@@ -1,0 +1,8 @@
+.contenedor-contenido {
+    padding: 20px; /* Agrega espacio en blanco alrededor del contenido */
+}
+
+.BOTON:hover{
+    background-color: #FF585D;
+    border-radius: 7px;
+}
