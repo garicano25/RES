@@ -52,7 +52,6 @@ $(document).ready(function() {
             
             $('#edad').val(edad);
             console.log('Edad calculada:', edad); // Mensaje de consola para mostrar la edad calculada
-            $('#edad').prop('readonly', true); // Desactivar la edición después de completar automáticamente
         }
     }
 });

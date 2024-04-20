@@ -80,7 +80,7 @@
         <button type="button" class="btn btn-primary" id="btnSiguiente">Siguiente</button>
         
         <div class="mb-3 d-none" id="selectPuestos">
-            <label for="puestos" class="form-label form-label-puestos">Puestos</label>
+            <label for="puestos" class="form-label form-label-puestos">Vacantes</label>
             <select class="form-select" id="puestos">
                 <option selected disabled>Selecciona un puesto</option>
                 <option value="1">Puesto 1</option>

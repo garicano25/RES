@@ -70,11 +70,6 @@
                     </li>
                     
                     <li class="nav-item" style="margin-left: 25px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
-                            <i class="bi bi-person-lines-fill"></i> Reclutamiento
-                        </a>
-                    </li>
-                    <li class="nav-item" style="margin-left: 25px;">
                         <a class="nav-link BOTON" href="{{ url('/ruta') }}" style="color: #fff; font-weight: bold; text-decoration: none;">
                             <i class="bi bi-bank2"></i> Banco.CV
                         </a>
@@ -93,6 +88,11 @@
                     <li class="nav-item" style="margin-left: 25px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
                             <i class="bi bi-file-earmark-bar-graph-fill"></i> DPT
+                        </a>
+                    </li>
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
+                            <i class="bi bi-person-lines-fill"></i> Reclutamiento
                         </a>
                     </li>
                     <li class="nav-item" style="margin-left: 25px;">
