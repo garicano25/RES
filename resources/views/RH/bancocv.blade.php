@@ -5,7 +5,7 @@
 
 <style>
     .header {
-        background-color: rgba( 225, 83, 93); /* Color de fondo personalizable con opacidad */
+        background-color: rgb(255, 255, 255); /* Color de fondo personalizable con opacidad */
         padding: 20px;
         display: flex;
         align-items: center; /* Centra verticalmente */
@@ -29,11 +29,15 @@
 
     h1 {
         margin: 0;
-        color: white; /* Texto en blanco */
-    }
+        color: rgb(0, 0, 0); /* Texto en blanco */
+        font-family: Poppins;
 
+    }
     .form-label-puestos {
-    font-size: 1.5rem; /* Tamaño de fuente más grande */
+        font-family: Poppins;
+
+    font-size: 1.5rem; /* Tamaño d
+    e fuente más grande */
     margin: auto; /* Centra horizontalmente */
     text-align: center; /* Centra el texto horizontalmente */
     display: block; /* Asegura que el elemento ocupe todo el ancho disponible */
@@ -69,6 +73,15 @@
             <input type="text" class="form-control" id="curp" placeholder="CURP" required>
         </div>
         <div class="mb-3">
+            <label for="sexo" class="form-label form-label-sexo">Sexo</label>
+            <select class="form-select" id="sexo">
+                <option selected disabled>Selecciona una opción</option>
+                <option value="1">Mujer</option>
+                <option value="2">Hombre</option>
+                <option value="3">Prefiero no deirlo</option>
+            </select>
+        </div>
+        <div class="mb-3">
             <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
             <input type="text" class="form-control" id="fecha_nacimiento">
         </div>
@@ -97,3 +110,5 @@
 
 
 @endsection
+
+

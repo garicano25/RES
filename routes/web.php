@@ -22,10 +22,13 @@ use Illuminate\Support\Facades\Route;
 
 // RUTA PRINCIPAL 
 
+
 Route::get('/', function () {return view('tablero.index');});
 
 
-Route::get('/ruta', function () {
+//BANCO DE CV
+
+Route::get('/vacantes', function () {
     return view('RH.bancocv');
 });
 

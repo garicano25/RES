@@ -4,6 +4,7 @@ document.getElementById('btnSiguiente').addEventListener('click', function() {
         document.getElementById('nombre').value === '' ||
         document.getElementById('correo').value === '' ||
         document.getElementById('curp').value === '' ||
+        document.getElementById('sexo').value === '' ||
         document.getElementById('telefono').value === '' ||
         document.getElementById('fecha_nacimiento').value === '' ||
         document.getElementById('edad').value === ''

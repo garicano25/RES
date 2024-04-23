@@ -36,8 +36,14 @@
             <a class="navbar-brand" href="#">
                 <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
             </a>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav1">
                 <ul class="navbar-nav">
+                    <li class="nav-item" style="margin-right: 25px;">
+                        <a class="nav-link" href="{{ url('/vacantes') }}">
+                            <i class="bi bi-file-earmark-person-fill text-white" style="font-size: 24px;"></i> 
+                        </a>
+                    </li>
+                    
                     <li class="nav-item" style="margin-right: 25px;">
                         <a class="nav-link" href="#">
                             <i class="bi bi-chat-left-fill text-white" style="font-size: 24px;"></i> 
@@ -70,47 +76,47 @@
                     </li>
                     
                     <li class="nav-item" style="margin-left: 25px;">
-                        <a class="nav-link BOTON" href="{{ url('/ruta') }}" style="color: #fff; font-weight: bold; text-decoration: none;">
-                            <i class="bi bi-bank2"></i> Banco.CV
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
+                            <i class="bi bi-bank2"></i> Organización
                         </a>
                     </li>
                     
                     <li class="nav-item" style="margin-left: 25px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
-                            <i class="bi bi-diagram-3-fill"></i> Organigrama
+                            <i class="bi bi-diagram-3-fill"></i> Reclutamiento
                         </a>
                     </li>
                     <li class="nav-item" style="margin-left: 25px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
-                            <i class="bi bi-file-earmark-ppt-fill"></i> PPT
+                            <i class="bi bi-file-earmark-ppt-fill"></i> Selección
                         </a>
                     </li>
                     <li class="nav-item" style="margin-left: 25px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
-                            <i class="bi bi-file-earmark-bar-graph-fill"></i> DPT
+                            <i class="bi bi-file-earmark-ppt-fill"></i> Contratación
                         </a>
                     </li>
                     <li class="nav-item" style="margin-left: 25px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
-                            <i class="bi bi-person-lines-fill"></i> Reclutamiento
+                            <i class="bi bi-file-earmark-bar-graph-fill"></i> Recursos  empleados
                         </a>
                     </li>
                     <li class="nav-item" style="margin-left: 25px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
-                            <i class="bi bi-person-lines-fill"></i> Selección
+                            <i class="bi bi-person-lines-fill"></i> Capacitación
                         </a>
                     </li>
                     <li class="nav-item" style="margin-left: 25px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
-                            <i class="bi bi-file-earmark-check-fill"></i> Contratación
+                            <i class="bi bi-person-lines-fill"></i> Eval  de desempeño 
                         </a>
                     </li>
                     <li class="nav-item" style="margin-left: 25px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
-                            <i class="bi bi-file-earmark-arrow-up-fill"></i> Permisos internos
+                            <i class="bi bi-file-earmark-check-fill"></i> Desvinculación
                         </a>
                     </li>
-                    <li class="nav-item" style="margin-left: 25x;">
+                    <li class="nav-item" style="margin-left: 25px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
                             <i class="bi bi-people-fill"></i> Usuarios
                         </a>
