@@ -28,8 +28,11 @@ Route::get('/', function () {return view('tablero.index');});
 
 //BANCO DE CV
 
-Route::get('/vacantes', function () {
-    return view('RH.bancocv');
-});
+Route::get('/vacantes',function(){return view('RH.reclutamiento.bancocv');});
+
+
+// ORGANIGRAMA
+
+Route::get('/organigrama',function(){return view('RH.organizacion.organigrama');});
 
 
