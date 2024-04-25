@@ -34,7 +34,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
                 <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
             </a>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav1">
@@ -106,7 +106,7 @@
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 20px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.9rem;">
-                            <i class="bi bi-file-earmark-bar-graph-fill" style="margin-right: 5px;"></i> Recursos empleados
+                            <i class="bi bi-file-earmark-bar-graph-fill" style="margin-right: 5px;"></i> Rec.Empleados
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 20px;">
@@ -116,7 +116,7 @@
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 20px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.9rem;">
-                            <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> Eval de desempeño
+                            <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> Eval.desempeño
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 20px;">
