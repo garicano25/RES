@@ -8,13 +8,11 @@
     <link rel="icon" type="image/png" sizes="20x20" href="/assets/images/iconologo.png">
     <title>Results in Performance</title>
 
-
-
     <!-- Bootstrap  iconos v1.11.3 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- Bootstrap v.5.2 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Datatables 1.13.1  v.5.2 -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
@@ -22,6 +20,7 @@
     <!--Animación -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/loading.css@v2.0.0/dist/loading.css​">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/loading.css@v2.0.0/dist/loading.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/transition.css@v2.0.0/dist/transition.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/transition.css@v2.0.0/dist/transition.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.css">
@@ -32,7 +31,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover;">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover;">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
                 <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
@@ -61,79 +60,71 @@
     </nav>
     
 
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0, 124, 186, 0.850); -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75);">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0, 124, 186, 0.850); -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75);
+    -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75);
+    box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75);">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-
-                    <li class="nav-item dropdown" style="margin-left: 20px;">
-                        <a class="nav-link BOTON" href="/" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.9rem;">
-                            <i class="bi bi-layout-text-window-reverse" style="margin-right: 5px;"></i> Tablero
-                        </a>
-                        
-                    </li>
-
-                    <li class="nav-item dropdown" style="margin-left: 20px;">
-                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-size: 0.9rem;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-bank2" style="margin-right: 5px;"></i> Organización
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url('/organigrama') }}">Organigrama</a></li>
-                            <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="#">PPT</a></li>
-                            <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="#">DPT</a></li>
-                        </ul>
-                    </li>
-    
-                    <li class="nav-item dropdown" style="margin-left: 20px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.9rem;">
-                            <i class="bi bi-diagram-3-fill" style="margin-right: 5px;"></i> Reclutamiento
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a class="nav-link BOTON" href="/" style="color: #fff; font-weight: bold; text-decoration: none;">
+                            <i class="bi bi-layout-text-window-reverse"></i> Tablero
                         </a>
                     </li>
-                    <li class="nav-item dropdown" style="margin-left: 20px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.9rem;">
-                            <i class="bi bi-file-earmark-ppt-fill" style="margin-right: 5px;"></i> Selección
+                    
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
+                            <i class="bi bi-bank2"></i> Organización
                         </a>
                     </li>
-                    <li class="nav-item dropdown" style="margin-left: 20px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.9rem;">
-                            <i class="bi bi-file-earmark-ppt-fill" style="margin-right: 5px;"></i> Contratación
+                    
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
+                            <i class="bi bi-diagram-3-fill"></i> Reclutamiento
                         </a>
                     </li>
-                    <li class="nav-item dropdown" style="margin-left: 20px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.9rem;">
-                            <i class="bi bi-file-earmark-bar-graph-fill" style="margin-right: 5px;"></i> Recursos empleados
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
+                            <i class="bi bi-file-earmark-ppt-fill"></i> Selección
                         </a>
                     </li>
-                    <li class="nav-item dropdown" style="margin-left: 20px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.9rem;">
-                            <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> Capacitación
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
+                            <i class="bi bi-file-earmark-ppt-fill"></i> Contratación
                         </a>
                     </li>
-                    <li class="nav-item dropdown" style="margin-left: 20px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.9rem;">
-                            <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> Eval de desempeño
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
+                            <i class="bi bi-file-earmark-bar-graph-fill"></i> Recursos  empleados
                         </a>
                     </li>
-                    <li class="nav-item dropdown" style="margin-left: 20px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.9rem;">
-                            <i class="bi bi-file-earmark-check-fill" style="margin-right: 5px;"></i> Desvinculación
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
+                            <i class="bi bi-person-lines-fill"></i> Capacitación
                         </a>
                     </li>
-                    <li class="nav-item dropdown" style="margin-left: 20px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.9rem;">
-                            <i class="bi bi-people-fill" style="margin-right: 5px;"></i> Usuarios
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
+                            <i class="bi bi-person-lines-fill"></i> Eval  de desempeño 
+                        </a>
+                    </li>
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
+                            <i class="bi bi-file-earmark-check-fill"></i> Desvinculación
+                        </a>
+                    </li>
+                    <li class="nav-item" style="margin-left: 25px;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;">
+                            <i class="bi bi-people-fill"></i> Usuarios
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-
 
     <div style="margin-top: 36px;"> <!-- Agregué un margen superior de 20px -->
         @yield('contenido')
@@ -155,6 +146,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Animación -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.js"></script>
 
 

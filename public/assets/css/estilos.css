@@ -4,7 +4,7 @@
 
 .BOTON:hover{
     background-color: #FF585D;
-    border-radius: 2px;
+    border-radius: 7px;
     transform: scale(1.1); /* Escala del 110% (efecto de zoom) */
 
 }
@@ -14,3 +14,4 @@
     display: inline-block;
     transition: transform 0.3s ease; /* Transición suave para el efecto de zoom */
 }
+
