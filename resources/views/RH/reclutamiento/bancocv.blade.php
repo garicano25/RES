@@ -74,7 +74,7 @@
         </div>
         <div class="mb-3">
             <label for="sexo" class="form-label form-label-sexo">Sexo</label>
-            <select class="form-select" id="sexo">
+            <select class="form-select" id="sexo" required>
                 <option selected disabled>Selecciona una opción</option>
                 <option value="1">Mujer</option>
                 <option value="2">Hombre</option>
@@ -83,15 +83,17 @@
         </div>
         <div class="mb-3">
             <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
-            <input type="text" class="form-control" id="fecha_nacimiento">
+            <input type="date" class="form-control" id="fecha_nacimiento">
         </div>
         <div class="mb-3">
             <label for="edad" class="form-label">Edad</label>
             <input type="number" class="form-control" id="edad">
         </div>
         
-        <button type="button" class="btn btn-primary" id="btnSiguiente">Siguiente</button>
+        <button type="button" class="btn btn-danger" id="btnSiguiente">Siguiente</button>
         
+
+        <br><br>
         <div class="mb-3 d-none" id="selectPuestos">
             <label for="puestos" class="form-label form-label-puestos">Vacantes</label>
             <select class="form-select" id="puestos">
