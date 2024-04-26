@@ -86,6 +86,8 @@
                             <li><a class="dropdown-item" href="#">PPT</a></li>
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="#">DPT</a></li>
+                            <hr class="dropdown-divider">
+                            <li><a class="dropdown-item" href="#">Requerimiento Personal</a></li>
                         </ul>
                     </li>
     
