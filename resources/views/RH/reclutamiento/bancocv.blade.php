@@ -58,53 +58,70 @@
     <form id="formulario">
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre completo</label>
-            <input type="text" class="form-control" id="nombre" placeholder="Nombre completo" required>
+            <input type="text" class="form-control"  name="NOMBRE_VACANTE"    id="NOMBRE_VACANTE" placeholder="Nombre completo" required>
         </div>
         <div class="mb-3">
             <label for="correo" class="form-label">Correo electrónico</label>
-            <input type="email" class="form-control" id="correo" placeholder="correo@example.com" required>
+            <input type="email" class="form-control" name="CORREO_VACANTE" id="CORREO_VACANTE" placeholder="correo@example.com" required>
         </div>
         <div class="mb-3">
             <label for="telefono" class="form-label">Teléfono</label>
-            <input type="tel" class="form-control" id="telefono" placeholder="Teléfono" required>
+            <input type="number" class="form-control"  name="TELEFONO_VACANTE" id="TELEFONO_VACANTE" placeholder="Teléfono" required>
         </div>
         <div class="mb-3">
             <label for="curp" class="form-label">CURP</label>
-            <input type="text" class="form-control" id="curp" placeholder="CURP" required>
-        </div>
-        <div class="mb-3">
-            <label for="sexo" class="form-label form-label-sexo">Sexo</label>
-            <select class="form-select" id="sexo" required>
-                <option selected disabled>Selecciona una opción</option>
-                <option value="1">Mujer</option>
-                <option value="2">Hombre</option>
-                <option value="3">Prefiero no deirlo</option>
-            </select>
+            <input type="text" class="form-control" name="CURP_VACANTE"  id="CURP_VACANTE" placeholder="CURP" required>
         </div>
         <div class="mb-3">
             <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
-            <input type="date" class="form-control" id="fecha_nacimiento">
+            <input type="date" class="form-control" name="FECHA_NACIMIENTO_VACANTE"  id="FECHA_NACIMIENTO_VACANTE"  required> 
         </div>
         <div class="mb-3">
             <label for="edad" class="form-label">Edad</label>
-            <input type="number" class="form-control" id="edad">
+            <input type="number" name="EDAD_VACANTE" class="form-control" id="EDAD_VACANTE"  required>
         </div>
         
         <button type="button" class="btn btn-danger" id="btnSiguiente">Siguiente</button>
         
-
         <br><br>
+
+
         <div class="mb-3 d-none" id="selectPuestos">
             <label for="puestos" class="form-label form-label-puestos">Vacantes</label>
-            <select class="form-select" id="puestos">
+            <select class="form-select"  name="PUESTO_VACANTES" id="PUESTO_VACANTES" required>
                 <option selected disabled>Selecciona un puesto</option>
-                <option value="1">Puesto 1</option>
-                <option value="2">Puesto 2</option>
-                <option value="3">Puesto 3</option>
+                <option value="1">Asistente RRHH</option>
+                <option value="2">Asistente de planeación y logística</option>
+                <option value="3">Intendente</option>
+                <option value="4">Asistente contable</option>
+                <option value="5">Asistente de nómina</option>
+                <option value="6">Asistente de compras</option>
+                <option value="7">Almacenista</option>
+                <option value="8">Consultor</option>
+                <option value="9">Instructor - Facilitador</option>
+                <option value="10">Ejecutivo de ventas</option>
+                <option value="11">Desarrollador de Software</option>
+
+
             </select>
         </div>
+
+       
+
+
+
+
+
+
+            
+        </div>
+
+
+
+
     </form>
 </div>
+
 
 
 

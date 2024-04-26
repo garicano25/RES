@@ -1,13 +1,13 @@
-document.getElementById('btnSiguiente').addEventListener('click', function() {
+// document.getElementById('btnSiguiente').addEventListener('click', function() {
     // Verificar si todos los campos están completos
     if (
-        document.getElementById('nombre').value === '' ||
-        document.getElementById('correo').value === '' ||
-        document.getElementById('curp').value === '' ||
-        document.getElementById('sexo').value === '' ||
-        document.getElementById('telefono').value === '' ||
-        document.getElementById('fecha_nacimiento').value === '' ||
-        document.getElementById('edad').value === ''
+        document.getElementById('NOMBRE_VACANTE').value === '' ||
+        document.getElementById('CORREO_VACANTE').value === '' ||
+        document.getElementById('TELEFONO_VACANTE').value === '' ||
+        document.getElementById('CURP_VACANTE').value === '' ||
+        // document.getElementById('SEXO_VACANTE').value === '' ||
+        document.getElementById('FECHA_NACIMIENTO_VACANTE').value === '' ||
+        document.getElementById('EDAD_VACANTE').value === ''
     ) {
         // Mostrar alerta de SweetAlert2 con un temporizador de 2 segundos
         Swal.fire({
