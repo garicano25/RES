@@ -5,50 +5,50 @@
 
 <style>
     .header {
-        background-color: rgb(255, 255, 255); /* Color de fondo personalizable con opacidad */
+        background-color: rgb(255, 255, 255); 
         padding: 20px;
         display: flex;
-        align-items: center; /* Centra verticalmente */
-        justify-content: space-between; /* Espacia los elementos horizontalmente */
-        -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); /* Sombra */
-        -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); /* Sombra */
-        box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); /* Sombra */
+        align-items: center; 
+        justify-content: space-between; 
+        -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); 
+        -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); 
+        box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); 
     }
 
     .logo-img {
-        width: 150px; /* Tamaño personalizable */
-        margin-right: 15px; /* Espacio entre la imagen y el texto */
+        width: 150px;
+        margin-right: 15px; 
     }
 
     .header-text {
-        flex: 1; /* Llena el espacio restante */
+        flex: 1; 
         display: flex;
-        align-items: center; /* Centra verticalmente */
-        justify-content: center; /* Centra horizontalmente */
+        align-items: center; 
+        justify-content: center; 
     }
 
     h1 {
         margin: 0;
-        color: rgb(0, 0, 0); /* Texto en blanco */
+        color: rgb(0, 0, 0); 
         font-family: Poppins;
 
     }
     .form-label-puestos {
         font-family: Poppins;
 
-    font-size: 1.5rem; /* Tamaño d
-    e fuente más grande */
-    margin: auto; /* Centra horizontalmente */
-    text-align: center; /* Centra el texto horizontalmente */
-    display: block; /* Asegura que el elemento ocupe todo el ancho disponible */
-    width: fit-content; /* Ajusta el ancho del elemento al contenido */
+    font-size: 1.5rem; 
+    e fuente más grande 
+    margin: auto;
+    text-align: center;
+    display: block; 
+    width: fit-content; 
 }   
 </style>
 
 <header class="header mt-5 mb-4">
-    <img src="/assets/images/Negroancho.png" alt="Logo" class="logo-img"> <!-- Logo a la izquierda del header -->
-    <div class="header-text"> <!-- Contenedor del texto -->
-        <h1>Vacantes</h1> <!-- Texto en el centro del header -->
+    <img src="/assets/images/Negroancho.png" alt="Logo" class="logo-img"> 
+    <div class="header-text">
+        <h1>Vacantes</h1> 
     </div>
 </header>
  

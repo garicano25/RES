@@ -71,14 +71,14 @@
 
                     <li class="nav-item dropdown" style="margin-left: 20px;">
                         <a class="nav-link BOTON" href="/" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.9rem;">
-                            <i class="bi bi-layout-text-window-reverse" style="margin-right: 5px;"></i> Tablero
+                            <i class="bi bi-speedometer" style="margin-right: 5px;"></i> Tablero
                         </a>
                         
                     </li>
 
                     <li class="nav-item dropdown" style="margin-left: 20px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-size: 0.9rem;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-bank2" style="margin-right: 5px;"></i> Organización
+                            <i class="bi bi-building" style="margin-right: 5px;"></i> Organización
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url('/organigrama') }}">Organigrama</a></li>
@@ -137,7 +137,7 @@
     </nav>
 
 
-    <div style="margin-top: 36px;"> <!-- Agregué un margen superior de 20px -->
+    <div style="margin-top: 36px;"> 
         @yield('contenido')
     </div>
 
