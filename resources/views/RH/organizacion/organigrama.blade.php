@@ -7,11 +7,11 @@
   <ol class="breadcrumb m-b-10" style="background-color: rgb(164, 214, 94); padding: 20px; border-radius: 10px;">
     <h2 style="color: #ffffff; margin: 0;"><i class="bi bi-diagram-3-fill"></i> Organigrama  </h2>
   
-    <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_moduloproveedores" id="abrir1ModalBtn" style="margin-left: auto;">
+    <button type="button" class="btn btn-light   waves-effect waves-light botonnuevo_area" id="abrir1ModalBtn" style="margin-left: auto;">
       Departamento   <i class="bi bi-plus-circle"></i>
    </button>
 
-    <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_moduloproveedores" id="abrirModalBtn" style="margin-left: auto;">
+    <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_departamento" id="abrirModalBtn" style="margin-left: auto;">
        Área   <i class="bi bi-plus-circle"></i> 
     </button>
   </ol>
