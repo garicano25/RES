@@ -3,21 +3,22 @@
 @section('contenido')
 
 
+
 <div class="contenedor-contenido">
-  <ol class="breadcrumb m-b-10" style="background-color: rgb(164, 214, 94); padding: 20px; border-radius: 10px;">
-    <h2 style="color: #ffffff; margin: 0;"><i class="bi bi-diagram-3-fill"></i> Organigrama  </h2>
+  <ol class="breadcrumb m-b-10" style="background-color: rgb(164, 214, 94); padding: 10px; border-radius: 10px;">
+    <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-diagram-3-fill"></i> Organigrama  </h3>
   
-    <button type="button" class="btn btn-light   waves-effect waves-light botonnuevo_area" id="abrir1ModalBtn" style="margin-left: auto;">
-      Departamento   <i class="bi bi-plus-circle"></i>
-   </button>
+
+    <a href="{{ url('/organigrama1') }}" class="btn btn-light waves-effect waves-light botonnuevo_area" style="margin-left: auto;">
+      Organigrama <i class="bi bi-plus-circle"></i>
+  </a>
+  
+ 
 
     <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_departamento" id="abrirModalBtn" style="margin-left: auto;">
        Área   <i class="bi bi-plus-circle"></i> 
     </button>
   </ol>
-
-
-
 
             <!--  MODAL AREA -->
         <div class="modal fade" id="exampleModal_area" tabindex="-1" aria-labelledby="exampleModalLabel_area" aria-hidden="true">

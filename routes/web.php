@@ -35,4 +35,14 @@ Route::get('/vacantes',function(){return view('RH.reclutamiento.bancocv');});
 
 Route::get('/organigrama',function(){return view('RH.organizacion.organigrama');});
 
+Route::get('/organigrama1',function(){return view('RH.organizacion.org');});
+
+
+Route::get('/organigrama2',function(){return view('RH.organizacion.or');});
+
+
+
+
+
+
 

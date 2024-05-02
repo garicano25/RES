@@ -1,33 +1,23 @@
 
 
-// MODAL DE AREA 
-document.addEventListener("DOMContentLoaded", function() {
-    var abrirModalBtn = document.getElementById("abrirModalBtn");
+@extends('principal.maestra')
 
-    abrirModalBtn.addEventListener("click", function() {
-          var modal = document.getElementById("exampleModal_area");
-      var modalInstance = new bootstrap.Modal(modal);
-      modalInstance.show();
-    });
-  });
+@section('contenido')
 
 
+  
 
+    <div class="contenedor-contenido">
+        <div id="toolbar">
+            <input type="text" id="textoNodo" placeholder="Texto del Nodo">
+            <input type="color" id="colorNodo">
+            <input type="color" id="colorTexto" value="#000000">
+            <button id="agregarNodo">Agregar Nodo</button>
+            <button id="agregarRelacion">Agregar Relación</button>
+        </div>
+        <div id="organigrama-container"></div>
 
-//  MODAL DEPARTAMENTO 
-  document.addEventListener("DOMContentLoaded", function() {
-    var abrir1ModalBtn = document.getElementById("abrir1ModalBtn");
-
-    abrir1ModalBtn.addEventListener("click", function() {
-          var modal = document.getElementById("exampleModal_departamento");
-      var modalInstance = new bootstrap.Modal(modal);
-      modalInstance.show();
-    });
-  });
-
-
-  //organigrama
-
+   <script>
         document.addEventListener('DOMContentLoaded', function() {
             let organigrama = new joint.dia.Graph();
             let paper = new joint.dia.Paper({
@@ -235,4 +225,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
             }
         });
-    
+    </script>
+
+
+@endsection

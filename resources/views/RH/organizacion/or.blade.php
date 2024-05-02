@@ -1,33 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organigrama Personalizado</title>
+    <style>
+        #organigrama-container {
+            width: 80%;
+            height: 600px;
+            border: 2px solid #ccc;
+            position: relative;
+        }
+        #toolbar {
+            margin-bottom: 10px;
+        }
+        #toolbar input,
+        #toolbar select,
+        #toolbar button {
+            margin-right: 10px;
+        }
+        .node {
+            border-radius: 10px;
+            position: relative;
+            display: inline-block;
+            margin: 10px;
+        }
+        .delete-button {
+            cursor: pointer;
+            fill: red;
+            font-size: 18px;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            z-index: 1;
+        }
+        .context-menu {
+            position: absolute;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 5px;
+        }
+        .context-menu-item {
+            cursor: pointer;
+            padding: 5px;
+            margin: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div id="toolbar">
+        <input type="text" id="textoNodo" placeholder="Texto del Nodo">
+        <input type="color" id="colorNodo">
+        <input type="color" id="colorTexto" value="#000000">
+        <button id="agregarNodo">Agregar Nodo</button>
+        <button id="agregarRelacion">Agregar Relación</button>
+    </div>
+    <div id="organigrama-container"></div>
 
-
-// MODAL DE AREA 
-document.addEventListener("DOMContentLoaded", function() {
-    var abrirModalBtn = document.getElementById("abrirModalBtn");
-
-    abrirModalBtn.addEventListener("click", function() {
-          var modal = document.getElementById("exampleModal_area");
-      var modalInstance = new bootstrap.Modal(modal);
-      modalInstance.show();
-    });
-  });
-
-
-
-
-//  MODAL DEPARTAMENTO 
-  document.addEventListener("DOMContentLoaded", function() {
-    var abrir1ModalBtn = document.getElementById("abrir1ModalBtn");
-
-    abrir1ModalBtn.addEventListener("click", function() {
-          var modal = document.getElementById("exampleModal_departamento");
-      var modalInstance = new bootstrap.Modal(modal);
-      modalInstance.show();
-    });
-  });
-
-
-  //organigrama
-
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.0/backbone-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jointjs/3.5.1/joint.min.js"></script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             let organigrama = new joint.dia.Graph();
             let paper = new joint.dia.Paper({
@@ -235,4 +270,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 });
             }
         });
-    
+    </script>
+</body>
+</html>
