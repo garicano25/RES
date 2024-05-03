@@ -3,57 +3,56 @@
 namespace App\Http\Controllers\organizacion;
 
 use App\Http\Controllers\Controller;
-use App\Models\organizacion\PPTModel;
+use App\Models\organizacion\DPTModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage; // Importar la clase Storage
 
-class PPTController extends Controller
+class DPTController extends Controller
 {
-    public function upload(Request $request)
+    public function guardar(Request $request)
     {
         // Validar el formulario
         $request->validate([
             'NOMBRE_PUESTO' => 'required|string',
-            'ARCHIVO_PPT' => 'required|mimes:xls,xlsx'
+            'ARCHIVO_DPT' => 'required|mimes:xls,xlsx'
         ]);
 
         try {
             // Guardar el archivo en el servidor
-            $file = $request->file('ARCHIVO_PPT');
-            $file->move('PPT_EXCEL', $file->getClientOriginalName());
+            $file = $request->file('ARCHIVO_DPT');
+            $file->move('DPT_EXCEL', $file->getClientOriginalName());
 
             // Insertar los datos en la tabla "PPT"
-            PPTModel::create([
+            DPTModel::create([
                 'NOMBRE_PUESTO' => $request->input('NOMBRE_PUESTO'),
-                'ARCHIVO_PPT' => $file->getClientOriginalName()
+                'ARCHIVO_DPT' => $file->getClientOriginalName()
             ]);
 
             // Devolver una respuesta JSON indicando que los datos se han guardado
             return redirect()->back()->with('success', 'Datos guardados correctamente.');
-        
         } catch (\Exception $e) {
-            // Mostrar alerta de error con mensaje detallado
-            return response()->json(['error' => 'Error al guardar los datos: ' . $e->getMessage()], 500);
+            // Mostrar alerta de error
+            return response()->json(['error' => 'Error al guardar los datos. Por favor, inténtalo de nuevo.'], 500);
         }
     }
     
 
-
-    public function getAllData()
+    public function getAllData_DPT()
     {
-        $data = PPTModel::all();
-        return view('RH.organizacion.PPT', compact('data'));
+        $data = DPTModel::all();
+        return view('RH.organizacion.DPT', compact('data'));
     }
+
 
     public function verExcel($id)
     {
-        $ppt = PPTModel::find($id);
+        $dpt = DPTModel::find($id);
     
-        if (!$ppt) {
+        if (!$dpt) {
             abort(404); // Mostrar página de error si no se encuentra el registro
         }
     
-        $archivoPath = public_path("PPT_EXCEL/{$ppt->ARCHIVO_PPT}");
+        $archivoPath = public_path("DPT_EXCEL/{$dpt->ARCHIVO_DPT}");
     
         // Verificar la existencia del archivo
         if (!file_exists($archivoPath)) {
@@ -66,10 +65,11 @@ class PPTController extends Controller
         return response()->json(['excel' => base64_encode($contenido)]);
     }
     
+
     public function eliminar($id)
     {
         // Buscar el registro por su ID
-        $registro = PPTModel::find($id);
+        $registro = DPTModel::find($id);
     
         if (!$registro) {
             return response()->json(['success' => false, 'message' => 'Registro no encontrado'], 404);
@@ -84,6 +84,4 @@ class PPTController extends Controller
             return response()->json(['success' => false, 'message' => 'Error al eliminar el registro: ' . $e->getMessage()], 500);
         }
     }
-    
-
 }

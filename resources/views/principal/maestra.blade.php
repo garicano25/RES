@@ -83,14 +83,14 @@
                             <i class="bi bi-building" style="margin-right: 5px;"></i> <span class="d-lg-none">Organización</span><span class="d-none d-lg-inline">Organización</span>
                         </a>
 
-                        <ul class="dropdown-menu" style="font-size: 0.8rem;">
+                        <ul class="dropdown-menu" >
                             <li><a class="dropdown-item" href="{{ url('/organigrama') }}">Organigrama</a></li>
-                            <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/PPT')}}">PPT</a></li>
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/DPT')}}">DPT</a></li>
                             <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="#">Requerimiento Personal</a></li>
+                            <li><a class="dropdown-item" href="{{url('/PPT')}}">PPT</a></li>
+                            <hr class="dropdown-divider">
+                            <li><a class="dropdown-item" href="{{url('/requerimiento')}}">Requerimiento Personal</a></li>
                         </ul>
                         
                     </li>
@@ -160,6 +160,7 @@
 
     <!-- sweetalert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 
     <!-- Animación -->
@@ -171,6 +172,8 @@
     <script src="/assets/js_sitio/organizacion/organigrama.js"></script>
 
     <script src="/assets/js_sitio/organizacion/PPT.js"></script>
+    <script src="/assets/js_sitio/organizacion/DPT.js"></script>
+
 
   
     <!-- Organigrama-->

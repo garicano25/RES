@@ -8,7 +8,7 @@
   <ol class="breadcrumb m-b-10" style="background-color: rgb(164, 214, 94); padding: 10px; border-radius: 10px;">
     <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-filetype-ppt"></i> PPT  </h3>
   
-    <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_departamento" id="abrirModalBtn" style="margin-left: auto;">
+    <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_ppt" id="abrirModalBtn" style="margin-left: auto;">
         Nuevo PPT  <i class="bi bi-plus-circle"></i> 
      </button>
    </ol>
