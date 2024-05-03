@@ -102,29 +102,12 @@
                 <option value="10">Ejecutivo de ventas</option>
                 <option value="11">Desarrollador de Software</option>
 
-
             </select>
         </div>
-
-       
-
-
-
-
-
-
             
         </div>
-
-
-
-
     </form>
 </div>
-
-
-
-
 
 
 

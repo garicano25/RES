@@ -32,6 +32,8 @@
     <link rel="stylesheet" href="assets/css/organigrama.css">
 
 
+
+
 </head>
 <body>
 
@@ -72,63 +74,63 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown" style="margin-left: 10px;">
-                        <a class="nav-link BOTON" href="/" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.8rem;">
+                        <a class="nav-link BOTON" href="/" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-speedometer" style="margin-right: 5px;"></i> <span class="d-lg-none">Tablero</span><span class="d-none d-lg-inline">Tablero</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
-                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-size: 0.8rem;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff;  role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-building" style="margin-right: 5px;"></i> <span class="d-lg-none">Organización</span><span class="d-none d-lg-inline">Organización</span>
                         </a>
 
                         <ul class="dropdown-menu" style="font-size: 0.8rem;">
                             <li><a class="dropdown-item" href="{{ url('/organigrama') }}">Organigrama</a></li>
                             <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="#">PPT</a></li>
+                            <li><a class="dropdown-item" href="{{url('/PPT')}}">PPT</a></li>
                             <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="#">DPT</a></li>
+                            <li><a class="dropdown-item" href="{{url('/DPT')}}">DPT</a></li>
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="#">Requerimiento Personal</a></li>
                         </ul>
                         
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.8rem;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-diagram-3-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Reclutamiento</span><span class="d-none d-lg-inline">Reclutamiento</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.8rem;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-file-earmark-ppt-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Selección</span><span class="d-none d-lg-inline">Selección</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.8rem;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-file-earmark-ppt-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Contratación</span><span class="d-none d-lg-inline">Contratación</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.8rem;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-file-earmark-bar-graph-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Rec.Empleados</span><span class="d-none d-lg-inline">Rec.Empleados</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.8rem;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Capacitación</span><span class="d-none d-lg-inline">Capacitación</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.8rem;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Eval.desempeño</span><span class="d-none d-lg-inline">Eval.desempeño</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.8rem;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-file-earmark-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Desvinculación</span><span class="d-none d-lg-inline">Desvinculación</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; font-size: 0.8rem;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-people-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Usuarios</span><span class="d-none d-lg-inline">Usuarios</span>
                         </a>
                     </li>
@@ -146,7 +148,6 @@
 
     <!-- Jquery 3.6.4-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!--Bootstrap -->
 
@@ -156,20 +157,31 @@
     <!-- Datatables 1.13.1  v.5.2 -->
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+
     <!-- sweetalert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
     <!-- Animación -->
     <script src="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.js"></script>
     <!-- Banco CV -->
     <script src="/assets/js_sitio/bancocv.js"></script>
+    
     <!-- organización -->
     <script src="/assets/js_sitio/organizacion/organigrama.js"></script>
+
+    <script src="/assets/js_sitio/organizacion/PPT.js"></script>
+
+  
     <!-- Organigrama-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.0/backbone-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jointjs/3.5.1/joint.min.js"></script>
+<!-- Incluir la librería SheetJS desde una CDN -->
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.4/xlsx.full.min.js"></script>
 
 </body>
 </html>

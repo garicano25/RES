@@ -2,21 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-// Route::get('/', function () {
-
-//     return view('welcome');
-// });
+use App\Http\Controllers\organizacion\PPTController;
 
 
 
@@ -34,13 +20,29 @@ Route::get('/vacantes',function(){return view('RH.reclutamiento.bancocv');});
 // ORGANIGRAMA
 
 Route::get('/organigrama',function(){return view('RH.organizacion.organigrama');});
-
 Route::get('/organigrama1',function(){return view('RH.organizacion.org');});
 
 
-Route::get('/organigrama2',function(){return view('RH.organizacion.or');});
 
 
+//PPT
+Route::get('/PPT',function(){return view('RH.organizacion.PPT');});
+Route::post('/upload/excel', [PPTController::class, 'upload'])->name('upload.excel');
+
+
+// DPT
+Route::get('/DPT',function(){return view('RH.organizacion.DPT');});
+
+
+
+
+// Route::get('/PPT.Q', [PPTController::class, 'getDataForDataTable'])->name('Datos_PPT');
+
+Route::get('/PPT', [PPTController::class, 'getAllData'])->name('Datos_PPT');
+
+
+
+Route::get('/ver-excel/{id}', [PPTController::class, 'verExcel'])->name('ver-excel');
 
 
 
