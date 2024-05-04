@@ -9,9 +9,7 @@
     <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-diagram-3-fill"></i> Organigrama  </h3>
   
 
-    <a href="{{ url('/organigrama1') }}" class="btn btn-light waves-effect waves-light botonnuevo_area" style="margin-left: auto;">
-      Organigrama <i class="bi bi-plus-circle"></i>
-  </a>
+    
   
  
 
