@@ -2,8 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\organizacion\PPTController;
-use App\Http\Controllers\organizacion\DPTController;
+
 
 
 
@@ -32,7 +31,7 @@ Route::get('/PPT',function(){return view('RH.organizacion.PPT');});
 Route::get('/DPT',function(){return view('RH.organizacion.DPT');});
 
 
-
+// REQUERIMIENTO PERSONAL 
 Route::get('/requerimiento',function(){return view('RH.organizacion.requerimiento_personal');});
 
 
