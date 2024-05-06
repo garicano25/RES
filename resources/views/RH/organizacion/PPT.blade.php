@@ -640,17 +640,19 @@
                       <!-- III. Conocimientos adicionales -->
             <div class="row mb-3">
                 <div class="col-12 text-center">
-                    <h4>III. Conocimientos adicionaless</h4>
+                    <h4>III. Conocimientos adicionales</h4>
                 </div>
             </div>
                     
             <div class="row mb-3">
-
                 <div class="col-6">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Ofimática</th>
+                                <th rowspan="2">Ofimática</th>
+                                <th colspan="5" class="text-center">Nivel de dominio </th>
+                            </tr>
+                            <tr>
                                 <th>Aplica</th>
                                 <th>Bajo</th>
                                 <th>Medio</th>
@@ -662,37 +664,18 @@
                         <tbody>
                             <tr>
                                 <td>Word</td>
+                               
                                 <td>
-                                    <select class="form-control" id="WORD_APLICA_PPT" name="WORD_APLICA_PPT">
-                                        <option selected disabled></option>
-                                        <option value="1">Si</option>
-                                        <option value="2">No</option>
-                                        <option value="3">NA</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="WORD_APLICA_PPT" name="WORD_APLICA_PPT">
                                 </td>
                                 <td>
-                                    <select class="form-control" id="WORD_BAJO_PPT" name="WORD_BAJO_PPT">
-                                        <option selected disabled></option>
-                                        <option value="1">Si</option>
-                                        <option value="2">No</option>
-                                        <option value="3">NA</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="WORD_BAJO_PPT" name="WORD_BAJO_PPT">
                                 </td>
                                 <td>
-                                    <select class="form-control" id="WORD_MEDIO_PPT" name="WORD_MEDIO_PPT">
-                                        <option selected disabled></option>
-                                        <option value="1">Si</option>
-                                        <option value="2">No</option>
-                                        <option value="3">NA</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="WORD_MEDIO_PPT" name="WORD_MEDIO_PPT">
                                 </td>
                                 <td>
-                                    <select class="form-control" id="WORD_ALTO_PPT" name="WORD_ALTO_PPT">
-                                        <option selected disabled></option>
-                                        <option value="1">Si</option>
-                                        <option value="2">No</option>
-                                        <option value="3">NA</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="WORD_ALTO_PPT" name="WORD_ALTO_PPT">
                                 </td>
                                 <td>
                                     <label class="form-check-label" for="WORD_CUMPLE_SI">Si</label>
@@ -706,36 +689,17 @@
                             <tr>
                                 <td>Excel</td>
                                 <td>
-                                    <select class="form-control" id="EXCEL_APLICA_PPT" name="EXCEL_APLICA_PPT">
-                                        <option selected disabled></option>
-                                        <option value="1">Si</option>
-                                        <option value="2">No</option>
-                                        <option value="3">NA</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="EXCEL_APLICA_PPT" name="EXCEL_APLICA_PPT">
                                 </td>
                                 <td>
-                                    <select class="form-control" id="EXCEL_BAJO_PPT" name="EXCEL_BAJO_PPT">
-                                        <option selected disabled></option>
-                                        <option value="1">Si</option>
-                                        <option value="2">No</option>
-                                        <option value="3">NA</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="EXCEL_BAJO_PPT" name="EXCEL_BAJO_PPT">
+                                </td>
+                                
+                                <td>
+                                    <input type="text" class="form-control" id="EXCEL_MEDIO_PPT" name="EXCEL_MEDIO_PPT">
                                 </td>
                                 <td>
-                                    <select class="form-control" id="EXCEL_MEDIO_PPT" name="EXCEL_MEDIO_PPT">
-                                        <option selected disabled></option>
-                                        <option value="1">Si</option>
-                                        <option value="2">No</option>
-                                        <option value="3">NA</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="form-control" id="EXCEL_ALTO_PPT" name="EXCEL_ALTO_PPT">
-                                        <option selected disabled></option>
-                                        <option value="1">Si</option>
-                                        <option value="2">No</option>
-                                        <option value="3">NA</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="EXCEL_ALTO_PPT" name="EXCEL_ALTO_PPT">
                                 </td>
                                 <td>
                                     <label class="form-check-label" for="EXCEL_CUMPLE_SI">Si</label>
@@ -749,43 +713,23 @@
                             <tr>
                                 <td>Power Point</td>
                                 <td>
-                                    <select class="form-control" id="POWER_APLICA_PPT" name="POWER_APLICA_PPT">
-                                        <option selected disabled></option>
-                                        <option value="1">Si</option>
-                                        <option value="2">No</option>
-                                        <option value="3">NA</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="POWER_APLICA_PPT" name="POWER_APLICA_PPT">
                                 </td>
                                 <td>
-                                    <select class="form-control" id="POWER_BAJO_PPT" name="POWER_BAJO_PPT">
-                                        <option selected disabled></option>
-                                        <option value="1">Si</option>
-                                        <option value="2">No</option>
-                                        <option value="3">NA</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="POWER_BAJO_PPT" name="POWER_BAJO_PPT">
                                 </td>
                                 <td>
-                                    <select class="form-control" id="POWER_MEDIO_PPT" name="POWER_MEDIO_PPT">
-                                        <option selected disabled></option>
-                                        <option value="1">Si</option>
-                                        <option value="2">No</option>
-                                        <option value="3">NA</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="POWER_MEDIO_PPT" name="POWER_MEDIO_PPT">
                                 </td>
                                 <td>
-                                    <select class="form-control" id="POWER_ALTO_PPT" name="POWER_ALTO_PPT">
-                                        <option selected disabled></option>
-                                        <option value="1">Si</option>
-                                        <option value="2">No</option>
-                                        <option value="3">NA</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="POWER_ALTO_PPT" name="POWER_ALTO_PPT">
                                 </td>
                                 <td>
                                     <label class="form-check-label" for="POWER_CUMPLE_SI">Si</label>
                                     <input class="form-check-input" type="radio" name="POWER_CUMPLE_PPT" id="POWER_CUMPLE_SI" value="Si">
                                 </td>
                                 <td>
-                                    <label class="form-check-label" for="EXCEL_CUMPLE_NO">No</label>
+                                    <label class="form-check-label" for="POWER _CUMPLE_NO">No</label>
                                     <input class="form-check-input" type="radio" name="POWER_CUMPLE_PPT" id="POWER _CUMPLE_NO" value="no">
                                 </td>
                             </tr>
@@ -814,15 +758,15 @@
                             <tr>
                                 <td><input type="text" class="form-control" id="NOMBRE_IDOMA1_PPT" name="NOMBRE_IDOMA1_PPT">
                                 </td>
-                                <td><input type="text" class="form-control" id="APLICA_IDIOMA1_PPT" name="APLICA_IDIOMA1_PPT">
+                                <td><input type="number" class="form-control" id="APLICA_IDIOMA1_PPT" name="APLICA_IDIOMA1_PPT">
                                 </td>
-                                <td><input type="text" class="form-control" id="HABLAR_IDIOMA1_PPT" name="HABLAR_IDIOMA1_PPT">
+                                <td><input type="number" class="form-control" id="HABLAR_IDIOMA1_PPT" name="HABLAR_IDIOMA1_PPT">
                                 </td>
-                                <td><input type="text" class="form-control" id="ESCRIBIR_IDIOMA1_PPT" name="ESCRIBIR_IDIOMA1_PPT">
+                                <td><input type="number" class="form-control" id="ESCRIBIR_IDIOMA1_PPT" name="ESCRIBIR_IDIOMA1_PPT">
                                 </td>
-                                <td><input type="text" class="form-control" id="LEER_IDIOMA1_PPT" name="LEER_IDIOMA1_PPT">
+                                <td><input type="number" class="form-control" id="LEER_IDIOMA1_PPT" name="LEER_IDIOMA1_PPT">
                                 </td>
-                                <td><input type="text" class="form-control" id="ESCUCHAR_IDIOMA1_PPT" name="ESCUCHAR_IDIOMA1_PPT">
+                                <td><input type="number" class="form-control" id="ESCUCHAR_IDIOMA1_PPT" name="ESCUCHAR_IDIOMA1_PPT">
                                 </td>
                                 <td>
                                     <label class="form-check-label" for="IDIOMA1_CUMPLE_SI">Si</label>
@@ -836,15 +780,15 @@
                             <tr>
                                 <td><input type="text" class="form-control" id="NOMBRE_IDIOMA2_PPT" name="NOMBRE_IDIOMA2_PPT">
                                 </td>
-                                <td><input type="text" class="form-control" id="APLICA_IDIOMA2_PPT" name="APLICA_IDIOMA2_PPT">
+                                <td><input type="number" class="form-control" id="APLICA_IDIOMA2_PPT" name="APLICA_IDIOMA2_PPT">
                                 </td>
-                                <td><input type="text" class="form-control" id="HABLAR_IDIOMA2_PPT" name="HABLAR_IDIOMA2_PPT">
+                                <td><input type="number" class="form-control" id="HABLAR_IDIOMA2_PPT" name="HABLAR_IDIOMA2_PPT">
                                 </td>
-                                <td><input type="text" class="form-control" id="ESCRIBIR_IDIOMA2_PPT" name="ESCRIBIR_IDIOMA2_PPT">
+                                <td><input type="number" class="form-control" id="ESCRIBIR_IDIOMA2_PPT" name="ESCRIBIR_IDIOMA2_PPT">
                                 </td>
-                                <td><input type="text" class="form-control" id="LEER_IDIOMA2_PPT" name="LEER_IDIOMA2_PPT">
+                                <td><input type="number" class="form-control" id="LEER_IDIOMA2_PPT" name="LEER_IDIOMA2_PPT">
                                 </td>
-                                <td><input type="text" class="form-control" id="ESCUCHAR_IDIOMA2_PPT" name="ESCUCHAR_IDIOMA2_PPT">
+                                <td><input type="number" class="form-control" id="ESCUCHAR_IDIOMA2_PPT" name="ESCUCHAR_IDIOMA2_PPT">
                                 </td>
                                 <td>
                                     <label class="form-check-label" for="IDIOMA2_CUMPLE_SI">Si</label>
@@ -858,15 +802,15 @@
                             <tr>
                                 <td><input type="text" class="form-control" id="NOMBRE_IDIOMA3_PPT" name="NOMBRE_IDIOMA3_PPT">
                                 </td>
-                                <td><input type="text" class="form-control" id="APLICA_IDIOMA3_PPT" name="APLICA_IDIOMA3_PPT">
+                                <td><input type="number" class="form-control" id="APLICA_IDIOMA3_PPT" name="APLICA_IDIOMA3_PPT">
                                 </td>
-                                <td><input type="text" class="form-control" id="HABLAR_IDIOMA3_PPT" name="HABLAR_IDIOMA3_PPT">
+                                <td><input type="number" class="form-control" id="HABLAR_IDIOMA3_PPT" name="HABLAR_IDIOMA3_PPT">
                                 </td>
-                                <td><input type="text" class="form-control" id="ESCRIBIR_IDIOMA3_PPT" name="ESCRIBIR_IDIOMA3_PPT">
+                                <td><input type="number" class="form-control" id="ESCRIBIR_IDIOMA3_PPT" name="ESCRIBIR_IDIOMA3_PPT">
                                 </td>
-                                <td><input type="text" class="form-control" id="LEER_IDIOMA3_PPT" name="LEER_IDIOMA3_PPT">
+                                <td><input type="number" class="form-control" id="LEER_IDIOMA3_PPT" name="LEER_IDIOMA3_PPT">
                                 </td>
-                                <td><input type="text" class="form-control" id="ESCUCHAR_IDIOMA3_PPT" name="ESCUCHAR_IDIOMA3_PPT">
+                                <td><input type="number" class="form-control" id="ESCUCHAR_IDIOMA3_PPT" name="ESCUCHAR_IDIOMA3_PPT">
                                 </td>
                                 <td>
                                     <label class="form-check-label" for="IDIOMA3_CUMPLE_SI">Si</label>
@@ -881,8 +825,696 @@
                     </table>
                 </div>
             </div>
+            <div class="row mb-3">
+                <div class="col-6">
+                  <div class="accordion" id="otrosConocimientosAccordion">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="cursoTemasHeading">
+                        <button class="accordion-button collapsed text-center" type="button" data-bs-toggle="collapse" data-bs-target="#cursoTemasCollapse" aria-expanded="false" aria-controls="cursoTemasCollapse">
+                          Otros conocimientos adicionales
+                        </button>
+                      </h2>
+                      <div id="cursoTemasCollapse" class="accordion-collapse collapse" aria-labelledby="cursoTemasHeading" data-bs-parent="#otrosConocimientosAccordion">
+                        <div class="accordion-body">
+                          <div class="table-responsive">
+                            <table class="table table-bordered">
+                              <thead>
+                                <tr>
+                                    <th class="text-center">Cursos/Temas</th>
+                                    <th class="text-center">*R</th>
+                                    <th class="text-center">*D</th>
+                                    <th class="text-center">Si</th>
+                                    <th class="text-center">No</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td><input type="text" class="form-control" id="CURSO1_PPT" name="CURSO1_PPT"></td>
+                                  <td><input type="text" class="form-control" id="CURSO1_REQUERIDO_PPT" name="CURSO1_REQUERIDO_PPT"></td>
+                                  <td><input type="text" class="form-control" id="CURSO1_DESEABLE_PPT" name="CURSO1_DESEABLE_PPT"></td>
+                                  <td>
+                                    <input class="form-check-input" type="radio" name="CURSO1_CUMPLE_PPT" id="CURSO1_CUMPLE_SI" value="Si">
+                                 </td>
+                                 <td>
+                                    <input class="form-check-input" type="radio" name="CURSO1_CUMPLE_PPT" id="CURSO1_CUMPLE_NO" value="no">
+                                 </td>
+                                </tr>
 
+                                <tr>
+                                    <td><input type="text" class="form-control" id="CURSO2_PPT" name="CURSO2_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO2_REQUERIDO_PPT" name="CURSO2_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO2_DESEABLE_PPT" name="CURSO2_DESEABLE_PPT"></td>
+  
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO2_CUMPLE_PPT" id="CURSO2_CUMPLE_SI" value="Si">
+                                  </td>
+                                  <td>
+                                      <input class="form-check-input" type="radio" name="CURSO2_CUMPLE_PPT" id="CURSO2_CUMPLE_NO" value="no">
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control" id="CURSO3_PPT" name="CURSO3_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO3_REQUERIDO_PPT" name="CURSO3_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO3_DESEABLE_PPT" name="CURSO3_DESEABLE_PPT"></td>
+  
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO3_CUMPLE_PPT" id="CURSO3_CUMPLE_SI" value="Si">
+                                  </td>
+                                  <td>
+                                      <input class="form-check-input" type="radio" name="CURSO3_CUMPLE_PPT" id="CURSO3_CUMPLE_NO" value="no">
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control" id="CURSO4_PPT" name="CURSO4_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO4_REQUERIDO_PPT" name="CURSO4_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO4_DESEABLE_PPT" name="CURSO4_DESEABLE_PPT"></td>
+  
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO4_CUMPLE_PPT" id="CURSO4_CUMPLE_SI" value="Si">
+                                  </td>
+                                  <td>
+                                      <input class="form-check-input" type="radio" name="CURSO4_CUMPLE_PPT" id="CURSO4_CUMPLE_NO" value="no">
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control" id="CURSO5_PPT" name="CURSO5_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO5_REQUERIDO_PPT" name="CURSO5_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO5_DESEABLE_PPT" name="CURSO5_DESEABLE_PPT"></td>
+  
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO5_CUMPLE_PPT" id="CURSO5_CUMPLE_SI" value="Si">
+                                  </td>
+                                  <td>
+                                      <input class="form-check-input" type="radio" name="CURSO5_CUMPLE_PPT" id="CURSO5_CUMPLE_NO" value="no">
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control" id="CURSO6_PPT" name="CURSO6_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO6_REQUERIDO_PPT" name="CURSO6_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO6_DESEABLE_PPT" name="CURSO6_DESEABLE_PPT"></td>
+  
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO6_CUMPLE_PPT" id="CURSO6_CUMPLE_SI" value="Si">
+                                  </td>
+                                  <td>
+                                      <input class="form-check-input" type="radio" name="CURSO6_CUMPLE_PPT" id="CURSO6_CUMPLE_NO" value="no">
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control" id="CURSO7_PPT" name="CURSO7_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO7_REQUERIDO_PPT" name="CURSO7_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO7_DESEABLE_PPT" name="CURSO7_DESEABLE_PPT"></td>
+  
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO7_CUMPLE_PPT" id="CURSO7_CUMPLE_SI" value="Si">
+                                  </td>
+                                  <td>
+                                      <input class="form-check-input" type="radio" name="CURSO7_CUMPLE_PPT" id="CURSO7_CUMPLE_NO" value="no">
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control" id="CURSO8_PPT" name="CURSO8_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO8_REQUERIDO_PPT" name="CURSO8_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO8_DESEABLE_PPT" name="CURSO8_DESEABLE_PPT"></td>
+  
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO8_CUMPLE_PPT" id="CURSO8_CUMPLE_SI" value="Si">
+                                  </td>
+                                  <td>
+                                      <input class="form-check-input" type="radio" name="CURSO8_CUMPLE_PPT" id="CURSO8_CUMPLE_NO" value="no">
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control" id="CURSO9_PPT" name="CURSO9_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO9_REQUERIDO_PPT" name="CURSO9_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO9_DESEABLE_PPT" name="CURSO9_DESEABLE_PPT"></td>
+  
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO9_CUMPLE_PPT" id="CURSO9_CUMPLE_SI" value="Si">
+                                  </td>
+                                  <td>
+                                      <input class="form-check-input" type="radio" name="CURSO9_CUMPLE_PPT" id="CURSO9_CUMPLE_NO" value="no">
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control" id="CURSO10_PPT" name="CURSO10_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO10_REQUERIDO_PPT" name="CURSO10_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO10_DESEABLE_PPT" name="CURSO10_DESEABLE_PPT"></td>
+  
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO10_CUMPLE_PPT" id="CURSO10_CUMPLE_SI" value="Si">
+                                  </td>
+                                  <td>
+                                      <input class="form-check-input" type="radio" name="CURSO10_CUMPLE_PPT" id="CURSO10_CUMPLE_NO" value="no">
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <p class="mt-3 text-center">
+                            <strong>*R: Requerido     *D: Deseable</strong> 
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                    <div class="accordion" id="otrosConocimientos1Accordion">
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="cursoTemas1Heading">
+                          <button class="accordion-button collapsed text-center" type="button" data-bs-toggle="collapse" data-bs-target="#cursoTemas1Collapse" aria-expanded="false" aria-controls="cursoTemas1Collapse">
+                            Otros conocimientos adicionales
+                          </button>
+                        </h2>
+                        <div id="cursoTemas1Collapse" class="accordion-collapse collapse" aria-labelledby="cursoTemas1Heading" data-bs-parent="#otrosConocimientos1Accordion">
+                          <div class="accordion-body">
+                            <div class="table-responsive">
+                              <table class="table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th class="text-center">Cursos/Temas</th>
+                                    <th class="text-center">*R</th>
+                                    <th class="text-center">*D</th>
+                                    <th class="text-center">Si</th>
+                                    <th class="text-center">No</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td><input type="text" class="form-control" id="CURSO11_PPT" name="CURSO11_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO11_REQUERIDO_PPT" name="CURSO11_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO11_DESEABLE_PPT" name="CURSO11_DESEABLE_PPT"></td>
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO11_CUMPLE_PPT" id="CURSO11_CUMPLE_SI" value="Si">
+                                   </td>
+                                   <td>
+                                      <input class="form-check-input" type="radio" name="CURSO11_CUMPLE_PPT" id="CURSO11_CUMPLE_NO" value="no">
+                                   </td>
+                                  </tr>
+  
+                                  <tr>
+                                      <td><input type="text" class="form-control" id="CURSO12_PPT" name="CURSO12_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO12_REQUERIDO_PPT" name="CURSO12_REQUERIDO_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO12_DESEABLE_PPT" name="CURSO12_DESEABLE_PPT"></td>
+    
+                                      <td>
+                                        <input class="form-check-input" type="radio" name="CURSO12_CUMPLE_PPT" id="CURSO12_CUMPLE_SI" value="Si">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="radio" name="CURSO12_CUMPLE_PPT" id="CURSO12_CUMPLE_NO" value="no">
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                      <td><input type="text" class="form-control" id="CURSO13_PPT" name="CURSO13_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO13_REQUERIDO_PPT" name="CURSO13_REQUERIDO_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO13_DESEABLE_PPT" name="CURSO13_DESEABLE_PPT"></td>
+    
+                                      <td>
+                                        <input class="form-check-input" type="radio" name="CURSO13_CUMPLE_PPT" id="CURSO13_CUMPLE_SI" value="Si">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="radio" name="CURSO13_CUMPLE_PPT" id="CURSO13_CUMPLE_NO" value="no">
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                      <td><input type="text" class="form-control" id="CURSO14_PPT" name="CURSO14_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO14_REQUERIDO_PPT" name="CURSO14_REQUERIDO_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO14_DESEABLE_PPT" name="CURSO14_DESEABLE_PPT"></td>
+    
+                                      <td>
+                                        <input class="form-check-input" type="radio" name="CURSO14_CUMPLE_PPT" id="CURSO14_CUMPLE_SI" value="Si">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="radio" name="CURSO14_CUMPLE_PPT" id="CURSO14_CUMPLE_NO" value="no">
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                      <td><input type="text" class="form-control" id="CURSO15_PPT" name="CURSO15_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO15_REQUERIDO_PPT" name="CURSO15_REQUERIDO_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO15_DESEABLE_PPT" name="CURSO15_DESEABLE_PPT"></td>
+    
+                                      <td>
+                                        <input class="form-check-input" type="radio" name="CURSO15_CUMPLE_PPT" id="CURSO15_CUMPLE_SI" value="Si">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="radio" name="CURSO15_CUMPLE_PPT" id="CURSO15_CUMPLE_NO" value="no">
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                      <td><input type="text" class="form-control" id="CURSO16_PPT" name="CURSO16_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO16_REQUERIDO_PPT" name="CURSO16_REQUERIDO_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO16_DESEABLE_PPT" name="CURSO16_DESEABLE_PPT"></td>
+    
+                                      <td>
+                                        <input class="form-check-input" type="radio" name="CURSO16_CUMPLE_PPT" id="CURSO16_CUMPLE_SI" value="Si">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="radio" name="CURSO16_CUMPLE_PPT" id="CURSO16_CUMPLE_NO" value="no">
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                      <td><input type="text" class="form-control" id="CURSO17_PPT" name="CURSO17_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO17_REQUERIDO_PPT" name="CURSO17_REQUERIDO_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO17_DESEABLE_PPT" name="CURSO17_DESEABLE_PPT"></td>
+    
+                                      <td>
+                                        <input class="form-check-input" type="radio" name="CURSO17_CUMPLE_PPT" id="CURSO17_CUMPLE_SI" value="Si">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="radio" name="CURSO17_CUMPLE_PPT" id="CURSO17_CUMPLE_NO" value="no">
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                      <td><input type="text" class="form-control" id="CURSO18_PPT" name="CURSO18_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO18_REQUERIDO_PPT" name="CURSO18_REQUERIDO_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO18_DESEABLE_PPT" name="CURSO18_DESEABLE_PPT"></td>
+    
+                                      <td>
+                                        <input class="form-check-input" type="radio" name="CURSO18_CUMPLE_PPT" id="CURSO18_CUMPLE_SI" value="Si">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="radio" name="CURSO18_CUMPLE_PPT" id="CURSO18_CUMPLE_NO" value="no">
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                      <td><input type="text" class="form-control" id="CURSO19_PPT" name="CURSO19_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO19_REQUERIDO_PPT" name="CURSO19_REQUERIDO_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO19_DESEABLE_PPT" name="CURSO19_DESEABLE_PPT"></td>
+    
+                                      <td>
+                                        <input class="form-check-input" type="radio" name="CURSO19_CUMPLE_PPT" id="CURSO19_CUMPLE_SI" value="Si">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="radio" name="CURSO19_CUMPLE_PPT" id="CURSO19_CUMPLE_NO" value="no">
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                      <td><input type="text" class="form-control" id="CURSO20_PPT" name="CURSO20_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO20_REQUERIDO_PPT" name="CURSO20_REQUERIDO_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO20_DESEABLE_PPT" name="CURSO20_DESEABLE_PPT"></td>
+    
+                                      <td>
+                                        <input class="form-check-input" type="radio" name="CURSO20_CUMPLE_PPT" id="CURSO20_CUMPLE_SI" value="Si">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="radio" name="CURSO20_CUMPLE_PPT" id="CURSO20_CUMPLE_NO" value="no">
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <p class="mt-3 text-center">
+                              <strong>*R: Requerido     *D: Deseable</strong> 
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
 
+              <div class="row mb-3">
+                <div class="col-6">
+                  <div class="accordion" id="otrosConocimientos2Accordion">
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="cursoTemas2Heading">
+                        <button class="accordion-button collapsed text-center" type="button" data-bs-toggle="collapse" data-bs-target="#cursoTemas2Collapse" aria-expanded="false" aria-controls="cursoTemas2Collapse">
+                          Otros conocimientos adicionales
+                        </button>
+                      </h2>
+                      <div id="cursoTemas2Collapse" class="accordion-collapse collapse" aria-labelledby="cursoTemas2Heading" data-bs-parent="#otrosConocimientos2Accordion">
+                        <div class="accordion-body">
+                          <div class="table-responsive">
+                            <table class="table table-bordered">
+                              <thead>
+                                <tr>
+                                    <th class="text-center">Cursos/Temas</th>
+                                    <th class="text-center">*R</th>
+                                    <th class="text-center">*D</th>
+                                    <th class="text-center">Si</th>
+                                    <th class="text-center">No</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td><input type="text" class="form-control" id="CURSO21_PPT" name="CURSO21_PPT"></td>
+                                  <td><input type="text" class="form-control" id="CURSO21_REQUERIDO_PPT" name="CURSO21_REQUERIDO_PPT"></td>
+                                  <td><input type="text" class="form-control" id="CURSO21_DESEABLE_PPT" name="CURSO21_DESEABLE_PPT"></td>
+                                  <td>
+                                    <input class="form-check-input" type="radio" name="CURSO21_CUMPLE_PPT" id="CURSO21_CUMPLE_SI" value="Si">
+                                 </td>
+                                 <td>
+                                    <input class="form-check-input" type="radio" name="CURSO21_CUMPLE_PPT" id="CURSO21_CUMPLE_NO" value="no">
+                                 </td>
+                                </tr>
+
+                                <tr>
+                                    <td><input type="text" class="form-control" id="CURSO22_PPT" name="CURSO22_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO22_REQUERIDO_PPT" name="CURSO22_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO22_DESEABLE_PPT" name="CURSO22_DESEABLE_PPT"></td>
+  
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO22_CUMPLE_PPT" id="CURSO22_CUMPLE_SI" value="Si">
+                                  </td>
+                                  <td>
+                                      <input class="form-check-input" type="radio" name="CURSO22_CUMPLE_PPT" id="CURSO22_CUMPLE_NO" value="no">
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control" id="CURSO23_PPT" name="CURSO23_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO23_REQUERIDO_PPT" name="CURSO23_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO23_DESEABLE_PPT" name="CURSO23_DESEABLE_PPT"></td>
+  
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO23_CUMPLE_PPT" id="CURSO23_CUMPLE_SI" value="Si">
+                                  </td>
+                                  <td>
+                                      <input class="form-check-input" type="radio" name="CURSO23_CUMPLE_PPT" id="CURSO23_CUMPLE_NO" value="no">
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control" id="CURSO24_PPT" name="CURSO24_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO24_REQUERIDO_PPT" name="CURSO24_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO24_DESEABLE_PPT" name="CURSO24_DESEABLE_PPT"></td>
+  
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO24_CUMPLE_PPT" id="CURSO24_CUMPLE_SI" value="Si">
+                                  </td>
+                                  <td>
+                                      <input class="form-check-input" type="radio" name="CURSO24_CUMPLE_PPT" id="CURSO24_CUMPLE_NO" value="no">
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control" id="CURSO25_PPT" name="CURSO25_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO25_REQUERIDO_PPT" name="CURSO25_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO25_DESEABLE_PPT" name="CURSO25_DESEABLE_PPT"></td>
+  
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO25_CUMPLE_PPT" id="CURSO25_CUMPLE_SI" value="Si">
+                                  </td>
+                                  <td>
+                                      <input class="form-check-input" type="radio" name="CURSO25_CUMPLE_PPT" id="CURSO25_CUMPLE_NO" value="no">
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control" id="CURSO26_PPT" name="CURSO26_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO26_REQUERIDO_PPT" name="CURSO26_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO26_DESEABLE_PPT" name="CURSO26_DESEABLE_PPT"></td>
+  
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO26_CUMPLE_PPT" id="CURSO26_CUMPLE_SI" value="Si">
+                                  </td>
+                                  <td>
+                                      <input class="form-check-input" type="radio" name="CURSO26_CUMPLE_PPT" id="CURSO26_CUMPLE_NO" value="no">
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control" id="CURSO27_PPT" name="CURSO27_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO27_REQUERIDO_PPT" name="CURSO27_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO27_DESEABLE_PPT" name="CURSO27_DESEABLE_PPT"></td>
+  
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO27_CUMPLE_PPT" id="CURSO27_CUMPLE_SI" value="Si">
+                                  </td>
+                                  <td>
+                                      <input class="form-check-input" type="radio" name="CURSO27_CUMPLE_PPT" id="CURSO27_CUMPLE_NO" value="no">
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control" id="CURSO28_PPT" name="CURSO28_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO28_REQUERIDO_PPT" name="CURSO28_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO28_DESEABLE_PPT" name="CURSO28_DESEABLE_PPT"></td>
+  
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO28_CUMPLE_PPT" id="CURSO28_CUMPLE_SI" value="Si">
+                                  </td>
+                                  <td>
+                                      <input class="form-check-input" type="radio" name="CURSO28_CUMPLE_PPT" id="CURSO28_CUMPLE_NO" value="no">
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control" id="CURSO29_PPT" name="CURSO29_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO29_REQUERIDO_PPT" name="CURSO29_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO29_DESEABLE_PPT" name="CURSO29_DESEABLE_PPT"></td>
+  
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO29_CUMPLE_PPT" id="CURSO29_CUMPLE_SI" value="Si">
+                                  </td>
+                                  <td>
+                                      <input class="form-check-input" type="radio" name="CURSO29_CUMPLE_PPT" id="CURSO29_CUMPLE_NO" value="no">
+                                  </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text" class="form-control" id="CURSO30_PPT" name="CURSO30_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO30_REQUERIDO_PPT" name="CURSO30_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO30_DESEABLE_PPT" name="CURSO30_DESEABLE_PPT"></td>
+  
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO30_CUMPLE_PPT" id="CURSO30_CUMPLE_SI" value="Si">
+                                  </td>
+                                  <td>
+                                      <input class="form-check-input" type="radio" name="CURSO30_CUMPLE_PPT" id="CURSO30_CUMPLE_NO" value="no">
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <p class="mt-3 text-center">
+                            <strong>*R: Requerido     *D: Deseable</strong> 
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                    <div class="accordion" id="otrosConocimientos3Accordion">
+                      <div class="accordion-item">
+                        <h2 class="accordion-header" id="cursoTemas3Heading">
+                          <button class="accordion-button collapsed text-center" type="button" data-bs-toggle="collapse" data-bs-target="#cursoTemas3Collapse" aria-expanded="false" aria-controls="cursoTemas3Collapse">
+                            Otros conocimientos adicionales
+                          </button>
+                        </h2>
+                        <div id="cursoTemas3Collapse" class="accordion-collapse collapse" aria-labelledby="cursoTemas3Heading" data-bs-parent="#otrosConocimientos3Accordion">
+                          <div class="accordion-body">
+                            <div class="table-responsive">
+                              <table class="table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th class="text-center">Cursos/Temas</th>
+                                    <th class="text-center">*R</th>
+                                    <th class="text-center">*D</th>
+                                    <th class="text-center">Si</th>
+                                    <th class="text-center">No</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td><input type="text" class="form-control" id="CURSO31_PPT" name="CURSO31_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO31_REQUERIDO_PPT" name="CURSO31_REQUERIDO_PPT"></td>
+                                    <td><input type="text" class="form-control" id="CURSO31_DESEABLE_PPT" name="CURSO31_DESEABLE_PPT"></td>
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO31_CUMPLE_PPT" id="CURSO31_CUMPLE_SI" value="Si">
+                                   </td>
+                                   <td>
+                                      <input class="form-check-input" type="radio" name="CURSO31_CUMPLE_PPT" id="CURSO31_CUMPLE_NO" value="no">
+                                   </td>
+                                  </tr>
+  
+                                  <tr>
+                                      <td><input type="text" class="form-control" id="CURSO32_PPT" name="CURSO32_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO32_REQUERIDO_PPT" name="CURSO32_REQUERIDO_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO32_DESEABLE_PPT" name="CURSO32_DESEABLE_PPT"></td>
+    
+                                      <td>
+                                        <input class="form-check-input" type="radio" name="CURSO32_CUMPLE_PPT" id="CURSO32_CUMPLE_SI" value="Si">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="radio" name="CURSO32_CUMPLE_PPT" id="CURSO32_CUMPLE_NO" value="no">
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                      <td><input type="text" class="form-control" id="CURSO33_PPT" name="CURSO33_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO33_REQUERIDO_PPT" name="CURSO33_REQUERIDO_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO33_DESEABLE_PPT" name="CURSO33_DESEABLE_PPT"></td>
+    
+                                      <td>
+                                        <input class="form-check-input" type="radio" name="CURSO33_CUMPLE_PPT" id="CURSO33_CUMPLE_SI" value="Si">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="radio" name="CURSO33_CUMPLE_PPT" id="CURSO33_CUMPLE_NO" value="no">
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                      <td><input type="text" class="form-control" id="CURSO34_PPT" name="CURSO34_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO3_REQUERIDO_PPT" name="CURSO34_REQUERIDO_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO14_DESEABLE_PPT" name="CURSO34_DESEABLE_PPT"></td>
+    
+                                      <td>
+                                        <input class="form-check-input" type="radio" name="CURSO34_CUMPLE_PPT" id="CURSO34_CUMPLE_SI" value="Si">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="radio" name="CURSO34_CUMPLE_PPT" id="CURSO34_CUMPLE_NO" value="no">
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                      <td><input type="text" class="form-control" id="CURSO35_PPT" name="CURSO35_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO35_REQUERIDO_PPT" name="CURSO35_REQUERIDO_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO35_DESEABLE_PPT" name="CURSO35_DESEABLE_PPT"></td>
+    
+                                      <td>
+                                        <input class="form-check-input" type="radio" name="CURSO35_CUMPLE_PPT" id="CURSO35_CUMPLE_SI" value="Si">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="radio" name="CURSO35_CUMPLE_PPT" id="CURSO35_CUMPLE_NO" value="no">
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                      <td><input type="text" class="form-control" id="CURSO36_PPT" name="CURSO36_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO36_REQUERIDO_PPT" name="CURSO36_REQUERIDO_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO36_DESEABLE_PPT" name="CURSO36_DESEABLE_PPT"></td>
+    
+                                      <td>
+                                        <input class="form-check-input" type="radio" name="CURSO36_CUMPLE_PPT" id="CURSO36_CUMPLE_SI" value="Si">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="radio" name="CURSO36_CUMPLE_PPT" id="CURSO36_CUMPLE_NO" value="no">
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                      <td><input type="text" class="form-control" id="CURSO37_PPT" name="CURSO37_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO37_REQUERIDO_PPT" name="CURSO37_REQUERIDO_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO37_DESEABLE_PPT" name="CURSO37_DESEABLE_PPT"></td>
+    
+                                      <td>
+                                        <input class="form-check-input" type="radio" name="CURSO37_CUMPLE_PPT" id="CURSO37_CUMPLE_SI" value="Si">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="radio" name="CURSO37_CUMPLE_PPT" id="CURSO37_CUMPLE_NO" value="no">
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                      <td><input type="text" class="form-control" id="CURSO38_PPT" name="CURSO38_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO38_REQUERIDO_PPT" name="CURSO38_REQUERIDO_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO38_DESEABLE_PPT" name="CURSO38_DESEABLE_PPT"></td>
+    
+                                      <td>
+                                        <input class="form-check-input" type="radio" name="CURSO38_CUMPLE_PPT" id="CURSO38_CUMPLE_SI" value="Si">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="radio" name="CURSO38_CUMPLE_PPT" id="CURSO38_CUMPLE_NO" value="no">
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                      <td><input type="text" class="form-control" id="CURSO39_PPT" name="CURSO39_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO39_REQUERIDO_PPT" name="CURSO39_REQUERIDO_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO39_DESEABLE_PPT" name="CURSO39_DESEABLE_PPT"></td>
+    
+                                      <td>
+                                        <input class="form-check-input" type="radio" name="CURSO39_CUMPLE_PPT" id="CURSO39_CUMPLE_SI" value="Si">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="radio" name="CURSO39_CUMPLE_PPT" id="CURSO39_CUMPLE_NO" value="no">
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                      <td><input type="text" class="form-control" id="CURSO40_PPT" name="CURSO40_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO40_REQUERIDO_PPT" name="CURSO40_REQUERIDO_PPT"></td>
+                                      <td><input type="text" class="form-control" id="CURSO40_DESEABLE_PPT" name="CURSO40_DESEABLE_PPT"></td>
+    
+                                      <td>
+                                        <input class="form-check-input" type="radio" name="CURSO40_CUMPLE_PPT" id="CURSO40_CUMPLE_SI" value="Si">
+                                    </td>
+                                    <td>
+                                        <input class="form-check-input" type="radio" name="CURSO40_CUMPLE_PPT" id="CURSO40_CUMPLE_NO" value="no">
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <p class="mt-3 text-center">
+                              <strong>*R: Requerido     *D: Deseable</strong> 
+                            </p>
+                          </div>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                  <!-- IV. Experiencia -->
+            <div class="row mb-3">
+                <div class="col-12 text-center">
+                    <h4>IV. Experiencia</h4>
+                </div>
+            </div>
+                    
+            <div class="row mb-3">
+                <div class="col-3">
+                    <label>Experiencia laboral general requerida</label>
+                </div>
+                <div class="col-7">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="EXPERIENCIA_LABORAL_GENERAL_PPT" name="EXPERIENCIA_LABORAL_GENERAL_PPT">
+                    </div>
+                 </div>   
+                <div class="col-1">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="EXPERIENCIAGENERAL_CUMPLE_PPT" id="EXPERIENCIAGENERAL_CUMPLE_SI" value="si">
+                        <label class="form-check-label" for="EXPERIENCIAGENERAL_CUMPLE_SI">Si</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="EXPERIENCIAGENERAL_CUMPLE_PPT" id="EXPERIENCIAGENERAL_CUMPLE_NO" value="no">
+                        <label class="form-check-label" for="EXPERIENCIAGENERAL_CUMPLE_NO">No</label>
+                    </div>
+                </div> 
+            </div>
+            <div class="row mb-3">
+                <div class="col-3">
+                    <label>Indique la cantidad total de años de experiencia laboral</label>
+                </div>
+                <div class="col-7">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="CANTIDAD_EXPERIENCIA_PPT" name="CANTIDAD_EXPERIENCIA_PPT">
+                    </div>
+                 </div>   
+                <div class="col-1">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="CANTIDAD_EXPERIENCIA_CUMPLE_PPT" id="CANTIDAD_EXPERIENCIA_CUMPLE_SI" value="si">
+                        <label class="form-check-label" for="CANTIDAD_EXPERIENCIA_CUMPLE_SI">Si</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="CANTIDAD_EXPERIENCIA_CUMPLE_PPT" id="CANTIDAD_EXPERIENCIA_CUMPLE_NO" value="no">
+                        <label class="form-check-label" for="CANTIDAD_EXPERIENCIA_CUMPLE_NO">No</label>
+                    </div>
+                </div> 
+            </div>
+            <div class="row mb-3">
+                <div class="col-3">
+                    <label>Experiencia laboral específica requerida</label>
+                </div>
+                <div class="col-7">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="EXPERIENCIA_ESPECIFICA_PPT" name="EXPERIENCIA_ESPECIFICA_PPT">
+                    </div>
+                 </div>   
+                <div class="col-1">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="EXPERIENCIA_ESPECIFICA_CUMPLE_PPT" id="EXPERIENCIA_ESPECIFICA_CUMPLE_SI" value="si">
+                        <label class="form-check-label" for="EXPERIENCIA_ESPECIFICA_CUMPLE_SI">Si</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="EXPERIENCIA_ESPECIFICA_CUMPLE_PPT" id="EXPERIENCIA_ESPECIFICA_CUMPLE_NO" value="no">
+                        <label class="form-check-label" for="EXPERIENCIA_ESPECIFICA_CUMPLE_NO">No</label>
+                    </div>
+                </div> 
+            </div>
+            <div class="row mb-3">
+                <div class="col-12 ">
+                    <h5>Marque el nivel mínimo de puesto que se requiere como experiencia</h5>
+                </div>
+            </div>
 
 
 
