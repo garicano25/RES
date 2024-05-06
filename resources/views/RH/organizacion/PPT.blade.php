@@ -644,6 +644,245 @@
                 </div>
             </div>
                     
+            <div class="row mb-3">
+
+                <div class="col-6">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Ofimática</th>
+                                <th>Aplica</th>
+                                <th>Bajo</th>
+                                <th>Medio</th>
+                                <th>Alto</th>
+                                <th>Si</th>
+                                <th>No</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Word</td>
+                                <td>
+                                    <select class="form-control" id="WORD_APLICA_PPT" name="WORD_APLICA_PPT">
+                                        <option selected disabled></option>
+                                        <option value="1">Si</option>
+                                        <option value="2">No</option>
+                                        <option value="3">NA</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control" id="WORD_BAJO_PPT" name="WORD_BAJO_PPT">
+                                        <option selected disabled></option>
+                                        <option value="1">Si</option>
+                                        <option value="2">No</option>
+                                        <option value="3">NA</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control" id="WORD_MEDIO_PPT" name="WORD_MEDIO_PPT">
+                                        <option selected disabled></option>
+                                        <option value="1">Si</option>
+                                        <option value="2">No</option>
+                                        <option value="3">NA</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control" id="WORD_ALTO_PPT" name="WORD_ALTO_PPT">
+                                        <option selected disabled></option>
+                                        <option value="1">Si</option>
+                                        <option value="2">No</option>
+                                        <option value="3">NA</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label class="form-check-label" for="WORD_CUMPLE_SI">Si</label>
+                                    <input class="form-check-input" type="radio" name="WORD_CUMPLE_PPT" id="WORD_CUMPLE_SI" value="Si">
+                                </td>
+                                <td>
+                                    <label class="form-check-label" for="WORD_CUMPLE_NO">No</label>
+                                    <input class="form-check-input" type="radio" name="WORD_CUMPLE_PPT" id="WORD_CUMPLE_NO" value="no">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Excel</td>
+                                <td>
+                                    <select class="form-control" id="EXCEL_APLICA_PPT" name="EXCEL_APLICA_PPT">
+                                        <option selected disabled></option>
+                                        <option value="1">Si</option>
+                                        <option value="2">No</option>
+                                        <option value="3">NA</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control" id="EXCEL_BAJO_PPT" name="EXCEL_BAJO_PPT">
+                                        <option selected disabled></option>
+                                        <option value="1">Si</option>
+                                        <option value="2">No</option>
+                                        <option value="3">NA</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control" id="EXCEL_MEDIO_PPT" name="EXCEL_MEDIO_PPT">
+                                        <option selected disabled></option>
+                                        <option value="1">Si</option>
+                                        <option value="2">No</option>
+                                        <option value="3">NA</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control" id="EXCEL_ALTO_PPT" name="EXCEL_ALTO_PPT">
+                                        <option selected disabled></option>
+                                        <option value="1">Si</option>
+                                        <option value="2">No</option>
+                                        <option value="3">NA</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label class="form-check-label" for="EXCEL_CUMPLE_SI">Si</label>
+                                    <input class="form-check-input" type="radio" name="EXCEL_CUMPLE_PPT" id="EXCEL_CUMPLE_SI" value="Si">
+                                </td>
+                                <td>
+                                    <label class="form-check-label" for="EXCEL_CUMPLE_NO">No</label>
+                                    <input class="form-check-input" type="radio" name="EXCEL_CUMPLE_PPT" id="EXCEL_CUMPLE_NO" value="no">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Power Point</td>
+                                <td>
+                                    <select class="form-control" id="POWER_APLICA_PPT" name="POWER_APLICA_PPT">
+                                        <option selected disabled></option>
+                                        <option value="1">Si</option>
+                                        <option value="2">No</option>
+                                        <option value="3">NA</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control" id="POWER_BAJO_PPT" name="POWER_BAJO_PPT">
+                                        <option selected disabled></option>
+                                        <option value="1">Si</option>
+                                        <option value="2">No</option>
+                                        <option value="3">NA</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control" id="POWER_MEDIO_PPT" name="POWER_MEDIO_PPT">
+                                        <option selected disabled></option>
+                                        <option value="1">Si</option>
+                                        <option value="2">No</option>
+                                        <option value="3">NA</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control" id="POWER_ALTO_PPT" name="POWER_ALTO_PPT">
+                                        <option selected disabled></option>
+                                        <option value="1">Si</option>
+                                        <option value="2">No</option>
+                                        <option value="3">NA</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <label class="form-check-label" for="POWER_CUMPLE_SI">Si</label>
+                                    <input class="form-check-input" type="radio" name="POWER_CUMPLE_PPT" id="POWER_CUMPLE_SI" value="Si">
+                                </td>
+                                <td>
+                                    <label class="form-check-label" for="EXCEL_CUMPLE_NO">No</label>
+                                    <input class="form-check-input" type="radio" name="POWER_CUMPLE_PPT" id="POWER _CUMPLE_NO" value="no">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-6">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Idioma</th>
+                                <th colspan="5" class="text-center">Nivel de dominio en %</th>
+                            </tr>
+                            <tr>
+                                <th>Aplica</th>
+                                <th>Hablar</th>
+                                <th>Escribir</th>
+                                <th>Leer</th>
+                                <th>Escuchar</th>
+                                <th>Si</th>
+                                <th>No</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" class="form-control" id="NOMBRE_IDOMA1_PPT" name="NOMBRE_IDOMA1_PPT">
+                                </td>
+                                <td><input type="text" class="form-control" id="APLICA_IDIOMA1_PPT" name="APLICA_IDIOMA1_PPT">
+                                </td>
+                                <td><input type="text" class="form-control" id="HABLAR_IDIOMA1_PPT" name="HABLAR_IDIOMA1_PPT">
+                                </td>
+                                <td><input type="text" class="form-control" id="ESCRIBIR_IDIOMA1_PPT" name="ESCRIBIR_IDIOMA1_PPT">
+                                </td>
+                                <td><input type="text" class="form-control" id="LEER_IDIOMA1_PPT" name="LEER_IDIOMA1_PPT">
+                                </td>
+                                <td><input type="text" class="form-control" id="ESCUCHAR_IDIOMA1_PPT" name="ESCUCHAR_IDIOMA1_PPT">
+                                </td>
+                                <td>
+                                    <label class="form-check-label" for="IDIOMA1_CUMPLE_SI">Si</label>
+                                    <input class="form-check-input" type="radio" name="IDIOM1_CUMPLE_PPT" id="IDIOMA1_CUMPLE_SI" value="Si">
+                                </td>
+                                <td>
+                                    <label class="form-check-label" for="IDIOMA1_CUMPLE_NO">No</label>
+                                    <input class="form-check-input" type="radio" name="IDIOMA1_CUMPLE_PPT" id="IDIOMA1_CUMPLE_NO" value="no">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="form-control" id="NOMBRE_IDIOMA2_PPT" name="NOMBRE_IDIOMA2_PPT">
+                                </td>
+                                <td><input type="text" class="form-control" id="APLICA_IDIOMA2_PPT" name="APLICA_IDIOMA2_PPT">
+                                </td>
+                                <td><input type="text" class="form-control" id="HABLAR_IDIOMA2_PPT" name="HABLAR_IDIOMA2_PPT">
+                                </td>
+                                <td><input type="text" class="form-control" id="ESCRIBIR_IDIOMA2_PPT" name="ESCRIBIR_IDIOMA2_PPT">
+                                </td>
+                                <td><input type="text" class="form-control" id="LEER_IDIOMA2_PPT" name="LEER_IDIOMA2_PPT">
+                                </td>
+                                <td><input type="text" class="form-control" id="ESCUCHAR_IDIOMA2_PPT" name="ESCUCHAR_IDIOMA2_PPT">
+                                </td>
+                                <td>
+                                    <label class="form-check-label" for="IDIOMA2_CUMPLE_SI">Si</label>
+                                    <input class="form-check-input" type="radio" name="IDIOMA2_CUMPLE_PPT" id="IDIOMA2_CUMPLE_SI" value="Si">
+                                </td>
+                                <td>
+                                    <label class="form-check-label" for="IDIOMA2_CUMPLE_NO">No</label>
+                                    <input class="form-check-input" type="radio" name="IDIOMA2_CUMPLE_PPT" id="IDIOMA2_CUMPLE_NO" value="no">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="form-control" id="NOMBRE_IDIOMA3_PPT" name="NOMBRE_IDIOMA3_PPT">
+                                </td>
+                                <td><input type="text" class="form-control" id="APLICA_IDIOMA3_PPT" name="APLICA_IDIOMA3_PPT">
+                                </td>
+                                <td><input type="text" class="form-control" id="HABLAR_IDIOMA3_PPT" name="HABLAR_IDIOMA3_PPT">
+                                </td>
+                                <td><input type="text" class="form-control" id="ESCRIBIR_IDIOMA3_PPT" name="ESCRIBIR_IDIOMA3_PPT">
+                                </td>
+                                <td><input type="text" class="form-control" id="LEER_IDIOMA3_PPT" name="LEER_IDIOMA3_PPT">
+                                </td>
+                                <td><input type="text" class="form-control" id="ESCUCHAR_IDIOMA3_PPT" name="ESCUCHAR_IDIOMA3_PPT">
+                                </td>
+                                <td>
+                                    <label class="form-check-label" for="IDIOMA3_CUMPLE_SI">Si</label>
+                                    <input class="form-check-input" type="radio" name="IDIOMA3_CUMPLE_PPT" id="IDIOMA3_CUMPLE_SI" value="Si">
+                                </td>
+                                <td>
+                                    <label class="form-check-label" for="IDIOMA3_CUMPLE_NO">No</label>
+                                    <input class="form-check-input" type="radio" name="IDIOMA3_CUMPLE_PPT" id="IDIOMA3_CUMPLE_NO" value="no">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
 
 
 
