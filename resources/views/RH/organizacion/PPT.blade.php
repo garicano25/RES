@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <div class="col-5">
+                <div class="col-4">
                     <div class="form-group">
                         <label>Edad (mínima / máxima)</label>
                         <select class="form-control" id="EDAD_PPT" name="EDAD_PPT">
@@ -76,8 +76,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-1">
-                    <label>Lo cumple</label><br>
+                <div class="col-2">
+                    <br>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="EDAD_CUMPLE_PPT" id="EDAD_CUMPLE_SI" value="si">
                         <label class="form-check-label" for="EDAD_CUMPLE_SI">Si</label>
@@ -87,7 +87,7 @@
                         <label class="form-check-label" for="EDAD_CUMPLE_NO">No</label>
                     </div>
                 </div>
-                <div class="col-5">
+                <div class="col-4">
                     <div class="form-group">
                         <label>Género</label>
                         <select class="form-control" id="GENERO_PPT" name="GENERO_PPT">
@@ -98,8 +98,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-1">
-                    <label>Lo cumple</label><br>
+                <div class="col-2">
+                   <br>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="GENERO_CUMPLE_PPT" id="GENERO_CUMPLE_SI" value="si">
                         <label class="form-check-label" for="GENERO_CUMPLE_SI">Si</label>
@@ -111,7 +111,7 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <div class="col-5">
+                <div class="col-4">
                     <div class="form-group">
                         <label>Estado civil</label>
                         <select class="form-control" id="ESTADO_CIVIL_PPT" name="ESTADO_CIVIL_PPT">
@@ -123,8 +123,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-1">
-                    <label>Lo cumple</label><br>
+                <div class="col-2">
+                    <br>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="ESTADO_CIVIL_CUMPLE_PPT" id="ESTADO_CUMPLE_SI" value="si">
                         <label class="form-check-label" for="ESTADO_CUMPLE_SI">Si</label>
@@ -134,7 +134,7 @@
                         <label class="form-check-label" for="ESTADO_CUMPLE_NO">No</label>
                     </div>
                 </div>
-                <div class="col-5">
+                <div class="col-4">
                     <div class="form-group">
                         <label>Nacionalidad </label>
                         <select class="form-control" id="NACIONALIDAD_PPT" name="NACIONALIDAD_PPT">
@@ -145,8 +145,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-1">
-                    <label>Lo cumple</label><br>
+                <div class="col-2">
+                    <br>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="NACIONALIDAD_CUMPLE_PPT" id="NACIONALIDAD_CUMPLE_SI" value="si">
                         <label class="form-check-label" for="NACIONALIDAD_CUMPLE_SI">Si</label>
@@ -158,7 +158,7 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <div class="col-5">
+                <div class="col-4">
                     <div class="form-group">
                         <label>Persona con discapacidad</label>
                         <select class="form-control" id="DISCAPACIDAD_PPT" name="DISCAPACIDAD_PPT">
@@ -171,8 +171,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-1">
-                    <label>Lo cumple</label><br>
+                <div class="col-2">
+                    <br>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="DISCAPACIDAD_CUMPLE_PPT" id="DISCAPACIDADCUMPLE_SI" value="si">
                         <label class="form-check-label" for="DISCAPACIDAD_CUMPLE_SI">Si</label>
@@ -214,7 +214,7 @@
                                     </div>
                                  </div>
                                  <div class="col-4">
-                                     <label>Lo cumple</label><br>
+                                     <br>
                                      <div class="form-check form-check-inline">
                                          <input class="form-check-input" type="radio" name="SECUNDARIA_CUMPLE_PPT" id="SECUNDARIA_CUMPLE_SI" value="si">
                                          <label class="form-check-label" for="SECUNDARIA_CUMPLE_SI">Si</label>
@@ -240,7 +240,7 @@
                                     </div>
                                  </div>
                                  <div class="col-4">
-                                     <label>Lo cumple</label><br>
+                                    <br>
                                      <div class="form-check form-check-inline">
                                          <input class="form-check-input" type="radio" name="TECNICA_CUMPLE_PPT" id="TECNICA_CUMPLE_SI" value="si">
                                          <label class="form-check-label" for="TECNICA_CUMPLE_SI">Si</label>
@@ -266,7 +266,7 @@
                                     </div>
                                  </div>
                                  <div class="col-4">
-                                     <label>Lo cumple</label><br>
+                                     <br>
                                      <div class="form-check form-check-inline">
                                          <input class="form-check-input" type="radio" name="TECNICO_CUMPLE_PPT" id="TECNICO_CUMPLE_SI" value="si">
                                          <label class="form-check-label" for="TECNICO_CUMPLE_SI">Si</label>
@@ -292,7 +292,7 @@
                                     </div>
                                  </div>
                                  <div class="col-4">
-                                     <label>Lo cumple</label><br>
+                                    <br>
                                      <div class="form-check form-check-inline">
                                          <input class="form-check-input" type="radio" name="UNIVERSITARIO_CUMPLE_PPT" id="UNIVERSITARIO_CUMPLE_SI" value="si">
                                          <label class="form-check-label" for="UNIVERSITARIO_CUMPLE_SI">Si</label>
@@ -324,7 +324,7 @@
                                     </div>
                                  </div>
                                  <div class="col-4">
-                                     <label>Lo cumple</label><br>
+                                    <br>
                                      <div class="form-check form-check-inline">
                                          <input class="form-check-input" type="radio" name="SITUACION_CUMPLE_PPT" id="SITUACION_CUMPLE_SI" value="si">
                                          <label class="form-check-label" for="SITUACION_CUMPLE_SI">Si</label>
@@ -350,7 +350,7 @@
                                     </div>
                                  </div>
                                  <div class="col-4">
-                                     <label>Lo cumple</label><br>
+                                     <br>
                                      <div class="form-check form-check-inline">
                                          <input class="form-check-input" type="radio" name="CEDULA_CUMPLE_PPT" id="CEDULA_CUMPLE_SI" value="si">
                                          <label class="form-check-label" for="CEDULA_CUMPLE_SI">Si</label>
@@ -369,7 +369,7 @@
                         <div class="row">
                             <div class="col-12"> 
                                 <div class="row">
-                                    <div class="col-8">
+                                    <div class="col-8 ">
                                         <div class="form-group">
                                             <label>Áreas de conocimientos</label>
                                             <select class="form-control" id="AREA1_PPT" name="AREA1_PPT">
@@ -386,7 +386,7 @@
                                         </div>
                                     </div>
                                     <div class="col-4">
-                                        <label>Lo cumple</label><br>
+                                        <br>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="AREA1_CUMPLE_PPT" id="AREA1_CUMPLE_SI" value="si">
                                             <label class="form-check-label" for="AREA1_CUMPLE_SI">Si</label>
@@ -398,14 +398,15 @@
                                     </div>
                                 </div> 
                             </div>
+                            
                             <!-- AREA 2 -->
-                            <div class="col-12 mt-3"> 
+                            <div class="col-12"> 
                                 <div class="row">
                                     <div class="col-8">
                                         <div class="form-group">
+                                            <label></label>
                                             <select class="form-control" id="AREA2_PPT" name="AREA2_PPT">
                                                 <option selected disabled>Seleccione una opción</option>
-
                                                 <option value="1">N/A</option>
                                                 <option value="2">Agronomía</option>
                                                 <option value="3">C. Educación</option>
@@ -418,7 +419,7 @@
                                         </div>
                                     </div>
                                     <div class="col-4">
-                                        <label>Lo cumple</label><br>
+                                        <br>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="AREA2_CUMPLE_PPT" id="AREA2_CUMPLE_SI" value="si">
                                             <label class="form-check-label" for="AREA2_CUMPLE_SI">Si</label>
@@ -431,10 +432,11 @@
                                 </div> 
                             </div>
                             <!-- AREA 3 -->
-                            <div class="col-12 mt-2"> 
+                            <div class="col-12"> 
                                 <div class="row">
                                     <div class="col-8">
                                         <div class="form-group">
+                                            <label></label>
                                             <select class="form-control" id="AREA3_PPT" name="AREA3_PPT">
                                                 <option selected disabled>Seleccione una opción</option>
                                                 <option value="1">N/A</option>
@@ -449,7 +451,7 @@
                                         </div>
                                     </div>
                                     <div class="col-4">
-                                        <label>Lo cumple</label><br>
+                                        <br>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="AREA3_CUMPLE_PPT" id="AREA3_CUMPLE_SI" value="si">
                                             <label class="form-check-label" for="AREA3_CUMPLE_SI">Si</label>
@@ -462,10 +464,11 @@
                                 </div> 
                             </div>
                             <!-- AREA 4 -->
-                            <div class="col-12 mt-2"> 
+                            <div class="col-12"> 
                                 <div class="row">
                                     <div class="col-8">
                                         <div class="form-group">
+                                            <label></label>
                                             <select class="form-control" id="AREA4_PPT" name="AREA4_PPT">
                                                 <option selected disabled>Seleccione una opción</option>
                                                 <option value="1">N/A</option>
@@ -480,7 +483,7 @@
                                         </div>
                                     </div>
                                     <div class="col-4">
-                                        <label>Lo cumple</label><br>
+                                        <br>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="AREA4_CUMPLE_PPT" id="AREA4_CUMPLE_SI" value="si">
                                             <label class="form-check-label" for="AREA4_CUMPLE_SI">Si</label>
@@ -511,36 +514,28 @@
                     </div>
                     <div class="row mb-3">
                         <div class="col-12 ">
-                            <h5>Estudios de posgrado requeridos</h5>
+                            <h6>Estudios de posgrado requeridos</h6>
                         </div>
                     </div>
                     
-                    <div class="row mb-3">
+                    <div class="row mb-1">
                         <div class="col-1 mt-4">
                             <label>Especialidad</label>
                         </div>
-                        <div class="col-2">
+                        <div class="col-1">
                             <div class="form-group">
                                 <label>Egresado</label>
-                                <select class="form-control" id="EGRESADO_ESPECIALIDAD_PPT" name="EGRESADO_ESPECIALIDAD_PPT">
-                                    <option selected disabled>Seleccione una opción</option>
-                                    <option value="1">Egresado</option>
-                                    <option value="2">No Egresado</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="form-group">
-                                <label>Graduado</label>
-                                <select class="form-control" id="GRADUADO_ESPECIALIDA_PPT" name="GRADUADO_ESPECIALIDA_PPT">
-                                    <option selected disabled>Seleccione una opción</option>
-                                    <option value="1">Deseable</option>
-                                    <option value="2">No Deseable</option>
-                                </select>
+                                <input type="text" class="form-control" id="EGRESADO_ESPECIALIDAD_PPT" name="EGRESADO_ESPECIALIDAD_PPT">
                             </div>
                         </div>
                         <div class="col-1">
-                            <label>Lo cumple</label><br>
+                            <div class="form-group">
+                                <label>Graduado</label>
+                                <input type="text" class="form-control" id="GRADUADO_ESPECIALIDA_PPT" name="GRADUADO_ESPECIALIDA_PPT">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                           <br>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="ESPECIALIDAD_CUMPLE_PPT" id="ESPECIALIDAD_CUMPLE_SI" value="si">
                                 <label class="form-check-label" for="ESPECIALIDAD_CUMPLE_SI">Si</label>
@@ -561,28 +556,20 @@
                         <div class="col-1 mt-4">
                             <label>Maestría</label>
                         </div>
-                        <div class="col-2">
+                        <div class="col-1">
                             <div class="form-group">
                                 <label>Egresado</label>
-                                <select class="form-control" id="EGRESADO_MAESTRIA_PPT" name="EGRESADO_MAESTRIA_PPT">
-                                    <option selected disabled>Seleccione una opción</option>
-                                    <option value="1">Egresado</option>
-                                    <option value="2">No Egresado</option>
-                                </select>
+                                <input type="text" class="form-control" id="EGRESADO_MAESTRIA_PPT" name="EGRESADO_MAESTRIA_PPT">
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-1">
                             <div class="form-group">
                                 <label>Graduado</label>
-                                <select class="form-control" id="GRADUADO_MAESTRIA_PPT" name="GRADUADO_MAESTRIA_PPT">
-                                    <option selected disabled>Seleccione una opción</option>
-                                    <option value="1">Deseable</option>
-                                    <option value="2">No Deseable</option>
-                                </select>
+                                <input type="text" class="form-control" id="GRADUADO_MAESTRIA_PPT" name="GRADUADO_MAESTRIA_PPT">
                             </div>
                         </div>
                         <div class="col-2">
-                            <label>Lo cumple</label><br>
+                           <br>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="MAESTRIA_CUMPLE_PPT" id="MAESTRIA_CUMPLE_SI" value="si">
                                 <label class="form-check-label" for="MAESTRIA_CUMPLE_SI">Si</label>
@@ -598,28 +585,20 @@
                         <div class="col-1 mt-4">
                             <label>Doctorado</label>
                         </div>
-                        <div class="col-2">
+                        <div class="col-1">
                             <div class="form-group">
                                 <label>Egresado</label>
-                                <select class="form-control" id="EGRESADO_DOCTORADO_PPT" name="EGRESADO_DOCTORADO_PPT">
-                                    <option selected disabled>Seleccione una opción</option>
-                                    <option value="1">Egresado</option>
-                                    <option value="2">No Egresado</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-2">
-                            <div class="form-group">
-                                <label>Graduado</label>
-                                <select class="form-control" id="GRADUADO_DOCTORADO_PPT" name="GRADUADO_DOCTORADO_PPT">
-                                    <option selected disabled>Seleccione una opción</option>
-                                    <option value="1">Deseable</option>
-                                    <option value="2">No Deseable</option>
-                                </select>
+                                <input type="text" class="form-control" id="EGRESADO_DOCTORADO_PPT" name="EGRESADO_DOCTORADO_PPT">
                             </div>
                         </div>
                         <div class="col-1">
-                            <label>Lo cumple</label><br>
+                            <div class="form-group">
+                                <label>Graduado</label>
+                                <input type="text" class="form-control" id="GRADUADO_DOCTORADO_PPT" name="GRADUADO_DOCTORADO_PPT">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <br>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="DOCTORADO_CUMPLE_PPT" id="DOCTORADO_CUMPLE_SI" value="si">
                                 <label class="form-check-label" for="DOCTORADO_CUMPLE_SI">Si</label>
@@ -1451,15 +1430,15 @@
             </div>
                     
             <div class="row mb-3">
-                <div class="col-3">
+                <div class="col-5">
                     <label>Experiencia laboral general requerida</label>
                 </div>
-                <div class="col-7">
+                <div class="col-5">
                     <div class="form-group">
                         <input type="text" class="form-control" id="EXPERIENCIA_LABORAL_GENERAL_PPT" name="EXPERIENCIA_LABORAL_GENERAL_PPT">
                     </div>
                  </div>   
-                <div class="col-1">
+                <div class="col-2">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="EXPERIENCIAGENERAL_CUMPLE_PPT" id="EXPERIENCIAGENERAL_CUMPLE_SI" value="si">
                         <label class="form-check-label" for="EXPERIENCIAGENERAL_CUMPLE_SI">Si</label>
@@ -1471,15 +1450,15 @@
                 </div> 
             </div>
             <div class="row mb-3">
-                <div class="col-3">
+                <div class="col-5">
                     <label>Indique la cantidad total de años de experiencia laboral</label>
                 </div>
-                <div class="col-7">
+                <div class="col-5">
                     <div class="form-group">
                         <input type="text" class="form-control" id="CANTIDAD_EXPERIENCIA_PPT" name="CANTIDAD_EXPERIENCIA_PPT">
                     </div>
                  </div>   
-                <div class="col-1">
+                <div class="col-2">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="CANTIDAD_EXPERIENCIA_CUMPLE_PPT" id="CANTIDAD_EXPERIENCIA_CUMPLE_SI" value="si">
                         <label class="form-check-label" for="CANTIDAD_EXPERIENCIA_CUMPLE_SI">Si</label>
@@ -1491,15 +1470,15 @@
                 </div> 
             </div>
             <div class="row mb-3">
-                <div class="col-3">
+                <div class="col-5">
                     <label>Experiencia laboral específica requerida</label>
                 </div>
-                <div class="col-7">
+                <div class="col-5">
                     <div class="form-group">
                         <input type="text" class="form-control" id="EXPERIENCIA_ESPECIFICA_PPT" name="EXPERIENCIA_ESPECIFICA_PPT">
                     </div>
                  </div>   
-                <div class="col-1">
+                <div class="col-2">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="EXPERIENCIA_ESPECIFICA_CUMPLE_PPT" id="EXPERIENCIA_ESPECIFICA_CUMPLE_SI" value="si">
                         <label class="form-check-label" for="EXPERIENCIA_ESPECIFICA_CUMPLE_SI">Si</label>
@@ -1512,13 +1491,431 @@
             </div>
             <div class="row mb-3">
                 <div class="col-12 ">
-                    <h5>Marque el nivel mínimo de puesto que se requiere como experiencia</h5>
+                    <h6>Marque el nivel mínimo de puesto que se requiere como experiencia</h6>
                 </div>
             </div>
 
+            <div class="row mb-3">
+                <div class="col-3 mt-1">
+                    <label>Practicante profesional</label>
+                </div>
+                <div class="col-1">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="PRACTICA_PROFESIONAL_PPT" name="PRACTICA_PROFESIONAL_PPT">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="PRACTICA_PROFESIONAL_CUMPLE_PPT" id="PRACTICA_PROFESIONAL_CUMPLE_SI" value="si">
+                        <label class="form-check-label" for="PRACTICA_PROFESIONAL_CUMPLE_SI">Si</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="PRACTICA_PROFESIONAL_CUMPLE_PPT" id="PRACTICA_PROFESIONAL_CUMPLE_NO" value="no">
+                        <label class="form-check-label" for="PRACTICA_PROFESIONAL_CUMPLE_NO">No</label>
+                    </div>
+                </div>
 
+                <div class="col-3 mt-1">
+                    <label>Elaboración de reportes</label>
+                </div>
+                <div class="col-1">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="ELABORACION_REPORTES_PPT" name="ELABORACION_REPORTES_PPT">
+                    </div>
+                </div>
+               
+                <div class="col-2">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ELABORACION_REPORTES_CUMPLE_PPT" id="ELABORACION_REPORTES_CUMPLE_SI" value="si">
+                        <label class="form-check-label" for="ELABORACION_REPORTES_CUMPLE_SI">Si</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ELABORACION_REPORTES_CUMPLE_PPT" id="ELABORACION_REPORTES_CUMPLE_NO" value="no">
+                        <label class="form-check-label" for="ELABORACION_REPORTES_CUMPLE_NO">No</label>
+                    </div>
+                </div> 
+            </div>
+            <div class="row mb-3">
+                <div class="col-3 mt-1">
+                    <label>Auxiliar o Asistente</label>
+                </div>
+                <div class="col-1">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="AUXILIAR_ASISTENTE_PPT" name="AUXILIAR_ASISTENTE_PPT">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="AUXILIAR_ASISTENTE_CUMPLE_PPT" id="AUXILIAR_ASISTENTE_CUMPLE_SI" value="si">
+                        <label class="form-check-label" for="AUXILIAR_ASISTENTE_CUMPLE_SI">Si</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="AUXILIAR_ASISTENTE_CUMPLE_PPT" id="AUXILIAR_ASISTENTE_CUMPLE_NO" value="no">
+                        <label class="form-check-label" for="AUXILIAR_ASISTENTE_CUMPLE_NO">No</label>
+                    </div>
+                </div>
+                <div class="col-3 mt-1">
+                    <label>Supervisor o coordinador</label>
+                </div>
+                <div class="col-1">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="SUPERVISOR_COORDINADOR_PPT" name="SUPERVISOR_COORDINADOR_PPT">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="SUPERVISOR_COORDINADOR_CUMPLE_PPT" id="SUPERVISOR_COORDINADOR_CUMPLE_SI" value="si">
+                        <label class="form-check-label" for="SUPERVISOR_COORDINADOR_CUMPLE_SI">Si</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="SUPERVISOR_COORDINADOR_CUMPLE_PPT" id="SUPERVISOR_COORDINADOR_CUMPLE_NO" value="no">
+                        <label class="form-check-label" for="SUPERVISOR_COORDINADOR_CUMPLE_NO">No</label>
+                    </div>
+                </div> 
+            </div>
+            <div class="row mb-3">
+                <div class="col-3 mt-1">
+                    <label>Analista o Especialista</label>
+                </div>
+                <div class="col-1">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="ANALISTA_ESPECIALISTA_PPT" name="ANALISTA_ESPECIALISTA_PPT">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ANALISTA_ESPECIALISTA_CUMPLE_PPT" id="ANALISTA_ESPECIALISTA_CUMPLE_SI" value="si">
+                        <label class="form-check-label" for="ANALISTA_ESPECIALISTA_CUMPLE_SI">Si</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ANALISTA_ESPECIALISTA_CUMPLE_PPT" id="ANALISTA_ESPECIALISTA_CUMPLE_NO" value="no">
+                        <label class="form-check-label" for="ANALISTA_ESPECIALISTA_CUMPLE_NO">No</label>
+                    </div>
+                </div>
+                <div class="col-3 mt-1">
+                    <label>Consultor o asesor</label>
+                </div>
+                <div class="col-1">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="CONSULTOR_ASESOR_PPT" name="CONSULTOR_ASESOR_PPT">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="CONSULTOR_ASESOR_CUMPLE_PPT" id="CONSULTOR_ASESOR_CUMPLE_SI" value="si">
+                        <label class="form-check-label" for="CONSULTOR_ASESOR_CUMPLE_SI">Si</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="CONSULTOR_ASESOR_CUMPLE_PPT" id="CONSULTOR_ASESOR_CUMPLE_NO" value="no">
+                        <label class="form-check-label" for="CONSULTOR_ASESOR_CUMPLE_NO">No</label>
+                    </div>
+                </div> 
+            </div>
 
+            <div class="row mb-3">
+                <div class="col-3 mt-1">
+                    <label>Técnico de muestreo</label>
+                </div>
+                <div class="col-1">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="TECNICO_MUESTREO_PPT" name="TECNICO_MUESTREO_PPT">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="TECNICO_MUESTREO_CUMPLE_PPT" id="TECNICO_MUESTREO_CUMPLE_SI" value="si">
+                        <label class="form-check-label" for="TECNICO_MUESTREO_CUMPLE_SI">Si</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="TECNICO_MUESTREO_CUMPLE_PPT" id="TECNICO_MUESTREO_CUMPLE_NO" value="no">
+                        <label class="form-check-label" for="TECNICO_MUESTREO_CUMPLE_NO">No</label>
+                    </div>
+                </div>
+                <div class="col-3 mt-1">
+                    <label>Jefe de área o departamento</label>
+                </div>
+                <div class="col-1">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="JEFE_AREA_PPT" name="JEFE_AREA_PPT">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="JEFE_AREA_CUMPLE_PPT" id="JEFE_AREA_CUMPLE_SI" value="si">
+                        <label class="form-check-label" for="JEFE_AREA_CUMPLE_SI">Si</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="JEFE_AREA_CUMPLE_PPT" id="JEFE_AREA_CUMPLE_NO" value="no">
+                        <label class="form-check-label" for="JEFE_AREA_CUMPLE_NO">No</label>
+                    </div>
+                </div> 
+            </div>
 
+            <div class="row mb-3">
+                <div class="col-3 mt-1">
+                    <label>Signatario</label>
+                </div>
+                <div class="col-1">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="SIGNATARIO_PPT" name="SIGNATARIO_PPT">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="SIGNATARIO_CUMPLE_PPT" id="SIGNATARIO_CUMPLE_SI" value="si">
+                        <label class="form-check-label" for="SIGNATARIO_CUMPLE_SI">Si</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="SIGNATARIO_CUMPLE_PPT" id="SIGNATARIO_CUMPLE_NO" value="no">
+                        <label class="form-check-label" for="SIGNATARIO_CUMPLE_NO">No</label>
+                    </div>
+                </div>
+                <div class="col-3 mt-1">
+                    <label>Gerente o Director</label>
+                </div>
+                <div class="col-1">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="GERENTE_DIRECTOR_PPT" name="GERENTE_DIRECTOR_PPT">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="GERENTE_DIRECTOR_CUMPLE_PPT" id="GERENTE_DIRECTOR_CUMPLE_SI" value="si">
+                        <label class="form-check-label" for="GERENTE_DIRECTOR_CUMPLE_SI">Si</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="GERENTE_DIRECTOR_CUMPLE_PPT" id="GERENTE_DIRECTOR_CUMPLE_NO" value="no">
+                        <label class="form-check-label" for="GERENTE_DIRECTOR_CUMPLE_NO">No</label>
+                    </div>
+                </div> 
+            </div>
+            <div class="row mb-3">
+                <div class="col-12 ">
+                    <h6>Indique el tiempo de experiencia específica requerida para el cargo</h6>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-10">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="TIEMPO_EXPERIENCIA_PPT" name="TIEMPO_EXPERIENCIA_PPT">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="TIEMPO_EXPERIENCIA_CUMPLE_PPT" id="TIEMPO_EXPERIENCIA_CUMPLE_SI" value="si">
+                        <label class="form-check-label" for="TIEMPO_EXPERIENCIA_CUMPLE_SI">Si</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="TIEMPO_EXPERIENCIA_CUMPLE_PPT" id="TIEMPO_EXPERIENCIA_CUMPLE_NO" value="no">
+                        <label class="form-check-label" for="TIEMPO_EXPERIENCIA_CUMPLE_NO">No</label>
+                    </div>
+                </div> 
+            </div>
+                <!-- V. Habilidades y competencias funcionales -->
+                <div class="row mb-3">
+                    <div class="col-12 text-center">
+                        <h4>V. Habilidades y competencias funcionales</h4>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th class="text-center">Habilidad / Competencia</th>
+                            <th class="text-center">Requerido</th>
+                            <th class="text-center">Deseable</th>
+                            <th class="text-center">No requerido</th>
+                            <th class="text-center">Si</th>
+                            <th class="text-center">No</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Innovación</td>
+                            <td>
+                                <input type="text" class="form-control" id="INNOVACION_REQUERIDA_PPT" name="INNOVACION_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="INNOVACION_DESEABLE_PPT" name="INNOVACION_DESEABLE_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="INNOVACION_NO_REQUERIDA_PPT" name="INNOVACION_NO_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="INNOVACION_CUMPLE_PPT" id="INNOVACION_CUMPLE_SI" value="Si">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="INNOVACION_CUMPLE_PPT" id="INNOVACION_CUMPLE_NO" value="no">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Pasión</td>
+                            <td>
+                                <input type="text" class="form-control" id="PASION_REQUERIDA_PPT" name="PASION_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="PASION_DESEABLE_PPT" name="PASION_DESEABLE_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="PASION_NO_REQUERIDA_PPT" name="PASION_NO_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="PASION_CUMPLE_PPT" id="PASION_CUMPLE_SI" value="Si">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="PASION_CUMPLE_PPT" id="PASION_CUMPLE_NO" value="no">
+                            </td>
+                          </tr>
+                         
+                          <tr>
+                            <td>Servicio (Orientación al cliente)</td>
+                            <td>
+                                <input type="text" class="form-control" id="SERVICIO_CLIENTE_REQUERIDA_PPT" name="SERVICIO_CLIENTE_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="SERVICIO_CLIENTE_DESEABLE_PPT" name="SERVICIO_CLIENTE_DESEABLE_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="SERVICIO_CLIENTE_NO_REQUERIDA_PPT" name="SERVICIO_CLIENTE_NO_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="SERVICIO_CLIENTE_CUMPLE_PPT" id="SERVICIO_CLIENTE_CUMPLE_SI" value="Si">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="SERVICIO_CLIENTE_CUMPLE_PPT" id="SERVICIO_CLIENTE_CUMPLE_NO" value="no">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Comunicación eficaz</td>
+                            <td>
+                                <input type="text" class="form-control" id="COMUNICACION_EFICAZ_REQUERIDA_PPT" name="COMUNICACION_EFICAZ_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="COMUNICACION_EFICAZ_DESEABLE_PPT" name="COMUNICACION_EFICAZ_DESEABLE_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="COMUNICACION_EFICAZ_NO_REQUERIDA_PPT" name="COMUNICACION_EFICAZ_NO_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="COMUNICACION_EFICAZ_CUMPLE_PPT" id="COMUNICACION_EFICAZ_CUMPLE_SI" value="Si">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="COMUNICACION_EFICAZ_CUMPLE_PPT" id="COMUNICACION_EFICAZ_CUMPLE_NO" value="no">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Trabajo en equipo</td>
+                            <td>
+                                <input type="text" class="form-control" id="TRABAJO_EQUIPO_REQUERIDA_PPT" name="TRABAJO_EQUIPO_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="TRABAJO_EQUIPO_DESEABLE_PPT" name="TRABAJO_EQUIPO_DESEABLE_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="TRABAJO_EQUIPO_NO_REQUERIDA_PPT" name="TRABAJO_EQUIPO_NO_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="TRABAJO_EQUIPO_CUMPLE_PPT" id="TRABAJO_EQUIPO_CUMPLE_SI" value="Si">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="TRABAJO_EQUIPO_CUMPLE_PPT" id="TRABAJO_EQUIPO_CUMPLE_NO" value="no">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Integridad</td>
+                            <td>
+                                <input type="text" class="form-control" id="INTEGRIDAD_REQUERIDA_PPT" name="INTEGRIDAD_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="INTEGRIDAD_DESEABLE_PPT" name="INTEGRIDAD_DESEABLE_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="INTEGRIDAD_NO_REQUERIDA_PPT" name="INTEGRIDAD_NO_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="INTEGRIDAD_CUMPLE_PPT" id="INTEGRIDAD_CUMPLE_SI" value="Si">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="INTEGRIDAD_CUMPLE_PPT" id="INTEGRIDAD_CUMPLE_NO" value="no">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Responsabilidad social</td>
+                            <td>
+                                <input type="text" class="form-control" id="RESPONSABILIDAD_SOCIAL_REQUERIDA_PPT" name="RESPONSABILIDAD_SOCIAL_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="RESPONSABILIDAD_SOCIAL_DESEABLE_PPT" name="RESPONSABILIDAD_SOCIAL_DESEABLE_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="RESPONSABILIDAD_SOCIAL_NO_REQUERIDA_PPT" name="RESPONSABILIDAD_SOCIAL_NO_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="RESPONSABILIDAD_SOCIAL_CUMPLE_PPT" id="RESPONSABILIDAD_SOCIAL_CUMPLE_SI" value="Si">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="RESPONSABILIDAD_SOCIAL_CUMPLE_PPT" id="RESPONSABILIDAD_SOCIAL_CUMPLE_NO" value="no">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Adaptabilidad a los cambios del entorno</td>
+                            <td>
+                                <input type="text" class="form-control" id="ADAPTABILIDAD_REQUERIDA_PPT" name="ADAPTABILIDAD_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="ADAPTABILIDAD_DESEABLE_PPT" name="ADAPTABILIDAD_DESEABLE_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="ADAPTABILIDAD_NO_REQUERIDA_PPT" name="ADAPTABILIDAD_NO_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="ADAPTABILIDAD_CUMPLE_PPT" id="ADAPTABILIDAD_CUMPLE_SI" value="Si">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="ADAPTABILIDAD_CUMPLE_PPT" id="ADAPTABILIDAD_CUMPLE_NO" value="no">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Liderazgo</td>
+                            <td>
+                                <input type="text" class="form-control" id="LIDERAZGO_REQUERIDA_PPT" name="LIDERAZGO_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="LIDERAZGO_DESEABLE_PPT" name="LIDERAZGO_DESEABLE_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="LIDERAZGO_NO_REQUERIDA_PPT" name=LIDERAZGO_NO_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="LIDERAZGO_CUMPLE_PPT" id="LIDERAZGO_CUMPLE_SI" value="Si">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="LIDERAZGO_CUMPLE_PPT" id="LIDERAZGO_CUMPLE_NO" value="no">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Toma de decisiones</td>
+                            <td>
+                                <input type="text" class="form-control" id="TOMA_DECISIONES_REQUERIDA_PPT" name="TOMA_DECISIONES_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="TOMA_DECISIONES_DESEABLE_PPT" name="TOMA_DECISIONES_DESEABLE_PPT">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" id="TOMA_DECISIONES_NO_REQUERIDA_PPT" name=TOMA_DECISIONES_NO_REQUERIDA_PPT">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="TOMA_DECISIONES_CUMPLE_PPT" id="TOMA_DECISIONES_CUMPLE_SI" value="Si">
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="radio" name="TOMA_DECISIONES_CUMPLE_PPT" id="TOMA_DECISIONES_CUMPLE_NO" value="no">
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
 
 
 
