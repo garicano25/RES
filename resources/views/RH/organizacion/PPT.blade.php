@@ -23,7 +23,7 @@
     <div class="modal-dialog modal-fullscreen">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="miModalLabel" >Perfil del puesto de trabajo</h5>
+          <h5 class="modal-title" id="miModalLabel" >Perfil del puesto de trabajo(PPT)</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -1422,7 +1422,7 @@
                     </div>
                 </div>
 
-                  <!-- IV. Experiencia -->
+                <!-- IV. Experiencia -->
             <div class="row mb-3">
                 <div class="col-12 text-center">
                     <h4>IV. Experiencia</h4>
@@ -1903,7 +1903,7 @@
                                 <input type="text" class="form-control" id="TOMA_DECISIONES_DESEABLE_PPT" name="TOMA_DECISIONES_DESEABLE_PPT">
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="TOMA_DECISIONES_NO_REQUERIDA_PPT" name=TOMA_DECISIONES_NO_REQUERIDA_PPT">
+                                <input type="text" class="form-control" id="TOMA_DECISIONES_NO_REQUERIDA_PPT" name="TOMA_DECISIONES_NO_REQUERIDA_PPT">
                             </td>
                             <td>
                                 <input class="form-check-input" type="radio" name="TOMA_DECISIONES_CUMPLE_PPT" id="TOMA_DECISIONES_CUMPLE_SI" value="Si">
@@ -1916,27 +1916,182 @@
                       </table>
                     </div>
                   </div>
+                    <!-- VI. Otros -->
+                <div class="row mb-3">
+                       <div class="col-12 text-center">
+                            <h4>VI. Otros</h4>
+                       </div>
+                  </div>
 
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Si</th>
+                                <th>No</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Disponibilidad para viajar</td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="DISPONIBILAD_VIAJAR_PPT" id="VIAJAR_SI" value="Si"><label class="form-check-label" for="VIAJAR_SI"></label></div></td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="DISPONIBILAD_VIAJAR_PPT" id="VIAJAR_NO" value="No"><label class="form-check-label" for="VIAJAR_NO"></label></div></td>
+                            </tr>
+                            <tr><td></td></tr>
+                            <tr>
+                                <td>Requiere pasaporte</td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIERE_PASAPORTE_PPT" id="PASAPORTE_SI" value="Si"><label class="form-check-label" for="PASAPORTE_SI"></label></div></td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIERE_PASAPORTE_PPT" id="PASAPORTE_NO" value="No"><label class="form-check-label" for="PASAPORTE_NO"></label></div></td>
+                            </tr>
+                            <tr><td></td></tr>
+                            <tr>
+                                <td>Requiere visa americana</td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIERE_VISA_PPT" id="VISA_SI" value="Si"><label class="form-check-label" for="VISA_SI"></label></div></td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIERE_VISA_PPT" id="VISA_NO" value="No"><label class="form-check-label" for="VISA_NO"></label></div></td>
+                            </tr>
+                            <tr><td></td></tr>
+                            <tr>
+                                <td>Requiere licencia de conducción</td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIERE_LICENCIA_PPT" id="LICENCIA_SI" value="Si"><label class="form-check-label" for="LICENCIA_SI"></label></div></td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIERE_LICENCIA_PPT" id="LICENCIA_NO" value="No"><label class="form-check-label" for="LICENCIA_NO"></label></div></td>
+                            </tr>
+                            <tr>
+                                <td>Disponibilidad para cambio de residencia</td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="CAMBIO_RESIDENCIA_PPT" id="CAMBIORESIDENCIA_SI" value="Si"><label class="form-check-label" for="CAMBIORESIDENCIA_SI"></label></div></td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="CAMBIO_RESIDENCIA_PPT" id="CAMBIORESIDENCIA_NO" value="No"><label class="form-check-label" for="CAMBIORESIDENCIA_NO"></label></div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-6">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Si</th>
+                                <th>No</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select class="form-control" id="DISPONIBILADVIAJAR_OPCION_PPT" name="DISPONIBILADVIAJAR_OPCION_PPT">
+                                        <option selected disabled>Seleccione una opción</option>
+                                        <option value="1">No</option>
+                                        <option value="2">Nacional</option>
+                                        <option value="3">Internacional</option>
+                                        <option value="4">Nacional-Internac.</option>
+                                    </select>
+                                </td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="DISPONIBILADVIAJAR_OPCION_CUMPLE" id="DISPONIBILADVIAJAR_OPCION_SI" value="Si"><label class="form-check-label" for="DISPONIBILADVIAJAR_OPCION_SI"></label></div></td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="DISPONIBILADVIAJAR_OPCION_CUMPLE" id="DISPONIBILADVIAJAR_OPCION_NO" value="No"><label class="form-check-label" for="DISPONIBILADVIAJAR_OPCION_NO"></label></div></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select class="form-control" id="REQUIEREPASAPORTE_OPCION_PPT" name="REQUIEREPASAPORTE_OPCION_PPT">
+                                        <option selected disabled>Seleccione una opción</option>
+                                        <option value="1">No aplica</option>
+                                        <option value="2">Deseable</option>
+                                        <option value="3">Requerido</option>
+                                    </select>
+                                </td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIEREPASAPORTE_OPCION_CUMPLE" id="REQUIEREPASAPORTE_OPCION_SI" value="Si"><label class="form-check-label" for="REQUIEREPASAPORTE_OPCION_SI"></label></div></td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIEREPASAPORTE_OPCION_CUMPLE" id="REQUIEREPASAPORTE_OPCION_NO" value="No"><label class="form-check-label" for="REQUIEREPASAPORTE_OPCION_NO"></label></div></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select class="form-control" id="REQUIERE_VISA_OPCION_PPT" name="REQUIERE_VISA_OPCION_PPT">
+                                        <option selected disabled>Seleccione una opción</option>
+                                        <option value="1">No aplica</option>
+                                        <option value="2">Deseable</option>
+                                        <option value="3">Requerido</option>
+                                    </select>
+                                </td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIEREVISA_OPCION_CUMPLE" id="REQUIEREVISA_OPCION_SI" value="Si"><label class="form-check-label" for="REQUIEREVISA_OPCION_SI"></label></div></td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIEREVISA_OPCION_CUMPLE" id="REQUIEREVISA_OPCION_NO" value="No"><label class="form-check-label" for="REQUIEREVISA_OPCION_NO"></label></div></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select class="form-control" id="REQUIERELICENCIA_OPCION_PPT" name="REQUIERELICENCIA_OPCION_PPT">
+                                        <option selected disabled>Seleccione una opción</option>
+                                        <option value="1">No aplica</option>
+                                        <option value="2">Automovilista</option>
+                                        <option value="3">Chofer</option>
+                                        <option value="4">Eq. Pesado</option>
+                                        <option value="5">Motociclista</option>
+                                    </select>
+                                </td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIERELICENCIA_OPCION_CUMPLE" id="REQUIERELICENCIA_OPCION_SI" value="Si"><label class="form-check-label" for="REQUIERELICENCIA_OPCION_SI"></label></div></td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIERELICENCIA_OPCION_CUMPLE" id="REQUIERELICENCIA_OPCION_NO" value="No"><label class="form-check-label" for="REQUIERELICENCIA_OPCION_NO"></label></div></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select class="form-control" id="CAMBIORESIDENCIA_OPCION_PPT" name="CAMBIORESIDENCIA_OPCION_PPT">
+                                        <option selected disabled>Seleccione una opción</option>
+                                        <option value="1">No aplica</option>
+                                        <option value="2">Nacional</option>
+                                        <option value="3">Internacional</option>
+                                    </select>
+                                </td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="CAMBIORESIDENCIA_OPCION_CUMPLE" id="CAMBIORESIDENCIA_OPCION_SI" value="Si"><label class="form-check-label" for="CAMBIORESIDENCIA_OPCION_SI"></label></div></td>
+                                <td><div class="form-check"><input class="form-check-input" type="radio" name="CAMBIORESIDENCIA_OPCION_CUMPLE" id="CAMBIORESIDENCIA_OPCION_NO" value="No"><label class="form-check-label" for="CAMBIORESIDENCIA_OPCION_NO"></label></div></td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- X. Observaciones -->
+                <div class="row mb-3">
+                    <div class="col-12 text-center">
+                         <h4>X. Observaciones</h4>
+                    </div>
+               </div>
 
+               <div class="row mb-3">
+                <div class="col-12">
+                    <div class="form-group">
+                        <textarea class="form-control" id="OBSERVACIONES_PPT" name="OBSERVACIONES_PPT" rows="2"></textarea>
+                    </div>
+                </div>
+               </div>
+             <br>
+               <div class="row mb-3">
+                <div class="col-12 text-center">
+                     <h4></h4>
+                </div>
+               </div>
 
-
-
-
-
-
-
-
-               
-
-
-
-
-          
-
-            
-
-
-
+               <div class="row mb-3">
+                <div class="col-4 text-center">
+                    <h6>Elaborado por</h6>
+                    <input type="text" class="form-control">
+                    <div>Nombre</div>
+                    <input type="text" class="form-control">
+                    <div>Firma</div>
+                    <input type="date" class="form-control" id="fechaInput1" onchange="formatDate(this)">
+                    <div>Fecha</div>
+                </div>
+                <div class="col-4 text-center">
+                    <h6>Revisado por</h6>
+                    <input type="text" class="form-control">
+                    <div>Nombre</div>
+                    <input type="text" class="form-control">
+                    <div>Firma</div>
+                    <input type="date" class="form-control" id="fechaInput2" onchange="formatDate(this)">
+                    <div>Fecha</div>
+                </div>
+                <div class="col-4 text-center">
+                    <h6>Autorizado por</h6>
+                    <input type="text" class="form-control">
+                    <div>Nombre</div>
+                    <input type="text" class="form-control">
+                    <div>Firma</div>
+                    <input type="date" class="form-control" id="fechaInput3" onchange="formatDate(this)">
+                    <div>Fecha</div>
+                </div>
+            </div>
             
         </div>
         </div>
