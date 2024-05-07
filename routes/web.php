@@ -32,7 +32,7 @@ Route::get('/DPT',function(){return view('RH.organizacion.DPT');});
 
 
 // REQUERIMIENTO PERSONAL 
-Route::get('/requerimiento',function(){return view('RH.organizacion.requerimiento_personal');});
+Route::get('/REQUERIMIENTO',function(){return view('RH.organizacion.requerimiento_personal');});
 
 
 
