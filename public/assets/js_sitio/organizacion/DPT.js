@@ -7,7 +7,7 @@
                                 '<span>' + contadorFunciones + '</span>' +
                             '</div>' +
                             '<div class="col-10">' +
-                                '<input type="text" id="FUNCION_CLAVE_CARGO_DPT_' + contadorFunciones + '" name="FUNCION_CLAVE_CARGO_DPT_' + contadorFunciones + '" class="form-control text-center">' +
+                                '<input type="text" id="FUNCION_CLAVE_CARGO_DPT' + contadorFunciones + '" name="FUNCION_CLAVE_CARGO_DPT' + contadorFunciones + '" class="form-control text-center">' +
                             '</div>' +
                             '<div class="col-1">' +
                                 '<button class="btn btn-danger" onclick="eliminarFuncion(this)"><i class="bi bi-trash"></i></button>' +
@@ -44,7 +44,7 @@
                                 '<span>' + contadorFunciones1 + '</span>' +
                             '</div>' +
                             '<div class="col-10">' +
-                                '<input type="text" id="FUNCION_CLAVE_GESTION_DPT_' + contadorFunciones1 + '" name="FUNCION_CLAVE_CARGO_DPT_' + contadorFunciones1 + '" class="form-control text-center">' +
+                                '<input type="text" id="FUNCION_CLAVE_GESTION_DPT' + contadorFunciones1 + '" name="FUNCION_CLAVE_CARGO_DPT' + contadorFunciones1 + '" class="form-control text-center">' +
                             '</div>' +
                             '<div class="col-1">' +
                                 '<button class="btn btn-danger" onclick="eliminarFuncion1(this)"><i class="bi bi-trash"></i></button>' +

@@ -831,175 +831,173 @@
                               <tbody>
                                 <tr>
                                   <td>
-                                    <input type="text" class="form-control" id="CURSO1_PPT" name="CURSO1_PPT">
+                                    <input type="text" class="form-control" id="CURSO1_PPT" name="CURSO_PPT[]">
                                 </td>
                                   <td>
-                                    <input type="text" class="form-control" id="CURSO1_REQUERIDO_PPT" name="CURSO1_REQUERIDO_PPT">
+                                    <input type="text" class="form-control" id="CURSO1_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                 </td>
                                   <td>
-                                    <input type="text" class="form-control" id="CURSO1_DESEABLE_PPT" name="CURSO1_DESEABLE_PPT">
+                                    <input type="text" class="form-control" id="CURSO1_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                 </td>
                                   <td>
-                                    <input class="form-check-input" type="radio" name="CURSO1_CUMPLE_PPT" id="CURSO1_CUMPLE_SI" value="Si">
+                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO1_CUMPLE_SI" value="Si">
                                  </td>
                                  <td>
-                                    <input class="form-check-input" type="radio" name="CURSO1_CUMPLE_PPT" id="CURSO1_CUMPLE_NO" value="no">
+                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO1_CUMPLE_NO" value="no">
                                  </td>
                                 </tr>
 
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO2_PPT" name="CURSO2_PPT">
+                                        <input type="text" class="form-control" id="CURSO2_PPT" name="CURSO_PPT[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO2_REQUERIDO_PPT" name="CURSO2_REQUERIDO_PPT">
+                                    <input type="text" class="form-control" id="CURSO2_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO2_DESEABLE_PPT" name="CURSO2_DESEABLE_PPT">
+                                    <input type="text" class="form-control" id="CURSO2_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                     </td>
                                     <td>
-                                      <input class="form-check-input" type="radio" name="CURSO2_CUMPLE_PPT" id="CURSO2_CUMPLE_SI" value="Si">
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO2_CUMPLE_SI" value="Si">
                                   </td>
                                   <td>
-                                      <input class="form-check-input" type="radio" name="CURSO2_CUMPLE_PPT" id="CURSO2_CUMPLE_NO" value="no">
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO2_CUMPLE_NO" value="no">
                                   </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO3_PPT" name="CURSO3_PPT">
+                                        <input type="text" class="form-control" id="CURSO3_PPT" name="CURSO_PPT[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO3_REQUERIDO_PPT" name="CURSO3_REQUERIDO_PPT">
+                                    <input type="text" class="form-control" id="CURSO3_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO3_DESEABLE_PPT" name="CURSO3_DESEABLE_PPT">
+                                    <input type="text" class="form-control" id="CURSO3_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                     </td>
                                     <td>
-                                      <input class="form-check-input" type="radio" name="CURSO3_CUMPLE_PPT" id="CURSO3_CUMPLE_SI" value="Si">
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO3_CUMPLE_SI" value="Si">
                                   </td>
                                   <td>
-                                      <input class="form-check-input" type="radio" name="CURSO3_CUMPLE_PPT" id="CURSO3_CUMPLE_NO" value="no">
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO3_CUMPLE_NO" value="no">
                                   </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO4_PPT" name="CURSO4_PPT">
+                                        <input type="text" class="form-control" id="CURSO4_PPT" name="CURSO_PPT[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO4_REQUERIDO_PPT" name="CURSO4_REQUERIDO_PPT">
+                                    <input type="text" class="form-control" id="CURSO4_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO4_DESEABLE_PPT" name="CURSO4_DESEABLE_PPT">
+                                    <input type="text" class="form-control" id="CURSO4_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                     </td>
-  
                                     <td>
-                                      <input class="form-check-input" type="radio" name="CURSO4_CUMPLE_PPT" id="CURSO4_CUMPLE_SI" value="Si">
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO4_CUMPLE_SI" value="Si">
                                   </td>
                                   <td>
-                                      <input class="form-check-input" type="radio" name="CURSO4_CUMPLE_PPT" id="CURSO4_CUMPLE_NO" value="no">
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO4_CUMPLE_NO" value="no">
                                   </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO5_PPT" name="CURSO5_PPT">
+                                        <input type="text" class="form-control" id="CURSO5_PPT" name="CURSO_PPT[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO5_REQUERIDO_PPT" name="CURSO5_REQUERIDO_PPT">
+                                    <input type="text" class="form-control" id="CURSO5_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO5_DESEABLE_PPT" name="CURSO5_DESEABLE_PPT">
+                                    <input type="text" class="form-control" id="CURSO5_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                     </td>
-  
                                     <td>
-                                      <input class="form-check-input" type="radio" name="CURSO5_CUMPLE_PPT" id="CURSO5_CUMPLE_SI" value="Si">
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO5_CUMPLE_SI" value="Si">
                                   </td>
                                   <td>
-                                      <input class="form-check-input" type="radio" name="CURSO5_CUMPLE_PPT" id="CURSO5_CUMPLE_NO" value="no">
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO5_CUMPLE_NO" value="no">
                                   </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO6_PPT" name="CURSO6_PPT">
+                                        <input type="text" class="form-control" id="CURSO6_PPT" name="CURSO_PPT[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO6_REQUERIDO_PPT" name="CURSO6_REQUERIDO_PPT">
+                                    <input type="text" class="form-control" id="CURSO6_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO6_DESEABLE_PPT" name="CURSO6_DESEABLE_PPT">
+                                    <input type="text" class="form-control" id="CURSO6_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                     </td>
                                     <td>
-                                      <input class="form-check-input" type="radio" name="CURSO6_CUMPLE_PPT" id="CURSO6_CUMPLE_SI" value="Si">
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO6_CUMPLE_SI" value="Si">
                                   </td>
                                   <td>
-                                      <input class="form-check-input" type="radio" name="CURSO6_CUMPLE_PPT" id="CURSO6_CUMPLE_NO" value="no">
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO6_CUMPLE_NO" value="no">
                                   </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO7_PPT" name="CURSO7_PPT">
+                                        <input type="text" class="form-control" id="CURSO7_PPT" name="CURSO_PPT[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO7_REQUERIDO_PPT" name="CURSO7_REQUERIDO_PPT">
+                                    <input type="text" class="form-control" id="CURSO7_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO7_DESEABLE_PPT" name="CURSO7_DESEABLE_PPT">
+                                    <input type="text" class="form-control" id="CURSO7_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                     </td>
                                     <td>
-                                      <input class="form-check-input" type="radio" name="CURSO7_CUMPLE_PPT" id="CURSO7_CUMPLE_SI" value="Si">
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO7_CUMPLE_SI" value="Si">
                                   </td>
                                   <td>
-                                      <input class="form-check-input" type="radio" name="CURSO7_CUMPLE_PPT" id="CURSO7_CUMPLE_NO" value="no">
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO7_CUMPLE_NO" value="no">
                                   </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO8_PPT" name="CURSO8_PPT">
+                                        <input type="text" class="form-control" id="CURSO8_PPT" name="CURSO_PPT[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO8_REQUERIDO_PPT" name="CURSO8_REQUERIDO_PPT">
+                                    <input type="text" class="form-control" id="CURSO8_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO8_DESEABLE_PPT" name="CURSO8_DESEABLE_PPT">
+                                    <input type="text" class="form-control" id="CURSO8_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                     </td>
                                     <td>
-                                      <input class="form-check-input" type="radio" name="CURSO8_CUMPLE_PPT" id="CURSO8_CUMPLE_SI" value="Si">
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO8_CUMPLE_SI" value="Si">
                                   </td>
                                   <td>
-                                      <input class="form-check-input" type="radio" name="CURSO8_CUMPLE_PPT" id="CURSO8_CUMPLE_NO" value="no">
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO8_CUMPLE_NO" value="no">
                                   </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO9_PPT" name="CURSO9_PPT">
+                                        <input type="text" class="form-control" id="CURSO9_PPT" name="CURSO_PPT[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO9_REQUERIDO_PPT" name="CURSO9_REQUERIDO_PPT">
+                                    <input type="text" class="form-control" id="CURSO9_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO9_DESEABLE_PPT" name="CURSO9_DESEABLE_PPT">
+                                    <input type="text" class="form-control" id="CURSO9_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                     </td>
                                     <td>
-                                      <input class="form-check-input" type="radio" name="CURSO9_CUMPLE_PPT" id="CURSO9_CUMPLE_SI" value="Si">
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO9_CUMPLE_SI" value="Si">
                                   </td>
                                   <td>
-                                      <input class="form-check-input" type="radio" name="CURSO9_CUMPLE_PPT" id="CURSO9_CUMPLE_NO" value="no">
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO9_CUMPLE_NO" value="no">
                                   </td>
                                 </tr>
                                 <tr>
-                                    <td
-                                    ><input type="text" class="form-control" id="CURSO10_PPT" name="CURSO10_PPT">
-                                </td>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO10_REQUERIDO_PPT" name="CURSO10_REQUERIDO_PPT">
+                                        <input type="text" class="form-control" id="CURSO10_PPT" name="CURSO_PPT[]">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="CURSO10_DESEABLE_PPT" name="CURSO10_DESEABLE_PPT">
+                                    <input type="text" class="form-control" id="CURSO10_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                     </td>
                                     <td>
-                                      <input class="form-check-input" type="radio" name="CURSO10_CUMPLE_PPT" id="CURSO10_CUMPLE_SI" value="Si">
+                                    <input type="text" class="form-control" id="CURSO10_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                    </td>
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO10_CUMPLE_SI" value="Si">
                                   </td>
                                   <td>
-                                      <input class="form-check-input" type="radio" name="CURSO10_CUMPLE_PPT" id="CURSO10_CUMPLE_NO" value="no">
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO10_CUMPLE_NO" value="no">
                                   </td>
                                 </tr>
                               </tbody>
@@ -1035,126 +1033,187 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <td><input type="text" class="form-control" id="CURSO11_PPT" name="CURSO11_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO11_REQUERIDO_PPT" name="CURSO11_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO11_DESEABLE_PPT" name="CURSO11_DESEABLE_PPT"></td>
+                                <tr>
                                     <td>
-                                      <input class="form-check-input" type="radio" name="CURSO11_CUMPLE_PPT" id="CURSO11_CUMPLE_SI" value="Si">
-                                   </td>
-                                   <td>
-                                      <input class="form-check-input" type="radio" name="CURSO11_CUMPLE_PPT" id="CURSO11_CUMPLE_NO" value="no">
-                                   </td>
-                                  </tr>
-  
-                                  <tr>
-                                      <td><input type="text" class="form-control" id="CURSO12_PPT" name="CURSO12_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO12_REQUERIDO_PPT" name="CURSO12_REQUERIDO_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO12_DESEABLE_PPT" name="CURSO12_DESEABLE_PPT"></td>
-    
+                                            <input type="text" class="form-control" id="CURSO11_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                    <td>
+                                    <input type="text" class="form-control" id="CURSO11_REQUERIDO_PPT" 
+                                                name="CURSO_REQUERIDO_PPT[]">
+                                    </td>
+                                    <td>
+                                    <input type="text" class="form-control" id="CURSO11_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO11_CUMPLE_SI" value="Si">
+                                      </td>
                                       <td>
-                                        <input class="form-check-input" type="radio" name="CURSO12_CUMPLE_PPT" id="CURSO12_CUMPLE_SI" value="Si">
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO11_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>                   
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO12_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO12_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO12_DESEABLE_PPT"
+                                         name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO12_CUMPLE_SI" value="Si">
                                     </td>
                                     <td>
-                                        <input class="form-check-input" type="radio" name="CURSO12_CUMPLE_PPT" id="CURSO12_CUMPLE_NO" value="no">
+                                        <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO12_CUMPLE_NO" value="no">
                                     </td>
-                                  </tr>
-                                  <tr>
-                                      <td><input type="text" class="form-control" id="CURSO13_PPT" name="CURSO13_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO13_REQUERIDO_PPT" name="CURSO13_REQUERIDO_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO13_DESEABLE_PPT" name="CURSO13_DESEABLE_PPT"></td>
-    
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO13_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO13_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO13_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO13_CUMPLE_SI" value="Si">
+                                      </td>
                                       <td>
-                                        <input class="form-check-input" type="radio" name="CURSO13_CUMPLE_PPT" id="CURSO13_CUMPLE_SI" value="Si">
-                                    </td>
-                                    <td>
-                                        <input class="form-check-input" type="radio" name="CURSO13_CUMPLE_PPT" id="CURSO13_CUMPLE_NO" value="no">
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                      <td><input type="text" class="form-control" id="CURSO14_PPT" name="CURSO14_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO14_REQUERIDO_PPT" name="CURSO14_REQUERIDO_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO14_DESEABLE_PPT" name="CURSO14_DESEABLE_PPT"></td>
-    
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO13_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO14_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO14_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO14_DESEABLE_PPT"
+                                         name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO14_CUMPLE_SI" value="Si">
+                                      </td>
                                       <td>
-                                        <input class="form-check-input" type="radio" name="CURSO14_CUMPLE_PPT" id="CURSO14_CUMPLE_SI" value="Si">
-                                    </td>
-                                    <td>
-                                        <input class="form-check-input" type="radio" name="CURSO14_CUMPLE_PPT" id="CURSO14_CUMPLE_NO" value="no">
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                      <td><input type="text" class="form-control" id="CURSO15_PPT" name="CURSO15_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO15_REQUERIDO_PPT" name="CURSO15_REQUERIDO_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO15_DESEABLE_PPT" name="CURSO15_DESEABLE_PPT"></td>
-    
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO14_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO15_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO15_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO15_DESEABLE_PPT"
+                                         name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO15_CUMPLE_SI" value="Si">
+                                      </td>
                                       <td>
-                                        <input class="form-check-input" type="radio" name="CURSO15_CUMPLE_PPT" id="CURSO15_CUMPLE_SI" value="Si">
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO15_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                  
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO16_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO16_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO16_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO16_CUMPLE_SI" value="Si">
                                     </td>
                                     <td>
-                                        <input class="form-check-input" type="radio" name="CURSO15_CUMPLE_PPT" id="CURSO15_CUMPLE_NO" value="no">
+                                        <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO16_CUMPLE_NO" value="no">
                                     </td>
-                                  </tr>
-                                  <tr>
-                                      <td><input type="text" class="form-control" id="CURSO16_PPT" name="CURSO16_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO16_REQUERIDO_PPT" name="CURSO16_REQUERIDO_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO16_DESEABLE_PPT" name="CURSO16_DESEABLE_PPT"></td>
-    
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO17_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO17_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO17_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO17_CUMPLE_SI" value="Si">
+                                      </td>
                                       <td>
-                                        <input class="form-check-input" type="radio" name="CURSO16_CUMPLE_PPT" id="CURSO16_CUMPLE_SI" value="Si">
-                                    </td>
-                                    <td>
-                                        <input class="form-check-input" type="radio" name="CURSO16_CUMPLE_PPT" id="CURSO16_CUMPLE_NO" value="no">
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                      <td><input type="text" class="form-control" id="CURSO17_PPT" name="CURSO17_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO17_REQUERIDO_PPT" name="CURSO17_REQUERIDO_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO17_DESEABLE_PPT" name="CURSO17_DESEABLE_PPT"></td>
-    
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO17_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO18_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO18_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO18_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO18_CUMPLE_SI" value="Si">
+                                      </td>
                                       <td>
-                                        <input class="form-check-input" type="radio" name="CURSO17_CUMPLE_PPT" id="CURSO17_CUMPLE_SI" value="Si">
-                                    </td>
-                                    <td>
-                                        <input class="form-check-input" type="radio" name="CURSO17_CUMPLE_PPT" id="CURSO17_CUMPLE_NO" value="no">
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                      <td><input type="text" class="form-control" id="CURSO18_PPT" name="CURSO18_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO18_REQUERIDO_PPT" name="CURSO18_REQUERIDO_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO18_DESEABLE_PPT" name="CURSO18_DESEABLE_PPT"></td>
-    
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO18_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO19_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO19_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO19_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO19_CUMPLE_SI" value="Si">
+                                      </td>
                                       <td>
-                                        <input class="form-check-input" type="radio" name="CURSO18_CUMPLE_PPT" id="CURSO18_CUMPLE_SI" value="Si">
-                                    </td>
-                                    <td>
-                                        <input class="form-check-input" type="radio" name="CURSO18_CUMPLE_PPT" id="CURSO18_CUMPLE_NO" value="no">
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                      <td><input type="text" class="form-control" id="CURSO19_PPT" name="CURSO19_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO19_REQUERIDO_PPT" name="CURSO19_REQUERIDO_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO19_DESEABLE_PPT" name="CURSO19_DESEABLE_PPT"></td>
-    
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO19_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO20_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO20_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO20_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO20_CUMPLE_SI" value="Si">
+                                      </td>
                                       <td>
-                                        <input class="form-check-input" type="radio" name="CURSO19_CUMPLE_PPT" id="CURSO19_CUMPLE_SI" value="Si">
-                                    </td>
-                                    <td>
-                                        <input class="form-check-input" type="radio" name="CURSO19_CUMPLE_PPT" id="CURSO19_CUMPLE_NO" value="no">
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                      <td><input type="text" class="form-control" id="CURSO20_PPT" name="CURSO20_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO20_REQUERIDO_PPT" name="CURSO20_REQUERIDO_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO20_DESEABLE_PPT" name="CURSO20_DESEABLE_PPT"></td>
-    
-                                      <td>
-                                        <input class="form-check-input" type="radio" name="CURSO20_CUMPLE_PPT" id="CURSO20_CUMPLE_SI" value="Si">
-                                    </td>
-                                    <td>
-                                        <input class="form-check-input" type="radio" name="CURSO20_CUMPLE_PPT" id="CURSO20_CUMPLE_NO" value="no">
-                                    </td>
-                                  </tr>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO20_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
                                 </tbody>
                               </table>
                             </div>
@@ -1192,125 +1251,186 @@
                               </thead>
                               <tbody>
                                 <tr>
-                                  <td><input type="text" class="form-control" id="CURSO21_PPT" name="CURSO21_PPT"></td>
-                                  <td><input type="text" class="form-control" id="CURSO21_REQUERIDO_PPT" name="CURSO21_REQUERIDO_PPT"></td>
-                                  <td><input type="text" class="form-control" id="CURSO21_DESEABLE_PPT" name="CURSO21_DESEABLE_PPT"></td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO21_PPT" name="CURSO_PPT[]">
+                                    </td>
+                                    <td>
+                                    <input type="text" class="form-control" id="CURSO21_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                    </td>
+                                    <td>
+                                    <input type="text" class="form-control" id="CURSO21_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                    </td>
+                                    <td>
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO21_CUMPLE_SI" value="Si">
+                                  </td>
                                   <td>
-                                    <input class="form-check-input" type="radio" name="CURSO21_CUMPLE_PPT" id="CURSO21_CUMPLE_SI" value="Si">
-                                 </td>
-                                 <td>
-                                    <input class="form-check-input" type="radio" name="CURSO21_CUMPLE_PPT" id="CURSO21_CUMPLE_NO" value="no">
-                                 </td>
+                                      <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO21_CUMPLE_NO" value="no">
+                                  </td>
                                 </tr>
 
-                                <tr>
-                                    <td><input type="text" class="form-control" id="CURSO22_PPT" name="CURSO22_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO22_REQUERIDO_PPT" name="CURSO22_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO22_DESEABLE_PPT" name="CURSO22_DESEABLE_PPT"></td>
-  
+                              
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO22_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO22_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO22_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO22_CUMPLE_SI" value="Si">
+                                    </td>
                                     <td>
-                                      <input class="form-check-input" type="radio" name="CURSO22_CUMPLE_PPT" id="CURSO22_CUMPLE_SI" value="Si">
-                                  </td>
-                                  <td>
-                                      <input class="form-check-input" type="radio" name="CURSO22_CUMPLE_PPT" id="CURSO22_CUMPLE_NO" value="no">
-                                  </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" class="form-control" id="CURSO23_PPT" name="CURSO23_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO23_REQUERIDO_PPT" name="CURSO23_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO23_DESEABLE_PPT" name="CURSO23_DESEABLE_PPT"></td>
-  
-                                    <td>
-                                      <input class="form-check-input" type="radio" name="CURSO23_CUMPLE_PPT" id="CURSO23_CUMPLE_SI" value="Si">
-                                  </td>
-                                  <td>
-                                      <input class="form-check-input" type="radio" name="CURSO23_CUMPLE_PPT" id="CURSO23_CUMPLE_NO" value="no">
-                                  </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" class="form-control" id="CURSO24_PPT" name="CURSO24_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO24_REQUERIDO_PPT" name="CURSO24_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO24_DESEABLE_PPT" name="CURSO24_DESEABLE_PPT"></td>
-  
-                                    <td>
-                                      <input class="form-check-input" type="radio" name="CURSO24_CUMPLE_PPT" id="CURSO24_CUMPLE_SI" value="Si">
-                                  </td>
-                                  <td>
-                                      <input class="form-check-input" type="radio" name="CURSO24_CUMPLE_PPT" id="CURSO24_CUMPLE_NO" value="no">
-                                  </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" class="form-control" id="CURSO25_PPT" name="CURSO25_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO25_REQUERIDO_PPT" name="CURSO25_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO25_DESEABLE_PPT" name="CURSO25_DESEABLE_PPT"></td>
-  
-                                    <td>
-                                      <input class="form-check-input" type="radio" name="CURSO25_CUMPLE_PPT" id="CURSO25_CUMPLE_SI" value="Si">
-                                  </td>
-                                  <td>
-                                      <input class="form-check-input" type="radio" name="CURSO25_CUMPLE_PPT" id="CURSO25_CUMPLE_NO" value="no">
-                                  </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" class="form-control" id="CURSO26_PPT" name="CURSO26_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO26_REQUERIDO_PPT" name="CURSO26_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO26_DESEABLE_PPT" name="CURSO26_DESEABLE_PPT"></td>
-  
-                                    <td>
-                                      <input class="form-check-input" type="radio" name="CURSO26_CUMPLE_PPT" id="CURSO26_CUMPLE_SI" value="Si">
-                                  </td>
-                                  <td>
-                                      <input class="form-check-input" type="radio" name="CURSO26_CUMPLE_PPT" id="CURSO26_CUMPLE_NO" value="no">
-                                  </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" class="form-control" id="CURSO27_PPT" name="CURSO27_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO27_REQUERIDO_PPT" name="CURSO27_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO27_DESEABLE_PPT" name="CURSO27_DESEABLE_PPT"></td>
-  
-                                    <td>
-                                      <input class="form-check-input" type="radio" name="CURSO27_CUMPLE_PPT" id="CURSO27_CUMPLE_SI" value="Si">
-                                  </td>
-                                  <td>
-                                      <input class="form-check-input" type="radio" name="CURSO27_CUMPLE_PPT" id="CURSO27_CUMPLE_NO" value="no">
-                                  </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" class="form-control" id="CURSO28_PPT" name="CURSO28_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO28_REQUERIDO_PPT" name="CURSO28_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO28_DESEABLE_PPT" name="CURSO28_DESEABLE_PPT"></td>
-  
-                                    <td>
-                                      <input class="form-check-input" type="radio" name="CURSO28_CUMPLE_PPT" id="CURSO28_CUMPLE_SI" value="Si">
-                                  </td>
-                                  <td>
-                                      <input class="form-check-input" type="radio" name="CURSO28_CUMPLE_PPT" id="CURSO28_CUMPLE_NO" value="no">
-                                  </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" class="form-control" id="CURSO29_PPT" name="CURSO29_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO29_REQUERIDO_PPT" name="CURSO29_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO29_DESEABLE_PPT" name="CURSO29_DESEABLE_PPT"></td>
-  
-                                    <td>
-                                      <input class="form-check-input" type="radio" name="CURSO29_CUMPLE_PPT" id="CURSO29_CUMPLE_SI" value="Si">
-                                  </td>
-                                  <td>
-                                      <input class="form-check-input" type="radio" name="CURSO29_CUMPLE_PPT" id="CURSO29_CUMPLE_NO" value="no">
-                                  </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" class="form-control" id="CURSO30_PPT" name="CURSO30_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO30_REQUERIDO_PPT" name="CURSO30_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO30_DESEABLE_PPT" name="CURSO30_DESEABLE_PPT"></td>
-  
-                                    <td>
-                                      <input class="form-check-input" type="radio" name="CURSO30_CUMPLE_PPT" id="CURSO30_CUMPLE_SI" value="Si">
-                                  </td>
-                                  <td>
-                                      <input class="form-check-input" type="radio" name="CURSO30_CUMPLE_PPT" id="CURSO30_CUMPLE_NO" value="no">
-                                  </td>
-                                </tr>
+                                        <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO22_CUMPLE_NO" value="no">
+                                    </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO23_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO23_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO23_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO23_CUMPLE_SI" value="Si">
+                                      </td>
+                                      <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO23_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO24_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO24_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO24_DESEABLE_PPT"
+                                         name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO24_CUMPLE_SI" value="Si">
+                                      </td>
+                                      <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO24_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO25_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO25_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO25_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO25_CUMPLE_SI" value="Si">
+                                      </td>
+                                      <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO25_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO26_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO26_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO26_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO26_CUMPLE_SI" value="Si">
+                                      </td>
+                                      <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO26_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO27_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO27_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO27_DESEABLE_PPT"
+                                         name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO27_CUMPLE_SI" value="Si">
+                                      </td>
+                                      <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO27_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO28_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO28_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO28_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO28_CUMPLE_SI" value="Si">
+                                      </td>
+                                      <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO28_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO29_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO29_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO29_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO29_CUMPLE_SI" value="Si">
+                                      </td>
+                                      <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO29_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO30_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO30_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO30_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO30_CUMPLE_SI" value="Si">
+                                      </td>
+                                      <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO30_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
                               </tbody>
                             </table>
                           </div>
@@ -1344,126 +1464,188 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                    <td><input type="text" class="form-control" id="CURSO31_PPT" name="CURSO31_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO31_REQUERIDO_PPT" name="CURSO31_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO31_DESEABLE_PPT" name="CURSO31_DESEABLE_PPT"></td>
-                                    <td>
-                                      <input class="form-check-input" type="radio" name="CURSO31_CUMPLE_PPT" id="CURSO31_CUMPLE_SI" value="Si">
-                                   </td>
-                                   <td>
-                                      <input class="form-check-input" type="radio" name="CURSO31_CUMPLE_PPT" id="CURSO31_CUMPLE_NO" value="no">
-                                   </td>
-                                  </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO31_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO31_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO31_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO31_CUMPLE_SI" value="Si">
+                                      </td>
+                                      <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO31_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
   
-                                  <tr>
-                                      <td><input type="text" class="form-control" id="CURSO32_PPT" name="CURSO32_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO32_REQUERIDO_PPT" name="CURSO32_REQUERIDO_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO32_DESEABLE_PPT" name="CURSO32_DESEABLE_PPT"></td>
-    
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO32_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO32_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO32_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO32_CUMPLE_SI" value="Si">
+                                      </td>
                                       <td>
-                                        <input class="form-check-input" type="radio" name="CURSO32_CUMPLE_PPT" id="CURSO32_CUMPLE_SI" value="Si">
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO32_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO33_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO33_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO33_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO33_CUMPLE_SI" value="Si">
+                                      </td>
+                                      <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO33_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO34_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO34_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO34_DESEABLE_PPT"
+                                         name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO34_CUMPLE_SI" value="Si">
+                                      </td>
+                                      <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO34_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO35_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO35_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO35_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO35_CUMPLE_SI" value="Si">
+                                      </td>
+                                      <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO35_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                 
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO36_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO36_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO36_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO36_CUMPLE_SI" value="Si">
                                     </td>
                                     <td>
-                                        <input class="form-check-input" type="radio" name="CURSO32_CUMPLE_PPT" id="CURSO32_CUMPLE_NO" value="no">
+                                        <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO36_CUMPLE_NO" value="no">
                                     </td>
-                                  </tr>
-                                  <tr>
-                                      <td><input type="text" class="form-control" id="CURSO33_PPT" name="CURSO33_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO33_REQUERIDO_PPT" name="CURSO33_REQUERIDO_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO33_DESEABLE_PPT" name="CURSO33_DESEABLE_PPT"></td>
-    
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO37_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO37_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO37_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO37_CUMPLE_SI" value="Si">
+                                      </td>
                                       <td>
-                                        <input class="form-check-input" type="radio" name="CURSO33_CUMPLE_PPT" id="CURSO33_CUMPLE_SI" value="Si">
-                                    </td>
-                                    <td>
-                                        <input class="form-check-input" type="radio" name="CURSO33_CUMPLE_PPT" id="CURSO33_CUMPLE_NO" value="no">
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                      <td><input type="text" class="form-control" id="CURSO34_PPT" name="CURSO34_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO3_REQUERIDO_PPT" name="CURSO34_REQUERIDO_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO14_DESEABLE_PPT" name="CURSO34_DESEABLE_PPT"></td>
-    
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO37_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO38_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO38_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO38_DESEABLE_PPT" 
+                                        name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO38_CUMPLE_SI" value="Si">
+                                      </td>
                                       <td>
-                                        <input class="form-check-input" type="radio" name="CURSO34_CUMPLE_PPT" id="CURSO34_CUMPLE_SI" value="Si">
-                                    </td>
-                                    <td>
-                                        <input class="form-check-input" type="radio" name="CURSO34_CUMPLE_PPT" id="CURSO34_CUMPLE_NO" value="no">
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                      <td><input type="text" class="form-control" id="CURSO35_PPT" name="CURSO35_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO35_REQUERIDO_PPT" name="CURSO35_REQUERIDO_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO35_DESEABLE_PPT" name="CURSO35_DESEABLE_PPT"></td>
-    
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO38_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO39_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO39_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO39_DESEABLE_PPT"
+                                         name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO39_CUMPLE_SI" value="Si">
+                                      </td>
                                       <td>
-                                        <input class="form-check-input" type="radio" name="CURSO35_CUMPLE_PPT" id="CURSO35_CUMPLE_SI" value="Si">
-                                    </td>
-                                    <td>
-                                        <input class="form-check-input" type="radio" name="CURSO35_CUMPLE_PPT" id="CURSO35_CUMPLE_NO" value="no">
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                      <td><input type="text" class="form-control" id="CURSO36_PPT" name="CURSO36_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO36_REQUERIDO_PPT" name="CURSO36_REQUERIDO_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO36_DESEABLE_PPT" name="CURSO36_DESEABLE_PPT"></td>
-    
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO39_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="CURSO40_PPT" name="CURSO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO40_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                        </td>
+                                        <td>
+                                        <input type="text" class="form-control" id="CURSO40_DESEABLE_PPT"
+                                         name="CURSO_DESEABLE_PPT[]">
+                                        </td>
+                                        <td>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO40_CUMPLE_SI" value="Si">
+                                      </td>
                                       <td>
-                                        <input class="form-check-input" type="radio" name="CURSO36_CUMPLE_PPT" id="CURSO36_CUMPLE_SI" value="Si">
-                                    </td>
-                                    <td>
-                                        <input class="form-check-input" type="radio" name="CURSO36_CUMPLE_PPT" id="CURSO36_CUMPLE_NO" value="no">
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                      <td><input type="text" class="form-control" id="CURSO37_PPT" name="CURSO37_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO37_REQUERIDO_PPT" name="CURSO37_REQUERIDO_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO37_DESEABLE_PPT" name="CURSO37_DESEABLE_PPT"></td>
-    
-                                      <td>
-                                        <input class="form-check-input" type="radio" name="CURSO37_CUMPLE_PPT" id="CURSO37_CUMPLE_SI" value="Si">
-                                    </td>
-                                    <td>
-                                        <input class="form-check-input" type="radio" name="CURSO37_CUMPLE_PPT" id="CURSO37_CUMPLE_NO" value="no">
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                      <td><input type="text" class="form-control" id="CURSO38_PPT" name="CURSO38_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO38_REQUERIDO_PPT" name="CURSO38_REQUERIDO_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO38_DESEABLE_PPT" name="CURSO38_DESEABLE_PPT"></td>
-    
-                                      <td>
-                                        <input class="form-check-input" type="radio" name="CURSO38_CUMPLE_PPT" id="CURSO38_CUMPLE_SI" value="Si">
-                                    </td>
-                                    <td>
-                                        <input class="form-check-input" type="radio" name="CURSO38_CUMPLE_PPT" id="CURSO38_CUMPLE_NO" value="no">
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                      <td><input type="text" class="form-control" id="CURSO39_PPT" name="CURSO39_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO39_REQUERIDO_PPT" name="CURSO39_REQUERIDO_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO39_DESEABLE_PPT" name="CURSO39_DESEABLE_PPT"></td>
-    
-                                      <td>
-                                        <input class="form-check-input" type="radio" name="CURSO39_CUMPLE_PPT" id="CURSO39_CUMPLE_SI" value="Si">
-                                    </td>
-                                    <td>
-                                        <input class="form-check-input" type="radio" name="CURSO39_CUMPLE_PPT" id="CURSO39_CUMPLE_NO" value="no">
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                      <td><input type="text" class="form-control" id="CURSO40_PPT" name="CURSO40_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO40_REQUERIDO_PPT" name="CURSO40_REQUERIDO_PPT"></td>
-                                      <td><input type="text" class="form-control" id="CURSO40_DESEABLE_PPT" name="CURSO40_DESEABLE_PPT"></td>
-    
-                                      <td>
-                                        <input class="form-check-input" type="radio" name="CURSO40_CUMPLE_PPT" id="CURSO40_CUMPLE_SI" value="Si">
-                                    </td>
-                                    <td>
-                                        <input class="form-check-input" type="radio" name="CURSO40_CUMPLE_PPT" id="CURSO40_CUMPLE_NO" value="no">
-                                    </td>
-                                  </tr>
+                                          <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO40_CUMPLE_NO" value="no">
+                                      </td>
+                                    </tr>
                                 </tbody>
                               </table>
                             </div>
