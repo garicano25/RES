@@ -70,11 +70,11 @@
                         <label>Edad (mínima / máxima)</label>
                         <select class="form-control" id="EDAD_PPT" name="EDAD_PPT">
                             <option selected disabled>Seleccione una opción</option>
-                            <option value="1">Indistinto</option>
-                            <option value="2">18-25</option>
-                            <option value="3">26-35</option>
-                            <option value="4">36-45</option>
-                            <option value="5">Mayor de 45</option>
+                            <option value="Indistinto">Indistinto</option>
+                            <option value="18-25">18-25</option>
+                            <option value="26-35">26-35</option>
+                            <option value="36-45">36-45</option>
+                            <option value="Mayor de 45">Mayor de 45</option>
                         </select>
                     </div>
                 </div>
@@ -94,9 +94,9 @@
                         <label>Género</label>
                         <select class="form-control" id="GENERO_PPT" name="GENERO_PPT">
                             <option selected disabled>Seleccione una opción</option>
-                            <option value="1">Indistinto</option>
-                            <option value="2">Masculino</option>
-                            <option value="3">Femenino</option>
+                            <option value="Indistinto">Indistinto</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
                         </select>
                     </div>
                 </div>
@@ -118,10 +118,10 @@
                         <label>Estado civil</label>
                         <select class="form-control" id="ESTADO_CIVIL_PPT" name="ESTADO_CIVIL_PPT">
                             <option selected disabled>Seleccione una opción</option>
-                            <option value="1">Indistinto</option>
-                            <option value="2">Soltero (a)</option>
-                            <option value="3">Casado (a)</option>
-                            <option value="4">Separado (a)</option>
+                            <option value="Indistinto">Indistinto</option>
+                            <option value="Soltero(a)">Soltero (a)</option>
+                            <option value="Casado(a)">Casado (a)</option>
+                            <option value="Separado(a)">Separado (a)</option>
                         </select>
                     </div>
                 </div>
@@ -141,9 +141,9 @@
                         <label>Nacionalidad </label>
                         <select class="form-control" id="NACIONALIDAD_PPT" name="NACIONALIDAD_PPT">
                             <option selected disabled>Seleccione una opción</option>
-                            <option value="1">Indistinto</option>
-                            <option value="2">Mexicana</option>
-                            <option value="3">Extranjero</option>
+                            <option value="Indistinto">Indistinto</option>
+                            <option value="Mexicana">Mexicana</option>
+                            <option value="Extranjero">Extranjero</option>
                         </select>
                     </div>
                 </div>
@@ -165,11 +165,11 @@
                         <label>Persona con discapacidad</label>
                         <select class="form-control" id="DISCAPACIDAD_PPT" name="DISCAPACIDAD_PPT">
                             <option selected disabled>Seleccione una opción</option>
-                            <option value="1">Indistinto</option>
-                            <option value="2">Ninguna</option>
-                            <option value="3">Motriz</option>
-                            <option value="4">Visual </option>
-                            <option value="5">Auditiva</option>
+                            <option value="Indistinto">Indistinto</option>
+                            <option value="Ninguna">Ninguna</option>
+                            <option value="Motriz">Motriz</option>
+                            <option value="Visual">Visual </option>
+                            <option value="Auditiva">Auditiva</option>
                         </select>
                     </div>
                 </div>
@@ -210,8 +210,8 @@
                                         <label>Secundaria</label>
                                         <select class="form-control" id="SECUNDARIA_PPT" name="SECUNDARIA_PPT">
                                             <option selected disabled>Seleccione una opción</option>
-                                            <option value="1">Incompleta</option>
-                                            <option value="2">Completa</option>
+                                            <option value="Incompleta">Incompleta</option>
+                                            <option value="Completa">Completa</option>
                                         </select>
                                     </div>
                                  </div>
@@ -236,8 +236,8 @@
                                         <label>Técnica básica</label>
                                         <select class="form-control" id="TECNICA_PPT" name="TECNICA_PPT">
                                             <option selected disabled>Seleccione una opción</option>
-                                            <option value="1">Incompleta</option>
-                                            <option value="2">Completa</option>
+                                            <option value="Incompleta">Incompleta</option>
+                                            <option value="Completa">Completa</option>
                                         </select>
                                     </div>
                                  </div>
@@ -262,8 +262,8 @@
                                         <label>Técnico superior</label>
                                         <select class="form-control" id="TECNICO_PPT" name="TECNICO_PPT">
                                             <option selected disabled>Seleccione una opción</option>
-                                            <option value="1">Incompleta</option>
-                                            <option value="2">Completa</option>
+                                            <option value="Incompleta">Incompleta</option>
+                                            <option value="Completa">Completa</option>
                                         </select>
                                     </div>
                                  </div>
@@ -288,8 +288,8 @@
                                         <label>Universitario (Lic.)</label>
                                         <select class="form-control" id="UNIVERSITARIO_PPT" name="UNIVERSITARIO_PPT">
                                             <option selected disabled>Seleccione una opción</option>
-                                            <option value="1">Incompleta</option>
-                                            <option value="2">Completa</option>
+                                            <option value="Incompleta">Incompleta</option>
+                                            <option value="Completa">Completa</option>
                                         </select>
                                     </div>
                                  </div>
@@ -319,9 +319,9 @@
                                         <label>Situación académica </label>
                                         <select class="form-control" id="SITUACION_PPT" name="SITUACION_PPT">
                                             <option selected disabled>Seleccione una opción</option>
-                                            <option value="1">Egresado</option>
-                                            <option value="2">Bachiller</option>
-                                            <option value="3">Titulado</option>
+                                            <option value="Egresado">Egresado</option>
+                                            <option value="Bachiller">Bachiller</option>
+                                            <option value="Titulado">Titulado</option>
                                         </select>
                                     </div>
                                  </div>
@@ -346,8 +346,8 @@
                                         <label>Cédula profesional</label>
                                         <select class="form-control" id="CEDULA_PPT" name="CEDULA_PPT">
                                             <option selected disabled>Seleccione una opción</option>
-                                            <option value="1">Aplica</option>
-                                            <option value="2">No aplica</option>
+                                            <option value="Aplica">Aplica</option>
+                                            <option value="No aplica">No aplica</option>
                                         </select>
                                     </div>
                                  </div>
@@ -376,14 +376,14 @@
                                             <label>Áreas de conocimientos</label>
                                             <select class="form-control" id="AREA1_PPT" name="AREA1_PPT">
                                                 <option selected disabled>Seleccione una opción</option>
-                                                <option value="1">N/A</option>
-                                                <option value="2">Agronomía</option>
-                                                <option value="3">C. Educación</option>
-                                                <option value="4">C. Naturales</option>
-                                                <option value="5">C. Salud</option>
-                                                <option value="6">C. Sociales</option>
-                                                <option value="7">Administración </option>
-                                                <option value="8">Ingeniería</option>
+                                                <option value="N/A">N/A</option>
+                                                <option value="Agronomía">Agronomía</option>
+                                                <option value="C. Educación">C. Educación</option>
+                                                <option value="C. Naturales">C. Naturales</option>
+                                                <option value="C. Salud">C. Salud</option>
+                                                <option value="C. Sociales">C. Sociales</option>
+                                                <option value="Administración">Administración</option>
+                                                <option value="Ingeniería">Ingeniería</option>
                                             </select>
                                         </div>
                                     </div>
@@ -409,14 +409,14 @@
                                             <label></label>
                                             <select class="form-control" id="AREA2_PPT" name="AREA2_PPT">
                                                 <option selected disabled>Seleccione una opción</option>
-                                                <option value="1">N/A</option>
-                                                <option value="2">Agronomía</option>
-                                                <option value="3">C. Educación</option>
-                                                <option value="4">C. Naturales</option>
-                                                <option value="5">C. Salud</option>
-                                                <option value="6">C. Sociales</option>
-                                                <option value="7">Administración </option>
-                                                <option value="8">Ingeniería</option>
+                                                <option value="N/A">N/A</option>
+                                                <option value="Agronomía">Agronomía</option>
+                                                <option value="C. Educación">C. Educación</option>
+                                                <option value="C. Naturales">C. Naturales</option>
+                                                <option value="C. Salud">C. Salud</option>
+                                                <option value="C. Sociales">C. Sociales</option>
+                                                <option value="Administración">Administración</option>
+                                                <option value="Ingeniería">Ingeniería</option>
                                             </select>
                                         </div>
                                     </div>
@@ -441,14 +441,14 @@
                                             <label></label>
                                             <select class="form-control" id="AREA3_PPT" name="AREA3_PPT">
                                                 <option selected disabled>Seleccione una opción</option>
-                                                <option value="1">N/A</option>
-                                                <option value="2">Agronomía</option>
-                                                <option value="3">C. Educación</option>
-                                                <option value="4">C. Naturales</option>
-                                                <option value="5">C. Salud</option>
-                                                <option value="6">C. Sociales</option>
-                                                <option value="7">Administración </option>
-                                                <option value="8">Ingeniería</option>
+                                                <option value="N/A">N/A</option>
+                                                <option value="Agronomía">Agronomía</option>
+                                                <option value="C. Educación">C. Educación</option>
+                                                <option value="C. Naturales">C. Naturales</option>
+                                                <option value="C. Salud">C. Salud</option>
+                                                <option value="C. Sociales">C. Sociales</option>
+                                                <option value="Administración">Administración</option>
+                                                <option value="Ingeniería">Ingeniería</option>
                                             </select>
                                         </div>
                                     </div>
@@ -473,14 +473,14 @@
                                             <label></label>
                                             <select class="form-control" id="AREA4_PPT" name="AREA4_PPT">
                                                 <option selected disabled>Seleccione una opción</option>
-                                                <option value="1">N/A</option>
-                                                <option value="2">Agronomía</option>
-                                                <option value="3">C. Educación</option>
-                                                <option value="4">C. Naturales</option>
-                                                <option value="5">C. Salud</option>
-                                                <option value="6">C. Sociales</option>
-                                                <option value="7">Administración </option>
-                                                <option value="8">Ingeniería</option>
+                                                <option value="N/A">N/A</option>
+                                                <option value="Agronomía">Agronomía</option>
+                                                <option value="C. Educación">C. Educación</option>
+                                                <option value="C. Naturales">C. Naturales</option>
+                                                <option value="C. Salud">C. Salud</option>
+                                                <option value="C. Sociales">C. Sociales</option>
+                                                <option value="Administración">Administración</option>
+                                                <option value="Ingeniería">Ingeniería</option>
                                             </select>
                                         </div>
                                     </div>
@@ -2255,10 +2255,10 @@
                                 <td>
                                     <select class="form-control" id="DISPONIBILADVIAJAR_OPCION_PPT" name="DISPONIBILADVIAJAR_OPCION_PPT">
                                         <option selected disabled>Seleccione una opción</option>
-                                        <option value="1">No</option>
-                                        <option value="2">Nacional</option>
-                                        <option value="3">Internacional</option>
-                                        <option value="4">Nacional-Internac.</option>
+                                        <option value="No">No</option>
+                                        <option value="Nacional">Nacional</option>
+                                        <option value="Internacional">Internacional</option>
+                                        <option value="Nacional-Internac.">Nacional-Internac.</option>
                                     </select>
                                 </td>
                                 <td>
@@ -2276,9 +2276,9 @@
                                 <td>
                                     <select class="form-control" id="REQUIEREPASAPORTE_OPCION_PPT" name="REQUIEREPASAPORTE_OPCION_PPT">
                                         <option selected disabled>Seleccione una opción</option>
-                                        <option value="1">No aplica</option>
-                                        <option value="2">Deseable</option>
-                                        <option value="3">Requerido</option>
+                                        <option value="No aplica">No aplica</option>
+                                        <option value="Deseable">Deseable</option>
+                                        <option value="Requerido">Requerido</option>
                                     </select>
                                 </td>
                                 <td>
@@ -2296,9 +2296,9 @@
                                 <td>
                                     <select class="form-control" id="REQUIERE_VISA_OPCION_PPT" name="REQUIERE_VISA_OPCION_PPT">
                                         <option selected disabled>Seleccione una opción</option>
-                                        <option value="1">No aplica</option>
-                                        <option value="2">Deseable</option>
-                                        <option value="3">Requerido</option>
+                                        <option value="No aplica">No aplica</option>
+                                        <option value="Deseable">Deseable</option>
+                                        <option value="Requerido">Requerido</option>
                                     </select>
                                 </td>
                                 <td>
@@ -2315,11 +2315,11 @@
                                 <td>
                                     <select class="form-control" id="REQUIERELICENCIA_OPCION_PPT" name="REQUIERELICENCIA_OPCION_PPT">
                                         <option selected disabled>Seleccione una opción</option>
-                                        <option value="1">No aplica</option>
-                                        <option value="2">Automovilista</option>
-                                        <option value="3">Chofer</option>
-                                        <option value="4">Eq. Pesado</option>
-                                        <option value="5">Motociclista</option>
+                                        <option value="No aplica">No aplica</option>
+                                        <option value="Automovilista">Automovilista</option>
+                                        <option value="Chofer">Chofer</option>
+                                        <option value="Eq. Pesado">Eq. Pesado</option>
+                                        <option value="Motociclista">Motociclista</option>
                                     </select>
                                 </td>
                                 <td>
@@ -2337,9 +2337,9 @@
                                 <td>
                                     <select class="form-control" id="CAMBIORESIDENCIA_OPCION_PPT" name="CAMBIORESIDENCIA_OPCION_PPT">
                                         <option selected disabled>Seleccione una opción</option>
-                                        <option value="1">No aplica</option>
-                                        <option value="2">Nacional</option>
-                                        <option value="3">Internacional</option>
+                                        <option value="No aplica">No aplica</option>
+                                        <option value="Nacional">Nacional</option>
+                                        <option value="Internacional">Internacional</option>
                                     </select>
                                 </td>
                                 <td>
