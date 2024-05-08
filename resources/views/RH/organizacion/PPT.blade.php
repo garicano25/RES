@@ -5,7 +5,7 @@
 
 
 <div class="contenedor-contenido">
-  <ol class="breadcrumb m-b-10" style="background-color: rgb(164, 214, 94); padding: 10px; border-radius: 10px;">
+  <ol class="breadcrumb mb-5">
     <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-filetype-ppt"></i> PPT</h3>
 
 

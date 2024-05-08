@@ -5,7 +5,7 @@
 
 
 <div class="contenedor-contenido">
-  <ol class="breadcrumb m-b-10" style="background-color: rgb(164, 214, 94); padding: 10px; border-radius: 10px;">
+  <ol class="breadcrumb mb-5">
     <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-fill"></i> DPT  </h3>
 
     <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_dpt" data-bs-toggle="modal" data-bs-target="#miModal_DPT" style="margin-left: auto;">
