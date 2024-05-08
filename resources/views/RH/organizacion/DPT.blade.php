@@ -63,10 +63,10 @@
             <div class="form-group">
               <select class="form-control" id="NIVEL_JERARQUICO_DPT" name="NIVEL_JERARQUICO_DPT">
                 <option selected disabled>Seleccione una opción</option>
-                <option value="1">Indistinto</option>
-                <option value="2">Táctico</option>
-                <option value="3">Funcional</option>
-                <option value="4">Operativo</option>
+                <option value="Indistinto">Indistinto</option>
+                <option value="Táctico">Táctico</option>
+                <option value="Funcional">Funcional</option>
+                <option value="Operativo">Operativo</option>
             </select>
             </div>
          </div>

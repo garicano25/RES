@@ -848,10 +848,10 @@
                                                                     <input type="text" class="form-control" id="CURSO1_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO1_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[1]" id="CURSO1_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO1_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[1]" id="CURSO1_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
 
@@ -866,10 +866,10 @@
                                                                     <input type="text" class="form-control" id="CURSO2_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO2_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[2]" id="CURSO2_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO2_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[2]" id="CURSO2_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -883,10 +883,10 @@
                                                                     <input type="text" class="form-control" id="CURSO3_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO3_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[3]" id="CURSO3_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO3_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[3]" id="CURSO3_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -900,10 +900,10 @@
                                                                     <input type="text" class="form-control" id="CURSO4_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO4_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[4]" id="CURSO4_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO4_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[4]" id="CURSO4_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -917,10 +917,10 @@
                                                                     <input type="text" class="form-control" id="CURSO5_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO5_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[5]" id="CURSO5_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO5_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[5]" id="CURSO5_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -934,10 +934,10 @@
                                                                     <input type="text" class="form-control" id="CURSO6_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO6_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[6]" id="CURSO6_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO6_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[6]" id="CURSO6_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -951,10 +951,10 @@
                                                                     <input type="text" class="form-control" id="CURSO7_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO7_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[7]" id="CURSO7_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO7_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[7]" id="CURSO7_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -968,10 +968,10 @@
                                                                     <input type="text" class="form-control" id="CURSO8_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO8_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[8]" id="CURSO8_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO8_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[8]" id="CURSO8_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -985,10 +985,10 @@
                                                                     <input type="text" class="form-control" id="CURSO9_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO9_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[9]" id="CURSO9_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO9_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[9]" id="CURSO9_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1002,10 +1002,10 @@
                                                                     <input type="text" class="form-control" id="CURSO10_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO10_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[10]" id="CURSO10_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO10_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[10]" id="CURSO10_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -1052,10 +1052,10 @@
                                                                     <input type="text" class="form-control" id="CURSO11_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO11_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[11]" id="CURSO11_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO11_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[11]" id="CURSO11_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1069,10 +1069,10 @@
                                                                     <input type="text" class="form-control" id="CURSO12_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO12_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[12]" id="CURSO12_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO12_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[12]" id="CURSO12_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1086,10 +1086,10 @@
                                                                     <input type="text" class="form-control" id="CURSO13_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO13_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[13]" id="CURSO13_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO13_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[13]" id="CURSO13_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1103,10 +1103,10 @@
                                                                     <input type="text" class="form-control" id="CURSO14_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO14_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[14]" id="CURSO14_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO14_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[14]" id="CURSO14_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1120,10 +1120,10 @@
                                                                     <input type="text" class="form-control" id="CURSO15_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO15_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[15]" id="CURSO15_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO15_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[15]" id="CURSO15_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
 
@@ -1138,10 +1138,10 @@
                                                                     <input type="text" class="form-control" id="CURSO16_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO16_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[16]" id="CURSO16_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO16_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[16]" id="CURSO16_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1155,10 +1155,10 @@
                                                                     <input type="text" class="form-control" id="CURSO17_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO17_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[17]" id="CURSO17_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO17_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[17]" id="CURSO17_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1172,10 +1172,10 @@
                                                                     <input type="text" class="form-control" id="CURSO18_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO18_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[18]" id="CURSO18_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO18_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[18]" id="CURSO18_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1189,10 +1189,10 @@
                                                                     <input type="text" class="form-control" id="CURSO19_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO19_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[19]" id="CURSO19_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO19_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[19]" id="CURSO19_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1206,10 +1206,10 @@
                                                                     <input type="text" class="form-control" id="CURSO20_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO20_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[20]" id="CURSO20_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO20_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[20]" id="CURSO20_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -1259,10 +1259,10 @@
                                                                     <input type="text" class="form-control" id="CURSO21_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO21_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[21]" id="CURSO21_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO21_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[21]" id="CURSO21_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
 
@@ -1278,10 +1278,10 @@
                                                                     <input type="text" class="form-control" id="CURSO22_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO22_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[22]" id="CURSO22_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO22_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[22]" id="CURSO22_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1295,10 +1295,10 @@
                                                                     <input type="text" class="form-control" id="CURSO23_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO23_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[23]" id="CURSO23_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO23_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[23]" id="CURSO23_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1312,10 +1312,10 @@
                                                                     <input type="text" class="form-control" id="CURSO24_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO24_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[24]" id="CURSO24_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO24_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[24]" id="CURSO24_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1329,10 +1329,10 @@
                                                                     <input type="text" class="form-control" id="CURSO25_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO25_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[25]" id="CURSO25_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO25_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[25]" id="CURSO25_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1346,10 +1346,10 @@
                                                                     <input type="text" class="form-control" id="CURSO26_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO26_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[26]" id="CURSO26_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO26_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[26]" id="CURSO26_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1363,10 +1363,10 @@
                                                                     <input type="text" class="form-control" id="CURSO27_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO27_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[27]" id="CURSO27_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO27_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[27]" id="CURSO27_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1380,10 +1380,10 @@
                                                                     <input type="text" class="form-control" id="CURSO28_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO28_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[28]" id="CURSO28_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO28_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[28]" id="CURSO28_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1397,10 +1397,10 @@
                                                                     <input type="text" class="form-control" id="CURSO29_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO29_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[29]" id="CURSO29_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO29_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[29]" id="CURSO29_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1414,10 +1414,10 @@
                                                                     <input type="text" class="form-control" id="CURSO30_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO30_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[30]" id="CURSO30_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO30_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[30]" id="CURSO30_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -1464,10 +1464,10 @@
                                                                     <input type="text" class="form-control" id="CURSO31_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO31_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[31]" id="CURSO31_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO31_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[31]" id="CURSO31_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
 
@@ -1482,10 +1482,10 @@
                                                                     <input type="text" class="form-control" id="CURSO32_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO32_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[32]" id="CURSO32_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO32_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[32]" id="CURSO32_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1499,10 +1499,10 @@
                                                                     <input type="text" class="form-control" id="CURSO33_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO33_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[33]" id="CURSO33_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO33_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[33]" id="CURSO33_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1516,10 +1516,10 @@
                                                                     <input type="text" class="form-control" id="CURSO34_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO34_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[34]" id="CURSO34_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO34_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[34]" id="CURSO34_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1533,10 +1533,10 @@
                                                                     <input type="text" class="form-control" id="CURSO35_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO35_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[35]" id="CURSO35_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO35_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[35]" id="CURSO35_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
 
@@ -1551,10 +1551,10 @@
                                                                     <input type="text" class="form-control" id="CURSO36_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO36_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[36]" id="CURSO36_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO36_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[36]" id="CURSO36_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1568,10 +1568,10 @@
                                                                     <input type="text" class="form-control" id="CURSO37_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO37_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[37]" id="CURSO37_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO37_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[37]" id="CURSO37_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1585,10 +1585,10 @@
                                                                     <input type="text" class="form-control" id="CURSO38_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO38_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[38]" id="CURSO38_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO38_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[38]" id="CURSO38_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1602,10 +1602,10 @@
                                                                     <input type="text" class="form-control" id="CURSO39_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO39_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[39]" id="CURSO39_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO39_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[39]" id="CURSO39_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -1619,10 +1619,10 @@
                                                                     <input type="text" class="form-control" id="CURSO40_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO40_CUMPLE_SI" value="Si">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[40]" id="CURSO40_CUMPLE_SI" value="Si">
                                                                 </td>
                                                                 <td>
-                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[]" id="CURSO40_CUMPLE_NO" value="no">
+                                                                    <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[40]" id="CURSO40_CUMPLE_NO" value="no">
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -2408,11 +2408,8 @@
                     <button type="submit" class="btn btn-success" id="guardarFormPPT">Guardar</button>
                 </div>
             </form>
+            </div>
         </div>
     </div>
-</div>
-
-
-
 
 @endsection
