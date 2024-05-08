@@ -14,7 +14,7 @@ class CreateDptTable extends Migration
     public function up()
     {
         Schema::create('DPT', function (Blueprint $table) {
-            $table->ID_DPT();
+            $table->id();
             $table->string('NOMBRE_PUESTO');
             $table->string('ARCHIVO_DPT');
             $table->timestamps();
@@ -28,6 +28,6 @@ class CreateDptTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dpt');
-    }
+        Schema::dropIfExists('DPT');
+    } 
 }

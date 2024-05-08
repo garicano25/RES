@@ -19,7 +19,7 @@ $("#guardarFormPPT").click(function (e) {
                 setTimeout(() => {
 
                     ID_FORMULARIO_PPT = data.PPT.ID_FORMULARIO_PPT
-                    alertMensaje('success','Información guardada correctamente', 'Guardado')
+                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para hacer uso del PPT')
 
                 }, 300);
                 

@@ -28,18 +28,18 @@ class pptController extends Controller{
                         $PPT = formulariopptModel::create($request->all());
 
 
-                        //GUARDAR LOS CURSOS
-                        // if ($request->CURSO_PPT) {
-                        //     foreach ($request->CURSO_PPT as $key => $value) {
-                        //         $guardar_curso = cursospptModel::create([
-                        //             'FORMULARO_PPT_ID' => $PPT->ID_FORMULARIO_PPT,
-                        //             'CURSO_PPT' => $value,
-                        //             'CURSO_REQUERIDO' => $request->CURSO_REQUERIDO_PPT[$key],
-                        //             'CURSO_DESEABLE_PPT' => $request->CURSO_DESEABLE_PPT[$key],
-                        //             'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$key]
-                        //         ]);
-                        //     }
-                        // }
+                        // GUARDAR LOS CURSOS
+                        if ($request->CURSO_PPT) {
+                            foreach ($request->CURSO_PPT as $key => $value) {
+                                $guardar_curso = cursospptModel::create([
+                                    'FORMULARO_PPT_ID' => $PPT->ID_FORMULARIO_PPT,
+                                    'CURSO_PPT' => $value,
+                                    'CURSO_REQUERIDO' => $request->CURSO_REQUERIDO_PPT[$key],
+                                    'CURSO_DESEABLE_PPT' => $request->CURSO_DESEABLE_PPT[$key],
+                                    'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$key]
+                                ]);
+                            }
+                        }
 
 
                     } else { //Editamos el ppt y eliminar ppt
