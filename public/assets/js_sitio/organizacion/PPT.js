@@ -99,6 +99,7 @@ $("#guardarFormPPT").click(function (e) {
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para hacer uso del PPT')
                      $('miModal_PPT').modal('hide')
                     document.getElementById('formularioPPT').reset();
+                    TablaPPT.ajax.reload()
 
                 }, 300);
                 
@@ -126,6 +127,8 @@ $("#guardarFormPPT").click(function (e) {
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                      $('miModal_PPT').modal('hide')
                     document.getElementById('formularioPPT').reset();
+                    TablaPPT.ajax.reload()
+
                     
 
                 }, 300);  
@@ -134,3 +137,16 @@ $("#guardarFormPPT").click(function (e) {
     }
     
 });
+
+
+$('#TablaPPT tbody').on('click', 'td>button.EDITAR', function () {
+
+    var tr = $(this).closest('tr');
+    var row = TablaPPT.row(tr);
+    ID_FORMULARIO_PPT = row.data().ID_FORMULARIO_PPT
+
+    //Rellenamos los datos del formulario
+    editarDatoTabla(row.data(), 'formularioPPT', 'miModal_PPT')
+
+  
+})
