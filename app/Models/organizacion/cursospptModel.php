@@ -11,7 +11,7 @@ class cursospptModel extends Model
     protected $primaryKey = 'ID_CURSOS_PPT';
     protected $table = 'cursos_ppt';
     protected $fillable = [
-        'FORMULARO_PPT_ID',
+        'FORMULARIO_PPT_ID',
         'CURSO_PPT',
         'CURSO_REQUERIDO',
         'CURSO_DESEABLE',

@@ -24,6 +24,8 @@ Route::get('/TablaCargos/{area_id}', [areasController::class, 'TablaCargos']);
 //PPT
 Route::get('/PPT', function () {return view('RH.organizacion.PPT');});
 Route::post('/pptSave', [pptController::class, 'store']);
+Route::get('/TablaPPT', [pptController::class, 'TablaPPT']);
+
 
 
 // DPT

@@ -15,6 +15,13 @@
     </ol>
 
 
+    <div class="card-body">
+        <table id="TablaPPT" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+
+        </table>
+    </div>
+
+
 </div>
 
 
@@ -2408,8 +2415,8 @@
                     <button type="submit" class="btn btn-success" id="guardarFormPPT">Guardar</button>
                 </div>
             </form>
-            </div>
         </div>
     </div>
+</div>
 
 @endsection
