@@ -7,9 +7,11 @@
 <div class="contenedor-contenido">
   <ol class="breadcrumb m-b-10" style="background-color: rgb(164, 214, 94); padding: 10px; border-radius: 10px;">
     <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-filetype-ppt"></i> PPT</h3>
-          <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_ppt" data-bs-toggle="modal" data-bs-target="#miModal" style="margin-left: auto;">
+
+
+    <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_ppt" data-bs-toggle="modal" data-bs-target="#miModal_PPT" style="margin-left: auto;">
     Nuevo PPT  <i class="bi bi-plus-circle"></i> 
-  </button>
+    </button>
  </ol>
   
 
@@ -19,7 +21,7 @@
 
 
 <!-- MODAL  -->
-<div class="modal modal-fullscreen fade" id="miModal" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
+<div class="modal modal-fullscreen fade" id="miModal_PPT" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen">
       <div class="modal-content">
         <div class="modal-header">
@@ -44,7 +46,7 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label>Área de trabajador</label>
-                        <input type="text" class="form-control" id="AREA_TRABAJADO_PPT" name="AREA_TRABAJADO_PPT">
+                        <input type="text" class="form-control" id="AREA_TRABAJADOR_PPT" name="AREA_TRABAJADOR_PPT">
                     </div>
                 </div>
             </div>
@@ -52,7 +54,7 @@
                 <div class="col-12">
                     <div class="form-group">
                         <label>Propósito o finalidad del puesto</label>
-                        <textarea class="form-control" id="AREA_TRABAJADO_PPT" name="AREA_TRABAJADO_PPT" rows="3"></textarea>
+                        <textarea class="form-control" id="PROPOSITO_FINALIDAD_PPT" name="PROPOSITO_FINALIDAD_PPT" rows="3"></textarea>
                     </div>
                 </div>
             </div>
@@ -749,7 +751,7 @@
                                 </td>
                                 <td>
                                     <label class="form-check-label" for="IDIOMA1_CUMPLE_SI">Si</label>
-                                    <input class="form-check-input" type="radio" name="IDIOM1_CUMPLE_PPT" id="IDIOMA1_CUMPLE_SI" value="Si">
+                                    <input class="form-check-input" type="radio" name="IDIOMA1_CUMPLE_PPT" id="IDIOMA1_CUMPLE_SI" value="Si">
                                 </td>
                                 <td>
                                     <label class="form-check-label" for="IDIOMA1_CUMPLE_NO">No</label>
@@ -828,9 +830,15 @@
                               </thead>
                               <tbody>
                                 <tr>
-                                  <td><input type="text" class="form-control" id="CURSO1_PPT" name="CURSO1_PPT"></td>
-                                  <td><input type="text" class="form-control" id="CURSO1_REQUERIDO_PPT" name="CURSO1_REQUERIDO_PPT"></td>
-                                  <td><input type="text" class="form-control" id="CURSO1_DESEABLE_PPT" name="CURSO1_DESEABLE_PPT"></td>
+                                  <td>
+                                    <input type="text" class="form-control" id="CURSO1_PPT" name="CURSO1_PPT">
+                                </td>
+                                  <td>
+                                    <input type="text" class="form-control" id="CURSO1_REQUERIDO_PPT" name="CURSO1_REQUERIDO_PPT">
+                                </td>
+                                  <td>
+                                    <input type="text" class="form-control" id="CURSO1_DESEABLE_PPT" name="CURSO1_DESEABLE_PPT">
+                                </td>
                                   <td>
                                     <input class="form-check-input" type="radio" name="CURSO1_CUMPLE_PPT" id="CURSO1_CUMPLE_SI" value="Si">
                                  </td>
@@ -840,10 +848,15 @@
                                 </tr>
 
                                 <tr>
-                                    <td><input type="text" class="form-control" id="CURSO2_PPT" name="CURSO2_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO2_REQUERIDO_PPT" name="CURSO2_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO2_DESEABLE_PPT" name="CURSO2_DESEABLE_PPT"></td>
-  
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO2_PPT" name="CURSO2_PPT">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO2_REQUERIDO_PPT" name="CURSO2_REQUERIDO_PPT">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO2_DESEABLE_PPT" name="CURSO2_DESEABLE_PPT">
+                                    </td>
                                     <td>
                                       <input class="form-check-input" type="radio" name="CURSO2_CUMPLE_PPT" id="CURSO2_CUMPLE_SI" value="Si">
                                   </td>
@@ -852,10 +865,15 @@
                                   </td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" class="form-control" id="CURSO3_PPT" name="CURSO3_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO3_REQUERIDO_PPT" name="CURSO3_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO3_DESEABLE_PPT" name="CURSO3_DESEABLE_PPT"></td>
-  
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO3_PPT" name="CURSO3_PPT">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO3_REQUERIDO_PPT" name="CURSO3_REQUERIDO_PPT">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO3_DESEABLE_PPT" name="CURSO3_DESEABLE_PPT">
+                                    </td>
                                     <td>
                                       <input class="form-check-input" type="radio" name="CURSO3_CUMPLE_PPT" id="CURSO3_CUMPLE_SI" value="Si">
                                   </td>
@@ -864,9 +882,15 @@
                                   </td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" class="form-control" id="CURSO4_PPT" name="CURSO4_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO4_REQUERIDO_PPT" name="CURSO4_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO4_DESEABLE_PPT" name="CURSO4_DESEABLE_PPT"></td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO4_PPT" name="CURSO4_PPT">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO4_REQUERIDO_PPT" name="CURSO4_REQUERIDO_PPT">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO4_DESEABLE_PPT" name="CURSO4_DESEABLE_PPT">
+                                    </td>
   
                                     <td>
                                       <input class="form-check-input" type="radio" name="CURSO4_CUMPLE_PPT" id="CURSO4_CUMPLE_SI" value="Si">
@@ -876,9 +900,15 @@
                                   </td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" class="form-control" id="CURSO5_PPT" name="CURSO5_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO5_REQUERIDO_PPT" name="CURSO5_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO5_DESEABLE_PPT" name="CURSO5_DESEABLE_PPT"></td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO5_PPT" name="CURSO5_PPT">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO5_REQUERIDO_PPT" name="CURSO5_REQUERIDO_PPT">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO5_DESEABLE_PPT" name="CURSO5_DESEABLE_PPT">
+                                    </td>
   
                                     <td>
                                       <input class="form-check-input" type="radio" name="CURSO5_CUMPLE_PPT" id="CURSO5_CUMPLE_SI" value="Si">
@@ -888,10 +918,15 @@
                                   </td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" class="form-control" id="CURSO6_PPT" name="CURSO6_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO6_REQUERIDO_PPT" name="CURSO6_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO6_DESEABLE_PPT" name="CURSO6_DESEABLE_PPT"></td>
-  
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO6_PPT" name="CURSO6_PPT">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO6_REQUERIDO_PPT" name="CURSO6_REQUERIDO_PPT">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO6_DESEABLE_PPT" name="CURSO6_DESEABLE_PPT">
+                                    </td>
                                     <td>
                                       <input class="form-check-input" type="radio" name="CURSO6_CUMPLE_PPT" id="CURSO6_CUMPLE_SI" value="Si">
                                   </td>
@@ -900,10 +935,15 @@
                                   </td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" class="form-control" id="CURSO7_PPT" name="CURSO7_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO7_REQUERIDO_PPT" name="CURSO7_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO7_DESEABLE_PPT" name="CURSO7_DESEABLE_PPT"></td>
-  
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO7_PPT" name="CURSO7_PPT">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO7_REQUERIDO_PPT" name="CURSO7_REQUERIDO_PPT">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO7_DESEABLE_PPT" name="CURSO7_DESEABLE_PPT">
+                                    </td>
                                     <td>
                                       <input class="form-check-input" type="radio" name="CURSO7_CUMPLE_PPT" id="CURSO7_CUMPLE_SI" value="Si">
                                   </td>
@@ -912,10 +952,15 @@
                                   </td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" class="form-control" id="CURSO8_PPT" name="CURSO8_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO8_REQUERIDO_PPT" name="CURSO8_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO8_DESEABLE_PPT" name="CURSO8_DESEABLE_PPT"></td>
-  
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO8_PPT" name="CURSO8_PPT">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO8_REQUERIDO_PPT" name="CURSO8_REQUERIDO_PPT">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO8_DESEABLE_PPT" name="CURSO8_DESEABLE_PPT">
+                                    </td>
                                     <td>
                                       <input class="form-check-input" type="radio" name="CURSO8_CUMPLE_PPT" id="CURSO8_CUMPLE_SI" value="Si">
                                   </td>
@@ -924,10 +969,15 @@
                                   </td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" class="form-control" id="CURSO9_PPT" name="CURSO9_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO9_REQUERIDO_PPT" name="CURSO9_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO9_DESEABLE_PPT" name="CURSO9_DESEABLE_PPT"></td>
-  
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO9_PPT" name="CURSO9_PPT">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO9_REQUERIDO_PPT" name="CURSO9_REQUERIDO_PPT">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO9_DESEABLE_PPT" name="CURSO9_DESEABLE_PPT">
+                                    </td>
                                     <td>
                                       <input class="form-check-input" type="radio" name="CURSO9_CUMPLE_PPT" id="CURSO9_CUMPLE_SI" value="Si">
                                   </td>
@@ -936,10 +986,15 @@
                                   </td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" class="form-control" id="CURSO10_PPT" name="CURSO10_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO10_REQUERIDO_PPT" name="CURSO10_REQUERIDO_PPT"></td>
-                                    <td><input type="text" class="form-control" id="CURSO10_DESEABLE_PPT" name="CURSO10_DESEABLE_PPT"></td>
-  
+                                    <td
+                                    ><input type="text" class="form-control" id="CURSO10_PPT" name="CURSO10_PPT">
+                                </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO10_REQUERIDO_PPT" name="CURSO10_REQUERIDO_PPT">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" id="CURSO10_DESEABLE_PPT" name="CURSO10_DESEABLE_PPT">
+                                    </td>
                                     <td>
                                       <input class="form-check-input" type="radio" name="CURSO10_CUMPLE_PPT" id="CURSO10_CUMPLE_SI" value="Si">
                                   </td>
@@ -1885,7 +1940,7 @@
                                 <input type="text" class="form-control" id="LIDERAZGO_DESEABLE_PPT" name="LIDERAZGO_DESEABLE_PPT">
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="LIDERAZGO_NO_REQUERIDA_PPT" name=LIDERAZGO_NO_REQUERIDA_PPT">
+                                <input type="text" class="form-control" id="LIDERAZGO_NO_REQUERIDA_PPT" name="LIDERAZGO_NO_REQUERIDA_PPT">
                             </td>
                             <td>
                                 <input class="form-check-input" type="radio" name="LIDERAZGO_CUMPLE_PPT" id="LIDERAZGO_CUMPLE_SI" value="Si">
@@ -1936,31 +1991,70 @@
                         <tbody>
                             <tr>
                                 <td>Disponibilidad para viajar</td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="DISPONIBILAD_VIAJAR_PPT" id="VIAJAR_SI" value="Si"><label class="form-check-label" for="VIAJAR_SI"></label></div></td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="DISPONIBILAD_VIAJAR_PPT" id="VIAJAR_NO" value="No"><label class="form-check-label" for="VIAJAR_NO"></label></div></td>
+                            <td>
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="DISPONIBILAD_VIAJAR_PPT" id="VIAJAR_SI" value="Si">
+                                </div>
+                            </td>
+                                <td>
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="DISPONIBILAD_VIAJAR_PPT" id="VIAJAR_NO" value="No">
+                                </div>
+                            </td>
                             </tr>
                             <tr><td></td></tr>
                             <tr>
                                 <td>Requiere pasaporte</td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIERE_PASAPORTE_PPT" id="PASAPORTE_SI" value="Si"><label class="form-check-label" for="PASAPORTE_SI"></label></div></td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIERE_PASAPORTE_PPT" id="PASAPORTE_NO" value="No"><label class="form-check-label" for="PASAPORTE_NO"></label></div></td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="REQUIERE_PASAPORTE_PPT" id="PASAPORTE_SI" value="Si">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-check"><input class="form-check-input" type="radio" name="REQUIERE_PASAPORTE_PPT" id="PASAPORTE_NO" value="No">
+                                    </div>
+                                </td>
                             </tr>
                             <tr><td></td></tr>
                             <tr>
                                 <td>Requiere visa americana</td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIERE_VISA_PPT" id="VISA_SI" value="Si"><label class="form-check-label" for="VISA_SI"></label></div></td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIERE_VISA_PPT" id="VISA_NO" value="No"><label class="form-check-label" for="VISA_NO"></label></div></td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="REQUIERE_VISA_PPT" id="VISA_SI" value="Si">
+                                       </div>
+                                </td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="REQUIERE_VISA_PPT" id="VISA_NO" value="No">
+                                    </div>
+                                </td>
                             </tr>
                             <tr><td></td></tr>
                             <tr>
                                 <td>Requiere licencia de conducción</td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIERE_LICENCIA_PPT" id="LICENCIA_SI" value="Si"><label class="form-check-label" for="LICENCIA_SI"></label></div></td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIERE_LICENCIA_PPT" id="LICENCIA_NO" value="No"><label class="form-check-label" for="LICENCIA_NO"></label></div></td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="REQUIERE_LICENCIA_PPT" id="LICENCIA_SI" value="Si">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="REQUIERE_LICENCIA_PPT" id="LICENCIA_NO" value="No">
+                                        </div>
+                                </td>
                             </tr>
                             <tr>
                                 <td>Disponibilidad para cambio de residencia</td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="CAMBIO_RESIDENCIA_PPT" id="CAMBIORESIDENCIA_SI" value="Si"><label class="form-check-label" for="CAMBIORESIDENCIA_SI"></label></div></td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="CAMBIO_RESIDENCIA_PPT" id="CAMBIORESIDENCIA_NO" value="No"><label class="form-check-label" for="CAMBIORESIDENCIA_NO"></label></div></td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="CAMBIO_RESIDENCIA_PPT" id="CAMBIORESIDENCIA_SI" value="Si">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="CAMBIO_RESIDENCIA_PPT" id="CAMBIORESIDENCIA_NO" value="No">
+                                </div>
+                            </td>
                             </tr>
                         </tbody>
                     </table>
@@ -1985,8 +2079,16 @@
                                         <option value="4">Nacional-Internac.</option>
                                     </select>
                                 </td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="DISPONIBILADVIAJAR_OPCION_CUMPLE" id="DISPONIBILADVIAJAR_OPCION_SI" value="Si"><label class="form-check-label" for="DISPONIBILADVIAJAR_OPCION_SI"></label></div></td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="DISPONIBILADVIAJAR_OPCION_CUMPLE" id="DISPONIBILADVIAJAR_OPCION_NO" value="No"><label class="form-check-label" for="DISPONIBILADVIAJAR_OPCION_NO"></label></div></td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="DISPONIBILADVIAJAR_OPCION_CUMPLE" id="DISPONIBILADVIAJAR_OPCION_SI" value="Si">
+                                </div>
+                            </td>
+                                <td>
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="DISPONIBILADVIAJAR_OPCION_CUMPLE" id="DISPONIBILADVIAJAR_OPCION_NO" value="No">
+                                </div>
+                            </td>
                             </tr>
                             <tr>
                                 <td>
@@ -1997,8 +2099,16 @@
                                         <option value="3">Requerido</option>
                                     </select>
                                 </td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIEREPASAPORTE_OPCION_CUMPLE" id="REQUIEREPASAPORTE_OPCION_SI" value="Si"><label class="form-check-label" for="REQUIEREPASAPORTE_OPCION_SI"></label></div></td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIEREPASAPORTE_OPCION_CUMPLE" id="REQUIEREPASAPORTE_OPCION_NO" value="No"><label class="form-check-label" for="REQUIEREPASAPORTE_OPCION_NO"></label></div></td>
+                                <td>
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="REQUIEREPASAPORTE_OPCION_CUMPLE" id="REQUIEREPASAPORTE_OPCION_SI" value="Si">
+                                </div>
+                            </td>
+                                <td>
+                                    <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="REQUIEREPASAPORTE_OPCION_CUMPLE" id="REQUIEREPASAPORTE_OPCION_NO" value="No">
+                                </div>
+                            </td>
                             </tr>
                             <tr>
                                 <td>
@@ -2009,8 +2119,15 @@
                                         <option value="3">Requerido</option>
                                     </select>
                                 </td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIEREVISA_OPCION_CUMPLE" id="REQUIEREVISA_OPCION_SI" value="Si"><label class="form-check-label" for="REQUIEREVISA_OPCION_SI"></label></div></td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIEREVISA_OPCION_CUMPLE" id="REQUIEREVISA_OPCION_NO" value="No"><label class="form-check-label" for="REQUIEREVISA_OPCION_NO"></label></div></td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="REQUIEREVISA_OPCION_CUMPLE" id="REQUIEREVISA_OPCION_SI" value="Si">
+                                </div>
+                                </td>
+                                <td>
+                                    <div class="form-check"><input class="form-check-input" type="radio" name="REQUIEREVISA_OPCION_CUMPLE" id="REQUIEREVISA_OPCION_NO" value="No">
+                                </div>
+                                </td>
                             </tr>
                             <tr>
                                 <td>
@@ -2023,8 +2140,16 @@
                                         <option value="5">Motociclista</option>
                                     </select>
                                 </td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIERELICENCIA_OPCION_CUMPLE" id="REQUIERELICENCIA_OPCION_SI" value="Si"><label class="form-check-label" for="REQUIERELICENCIA_OPCION_SI"></label></div></td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="REQUIERELICENCIA_OPCION_CUMPLE" id="REQUIERELICENCIA_OPCION_NO" value="No"><label class="form-check-label" for="REQUIERELICENCIA_OPCION_NO"></label></div></td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="REQUIERELICENCIA_OPCION_CUMPLE" id="REQUIERELICENCIA_OPCION_SI" value="Si">
+                                </div>
+                            </td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="REQUIERELICENCIA_OPCION_CUMPLE" id="REQUIERELICENCIA_OPCION_NO" value="No">
+                                </div>
+                            </td>
                             </tr>
                             <tr>
                                 <td>
@@ -2035,8 +2160,16 @@
                                         <option value="3">Internacional</option>
                                     </select>
                                 </td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="CAMBIORESIDENCIA_OPCION_CUMPLE" id="CAMBIORESIDENCIA_OPCION_SI" value="Si"><label class="form-check-label" for="CAMBIORESIDENCIA_OPCION_SI"></label></div></td>
-                                <td><div class="form-check"><input class="form-check-input" type="radio" name="CAMBIORESIDENCIA_OPCION_CUMPLE" id="CAMBIORESIDENCIA_OPCION_NO" value="No"><label class="form-check-label" for="CAMBIORESIDENCIA_OPCION_NO"></label></div></td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="CAMBIORESIDENCIA_OPCION_CUMPLE" id="CAMBIORESIDENCIA_OPCION_SI" value="Si">
+                                </div>
+                            </td>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="CAMBIORESIDENCIA_OPCION_CUMPLE" id="CAMBIORESIDENCIA_OPCION_NO" value="No">
+                                </div>
+                            </td>
                             </tr>
                         </tbody>
                         </table>
@@ -2066,42 +2199,50 @@
                <div class="row mb-3">
                 <div class="col-4 text-center">
                     <h6>Elaborado por</h6>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control text-center" id="ELABORADO_NOMBRE_PPT" name="ELABORADO_NOMBRE_PPT">
                     <div>Nombre</div>
-                    <input type="text" class="form-control">
+                    <br>
+                    <input type="text" class="form-control text-center" id="ELABORADO_FIRMA_PPT" name="ELABORADO_FIRMA_PPT">
                     <div>Firma</div>
-                    <input type="date" class="form-control" id="fechaInput1" onchange="formatDate(this)">
+                    <br>
+                    <input type="date" class="form-control text-center" id="ELABORADO_FECHA_PPT" name="ELABORADO_FECHA_PPT">
                     <div>Fecha</div>
+                    <br>
                 </div>
                 <div class="col-4 text-center">
                     <h6>Revisado por</h6>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control text-center" id="REVISADO_NOMBRE_PPT" name="REVISADO_NOMBRE_PPT">
                     <div>Nombre</div>
-                    <input type="text" class="form-control">
+                    <br>
+                    <input type="text" class="form-control text-center" id="REVISADO_FIRMA_PPT" name="REVISADO_FIRMA_PPT">
                     <div>Firma</div>
-                    <input type="date" class="form-control" id="fechaInput2" onchange="formatDate(this)">
+                    <br>
+                    <input type="date" class="form-control text-center" id="REVISADO_FECHA_PPT" name="REVISADO_FECHA_PPT">
                     <div>Fecha</div>
+                    <br>
                 </div>
                 <div class="col-4 text-center">
                     <h6>Autorizado por</h6>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control text-center" id="AUTORIZADO_NOMBRE_PPT" name="AUTORIZADO_NOMBRE_PPT">
                     <div>Nombre</div>
-                    <input type="text" class="form-control">
+                    <br>
+                    <input type="text" class="form-control text-center" id="AUTORIZADO_FIRMA_PPT" name="AUTORIZADO_FIRMA_PPT">
                     <div>Firma</div>
-                    <input type="date" class="form-control" id="fechaInput3" onchange="formatDate(this)">
+                    <br>
+                    <input type="date" class="form-control text-center" id="AUTORIZADO_FECHA_PPT" name="AUTORIZADO_FECHA_PPT">
                     <div>Fecha</div>
+                    <br>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
-            
+            </div>
         </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary">Guardar</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
 
   

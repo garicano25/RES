@@ -90,7 +90,7 @@
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/PPT')}}">PPT</a></li>
                             <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/requerimiento')}}">Requerimiento Personal</a></li>
+                            <li><a class="dropdown-item" href="{{url('/REQUERIMIENTO')}}">Requerimiento Personal</a></li>
                         </ul>
                         
                     </li>
