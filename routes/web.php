@@ -1,40 +1,35 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-
-
-
+use App\Http\Controllers\organizacion\areasController;
+use App\Http\Controllers\organizacion\pptController;
 
 
 // RUTA PRINCIPAL 
-
-
 Route::get('/', function () {return view('tablero.index');});
 
 //BANCO DE CV
-
-Route::get('/vacantes',function(){return view('RH.reclutamiento.bancocv');});
-
+Route::get('/vacantes', function () {return view('RH.reclutamiento.bancocv');});
 
 
 //==============================================  ORGANIZACION  ============================================== 
 
 // ORGANIGRAMA
+Route::get('/organigrama', function () { return view('RH.organizacion.organigrama');});
+Route::post('/areasSave', [areasController::class, 'store']);
+Route::get('/areasDelete', [areasController::class, 'store']);
+Route::get('/TablaAreas', [areasController::class, 'TablaAreas']);
+Route::get('/TablaCargos/{area_id}', [areasController::class, 'TablaCargos']);
 
-Route::get('/organigrama',function(){return view('RH.organizacion.organigrama');});
 //PPT
-Route::get('/PPT',function(){return view('RH.organizacion.PPT');});
+Route::get('/PPT', function () {return view('RH.organizacion.PPT');});
+Route::post('/pptSave', [pptController::class, 'store']);
 
 
 // DPT
-Route::get('/DPT',function(){return view('RH.organizacion.DPT');});
-
-
+Route::get('/DPT', function () {return view('RH.organizacion.DPT');});
 // REQUERIMIENTO PERSONAL 
 Route::get('/REQUERIMIENTO',function(){return view('RH.organizacion.requerimiento_personal');});
-
-
 
 
 

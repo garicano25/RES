@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
     <link rel="icon" type="image/png" sizes="20x20" href="/assets/images/iconologo.png">
     <title>Results in Performance</title>
 
@@ -26,7 +27,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/transition.css@v2.0.0/dist/transition.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/transition.css@v2.0.0/dist/transition.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.css">
-    
+
     <!--Archivo css -->
     <link rel="stylesheet" href="assets/css/estilos.css">
     <link rel="stylesheet" href="assets/css/organigrama.css">
@@ -35,9 +36,10 @@
 
 
 </head>
+
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover;">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover;">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
                 <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
@@ -46,25 +48,25 @@
                 <ul class="navbar-nav">
                     <li class="nav-item" style="margin-right: 25px;">
                         <a class="nav-link" href="{{ url('/vacantes') }}">
-                            <i class="bi bi-file-earmark-person-fill text-white" style="font-size: 24px;"></i> 
+                            <i class="bi bi-file-earmark-person-fill text-white" style="font-size: 24px;"></i>
                         </a>
                     </li>
-                    
+
                     <li class="nav-item" style="margin-right: 25px;">
                         <a class="nav-link" href="#">
-                            <i class="bi bi-chat-left-fill text-white" style="font-size: 24px;"></i> 
+                            <i class="bi bi-chat-left-fill text-white" style="font-size: 24px;"></i>
                         </a>
                     </li>
                     <li class="nav-item" style="margin-right: 45px;">
                         <a class="nav-link" href="#">
-                            <i class="bi bi-person-fill text-white" style="font-size: 24px;"></i> 
+                            <i class="bi bi-person-fill text-white" style="font-size: 24px;"></i>
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    
+
 
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0, 124, 186, 0.850); -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75);">
         <div class="container-fluid">
@@ -79,11 +81,11 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
-                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff;  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff;  role=" button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-building" style="margin-right: 5px;"></i> <span class="d-lg-none">Organización</span><span class="d-none d-lg-inline">Organización</span>
                         </a>
 
-                        <ul class="dropdown-menu" >
+                        <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url('/organigrama') }}">Organigrama</a></li>
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/DPT')}}">DPT</a></li>
@@ -92,7 +94,7 @@
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/REQUERIMIENTO')}}">Requerimiento Personal</a></li>
                         </ul>
-                        
+
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
@@ -138,53 +140,78 @@
             </div>
         </div>
     </nav>
-    
+
+    <!-- Modal de carga -->
+    <style>
+        #modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Ajusta la opacidad aquí */
+            z-index: 999;
+            display: none;
+            /* Empieza oculto */
+        }
+
+        #loading-image {
+            position: absolute;
+            top: 40%;
+            left: 28%;
+        }
+    </style>
+    <div id="modal-overlay">
+        <img src="/assets/images/Colorancho.png" class="ld ld-bounce" alt="Cargando" style="max-width: 100%; max-height: 214px;" id="loading-image">
+    </div>
 
 
-    <div style="margin-top: 25px;"> 
+    <div style="margin-top: 25px;">
         @yield('contenido')
     </div>
 
 
     <!-- Jquery 3.6.4-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
     <!--Bootstrap -->
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
-
-
     <!-- Datatables 1.13.1  v.5.2 -->
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
-
     <!-- sweetalert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-
     <!-- Animación -->
     <script src="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.js"></script>
+    <!-- Funciones generales -->
+    <script src="/assets/js_sitio/funciones.js"></script>
+
+
+
+    @if(request()->is('vacantes'))
     <!-- Banco CV -->
     <script src="/assets/js_sitio/bancocv.js"></script>
-    
+    @endif
+
+
+    @if(request()->is('organigrama'))
     <!-- organización -->
     <script src="/assets/js_sitio/organizacion/organigrama.js"></script>
 
+    @endif
+
+    @if(request()->is('PPT'))
+
     <script src="/assets/js_sitio/organizacion/PPT.js"></script>
+
+    @endif
+
+    @if(request()->is('DPT'))
     <script src="/assets/js_sitio/organizacion/DPT.js"></script>
 
-
-  
-    <!-- Organigrama-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.4.0/backbone-min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jointjs/3.5.1/joint.min.js"></script>
-<!-- Incluir la librería SheetJS desde una CDN -->
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.4/xlsx.full.min.js"></script>
+    @endif
 
 </body>
+
 </html>

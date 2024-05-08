@@ -14,3 +14,65 @@
     display: inline-block;
     transition: transform 0.3s ease; /* Transición suave para el efecto de zoom */
 }
+
+/* Estilo para la tabla */
+.TableCustom table {
+    font-family: Arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    border: 2px solid #3498db;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezados de columna */
+.TableCustom th {
+    background-color: rgba(0, 124, 186, 0.850);
+    color: #ffffff;
+    font-weight: bold;
+    /* font-size: 22px; */
+    text-align: left;
+    border-radius: 5px;
+    /* padding: 10px; */
+}
+
+/* Filas pares
+ tr:nth-child(even) {
+    background-color: rgba(0, 124, 186, 0.850);
+}
+
+/* Filas impares */
+ /* tr:nth-child(odd) {
+    background-color: rgba(0, 124, 186, 0.850); */
+/* } */
+
+/* Celdas de datos */
+ td {
+    /* padding: 8px; */
+    text-align: left; 
+    /* font-size: 22px; */
+}
+
+/* Estilo para el hover de las filas */
+/* tr:hover {
+    background-color: #69b8ed;
+    color: #ffffff;
+    transition: background-color 0.3s;
+} */
+
+/* Estilo para la clase activa (puedes agregar esta clase a la fila seleccionada) */
+/* tr.active {
+    background-color: #ff6b6b;
+    color: #ffffff;
+} */
+
+/* Agrega un borde alrededor de la tabla */
+/* table-bordered {
+    border: 1px solid #3498db;
+}  */
+
+ol {
+    background-color: rgb(164, 214, 94) !important;
+    padding: 10px !important;
+    border-radius: 10px !important;
+}
