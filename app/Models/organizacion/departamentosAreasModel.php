@@ -15,6 +15,8 @@ class departamentosAreasModel extends Model
         'NOMBRE',
         'TIPO_AREA_ID',
         'AREA_ID',
+        'TIENE_ENCARGADO',
+        'ENCARGADO_AREA_ID',
         'ACTIVO'
     ];
 
