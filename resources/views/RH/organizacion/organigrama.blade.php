@@ -85,7 +85,7 @@
               </form>
 
               <!-- Tabla de los encargados -->
-              <table id="TablaEncargados" class="table table-hover bg-white table-bordered text-center w-100">
+              <table id="TablaEncargados" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
 
               </table>
             </div>
@@ -109,7 +109,7 @@
                 </div>
               </form>
               <!-- Tabla de las cargas -->
-              <table id="TablaCargos" class="table table-hover bg-white table-bordered text-center w-100">
+              <table id="TablaCargos" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
 
               </table>
             </div>

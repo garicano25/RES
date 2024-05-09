@@ -81,6 +81,8 @@ class areasController extends Controller{
 
                 $value->BTN_ELIMINAR = '<button type="button" class="btn btn-danger btn-circle ELIMINAR"><i class="bi bi-trash3"></i></button>';
 
+               
+
                 // } else {
 
                 //     $value->boton_eliminar = '<button type="button" class="btn btn-secondary btn-circle"><i class="fa fa-ban"></i></button>';
@@ -138,24 +140,28 @@ class areasController extends Controller{
                 return response()->json($response);
 
                 break;
+
             //Guardar Departamento
             case 2:
 
-                    //Guardamos departamento
-                    if ($request->ID_DEPARTAMENTO_AREA == 0) {
+                //Guardamos departamento
+                if ($request->ID_DEPARTAMENTO_AREA == 0) {
 
-                        DB::statement('ALTER TABLE departamentos_areas AUTO_INCREMENT=1;');
-                        $areas = departamentosAreasModel::create($request->all());
-
-                    } else { //Editamos departamento
-
-                        $areas = departamentosAreasModel::find($request->ID_DEPARTAMENTO_AREA);
-                        $areas->update($request->all());
-                    }
+                    DB::statement('ALTER TABLE departamentos_areas AUTO_INCREMENT=1;');
+                    $departamentos = departamentosAreasModel::create($request->all());
 
                     $response['code']  = 1;
-                    $response['departamento']  = $areas;
+                    $response['departamento']  = $departamentos;
                     return response()->json($response);
+
+                } else { //Eliminar departamento
+
+                    $departamentos = departamentosAreasModel::where('ID_DEPARTAMENTO_AREA', $request['ID_DEPARTAMENTO_AREA'])->delete();
+
+                    $response['code']  = 1;
+                    $response['departamento']  = 'Eliminado';
+                    return response()->json($response);
+                }
 
                 break;
 

@@ -41,12 +41,12 @@ $("#guardarArea").click(function (e) {
                     setTimeout(() => {
 
                         ID_AREA = data.area.ID_AREA
-                        // $('#guardarArea').text('Guardar cambios')
                         $('#nav-encargados-tab').prop('disabled', false)
                         $('#nav-cargos-tab').prop('disabled', false)
                         alertToast('Areas guardada exitosamente', 'success', 3000)
                         TablaAreas.ajax.reload()
-                    
+                        TablaDepartamentos(ID_AREA)
+                        
                         
                     }, 300);
                     
@@ -70,7 +70,6 @@ $("#guardarArea").click(function (e) {
                     setTimeout(() => {
 
                         ID_AREA = data.area.ID_AREA
-                        // $('#guardarArea').text('Guardar cambios')
                         $('#nav-encargados-tab').prop('disabled', false)
                         $('#nav-cargos-tab').prop('disabled', false)
                         alertToast('Areas editada exitosamente', 'success', 3000)
@@ -82,8 +81,6 @@ $("#guardarArea").click(function (e) {
         }
     }
 });
-
-
 
 
 
@@ -106,8 +103,9 @@ $("#guardarDepartamento").click(function (e) {
                 setTimeout(() => {
 
                     alertToast('Departamento guardado exitosamente', 'success', 3000)
-                        TablaAreas.ajax.reload()
-                        TablaCargos.ajax.reload()
+                    TablaAreas.ajax.reload()
+                    TablaCargos.ajax.reload()
+                    $('#CARGO_DESCRIPCION').val('')
                     
                 }, 300);  
             })
@@ -191,23 +189,24 @@ $('#TablaAreas tbody').on('click', 'td>button.ELIMINAR', function () {
 
     var tr = $(this).closest('tr');
     var row = TablaAreas.row(tr);
-    ID_AREA = row.data().ID_AREA
 
     data = {
         api: 1,
         ELIMINAR: 1,
-        ID_AREA: ID_AREA
+        ID_AREA: row.data().ID_AREA
     }
-    eliminarDatoTabla(data, TablaAreas, 'areasDelete')
+    
+    eliminarDatoTabla(data, [TablaAreas], 'areasDelete')
 
 })
 
 
 function TablaDepartamentos(id_area) {
 
-    if (TablaCargos) {
+    if (TablaCargos != null) {
         TablaCargos.destroy()
-    }
+        
+    }   
 
     TablaCargos = $("#TablaCargos").DataTable({
         language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json", },
@@ -234,7 +233,7 @@ function TablaDepartamentos(id_area) {
             },
             complete: function () {
                 TablaCargos.columns.adjust().draw()
-                
+            
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alertErrorAJAX(jqXHR, textStatus, errorThrown);
@@ -253,5 +252,21 @@ function TablaDepartamentos(id_area) {
             { target: 2, title: 'Eliminar', className: 'all text-center' },
         ]
     })
+
 }
+
+
+$('#TablaCargos').on('click', 'button.ELIMINAR', function () {
+    var tr = $(this).closest('tr');
+    var row = TablaCargos.row(tr);
+
+    var data = {
+        api: 2,
+        ID_DEPARTAMENTO_AREA: row.data().ID_DEPARTAMENTO_AREA
+    };
+
+    eliminarDatoTabla(data, [TablaCargos, TablaAreas], 'areasDelete');
+    
+
+});
 

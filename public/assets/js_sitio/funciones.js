@@ -2319,10 +2319,10 @@ function editarDatoTabla( data, form = 'OnlyForm', modalID = 'ModalID') {
 }
 
 
-function eliminarDatoTabla(data, varTable, url) {
+function eliminarDatoTabla(data, arregloTable, url) {
      alertMensajeConfirm({
-            title: "Esta seguro de eliminar este registro?",
-            text: "Esta accion es irreversible",
+            title: "¿Está seguro de eliminar este registro?",
+            text: "Está acción es irreversible",
             icon: "warning",
         }, function () { 
             
@@ -2335,22 +2335,23 @@ function eliminarDatoTabla(data, varTable, url) {
                 cache: false,
                 success:function(dato)
                 {
-                  varTable.ajax.reload()
+
+                  for (var i = 0; i < arregloTable.length; i++) {
+                    arregloTable[i].ajax.reload();
+                  }
                   
                   setTimeout(() => {
                     
-                    swal({
-                        title: "Correcto",
-                         text: "Registro eliminado correctamente",
-                        type: "success", 
-                        buttons: {
-                            visible: false
-                        },
-                        timer: 1500,
-                        showConfirmButton: false
-                    });
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Registro eliminado',
+                        text: 'La eliminación fue realizada exitosamente',
+                        timer: 2000,
+                        timerProgressBar: true
+                    })
 
                   }, 1000);
+
                 },
                 error: function(dato){
                     return false;
