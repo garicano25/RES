@@ -1,0 +1,83 @@
+<?php
+
+namespace App\Models\organizacion;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class formulariodptModel extends Model
+{
+
+    protected $primaryKey = 'ID_FORMULARIO_DPT';
+    protected $table = 'formulario_dpt';
+    protected $fillable = [
+        'DEPARTAMENTOS_AREAS_ID',
+        'AREA_TRABAJO_DPT',
+        'PROPOSITO_FINALIDAD_DPT',
+        'NIVEL_JERARQUICO_DPT',
+        'PUESTO_REPORTA_DPT',
+        'PUESTO_LE_REPORTAN_DPT',
+        'PUESTOS_INTERACTUAN_DPT',
+        'PUESTOS_DIRECTOS_DPT',
+        'LUGAR_TRABAJO_DPT',
+        'DISPONIBILIDAD_VIAJAR_SI_DPT',
+        'DISPONIBILIDAD_VIAJAR_NO_DPT',
+        'HORARIO_ENTRADA_DPT',
+        'HORARIO_SALIDA_DPT',
+        'FUNCIONES_CARGO_DPT',
+        'FUNCIONES_GESTION_DPT',
+        'INNOVACION_BAJO_DPT',
+        'INNOVACION_MEDIO_DPT',
+        'INNOVACION_ALTO_DPT',
+        'PASION_BAJO_DPT',
+        'PASION_MEDIO_DPT',
+        'PASION_ALTO_DPT',
+        'SERVICIO_BAJO_DPT',
+        'SERVICIO_MEDIO_DPT',
+        'SERVICIO_ALTO_DPT',
+        'COMUNICACION_BAJO_DPT',
+        'COMUNICACION_MEDIO_DPT',
+        'COMUNICACION_ALTO_DPT',
+        'TRABAJO_BAJO_DPT',
+        'TRABAJO_MEDIO_DPT',
+        'TRABAJO_ALTO_DPT',
+        'INTEGRIDAD_BAJO_DPT',
+        'INTEGRIDAD_MEDIO_DPT',
+        'INTEGRIDAD_ALTO_DPT',
+        'RESPONSABILIDAD_BAJO_DPT',
+        'RESPONSABILIDAD_MEDIO_DPT',
+        'RESPONSABILIDAD_ALTO_DPT',
+        'ADAPTABILIDAD_BAJO_DPT',
+        'ADAPTABILIDAD_MEDIO_DPT',
+        'ADAPTABILIDAD_ALTO_DPT',
+        'LIDERAZGO_BAJO_DPT',
+        'LIDERAZGO_MEDIO_DPT',
+        'LIDERAZGO_ALTO_DPT',
+        'TOMADECISION_BAJO_DPT',
+        'TOMADECISION_MEDIO_DPT',
+        'TOMADECISION_ALTO_DPT',
+        'DE_INFORMACION_SI_DPT',
+        'DE_INFORMACION_NO_DPT',
+        'DE_RECURSOS_SI_DPT',
+        'DE_RECURSOS_NO_DPT',
+        'DE_INFORMACION_ESPECIFIQUE_DPT',
+        'DE_RECURSOS_ESPECIFIQUE_DPT',
+        'DE_EQUIPOS_SI_DPT',
+        'DE_EQUIPOS_NO_DPT',
+        'DE_VEHICULOS_SI_DPT',
+        'DE_VEHICULOS_NO_DPT',
+        'DE_EQUIPOS_ESPECIFIQUE_DPT',
+        'DE_VEHICULOS_ESPECIFIQUE_DPT',
+        'OBSERVACIONES_DPT',
+        'ORGANIGRAMA_DPT',
+        'ELABORADO_NOMBRE_DPT',
+        'ELABORADO_FIRMA_DPT',
+        'ELABORADO_FECHA_DPT',
+        'REVISADO_NOMBRE_DPT',
+        'REVISADO_FIRMA_DPT',
+        'REVISADO_FECHA_DPT',
+        'AUTORIZADO_NOMBRE_DPT',
+        'AUTORIZADO_FIRMA_DPT',
+        'AUTORIZADO_FECHA_DPT',
+    ];
+}

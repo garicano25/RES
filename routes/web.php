@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\organizacion\areasController;
 use App\Http\Controllers\organizacion\pptController;
+use App\Http\Controllers\organizacion\dptController;
+
+
 
 
 // RUTA PRINCIPAL 
@@ -29,6 +32,22 @@ Route::get('/TablaPPT', [pptController::class, 'TablaPPT']);
 
 
 // DPT
-Route::get('/DPT', function () {return view('RH.organizacion.DPT');});
+
+Route::get('/DPT', [dptController::class, 'index']);
+Route::post('/dptSave', [dptController::class, 'store']);
+Route::get('/TablaDPT', [dptController::class, 'TablaDPT']);
+
+
+
+
+
+
+
+
+
+
+
+
+
 // REQUERIMIENTO PERSONAL 
 Route::get('/REQUERIMIENTO', function () {return view('RH.organizacion.requerimiento_personal');});

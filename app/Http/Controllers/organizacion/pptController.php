@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\organizacion\cursospptModel;
 use App\Models\organizacion\formulariopptModel;
-use DB;
+use DB;     
 
 class pptController extends Controller{
 
