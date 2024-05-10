@@ -1,6 +1,7 @@
 //VARIABLES
 ID_FORMULARIO_DPT = 0
-var contactos = [];
+var cargos = [];
+var gestion = [];
 
 
 
@@ -70,27 +71,28 @@ TablaDPT = $("#TablaDPT").DataTable({
 
     ]
 })
-
 $("#guardarFormDPT").click(function (e) {
     e.preventDefault();
-    
-    var formData = new FormData($('#formularioDPT')[0]);
 
-          
 
-    // Recopila los datos de los contactos predeterminados
-    var contactos = [];
-    $(".funciones-responsabilidades-cargo").each(function() {
-        var contacto = {
-            'FUNCION_CLAVE_GESTION_DPT': $(this).find("input[name='FUNCION_CLAVE_GESTION_DPT']").val(),
+                var cargos = [];
+                $(".generarcargo").each(function() {
+                    var cargojs = {
+                        'FUNCIONES_CARGO_DPT': $(this).find("input[name='FUNCIONES_CLAVE_CARGO_DPT']").val(),
+                    }
+                    cargos.push(cargojs);
 
-        };
-        contactos.push(contacto);
-    });
+                });
 
-    formData.append('FUNCIONES_CARGO_DPT',JSON.stringify(contactos));
+                var gestion = [];
+                $(".generargestion").each(function() {
+                    var gestionjs = {
+                        'FUNCIONES_GESTION_DPT': $(this).find("input[name='FUNCIONES_CLAVE_GESTION_DPT']").val(),
+                    }
+                    gestion.push(gestionjs);
+                });
 
-    
+
     if (ID_FORMULARIO_DPT == 0) {
         
         alertMensajeConfirm({
@@ -99,14 +101,34 @@ $("#guardarFormDPT").click(function (e) {
             icon: "question",
         },async function () { 
             
+            data={api: 1,
+                        ID_FORMULARIO_DPT:ID_FORMULARIO_DPT,
+                        CARGOS:JSON.stringify(cargos),
+                        GESTION:JSON.stringify(gestion),
+
+
+            }
             await loaderbtn('guardarFormDPT')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_DPT: ID_FORMULARIO_DPT }, 'dptSave', 'formularioDPT', 'guardarFormDPT', { callbackAfter: true}, false, function (data) {
+            await ajaxAwaitFormData(data, 'dptSave', 'formularioDPT', 'guardarFormDPT', { callbackAfter: true, callbackBefore: true }, () => {
+        
+            
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
                 
                 setTimeout(() => {
                     
                     ID_FORMULARIO_DPT = data.DPT.ID_FORMULARIO_DPT
-                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para hacer uso del DPT')
-                    $('miModal_DPT').modal('hide')
+                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para hacer uso del DPT',null,null,1500)
+                    $('#miModal_DPT').modal('hide')
                     document.getElementById('formularioDPT').reset();
                     TablaDPT.ajax.reload()
                     
@@ -133,75 +155,38 @@ $("#guardarFormDPT").click(function (e) {
                     
                     
                     ID_FORMULARIO_DPT = data.DPT.ID_FORMULARIO_DPT
-                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
-                    $('miModal_DPT').modal('hide')
+                    alertMensaje('success', 'Información editada correctamente', 'Información guardada',null,null,1500)
+                    $('#miModal_DPT').modal('hide')
                     document.getElementById('formularioDPT').reset();
                     TablaDPT.ajax.reload()
-                    
-                    
                     
                 }, 300);  
             })
         }, 1)
     }
-    
+ 
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", function() {
-    const botonAgregar = document.getElementById('botonagregarContacto');
-    botonAgregar.addEventListener('click', agregarContacto);
+    const botonAgregar = document.getElementById('botonagregarcargo');
+    botonAgregar.addEventListener('click', botonagregarcargo);
 
-    function agregarContacto() {
+    function botonagregarcargo() {
         const divContacto = document.createElement('div');
-        divContacto.classList.add('row', 'generarlistadecontacto','m-3');
+        divContacto.classList.add('row', 'generarcargo', 'm-3');
         divContacto.innerHTML = `
-       
-            <div class="col-lg-12 col-sm-1">
-                    
-                <div class="col-lg-4 col-sm-6">
-                    <div class="form-group">
-                        <label>Área contacto: *</label>
-                        <input type="text" class="form-control" name="FUNCION_CLAVE_GESTION_DPT" required>
-                    </div>
-                </div>
-                
-             
-                <div class="col-lg-3 col-sm-6">
-                
-                <div class="col-1">
-                    <div class="form-group" style="text-align: center;">
-                        <button type="button" class="btn btn-danger botonEliminarContacto">Eliminar contacto <i class="fa fa-trash"></i></button>
-                    </div>
-                </div>
-            
+        <div class="row mb-3">
+        
+            <div class="col-10">
+                             <input type="text" class="form-control" name="FUNCIONES_CLAVE_CARGO_DPT" id="FUNCIONES_CLAVE_CARGO_DPT" required>
+            </div>
+            <div class="col-1">
+                <button type="button" class="btn btn-danger botonEliminarContacto"><i class="bi bi-trash"></i></i></button>  
+            </div>
+        </div>
         `;
-        const contenedor = document.querySelector('.funciones-responsabilidades-cargo');
+        const contenedor = document.getElementById('funciones-responsabilidades-cargo');
         contenedor.appendChild(divContacto);
 
         const botonEliminar = divContacto.querySelector('.botonEliminarContacto');
@@ -213,59 +198,50 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-    function eliminarFuncion(elemento) {
-        var contadorEliminado = elemento.parentElement.parentElement.firstElementChild.firstElementChild.innerText;
-        contadorFunciones--;
-        elemento.parentElement.parentElement.remove();
-        actualizarContadores(contadorEliminado);
-    }
-
-    function actualizarContadores(contadorEliminado) {
-        var contadores = document.querySelectorAll('#funciones-responsabilidades-cargo .col-1 span');
-        contadores.forEach(function(contador, index) {
-            if (parseInt(contador.innerText) > parseInt(contadorEliminado)) {
-                contador.innerText = parseInt(contador.innerText) - 1;
-            }
-        });
-    }
-
-
-
-    var contadorFunciones1 = 0;
-    $('#botonagregargestion').on('click', function(e){
-        e.preventDefault();
-
-        contadorFunciones1++;
-        var inputHTML = '<div class="row mb-3">' +
-                            '<div class="col-1 d-flex align-items-center justify-content-center">' +
-                                '<span>' + contadorFunciones1 + '</span>' +
-                            '</div>' +
-                            '<div class="col-10">' +
-                                '<input type="text" id="FUNCION_CLAVE_GESTION_DPT' + contadorFunciones1 + '" name="FUNCION_CLAVE_GESTION_DPT' + contadorFunciones1 + '" class="form-control text-center">' +
-                            '</div>' +
-                            '<div class="col-1">' +
-                                '<button class="btn btn-danger" onclick="eliminarFuncion1(this)"><i class="bi bi-trash"></i></button>' +
-                            '</div>' +
-                        '</div>';
-
-        document.getElementById('funciones-responsabilidades-gestion').insertAdjacentHTML('beforeend', inputHTML);
-    })
-
-    function eliminarFuncion1(elemento) {
-        var contadorEliminado1 = elemento.parentElement.parentElement.firstElementChild.firstElementChild.innerText;
-        contadorFunciones1--;
-        elemento.parentElement.parentElement.remove();
-        actualizarContadores1(contadorEliminado1);
-    }
-
-    function actualizarContadores1(contadorEliminado1) {
-        var contadores1 = document.querySelectorAll('#funciones-responsabilidades-gestion.col-1 span');
-        contadores1.forEach(function(contador1, index) {
-            if (parseInt(contador1.innerText) > parseInt(contadorEliminado1)) {
-                contador1.innerText = parseInt(contador1.innerText) - 1;
-            }
-        });
-    }
-
-
     
+document.addEventListener("DOMContentLoaded", function() {
+    const botonAgregar = document.getElementById('botonagregargestion');
+    botonAgregar.addEventListener('click', botonagregargestion);
+
+    function botonagregargestion() {
+        const divGestion = document.createElement('div');
+        divGestion.classList.add('row', 'generargestion', 'm-3');
+        divGestion.innerHTML = `
+        <div class="row mb-3">
+        
+                    <div class="col-10">
+
+                        <input type="text" class="form-control" name="FUNCIONES_CLAVE_GESTION_DPT" id="FUNCIONES_CLAVE_GESTION_DPT" required>
+                
+                </div>
+                <div class="col-1">
+                        <button type="button" class="btn btn-danger botonEliminarContacto"><i class="bi bi-trash"></i></i></button>
+                   
+                </div>
+        </div>
+        `;
+        const contenedor = document.getElementById('funciones-responsabilidades-gestion');
+        contenedor.appendChild(divGestion);
+
+        const botonEliminar = divGestion.querySelector('.botonEliminarContacto');
+        botonEliminar.addEventListener('click', function() {
+            contenedor.removeChild(divGestion);
+        });
+    }
+});
+
+
+
+   
+
+$('#TablaDPT tbody').on('click', 'td>button.EDITAR', function () {
+
+    var tr = $(this).closest('tr');
+    var row = TablaDPT.row(tr);
+    ID_FORMULARIO_DPT = row.data().ID_FORMULARIO_DPT
+
+    //Rellenamos los datos del formulario
+    editarDatoTabla(row.data(), 'formularioPPT','miModal_DPT', 1)
+
+  
+})

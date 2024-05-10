@@ -41,12 +41,12 @@
                       <div class="col-6">
                         <div class="form-group">
                             <label>Nombre del puesto</label>
-                            <select class="form-control" id="areasSelect" name="DEPARTAMENTOS_AREAS_ID">
+                            <select class="form-control" id="DEPARTAMENTOS_AREAS_ID" name="DEPARTAMENTOS_AREAS_ID">
                                 <option selected disabled>Seleccione una opción</option>
                                 @foreach ($areas as $area)
-                                <option value="{{ $area->id }}">{{ $area->NOMBRE }}</option>
-                            @endforeach
-                            
+                                <option value="{{ $area->ID_DEPARTAMENTO_AREA }}">{{ $area->NOMBRE }}</option>
+                                @endforeach
+
                             </select>
                         </div>
                     </div>
