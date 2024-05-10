@@ -48,8 +48,13 @@
                         <div class="row mb-3">
                             <div class="col-4">
                                 <div class="form-group">
-                                    <label>Nombre del puesto</label>
-                                    <input type="text" class="form-control" id="NOMBRE_PUESTO_PPT" name="NOMBRE_PUESTO_PPT">
+                                    <label>Nombre del puesto *</label>
+                                    <select class="form-control" id="DEPARTAMENTO_AREA_ID" name="DEPARTAMENTO_AREA_ID" required>
+                                        <option selected disabled>Seleccione una opción...</option>
+                                        @foreach ($areas as $area)
+                                        <option value="{{ $area->ID_DEPARTAMENTO_AREA }}">{{ $area->NOMBRE }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-4">
@@ -2410,7 +2415,7 @@
                         </div>
 
 
-                        
+
                     </div>
                 </div>
                 <div class="modal-footer mx-5">

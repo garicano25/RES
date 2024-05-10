@@ -30,13 +30,104 @@ class areasController extends Controller
 
 
                 //Obtenemos el area afectada
-                $departamentos = DB::select('SELECT NOMBRE FROM departamentos_areas da  WHERE da.AREA_ID = ? ', [$value->ID_AREA]);
+                $departamentos = DB::select('SELECT NOMBRE, ID_DEPARTAMENTO_AREA FROM departamentos_areas da  WHERE da.AREA_ID = ? ', [$value->ID_AREA]);
                 $encargados = DB::select('SELECT NOMBRE_CARGO FROM encargados_areas da  WHERE da.AREA_ID = ? ', [$value->ID_AREA]);
 
 
                 $cadena = "";
                 foreach ($departamentos  as $key => $val) {
-                    $cadena .= "<li>" .  $val->NOMBRE . "</li>";
+
+                    $ppt = DB::select("SELECT IF(COUNT(ppt.ID_FORMULARIO_PPT) > 0, 1, 0) AS TIENE_PPT,  
+                                        IF(COUNT(dpt.ID_FORMULARIO_DPT) > 0, 1, 0) AS TIENE_DPT
+                                        FROM departamentos_areas d
+                                        LEFT JOIN formulario_ppt ppt ON ppt.DEPARTAMENTO_AREA_ID = d.ID_DEPARTAMENTO_AREA 
+                                        LEFT JOIN formulario_dpt dpt ON dpt.DEPARTAMENTOS_AREAS_ID = d.ID_DEPARTAMENTO_AREA
+                                        WHERE d.ID_DEPARTAMENTO_AREA = ?", [$val->ID_DEPARTAMENTO_AREA]);
+
+
+                    //TIENE PPT Y DPT
+                    if($ppt[0]->TIENE_PPT == 1 && $ppt[0]->TIENE_DPT == 1){
+
+                        $cadena .= "
+                        
+
+                        <div class='row'>
+                            <div class='col-8'>
+                                <li class='mb-2'>" . $val->NOMBRE . " </li>
+                            </div>
+                            <div class='col-4 justify-content-end d-flex'>
+                                <lu>
+                                    <span class='badge text-bg-success' ><i class='bi bi-check-lg'></i> PPT </span>
+                                    <span class='badge text-bg-success' style='margin-left: 10px'><i class='bi bi-check-lg'></i> DPT </span>
+                                </lu>
+                            </div>
+                        </div>
+
+                        ";
+
+                    //NO TIENEN PPT NI DPT
+                    }else if ($ppt[0]->TIENE_PPT == 0 && $ppt[0]->TIENE_DPT == 0){
+
+                        
+
+                        $cadena .= "
+                        
+
+                        <div class='row'>
+                            <div class='col-8'>
+                                <li class='mb-2'>" . $val->NOMBRE . " </li>
+                            </div>
+                            <div class='col-4 justify-content-end d-flex'>
+                                <lu>
+                                    <span class='badge text-bg-danger' ><i class='bi bi-x'></i> PPT </span> 
+                                    <span class='badge text-bg-danger' style='margin-left: 10px'><i class='bi bi-x'></i> DPT </span> 
+                                </lu>
+                            </div>
+                        </div>
+
+                        ";
+
+                        //TIEN PPT Y NO TIENE DPT
+                    } else if ($ppt[0]->TIENE_PPT == 1 && $ppt[0]->TIENE_DPT == 0) {
+
+
+                        $cadena .= "
+                        <div class='row'>
+                            <div class='col-8'>
+                                <li class='mb-2'>" . $val->NOMBRE . " </li>
+                            </div>
+                            <div class='col-4 justify-content-end d-flex'>
+                                <lu>
+                                    <span class='badge text-bg-success' ><i class='bi bi-check-lg'></i> PPT </span> 
+                                    <span class='badge text-bg-danger' style='margin-left: 10px'><i class='bi bi-x'></i> DPT </span> 
+                                </lu>
+                            </div>
+                        </div>
+
+                        ";
+
+                        //NO TIENE PPT Y TIENE DPT
+                    } else if ($ppt[0]->TIENE_PPT == 0 && $ppt[0]->TIENE_DPT == 1) {
+
+                        $cadena .= "
+                        
+                        <div class='row'>
+                            <div class='col-8'>
+                                <li class='mb-2'>" . $val->NOMBRE . " </li>
+                            </div>
+                            <div class='col-4 justify-content-end d-flex'>
+                                <lu>
+                                    <span class='badge text-bg-danger' ><i class='bi bi-x'></i> PPT </span>
+                                    <span class='badge text-bg-success' style='margin-left: 10px'><i class='bi bi-check-lg'></i> DPT </span>
+                                </lu>
+                            </div>
+                        </div>
+
+                        ";
+
+                    }
+
+
                 }
 
                 $encargados_list = "";

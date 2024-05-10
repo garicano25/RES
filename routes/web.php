@@ -30,7 +30,7 @@ Route::get('/getDataOrganigrama/{area_id}/{esGeneral}', [areasController::class,
 
 
 //PPT
-Route::get('/PPT', function () {return view('RH.organizacion.PPT');});
+Route::get('/PPT', [pptController::class, 'index']);
 Route::post('/pptSave', [pptController::class, 'store']);
 Route::get('/TablaPPT', [pptController::class, 'TablaPPT']);
 

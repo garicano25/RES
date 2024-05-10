@@ -8,6 +8,8 @@ const ModalArea = document.getElementById('miModal_PPT')
 ModalArea.addEventListener('hidden.bs.modal', event => {
   
     ID_FORMULARIO_PPT = 0
+
+
 })
 
 
@@ -49,7 +51,7 @@ TablaPPT = $("#TablaPPT").DataTable({
     },
     columns: [
         { data: 'ID_FORMULARIO_PPT' },
-        { data: 'NOMBRE_PUESTO_PPT' },
+        { data: 'AREA_TRABAJADOR_PPT' },
         { data: 'NOMBRE_TRABAJADOR_PPT' },
         { data: 'ELABORADO_POR' },
         { data: 'REVISADO_POR' },
@@ -62,7 +64,7 @@ TablaPPT = $("#TablaPPT").DataTable({
     ],
     columnDefs: [
         { target: 0, title: '#', className: 'all' },
-        { target: 1, title: 'Puesto', className: 'all' },
+        { target: 1, title: 'Area de trabajo', className: 'all' },
         { target: 2, title: 'Trabajador', className: 'all' },
         { target: 3, title: 'Elaborado por', className: 'all text-center' },
         { target: 4, title: 'Revisado por', className: 'all text-center' },
@@ -91,13 +93,36 @@ $("#guardarFormPPT").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarFormPPT')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_PPT: ID_FORMULARIO_PPT }, 'pptSave', 'formularioPPT', 'guardarFormPPT', { callbackAfter: true}, false, function (data) {
+            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_PPT: ID_FORMULARIO_PPT }, 'pptSave', 'formularioPPT', 'guardarFormPPT', { callbackAfter: true, callbackBefore: true }, () => {
+        
+                // Swal.fire({
+                //     title: "Espere un momento!",
+                //     text: "Estamos guardando la información.",
+                //     imageUrl: "/assets/images/Gif.gif",
+                //     imageWidth: 350,
+                //     imageHeight: 305,
+                //     imageAlt: "Loader Gif",
+                //     showConfirmButton: false,
+
+                // });
+
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
                     
                 setTimeout(() => {
 
                     ID_FORMULARIO_PPT = data.PPT.ID_FORMULARIO_PPT
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para hacer uso del PPT')
-                     $('miModal_PPT').modal('hide')
+                     $('#miModal_PPT').modal('hide')
                     document.getElementById('formularioPPT').reset();
                     TablaPPT.ajax.reload()
 
@@ -146,7 +171,7 @@ $('#TablaPPT tbody').on('click', 'td>button.EDITAR', function () {
     ID_FORMULARIO_PPT = row.data().ID_FORMULARIO_PPT
 
     //Rellenamos los datos del formulario
-    editarDatoTabla(row.data(), 'formularioPPT', 'miModal_PPT')
+    editarDatoTabla(row.data(), 'formularioPPT','miModal_PPT', 1)
 
   
 })

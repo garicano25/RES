@@ -13,7 +13,7 @@ class formulariopptModel extends Model
     protected $table = 'formulario_ppt';
     protected $fillable = [
         'USUARIO_ID',
-        'NOMBRE_PUESTO_PPT',
+        'DEPARTAMENTO_AREA_ID',
         'NOMBRE_TRABAJADOR_PPT',
         'AREA_TRABAJADOR_PPT',
         'PROPOSITO_FINALIDAD_PPT',
