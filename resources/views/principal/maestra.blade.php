@@ -37,7 +37,7 @@
 
 </head>
 
-<body>
+<body class="body">
 
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover;">
         <div class="container-fluid">
@@ -198,6 +198,8 @@
     @if(request()->is('organigrama'))
     <!-- organización -->
     <script src="/assets/js_sitio/organizacion/organigrama.js"></script>
+    <script src="/assets/js/GOJs/go.js"></script>
+
 
     @endif
 

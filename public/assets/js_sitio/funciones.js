@@ -122,7 +122,7 @@ function calcularEdad(fecha) {
 
 
 //Ajax Async (NO FORM DATA SUPPORT)
-async function ajaxAwait(dataJson, apiURL,
+async function ajaxAwait(dataJson, apiURL, method,
   config = {
     alertBefore: false
   },
@@ -149,7 +149,7 @@ async function ajaxAwait(dataJson, apiURL,
       url: apiURL,
       data: dataJson,
       dataType: 'json',
-      type: 'POST',
+      type: method,
       beforeSend: function () {
         config.callbackBefore ? callbackBefore() : 1;
       },
@@ -2373,3 +2373,5 @@ function loaderbtn(btn) {
         }
     })
 }
+
+
