@@ -111,6 +111,7 @@ class pptController extends Controller
                         $response['code']  = 1;
                         $response['PPT']  = $PPT;
                         return response()->json($response);
+                        
                     } else { //Editamos el ppt y eliminar ppt
 
 

@@ -104,9 +104,11 @@ class dptController extends Controller
                             }
                         }
 
+                    $request['FUNCIONES_CARGOS_DPT'] = $request->CARGOS;
+                    $DPT->update($request->all());
 
-
-                    
+                    $request['FUNCIONES_GESTION_DPT'] = $request->GESTION;
+                    $DPT->update($request->all());
 
 
                     $response['code'] = 1;
@@ -122,3 +124,4 @@ class dptController extends Controller
         }
     }
 }
+

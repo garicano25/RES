@@ -154,7 +154,6 @@ $("#guardarFormPPT").click(function (e) {
                     document.getElementById('formularioPPT').reset();
                     TablaPPT.ajax.reload()
 
-                    
 
                 }, 300);  
             })
@@ -175,3 +174,4 @@ $('#TablaPPT tbody').on('click', 'td>button.EDITAR', function () {
 
   
 })
+
