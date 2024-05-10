@@ -8,6 +8,7 @@ const ModalArea = document.getElementById('miModal_PPT')
 ModalArea.addEventListener('hidden.bs.modal', event => {
   
     ID_FORMULARIO_PPT = 0
+     $('.collapse').collapse('hide')
 
 
 })
@@ -121,7 +122,7 @@ $("#guardarFormPPT").click(function (e) {
                 setTimeout(() => {
 
                     ID_FORMULARIO_PPT = data.PPT.ID_FORMULARIO_PPT
-                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para hacer uso del PPT')
+                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para hacer uso del PPT',null,null, 1500)
                      $('#miModal_PPT').modal('hide')
                     document.getElementById('formularioPPT').reset();
                     TablaPPT.ajax.reload()
@@ -166,12 +167,13 @@ $("#guardarFormPPT").click(function (e) {
 
 $('#TablaPPT tbody').on('click', 'td>button.EDITAR', function () {
 
+
     var tr = $(this).closest('tr');
     var row = TablaPPT.row(tr);
     ID_FORMULARIO_PPT = row.data().ID_FORMULARIO_PPT
 
     //Rellenamos los datos del formulario
-    editarDatoTabla(row.data(), 'formularioPPT','miModal_PPT', 1)
-
+    editarDatoTabla(row.data(), 'formularioPPT', 'miModal_PPT', 1)
+    
   
 })

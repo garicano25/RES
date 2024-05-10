@@ -2353,35 +2353,60 @@ function editarDatoTabla( data, form = 'OnlyForm', modalID = 'ModalID', formComp
     //RECORREMOS LOS CURSOS SI ES QUE EXISTE
     if (data.CURSOS.length > 0) { 
       var cursos = data.CURSOS
-      
-      for (var key in cursos) {
-        if (cursos.hasOwnProperty(key)) {
+      var count = 1    
+
+        // Supongamos que 'data' es el array que contiene los objetos de datos
+      cursos.forEach(function (obj) {
+        
+        // Acceder a las propiedades de cada objeto
+  
+
+        cumple = obj.CURSO_CUMPLE_PPT.toUpperCase(); 
+
+        $('#' + form).find(`input[id='CURSO${count}_PPT'][type='text']`).val(obj.CURSO_PPT)
+
+          $('#' + form).find(`input[id='CURSO${count}_CUMPLE_${cumple}'][value='${obj.CURSO_CUMPLE_PPT}'][type='radio']`).prop('checked', true)
 
 
-          if (!key.startsWith("BTN") && key !== "created_at" && key !== "updated_at") {
-                
-            var input = $('#' + form).find(`input[name='${key}'][type='text'], input[name='${key}'][type='number']`);
-            var textarea = $('#' + form).find(`textarea[name='${key}']`).val(cursos[key]);
-            var select = $('#' + form).find(`select[name='${key}']`).val(cursos[key]);
-            
-            if (input.length) {
-              input.val(cursos[key]);
-              
-            } else if (textarea.length) {
-              textarea.val(cursos[key]);
-              
-            } else if (select.length) {
+        if (obj.CURSO_DESEABLE == null) {
+          
+          $('#' + form).find(`input[id='CURSO${count}_REQUERIDO_PPT'][type='text']`).val(obj.CURSO_REQUERIDO)
 
-              select.val(cursos[key])
+        } else {
+          
+          $('#' + form).find(`input[id='CURSO${count}_DESEABLE_PPT'][type='text']`).val(obj.CURSO_DESEABLE)
 
-            } else {
-
-              $('#' + form).find(`input[name='${key}'][value='${cursos[key]}'][type='radio']`).prop('checked', true)
-
-            }
-          }
         }
+
+        count++
+      });
+
+
+      cursosTotales = data.CURSOS.length 
+      if (cursosTotales <= 10) {
+
+        $('#cursoTemasCollapse').collapse('show')
+
+
+      } else if (cursosTotales > 10 && cursosTotales <= 20) {
+          $('#cursoTemasCollapse').collapse('show')
+          $('#cursoTemas1Collapse').collapse('show')
+          
+
+      } else if (cursosTotales > 20 && cursosTotales <= 30) {
+          $('#cursoTemasCollapse').collapse('show')
+          $('#cursoTemas1Collapse').collapse('show')
+          $('#cursoTemas2Collapse').collapse('show')
+
+
+      } else if (cursosTotales > 30){
+          
+          $('.collapse').collapse('show')
+      
+
+
       }
+
     }
 
 

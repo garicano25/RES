@@ -47,7 +47,18 @@ class pptController extends Controller
                 $value->BTN_ELIMINAR = '<button type="button" class="btn btn-danger btn-circle ELIMINAR"><i class="bi bi-trash3"></i></button>';
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-circle EDITAR"><i class="bi bi-pencil-square"></i></button>';
                 $value->BTN_PPT = '<button type="button" class="btn btn-success btn-circle PPT"><i class="bi bi-file-earmark-excel"></i></button>';
-                $value->BTN_ACCION = '<button type="button" class="btn btn-primary btn-circle ACCION"><i class="bi bi-eye"></i></button>';
+
+
+                if(is_null($value->REVISADO_NOMBRE_PPT)){
+
+                    $value->BTN_ACCION = '<button type="button" class="btn btn-primary btn-circle REVISAR"><i class="bi bi-eye-fill"></i></button>';
+                
+                }else {
+
+                    $value->BTN_ACCION = '<button type="button" class="btn btn-primary btn-circle AUTORIZAR"><i class="bi bi-clipboard-check-fill"></i></button>';
+
+                }
+
 
 
 
