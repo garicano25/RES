@@ -44,7 +44,7 @@
                         <input type="hidden" class="form-control" id="USUARIO_ID" name="USUARIO_ID" value="0">
 
                     </div>
-                    <div class="row">
+                    <d class="row">
                         <div class="row mb-3">
                             <div class="col-4">
                                 <div class="form-group">
@@ -1743,6 +1743,46 @@
                                 </div>
                             </div>
 
+
+
+                            <div class="col-3 mt-1">
+                                <label>Auxiliar o Asistente</label>
+                            </div>
+                            <div class="col-1">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="AUXILIAR_ASISTENTE_PPT" name="AUXILIAR_ASISTENTE_PPT">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="AUXILIAR_ASISTENTE_CUMPLE_PPT" id="AUXILIAR_ASISTENTE_CUMPLE_SI" value="si">
+                                    <label class="form-check-label" for="AUXILIAR_ASISTENTE_CUMPLE_SI">Si</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="AUXILIAR_ASISTENTE_CUMPLE_PPT" id="AUXILIAR_ASISTENTE_CUMPLE_NO" value="no">
+                                    <label class="form-check-label" for="AUXILIAR_ASISTENTE_CUMPLE_NO">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                                <div class="col-3 mt-1">
+                                    <label>Analista o Especialista</label>
+                                </div>
+                                <div class="col-1">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="ANALISTA_ESPECIALISTA_PPT" name="ANALISTA_ESPECIALISTA_PPT">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ANALISTA_ESPECIALISTA_CUMPLE_PPT" id="ANALISTA_ESPECIALISTA_CUMPLE_SI" value="si">
+                                        <label class="form-check-label" for="ANALISTA_ESPECIALISTA_CUMPLE_SI">Si</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ANALISTA_ESPECIALISTA_CUMPLE_PPT" id="ANALISTA_ESPECIALISTA_CUMPLE_NO" value="no">
+                                        <label class="form-check-label" for="ANALISTA_ESPECIALISTA_CUMPLE_NO">No</label>
+                                    </div>
+                                </div>
                             <div class="col-3 mt-1">
                                 <label>Elaboración de reportes</label>
                             </div>
@@ -1763,61 +1803,29 @@
                                 </div>
                             </div>
                         </div>
+                    
+
+
+                        
+
                         <div class="row mb-3">
+
                             <div class="col-3 mt-1">
-                                <label>Auxiliar o Asistente</label>
+                                <label>Técnico de muestreo</label>
                             </div>
                             <div class="col-1">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="AUXILIAR_ASISTENTE_PPT" name="AUXILIAR_ASISTENTE_PPT">
+                                    <input type="text" class="form-control" id="TECNICO_MUESTREO_PPT" name="TECNICO_MUESTREO_PPT">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="AUXILIAR_ASISTENTE_CUMPLE_PPT" id="AUXILIAR_ASISTENTE_CUMPLE_SI" value="si">
-                                    <label class="form-check-label" for="AUXILIAR_ASISTENTE_CUMPLE_SI">Si</label>
+                                    <input class="form-check-input" type="radio" name="TECNICO_MUESTREO_CUMPLE_PPT" id="TECNICO_MUESTREO_CUMPLE_SI" value="si">
+                                    <label class="form-check-label" for="TECNICO_MUESTREO_CUMPLE_SI">Si</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="AUXILIAR_ASISTENTE_CUMPLE_PPT" id="AUXILIAR_ASISTENTE_CUMPLE_NO" value="no">
-                                    <label class="form-check-label" for="AUXILIAR_ASISTENTE_CUMPLE_NO">No</label>
-                                </div>
-                            </div>
-                            <div class="col-3 mt-1">
-                                <label>Supervisor o coordinador</label>
-                            </div>
-                            <div class="col-1">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="SUPERVISOR_COORDINADOR_PPT" name="SUPERVISOR_COORDINADOR_PPT">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="SUPERVISOR_COORDINADOR_CUMPLE_PPT" id="SUPERVISOR_COORDINADOR_CUMPLE_SI" value="si">
-                                    <label class="form-check-label" for="SUPERVISOR_COORDINADOR_CUMPLE_SI">Si</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="SUPERVISOR_COORDINADOR_CUMPLE_PPT" id="SUPERVISOR_COORDINADOR_CUMPLE_NO" value="no">
-                                    <label class="form-check-label" for="SUPERVISOR_COORDINADOR_CUMPLE_NO">No</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-3 mt-1">
-                                <label>Analista o Especialista</label>
-                            </div>
-                            <div class="col-1">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="ANALISTA_ESPECIALISTA_PPT" name="ANALISTA_ESPECIALISTA_PPT">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="ANALISTA_ESPECIALISTA_CUMPLE_PPT" id="ANALISTA_ESPECIALISTA_CUMPLE_SI" value="si">
-                                    <label class="form-check-label" for="ANALISTA_ESPECIALISTA_CUMPLE_SI">Si</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="ANALISTA_ESPECIALISTA_CUMPLE_PPT" id="ANALISTA_ESPECIALISTA_CUMPLE_NO" value="no">
-                                    <label class="form-check-label" for="ANALISTA_ESPECIALISTA_CUMPLE_NO">No</label>
+                                    <input class="form-check-input" type="radio" name="TECNICO_MUESTREO_CUMPLE_PPT" id="TECNICO_MUESTREO_CUMPLE_NO" value="no">
+                                    <label class="form-check-label" for="TECNICO_MUESTREO_CUMPLE_NO">No</label>
                                 </div>
                             </div>
                             <div class="col-3 mt-1">
@@ -1842,44 +1850,24 @@
 
                         <div class="row mb-3">
                             <div class="col-3 mt-1">
-                                <label>Técnico de muestreo</label>
+                                <label>Supervisor o coordinador</label>
                             </div>
                             <div class="col-1">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="TECNICO_MUESTREO_PPT" name="TECNICO_MUESTREO_PPT">
+                                    <input type="text" class="form-control" id="SUPERVISOR_COORDINADOR_PPT" name="SUPERVISOR_COORDINADOR_PPT">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="TECNICO_MUESTREO_CUMPLE_PPT" id="TECNICO_MUESTREO_CUMPLE_SI" value="si">
-                                    <label class="form-check-label" for="TECNICO_MUESTREO_CUMPLE_SI">Si</label>
+                                    <input class="form-check-input" type="radio" name="SUPERVISOR_COORDINADOR_CUMPLE_PPT" id="SUPERVISOR_COORDINADOR_CUMPLE_SI" value="si">
+                                    <label class="form-check-label" for="SUPERVISOR_COORDINADOR_CUMPLE_SI">Si</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="TECNICO_MUESTREO_CUMPLE_PPT" id="TECNICO_MUESTREO_CUMPLE_NO" value="no">
-                                    <label class="form-check-label" for="TECNICO_MUESTREO_CUMPLE_NO">No</label>
+                                    <input class="form-check-input" type="radio" name="SUPERVISOR_COORDINADOR_CUMPLE_PPT" id="SUPERVISOR_COORDINADOR_CUMPLE_NO" value="no">
+                                    <label class="form-check-label" for="SUPERVISOR_COORDINADOR_CUMPLE_NO">No</label>
                                 </div>
                             </div>
-                            <div class="col-3 mt-1">
-                                <label>Jefe de área o departamento</label>
-                            </div>
-                            <div class="col-1">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="JEFE_AREA_PPT" name="JEFE_AREA_PPT">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="JEFE_AREA_CUMPLE_PPT" id="JEFE_AREA_CUMPLE_SI" value="si">
-                                    <label class="form-check-label" for="JEFE_AREA_CUMPLE_SI">Si</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="JEFE_AREA_CUMPLE_PPT" id="JEFE_AREA_CUMPLE_NO" value="no">
-                                    <label class="form-check-label" for="JEFE_AREA_CUMPLE_NO">No</label>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="row mb-3">
                             <div class="col-3 mt-1">
                                 <label>Signatario</label>
                             </div>
@@ -1896,6 +1884,27 @@
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="SIGNATARIO_CUMPLE_PPT" id="SIGNATARIO_CUMPLE_NO" value="no">
                                     <label class="form-check-label" for="SIGNATARIO_CUMPLE_NO">No</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-3 mt-1">
+                                <label>Jefe de área o departamento</label>
+                            </div>
+                            <div class="col-1">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="JEFE_AREA_PPT" name="JEFE_AREA_PPT">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="JEFE_AREA_CUMPLE_PPT" id="JEFE_AREA_CUMPLE_SI" value="si">
+                                    <label class="form-check-label" for="JEFE_AREA_CUMPLE_SI">Si</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="JEFE_AREA_CUMPLE_PPT" id="JEFE_AREA_CUMPLE_NO" value="no">
+                                    <label class="form-check-label" for="JEFE_AREA_CUMPLE_NO">No</label>
                                 </div>
                             </div>
                             <div class="col-3 mt-1">

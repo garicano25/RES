@@ -78,31 +78,55 @@ class dptController extends Controller
                         $DPT = formulariodptModel::find($request->ID_FORMULARIO_DPT);
                         $DPT->update($request->all());
                     }
-
-                    // Guardar Relaciones Internas
                  
-                        if ($request->INTERNAS_CONQUIEN_DPT) {
-                            foreach ($request->INTERNAS_CONQUIEN_DPT as $key => $value) {
-                                if (isset($request->INTERNAS_PARAQUE_DPT[$key]) &&
-                                    isset($request->INTERNAS_FRECUENCIA_DIARIAS_DPT[$key]) &&
-                                    isset($request->INTERNAS_FRECUENCIA_SEMANAL_DPT[$key]) &&
-                                    isset($request->INTERNAS_FRECUENCIA_MENSUAL_DPT[$key]) &&
-                                    isset($request->INTERNAS_FRECUENCIA_SEMESTRAL_DPT[$key]) &&
-                                    isset($request->INTERNAS_FRECUENCIA_ANUAL_DPT[$key])) {
+                        // Verifica si existen relaciones internas y las guarda
+                if ($request->INTERNAS_CONQUIEN_DPT) {
+                    foreach ($request->INTERNAS_CONQUIEN_DPT as $key => $value) {
+                        if (isset($request->INTERNAS_PARAQUE_DPT[$key]) &&
+                            isset($request->INTERNAS_FRECUENCIA_DIARIAS_DPT[$key]) &&
+                            isset($request->INTERNAS_FRECUENCIA_SEMANAL_DPT[$key]) &&
+                            isset($request->INTERNAS_FRECUENCIA_MENSUAL_DPT[$key]) &&
+                            isset($request->INTERNAS_FRECUENCIA_SEMESTRAL_DPT[$key]) &&
+                            isset($request->INTERNAS_FRECUENCIA_ANUAL_DPT[$key])) {
 
-                                    $guardar_internas = relacionesinternasModel::create([
-                                        'FORMULARIO_DPT_ID' => $DPT->ID_FORMULARIO_DPT,
-                                        'INTERNAS_CONQUIEN_DPT' => $value,
-                                        'INTERNAS_PARAQUE_DPT' => $request->INTERNAS_PARAQUE_DPT[$key],
-                                        'INTERNAS_FRECUENCIA_DIARIAS_DPT' => $request->INTERNAS_FRECUENCIA_DIARIAS_DPT[$key],
-                                        'INTERNAS_FRECUENCIA_SEMANAL_DPT' => $request->INTERNAS_FRECUENCIA_SEMANAL_DPT[$key],
-                                        'INTERNAS_FRECUENCIA_MENSUAL_DPT' => $request->INTERNAS_FRECUENCIA_MENSUAL_DPT[$key],
-                                        'INTERNAS_FRECUENCIA_SEMESTRAL_DPT' => $request->INTERNAS_FRECUENCIA_SEMESTRAL_DPT[$key],
-                                        'INTERNAS_FRECUENCIA_ANUAL_DPT' => $request->INTERNAS_FRECUENCIA_ANUAL_DPT[$key]
-                                    ]);
-                                }
-                            }
+                            $guardar_internas = relacionesinternasModel::create([
+                                'FORMULARIO_DPT_ID' => $DPT->ID_FORMULARIO_DPT,
+                                'INTERNAS_CONQUIEN_DPT' => $value,
+                                'INTERNAS_PARAQUE_DPT' => $request->INTERNAS_PARAQUE_DPT[$key],
+                                'INTERNAS_FRECUENCIA_DIARIAS_DPT' => $request->INTERNAS_FRECUENCIA_DIARIAS_DPT[$key],
+                                'INTERNAS_FRECUENCIA_SEMANAL_DPT' => $request->INTERNAS_FRECUENCIA_SEMANAL_DPT[$key],
+                                'INTERNAS_FRECUENCIA_MENSUAL_DPT' => $request->INTERNAS_FRECUENCIA_MENSUAL_DPT[$key],
+                                'INTERNAS_FRECUENCIA_SEMESTRAL_DPT' => $request->INTERNAS_FRECUENCIA_SEMESTRAL_DPT[$key],
+                                'INTERNAS_FRECUENCIA_ANUAL_DPT' => $request->INTERNAS_FRECUENCIA_ANUAL_DPT[$key]
+                            ]);
                         }
+                    }
+                } 
+
+                // Verifica si existen relaciones externas y las guarda
+                if ($request->EXTERNAS_CONQUIEN_DPT) {
+                    foreach ($request->EXTERNAS_CONQUIEN_DPT as $key => $value) {
+                        if (isset($request->EXTERNAS_PARAQUE_DPT[$key]) &&
+                            isset($request->EXTERNAS_FRECUENCIA_DIARIAS_DPT[$key]) &&
+                            isset($request->EXTERNAS_FRECUENCIA_SEMANAL_DPT[$key]) &&
+                            isset($request->EXTERNAS_FRECUENCIA_MENSUAL_DPT[$key]) &&
+                            isset($request->EXTERNAS_FRECUENCIA_SEMESTRAL_DPT[$key]) &&
+                            isset($request->EXTERNAS_FRECUENCIA_ANUAL_DPT[$key])) {
+
+                            $guardar_EXTERNAS = relacionesexternasModel::create([
+                                'FORMULARIO_DPT_ID' => $DPT->ID_FORMULARIO_DPT,
+                                'EXTERNAS_CONQUIEN_DPT' => $value,
+                                'EXTERNAS_PARAQUE_DPT' => $request->EXTERNAS_PARAQUE_DPT[$key],
+                                'EXTERNAS_FRECUENCIA_DIARIAS_DPT' => $request->EXTERNAS_FRECUENCIA_DIARIAS_DPT[$key],
+                                'EXTERNAS_FRECUENCIA_SEMANAL_DPT' => $request->EXTERNAS_FRECUENCIA_SEMANAL_DPT[$key],
+                                'EXTERNAS_FRECUENCIA_MENSUAL_DPT' => $request->EXTERNAS_FRECUENCIA_MENSUAL_DPT[$key],
+                                'EXTERNAS_FRECUENCIA_SEMESTRAL_DPT' => $request->EXTERNAS_FRECUENCIA_SEMESTRAL_DPT[$key],
+                                'EXTERNAS_FRECUENCIA_ANUAL_DPT' => $request->EXTERNAS_FRECUENCIA_ANUAL_DPT[$key]
+                            ]);
+                        }
+                    }
+                }
+
 
                     $request['FUNCIONES_CARGOS_DPT'] = $request->CARGOS;
                     $DPT->update($request->all());
