@@ -33,6 +33,10 @@ Route::get('/getDataOrganigrama/{area_id}/{esGeneral}', [areasController::class,
 Route::get('/PPT', [pptController::class, 'index']);
 Route::post('/pptSave', [pptController::class, 'store']);
 Route::get('/TablaPPT', [pptController::class, 'TablaPPT']);
+Route::get('/autorizarPPT/{id_formulario}', [pptController::class, 'autorizarPPT']);
+Route::get('/revisarPPT/{id_formulario}', [pptController::class, 'revisarPPT']);
+
+
 
 
 

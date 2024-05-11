@@ -41,22 +41,31 @@ class pptController extends Controller
 
 
 
-                // // Botones
-                // if (auth()->user()->hasRoles(['Superusuario', 'Administrador', 'Reconocimiento', 'CoordinadorHI'])  && ($recsensorial->recsensorial_bloqueado + 0) == 0) {
-
-                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-danger btn-circle ELIMINAR"><i class="bi bi-trash3"></i></button>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-circle EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                $value->BTN_PPT = '<button type="button" class="btn btn-success btn-circle PPT"><i class="bi bi-file-earmark-excel"></i></button>';
-
-
-                if(is_null($value->REVISADO_NOMBRE_PPT)){
-
-                    $value->BTN_ACCION = '<button type="button" class="btn btn-primary btn-circle REVISAR"><i class="bi bi-eye-fill"></i></button>';
+               
                 
-                }else {
+                ## CREADO Y AUN NO ESTA REVISADO NI AUTORIZADO
+                if(!is_null($value->ELABORADO_NOMBRE_PPT) && is_null($value->REVISADO_NOMBRE_PPT)&& is_null($value->AUTORIZADO_NOMBRE_PPT)){
 
-                    $value->BTN_ACCION = '<button type="button" class="btn btn-primary btn-circle AUTORIZAR"><i class="bi bi-clipboard-check-fill"></i></button>';
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-danger btn-circle ELIMINAR"><i class="bi bi-trash3"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-circle EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_PPT = '<button type="button" class="btn btn-secondary btn-circle "><i class="bi bi-ban"></i></button>';
+                    $value->BTN_ACCION = '<button type="button" class="btn btn-primary btn-circle REVISAR" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Revisar PPT"><i class="bi bi-eye-fill"></i></button>';
 
+                    ##CREADO Y REVISADO PERO NO AUTORIZADO
+                }else if (!is_null($value->ELABORADO_NOMBRE_PPT) && !is_null($value->REVISADO_NOMBRE_PPT) && is_null($value->AUTORIZADO_NOMBRE_PPT)) {
+
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secondary btn-circle"><i class="bi bi-ban"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-circle "><i class="bi bi-ban"></i></button>';
+                    $value->BTN_PPT = '<button type="button" class="btn btn-secondary btn-circle "><i class="bi bi-ban"></i></button>';
+                    $value->BTN_ACCION = '<button type="button" class="btn btn-primary btn-circle AUTORIZAR" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Autorizar PPT"><i class="bi bi-clipboard-check-fill"></i></button>';
+
+                    ## CREADO, REVISADO Y AUTORIZADO
+                } else if (!is_null($value->ELABORADO_NOMBRE_PPT) && !is_null($value->REVISADO_NOMBRE_PPT) && !is_null($value->AUTORIZADO_NOMBRE_PPT)) {
+
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secondary btn-circle "><i class="bi bi-ban"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-circle"><i class="bi bi-ban"></i></button>';
+                    $value->BTN_PPT = '<button type="button" class="btn btn-success btn-circle PPT"><i class="bi bi-file-earmark-excel-fill"></i></button>';
+                    $value->BTN_ACCION = '<button type="button" class="btn btn-success btn-circle " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Finalizado PPT" title="Finalizado"><i class="bi bi-check-circle-fill"></i></button>';
                 }
 
 
@@ -80,6 +89,40 @@ class pptController extends Controller
         }
     }
 
+
+    public function revisarPPT($id_formulario){
+
+        $fecha_actual = date('Y-m-d');
+
+        $PPT = formulariopptModel::find($id_formulario);
+        $PPT->REVISADO_NOMBRE_PPT = 'Usuario anónimo';
+        $PPT->REVISADO_FIRMA_PPT = 'USER';
+        $PPT->REVISADO_FECHA_PPT = $fecha_actual; 
+
+        $PPT->save();
+
+        $response['code']  = 1;
+        $response['PPT']  = 'Revisado';
+        return response()->json($response);
+    }
+
+
+    public function autorizarPPT($id_formulario)
+    {
+
+        $fecha_actual = date('Y-m-d');
+
+        $PPT = formulariopptModel::find($id_formulario);
+        $PPT->AUTORIZADO_NOMBRE_PPT = 'Usuario anónimo';
+        $PPT->AUTORIZADO_FIRMA_PPT = 'USER';
+        $PPT->AUTORIZADO_FECHA_PPT = $fecha_actual;
+
+        $PPT->save();
+
+        $response['code']  = 1;
+        $response['PPT']  = 'Autorizado';
+        return response()->json($response);
+    }
 
 
 
@@ -122,7 +165,6 @@ class pptController extends Controller
                         $response['code']  = 1;
                         $response['PPT']  = $PPT;
                         return response()->json($response);
-                        
                     } else { //Editamos el ppt y eliminar ppt
 
 

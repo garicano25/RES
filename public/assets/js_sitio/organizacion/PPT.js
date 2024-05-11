@@ -8,7 +8,11 @@ const ModalArea = document.getElementById('miModal_PPT')
 ModalArea.addEventListener('hidden.bs.modal', event => {
   
     ID_FORMULARIO_PPT = 0
-     $('.collapse').collapse('hide')
+    $('.collapse').collapse('hide')
+    
+    $('#guardarFormPPT').css('display', 'block').prop('disabled', false);
+    $('#revisarFormPPT').css('display', 'none').prop('disabled', true);
+    $('#AutorizarFormPPT').css('display', 'none').prop('disabled', true);
 
 
 })
@@ -177,3 +181,111 @@ $('#TablaPPT tbody').on('click', 'td>button.EDITAR', function () {
   
 })
 
+
+$('#TablaPPT tbody').on('click', 'td>button.REVISAR', function () {
+
+
+    var tr = $(this).closest('tr');
+    var row = TablaPPT.row(tr);
+    ID_FORMULARIO_PPT = row.data().ID_FORMULARIO_PPT
+
+    //Rellenamos los datos del formulario
+    editarDatoTabla(row.data(), 'formularioPPT', 'miModal_PPT', 1)
+
+
+    $('#formularioPPT input').prop('disabled', true);
+    $('#formularioPPT textarea').prop('disabled', true);
+    $('#formularioPPT select').prop('disabled', true);
+
+    $('#revisarFormPPT').css('display', 'block').prop('disabled', false);
+    $('#guardarFormPPT').css('display', 'none').prop('disabled', true);
+
+})
+
+
+$('#TablaPPT tbody').on('click', 'td>button.AUTORIZAR', function () {
+
+
+    var tr = $(this).closest('tr');
+    var row = TablaPPT.row(tr);
+    ID_FORMULARIO_PPT = row.data().ID_FORMULARIO_PPT
+
+    //Rellenamos los datos del formulario
+    editarDatoTabla(row.data(), 'formularioPPT', 'miModal_PPT', 1)
+
+
+    $('#formularioPPT input').prop('disabled', true);
+    $('#formularioPPT textarea').prop('disabled', true);
+    $('#formularioPPT select').prop('disabled', true);
+
+    $('#AutorizarFormPPT').css('display', 'block').prop('disabled', false);
+    $('#guardarFormPPT').css('display', 'none').prop('disabled', true);
+
+})
+
+$('#revisarFormPPT').on('click', function () {
+    
+    alertMensajeConfirm({
+        title: "¿Desea marcar como revisado este PPT?",
+        text: "Al revisarlo, pasara hacer autorizado ",
+        icon: "question",
+    }, function () { 
+
+        ajaxAwait({}, '/revisarPPT/' + ID_FORMULARIO_PPT, 'GET', { callbackAfter: true, callbackBefore: true }, () => {
+    
+            Swal.fire({
+                icon: 'info',
+                title: 'Espere un momento...',
+                text: 'Estamos confirmando la revisión',
+                showConfirmButton: false
+            })
+
+            $('.swal2-popup').addClass('ld ld-breath')
+    
+            
+        }, function (data) {
+                
+            
+            alertMensaje('success','Revisión confirmada', 'Esta información esta lista para ser autorizada',null,null, 2000)
+            $('#miModal_PPT').modal('hide')
+            document.getElementById('formularioPPT').reset();
+            TablaPPT.ajax.reload()
+
+        })
+        
+    }, 1)
+})
+
+
+$('#AutorizarFormPPT').on('click', function () {
+    
+    alertMensajeConfirm({
+        title: "¿Desea autorizar el PPT?",
+        text: "Al autorizarlo, podra hacer uso del PPT ",
+        icon: "question",
+    }, function () { 
+
+        ajaxAwait({}, '/autorizarPPT/' + ID_FORMULARIO_PPT, 'GET', { callbackAfter: true, callbackBefore: true }, () => {
+    
+            Swal.fire({
+                icon: 'info',
+                title: 'Espere un momento...',
+                text: 'Estamos confirmando la autorización',
+                showConfirmButton: false
+            })
+
+            $('.swal2-popup').addClass('ld ld-breath')
+    
+            
+        }, function (data) {
+                
+            
+            alertMensaje('success','Autorización confirmada', 'Esta información esta lista para ser utilizada',null,null, 2000)
+            $('#miModal_PPT').modal('hide')
+            document.getElementById('formularioPPT').reset();
+            TablaPPT.ajax.reload()
+
+        })
+        
+    }, 1)
+})

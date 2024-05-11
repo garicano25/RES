@@ -2420,7 +2420,11 @@
                 </div>
                 <div class="modal-footer mx-5">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-success" id="guardarFormPPT">Guardar</button>
+                    <button type="submit" class="btn btn-success" id="guardarFormPPT"><i class="bi bi-floppy-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Guardar PPT"></i> Guardar</button>
+
+                    <button type="button" class="btn btn-success" id="revisarFormPPT" style="display: none;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Marcar como revisado formato de PPT" disabled><i class="bi bi-card-checklist"></i> Revisado</button>
+
+                    <button type="button" class="btn btn-success" id="AutorizarFormPPT" style="display: none;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Autorizar formato PPT" disabled><i class="bi bi-clipboard-check-fill"></i> Autorizar</button>
                 </div>
             </form>
         </div>
