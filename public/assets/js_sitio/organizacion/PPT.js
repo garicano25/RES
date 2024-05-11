@@ -6,8 +6,14 @@ ID_FORMULARIO_PPT = 0
 
 const ModalArea = document.getElementById('miModal_PPT')
 ModalArea.addEventListener('hidden.bs.modal', event => {
-  
+    
+    
     ID_FORMULARIO_PPT = 0
+    document.getElementById('formularioPPT').reset();
+    $('#formularioPPT input').prop('disabled', false);
+    $('#formularioPPT textarea').prop('disabled', false);
+    $('#formularioPPT select').prop('disabled', false);
+    
     $('.collapse').collapse('hide')
     
     $('#guardarFormPPT').css('display', 'block').prop('disabled', false);
@@ -148,7 +154,19 @@ $("#guardarFormPPT").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarFormPPT')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_PPT: ID_FORMULARIO_PPT }, 'pptSave', 'formularioPPT', 'guardarFormPPT', { callbackAfter: true}, false, function (data) {
+            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_PPT: ID_FORMULARIO_PPT }, 'pptSave', 'formularioPPT', 'guardarFormPPT', { callbackAfter: true, callbackBefore: true }, () => {
+        
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
                     
                 setTimeout(() => {
 
@@ -289,3 +307,26 @@ $('#AutorizarFormPPT').on('click', function () {
         
     }, 1)
 })
+
+
+$('#TablaPPT tbody').on('click', 'td>button.PPT', function () {
+
+
+    var tr = $(this).closest('tr');
+    var row = TablaPPT.row(tr);
+    ID_FORMULARIO_PPT = row.data().ID_FORMULARIO_PPT
+
+   
+       alertMensajeConfirm({
+        title: "¿Desea visualizar el formato PPT?",
+        text: "Confirma para continuar ",
+        icon: "question",
+    }, function () { 
+
+		window.open("/makeExcelPPT/" + ID_FORMULARIO_PPT);
+           
+        
+    }, 1)
+
+})
+

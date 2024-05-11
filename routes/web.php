@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\organizacion\areasController;
 use App\Http\Controllers\organizacion\pptController;
 use App\Http\Controllers\organizacion\dptController;
-
+use App\Http\Controllers\excel\makeExcelController;
 
 
 
@@ -35,6 +35,8 @@ Route::post('/pptSave', [pptController::class, 'store']);
 Route::get('/TablaPPT', [pptController::class, 'TablaPPT']);
 Route::get('/autorizarPPT/{id_formulario}', [pptController::class, 'autorizarPPT']);
 Route::get('/revisarPPT/{id_formulario}', [pptController::class, 'revisarPPT']);
+Route::get('/makeExcelPPT/{id_formulario}', [makeExcelController::class, 'makeExcelPPT']);
+
 
 
 
