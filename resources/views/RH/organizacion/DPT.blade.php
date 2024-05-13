@@ -243,236 +243,241 @@
                                   </tr>
                               </thead>
                               <tbody>
-                                  <tr>
-                                    <td>
-                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN1_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                <tr>
+                                  <td>
+                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN1_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                  </td>
+                                  <td>
+                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE1_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
+                                  </td>
+                                  <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA1_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
+                                  </td>
+                                  <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA1_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                  </td>
+                                  <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA1_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                  </td>
+                                  <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA1_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                  </td>
+                                  <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA1_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN2_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                  </td>
+                                  <td>
+                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE2_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
+                                  </td>
+                                  <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA2_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
+                                  </td>
+                                  <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA2_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                  </td>
+                                  <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA2_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                  </td>
+                                  <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA2_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                  </td>
+                                  <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA2_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN3_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                  </td>
+                                  <td>
+                                      <textarea class="form-control"  style="width: 100%;"  id="INTERNAS_PARAQUE3_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
                                     <td>
-                                        <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE1_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
+                                      <input type="text" id="INTERNAS_FRECUENCIA3_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA1_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <input type="text" id="INTERNAS_FRECUENCIA3_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA1_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <input type="text" id="INTERNAS_FRECUENCIA3_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA1_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <input type="text" id="INTERNAS_FRECUENCIA3_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA1_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <input type="text" id="INTERNAS_FRECUENCIA3_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN4_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                  </td>
+                                  <td>
+                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE4_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
                                     <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA1_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN2_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                      <input type="text" id="INTERNAS_FRECUENCIA4_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                        <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE2_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
+                                      <input type="text" id="INTERNAS_FRECUENCIA4_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA2_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <input type="text" id="INTERNAS_FRECUENCIA4_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA2_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <input type="text" id="INTERNAS_FRECUENCIA4_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA2_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <input type="text" id="INTERNAS_FRECUENCIA4_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN5_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                  </td>
+                                  <td>
+                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE5_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
                                     <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA2_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <input type="text" id="INTERNAS_FRECUENCIA5_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA2_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN3_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                      <input type="text" id="INTERNAS_FRECUENCIA5_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                        <textarea class="form-control"  style="width: 100%;"  id="INTERNAS_PARAQUE3_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
+                                      <input type="text" id="INTERNAS_FRECUENCIA5_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA3_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <input type="text" id="INTERNAS_FRECUENCIA5_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA3_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <input type="text" id="INTERNAS_FRECUENCIA5_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN6_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                  </td>
+                                  <td>
+                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE6_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
                                     <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA3_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <input type="text" id="INTERNAS_FRECUENCIA6_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA3_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <input type="text" id="INTERNAS_FRECUENCIA6_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA3_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN4_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                      <input type="text" id="INTERNAS_FRECUENCIA6_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                        <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE4_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
+                                      <input type="text" id="INTERNAS_FRECUENCIA6_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA4_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <input type="text" id="INTERNAS_FRECUENCIA6_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
-                                    <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA4_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA4_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA4_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                      <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA4_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN5_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
-                                    </td>
-                                    <td>
-                                        <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE5_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
-                                    </td>
-                                    <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA5_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA5_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA5_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA5_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA5_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN6_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
-                                    </td>
-                                    <td>
-                                        <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE6_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
-                                    </td>
-                                    <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA6_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA6_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA6_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                      <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA6_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                      </td>
-                                      <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA6_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT" class="form-control text-center" style="width: 100%;">
-                                      </td>
-                                  </tr>
+                                </tr>
 
-                                  <tr>
-                                    <td>
-                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN7_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea></td>
-                                    <td>
-                                        <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE7_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea></td>
-                                      <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA7_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                      </td>
-                                      <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA7_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                      </td>
-                                      <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA7_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                      </td>
-                                      <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA7_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                      </td>
-                                      <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA7_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN8_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                <tr>
+                                  <td>
+                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN7_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                  </td>
+                                  <td>
+                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE7_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
                                     <td>
-                                        <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE8_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
-                                    </td>
-                                      <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA8_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                      </td>
-                                      <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA8_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                      </td>
-                                      <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA8_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                      </td>
-                                      <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA8_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                      </td>
-                                      <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA8_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN9_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                      <input type="text" id="INTERNAS_FRECUENCIA7_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                        <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE9_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
-                                      </td>
-                                      <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA9_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                      </td>
-                                      <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA9_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                      </td>
-                                      <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA9_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                      </td>
-                                      <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA9_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                      </td>
-                                      <td>
-                                        <input type="text" id="INTERNAS_FRECUENCIA9_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                      </td>
-                                  </tr>
-                                  <tr>
-                                    <td>
-                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN10_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                      <input type="text" id="INTERNAS_FRECUENCIA7_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                        <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE10_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
-                                      </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA10_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <input type="text" id="INTERNAS_FRECUENCIA7_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA10_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <input type="text" id="INTERNAS_FRECUENCIA7_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                    </td>
+                                    <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA7_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN8_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                  </td>
+                                  <td>
+                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE8_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
+                                    </td>
+                                    <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA8_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
+                                    </td>
+                                    <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA8_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                    </td>
+                                    <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA8_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                    </td>
+                                    <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA8_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                    </td>
+                                    <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA8_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN9_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                  </td>
+                                  <td>
+                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE9_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
+                                    </td>
+                                    <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA9_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
+                                    </td>
+                                    <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA9_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                    </td>
+                                    <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA9_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                    </td>
+                                    <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA9_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                    </td>
+                                    <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA9_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN10_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                  </td>
+                                  <td>
+                                      <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE10_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
+                                    </td>
+                                    <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA10_DIARIAS_DPT" 
+                                      name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
+                                    </td>
+                                    <td>
+                                      <input type="text" id="INTERNAS_FRECUENCIA10_SEMANAL_DPT" 
+                                      name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
                                       <input type="text" id="INTERNAS_FRECUENCIA10_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA10_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <input type="text" id="INTERNAS_FRECUENCIA10_SEMESTRAL_DPT"
+                                       name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
                                     <td>
                                       <input type="text" id="INTERNAS_FRECUENCIA10_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
                                     </td>
-                                  </tr>
-                              </tbody>
+                                </tr>
+                            </tbody>
                               </table>
                             </div>
                         </div>
@@ -1108,8 +1113,8 @@
                             </div>
 
                   </div>
-                </div>
-              <div class="modal-footer mx-5">
+              </div>
+            <div class="modal-footer mx-5">
                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                   <button type="submit" class="btn btn-success" id="guardarFormDPT">Guardar</button>
               </div>

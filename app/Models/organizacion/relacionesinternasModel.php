@@ -20,5 +20,4 @@ class relacionesinternasModel extends Model
         'INTERNAS_FRECUENCIA_ANUAL_DPT',
     ];
 
-
 }
