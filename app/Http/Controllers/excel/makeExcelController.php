@@ -58,7 +58,8 @@ class makeExcelController extends Controller{
           
 
             if (!is_null($val->EDAD_PPT)) {
-                $sheet->setCellValue('G13', $val->EDAD_PPT);            }
+                $sheet->setCellValue('G13', $val->EDAD_PPT);        
+            }
 
             if (!is_null($val->EDAD_CUMPLE_PPT)) {
                 if ($val->EDAD_CUMPLE_PPT == 'SI') {
@@ -71,19 +72,22 @@ class makeExcelController extends Controller{
 
 
             if (!is_null($val->GENERO_PPT)) {
-                $sheet->setCellValue('S13', $val->GENERO_PPT);    
+                $sheet->setCellValue('S13', $val->GENERO_PPT);
+            }    
 
             if (!is_null($val->GENERO_CUMPLE_PPT)) {
-                if ($val->GENERO_CUMPLE_PPT == 'SI') {
-                    $sheet->setCellValue('W13', 'X');
-                } else {
-                    $sheet->setCellValue('X13', 'X');
-                }
+                    if ($val->GENERO_CUMPLE_PPT == 'SI') {
+                        $sheet->setCellValue('W13', 'X');
+                    } else {
+                        $sheet->setCellValue('X13', 'X');
+                    }
             }
+            
 
 
             if (!is_null($val->ESTADO_CIVIL_PPT)) {
                 $sheet->setCellValue('H14', $val->ESTADO_CIVIL_PPT); 
+            }
 
             if (!is_null($val->ESTADO_CIVIL_CUMPLE_PPT)) {
                 if ($val->ESTADO_CIVIL_CUMPLE_PPT == 'SI') {
@@ -92,10 +96,12 @@ class makeExcelController extends Controller{
                     $sheet->setCellValue('M14', 'X');
                 }
             }
+            
 
 
             if (!is_null($val->NACIONALIDAD_PPT)) {
                 $sheet->setCellValue('S14', $val->NACIONALIDAD_PPT); 
+            }
 
             if (!is_null($val->NACIONALIDAD_CUMPLE_PPT)) {
                 if ($val->NACIONALIDAD_CUMPLE_PPT == 'SI') {
@@ -104,10 +110,12 @@ class makeExcelController extends Controller{
                     $sheet->setCellValue('X14', 'X');
                 }
             }
+            
         
 
             if (!is_null($val->DISCAPACIDAD_PPT)) {
                 $sheet->setCellValue('H15', $val->DISCAPACIDAD_PPT); 
+            }
 
             if (!is_null($val->DISCAPACIDAD_CUMPLE_PPT)) {
                 if ($val->DISCAPACIDAD_CUMPLE_PPT == 'SI') {
@@ -116,13 +124,12 @@ class makeExcelController extends Controller{
                     $sheet->setCellValue('M15', 'X');
                 }
             }
+            
         
 
             if (!is_null($val->CUAL_PPT)) {
                 $sheet->setCellValue('P15', $val->CUAL_PPT); 
-
-
-
+            }
 
             //II. Formación académica		
             
