@@ -33,6 +33,8 @@ Route::get('/getDataOrganigrama/{area_id}/{esGeneral}', [areasController::class,
 Route::get('/PPT', [pptController::class, 'index']);
 Route::post('/pptSave', [pptController::class, 'store']);
 Route::get('/TablaPPT', [pptController::class, 'TablaPPT']);
+
+
 Route::get('/autorizarPPT/{id_formulario}', [pptController::class, 'autorizarPPT']);
 Route::get('/revisarPPT/{id_formulario}', [pptController::class, 'revisarPPT']);
 Route::get('/makeExcelPPT/{id_formulario}', [makeExcelController::class, 'makeExcelPPT']);
@@ -47,6 +49,12 @@ Route::get('/makeExcelPPT/{id_formulario}', [makeExcelController::class, 'makeEx
 Route::get('/DPT', [dptController::class, 'index']);
 Route::post('/dptSave', [dptController::class, 'store']);
 Route::get('/TablaDPT', [dptController::class, 'TablaDPT']);
+
+
+// Route::get('/autorizarDPT/{id_formulario}', [dptController::class, 'autorizarDPT']);
+// Route::get('/revisarDPT/{id_formulario}', [dptController::class, 'revisarDPT']);
+// Route::get('/makeExcelDPT/{id_formulario}', [makeExcelController::class, 'makeExcelDPT']);
+
 
 
 

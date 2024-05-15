@@ -757,8 +757,10 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><input type="text" class="form-control" id="NOMBRE_IDOMA1_PPT" name="NOMBRE_IDOMA1_PPT">
+        
+                                            <td><input type="text" class="form-control" id="NOMBRE_IDIOMA1_PPT" name="NOMBRE_IDIOMA1_PPT">
                                             </td>
+
                                             <td><input type="text" class="form-control text-center" id="APLICA_IDIOMA1_PPT" name="APLICA_IDIOMA1_PPT">
                                             </td>
                                             <td><input type="number" class="form-control text-center" id="HABLAR_IDIOMA1_PPT" name="HABLAR_IDIOMA1_PPT">

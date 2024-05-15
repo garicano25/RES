@@ -8,7 +8,20 @@ var gestion = [];
 const ModalArea = document.getElementById('miModal_DPT')
 ModalArea.addEventListener('hidden.bs.modal', event => {
     
+    
     ID_FORMULARIO_DPT = 0
+    document.getElementById('formularioDPT').reset();
+    $('#formularioDPT input').prop('disabled', false);
+    $('#formularioDPT textarea').prop('disabled', false);
+    $('#formularioDPT select').prop('disabled', false);
+    
+    $('.collapse').collapse('hide')
+    
+    $('#guardarFormDPT').css('display', 'block').prop('disabled', false);
+    $('#revisarFormDPT').css('display', 'none').prop('disabled', true);
+    $('#AutorizarFormDPT').css('display', 'none').prop('disabled', true);
+
+
 })
 
 
@@ -56,6 +69,7 @@ TablaDPT = $("#TablaDPT").DataTable({
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' },
         
+        
     ],
     columnDefs: [
         { target: 0, title: '#', className: 'all' },
@@ -67,6 +81,7 @@ TablaDPT = $("#TablaDPT").DataTable({
         { target: 6, title: 'DPT', className: 'all text-center' },
         { target: 7, title: 'Editar', className: 'all text-center' },
         { target: 8, title: 'Eliminar', className: 'all text-center' },
+
 
 
     ]
@@ -143,52 +158,277 @@ $("#guardarFormDPT").click(function (e) {
         
     } else {
         alertMensajeConfirm({
-            title: "¿Desea editar la información de este formulario?",
-            text: "Al guardarla, se editara la información del DPT",
-            icon: "question",
-        },async function () { 
-            
-            await loaderbtn('guardarFormDPT')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_DPT: ID_FORMULARIO_DPT }, 'dptSave', 'formularioDPT', 'guardarFormDPT', { callbackAfter: true}, false, function (data) {
-                
-                setTimeout(() => {
-                    
-                    
-                    ID_FORMULARIO_DPT = data.DPT.ID_FORMULARIO_DPT
-                    alertMensaje('success', 'Información editada correctamente', 'Información guardada',null,null,1500)
-                    $('#miModal_DPT').modal('hide')
-                    document.getElementById('formularioDPT').reset();
-                    TablaDPT.ajax.reload()
-                    
-                }, 300);  
+        title: "¿Desea editar la información de este formulario?",
+        text: "Al guardarla, se editara la información del DPT",
+        icon: "question",
+    },async function () { 
+
+        await loaderbtn('guardarFormDPT')
+        await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_DPT: ID_FORMULARIO_DPT }, 'dptSave', 'formularioDPT', 'guardarFormDPT', { callbackAfter: true, callbackBefore: true }, () => {
+    
+            Swal.fire({
+                icon: 'info',
+                title: 'Espere un momento',
+                text: 'Estamos guardando la información',
+                showConfirmButton: false
             })
-        }, 1)
-    }
- 
+
+            $('.swal2-popup').addClass('ld ld-breath')
+    
+            
+        }, function (data) {
+                
+            setTimeout(() => {
+
+                
+                ID_FORMULARIO_DPT = data.DPT.ID_FORMULARIO_DPT
+                alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                 $('#miModal_DPT').modal('hide')
+                document.getElementById('formularioDPT').reset();
+                TablaDPT.ajax.reload()
+
+
+            }, 300);  
+        })
+    }, 1)
+}
+
 });
+
+
+
+
+// $('#TablaDPT tbody').on('click', 'td>button.EDITAR', function () {
+
+//     var tr = $(this).closest('tr');
+//     var row = TablaDPT.row(tr);
+//     ID_FORMULARIO_DPT = row.data().ID_FORMULARIO_DPT
+
+//     //Rellenamos los datos del formulario
+//     editarDatoTabla(row.data(), 'formularioDPT','miModal_DPT', 1)
+
+// })
+
+
+$('#TablaDPT tbody').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = TablaDPT.row(tr);
+    ID_FORMULARIO_DPT = row.data().ID_FORMULARIO_DPT;
+
+    console.log(row.data());
+
+    editarDatoTabla1(row.data(), 'formularioDPT', 'miModal_DPT', 1);
+});
+
+function editarDatoTabla1(data, formId, modalId) {
+    var form = $('#' + formId);
+    var modal = $('#' + modalId);
+
+    if (form.length > 0 && modal.length > 0) {
+        for (var key in data) {
+            if (data.hasOwnProperty(key)) {
+                var field = form.find('[name="' + key + '"]');
+                if (field.length > 0) {
+                    field.val(data[key]);
+                }
+            }
+        }
+
+        // Mostrar el modal
+        modal.modal('show');
+    } else {
+        console.error('Formulario o modal no encontrado');
+    }
+}
+
+
+
+
+
+// $('#TablaDPT tbody').on('click', 'td>button.REVISAR', function () {
+
+
+//     var tr = $(this).closest('tr');
+//     var row = TablaDPT.row(tr);
+//     ID_FORMULARIO_DPT = row.data().ID_FORMULARIO_DPT
+
+//     //Rellenamos los datos del formulario
+//     editarDatoTabla(row.data(), 'formularioDPT', 'miModal_DPT', 1)
+
+
+//     $('#formularioDPT input').prop('disabled', true);
+//     $('#formularioDPT textarea').prop('disabled', true);
+//     $('#formularioDPT select').prop('disabled', true);
+
+//     $('#revisarFormDPT').css('display', 'block').prop('disabled', false);
+//     $('#guardarFormDPT').css('display', 'none').prop('disabled', true);
+
+// })
+
+
+// $('#TablaDPT tbody').on('click', 'td>button.AUTORIZAR', function () {
+
+
+//     var tr = $(this).closest('tr');
+//     var row = TablaDPT.row(tr);
+//     ID_FORMULARIO_DPT = row.data().ID_FORMULARIO_DPT
+
+//     //Rellenamos los datos del formulario
+//     editarDatoTabla(row.data(), 'formularioDPT', 'miModal_DPT', 1)
+
+
+//     $('#formularioDPT input').prop('disabled', true);
+//     $('#formularioDPT textarea').prop('disabled', true);
+//     $('#formularioDPT select').prop('disabled', true);
+
+//     $('#AutorizarFormDPT').css('display', 'block').prop('disabled', false);
+//     $('#guardarFormDPT').css('display', 'none').prop('disabled', true);
+
+// })
+
+// $('#revisarFormDPT').on('click', function () {
+    
+//     alertMensajeConfirm({
+//         title: "¿Desea marcar como revisado este DPT?",
+//         text: "Al revisarlo, pasara hacer autorizado ",
+//         icon: "question",
+//     }, function () { 
+
+//         ajaxAwait({}, '/revisarDPT/' + ID_FORMULARIO_DPT, 'GET', { callbackAfter: true, callbackBefore: true }, () => {
+    
+//             Swal.fire({
+//                 icon: 'info',
+//                 title: 'Espere un momento...',
+//                 text: 'Estamos confirmando la revisión',
+//                 showConfirmButton: false
+//             })
+
+//             $('.swal2-popup').addClass('ld ld-breath')
+    
+            
+//         }, function (data) {
+                
+            
+//             alertMensaje('success','Revisión confirmada', 'Esta información esta lista para ser autorizada',null,null, 2000)
+//             $('#miModal_DPT').modal('hide')
+//             document.getElementById('formularioDPT').reset();
+//             TablaDPT.ajax.reload()
+
+//         })
+        
+//     }, 1)
+// })
+
+
+// $('#AutorizarFormDPT').on('click', function () {
+    
+//     alertMensajeConfirm({
+//         title: "¿Desea autorizar el DPT?",
+//         text: "Al autorizarlo, podra hacer uso del DPT ",
+//         icon: "question",
+//     }, function () { 
+
+//         ajaxAwait({}, '/autorizarDPT/' + ID_FORMULARIO_DPT, 'GET', { callbackAfter: true, callbackBefore: true }, () => {
+    
+//             Swal.fire({
+//                 icon: 'info',
+//                 title: 'Espere un momento...',
+//                 text: 'Estamos confirmando la autorización',
+//                 showConfirmButton: false
+//             })
+
+//             $('.swal2-popup').addClass('ld ld-breath')
+    
+            
+//         }, function (data) {
+                
+            
+//             alertMensaje('success','Autorización confirmada', 'Esta información esta lista para ser utilizada',null,null, 2000)
+//             $('#miModal_DPT').modal('hide')
+//             document.getElementById('formularioDPT').reset();
+//             TablaDPT.ajax.reload()
+
+//         })
+        
+//     }, 1)
+// })
+
+
+// $('#TablaDPT tbody').on('click', 'td>button.DPT', function () {
+
+
+//     var tr = $(this).closest('tr');
+//     var row = TablaDPT.row(tr);
+//     ID_FORMULARIO_DPT = row.data().ID_FORMULARIO_DPT
+
+   
+//        alertMensajeConfirm({
+//         title: "¿Desea visualizar el formato DPT?",
+//         text: "Confirma para continuar ",
+//         icon: "question",
+//     }, function () { 
+
+// 		window.open("/makeExcelDPT/" + ID_FORMULARIO_DPT);
+           
+        
+//     }, 1)
+
+// })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 document.addEventListener("DOMContentLoaded", function() {
     const botonAgregar = document.getElementById('botonagregarcargo');
     botonAgregar.addEventListener('click', botonagregarcargo);
-
+    
     function botonagregarcargo() {
         const divContacto = document.createElement('div');
         divContacto.classList.add('row', 'generarcargo', 'm-3');
         divContacto.innerHTML = `
         <div class="row mb-3">
         
-            <div class="col-10">
-                             <input type="text" class="form-control" name="FUNCIONES_CLAVE_CARGO_DPT" id="FUNCIONES_CLAVE_CARGO_DPT" required>
-            </div>
-            <div class="col-1">
-                <button type="button" class="btn btn-danger botonEliminarContacto"><i class="bi bi-trash"></i></i></button>  
-            </div>
+        <div class="col-10">
+        <input type="text" class="form-control" name="FUNCIONES_CLAVE_CARGO_DPT" id="FUNCIONES_CLAVE_CARGO_DPT" required>
+        </div>
+        <div class="col-1">
+        <button type="button" class="btn btn-danger botonEliminarContacto"><i class="bi bi-trash"></i></i></button>  
+        </div>
         </div>
         `;
         const contenedor = document.getElementById('funciones-responsabilidades-cargo');
         contenedor.appendChild(divContacto);
-
+        
         const botonEliminar = divContacto.querySelector('.botonEliminarContacto');
         botonEliminar.addEventListener('click', function() {
             contenedor.removeChild(divContacto);
@@ -198,31 +438,31 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-    
+
 document.addEventListener("DOMContentLoaded", function() {
     const botonAgregar = document.getElementById('botonagregargestion');
     botonAgregar.addEventListener('click', botonagregargestion);
-
+    
     function botonagregargestion() {
         const divGestion = document.createElement('div');
         divGestion.classList.add('row', 'generargestion', 'm-3');
         divGestion.innerHTML = `
         <div class="row mb-3">
         
-                    <div class="col-10">
-
-                        <input type="text" class="form-control" name="FUNCIONES_CLAVE_GESTION_DPT" id="FUNCIONES_CLAVE_GESTION_DPT" required>
-                
-                </div>
-                <div class="col-1">
-                        <button type="button" class="btn btn-danger botonEliminarContacto"><i class="bi bi-trash"></i></i></button>
-                   
-                </div>
+        <div class="col-10">
+        
+        <input type="text" class="form-control" name="FUNCIONES_CLAVE_GESTION_DPT" id="FUNCIONES_CLAVE_GESTION_DPT" required>
+        
+        </div>
+        <div class="col-1">
+        <button type="button" class="btn btn-danger botonEliminarContacto"><i class="bi bi-trash"></i></i></button>
+        
+        </div>
         </div>
         `;
         const contenedor = document.getElementById('funciones-responsabilidades-gestion');
         contenedor.appendChild(divGestion);
-
+        
         const botonEliminar = divGestion.querySelector('.botonEliminarContacto');
         botonEliminar.addEventListener('click', function() {
             contenedor.removeChild(divGestion);
@@ -232,16 +472,5 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-   
 
-$('#TablaDPT tbody').on('click', 'td>button.EDITAR', function () {
 
-    var tr = $(this).closest('tr');
-    var row = TablaDPT.row(tr);
-    ID_FORMULARIO_DPT = row.data().ID_FORMULARIO_DPT
-
-    //Rellenamos los datos del formulario
-    editarDatoTabla(row.data(), 'formularioPPT','miModal_DPT', 1)
-
-  
-})

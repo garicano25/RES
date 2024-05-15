@@ -63,7 +63,6 @@ TablaPPT = $("#TablaPPT").DataTable({
     columns: [
         { data: 'ID_FORMULARIO_PPT' },
         { data: 'AREA_TRABAJADOR_PPT' },
-        { data: 'NOMBRE_TRABAJADOR_PPT' },
         { data: 'ELABORADO_POR' },
         { data: 'REVISADO_POR' },
         { data: 'AUTORIZADO_POR' },
@@ -76,14 +75,13 @@ TablaPPT = $("#TablaPPT").DataTable({
     columnDefs: [
         { target: 0, title: '#', className: 'all' },
         { target: 1, title: 'Area de trabajo', className: 'all' },
-        { target: 2, title: 'Trabajador', className: 'all' },
-        { target: 3, title: 'Elaborado por', className: 'all text-center' },
-        { target: 4, title: 'Revisado por', className: 'all text-center' },
-        { target: 5, title: 'Autorizado por', className: 'all text-center' },
-        { target: 6, title: 'Accion', className: 'all text-center' },
-        { target: 7, title: 'PPT', className: 'all text-center' },
-        { target: 8, title: 'Editar', className: 'all text-center' },
-        { target: 9, title: 'Eliminar', className: 'all text-center' },
+        { target: 2, title: 'Elaborado por', className: 'all text-center' },
+        { target: 3, title: 'Revisado por', className: 'all text-center' },
+        { target: 4, title: 'Autorizado por', className: 'all text-center' },
+        { target: 5, title: 'Accion', className: 'all text-center' },
+        { target: 6, title: 'PPT', className: 'all text-center' },
+        { target: 7, title: 'Editar', className: 'all text-center' },
+        { target: 8, title: 'Eliminar', className: 'all text-center' },
 
 
     ]
@@ -173,7 +171,7 @@ $("#guardarFormPPT").click(function (e) {
                     
                     ID_FORMULARIO_PPT = data.PPT.ID_FORMULARIO_PPT
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
-                     $('miModal_PPT').modal('hide')
+                     $('#miModal_PPT').modal('hide')
                     document.getElementById('formularioPPT').reset();
                     TablaPPT.ajax.reload()
 

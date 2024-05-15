@@ -24,8 +24,7 @@ class CreateFormularioDptTable extends Migration
             $table->text('PUESTOS_INTERACTUAN_DPT')->nullable();
             $table->text('PUESTOS_DIRECTOS_DPT')->nullable();
             $table->text('LUGAR_TRABAJO_DPT')->nullable();
-            $table->text('DISPONIBILIDAD_VIAJAR_SI_DPT')->nullable();
-            $table->text('DISPONIBILIDAD_VIAJAR_NO_DPT')->nullable();
+            $table->text('DISPONIBILIDAD_VIAJAR')->nullable();
             $table->text('HORARIO_ENTRADA_DPT')->nullable();
             $table->text('HORARIO_SALIDA_DPT')->nullable();
             $table->text('FUNCIONES_CARGO_DPT')->nullable();

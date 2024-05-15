@@ -84,17 +84,15 @@
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff;  role=" button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-building" style="margin-right: 5px;"></i> <span class="d-lg-none">Organización</span><span class="d-none d-lg-inline">Organización</span>
                         </a>
-
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url('/organigrama') }}">Organigrama</a></li>
                             <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/DPT')}}">DPT</a></li>
-                            <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/PPT')}}">PPT</a></li>
+                            <hr class="dropdown-divider">                            
+                            <li><a class="dropdown-item" href="{{url('/DPT')}}">DPT</a></li>
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/REQUERIMIENTO')}}">Requerimiento Personal</a></li>
                         </ul>
-
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">

@@ -134,23 +134,21 @@
                       <div class="col-2">
                           <label for="lugar-trabajo" class="form-label">Lugar de trabajo</label>
                       </div>
-                      <div class="col-2">
+                      <div class="col-3">
                           <input type="text" id="LUGAR_TRABAJO_DPT" name="LUGAR_TRABAJO_DPT" class="form-control">
                       </div>
                       <div class="col-2">
-                          <label for="disponibilidad-viajar" class="form-label">Disponibilidad para viajar</label>
-                      </div>
-                      <div class="col-1">
-                          <label for="si" class="form-label">Si</label>
+                          <label for="disponibilidad-viajar" class="form-label ml-5">Disponibilidad para viajar</label>
                       </div>
                       <div class="col-2">
-                        <input type="text" id="DISPONIBILIDAD_VIAJAR_SI_DPT" name="DISPONIBILIDAD_VIAJAR_SI_DPT" class="form-control">
-                      </div>
-                      <div class="col-1">
-                          <label for="no" class="form-label">No</label>
-                      </div>
-                      <div class="col-2">
-                        <input type="text" id="DISPONIBILIDAD_VIAJAR_NO_DPT" name="DISPONIBILIDAD_VIAJAR_NO_DPT" class="form-control">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="DISPONIBILIDAD_VIAJAR" id="DISPONIBILIDAD_CUMPLE_SI" value="si">
+                            <label class="form-check-label" for="DISPONIBILIDAD_CUMPLE_SI">Si</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="DISPONIBILIDAD_VIAJAR" id="DISPONIBILIDAD_CUMPLE_NO" value="no">
+                            <label class="form-check-label" for="DISPONIBILIDAD_CUMPLE_NO">No</label>
+                        </div>
                       </div>
                     </div>
 
