@@ -22,11 +22,7 @@ class CreateRelacionesInternasDptTable extends Migration
                   ->onDelete('cascade');         
             $table->text('INTERNAS_CONQUIEN_DPT')->nullable();
             $table->text('INTERNAS_PARAQUE_DPT')->nullable();
-            $table->text('INTERNAS_FRECUENCIA_DIARIAS_DPT')->nullable();
-            $table->text('INTERNAS_FRECUENCIA_SEMANAL_DPT')->nullable();
-            $table->text('INTERNAS_FRECUENCIA_MENSUAL_DPT')->nullable();
-            $table->text('INTERNAS_FRECUENCIA_SEMESTRAL_DPT')->nullable();
-            $table->text('INTERNAS_FRECUENCIA_ANUAL_DPT')->nullable();
+            $table->text('INTERNAS_FRECUENCIA_DPT')->nullable();
             $table->timestamps();
         });
     }

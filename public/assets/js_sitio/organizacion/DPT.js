@@ -198,16 +198,7 @@ $("#guardarFormDPT").click(function (e) {
 
 
 
-// $('#TablaDPT tbody').on('click', 'td>button.EDITAR', function () {
 
-//     var tr = $(this).closest('tr');
-//     var row = TablaDPT.row(tr);
-//     ID_FORMULARIO_DPT = row.data().ID_FORMULARIO_DPT
-
-//     //Rellenamos los datos del formulario
-//     editarDatoTabla(row.data(), 'formularioDPT','miModal_DPT', 1)
-
-// })
 
 
 $('#TablaDPT tbody').on('click', 'td>button.EDITAR', function () {
@@ -217,29 +208,9 @@ $('#TablaDPT tbody').on('click', 'td>button.EDITAR', function () {
 
     console.log(row.data());
 
-    editarDatoTabla1(row.data(), 'formularioDPT', 'miModal_DPT', 1);
+    editarDatoTabla(row.data(), 'formularioDPT', 'miModal_DPT');
 });
 
-function editarDatoTabla1(data, formId, modalId) {
-    var form = $('#' + formId);
-    var modal = $('#' + modalId);
-
-    if (form.length > 0 && modal.length > 0) {
-        for (var key in data) {
-            if (data.hasOwnProperty(key)) {
-                var field = form.find('[name="' + key + '"]');
-                if (field.length > 0) {
-                    field.val(data[key]);
-                }
-            }
-        }
-
-        // Mostrar el modal
-        modal.modal('show');
-    } else {
-        console.error('Formulario o modal no encontrado');
-    }
-}
 
 
 

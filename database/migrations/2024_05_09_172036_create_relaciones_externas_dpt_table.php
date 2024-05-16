@@ -22,11 +22,7 @@ class CreateRelacionesExternasDptTable extends Migration
                   ->onDelete('cascade');
             $table->text('EXTERNAS_CONQUIEN_DPT')->nullable();
             $table->text('EXTERNAS_PARAQUE_DPT')->nullable();
-            $table->text('EXTERNAS_FRECUENCIA_DIARIAS_DPT')->nullable();
-            $table->text('EXTERNAS_FRECUENCIA_SEMANAL_DPT')->nullable();
-            $table->text('EXTERNAS_FRECUENCIA_MENSUAL_DPT')->nullable();
-            $table->text('EXTERNAS_FRECUENCIA_SEMESTRAL_DPT')->nullable();
-            $table->text('EXTERNAS_FRECUENCIA_ANUAL_DPT')->nullable();
+            $table->text('EXTERNAS_FRECUENCIA_DPT')->nullable();
             $table->timestamps();
         });
     }

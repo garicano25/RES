@@ -40,7 +40,7 @@
                 <div class="row">
                       <div class="col-6">
                         <div class="form-group">
-                            <label>Nombre del puesto</label>
+                            <label>Nombre categorías</label>
                             <select class="form-control" id="DEPARTAMENTOS_AREAS_ID" name="DEPARTAMENTOS_AREAS_ID">
                                 <option selected disabled>Seleccione una opción</option>
                                 @foreach ($areas as $area)
@@ -113,34 +113,23 @@
                         <div class="col-2">
                             <label for="puestos-interactuan" class="form-label">Puestos que interactúan</label>
                         </div>
-                        <div class="col-2">
-                            <input type="text" id="PUESTOS_INTERACTUAN_DPT" name="PUESTOS_INTERACTUAN_DPT" class="form-control">
+                        
+                        <div class="col-10">
+                          <input type="text" id="PUESTOS_INTERACTUAN_DPT" name="PUESTOS_INTERACTUAN_DPT" class="form-control">
                         </div>
-                        <div class="col-2">
-                            <label for="directos" class="form-label">Directos</label>
+                        
+                      </div>
+                      <div class="row mb-3">
+                        <div class="col-4">
+                          <label for="directos" class="form-label">Directos</label>
+                          <input type="text" id="PUESTOS_DIRECTOS_DPT" name="PUESTOS_DIRECTOS_DPT" class="form-control">
                         </div>
-                        <div class="col-2">
-                            <input type="text" id="PUESTOS_DIRECTOS_DPT" name="PUESTOS_DIRECTOS_DPT" class="form-control">
-                        </div>
-                        <div class="col-2">
+                        <div class="col-4">
                             <label for="indirectos" class="form-label">Indirectos</label>
-                        </div>
-                        <div class="col-2">
                             <input type="text" id="PUESTOS_INDIRECTOS_DPT" name="PUESTOS_INDIRECTOS_DPT" class="form-control">
                         </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <div class="col-2">
-                          <label for="lugar-trabajo" class="form-label">Lugar de trabajo</label>
-                      </div>
-                      <div class="col-3">
-                          <input type="text" id="LUGAR_TRABAJO_DPT" name="LUGAR_TRABAJO_DPT" class="form-control">
-                      </div>
-                      <div class="col-2">
+                        <div class="col-4 mt-4">
                           <label for="disponibilidad-viajar" class="form-label ml-5">Disponibilidad para viajar</label>
-                      </div>
-                      <div class="col-2">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="DISPONIBILIDAD_VIAJAR" id="DISPONIBILIDAD_CUMPLE_SI" value="si">
                             <label class="form-check-label" for="DISPONIBILIDAD_CUMPLE_SI">Si</label>
@@ -151,6 +140,27 @@
                         </div>
                       </div>
                     </div>
+
+                    <div class="row mb-3">
+                      {{-- <div class="col-2">
+                          <label for="lugar-trabajo" class="form-label">Lugar de trabajo</label>
+                      </div>
+                      <div class="col-3">
+                          <input type="text" id="LUGAR_TRABAJO_DPT" name="LUGAR_TRABAJO_DPT" class="form-control">
+                      </div> --}}
+                      {{-- <div class="col-4">
+                          <label for="disponibilidad-viajar" class="form-label ml-5">Disponibilidad para viajar</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="DISPONIBILIDAD_VIAJAR" id="DISPONIBILIDAD_CUMPLE_SI" value="si">
+                            <label class="form-check-label" for="DISPONIBILIDAD_CUMPLE_SI">Si</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="DISPONIBILIDAD_VIAJAR" id="DISPONIBILIDAD_CUMPLE_NO" value="no">
+                            <label class="form-check-label" for="DISPONIBILIDAD_CUMPLE_NO">No</label>
+                        </div>
+                      </div> --}}
+                      </div>
+                    
 
                     <div class="row mb-3">
                       <div class="col-2">
@@ -233,11 +243,7 @@
                                   <tr>
                                       <th></th>
                                       <th></th>
-                                      <th style="width: 2%;">Diaria</th>
-                                      <th style="width: 2%;">Semanal</th>
-                                      <th style="width: 2%;">Mensual</th>
-                                      <th style="width: 2%;">Semest.</th>
-                                      <th style="width: 2%;">Anual</th>
+                                      <th style="width: 50%;"></th>
                                   </tr>
                               </thead>
                               <tbody>
@@ -249,21 +255,16 @@
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE1_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                   </td>
                                   <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA1_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
+                                    <select class="form-control" id="INTERNAS_FRECUENCIA1_DPT" name="INTERNAS_FRECUENCIA_DPT[]">
+                                      <option selected disabled>Seleccione una opción</option>
+                                      <option value="Diaria">Diaria</option>
+                                      <option value="Semanal">Semanal</option>
+                                      <option value="Mensual">Mensual</option>
+                                      <option value="Semest.">Semest.</option>
+                                      <option value="Anual.">Anual.</option>
+                                    </select>
                                   </td>
-                                  <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA1_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                  </td>
-                                  <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA1_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                  </td>
-                                  <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA1_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                  </td>
-                                  <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA1_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                  </td>
-                                </tr>
+                                 </tr>
                                 <tr>
                                   <td>
                                     <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN2_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
@@ -272,19 +273,14 @@
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE2_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                   </td>
                                   <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA2_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                  </td>
-                                  <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA2_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                  </td>
-                                  <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA2_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                  </td>
-                                  <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA2_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                  </td>
-                                  <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA2_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                    <select class="form-control" id="INTERNAS_FRECUENCIA2_DPT" name="INTERNAS_FRECUENCIA_DPT[]">
+                                      <option selected disabled>Seleccione una opción</option>
+                                      <option value="Diaria">Diaria</option>
+                                      <option value="Semanal">Semanal</option>
+                                      <option value="Mensual">Mensual</option>
+                                      <option value="Semest.">Semest.</option>
+                                      <option value="Anual.">Anual.</option>
+                                    </select>
                                   </td>
                                 </tr>
                                 <tr>
@@ -295,19 +291,14 @@
                                       <textarea class="form-control"  style="width: 100%;"  id="INTERNAS_PARAQUE3_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
                                     <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA3_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA3_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA3_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA3_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA3_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <select class="form-control" id="INTERNAS_FRECUENCIA3_DPT" name="INTERNAS_FRECUENCIA_DPT[]">
+                                        <option selected disabled>Seleccione una opción</option>
+                                        <option value="Diaria">Diaria</option>
+                                        <option value="Semanal">Semanal</option>
+                                        <option value="Mensual">Mensual</option>
+                                        <option value="Semest.">Semest.</option>
+                                        <option value="Anual.">Anual.</option>
+                                      </select>
                                     </td>
                                 </tr>
                                 <tr>
@@ -318,19 +309,14 @@
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE4_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
                                     <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA4_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA4_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA4_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA4_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA4_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <select class="form-control" id="INTERNAS_FRECUENCIA4_DPT" name="INTERNAS_FRECUENCIA_DPT[]">
+                                        <option selected disabled>Seleccione una opción</option>
+                                        <option value="Diaria">Diaria</option>
+                                        <option value="Semanal">Semanal</option>
+                                        <option value="Mensual">Mensual</option>
+                                        <option value="Semest.">Semest.</option>
+                                        <option value="Anual.">Anual.</option>
+                                      </select>
                                     </td>
                                 </tr>
                                 <tr>
@@ -341,19 +327,14 @@
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE5_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
                                     <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA5_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA5_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA5_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA5_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA5_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <select class="form-control" id="INTERNAS_FRECUENCIA5_DPT" name="INTERNAS_FRECUENCIA_DPT[]">
+                                        <option selected disabled>Seleccione una opción</option>
+                                        <option value="Diaria">Diaria</option>
+                                        <option value="Semanal">Semanal</option>
+                                        <option value="Mensual">Mensual</option>
+                                        <option value="Semest.">Semest.</option>
+                                        <option value="Anual.">Anual.</option>
+                                      </select>
                                     </td>
                                 </tr>
                                 <tr>
@@ -364,19 +345,14 @@
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE6_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
                                     <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA6_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA6_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA6_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA6_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA6_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <select class="form-control" id="INTERNAS_FRECUENCIA6_DPT" name="INTERNAS_FRECUENCIA_DPT[]">
+                                        <option selected disabled>Seleccione una opción</option>
+                                        <option value="Diaria">Diaria</option>
+                                        <option value="Semanal">Semanal</option>
+                                        <option value="Mensual">Mensual</option>
+                                        <option value="Semest.">Semest.</option>
+                                        <option value="Anual.">Anual.</option>
+                                      </select>
                                     </td>
                                 </tr>
 
@@ -388,19 +364,14 @@
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE7_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
                                     <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA7_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA7_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA7_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA7_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA7_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <select class="form-control" id="INTERNAS_FRECUENCIA7_DPT" name="INTERNAS_FRECUENCIA_DPT[]">
+                                        <option selected disabled>Seleccione una opción</option>
+                                        <option value="Diaria">Diaria</option>
+                                        <option value="Semanal">Semanal</option>
+                                        <option value="Mensual">Mensual</option>
+                                        <option value="Semest.">Semest.</option>
+                                        <option value="Anual.">Anual.</option>
+                                      </select>
                                     </td>
                                 </tr>
                                 <tr>
@@ -411,19 +382,14 @@
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE8_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
                                     <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA8_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA8_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA8_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA8_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA8_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <select class="form-control" id="INTERNAS_FRECUENCIA8_DPT" name="INTERNAS_FRECUENCIA_DPT[]">
+                                        <option selected disabled>Seleccione una opción</option>
+                                        <option value="Diaria">Diaria</option>
+                                        <option value="Semanal">Semanal</option>
+                                        <option value="Mensual">Mensual</option>
+                                        <option value="Semest.">Semest.</option>
+                                        <option value="Anual.">Anual.</option>
+                                      </select>
                                     </td>
                                 </tr>
                                 <tr>
@@ -434,19 +400,15 @@
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE9_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
                                     <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA9_DIARIAS_DPT" name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA9_SEMANAL_DPT" name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA9_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA9_SEMESTRAL_DPT" name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA9_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <select class="form-control" id="INTERNAS_FRECUENCIA9_DPT" name="INTERNAS_FRECUENCIA_DPT[]">
+                                        <option selected disabled>Seleccione una opción</option>
+                                        <option value="Diaria">Diaria</option>
+                                        <option value="Semanal">Semanal</option>
+                                        <option value="Mensual">Mensual</option>
+                                        <option value="Semest.">Semest.</option>
+                                        <option value="Anual.">Anual.</option>
+  
+                                      </select>
                                     </td>
                                 </tr>
                                 <tr>
@@ -457,22 +419,15 @@
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE10_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
                                     <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA10_DIARIAS_DPT" 
-                                      name="INTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA10_SEMANAL_DPT" 
-                                      name="INTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA10_MENSUAL_DPT" name="INTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA10_SEMESTRAL_DPT"
-                                       name="INTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                    </td>
-                                    <td>
-                                      <input type="text" id="INTERNAS_FRECUENCIA10_ANUAL_DPT" name="INTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                      <select class="form-control" id="INTERNAS_FRECUENCIA10_DPT" name="INTERNAS_FRECUENCIA_DPT[]">
+                                        <option selected disabled>Seleccione una opción</option>
+                                        <option value="Diaria">Diaria</option>
+                                        <option value="Semanal">Semanal</option>
+                                        <option value="Mensual">Mensual</option>
+                                        <option value="Semest.">Semest.</option>
+                                        <option value="Anual.">Anual.</option>
+  
+                                      </select>
                                     </td>
                                 </tr>
                             </tbody>
@@ -497,14 +452,10 @@
                                                   <th colspan="5" class="text-center" style="width: 10%;">Frecuencia</th>
                                               </tr>
                                               <tr>
-                                                  <th></th>
-                                                  <th></th>
-                                                  <th style="width: 2%;">Diaria</th>
-                                                  <th style="width: 2%;">Semanal</th>
-                                                  <th style="width: 2%;">Mensual</th>
-                                                  <th style="width: 2%;">Semest.</th>
-                                                  <th style="width: 2%;">Anual</th>
-                                              </tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th style="width: 50%;"></th>
+                                            </tr>
                                           </thead>
                                           <tbody>
                                             <tr>
@@ -515,19 +466,14 @@
                                                   <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_PARAQUE1_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                               </td>
                                               <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA1_DIARIAS_DPT" name="EXTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                              </td>
-                                              <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA1_SEMANAL_DPT" name="EXTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                              </td>
-                                              <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA1_MENSUAL_DPT" name="EXTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                              </td>
-                                              <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA1_SEMESTRAL_DPT" name="EXTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                              </td>
-                                              <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA1_ANUAL_DPT" name="EXTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                                <select class="form-control" id="EXTERNAS_FRECUENCIA1_DPT" name="EXTERNAS_FRECUENCIA_DPT[]">
+                                                  <option selected disabled>Seleccione una opción</option>
+                                                  <option value="Diaria">Diaria</option>
+                                                  <option value="Semanal">Semanal</option>
+                                                  <option value="Mensual">Mensual</option>
+                                                  <option value="Semest.">Semest.</option>
+                                                  <option value="Anual.">Anual.</option>
+                                                </select>
                                               </td>
                                             </tr>
                                             <tr>
@@ -538,19 +484,14 @@
                                                   <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_PARAQUE2_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                               </td>
                                               <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA2_DIARIAS_DPT" name="EXTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                              </td>
-                                              <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA2_SEMANAL_DPT" name="EXTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                              </td>
-                                              <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA2_MENSUAL_DPT" name="EXTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                              </td>
-                                              <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA2_SEMESTRAL_DPT" name="EXTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                              </td>
-                                              <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA2_ANUAL_DPT" name="EXTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                                <select class="form-control" id="EXTERNAS_FRECUENCIA2_DPT" name="EXTERNAS_FRECUENCIA_DPT[]">
+                                                  <option selected disabled>Seleccione una opción</option>
+                                                  <option value="Diaria">Diaria</option>
+                                                  <option value="Semanal">Semanal</option>
+                                                  <option value="Mensual">Mensual</option>
+                                                  <option value="Semest.">Semest.</option>
+                                                  <option value="Anual.">Anual.</option>
+                                                </select>
                                               </td>
                                             </tr>
                                             <tr>
@@ -561,19 +502,14 @@
                                                   <textarea class="form-control"  style="width: 100%;"  id="EXTERNAS_PARAQUE3_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                                 </td>
                                                 <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA3_DIARIAS_DPT" name="EXTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA3_SEMANAL_DPT" name="EXTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA3_MENSUAL_DPT" name="EXTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA3_SEMESTRAL_DPT" name="EXTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA3_ANUAL_DPT" name="EXTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                                  <select class="form-control" id="EXTERNAS_FRECUENCIA3_DPT" name="EXTERNAS_FRECUENCIA_DPT[]">
+                                                    <option selected disabled>Seleccione una opción</option>
+                                                    <option value="Diaria">Diaria</option>
+                                                    <option value="Semanal">Semanal</option>
+                                                    <option value="Mensual">Mensual</option>
+                                                    <option value="Semest.">Semest.</option>
+                                                    <option value="Anual.">Anual.</option>
+                                                  </select>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -584,19 +520,14 @@
                                                   <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_PARAQUE4_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                                 </td>
                                                 <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA4_DIARIAS_DPT" name="EXTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA4_SEMANAL_DPT" name="EXTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA4_MENSUAL_DPT" name="EXTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA4_SEMESTRAL_DPT" name="EXTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA4_ANUAL_DPT" name="EXTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                                  <select class="form-control" id="EXTERNAS_FRECUENCIA4_DPT" name="EXTERNAS_FRECUENCIA_DPT[]">
+                                                    <option selected disabled>Seleccione una opción</option>
+                                                    <option value="Diaria">Diaria</option>
+                                                    <option value="Semanal">Semanal</option>
+                                                    <option value="Mensual">Mensual</option>
+                                                    <option value="Semest.">Semest.</option>
+                                                    <option value="Anual.">Anual.</option>
+                                                  </select>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -607,19 +538,14 @@
                                                   <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_PARAQUE5_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                                 </td>
                                                 <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA5_DIARIAS_DPT" name="EXTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA5_SEMANAL_DPT" name="EXTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA5_MENSUAL_DPT" name="EXTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA5_SEMESTRAL_DPT" name="EXTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA5_ANUAL_DPT" name="EXTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                                  <select class="form-control" id="EXTERNAS_FRECUENCIA5_DPT" name="EXTERNAS_FRECUENCIA_DPT[]">
+                                                    <option selected disabled>Seleccione una opción</option>
+                                                    <option value="Diaria">Diaria</option>
+                                                    <option value="Semanal">Semanal</option>
+                                                    <option value="Mensual">Mensual</option>
+                                                    <option value="Semest.">Semest.</option>
+                                                    <option value="Anual.">Anual.</option>
+                                                  </select>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -630,19 +556,14 @@
                                                   <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_PARAQUE6_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                                 </td>
                                                 <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA6_DIARIAS_DPT" name="EXTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA6_SEMANAL_DPT" name="EXTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA6_MENSUAL_DPT" name="EXTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA6_SEMESTRAL_DPT" name="EXTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA6_ANUAL_DPT" name="EXTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                                  <select class="form-control" id="EXTERNAS_FRECUENCIA6_DPT" name="EXTERNAS_FRECUENCIA_DPT[]">
+                                                    <option selected disabled>Seleccione una opción</option>
+                                                    <option value="Diaria">Diaria</option>
+                                                    <option value="Semanal">Semanal</option>
+                                                    <option value="Mensual">Mensual</option>
+                                                    <option value="Semest.">Semest.</option>
+                                                    <option value="Anual.">Anual.</option>
+                                                  </select>
                                                 </td>
                                             </tr>
 
@@ -654,19 +575,14 @@
                                                   <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_PARAQUE7_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                                 </td>
                                                 <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA7_DIARIAS_DPT" name="EXTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA7_SEMANAL_DPT" name="EXTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA7_MENSUAL_DPT" name="EXTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA7_SEMESTRAL_DPT" name="EXTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA7_ANUAL_DPT" name="EXTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                                  <select class="form-control" id="EXTERNAS_FRECUENCIA7_DPT" name="EXTERNAS_FRECUENCIA_DPT[]">
+                                                    <option selected disabled>Seleccione una opción</option>
+                                                    <option value="Diaria">Diaria</option>
+                                                    <option value="Semanal">Semanal</option>
+                                                    <option value="Mensual">Mensual</option>
+                                                    <option value="Semest.">Semest.</option>
+                                                    <option value="Anual.">Anual.</option>
+                                                  </select>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -677,19 +593,14 @@
                                                   <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_PARAQUE8_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                                 </td>
                                                 <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA8_DIARIAS_DPT" name="EXTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA8_SEMANAL_DPT" name="EXTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA8_MENSUAL_DPT" name="EXTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA8_SEMESTRAL_DPT" name="EXTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA8_ANUAL_DPT" name="EXTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                                  <select class="form-control" id="EXTERNAS_FRECUENCIA8_DPT" name="EXTERNAS_FRECUENCIA_DPT[]">
+                                                    <option selected disabled>Seleccione una opción</option>
+                                                    <option value="Diaria">Diaria</option>
+                                                    <option value="Semanal">Semanal</option>
+                                                    <option value="Mensual">Mensual</option>
+                                                    <option value="Semest.">Semest.</option>
+                                                    <option value="Anual.">Anual.</option>
+                                                  </select>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -700,21 +611,16 @@
                                                   <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_PARAQUE9_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                                 </td>
                                                 <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA9_DIARIAS_DPT" name="EXTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
+                                                  <select class="form-control" id="EXTERNAS_FRECUENCIA8_DPT" name="EXTERNAS_FRECUENCIA_DPT[]">
+                                                    <option selected disabled>Seleccione una opción</option>
+                                                    <option value="Diaria">Diaria</option>
+                                                    <option value="Semanal">Semanal</option>
+                                                    <option value="Mensual">Mensual</option>
+                                                    <option value="Semest.">Semest.</option>
+                                                    <option value="Anual.">Anual.</option>
+                                                  </select>
                                                 </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA9_SEMANAL_DPT" name="EXTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA9_MENSUAL_DPT" name="EXTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA9_SEMESTRAL_DPT" name="EXTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA9_ANUAL_DPT" name="EXTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                            </tr>
+                                              </tr>
                                             <tr>
                                               <td>
                                                 <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_CONQUIEN10_DPT" name="EXTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
@@ -723,22 +629,14 @@
                                                   <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_PARAQUE10_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                                 </td>
                                                 <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA10_DIARIAS_DPT" 
-                                                  name="EXTERNAS_FRECUENCIA_DIARIAS_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA10_SEMANAL_DPT" 
-                                                  name="EXTERNAS_FRECUENCIA_SEMANAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA10_MENSUAL_DPT" name="EXTERNAS_FRECUENCIA_MENSUAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA10_SEMESTRAL_DPT"
-                                                   name="EXTERNAS_FRECUENCIA_SEMESTRAL_DPT[]" class="form-control text-center" style="width: 100%;">
-                                                </td>
-                                                <td>
-                                                  <input type="text" id="EXTERNAS_FRECUENCIA10_ANUAL_DPT" name="EXTERNAS_FRECUENCIA_ANUAL_DPT[]" class="form-control text-center" style="width: 100%;">
+                                                  <select class="form-control" id="EXTERNAS_FRECUENCIA10_DPT" name="EXTERNAS_FRECUENCIA_DPT[]">
+                                                    <option selected disabled>Seleccione una opción</option>
+                                                    <option value="Diaria">Diaria</option>
+                                                    <option value="Semanal">Semanal</option>
+                                                    <option value="Mensual">Mensual</option>
+                                                    <option value="Semest.">Semest.</option>
+                                                    <option value="Anual.">Anual.</option>
+                                                  </select>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -767,101 +665,101 @@
                                                   </thead>
                                                   <tbody>
                                                       <tr>
-                                                          <td>1.- Innovación: genera soluciones innovadoras en el ambiente laboral, planteando ideas creativas e incorporando nuevas prácticas para alcanzar mejores resultados.
+                                                          <td><b>1.- Innovación:</b> genera soluciones innovadoras en el ambiente laboral, planteando ideas creativas e incorporando nuevas prácticas para alcanzar mejores resultados.
+                                                          </td>
+                                                          <td>  
+                                                            <input class="form-check-input" type="radio" name="ESCALA_INNOVACION" id="ESCALA_INNOVACION_BAJO" value="BAJO">
                                                           </td>
                                                           <td>
-                                                            <input type="text" id="INNOVACION_BAJO_DPT" name="INNOVACION_BAJO_DPT" class="form-control text-center" style="width: 100%;">
+                                                            <input class="form-check-input" type="radio" name="ESCALA_INNOVACION" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
                                                           </td>
                                                           <td>
-                                                            <input type="text" id="INNOVACION_MEDIO_DPT" name="INNOVACION_MEDIO_DPT" class="form-control text-center" style="width: 100%;">
-                                                          </td>
-                                                          <td>
-                                                            <input type="text" id="INNOVACION_ALTO_DPT" name="INNOVACION_ALTO_DPT" class="form-control text-center" style="width: 100%;">
+                                                            <input class="form-check-input" type="radio" name="ESCALA_INNOVACION" id="ESCALA_INNOVACION_ALTO" value="ALTO">
                                                           </td>
                                                       </tr>
                                                       <tr>
-                                                        <td>2.- Pasión: muestra compromiso para lograr metas dirigiéndose a las personas, a los equipos que forman parte del trabajo y a la organización,  a fin de obtener el triple resultado (financiero, social y ambiental). Se esfuerza por ser el mejor generador de valor a nuestros clientes, accionistas y empleados.</td>
+                                                        <td><b>2.- Pasión:</b> muestra compromiso para lograr metas dirigiéndose a las personas, a los equipos que forman parte del trabajo y a la organización,  a fin de obtener el triple resultado (financiero, social y ambiental). Se esfuerza por ser el mejor generador de valor a nuestros clientes, accionistas y empleados.</td>
                                                         <td>
-                                                          <input type="text" id="PASION_BAJO_DPT" name="PASION_BAJO_DPT" class="form-control text-center" style="width: 100%;">
+                                                          <input class="form-check-input" type="radio" name="ESCALA_PASION" id="ESCALA_PASION_BAJO" value="BAJO">
                                                         </td>
                                                         <td>
-                                                          <input type="text" id="PASION_MEDIO_DPT" name="PASION_MEDIO_DPT" class="form-control text-center" style="width: 100%;">
+                                                          <input class="form-check-input" type="radio" name="ESCALA_PASION" id="ESCALA_PASION_MEDIO" value="MEDIO">
                                                         </td>
                                                         <td>
-                                                          <input type="text" id="PASION_ALTO_DPT" name="PASION_ALTO_DPT" class="form-control text-center" style="width: 100%;">
+                                                          <input class="form-check-input" type="radio" name="ESCALA_PASION" id="ESCALA_PASION_ALTO" value="ALTO">
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                      <td>3.- Servicio (orientación al cliente): excede las expectativas al esforzarse por conocer y resolver los problemas de los clientes internos/externos; buscando ayudar y obtener relaciones a largo plazo. Crea prácticas que satisfacen las necesidades tanto del cliente como de la organización.</td>
+                                                      <td><b>3.- Servicio (orientación al cliente):</b> excede las expectativas al esforzarse por conocer y resolver los problemas de los clientes internos/externos; buscando ayudar y obtener relaciones a largo plazo. Crea prácticas que satisfacen las necesidades tanto del cliente como de la organización.</td>
                                                       <td>
-                                                        <input type="text" id="SERVICIO_BAJO_DPT" name="SERVICIO_BAJO_DPT" class="form-control text-center" style="width: 100%;">
+                                                        <input class="form-check-input" type="radio" name="ESCALA_SERVICIO" id="ESCALA_SERVICIO_BAJO" value="BAJO">
                                                       </td>
                                                       <td>
-                                                        <input type="text" id="SERVICIO_MEDIO_DPT" name="SERVICIO_MEDIO_DPT" class="form-control text-center" style="width: 100%;">
+                                                        <input class="form-check-input" type="radio" name="ESCALA_SERVICIO" id="ESCALA_SERVICIO_MEDIO" value="MEDIO">
                                                       </td>
                                                       <td>
-                                                        <input type="text" id="SERVICIO_ALTO_DPT" name="SERVICIO_ALTO_DPT" class="form-control text-center" style="width: 100%;">
+                                                        <input class="form-check-input" type="radio" name="ESCALA_SERVICIO" id="ESCALA_SERVICIO_ALTO" value="ALTO">
                                                       </td>
                                                   </tr>
                                                   <tr>
-                                                    <td>4.- Comunicación eficaz: capacidad para escuchar y entender al otro, para transmitir en forma clara y oportuna la información requerida por los demás, a fin de alcanzar los objetivos organizacionales y para mantener canales de comunicación abiertos y redes de contacto formales e informales que abarquen los diferentes niveles de la organización.</td>
+                                                    <td><b>4.- Comunicación eficaz:</b> capacidad para escuchar y entender al otro, para transmitir en forma clara y oportuna la información requerida por los demás, a fin de alcanzar los objetivos organizacionales y para mantener canales de comunicación abiertos y redes de contacto formales e informales que abarquen los diferentes niveles de la organización.</td>
                                                     <td>
-                                                      <input type="text" id="COMUNICACION_BAJO_DPT" name="COMUNICACION_BAJO_DPT" class="form-control text-center" style="width: 100%;">
+                                                      <input class="form-check-input" type="radio" name="ESCALA_COMUNICACION" id="ESCALA_COMUNICACION_BAJO" value="BAJO">
                                                     </td>
                                                     <td>
-                                                      <input type="text" id="COMUNICACION_MEDIO_DPT" name="COMUNICACION_MEDIO_DPT" class="form-control text-center" style="width: 100%;">
+                                                      <input class="form-check-input" type="radio" name="ESCALA_COMUNICACION" id="ESCALA_COMUNICACION_MEDIO" value="MEDIO">
                                                     </td>
                                                     <td>
-                                                      <input type="text" id="COMUNICACION_ALTO_DPT" name="COMUNICACION_ALTO_DPT" class="form-control text-center" style="width: 100%;">
+                                                      <input class="form-check-input" type="radio" name="ESCALA_COMUNICACION" id="ESCALA_COMUNICACION_ALTO" value="ALTO">
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                  <td>5.- Trabajo en equipo: posee la habilidad para participar en una meta común incluso cuando no es de interés personal; tiene la capacidad para comprender la repercusión del trabajo en equipo para mantener relaciones productivas y lograr resultados.</td>
+                                                  <td><b>5.- Trabajo en equipo:</b> posee la habilidad para participar en una meta común incluso cuando no es de interés personal; tiene la capacidad para comprender la repercusión del trabajo en equipo para mantener relaciones productivas y lograr resultados.</td>
                                                   <td>
-                                                    <input type="text" id="TRABAJO_BAJO_DPT" name="TRABAJO_BAJO_DPT" class="form-control text-center" style="width: 100%;">
+                                                    <input class="form-check-input" type="radio" name="ESCALA_TRABAJO" id="ESCALA_TRABAJO_BAJO" value="BAJO">
                                                   </td>
                                                   <td>
-                                                    <input type="text" id="TRABAJO_MEDIO_DPT" name="TRABAJO_MEDIO_DPT" class="form-control text-center" style="width: 100%;">
+                                                    <input class="form-check-input" type="radio" name="ESCALA_TRABAJO" id="ESCALA_TRABAJO_MEDIO" value="MEDIO">
                                                   </td>
                                                   <td>
-                                                    <input type="text" id="TRABAJO_ALTO_DPT" name="TRABAJO_ALTO_DPT" class="form-control text-center" style="width: 100%;">
-                                                  </td>
-                                                </tr>
-                                                <tr>
-                                                  <td>6.- Integridad: actúa con honestidad, comunicando sus intenciones, ideas y sentimientos de manera abierta y directa. Es conguente con lo que dice y hace con base en los lineamientos establecidos en nuestro código de ética.</td>
-                                                  <td>
-                                                    <input type="text" id="INTEGRIDAD_BAJO_DPT" name="INTEGRIDAD_BAJO_DPT" class="form-control text-center" style="width: 100%;">
-                                                  </td>
-                                                  <td>
-                                                    <input type="text" id="INTEGRIDAD_MEDIO_DPT" name="INTEGRIDAD_MEDIO_DPT" class="form-control text-center" style="width: 100%;">
-                                                  </td>
-                                                  <td>
-                                                    <input type="text" id="INTEGRIDAD_ALTO_DPT" name="INTEGRIDAD_ALTO_DPT" class="form-control text-center" style="width: 100%;">
+                                                    <input class="form-check-input" type="radio" name="ESCALA_TRABAJO" id="ESCALA_TRABAJO_ALTO" value="ALTO">
                                                   </td>
                                                 </tr>
                                                 <tr>
-                                                  <td>7.- Responsabilidad social: se compromete socialmente con los trabajadores, las comunidades donde interactuamos y el medio ambiente, contribuyendo a la construcción del bien común.</td>
+                                                  <td><b>6.- Integridad:</b> actúa con honestidad, comunicando sus intenciones, ideas y sentimientos de manera abierta y directa. Es conguente con lo que dice y hace con base en los lineamientos establecidos en nuestro código de ética.</td>
                                                   <td>
-                                                    <input type="text" id="RESPONSABILIDAD_BAJO_DPT" name="RESPONSABILIDAD_BAJO_DPT" class="form-control text-center" style="width: 100%;">
+                                                    <input class="form-check-input" type="radio" name="ESCALA_INTEGRIDAD" id="ESCALA_INTEGRIDAD_BAJO" value="BAJO">
                                                   </td>
                                                   <td>
-                                                    <input type="text" id="RESPONSABILIDAD_MEDIO_DPT" name="RESPONSABILIDAD_MEDIO_DPT" class="form-control text-center" style="width: 100%;">
+                                                    <input class="form-check-input" type="radio" name="ESCALA_INTEGRIDAD" id="ESCALA_INTEGRIDAD_MEDIO" value="MEDIO">
                                                   </td>
                                                   <td>
-                                                    <input type="text" id="RESPONSABILIDAD_ALTO_DPT" name="RESPONSABILIDAD_ALTO_DPT" class="form-control text-center" style="width: 100%;">
+                                                    <input class="form-check-input" type="radio" name="ESCALA_INTEGRIDAD" id="ESCALA_INTEGRIDAD_ALTO" value="ALTO">
+                                                  </td>
+                                                </tr>
+                                                <tr>
+                                                  <td><b>7.- Responsabilidad social:</b> se compromete socialmente con los trabajadores, las comunidades donde interactuamos y el medio ambiente, contribuyendo a la construcción del bien común.</td>
+                                                  <td>
+                                                    <input class="form-check-input" type="radio" name="ESCALA_RESPONSABILIDAD" id="ESCALA_RESPONSABILIDAD_BAJO" value="BAJO">
+                                                  </td>
+                                                  <td>
+                                                    <input class="form-check-input" type="radio" name="ESCALA_RESPONSABILIDAD" id="ESCALA_RESPONSABILIDAD_MEDIO" value="MEDIO">
+                                                  </td>
+                                                  <td>
+                                                    <input class="form-check-input" type="radio" name="ESCALA_RESPONSABILIDAD" id="ESCALA_RESPONSABILIDAD_ALTO" value="ALTO">
                                                   </td>
                                                 </tr>
 
                                                 <tr>
-                                                  <td>8.- Adaptabilidad a los cambios del entorno: muestra capacidad para adaptarse a los cambios, mostrando flexibilidad y apertura para alcanzar objetivos cuando surgen dificultades, trabajo eficientemente durante cambios significativos de responsabilidades de puesto o cambios en el medio laboral.</td>
+                                                  <td><b>8.- Adaptabilidad a los cambios del entorno:</b> muestra capacidad para adaptarse a los cambios, mostrando flexibilidad y apertura para alcanzar objetivos cuando surgen dificultades, trabajo eficientemente durante cambios significativos de responsabilidades de puesto o cambios en el medio laboral.</td>
                                                   <td>
-                                                    <input type="text" id="ADAPTABILIDAD_BAJO_DPT" name="ADAPTABILIDAD_BAJO_DPT" class="form-control text-center" style="width: 100%;">
+                                                    <input class="form-check-input" type="radio" name="ESCALA_ADAPTIBILIDAD" id="ESCALA_ADAPTIBILIDAD_BAJO" value="BAJO">
                                                   </td>
                                                   <td>
-                                                    <input type="text" id="ADAPTABILIDAD_MEDIO_DPT" name="ADAPTABILIDAD_MEDIO_DPT" class="form-control text-center" style="width: 100%;">
+                                                    <input class="form-check-input" type="radio" name="ESCALA_ADAPTIBILIDAD" id="ESCALA_ADAPTIBILIDAD_MEDIO" value="MEDIO">
                                                   </td>
                                                   <td>
-                                                    <input type="text" id="ADAPTABILIDAD_ALTO_DPT" name="ADAPTABILIDAD_ALTO_DPT" class="form-control text-center" style="width: 100%;">
+                                                    <input class="form-check-input" type="radio" name="ESCALA_ADAPTIBILIDAD" id="ESCALA_ADAPTIBILIDAD_ALTO" value="ALTO">
                                                   </td>
                                                 </tr>
                                                   </tbody>
@@ -890,28 +788,28 @@
                                           </thead>
                                           <tbody>
                                               <tr>
-                                                  <td>1.- Liderazgo: habilidad necesaria para orientar la acción de los grupos humanos en una dirección determinada, inspirando valores de acción y anticipando escenarios de desarrollo de la acción de ese grupo. Muestra habilidad para fijar objetivos, establece claramente directivas, fija objetivos, prioridades con la capacidad de comunicarlos. Tiene energía la transmite a otros y motiva e inspira confianza.
+                                                  <td><b>1.- Liderazgo:</b> habilidad necesaria para orientar la acción de los grupos humanos en una dirección determinada, inspirando valores de acción y anticipando escenarios de desarrollo de la acción de ese grupo. Muestra habilidad para fijar objetivos, establece claramente directivas, fija objetivos, prioridades con la capacidad de comunicarlos. Tiene energía la transmite a otros y motiva e inspira confianza.
                                                   </td>
                                                   <td>
-                                                    <input type="text" id="LIDERAZGO_BAJO_DPT" name="LIDERAZGO_BAJO_DPT" class="form-control text-center" style="width: 100%;">
+                                                    <input class="form-check-input" type="radio" name="ESCALA_LIDERAZGO" id="ESCALA_LIDERAZGO_BAJO" value="BAJO">
                                                   </td>
                                                   <td>
-                                                    <input type="text" id="LIDERAZGO_MEDIO_DPT" name="LIDERAZGO_MEDIO_DPT" class="form-control text-center" style="width: 100%;">
+                                                    <input class="form-check-input" type="radio" name="ESCALA_LIDERAZGO" id="ESCALA_LIDERAZGO_MEDIO" value="MEDIO">
                                                   </td>
                                                   <td>
-                                                    <input type="text" id="LIDERAZGO_ALTO_DPT" name="LIDERAZGO_ALTO_DPT" class="form-control text-center" style="width: 100%;">
+                                                    <input class="form-check-input" type="radio" name="ESCALA_LIDERAZGO" id="ESCALA_LIDERAZGO_ALTO" value="ALTO">
                                                   </td>
                                               </tr>
                                               <tr>
                                                 <td>2.- Toma de decisiones: capacidad de elegir la mejor opción entre varias para conseguir el objetivo buscado de forma sistemática, comprometiéndose, y siendo coherentes, identifica la causa raíz de los problemas, usa métodos efectivos para seleccionar el curso de acción o las soluciones adecuadas.</td>
                                                 <td>
-                                                  <input type="text" id="TOMADECISION_BAJO_DPT" name="TOMADECISION_BAJO_DPT" class="form-control text-center" style="width: 100%;">
+                                                    <input class="form-check-input" type="radio" name="ESCALA_TOMADECISION" id="ESCALA_TOMADECISION_BAJO" value="BAJO">
                                                 </td>
                                                 <td>
-                                                  <input type="text" id="TOMADECISION_MEDIO_DPT" name="TOMADECISION_MEDIO_DPT" class="form-control text-center" style="width: 100%;">
+                                                    <input class="form-check-input" type="radio" name="ESCALA_TOMADECISION" id="ESCALA_TOMADECISION_MEDIO" value="MEDIO">
                                                 </td>
                                                 <td>
-                                                  <input type="text" id="TOMADECISION_ALTO_DPT" name="TOMADECISION_ALTO_DPT" class="form-control text-center" style="width: 100%;">
+                                                    <input class="form-check-input" type="radio" name="ESCALA_TOMADECISION" id="ESCALA_TOMADECISION_ALTO" value="ALTO">
                                                 </td>
                                             </tr>
                                           </tbody>
@@ -943,35 +841,38 @@
                               </div>
 
                               <div class="row mb-3">
-                                <div class="col-1 text-center ">
-                                  <label>Si</label>
-                                </div>
-                                <div class="col-1">
-                                  <input type="text" id="DE_INFORMACION_SI_DPT" name="DE_INFORMACION_SI_DPT" class="form-control text-center">
-                                </div>
-                                <div class="col-1 text-center ">
-                                  <label>No</label>
-                                </div>
-                                <div class="col-1">
-                                <input type="text" id="DE_INFORMACION_NO_DPT" name="DE_INFORMACION_NO_DPT" class="form-control text-center">
+                                <div class="col-1 text-center">
+                                  <h6></h6>
                               </div>
-                                <div class="col-3">
-                                <label>Especifique</label>
+                                <div class="col-2">
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="DE_INFORMACION_DPT" id="DEINFORMACION_SI" value="si">
+                                    <label class="form-check-label" for="DEINFORMACION_SI">Si</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="DE_INFORMACION_DPT" id="DEINFORMACION_NO" value="no">
+                                    <label class="form-check-label" for="DEINFORMACION_NO">No</label>
+                                  </div>
                                 </div>
-                                <div class="col-1 text-center ">
-                                  <label>Si</label>
-                              </div>
-                              <div class="col-1">
-                                <input type="text" id="DE_RECURSOS_SI_DPT" name="DE_RECURSOS_SI_DPT" class="form-control text-center">
-                              </div>
-                              <div class="col-1 text-center ">
-                                <label>No</label>
-                              </div>
-                            <div class="col-1">
-                              <input type="text" id="DE_RECURSOS_NO_DPT" name="DE_RECURSOS_NO_DPT" class="form-control text-center">
-                            </div>
-                            <div class="col-1">
-                              <label>Especifique</label>
+                                  <div class="col-3">
+                                    <label>Especifique</label>
+                                  </div>
+                                  <div class="col-1 text-center">
+                                    <h6></h6>
+                                </div>
+                                  <div class="col-2">
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="DE_RECURSOS_DPT" id="DERECURSOS_SI" value="si">
+                                      <label class="form-check-label" for="DERECURSOS_SI">Si</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                      <input class="form-check-input" type="radio" name="DE_RECURSOS_DPT" id="DERECURSOS_NO" value="no">
+                                      <label class="form-check-label" for="DERECURSOS_NO">No</label>
+                                    </div>
+                                  </div>
+                                    <div class="col-3">
+                                      <label>Especifique</label>
+                                    </div>
                             </div>
                               </div>
                               <div class="row mb-3">
@@ -1110,8 +1011,8 @@
                               </div>
                             </div>
 
-                  </div>
               </div>
+            </div>
             <div class="modal-footer mx-5">
                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                   <button type="submit" class="btn btn-success" id="guardarFormDPT">Guardar</button>
