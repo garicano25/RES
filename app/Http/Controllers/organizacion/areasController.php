@@ -8,8 +8,8 @@ use App\Models\organizacion\areasModel;
 use App\Models\organizacion\departamentosAreasModel;
 use App\Models\organizacion\encargadosAreasModel;
 
-
 use DB;
+
 
 
 class areasController extends Controller

@@ -76,3 +76,34 @@ ol {
     padding: 10px !important;
     border-radius: 10px !important;
 }
+
+.nav-item {
+    margin-left: 5px;
+}
+
+.nav-link {
+    font-size: 14px; 
+    padding: 4px 9px; }
+
+
+
+    .nombre-column {
+    width: 20%; 
+}
+
+
+td.descripcion-column {
+    max-width: 300px;
+    word-wrap: break-word; 
+    text-align: justify;
+    font-size: 12px; 
+}
+
+
+.dropdown-menu .dropdown-item {
+    font-size: 17px; /* Ajusta el tamaño de fuente */
+    padding: 5px 10px; /* Ajusta el padding */
+}
+.dropdown-menu hr {
+    margin: 5px 0; /* Ajusta el margen de los separadores */
+}

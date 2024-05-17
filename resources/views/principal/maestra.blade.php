@@ -81,9 +81,9 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
-                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff;  role=" button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-building" style="margin-right: 5px;"></i> <span class="d-lg-none">Organización</span><span class="d-none d-lg-inline">Organización</span>
-                        </a>
+                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff;"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-diagram-3-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Organización</span><span class="d-none d-lg-inline">Organización</span>
+                        </a>                                             
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url('/organigrama') }}">Organigrama</a></li>
                             <hr class="dropdown-divider">
@@ -96,39 +96,57 @@
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-diagram-3-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Reclutamiento</span><span class="d-none d-lg-inline">Reclutamiento</span>
+                            <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Reclutamiento</span><span class="d-none d-lg-inline">Reclutamiento</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-file-earmark-ppt-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Selección</span><span class="d-none d-lg-inline">Selección</span>
+                            <i class="bi bi-person-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Selección</span><span class="d-none d-lg-inline">Selección</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-file-earmark-ppt-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Contratación</span><span class="d-none d-lg-inline">Contratación</span>
+                            <i class="bi bi-person-badge-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Contratación</span><span class="d-none d-lg-inline">Contratación</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-file-earmark-bar-graph-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Rec.Empleados</span><span class="d-none d-lg-inline">Rec.Empleados</span>
+                            <i class="bi bi-briefcase-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Rec.Empleados</span><span class="d-none d-lg-inline">Rec.Empleados</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Capacitación</span><span class="d-none d-lg-inline">Capacitación</span>
+                            <i class="bi bi-person-bounding-box" style="margin-right: 5px;"></i> <span class="d-lg-none">Capacitación</span><span class="d-none d-lg-inline">Capacitación</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Eval.desempeño</span><span class="d-none d-lg-inline">Eval.desempeño</span>
+                            <i class="bi bi-clipboard-data-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Eval.desempeño</span><span class="d-none d-lg-inline">Eval.desempeño</span>
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-file-earmark-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Desvinculación</span><span class="d-none d-lg-inline">Desvinculación</span>
+                            <i class="bi bi-person-dash-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Desvinculación</span><span class="d-none d-lg-inline">Desvinculación</span>
                         </a>
                     </li>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown" style="margin-left: 10px;">
+                            <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> 
+                                <span class="d-lg-none">Catálogo</span>
+                                <span class="d-none d-lg-inline">Catálogo</span>
+                            </a>                                             
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ url('/Jerárquico') }}">Catálogo nivel Jerárquico</a></li>
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('#')}}">Funciones clave del cargo</a></li>
+                                <hr class="dropdown-divider">                            
+                                <li><a class="dropdown-item" href="{{url('#')}}">Funciones del sistema integrado de gestión</a></li>    
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/Asesores')}}">Catálogo de Asesores</a></li> 
+                            </ul>
+                        </li>
+                    </ul>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-people-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Usuarios</span><span class="d-none d-lg-inline">Usuarios</span>
@@ -197,20 +215,20 @@
     <!-- organización -->
     <script src="/assets/js_sitio/organizacion/organigrama.js"></script>
     <script src="/assets/js/GOJs/go.js"></script>
-
-
     @endif
 
     @if(request()->is('PPT'))
-
     <script src="/assets/js_sitio/organizacion/PPT.js"></script>
-
     @endif
 
     @if(request()->is('DPT'))
     <script src="/assets/js_sitio/organizacion/DPT.js"></script>
-
     @endif
+    
+    @if(request()->is('Jerárquico') || request()->is(''))
+    <script src="/assets/js_sitio/organizacion/catalogos.js"></script>
+    @endif
+
 
 </body>
 

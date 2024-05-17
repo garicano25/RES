@@ -4,7 +4,7 @@
 
 <div class="contenedor-contenido">
   <ol class="breadcrumb mb-5">
-    <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-diagram-3-fill"></i> Organigrama </h3>
+    <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-diagram-3-fill"></i>&nbsp;Organigrama </h3>
 
     <button type="button" class="btn btn-light waves-effect waves-light" id="verOrganigramaGeneral" style="margin-left: 35px;">
       Organigrama General <i class="bi bi-eye"></i>
@@ -21,6 +21,8 @@
 
     </table>
   </div>
+
+</div>
 
 
 

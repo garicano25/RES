@@ -4,23 +4,24 @@
 
 
 
-<div class="contenedor-contenido">
-  <ol class="breadcrumb mb-5">
-    <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-fill"></i> DPT  </h3>
 
-    <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_dpt"  id="actualizarDatos" data-bs-toggle="modal" data-bs-target="#miModal_DPT" style="margin-left: auto;">
-      Nuevo DPT  <i class="bi bi-plus-circle"></i> 
-      </button>
-    </ol>
-    
-
-
-    <div class="card-body">
-      <table id="TablaDPT" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
-
-      </table>
+    <div class="contenedor-contenido">
+      <ol class="breadcrumb mb-5">
+          <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-fill"></i>&nbsp;DPT</h3>
+  
+  
+          <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_ppt" data-bs-toggle="modal" data-bs-target="#miModal_DPT" style="margin-left: auto;">
+              Nuevo DPT &nbsp;<i class="bi bi-plus-circle"></i>
+          </button>
+      </ol>
+  
+      <div class="card-body">
+          <table id="TablaDPT" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+  
+          </table>
+      </div>
+  
   </div>
-    </div>
 
 
 
@@ -873,151 +874,153 @@
                                     <div class="col-3">
                                       <label>Especifique</label>
                                     </div>
-                            </div>
-                              </div>
-                              <div class="row mb-3">
-                                <div class="col-6 text-center">
-                                  <textarea class="form-control" id="DE_INFORMACION_ESPECIFIQUE_DPT" name="DE_INFORMACION_ESPECIFIQUE_DPT" rows="2"></textarea>                
-                              </div>
-                                <div class="col-6 text-center">
-                                  <textarea class="form-control" id="DE_RECURSOS_ESPECIFIQUE_DPT" name="DE_RECURSOS_ESPECIFIQUE_DPT" rows="2"></textarea> 
-                                </div>
-                              </div>
+                                    </div>
+                                      </div>
+                                      <div class="row mb-3">
+                                        <div class="col-6 text-center">
+                                          <textarea class="form-control" id="DE_INFORMACION_ESPECIFIQUE_DPT" name="DE_INFORMACION_ESPECIFIQUE_DPT" rows="2"></textarea>                
+                                      </div>
+                                        <div class="col-6 text-center">
+                                          <textarea class="form-control" id="DE_RECURSOS_ESPECIFIQUE_DPT" name="DE_RECURSOS_ESPECIFIQUE_DPT" rows="2"></textarea> 
+                                        </div>
+                                      </div>
 
-                              <div class="row mb-3">
-                                <div class="col-6 text-center">
-                                    <h6>De materiales y equipos</h6>
-                                </div>
-                                <div class="col-6 text-center">
-                                  <h6>De vehículos</h6>
-                                </div>
-                              </div>
+                                      <div class="row mb-3">
+                                        <div class="col-6 text-center">
+                                            <h6>De materiales y equipos</h6>
+                                        </div>
+                                        <div class="col-6 text-center">
+                                          <h6>De vehículos</h6>
+                                        </div>
+                                      </div>
 
-                              <div class="row mb-3">
-                                <div class="col-6 text-center">
-                                  <label>¿Usa materiales y equipos para realizar su trabajo?</label>
-                                </div>
-                                <div class="col-6 text-center">
-                                  <label>¿Esta autorizado para conducir vehículos de la empresa?</label>
-                                </div>
-                              </div>
+                                      <div class="row mb-3">
+                                        <div class="col-6 text-center">
+                                          <label>¿Usa materiales y equipos para realizar su trabajo?</label>
+                                        </div>
+                                        <div class="col-6 text-center">
+                                          <label>¿Esta autorizado para conducir vehículos de la empresa?</label>
+                                        </div>
+                                      </div>
 
-                              <div class="row mb-3">
-                                <div class="col-1 text-center ">
-                                  <label>Si</label>
-                                </div>
-                                <div class="col-1">
-                                  <input type="text" id="DE_EQUIPOS_SI_DPT" name="DE_EQUIPOS_SI_DPT" class="form-control text-center">
-                                </div>
-                                <div class="col-1 text-center ">
-                                  <label>No</label>
-                                </div>
-                                <div class="col-1">
-                                <input type="text" id="DE_EQUIPOS_NO_DPT" name="DE_EQUIPOS_NO_DPT" class="form-control text-center">
-                              </div>
-                                <div class="col-3">
-                                <label>Especifique</label>
-                                </div>
-                              <div class="col-1 text-center ">
-                                    <label>Si</label>
-                              </div>
-                              <div class="col-1">
-                                <input type="text" id="DE_VEHICULOS_SI_DPT" name="DE_VEHICULOS_SI_DPT" class="form-control text-center">
-                              </div>
-                              <div class="col-1 text-center ">
-                                <label>No</label>
-                              </div>
-                            <div class="col-1">
-                              <input type="text" id="DE_VEHICULOS_NO_DPT" name="DE_VEHICULOS_NO_DPT" class="form-control text-center">
-                            </div>
-                            <div class="col-1">
-                              <label>Especifique</label>
-                            </div>
-                        </div>
+                                      <div class="row mb-3">
+                                        <div class="col-1 text-center">
+                                          <h6></h6>
+                                      </div>
+                                        <div class="col-2">
+                                          <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="DE_EQUIPOS_DPT" id="DEEQUIPOS_SI" value="si">
+                                            <label class="form-check-label" for="DEEQUIPOS_SI">Si</label>
+                                          </div>
+                                          <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="DE_EQUIPOS_DPT" id="DEEQUIPOS_NO" value="no">
+                                            <label class="form-check-label" for="DEEQUIPOS_NO">No</label>
+                                          </div>
+                                        </div>
+                                          <div class="col-3">
+                                            <label>Especifique</label>
+                                          </div>
+                                          <div class="col-1 text-center">
+                                            <h6></h6>
+                                        </div>
+                                          <div class="col-2">
+                                            <div class="form-check form-check-inline">
+                                              <input class="form-check-input" type="radio" name="DE_VEHICULOS_DPT" id="DEVEHICULOS_SI" value="si">
+                                              <label class="form-check-label" for="DEVEHICULOS_SI">Si</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                              <input class="form-check-input" type="radio" name="DE_VEHICULOS_DPT" id="DEVEHICULOS_NO" value="no">
+                                              <label class="form-check-label" for="DEVEHICULOS_NO">No</label>
+                                            </div>
+                                          </div>
+                                            <div class="col-3">
+                                              <label>Especifique</label>
+                                            </div>
+                                    </div>
 
-                        <div class="row mb-3">
-                          <div class="col-6 text-center">
-                            <textarea class="form-control" id="DE_EQUIPOS_ESPECIFIQUE_DPT" name="DE_EQUIPOS_ESPECIFIQUE_DPT" rows="2"></textarea>                
-                        </div>
-                          <div class="col-6 text-center">
-                            <textarea class="form-control" id="DE_VEHICULOS_ESPECIFIQUE_DPT" name="DE_VEHICULOS_ESPECIFIQUE_DPT" rows="2"></textarea> 
-                          </div>
-                        </div>
-
-                          <!--IX. Observaciones-->
-                          <div class="row mb-3">
-                            <div class="col-12 text-center">
-                                <h4>IX. Observaciones</h4>
-                            </div>
-                          </div>
-                          <div class="row mb-3">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <textarea class="form-control" id="OBSERVACIONES_DPT" name="OBSERVACIONES_DPT" rows="2"></textarea>
+                                <div class="row mb-3">
+                                  <div class="col-6 text-center">
+                                    <textarea class="form-control" id="DE_EQUIPOS_ESPECIFIQUE_DPT" name="DE_EQUIPOS_ESPECIFIQUE_DPT" rows="2"></textarea>                
                                 </div>
-                            </div>
-                          </div>
-
-                             <!--X. Organigrama-->
-                          <div class="row mb-3">
-                            <div class="col-12 text-center">
-                                <h4>X. Organigrama</h4>
-                            </div>
-                          </div>
-
-                          <div class="row mb-3">
-                            <div class="col-12">
-                                <div class="form-group">
-                                    <textarea class="form-control" id="ORGANIGRAMA_DPT" name="ORGANIGRAMA_DPT" rows="5"></textarea>
+                                  <div class="col-6 text-center">
+                                    <textarea class="form-control" id="DE_VEHICULOS_ESPECIFIQUE_DPT" name="DE_VEHICULOS_ESPECIFIQUE_DPT" rows="2"></textarea> 
+                                  </div>
                                 </div>
-                            </div>
-                          </div>
-                          <div class="row mb-3 mt-5">
-                            <div class="col-4 text-center">
-                                <h6>Elaborado por</h6>
-                                <input type="text" class="form-control text-center" id="ELABORADO_NOMBRE_DPT" name="ELABORADO_NOMBRE_DPT">
-                                <div>Nombre</div>
-                                <br>
-                                <input type="text" class="form-control text-center" id="ELABORADO_FIRMA_DPT" name="ELABORADO_FIRMA_DPT">
-                                <div>Firma</div>
-                                <br>
-                                <input type="date" class="form-control text-center" id="ELABORADO_FECHA_DPT" name="ELABORADO_FECHA_DPT">
-                                <div>Fecha</div>
-                                <br>
-                            </div>
-                            <div class="col-4 text-center">
-                                <h6>Revisado por</h6>
-                                <input type="text" class="form-control text-center" id="REVISADO_NOMBRE_DPT" name="REVISADO_NOMBRE_DPT">
-                                <div>Nombre</div>
-                                <br>
-                                <input type="text" class="form-control text-center" id="REVISADO_FIRMA_DPT" name="REVISADO_FIRMA_DPT">
-                                <div>Firma</div>
-                                <br>
-                                <input type="date" class="form-control text-center" id="REVISADO_FECHA_DPT" name="REVISADO_FECHA_DPT">
-                                <div>Fecha</div>
-                                <br>
-                            </div>
-                            <div class="col-4 text-center">
-                                <h6>Autorizado por</h6>
-                                <input type="text" class="form-control text-center" id="AUTORIZADO_NOMBRE_DPT" name="AUTORIZADO_NOMBRE_DPT">
-                                <div>Nombre</div>
-                                <br>
-                                <input type="text" class="form-control text-center" id="AUTORIZADO_FIRMA_DPT" name="AUTORIZADO_FIRMA_DPT">
-                                <div>Firma</div>
-                                <br>
-                                <input type="date" class="form-control text-center" id="AUTORIZADO_FECHA_DPT" name="AUTORIZADO_FECHA_DPT">
-                                <div>Fecha</div>
-                                <br>
-                              </div>
-                            </div>
 
-              </div>
-            </div>
-            <div class="modal-footer mx-5">
+                                  <!--IX. Observaciones-->
+                                  <div class="row mb-3">
+                                    <div class="col-12 text-center">
+                                        <h4>IX. Observaciones</h4>
+                                    </div>
+                                  </div>
+                                  <div class="row mb-3">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <textarea class="form-control" id="OBSERVACIONES_DPT" name="OBSERVACIONES_DPT" rows="2"></textarea>
+                                        </div>
+                                    </div>
+                                  </div>
+
+                                    <!--X. Organigrama-->
+                                  <div class="row mb-3">
+                                    <div class="col-12 text-center">
+                                        <h4>X. Organigrama</h4>
+                                    </div>
+                                  </div>
+
+                                  <div class="row mb-3">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <textarea class="form-control" id="ORGANIGRAMA_DPT" name="ORGANIGRAMA_DPT" rows="5"></textarea>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="row mb-3 mt-5">
+                                    <div class="col-4 text-center">
+                                        <h6>Elaborado por</h6>
+                                        <input type="text" class="form-control text-center" id="ELABORADO_NOMBRE_DPT" name="ELABORADO_NOMBRE_DPT">
+                                        <div>Nombre</div>
+                                        <br>
+                                        <input type="text" class="form-control text-center" id="ELABORADO_FIRMA_DPT" name="ELABORADO_FIRMA_DPT">
+                                        <div>Firma</div>
+                                        <br>
+                                        <input type="date" class="form-control text-center" id="ELABORADO_FECHA_DPT" name="ELABORADO_FECHA_DPT">
+                                        <div>Fecha</div>
+                                        <br>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <h6>Revisado por</h6>
+                                        <input type="text" class="form-control text-center" id="REVISADO_NOMBRE_DPT" name="REVISADO_NOMBRE_DPT">
+                                        <div>Nombre</div>
+                                        <br>
+                                        <input type="text" class="form-control text-center" id="REVISADO_FIRMA_DPT" name="REVISADO_FIRMA_DPT">
+                                        <div>Firma</div>
+                                        <br>
+                                        <input type="date" class="form-control text-center" id="REVISADO_FECHA_DPT" name="REVISADO_FECHA_DPT">
+                                        <div>Fecha</div>
+                                        <br>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <h6>Autorizado por</h6>
+                                        <input type="text" class="form-control text-center" id="AUTORIZADO_NOMBRE_DPT" name="AUTORIZADO_NOMBRE_DPT">
+                                        <div>Nombre</div>
+                                        <br>
+                                        <input type="text" class="form-control text-center" id="AUTORIZADO_FIRMA_DPT" name="AUTORIZADO_FIRMA_DPT">
+                                        <div>Firma</div>
+                                        <br>
+                                        <input type="date" class="form-control text-center" id="AUTORIZADO_FECHA_DPT" name="AUTORIZADO_FECHA_DPT">
+                                        <div>Fecha</div>
+                                        <br>
+                                      </div>
+                                    </div>
+
+                   </div>
+                  <div class="modal-footer mx-5">
                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                   <button type="submit" class="btn btn-success" id="guardarFormDPT">Guardar</button>
               </div>
-          </form>
+            </form>
+          </div>
       </div>
   </div>
 </div>
