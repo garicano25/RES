@@ -9,7 +9,7 @@ class catalogojerarquiaModel extends Model
 {
 
     protected $primaryKey = 'ID_CATALOGO_JERARQUIA';
-    protected $table = 'catalogo_jerarquia';
+    protected $table = 'catalogo_jerarquias';
     protected $fillable = [
         'NOMBRE_JERARQUIA',
         'DESCRIPCION_JERARQUIA',

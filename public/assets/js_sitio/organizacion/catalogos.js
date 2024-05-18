@@ -1,6 +1,7 @@
 
 //VARIABLES GLOBALES
 var ID_CATALOGO_JERARQUIA = 0
+var ID_CATALOGO_ASESOR = 0
 
 
 
@@ -176,4 +177,89 @@ $('#Tablajerarquia tbody').on('click', 'td>button.EDITAR', function () {
     console.log(row.data());
 
     editarDatoTabla(row.data(), 'formularioJERARQUIA', 'miModal_JERARQUIA');
+});
+
+
+
+
+$("#guardarFormASESOR").click(function (e) {
+    e.preventDefault();
+
+    if (ID_CATALOGO_ASESOR == 0) {
+        
+        alertMensajeConfirm({
+            title: "¿Desea guardar la información?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarFormASESOR')
+            await ajaxAwaitFormData({ api: 2, ID_CATALOGO_ASESOR: ID_CATALOGO_ASESOR }, 'asesorSave', 'formularioASESOR', 'guardarFormASESOR', { callbackAfter: true, callbackBefore: true }, () => {
+
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
+                    
+                setTimeout(() => {
+
+                    ID_CATALOGO_ASESOR = data.asesor.ID_CATALOGO_ASESOR
+                    alertMensaje('success','Información guardada correctamente',null)
+                     $('#miModal_ASESORES').modal('hide')
+                    document.getElementById('formularioASESOR').reset();
+                    // Tablajerarquia.ajax.reload()
+
+                }, 300);
+                
+                
+            })
+            
+            
+            
+        }, 1)
+        
+    } else {
+            alertMensajeConfirm({
+            title: "¿Desea editar la información de este formulario?",
+            text: "Al guardarla, se editara la información",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarFormASESOR')
+            await ajaxAwaitFormData({ api: 2, ID_CATALOGO_ASESOR: ID_CATALOGO_ASESOR }, 'asesorSave', 'formularioASESOR', 'guardarFormASESOR', { callbackAfter: true, callbackBefore: true }, () => {
+
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
+                    
+                setTimeout(() => {
+
+                    
+                    ID_CATALOGO_ASESOR = data.asesor.ID_CATALOGO_ASESOR
+                    alertMensaje('success','Información guardada correctamente',null )
+                     $('#miModal_ASESORES').modal('hide')
+                    document.getElementById('formularioASESOR').reset();
+                    // Tablajerarquia.ajax.reload()
+
+
+                }, 300);  
+            })
+        }, 1)
+    }
+    
 });

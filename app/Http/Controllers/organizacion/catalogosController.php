@@ -4,8 +4,8 @@ namespace App\Http\Controllers\organizacion;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
 use App\Models\organizacion\catalogojerarquiaModel;
+use App\Models\organizacion\catalogoasesorModel;
 
 use DB;
 
@@ -49,7 +49,7 @@ class catalogosController extends Controller
                     
                     if ($request->ID_CATALOGO_JERARQUIA == 0) {
 
-                        DB::statement('ALTER TABLE catalogo_jerarquia AUTO_INCREMENT=1;');
+                        DB::statement('ALTER TABLE catalogo_jerarquias AUTO_INCREMENT=1;');
                         $jerarquias = catalogojerarquiaModel::create($request->all());
                     } else { 
 
@@ -74,28 +74,34 @@ class catalogosController extends Controller
 
                     break;
 
-                //     //Guardar Departamento
-                // case 2:
+                case 2:
 
-                //     //Guardamos departamento
-                //     if ($request->ID_DEPARTAMENTO_AREA == 0) {
+                    if ($request->ID_CATALOGO_ASESOR == 0) {
 
-                //         DB::statement('ALTER TABLE departamentos_areas AUTO_INCREMENT=1;');
-                //         $departamentos = departamentosAreasModel::create($request->all());
+                        DB::statement('ALTER TABLE catalogo_asesores AUTO_INCREMENT=1;');
+                        $asesores = catalogoasesorModel::create($request->all());
+                    } else { 
 
-                //         $response['code']  = 1;
-                //         $response['departamento']  = $departamentos;
-                //         return response()->json($response);
-                //     } else { //Eliminar departamento
+                        if (!isset($request->ELIMINAR)) {
 
-                //         $departamentos = departamentosAreasModel::where('ID_DEPARTAMENTO_AREA', $request['ID_DEPARTAMENTO_AREA'])->delete();
 
-                //         $response['code']  = 1;
-                //         $response['departamento']  = 'Eliminado';
-                //         return response()->json($response);
-                //     }
+                            $asesores = catalogoasesorModel::find($request->ID_CATALOGO_ASESOR);
+                            $asesores->update($request->all());
+                        } else {
 
-                //     break;
+                            $asesores = catalogoasesorModel::where('ID_CATALOGO_ASESOR', $request['ID_CATALOGO_ASESOR'])->delete();
+
+                            $response['code']  = 1;
+                            $response['asesor']  = 'Eliminada';
+                            return response()->json($response);
+                        }
+                    }
+
+                    $response['code']  = 1;
+                    $response['asesor']  = $asesores;
+                    return response()->json($response);
+
+                    break;
 
                 // //GUARDAR ENCARGADOS
                 // case 3:
@@ -121,11 +127,12 @@ class catalogosController extends Controller
 
 
                 //     break;
-                // default:
 
-                //     $response['code']  = 2;
-                //     $response['msj']  = 'Api no encontrada';
-                //     return response()->json($response);
+                default:
+
+                    $response['code']  = 2;
+                    $response['msj']  = 'Api no encontrada';
+                    return response()->json($response);
             }
         } catch (Exception $e) {
 

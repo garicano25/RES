@@ -12,8 +12,6 @@ use App\Http\Controllers\organizacion\catalogosController;
 // RUTA PRINCIPAL 
 Route::get('/', function () {return view('tablero.index');});
 
-//BANCO DE CV
-Route::get('/vacantes', function () {return view('RH.reclutamiento.bancocv');});
 
 
 //==============================================  ORGANIZACION  ============================================== 
@@ -29,13 +27,10 @@ Route::get('/listaEncagadosAreas/{area_id}', [areasController::class, 'listaEnca
 Route::get('/getDataOrganigrama/{area_id}/{esGeneral}', [areasController::class, 'getDataOrganigrama']);
 
 
-
 //PPT
 Route::get('/PPT', [pptController::class, 'index']);
 Route::post('/pptSave', [pptController::class, 'store']);
 Route::get('/TablaPPT', [pptController::class, 'TablaPPT']);
-
-
 Route::get('/autorizarPPT/{id_formulario}', [pptController::class, 'autorizarPPT']);
 Route::get('/revisarPPT/{id_formulario}', [pptController::class, 'revisarPPT']);
 Route::get('/makeExcelPPT/{id_formulario}', [makeExcelController::class, 'makeExcelPPT']);
@@ -53,8 +48,11 @@ Route::get('/TablaDPT', [dptController::class, 'TablaDPT']);
 // Route::get('/makeExcelDPT/{id_formulario}', [makeExcelController::class, 'makeExcelDPT']);
 
 
+// REQUERIMIENTO PERSONAL 
+Route::get('/REQUERIMIENTO', function () {return view('RH.organizacion.requerimiento_personal');});
 
-// Catálogos
+
+//==============================================  CATALOGOS  ============================================== 
 
 
 //catalogo de jerarquia
@@ -63,19 +61,23 @@ Route::post('/jerarquiaSave', [catalogosController::class, 'store']);
 Route::get('/jerarquiaDelete', [catalogosController::class, 'store']);
 Route::get('/Tablajerarquia', [catalogosController::class, 'Tablajerarquia']);
 
- //catalogo de asesores
+//catalogo de asesores
 
 
- Route::get('/Asesores', function () {return view('RH.organizacion.Catálogos.catálogo_asesores');});
-
-
-
-
-
-
+Route::get('/Asesores', function () {return view('RH.organizacion.Catálogos.catálogo_asesores');});
+Route::post('/asesorSave', [catalogosController::class, 'store']);
+Route::get('/asesorDelete', [catalogosController::class, 'store']);
+// Route::get('/Tablajerarquia', [catalogosController::class, 'Tablajerarquia']);
 
 
 
 
-// REQUERIMIENTO PERSONAL 
-Route::get('/REQUERIMIENTO', function () {return view('RH.organizacion.requerimiento_personal');});
+
+
+
+
+//==============================================  RECLUTAMIENTO  ============================================== 
+
+
+//BANCO DE CV
+Route::get('/vacantes', function () {return view('RH.reclutamiento.bancocv');});
