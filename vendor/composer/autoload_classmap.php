@@ -11,7 +11,7 @@ return array(
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\excel\\makeExcelController' => $baseDir . '/app/Http/Controllers/excel/makeExcelController.php',
     'App\\Http\\Controllers\\organizacion\\areasController' => $baseDir . '/app/Http/Controllers/organizacion/areasController.php',
-    'App\\Http\\Controllers\\organizacion\\catalogosController' => $baseDir . '/app/Http/Controllers/organizacion/catalogosController.php',
+    'App\\Http\\Controllers\\organizacion\\catalogosjerarquias' => $baseDir . '/app/Http/Controllers/organizacion/catalogosjerarquias.php',
     'App\\Http\\Controllers\\organizacion\\dptController' => $baseDir . '/app/Http/Controllers/organizacion/dptController.php',
     'App\\Http\\Controllers\\organizacion\\pptController' => $baseDir . '/app/Http/Controllers/organizacion/pptController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',

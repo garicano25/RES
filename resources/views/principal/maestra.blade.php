@@ -225,7 +225,7 @@
     <script src="/assets/js_sitio/organizacion/DPT.js"></script>
     @endif
     
-    @if(request()->is('Jerárquico') || request()->is(''))
+    @if(request()->is('Jerárquico') || request()->is('Asesores'))
     <script src="/assets/js_sitio/organizacion/catalogos.js"></script>
     @endif
 

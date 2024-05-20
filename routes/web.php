@@ -6,6 +6,7 @@ use App\Http\Controllers\organizacion\pptController;
 use App\Http\Controllers\organizacion\dptController;
 use App\Http\Controllers\excel\makeExcelController;
 use App\Http\Controllers\organizacion\catalogosController;
+use App\Http\Controllers\organizacion\catalogosasesoresController;
 
 
 
@@ -65,9 +66,9 @@ Route::get('/Tablajerarquia', [catalogosController::class, 'Tablajerarquia']);
 
 
 Route::get('/Asesores', function () {return view('RH.organizacion.Catálogos.catálogo_asesores');});
-Route::post('/asesorSave', [catalogosController::class, 'store']);
-Route::get('/asesorDelete', [catalogosController::class, 'store']);
-// Route::get('/Tablajerarquia', [catalogosController::class, 'Tablajerarquia']);
+Route::post('/asesorSave', [catalogosasesoresController::class, 'store']);
+Route::get('/asesorDelete', [catalogosasesoresController::class, 'store']);
+Route::get('/Tablaasesores', [catalogosasesoresController::class, 'Tablaasesores']);
 
 
 
