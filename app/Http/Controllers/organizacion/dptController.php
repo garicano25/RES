@@ -15,7 +15,6 @@ class dptController extends Controller
     public function index()
     {
         $areas = departamentosAreasModel::orderBy('NOMBRE', 'ASC')->get();
-        
         return view('RH.organizacion.DPT', compact('areas'));
     }
 

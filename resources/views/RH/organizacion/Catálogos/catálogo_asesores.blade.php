@@ -36,20 +36,19 @@
                     {!! csrf_field() !!}
                     <div class="mb-3">
                         <label for="NOMBRE_ASESOR" class="col-form-label">Nombre Asesor *</label>
-                        <input type="text" class="form-control" id="NOMBRE_ASESOR" name="NOMBRE_ASESOR" required>
+                        <input type="text" class="form-control" id="NOMBRE_ASESOR" name="NOMBRE_ASESOR" required/>
                     </div>
                     <div class="mb-3">
                         <label for="DESCRIPCION_ASESOR" class="col-form-label">Descripción:</label>
-                        <textarea class="form-control" id="DESCRIPCION_ASESOR" name="DESCRIPCION_ASESOR" rows="3"></textarea>
+                        <textarea class="form-control" id="DESCRIPCION_ASESOR" name="DESCRIPCION_ASESOR" rows="8"></textarea>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Es &nbsp;</label>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="ASESOR_ES" id="INTERNO_SI" value="1">
+                            <input class="form-check-input" type="radio" name="ASESOR_ES" id="INTERNO_SI" value="interno">
                             <label class="form-check-label" for="INTERNO_SI">Interno</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="ASESOR_ES" id="EXTERNO_NO" value="0">
+                            <input class="form-check-input" type="radio" name="ASESOR_ES" id="EXTERNO_NO" value="externo">
                             <label class="form-check-label" for="EXTERNO_NO">Externo</label>
                         </div>
                     </div>
