@@ -53,52 +53,95 @@ class makeExcelController extends Controller{
 
             //I. Características generales																						
 
-            $sheet->setCellValue('G13', $val->EDAD_PPT);
-            if(strtoupper($val->EDAD_CUMPLE_PPT) == 'SI' ){
-                $sheet->setCellValue('L13', 'X');
-            }else{
-                $sheet->setCellValue('M13', 'X');
-            }
-            $sheet->setCellValue('S13', $val->GENERO_PPT);
-            if (strtoupper($val->GENERO_CUMPLE_PPT) == 'SI') {
-                $sheet->setCellValue('W13', 'X');
-            } else {
-                $sheet->setCellValue('X13', 'X');
+
+
+          
+
+            if (!is_null($val->EDAD_PPT)) {
+                $sheet->setCellValue('G13', $val->EDAD_PPT);            }
+
+            if (!is_null($val->EDAD_CUMPLE_PPT)) {
+                if ($val->EDAD_CUMPLE_PPT == 'SI') {
+                    $sheet->setCellValue('L13', 'X');
+                } else {
+                    $sheet->setCellValue('M13', 'X');
+                }
             }
 
-            $sheet->setCellValue('H14', $val->ESTADO_CIVIL_PPT);
-            if (strtoupper($val->ESTADO_CIVIL_CUMPLE_PPT) == 'SI') {
-                $sheet->setCellValue('L14', 'X');
-            } else {
-                $sheet->setCellValue('M14', 'X');
+
+
+            if (!is_null($val->GENERO_PPT)) {
+                $sheet->setCellValue('S13', $val->GENERO_PPT);    
+
+            if (!is_null($val->GENERO_CUMPLE_PPT)) {
+                if ($val->GENERO_CUMPLE_PPT == 'SI') {
+                    $sheet->setCellValue('W13', 'X');
+                } else {
+                    $sheet->setCellValue('X13', 'X');
+                }
             }
 
-            $sheet->setCellValue('S14', $val->NACIONALIDAD_PPT);
-            if (strtoupper($val->NACIONALIDAD_CUMPLE_PPT) == 'SI') {
-                $sheet->setCellValue('W14', 'X');
-            } else {
-                $sheet->setCellValue('X14', 'X');
+
+            if (!is_null($val->ESTADO_CIVIL_PPT)) {
+                $sheet->setCellValue('H14', $val->ESTADO_CIVIL_PPT); 
+
+            if (!is_null($val->ESTADO_CIVIL_CUMPLE_PPT)) {
+                if ($val->ESTADO_CIVIL_CUMPLE_PPT == 'SI') {
+                    $sheet->setCellValue('L14', 'X');
+                } else {
+                    $sheet->setCellValue('M14', 'X');
+                }
             }
 
-            $sheet->setCellValue('H15', $val->DISCAPACIDAD_PPT);
-            if (strtoupper($val->DISCAPACIDAD_CUMPLE_PPT) == 'SI') {
-                $sheet->setCellValue('L15', 'X');
-            } else {
-                $sheet->setCellValue('M15', 'X');
-            }
 
-            $sheet->setCellValue('P15', $val->CUAL_PPT);
+            if (!is_null($val->NACIONALIDAD_PPT)) {
+                $sheet->setCellValue('S14', $val->NACIONALIDAD_PPT); 
 
-            //II. Formación académica																						
-            if (strtoupper($val->SECUNDARIA_PPT) == 'COMPLETA') {
-                $sheet->setCellValue('H19', 'X');
-            } else {
-                $sheet->setCellValue('G19', 'X');
+            if (!is_null($val->NACIONALIDAD_CUMPLE_PPT)) {
+                if ($val->NACIONALIDAD_CUMPLE_PPT == 'SI') {
+                    $sheet->setCellValue('W14', 'X');
+                } else {
+                    $sheet->setCellValue('X14', 'X');
+                }
             }
-            if (strtoupper($val->SECUNDARIA_CUMPLE_PPT) == 'SI') {
-                $sheet->setCellValue('J19', 'Si');
-            } else {
-                $sheet->setCellValue('J19', 'No');
+        
+
+            if (!is_null($val->DISCAPACIDAD_PPT)) {
+                $sheet->setCellValue('H15', $val->DISCAPACIDAD_PPT); 
+
+            if (!is_null($val->DISCAPACIDAD_CUMPLE_PPT)) {
+                if ($val->DISCAPACIDAD_CUMPLE_PPT == 'SI') {
+                    $sheet->setCellValue('L15', 'X');
+                } else {
+                    $sheet->setCellValue('M15', 'X');
+                }
+            }
+        
+
+            if (!is_null($val->CUAL_PPT)) {
+                $sheet->setCellValue('P15', $val->CUAL_PPT); 
+
+
+
+
+            //II. Formación académica		
+            
+            
+            if (!is_null($val->SECUNDARIA_PPT)) {
+                if ($val->SECUNDARIA_PPT == 'COMPLETA') {
+                    $sheet->setCellValue('H19', 'X');
+                } else {
+                    $sheet->setCellValue('G19', 'X');
+                }
+            }
+            
+
+            if (!is_null($val->SECUNDARIA_CUMPLE_PPT)) {
+                if (strtoupper($val->SECUNDARIA_CUMPLE_PPT) == 'SI') {
+                    $sheet->setCellValue('J19', 'Si');
+                } else {
+                    $sheet->setCellValue('J19', 'No');
+                }
             }
 
 
@@ -107,6 +150,7 @@ class makeExcelController extends Controller{
             } else {
                 $sheet->setCellValue('G20', 'X');
             }
+            
             if (strtoupper($val->TECNICA_CUMPLE_PPT) == 'SI') {
                 $sheet->setCellValue('J20', 'Si');
             } else {
@@ -756,12 +800,12 @@ class makeExcelController extends Controller{
                     $sheet->setCellValue('U' . $fila2, $val->CURSO_REQUERIDO);
                 }
                 if (!is_null($val->CURSO_DESEABLE)) {
-                    $sheet->setCellValue('V' . $fila1, $val->CURSO_DESEABLE);
+                    $sheet->setCellValue('V' . $fila2, $val->CURSO_DESEABLE);
                 }
                 if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
                     $sheet->setCellValue('X' . $fila2, 'Si');
                 } else {
-                    $sheet->setCellValue('X' . $fila1, 'No');
+                    $sheet->setCellValue('X' . $fila2, 'No');
                 }
 
                 $fila2++;
@@ -798,9 +842,8 @@ class makeExcelController extends Controller{
                 if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
                     $sheet->setCellValue('X' . $fila4, 'Si');
                 } else {
-                    $sheet->setCellValue('X' . $fila1, 'No');
+                    $sheet->setCellValue('X' . $fila4, 'No');
                 }
-
                 $fila4++;
 
 
@@ -812,19 +855,26 @@ class makeExcelController extends Controller{
 
 
 
-
-
-        // Guardar el archivo Excel modificado
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-        $ruta_modificada = storage_path('app/excelBlanco/PPT_modificado.xlsx');
-        $writer->save($ruta_modificada);
 
-        // Descargar el archivo Excel modificado
-        return response()->download($ruta_modificada, "PPT_modificado.xlsx", ['Content-Type' => 'application/octet-stream'])->deleteFileAfterSend(true);
-   
-   
+     
+        
+        $puesto = str_replace(['[', ']'], '', $puesto);
+        
+        $nombre_archivo = str_replace(['\\', '/', ':', '*', '?', '"', '<', '>', '|'], '', $puesto);
+        
+        $fecha_actual = date("dmy");
+        // $fecha_actual = date("ymd");
+
+        
+        $nombre_descarga = "PPT-{$nombre_archivo}- {$fecha_actual}.xlsx";
+        
+        return response()->streamDownload(function () use ($writer) {
+            $writer->save('php://output');
+        }, $nombre_descarga);
+        
+
     }
-
 
 
     public function makeExcelDPT(){

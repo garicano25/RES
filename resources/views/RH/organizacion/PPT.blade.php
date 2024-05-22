@@ -44,7 +44,7 @@
                         <input type="hidden" class="form-control" id="USUARIO_ID" name="USUARIO_ID" value="0">
 
                     </div>
-                    <d class="row">
+                    <div class="row">
                         <div class="row mb-3">
                             <div class="col-4">
                                 <div class="form-group">
@@ -547,13 +547,13 @@
                             <div class="col-1">
                                 <div class="form-group">
                                     <label>Egresado</label>
-                                    <input type="text" class="form-control" id="EGRESADO_ESPECIALIDAD_PPT" name="EGRESADO_ESPECIALIDAD_PPT">
+                                    <input type="text" class="form-control text-center" id="EGRESADO_ESPECIALIDAD_PPT" name="EGRESADO_ESPECIALIDAD_PPT">
                                 </div>
                             </div>
                             <div class="col-1">
                                 <div class="form-group">
                                     <label>Graduado</label>
-                                    <input type="text" class="form-control" id="GRADUADO_ESPECIALIDA_PPT" name="GRADUADO_ESPECIALIDA_PPT">
+                                    <input type="text" class="form-control text-center" id="GRADUADO_ESPECIALIDA_PPT" name="GRADUADO_ESPECIALIDA_PPT">
                                 </div>
                             </div>
                             <div class="col-2">
@@ -581,13 +581,13 @@
                             <div class="col-1">
                                 <div class="form-group">
                                     <label>Egresado</label>
-                                    <input type="text" class="form-control" id="EGRESADO_MAESTRIA_PPT" name="EGRESADO_MAESTRIA_PPT">
+                                    <input type="text" class="form-control text-center" id="EGRESADO_MAESTRIA_PPT" name="EGRESADO_MAESTRIA_PPT">
                                 </div>
                             </div>
                             <div class="col-1">
                                 <div class="form-group">
                                     <label>Graduado</label>
-                                    <input type="text" class="form-control" id="GRADUADO_MAESTRIA_PPT" name="GRADUADO_MAESTRIA_PPT">
+                                    <input type="text" class="form-control text-center" id="GRADUADO_MAESTRIA_PPT" name="GRADUADO_MAESTRIA_PPT">
                                 </div>
                             </div>
                             <div class="col-2">
@@ -610,13 +610,13 @@
                             <div class="col-1">
                                 <div class="form-group">
                                     <label>Egresado</label>
-                                    <input type="text" class="form-control" id="EGRESADO_DOCTORADO_PPT" name="EGRESADO_DOCTORADO_PPT">
+                                    <input type="text" class="form-control text-center" id="EGRESADO_DOCTORADO_PPT" name="EGRESADO_DOCTORADO_PPT">
                                 </div>
                             </div>
                             <div class="col-1">
                                 <div class="form-group">
                                     <label>Graduado</label>
-                                    <input type="text" class="form-control" id="GRADUADO_DOCTORADO_PPT" name="GRADUADO_DOCTORADO_PPT">
+                                    <input type="text" class="form-control text-center" id="GRADUADO_DOCTORADO_PPT" name="GRADUADO_DOCTORADO_PPT">
                                 </div>
                             </div>
                             <div class="col-2">
@@ -667,16 +667,16 @@
                                             <td>Word</td>
 
                                             <td>
-                                                <input type="text" class="form-control" id="WORD_APLICA_PPT" name="WORD_APLICA_PPT">
+                                                <input type="text" class="form-control text-center" id="WORD_APLICA_PPT" name="WORD_APLICA_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="WORD_BAJO_PPT" name="WORD_BAJO_PPT">
+                                                <input type="text" class="form-control text-center" id="WORD_BAJO_PPT" name="WORD_BAJO_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="WORD_MEDIO_PPT" name="WORD_MEDIO_PPT">
+                                                <input type="text" class="form-control text-center" id="WORD_MEDIO_PPT" name="WORD_MEDIO_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="WORD_ALTO_PPT" name="WORD_ALTO_PPT">
+                                                <input type="text" class="form-control text-center" id="WORD_ALTO_PPT" name="WORD_ALTO_PPT">
                                             </td>
                                             <td>
                                                 <label class="form-check-label" for="WORD_CUMPLE_SI">Si</label>
@@ -690,17 +690,17 @@
                                         <tr>
                                             <td>Excel</td>
                                             <td>
-                                                <input type="text" class="form-control" id="EXCEL_APLICA_PPT" name="EXCEL_APLICA_PPT">
+                                                <input type="text" class="form-control text-center" id="EXCEL_APLICA_PPT" name="EXCEL_APLICA_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="EXCEL_BAJO_PPT" name="EXCEL_BAJO_PPT">
+                                                <input type="text" class="form-control text-center" id="EXCEL_BAJO_PPT" name="EXCEL_BAJO_PPT">
                                             </td>
 
                                             <td>
-                                                <input type="text" class="form-control" id="EXCEL_MEDIO_PPT" name="EXCEL_MEDIO_PPT">
+                                                <input type="text" class="form-control text-center" id="EXCEL_MEDIO_PPT" name="EXCEL_MEDIO_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="EXCEL_ALTO_PPT" name="EXCEL_ALTO_PPT">
+                                                <input type="text" class="form-control text-center" id="EXCEL_ALTO_PPT" name="EXCEL_ALTO_PPT">
                                             </td>
                                             <td>
                                                 <label class="form-check-label" for="EXCEL_CUMPLE_SI">Si</label>
@@ -714,16 +714,16 @@
                                         <tr>
                                             <td>Power Point</td>
                                             <td>
-                                                <input type="text" class="form-control" id="POWER_APLICA_PPT" name="POWER_APLICA_PPT">
+                                                <input type="text" class="form-control text-center" id="POWER_APLICA_PPT" name="POWER_APLICA_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="POWER_BAJO_PPT" name="POWER_BAJO_PPT">
+                                                <input type="text" class="form-control text-center" id="POWER_BAJO_PPT" name="POWER_BAJO_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="POWER_MEDIO_PPT" name="POWER_MEDIO_PPT">
+                                                <input type="text" class="form-control text-center" id="POWER_MEDIO_PPT" name="POWER_MEDIO_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="POWER_ALTO_PPT" name="POWER_ALTO_PPT">
+                                                <input type="text" class="form-control text-center" id="POWER_ALTO_PPT" name="POWER_ALTO_PPT">
                                             </td>
                                             <td>
                                                 <label class="form-check-label" for="POWER_CUMPLE_SI">Si</label>
@@ -759,15 +759,15 @@
                                         <tr>
                                             <td><input type="text" class="form-control" id="NOMBRE_IDOMA1_PPT" name="NOMBRE_IDOMA1_PPT">
                                             </td>
-                                            <td><input type="number" class="form-control" id="APLICA_IDIOMA1_PPT" name="APLICA_IDIOMA1_PPT">
+                                            <td><input type="text" class="form-control text-center" id="APLICA_IDIOMA1_PPT" name="APLICA_IDIOMA1_PPT">
                                             </td>
-                                            <td><input type="number" class="form-control" id="HABLAR_IDIOMA1_PPT" name="HABLAR_IDIOMA1_PPT">
+                                            <td><input type="number" class="form-control text-center" id="HABLAR_IDIOMA1_PPT" name="HABLAR_IDIOMA1_PPT">
                                             </td>
-                                            <td><input type="number" class="form-control" id="ESCRIBIR_IDIOMA1_PPT" name="ESCRIBIR_IDIOMA1_PPT">
+                                            <td><input type="number" class="form-control text-center" id="ESCRIBIR_IDIOMA1_PPT" name="ESCRIBIR_IDIOMA1_PPT">
                                             </td>
-                                            <td><input type="number" class="form-control" id="LEER_IDIOMA1_PPT" name="LEER_IDIOMA1_PPT">
+                                            <td><input type="number" class="form-control text-center" id="LEER_IDIOMA1_PPT" name="LEER_IDIOMA1_PPT">
                                             </td>
-                                            <td><input type="number" class="form-control" id="ESCUCHAR_IDIOMA1_PPT" name="ESCUCHAR_IDIOMA1_PPT">
+                                            <td><input type="number" class="form-control text-center" id="ESCUCHAR_IDIOMA1_PPT" name="ESCUCHAR_IDIOMA1_PPT">
                                             </td>
                                             <td>
                                                 <label class="form-check-label" for="IDIOMA1_CUMPLE_SI">Si</label>
@@ -781,15 +781,15 @@
                                         <tr>
                                             <td><input type="text" class="form-control" id="NOMBRE_IDIOMA2_PPT" name="NOMBRE_IDIOMA2_PPT">
                                             </td>
-                                            <td><input type="number" class="form-control" id="APLICA_IDIOMA2_PPT" name="APLICA_IDIOMA2_PPT">
+                                            <td><input type="text" class="form-control text-center" id="APLICA_IDIOMA2_PPT" name="APLICA_IDIOMA2_PPT">
                                             </td>
-                                            <td><input type="number" class="form-control" id="HABLAR_IDIOMA2_PPT" name="HABLAR_IDIOMA2_PPT">
+                                            <td><input type="number" class="form-control text-center" id="HABLAR_IDIOMA2_PPT" name="HABLAR_IDIOMA2_PPT">
                                             </td>
-                                            <td><input type="number" class="form-control" id="ESCRIBIR_IDIOMA2_PPT" name="ESCRIBIR_IDIOMA2_PPT">
+                                            <td><input type="number" class="form-control text-center" id="ESCRIBIR_IDIOMA2_PPT" name="ESCRIBIR_IDIOMA2_PPT">
                                             </td>
-                                            <td><input type="number" class="form-control" id="LEER_IDIOMA2_PPT" name="LEER_IDIOMA2_PPT">
+                                            <td><input type="number" class="form-control text-center" id="LEER_IDIOMA2_PPT" name="LEER_IDIOMA2_PPT">
                                             </td>
-                                            <td><input type="number" class="form-control" id="ESCUCHAR_IDIOMA2_PPT" name="ESCUCHAR_IDIOMA2_PPT">
+                                            <td><input type="number" class="form-control text-center" id="ESCUCHAR_IDIOMA2_PPT" name="ESCUCHAR_IDIOMA2_PPT">
                                             </td>
                                             <td>
                                                 <label class="form-check-label" for="IDIOMA2_CUMPLE_SI">Si</label>
@@ -803,15 +803,15 @@
                                         <tr>
                                             <td><input type="text" class="form-control" id="NOMBRE_IDIOMA3_PPT" name="NOMBRE_IDIOMA3_PPT">
                                             </td>
-                                            <td><input type="number" class="form-control" id="APLICA_IDIOMA3_PPT" name="APLICA_IDIOMA3_PPT">
+                                            <td><input type="text" class="form-control text-center" id="APLICA_IDIOMA3_PPT" name="APLICA_IDIOMA3_PPT">
                                             </td>
-                                            <td><input type="number" class="form-control" id="HABLAR_IDIOMA3_PPT" name="HABLAR_IDIOMA3_PPT">
+                                            <td><input type="number" class="form-control text-center" id="HABLAR_IDIOMA3_PPT" name="HABLAR_IDIOMA3_PPT">
                                             </td>
-                                            <td><input type="number" class="form-control" id="ESCRIBIR_IDIOMA3_PPT" name="ESCRIBIR_IDIOMA3_PPT">
+                                            <td><input type="number" class="form-control text-center" id="ESCRIBIR_IDIOMA3_PPT" name="ESCRIBIR_IDIOMA3_PPT">
                                             </td>
-                                            <td><input type="number" class="form-control" id="LEER_IDIOMA3_PPT" name="LEER_IDIOMA3_PPT">
+                                            <td><input type="number" class="form-control text-center" id="LEER_IDIOMA3_PPT" name="LEER_IDIOMA3_PPT">
                                             </td>
-                                            <td><input type="number" class="form-control" id="ESCUCHAR_IDIOMA3_PPT" name="ESCUCHAR_IDIOMA3_PPT">
+                                            <td><input type="number" class="form-control text-center" id="ESCUCHAR_IDIOMA3_PPT" name="ESCUCHAR_IDIOMA3_PPT">
                                             </td>
                                             <td>
                                                 <label class="form-check-label" for="IDIOMA3_CUMPLE_SI">Si</label>
@@ -854,10 +854,10 @@
                                                                     <input type="text" class="form-control" id="CURSO1_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO1_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO1_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO1_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO1_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[1]" id="CURSO1_CUMPLE_SI" value="Si">
@@ -872,10 +872,10 @@
                                                                     <input type="text" class="form-control" id="CURSO2_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO2_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO2_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO2_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO2_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[2]" id="CURSO2_CUMPLE_SI" value="Si">
@@ -889,10 +889,10 @@
                                                                     <input type="text" class="form-control" id="CURSO3_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO3_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO3_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO3_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO3_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[3]" id="CURSO3_CUMPLE_SI" value="Si">
@@ -906,10 +906,10 @@
                                                                     <input type="text" class="form-control" id="CURSO4_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO4_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO4_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO4_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO4_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[4]" id="CURSO4_CUMPLE_SI" value="Si">
@@ -923,10 +923,10 @@
                                                                     <input type="text" class="form-control" id="CURSO5_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO5_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO5_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO5_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO5_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[5]" id="CURSO5_CUMPLE_SI" value="Si">
@@ -940,10 +940,10 @@
                                                                     <input type="text" class="form-control" id="CURSO6_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO6_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO6_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO6_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO6_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[6]" id="CURSO6_CUMPLE_SI" value="Si">
@@ -957,10 +957,10 @@
                                                                     <input type="text" class="form-control" id="CURSO7_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO7_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO7_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO7_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO7_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[7]" id="CURSO7_CUMPLE_SI" value="Si">
@@ -974,10 +974,10 @@
                                                                     <input type="text" class="form-control" id="CURSO8_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO8_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO8_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO8_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO8_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[8]" id="CURSO8_CUMPLE_SI" value="Si">
@@ -991,10 +991,10 @@
                                                                     <input type="text" class="form-control" id="CURSO9_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO9_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO9_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO9_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO9_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[9]" id="CURSO9_CUMPLE_SI" value="Si">
@@ -1008,10 +1008,10 @@
                                                                     <input type="text" class="form-control" id="CURSO10_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO10_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO10_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO10_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO10_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[10]" id="CURSO10_CUMPLE_SI" value="Si">
@@ -1058,10 +1058,10 @@
                                                                     <input type="text" class="form-control" id="CURSO11_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO11_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO11_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO11_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO11_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[11]" id="CURSO11_CUMPLE_SI" value="Si">
@@ -1075,10 +1075,10 @@
                                                                     <input type="text" class="form-control" id="CURSO12_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO12_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO12_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO12_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO12_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[12]" id="CURSO12_CUMPLE_SI" value="Si">
@@ -1092,10 +1092,10 @@
                                                                     <input type="text" class="form-control" id="CURSO13_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO13_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO13_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO13_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO13_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[13]" id="CURSO13_CUMPLE_SI" value="Si">
@@ -1109,10 +1109,10 @@
                                                                     <input type="text" class="form-control" id="CURSO14_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO14_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO14_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO14_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO14_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[14]" id="CURSO14_CUMPLE_SI" value="Si">
@@ -1126,10 +1126,10 @@
                                                                     <input type="text" class="form-control" id="CURSO15_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO15_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO15_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO15_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO15_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[15]" id="CURSO15_CUMPLE_SI" value="Si">
@@ -1144,10 +1144,10 @@
                                                                     <input type="text" class="form-control" id="CURSO16_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO16_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO16_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO16_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO16_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[16]" id="CURSO16_CUMPLE_SI" value="Si">
@@ -1161,10 +1161,10 @@
                                                                     <input type="text" class="form-control" id="CURSO17_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO17_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO17_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO17_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO17_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[17]" id="CURSO17_CUMPLE_SI" value="Si">
@@ -1178,10 +1178,10 @@
                                                                     <input type="text" class="form-control" id="CURSO18_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO18_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO18_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO18_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO18_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[18]" id="CURSO18_CUMPLE_SI" value="Si">
@@ -1195,10 +1195,10 @@
                                                                     <input type="text" class="form-control" id="CURSO19_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO19_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO19_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO19_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO19_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[19]" id="CURSO19_CUMPLE_SI" value="Si">
@@ -1212,10 +1212,10 @@
                                                                     <input type="text" class="form-control" id="CURSO20_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO20_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO20_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO20_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO20_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[20]" id="CURSO20_CUMPLE_SI" value="Si">
@@ -1265,10 +1265,10 @@
                                                                     <input type="text" class="form-control" id="CURSO21_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO21_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO21_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO21_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO21_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[21]" id="CURSO21_CUMPLE_SI" value="Si">
@@ -1284,10 +1284,10 @@
                                                                     <input type="text" class="form-control" id="CURSO22_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO22_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO22_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO22_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO22_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[22]" id="CURSO22_CUMPLE_SI" value="Si">
@@ -1301,10 +1301,10 @@
                                                                     <input type="text" class="form-control" id="CURSO23_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO23_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO23_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO23_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO23_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[23]" id="CURSO23_CUMPLE_SI" value="Si">
@@ -1318,10 +1318,10 @@
                                                                     <input type="text" class="form-control" id="CURSO24_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO24_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO24_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO24_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO24_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[24]" id="CURSO24_CUMPLE_SI" value="Si">
@@ -1335,10 +1335,10 @@
                                                                     <input type="text" class="form-control" id="CURSO25_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO25_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO25_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO25_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO25_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[25]" id="CURSO25_CUMPLE_SI" value="Si">
@@ -1352,10 +1352,10 @@
                                                                     <input type="text" class="form-control" id="CURSO26_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO26_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO26_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO26_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO26_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[26]" id="CURSO26_CUMPLE_SI" value="Si">
@@ -1369,10 +1369,10 @@
                                                                     <input type="text" class="form-control" id="CURSO27_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO27_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO27_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO27_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO27_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[27]" id="CURSO27_CUMPLE_SI" value="Si">
@@ -1386,10 +1386,10 @@
                                                                     <input type="text" class="form-control" id="CURSO28_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO28_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO28_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO28_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO28_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[28]" id="CURSO28_CUMPLE_SI" value="Si">
@@ -1403,10 +1403,10 @@
                                                                     <input type="text" class="form-control" id="CURSO29_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO29_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO29_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO29_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO29_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[29]" id="CURSO29_CUMPLE_SI" value="Si">
@@ -1420,10 +1420,10 @@
                                                                     <input type="text" class="form-control" id="CURSO30_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO30_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO30_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO30_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO30_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[30]" id="CURSO30_CUMPLE_SI" value="Si">
@@ -1470,10 +1470,10 @@
                                                                     <input type="text" class="form-control" id="CURSO31_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO31_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO31_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO31_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO31_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[31]" id="CURSO31_CUMPLE_SI" value="Si">
@@ -1488,10 +1488,10 @@
                                                                     <input type="text" class="form-control" id="CURSO32_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO32_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO32_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO32_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO32_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[32]" id="CURSO32_CUMPLE_SI" value="Si">
@@ -1505,10 +1505,10 @@
                                                                     <input type="text" class="form-control" id="CURSO33_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO33_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO33_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO33_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO33_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[33]" id="CURSO33_CUMPLE_SI" value="Si">
@@ -1522,10 +1522,10 @@
                                                                     <input type="text" class="form-control" id="CURSO34_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO34_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO34_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO34_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO34_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[34]" id="CURSO34_CUMPLE_SI" value="Si">
@@ -1539,10 +1539,10 @@
                                                                     <input type="text" class="form-control" id="CURSO35_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO35_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO35_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO35_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO35_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[35]" id="CURSO35_CUMPLE_SI" value="Si">
@@ -1557,10 +1557,10 @@
                                                                     <input type="text" class="form-control" id="CURSO36_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO36_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO36_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO36_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO36_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[36]" id="CURSO36_CUMPLE_SI" value="Si">
@@ -1574,10 +1574,10 @@
                                                                     <input type="text" class="form-control" id="CURSO37_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO37_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO37_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO37_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO37_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[37]" id="CURSO37_CUMPLE_SI" value="Si">
@@ -1591,10 +1591,10 @@
                                                                     <input type="text" class="form-control" id="CURSO38_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO38_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO38_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO38_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO38_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[38]" id="CURSO38_CUMPLE_SI" value="Si">
@@ -1608,10 +1608,10 @@
                                                                     <input type="text" class="form-control" id="CURSO39_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO39_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO39_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO39_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO39_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[39]" id="CURSO39_CUMPLE_SI" value="Si">
@@ -1625,10 +1625,10 @@
                                                                     <input type="text" class="form-control" id="CURSO40_PPT" name="CURSO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO40_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO40_REQUERIDO_PPT" name="CURSO_REQUERIDO_PPT[]">
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" class="form-control" id="CURSO40_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
+                                                                    <input type="text" class="form-control text-center" id="CURSO40_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[]">
                                                                 </td>
                                                                 <td>
                                                                     <input class="form-check-input" type="radio" name="CURSO_CUMPLE_PPT[40]" id="CURSO40_CUMPLE_SI" value="Si">
@@ -1729,7 +1729,7 @@
                             </div>
                             <div class="col-1">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="PRACTICA_PROFESIONAL_PPT" name="PRACTICA_PROFESIONAL_PPT">
+                                    <input type="text" class="form-control text-center" id="PRACTICA_PROFESIONAL_PPT" name="PRACTICA_PROFESIONAL_PPT">
                                 </div>
                             </div>
                             <div class="col-2">
@@ -1750,7 +1750,7 @@
                             </div>
                             <div class="col-1">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="AUXILIAR_ASISTENTE_PPT" name="AUXILIAR_ASISTENTE_PPT">
+                                    <input type="text" class="form-control text-center" id="AUXILIAR_ASISTENTE_PPT" name="AUXILIAR_ASISTENTE_PPT">
                                 </div>
                             </div>
                             <div class="col-2">
@@ -1770,7 +1770,7 @@
                                 </div>
                                 <div class="col-1">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="ANALISTA_ESPECIALISTA_PPT" name="ANALISTA_ESPECIALISTA_PPT">
+                                        <input type="text" class="form-control text-center" id="ANALISTA_ESPECIALISTA_PPT" name="ANALISTA_ESPECIALISTA_PPT">
                                     </div>
                                 </div>
                                 <div class="col-2">
@@ -1788,7 +1788,7 @@
                             </div>
                             <div class="col-1">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="ELABORACION_REPORTES_PPT" name="ELABORACION_REPORTES_PPT">
+                                    <input type="text" class="form-control text-center" id="ELABORACION_REPORTES_PPT" name="ELABORACION_REPORTES_PPT">
                                 </div>
                             </div>
 
@@ -1815,7 +1815,7 @@
                             </div>
                             <div class="col-1">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="TECNICO_MUESTREO_PPT" name="TECNICO_MUESTREO_PPT">
+                                    <input type="text" class="form-control text-center" id="TECNICO_MUESTREO_PPT" name="TECNICO_MUESTREO_PPT">
                                 </div>
                             </div>
                             <div class="col-2">
@@ -1833,7 +1833,7 @@
                             </div>
                             <div class="col-1">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="CONSULTOR_ASESOR_PPT" name="CONSULTOR_ASESOR_PPT">
+                                    <input type="text" class="form-control text-center" id="CONSULTOR_ASESOR_PPT" name="CONSULTOR_ASESOR_PPT">
                                 </div>
                             </div>
                             <div class="col-2">
@@ -1854,7 +1854,7 @@
                             </div>
                             <div class="col-1">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="SUPERVISOR_COORDINADOR_PPT" name="SUPERVISOR_COORDINADOR_PPT">
+                                    <input type="text" class="form-control text-center" id="SUPERVISOR_COORDINADOR_PPT" name="SUPERVISOR_COORDINADOR_PPT">
                                 </div>
                             </div>
                             <div class="col-2">
@@ -1873,7 +1873,7 @@
                             </div>
                             <div class="col-1">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="SIGNATARIO_PPT" name="SIGNATARIO_PPT">
+                                    <input type="text" class="form-control text-center" id="SIGNATARIO_PPT" name="SIGNATARIO_PPT">
                                 </div>
                             </div>
                             <div class="col-2">
@@ -1894,7 +1894,7 @@
                             </div>
                             <div class="col-1">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="JEFE_AREA_PPT" name="JEFE_AREA_PPT">
+                                    <input type="text" class="form-control text-center" id="JEFE_AREA_PPT" name="JEFE_AREA_PPT">
                                 </div>
                             </div>
                             <div class="col-2">
@@ -1912,7 +1912,7 @@
                             </div>
                             <div class="col-1">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="GERENTE_DIRECTOR_PPT" name="GERENTE_DIRECTOR_PPT">
+                                    <input type="text" class="form-control text-center" id="GERENTE_DIRECTOR_PPT" name="GERENTE_DIRECTOR_PPT">
                                 </div>
                             </div>
                             <div class="col-2">
@@ -1971,13 +1971,13 @@
                                         <tr>
                                             <td>Innovación</td>
                                             <td>
-                                                <input type="text" class="form-control" id="INNOVACION_REQUERIDA_PPT" name="INNOVACION_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="INNOVACION_REQUERIDA_PPT" name="INNOVACION_REQUERIDA_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="INNOVACION_DESEABLE_PPT" name="INNOVACION_DESEABLE_PPT">
+                                                <input type="text" class="form-control text-center" id="INNOVACION_DESEABLE_PPT" name="INNOVACION_DESEABLE_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="INNOVACION_NO_REQUERIDA_PPT" name="INNOVACION_NO_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="INNOVACION_NO_REQUERIDA_PPT" name="INNOVACION_NO_REQUERIDA_PPT">
                                             </td>
                                             <td>
                                                 <input class="form-check-input" type="radio" name="INNOVACION_CUMPLE_PPT" id="INNOVACION_CUMPLE_SI" value="Si">
@@ -1989,13 +1989,13 @@
                                         <tr>
                                             <td>Pasión</td>
                                             <td>
-                                                <input type="text" class="form-control" id="PASION_REQUERIDA_PPT" name="PASION_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="PASION_REQUERIDA_PPT" name="PASION_REQUERIDA_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="PASION_DESEABLE_PPT" name="PASION_DESEABLE_PPT">
+                                                <input type="text" class="form-control text-center" id="PASION_DESEABLE_PPT" name="PASION_DESEABLE_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="PASION_NO_REQUERIDA_PPT" name="PASION_NO_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="PASION_NO_REQUERIDA_PPT" name="PASION_NO_REQUERIDA_PPT">
                                             </td>
                                             <td>
                                                 <input class="form-check-input" type="radio" name="PASION_CUMPLE_PPT" id="PASION_CUMPLE_SI" value="Si">
@@ -2008,13 +2008,13 @@
                                         <tr>
                                             <td>Servicio (Orientación al cliente)</td>
                                             <td>
-                                                <input type="text" class="form-control" id="SERVICIO_CLIENTE_REQUERIDA_PPT" name="SERVICIO_CLIENTE_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="SERVICIO_CLIENTE_REQUERIDA_PPT" name="SERVICIO_CLIENTE_REQUERIDA_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="SERVICIO_CLIENTE_DESEABLE_PPT" name="SERVICIO_CLIENTE_DESEABLE_PPT">
+                                                <input type="text" class="form-control text-center" id="SERVICIO_CLIENTE_DESEABLE_PPT" name="SERVICIO_CLIENTE_DESEABLE_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="SERVICIO_CLIENTE_NO_REQUERIDA_PPT" name="SERVICIO_CLIENTE_NO_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="SERVICIO_CLIENTE_NO_REQUERIDA_PPT" name="SERVICIO_CLIENTE_NO_REQUERIDA_PPT">
                                             </td>
                                             <td>
                                                 <input class="form-check-input" type="radio" name="SERVICIO_CLIENTE_CUMPLE_PPT" id="SERVICIO_CLIENTE_CUMPLE_SI" value="Si">
@@ -2026,13 +2026,13 @@
                                         <tr>
                                             <td>Comunicación eficaz</td>
                                             <td>
-                                                <input type="text" class="form-control" id="COMUNICACION_EFICAZ_REQUERIDA_PPT" name="COMUNICACION_EFICAZ_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="COMUNICACION_EFICAZ_REQUERIDA_PPT" name="COMUNICACION_EFICAZ_REQUERIDA_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="COMUNICACION_EFICAZ_DESEABLE_PPT" name="COMUNICACION_EFICAZ_DESEABLE_PPT">
+                                                <input type="text" class="form-control text-center" id="COMUNICACION_EFICAZ_DESEABLE_PPT" name="COMUNICACION_EFICAZ_DESEABLE_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="COMUNICACION_EFICAZ_NO_REQUERIDA_PPT" name="COMUNICACION_EFICAZ_NO_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="COMUNICACION_EFICAZ_NO_REQUERIDA_PPT" name="COMUNICACION_EFICAZ_NO_REQUERIDA_PPT">
                                             </td>
                                             <td>
                                                 <input class="form-check-input" type="radio" name="COMUNICACION_EFICAZ_CUMPLE_PPT" id="COMUNICACION_EFICAZ_CUMPLE_SI" value="Si">
@@ -2044,13 +2044,13 @@
                                         <tr>
                                             <td>Trabajo en equipo</td>
                                             <td>
-                                                <input type="text" class="form-control" id="TRABAJO_EQUIPO_REQUERIDA_PPT" name="TRABAJO_EQUIPO_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="TRABAJO_EQUIPO_REQUERIDA_PPT" name="TRABAJO_EQUIPO_REQUERIDA_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="TRABAJO_EQUIPO_DESEABLE_PPT" name="TRABAJO_EQUIPO_DESEABLE_PPT">
+                                                <input type="text" class="form-control text-center" id="TRABAJO_EQUIPO_DESEABLE_PPT" name="TRABAJO_EQUIPO_DESEABLE_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="TRABAJO_EQUIPO_NO_REQUERIDA_PPT" name="TRABAJO_EQUIPO_NO_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="TRABAJO_EQUIPO_NO_REQUERIDA_PPT" name="TRABAJO_EQUIPO_NO_REQUERIDA_PPT">
                                             </td>
                                             <td>
                                                 <input class="form-check-input" type="radio" name="TRABAJO_EQUIPO_CUMPLE_PPT" id="TRABAJO_EQUIPO_CUMPLE_SI" value="Si">
@@ -2062,13 +2062,13 @@
                                         <tr>
                                             <td>Integridad</td>
                                             <td>
-                                                <input type="text" class="form-control" id="INTEGRIDAD_REQUERIDA_PPT" name="INTEGRIDAD_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="INTEGRIDAD_REQUERIDA_PPT" name="INTEGRIDAD_REQUERIDA_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="INTEGRIDAD_DESEABLE_PPT" name="INTEGRIDAD_DESEABLE_PPT">
+                                                <input type="text" class="form-control text-center" id="INTEGRIDAD_DESEABLE_PPT" name="INTEGRIDAD_DESEABLE_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="INTEGRIDAD_NO_REQUERIDA_PPT" name="INTEGRIDAD_NO_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="INTEGRIDAD_NO_REQUERIDA_PPT" name="INTEGRIDAD_NO_REQUERIDA_PPT">
                                             </td>
                                             <td>
                                                 <input class="form-check-input" type="radio" name="INTEGRIDAD_CUMPLE_PPT" id="INTEGRIDAD_CUMPLE_SI" value="Si">
@@ -2080,13 +2080,13 @@
                                         <tr>
                                             <td>Responsabilidad social</td>
                                             <td>
-                                                <input type="text" class="form-control" id="RESPONSABILIDAD_SOCIAL_REQUERIDA_PPT" name="RESPONSABILIDAD_SOCIAL_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="RESPONSABILIDAD_SOCIAL_REQUERIDA_PPT" name="RESPONSABILIDAD_SOCIAL_REQUERIDA_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="RESPONSABILIDAD_SOCIAL_DESEABLE_PPT" name="RESPONSABILIDAD_SOCIAL_DESEABLE_PPT">
+                                                <input type="text" class="form-control text-center" id="RESPONSABILIDAD_SOCIAL_DESEABLE_PPT" name="RESPONSABILIDAD_SOCIAL_DESEABLE_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="RESPONSABILIDAD_SOCIAL_NO_REQUERIDA_PPT" name="RESPONSABILIDAD_SOCIAL_NO_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="RESPONSABILIDAD_SOCIAL_NO_REQUERIDA_PPT" name="RESPONSABILIDAD_SOCIAL_NO_REQUERIDA_PPT">
                                             </td>
                                             <td>
                                                 <input class="form-check-input" type="radio" name="RESPONSABILIDAD_SOCIAL_CUMPLE_PPT" id="RESPONSABILIDAD_SOCIAL_CUMPLE_SI" value="Si">
@@ -2098,13 +2098,13 @@
                                         <tr>
                                             <td>Adaptabilidad a los cambios del entorno</td>
                                             <td>
-                                                <input type="text" class="form-control" id="ADAPTABILIDAD_REQUERIDA_PPT" name="ADAPTABILIDAD_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="ADAPTABILIDAD_REQUERIDA_PPT" name="ADAPTABILIDAD_REQUERIDA_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="ADAPTABILIDAD_DESEABLE_PPT" name="ADAPTABILIDAD_DESEABLE_PPT">
+                                                <input type="text" class="form-control text-center" id="ADAPTABILIDAD_DESEABLE_PPT" name="ADAPTABILIDAD_DESEABLE_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="ADAPTABILIDAD_NO_REQUERIDA_PPT" name="ADAPTABILIDAD_NO_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="ADAPTABILIDAD_NO_REQUERIDA_PPT" name="ADAPTABILIDAD_NO_REQUERIDA_PPT">
                                             </td>
                                             <td>
                                                 <input class="form-check-input" type="radio" name="ADAPTABILIDAD_CUMPLE_PPT" id="ADAPTABILIDAD_CUMPLE_SI" value="Si">
@@ -2116,13 +2116,13 @@
                                         <tr>
                                             <td>Liderazgo</td>
                                             <td>
-                                                <input type="text" class="form-control" id="LIDERAZGO_REQUERIDA_PPT" name="LIDERAZGO_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="LIDERAZGO_REQUERIDA_PPT" name="LIDERAZGO_REQUERIDA_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="LIDERAZGO_DESEABLE_PPT" name="LIDERAZGO_DESEABLE_PPT">
+                                                <input type="text" class="form-control text-center" id="LIDERAZGO_DESEABLE_PPT" name="LIDERAZGO_DESEABLE_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="LIDERAZGO_NO_REQUERIDA_PPT" name="LIDERAZGO_NO_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="LIDERAZGO_NO_REQUERIDA_PPT" name="LIDERAZGO_NO_REQUERIDA_PPT">
                                             </td>
                                             <td>
                                                 <input class="form-check-input" type="radio" name="LIDERAZGO_CUMPLE_PPT" id="LIDERAZGO_CUMPLE_SI" value="Si">
@@ -2134,13 +2134,13 @@
                                         <tr>
                                             <td>Toma de decisiones</td>
                                             <td>
-                                                <input type="text" class="form-control" id="TOMA_DECISIONES_REQUERIDA_PPT" name="TOMA_DECISIONES_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="TOMA_DECISIONES_REQUERIDA_PPT" name="TOMA_DECISIONES_REQUERIDA_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="TOMA_DECISIONES_DESEABLE_PPT" name="TOMA_DECISIONES_DESEABLE_PPT">
+                                                <input type="text" class="form-control text-center" id="TOMA_DECISIONES_DESEABLE_PPT" name="TOMA_DECISIONES_DESEABLE_PPT">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="TOMA_DECISIONES_NO_REQUERIDA_PPT" name="TOMA_DECISIONES_NO_REQUERIDA_PPT">
+                                                <input type="text" class="form-control text-center" id="TOMA_DECISIONES_NO_REQUERIDA_PPT" name="TOMA_DECISIONES_NO_REQUERIDA_PPT">
                                             </td>
                                             <td>
                                                 <input class="form-check-input" type="radio" name="TOMA_DECISIONES_CUMPLE_PPT" id="TOMA_DECISIONES_CUMPLE_SI" value="Si">
@@ -2424,9 +2424,9 @@
                         </div>
 
 
-
                     </div>
-                </div>
+                    </div>
+               
                 <div class="modal-footer mx-5">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-success" id="guardarFormPPT"><i class="bi bi-floppy-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Guardar PPT"></i> Guardar</button>
@@ -2436,6 +2436,7 @@
                     <button type="button" class="btn btn-success" id="AutorizarFormPPT" style="display: none;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Autorizar formato PPT" disabled><i class="bi bi-clipboard-check-fill"></i> Autorizar</button>
                 </div>
             </form>
+         </div>
         </div>
     </div>
 </div>
