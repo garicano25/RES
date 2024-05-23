@@ -7,7 +7,7 @@ use App\Http\Controllers\organizacion\dptController;
 use App\Http\Controllers\excel\makeExcelController;
 use App\Http\Controllers\organizacion\catalogosController;
 use App\Http\Controllers\organizacion\catalogosasesoresController;
-
+use App\Http\Controllers\organizacion\catalogosfuncionescargoController;
 
 
 // RUTA PRINCIPAL 
@@ -70,6 +70,14 @@ Route::post('/asesorSave', [catalogosasesoresController::class, 'store']);
 Route::get('/asesorDelete', [catalogosasesoresController::class, 'store']);
 Route::get('/Tablaasesores', [catalogosasesoresController::class, 'Tablaasesores']);
 
+//catalogo de funciones cargo
+
+
+
+Route::get('/FuncionesCargo', [catalogosfuncionescargoController::class, 'index']);
+Route::post('/CargoSave', [catalogosfuncionescargoController::class, 'store']);
+Route::get('/CargoDelete', [catalogosfuncionescargoController::class, 'store']);
+Route::get('/Tablaafuncionescargo', [catalogosfuncionescargoController::class, 'Tablaafuncionescargo']);
 
 
 

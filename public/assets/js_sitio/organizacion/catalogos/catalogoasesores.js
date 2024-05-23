@@ -178,5 +178,5 @@ $('#Tablaasesores tbody').on('click', 'td>button.EDITAR', function () {
 
     console.log(row.data());
 
-    editarDatoTabla(row.data(), 'formularioASESOR', 'miModal_ASESORES');
+    editarDatoTabla(row.data(), 'formularioASESOR', 'miModal_ASESORES',1);
 });

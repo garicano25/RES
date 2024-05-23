@@ -6,7 +6,7 @@
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
-        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-filetype-ppt"></i>&nbsp;PPT</h3>
+        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-filetype-ppt"></i>&nbsp;Perfil del puesto de trabajo(PPT)</h3>
 
 
         <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_ppt" data-bs-toggle="modal" data-bs-target="#miModal_PPT" style="margin-left: auto;">
@@ -50,8 +50,9 @@
                                         <select class="form-control" id="DEPARTAMENTO_AREA_ID" name="DEPARTAMENTO_AREA_ID" required>
                                             <option selected disabled>Seleccione una opción...</option>
                                             @foreach ($areas as $area)
-                                            <option value="{{ $area->ID_DEPARTAMENTO_AREA }}">{{ $area->NOMBRE }}</option>
-                                            @endforeach
+                                      <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
+                                       @endforeach
+
                                         </select>
                                     </div>
                                 </div>

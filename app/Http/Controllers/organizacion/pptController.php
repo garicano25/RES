@@ -12,14 +12,21 @@ use DB;
 
 class pptController extends Controller
 {
-
     public function index()
     {
-        $areas = departamentosAreasModel::orderBy('NOMBRE', 'ASC')->get();
+        $areas = DB::select("
+            SELECT NOMBRE, ID_DEPARTAMENTO_AREA as ID
+            FROM departamentos_areas
+            WHERE ACTIVO = 1
+
+            UNION
+
+            SELECT NOMBRE_CARGO AS NOMBRE, ID_ENCARGADO_AREA AS ID
+            FROM encargados_areas
+        ");
 
         return view('RH.organizacion.PPT', compact('areas'));
     }
-
 
     public function TablaPPT()
     {

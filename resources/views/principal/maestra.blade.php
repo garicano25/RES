@@ -137,13 +137,17 @@
                                 <span class="d-none d-lg-inline">Catálogo</span>
                             </a>                                             
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ url('/Jerárquico') }}">Catálogo nivel Jerárquico</a></li>
+                                <li><a class="dropdown-item" href="{{ url('/Jerárquico') }}">Catálogo nivel Jerárquico</a>
+                                </li>
                                 <hr class="dropdown-divider">
-                                <li><a class="dropdown-item" href="{{url('#')}}">Funciones clave del cargo</a></li>
+                                <li><a class="dropdown-item" href="{{url('/FuncionesCargo')}}">Funciones clave del cargo</a>
+                                </li>
                                 <hr class="dropdown-divider">                            
-                                <li><a class="dropdown-item" href="{{url('#')}}">Funciones del sistema integrado de gestión</a></li>    
+                                <li><a class="dropdown-item" href="{{url('#')}}">Funciones del sistema integrado de gestión</a>
+                                </li>    
                                 <hr class="dropdown-divider">
-                                <li><a class="dropdown-item" href="{{url('/Asesores')}}">Catálogo de Asesores</a></li> 
+                                <li><a class="dropdown-item" href="{{url('/Asesores')}}">Catálogo de Asesores</a>
+                                </li> 
                             </ul>
                         </li>
                     </ul>
@@ -233,6 +237,12 @@
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoasesores.js"></script>
     @endif
 
+  
+
+
+    @if(request()->is('FuncionesCargo'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionescargo.js"></script>
+    @endif
 
 
 

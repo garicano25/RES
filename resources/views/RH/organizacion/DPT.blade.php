@@ -7,7 +7,7 @@
 
     <div class="contenedor-contenido">
       <ol class="breadcrumb mb-5">
-          <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-fill"></i>&nbsp;DPT</h3>
+          <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-fill"></i>&nbsp;Descripción del puesto de trabajo(DPT)</h3>
   
   
           <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_ppt" data-bs-toggle="modal" data-bs-target="#miModal_DPT" style="margin-left: auto;">
@@ -43,12 +43,11 @@
                         <div class="form-group">
                             <label>Nombre categorías</label>
                             <select class="form-control" id="DEPARTAMENTOS_AREAS_ID" name="DEPARTAMENTOS_AREAS_ID">
-                                <option selected disabled>Seleccione una opción</option>
-                                @foreach ($areas as $area)
-                                <option value="{{ $area->ID_DEPARTAMENTO_AREA }}">{{ $area->NOMBRE }}</option>
-                                @endforeach
-
-                            </select>
+                              <option selected disabled>Seleccione una opción</option>
+                              @foreach ($areas as $area)
+                                  <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
+                              @endforeach
+                          </select>                          
                         </div>
                     </div>
                 
@@ -250,7 +249,13 @@
                               <tbody>
                                 <tr>
                                   <td>
-                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN1_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                    {{-- <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN1_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea> --}}
+                                    <select class="form-control" id="INTERNAS_CONQUIEN1_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                      <option selected disabled>Seleccione una opción</option>
+                                      @foreach ($areas as $area)
+                                      <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
+                                       @endforeach
+                                  </select>
                                   </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE1_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
@@ -268,8 +273,12 @@
                                  </tr>
                                 <tr>
                                   <td>
-                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN2_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
-                                  </td>
+                                    <select class="form-control" id="INTERNAS_CONQUIEN2_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                      <option selected disabled>Seleccione una opción</option>
+                                      @foreach ($areas as $area)
+                                      <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
+                                       @endforeach
+                                  </select>                                  </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE2_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                   </td>
@@ -286,8 +295,12 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN3_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
-                                  </td>
+                                    <select class="form-control" id="INTERNAS_CONQUIEN3_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                      <option selected disabled>Seleccione una opción</option>
+                                      @foreach ($areas as $area)
+                                      <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
+                                       @endforeach
+                                  </select>                                  </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"  id="INTERNAS_PARAQUE3_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
@@ -304,8 +317,12 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN4_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
-                                  </td>
+                                    <select class="form-control" id="INTERNAS_CONQUIEN4_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                      <option selected disabled>Seleccione una opción</option>
+                                      @foreach ($areas as $area)
+                                      <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
+                                       @endforeach
+                                  </select>                                  </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE4_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
@@ -322,8 +339,12 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN5_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
-                                  </td>
+                                    <select class="form-control" id="INTERNAS_CONQUIEN5_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                      <option selected disabled>Seleccione una opción</option>
+                                      @foreach ($areas as $area)
+                                      <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
+                                       @endforeach
+                                  </select>                                  </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE5_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
@@ -340,8 +361,12 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN6_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
-                                  </td>
+                                    <select class="form-control" id="INTERNAS_CONQUIEN6_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                      <option selected disabled>Seleccione una opción</option>
+                                      @foreach ($areas as $area)
+                                      <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
+                                       @endforeach
+                                  </select>                                  </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE6_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
@@ -359,8 +384,12 @@
 
                                 <tr>
                                   <td>
-                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN7_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
-                                  </td>
+                                    <select class="form-control" id="INTERNAS_CONQUIEN7_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                      <option selected disabled>Seleccione una opción</option>
+                                      @foreach ($areas as $area)
+                                      <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
+                                       @endforeach
+                                  </select>                                  </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE7_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
@@ -377,8 +406,12 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN8_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
-                                  </td>
+                                    <select class="form-control" id="INTERNAS_CONQUIEN8_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                      <option selected disabled>Seleccione una opción</option>
+                                      @foreach ($areas as $area)
+                                      <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
+                                       @endforeach
+                                  </select>                                  </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE8_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
@@ -395,8 +428,12 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN9_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
-                                  </td>
+                                    <select class="form-control" id="INTERNAS_CONQUIEN9_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                      <option selected disabled>Seleccione una opción</option>
+                                      @foreach ($areas as $area)
+                                      <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
+                                       @endforeach
+                                  </select>                                  </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE9_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
@@ -414,8 +451,12 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                    <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN10_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
-                                  </td>
+                                    <select class="form-control" id="INTERNAS_CONQUIEN10_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                      <option selected disabled>Seleccione una opción</option>
+                                      @foreach ($areas as $area)
+                                      <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
+                                       @endforeach
+                                  </select>                                  </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE10_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>

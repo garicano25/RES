@@ -60,7 +60,7 @@ TablaDPT = $("#TablaDPT").DataTable({
     },
     columns: [
         { data: 'ID_FORMULARIO_DPT' },
-        { data: 'DEPARTAMENTOS_AREAS_ID' },
+        { data: 'DEPARTAMENTOS_AREAS_ID', name: 'DEPARTAMENTOS_AREAS_ID' }, // Utiliza el nombre correcto 'DEPARTAMENTOS_AREAS_ID'
         { data: 'ELABORADO_POR' },
         { data: 'REVISADO_POR' },
         { data: 'AUTORIZADO_POR' },
@@ -73,11 +73,11 @@ TablaDPT = $("#TablaDPT").DataTable({
     ],
     columnDefs: [
         { target: 0, title: '#', className: 'all' },
-        { target: 1, title: 'Puesto', className: 'all' },
+        { target: 1, title: 'Nombre categoría', className: 'all' },
         { target: 2, title: 'Elaborado por', className: 'all text-center' },
         { target: 3, title: 'Revisado por', className: 'all text-center' },
         { target: 4, title: 'Autorizado por', className: 'all text-center' },
-        { target: 5, title: 'Accion', className: 'all text-center' },
+        { target: 5, title: 'Acción', className: 'all text-center' },
         { target: 6, title: 'DPT', className: 'all text-center' },
         { target: 7, title: 'Editar', className: 'all text-center' },
         { target: 8, title: 'Eliminar', className: 'all text-center' },
@@ -206,9 +206,8 @@ $('#TablaDPT tbody').on('click', 'td>button.EDITAR', function () {
     var row = TablaDPT.row(tr);
     ID_FORMULARIO_DPT = row.data().ID_FORMULARIO_DPT;
 
-    console.log(row.data());
 
-    editarDatoTabla(row.data(), 'formularioDPT', 'miModal_DPT');
+    editarDatoTabla(row.data(), 'formularioDPT', 'miModal_DPT', 1);
 });
 
 

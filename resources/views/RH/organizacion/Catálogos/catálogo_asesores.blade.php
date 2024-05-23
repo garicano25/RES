@@ -43,15 +43,17 @@
                         <textarea class="form-control" id="DESCRIPCION_ASESOR" name="DESCRIPCION_ASESOR" rows="8"></textarea>
                     </div>
                     <div class="mb-3">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="ASESOR_ES" id="INTERNO_SI" value="interno">
-                            <label class="form-check-label" for="INTERNO_SI">Interno</label>
+                        <div>
+                          <input type="radio" id="asesor_interno" name="ASESOR_ES" value="1">
+                          <label for="asesor_interno">Interno</label>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="ASESOR_ES" id="EXTERNO_NO" value="externo">
-                            <label class="form-check-label" for="EXTERNO_NO">Externo</label>
+                        <div>
+                          <input type="radio" id="asesor_externo" name="ASESOR_ES" value="0">
+                          <label for="asesor_externo">Externo</label>
                         </div>
-                    </div>
+                      </div>
+                      
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>

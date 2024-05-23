@@ -63,13 +63,13 @@ class makeExcelController extends Controller{
 
 
 
-            if (!is_null($val->EDAD_CUMPLE_PPT)) {               
-                if(strtoupper($val->EDAD_CUMPLE_PPT) == 'SI' ){
-                    $sheet->setCellValue('L13', 'X');
-                }else{
-                    $sheet->setCellValue('M13', 'X');
+                if (!is_null($val->EDAD_CUMPLE_PPT)) {               
+                    if(strtoupper($val->EDAD_CUMPLE_PPT) == 'SI' ){
+                        $sheet->setCellValue('L13', 'X');
+                    }else{
+                        $sheet->setCellValue('M13', 'X');
+                    }
                 }
-            }
 
 
 

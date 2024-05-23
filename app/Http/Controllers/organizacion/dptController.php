@@ -7,17 +7,25 @@ use Illuminate\Http\Request;
 use App\Models\organizacion\formulariodptModel;
 use App\Models\organizacion\relacionesinternasModel;
 use App\Models\organizacion\relacionesexternasModel;
-use App\Models\organizacion\departamentosAreasModel;
 use DB;
 
 class dptController extends Controller
 {
-    public function index()
-    {
-        $areas = departamentosAreasModel::orderBy('NOMBRE', 'ASC')->get();
-        return view('RH.organizacion.DPT', compact('areas'));
-    }
+            public function index()
+        {
+            $areas = DB::select("
+                SELECT NOMBRE, ID_DEPARTAMENTO_AREA as ID
+                FROM departamentos_areas
+                WHERE ACTIVO = 1
 
+                UNION
+
+                SELECT NOMBRE_CARGO AS NOMBRE, ID_ENCARGADO_AREA AS ID
+                FROM encargados_areas
+            ");
+
+            return view('RH.organizacion.DPT', compact('areas'));
+        }
   
 
     
