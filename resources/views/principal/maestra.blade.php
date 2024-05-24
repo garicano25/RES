@@ -143,7 +143,7 @@
                                 <li><a class="dropdown-item" href="{{url('/FuncionesCargo')}}">Funciones clave del cargo</a>
                                 </li>
                                 <hr class="dropdown-divider">                            
-                                <li><a class="dropdown-item" href="{{url('#')}}">Funciones del sistema integrado de gestión</a>
+                                <li><a class="dropdown-item" href="{{url('/Funcionesgestión')}}">Funciones del sistema <br> integrado de gestión</a>
                                 </li>    
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/Asesores')}}">Catálogo de Asesores</a>
@@ -238,14 +238,17 @@
     @endif
 
   
-
-
     @if(request()->is('FuncionesCargo'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionescargo.js"></script>
     @endif
 
+    @if(request()->is('Funcionesgestión'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionesgestion.js"></script>
+    @endif
 
 
+
+    
 
 </body>
 

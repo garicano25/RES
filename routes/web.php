@@ -79,6 +79,11 @@ Route::post('/CargoSave', [catalogosfuncionescargoController::class, 'store']);
 Route::get('/CargoDelete', [catalogosfuncionescargoController::class, 'store']);
 Route::get('/Tablaafuncionescargo', [catalogosfuncionescargoController::class, 'Tablaafuncionescargo']);
 
+//catalogo de funciones cargo
+
+
+
+Route::get('/Funcionesgestión', function () {return view('RH.organizacion.Catálogos.catálogo_funcionesgestion');});
 
 
 
