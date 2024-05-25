@@ -247,14 +247,14 @@
                             <label></label>
                           </div>
                           <div class="col-4">
-                            <input class="form-control" id="SOLICITA_RP" name="SOLICITA_RP" >
+                            <input type="text" class="form-control " id="SOLICITA_RP" name="SOLICITA_RP">
                           </div>
                           <div class="col-2">
                             <label></label>
 
                           </div>
                           <div class="col-4">
-                            <input class="form-control" id="AUTORIZA_RP" name="AUTORIZA_RP" >
+                            <input type="text" class="form-control " id="AUTORIZA_RP" name="AUTORIZA_RP">
                           </div>
                       </div>
                 </div>

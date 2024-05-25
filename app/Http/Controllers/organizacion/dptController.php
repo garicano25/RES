@@ -20,14 +20,12 @@ class dptController extends Controller
             public function index()
         {
             $areas = DB::select("
-                SELECT NOMBRE, ID_DEPARTAMENTO_AREA as ID
-                FROM departamentos_areas
-                WHERE ACTIVO = 1
-
-                UNION
-
-                SELECT NOMBRE_CARGO AS NOMBRE, ID_ENCARGADO_AREA AS ID
-                FROM encargados_areas
+            SELECT NOMBRE, ID_DEPARTAMENTO_AREA as ID, LUGAR_TRABAJO_CATEGORIA AS LUGAR, PROPOSITO_FINALIDAD_CATEGORIA AS PROPOSITO, 0 AS LIDER
+            FROM departamentos_areas
+            WHERE ACTIVO = 1
+            UNION
+            SELECT NOMBRE_CARGO AS NOMBRE, ID_ENCARGADO_AREA AS ID, LUGAR_TRABAJO_LIDER AS LUGAR, PROPOSITO_FINALIDAD_LIDER AS PROPOSITO, 1 AS LIDER
+            FROM encargados_areas
             ");
 
 
@@ -58,7 +56,7 @@ class dptController extends Controller
                 // Botones
                 $value->BTN_ELIMINAR = '<button type="button" class="btn btn-danger btn-circle ELIMINAR"><i class="bi bi-trash3"></i></button>';
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-circle EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                $value->BTN_DPT = '<button type="button" class="btn btn-success btn-circle DPT"><i class="bi bi-file-earmark-excel"></i></button>';
+                $value->BTN_DPT = '<button type="button" class="btn btn-success btn-circle D PT"><i class="bi bi-file-earmark-excel-fill"></i></button>';
             }
     
             // Respuesta
@@ -75,6 +73,61 @@ class dptController extends Controller
     }
     
 
+
+    public function infoReportan($ID, $LIDER)
+    {
+        try {
+
+
+            if ($LIDER == 1) {
+
+                $info = DB::select("SELECT GROUP_CONCAT(dep.NOMBRE SEPARATOR ', ') AS REPORTAN
+                                    FROM encargados_areas encargado
+                                    LEFT JOIN departamentos_areas dep ON dep.ENCARGADO_AREA_ID = encargado.ID_ENCARGADO_AREA
+                                    WHERE encargado.ID_ENCARGADO_AREA = ?", [$ID]);
+
+
+                // Respuesta
+                $response['code'] = 1;
+                $response['REPORTAN'] = $info;
+                $response['REPORTA'] = 'Director';
+                return response()->json($response);
+            } else if  ($LIDER == 0){
+
+                $info = DB::select("SELECT IF(dep.TIENE_ENCARGADO = 1, encargado.NOMBRE_CARGO , 'Director') REPORTA
+                                    FROM departamentos_areas dep
+                                    LEFT JOIN encargados_areas  encargado ON encargado.ID_ENCARGADO_AREA = dep.ENCARGADO_AREA_ID
+                                    WHERE dep.ID_DEPARTAMENTO_AREA = ?", [$ID]);
+
+
+                // Respuesta
+                $response['code'] = 1;
+                $response['REPORTAN'] = 'Ninguno';
+                $response['REPORTA'] = $info;
+                return response()->json($response);
+
+            } else {
+
+
+                $info = DB::select("SELECT GROUP_CONCAT(NOMBRE_CARGO SEPARATOR ', ') AS REPORTAN FROM encargados_areas");
+
+                // Respuesta
+                $response['code'] = 1;
+                $response['REPORTAN'] = $info;
+                $response['REPORTA'] = 'Ninguno';
+                return response()->json($response);
+
+            }
+
+        } catch (Exception $e) {
+
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0,
+                'code' => 0
+            ]);
+        }
+    }
     public function store(Request $request)
     {
         try {
@@ -82,15 +135,16 @@ class dptController extends Controller
                 case 1:
                     // Guardar área
                     if ($request->ID_FORMULARIO_DPT == 0) {
-                        // Concatenar valores de los checkboxes seleccionados para cargos y gestiones
                         $funciones_cargo = $request->FUNCIONES_CARGO_DPT ? implode(',', $request->FUNCIONES_CARGO_DPT) : '';
                         $funciones_gestion = $request->FUNCIONES_GESTION_DPT ? implode(',', $request->FUNCIONES_GESTION_DPT) : '';
     
-                        // Guardar Formulario DPT con los campos FUNCIONES_CARGO_DPT y FUNCIONES_GESTION_DPT concatenados
+                        $puestos_interactuan = $request->PUESTOS_INTERACTUAN_DPT;
+    
                         DB::statement('ALTER TABLE formulario_dpt AUTO_INCREMENT=1;');
                         $DPT = formulariodptModel::create(array_merge($request->all(), [
                             'FUNCIONES_CARGO_DPT' => $funciones_cargo,
-                            'FUNCIONES_GESTION_DPT' => $funciones_gestion
+                            'FUNCIONES_GESTION_DPT' => $funciones_gestion,
+                            'PUESTOS_INTERACTUAN_DPT' => implode(',', $puestos_interactuan)
                         ]));
     
                         // Verifica si existen relaciones internas y las guarda
@@ -130,15 +184,16 @@ class dptController extends Controller
                         return response()->json($response);
     
                     } else {
-                        // Actualizar área existente
                         $DPT = formulariodptModel::find($request->ID_FORMULARIO_DPT);
-                        // Concatenar valores de los checkboxes seleccionados para cargos y gestiones
                         $funciones_cargo = $request->FUNCIONES_CARGO_DPT ? implode(',', $request->FUNCIONES_CARGO_DPT) : '';
                         $funciones_gestion = $request->FUNCIONES_GESTION_DPT ? implode(',', $request->FUNCIONES_GESTION_DPT) : '';
-                        // Actualizar Formulario DPT con los campos FUNCIONES_CARGO_DPT y FUNCIONES_GESTION_DPT concatenados
-                        $DPT->update(array_merge($request->all(), [
+    
+                        $puestos_interactuan = $request->PUESTOS_INTERACTUAN_DPT;
+    
+                            $DPT->update(array_merge($request->all(), [
                             'FUNCIONES_CARGO_DPT' => $funciones_cargo,
-                            'FUNCIONES_GESTION_DPT' => $funciones_gestion
+                            'FUNCIONES_GESTION_DPT' => $funciones_gestion,
+                            'PUESTOS_INTERACTUAN_DPT' => implode(',', $puestos_interactuan)
                         ]));
     
                         // Verifica si existen relaciones internas y las guarda

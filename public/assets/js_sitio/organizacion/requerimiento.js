@@ -175,13 +175,34 @@ $('#Tablarequerimiento tbody').on('click', 'td>button.ELIMINAR', function () {
 
 
 $('#Tablarequerimiento tbody').on('click', 'td>button.EDITAR', function () {
+
+
     var tr = $(this).closest('tr');
     var row = Tablarequerimiento.row(tr);
-    ID_FORMULARO_REQUERIMIENTO = row.data().ID_FORMULARO_REQUERIMIENTO;
+    ID_FORMULARO_REQUERIMIENTO = row.data().ID_FORMULARO_REQUERIMIENTO
+
+    //Rellenamos los datos del formulario
+    editarDatoTabla(row.data(), 'formularioRP', 'miModal_REQUERIMIENTO', 1)
+    
+  
+})
 
 
-    editarDatoTabla(row.data(), 'formularioRP', 'miModal_REQUERIMIENTO',1);
-});
+// $('#Tablarequerimiento tbody').on('click', 'td>button.EDITAR', function () {
+//     var tr = $(this).closest('tr');
+//     var row = Tablarequerimiento.row(tr);
+//     ID_FORMULARO_REQUERIMIENTO = row.data().ID_FORMULARO_REQUERIMIENTO;
+
+
+//     // Asignar los valores a los campos específicos
+//     $('#SOLICITA_RP').val(row.data().SOLICITA_RP);
+//     $('#AUTORIZA_RP').val(row.data().AUTORIZA_RP);
+
+//     // Mostrar el modal
+//     $('#miModal_REQUERIMIENTO').modal('show');
+    
+// });
+
 
 
 $('#Tablarequerimiento tbody').on('click', 'td>button.RP', function () {

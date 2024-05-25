@@ -46,6 +46,9 @@ Route::get('/TablaDPT', [dptController::class, 'TablaDPT']);
 // Route::get('/autorizarDPT/{id_formulario}', [dptController::class, 'autorizarDPT']);
 // Route::get('/revisarDPT/{id_formulario}', [dptController::class, 'revisarDPT']);
 
+Route::get('/makeExcelDPT/{id_formulario}', [makeExcelController::class, 'makeExcelDPT']);
+
+Route::get('/infoReportan/{ID}/{LIDER}', [dptController::class, 'infoReportan']);
 
 
 // REQUERIMIENTO PERSONAL 

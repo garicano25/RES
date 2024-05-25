@@ -83,132 +83,158 @@ TablaDPT = $("#TablaDPT").DataTable({
     ]
 })
 
-$("#guardarFormDPT").click(function (e) {
-    e.preventDefault();
+$(document).ready(function () {
+    // Inicializar Selectize en el select #PUESTOS_INTERACTUAN_DPT
+    $('#PUESTOS_INTERACTUAN_DPT').selectize({
+        plugins: ['remove_button'],
+        delimiter: ',',
+        persist: false,
+        placeholder: 'Seleccione una opción'
+    });
 
-    if (ID_FORMULARIO_DPT == 0) {
-        
-        alertMensajeConfirm({
-            title: "¿Desea guardar la información?",
-            text: "Al guardarla, se usara para la creación del DPT",
-            icon: "question",
-        },async function () { 
+    // Función para manejar el evento de clic en el botón guardarFormDPT
+    $("#guardarFormDPT").click(function (e) {
+        e.preventDefault();
 
-            await loaderbtn('guardarFormDPT')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_DPT: ID_FORMULARIO_DPT }, 'dptSave', 'formularioDPT', 'guardarFormDPT', { callbackAfter: true, callbackBefore: true }, () => {
-        
-                // Swal.fire({
-                //     title: "Espere un momento!",
-                //     text: "Estamos guardando la información.",
-                //     imageUrl: "/assets/images/Gif.gif",
-                //     imageWidth: 350,
-                //     imageHeight: 305,
-                //     imageAlt: "Loader Gif",
-                //     showConfirmButton: false,
-
-                // });
-
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                })
-
-                $('.swal2-popup').addClass('ld ld-breath')
-        
-                
-            }, function (data) {
-                    
-                setTimeout(() => {
-
-                    ID_FORMULARIO_DPT = data.DPT.ID_FORMULARIO_DPT
-                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para hacer uso del DPT',null,null, 1500)
-                     $('#miModal_DPT').modal('hide')
-                    document.getElementById('formularioDPT').reset();
-                    TablaDPT.ajax.reload()
-
-                }, 300);
-                
-                
-            })
-            
-            
-            
-        }, 1)
-        
-    } else {
+        if (ID_FORMULARIO_DPT == 0) {
+            // Código para guardar el formulario...
             alertMensajeConfirm({
-            title: "¿Desea editar la información de este formulario?",
-            text: "Al guardarla, se editara la información del DPT",
-            icon: "question",
-        },async function () { 
-
-            await loaderbtn('guardarFormDPT')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_DPT: ID_FORMULARIO_DPT }, 'dptSave', 'formularioDPT', 'guardarFormDPT', { callbackAfter: true, callbackBefore: true }, () => {
-        
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                })
-
-                $('.swal2-popup').addClass('ld ld-breath')
-        
-                
-            }, function (data) {
-                    
-                setTimeout(() => {
-
-                    
-                    ID_FORMULARIO_DPT = data.DPT.ID_FORMULARIO_DPT
-                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
-                     $('#miModal_DPT').modal('hide')
-                    document.getElementById('formularioDPT').reset();
-                    TablaDPT.ajax.reload()
-
-
-                }, 300);  
-            })
-        }, 1)
-    }
-    
+                title: "¿Desea guardar la información?",
+                text: "Al guardarla, se usara para la creación del DPT",
+                icon: "question",
+            }, async function () { 
+                await loaderbtn('guardarFormDPT');
+                await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_DPT: ID_FORMULARIO_DPT }, 'dptSave', 'formularioDPT', 'guardarFormDPT', { callbackAfter: true, callbackBefore: true }, () => {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+                    $('.swal2-popup').addClass('ld ld-breath');
+                }, function (data) {
+                    setTimeout(() => {
+                        ID_FORMULARIO_DPT = data.DPT.ID_FORMULARIO_DPT;
+                        alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para hacer uso del DPT',null,null, 1500);
+                        $('#miModal_DPT').modal('hide');
+                        document.getElementById('formularioDPT').reset();
+                        TablaDPT.ajax.reload();
+                        // Resetear el select #PUESTOS_INTERACTUAN_DPT después de guardar
+                        $('#PUESTOS_INTERACTUAN_DPT')[0].selectize.clear();
+                    }, 300);
+                });
+            }, 1);
+        } else {
+            // Código para editar el formulario...
+            alertMensajeConfirm({
+                title: "¿Desea editar la información de este formulario?",
+                text: "Al guardarla, se editara la información del DPT",
+                icon: "question",
+            }, async function () { 
+                await loaderbtn('guardarFormDPT');
+                await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_DPT: ID_FORMULARIO_DPT }, 'dptSave', 'formularioDPT', 'guardarFormDPT', { callbackAfter: true, callbackBefore: true }, () => {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+                    $('.swal2-popup').addClass('ld ld-breath');
+                }, function (data) {
+                    setTimeout(() => {
+                        ID_FORMULARIO_DPT = data.DPT.ID_FORMULARIO_DPT;
+                        alertMensaje('success', 'Información editada correctamente', 'Información guardada');
+                        $('#miModal_DPT').modal('hide');
+                        document.getElementById('formularioDPT').reset();
+                        TablaDPT.ajax.reload();
+                        // Resetear el select #PUESTOS_INTERACTUAN_DPT después de editar
+                        $('#PUESTOS_INTERACTUAN_DPT')[0].selectize.clear();
+                    }, 300);  
+                });
+            }, 1);
+        }
+    });
 });
 
 
 
-   
+$("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
+
+    var valorSeleccionado = $(this).find("option:selected");
+
+    //Obtenemos valores
+    var infoLugar = valorSeleccionado.data("lugar");
+    var infoProposito = valorSeleccionado.data("proposito");
+    var infoLider = valorSeleccionado.data("lider");
+    var textoSeleccionado = valorSeleccionado.text();
+
+    //Asignamos valores 
+    $('#AREA_TRABAJO_DPT').val(infoLugar).prop('readonly', true)
+    $('#PROPOSITO_FINALIDAD_DPT').val(infoProposito).prop('readonly', true)
+
+
+    //Creamos la ruta de consulta 
+    lider = textoSeleccionado.toUpperCase() == 'DIRECTOR' ? 2 : parseInt(infoLider)
+    ruta = '/infoReportan/' + parseInt($(this).val()) + '/' + lider
+
+    //Realizamos la peticion para consultar la informacion
+    ajaxAwait({}, ruta , 'GET', { callbackAfter: true, callbackBefore: true }, () => {
+
+        $('#PUESTO_REPORTA_DPT').val('Consultando información...').prop('readonly', true)
+        $('#PUESTO_LE_REPORTAN_DPT').val('Consultando información...').prop('readonly', true)
+
+    }, function (data) {
         
+        //Asignamos valores a nuestros inputs
+        if (lider == 1 || lider == 2) {
+            $('#PUESTO_REPORTA_DPT').val(data.REPORTA).prop('readonly', true)
+            $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN[0].REPORTAN).prop('readonly', true)
+
+        } else {
+
+            $('#PUESTO_REPORTA_DPT').val(data.REPORTA[0].REPORTA).prop('readonly', true)
+            $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN).prop('readonly', true)
+        } 
+    })
+});
+
 
 
 
 
 // Evento click para el botón de editar
-$('#TablaDPT tbody').on('click', 'td>button.EDITAR', function () {
-    var tr = $(this).closest('tr');
-    var row = TablaDPT.row(tr);
-    ID_FORMULARIO_DPT = row.data().ID_FORMULARIO_DPT;
+    $('#TablaDPT tbody').on('click', 'td>button.EDITAR', function () {
+        var tr = $(this).closest('tr');
+        var row = TablaDPT.row(tr);
+        ID_FORMULARIO_DPT = row.data().ID_FORMULARIO_DPT;
 
-    // Obtener datos del formulario actual
-    editarDatoTabla(row.data(), 'formularioDPT', 'miModal_DPT', 1);
+        // Obtener datos del formulario actual
+        editarDatoTabla(row.data(), 'formularioDPT', 'miModal_DPT', 1);
 
-    // Mostrar modal
-    $("#miModal_DPT").modal("show");
+        // Mostrar modal
+        $("#miModal_DPT").modal("show");
 
-    // Desbloquear opciones guardadas
-    var funcionesCargo = row.data().FUNCIONES_CARGO_DPT ? row.data().FUNCIONES_CARGO_DPT.split(',') : [];
-    var funcionesGestion = row.data().FUNCIONES_GESTION_DPT ? row.data().FUNCIONES_GESTION_DPT.split(',') : [];
+        // Desbloquear opciones guardadas
+        var funcionesCargo = row.data().FUNCIONES_CARGO_DPT ? row.data().FUNCIONES_CARGO_DPT.split(',') : [];
+        var funcionesGestion = row.data().FUNCIONES_GESTION_DPT ? row.data().FUNCIONES_GESTION_DPT.split(',') : [];
 
-    // Actualizar checkboxes y descripciones
-    $('.toggle-switch-cargo').each(function () {
-        var id = this.value;
-        var tablePrefix = this.name === 'FUNCIONES_CARGO_DPT[]' ? 'cargo' : 'gestion';
-        var isChecked = tablePrefix === 'cargo' ? funcionesCargo.includes(id) : funcionesGestion.includes(id);
-        this.checked = isChecked;
-        toggleDescription(tablePrefix, id, isChecked);
+        // Actualizar checkboxes y descripciones
+        $('.toggle-switch-cargo').each(function () {
+            var id = this.value;
+            var tablePrefix = this.name === 'FUNCIONES_CARGO_DPT[]' ? 'cargo' : 'gestion';
+            var isChecked = tablePrefix === 'cargo' ? funcionesCargo.includes(id) : funcionesGestion.includes(id);
+            this.checked = isChecked;
+            toggleDescription(tablePrefix, id, isChecked);
+        });
+
+        // Seleccionar opciones guardadas en el select #PUESTOS_INTERACTUAN_DPT
+        var opcionesSeleccionadas = row.data().PUESTOS_INTERACTUAN_DPT ? row.data().PUESTOS_INTERACTUAN_DPT.split(',') : [];
+        var selectize = $('#PUESTOS_INTERACTUAN_DPT')[0].selectize;
+        opcionesSeleccionadas.forEach(function (opcion) {
+            selectize.addItem(opcion);
+        });
     });
-});
+
 
 // Función para alternar la descripción
 function toggleDescription(tablePrefix, id, checked) {
@@ -340,57 +366,26 @@ function toggleDescription(tablePrefix, id, checked) {
 // })
 
 
-// $('#TablaDPT tbody').on('click', 'td>button.DPT', function () {
+$('#TablaDPT tbody').on('click', 'td>button.DPT', function () {
 
 
-//     var tr = $(this).closest('tr');
-//     var row = TablaDPT.row(tr);
-//     ID_FORMULARIO_DPT = row.data().ID_FORMULARIO_DPT
+    var tr = $(this).closest('tr');
+    var row = TablaDPT.row(tr);
+    ID_FORMULARIO_DPT = row.data().ID_FORMULARIO_DPT
 
    
-//        alertMensajeConfirm({
-//         title: "¿Desea visualizar el formato DPT?",
-//         text: "Confirma para continuar ",
-//         icon: "question",
-//     }, function () { 
+       alertMensajeConfirm({
+        title: "¿Desea visualizar el formato DPT?",
+        text: "Confirma para continuar ",
+        icon: "question",
+    }, function () { 
 
-// 		window.open("/makeExcelDPT/" + ID_FORMULARIO_DPT);
+		window.open("/makeExcelDPT/" + ID_FORMULARIO_DPT);
            
         
-//     }, 1)
+    }, 1)
 
-// })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+})
 
 
 
@@ -458,6 +453,10 @@ $(document).ready(function () {
             this.checked = false; // Desmarcar todos los checkboxes
             toggleDescription(this.name === 'FUNCIONES_CARGO_DPT[]' ? 'cargo' : 'gestion', this.value, false);
         });
+
+        // Vaciar el select #PUESTOS_INTERACTUAN_DPT
+        var selectize = $('#PUESTOS_INTERACTUAN_DPT')[0].selectize;
+        selectize.clear();
     });
 
     // Event listener para los checkboxes
@@ -483,3 +482,8 @@ $(document).ready(function () {
         }
     }
 });
+
+
+
+
+    

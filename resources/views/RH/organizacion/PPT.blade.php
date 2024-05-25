@@ -50,7 +50,7 @@
                                         <select class="form-control" id="DEPARTAMENTO_AREA_ID" name="DEPARTAMENTO_AREA_ID" required>
                                             <option selected disabled>Seleccione una opción...</option>
                                             @foreach ($areas as $area)
-                                      <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
+                                      <option value="{{ $area->ID }}" data-lugar="{{ $area->LUGAR}}" data-proposito="{{ $area->PROPOSITO }}" data-lider="{{ $area->LIDER }}">{{ $area->NOMBRE }}</option>
                                        @endforeach
 
                                         </select>
@@ -1664,7 +1664,12 @@
                                 </div>
                                 <div class="col-5">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="EXPERIENCIA_LABORAL_GENERAL_PPT" name="EXPERIENCIA_LABORAL_GENERAL_PPT">
+                                        <select class="form-control" id="EXPERIENCIA_LABORAL_GENERAL_PPT" name="EXPERIENCIA_LABORAL_GENERAL_PPT">
+                                            <option selected disabled>Seleccione una opción</option>
+                                            <option value="No necesaria">No necesaria</option>
+                                            <option value="Deseable">Deseable</option>
+                                            <option value="Necesaria">Necesaria</option>  
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-2">
@@ -1704,7 +1709,12 @@
                                 </div>
                                 <div class="col-5">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="EXPERIENCIA_ESPECIFICA_PPT" name="EXPERIENCIA_ESPECIFICA_PPT">
+                                        <select class="form-control" id="EXPERIENCIA_ESPECIFICA_PPT" name="EXPERIENCIA_ESPECIFICA_PPT">
+                                            <option selected disabled>Seleccione una opción</option>
+                                            <option value="No necesaria">No necesaria</option>
+                                            <option value="Deseable">Deseable</option>
+                                            <option value="Necesaria">Necesaria</option>  
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-2">

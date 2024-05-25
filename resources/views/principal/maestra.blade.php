@@ -28,6 +28,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/transition.css@v2.0.0/dist/transition.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.css">
 
+    <!-- Select opcion selectize -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" />
+
+
     <!--Archivo css -->
     <link rel="stylesheet" href="assets/css/estilos.css">
     <link rel="stylesheet" href="assets/css/organigrama.css">
@@ -195,6 +199,7 @@
     </div>
 
 
+
     <!-- Jquery 3.6.4-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!--Bootstrap -->
@@ -209,6 +214,9 @@
     <script src="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.js"></script>
     <!-- Funciones generales -->
     <script src="/assets/js_sitio/funciones.js"></script>
+    <!-- Select opcion selectize -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
+
 
 
 

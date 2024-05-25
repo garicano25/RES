@@ -13,7 +13,7 @@
 
 th.header {
     background-color: rgba(0, 124, 186, 0.850); /* Cambiar el color de fondo de las celdas de encabezado */
-    color: white; /* Cambiar el color del texto */
+    color: rgb(0, 0, 0); /* Cambiar el color del texto */
     text-align: center; /* Centrar el texto */
 }
 
@@ -31,7 +31,7 @@ th, td {
 
 th {
     background-color: rgba(0, 124, 186, 0.850); /* Cambiar el color de fondo de las celdas de encabezado */
-    color: white; /* Cambiar el color del texto */
+    color: rgb(0, 0, 0); /* Cambiar el color del texto */
 }
 
 .description {
@@ -151,12 +151,12 @@ input:checked + .slider:before {
                       <div class="col-6">
                         <div class="form-group">
                             <label>Nombre categorías</label>
-                            <select class="form-control" id="DEPARTAMENTOS_AREAS_ID" name="DEPARTAMENTOS_AREAS_ID">
-                              <option selected disabled>Seleccione una opción</option>
+                            <select class="form-control" id="DEPARTAMENTOS_AREAS_ID" name="DEPARTAMENTOS_AREAS_ID" required>
+                              <option value="" disabled selected>Seleccione una opción</option>
                               @foreach ($areas as $area)
-                                  <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
+                                  <option value="{{ $area->ID }}" data-lugar="{{ $area->LUGAR}}" data-proposito="{{ $area->PROPOSITO }}" data-lider="{{ $area->LIDER }}">{{ $area->NOMBRE }}</option>
                               @endforeach
-                          </select>                          
+                          </select>                    
                         </div>
                     </div>
                 
@@ -223,13 +223,14 @@ input:checked + .slider:before {
                         </div>
                         
                         <div class="col-10">
-                          <select class="form-control" id="PUESTOS_INTERACTUAN_DPT" name="PUESTOS_INTERACTUAN_DPT">
-                            <option selected disabled>Seleccione una opción</option>
+                          <select class="custom-select form-control" id="PUESTOS_INTERACTUAN_DPT" name="PUESTOS_INTERACTUAN_DPT[]" required multiple>
                             @foreach ($areas as $area)
                                 <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
                             @endforeach
-                        </select> 
-                        </div>
+                        </select>
+                      </div>
+                      
+
                         
                       </div>
                       <div class="row mb-3">
@@ -262,13 +263,13 @@ input:checked + .slider:before {
                           <label for="horario-entrada" class="form-label">Horario de entrada</label>
                       </div>
                       <div class="col-4 ">
-                          <input type="text" id="HORARIO_ENTRADA_DPT" name="HORARIO_ENTRADA_DPT" class="form-control text-center">
+                          <input type="time" id="HORARIO_ENTRADA_DPT" name="HORARIO_ENTRADA_DPT" class="form-control text-center">
                       </div>
                       <div class="col-2">
                           <label for="horario-salida" class="form-label">Horario de salida</label>
                       </div>
                       <div class="col-4">
-                        <input type="text" id="HORARIO_SALIDA_DPT" name="HORARIO_SALIDA_DPT" class="form-control text-center">
+                        <input type="time" id="HORARIO_SALIDA_DPT" name="HORARIO_SALIDA_DPT" class="form-control text-center">
                       </div>
                     </div>
 

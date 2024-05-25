@@ -15,14 +15,12 @@ class pptController extends Controller
     public function index()
     {
         $areas = DB::select("
-            SELECT NOMBRE, ID_DEPARTAMENTO_AREA as ID
-            FROM departamentos_areas
-            WHERE ACTIVO = 1
-
-            UNION
-
-            SELECT NOMBRE_CARGO AS NOMBRE, ID_ENCARGADO_AREA AS ID
-            FROM encargados_areas
+        SELECT NOMBRE, ID_DEPARTAMENTO_AREA as ID, LUGAR_TRABAJO_CATEGORIA AS LUGAR, PROPOSITO_FINALIDAD_CATEGORIA AS PROPOSITO, 0 AS LIDER
+        FROM departamentos_areas
+        WHERE ACTIVO = 1
+        UNION
+        SELECT NOMBRE_CARGO AS NOMBRE, ID_ENCARGADO_AREA AS ID, LUGAR_TRABAJO_LIDER AS LUGAR, PROPOSITO_FINALIDAD_LIDER AS PROPOSITO, 1 AS LIDER
+        FROM encargados_areas
         ");
 
         return view('RH.organizacion.PPT', compact('areas'));
