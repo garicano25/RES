@@ -17,48 +17,50 @@ use DB;
 
 class dptController extends Controller
 {
-    public function index()
-    {
-        $areas = DB::select("
-               SELECT NOMBRE, ID_DEPARTAMENTO_AREA as ID, LUGAR_TRABAJO_CATEGORIA AS LUGAR, PROPOSITO_FINALIDAD_CATEGORIA AS PROPOSITO, 0 AS LIDER
+            public function index()
+        {
+            $areas = DB::select("
+                SELECT NOMBRE, ID_DEPARTAMENTO_AREA as ID
                 FROM departamentos_areas
                 WHERE ACTIVO = 1
+
                 UNION
-                SELECT NOMBRE_CARGO AS NOMBRE, ID_ENCARGADO_AREA AS ID, LUGAR_TRABAJO_LIDER AS LUGAR, PROPOSITO_FINALIDAD_LIDER AS PROPOSITO, 1 AS LIDER
+
+                SELECT NOMBRE_CARGO AS NOMBRE, ID_ENCARGADO_AREA AS ID
                 FROM encargados_areas
             ");
 
 
-        $nivel = catalogojerarquiaModel::orderBy('NOMBRE_JERARQUIA', 'ASC')->get();
-        $externo = catalogorelacionesexternaModel::orderBy('NOMBRE_RELACIONEXTERNA', 'ASC')->get();
-        $cargo = catalogofuncionescargoModel::orderBy('DESCRIPCION_FUNCION_CARGO', 'ASC')->get();
-        $gestion = catalogofuncionesgestionModel::orderBy('DESCRIPCION_FUNCION_GESTION', 'ASC')->get();
-        return view('RH.organizacion.DPT', compact('areas', 'nivel', 'externo', 'cargo', 'gestion'));
-    }
+            $nivel = catalogojerarquiaModel::orderBy('NOMBRE_JERARQUIA', 'ASC')->get();
+            $externo = catalogorelacionesexternaModel::orderBy('NOMBRE_RELACIONEXTERNA', 'ASC')->get();
+            $cargo = catalogofuncionescargoModel::orderBy('DESCRIPCION_FUNCION_CARGO', 'ASC')->get();
+            $gestion = catalogofuncionesgestionModel::orderBy('DESCRIPCION_FUNCION_GESTION', 'ASC')->get();
+            return view('RH.organizacion.DPT', compact('areas','nivel','externo','cargo','gestion'));
+        }
+  
 
-
-
+    
     public function TablaDPT()
     {
         try {
             $tabla = formulariodptModel::get();
-
+    
             foreach ($tabla as $value) {
                 // Obtención de relaciones internas y externas
                 $value->INTERNAS = relacionesinternasModel::where('FORMULARIO_DPT_ID', $value->ID_FORMULARIO_DPT)->get();
                 $value->EXTERNAS = relacionesexternasModel::where('FORMULARIO_DPT_ID', $value->ID_FORMULARIO_DPT)->get();
-
+    
                 // Formato de campos de usuario
                 $value->ELABORADO_POR = $value->ELABORADO_NOMBRE_DPT . '<br>' . $value->ELABORADO_FECHA_DPT;
                 $value->REVISADO_POR = is_null($value->REVISADO_NOMBRE_DPT) ? '<span class="badge text-bg-warning">Sin revisar</span>' : $value->REVISADO_NOMBRE_DPT . '<br>' . $value->REVISADO_FECHA_DPT;
                 $value->AUTORIZADO_POR = is_null($value->AUTORIZADO_NOMBRE_DPT) ? '<span class="badge text-bg-danger">Sin autorizar</span>' : $value->AUTORIZADO_NOMBRE_DPT . '<br>' . $value->AUTORIZADO_FECHA_DPT;
-
+    
                 // Botones
                 $value->BTN_ELIMINAR = '<button type="button" class="btn btn-danger btn-circle ELIMINAR"><i class="bi bi-trash3"></i></button>';
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-circle EDITAR"><i class="bi bi-pencil-square"></i></button>';
                 $value->BTN_DPT = '<button type="button" class="btn btn-success btn-circle DPT"><i class="bi bi-file-earmark-excel"></i></button>';
             }
-
+    
             // Respuesta
             return response()->json([
                 'data' => $tabla,
@@ -71,64 +73,7 @@ class dptController extends Controller
             ]);
         }
     }
-
-
-
-    public function infoReportan($ID, $LIDER)
-    {
-        try {
-
-
-            if ($LIDER == 1) {
-
-                $info = DB::select("SELECT GROUP_CONCAT(dep.NOMBRE SEPARATOR ', ') AS REPORTAN
-                                    FROM encargados_areas encargado
-                                    LEFT JOIN departamentos_areas dep ON dep.ENCARGADO_AREA_ID = encargado.ID_ENCARGADO_AREA
-                                    WHERE encargado.ID_ENCARGADO_AREA = ?", [$ID]);
-
-
-                // Respuesta
-                $response['code'] = 1;
-                $response['REPORTAN'] = $info;
-                $response['REPORTA'] = 'Director';
-                return response()->json($response);
-            } else if  ($LIDER == 0){
-
-                $info = DB::select("SELECT IF(dep.TIENE_ENCARGADO = 1, encargado.NOMBRE_CARGO , 'Director') REPORTA
-                                    FROM departamentos_areas dep
-                                    LEFT JOIN encargados_areas  encargado ON encargado.ID_ENCARGADO_AREA = dep.ENCARGADO_AREA_ID
-                                    WHERE dep.ID_DEPARTAMENTO_AREA = ?", [$ID]);
-
-
-                // Respuesta
-                $response['code'] = 1;
-                $response['REPORTAN'] = 'Ninguno';
-                $response['REPORTA'] = $info;
-                return response()->json($response);
-
-            } else {
-
-
-                $info = DB::select("SELECT GROUP_CONCAT(NOMBRE_CARGO SEPARATOR ', ') AS REPORTAN FROM encargados_areas");
-
-                // Respuesta
-                $response['code'] = 1;
-                $response['REPORTAN'] = $info;
-                $response['REPORTA'] = 'Ninguno';
-                return response()->json($response);
-
-            }
-
-        } catch (Exception $e) {
-
-            return response()->json([
-                'msj' => 'Error ' . $e->getMessage(),
-                'data' => 0,
-                'code' => 0
-            ]);
-        }
-    }
-
+    
 
     public function store(Request $request)
     {
@@ -140,22 +85,20 @@ class dptController extends Controller
                         // Concatenar valores de los checkboxes seleccionados para cargos y gestiones
                         $funciones_cargo = $request->FUNCIONES_CARGO_DPT ? implode(',', $request->FUNCIONES_CARGO_DPT) : '';
                         $funciones_gestion = $request->FUNCIONES_GESTION_DPT ? implode(',', $request->FUNCIONES_GESTION_DPT) : '';
-
+    
                         // Guardar Formulario DPT con los campos FUNCIONES_CARGO_DPT y FUNCIONES_GESTION_DPT concatenados
                         DB::statement('ALTER TABLE formulario_dpt AUTO_INCREMENT=1;');
                         $DPT = formulariodptModel::create(array_merge($request->all(), [
                             'FUNCIONES_CARGO_DPT' => $funciones_cargo,
                             'FUNCIONES_GESTION_DPT' => $funciones_gestion
                         ]));
-
+    
                         // Verifica si existen relaciones internas y las guarda
                         if ($request->INTERNAS_CONQUIEN_DPT) {
                             foreach ($request->INTERNAS_CONQUIEN_DPT as $key => $value) {
-                                if (
-                                    isset($request->INTERNAS_PARAQUE_DPT[$key]) &&
-                                    isset($request->INTERNAS_FRECUENCIA_DPT[$key])
-                                ) {
-
+                                if (isset($request->INTERNAS_PARAQUE_DPT[$key]) &&
+                                    isset($request->INTERNAS_FRECUENCIA_DPT[$key])) {
+    
                                     relacionesinternasModel::create([
                                         'FORMULARIO_DPT_ID' => $DPT->ID_FORMULARIO_DPT,
                                         'INTERNAS_CONQUIEN_DPT' => $value,
@@ -165,15 +108,13 @@ class dptController extends Controller
                                 }
                             }
                         }
-
+    
                         // Verifica si existen relaciones externas y las guarda
                         if ($request->EXTERNAS_CONQUIEN_DPT) {
                             foreach ($request->EXTERNAS_CONQUIEN_DPT as $key => $value) {
-                                if (
-                                    isset($request->EXTERNAS_PARAQUE_DPT[$key]) &&
-                                    isset($request->EXTERNAS_FRECUENCIA_DPT[$key])
-                                ) {
-
+                                if (isset($request->EXTERNAS_PARAQUE_DPT[$key]) &&
+                                    isset($request->EXTERNAS_FRECUENCIA_DPT[$key])) {
+    
                                     relacionesexternasModel::create([
                                         'FORMULARIO_DPT_ID' => $DPT->ID_FORMULARIO_DPT,
                                         'EXTERNAS_CONQUIEN_DPT' => $value,
@@ -183,10 +124,11 @@ class dptController extends Controller
                                 }
                             }
                         }
-
+    
                         $response['code'] = 1;
                         $response['DPT'] = $DPT;
                         return response()->json($response);
+    
                     } else {
                         // Actualizar área existente
                         $DPT = formulariodptModel::find($request->ID_FORMULARIO_DPT);
@@ -198,15 +140,13 @@ class dptController extends Controller
                             'FUNCIONES_CARGO_DPT' => $funciones_cargo,
                             'FUNCIONES_GESTION_DPT' => $funciones_gestion
                         ]));
-
+    
                         // Verifica si existen relaciones internas y las guarda
                         if ($request->INTERNAS_CONQUIEN_DPT) {
                             foreach ($request->INTERNAS_CONQUIEN_DPT as $key => $value) {
-                                if (
-                                    isset($request->INTERNAS_PARAQUE_DPT[$key]) &&
-                                    isset($request->INTERNAS_FRECUENCIA_DPT[$key])
-                                ) {
-
+                                if (isset($request->INTERNAS_PARAQUE_DPT[$key]) &&
+                                    isset($request->INTERNAS_FRECUENCIA_DPT[$key])) {
+    
                                     relacionesinternasModel::create([
                                         'FORMULARIO_DPT_ID' => $DPT->ID_FORMULARIO_DPT,
                                         'INTERNAS_CONQUIEN_DPT' => $value,
@@ -216,15 +156,13 @@ class dptController extends Controller
                                 }
                             }
                         }
-
+    
                         // Verifica si existen relaciones externas y las guarda
                         if ($request->EXTERNAS_CONQUIEN_DPT) {
                             foreach ($request->EXTERNAS_CONQUIEN_DPT as $key => $value) {
-                                if (
-                                    isset($request->EXTERNAS_PARAQUE_DPT[$key]) &&
-                                    isset($request->EXTERNAS_FRECUENCIA_DPT[$key])
-                                ) {
-
+                                if (isset($request->EXTERNAS_PARAQUE_DPT[$key]) &&
+                                    isset($request->EXTERNAS_FRECUENCIA_DPT[$key])) {
+    
                                     relacionesexternasModel::create([
                                         'FORMULARIO_DPT_ID' => $DPT->ID_FORMULARIO_DPT,
                                         'EXTERNAS_CONQUIEN_DPT' => $value,
@@ -234,12 +172,12 @@ class dptController extends Controller
                                 }
                             }
                         }
-
+    
                         $response['code'] = 1;
                         $response['DPT'] = $DPT;
                         return response()->json($response);
                     }
-
+    
                 default:
                     $response['code'] = 2;
                     return response()->json($response);
@@ -248,4 +186,6 @@ class dptController extends Controller
             return response()->json(['code' => 0, 'message' => 'Error al guardar el Área', 'error' => $e->getMessage()]);
         }
     }
+    
+
 }
