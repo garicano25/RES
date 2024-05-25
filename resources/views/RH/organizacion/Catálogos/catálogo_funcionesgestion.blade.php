@@ -15,11 +15,11 @@
         </button>
     </ol>
 
-    {{-- <div class="card-body">
-        <table id="Tablaafuncionescargo" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+    <div class="card-body">
+        <table id="Tablafuncionesgestion" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
 
         </table>
-    </div> --}}
+    </div>
 </div>
 
 
@@ -48,10 +48,10 @@
                         </div>
                         <div class="mb-3">
                             <select class="form-select" id="CATEGORIAS_GESTION" name="CATEGORIAS_GESTION" required>
-                                <option selected disabled>Seleccione una opción</option>
-                                      {{-- @foreach ($areas as $area)
+                                <option value="0" selected disabled>Seleccione una opción</option>
+                                @foreach ($areas as $area)
                                       <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
-                                       @endforeach --}}
+                                       @endforeach
                             </select>
                         </div>
                         <div class="row mb-3">

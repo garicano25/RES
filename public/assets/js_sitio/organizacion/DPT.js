@@ -64,7 +64,6 @@ TablaDPT = $("#TablaDPT").DataTable({
         { data: 'ELABORADO_POR' },
         { data: 'REVISADO_POR' },
         { data: 'AUTORIZADO_POR' },
-        { data: 'BTN_ACCION' },
         { data: 'BTN_DPT' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' },
@@ -77,10 +76,9 @@ TablaDPT = $("#TablaDPT").DataTable({
         { target: 2, title: 'Elaborado por', className: 'all text-center' },
         { target: 3, title: 'Revisado por', className: 'all text-center' },
         { target: 4, title: 'Autorizado por', className: 'all text-center' },
-        { target: 5, title: 'Acción', className: 'all text-center' },
-        { target: 6, title: 'DPT', className: 'all text-center' },
-        { target: 7, title: 'Editar', className: 'all text-center' },
-        { target: 8, title: 'Eliminar', className: 'all text-center' },
+        { target: 5, title: 'DPT', className: 'all text-center' },
+        { target: 6, title: 'Editar', className: 'all text-center' },
+        { target: 7, title: 'Eliminar', className: 'all text-center' },
 
 
 

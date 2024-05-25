@@ -1,6 +1,6 @@
 //VARIABLES
 ID_CATALOGO_FUNCIONESCARGO = 0
-// Tablajerarquia = null
+Tablaafuncionescargo = null
 
 
 
@@ -9,7 +9,7 @@ const ModalArea = document.getElementById('miModal_FUNCIONESCARGO')
 ModalArea.addEventListener('hidden.bs.modal', event => {
     
     
-    ID_CATALOGO_ASESOR = 0
+    ID_CATALOGO_FUNCIONESCARGO = 0
     document.getElementById('formularioFUNCIONESCARGO').reset();
    
 
@@ -136,10 +136,11 @@ var Tablaafuncionescargo = $("#Tablaafuncionescargo").DataTable({
         },
         dataSrc: 'data'
     },
-    order: [[0, 'asc']], // Ordena por la primera columna (ID_CATALOGO_ASESOR) en orden ascendente
+    order: [[0, 'asc']], 
     columns: [
         { data: 'ID_CATALOGO_FUNCIONESCARGO' },
         { data: 'TIPO_FUNCION_CARGO' },
+        { data: 'CATEGORIAS_CARGO' },
         { data: 'DESCRIPCION_FUNCION_CARGO'},
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' }
@@ -147,9 +148,10 @@ var Tablaafuncionescargo = $("#Tablaafuncionescargo").DataTable({
     columnDefs: [
         { targets: 0, title: '#', className: 'all' },
         { targets: 1, title: 'Tipo de función', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'Descrición', className: 'all text-center descripcion-column' },
-        { targets: 3, title: 'Editar', className: 'all text-center' },
-        { targets: 4, title: 'Eliminar', className: 'all text-center' }
+        { targets: 2, title: 'Nombre de la categoría', className: 'all text-center nombre-column' },
+        { targets: 3, title: 'Descrición', className: 'all text-center descripcion-column' },
+        { targets: 4, title: 'Editar', className: 'all text-center' },
+        { targets: 5, title: 'Eliminar', className: 'all text-center' }
     ]
 });
 

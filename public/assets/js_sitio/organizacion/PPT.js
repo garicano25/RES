@@ -19,7 +19,7 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     $('#guardarFormPPT').css('display', 'block').prop('disabled', false);
     $('#revisarFormPPT').css('display', 'none').prop('disabled', true);
     $('#AutorizarFormPPT').css('display', 'none').prop('disabled', true);
-
+    $('.desabilitado').css('background','#E2EFDA').prop('disabled', true);
 
 })
 
@@ -87,7 +87,15 @@ TablaPPT = $("#TablaPPT").DataTable({
     ]
 })
 
+$("#nuevo_ppt").click(function (e) {
+e.preventDefault();
 
+$('.desabilitado').css('background','#E2EFDA');
+
+$("#miModal_PPT").modal("show");
+
+
+})
 
 
 $("#guardarFormPPT").click(function (e) {

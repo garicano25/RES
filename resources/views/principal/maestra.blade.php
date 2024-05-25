@@ -91,7 +91,7 @@
                             <hr class="dropdown-divider">                            
                             <li><a class="dropdown-item" href="{{url('/DPT')}}">DPT</a></li>
                             <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/REQUERIMIENTO')}}">Requerimiento Personal</a></li>
+                            <li><a class="dropdown-item" href="{{url('/RequisiciónDePersonal')}}">Requisición de personal </a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
@@ -147,6 +147,9 @@
                                 </li>    
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/Asesores')}}">Catálogo de Asesores</a>
+                                </li> 
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/RelacionesExternas')}}">Relaciones externas</a>
                                 </li> 
                             </ul>
                         </li>
@@ -244,6 +247,14 @@
 
     @if(request()->is('Funcionesgestión'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionesgestion.js"></script>
+    @endif
+
+    @if(request()->is('RelacionesExternas'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogosrelacionesxternas.js"></script>
+    @endif
+
+    @if(request()->is('RequisiciónDePersonal'))
+    <script src="/assets/js_sitio/organizacion/requerimiento.js"></script>
     @endif
 
 

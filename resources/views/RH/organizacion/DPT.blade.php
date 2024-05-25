@@ -53,7 +53,7 @@
                 
                       <div class="col-6">
                           <div class="form-group">
-                              <label>Área de trabajo</label>
+                              <label>Lugar de trabajo  </label>
                               <input type="text" class="form-control" id="AREA_TRABAJO_DPT" name="AREA_TRABAJO_DPT">
                           </div>
                       </div>

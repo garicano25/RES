@@ -4,39 +4,23 @@ namespace App\Http\Controllers\organizacion;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-use App\Models\organizacion\catalogofuncionesgestionModel;
+use App\Models\organizacion\catalogorelacionesexternaModel;
 
 use DB;
 
-class catalogosfuncionesgestionController extends Controller
+class catalogosrelacionesexternasController extends Controller
 {
-    public function index()
-    {
-        $areas = DB::select("
-            SELECT NOMBRE, ID_DEPARTAMENTO_AREA as ID
-            FROM departamentos_areas
-            WHERE ACTIVO = 1
-
-            UNION
-
-            SELECT NOMBRE_CARGO AS NOMBRE, ID_ENCARGADO_AREA AS ID
-            FROM encargados_areas
-        ");
-
-        return view('RH.organizacion.Catálogos.catálogo_funcionesgestion', compact('areas'));
-    }
-
-    public function Tablafuncionesgestion()
+    public function Tablarelacionesexterna()
     {
         try {
-            $tabla = catalogofuncionesgestionModel::get();
+            $tabla = catalogorelacionesexternaModel::get();
     
             foreach ($tabla as $value) {
             
                 // Botones
                 $value->BTN_ELIMINAR = '<button type="button" class="btn btn-danger btn-circle ELIMINAR"><i class="bi bi-trash3"></i></button>';
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-circle EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                
             }
     
             // Respuesta
@@ -61,29 +45,29 @@ class catalogosfuncionesgestionController extends Controller
                 case 1:
 
                     
-                    if ($request->ID_CATALOGO_FUNCIONESGESTION == 0) {
+                    if ($request->ID_CATALOGO_RELACIONESEXTERNAS == 0) {
 
-                        DB::statement('ALTER TABLE catalogo_funcionesgestiones AUTO_INCREMENT=1;');
-                        $gestiones = catalogofuncionesgestionModel::create($request->all());
+                        DB::statement('ALTER TABLE catalogo_relacionesexternas AUTO_INCREMENT=1;');
+                        $externas = catalogorelacionesexternaModel::create($request->all());
                     } else { 
 
                         if (!isset($request->ELIMINAR)) {
 
 
-                            $gestiones = catalogofuncionesgestionModel::find($request->ID_CATALOGO_FUNCIONESGESTION);
-                            $gestiones->update($request->all());
+                            $externas = catalogorelacionesexternaModel::find($request->ID_CATALOGO_RELACIONESEXTERNAS);
+                            $externas->update($request->all());
                         } else {
 
-                            $gestiones = catalogofuncionesgestionModel::where('ID_CATALOGO_FUNCIONESGESTION', $request['ID_CATALOGO_FUNCIONESGESTION'])->delete();
+                            $externas = catalogorelacionesexternaModel::where('ID_CATALOGO_RELACIONESEXTERNAS', $request['ID_CATALOGO_RELACIONESEXTERNAS'])->delete();
 
                             $response['code']  = 1;
-                            $response['gestion']  = 'Eliminada';
+                            $response['externa']  = 'Eliminada';
                             return response()->json($response);
                         }
                     }
 
                     $response['code']  = 1;
-                    $response['gestion']  = $gestiones;
+                    $response['externa']  = $externas;
                     return response()->json($response);
 
                     break;
@@ -96,7 +80,7 @@ class catalogosfuncionesgestionController extends Controller
             }
         } catch (Exception $e) {
 
-            return response()->json('Error al guardar las funciones');
+            return response()->json('Error al guardar las Relaciones');
         }
     }
 
