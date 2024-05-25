@@ -191,6 +191,20 @@ $("#guardarFormPPT").click(function (e) {
     
 });
 
+$("#DEPARTAMENTO_AREA_ID").on("change", function () {
+
+    var valorSeleccionado = $(this).find("option:selected");
+    var infoLugar = valorSeleccionado.data("lugar");
+    var infoProposito = valorSeleccionado.data("proposito");
+   
+    
+    $('#AREA_TRABAJADOR_PPT').val(infoLugar).prop('readonly', true)
+    $('#PROPOSITO_FINALIDAD_PPT').val(infoProposito).prop('readonly', true)
+
+
+});
+        
+
 
 $('#TablaPPT tbody').on('click', 'td>button.EDITAR', function () {
 

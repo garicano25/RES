@@ -178,7 +178,45 @@ $("#guardarFormDPT").click(function (e) {
 
 
 
-   
+$("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
+
+    var valorSeleccionado = $(this).find("option:selected");
+
+    //Obtenemos valores
+    var infoLugar = valorSeleccionado.data("lugar");
+    var infoProposito = valorSeleccionado.data("proposito");
+    var infoLider = valorSeleccionado.data("lider");
+    var textoSeleccionado = valorSeleccionado.text();
+
+    //Asignamos valores 
+    $('#AREA_TRABAJO_DPT').val(infoLugar).prop('readonly', true)
+    $('#PROPOSITO_FINALIDAD_DPT').val(infoProposito).prop('readonly', true)
+
+
+    //Creamos la ruta de consulta 
+    lider = textoSeleccionado.toUpperCase() == 'DIRECTOR' ? 2 : parseInt(infoLider)
+    ruta = '/infoReportan/' + parseInt($(this).val()) + '/' + lider
+
+    //Realizamos la peticion para consultar la informacion
+    ajaxAwait({}, ruta , 'GET', { callbackAfter: true, callbackBefore: true }, () => {
+
+        $('#PUESTO_REPORTA_DPT').val('Consultando información...').prop('readonly', true)
+        $('#PUESTO_LE_REPORTAN_DPT').val('Consultando información...').prop('readonly', true)
+
+    }, function (data) {
+        
+        //Asignamos valores a nuestros inputs
+        if (lider == 1 || lider == 2) {
+            $('#PUESTO_REPORTA_DPT').val(data.REPORTA).prop('readonly', true)
+            $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN[0].REPORTAN).prop('readonly', true)
+
+        } else {
+
+            $('#PUESTO_REPORTA_DPT').val(data.REPORTA[0].REPORTA).prop('readonly', true)
+            $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN).prop('readonly', true)
+        } 
+    })
+});
         
 
 

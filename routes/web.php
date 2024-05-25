@@ -45,6 +45,7 @@ Route::post('/dptSave', [dptController::class, 'store']);
 Route::get('/TablaDPT', [dptController::class, 'TablaDPT']);
 // Route::get('/autorizarDPT/{id_formulario}', [dptController::class, 'autorizarDPT']);
 // Route::get('/revisarDPT/{id_formulario}', [dptController::class, 'revisarDPT']);
+Route::get('/infoReportan/{ID}/{LIDER}', [dptController::class, 'infoReportan']);
 
 
 
