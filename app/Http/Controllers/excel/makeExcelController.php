@@ -15,12 +15,18 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Illuminate\Support\Facades\Response;
+
+
 
 //DATOS DEL PPT
 use App\Models\organizacion\documentosPPTModel;
 use App\Models\organizacion\formulariopptModel;
 use App\Models\organizacion\cursospptModel;
 use App\Models\organizacion\departamentosAreasModel;
+use App\Models\organizacion\formulariorequerimientoModel;
+use App\Models\organizacion\areasModel;
+
 
 
 
@@ -1170,7 +1176,151 @@ class makeExcelController extends Controller{
         return view('excel.makeExcelDPT');
     }
 
-    public function makeExcelRequerimientos(){
-        return view('excel.makeExcelArea');
+
+
+    public function makeExcelRP($id_formulario) {
+        // OBTENER DATOS DEL FORMULARIO EN LA BASE DE DATOS
+        $form = formulariorequerimientoModel::where('ID_FORMULARO_REQUERIMIENTO', $id_formulario)->get();
+    
+        // CARGAR EL EXCEL EN BLANCO
+        $ruta = storage_path('app/excelBlanco/Requerimiento.xlsx');
+        $spreadsheet = IOFactory::load($ruta);
+        $sheet = $spreadsheet->getActiveSheet();
+        
+        // RECORRER LOS DATOS OBTENIDOS DEL FORMULARIO
+        foreach ($form as $key => $val) {
+
+            $puesto = areasModel::where('ID_AREA', $val->AREA_RP)->pluck('NOMBRE');
+
+
+            if (!is_null($val->FECHA_RP)) {
+                $sheet->setCellValue('H5', $val->FECHA_RP);        
+            }
+
+
+            if (!is_null($val->PRIORIDAD_RP)) {
+                $sheet->setCellValue('X5', $val->PRIORIDAD_RP);        
+            }
+
+
+            if (!is_null($val->TIPO_VACANTE_RP)) {
+                $sheet->setCellValue('H6', $val->TIPO_VACANTE_RP);        
+            }
+
+
+            if (!is_null($val->MOTIVO_VACANTE_RP)) {
+                $sheet->setCellValue('X6', $val->MOTIVO_VACANTE_RP);        
+            }
+
+            if (!is_null($val->SUSTITUYE_RP)) {
+                $sheet->setCellValue('H7', $val->SUSTITUYE_RP);        
+            }
+
+            if (!is_null($val->CENTRO_COSTO_RP)) {
+                $sheet->setCellValue('H8', $val->CENTRO_COSTO_RP);        
+            }
+
+            $sheet->setCellValue('X8', str_replace(['[', ']', '"'], '', $puesto)); 
+
+
+            if (!is_null($val->NO_VACANTES_RP)) {
+                $sheet->setCellValue('F12', $val->NO_VACANTES_RP);        
+            }
+
+            if (!is_null($val->PUESTO_RP)) {
+                $sheet->setCellValue('L12', $val->PUESTO_RP);        
+            }
+
+            if (!is_null($val->FECHA_INICIO_RP)) {
+                $sheet->setCellValue('W12', $val->FECHA_INICIO_RP);        
+            }
+
+
+            if (!is_null($val->OBSERVACION1_RP)) {
+                $sheet->setCellValue('D15', $val->OBSERVACION1_RP);        
+            }
+
+            if (!is_null($val->OBSERVACION2_RP)) {
+                $sheet->setCellValue('D16', $val->OBSERVACION2_RP);        
+            }
+
+            if (!is_null($val->OBSERVACION3_RP)) {
+                $sheet->setCellValue('D17', $val->OBSERVACION3_RP);        
+            }
+
+            if (!is_null($val->OBSERVACION4_RP)) {
+                $sheet->setCellValue('D18', $val->OBSERVACION4_RP);        
+            }
+
+            if (!is_null($val->OBSERVACION5_RP)) {
+                $sheet->setCellValue('D19', $val->OBSERVACION5_RP);        
+            }
+
+
+            if (!is_null($val->CORREO_CORPORATIVO_RP)) {
+                if (strtoupper($val->CORREO_CORPORATIVO_RP) == 'SI') {
+                    $sheet->setCellValue('W21', 'X');
+                } else {
+                     $sheet->setCellValue('AA21', 'X');
+                }
+            }
+
+
+            if (!is_null($val->TELEFONO_CORPORATIVO_RP)) {
+                if (strtoupper($val->TELEFONO_CORPORATIVO_RP) == 'SI') {
+                    $sheet->setCellValue('W23', 'X');
+                } else {
+                     $sheet->setCellValue('AA23', 'X');
+                }
+            }
+
+
+            if (!is_null($val->SOFTWARE_RP)) {
+                if (strtoupper($val->SOFTWARE_RP) == 'SI') {
+                    $sheet->setCellValue('W25', 'X');
+                } else {
+                     $sheet->setCellValue('AA25', 'X');
+                }
+            }
+
+
+            if (!is_null($val->VEHICULO_EMPRESA_RP)) {
+                if (strtoupper($val->VEHICULO_EMPRESA_RP) == 'SI') {
+                    $sheet->setCellValue('W27', 'X');
+                } else {
+                     $sheet->setCellValue('AA27', 'X');
+                }
+            }
+
+
+            if (!is_null($val->SOLICITA_RP)) {
+                $sheet->setCellValue('F30', $val->SOLICITA_RP);        
+            }
+
+            if (!is_null($val->AUTORIZA_RP)) {
+                $sheet->setCellValue('R30', $val->AUTORIZA_RP);        
+            }
+
+
+
+
+
+
+        }
+    
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+    
+        // Obtener la fecha actual en el formato deseado
+        $fecha_actual = date("dmy");
+    
+        // Definir el nombre del archivo
+        $nombre_descarga = "REQUERIMIENTO PERSONAL - {$fecha_actual}.xlsx";
+    
+        // Descarga el archivo con el nombre especificado
+        return Response::streamDownload(function () use ($writer) {
+            $writer->save('php://output');
+        }, $nombre_descarga);
+    
+
     }
 }

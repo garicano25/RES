@@ -113,7 +113,7 @@
                         <div class="col-2 text-center">
                           <div class="form-group">
                               <label>No. de vacantes</label>
-                              <input type="text" class="form-control " id="NO_VACANTES_RP" name="NO_VACANTES_RP">
+                              <input type="number" class="form-control " id="NO_VACANTES_RP" name="NO_VACANTES_RP">
                           </div>
                         </div>
                         <div class="col-1">

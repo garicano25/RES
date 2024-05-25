@@ -45,7 +45,6 @@ Route::post('/dptSave', [dptController::class, 'store']);
 Route::get('/TablaDPT', [dptController::class, 'TablaDPT']);
 // Route::get('/autorizarDPT/{id_formulario}', [dptController::class, 'autorizarDPT']);
 // Route::get('/revisarDPT/{id_formulario}', [dptController::class, 'revisarDPT']);
-Route::get('/makeExcelDPT/{id_formulario}', [makeExcelController::class, 'makeExcelDPT']);
 
 
 
@@ -56,6 +55,8 @@ Route::get('/RequisiciónDePersonal', [requerimientoPersonalController::class, '
 Route::post('/RequerimientoSave', [requerimientoPersonalController::class, 'store']);
 Route::get('/RequerimientoDelete', [requerimientoPersonalController::class, 'store']);
 Route::get('/Tablarequerimiento', [requerimientoPersonalController::class, 'Tablarequerimiento']);
+Route::get('/makeExcelRP/{id_formulario}', [makeExcelController::class, 'makeExcelRP']);
+
 
 //==============================================  CATALOGOS  ============================================== 
 

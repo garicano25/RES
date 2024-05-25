@@ -23,7 +23,7 @@ class formulariorequerimientoModel extends Model
         'OBSERVACION1_RP',
         'OBSERVACION2_RP',
         'OBSERVACION3_RP',
-        'OBSERVACION4_RP',
+        'OBSERVACION4_RP', 
         'OBSERVACION5_RP',
         'CORREO_CORPORATIVO_RP',
         'TELEFONO_CORPORATIVO_RP',
