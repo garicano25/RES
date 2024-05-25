@@ -286,8 +286,8 @@ TablaAreas = $("#TablaAreas").DataTable({
     columnDefs: [
         { target: 0, title: '#', className: 'all' },
         { target: 1, title: 'Área', className: 'all' },
-        { target: 2, title: 'Encargados', className: 'all' },
-        { target: 3, title: 'Departamentos', className: 'all' },
+        { target: 2, title: 'Líderes de categorias', className: 'all' },
+        { target: 3, title: 'Categorias', className: 'all' },
         { target: 4, title: 'Organigrama', className: 'all text-center' },
         { target: 5, title: 'Editar', className: 'all text-center' },
         { target: 6, title: 'Eliminar', className: 'all text-center' },
@@ -407,7 +407,7 @@ $("#guardarEncargado").click(function (e) {
 
             
         alertMensajeConfirm({
-            title: "¿Desea agregar este encargado al área actual?",
+            title: "¿Desea agregar este Líder de categoria al área actual?",
             text: "Al guardarlo, se agregara al organigrama",
             icon: "question",
         },async function () { 
@@ -417,7 +417,7 @@ $("#guardarEncargado").click(function (e) {
                     
                 setTimeout(() => {
 
-                    alertToast('Encargado guardado exitosamente', 'success', 3000)
+                    alertToast('Líder guardado exitosamente', 'success', 3000)
                     // TablaAreas.ajax.reload()
                     TablaEncargado.ajax.reload()
                     $('#NOMBRE_CARGO').val('')
@@ -476,7 +476,7 @@ function TablaEncargados(id_area) {
         ],
         columnDefs: [
             { target: 0, title: '#', className: 'all' },
-            { target: 1, title: 'Descripción del cargo', className: 'all' },
+            { target: 1, title: 'Nombre de la categoria', className: 'all' },
             { target: 2, title: 'Eliminar', className: 'all text-center' },
         ]
     })
@@ -526,7 +526,7 @@ $("#guardarDepartamento").click(function (e) {
 
             
         alertMensajeConfirm({
-            title: "¿Desea guardar este cargo al área actual?",
+            title: "¿Desea guardar esta categoria al área actual?",
             text: "Al guardarlo, se agregara al organigrama",
             icon: "question",
         },async function () { 
@@ -536,7 +536,7 @@ $("#guardarDepartamento").click(function (e) {
                     
                 setTimeout(() => {
 
-                    alertToast('Departamento guardado exitosamente', 'success', 3000)
+                    alertToast('Categoria guardada exitosamente', 'success', 3000)
                     TablaAreas.ajax.reload()
                     TablaCargos.ajax.reload()
                     
@@ -597,7 +597,7 @@ function TablaDepartamentos(id_area) {
         ],
         columnDefs: [
             { target: 0, title: '#', className: 'all' },
-            { target: 1, title: 'Cargo', className: 'all' },
+            { target: 1, title: 'Categoria', className: 'all' },
             { target: 2, title: 'Eliminar', className: 'all text-center' },
         ]
     })
