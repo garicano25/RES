@@ -14,5 +14,7 @@ class encargadosAreasModel extends Model
         'AREA_ID',
         'TIPO_AREA_ID',
         'NOMBRE_CARGO',
+        'PROPOSITO_FINALIDAD_LIDER',
+        'LUGAR_TRABAJO_LIDER'
     ];
 }

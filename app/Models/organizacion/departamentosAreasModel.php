@@ -17,7 +17,9 @@ class departamentosAreasModel extends Model
         'AREA_ID',
         'TIENE_ENCARGADO',
         'ENCARGADO_AREA_ID',
-        'ACTIVO'
+        'ACTIVO',
+        'PROPOSITO_FINALIDAD_CATEGORIA',
+        'LUGAR_TRABAJO_CATEGORIA'
     ];
 
 }
