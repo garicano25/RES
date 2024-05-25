@@ -4,13 +4,122 @@
 
 
 
+<style>
+ /* Estilos adicionales para la tabla */
+.table-sm {
+    width: 90%; /* Ajustar el ancho de la tabla */
+    margin: 0 auto; /* Centrar la tabla */
+}
+
+th.header {
+    background-color: rgba(0, 124, 186, 0.850); /* Cambiar el color de fondo de las celdas de encabezado */
+    color: white; /* Cambiar el color del texto */
+    text-align: center; /* Centrar el texto */
+}
+
+/* Estilos de la tabla y los interruptores */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: rgba(0, 124, 186, 0.850); /* Cambiar el color de fondo de las celdas de encabezado */
+    color: white; /* Cambiar el color del texto */
+}
+
+.description {
+    max-width: 400px;
+    word-wrap: break-word;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #FF585D;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #FF585D;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+.blocked {
+    color: gray;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.active {
+    color: black;
+    pointer-events: auto;
+    opacity: 1;
+}
+
+</style>
+
 
     <div class="contenedor-contenido">
       <ol class="breadcrumb mb-5">
           <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-fill"></i>&nbsp;Descripción del puesto de trabajo(DPT)</h3>
   
   
-          <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_ppt" data-bs-toggle="modal" data-bs-target="#miModal_DPT" style="margin-left: auto;">
+          <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_ppt" id="nuevo_dpt" style="margin-left: auto;">
               Nuevo DPT &nbsp;<i class="bi bi-plus-circle"></i>
           </button>
       </ol>
@@ -80,10 +189,9 @@
                           <div class="form-group">
                               <select class="form-control" id="NIVEL_JERARQUICO_DPT" name="NIVEL_JERARQUICO_DPT">
                                 <option selected disabled>Seleccione una opción</option>
-                                <option value="Indistinto">Indistinto</option>
-                                <option value="Táctico">Táctico</option>
-                                <option value="Funcional">Funcional</option>
-                                <option value="Operativo">Operativo</option>
+                                @foreach ($nivel as $niveles)
+                                  <option value="{{ $niveles->ID_CATALOGO_JERARQUIA }}">{{ $niveles->NOMBRE_JERARQUIA }}</option>
+                              @endforeach
                               </select>
                           </div>
                       </div>
@@ -115,7 +223,12 @@
                         </div>
                         
                         <div class="col-10">
-                          <input type="text" id="PUESTOS_INTERACTUAN_DPT" name="PUESTOS_INTERACTUAN_DPT" class="form-control">
+                          <select class="form-control" id="PUESTOS_INTERACTUAN_DPT" name="PUESTOS_INTERACTUAN_DPT">
+                            <option selected disabled>Seleccione una opción</option>
+                            @foreach ($areas as $area)
+                                <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
+                            @endforeach
+                        </select> 
                         </div>
                         
                       </div>
@@ -141,25 +254,7 @@
                       </div>
                     </div>
 
-                    <div class="row mb-3">
-                      {{-- <div class="col-2">
-                          <label for="lugar-trabajo" class="form-label">Lugar de trabajo</label>
-                      </div>
-                      <div class="col-3">
-                          <input type="text" id="LUGAR_TRABAJO_DPT" name="LUGAR_TRABAJO_DPT" class="form-control">
-                      </div> --}}
-                      {{-- <div class="col-4">
-                          <label for="disponibilidad-viajar" class="form-label ml-5">Disponibilidad para viajar</label>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="DISPONIBILIDAD_VIAJAR" id="DISPONIBILIDAD_CUMPLE_SI" value="si">
-                            <label class="form-check-label" for="DISPONIBILIDAD_CUMPLE_SI">Si</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="DISPONIBILIDAD_VIAJAR" id="DISPONIBILIDAD_CUMPLE_NO" value="no">
-                            <label class="form-check-label" for="DISPONIBILIDAD_CUMPLE_NO">No</label>
-                        </div>
-                      </div> --}}
-                      </div>
+                   
                     
 
                     <div class="row mb-3">
@@ -184,46 +279,72 @@
                         </div>
                       </div>
                       <div class="row mb-3">
-                        <div class="col-12 ">
-                            <h6>Nota: brevemente describa las responsabilidades del puesto, listando las actividades en orden de importancia. Utilizar verbos en infinitivo como: elaborar, validar, actualizar, enviar, atender, mantener, administrar, entre otros.</h6>
-                        </div>
+                        <table class="table-sm">
+                          <thead>
+                              <tr>
+                                  <th class="header">Descripción</th>
+                                  <th class="header">Activar/Desactivar</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              @foreach ($cargo as $cargos)
+                              <tr>
+                                  <td id="desc-cargo-{{ $cargos->ID_CATALOGO_FUNCIONESCARGO }}" class="description blocked">
+                                      {{ $cargos->DESCRIPCION_FUNCION_CARGO }}
+                                  </td>
+                                  <td>
+                                      <div class="switch-container">
+                                          <label class="switch">
+                                              <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_CARGO_DPT[]" value="{{ $cargos->ID_CATALOGO_FUNCIONESCARGO }}">
+                                              <span class="slider"></span>
+                                          </label>
+                                      </div>
+                                  </td>
+                              </tr>
+                              @endforeach
+                          </tbody>
+                      </table>
                       </div>
-
-                      <div class="row mb-3">
-                        <div class="col-2">
-                            <h5>Funciones del cargo</h5>
-                          </div>
-                          <div class="col-4">
-                            <button type="button" class="btn btn-danger"  id="botonagregarcargo">AGREGAR <i class="bi bi-plus-circle"></i> </button>                          </div>
-                      </div>
-                      
-                      <div id="funciones-responsabilidades-cargo"></div>
-
+                
+        
                         <!-- III. Funciones y responsabilidades del sistema integrado de gestión (SIG) -->
-                      <br><br><br>
+                      <br><br><br><br><br><br><br><br><br>
                       <div class="row mb-3">
                         <div class="col-12 text-center">
                             <h4>III. Funciones y responsabilidades del sistema integrado de gestión (SIG)</h4>
                         </div>
                       </div>
-                        <div class="row mb-3">
-                            <div class="col-12 ">
-                                <h6>Nota: brevemente describa las responsabilidades del puesto, enlistando las actividades en orden de importancia. Utilizar verbos en infinitivo como: elaborar, validar, actualizar, enviar, atender, mantener, administrar, entre otros.</h6>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                          <div class="col-2">
-                            <h5>Funciones  del sistema integrado</h5>
-                          </div>
-                          <div class="col-4 ">
-                              <button type="button" class="btn btn-danger"  id="botonagregargestion">AGREGAR <i class="bi bi-plus-circle"></i> </button>
-                          </div>
+                     
+                      <div class="row mb-3">
+                        <table class="table-sm">
+                          <thead>
+                              <tr>
+                                  <th class="header">Descripción</th>
+                                  <th class="header">Activar/Desactivar</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              @foreach ($gestion as $gestiones)
+                              <tr>
+                                <td id="desc-gestion-{{ $gestiones->ID_CATALOGO_FUNCIONESGESTION }}" class="description blocked">
+                                    {{ $gestiones->DESCRIPCION_FUNCION_GESTION }}
+                                </td>
+                                <td>
+                                    <div class="switch-container">
+                                        <label class="switch">
+                                            <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_GESTION_DPT[]" value="{{ $gestiones->ID_CATALOGO_FUNCIONESGESTION }}">
+                                            <span class="slider"></span>
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                              @endforeach
+                          </tbody>
+                      </table>
                       </div>
+                
 
-
-                      <div id="funciones-responsabilidades-gestion"></div>
-
+                        
                          <!-- IV. Relaciones internas estratégicas -->
                       <div class="row mb-3">
                         <div class="col-12 text-center">
@@ -249,8 +370,7 @@
                               <tbody>
                                 <tr>
                                   <td>
-                                    {{-- <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_CONQUIEN1_DPT" name="INTERNAS_CONQUIEN_DPT[]" rows="2"></textarea> --}}
-                                    <select class="form-control" id="INTERNAS_CONQUIEN1_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                    <select class="form-control area-select" id="INTERNAS_CONQUIEN1_DPT" name="INTERNAS_CONQUIEN_DPT[]">
                                       <option selected disabled>Seleccione una opción</option>
                                       @foreach ($areas as $area)
                                       <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
@@ -273,12 +393,13 @@
                                  </tr>
                                 <tr>
                                   <td>
-                                    <select class="form-control" id="INTERNAS_CONQUIEN2_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                    <select class="form-control area-select" id="INTERNAS_CONQUIEN2_DPT" name="INTERNAS_CONQUIEN_DPT[]">
                                       <option selected disabled>Seleccione una opción</option>
                                       @foreach ($areas as $area)
                                       <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
                                        @endforeach
-                                  </select>                                  </td>
+                                  </select>                               
+                                   </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE2_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                   </td>
@@ -295,12 +416,13 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                    <select class="form-control" id="INTERNAS_CONQUIEN3_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                    <select class="form-control area-select" id="INTERNAS_CONQUIEN3_DPT" name="INTERNAS_CONQUIEN_DPT[]">
                                       <option selected disabled>Seleccione una opción</option>
                                       @foreach ($areas as $area)
                                       <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
                                        @endforeach
-                                  </select>                                  </td>
+                                  </select>                                 
+                                 </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"  id="INTERNAS_PARAQUE3_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
@@ -317,12 +439,13 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                    <select class="form-control" id="INTERNAS_CONQUIEN4_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                    <select class="form-control area-select" id="INTERNAS_CONQUIEN4_DPT" name="INTERNAS_CONQUIEN_DPT[]">
                                       <option selected disabled>Seleccione una opción</option>
                                       @foreach ($areas as $area)
                                       <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
                                        @endforeach
-                                  </select>                                  </td>
+                                    </select>                                 
+                                 </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE4_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
@@ -339,12 +462,13 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                    <select class="form-control" id="INTERNAS_CONQUIEN5_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                    <select class="form-control area-select" id="INTERNAS_CONQUIEN5_DPT" name="INTERNAS_CONQUIEN_DPT[]">
                                       <option selected disabled>Seleccione una opción</option>
                                       @foreach ($areas as $area)
                                       <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
                                        @endforeach
-                                  </select>                                  </td>
+                                  </select>                                
+                                  </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE5_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
@@ -361,12 +485,13 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                    <select class="form-control" id="INTERNAS_CONQUIEN6_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                    <select class="form-control area-select" id="INTERNAS_CONQUIEN6_DPT" name="INTERNAS_CONQUIEN_DPT[]">
                                       <option selected disabled>Seleccione una opción</option>
                                       @foreach ($areas as $area)
                                       <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
                                        @endforeach
-                                  </select>                                  </td>
+                                  </select>                                
+                                  </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE6_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
@@ -384,12 +509,13 @@
 
                                 <tr>
                                   <td>
-                                    <select class="form-control" id="INTERNAS_CONQUIEN7_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                    <select class="form-control area-select" id="INTERNAS_CONQUIEN7_DPT" name="INTERNAS_CONQUIEN_DPT[]">
                                       <option selected disabled>Seleccione una opción</option>
                                       @foreach ($areas as $area)
                                       <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
                                        @endforeach
-                                  </select>                                  </td>
+                                  </select>                                
+                                  </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE7_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
@@ -406,12 +532,13 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                    <select class="form-control" id="INTERNAS_CONQUIEN8_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                    <select class="form-control area-select" id="INTERNAS_CONQUIEN8_DPT" name="INTERNAS_CONQUIEN_DPT[]">
                                       <option selected disabled>Seleccione una opción</option>
                                       @foreach ($areas as $area)
                                       <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
                                        @endforeach
-                                  </select>                                  </td>
+                                  </select>                                
+                                  </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE8_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
@@ -428,12 +555,13 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                    <select class="form-control" id="INTERNAS_CONQUIEN9_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                    <select class="form-control area-select" id="INTERNAS_CONQUIEN9_DPT" name="INTERNAS_CONQUIEN_DPT[]">
                                       <option selected disabled>Seleccione una opción</option>
                                       @foreach ($areas as $area)
                                       <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
                                        @endforeach
-                                  </select>                                  </td>
+                                  </select>                                
+                                  </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE9_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
@@ -451,12 +579,13 @@
                                 </tr>
                                 <tr>
                                   <td>
-                                    <select class="form-control" id="INTERNAS_CONQUIEN10_DPT" name="INTERNAS_CONQUIEN_DPT[]">
+                                    <select class="form-control area-select" id="INTERNAS_CONQUIEN10_DPT" name="INTERNAS_CONQUIEN_DPT[]">
                                       <option selected disabled>Seleccione una opción</option>
                                       @foreach ($areas as $area)
                                       <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
                                        @endforeach
-                                  </select>                                  </td>
+                                  </select>                                  
+                                </td>
                                   <td>
                                       <textarea class="form-control"  style="width: 100%;"   id="INTERNAS_PARAQUE10_DPT" name="INTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                     </td>
@@ -502,13 +631,18 @@
                                           <tbody>
                                             <tr>
                                               <td>
-                                                <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_CONQUIEN1_DPT" name="EXTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
-                                              </td>
+                                                <select class="form-control externa-select" id="EXTERNAS_CONQUIEN1_DPT" name="EXTERNAS_CONQUIEN_DPT[]">
+                                                  <option selected disabled>Seleccione una opción</option>
+                                                  @foreach ($externo as $externos)
+                                                  <option value="{{ $externos->ID_CATALOGO_RELACIONESEXTERNAS }}">{{ $externos->NOMBRE_RELACIONEXTERNA }}</option>
+                                                   @endforeach
+                                                </select>                                                
+                                               </td>
                                               <td>
                                                   <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_PARAQUE1_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                               </td>
                                               <td>
-                                                <select class="form-control" id="EXTERNAS_FRECUENCIA1_DPT" name="EXTERNAS_FRECUENCIA_DPT[]">
+                                                <select class="form-control" id="EXTERNAS_FRECUENCIA2_DPT" name="EXTERNAS_FRECUENCIA_DPT[]">
                                                   <option selected disabled>Seleccione una opción</option>
                                                   <option value="Diaria">Diaria</option>
                                                   <option value="Semanal">Semanal</option>
@@ -520,7 +654,12 @@
                                             </tr>
                                             <tr>
                                               <td>
-                                                <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_CONQUIEN2_DPT" name="EXTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                                <select class="form-control externa-select" id="EXTERNAS_CONQUIEN2_DPT" name="EXTERNAS_CONQUIEN_DPT[]">
+                                                  <option selected disabled>Seleccione una opción</option>
+                                                  @foreach ($externo as $externos)
+                                                  <option value="{{ $externos->ID_CATALOGO_RELACIONESEXTERNAS }}">{{ $externos->NOMBRE_RELACIONEXTERNA }}</option>
+                                                   @endforeach
+                                                </select>                                                
                                               </td>
                                               <td>
                                                   <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_PARAQUE2_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
@@ -538,7 +677,12 @@
                                             </tr>
                                             <tr>
                                               <td>
-                                                <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_CONQUIEN3_DPT" name="EXTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                                <select class="form-control externa-select" id="EXTERNAS_CONQUIEN3_DPT" name="EXTERNAS_CONQUIEN_DPT[]">
+                                                  <option selected disabled>Seleccione una opción</option>
+                                                  @foreach ($externo as $externos)
+                                                  <option value="{{ $externos->ID_CATALOGO_RELACIONESEXTERNAS }}">{{ $externos->NOMBRE_RELACIONEXTERNA }}</option>
+                                                   @endforeach
+                                                </select>                                                
                                               </td>
                                               <td>
                                                   <textarea class="form-control"  style="width: 100%;"  id="EXTERNAS_PARAQUE3_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
@@ -556,7 +700,12 @@
                                             </tr>
                                             <tr>
                                               <td>
-                                                <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_CONQUIEN4_DPT" name="EXTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
+                                                <select class="form-control externa-select" id="EXTERNAS_CONQUIEN4_DPT" name="EXTERNAS_CONQUIEN_DPT[]">
+                                                  <option selected disabled>Seleccione una opción</option>
+                                                  @foreach ($externo as $externos)
+                                                  <option value="{{ $externos->ID_CATALOGO_RELACIONESEXTERNAS }}">{{ $externos->NOMBRE_RELACIONEXTERNA }}</option>
+                                                   @endforeach
+                                                </select>                                                
                                               </td>
                                               <td>
                                                   <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_PARAQUE4_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
@@ -574,8 +723,13 @@
                                             </tr>
                                             <tr>
                                               <td>
-                                                <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_CONQUIEN5_DPT" name="EXTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
-                                              </td>
+                                                <select class="form-control externa-select" id="EXTERNAS_CONQUIEN5_DPT" name="EXTERNAS_CONQUIEN_DPT[]">
+                                                  <option selected disabled>Seleccione una opción</option>
+                                                  @foreach ($externo as $externos)
+                                                  <option value="{{ $externos->ID_CATALOGO_RELACIONESEXTERNAS }}">{{ $externos->NOMBRE_RELACIONEXTERNA }}</option>
+                                                   @endforeach
+                                                </select>                                               
+                                               </td>
                                               <td>
                                                   <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_PARAQUE5_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                                 </td>
@@ -592,8 +746,13 @@
                                             </tr>
                                             <tr>
                                               <td>
-                                                <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_CONQUIEN6_DPT" name="EXTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
-                                              </td>
+                                                <select class="form-control externa-select" id="EXTERNAS_CONQUIEN6_DPT" name="EXTERNAS_CONQUIEN_DPT[]">
+                                                  <option selected disabled>Seleccione una opción</option>
+                                                  @foreach ($externo as $externos)
+                                                  <option value="{{ $externos->ID_CATALOGO_RELACIONESEXTERNAS }}">{{ $externos->NOMBRE_RELACIONEXTERNA }}</option>
+                                                   @endforeach
+                                                </select>                                              
+                                                </td>
                                               <td>
                                                   <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_PARAQUE6_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                                 </td>
@@ -611,8 +770,13 @@
 
                                             <tr>
                                               <td>
-                                                <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_CONQUIEN7_DPT" name="EXTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
-                                              </td>
+                                                <select class="form-control externa-select" id="EXTERNAS_CONQUIEN7_DPT" name="EXTERNAS_CONQUIEN_DPT[]">
+                                                  <option selected disabled>Seleccione una opción</option>
+                                                  @foreach ($externo as $externos)
+                                                  <option value="{{ $externos->ID_CATALOGO_RELACIONESEXTERNAS }}">{{ $externos->NOMBRE_RELACIONEXTERNA }}</option>
+                                                   @endforeach
+                                                </select>                                              
+                                                </td>
                                               <td>
                                                   <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_PARAQUE7_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                                 </td>
@@ -629,8 +793,13 @@
                                             </tr>
                                             <tr>
                                               <td>
-                                                <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_CONQUIEN8_DPT" name="EXTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
-                                              </td>
+                                                <select class="form-control externa-select" id="EXTERNAS_CONQUIEN8_DPT" name="EXTERNAS_CONQUIEN_DPT[]">
+                                                  <option selected disabled>Seleccione una opción</option>
+                                                  @foreach ($externo as $externos)
+                                                  <option value="{{ $externos->ID_CATALOGO_RELACIONESEXTERNAS }}">{{ $externos->NOMBRE_RELACIONEXTERNA }}</option>
+                                                   @endforeach
+                                                </select>                                               
+                                               </td>
                                               <td>
                                                   <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_PARAQUE8_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                                 </td>
@@ -647,8 +816,13 @@
                                             </tr>
                                             <tr>
                                               <td>
-                                                <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_CONQUIEN9_DPT" name="EXTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
-                                              </td>
+                                                <select class="form-control externa-select" id="EXTERNAS_CONQUIEN9_DPT" name="EXTERNAS_CONQUIEN_DPT[]">
+                                                  <option selected disabled>Seleccione una opción</option>
+                                                  @foreach ($externo as $externos)
+                                                  <option value="{{ $externos->ID_CATALOGO_RELACIONESEXTERNAS }}">{{ $externos->NOMBRE_RELACIONEXTERNA }}</option>
+                                                   @endforeach
+                                                </select>                                               
+                                               </td>
                                               <td>
                                                   <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_PARAQUE9_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                                 </td>
@@ -665,8 +839,13 @@
                                               </tr>
                                             <tr>
                                               <td>
-                                                <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_CONQUIEN10_DPT" name="EXTERNAS_CONQUIEN_DPT[]" rows="2"></textarea>
-                                              </td>
+                                                <select class="form-control externa-select" id="EXTERNAS_CONQUIEN10_DPT" name="EXTERNAS_CONQUIEN_DPT[]">
+                                                  <option selected disabled>Seleccione una opción</option>
+                                                  @foreach ($externo as $externos)
+                                                  <option value="{{ $externos->ID_CATALOGO_RELACIONESEXTERNAS }}">{{ $externos->NOMBRE_RELACIONEXTERNA }}</option>
+                                                   @endforeach
+                                                </select>                                              
+                                                </td>
                                               <td>
                                                   <textarea class="form-control"  style="width: 100%;"   id="EXTERNAS_PARAQUE10_DPT" name="EXTERNAS_PARAQUE_DPT[]"rows="2"></textarea>
                                                 </td>

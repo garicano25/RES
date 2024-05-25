@@ -2355,7 +2355,6 @@ function editarDatoTabla( data, form = 'OnlyForm', modalID = 'ModalID', formComp
 
     if ('INTERNAS' in data) {
 
-      console.log('tiene internas')
       if (data.INTERNAS.length > 0) { 
         var cursos = data.INTERNAS
         var count = 1    

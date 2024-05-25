@@ -1,6 +1,6 @@
 //VARIABLES
 ID_FORMULARO_REQUERIMIENTO = 0
-// Tablarelacionesexterna = null
+Tablarequerimiento = null
 
 
 
@@ -182,6 +182,29 @@ $('#Tablarequerimiento tbody').on('click', 'td>button.EDITAR', function () {
 
     editarDatoTabla(row.data(), 'formularioRP', 'miModal_REQUERIMIENTO',1);
 });
+
+
+$('#Tablarequerimiento tbody').on('click', 'td>button.RP', function () {
+
+
+    var tr = $(this).closest('tr');
+    var row = Tablarequerimiento.row(tr);
+    ID_FORMULARO_REQUERIMIENTO = row.data().ID_FORMULARO_REQUERIMIENTO
+
+   
+       alertMensajeConfirm({
+        title: "¿Desea visualizar el formato Requisición de personal ?",
+        text: "Confirma para continuar ",
+        icon: "question",
+    }, function () { 
+
+		window.open("/makeExcelRP/" + ID_FORMULARO_REQUERIMIENTO);
+           
+        
+    }, 1)
+
+})
+
 
 
 
