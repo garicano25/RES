@@ -60,7 +60,7 @@ class dptController extends Controller
             }
     
             // Respuesta
-            return response()->json([
+            return response()->json([ 
                 'data' => $tabla,
                 'msj' => 'Información consultada correctamente'
             ]);
@@ -78,6 +78,10 @@ class dptController extends Controller
     {
         try {
 
+            $funciones = DB::select("SELECT ID_CATALOGO_FUNCIONESCARGO ID, DESCRIPCION_FUNCION_CARGO DESCRIPCION, TIPO_FUNCION_CARGO TIPO
+            FROM catalogo_funcionescargos
+            WHERE CATEGORIAS_CARGO = ? OR TIPO_FUNCION_CARGO = 'generica'
+            ORDER BY TIPO_FUNCION_CARGO", [$ID]);
 
             if ($LIDER == 1) {
 
@@ -86,11 +90,12 @@ class dptController extends Controller
                                     LEFT JOIN departamentos_areas dep ON dep.ENCARGADO_AREA_ID = encargado.ID_ENCARGADO_AREA
                                     WHERE encargado.ID_ENCARGADO_AREA = ?", [$ID]);
 
-
+            
                 // Respuesta
                 $response['code'] = 1;
                 $response['REPORTAN'] = $info;
                 $response['REPORTA'] = 'Director';
+                $response['FUNCIONES'] = $funciones;
                 return response()->json($response);
             } else if  ($LIDER == 0){
 
@@ -100,10 +105,12 @@ class dptController extends Controller
                                     WHERE dep.ID_DEPARTAMENTO_AREA = ?", [$ID]);
 
 
+              
                 // Respuesta
                 $response['code'] = 1;
                 $response['REPORTAN'] = 'Ninguno';
                 $response['REPORTA'] = $info;
+                $response['FUNCIONES'] = $funciones;
                 return response()->json($response);
 
             } else {
@@ -115,6 +122,7 @@ class dptController extends Controller
                 $response['code'] = 1;
                 $response['REPORTAN'] = $info;
                 $response['REPORTA'] = 'Ninguno';
+                $response['FUNCIONES'] = $funciones;
                 return response()->json($response);
 
             }

@@ -185,6 +185,8 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
 
     }, function (data) {
         
+        console.log(data.FUNCIONES[0].FUNCIONES)
+
         //Asignamos valores a nuestros inputs
         if (lider == 1 || lider == 2) {
             $('#PUESTO_REPORTA_DPT').val(data.REPORTA).prop('readonly', true)
@@ -194,7 +196,7 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
 
             $('#PUESTO_REPORTA_DPT').val(data.REPORTA[0].REPORTA).prop('readonly', true)
             $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN).prop('readonly', true)
-        } 
+        }  
     })
 });
 

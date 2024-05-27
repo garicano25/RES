@@ -161,7 +161,7 @@ class pptController extends Controller
                                         'CURSO_PPT' => $value,
                                         'CURSO_REQUERIDO' => $request->CURSO_REQUERIDO_PPT[$key],
                                         'CURSO_DESEABLE' => $request->CURSO_DESEABLE_PPT[$key],
-                                        'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num]
+                                        // 'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num]
                                     ]);
                                 }
                             }
@@ -195,7 +195,8 @@ class pptController extends Controller
                                         'CURSO_PPT' => $value,
                                         'CURSO_REQUERIDO' => $request->CURSO_REQUERIDO_PPT[$key],
                                         'CURSO_DESEABLE' => $request->CURSO_DESEABLE_PPT[$key],
-                                        'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num]
+                                        // 'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num] SE VA ACTIVAR HASTA QUE SE MANDE A LLAMAR EN LA
+                                        // CONTRATACION
                                     ]);
                                 }
                             }
