@@ -247,16 +247,48 @@
                             <label></label>
                           </div>
                           <div class="col-4">
-                            <input type="text" class="form-control " id="SOLICITA_RP" name="SOLICITA_RP">
+                            <input type="text"  class="form-control text-center" id="SOLICITA_RP" name="SOLICITA_RP" placeholder="Firma">
                           </div>
                           <div class="col-2">
                             <label></label>
 
                           </div>
                           <div class="col-4">
-                            <input type="text" class="form-control " id="AUTORIZA_RP" name="AUTORIZA_RP">
+                            <input type="text"  class="form-control text-center" id="AUTORIZA_RP" name="AUTORIZA_RP" placeholder="Firma">
                           </div>
                       </div>
+
+                      <div class="row mb-3">
+                        <div class="col-1">
+                          <label></label>
+                        </div>
+                        <div class="col-4">
+                          <input type="text"  class="form-control text-center" id="NOMBRE_SOLICITA_RP" name="NOMBRE_SOLICITA_RP" placeholder="Nombre del solicitante">
+                        </div>
+                        <div class="col-2">
+                          <label></label>
+
+                        </div>
+                        <div class="col-4 ">
+                          <input type="text" class="form-control text-center" id="NOMBRE_AUTORIZA_RP" name="NOMBRE_AUTORIZA_RP" placeholder="Nombre del que Autoriza">
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <div class="col-1">
+                        <label></label>
+                      </div>
+                      <div class="col-4">
+                        <input type="text"  class="form-control text-center" id="CARGO_SOLICITA_RP" name="CARGO_SOLICITA_RP" placeholder="Cargo del Solicitante">
+                      </div>
+                      <div class="col-2">
+                        <label></label>
+
+                      </div>
+                      <div class="col-4">
+                        <input type="text"  class="form-control text-center" id="CARGO_AUTORIZA_RP" name="CARGO_AUTORIZA_RP" placeholder="Cargo del que Autoriza">
+                      </div>
+                  </div>
                 </div>
            </div>
            <div class="modal-footer mx-5">

@@ -19,6 +19,7 @@ class formulariodptModel extends Model
         'PUESTO_LE_REPORTAN_DPT',
         'PUESTOS_INTERACTUAN_DPT',
         'PUESTOS_DIRECTOS_DPT',
+        'PUESTOS_INDIRECTOS_DPT',      
         'LUGAR_TRABAJO_DPT',
         'DISPONIBILIDAD_VIAJAR',
         'HORARIO_ENTRADA_DPT',
