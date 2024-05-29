@@ -121,7 +121,7 @@
                         </div>
                         <div class="col-4 text-center">
                           <div class="form-group">
-                              <label>Puesto</label>
+                              <label>Categoría</label>
                               <input type="text" class="form-control " id="PUESTO_RP" name="PUESTO_RP">
                           </div>
                         </div>

@@ -17,6 +17,9 @@ class requerimientoPersonalController extends Controller
     {
         $areas = areasModel::orderBy('NOMBRE', 'ASC')->get();
         return view('RH.organizacion.requerimiento_personal', compact('areas'));
+
+
+        
     }
 
 

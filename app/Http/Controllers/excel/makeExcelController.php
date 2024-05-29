@@ -1084,11 +1084,11 @@ class makeExcelController extends Controller{
                 if (!is_null($val->CURSO_DESEABLE)) {
                     $sheet->setCellValue('J' . $fila1, $val->CURSO_DESEABLE);
                 }
-                if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('L' . $fila1, 'Si');
-                } else {
-                    $sheet->setCellValue('L' . $fila1, 'No');
-                }
+                // if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
+                //     $sheet->setCellValue('L' . $fila1, 'Si');
+                // } else {
+                //     $sheet->setCellValue('L' . $fila1, 'No');
+                // }
 
                 $fila1++;
 
@@ -1102,11 +1102,11 @@ class makeExcelController extends Controller{
                 if (!is_null($val->CURSO_DESEABLE)) {
                     $sheet->setCellValue('V' . $fila2, $val->CURSO_DESEABLE);
                 }
-                if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('X' . $fila2, 'Si');
-                } else {
-                    $sheet->setCellValue('X' . $fila2, 'No');
-                }
+                // if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
+                //     $sheet->setCellValue('X' . $fila2, 'Si');
+                // } else {
+                //     $sheet->setCellValue('X' . $fila2, 'No');
+                // }
 
                 $fila2++;
 
@@ -1120,11 +1120,11 @@ class makeExcelController extends Controller{
                 if (!is_null($val->CURSO_DESEABLE)) {
                     $sheet->setCellValue('J' . $fila3, $val->CURSO_DESEABLE);
                 }
-                if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('X' . $fila3, 'Si');
-                } else {
-                    $sheet->setCellValue('X' . $fila3, 'No');
-                }
+                // if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
+                //     $sheet->setCellValue('X' . $fila3, 'Si');
+                // } else {
+                //     $sheet->setCellValue('X' . $fila3, 'No');
+                // }
 
                 $fila3++;
 
@@ -1138,11 +1138,11 @@ class makeExcelController extends Controller{
                 if (!is_null($val->CURSO_DESEABLE)) {
                     $sheet->setCellValue('V' . $fila4, $val->CURSO_DESEABLE);
                 }
-                if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('X' . $fila4, 'Si');
-                } else {
-                    $sheet->setCellValue('X' . $fila4, 'No');
-                }
+                // if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
+                //     $sheet->setCellValue('X' . $fila4, 'Si');
+                // } else {
+                //     $sheet->setCellValue('X' . $fila4, 'No');
+                // }
 
                 $fila4++;
 
@@ -1156,11 +1156,11 @@ class makeExcelController extends Controller{
                 if (!is_null($val->CURSO_DESEABLE)) {
                     $sheet->setCellValue('J' . $fila5, $val->CURSO_DESEABLE);
                 }
-                if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('X' . $fila5, 'Si');
-                } else {
-                    $sheet->setCellValue('X' . $fila5, 'No');
-                }
+                // if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
+                //     $sheet->setCellValue('X' . $fila5, 'Si');
+                // } else {
+                //     $sheet->setCellValue('X' . $fila5, 'No');
+                // }
 
                 $fila5++;
 
@@ -1175,11 +1175,11 @@ class makeExcelController extends Controller{
                 if (!is_null($val->CURSO_DESEABLE)) {
                     $sheet->setCellValue('V' . $fila6, $val->CURSO_DESEABLE);
                 }
-                if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('X' . $fila6, 'Si');
-                } else {
-                    $sheet->setCellValue('X' . $fila6, 'No');
-                }
+                // if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
+                //     $sheet->setCellValue('X' . $fila6, 'Si');
+                // } else {
+                //     $sheet->setCellValue('X' . $fila6, 'No');
+                // }
 
                 $fila6++;
 
