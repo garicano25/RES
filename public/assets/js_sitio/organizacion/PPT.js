@@ -210,10 +210,14 @@ $('#TablaPPT tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = TablaPPT.row(tr);
     ID_FORMULARIO_PPT = row.data().ID_FORMULARIO_PPT
+    data = row.data();
+    form = "formularioPPT"
 
-    //Rellenamos los datos del formulario
-    editarDatoTabla(row.data(), 'formularioPPT', 'miModal_PPT', 1)
+   
     
+    //Rellenamos los datos del formulario
+    editarDatoTabla(data,form,'miModal_PPT', 1)
+    mostrarCursos(data,form)
   
 })
 
@@ -224,9 +228,13 @@ $('#TablaPPT tbody').on('click', 'td>button.REVISAR', function () {
     var tr = $(this).closest('tr');
     var row = TablaPPT.row(tr);
     ID_FORMULARIO_PPT = row.data().ID_FORMULARIO_PPT
+    data = row.data();
+    form = "formularioPPT"
 
+   
     //Rellenamos los datos del formulario
     editarDatoTabla(row.data(), 'formularioPPT', 'miModal_PPT', 1)
+    mostrarCursos(data,form)
 
 
     $('#formularioPPT input').prop('disabled', true);
@@ -245,9 +253,13 @@ $('#TablaPPT tbody').on('click', 'td>button.AUTORIZAR', function () {
     var tr = $(this).closest('tr');
     var row = TablaPPT.row(tr);
     ID_FORMULARIO_PPT = row.data().ID_FORMULARIO_PPT
+    data = row.data();
+    form = "formularioPPT"
 
+   
     //Rellenamos los datos del formulario
     editarDatoTabla(row.data(), 'formularioPPT', 'miModal_PPT', 1)
+    mostrarCursos(data,form)
 
 
     $('#formularioPPT input').prop('disabled', true);
@@ -348,3 +360,65 @@ $('#TablaPPT tbody').on('click', 'td>button.PPT', function () {
 
 })
 
+function mostrarCursos(data,form){
+
+ //RECORREMOS LOS CURSOS SI ES QUE EXISTE
+ if ('CURSOS' in data) {
+    if (data.CURSOS.length > 0) { 
+      var cursos = data.CURSOS
+      var count = 1    
+    
+        // Supongamos que 'data' es el array que contiene los objetos de datos
+      cursos.forEach(function (obj) {
+        
+      
+
+        // cumple = obj.CURSO_CUMPLE_PPT.toUpperCase(); 
+
+        $('#' + form).find(`textarea[id='CURSO${count}_PPT']`).val(obj.CURSO_PPT)
+    
+        //   $('#' + form).find(`input[id='CURSO${count}_CUMPLE_${cumple}'][value='${obj.CURSO_CUMPLE_PPT}'][type='radio']`).prop('checked', true)
+
+
+        if (obj.CURSO_DESEABLE == null) {
+          
+          $('#' + form).find(`input[id='CURSO${count}_REQUERIDO_PPT'][type='checkbox']`).prop('checked', true)
+
+        } else {
+          
+          $('#' + form).find(`input[id='CURSO${count}_DESEABLE_PPT'][type='checkbox']`).prop('checked', true)
+
+        }
+
+        count++
+      });
+
+
+      cursosTotales = data.CURSOS.length 
+      if (cursosTotales <= 10) {
+
+        $('#cursoTemasCollapse').collapse('show')
+
+
+      } else if (cursosTotales > 10 && cursosTotales <= 20) {
+          $('#cursoTemasCollapse').collapse('show')
+          $('#cursoTemas1Collapse').collapse('show')
+          
+
+      } else if (cursosTotales > 20 && cursosTotales <= 30) {
+          $('#cursoTemasCollapse').collapse('show')
+          $('#cursoTemas1Collapse').collapse('show')
+          $('#cursoTemas2Collapse').collapse('show')
+
+
+      } else if (cursosTotales > 30){
+          
+          $('.collapse').collapse('show')
+      
+
+
+      }
+
+    }
+  }
+}

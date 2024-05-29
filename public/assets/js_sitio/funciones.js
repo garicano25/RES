@@ -2330,8 +2330,11 @@ function editarDatoTabla( data, form = 'OnlyForm', modalID = 'ModalID', formComp
         if (!key.startsWith("BTN") && key !== "created_at" && key !== "updated_at") {
               
           var input = $('#' + form).find(`input[name='${key}'][type='text'], input[name='${key}'][type='number']`);
+          var date = $('#' + form).find(`input[name='${key}'][type='date']`);
+          var time = $('#' + form).find(`input[name='${key}'][type='time']`);
           var textarea = $('#' + form).find(`textarea[name='${key}']`).val(data[key]);
           var select = $('#' + form).find(`select[name='${key}']`).val(data[key]);
+
           
           if (input.length) {
             input.val(data[key]);
@@ -2343,118 +2346,22 @@ function editarDatoTabla( data, form = 'OnlyForm', modalID = 'ModalID', formComp
 
             select.val(data[key])
 
+          }  else if (date.length) {
+
+            date.val(data[key])
+
+          }else if (time.length) {
+
+            time.val(data[key])
+
           } else {
 
             $('#' + form).find(`input[name='${key}'][value='${data[key]}'][type='radio']`).prop('checked', true)
-
+                   
+            $('#' + form).find(`input[name='${key}'][value='${data[key]}'][type='checkbox']`).prop('checked', true)
           }
-        }
-      }
-    }
-
-
-    if ('INTERNAS' in data) {
-
-      if (data.INTERNAS.length > 0) { 
-        var cursos = data.INTERNAS
-        var count = 1    
-
-          // Supongamos que 'data' es el array que contiene los objetos de datos
-        cursos.forEach(function (obj) {
-
-
           
-          // Acceder a las propiedades de cada objeto    INTERNAS_CONQUIEN1_DPT  INTERNAS_PARAQUE1_DPT   INTERNAS_FRECUENCIA1_DPT
-          $('#' + form).find(`select[id='INTERNAS_CONQUIEN${count}_DPT']`).val(obj.INTERNAS_CONQUIEN_DPT)
-          $('#' + form).find(`textarea[id='INTERNAS_PARAQUE${count}_DPT']`).val(obj.INTERNAS_PARAQUE_DPT)
-          $('#' + form).find(`select[id='INTERNAS_FRECUENCIA${count}_DPT']`).val(obj.INTERNAS_FRECUENCIA_DPT)
-
-          count++
-        });
-      }
-    }
-
-    
-    if ('EXTERNAS' in data) {
-
-      if (data.EXTERNAS.length > 0) { 
-        var cursos = data.EXTERNAS
-        var count = 1    
-
-          // Supongamos que 'data' es el array que contiene los objetos de datos
-        cursos.forEach(function (obj) {
-
-          // Acceder a las propiedades de cada objeto    INTERNAS_CONQUIEN1_DPT  INTERNAS_PARAQUE1_DPT   INTERNAS_FRECUENCIA1_DPT
-          $('#' + form).find(`select[id='EXTERNAS_CONQUIEN${count}_DPT']`).val(obj.EXTERNAS_CONQUIEN_DPT)
-          $('#' + form).find(`textarea[id='EXTERNAS_PARAQUE${count}_DPT']`).val(obj.EXTERNAS_PARAQUE_DPT)
-          $('#' + form).find(`select[id='EXTERNAS_FRECUENCIA${count}_DPT']`).val(obj.EXTERNAS_FRECUENCIA_DPT)
-
-          count++
-        });
-      }
-    }
-
-
-
-
-    //RECORREMOS LOS CURSOS SI ES QUE EXISTE
-    if ('CURSOS' in data) {
-      if (data.CURSOS.length > 0) { 
-        var cursos = data.CURSOS
-        var count = 1    
-
-          // Supongamos que 'data' es el array que contiene los objetos de datos
-        cursos.forEach(function (obj) {
-          
-          // Acceder a las propiedades de cada objeto
-    
-
-          cumple = obj.CURSO_CUMPLE_PPT.toUpperCase(); 
-
-          $('#' + form).find(`input[id='CURSO${count}_PPT'][type='text']`).val(obj.CURSO_PPT)
-
-            $('#' + form).find(`input[id='CURSO${count}_CUMPLE_${cumple}'][value='${obj.CURSO_CUMPLE_PPT}'][type='radio']`).prop('checked', true)
-
-
-          if (obj.CURSO_DESEABLE == null) {
-            
-            $('#' + form).find(`input[id='CURSO${count}_REQUERIDO_PPT'][type='text']`).val(obj.CURSO_REQUERIDO)
-
-          } else {
-            
-            $('#' + form).find(`input[id='CURSO${count}_DESEABLE_PPT'][type='text']`).val(obj.CURSO_DESEABLE)
-
-          }
-
-          count++
-        });
-
-
-        cursosTotales = data.CURSOS.length 
-        if (cursosTotales <= 10) {
-
-          $('#cursoTemasCollapse').collapse('show')
-
-
-        } else if (cursosTotales > 10 && cursosTotales <= 20) {
-            $('#cursoTemasCollapse').collapse('show')
-            $('#cursoTemas1Collapse').collapse('show')
-            
-
-        } else if (cursosTotales > 20 && cursosTotales <= 30) {
-            $('#cursoTemasCollapse').collapse('show')
-            $('#cursoTemas1Collapse').collapse('show')
-            $('#cursoTemas2Collapse').collapse('show')
-
-
-        } else if (cursosTotales > 30){
-            
-            $('.collapse').collapse('show')
-        
-
-
         }
-
       }
     }
 

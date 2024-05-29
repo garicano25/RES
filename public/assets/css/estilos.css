@@ -101,9 +101,17 @@ td.descripcion-column {
 
 
 .dropdown-menu .dropdown-item {
-    font-size: 17px; /* Ajusta el tamaño de fuente */
-    padding: 5px 10px; /* Ajusta el padding */
+    font-size: 17px; 
+    padding: 5px 10px; 
 }
 .dropdown-menu hr {
-    margin: 5px 0; /* Ajusta el margen de los separadores */
+    margin: 5px 0;
+}
+
+
+input[type="checkbox"] {
+    width: 15px;  
+    height: 15px; 
+    transform: scale(1.5); 
+    margin: 5px; 
 }

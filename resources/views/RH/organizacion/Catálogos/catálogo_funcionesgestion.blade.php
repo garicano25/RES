@@ -50,8 +50,8 @@
                             <select class="form-select" id="CATEGORIAS_GESTION" name="CATEGORIAS_GESTION" required>
                                 <option value="0" selected disabled>Seleccione una opción</option>
                                 @foreach ($areas as $area)
-                                      <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
-                                       @endforeach
+                                    <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="row mb-3">

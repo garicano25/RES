@@ -149,18 +149,21 @@ class pptController extends Controller
 
 
                         // GUARDAR LOS CURSOS
-                        if ($request->CURSO_PPT) {
+
+                     
+                        
+                        if ($request->CURSO_PPT) {                          
                             foreach ($request->CURSO_PPT as $key => $value) {
 
                                 $num = $key + 1;
-
-                                if ((isset($request->CURSO_REQUERIDO_PPT[$key]) || isset($request->CURSO_DESEABLE_PPT[$key])) && isset($request->CURSO_CUMPLE_PPT[$num])) {
+                                
+                                if ((!empty($request->CURSO_PPT[$key]))) {
 
                                     $guardar_curso = cursospptModel::create([
                                         'FORMULARIO_PPT_ID' => $PPT->ID_FORMULARIO_PPT,
                                         'CURSO_PPT' => $value,
-                                        'CURSO_REQUERIDO' => $request->CURSO_REQUERIDO_PPT[$key],
-                                        'CURSO_DESEABLE' => $request->CURSO_DESEABLE_PPT[$key],
+                                        'CURSO_REQUERIDO' =>isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
+                                        'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] :null,
                                         // 'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num]
                                     ]);
                                 }
@@ -183,20 +186,19 @@ class pptController extends Controller
 
 
                         // GUARDAR LOS CURSOS
-                        if ($request->CURSO_PPT) {
+                         if ($request->CURSO_PPT) {                          
                             foreach ($request->CURSO_PPT as $key => $value) {
-
+                                
                                 $num = $key + 1;
-
-                                if ((isset($request->CURSO_REQUERIDO_PPT[$key]) || isset($request->CURSO_DESEABLE_PPT[$key])) && isset($request->CURSO_CUMPLE_PPT[$num])) {
+                                
+                                if ((!empty($request->CURSO_PPT[$key]))) {
 
                                     $guardar_curso = cursospptModel::create([
-                                        'FORMULARIO_PPT_ID' => $request->ID_FORMULARIO_PPT,
+                                        'FORMULARIO_PPT_ID' => $PPT->ID_FORMULARIO_PPT,
                                         'CURSO_PPT' => $value,
-                                        'CURSO_REQUERIDO' => $request->CURSO_REQUERIDO_PPT[$key],
-                                        'CURSO_DESEABLE' => $request->CURSO_DESEABLE_PPT[$key],
-                                        // 'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num] SE VA ACTIVAR HASTA QUE SE MANDE A LLAMAR EN LA
-                                        // CONTRATACION
+                                        'CURSO_REQUERIDO' =>isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
+                                        'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] :null,
+                                        // 'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num]
                                     ]);
                                 }
                             }

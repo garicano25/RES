@@ -182,6 +182,9 @@ $('#Tablaafuncionescargo tbody').on('click', 'td>button.EDITAR', function () {
 });
 
 
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
     const especificaRadio = document.getElementById('especifica');
     const genericaRadio = document.getElementById('generica');

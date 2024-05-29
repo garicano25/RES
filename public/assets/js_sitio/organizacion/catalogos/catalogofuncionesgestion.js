@@ -5,19 +5,19 @@ Tablafuncionesgestion = null
 
 
 
-const ModalArea = document.getElementById('miModal_FUNCIONESGESTION')
+const ModalArea = document.getElementById('miModal_FUNCIONESGESTION');
 ModalArea.addEventListener('hidden.bs.modal', event => {
-    
-    
-    ID_CATALOGO_ASESOR = 0
+    ID_CATALOGO_FUNCIONESGESTION = 0;
     document.getElementById('formularioFUNCIONESGESTION').reset();
-   
+    $('#CATEGORIAS_GESTION').val('0'); // Resetea el select
+});
 
+
+$(document).on('change', 'input[name="TIPO_FUNCION_GESTION"]', function() {
+    if (this.value === 'generica') {
+        $('#CATEGORIAS_GESTION').val('0'); // Resetea el select
+    }
 })
-
-
-
-
 
 
 $("#guardarFormFuncionesgestion").click(function (e) {
@@ -103,7 +103,6 @@ $("#guardarFormFuncionesgestion").click(function (e) {
     
 });
 
-
 var Tablafuncionesgestion = $("#Tablafuncionesgestion").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
@@ -172,39 +171,52 @@ $('#Tablafuncionesgestion tbody').on('click', 'td>button.ELIMINAR', function () 
 })
 
 
-$('#Tablafuncionesgestion tbody').on('click', 'td>button.EDITAR', function () {
-    var tr = $(this).closest('tr');
-    var row = Tablafuncionesgestion.row(tr);
-    ID_CATALOGO_FUNCIONESGESTION = row.data().ID_CATALOGO_FUNCIONESGESTION;
-
-
-    editarDatoTabla(row.data(), 'formularioFUNCIONESGESTION', 'miModal_FUNCIONESGESTION',1);
-});
-
-
-document.addEventListener('DOMContentLoaded', function() {
+// Función para manejar el cambio de estado del select y radio buttons
+function handleRadioChange() {
     const especificaRadio = document.getElementById('especifica');
     const genericaRadio = document.getElementById('generica');
     const categoriasSelect = document.getElementById('CATEGORIAS_GESTION');
 
-    // Función para manejar el cambio de estado del select
-    function handleRadioChange() {
-        console.log('Especifica checked:', especificaRadio.checked);
-        console.log('Generica checked:', genericaRadio.checked);
-
-        if (genericaRadio.checked) {
-            categoriasSelect.disabled = true;
-            console.log('Categorias select disabled');
-        } else if (especificaRadio.checked) {
-            categoriasSelect.disabled = false;
-            console.log('Categorias select enabled');
-        }
+    if (genericaRadio.checked) {
+        categoriasSelect.disabled = true;
+    } else if (especificaRadio.checked) {
+        categoriasSelect.disabled = false;
     }
+}
+
+//  los cambios en los radio buttons
+document.addEventListener('DOMContentLoaded', function() {
+    const especificaRadio = document.getElementById('especifica');
+    const genericaRadio = document.getElementById('generica');
+    const categoriasSelect = document.getElementById('CATEGORIAS_GESTION');
 
     especificaRadio.addEventListener('change', handleRadioChange);
     genericaRadio.addEventListener('change', handleRadioChange);
 
     handleRadioChange(); // Verificar estado inicial
 });
+
+//  los clics en los botones de edición
+$('#Tablafuncionesgestion tbody').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablafuncionesgestion.row(tr);
+    ID_CATALOGO_FUNCIONESGESTION = row.data().ID_CATALOGO_FUNCIONESGESTION;
+
+    // Obtén el tipo de función (generica o especifica)
+    var tipoFuncion = row.data().TIPO_FUNCION_GESTION;
+
+    // Llena el formulario y muestra el modal
+    editarDatoTabla(row.data(), 'formularioFUNCIONESGESTION', 'miModal_FUNCIONESGESTION', 1);
+
+    if (tipoFuncion === 'especifica') {
+        $('#especifica').prop('checked', true);
+        $('#CATEGORIAS_GESTION').val(row.data().CATEGORIAS_GESTION); // Selecciona la opción correspondiente
+    } else {
+        $('#generica').prop('checked', true);
+    }
+
+    handleRadioChange();
+});
+
 
 

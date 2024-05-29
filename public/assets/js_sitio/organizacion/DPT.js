@@ -3,24 +3,25 @@ ID_FORMULARIO_DPT = 0
 
 
 
-const ModalArea = document.getElementById('miModal_DPT')
+const ModalArea = document.getElementById('miModal_DPT');
 ModalArea.addEventListener('hidden.bs.modal', event => {
-    
-    
-    ID_FORMULARIO_DPT = 0
+    ID_FORMULARIO_DPT = 0;
     document.getElementById('formularioDPT').reset();
     $('#formularioDPT input').prop('disabled', false);
     $('#formularioDPT textarea').prop('disabled', false);
     $('#formularioDPT select').prop('disabled', false);
-    
-    $('.collapse').collapse('hide')
-    
+
+    $('.collapse').collapse('hide');
+
     $('#guardarFormDPT').css('display', 'block').prop('disabled', false);
     $('#revisarFormDPT').css('display', 'none').prop('disabled', true);
     $('#AutorizarFormDPT').css('display', 'none').prop('disabled', true);
 
+    // Resetea la tabla
+    $('#tbodyFucnionesCargo').empty();
+    $('#tbodyFuncionesGestion').empty();
+});
 
-})
 
 
 TablaDPT = $("#TablaDPT").DataTable({
@@ -157,7 +158,7 @@ $(document).ready(function () {
 });
 
 
-
+var info = ''
 $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
 
     var valorSeleccionado = $(this).find("option:selected");
@@ -184,10 +185,92 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
         $('#PUESTO_LE_REPORTAN_DPT').val('Consultando información...').prop('readonly', true)
 
     }, function (data) {
-        
-        console.log(data.FUNCIONES[0].FUNCIONES)
+            info = data
 
-        //Asignamos valores a nuestros inputs
+
+            $('#tbodyFucnionesCargo').empty();
+            
+            //FUNCIONES DE CARG0
+            $.each(data.FUNCIONES, function(index, funcion) {
+                let rowHtml = '';
+            
+                if (funcion.TIPO == 'generica') {
+                    rowHtml = `<tr>
+                        <td id="desc-cargo-${funcion.ID}" class="description blocked">
+                            ${funcion.DESCRIPCION}
+                        </td>
+                        <td>
+                            <div class="switch-container">
+                                <label class="switch">
+                                    <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_CARGO_DPT[]" value="${funcion.ID}">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>`;
+                } else {
+                    rowHtml = `<tr>
+                        <td id="desc-cargo-${funcion.ID}" class="description active">
+                            ${funcion.DESCRIPCION}
+                        </td>
+                        <td>
+                            <div class="switch-container">
+                                <label class="switch">
+                                    <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_CARGO_DPT[]" value="${funcion.ID}" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>`;
+                }
+            
+                $('#tbodyFucnionesCargo').append(rowHtml);
+            });
+
+                //FUNCIONES DE GESTIONES
+
+            $('#tbodyFuncionesGestion').empty();
+
+          
+             $.each(data.GESTIONES, function(index, gestion) {
+                let rowHtml = '';
+            
+                if (gestion.TIPO == 'generica') {
+                    rowHtml = `<tr>
+                        <td id="desc-gestion-${gestion.ID}" class="description blocked">
+                            ${gestion.DESCRIPCION}
+                        </td>
+                        <td>
+                            <div class="switch-container">
+                                <label class="switch">
+                                    <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_GESTION_DPT[]" value="${gestion.ID}">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>`;
+                } else {
+                    rowHtml = `<tr>
+                        <td id="desc-gestion-${gestion.ID}" class="description active">
+                            ${gestion.DESCRIPCION}
+                        </td>
+                        <td>
+                            <div class="switch-container">
+                                <label class="switch">
+                                    <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_GESTION_DPT[]" value="${gestion.ID}" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>`;
+                }
+            
+                $('#tbodyFuncionesGestion').append(rowHtml);
+            });
+        
+        
+
+        //CONSUILTAMOS LOS REPONSABLES DE CADA CATEGORIA
         if (lider == 1 || lider == 2) {
             $('#PUESTO_REPORTA_DPT').val(data.REPORTA).prop('readonly', true)
             $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN[0].REPORTAN).prop('readonly', true)
@@ -204,37 +287,26 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
 
 
 
-// Evento click para el botón de editar
+
     $('#TablaDPT tbody').on('click', 'td>button.EDITAR', function () {
         var tr = $(this).closest('tr');
         var row = TablaDPT.row(tr);
         ID_FORMULARIO_DPT = row.data().ID_FORMULARIO_DPT;
 
-        // Obtener datos del formulario actual
-        editarDatoTabla(row.data(), 'formularioDPT', 'miModal_DPT', 1);
-
-        // Mostrar modal
-        $("#miModal_DPT").modal("show");
-
-        // Desbloquear opciones guardadas
-        var funcionesCargo = row.data().FUNCIONES_CARGO_DPT ? row.data().FUNCIONES_CARGO_DPT.split(',') : [];
-        var funcionesGestion = row.data().FUNCIONES_GESTION_DPT ? row.data().FUNCIONES_GESTION_DPT.split(',') : [];
-
-        // Actualizar checkboxes y descripciones
-        $('.toggle-switch-cargo').each(function () {
-            var id = this.value;
-            var tablePrefix = this.name === 'FUNCIONES_CARGO_DPT[]' ? 'cargo' : 'gestion';
-            var isChecked = tablePrefix === 'cargo' ? funcionesCargo.includes(id) : funcionesGestion.includes(id);
-            this.checked = isChecked;
-            toggleDescription(tablePrefix, id, isChecked);
-        });
-
-        // Seleccionar opciones guardadas en el select #PUESTOS_INTERACTUAN_DPT
-        var opcionesSeleccionadas = row.data().PUESTOS_INTERACTUAN_DPT ? row.data().PUESTOS_INTERACTUAN_DPT.split(',') : [];
+        var form = "formularioDPT"
+        data = row.data()
+           
+       
+          
+          // Seleccionar opciones guardadas en el select #PUESTOS_INTERACTUAN_DPT
+        var opcionesSeleccionadas = data.PUESTOS_INTERACTUAN_DPT ? data.PUESTOS_INTERACTUAN_DPT.split(',') : [];
         var selectize = $('#PUESTOS_INTERACTUAN_DPT')[0].selectize;
         opcionesSeleccionadas.forEach(function (opcion) {
             selectize.addItem(opcion);
         });
+           // Obtener datos del formulario actual
+           editarDatoTabla(data, form, 'miModal_DPT', 1);
+           mostrarFunciones(data,form)
     });
 
 
@@ -252,8 +324,17 @@ function toggleDescription(tablePrefix, id, checked) {
     }
 }
 
+// MARCAR LOS CHECK Y QUE SE PONGAN LAS LETRAS EN NEGRO 
+$(document).on('change', '.toggle-switch-cargo', function() {
+    let isChecked = $(this).is(':checked');
+    let descripcionTd = $(this).closest('tr').find('.description');
 
-
+    if (isChecked) {
+        descripcionTd.removeClass('blocked').addClass('active');
+    } else {
+        descripcionTd.removeClass('active').addClass('blocked');
+    }
+});
 
 
 
@@ -393,7 +474,7 @@ $('#TablaDPT tbody').on('click', 'td>button.DPT', function () {
 
 
 
-
+// NO SELECCIONAR LA MISMA CATEGORIA EN LAS RELACIONES INTERNAS
 document.addEventListener('DOMContentLoaded', function () {
     const selects = document.querySelectorAll('.area-select');
 
@@ -417,6 +498,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+// NO SELECCIONAR LOS MISMOS DE RELACIONES EXTERNAS 
 
 document.addEventListener('DOMContentLoaded', function () {
     const selects = document.querySelectorAll('.externa-select');
@@ -442,7 +524,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
+// CREAR UN NUEVO DPT
 $(document).ready(function () {
     // Abrir modal y bloquear checkboxes
     $("#nuevo_dpt").click(function (e) {
@@ -486,6 +568,49 @@ $(document).ready(function () {
 });
 
 
+function mostrarFunciones(data,form){
 
+    if ('INTERNAS' in data) {
+
+        if (data.INTERNAS.length > 0) { 
+          var cursos = data.INTERNAS
+          var count = 1    
+  
+            // Supongamos que 'data' es el array que contiene los objetos de datos
+          cursos.forEach(function (obj) {
+  
+  
+            
+            // Acceder a las propiedades de cada objeto    INTERNAS_CONQUIEN1_DPT  INTERNAS_PARAQUE1_DPT   INTERNAS_FRECUENCIA1_DPT
+            $('#' + form).find(`select[id='INTERNAS_CONQUIEN${count}_DPT']`).val(obj.INTERNAS_CONQUIEN_DPT)
+            $('#' + form).find(`textarea[id='INTERNAS_PARAQUE${count}_DPT']`).val(obj.INTERNAS_PARAQUE_DPT)
+            $('#' + form).find(`select[id='INTERNAS_FRECUENCIA${count}_DPT']`).val(obj.INTERNAS_FRECUENCIA_DPT)
+  
+            count++
+          });
+        }
+      }
+  
+      
+      if ('EXTERNAS' in data) {
+  
+        if (data.EXTERNAS.length > 0) { 
+          var cursos = data.EXTERNAS
+          var count = 1    
+  
+            // Supongamos que 'data' es el array que contiene los objetos de datos
+          cursos.forEach(function (obj) {
+  
+            // Acceder a las propiedades de cada objeto    INTERNAS_CONQUIEN1_DPT  INTERNAS_PARAQUE1_DPT   INTERNAS_FRECUENCIA1_DPT
+            $('#' + form).find(`select[id='EXTERNAS_CONQUIEN${count}_DPT']`).val(obj.EXTERNAS_CONQUIEN_DPT)
+            $('#' + form).find(`textarea[id='EXTERNAS_PARAQUE${count}_DPT']`).val(obj.EXTERNAS_PARAQUE_DPT)
+            $('#' + form).find(`select[id='EXTERNAS_FRECUENCIA${count}_DPT']`).val(obj.EXTERNAS_FRECUENCIA_DPT)
+  
+            count++
+          });
+        }
+      }
+
+}
 
     

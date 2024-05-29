@@ -279,7 +279,7 @@ input:checked + .slider:before {
                             <h4>II. Funciones y responsabilidades clave del cargo</h4>
                         </div>
                       </div>
-                      <div class="row mb-3">
+                      <div class="row mb-3" >
                         <table class="table-sm">
                           <thead>
                               <tr>
@@ -287,29 +287,14 @@ input:checked + .slider:before {
                                   <th class="header">Activar/Desactivar</th>
                               </tr>
                           </thead>
-                          <tbody>
-                              @foreach ($cargo as $cargos)
-                              <tr>
-                                  <td id="desc-cargo-{{ $cargos->ID_CATALOGO_FUNCIONESCARGO }}" class="description blocked">
-                                      {{ $cargos->DESCRIPCION_FUNCION_CARGO }}
-                                  </td>
-                                  <td>
-                                      <div class="switch-container">
-                                          <label class="switch">
-                                              <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_CARGO_DPT[]" value="{{ $cargos->ID_CATALOGO_FUNCIONESCARGO }}">
-                                              <span class="slider"></span>
-                                          </label>
-                                      </div>
-                                  </td>
-                              </tr>
-                              @endforeach
+                          <tbody id="tbodyFucnionesCargo">
+                              
                           </tbody>
                       </table>
                       </div>
                 
         
                         <!-- III. Funciones y responsabilidades del sistema integrado de gestión (SIG) -->
-                      <br><br><br><br><br><br><br><br><br>
                       <div class="row mb-3">
                         <div class="col-12 text-center">
                             <h4>III. Funciones y responsabilidades del sistema integrado de gestión (SIG)</h4>
@@ -324,22 +309,8 @@ input:checked + .slider:before {
                                   <th class="header">Activar/Desactivar</th>
                               </tr>
                           </thead>
-                          <tbody>
-                              @foreach ($gestion as $gestiones)
-                              <tr>
-                                <td id="desc-gestion-{{ $gestiones->ID_CATALOGO_FUNCIONESGESTION }}" class="description blocked">
-                                    {{ $gestiones->DESCRIPCION_FUNCION_GESTION }}
-                                </td>
-                                <td>
-                                    <div class="switch-container">
-                                        <label class="switch">
-                                            <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_GESTION_DPT[]" value="{{ $gestiones->ID_CATALOGO_FUNCIONESGESTION }}">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                              @endforeach
+                          <tbody id="tbodyFuncionesGestion">
+                              
                           </tbody>
                       </table>
                       </div>
