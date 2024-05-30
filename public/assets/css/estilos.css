@@ -137,3 +137,4 @@ input[type="radio"]:checked::before {
 .form-check-input:disabled {
     background-color: #d1d1d1;
 }
+

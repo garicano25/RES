@@ -10,11 +10,19 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     
     
     ID_CATALOGO_FUNCIONESCARGO = 0
+
     document.getElementById('formularioFUNCIONESCARGO').reset();
+    $('#CATEGORIAS_CARGO').val('0'); // Resetea el select
    
 
 })
 
+
+$(document).on('change', 'input[name="TIPO_FUNCION_CARGO"]', function() {
+    if (this.value === 'generica') {
+        $('#CATEGORIAS_CARGO').val('0'); // Resetea el select
+    }
+})
 
 
 
@@ -178,32 +186,47 @@ $('#Tablaafuncionescargo tbody').on('click', 'td>button.EDITAR', function () {
     ID_CATALOGO_FUNCIONESCARGO = row.data().ID_CATALOGO_FUNCIONESCARGO;
 
 
+     var tipoFuncion = row.data().TIPO_FUNCION_CARGO;
+
+
     editarDatoTabla(row.data(), 'formularioFUNCIONESCARGO', 'miModal_FUNCIONESCARGO',1);
+
+    if (tipoFuncion === 'especifica') {
+        $('#especifica').prop('checked', true);
+        $('#CATEGORIAS_CARGO').val(row.data().CATEGORIAS_CARGO); 
+        $('#generica').prop('checked', true);
+    }
+
+    handleRadioChange();
 });
 
 
 
 
 
+
+
+
+function handleRadioChange() {
+    const especificaRadio = document.getElementById('especifica');
+    const genericaRadio = document.getElementById('generica');
+    const categoriasSelect = document.getElementById('CATEGORIAS_CARGO');
+
+    if (genericaRadio.checked) {
+        categoriasSelect.disabled = true;
+    } else if (especificaRadio.checked) {
+        categoriasSelect.disabled = false;
+    }
+}
+
+//  los cambios en los radio buttons
 document.addEventListener('DOMContentLoaded', function() {
     const especificaRadio = document.getElementById('especifica');
     const genericaRadio = document.getElementById('generica');
     const categoriasSelect = document.getElementById('CATEGORIAS_CARGO');
 
-    // Función para manejar el cambio de estado del select
-    function handleRadioChange() {
-        if (genericaRadio.checked) {
-            categoriasSelect.disabled = true;
-        } else if (especificaRadio.checked) {
-            categoriasSelect.disabled = false;
-        }
-    }
-
-    // Asignar la función al evento change de los radios
     especificaRadio.addEventListener('change', handleRadioChange);
     genericaRadio.addEventListener('change', handleRadioChange);
 
-    // Ejecutar la función al cargar la página para establecer el estado inicial
-    handleRadioChange();
+    handleRadioChange(); // Verificar estado inicial
 });
-

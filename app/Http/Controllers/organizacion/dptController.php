@@ -28,12 +28,20 @@ class dptController extends Controller
             FROM encargados_areas
             ");
 
+            $categorias = DB::select("
+            SELECT NOMBRE, ID_DEPARTAMENTO_AREA as ID, 0 AS LIDER
+            FROM departamentos_areas
+            WHERE ACTIVO = 1
+            UNION
+            SELECT NOMBRE_CARGO AS NOMBRE, ID_ENCARGADO_AREA AS ID,  1 AS LIDER
+            FROM encargados_areas");
+
 
             $nivel = catalogojerarquiaModel::orderBy('NOMBRE_JERARQUIA', 'ASC')->get();
             $externo = catalogorelacionesexternaModel::orderBy('NOMBRE_RELACIONEXTERNA', 'ASC')->get();
             $cargo = catalogofuncionescargoModel::orderBy('DESCRIPCION_FUNCION_CARGO', 'ASC')->get();
             $gestion = catalogofuncionesgestionModel::orderBy('DESCRIPCION_FUNCION_GESTION', 'ASC')->get();
-            return view('RH.organizacion.DPT', compact('areas','nivel','externo','cargo','gestion'));
+            return view('RH.organizacion.DPT', compact('areas','nivel','externo','cargo','gestion','categorias'));
         }
   
 
@@ -152,69 +160,48 @@ class dptController extends Controller
         try {
             switch (intval($request->api)) {
                 case 1:
-                    // Guardar área
+                                   
+                    
                     if ($request->ID_FORMULARIO_DPT == 0) {
-                        $funciones_cargo = $request->FUNCIONES_CARGO_DPT ? implode(',', $request->FUNCIONES_CARGO_DPT) : '';
-                        $funciones_gestion = $request->FUNCIONES_GESTION_DPT ? implode(',', $request->FUNCIONES_GESTION_DPT) : '';
+                        // $funciones_cargo = $request->FUNCIONES_CARGO_DPT ? implode(',', $request->FUNCIONES_CARGO_DPT) : '';
+                        // $funciones_gestion = $request->FUNCIONES_GESTION_DPT ? implode(',', $request->FUNCIONES_GESTION_DPT) : '';
     
-                        $puestos_interactuan = $request->PUESTOS_INTERACTUAN_DPT;
+                        // $puestos_interactuan = $request->PUESTOS_INTERACTUAN_DPT;
     
-                        DB::statement('ALTER TABLE formulario_dpt AUTO_INCREMENT=1;');
-                        $DPT = formulariodptModel::create(array_merge($request->all(), [
-                            'FUNCIONES_CARGO_DPT' => $funciones_cargo,
-                            'FUNCIONES_GESTION_DPT' => $funciones_gestion,
-                            'PUESTOS_INTERACTUAN_DPT' => !empty($puestos_interactuan) ? implode(',', $puestos_interactuan) : ''
-                        ]));
+                        // DB::statement('ALTER TABLE formulario_dpt AUTO_INCREMENT=1;');
+                        // $DPT = formulariodptModel::create(array_merge($request->all(), [
+                        //     'FUNCIONES_CARGO_DPT' => $funciones_cargo,
+                        //     'FUNCIONES_GESTION_DPT' => $funciones_gestion,
+                        //     'PUESTOS_INTERACTUAN_DPT' => !empty($puestos_interactuan) ? implode(',', $puestos_interactuan) : ''
+                        // ]));
+
+                        $DPT = formulariodptModel::create($request->all());
     
-                        // Verifica si existen relaciones internas y las guarda
                         if ($request->INTERNAS_CONQUIEN_DPT) {
                             foreach ($request->INTERNAS_CONQUIEN_DPT as $key => $value) {
-                                $paraque = $request->INTERNAS_PARAQUE_DPT[$key] ?? '';
-                                $frecuencia = $request->INTERNAS_FRECUENCIA_DPT[$key] ?? '';
-                                
-                                // Verifica si ya existe una relación interna con este ID
-                                $relacion_interna = relacionesinternasModel::find($key);
-                                
-                                // Si ya existe la relación, actualízala; de lo contrario, créala
-                                if ($relacion_interna) {
-                                    $relacion_interna->update([
-                                        'INTERNAS_CONQUIEN_DPT' => $value,
-                                        'INTERNAS_PARAQUE_DPT' => $paraque,
-                                        'INTERNAS_FRECUENCIA_DPT' => $frecuencia,
-                                    ]);
-                                } else {
+                                if (isset($request->INTERNAS_PARAQUE_DPT[$key]) &&
+                                    isset($request->INTERNAS_FRECUENCIA_DPT[$key])) {
+    
                                     relacionesinternasModel::create([
                                         'FORMULARIO_DPT_ID' => $DPT->ID_FORMULARIO_DPT,
                                         'INTERNAS_CONQUIEN_DPT' => $value,
-                                        'INTERNAS_PARAQUE_DPT' => $paraque,
-                                        'INTERNAS_FRECUENCIA_DPT' => $frecuencia,
+                                        'INTERNAS_PARAQUE_DPT' => $request->INTERNAS_PARAQUE_DPT[$key],
+                                        'INTERNAS_FRECUENCIA_DPT' => $request->INTERNAS_FRECUENCIA_DPT[$key],
                                     ]);
                                 }
                             }
                         }
-
-                        // Actualiza relaciones externas si existen y se han modificado
+    
                         if ($request->EXTERNAS_CONQUIEN_DPT) {
                             foreach ($request->EXTERNAS_CONQUIEN_DPT as $key => $value) {
-                                $paraque = $request->EXTERNAS_PARAQUE_DPT[$key] ?? '';
-                                $frecuencia = $request->EXTERNAS_FRECUENCIA_DPT[$key] ?? '';
-                                
-                                // Verifica si ya existe una relación externa con este ID
-                                $relacion_externa = relacionesexternasModel::find($key);
-                                
-                                // Si ya existe la relación, actualízala; de lo contrario, créala
-                                if ($relacion_externa) {
-                                    $relacion_externa->update([
-                                        'EXTERNAS_CONQUIEN_DPT' => $value,
-                                        'EXTERNAS_PARAQUE_DPT' => $paraque,
-                                        'EXTERNAS_FRECUENCIA_DPT' => $frecuencia,
-                                    ]);
-                                } else {
+                                if (isset($request->EXTERNAS_PARAQUE_DPT[$key]) &&
+                                    isset($request->EXTERNAS_FRECUENCIA_DPT[$key])) {
+    
                                     relacionesexternasModel::create([
                                         'FORMULARIO_DPT_ID' => $DPT->ID_FORMULARIO_DPT,
                                         'EXTERNAS_CONQUIEN_DPT' => $value,
-                                        'EXTERNAS_PARAQUE_DPT' => $paraque,
-                                        'EXTERNAS_FRECUENCIA_DPT' => $frecuencia,
+                                        'EXTERNAS_PARAQUE_DPT' => $request->EXTERNAS_PARAQUE_DPT[$key],
+                                        'EXTERNAS_FRECUENCIA_DPT' => $request->EXTERNAS_FRECUENCIA_DPT[$key]
                                     ]);
                                 }
                             }
@@ -224,6 +211,7 @@ class dptController extends Controller
                         return response()->json($response);
     
                     } else {
+
                             $DPT = formulariodptModel::find($request->ID_FORMULARIO_DPT);
                             $funciones_cargo = $request->FUNCIONES_CARGO_DPT ? implode(',', $request->FUNCIONES_CARGO_DPT) : '';
                             $funciones_gestion = $request->FUNCIONES_GESTION_DPT ? implode(',', $request->FUNCIONES_GESTION_DPT) : '';
@@ -236,61 +224,35 @@ class dptController extends Controller
                                 'PUESTOS_INTERACTUAN_DPT' => !empty($puestos_interactuan) ? implode(',', $puestos_interactuan) : ''
                             ]));
         
-                           // Verifica si existen relaciones internas y las guarda
-                        if ($request->INTERNAS_CONQUIEN_DPT) {
+                           if ($request->INTERNAS_CONQUIEN_DPT) {
                             foreach ($request->INTERNAS_CONQUIEN_DPT as $key => $value) {
-                                $paraque = $request->INTERNAS_PARAQUE_DPT[$key] ?? '';
-                                $frecuencia = $request->INTERNAS_FRECUENCIA_DPT[$key] ?? '';
-                                
-                                // Verifica si ya existe una relación interna con este ID
-                                $relacion_interna = relacionesinternasModel::find($key);
-                                
-                                // Si ya existe la relación, actualízala; de lo contrario, créala
-                                if ($relacion_interna) {
-                                    $relacion_interna->update([
-                                        'INTERNAS_CONQUIEN_DPT' => $value,
-                                        'INTERNAS_PARAQUE_DPT' => $paraque,
-                                        'INTERNAS_FRECUENCIA_DPT' => $frecuencia,
-                                    ]);
-                                } else {
+                                if (isset($request->INTERNAS_PARAQUE_DPT[$key]) &&
+                                    isset($request->INTERNAS_FRECUENCIA_DPT[$key])) {
+    
                                     relacionesinternasModel::create([
                                         'FORMULARIO_DPT_ID' => $DPT->ID_FORMULARIO_DPT,
                                         'INTERNAS_CONQUIEN_DPT' => $value,
-                                        'INTERNAS_PARAQUE_DPT' => $paraque,
-                                        'INTERNAS_FRECUENCIA_DPT' => $frecuencia,
+                                        'INTERNAS_PARAQUE_DPT' => $request->INTERNAS_PARAQUE_DPT[$key],
+                                        'INTERNAS_FRECUENCIA_DPT' => $request->INTERNAS_FRECUENCIA_DPT[$key],
                                     ]);
                                 }
                             }
                         }
 
-                        // Actualiza relaciones externas si existen y se han modificado
                         if ($request->EXTERNAS_CONQUIEN_DPT) {
                             foreach ($request->EXTERNAS_CONQUIEN_DPT as $key => $value) {
-                                $paraque = $request->EXTERNAS_PARAQUE_DPT[$key] ?? '';
-                                $frecuencia = $request->EXTERNAS_FRECUENCIA_DPT[$key] ?? '';
-                                
-                                // Verifica si ya existe una relación externa con este ID
-                                $relacion_externa = relacionesexternasModel::find($key);
-                                
-                                // Si ya existe la relación, actualízala; de lo contrario, créala
-                                if ($relacion_externa) {
-                                    $relacion_externa->update([
-                                        'EXTERNAS_CONQUIEN_DPT' => $value,
-                                        'EXTERNAS_PARAQUE_DPT' => $paraque,
-                                        'EXTERNAS_FRECUENCIA_DPT' => $frecuencia,
-                                    ]);
-                                } else {
+                                if (isset($request->EXTERNAS_PARAQUE_DPT[$key]) &&
+                                    isset($request->EXTERNAS_FRECUENCIA_DPT[$key])) {
+    
                                     relacionesexternasModel::create([
                                         'FORMULARIO_DPT_ID' => $DPT->ID_FORMULARIO_DPT,
                                         'EXTERNAS_CONQUIEN_DPT' => $value,
-                                        'EXTERNAS_PARAQUE_DPT' => $paraque,
-                                        'EXTERNAS_FRECUENCIA_DPT' => $frecuencia,
+                                        'EXTERNAS_PARAQUE_DPT' => $request->EXTERNAS_PARAQUE_DPT[$key],
+                                        'EXTERNAS_FRECUENCIA_DPT' => $request->EXTERNAS_FRECUENCIA_DPT[$key]
                                     ]);
                                 }
                             }
                         }
-
-
                             $response['code'] = 1;
                             $response['DPT'] = $DPT;
                             return response()->json($response);

@@ -223,9 +223,9 @@ input:checked + .slider:before {
                         </div>
                         
                         <div class="col-10">
-                          <select class="custom-select form-control" id="PUESTOS_INTERACTUAN_DPT" name="PUESTOS_INTERACTUAN_DPT[]" required multiple>
-                            @foreach ($areas as $area)
-                                <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
+                          <select class="custom-select form-control" id="PUESTOS_INTERACTUAN_DPT" name="PUESTOS_INTERACTUAN" required multiple>
+                            @foreach ($categorias as $cat)
+                                <option value="{{ $cat->ID }}-{{ $cat->LIDER }}">{{ $cat->NOMBRE }}</option>
                             @endforeach
                         </select>
                       </div>

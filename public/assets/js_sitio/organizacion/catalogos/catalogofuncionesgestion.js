@@ -202,15 +202,13 @@ $('#Tablafuncionesgestion tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablafuncionesgestion.row(tr);
     ID_CATALOGO_FUNCIONESGESTION = row.data().ID_CATALOGO_FUNCIONESGESTION;
 
-    // Obtén el tipo de función (generica o especifica)
     var tipoFuncion = row.data().TIPO_FUNCION_GESTION;
 
-    // Llena el formulario y muestra el modal
     editarDatoTabla(row.data(), 'formularioFUNCIONESGESTION', 'miModal_FUNCIONESGESTION', 1);
 
     if (tipoFuncion === 'especifica') {
         $('#especifica').prop('checked', true);
-        $('#CATEGORIAS_GESTION').val(row.data().CATEGORIAS_GESTION); // Selecciona la opción correspondiente
+        $('#CATEGORIAS_GESTION').val(row.data().CATEGORIAS_GESTION); 
     } else {
         $('#generica').prop('checked', true);
     }

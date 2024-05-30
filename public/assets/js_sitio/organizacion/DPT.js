@@ -85,7 +85,6 @@ TablaDPT = $("#TablaDPT").DataTable({
 })
 
 $(document).ready(function () {
-    // Inicializar Selectize en el select #PUESTOS_INTERACTUAN_DPT
     $('#PUESTOS_INTERACTUAN_DPT').selectize({
         plugins: ['remove_button'],
         delimiter: ',',
@@ -93,19 +92,19 @@ $(document).ready(function () {
         placeholder: 'Seleccione una opción'
     });
 
-    // Función para manejar el evento de clic en el botón guardarFormDPT
+
+
     $("#guardarFormDPT").click(function (e) {
         e.preventDefault();
 
         if (ID_FORMULARIO_DPT == 0) {
-            // Código para guardar el formulario...
             alertMensajeConfirm({
                 title: "¿Desea guardar la información?",
                 text: "Al guardarla, se usara para la creación del DPT",
                 icon: "question",
             }, async function () { 
                 await loaderbtn('guardarFormDPT');
-                await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_DPT: ID_FORMULARIO_DPT }, 'dptSave', 'formularioDPT', 'guardarFormDPT', { callbackAfter: true, callbackBefore: true }, () => {
+                await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_DPT: ID_FORMULARIO_DPT,PUESTOS_INTERACTUAN_DPT:$("#PUESTOS_INTERACTUAN_DPT").val()}, 'dptSave', 'formularioDPT', 'guardarFormDPT', { callbackAfter: true, callbackBefore: true }, () => {
                     Swal.fire({
                         icon: 'info',
                         title: 'Espere un momento',
@@ -120,7 +119,6 @@ $(document).ready(function () {
                         $('#miModal_DPT').modal('hide');
                         document.getElementById('formularioDPT').reset();
                         TablaDPT.ajax.reload();
-                        // Resetear el select #PUESTOS_INTERACTUAN_DPT después de guardar
                         $('#PUESTOS_INTERACTUAN_DPT')[0].selectize.clear();
                     }, 300);
                 });
@@ -148,7 +146,6 @@ $(document).ready(function () {
                         $('#miModal_DPT').modal('hide');
                         document.getElementById('formularioDPT').reset();
                         TablaDPT.ajax.reload();
-                        // Resetear el select #PUESTOS_INTERACTUAN_DPT después de editar
                         $('#PUESTOS_INTERACTUAN_DPT')[0].selectize.clear();
                     }, 300);  
                 });
