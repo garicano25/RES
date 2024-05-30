@@ -163,20 +163,22 @@ class dptController extends Controller
                                    
                     
                     if ($request->ID_FORMULARIO_DPT == 0) {
-                        // $funciones_cargo = $request->FUNCIONES_CARGO_DPT ? implode(',', $request->FUNCIONES_CARGO_DPT) : '';
-                        // $funciones_gestion = $request->FUNCIONES_GESTION_DPT ? implode(',', $request->FUNCIONES_GESTION_DPT) : '';
+                        $funciones_cargo = $request->FUNCIONES_CARGO_DPT ? implode(',', $request->FUNCIONES_CARGO_DPT) : '';
+                        $funciones_gestion = $request->FUNCIONES_GESTION_DPT ? implode(',', $request->FUNCIONES_GESTION_DPT) : '';
     
-                        // $puestos_interactuan = $request->PUESTOS_INTERACTUAN_DPT;
+                        $puestos_interactuan = $request->PUESTOS_INTERACTUAN_DPT;
     
-                        // DB::statement('ALTER TABLE formulario_dpt AUTO_INCREMENT=1;');
-                        // $DPT = formulariodptModel::create(array_merge($request->all(), [
-                        //     'FUNCIONES_CARGO_DPT' => $funciones_cargo,
-                        //     'FUNCIONES_GESTION_DPT' => $funciones_gestion,
-                        //     'PUESTOS_INTERACTUAN_DPT' => !empty($puestos_interactuan) ? implode(',', $puestos_interactuan) : ''
-                        // ]));
+                        DB::statement('ALTER TABLE formulario_dpt AUTO_INCREMENT=1;');
+                        $DPT = formulariodptModel::create(array_merge($request->all(), [
+                            'FUNCIONES_CARGO_DPT' => $funciones_cargo,
+                            'FUNCIONES_GESTION_DPT' => $funciones_gestion,
+                            'PUESTOS_INTERACTUAN_DPT' => !empty($puestos_interactuan) ? str_replace('}','',implode(',', $puestos_interactuan)) : ''
+                        ]));
 
-                        $DPT = formulariodptModel::create($request->all());
-    
+                        // $DPT = formulariodptModel::create($request->all());
+
+                       
+
                         if ($request->INTERNAS_CONQUIEN_DPT) {
                             foreach ($request->INTERNAS_CONQUIEN_DPT as $key => $value) {
                                 if (isset($request->INTERNAS_PARAQUE_DPT[$key]) &&

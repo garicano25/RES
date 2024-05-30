@@ -104,7 +104,7 @@ $(document).ready(function () {
                 icon: "question",
             }, async function () { 
                 await loaderbtn('guardarFormDPT');
-                await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_DPT: ID_FORMULARIO_DPT,PUESTOS_INTERACTUAN_DPT:$("#PUESTOS_INTERACTUAN_DPT").val()}, 'dptSave', 'formularioDPT', 'guardarFormDPT', { callbackAfter: true, callbackBefore: true }, () => {
+                await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_DPT: ID_FORMULARIO_DPT}, 'dptSave', 'formularioDPT', 'guardarFormDPT', { callbackAfter: true, callbackBefore: true }, () => {
                     Swal.fire({
                         icon: 'info',
                         title: 'Espere un momento',

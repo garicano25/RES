@@ -56,4 +56,5 @@ class formulariodptModel extends Model
         'AUTORIZADO_FIRMA_DPT',
         'AUTORIZADO_FECHA_DPT',
     ];
+
 }
