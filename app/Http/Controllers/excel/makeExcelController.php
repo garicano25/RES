@@ -1311,7 +1311,7 @@ class makeExcelController extends Controller{
             
             $puesto = departamentosAreasModel::where('ID_DEPARTAMENTO_AREA', $val->DEPARTAMENTOS_AREAS_ID)->pluck('NOMBRE');
 
-            // $puesto1 = departamentosAreasModel::where('PUESTOS_INTERACTUAN_DPT', $val->DEPARTAMENTOS_AREAS_ID)->pluck('NOMBRE');
+          
 
             //DATOS 
 
@@ -1343,8 +1343,12 @@ class makeExcelController extends Controller{
                 $sheet->setCellValue('H16', $val->PUESTO_REPORTA_DPT);        
             }
 
-               // PENDIENTE
-            // $sheet->setCellValue('H18', str_replace(['[', ']', '"'], '', $puesto1));
+
+            
+            if (!is_null($val->PUESTOS_INTERACTUAN_DPT)) {
+                $sheet->setCellValue('H18', $val->PUESTOS_INTERACTUAN_DPT);        
+            }
+              
 
             if (!is_null($val->PUESTOS_DIRECTOS_DPT)) {
                 $sheet->setCellValue('H20', $val->PUESTOS_DIRECTOS_DPT);        
