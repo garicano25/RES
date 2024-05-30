@@ -115,3 +115,25 @@ input[type="checkbox"] {
     transform: scale(1.5); 
     margin: 5px; 
 }
+
+
+input[type="radio"]:checked {
+    background-color: black;
+    border-color: black;
+}
+
+input[type="radio"]:checked::before {
+    background-color: black;
+}
+
+.radio-container {
+    background-color: #E2EFDA;
+    border-radius: 5px;
+    padding: 5px;
+    display: inline-block;
+}
+
+/* Opcional: si deseas cambiar el estilo de los radio buttons cuando están deshabilitados */
+.form-check-input:disabled {
+    background-color: #d1d1d1;
+}

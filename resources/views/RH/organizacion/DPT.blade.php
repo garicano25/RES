@@ -116,7 +116,7 @@ input:checked + .slider:before {
 
     <div class="contenedor-contenido">
       <ol class="breadcrumb mb-5">
-          <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-fill"></i>&nbsp;Descripción del puesto de trabajo(DPT)</h3>
+          <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-fill"></i>&nbsp;Descripción del puesto de trabajo&nbsp;(DPT)</h3>
   
   
           <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_ppt" id="nuevo_dpt" style="margin-left: auto;">
@@ -142,7 +142,7 @@ input:checked + .slider:before {
       <div class="modal-content">
           <form method="post" enctype="multipart/form-data" id="formularioDPT" style="background-color: #ffffff;">
               <div class="modal-header">
-                  <h5 class="modal-title" id="miModalLabel">Descripción del puesto de trabajo(DPT)</h5>
+                  <h5 class="modal-title" id="miModalLabel">Descripción del puesto de trabajo &nbsp;(DPT)</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">

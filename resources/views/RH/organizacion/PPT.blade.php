@@ -99,13 +99,15 @@
                                 </div>
                                 <div class="col-2">
                                     <br>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="EDAD_CUMPLE_PPT" id="EDAD_CUMPLE_SI" value="si"  disabled>
-                                        <label class="form-check-label" for="EDAD_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="EDAD_CUMPLE_PPT" id="EDAD_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="EDAD_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="EDAD_CUMPLE_PPT" id="EDAD_CUMPLE_SI" value="si"  disabled>
+                                            <label class="form-check-label" for="EDAD_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="EDAD_CUMPLE_PPT" id="EDAD_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="EDAD_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -121,13 +123,15 @@
                                 </div>
                                 <div class="col-2">
                                     <br>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="GENERO_CUMPLE_PPT" id="GENERO_CUMPLE_SI" value="si"  disabled>
-                                        <label class="form-check-label" for="GENERO_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="GENERO_CUMPLE_PPT" id="GENERO_CUMPLE_NO" value="no"  disabled>
-                                        <label class="form-check-label" for="GENERO_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="GENERO_CUMPLE_PPT" id="GENERO_CUMPLE_SI" value="si"  disabled>
+                                            <label class="form-check-label" for="GENERO_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="GENERO_CUMPLE_PPT" id="GENERO_CUMPLE_NO" value="no"  disabled>
+                                            <label class="form-check-label" for="GENERO_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -146,13 +150,15 @@
                                 </div>
                                 <div class="col-2">
                                     <br>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="ESTADO_CIVIL_CUMPLE_PPT" id="ESTADO_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="ESTADO_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="ESTADO_CIVIL_CUMPLE_PPT" id="ESTADO_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="ESTADO_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="ESTADO_CIVIL_CUMPLE_PPT" id="ESTADO_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="ESTADO_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="ESTADO_CIVIL_CUMPLE_PPT" id="ESTADO_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="ESTADO_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -168,13 +174,15 @@
                                 </div>
                                 <div class="col-2">
                                     <br>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="NACIONALIDAD_CUMPLE_PPT" id="NACIONALIDAD_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="NACIONALIDAD_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="NACIONALIDAD_CUMPLE_PPT" id="NACIONALIDAD_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="NACIONALIDAD_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="NACIONALIDAD_CUMPLE_PPT" id="NACIONALIDAD_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="NACIONALIDAD_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="NACIONALIDAD_CUMPLE_PPT" id="NACIONALIDAD_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="NACIONALIDAD_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -194,13 +202,15 @@
                                 </div>
                                 <div class="col-2">
                                     <br>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="DISCAPACIDAD_CUMPLE_PPT" id="DISCAPACIDAD_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="DISCAPACIDAD_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="DISCAPACIDAD_CUMPLE_PPT" id="DISCAPACIDAD_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="DISCAPACIDAD_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="DISCAPACIDAD_CUMPLE_PPT" id="DISCAPACIDAD_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="DISCAPACIDAD_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="DISCAPACIDAD_CUMPLE_PPT" id="DISCAPACIDAD_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="DISCAPACIDAD_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -236,13 +246,15 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <br>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado" type="radio" name="SECUNDARIA_CUMPLE_PPT" id="SECUNDARIA_CUMPLE_SI" value="si" disabled>
-                                                        <label class="form-check-label" for="SECUNDARIA_CUMPLE_SI">Si</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado" type="radio" name="SECUNDARIA_CUMPLE_PPT" id="SECUNDARIA_CUMPLE_NO" value="no" disabled>
-                                                        <label class="form-check-label" for="SECUNDARIA_CUMPLE_NO">No</label>
+                                                    <div class="radio-container">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado" type="radio" name="SECUNDARIA_CUMPLE_PPT" id="SECUNDARIA_CUMPLE_SI" value="si" disabled>
+                                                            <label class="form-check-label" for="SECUNDARIA_CUMPLE_SI">Si</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado" type="radio" name="SECUNDARIA_CUMPLE_PPT" id="SECUNDARIA_CUMPLE_NO" value="no" disabled>
+                                                            <label class="form-check-label" for="SECUNDARIA_CUMPLE_NO">No</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -262,13 +274,15 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <br>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado" type="radio" name="TECNICA_CUMPLE_PPT" id="TECNICA_CUMPLE_SI" value="si" disabled>
-                                                        <label class="form-check-label" for="TECNICA_CUMPLE_SI">Si</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado" type="radio" name="TECNICA_CUMPLE_PPT" id="TECNICA_CUMPLE_NO" value="no" disabled>
-                                                        <label class="form-check-label" for="TECNICA_CUMPLE_NO">No</label>
+                                                    <div class="radio-container">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado" type="radio" name="TECNICA_CUMPLE_PPT" id="TECNICA_CUMPLE_SI" value="si" disabled>
+                                                            <label class="form-check-label" for="TECNICA_CUMPLE_SI">Si</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado" type="radio" name="TECNICA_CUMPLE_PPT" id="TECNICA_CUMPLE_NO" value="no" disabled>
+                                                            <label class="form-check-label" for="TECNICA_CUMPLE_NO">No</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -288,13 +302,15 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <br>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado" type="radio" name="TECNICO_CUMPLE_PPT" id="TECNICO_CUMPLE_SI" value="si" disabled>
-                                                        <label class="form-check-label" for="TECNICO_CUMPLE_SI">Si</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado" type="radio" name="TECNICO_CUMPLE_PPT" id="TECNICO_CUMPLE_NO" value="no" disabled>
-                                                        <label class="form-check-label" for="TECNICO_CUMPLE_NO">No</label>
+                                                    <div class="radio-container">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado" type="radio" name="TECNICO_CUMPLE_PPT" id="TECNICO_CUMPLE_SI" value="si" disabled>
+                                                            <label class="form-check-label" for="TECNICO_CUMPLE_SI">Si</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado" type="radio" name="TECNICO_CUMPLE_PPT" id="TECNICO_CUMPLE_NO" value="no" disabled>
+                                                            <label class="form-check-label" for="TECNICO_CUMPLE_NO">No</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -314,13 +330,15 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <br>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado" type="radio" name="UNIVERSITARIO_CUMPLE_PPT" id="UNIVERSITARIO_CUMPLE_SI" value="si" disabled>
-                                                        <label class="form-check-label" for="UNIVERSITARIO_CUMPLE_SI">Si</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado" type="radio" name="UNIVERSITARIO_CUMPLE_PPT" id="UNIVERSITARIO_CUMPLE_NO" value="no" disabled>
-                                                        <label class="form-check-label" for="UNIVERSITARIO_CUMPLE_NO">No</label>
+                                                    <div class="radio-container">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado" type="radio" name="UNIVERSITARIO_CUMPLE_PPT" id="UNIVERSITARIO_CUMPLE_SI" value="si" disabled>
+                                                            <label class="form-check-label" for="UNIVERSITARIO_CUMPLE_SI">Si</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado" type="radio" name="UNIVERSITARIO_CUMPLE_PPT" id="UNIVERSITARIO_CUMPLE_NO" value="no" disabled>
+                                                            <label class="form-check-label" for="UNIVERSITARIO_CUMPLE_NO">No</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -346,13 +364,15 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <br>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado" type="radio" name="SITUACION_CUMPLE_PPT" id="SITUACION_CUMPLE_SI" value="si" disabled>
-                                                        <label class="form-check-label" for="SITUACION_CUMPLE_SI">Si</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado" type="radio" name="SITUACION_CUMPLE_PPT" id="SITUACION_CUMPLE_NO" value="no" disabled>
-                                                        <label class="form-check-label" for="SITUACION_CUMPLE_NO">No</label>
+                                                    <div class="radio-container">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado" type="radio" name="SITUACION_CUMPLE_PPT" id="SITUACION_CUMPLE_SI" value="si" disabled>
+                                                            <label class="form-check-label" for="SITUACION_CUMPLE_SI">Si</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado" type="radio" name="SITUACION_CUMPLE_PPT" id="SITUACION_CUMPLE_NO" value="no" disabled>
+                                                            <label class="form-check-label" for="SITUACION_CUMPLE_NO">No</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -372,13 +392,15 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <br>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado desabilitado" type="radio" name="CEDULA_CUMPLE_PPT" id="CEDULA_CUMPLE_SI" value="si" disabled>
-                                                        <label class="form-check-label" for="CEDULA_CUMPLE_SI">Si</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado desabilitado" type="radio" name="CEDULA_CUMPLE_PPT" id="CEDULA_CUMPLE_NO" value="no" disabled>
-                                                        <label class="form-check-label" for="CEDULA_CUMPLE_NO">No</label>
+                                                    <div class="radio-container">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado desabilitado" type="radio" name="CEDULA_CUMPLE_PPT" id="CEDULA_CUMPLE_SI" value="si" disabled>
+                                                            <label class="form-check-label" for="CEDULA_CUMPLE_SI">Si</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado desabilitado" type="radio" name="CEDULA_CUMPLE_PPT" id="CEDULA_CUMPLE_NO" value="no" disabled>
+                                                            <label class="form-check-label" for="CEDULA_CUMPLE_NO">No</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -408,13 +430,15 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <br>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado" type="radio" name="AREA1_CUMPLE_PPT" id="AREA1_CUMPLE_SI" value="si" disabled>
-                                                        <label class="form-check-label" for="AREA1_CUMPLE_SI">Si</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado" type="radio" name="AREA1_CUMPLE_PPT" id="AREA1_CUMPLE_NO" value="no" disabled>
-                                                        <label class="form-check-label" for="AREA1_CUMPLE_NO">No</label>
+                                                    <div class="radio-container">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado" type="radio" name="AREA1_CUMPLE_PPT" id="AREA1_CUMPLE_SI" value="si" disabled>
+                                                            <label class="form-check-label" for="AREA1_CUMPLE_SI">Si</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado" type="radio" name="AREA1_CUMPLE_PPT" id="AREA1_CUMPLE_NO" value="no" disabled>
+                                                            <label class="form-check-label" for="AREA1_CUMPLE_NO">No</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -441,13 +465,15 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <br>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado desabilitado" type="radio" name="AREA2_CUMPLE_PPT" id="AREA2_CUMPLE_SI" value="si" disabled>
-                                                        <label class="form-check-label" for="AREA2_CUMPLE_SI">Si</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado desabilitado" type="radio" name="AREA2_CUMPLE_PPT" id="AREA2_CUMPLE_NO" value="no" disabled>
-                                                        <label class="form-check-label" for="AREA2_CUMPLE_NO">No</label>
+                                                    <div class="radio-container">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado desabilitado" type="radio" name="AREA2_CUMPLE_PPT" id="AREA2_CUMPLE_SI" value="si" disabled>
+                                                            <label class="form-check-label" for="AREA2_CUMPLE_SI">Si</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado desabilitado" type="radio" name="AREA2_CUMPLE_PPT" id="AREA2_CUMPLE_NO" value="no" disabled>
+                                                            <label class="form-check-label" for="AREA2_CUMPLE_NO">No</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -473,13 +499,15 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <br>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado" type="radio" name="AREA3_CUMPLE_PPT" id="AREA3_CUMPLE_SI" value="si" disabled>
-                                                        <label class="form-check-label" for="AREA3_CUMPLE_SI">Si</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado" type="radio" name="AREA3_CUMPLE_PPT" id="AREA3_CUMPLE_NO" value="no" disabled>
-                                                        <label class="form-check-label" for="AREA3_CUMPLE_NO">No</label>
+                                                    <div class="radio-container">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado" type="radio" name="AREA3_CUMPLE_PPT" id="AREA3_CUMPLE_SI" value="si" disabled>
+                                                            <label class="form-check-label" for="AREA3_CUMPLE_SI">Si</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado" type="radio" name="AREA3_CUMPLE_PPT" id="AREA3_CUMPLE_NO" value="no" disabled>
+                                                            <label class="form-check-label" for="AREA3_CUMPLE_NO">No</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -505,13 +533,15 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <br>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado" type="radio" name="AREA4_CUMPLE_PPT" id="AREA4_CUMPLE_SI" value="si" disabled>
-                                                        <label class="form-check-label" for="AREA4_CUMPLE_SI">Si</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado" type="radio" name="AREA4_CUMPLE_PPT" id="AREA4_CUMPLE_NO" value="no" disabled>
-                                                        <label class="form-check-label" for="AREA4_CUMPLE_NO">No</label>
+                                                    <div class="radio-container">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado" type="radio" name="AREA4_CUMPLE_PPT" id="AREA4_CUMPLE_SI" value="si" disabled>
+                                                            <label class="form-check-label" for="AREA4_CUMPLE_SI">Si</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado" type="radio" name="AREA4_CUMPLE_PPT" id="AREA4_CUMPLE_NO" value="no" disabled>
+                                                            <label class="form-check-label" for="AREA4_CUMPLE_NO">No</label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -540,30 +570,33 @@
                             </div>
 
                             <div class="row mb-1">
-                                <div class="col-1 ">
+                                <div class="col-1">
                                     <label>Especialidad</label>
                                 </div>
                                 <div class="col-1">
                                     <div class="form-group text-center">
-                                        <label>Egresado</label>
-                                        <input type="text" class="form-control" id="EGRESADO_ESPECIALIDAD_PPT" name="EGRESADO_ESPECIALIDAD_PPT">
+                                        <label>Egresado &nbsp;&nbsp;&nbsp;</label>
+                                        <input class="form-check-input " type="radio" name="EGRESADO_ESPECIALIDAD_PPT" id="ESPECIALIDAD_SI" value="*E" >
+
                                     </div>
                                 </div>
                                 <div class="col-1">
                                     <div class="form-group text-center">
                                         <label>Grado/título</label>
-                                        <input type="text" class="form-control text-center" id="GRADUADO_ESPECIALIDA_PPT" name="GRADUADO_ESPECIALIDA_PPT">
+                                        <input class="form-check-input " type="radio" name="EGRESADO_ESPECIALIDAD_PPT" id="ESPECIALIDAD_NO" value="*D" >
                                     </div>
                                 </div>
                                 <div class="col-2">
                                     <br>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="ESPECIALIDAD_CUMPLE_PPT" id="ESPECIALIDAD_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="ESPECIALIDAD_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="ESPECIALIDAD_CUMPLE_PPT" id="ESPECIALIDAD_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="ESPECIALIDAD_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="ESPECIALIDAD_CUMPLE_PPT" id="ESPECIALIDAD_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="ESPECIALIDAD_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="ESPECIALIDAD_CUMPLE_PPT" id="ESPECIALIDAD_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="ESPECIALIDAD_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -579,25 +612,27 @@
                                 </div>
                                 <div class="col-1">
                                     <div class="form-group text-center">
-                                        <label>Egresado</label>
-                                        <input type="text" class="form-control text-center" id="EGRESADO_MAESTRIA_PPT" name="EGRESADO_MAESTRIA_PPT">
+                                        <label>Egresado &nbsp;&nbsp;&nbsp;</label>
+                                        <input class="form-check-input " type="radio" name="EGRESADO_MAESTRIA_PPT" id="MAESTRIA_SI" value="*E" >
                                     </div>
                                 </div>
                                 <div class="col-1">
                                     <div class="form-group text-center">
-                                        <label>Graduado</label>
-                                        <input type="text" class="form-control text-center" id="GRADUADO_MAESTRIA_PPT" name="GRADUADO_MAESTRIA_PPT">
+                                        <label>Grado/título</label>
+                                        <input class="form-check-input " type="radio" name="EGRESADO_MAESTRIA_PPT" id="MAESTRIA_NO" value="*D" >
                                     </div>
                                 </div>
                                 <div class="col-2">
                                     <br>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="MAESTRIA_CUMPLE_PPT" id="MAESTRIA_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="MAESTRIA_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="MAESTRIA_CUMPLE_PPT" id="MAESTRIA_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="MAESTRIA_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="MAESTRIA_CUMPLE_PPT" id="MAESTRIA_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="MAESTRIA_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="MAESTRIA_CUMPLE_PPT" id="MAESTRIA_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="MAESTRIA_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -606,28 +641,33 @@
                                 <div class="col-1 mt-4">
                                     <label>Doctorado</label>
                                 </div>
+
                                 <div class="col-1">
                                     <div class="form-group text-center">
-                                        <label>Egresado</label>
-                                        <input type="text" class="form-control text-center" id="EGRESADO_DOCTORADO_PPT" name="EGRESADO_DOCTORADO_PPT">
+                                        <label>Egresado &nbsp;&nbsp;&nbsp;</label>
+                                        <input class="form-check-input " type="radio" name="EGRESADO_DOCTORADO_PPT" id="DOCTORADO_SI" value="*E" >
+
                                     </div>
                                 </div>
                                 <div class="col-1">
                                     <div class="form-group text-center">
                                         <label>Grado/título</label>
-                                        <input type="text" class="form-control text-center" id="GRADUADO_DOCTORADO_PPT" name="GRADUADO_DOCTORADO_PPT">
+                                        <input class="form-check-input " type="radio" name="EGRESADO_DOCTORADO_PPT" id="DOCTORADO_NO" value="*D" >
                                     </div>
                                 </div>
                                 <div class="col-2">
                                     <br>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="DOCTORADO_CUMPLE_PPT" id="DOCTORADO_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="DOCTORADO_CUMPLE_SI">Si</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="DOCTORADO_CUMPLE_PPT" id="DOCTORADO_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="DOCTORADO_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="DOCTORADO_CUMPLE_PPT" id="DOCTORADO_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="DOCTORADO_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="DOCTORADO_CUMPLE_PPT" id="DOCTORADO_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="DOCTORADO_CUMPLE_NO">No</label>
-                                    </div>
+
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
@@ -683,12 +723,16 @@
                                                     <input type="checkbox" id="WORD_ALTO_PPT" name="WORD_ALTO_PPT" value="X"> 
                                                 </td>
                                                 <td>
-                                                    <label class="form-check-label" for="WORD_CUMPLE_SI">Si</label>
-                                                    <input class="form-check-input desabilitado" type="radio" name="WORD_CUMPLE_PPT" id="WORD_CUMPLE_SI" value="si" disabled>
+                                                    <div class="radio-container">
+                                                        <label class="form-check-label" for="WORD_CUMPLE_SI">Si</label>
+                                                        <input class="form-check-input desabilitado" type="radio" name="WORD_CUMPLE_PPT" id="WORD_CUMPLE_SI" value="si" disabled>
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <label class="form-check-label" for="WORD_CUMPLE_NO">No</label>
-                                                    <input class="form-check-input desabilitado" type="radio" name="WORD_CUMPLE_PPT" id="WORD_CUMPLE_NO" value="no" disabled>
+                                                    <div class="radio-container">
+                                                        <label class="form-check-label" for="WORD_CUMPLE_NO">No</label>
+                                                        <input class="form-check-input desabilitado" type="radio" name="WORD_CUMPLE_PPT" id="WORD_CUMPLE_NO" value="no" disabled>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr style="height: 25px;"></tr> 
@@ -711,12 +755,16 @@
                                                         <input type="checkbox" id="EXCEL_ALTO_PPT" name="EXCEL_ALTO_PPT" value="X">
                                                     </td>
                                                     <td>
-                                                        <label class="form-check-label" for="EXCEL_CUMPLE_SI">Si</label>
-                                                        <input class="form-check-input desabilitado" type="radio" name="EXCEL_CUMPLE_PPT" id="EXCEL_CUMPLE_SI" value="si" disabled>
+                                                        <div class="radio-container">
+                                                            <label class="form-check-label" for="EXCEL_CUMPLE_SI">Si</label>
+                                                            <input class="form-check-input desabilitado" type="radio" name="EXCEL_CUMPLE_PPT" id="EXCEL_CUMPLE_SI" value="si" disabled>
+                                                        </div>
                                                     </td>
                                                     <td>
-                                                        <label class="form-check-label" for="EXCEL_CUMPLE_NO">No</label>
-                                                        <input class="form-check-input desabilitado" type="radio" name="EXCEL_CUMPLE_PPT" id="EXCEL_CUMPLE_NO" value="no" disabled>
+                                                        <div class="radio-container">
+                                                            <label class="form-check-label" for="EXCEL_CUMPLE_NO">No</label>
+                                                            <input class="form-check-input desabilitado" type="radio" name="EXCEL_CUMPLE_PPT" id="EXCEL_CUMPLE_NO" value="no" disabled>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             
@@ -740,12 +788,16 @@
                                                     <input type="checkbox" id="POWER_ALTO_PPT" name="POWER_ALTO_PPT" value="X">
                                                 </td>
                                                 <td>
-                                                    <label class="form-check-label" for="POWER_CUMPLE_SI">Si</label>
-                                                    <input class="form-check-input  desabilitado desabilitado" type="radio" name="POWER_CUMPLE_PPT" id="POWER_CUMPLE_SI" value="si" disabled>
+                                                    <div class="radio-container">
+                                                        <label class="form-check-label" for="POWER_CUMPLE_SI">Si</label>
+                                                        <input class="form-check-input  desabilitado desabilitado" type="radio" name="POWER_CUMPLE_PPT" id="POWER_CUMPLE_SI" value="si" disabled>
+                                                    </div>
                                                 </td>
                                                 <td>
-                                                    <label class="form-check-label" for="POWER _CUMPLE_NO">No</label>
-                                                    <input class="form-check-input  desabilitado desabilitado" type="radio" name="POWER_CUMPLE_PPT" id="POWER _CUMPLE_NO" value="no" disabled>
+                                                    <div class="radio-container">
+                                                        <label class="form-check-label" for="POWER _CUMPLE_NO">No</label>
+                                                        <input class="form-check-input  desabilitado desabilitado" type="radio" name="POWER_CUMPLE_PPT" id="POWER _CUMPLE_NO" value="no" disabled>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -772,70 +824,100 @@
                                         <tbody>
                                             <tr>
             
-                                                <td><input type="text" class="form-control" id="NOMBRE_IDIOMA1_PPT" name="NOMBRE_IDIOMA1_PPT">
+                                                <td>
+                                                    <input type="text" class="form-control" id="NOMBRE_IDIOMA1_PPT" name="NOMBRE_IDIOMA1_PPT">
                                                 </td>
 
-                                                <td><input type="text" class="form-control text-center" id="APLICA_IDIOMA1_PPT" name="APLICA_IDIOMA1_PPT">
-                                                </td>
-                                                <td><input type="number" class="form-control text-center" id="HABLAR_IDIOMA1_PPT" name="HABLAR_IDIOMA1_PPT">
-                                                </td>
-                                                <td><input type="number" class="form-control text-center" id="ESCRIBIR_IDIOMA1_PPT" name="ESCRIBIR_IDIOMA1_PPT">
-                                                </td>
-                                                <td><input type="number" class="form-control text-center" id="LEER_IDIOMA1_PPT" name="LEER_IDIOMA1_PPT">
-                                                </td>
-                                                <td><input type="number" class="form-control text-center" id="ESCUCHAR_IDIOMA1_PPT" name="ESCUCHAR_IDIOMA1_PPT">
+                                                <td>
+                                                    <input type="text" class="form-control text-center" id="APLICA_IDIOMA1_PPT" name="APLICA_IDIOMA1_PPT">
                                                 </td>
                                                 <td>
-                                                    <label class="form-check-label" for="IDIOMA1_CUMPLE_SI">Si</label>
-                                                    <input class="form-check-input desabilitado" type="radio" name="IDIOMA1_CUMPLE_PPT" id="IDIOMA1_CUMPLE_SI" value="si" disabled>
+                                                    <input type="number" class="form-control text-center" id="HABLAR_IDIOMA1_PPT" name="HABLAR_IDIOMA1_PPT">
                                                 </td>
                                                 <td>
-                                                    <label class="form-check-label" for="IDIOMA1_CUMPLE_NO">No</label>
-                                                    <input class="form-check-input desabilitado" type="radio" name="IDIOMA1_CUMPLE_PPT" id="IDIOMA1_CUMPLE_NO" value="no" disabled>
+                                                    <input type="number" class="form-control text-center" id="ESCRIBIR_IDIOMA1_PPT" name="ESCRIBIR_IDIOMA1_PPT">
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control text-center" id="LEER_IDIOMA1_PPT" name="LEER_IDIOMA1_PPT">
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control text-center" id="ESCUCHAR_IDIOMA1_PPT" name="ESCUCHAR_IDIOMA1_PPT">
+                                                </td>
+                                                <td>
+                                                    <div class="radio-container">
+                                                        <label class="form-check-label" for="IDIOMA1_CUMPLE_SI">Si</label>
+                                                        <input class="form-check-input desabilitado" type="radio" name="IDIOMA1_CUMPLE_PPT" id="IDIOMA1_CUMPLE_SI" value="si" disabled>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="radio-container">
+                                                        <label class="form-check-label" for="IDIOMA1_CUMPLE_NO">No</label>
+                                                        <input class="form-check-input desabilitado" type="radio" name="IDIOMA1_CUMPLE_PPT" id="IDIOMA1_CUMPLE_NO" value="no" disabled>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><input type="text" class="form-control" id="NOMBRE_IDIOMA2_PPT" name="NOMBRE_IDIOMA2_PPT">
-                                                </td>
-                                                <td><input type="text" class="form-control text-center" id="APLICA_IDIOMA2_PPT" name="APLICA_IDIOMA2_PPT">
-                                                </td>
-                                                <td><input type="number" class="form-control text-center" id="HABLAR_IDIOMA2_PPT" name="HABLAR_IDIOMA2_PPT">
-                                                </td>
-                                                <td><input type="number" class="form-control text-center" id="ESCRIBIR_IDIOMA2_PPT" name="ESCRIBIR_IDIOMA2_PPT">
-                                                </td>
-                                                <td><input type="number" class="form-control text-center" id="LEER_IDIOMA2_PPT" name="LEER_IDIOMA2_PPT">
-                                                </td>
-                                                <td><input type="number" class="form-control text-center" id="ESCUCHAR_IDIOMA2_PPT" name="ESCUCHAR_IDIOMA2_PPT">
+                                                <td>
+                                                    <input type="text" class="form-control" id="NOMBRE_IDIOMA2_PPT" name="NOMBRE_IDIOMA2_PPT">
                                                 </td>
                                                 <td>
-                                                    <label class="form-check-label" for="IDIOMA2_CUMPLE_SI">Si</label>
-                                                    <input class="form-check-input desabilitado" type="radio" name="IDIOMA2_CUMPLE_PPT" id="IDIOMA2_CUMPLE_SI" value="si" disabled>
+                                                    <input type="text" class="form-control text-center" id="APLICA_IDIOMA2_PPT" name="APLICA_IDIOMA2_PPT">
                                                 </td>
                                                 <td>
-                                                    <label class="form-check-label" for="IDIOMA2_CUMPLE_NO">No</label>
-                                                    <input class="form-check-input desabilitado" type="radio" name="IDIOMA2_CUMPLE_PPT" id="IDIOMA2_CUMPLE_NO" value="no" disabled>
+                                                    <input type="number" class="form-control text-center" id="HABLAR_IDIOMA2_PPT" name="HABLAR_IDIOMA2_PPT">
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control text-center" id="ESCRIBIR_IDIOMA2_PPT" name="ESCRIBIR_IDIOMA2_PPT">
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control text-center" id="LEER_IDIOMA2_PPT" name="LEER_IDIOMA2_PPT">
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control text-center" id="ESCUCHAR_IDIOMA2_PPT" name="ESCUCHAR_IDIOMA2_PPT">
+                                                </td>
+                                                <td>
+                                                    <div class="radio-container">
+                                                        <label class="form-check-label" for="IDIOMA2_CUMPLE_SI">Si</label>
+                                                        <input class="form-check-input desabilitado" type="radio" name="IDIOMA2_CUMPLE_PPT" id="IDIOMA2_CUMPLE_SI" value="si" disabled>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="radio-container">
+                                                        <label class="form-check-label" for="IDIOMA2_CUMPLE_NO">No</label>
+                                                        <input class="form-check-input desabilitado" type="radio" name="IDIOMA2_CUMPLE_PPT" id="IDIOMA2_CUMPLE_NO" value="no" disabled>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><input type="text" class="form-control" id="NOMBRE_IDIOMA3_PPT" name="NOMBRE_IDIOMA3_PPT">
-                                                </td>
-                                                <td><input type="text" class="form-control text-center" id="APLICA_IDIOMA3_PPT" name="APLICA_IDIOMA3_PPT">
-                                                </td>
-                                                <td><input type="number" class="form-control text-center" id="HABLAR_IDIOMA3_PPT" name="HABLAR_IDIOMA3_PPT">
-                                                </td>
-                                                <td><input type="number" class="form-control text-center" id="ESCRIBIR_IDIOMA3_PPT" name="ESCRIBIR_IDIOMA3_PPT">
-                                                </td>
-                                                <td><input type="number" class="form-control text-center" id="LEER_IDIOMA3_PPT" name="LEER_IDIOMA3_PPT">
-                                                </td>
-                                                <td><input type="number" class="form-control text-center" id="ESCUCHAR_IDIOMA3_PPT" name="ESCUCHAR_IDIOMA3_PPT">
+                                                <td>
+                                                    <input type="text" class="form-control" id="NOMBRE_IDIOMA3_PPT" name="NOMBRE_IDIOMA3_PPT">
                                                 </td>
                                                 <td>
-                                                    <label class="form-check-label" for="IDIOMA3_CUMPLE_SI">Si</label>
-                                                    <input class="form-check-input desabilitado" type="radio" name="IDIOMA3_CUMPLE_PPT" id="IDIOMA3_CUMPLE_SI" value="si" disabled>
+                                                    <input type="text" class="form-control text-center" id="APLICA_IDIOMA3_PPT" name="APLICA_IDIOMA3_PPT">
                                                 </td>
                                                 <td>
-                                                    <label class="form-check-label" for="IDIOMA3_CUMPLE_NO">No</label>
-                                                    <input class="form-check-input desabilitado" type="radio" name="IDIOMA3_CUMPLE_PPT" id="IDIOMA3_CUMPLE_NO" value="no" disabled>
+                                                    <input type="number" class="form-control text-center" id="HABLAR_IDIOMA3_PPT" name="HABLAR_IDIOMA3_PPT">
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control text-center" id="ESCRIBIR_IDIOMA3_PPT" name="ESCRIBIR_IDIOMA3_PPT">
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control text-center" id="LEER_IDIOMA3_PPT" name="LEER_IDIOMA3_PPT">
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control text-center" id="ESCUCHAR_IDIOMA3_PPT" name="ESCUCHAR_IDIOMA3_PPT">
+                                                </td>
+                                                <td>
+                                                    <div class="radio-container">
+                                                        <label class="form-check-label" for="IDIOMA3_CUMPLE_SI">Si</label>
+                                                        <input class="form-check-input desabilitado" type="radio" name="IDIOMA3_CUMPLE_PPT" id="IDIOMA3_CUMPLE_SI" value="si" disabled>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="radio-container">
+                                                        <label class="form-check-label" for="IDIOMA3_CUMPLE_NO">No</label>
+                                                        <input class="form-check-input desabilitado" type="radio" name="IDIOMA3_CUMPLE_PPT" id="IDIOMA3_CUMPLE_NO" value="no" disabled>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -876,10 +958,14 @@
                                                                         <input type="checkbox" id="CURSO1_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[1]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[1]" id="CURSO1_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[1]" id="CURSO1_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[1]" id="CURSO1_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                         <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[1]" id="CURSO1_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
 
@@ -894,10 +980,14 @@
                                                                         <input type="checkbox" id="CURSO2_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[2]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[2]" id="CURSO2_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[2]" id="CURSO2_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[2]" id="CURSO2_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[2]" id="CURSO2_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -911,10 +1001,14 @@
                                                                         <input type="checkbox" id="CURSO3_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[3]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[3]" id="CURSO3_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                         <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[3]" id="CURSO3_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[3]" id="CURSO3_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[3]" id="CURSO3_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -928,10 +1022,14 @@
                                                                         <input type="checkbox" id="CURSO4_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[4]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[4]" id="CURSO4_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                         <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[4]" id="CURSO4_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[4]" id="CURSO4_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[4]" id="CURSO4_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -945,10 +1043,14 @@
                                                                         <input type="checkbox" id="CURSO5_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[5]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[5]" id="CURSO5_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[5]" id="CURSO5_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[5]" id="CURSO5_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                         <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[5]" id="CURSO5_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -962,10 +1064,14 @@
                                                                         <input type="checkbox" id="CURSO6_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[6]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[6]" id="CURSO6_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[6]" id="CURSO6_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[6]" id="CURSO6_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[6]" id="CURSO6_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -979,10 +1085,14 @@
                                                                         <input type="checkbox" id="CURSO7_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[7]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[7]" id="CURSO7_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[7]" id="CURSO7_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[7]" id="CURSO7_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[7]" id="CURSO7_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -996,10 +1106,14 @@
                                                                         <input type="checkbox" id="CURSO8_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[8]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[8]" id="CURSO8_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[8]" id="CURSO8_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[8]" id="CURSO8_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[8]" id="CURSO8_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1013,10 +1127,14 @@
                                                                         <input type="checkbox" id="CURSO9_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[9]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[9]" id="CURSO9_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[9]" id="CURSO9_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[9]" id="CURSO9_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[9]" id="CURSO9_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1030,10 +1148,14 @@
                                                                         <input type="checkbox" id="CURSO10_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[10]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[10]" id="CURSO10_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[10]" id="CURSO10_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[10]" id="CURSO10_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[10]" id="CURSO10_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -1080,10 +1202,14 @@
                                                                         <input type="checkbox" id="CURSO11_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[11]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[11]" id="CURSO11_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[11]" id="CURSO11_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[11]" id="CURSO11_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[11]" id="CURSO11_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1097,10 +1223,14 @@
                                                                         <input type="checkbox" id="CURSO12_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[12]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[12]" id="CURSO12_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[12]" id="CURSO12_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[12]" id="CURSO12_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[12]" id="CURSO12_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1114,10 +1244,14 @@
                                                                         <input type="checkbox" id="CURSO13_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[13]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[13]" id="CURSO13_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                              <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[13]" id="CURSO13_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[13]" id="CURSO13_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                                <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[13]" id="CURSO13_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1131,10 +1265,14 @@
                                                                         <input type="checkbox" id="CURSO14_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[14]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[14]" id="CURSO14_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[14]" id="CURSO14_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[14]" id="CURSO14_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                                <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[14]" id="CURSO14_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1148,10 +1286,14 @@
                                                                         <input type="checkbox" id="CURSO15_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[15]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[15]" id="CURSO15_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[15]" id="CURSO15_CUMPLE_SI" value="si" disabled >
+                                                                        </div>  
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[15]" id="CURSO15_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                                <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[15]" id="CURSO15_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1165,10 +1307,14 @@
                                                                         <input type="checkbox" id="CURSO16_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[16]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[16]" id="CURSO16_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[16]" id="CURSO16_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[16]" id="CURSO16_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[16]" id="CURSO16_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1182,10 +1328,14 @@
                                                                         <input type="checkbox" id="CURSO17_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[17]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[17]" id="CURSO17_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[17]" id="CURSO17_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[17]" id="CURSO17_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[17]" id="CURSO17_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1199,10 +1349,14 @@
                                                                         <input type="checkbox" id="CURSO18_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[18]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[18]" id="CURSO18_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                         <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[18]" id="CURSO18_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[18]" id="CURSO18_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[18]" id="CURSO18_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1216,10 +1370,14 @@
                                                                         <input type="checkbox" id="CURSO19_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[19]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[19]" id="CURSO19_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                          <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[19]" id="CURSO19_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[19]" id="CURSO19_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[19]" id="CURSO19_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1233,10 +1391,14 @@
                                                                         <input type="checkbox" id="CURSO20_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[20]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[20]" id="CURSO20_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                         <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[20]" id="CURSO20_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[20]" id="CURSO20_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                         <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[20]" id="CURSO20_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -1286,10 +1448,14 @@
                                                                         <input type="checkbox" id="CURSO21_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[21]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[21]" id="CURSO21_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[21]" id="CURSO21_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[21]" id="CURSO21_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[21]" id="CURSO21_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1303,10 +1469,14 @@
                                                                         <input type="checkbox" id="CURSO22_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[22]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[22]" id="CURSO22_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[22]" id="CURSO22_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[22]" id="CURSO22_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                          <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[22]" id="CURSO22_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1320,10 +1490,14 @@
                                                                         <input type="checkbox" id="CURSO23_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[23]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[23]" id="CURSO23_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                         <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[23]" id="CURSO23_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[23]" id="CURSO23_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                          <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[23]" id="CURSO23_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1337,10 +1511,14 @@
                                                                         <input type="checkbox" id="CURSO24_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[24]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[24]" id="CURSO24_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                         <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[24]" id="CURSO24_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[24]" id="CURSO24_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[24]" id="CURSO24_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1354,10 +1532,14 @@
                                                                         <input type="checkbox" id="CURSO25_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[25]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[25]" id="CURSO25_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                          <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[25]" id="CURSO25_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[25]" id="CURSO25_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[25]" id="CURSO25_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1371,10 +1553,14 @@
                                                                         <input type="checkbox" id="CURSO26_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[26]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[26]" id="CURSO26_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[26]" id="CURSO26_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[26]" id="CURSO26_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                         <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[26]" id="CURSO26_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1388,10 +1574,14 @@
                                                                         <input type="checkbox" id="CURSO27_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[27]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[27]" id="CURSO27_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                         <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[27]" id="CURSO27_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[27]" id="CURSO27_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[27]" id="CURSO27_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1405,10 +1595,14 @@
                                                                         <input type="checkbox" id="CURSO28_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[28]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[28]" id="CURSO28_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[28]" id="CURSO28_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[28]" id="CURSO28_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[28]" id="CURSO28_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1422,10 +1616,14 @@
                                                                         <input type="checkbox" id="CURSO29_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[29]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[29]" id="CURSO29_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[29]" id="CURSO29_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[29]" id="CURSO29_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[29]" id="CURSO29_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1439,10 +1637,14 @@
                                                                         <input type="checkbox" id="CURSO30_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[30]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[30]" id="CURSO30_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                         <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[30]" id="CURSO30_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[30]" id="CURSO30_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[30]" id="CURSO30_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -1489,10 +1691,14 @@
                                                                         <input type="checkbox" id="CURSO31_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[31]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[31]" id="CURSO31_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[31]" id="CURSO31_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[31]" id="CURSO31_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                          <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[31]" id="CURSO31_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
 
@@ -1507,10 +1713,14 @@
                                                                         <input type="checkbox" id="CURSO32_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[32]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[32]" id="CURSO32_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                          <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[32]" id="CURSO32_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[32]" id="CURSO32_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[32]" id="CURSO32_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1524,10 +1734,14 @@
                                                                         <input type="checkbox" id="CURSO33_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[33]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[33]" id="CURSO33_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[33]" id="CURSO33_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[33]" id="CURSO33_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[33]" id="CURSO33_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1541,10 +1755,14 @@
                                                                         <input type="checkbox" id="CURSO34_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[34]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[34]" id="CURSO34_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[34]" id="CURSO34_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[34]" id="CURSO34_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[34]" id="CURSO34_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1558,10 +1776,14 @@
                                                                         <input type="checkbox" id="CURSO35_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[35]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[35]" id="CURSO35_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[35]" id="CURSO35_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[35]" id="CURSO35_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[35]" id="CURSO35_CUMPLE_NO" value="no" disabled>
+                                                                            </div>
                                                                     </td>
                                                                 </tr>
 
@@ -1576,10 +1798,14 @@
                                                                         <input type="checkbox" id="CURSO36_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[36]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[36]" id="CURSO36_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                         <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[36]" id="CURSO36_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[36]" id="CURSO36_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[36]" id="CURSO36_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1593,10 +1819,14 @@
                                                                         <input type="checkbox" id="CURSO37_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[37]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[37]" id="CURSO37_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[37]" id="CURSO37_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[37]" id="CURSO37_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                              <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[37]" id="CURSO37_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1610,10 +1840,14 @@
                                                                         <input type="checkbox" id="CURSO38_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[38]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[38]" id="CURSO38_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[38]" id="CURSO38_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[38]" id="CURSO38_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                              <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[38]" id="CURSO38_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1627,10 +1861,14 @@
                                                                         <input type="checkbox" id="CURSO39_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[39]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[39]" id="CURSO39_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[39]" id="CURSO39_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[39]" id="CURSO39_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[39]" id="CURSO39_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -1644,10 +1882,14 @@
                                                                         <input type="checkbox" id="CURSO40_DESEABLE_PPT" name="CURSO_DESEABLE_PPT[40]" value="X">
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[40]" id="CURSO40_CUMPLE_SI" value="si" disabled >
+                                                                        <div class="radio-container">
+                                                                             <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[40]" id="CURSO40_CUMPLE_SI" value="si" disabled >
+                                                                        </div>
                                                                     </td>
                                                                     <td class="text-center">
-                                                                        <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[40]" id="CURSO40_CUMPLE_NO" value="no" disabled>
+                                                                        <div class="radio-container">
+                                                                            <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[40]" id="CURSO40_CUMPLE_NO" value="no" disabled>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -1685,13 +1927,15 @@
                                     </div>
                                 </div>
                                 <div class="col-2">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="EXPERIENCIAGENERAL_CUMPLE_PPT" id="EXPERIENCIAGENERAL_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="EXPERIENCIAGENERAL_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="EXPERIENCIAGENERAL_CUMPLE_PPT" id="EXPERIENCIAGENERAL_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="EXPERIENCIAGENERAL_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="EXPERIENCIAGENERAL_CUMPLE_PPT" id="EXPERIENCIAGENERAL_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="EXPERIENCIAGENERAL_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="EXPERIENCIAGENERAL_CUMPLE_PPT" id="EXPERIENCIAGENERAL_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="EXPERIENCIAGENERAL_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1705,13 +1949,15 @@
                                     </div>
                                 </div>
                                 <div class="col-2">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="CANTIDAD_EXPERIENCIA_CUMPLE_PPT" id="CANTIDAD_EXPERIENCIA_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="CANTIDAD_EXPERIENCIA_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="CANTIDAD_EXPERIENCIA_CUMPLE_PPT" id="CANTIDAD_EXPERIENCIA_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="CANTIDAD_EXPERIENCIA_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="CANTIDAD_EXPERIENCIA_CUMPLE_PPT" id="CANTIDAD_EXPERIENCIA_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="CANTIDAD_EXPERIENCIA_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="CANTIDAD_EXPERIENCIA_CUMPLE_PPT" id="CANTIDAD_EXPERIENCIA_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="CANTIDAD_EXPERIENCIA_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1730,13 +1976,15 @@
                                     </div>
                                 </div>
                                 <div class="col-2">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="EXPERIENCIA_ESPECIFICA_CUMPLE_PPT" id="EXPERIENCIA_ESPECIFICA_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="EXPERIENCIA_ESPECIFICA_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="EXPERIENCIA_ESPECIFICA_CUMPLE_PPT" id="EXPERIENCIA_ESPECIFICA_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="EXPERIENCIA_ESPECIFICA_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="EXPERIENCIA_ESPECIFICA_CUMPLE_PPT" id="EXPERIENCIA_ESPECIFICA_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="EXPERIENCIA_ESPECIFICA_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="EXPERIENCIA_ESPECIFICA_CUMPLE_PPT" id="EXPERIENCIA_ESPECIFICA_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="EXPERIENCIA_ESPECIFICA_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1756,16 +2004,17 @@
                                     </div>
                                 </div>
                                 <div class="col-2">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="PRACTICA_PROFESIONAL_CUMPLE_PPT" id="PRACTICA_PROFESIONAL_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="PRACTICA_PROFESIONAL_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="PRACTICA_PROFESIONAL_CUMPLE_PPT" id="PRACTICA_PROFESIONAL_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="PRACTICA_PROFESIONAL_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="PRACTICA_PROFESIONAL_CUMPLE_PPT" id="PRACTICA_PROFESIONAL_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="PRACTICA_PROFESIONAL_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="PRACTICA_PROFESIONAL_CUMPLE_PPT" id="PRACTICA_PROFESIONAL_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="PRACTICA_PROFESIONAL_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
-
 
 
                                 <div class="col-2 mt-1">
@@ -1778,13 +2027,15 @@
                                     </div>
                                 </div>
                                 <div class="col-2">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="AUXILIAR_ASISTENTE_CUMPLE_PPT" id="AUXILIAR_ASISTENTE_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="AUXILIAR_ASISTENTE_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="AUXILIAR_ASISTENTE_CUMPLE_PPT" id="AUXILIAR_ASISTENTE_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="AUXILIAR_ASISTENTE_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="AUXILIAR_ASISTENTE_CUMPLE_PPT" id="AUXILIAR_ASISTENTE_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="AUXILIAR_ASISTENTE_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="AUXILIAR_ASISTENTE_CUMPLE_PPT" id="AUXILIAR_ASISTENTE_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="AUXILIAR_ASISTENTE_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1798,13 +2049,15 @@
                                         </div>
                                     </div>
                                     <div class="col-2">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="ANALISTA_ESPECIALISTA_CUMPLE_PPT" id="ANALISTA_ESPECIALISTA_CUMPLE_SI" value="si" disabled>
-                                            <label class="form-check-label" for="ANALISTA_ESPECIALISTA_CUMPLE_SI">Si</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="ANALISTA_ESPECIALISTA_CUMPLE_PPT" id="ANALISTA_ESPECIALISTA_CUMPLE_NO" value="no" disabled>
-                                            <label class="form-check-label" for="ANALISTA_ESPECIALISTA_CUMPLE_NO">No</label>
+                                        <div class="radio-container">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input desabilitado" type="radio" name="ANALISTA_ESPECIALISTA_CUMPLE_PPT" id="ANALISTA_ESPECIALISTA_CUMPLE_SI" value="si" disabled>
+                                                <label class="form-check-label" for="ANALISTA_ESPECIALISTA_CUMPLE_SI">Si</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input desabilitado" type="radio" name="ANALISTA_ESPECIALISTA_CUMPLE_PPT" id="ANALISTA_ESPECIALISTA_CUMPLE_NO" value="no" disabled>
+                                                <label class="form-check-label" for="ANALISTA_ESPECIALISTA_CUMPLE_NO">No</label>
+                                            </div>
                                         </div>
                                     </div>
                                 <div class="col-2 mt-1">
@@ -1817,20 +2070,19 @@
                                 </div>
 
                                 <div class="col-2">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="ELABORACION_REPORTES_CUMPLE_PPT" id="ELABORACION_REPORTES_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="ELABORACION_REPORTES_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="ELABORACION_REPORTES_CUMPLE_PPT" id="ELABORACION_REPORTES_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="ELABORACION_REPORTES_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="ELABORACION_REPORTES_CUMPLE_PPT" id="ELABORACION_REPORTES_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="ELABORACION_REPORTES_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="ELABORACION_REPORTES_CUMPLE_PPT" id="ELABORACION_REPORTES_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="ELABORACION_REPORTES_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        
-
-
-                            
+                                                  
 
                             <div class="row mb-3">
 
@@ -1843,13 +2095,15 @@
                                     </div>
                                 </div>
                                 <div class="col-2">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="TECNICO_MUESTREO_CUMPLE_PPT" id="TECNICO_MUESTREO_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="TECNICO_MUESTREO_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="TECNICO_MUESTREO_CUMPLE_PPT" id="TECNICO_MUESTREO_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="TECNICO_MUESTREO_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="TECNICO_MUESTREO_CUMPLE_PPT" id="TECNICO_MUESTREO_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="TECNICO_MUESTREO_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="TECNICO_MUESTREO_CUMPLE_PPT" id="TECNICO_MUESTREO_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="TECNICO_MUESTREO_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-2 mt-1">
@@ -1862,13 +2116,15 @@
                                     </div>
                                 </div>
                                 <div class="col-2">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="CONSULTOR_ASESOR_CUMPLE_PPT" id="CONSULTOR_ASESOR_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="CONSULTOR_ASESOR_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="CONSULTOR_ASESOR_CUMPLE_PPT" id="CONSULTOR_ASESOR_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="CONSULTOR_ASESOR_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="CONSULTOR_ASESOR_CUMPLE_PPT" id="CONSULTOR_ASESOR_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="CONSULTOR_ASESOR_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="CONSULTOR_ASESOR_CUMPLE_PPT" id="CONSULTOR_ASESOR_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="CONSULTOR_ASESOR_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1883,13 +2139,15 @@
                                     </div>
                                 </div>
                                 <div class="col-2">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="SUPERVISOR_COORDINADOR_CUMPLE_PPT" id="SUPERVISOR_COORDINADOR_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="SUPERVISOR_COORDINADOR_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="SUPERVISOR_COORDINADOR_CUMPLE_PPT" id="SUPERVISOR_COORDINADOR_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="SUPERVISOR_COORDINADOR_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="SUPERVISOR_COORDINADOR_CUMPLE_PPT" id="SUPERVISOR_COORDINADOR_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="SUPERVISOR_COORDINADOR_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="SUPERVISOR_COORDINADOR_CUMPLE_PPT" id="SUPERVISOR_COORDINADOR_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="SUPERVISOR_COORDINADOR_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -1902,13 +2160,15 @@
                                     </div>
                                 </div>
                                 <div class="col-2">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="SIGNATARIO_CUMPLE_PPT" id="SIGNATARIO_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="SIGNATARIO_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="SIGNATARIO_CUMPLE_PPT" id="SIGNATARIO_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="SIGNATARIO_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="SIGNATARIO_CUMPLE_PPT" id="SIGNATARIO_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="SIGNATARIO_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="SIGNATARIO_CUMPLE_PPT" id="SIGNATARIO_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="SIGNATARIO_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1923,13 +2183,15 @@
                                     </div>
                                 </div>
                                 <div class="col-2">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="JEFE_AREA_CUMPLE_PPT" id="JEFE_AREA_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="JEFE_AREA_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="JEFE_AREA_CUMPLE_PPT" id="JEFE_AREA_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="JEFE_AREA_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="JEFE_AREA_CUMPLE_PPT" id="JEFE_AREA_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="JEFE_AREA_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="JEFE_AREA_CUMPLE_PPT" id="JEFE_AREA_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="JEFE_AREA_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-2 mt-1">
@@ -1941,13 +2203,15 @@
                                     </div>
                                 </div>
                                 <div class="col-2">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="GERENTE_DIRECTOR_CUMPLE_PPT" id="GERENTE_DIRECTOR_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="GERENTE_DIRECTOR_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="GERENTE_DIRECTOR_CUMPLE_PPT" id="GERENTE_DIRECTOR_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="GERENTE_DIRECTOR_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="GERENTE_DIRECTOR_CUMPLE_PPT" id="GERENTE_DIRECTOR_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="GERENTE_DIRECTOR_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="GERENTE_DIRECTOR_CUMPLE_PPT" id="GERENTE_DIRECTOR_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="GERENTE_DIRECTOR_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1963,13 +2227,15 @@
                                     </div>
                                 </div>
                                 <div class="col-2">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="TIEMPO_EXPERIENCIA_CUMPLE_PPT" id="TIEMPO_EXPERIENCIA_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="TIEMPO_EXPERIENCIA_CUMPLE_SI">Si</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="TIEMPO_EXPERIENCIA_CUMPLE_PPT" id="TIEMPO_EXPERIENCIA_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="TIEMPO_EXPERIENCIA_CUMPLE_NO">No</label>
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="TIEMPO_EXPERIENCIA_CUMPLE_PPT" id="TIEMPO_EXPERIENCIA_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="TIEMPO_EXPERIENCIA_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="TIEMPO_EXPERIENCIA_CUMPLE_PPT" id="TIEMPO_EXPERIENCIA_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="TIEMPO_EXPERIENCIA_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -2005,10 +2271,14 @@
                                                     <input type="checkbox" id="INNOVACION_NO_REQUERIDA_PPT" name="INNOVACION_NO_REQUERIDA_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input class="form-check-input desabilitado" type="radio" name="INNOVACION_CUMPLE_PPT" id="INNOVACION_CUMPLE_SI" value="si" disabled>
+                                                    <div class="radio-container">
+                                                         <input class="form-check-input desabilitado" type="radio" name="INNOVACION_CUMPLE_PPT" id="INNOVACION_CUMPLE_SI" value="si" disabled>
+                                                    </div>
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input desabilitado" type="radio" name="INNOVACION_CUMPLE_PPT" id="INNOVACION_CUMPLE_NO" value="no" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                        <input class="form-check-input desabilitado" type="radio" name="INNOVACION_CUMPLE_PPT" id="INNOVACION_CUMPLE_NO" value="no" disabled>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -2023,11 +2293,15 @@
                                                 <td class="text-center">
                                                     <input type="checkbox" id="PASION_NO_REQUERIDA_PPT" name="PASION_NO_REQUERIDA_PPT" value="X">
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input desabilitado" type="radio" name="PASION_CUMPLE_PPT" id="PASION_CUMPLE_SI" value="si" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                         <input class="form-check-input desabilitado" type="radio" name="PASION_CUMPLE_PPT" id="PASION_CUMPLE_SI" value="si" disabled>
+                                                    </div>
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input desabilitado" type="radio" name="PASION_CUMPLE_PPT" id="PASION_CUMPLE_NO" value="no" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                      <input class="form-check-input desabilitado" type="radio" name="PASION_CUMPLE_PPT" id="PASION_CUMPLE_NO" value="no" disabled>
+                                                    </div>
                                                 </td>
                                             </tr>
 
@@ -2043,11 +2317,15 @@
                                                 <td class="text-center">
                                                     <input type="checkbox" id="SERVICIO_CLIENTE_NO_REQUERIDA_PPT" name="SERVICIO_CLIENTE_NO_REQUERIDA_PPT" value="X">
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input desabilitado" type="radio" name="SERVICIO_CLIENTE_CUMPLE_PPT" id="SERVICIO_CLIENTE_CUMPLE_SI" value="si" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                        <input class="form-check-input desabilitado" type="radio" name="SERVICIO_CLIENTE_CUMPLE_PPT" id="SERVICIO_CLIENTE_CUMPLE_SI" value="si" disabled>
+                                                    </div>
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input desabilitado" type="radio" name="SERVICIO_CLIENTE_CUMPLE_PPT" id="SERVICIO_CLIENTE_CUMPLE_NO" value="no" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                         <input class="form-check-input desabilitado" type="radio" name="SERVICIO_CLIENTE_CUMPLE_PPT" id="SERVICIO_CLIENTE_CUMPLE_NO" value="no" disabled>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -2057,16 +2335,19 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <input type="checkbox" id="COMUNICACION_EFICAZ_DESEABLE_PPT" name="COMUNICACION_EFICAZ_DESEABLE_PPT" value="X">
-
                                                 </td>
                                                 <td class="text-center">
                                                     <input type="checkbox" id="COMUNICACION_EFICAZ_NO_REQUERIDA_PPT" name="COMUNICACION_EFICAZ_NO_REQUERIDA_PPT" value="X">
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input desabilitado" type="radio" name="COMUNICACION_EFICAZ_CUMPLE_PPT" id="COMUNICACION_EFICAZ_CUMPLE_SI" value="si" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                        <input class="form-check-input desabilitado" type="radio" name="COMUNICACION_EFICAZ_CUMPLE_PPT" id="COMUNICACION_EFICAZ_CUMPLE_SI" value="si" disabled>
+                                                    </div>
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input desabilitado" type="radio" name="COMUNICACION_EFICAZ_CUMPLE_PPT" id="COMUNICACION_EFICAZ_CUMPLE_NO" value="no" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                        <input class="form-check-input desabilitado" type="radio" name="COMUNICACION_EFICAZ_CUMPLE_PPT" id="COMUNICACION_EFICAZ_CUMPLE_NO" value="no" disabled>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -2080,11 +2361,15 @@
                                                 <td class="text-center">
                                                     <input type="checkbox" id="TRABAJO_EQUIPO_NO_REQUERIDA_PPT" name="TRABAJO_EQUIPO_NO_REQUERIDA_PPT" value="X">
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input desabilitado" type="radio" name="TRABAJO_EQUIPO_CUMPLE_PPT" id="TRABAJO_EQUIPO_CUMPLE_SI" value="si" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                         <input class="form-check-input desabilitado" type="radio" name="TRABAJO_EQUIPO_CUMPLE_PPT" id="TRABAJO_EQUIPO_CUMPLE_SI" value="si" disabled>
+                                                    </div>
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input desabilitado" type="radio" name="TRABAJO_EQUIPO_CUMPLE_PPT" id="TRABAJO_EQUIPO_CUMPLE_NO" value="no" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                         <input class="form-check-input desabilitado" type="radio" name="TRABAJO_EQUIPO_CUMPLE_PPT" id="TRABAJO_EQUIPO_CUMPLE_NO" value="no" disabled>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -2098,11 +2383,15 @@
                                                 <td class="text-center">
                                                     <input type="checkbox" id="INTEGRIDAD_NO_REQUERIDA_PPT" name="INTEGRIDAD_NO_REQUERIDA_PPT" value="X">
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input desabilitado" type="radio" name="INTEGRIDAD_CUMPLE_PPT" id="INTEGRIDAD_CUMPLE_SI" value="si" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                        <input class="form-check-input desabilitado" type="radio" name="INTEGRIDAD_CUMPLE_PPT" id="INTEGRIDAD_CUMPLE_SI" value="si" disabled>
+                                                    </div>
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input desabilitado" type="radio" name="INTEGRIDAD_CUMPLE_PPT" id="INTEGRIDAD_CUMPLE_NO" value="no" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                         <input class="form-check-input desabilitado" type="radio" name="INTEGRIDAD_CUMPLE_PPT" id="INTEGRIDAD_CUMPLE_NO" value="no" disabled>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -2115,13 +2404,16 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <input type="checkbox" id="RESPONSABILIDAD_SOCIAL_NO_REQUERIDA_PPT" name="RESPONSABILIDAD_SOCIAL_NO_REQUERIDA_PPT" value="X">
-
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input desabilitado" type="radio" name="RESPONSABILIDAD_SOCIAL_CUMPLE_PPT" id="RESPONSABILIDAD_SOCIAL_CUMPLE_SI" value="si" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                         <input class="form-check-input desabilitado" type="radio" name="RESPONSABILIDAD_SOCIAL_CUMPLE_PPT" id="RESPONSABILIDAD_SOCIAL_CUMPLE_SI" value="si" disabled>
+                                                    </div>
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input desabilitado" type="radio" name="RESPONSABILIDAD_SOCIAL_CUMPLE_PPT" id="RESPONSABILIDAD_SOCIAL_CUMPLE_NO" value="no" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                         <input class="form-check-input desabilitado" type="radio" name="RESPONSABILIDAD_SOCIAL_CUMPLE_PPT" id="RESPONSABILIDAD_SOCIAL_CUMPLE_NO" value="no" disabled>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -2135,29 +2427,36 @@
                                                 <td class="text-center">
                                                     <input type="checkbox" id="ADAPTABILIDAD_NO_REQUERIDA_PPT" name="ADAPTABILIDAD_NO_REQUERIDA_PPT" value="X">                                                   
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input" type="radio" name="ADAPTABILIDAD_CUMPLE_PPT" id="ADAPTABILIDAD_CUMPLE_SI" value="si" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                         <input class="form-check-input desabilitado" type="radio" name="ADAPTABILIDAD_CUMPLE_PPT" id="ADAPTABILIDAD_CUMPLE_SI" value="si" disabled>
+                                                    </div>
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input" type="radio" name="ADAPTABILIDAD_CUMPLE_PPT" id="ADAPTABILIDAD_CUMPLE_NO" value="no" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                         <input class="form-check-input desabilitado" type="radio" name="ADAPTABILIDAD_CUMPLE_PPT" id="ADAPTABILIDAD_CUMPLE_NO" value="no" disabled>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Liderazgo</td>
                                                 <td class="text-center">
                                                     <input type="checkbox" id="LIDERAZGO_REQUERIDA_PPT" name="LIDERAZGO_REQUERIDA_PPT" value="X">    
-
                                                 </td>
                                                 <td class="text-center">
-                                                <input type="checkbox" id="LIDERAZGO_DESEABLE_PPT" name="LIDERAZGO_DESEABLE_PPT" Value="X">                                                  </td>
+                                                     <input type="checkbox" id="LIDERAZGO_DESEABLE_PPT" name="LIDERAZGO_DESEABLE_PPT" Value="X">                                                  </td>
                                                 <td class="text-center">
-                                                <input type="checkbox" id="LIDERAZGO_NO_REQUERIDA_PPT" name="LIDERAZGO_NO_REQUERIDA_PPT" Value="X">     
+                                                    <input type="checkbox" id="LIDERAZGO_NO_REQUERIDA_PPT" name="LIDERAZGO_NO_REQUERIDA_PPT" Value="X">     
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input desabilitado" type="radio" name="LIDERAZGO_CUMPLE_PPT" id="LIDERAZGO_CUMPLE_SI" value="si" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                        <input class="form-check-input desabilitado" type="radio" name="LIDERAZGO_CUMPLE_PPT" id="LIDERAZGO_CUMPLE_SI" value="si" disabled>
+                                                    </div>
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input desabilitado" type="radio" name="LIDERAZGO_CUMPLE_PPT" id="LIDERAZGO_CUMPLE_NO" value="no" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                         <input class="form-check-input desabilitado" type="radio" name="LIDERAZGO_CUMPLE_PPT" id="LIDERAZGO_CUMPLE_NO" value="no" disabled>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -2169,15 +2468,17 @@
                                                     <input type="checkbox" id="TOMA_DECISIONES_DESEABLE_PPT" name="TOMA_DECISIONES_DESEABLE_PPT" Value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="TOMA_DECISIONES_NO_REQUERIDA_PPT" name="TOMA_DECISIONES_NO_REQUERIDA_PPT" Value="X">
-
-                                                  
+                                                    <input type="checkbox" id="TOMA_DECISIONES_NO_REQUERIDA_PPT" name="TOMA_DECISIONES_NO_REQUERIDA_PPT" Value="X"> 
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input desabilitado" type="radio" name="TOMA_DECISIONES_CUMPLE_PPT" id="TOMA_DECISIONES_CUMPLE_SI" value="si" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                     <input class="form-check-input desabilitado" type="radio" name="TOMA_DECISIONES_CUMPLE_PPT" id="TOMA_DECISIONES_CUMPLE_SI" value="si" disabled>
+                                                    </div>
                                                 </td>
-                                                <td>
-                                                    <input class="form-check-input desabilitado" type="radio" name="TOMA_DECISIONES_CUMPLE_PPT" id="TOMA_DECISIONES_CUMPLE_NO" value="no" disabled>
+                                                <td class="text-center">
+                                                    <div class="radio-container">
+                                                         <input class="form-check-input desabilitado" type="radio" name="TOMA_DECISIONES_CUMPLE_PPT" id="TOMA_DECISIONES_CUMPLE_NO" value="no" disabled>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -2197,22 +2498,18 @@
                                         <thead>
                                             <tr>
                                                 <th></th>
-                                                <th>Si</th>
-                                                <th>No</th>
+                                                <th class="text-center">Si</th>
+                                                <th class="text-center">No</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td>Disponibilidad para viajar</td>
-                                                <td>
-                                                    <div class="form-check">
+                                                <td class="text-center">
                                                         <input class="form-check-input" type="radio" name="DISPONIBILAD_VIAJAR_PPT" id="VIAJAR_SI" value="si">
-                                                    </div>
                                                 </td>
-                                                <td>
-                                                    <div class="form-check">
+                                                <td class="text-center">
                                                         <input class="form-check-input" type="radio" name="DISPONIBILAD_VIAJAR_PPT" id="VIAJAR_NO" value="no">
-                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -2220,14 +2517,11 @@
                                             </tr>
                                             <tr>
                                                 <td>Requiere pasaporte</td>
-                                                <td>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="REQUIERE_PASAPORTE_PPT" id="PASAPORTE_SI" value="si">
-                                                    </div>
+                                                <td class="text-center">
+                                                    <input class="form-check-input" type="radio" name="REQUIERE_PASAPORTE_PPT" id="PASAPORTE_SI" value="si">
                                                 </td>
-                                                <td>
-                                                    <div class="form-check"><input class="form-check-input" type="radio" name="REQUIERE_PASAPORTE_PPT" id="PASAPORTE_NO" value="no">
-                                                    </div>
+                                                <td class="text-center">
+                                                    <input class="form-check-input" type="radio" name="REQUIERE_PASAPORTE_PPT" id="PASAPORTE_NO" value="no">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -2235,15 +2529,11 @@
                                             </tr>
                                             <tr>
                                                 <td>Requiere visa americana</td>
-                                                <td>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="REQUIERE_VISA_PPT" id="VISA_SI" value="si">
-                                                    </div>
+                                                <td class="text-center">
+                                                    <input class="form-check-input" type="radio" name="REQUIERE_VISA_PPT" id="VISA_SI" value="si">
                                                 </td>
-                                                <td>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="REQUIERE_VISA_PPT" id="VISA_NO" value="no">
-                                                    </div>
+                                                <td class="text-center">
+                                                    <input class="form-check-input" type="radio" name="REQUIERE_VISA_PPT" id="VISA_NO" value="no">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -2251,28 +2541,20 @@
                                             </tr>
                                             <tr>
                                                 <td>Requiere licencia de conducción</td>
-                                                <td>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="REQUIERE_LICENCIA_PPT" id="LICENCIA_SI" value="si">
-                                                    </div>
+                                                <td class="text-center">
+                                                    <input class="form-check-input" type="radio" name="REQUIERE_LICENCIA_PPT" id="LICENCIA_SI" value="si">
                                                 </td>
-                                                <td>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="REQUIERE_LICENCIA_PPT" id="LICENCIA_NO" value="no">
-                                                    </div>
+                                                <td class="text-center">
+                                                    <input class="form-check-input" type="radio" name="REQUIERE_LICENCIA_PPT" id="LICENCIA_NO" value="no">
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Disponibilidad para cambio de residencia</td>
-                                                <td>
-                                                    <div class="form-check">
+                                                <td class="text-center">
                                                         <input class="form-check-input" type="radio" name="CAMBIO_RESIDENCIA_PPT" id="CAMBIORESIDENCIA_SI" value="si">
-                                                    </div>
                                                 </td>
-                                                <td>
-                                                    <div class="form-check">
+                                                <td class="text-center">
                                                         <input class="form-check-input" type="radio" name="CAMBIO_RESIDENCIA_PPT" id="CAMBIORESIDENCIA_NO" value="no">
-                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -2283,8 +2565,8 @@
                                         <thead>
                                             <tr>
                                                 <th></th>
-                                                <th>Si</th>
-                                                <th>No</th>
+                                                <th class="text-center">Si</th>
+                                                <th class="text-center">No</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -2298,13 +2580,13 @@
                                                         <option value="Nacional-Internac.">Nacional-Internac.</option>
                                                     </select>
                                                 </td>
-                                                <td>
-                                                    <div class="form-check">
+                                                <td class="text-center">
+                                                    <div class="radio-container">
                                                         <input class="form-check-input desabilitado" type="radio" name="DISPONIBILADVIAJAR_OPCION_CUMPLE" id="DISPONIBILADVIAJAR_OPCION_SI" value="si" disabled>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="form-check">
+                                                <td class="text-center">
+                                                    <div class="radio-container">
                                                         <input class="form-check-input desabilitado" type="radio" name="DISPONIBILADVIAJAR_OPCION_CUMPLE" id="DISPONIBILADVIAJAR_OPCION_NO" value="No" disabled>
                                                     </div>
                                                 </td>
@@ -2318,13 +2600,13 @@
                                                         <option value="Requerido">Requerido</option>
                                                     </select>
                                                 </td>
-                                                <td>
-                                                    <div class="form-check">
+                                                <td class="text-center">
+                                                    <div class="radio-container">
                                                         <input class="form-check-input desabilitado" type="radio" name="REQUIEREPASAPORTE_OPCION_CUMPLE" id="REQUIEREPASAPORTE_OPCION_SI" value="si" disabled>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="form-check">
+                                                <td class="text-center">
+                                                    <div class="radio-container">
                                                         <input class="form-check-input desabilitado" type="radio" name="REQUIEREPASAPORTE_OPCION_CUMPLE" id="REQUIEREPASAPORTE_OPCION_NO" value="no" disabled>
                                                     </div>
                                                 </td>
@@ -2338,15 +2620,15 @@
                                                         <option value="Requerido">Requerido</option>
                                                     </select>
                                                 </td>
-                                                <td>
-                                                    <div class="form-check">
+                                                <td class="text-center">
+                                                    <div class="radio-container">
                                                         <input class="form-check-input desabilitado" type="radio" name="REQUIEREVISA_OPCION_CUMPLE" id="REQUIEREVISA_OPCION_SI" value="si" disabled>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="form-check">
+                                                <td class="text-center">
+                                                    <div class="radio-container">
                                                         <input class="form-check-input desabilitado" type="radio" name="REQUIEREVISA_OPCION_CUMPLE" id="REQUIEREVISA_OPCION_NO" value="no" disabled>
-                                                    </div>
+                                                    </div>                                                    
                                                 </td>
                                             </tr>
                                             <tr>
@@ -2360,13 +2642,13 @@
                                                         <option value="Motociclista">Motociclista</option>
                                                     </select>
                                                 </td>
-                                                <td>
-                                                    <div class="form-check">
+                                               <td class="text-center">
+                                                    <div class="radio-container">
                                                         <input class="form-check-input desabilitado" type="radio" name="REQUIERELICENCIA_OPCION_CUMPLE" id="REQUIERELICENCIA_OPCION_SI" value="si" disabled>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="form-check">
+                                                <td class="text-center">
+                                                    <div class="radio-container">
                                                         <input class="form-check-input desabilitado" type="radio" name="REQUIERELICENCIA_OPCION_CUMPLE" id="REQUIERELICENCIA_OPCION_NO" value="no" disabled>
                                                     </div>
                                                 </td>
@@ -2380,15 +2662,16 @@
                                                         <option value="Internacional">Internacional</option>
                                                     </select>
                                                 </td>
-                                                <td>
-                                                    <div class="form-check">
+                                                <td class="text-center">
+                                                    <div class="radio-container">
                                                         <input class="form-check-input desabilitado" type="radio" name="CAMBIORESIDENCIA_OPCION_CUMPLE" id="CAMBIORESIDENCIA_OPCION_SI" value="si" disabled>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="form-check">
+                                                <td class="text-center">
+                                                    <div class="radio-container">
                                                         <input class="form-check-input desabilitado" type="radio" name="CAMBIORESIDENCIA_OPCION_CUMPLE" id="CAMBIORESIDENCIA_OPCION_NO" value="no" disabled>
                                                     </div>
+                                                  
                                                 </td>
                                             </tr>
                                         </tbody>

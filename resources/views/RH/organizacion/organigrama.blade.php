@@ -42,8 +42,8 @@
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-area-tab" data-bs-toggle="tab" data-bs-target="#nav-area" type="button" role="tab" aria-controls="nav-area" aria-selected="true">Área</button>
-            <button class="nav-link" id="nav-encargados-tab" data-bs-toggle="tab" data-bs-target="#nav-encargados" type="button" role="tab" aria-controls="nav-encargados" aria-selected="false" disabled>Líder de categoria</button>
-            <button class="nav-link" id="nav-cargos-tab" data-bs-toggle="tab" data-bs-target="#nav-cargos" type="button" role="tab" aria-controls="nav-cargos" aria-selected="false" disabled>Categorias</button>
+            <button class="nav-link" id="nav-encargados-tab" data-bs-toggle="tab" data-bs-target="#nav-encargados" type="button" role="tab" aria-controls="nav-encargados" aria-selected="false" disabled>Líder de categoría</button>
+            <button class="nav-link" id="nav-cargos-tab" data-bs-toggle="tab" data-bs-target="#nav-cargos" type="button" role="tab" aria-controls="nav-cargos" aria-selected="false" disabled>categorías</button>
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -74,7 +74,7 @@
               <div class="row">
                 <div class="col-10">
                   <div class="mb-3">
-                    <label class="form-label">Nombre de la categoria *</label>
+                    <label class="form-label">Nombre de la categoría *</label>
                     <input type="text" class="form-control" id="NOMBRE_CARGO" name="NOMBRE_CARGO" required>
                   </div>
                 </div>
@@ -121,14 +121,14 @@
                 <div class="col-6">
                   <div class="form-floating">
                     <select class="form-select" id="ENCARGADO_AREA_ID" name="ENCARGADO_AREA_ID"></select>
-                    <label for="ENCARGADO_AREA_ID">Líder de categoria</label>
+                    <label for="ENCARGADO_AREA_ID">Líder de categoría</label>
                   </div>
                 </div>
               </div>
               <div class="row mt-4">
                 <div class="col-10">
                   <div class="mb-3">
-                    <input type="text" class="form-control" id="CARGO_DESCRIPCION" name="NOMBRE" placeholder="Nombre de la categoria" required>
+                    <input type="text" class="form-control" id="CARGO_DESCRIPCION" name="NOMBRE" placeholder="Nombre de la categoría" required>
                   </div>
 
                 </div>
@@ -207,6 +207,49 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+
+<!-- Modal Ccategoría !-->
+
+<div class="modal fade" id="miModal_CATEGORIAS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <form method="post" enctype="multipart/form-data" id="formDepartamentos" style="background-color: #ffffff;">
+              <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Categoría</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                  {!! csrf_field() !!}
+                  <div class="row mt-4">
+                    <div class="col-10">
+                      <div class="mb-3">
+                        <input type="text" class="form-control" id="CARGO_DESCRIPCION" name="NOMBRE" placeholder="Nombre de la categoría" required>
+                      </div>
+    
+                    </div>
+                      
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <input type="text" class="form-control" id="LUGAR_TRABAJO_CATEGORIA" name="LUGAR_TRABAJO_CATEGORIA" placeholder="Lugar de Trabajo" required>
+                      </div>
+    
+                    </div>
+                    <div class="col-12">
+                      <div class="mb-3">
+                        <textarea class="form-control" id="PROPOSITO_FINALIDAD_CATEGORIA" name="PROPOSITO_FINALIDAD_CATEGORIA" rows="2" placeholder="Propósito o finalidad el puesto"></textarea>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-success" id="guardarDepartamento">Guardar</button>
+              </div>
+          </form>
+      </div>
   </div>
 </div>
 
