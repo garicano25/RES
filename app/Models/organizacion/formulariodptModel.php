@@ -57,4 +57,11 @@ class formulariodptModel extends Model
         'AUTORIZADO_FECHA_DPT',
     ];
 
+
+    protected $casts = [
+        'PUESTOS_INTERACTUAN_DPT' => 'array',
+        'FUNCIONES_CARGO_DPT' => 'array',
+        'FUNCIONES_GESTION_DPT' => 'array',
+    ];
+
 }

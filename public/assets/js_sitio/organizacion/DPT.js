@@ -293,14 +293,7 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
         var form = "formularioDPT"
         data = row.data()
            
-       
-          
-          // Seleccionar opciones guardadas en el select #PUESTOS_INTERACTUAN_DPT
-        var opcionesSeleccionadas = data.PUESTOS_INTERACTUAN_DPT ? data.PUESTOS_INTERACTUAN_DPT.split(',') : [];
-        var selectize = $('#PUESTOS_INTERACTUAN_DPT')[0].selectize;
-        opcionesSeleccionadas.forEach(function (opcion) {
-            selectize.addItem(opcion);
-        });
+    
            // Obtener datos del formulario actual
            editarDatoTabla(data, form, 'miModal_DPT', 1);
            mostrarFunciones(data,form)
@@ -592,11 +585,11 @@ function mostrarFunciones(data,form){
       if ('EXTERNAS' in data) {
   
         if (data.EXTERNAS.length > 0) { 
-          var cursos = data.EXTERNAS
+          var cursos1 = data.EXTERNAS
           var count = 1    
   
             // Supongamos que 'data' es el array que contiene los objetos de datos
-          cursos.forEach(function (obj) {
+          cursos1.forEach(function (obj) {
   
             // Acceder a las propiedades de cada objeto    INTERNAS_CONQUIEN1_DPT  INTERNAS_PARAQUE1_DPT   INTERNAS_FRECUENCIA1_DPT
             $('#' + form).find(`select[id='EXTERNAS_CONQUIEN${count}_DPT']`).val(obj.EXTERNAS_CONQUIEN_DPT)

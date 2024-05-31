@@ -232,7 +232,7 @@
               <div class="col-10">
                 <select class="custom-select form-control" id="PUESTOS_INTERACTUAN_DPT" name="PUESTOS_INTERACTUAN_DPT[]" required multiple>
                   @foreach ($categorias as $cat)
-                  <option value="{{ $cat->NOMBRE }}}">{{ $cat->NOMBRE }}</option>
+                  <option value="{{ $cat->ID }}-{{$cat->LIDER}}">{{ $cat->NOMBRE }}</option>
                   @endforeach
                 </select>
               </div>
@@ -621,7 +621,7 @@
                         <textarea class="form-control" style="width: 100%;" id="EXTERNAS_PARAQUE1_DPT" name="EXTERNAS_PARAQUE_DPT[]" rows="2"></textarea>
                       </td>
                       <td>
-                        <select class="form-control" id="EXTERNAS_FRECUENCIA2_DPT" name="EXTERNAS_FRECUENCIA_DPT[]">
+                        <select class="form-control" id="EXTERNAS_FRECUENCIA1_DPT" name="EXTERNAS_FRECUENCIA_DPT[]">
                           <option selected disabled>Seleccione una opción</option>
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>

@@ -51,7 +51,18 @@ class makeExcelController extends Controller{
 
         foreach ($form as $key => $val) {
             
-            $puesto = departamentosAreasModel::where('ID_DEPARTAMENTO_AREA', $val->DEPARTAMENTO_AREA_ID)->pluck('NOMBRE');
+
+
+        $puesto= DB::select("SELECT NOMBRE FROM (
+                                SELECT NOMBRE
+                                FROM departamentos_areas
+                                WHERE ACTIVO = 1
+                                UNION
+                                SELECT NOMBRE_CARGO AS NOMBRE
+                                FROM encargados_areas) 
+                            AS NOMBRES
+                            WHERE NOMBRE = 'Director'");
+            
 
             //DATOS DE LA PERSONA
 
@@ -1650,12 +1661,12 @@ class makeExcelController extends Controller{
                 $sheet->setCellValue('Q17', $val->AUTORIZADO_FECHA_DPT);        
             }
 
+            // II. Funciones y responsabilidades clave de la categoría																						
 
-
-
-
-
+            
+         
         }
+
 
 
 
@@ -1683,6 +1694,15 @@ class makeExcelController extends Controller{
             $writer->save('php://output');
         }, $nombre_descarga);
     }
+
+
+
+
+
+
+
+
+
 
 
 
