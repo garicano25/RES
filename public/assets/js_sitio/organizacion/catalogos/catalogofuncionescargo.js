@@ -12,7 +12,10 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     ID_CATALOGO_FUNCIONESCARGO = 0
 
     document.getElementById('formularioFUNCIONESCARGO').reset();
-    $('#CATEGORIAS_CARGO').val('0'); // Resetea el select
+    $('#CATEGORIAS_CARGO').val('0'); 
+
+    $('#formularioFUNCIONESCARGO che').prop('disabled', false);
+
    
 
 })
@@ -20,7 +23,7 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 
 $(document).on('change', 'input[name="TIPO_FUNCION_CARGO"]', function() {
     if (this.value === 'generica') {
-        $('#CATEGORIAS_CARGO').val('0'); // Resetea el select
+        $('#CATEGORIAS_CARGO').val('0'); 
     }
 })
 
@@ -180,33 +183,6 @@ $('#Tablaafuncionescargo tbody').on('click', 'td>button.ELIMINAR', function () {
 })
 
 
-$('#Tablaafuncionescargo tbody').on('click', 'td>button.EDITAR', function () {
-    var tr = $(this).closest('tr');
-    var row = Tablaafuncionescargo.row(tr);
-    ID_CATALOGO_FUNCIONESCARGO = row.data().ID_CATALOGO_FUNCIONESCARGO;
-
-
-     var tipoFuncion = row.data().TIPO_FUNCION_CARGO;
-
-
-    editarDatoTabla(row.data(), 'formularioFUNCIONESCARGO', 'miModal_FUNCIONESCARGO',1);
-
-    if (tipoFuncion === 'especifica') {
-        $('#especifica').prop('checked', true);
-        $('#CATEGORIAS_CARGO').val(row.data().CATEGORIAS_CARGO); 
-        $('#generica').prop('checked', true);
-    }
-
-    handleRadioChange();
-});
-
-
-
-
-
-
-
-
 function handleRadioChange() {
     const especificaRadio = document.getElementById('especifica');
     const genericaRadio = document.getElementById('generica');
@@ -219,7 +195,6 @@ function handleRadioChange() {
     }
 }
 
-//  los cambios en los radio buttons
 document.addEventListener('DOMContentLoaded', function() {
     const especificaRadio = document.getElementById('especifica');
     const genericaRadio = document.getElementById('generica');
@@ -228,5 +203,24 @@ document.addEventListener('DOMContentLoaded', function() {
     especificaRadio.addEventListener('change', handleRadioChange);
     genericaRadio.addEventListener('change', handleRadioChange);
 
-    handleRadioChange(); // Verificar estado inicial
+    handleRadioChange(); 
+});
+
+$('#Tablaafuncionescargo tbody').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablaafuncionescargo.row(tr);
+    ID_CATALOGO_FUNCIONESCARGO = row.data().ID_CATALOGO_FUNCIONESCARGO;
+
+    var tipoFuncion = row.data().TIPO_FUNCION_CARGO;
+
+    editarDatoTabla(row.data(), 'formularioFUNCIONESCARGO', 'miModal_FUNCIONESCARGO', 1);
+
+    if (tipoFuncion === 'especifica') {
+        $('#especifica').prop('checked', true);
+        $('#CATEGORIAS_GESTION').val(row.data().CATEGORIAS_CARGO); 
+    } else {
+        $('#generica').prop('checked', true);
+    }
+
+    handleRadioChange();
 });

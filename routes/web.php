@@ -37,6 +37,8 @@ Route::get('/TablaPPT', [pptController::class, 'TablaPPT']);
 Route::get('/autorizarPPT/{id_formulario}', [pptController::class, 'autorizarPPT']);
 Route::get('/revisarPPT/{id_formulario}', [pptController::class, 'revisarPPT']);
 Route::get('/makeExcelPPT/{id_formulario}', [makeExcelController::class, 'makeExcelPPT']);
+// Route::get('/PPTDelete', [pptController::class, 'store']);
+
 
 
 // DPT
@@ -87,10 +89,11 @@ Route::post('/CargoSave', [catalogosfuncionescargoController::class, 'store']);
 Route::get('/CargoDelete', [catalogosfuncionescargoController::class, 'store']);
 Route::get('/Tablaafuncionescargo', [catalogosfuncionescargoController::class, 'Tablaafuncionescargo']);
 
-//catalogo de funciones cargo
+//catalogo de funciones  gestiones
 
 
-Route::get('/Funcionesgestión', [catalogosfuncionesgestionController::class, 'index']);
+
+Route::get('/Funcionesgestión', function () {return view('RH.organizacion.Catálogos.catálogo_funcionesgestion');});
 Route::post('/GestionSave', [catalogosfuncionesgestionController::class, 'store']);
 Route::get('/GestionDelete', [catalogosfuncionesgestionController::class, 'store']);
 Route::get('/Tablafuncionesgestion', [catalogosfuncionesgestionController::class, 'Tablafuncionesgestion']);

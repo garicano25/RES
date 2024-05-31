@@ -34,28 +34,29 @@
                     <div class="modal-body">
                         {!! csrf_field() !!}
                         <div class="mb-3">
-                            <label class="col-form-label">Tipo de Función:</label>
+                            <label class="col-form-label">Para quién es la  Función:</label>
                             <div class="d-flex">
                                 <div class="form-check me-3">
-                                    <input class="form-check-input" type="radio" name="TIPO_FUNCION_GESTION" id="especifica" value="especifica" required>
-                                    <label class="form-check-label" for="especifica">Específica</label>
+                                    <label class="form-check-label" for="director">Director</label>
+                                    <input class="form-check-input" type="checkbox" name="TIPO_FUNCION_GESTION[]" id="director" value="Director">
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="TIPO_FUNCION_GESTION" id="generica" value="generica" required>
-                                    <label class="form-check-label" for="generica">Genérica</label>
+                                <div class="form-check me-3 mx-4">
+                                    <label class="form-check-label" for="lider">Líder categoría</label>
+                                    <input class="form-check-input" type="checkbox" name="TIPO_FUNCION_GESTION[]" id="lider" value="Líder">
                                 </div>
-                            </div>
+                                <div class="form-check me-3 mx-4">
+                                    <label class="form-check-label" for="colaborador">Colaborador</label>
+                                    <input class="form-check-input" type="checkbox" name="TIPO_FUNCION_GESTION[]" id="colaborador" value="colaborador">
+                                </div>
+                                <div class="form-check me-3 mx-4">
+                                    <label class="form-check-label" for="todo">Todos </label>
+                                    <input class="form-check-input" type="checkbox" name="TIPO_FUNCION_GESTION[]" id="todo" value="Todas">
+                                </div>
+                                
                         </div>
-                        <div class="mb-3">
-                            <select class="form-select" id="CATEGORIAS_GESTION" name="CATEGORIAS_GESTION" required>
-                                <option value="0" selected disabled>Seleccione una opción</option>
-                                @foreach ($areas as $area)
-                                    <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        
                         <div class="row mb-3">
-                            <div class="col-12 ">
+                            <div class="col-12 mt-3 ">
                                 <label><b>Nota:</b> brevemente describa las responsabilidades del puesto, enlistando las actividades en orden de importancia. Utilizar verbos en infinitivo como: elaborar, validar, actualizar, enviar, atender, mantener, administrar, entre otros.</label>
                             </div>
                         </div>

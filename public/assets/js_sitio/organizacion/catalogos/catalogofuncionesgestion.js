@@ -9,15 +9,13 @@ const ModalArea = document.getElementById('miModal_FUNCIONESGESTION');
 ModalArea.addEventListener('hidden.bs.modal', event => {
     ID_CATALOGO_FUNCIONESGESTION = 0;
     document.getElementById('formularioFUNCIONESGESTION').reset();
-    $('#CATEGORIAS_GESTION').val('0'); // Resetea el select
+   
+    $('#formularioFUNCIONESGESTION checkbox').prop('disabled', false);
+
 });
 
 
-$(document).on('change', 'input[name="TIPO_FUNCION_GESTION"]', function() {
-    if (this.value === 'generica') {
-        $('#CATEGORIAS_GESTION').val('0'); // Resetea el select
-    }
-})
+
 
 
 $("#guardarFormFuncionesgestion").click(function (e) {
@@ -55,12 +53,10 @@ $("#guardarFormFuncionesgestion").click(function (e) {
                     document.getElementById('formularioFUNCIONESGESTION').reset();
                     Tablafuncionesgestion.ajax.reload()
 
-           
-                
+                         
                 
             })
-            
-            
+                        
             
         }, 1)
         
@@ -135,22 +131,20 @@ var Tablafuncionesgestion = $("#Tablafuncionesgestion").DataTable({
         },
         dataSrc: 'data'
     },
-    order: [[0, 'asc']], // Ordena por la primera columna (ID_CATALOGO_ASESOR) en orden ascendente
+    order: [[0, 'asc']], 
     columns: [
         { data: 'ID_CATALOGO_FUNCIONESGESTION' },
         { data: 'TIPO_FUNCION_GESTION' },
-        { data: 'CATEGORIAS_GESTION' },
         { data: 'DESCRIPCION_FUNCION_GESTION'},
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all' },
-        { targets: 1, title: 'Tipo de función', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'Nombre de la categoría', className: 'all text-center nombre-column' },
-        { targets: 3, title: 'Descrición', className: 'all text-center descripcion-column' },
-        { targets: 4, title: 'Editar', className: 'all text-center' },
-        { targets: 5, title: 'Eliminar', className: 'all text-center' }
+        { targets: 1, title: 'Para quién', className: 'all text-center nombre-column' },
+        { targets: 2, title: 'Descrición', className: 'all text-center descripcion-column' },
+        { targets: 3, title: 'Editar', className: 'all text-center' },
+        { targets: 4, title: 'Eliminar', className: 'all text-center' }
     ]
 });
 
@@ -171,50 +165,65 @@ $('#Tablafuncionesgestion tbody').on('click', 'td>button.ELIMINAR', function () 
 })
 
 
-// Función para manejar el cambio de estado del select y radio buttons
-function handleRadioChange() {
-    const especificaRadio = document.getElementById('especifica');
-    const genericaRadio = document.getElementById('generica');
-    const categoriasSelect = document.getElementById('CATEGORIAS_GESTION');
 
-    if (genericaRadio.checked) {
-        categoriasSelect.disabled = true;
-    } else if (especificaRadio.checked) {
-        categoriasSelect.disabled = false;
-    }
-}
-
-//  los cambios en los radio buttons
-document.addEventListener('DOMContentLoaded', function() {
-    const especificaRadio = document.getElementById('especifica');
-    const genericaRadio = document.getElementById('generica');
-    const categoriasSelect = document.getElementById('CATEGORIAS_GESTION');
-
-    especificaRadio.addEventListener('change', handleRadioChange);
-    genericaRadio.addEventListener('change', handleRadioChange);
-
-    handleRadioChange(); // Verificar estado inicial
-});
-
-//  los clics en los botones de edición
 $('#Tablafuncionesgestion tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablafuncionesgestion.row(tr);
     ID_CATALOGO_FUNCIONESGESTION = row.data().ID_CATALOGO_FUNCIONESGESTION;
 
-    var tipoFuncion = row.data().TIPO_FUNCION_GESTION;
+    var datosRegistro = row.data();
 
-    editarDatoTabla(row.data(), 'formularioFUNCIONESGESTION', 'miModal_FUNCIONESGESTION', 1);
+    var tiposFuncionGestion = datosRegistro.TIPO_FUNCION_GESTION;
+    $('input[name="TIPO_FUNCION_GESTION[]"]').prop('checked', false); // Desmarcar todos los checkboxes primero
+    tiposFuncionGestion.forEach(function (tipo) {
+        $('input[name="TIPO_FUNCION_GESTION[]"][value="' + tipo + '"]').prop('checked', true); // Marcar el checkbox correspondiente
+    });
 
-    if (tipoFuncion === 'especifica') {
-        $('#especifica').prop('checked', true);
-        $('#CATEGORIAS_GESTION').val(row.data().CATEGORIAS_GESTION); 
-    } else {
-        $('#generica').prop('checked', true);
-    }
-
-    handleRadioChange();
+    // Mostrar el modal de edición
+    editarDatoTabla(datosRegistro, 'formularioFUNCIONESGESTION', 'miModal_FUNCIONESGESTION', 1);
 });
 
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const directorCheckbox = document.getElementById('director');
+    const liderCheckbox = document.getElementById('lider');
+    const colaboradorCheckbox = document.getElementById('colaborador');
+    const todoCheckbox = document.getElementById('todo');
+
+    function updateCheckboxState() {
+        if (todoCheckbox.checked) {
+            directorCheckbox.checked = false;
+            liderCheckbox.checked = false;
+            colaboradorCheckbox.checked = false;
+            directorCheckbox.disabled = true;
+            liderCheckbox.disabled = true;
+            colaboradorCheckbox.disabled = true;
+        } else {
+            directorCheckbox.disabled = false;
+            liderCheckbox.disabled = false;
+            colaboradorCheckbox.disabled = false;
+
+            const selectedCheckboxes = [directorCheckbox, liderCheckbox, colaboradorCheckbox].filter(checkbox => checkbox.checked);
+            if (selectedCheckboxes.length >= 2) {
+                [directorCheckbox, liderCheckbox, colaboradorCheckbox].forEach(checkbox => {
+                    if (!checkbox.checked) {
+                        checkbox.disabled = true;
+                    }
+                });
+            } else {
+                [directorCheckbox, liderCheckbox, colaboradorCheckbox].forEach(checkbox => {
+                    checkbox.disabled = false;
+                });
+            }
+        }
+    }
+
+    directorCheckbox.addEventListener('change', updateCheckboxState);
+    liderCheckbox.addEventListener('change', updateCheckboxState);
+    colaboradorCheckbox.addEventListener('change', updateCheckboxState);
+    todoCheckbox.addEventListener('change', updateCheckboxState);
+});
 
 

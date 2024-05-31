@@ -204,6 +204,21 @@ $("#DEPARTAMENTO_AREA_ID").on("change", function () {
 
 });
 
+$('#TablaPPT tbody').on('click', 'td>button.ELIMINAR', function () {
+
+    var tr = $(this).closest('tr');
+    var row = TablaPPT.row(tr);
+
+    data = {
+        api: 1,
+        ELIMINAR: 1,
+        ID_FORMULARIO_PPT: row.data().ID_FORMULARIO_PPT
+    }
+    
+    eliminarDatoTabla(data, [TablaPPT], 'PPTDelete')
+
+})
+
 $('#TablaPPT tbody').on('click', 'td>button.EDITAR', function () {
 
 

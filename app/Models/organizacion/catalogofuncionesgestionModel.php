@@ -13,4 +13,10 @@ class catalogofuncionesgestionModel extends Model
         'TIPO_FUNCION_GESTION',
         'CATEGORIAS_GESTION',
         'DESCRIPCION_FUNCION_GESTION',
-    ];}
+    ];
+
+    protected $casts = [
+        'TIPO_FUNCION_GESTION' => 'array',
+    ];
+}
+
