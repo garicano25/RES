@@ -84,17 +84,8 @@ TablaDPT = $("#TablaDPT").DataTable({
     ]
 })
 
-$(document).ready(function () {
-    $('#PUESTOS_INTERACTUAN_DPT').selectize({
-        plugins: ['remove_button'],
-        delimiter: ',',
-        persist: false,
-        placeholder: 'Seleccione una opción'
-    });
 
-
-
-    $("#guardarFormDPT").click(function (e) {
+$("#guardarFormDPT").click(function (e) {
         e.preventDefault();
 
         if (ID_FORMULARIO_DPT == 0) {
@@ -124,7 +115,6 @@ $(document).ready(function () {
                 });
             }, 1);
         } else {
-            // Código para editar el formulario...
             alertMensajeConfirm({
                 title: "¿Desea editar la información de este formulario?",
                 text: "Al guardarla, se editara la información del DPT",
@@ -152,7 +142,7 @@ $(document).ready(function () {
             }, 1);
         }
     });
-});
+
 
 
 var info = ''
@@ -226,44 +216,44 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
 
                 //FUNCIONES DE GESTIONES
 
-            $('#tbodyFuncionesGestion').empty();
+            // $('#tbodyFuncionesGestion').empty();
 
           
-             $.each(data.GESTIONES, function(index, gestion) {
-                let rowHtml = '';
+            //  $.each(data.GESTIONES, function(index, gestion) {
+            //     let rowHtml = '';
             
-                if (gestion.TIPO == 'generica') {
-                    rowHtml = `<tr>
-                        <td id="desc-gestion-${gestion.ID}" class="description blocked">
-                            ${gestion.DESCRIPCION}
-                        </td>
-                        <td>
-                            <div class="switch-container">
-                                <label class="switch">
-                                    <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_GESTION_DPT[]" value="${gestion.ID}">
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                        </td>
-                    </tr>`;
-                } else {
-                    rowHtml = `<tr>
-                        <td id="desc-gestion-${gestion.ID}" class="description active">
-                            ${gestion.DESCRIPCION}
-                        </td>
-                        <td>
-                            <div class="switch-container">
-                                <label class="switch">
-                                    <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_GESTION_DPT[]" value="${gestion.ID}" checked>
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                        </td>
-                    </tr>`;
-                }
+            //     if (gestion.TIPO == 'generica') {
+            //         rowHtml = `<tr>
+            //             <td id="desc-gestion-${gestion.ID}" class="description blocked">
+            //                 ${gestion.DESCRIPCION}
+            //             </td>
+            //             <td>
+            //                 <div class="switch-container">
+            //                     <label class="switch">
+            //                         <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_GESTION_DPT[]" value="${gestion.ID}">
+            //                         <span class="slider"></span>
+            //                     </label>
+            //                 </div>
+            //             </td>
+            //         </tr>`;
+            //     } else {
+            //         rowHtml = `<tr>
+            //             <td id="desc-gestion-${gestion.ID}" class="description active">
+            //                 ${gestion.DESCRIPCION}
+            //             </td>
+            //             <td>
+            //                 <div class="switch-container">
+            //                     <label class="switch">
+            //                         <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_GESTION_DPT[]" value="${gestion.ID}" checked>
+            //                         <span class="slider"></span>
+            //                     </label>
+            //                 </div>
+            //             </td>
+            //         </tr>`;
+            //     }
             
-                $('#tbodyFuncionesGestion').append(rowHtml);
-            });
+            //     $('#tbodyFuncionesGestion').append(rowHtml);
+            // });
         
         
 
@@ -283,24 +273,160 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
 
 
 
-
-
-    $('#TablaDPT tbody').on('click', 'td>button.EDITAR', function () {
-        var tr = $(this).closest('tr');
-        var row = TablaDPT.row(tr);
-        ID_FORMULARIO_DPT = row.data().ID_FORMULARIO_DPT;
-
-        var form = "formularioDPT"
-        data = row.data()
-           
-    
-           // Obtener datos del formulario actual
-           editarDatoTabla(data, form, 'miModal_DPT', 1);
-           mostrarFunciones(data,form)
+$(document).ready(function () {
+    // Inicializar Selectize
+    var $select = $('#PUESTOS_INTERACTUAN_DPT').selectize({
+        plugins: ['remove_button'],
+        delimiter: ',',
+        persist: false,
+        placeholder: 'Seleccione una opción'
     });
+        var selectizeInstance = $select[0].selectize;
+});
 
 
-// Función para alternar la descripción
+
+  
+
+// Variable global para almacenar las funciones disponibles
+var funcionesDisponibles = [];
+
+// Función para obtener las descripciones de las funciones según sus IDs
+function obtenerDescripcionesFunciones(funcionIds) {
+    var descripciones = [];
+    funcionIds.forEach(function(funcionId) {
+        var idString = String(funcionId);
+        var funcion = funcionesDisponibles.find(f => f.ID === idString);
+        if (funcion) {
+            descripciones.push(funcion.DESCRIPCION);
+        } else {
+            descripciones.push('Descripción no encontrada para ID ' + idString);
+        }
+    });
+    return descripciones;
+}
+
+// Función para marcar las funciones específicas guardadas en la tabla
+function marcarFuncionesEspecificas(funcionesGuardadas) {
+    funcionesGuardadas.forEach(function(funcionId) {
+        var descripcion = obtenerDescripcionesFunciones([funcionId])[0];
+        var rowHtml = `<tr>
+            <td>${descripcion}</td>
+            <td>
+                <div class="switch-container">
+                    <label class="switch">
+                        <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_CARGO_DPT[]" value="${funcionId}" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </td>
+        </tr>`;
+        $('#tbodyFucnionesCargo').append(rowHtml);
+    });
+}
+
+// Evento al hacer click en el botón EDITAR en la tabla
+$('#TablaDPT tbody').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = TablaDPT.row(tr);
+    ID_FORMULARIO_DPT = row.data().ID_FORMULARIO_DPT;
+    var form = "formularioDPT";
+    var data = row.data();
+    
+    console.log('Datos recibidos:', data);
+    
+    // Obtener las funciones guardadas en la base de datos
+    var funcionesGuardadas = [];
+    
+    if (Array.isArray(data.FUNCIONES_CARGO_DPT)) {
+        funcionesGuardadas = data.FUNCIONES_CARGO_DPT;
+    } else if (data.FUNCIONES_CARGO_DPT) {
+        try {
+            funcionesGuardadas = JSON.parse(data.FUNCIONES_CARGO_DPT);
+        } catch (e) {
+            console.error("Error al parsear JSON de FUNCIONES_CARGO_DPT: ", e);
+        }
+    }
+
+    console.log('Funciones guardadas:', funcionesGuardadas);
+
+    // Limpiar la tabla antes de agregar las funciones
+    $('#tbodyFucnionesCargo').empty();
+
+    // Marcar las funciones guardadas en la tabla
+    marcarFuncionesEspecificas(funcionesGuardadas);
+
+    // Otras acciones que necesites realizar al editar
+    editarDatoTabla(data, form, 'miModal_DPT', 1);
+    mostrarFunciones(data, form);
+
+    // Obtener las funciones disponibles para el área seleccionada
+    var areaSeleccionada = $('#DEPARTAMENTOS_AREAS_ID').val();
+    console.log('Área seleccionada:', areaSeleccionada);
+
+
+
+    // Marcar las funciones específicas guardadas en la tabla
+    marcarFuncionesEspecificas(funcionesGuardadas);
+});
+
+
+
+//FUNCION EDITAR   Y QUE SE MUESTREN LOS SELECT
+
+// $(document).ready(function () {
+//     // Inicializar Selectize
+//     var $select = $('#PUESTOS_INTERACTUAN_DPT').selectize({
+//         plugins: ['remove_button'],
+//         delimiter: ',',
+//         persist: false,
+//         placeholder: 'Seleccione una opción'
+//     });
+
+//     var selectizeInstance = $select[0].selectize;
+
+//     $('#TablaDPT tbody').on('click', 'td>button.EDITAR', function () {
+//         var tr = $(this).closest('tr');
+//         var row = TablaDPT.row(tr);
+//         ID_FORMULARIO_DPT = row.data().ID_FORMULARIO_DPT;
+//         var form = "formularioDPT";
+//         var data = row.data();
+        
+//         // Inicializar el array para las opciones guardadas
+//         var savedOptions = [];
+
+//         // Obtener el valor de PUESTOS_INTERACTUAN_DPT
+//         var puestosInteractuan = data.PUESTOS_INTERACTUAN_DPT;
+
+//         if (Array.isArray(puestosInteractuan)) { // Verificar si ya es un arreglo
+//             savedOptions = puestosInteractuan;
+//         } else if (puestosInteractuan && puestosInteractuan.length > 2) { // Verificar si es una cadena JSON válida
+//             try {
+//                 // Intentar parsear la cadena JSON
+//                 savedOptions = JSON.parse(puestosInteractuan);
+//             } catch (e) {
+//                 console.error("Error al parsear JSON: ", e);
+//             }
+//         } else {
+//             console.warn("PUESTOS_INTERACTUAN_DPT está vacío o no tiene un formato JSON válido.");
+//         }
+        
+//         // Limpiar las opciones seleccionadas antes de cargar las nuevas
+//         selectizeInstance.clear();
+
+//         // Establecer las opciones seleccionadas si el JSON fue parseado correctamente
+//         if (Array.isArray(savedOptions)) {
+//             selectizeInstance.setValue(savedOptions);
+//         }
+
+//         // Mostrar datos adicionales si es necesario
+//         editarDatoTabla(data, form, 'miModal_DPT', 1);
+//         mostrarFunciones(data, form);
+//     });
+// });
+
+
+
 function toggleDescription(tablePrefix, id, checked) {
     const description = document.getElementById(`desc-${tablePrefix}-${id}`);
     if (description) {
@@ -518,11 +644,10 @@ document.addEventListener('DOMContentLoaded', function () {
 $(document).ready(function () {
     $("#nuevo_dpt").click(function (e) {
         e.preventDefault();
-        // Mostrar modal
         $("#miModal_DPT").modal("show");
 
         $('.toggle-switch-cargo').each(function () {
-            this.checked = false; // Desmarcar todos los checkboxes
+            this.checked = false; 
             toggleDescription(this.name === 'FUNCIONES_CARGO_DPT[]' ? 'cargo' : 'gestion', this.value, false);
         });
 

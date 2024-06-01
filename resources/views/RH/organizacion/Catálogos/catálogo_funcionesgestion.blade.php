@@ -38,19 +38,19 @@
                             <div class="d-flex">
                                 <div class="form-check me-3">
                                     <label class="form-check-label" for="director">Director</label>
-                                    <input class="form-check-input" type="checkbox" name="TIPO_FUNCION_GESTION[]" id="director" value="Director">
+                                    <input class="form-check-input" type="checkbox" name="DIRECTOR_GESTION" id="director" value="1">
                                 </div>
                                 <div class="form-check me-3 mx-4">
                                     <label class="form-check-label" for="lider">Líder categoría</label>
-                                    <input class="form-check-input" type="checkbox" name="TIPO_FUNCION_GESTION[]" id="lider" value="Líder">
+                                    <input class="form-check-input" type="checkbox" name="LIDER_GESTION" id="lider" value="1">
                                 </div>
                                 <div class="form-check me-3 mx-4">
                                     <label class="form-check-label" for="colaborador">Colaborador</label>
-                                    <input class="form-check-input" type="checkbox" name="TIPO_FUNCION_GESTION[]" id="colaborador" value="colaborador">
+                                    <input class="form-check-input" type="checkbox" name="COLABORADOR_GESTION" id="colaborador" value="1">
                                 </div>
                                 <div class="form-check me-3 mx-4">
                                     <label class="form-check-label" for="todo">Todos </label>
-                                    <input class="form-check-input" type="checkbox" name="TIPO_FUNCION_GESTION[]" id="todo" value="Todas">
+                                    <input class="form-check-input" type="checkbox" name="TODO_GESTION" id="todo" value="1">
                                 </div>
                                 
                         </div>

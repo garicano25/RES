@@ -231,11 +231,11 @@
 
               <div class="col-10">
                 <select class="custom-select form-control" id="PUESTOS_INTERACTUAN_DPT" name="PUESTOS_INTERACTUAN_DPT[]" required multiple>
-                  @foreach ($categorias as $cat)
-                  <option value="{{ $cat->ID }}-{{$cat->LIDER}}">{{ $cat->NOMBRE }}</option>
-                  @endforeach
+                    @foreach ($categorias as $cat)
+                    <option value="{{ $cat->ID }}-{{$cat->LIDER}}">{{ $cat->NOMBRE }}</option>
+                    @endforeach
                 </select>
-              </div>
+            </div>
 
 
 
@@ -289,15 +289,14 @@
             <div class="row mb-3">
               <table class="table-sm">
                 <thead>
-                  <tr>
-                    <th class="header">Descripción</th>
-                    <th class="header">Activar/Desactivar</th>
-                  </tr>
+                    <tr>
+                        <th class="header">Descripción</th>
+                        <th class="header">Activar/Desactivar</th>
+                    </tr>
                 </thead>
-                <tbody id="tbodyFucnionesCargo">
-
-                </tbody>
-              </table>
+                <tbody id="tbodyFucnionesCargo"></tbody>
+            </table>
+           
             </div>
 
 
@@ -356,7 +355,7 @@
                           @endforeach
                         </select>
                       </td>
-                      <td>ESCALA_INTEGRIDAD
+                      <td>
                         <textarea class="form-control" style="width: 100%;" id="INTERNAS_PARAQUE1_DPT" name="INTERNAS_PARAQUE_DPT[]" rows="2"></textarea>
                       </td>
                       <td>

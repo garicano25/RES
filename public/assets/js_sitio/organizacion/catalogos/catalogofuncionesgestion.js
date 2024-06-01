@@ -4,15 +4,14 @@ Tablafuncionesgestion = null
 
 
 
-
 const ModalArea = document.getElementById('miModal_FUNCIONESGESTION');
 ModalArea.addEventListener('hidden.bs.modal', event => {
     ID_CATALOGO_FUNCIONESGESTION = 0;
     document.getElementById('formularioFUNCIONESGESTION').reset();
    
-    $('#formularioFUNCIONESGESTION checkbox').prop('disabled', false);
-
+    $('#formularioFUNCIONESGESTION input[type="checkbox"]').prop('checked', false).prop('disabled', false);
 });
+
 
 
 
@@ -134,17 +133,17 @@ var Tablafuncionesgestion = $("#Tablafuncionesgestion").DataTable({
     order: [[0, 'asc']], 
     columns: [
         { data: 'ID_CATALOGO_FUNCIONESGESTION' },
-        { data: 'TIPO_FUNCION_GESTION' },
+        // { data: 'TIPO_FUNCION_GESTION' },
         { data: 'DESCRIPCION_FUNCION_GESTION'},
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all' },
-        { targets: 1, title: 'Para quién', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'Descrición', className: 'all text-center descripcion-column' },
-        { targets: 3, title: 'Editar', className: 'all text-center' },
-        { targets: 4, title: 'Eliminar', className: 'all text-center' }
+        // { targets: 1, title: 'Para quién', className: 'all text-center nombre-column' },
+        { targets: 1, title: 'Descrición', className: 'all text-center descripcion-column' },
+        { targets: 2, title: 'Editar', className: 'all text-center' },
+        { targets: 3, title: 'Eliminar', className: 'all text-center' }
     ]
 });
 
@@ -171,19 +170,10 @@ $('#Tablafuncionesgestion tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablafuncionesgestion.row(tr);
     ID_CATALOGO_FUNCIONESGESTION = row.data().ID_CATALOGO_FUNCIONESGESTION;
 
-    var datosRegistro = row.data();
+    console.log(row.data());
 
-    var tiposFuncionGestion = datosRegistro.TIPO_FUNCION_GESTION;
-    $('input[name="TIPO_FUNCION_GESTION[]"]').prop('checked', false); // Desmarcar todos los checkboxes primero
-    tiposFuncionGestion.forEach(function (tipo) {
-        $('input[name="TIPO_FUNCION_GESTION[]"][value="' + tipo + '"]').prop('checked', true); // Marcar el checkbox correspondiente
-    });
-
-    // Mostrar el modal de edición
-    editarDatoTabla(datosRegistro, 'formularioFUNCIONESGESTION', 'miModal_FUNCIONESGESTION', 1);
+    editarDatoTabla(row.data(), 'formularioFUNCIONESGESTION', 'miModal_FUNCIONESGESTION',1);
 });
-
-
 
 
 document.addEventListener('DOMContentLoaded', function () {

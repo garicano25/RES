@@ -42,6 +42,7 @@ return array(
     'App\\Models\\organizacion\\encargadosAreasModel' => $baseDir . '/app/Models/organizacion/encargadosAreasModel.php',
     'App\\Models\\organizacion\\formulariodptModel' => $baseDir . '/app/Models/organizacion/formulariodptModel.php',
     'App\\Models\\organizacion\\formulariopptModel' => $baseDir . '/app/Models/organizacion/formulariopptModel.php',
+    'App\\Models\\organizacion\\formulariorequerimientoModel' => $baseDir . '/app/Models/organizacion/formulariorequerimientoModel.php',
     'App\\Models\\organizacion\\relacionesexternasModel' => $baseDir . '/app/Models/organizacion/relacionesexternasModel.php',
     'App\\Models\\organizacion\\relacionesinternasModel' => $baseDir . '/app/Models/organizacion/relacionesinternasModel.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',

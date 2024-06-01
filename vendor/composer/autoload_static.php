@@ -631,6 +631,7 @@ class ComposerStaticInitc61ff82cbf0142a401a48a8161e1595a
         'App\\Models\\organizacion\\encargadosAreasModel' => __DIR__ . '/../..' . '/app/Models/organizacion/encargadosAreasModel.php',
         'App\\Models\\organizacion\\formulariodptModel' => __DIR__ . '/../..' . '/app/Models/organizacion/formulariodptModel.php',
         'App\\Models\\organizacion\\formulariopptModel' => __DIR__ . '/../..' . '/app/Models/organizacion/formulariopptModel.php',
+        'App\\Models\\organizacion\\formulariorequerimientoModel' => __DIR__ . '/../..' . '/app/Models/organizacion/formulariorequerimientoModel.php',
         'App\\Models\\organizacion\\relacionesexternasModel' => __DIR__ . '/../..' . '/app/Models/organizacion/relacionesexternasModel.php',
         'App\\Models\\organizacion\\relacionesinternasModel' => __DIR__ . '/../..' . '/app/Models/organizacion/relacionesinternasModel.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',

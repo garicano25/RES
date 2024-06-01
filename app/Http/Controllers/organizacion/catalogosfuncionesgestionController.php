@@ -39,52 +39,55 @@ class catalogosfuncionesgestionController extends Controller
     }
 
 
-    public function store(Request $request)
-    {
-        try {
-            switch (intval($request->api)) {
-                case 1:
-                    $tiposFuncionGestion = $request->input('TIPO_FUNCION_GESTION', []);
-    
-                    if (!is_array($tiposFuncionGestion)) {
-                        $tiposFuncionGestion = explode(',', $tiposFuncionGestion);
-                    }
-    
-                    $tiposFuncionGestion = array_map('strval', $tiposFuncionGestion);
-    
-                    $request->merge(['TIPO_FUNCION_GESTION' => $tiposFuncionGestion]);
-    
-                    if ($request->ID_CATALOGO_FUNCIONESGESTION == 0) {
-                        DB::statement('ALTER TABLE catalogo_funcionesgestiones AUTO_INCREMENT=1;');
-    
-                        $gestiones = catalogofuncionesgestionModel::create($request->all());
+
+
+public function store(Request $request)
+{
+
+    try {
+        switch (intval($request->api)) {
+            case 1:
+
+                
+                if ($request->ID_CATALOGO_FUNCIONESGESTION == 0) {
+
+                    DB::statement('ALTER TABLE catalogo_funcionesgestiones AUTO_INCREMENT=1;');
+                    $gestiones = catalogofuncionesgestionModel::create($request->all());
+                } else { 
+
+                    if (!isset($request->ELIMINAR)) {
+
+
+                        $gestiones = catalogofuncionesgestionModel::find($request->ID_CATALOGO_FUNCIONESGESTION);
+                        $gestiones->update($request->all());
                     } else {
-                        
-                        if (!isset($request->ELIMINAR)) {
-                            $gestiones = catalogofuncionesgestionModel::find($request->ID_CATALOGO_FUNCIONESGESTION);
-                            $gestiones->update($request->all());
-                        } else {
-                            catalogofuncionesgestionModel::where('ID_CATALOGO_FUNCIONESGESTION', $request->ID_CATALOGO_FUNCIONESGESTION)->delete();
-    
-                            $response['code'] = 1;
-                            $response['gestion'] = 'Eliminada';
-                            return response()->json($response);
-                        }
+
+                        $gestiones = catalogofuncionesgestionModel::where('ID_CATALOGO_FUNCIONESGESTION', $request['ID_CATALOGO_FUNCIONESGESTION'])->delete();
+
+                        $response['code']  = 1;
+                        $response['gestion']  = 'Eliminada';
+                        return response()->json($response);
                     }
-    
-                    $response['code'] = 1;
-                    $response['gestion'] = $gestiones;
-                    return response()->json($response);
-    
-                    break;
-    
-                default:
-                    $response['code'] = 1;
-                    $response['msj'] = 'Api no encontrada';
-                    return response()->json($response);
-            }
-        } catch (Exception $e) {
-            return response()->json('Error al guardar las funciones');
+                }
+
+                $response['code']  = 1;
+                $response['gestion']  = $gestiones;
+                return response()->json($response);
+
+                break;
+
+            default:
+
+                $response['code']  = 1;
+                $response['msj']  = 'Api no encontrada';
+                return response()->json($response);
         }
+    } catch (Exception $e) {
+
+        return response()->json('Error al guardar las funciones');
     }
 }
+
+}
+
+

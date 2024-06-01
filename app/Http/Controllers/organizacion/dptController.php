@@ -92,10 +92,10 @@ class dptController extends Controller
             ORDER BY TIPO_FUNCION_CARGO", [$ID]);
 
 
-            $gestiones = DB::select("SELECT ID_CATALOGO_FUNCIONESGESTION ID, DESCRIPCION_FUNCION_GESTION DESCRIPCION, TIPO_FUNCION_GESTION TIPO
-            FROM catalogo_funcionesgestiones
-            WHERE CATEGORIAS_GESTION = ? OR TIPO_FUNCION_GESTION = 'generica'
-            ORDER BY TIPO_FUNCION_GESTION",[$ID]);
+            // $gestiones = DB::select("SELECT ID_CATALOGO_FUNCIONESGESTION ID, DESCRIPCION_FUNCION_GESTION DESCRIPCION, TIPO_FUNCION_GESTION TIPO
+            // FROM catalogo_funcionesgestiones
+            // WHERE CATEGORIAS_GESTION = ? OR TIPO_FUNCION_GESTION = 'generica'
+            // ORDER BY TIPO_FUNCION_GESTION",[$ID]);
 
             if ($LIDER == 1) {
 
@@ -110,7 +110,7 @@ class dptController extends Controller
                 $response['REPORTAN'] = $info;
                 $response['REPORTA'] = 'Director';
                 $response['FUNCIONES'] = $funciones;
-                $response['GESTIONES'] = $gestiones;
+                // $response['GESTIONES'] = $gestiones;
                 return response()->json($response);
             } else if  ($LIDER == 0){
 
@@ -126,7 +126,7 @@ class dptController extends Controller
                 $response['REPORTAN'] = 'Ninguno';
                 $response['REPORTA'] = $info;
                 $response['FUNCIONES'] = $funciones;
-                $response['GESTIONES'] = $gestiones;
+                // $response['GESTIONES'] = $gestiones;
 
                 return response()->json($response);
 
@@ -140,7 +140,7 @@ class dptController extends Controller
                 $response['REPORTAN'] = $info;
                 $response['REPORTA'] = 'Ninguno';
                 $response['FUNCIONES'] = $funciones;
-                $response['GESTIONES'] = $gestiones;
+                // $response['GESTIONES'] = $gestiones;
 
                 return response()->json($response);
 
