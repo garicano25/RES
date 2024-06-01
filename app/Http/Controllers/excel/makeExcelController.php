@@ -27,7 +27,10 @@ use App\Models\organizacion\departamentosAreasModel;
 use App\Models\organizacion\formulariorequerimientoModel;
 use App\Models\organizacion\areasModel;
 use App\Models\organizacion\formulariodptModel;
+use App\Models\organizacion\relacionesexternasModel;
 
+use App\Models\organizacion\relacionesinternasModel;
+use App\Models\organizacion\catalogorelacionesexternaModel;
 
 
 
@@ -53,15 +56,7 @@ class makeExcelController extends Controller{
             
 
 
-        $puesto= DB::select("SELECT NOMBRE FROM (
-                                SELECT NOMBRE
-                                FROM departamentos_areas
-                                WHERE ACTIVO = 1
-                                UNION
-                                SELECT NOMBRE_CARGO AS NOMBRE
-                                FROM encargados_areas) 
-                            AS NOMBRES
-                            WHERE NOMBRE = 'Director'");
+            $puesto = departamentosAreasModel :: where('ID_DEPARTAMENTO_AREA',$val-> DEPARTAMENTO_AREA_ID)->pluck('NOMBRE');
             
 
             //DATOS DE LA PERSONA
@@ -320,16 +315,21 @@ class makeExcelController extends Controller{
 
 
 
+           
+
+
             if (!is_null($val->EGRESADO_ESPECIALIDAD_PPT)) {
-                $sheet->setCellValue('F29', 'D*');
+                if (strtoupper($val->EGRESADO_ESPECIALIDAD_PPT) == '*E') {
+                    $sheet->setCellValue('F29', '*E');
+                } else {
+                    $sheet->setCellValue('H29', '*D');
+                }
             }
 
-            if (!is_null($val->GRADUADO_ESPECIALIDA_PPT)) {
-                $sheet->setCellValue('H29', 'D*');
-            } 
+
+
 
             if (!is_null($val->ESPECIALIDAD_CUMPLE_PPT)) {
-
                 if (strtoupper($val->ESPECIALIDAD_CUMPLE_PPT) == 'SI') {
                     $sheet->setCellValue('J29', 'Si');
                 } else {
@@ -347,13 +347,12 @@ class makeExcelController extends Controller{
 
 
             if (!is_null($val->EGRESADO_MAESTRIA_PPT)) {
-                $sheet->setCellValue('F30', 'D*');
+                if (strtoupper($val->EGRESADO_MAESTRIA_PPT) == '*E') {
+                    $sheet->setCellValue('F30', '*E');
+                } else {
+                    $sheet->setCellValue('H30', '*D');
+                }
             }
-            if (!is_null($val->GRADUADO_MAESTRIA_PPT)) {
-                $sheet->setCellValue('H30', 'D*');
-            }
-
-
 
             if (!is_null($val->MAESTRIA_CUMPLE_PPT)) {
 
@@ -366,10 +365,11 @@ class makeExcelController extends Controller{
 
 
             if (!is_null($val->EGRESADO_DOCTORADO_PPT)) {
-                $sheet->setCellValue('F31', 'D*');
-            }
-            if (!is_null($val->GRADUADO_DOCTORADO_PPT)) {
-                $sheet->setCellValue('H31', 'D*');
+                if (strtoupper($val->EGRESADO_DOCTORADO_PPT) == '*E') {
+                    $sheet->setCellValue('F31', '*E');
+                } else {
+                    $sheet->setCellValue('H31', '*D');
+                }
             }
 
 
@@ -552,30 +552,30 @@ class makeExcelController extends Controller{
             //CURSOS - PENDIENTE
 
             //IV. Experiencia
-
+            
 
             if (!is_null($val->EXPERIENCIA_LABORAL_GENERAL_PPT)) {
-                $sheet->setCellValue('N77', $val->EXPERIENCIA_LABORAL_GENERAL_PPT); 
+                $sheet->setCellValue('N74', $val->EXPERIENCIA_LABORAL_GENERAL_PPT); 
             }
 
             
             if (!is_null($val->EXPERIENCIAGENERAL_CUMPLE_PPT)) {
                 if (strtoupper($val->EXPERIENCIAGENERAL_CUMPLE_PPT) == 'SI') {
-                     $sheet->setCellValue('V77', 'X');
+                     $sheet->setCellValue('V74', 'X');
                 } else {
-                    $sheet->setCellValue('W77', 'X');
+                    $sheet->setCellValue('W74', 'X');
                 }
             }
 
             if (!is_null($val->CANTIDAD_EXPERIENCIA_PPT)) {
-                $sheet->setCellValue('N78', $val->CANTIDAD_EXPERIENCIA_PPT); 
+                $sheet->setCellValue('N75', $val->CANTIDAD_EXPERIENCIA_PPT); 
             }
 
             if (!is_null($val->CANTIDAD_EXPERIENCIA_CUMPLE_PPT)) {
                 if (strtoupper($val->CANTIDAD_EXPERIENCIA_CUMPLE_PPT) == 'SI') {
-                     $sheet->setCellValue('V78', 'X');
+                     $sheet->setCellValue('V75', 'X');
                 } else {
-                    $sheet->setCellValue('W78', 'X');
+                    $sheet->setCellValue('W75', 'X');
                 }
             }
 
@@ -595,324 +595,324 @@ class makeExcelController extends Controller{
 
 
             if (!is_null($val->PRACTICA_PROFESIONAL_PPT)) {
-                $sheet->setCellValue('I84', $val->PRACTICA_PROFESIONAL_PPT);
+                $sheet->setCellValue('I82', $val->PRACTICA_PROFESIONAL_PPT);
             }
             if (!is_null($val->PRACTICA_PROFESIONAL_CUMPLE_PPT)) {
                 if (strtoupper($val->PRACTICA_PROFESIONAL_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('K84', 'X');
+                    $sheet->setCellValue('K82', 'X');
                 } else {
-                     $sheet->setCellValue('L84', 'X');
+                     $sheet->setCellValue('L82', 'X');
                 }
             }
 
 
             if (!is_null($val->ELABORACION_REPORTES_PPT)) {
-                $sheet->setCellValue('U85', $val->ELABORACION_REPORTES_PPT);
+                $sheet->setCellValue('U83', $val->ELABORACION_REPORTES_PPT);
             }
 
             if (!is_null($val->ELABORACION_REPORTES_CUMPLE_PPT)) {
                 if (strtoupper($val->ELABORACION_REPORTES_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('W85', 'X');
+                    $sheet->setCellValue('W83', 'X');
                 } else {
-                     $sheet->setCellValue('X85', 'X');
+                     $sheet->setCellValue('X83', 'X');
                 }
             }
 
 
             if (!is_null($val->AUXILIAR_ASISTENTE_PPT)) {
-                $sheet->setCellValue('U84', $val->AUXILIAR_ASISTENTE_PPT);
+                $sheet->setCellValue('U82', $val->AUXILIAR_ASISTENTE_PPT);
             }
 
             if (!is_null($val->AUXILIAR_ASISTENTE_CUMPLE_PPT)) {
                 if (strtoupper($val->AUXILIAR_ASISTENTE_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('W84', 'X');
+                    $sheet->setCellValue('W82', 'X');
                 } else {
-                     $sheet->setCellValue('X84', 'X');
+                     $sheet->setCellValue('X82', 'X');
                 }
             }
 
 
             if (!is_null($val->SUPERVISOR_COORDINADOR_PPT)) {
-                $sheet->setCellValue('I87', $val->SUPERVISOR_COORDINADOR_PPT);
+                $sheet->setCellValue('I85', $val->SUPERVISOR_COORDINADOR_PPT);
             }
 
             if (!is_null($val->SUPERVISOR_COORDINADOR_CUMPLE_PPT)) {
                 if (strtoupper($val->SUPERVISOR_COORDINADOR_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('K87', 'X');
-                } else {
-                     $sheet->setCellValue('L87', 'X');
-                }
-            }
-
-            if (!is_null($val->ANALISTA_ESPECIALISTA_PPT)) {
-                $sheet->setCellValue('I85', $val->ANALISTA_ESPECIALISTA_PPT);
-            }
-
-            if (!is_null($val->ANALISTA_ESPECIALISTA_CUMPLE_PPT)) {
-                if (strtoupper($val->ANALISTA_ESPECIALISTA_CUMPLE_PPT) == 'SI') {
                     $sheet->setCellValue('K85', 'X');
                 } else {
                      $sheet->setCellValue('L85', 'X');
                 }
             }
 
+            if (!is_null($val->ANALISTA_ESPECIALISTA_PPT)) {
+                $sheet->setCellValue('I83', $val->ANALISTA_ESPECIALISTA_PPT);
+            }
+
+            if (!is_null($val->ANALISTA_ESPECIALISTA_CUMPLE_PPT)) {
+                if (strtoupper($val->ANALISTA_ESPECIALISTA_CUMPLE_PPT) == 'SI') {
+                    $sheet->setCellValue('K83', 'X');
+                } else {
+                     $sheet->setCellValue('L83', 'X');
+                }
+            }
+
             if (!is_null($val->CONSULTOR_ASESOR_PPT)) {
-                $sheet->setCellValue('U86', $val->CONSULTOR_ASESOR_PPT);
+                $sheet->setCellValue('U84', $val->CONSULTOR_ASESOR_PPT);
             }
 
 
             if (!is_null($val->CONSULTOR_ASESOR_CUMPLE_PPT)) {
                 if (strtoupper($val->CONSULTOR_ASESOR_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('W86', 'X');
+                    $sheet->setCellValue('W84', 'X');
                 } else {
-                     $sheet->setCellValue('X86', 'X');
+                     $sheet->setCellValue('X84', 'X');
                 }
             }
 
             if (!is_null($val->TECNICO_MUESTREO_PPT)) {
-                $sheet->setCellValue('I86', $val->TECNICO_MUESTREO_PPT);
+                $sheet->setCellValue('I84', $val->TECNICO_MUESTREO_PPT);
             }
 
             if (!is_null($val->TECNICO_MUESTREO_CUMPLE_PPT)) {
                 if (strtoupper($val->TECNICO_MUESTREO_CUMPLE_PPT) == 'SI') {
+                    $sheet->setCellValue('K84', 'X');
+                } else {
+                     $sheet->setCellValue('L84', 'X');
+                }
+            }
+
+            if (!is_null($val->JEFE_AREA_PPT)) {
+                $sheet->setCellValue('I86', $val->JEFE_AREA_PPT);
+            }
+
+
+            if (!is_null($val->JEFE_AREA_CUMPLE_PPT)) {
+                if (strtoupper($val->JEFE_AREA_CUMPLE_PPT) == 'SI') {
                     $sheet->setCellValue('K86', 'X');
                 } else {
                      $sheet->setCellValue('L86', 'X');
                 }
             }
 
-            if (!is_null($val->JEFE_AREA_PPT)) {
-                $sheet->setCellValue('I88', $val->JEFE_AREA_PPT);
-            }
-
-
-            if (!is_null($val->JEFE_AREA_CUMPLE_PPT)) {
-                if (strtoupper($val->JEFE_AREA_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('K88', 'X');
-                } else {
-                     $sheet->setCellValue('L88', 'X');
-                }
-            }
-
             if (!is_null($val->SIGNATARIO_PPT)) {
-                $sheet->setCellValue('U87', $val->SIGNATARIO_PPT);
+                $sheet->setCellValue('U85', $val->SIGNATARIO_PPT);
             }
 
             if (!is_null($val->SIGNATARIO_CUMPLE_PPT)) {
                 if (strtoupper($val->SIGNATARIO_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('W87', 'X');
+                    $sheet->setCellValue('W85', 'X');
                 } else {
-                     $sheet->setCellValue('X87', 'X');
+                     $sheet->setCellValue('X85', 'X');
                 }
             }
 
             if (!is_null($val->GERENTE_DIRECTOR_PPT)) {
-                $sheet->setCellValue('U88', $val->GERENTE_DIRECTOR_PPT);
+                $sheet->setCellValue('U86', $val->GERENTE_DIRECTOR_PPT);
             }
 
 
             if (!is_null($val->GERENTE_DIRECTOR_CUMPLE_PPT)) {
                 if (strtoupper($val->GERENTE_DIRECTOR_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('W88', 'X');
+                    $sheet->setCellValue('W86', 'X');
                 } else {
-                     $sheet->setCellValue('X88', 'X');
+                     $sheet->setCellValue('X86', 'X');
                 }
             }
 
             if (!is_null($val->TIEMPO_EXPERIENCIA_PPT)) {
-                $sheet->setCellValue('B93', $val->TIEMPO_EXPERIENCIA_PPT);
+                $sheet->setCellValue('B90', $val->TIEMPO_EXPERIENCIA_PPT);
             }
 
             if (!is_null($val->TIEMPO_EXPERIENCIA_CUMPLE_PPT)) {
                 if (strtoupper($val->TIEMPO_EXPERIENCIA_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('V93', 'X');
+                    $sheet->setCellValue('V90', 'X');
                 } else {
-                     $sheet->setCellValue('W93', 'X');
+                     $sheet->setCellValue('W90', 'X');
                 }
             }
 
 
             // V. habilidades y competencias funcionales
             if (!is_null($val->INNOVACION_REQUERIDA_PPT)) {
-                $sheet->setCellValue('L97', $val->INNOVACION_REQUERIDA_PPT);
+                $sheet->setCellValue('L94', $val->INNOVACION_REQUERIDA_PPT);
             }
             if (!is_null($val->INNOVACION_DESEABLE_PPT)) {
-                $sheet->setCellValue('O97', $val->INNOVACION_DESEABLE_PPT);
+                $sheet->setCellValue('O94', $val->INNOVACION_DESEABLE_PPT);
             }
             if (!is_null($val->INNOVACION_NO_REQUERIDA_PPT)) {
-                $sheet->setCellValue('R97', $val->INNOVACION_NO_REQUERIDA_PPT);
+                $sheet->setCellValue('R94', $val->INNOVACION_NO_REQUERIDA_PPT);
             }
 
 
             if (!is_null($val->INNOVACION_CUMPLE_PPT)) {
                 if (strtoupper($val->INNOVACION_CUMPLE_PPT) == 'SI') {
+                    $sheet->setCellValue('V94', 'X');
+                } else {
+                     $sheet->setCellValue('W94', 'X');
+                }
+            }
+
+            if (!is_null($val->PASION_REQUERIDA_PPT)) {
+                $sheet->setCellValue('L95', $val->PASION_REQUERIDA_PPT);
+            }
+            if (!is_null($val->PASION_DESEABLE_PPT)) {
+                $sheet->setCellValue('O95', $val->PASION_DESEABLE_PPT);
+            }
+            if (!is_null($val->PASION_NO_REQUERIDA_PPT)) {
+                $sheet->setCellValue('R95', $val->PASION_NO_REQUERIDA_PPT);
+            }
+
+            if (!is_null($val->PASION_CUMPLE_PPT)) {
+                if (strtoupper($val->PASION_CUMPLE_PPT) == 'SI') {
+                    $sheet->setCellValue('V95', 'X');
+                } else {
+                     $sheet->setCellValue('W95', 'X');
+                }
+            }
+
+            if (!is_null($val->SERVICIO_CLIENTE_REQUERIDA_PPT)) {
+                $sheet->setCellValue('L96', $val->SERVICIO_CLIENTE_REQUERIDA_PPT);
+            }
+            if (!is_null($val->SERVICIO_CLIENTE_DESEABLE_PPT)) {
+                $sheet->setCellValue('O96', $val->SERVICIO_CLIENTE_DESEABLE_PPT);
+            }
+            if (!is_null($val->SERVICIO_CLIENTE_NO_REQUERIDA_PPT)) {
+                $sheet->setCellValue('R96', $val->SERVICIO_CLIENTE_NO_REQUERIDA_PPT);
+            }
+
+            if (!is_null($val->SERVICIO_CLIENTE_CUMPLE_PPT)) {
+                if (strtoupper($val->SERVICIO_CLIENTE_CUMPLE_PPT) == 'SI') {
+                    $sheet->setCellValue('V96', 'X');
+                } else {
+                     $sheet->setCellValue('W96', 'X');
+                }
+            }
+
+            if (!is_null($val->COMUNICACION_EFICAZ_REQUERIDA_PPT)) {
+                $sheet->setCellValue('L97', $val->COMUNICACION_EFICAZ_REQUERIDA_PPT);
+            }
+            if (!is_null($val->COMUNICACION_EFICAZ_DESEABLE_PPT)) {
+                $sheet->setCellValue('O97', $val->COMUNICACION_EFICAZ_DESEABLE_PPT);
+            }
+            if (!is_null($val->COMUNICACION_EFICAZ_NO_REQUERIDA_PPT)) {
+                $sheet->setCellValue('R97', $val->COMUNICACION_EFICAZ_NO_REQUERIDA_PPT);
+            }
+
+            if (!is_null($val->COMUNICACION_EFICAZ_CUMPLE_PPT)) {
+                if (strtoupper($val->COMUNICACION_EFICAZ_CUMPLE_PPT) == 'SI') {
                     $sheet->setCellValue('V97', 'X');
                 } else {
                      $sheet->setCellValue('W97', 'X');
                 }
             }
 
-            if (!is_null($val->PASION_REQUERIDA_PPT)) {
-                $sheet->setCellValue('L98', $val->PASION_REQUERIDA_PPT);
+
+            if (!is_null($val->TRABAJO_EQUIPO_REQUERIDA_PPT)) {
+                $sheet->setCellValue('L98', $val->TRABAJO_EQUIPO_REQUERIDA_PPT);
             }
-            if (!is_null($val->PASION_DESEABLE_PPT)) {
-                $sheet->setCellValue('O98', $val->PASION_DESEABLE_PPT);
+            if (!is_null($val->TRABAJO_EQUIPO_DESEABLE_PPT)) {
+                $sheet->setCellValue('O98', $val->TRABAJO_EQUIPO_DESEABLE_PPT);
             }
-            if (!is_null($val->PASION_NO_REQUERIDA_PPT)) {
-                $sheet->setCellValue('R98', $val->PASION_NO_REQUERIDA_PPT);
+            if (!is_null($val->TRABAJO_EQUIPO_NO_REQUERIDA_PPT)) {
+                $sheet->setCellValue('R98', $val->TRABAJO_EQUIPO_NO_REQUERIDA_PPT);
             }
 
-            if (!is_null($val->PASION_CUMPLE_PPT)) {
-                if (strtoupper($val->PASION_CUMPLE_PPT) == 'SI') {
+            if (!is_null($val->TRABAJO_EQUIPO_CUMPLE_PPT)) {
+                if (strtoupper($val->TRABAJO_EQUIPO_CUMPLE_PPT) == 'SI') {
                     $sheet->setCellValue('V98', 'X');
                 } else {
                      $sheet->setCellValue('W98', 'X');
                 }
             }
 
-            if (!is_null($val->SERVICIO_CLIENTE_REQUERIDA_PPT)) {
-                $sheet->setCellValue('L99', $val->SERVICIO_CLIENTE_REQUERIDA_PPT);
+            if (!is_null($val->INTEGRIDAD_REQUERIDA_PPT)) {
+                $sheet->setCellValue('L99', $val->INTEGRIDAD_REQUERIDA_PPT);
             }
-            if (!is_null($val->SERVICIO_CLIENTE_DESEABLE_PPT)) {
-                $sheet->setCellValue('O99', $val->SERVICIO_CLIENTE_DESEABLE_PPT);
+            if (!is_null($val->INTEGRIDAD_DESEABLE_PPT)) {
+                $sheet->setCellValue('O99', $val->INTEGRIDAD_DESEABLE_PPT);
             }
-            if (!is_null($val->SERVICIO_CLIENTE_NO_REQUERIDA_PPT)) {
-                $sheet->setCellValue('R99', $val->SERVICIO_CLIENTE_NO_REQUERIDA_PPT);
+            if (!is_null($val->INTEGRIDAD_NO_REQUERIDA_PPT)) {
+                $sheet->setCellValue('R99', $val->INTEGRIDAD_NO_REQUERIDA_PPT);
             }
 
-            if (!is_null($val->SERVICIO_CLIENTE_CUMPLE_PPT)) {
-                if (strtoupper($val->SERVICIO_CLIENTE_CUMPLE_PPT) == 'SI') {
+            if (!is_null($val->INTEGRIDAD_CUMPLE_PPT)) {
+                if (strtoupper($val->INTEGRIDAD_CUMPLE_PPT) == 'SI') {
                     $sheet->setCellValue('V99', 'X');
                 } else {
                      $sheet->setCellValue('W99', 'X');
                 }
             }
 
-            if (!is_null($val->COMUNICACION_EFICAZ_REQUERIDA_PPT)) {
-                $sheet->setCellValue('L100', $val->COMUNICACION_EFICAZ_REQUERIDA_PPT);
+            if (!is_null($val->RESPONSABILIDAD_SOCIAL_REQUERIDA_PPT)) {
+                $sheet->setCellValue('L100', $val->RESPONSABILIDAD_SOCIAL_REQUERIDA_PPT);
             }
-            if (!is_null($val->COMUNICACION_EFICAZ_DESEABLE_PPT)) {
-                $sheet->setCellValue('O100', $val->COMUNICACION_EFICAZ_DESEABLE_PPT);
+            if (!is_null($val->RESPONSABILIDAD_SOCIAL_DESEABLE_PPT)) {
+                $sheet->setCellValue('O100', $val->RESPONSABILIDAD_SOCIAL_DESEABLE_PPT);
             }
-            if (!is_null($val->COMUNICACION_EFICAZ_NO_REQUERIDA_PPT)) {
-                $sheet->setCellValue('R100', $val->COMUNICACION_EFICAZ_NO_REQUERIDA_PPT);
+            if (!is_null($val->RESPONSABILIDAD_SOCIAL_NO_REQUERIDA_PPT)) {
+                $sheet->setCellValue('R100', $val->RESPONSABILIDAD_SOCIAL_NO_REQUERIDA_PPT);
             }
 
-            if (!is_null($val->COMUNICACION_EFICAZ_CUMPLE_PPT)) {
-                if (strtoupper($val->COMUNICACION_EFICAZ_CUMPLE_PPT) == 'SI') {
+            if (!is_null($val->RESPONSABILIDAD_SOCIAL_CUMPLE_PPT)) {
+                if (strtoupper($val->RESPONSABILIDAD_SOCIAL_CUMPLE_PPT) == 'SI') {
                     $sheet->setCellValue('V100', 'X');
                 } else {
                      $sheet->setCellValue('W100', 'X');
                 }
             }
 
+            if (!is_null($val->ADAPTABILIDAD_REQUERIDA_PPT)) {
+                $sheet->setCellValue('L101', $val->ADAPTABILIDAD_REQUERIDA_PPT);
+            }
+            if (!is_null($val->ADAPTABILIDAD_DESEABLE_PPT)) {
+                $sheet->setCellValue('O101', $val->ADAPTABILIDAD_DESEABLE_PPT);
+            }
+            if (!is_null($val->ADAPTABILIDAD_NO_REQUERIDA_PPT)) {
+                $sheet->setCellValue('R101', $val->ADAPTABILIDAD_NO_REQUERIDA_PPT);
+            }
 
-            if (!is_null($val->TRABAJO_EQUIPO_REQUERIDA_PPT)) {
-                $sheet->setCellValue('L101', $val->TRABAJO_EQUIPO_REQUERIDA_PPT);
-            }
-            if (!is_null($val->TRABAJO_EQUIPO_DESEABLE_PPT)) {
-                $sheet->setCellValue('O101', $val->TRABAJO_EQUIPO_DESEABLE_PPT);
-            }
-            if (!is_null($val->TRABAJO_EQUIPO_NO_REQUERIDA_PPT)) {
-                $sheet->setCellValue('R101', $val->TRABAJO_EQUIPO_NO_REQUERIDA_PPT);
-            }
-
-            if (!is_null($val->TRABAJO_EQUIPO_CUMPLE_PPT)) {
-                if (strtoupper($val->TRABAJO_EQUIPO_CUMPLE_PPT) == 'SI') {
+            if (!is_null($val->ADAPTABILIDAD_CUMPLE_PPT)) {
+                if (strtoupper($val->ADAPTABILIDAD_CUMPLE_PPT) == 'SI') {
                     $sheet->setCellValue('V101', 'X');
                 } else {
                      $sheet->setCellValue('W101', 'X');
                 }
             }
 
-            if (!is_null($val->INTEGRIDAD_REQUERIDA_PPT)) {
-                $sheet->setCellValue('L102', $val->INTEGRIDAD_REQUERIDA_PPT);
+            if (!is_null($val->LIDERAZGO_REQUERIDA_PPT)) {
+                $sheet->setCellValue('L102', $val->LIDERAZGO_REQUERIDA_PPT);
             }
-            if (!is_null($val->INTEGRIDAD_DESEABLE_PPT)) {
-                $sheet->setCellValue('O102', $val->INTEGRIDAD_DESEABLE_PPT);
+            if (!is_null($val->LIDERAZGO_DESEABLE_PPT)) {
+                $sheet->setCellValue('O102', $val->LIDERAZGO_DESEABLE_PPT);
             }
-            if (!is_null($val->INTEGRIDAD_NO_REQUERIDA_PPT)) {
-                $sheet->setCellValue('R102', $val->INTEGRIDAD_NO_REQUERIDA_PPT);
+            if (!is_null($val->LIDERAZGO_NO_REQUERIDA_PPT)) {
+                $sheet->setCellValue('R102', $val->LIDERAZGO_NO_REQUERIDA_PPT);
             }
 
-            if (!is_null($val->INTEGRIDAD_CUMPLE_PPT)) {
-                if (strtoupper($val->INTEGRIDAD_CUMPLE_PPT) == 'SI') {
+            
+            if (!is_null($val->LIDERAZGO_CUMPLE_PPT)) {
+                if (strtoupper($val->LIDERAZGO_CUMPLE_PPT) == 'SI') {
                     $sheet->setCellValue('V102', 'X');
                 } else {
                      $sheet->setCellValue('W102', 'X');
                 }
             }
 
-            if (!is_null($val->RESPONSABILIDAD_SOCIAL_REQUERIDA_PPT)) {
-                $sheet->setCellValue('L103', $val->RESPONSABILIDAD_SOCIAL_REQUERIDA_PPT);
-            }
-            if (!is_null($val->RESPONSABILIDAD_SOCIAL_DESEABLE_PPT)) {
-                $sheet->setCellValue('O103', $val->RESPONSABILIDAD_SOCIAL_DESEABLE_PPT);
-            }
-            if (!is_null($val->RESPONSABILIDAD_SOCIAL_NO_REQUERIDA_PPT)) {
-                $sheet->setCellValue('R103', $val->RESPONSABILIDAD_SOCIAL_NO_REQUERIDA_PPT);
-            }
-
-            if (!is_null($val->RESPONSABILIDAD_SOCIAL_CUMPLE_PPT)) {
-                if (strtoupper($val->RESPONSABILIDAD_SOCIAL_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('V103', 'X');
-                } else {
-                     $sheet->setCellValue('W103', 'X');
-                }
-            }
-
-            if (!is_null($val->ADAPTABILIDAD_REQUERIDA_PPT)) {
-                $sheet->setCellValue('L104', $val->ADAPTABILIDAD_REQUERIDA_PPT);
-            }
-            if (!is_null($val->ADAPTABILIDAD_DESEABLE_PPT)) {
-                $sheet->setCellValue('O104', $val->ADAPTABILIDAD_DESEABLE_PPT);
-            }
-            if (!is_null($val->ADAPTABILIDAD_NO_REQUERIDA_PPT)) {
-                $sheet->setCellValue('R104', $val->ADAPTABILIDAD_NO_REQUERIDA_PPT);
-            }
-
-            if (!is_null($val->ADAPTABILIDAD_CUMPLE_PPT)) {
-                if (strtoupper($val->ADAPTABILIDAD_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('V104', 'X');
-                } else {
-                     $sheet->setCellValue('W104', 'X');
-                }
-            }
-
-            if (!is_null($val->LIDERAZGO_REQUERIDA_PPT)) {
-                $sheet->setCellValue('L105', $val->LIDERAZGO_REQUERIDA_PPT);
-            }
-            if (!is_null($val->LIDERAZGO_DESEABLE_PPT)) {
-                $sheet->setCellValue('O105', $val->LIDERAZGO_DESEABLE_PPT);
-            }
-            if (!is_null($val->LIDERAZGO_NO_REQUERIDA_PPT)) {
-                $sheet->setCellValue('R105', $val->LIDERAZGO_NO_REQUERIDA_PPT);
-            }
-
-            
-            if (!is_null($val->LIDERAZGO_CUMPLE_PPT)) {
-                if (strtoupper($val->LIDERAZGO_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('V105', 'X');
-                } else {
-                     $sheet->setCellValue('W105', 'X');
-                }
-            }
-
             if (!is_null($val->TOMA_DECISIONES_REQUERIDA_PPT)) {
-                $sheet->setCellValue('L106', $val->TOMA_DECISIONES_REQUERIDA_PPT);
+                $sheet->setCellValue('L103', $val->TOMA_DECISIONES_REQUERIDA_PPT);
             }
             if (!is_null($val->TOMA_DECISIONES_DESEABLE_PPT)) {
-                $sheet->setCellValue('O106', $val->TOMA_DECISIONES_DESEABLE_PPT);
+                $sheet->setCellValue('O103', $val->TOMA_DECISIONES_DESEABLE_PPT);
             }
             if (!is_null($val->TOMA_DECISIONES_NO_REQUERIDA_PPT)) {
-                $sheet->setCellValue('R106', $val->TOMA_DECISIONES_NO_REQUERIDA_PPT);
+                $sheet->setCellValue('R103', $val->TOMA_DECISIONES_NO_REQUERIDA_PPT);
             }
 
             if (!is_null($val->TOMA_DECISIONES_CUMPLE_PPT)) {
                 if (strtoupper($val->TOMA_DECISIONES_CUMPLE_PPT) == 'SI') {
-                    $sheet->setCellValue('V106', 'X');
+                    $sheet->setCellValue('V103', 'X');
                 } else {
-                     $sheet->setCellValue('W106', 'X');
+                     $sheet->setCellValue('W103', 'X');
                 }
             }
 
@@ -921,6 +921,33 @@ class makeExcelController extends Controller{
 
             if (!is_null($val->DISPONIBILAD_VIAJAR_PPT)) {
                 if (strtoupper($val->DISPONIBILAD_VIAJAR_PPT) == 'SI') {
+                    $sheet->setCellValue('J107', 'X');
+                } else {
+                     $sheet->setCellValue('K107', 'X');
+                }
+            }
+
+
+            if (!is_null($val->REQUIERE_PASAPORTE_PPT)) {
+                if (strtoupper($val->REQUIERE_PASAPORTE_PPT) == 'SI') {
+                    $sheet->setCellValue('J108', 'X');
+                } else
+                     $sheet->setCellValue('K108', 'X');
+                }
+            
+
+            
+            if (!is_null($val->REQUIERE_VISA_PPT)) {
+                if (strtoupper($val->REQUIERE_VISA_PPT) == 'SI') {
+                    $sheet->setCellValue('J109', 'X');
+                } else {
+                     $sheet->setCellValue('K109', 'X');
+                }
+            }
+
+
+            if (!is_null($val->REQUIERE_LICENCIA_PPT)) {
+                if (strtoupper($val->REQUIERE_LICENCIA_PPT) == 'SI') {
                     $sheet->setCellValue('J110', 'X');
                 } else {
                      $sheet->setCellValue('K110', 'X');
@@ -928,38 +955,11 @@ class makeExcelController extends Controller{
             }
 
 
-            if (!is_null($val->REQUIERE_PASAPORTE_PPT)) {
-                if (strtoupper($val->REQUIERE_PASAPORTE_PPT) == 'SI') {
-                    $sheet->setCellValue('J111', 'X');
-                } else
-                     $sheet->setCellValue('K111', 'X');
-                }
-            
-
-            
-            if (!is_null($val->REQUIERE_VISA_PPT)) {
-                if (strtoupper($val->REQUIERE_VISA_PPT) == 'SI') {
-                    $sheet->setCellValue('J112', 'X');
-                } else {
-                     $sheet->setCellValue('K112', 'X');
-                }
-            }
-
-
-            if (!is_null($val->REQUIERE_LICENCIA_PPT)) {
-                if (strtoupper($val->REQUIERE_LICENCIA_PPT) == 'SI') {
-                    $sheet->setCellValue('J113', 'X');
-                } else {
-                     $sheet->setCellValue('K113', 'X');
-                }
-            }
-
-
             if (!is_null($val->CAMBIO_RESIDENCIA_PPT)) {
                 if (strtoupper($val->CAMBIO_RESIDENCIA_PPT) == 'SI') {
-                    $sheet->setCellValue('J114', 'X');
+                    $sheet->setCellValue('J111', 'X');
                 } else {
-                     $sheet->setCellValue('K114', 'X');
+                     $sheet->setCellValue('K111', 'X');
                 }
             }
 
@@ -967,24 +967,68 @@ class makeExcelController extends Controller{
 
 
             if (!is_null($val->DISPONIBILADVIAJAR_OPCION_PPT)) {
-                $sheet->setCellValue('M110', $val->DISPONIBILADVIAJAR_OPCION_PPT);        
+                $sheet->setCellValue('M107', $val->DISPONIBILADVIAJAR_OPCION_PPT);        
             }
 
             if (!is_null($val->DISPONIBILADVIAJAR_OPCION_CUMPLE)) {
                 if (strtoupper($val->DISPONIBILADVIAJAR_OPCION_CUMPLE) == 'SI') {
+                    $sheet->setCellValue('S107', 'X');
+                } else {
+                     $sheet->setCellValue('T107', 'X');
+                }
+            }
+
+            if (!is_null($val->REQUIEREPASAPORTE_OPCION_PPT)) {
+                $sheet->setCellValue('M108', $val->REQUIEREPASAPORTE_OPCION_PPT);        
+            }
+
+
+            if (!is_null($val->REQUIEREPASAPORTE_OPCION_CUMPLE)) {
+                if (strtoupper($val->REQUIEREPASAPORTE_OPCION_CUMPLE) == 'SI') {
+                    $sheet->setCellValue('S108', 'X');
+                } else {
+                     $sheet->setCellValue('T108', 'X');
+                }
+            }
+
+
+            if (!is_null($val->REQUIERE_VISA_OPCION_PPT)) {
+                $sheet->setCellValue('M109', $val->REQUIERE_VISA_OPCION_PPT);        
+            }
+
+
+
+            if (!is_null($val->REQUIEREVISA_OPCION_CUMPLE)) {
+                if (strtoupper($val->REQUIEREVISA_OPCION_CUMPLE) == 'SI') {
+                    $sheet->setCellValue('S109', 'X');
+                } else {
+                     $sheet->setCellValue('T109', 'X');
+                }
+            }
+
+
+            if (!is_null($val->REQUIERELICENCIA_OPCION_PPT)) {
+                $sheet->setCellValue('M110', $val->REQUIERELICENCIA_OPCION_PPT);        
+            }
+
+
+            if (!is_null($val->REQUIERELICENCIA_OPCION_CUMPLE)) {
+                if (strtoupper($val->REQUIERELICENCIA_OPCION_CUMPLE) == 'SI') {
                     $sheet->setCellValue('S110', 'X');
                 } else {
                      $sheet->setCellValue('T110', 'X');
                 }
             }
 
-            if (!is_null($val->REQUIEREPASAPORTE_OPCION_PPT)) {
-                $sheet->setCellValue('M111', $val->REQUIEREPASAPORTE_OPCION_PPT);        
+
+
+            if (!is_null($val->CAMBIORESIDENCIA_OPCION_PPT)) {
+                $sheet->setCellValue('M111', $val->CAMBIORESIDENCIA_OPCION_PPT);        
             }
 
 
-            if (!is_null($val->REQUIEREPASAPORTE_OPCION_CUMPLE)) {
-                if (strtoupper($val->REQUIEREPASAPORTE_OPCION_CUMPLE) == 'SI') {
+            if (!is_null($val->CAMBIORESIDENCIA_OPCION_CUMPLE)) {
+                if (strtoupper($val->CAMBIORESIDENCIA_OPCION_CUMPLE) == 'SI') {
                     $sheet->setCellValue('S111', 'X');
                 } else {
                      $sheet->setCellValue('T111', 'X');
@@ -992,100 +1036,59 @@ class makeExcelController extends Controller{
             }
 
 
-            if (!is_null($val->REQUIERE_VISA_OPCION_PPT)) {
-                $sheet->setCellValue('M112', $val->REQUIERE_VISA_OPCION_PPT);        
-            }
-
-
-
-            if (!is_null($val->REQUIEREVISA_OPCION_CUMPLE)) {
-                if (strtoupper($val->REQUIEREVISA_OPCION_CUMPLE) == 'SI') {
-                    $sheet->setCellValue('S112', 'X');
-                } else {
-                     $sheet->setCellValue('T112', 'X');
-                }
-            }
-
-
-            if (!is_null($val->REQUIERELICENCIA_OPCION_PPT)) {
-                $sheet->setCellValue('M113', $val->REQUIERELICENCIA_OPCION_PPT);        
-            }
-
-
-            if (!is_null($val->REQUIERELICENCIA_OPCION_CUMPLE)) {
-                if (strtoupper($val->REQUIERELICENCIA_OPCION_CUMPLE) == 'SI') {
-                    $sheet->setCellValue('S113', 'X');
-                } else {
-                     $sheet->setCellValue('T113', 'X');
-                }
-            }
-
-
-
-            if (!is_null($val->CAMBIORESIDENCIA_OPCION_PPT)) {
-                $sheet->setCellValue('M114', $val->CAMBIORESIDENCIA_OPCION_PPT);        
-            }
-
-
-            if (!is_null($val->CAMBIORESIDENCIA_OPCION_CUMPLE)) {
-                if (strtoupper($val->CAMBIORESIDENCIA_OPCION_CUMPLE) == 'SI') {
-                    $sheet->setCellValue('S114', 'X');
-                } else {
-                     $sheet->setCellValue('T114', 'X');
-                }
-            }
-
-
             // X. Observaciones
             if (!is_null($val->OBSERVACIONES_PPT)) {
-                $sheet->setCellValue('B117', $val->OBSERVACIONES_PPT);
+                $sheet->setCellValue('B113', $val->OBSERVACIONES_PPT);
             }
 
 
             if (!is_null($val->ELABORADO_NOMBRE_PPT)) {
-                $sheet->setCellValue('B120', $val->ELABORADO_NOMBRE_PPT);
+                $sheet->setCellValue('B118', $val->ELABORADO_NOMBRE_PPT);
             }
             if (!is_null($val->ELABORADO_FIRMA_PPT)) {
-                $sheet->setCellValue('B122', $val->ELABORADO_FIRMA_PPT);
+                $sheet->setCellValue('B120', $val->ELABORADO_FIRMA_PPT);
             }
             if (!is_null($val->ELABORADO_FECHA_PPT)) {
-                $sheet->setCellValue('B124', $val->ELABORADO_FECHA_PPT);
+                $sheet->setCellValue('B122', $val->ELABORADO_FECHA_PPT);
             }
 
 
             if (!is_null($val->REVISADO_NOMBRE_PPT)) {
-                $sheet->setCellValue('I120', $val->REVISADO_NOMBRE_PPT);
+                $sheet->setCellValue('I118', $val->REVISADO_NOMBRE_PPT);
             }
             if (!is_null($val->REVISADO_FIRMA_PPT)) {
-                $sheet->setCellValue('I122', $val->REVISADO_FIRMA_PPT);
+                $sheet->setCellValue('I120', $val->REVISADO_FIRMA_PPT);
             }
             if (!is_null($val->REVISADO_FECHA_PPT)) {
-                $sheet->setCellValue('I124', $val->REVISADO_FECHA_PPT);
+                $sheet->setCellValue('I122', $val->REVISADO_FECHA_PPT);
             }
 
             if (!is_null($val->AUTORIZADO_NOMBRE_PPT)) {
-                $sheet->setCellValue('Q120', $val->AUTORIZADO_NOMBRE_PPT);
+                $sheet->setCellValue('Q118', $val->AUTORIZADO_NOMBRE_PPT);
             }
             if (!is_null($val->AUTORIZADO_FIRMA_PPT)) {
-                $sheet->setCellValue('Q122', $val->AUTORIZADO_FIRMA_PPT);
+                $sheet->setCellValue('Q120', $val->AUTORIZADO_FIRMA_PPT);
             }
             if (!is_null($val->AUTORIZADO_FECHA_PPT)) {
-                $sheet->setCellValue('Q124', $val->AUTORIZADO_FECHA_PPT);
+                $sheet->setCellValue('Q122', $val->AUTORIZADO_FECHA_PPT);
         }
     }
 
-        $fila1 = 45;
-        $fila2 = 45;
-        $fila3 = 52;
-        $fila4 = 52; 
-        $fila5 = 63;
-        $fila6 = 63;
+        $fila1 = 46;
+        $fila2 = 46;
+        $fila3 = 60;
+        $fila4 = 60; 
+     
+
+
+                
+
 
 
         $longitud = 1;
         foreach ($cursos as $key => $val) {
 
-            if ($longitud <= 3) {
+            if ($longitud <= 10) {
 
                 $sheet->setCellValue('B'.$fila1, $val->CURSO_PPT);
 
@@ -1103,7 +1106,7 @@ class makeExcelController extends Controller{
 
                 $fila1++;
 
-            } else if ($longitud > 3 && $longitud <= 6) {
+            } else if ($longitud > 10 && $longitud <= 20) {
 
                 $sheet->setCellValue('N' . $fila2, $val->CURSO_PPT);
 
@@ -1121,7 +1124,8 @@ class makeExcelController extends Controller{
 
                 $fila2++;
 
-            } else if ($longitud > 6 && $longitud <=13 ) {
+
+            } else if ($longitud > 20 && $longitud <= 30) {
 
                 $sheet->setCellValue('B' . $fila3, $val->CURSO_PPT);
 
@@ -1132,14 +1136,14 @@ class makeExcelController extends Controller{
                     $sheet->setCellValue('J' . $fila3, $val->CURSO_DESEABLE);
                 }
                 // if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
-                //     $sheet->setCellValue('X' . $fila3, 'Si');
+                //     $sheet->setCellValue('L' . $fila3, 'Si');
                 // } else {
-                //     $sheet->setCellValue('X' . $fila3, 'No');
+                //     $sheet->setCellValue('L' . $fila3, 'No');
                 // }
 
                 $fila3++;
 
-            } else if ($longitud > 13 && $longitud <=20 ) {
+            } else if ($longitud > 30){
 
                 $sheet->setCellValue('N' . $fila4, $val->CURSO_PPT);
 
@@ -1154,124 +1158,7 @@ class makeExcelController extends Controller{
                 // } else {
                 //     $sheet->setCellValue('X' . $fila4, 'No');
                 // }
-
                 $fila4++;
-
-            } else if ($longitud > 20 && $longitud <=30 ) {
-
-                $sheet->setCellValue('B' . $fila5, $val->CURSO_PPT);
-
-                if (!is_null($val->CURSO_REQUERIDO)) {
-                    $sheet->setCellValue('I' . $fila5, $val->CURSO_REQUERIDO);
-                }
-                if (!is_null($val->CURSO_DESEABLE)) {
-                    $sheet->setCellValue('J' . $fila5, $val->CURSO_DESEABLE);
-                }
-                // if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
-                //     $sheet->setCellValue('X' . $fila5, 'Si');
-                // } else {
-                //     $sheet->setCellValue('X' . $fila5, 'No');
-                // }
-
-                $fila5++;
-
-
-            } else if ($longitud > 30 && $longitud <=40 ) {
-
-                $sheet->setCellValue('N' . $fila6, $val->CURSO_PPT);
-
-                if (!is_null($val->CURSO_REQUERIDO)) {
-                    $sheet->setCellValue('U' . $fila6, $val->CURSO_REQUERIDO);
-                }
-                if (!is_null($val->CURSO_DESEABLE)) {
-                    $sheet->setCellValue('V' . $fila6, $val->CURSO_DESEABLE);
-                }
-                // if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
-                //     $sheet->setCellValue('X' . $fila6, 'Si');
-                // } else {
-                //     $sheet->setCellValue('X' . $fila6, 'No');
-                // }
-
-                $fila6++;
-
-                
-
-
-
-        // $longitud = 1;
-        // foreach ($cursos as $key => $val) {
-
-        //     if ($longitud <= 10) {
-
-        //         $sheet->setCellValue('B'.$fila1, $val->CURSO_PPT);
-
-        //         if (!is_null($val->CURSO_REQUERIDO)) {
-        //             $sheet->setCellValue('I' . $fila1, $val->CURSO_REQUERIDO);
-        //         }
-        //         if (!is_null($val->CURSO_DESEABLE)) {
-        //             $sheet->setCellValue('J' . $fila1, $val->CURSO_DESEABLE);
-        //         }
-        //         if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
-        //             $sheet->setCellValue('L' . $fila1, 'Si');
-        //         } else {
-        //             $sheet->setCellValue('L' . $fila1, 'No');
-        //         }
-
-        //         $fila1++;
-
-            // } else if ($longitud > 10 && $longitud <= 20) {
-
-            //     $sheet->setCellValue('N' . $fila2, $val->CURSO_PPT);
-
-            //     if (!is_null($val->CURSO_REQUERIDO)) {
-            //         $sheet->setCellValue('U' . $fila2, $val->CURSO_REQUERIDO);
-            //     }
-            //     if (!is_null($val->CURSO_DESEABLE)) {
-            //         $sheet->setCellValue('V' . $fila2, $val->CURSO_DESEABLE);
-            //     }
-            //     if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
-            //         $sheet->setCellValue('X' . $fila2, 'Si');
-            //     } else {
-            //         $sheet->setCellValue('X' . $fila2, 'No');
-            //     }
-
-            //     $fila2++;
-
-
-            // } else if ($longitud > 20 && $longitud <= 30) {
-
-            //     $sheet->setCellValue('B' . $fila3, $val->CURSO_PPT);
-
-            //     if (!is_null($val->CURSO_REQUERIDO)) {
-            //         $sheet->setCellValue('I' . $fila3, $val->CURSO_REQUERIDO);
-            //     }
-            //     if (!is_null($val->CURSO_DESEABLE)) {
-            //         $sheet->setCellValue('J' . $fila3, $val->CURSO_DESEABLE);
-            //     }
-            //     if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
-            //         $sheet->setCellValue('L' . $fila3, 'Si');
-            //     } else {
-            //         $sheet->setCellValue('L' . $fila3, 'No');
-            //     }
-
-            //     $fila3++;
-
-            // } else if ($longitud > 30){
-
-            //     $sheet->setCellValue('N' . $fila4, $val->CURSO_PPT);
-
-            //     if (!is_null($val->CURSO_REQUERIDO)) {
-            //         $sheet->setCellValue('U' . $fila4, $val->CURSO_REQUERIDO);
-            //     }
-            //     if (!is_null($val->CURSO_DESEABLE)) {
-            //         $sheet->setCellValue('V' . $fila4, $val->CURSO_DESEABLE);
-            //     }
-            //     if (strtoupper($val->CURSO_CUMPLE_PPT) == 'SI') {
-            //         $sheet->setCellValue('X' . $fila4, 'Si');
-            //     } else {
-            //         $sheet->setCellValue('X' . $fila4, 'No');
-            //     }
-            //     $fila4++;
 
 
             }
@@ -1309,7 +1196,9 @@ class makeExcelController extends Controller{
 
         //OBTENER DATOS DEL FORMULARIO EN LA BASE DE DATOS
         $form = formulariodptModel::where('ID_FORMULARIO_DPT', $id_formulario)->get();
-        $cursos = cursospptModel::where('FORMULARIO_PPT_ID', $id_formulario)->get();
+        $internas = relacionesinternasModel::where('FORMULARIO_DPT_ID', $id_formulario)->get();
+        $externas = relacionesexternasModel::where('FORMULARIO_DPT_ID', $id_formulario)->get();
+
         
 
         // CARGAR EL EXCEL EN BLANCO
@@ -1320,10 +1209,13 @@ class makeExcelController extends Controller{
 
         foreach ($form as $key => $val) {
             
-            $puesto = departamentosAreasModel::where('ID_DEPARTAMENTO_AREA', $val->DEPARTAMENTOS_AREAS_ID)->pluck('NOMBRE');
-
+            
+            $puesto = departamentosAreasModel :: where('ID_DEPARTAMENTO_AREA',$val-> DEPARTAMENTOS_AREAS_ID)->pluck('NOMBRE');
           
-
+            $puestos1 = departamentosAreasModel::whereIn('ID_DEPARTAMENTO_AREA', $val->PUESTOS_INTERACTUAN_DPT)->pluck('NOMBRE')->toArray();
+            $puestosStr = implode(', ', $puestos1); 
+            
+            
             //DATOS 
 
             $sheet->setCellValue('G7', str_replace(['[', ']', '"'], '', $puesto));
@@ -1351,15 +1243,13 @@ class makeExcelController extends Controller{
 
 
             if (!is_null($val->PUESTO_LE_REPORTAN_DPT)) {
-                $sheet->setCellValue('H16', $val->PUESTO_REPORTA_DPT);        
+                $sheet->setCellValue('H16', $val->PUESTO_LE_REPORTAN_DPT);        
             }
 
 
-            
-            if (!is_null($val->PUESTOS_INTERACTUAN_DPT)) {
-                $sheet->setCellValue('H18', $val->PUESTOS_INTERACTUAN_DPT);        
-            }
-              
+            $sheet->setCellValue('H18', $puestosStr);
+
+           
 
             if (!is_null($val->PUESTOS_DIRECTOS_DPT)) {
                 $sheet->setCellValue('H20', $val->PUESTOS_DIRECTOS_DPT);        
@@ -1396,13 +1286,13 @@ class makeExcelController extends Controller{
             if (!is_null($val->ESCALA_INNOVACION)) {
 
                 if (strtoupper($val->ESCALA_INNOVACION) == 'BAJO') {
-                    $sheet->setCellValue('S113', 'X');
+                    $sheet->setCellValue('S111', 'X');
 
                 } else  if (strtoupper($val->ESCALA_INNOVACION) == 'MEDIO') {
 
-                     $sheet->setCellValue('U113', 'X');
+                     $sheet->setCellValue('U111', 'X');
                 }else {
-                    $sheet->setCellValue('W113', 'X');
+                    $sheet->setCellValue('W111', 'X');
                }
             }
 
@@ -1411,13 +1301,13 @@ class makeExcelController extends Controller{
             if (!is_null($val->ESCALA_PASION)) {
 
                 if (strtoupper($val->ESCALA_PASION) == 'BAJO') {
-                    $sheet->setCellValue('S114', 'X');
+                    $sheet->setCellValue('S112', 'X');
 
                 } else  if (strtoupper($val->ESCALA_PASION) == 'MEDIO') {
                     
-                     $sheet->setCellValue('U114', 'X');
+                     $sheet->setCellValue('U112', 'X');
                 }else {
-                    $sheet->setCellValue('W114', 'X');
+                    $sheet->setCellValue('W112', 'X');
                }
             }
 
@@ -1426,9 +1316,37 @@ class makeExcelController extends Controller{
             if (!is_null($val->ESCALA_SERVICIO)) {
 
                 if (strtoupper($val->ESCALA_SERVICIO) == 'BAJO') {
-                    $sheet->setCellValue('S115', 'X');
+                    $sheet->setCellValue('S113', 'X');
 
                 } else  if (strtoupper($val->ESCALA_SERVICIO) == 'MEDIO') {
+                    
+                     $sheet->setCellValue('U113', 'X');
+                }else {
+                    $sheet->setCellValue('W113', 'X');
+               }
+            }
+
+
+            if (!is_null($val->ESCALA_COMUNICACION)) {
+
+                if (strtoupper($val->ESCALA_COMUNICACION) == 'BAJO') {
+                    $sheet->setCellValue('S114', 'X');
+
+                } else  if (strtoupper($val->ESCALA_COMUNICACION) == 'MEDIO') {
+                    
+                     $sheet->setCellValue('U114', 'X');
+                }else {
+                    $sheet->setCellValue('W114', 'X');
+               }
+            }
+
+
+            if (!is_null($val->ESCALA_TRABAJO)) {
+
+                if (strtoupper($val->ESCALA_TRABAJO) == 'BAJO') {
+                    $sheet->setCellValue('S115', 'X');
+
+                } else  if (strtoupper($val->ESCALA_TRABAJO) == 'MEDIO') {
                     
                      $sheet->setCellValue('U115', 'X');
                 }else {
@@ -1437,12 +1355,13 @@ class makeExcelController extends Controller{
             }
 
 
-            if (!is_null($val->ESCALA_COMUNICACION)) {
 
-                if (strtoupper($val->ESCALA_COMUNICACION) == 'BAJO') {
+            if (!is_null($val->ESCALA_INTEGRIDAD)) {
+
+                if (strtoupper($val->ESCALA_INTEGRIDAD) == 'BAJO') {
                     $sheet->setCellValue('S116', 'X');
 
-                } else  if (strtoupper($val->ESCALA_COMUNICACION) == 'MEDIO') {
+                } else  if (strtoupper($val->ESCALA_INTEGRIDAD) == 'MEDIO') {
                     
                      $sheet->setCellValue('U116', 'X');
                 }else {
@@ -1451,45 +1370,16 @@ class makeExcelController extends Controller{
             }
 
 
-            if (!is_null($val->ESCALA_TRABAJO)) {
-
-                if (strtoupper($val->ESCALA_TRABAJO) == 'BAJO') {
-                    $sheet->setCellValue('S122', 'X');
-
-                } else  if (strtoupper($val->ESCALA_TRABAJO) == 'MEDIO') {
-                    
-                     $sheet->setCellValue('U122', 'X');
-                }else {
-                    $sheet->setCellValue('W122', 'X');
-               }
-            }
-
-
-
-            if (!is_null($val->ESCALA_INTEGRIDA)) {
-
-                if (strtoupper($val->ESCALA_INTEGRIDA) == 'BAJO') {
-                    $sheet->setCellValue('S123', 'X');
-
-                } else  if (strtoupper($val->ESCALA_INTEGRIDA) == 'MEDIO') {
-                    
-                     $sheet->setCellValue('U123', 'X');
-                }else {
-                    $sheet->setCellValue('W123', 'X');
-               }
-            }
-
-
             if (!is_null($val->ESCALA_RESPONSABILIDAD)) {
 
                 if (strtoupper($val->ESCALA_RESPONSABILIDAD) == 'BAJO') {
-                    $sheet->setCellValue('S124', 'X');
+                    $sheet->setCellValue('S121', 'X');
 
                 } else  if (strtoupper($val->ESCALA_RESPONSABILIDAD) == 'MEDIO') {
                     
-                     $sheet->setCellValue('U124', 'X');
+                     $sheet->setCellValue('U121', 'X');
                 }else {
-                    $sheet->setCellValue('W124', 'X');
+                    $sheet->setCellValue('W121', 'X');
                }
             }
 
@@ -1497,13 +1387,13 @@ class makeExcelController extends Controller{
             if (!is_null($val->ESCALA_ADAPTIBILIDAD)) {
 
                 if (strtoupper($val->ESCALA_ADAPTIBILIDAD) == 'BAJO') {
-                    $sheet->setCellValue('S125', 'X');
+                    $sheet->setCellValue('S122', 'X');
 
                 } else  if (strtoupper($val->ESCALA_ADAPTIBILIDAD) == 'MEDIO') {
                     
-                     $sheet->setCellValue('U125', 'X');
+                     $sheet->setCellValue('U122', 'X');
                 }else {
-                    $sheet->setCellValue('W125', 'X');
+                    $sheet->setCellValue('W122', 'X');
                }
             }
 
@@ -1513,13 +1403,13 @@ class makeExcelController extends Controller{
             if (!is_null($val->ESCALA_LIDERAZGO)) {
 
                 if (strtoupper($val->ESCALA_LIDERAZGO) == 'BAJO') {
-                    $sheet->setCellValue('S129', 'X');
+                    $sheet->setCellValue('S126', 'X');
 
                 } else  if (strtoupper($val->ESCALA_LIDERAZGO) == 'MEDIO') {
                     
-                     $sheet->setCellValue('U129', 'X');
+                     $sheet->setCellValue('U126', 'X');
                 }else {
-                    $sheet->setCellValue('W129', 'X');
+                    $sheet->setCellValue('W126', 'X');
                }
             }
 
@@ -1527,13 +1417,13 @@ class makeExcelController extends Controller{
             if (!is_null($val->ESCALA_TOMADECISION)) {
 
                 if (strtoupper($val->ESCALA_TOMADECISION) == 'BAJO') {
-                    $sheet->setCellValue('S130', 'X');
+                    $sheet->setCellValue('S127', 'X');
 
                 } else  if (strtoupper($val->ESCALA_TOMADECISION) == 'MEDIO') {
                     
-                     $sheet->setCellValue('U130', 'X');
+                     $sheet->setCellValue('U127', 'X');
                 }else {
-                    $sheet->setCellValue('W130', 'X');
+                    $sheet->setCellValue('W127', 'X');
                }
             }
 
@@ -1544,9 +1434,9 @@ class makeExcelController extends Controller{
 
             if (!is_null($val->DE_INFORMACION_DPT)) {
                 if (strtoupper($val->DE_INFORMACION_DPT) == 'SI') {
-                    $sheet->setCellValue('E135', 'X');
+                    $sheet->setCellValue('E132', 'X');
                 } else {
-                     $sheet->setCellValue('H135', 'X');
+                     $sheet->setCellValue('H132', 'X');
                 }
             }
 
@@ -1554,47 +1444,47 @@ class makeExcelController extends Controller{
             
             if (!is_null($val->DE_RECURSOS_DPT)) {
                 if (strtoupper($val->DE_RECURSOS_DPT) == 'SI') {
-                    $sheet->setCellValue('P135', 'X');
+                    $sheet->setCellValue('P132', 'X');
                 } else {
-                     $sheet->setCellValue('S135', 'X');
+                     $sheet->setCellValue('S132', 'X');
                 }
             }
 
             
             if (!is_null($val->DE_INFORMACION_ESPECIFIQUE_DPT)) {
-                $sheet->setCellValue('B136', $val->DE_INFORMACION_ESPECIFIQUE_DPT);        
+                $sheet->setCellValue('B133', $val->DE_INFORMACION_ESPECIFIQUE_DPT);        
             }
 
             if (!is_null($val->DE_RECURSOS_ESPECIFIQUE_DPT)) {
-                $sheet->setCellValue('M136', $val->DE_RECURSOS_ESPECIFIQUE_DPT);        
+                $sheet->setCellValue('M133', $val->DE_RECURSOS_ESPECIFIQUE_DPT);        
             }
 
 
             if (!is_null($val->DE_EQUIPOS_DPT)) {
                 if (strtoupper($val->DE_EQUIPOS_DPT) == 'SI') {
-                    $sheet->setCellValue('E139', 'X');
+                    $sheet->setCellValue('E136', 'X');
                 } else {
-                     $sheet->setCellValue('H139', 'X');
+                     $sheet->setCellValue('H136', 'X');
                 }
             }
 
 
             if (!is_null($val->DE_VEHICULOS_DPT)) {
                 if (strtoupper($val->DE_VEHICULOS_DPT) == 'SI') {
-                    $sheet->setCellValue('P139', 'X');
+                    $sheet->setCellValue('P136', 'X');
                 } else {
-                     $sheet->setCellValue('S139', 'X');
+                     $sheet->setCellValue('S136', 'X');
                 }
             }
 
 
             if (!is_null($val->DE_EQUIPOS_ESPECIFIQUE_DPT)) {
-                $sheet->setCellValue('B140', $val->DE_EQUIPOS_ESPECIFIQUE_DPT);        
+                $sheet->setCellValue('B137', $val->DE_EQUIPOS_ESPECIFIQUE_DPT);        
             }
 
 
             if (!is_null($val->DE_VEHICULOS_ESPECIFIQUE_DPT)) {
-                $sheet->setCellValue('M140', $val->DE_VEHICULOS_ESPECIFIQUE_DPT);        
+                $sheet->setCellValue('M137', $val->DE_VEHICULOS_ESPECIFIQUE_DPT);        
             }
 
 
@@ -1602,78 +1492,179 @@ class makeExcelController extends Controller{
             //IX. Observaciones																						
 
             if (!is_null($val->OBSERVACIONES_DPT)) {
-                $sheet->setCellValue('B143', $val->OBSERVACIONES_DPT);        
+                $sheet->setCellValue('B140', $val->OBSERVACIONES_DPT);        
             }
 
 
             //X. Organigrama																						
 
 
-            if (!is_null($val->ORGANIGRAMA_DPT)) {
-                $sheet->setCellValue('B149', $val->ORGANIGRAMA_DPT);        
-            }
+            // if (!is_null($val->ORGANIGRAMA_DPT)) {
+            //     $sheet->setCellValue('B144', $val->ORGANIGRAMA_DPT);        
+            // }
 
+
+              // Agregar la imagen en la celda B144
+              $imagePath = public_path('/assets/images/organigramaaa.png'); // Asegúrate de que la ruta sea correcta
+        
+              $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+              $drawing->setName('Organigrama');
+              $drawing->setDescription('Organigrama');
+              $drawing->setPath($imagePath);
+              $drawing->setCoordinates('B144');
+              
+              // Ajustar el tamaño de la imagen para que sea grande
+              $drawing->setHeight($sheet->getRowDimension(144)->getRowHeight() * 175); 
+              $drawing->setWidth($sheet->getColumnDimension('B')->getWidth() * 175); 
+              
+              // Centrar la imagen en la celda
+              $drawing->setOffsetX(($sheet->getColumnDimension('B')->getWidth() * 370 - $drawing->getWidth()) / 2);
+              $drawing->setOffsetY(($sheet->getRowDimension(144)->getRowHeight() * 250 - $drawing->getHeight()) / 2);
+      
+              $drawing->setWorksheet($spreadsheet->getActiveSheet());
+        
 
 
             
             if (!is_null($val->ELABORADO_NOMBRE_DPT)) {
-                $sheet->setCellValue('B168', $val->ELABORADO_NOMBRE_DPT);        
+                $sheet->setCellValue('B163', $val->ELABORADO_NOMBRE_DPT);        
             }
 
 
             if (!is_null($val->ELABORADO_FIRMA_DPT)) {
-                $sheet->setCellValue('B170', $val->ELABORADO_FIRMA_DPT);        
+                $sheet->setCellValue('B165', $val->ELABORADO_FIRMA_DPT);        
             }
 
             if (!is_null($val->ELABORADO_FECHA_DPT)) {
-                $sheet->setCellValue('B173', $val->ELABORADO_FECHA_DPT);        
+                $sheet->setCellValue('B168', $val->ELABORADO_FECHA_DPT);        
             }
 
 
 
 
             if (!is_null($val->REVISADO_NOMBRE_DPT)) {
-                $sheet->setCellValue('I168', $val->REVISADO_NOMBRE_DPT);        
+                $sheet->setCellValue('I163', $val->REVISADO_NOMBRE_DPT);        
             }
 
 
             if (!is_null($val->REVISADO_FIRMA_DPT)) {
-                $sheet->setCellValue('I170', $val->REVISADO_FIRMA_DPT);        
+                $sheet->setCellValue('I165', $val->REVISADO_FIRMA_DPT);        
             }
 
 
             if (!is_null($val->REVISADO_FECHA_DPT)) {
-                $sheet->setCellValue('I173', $val->REVISADO_FECHA_DPT);        
+                $sheet->setCellValue('I168', $val->REVISADO_FECHA_DPT);        
             }
 
 
             if (!is_null($val->AUTORIZADO_NOMBRE_DPT)) {
-                $sheet->setCellValue('Q168', $val->AUTORIZADO_NOMBRE_DPT);        
+                $sheet->setCellValue('Q163', $val->AUTORIZADO_NOMBRE_DPT);        
             }
 
 
             if (!is_null($val->AUTORIZADO_FIRMA_DPT)) {
-                $sheet->setCellValue('Q170', $val->AUTORIZADO_FIRMA_DPT);        
+                $sheet->setCellValue('Q165', $val->AUTORIZADO_FIRMA_DPT);        
             }
 
 
             if (!is_null($val->AUTORIZADO_FECHA_DPT)) {
-                $sheet->setCellValue('Q17', $val->AUTORIZADO_FECHA_DPT);        
+                $sheet->setCellValue('Q168', $val->AUTORIZADO_FECHA_DPT);        
             }
+															
 
-            // II. Funciones y responsabilidades clave de la categoría																						
 
             
          
         }
 
 
+                //IV. Relaciones internas estratégicas
 
 
+                header('Content-Type: text/html; charset=utf-8');
+
+                $fila1 = 83;
+                $longitud = 1;
+                foreach ($internas as $key => $val) {
+                
+                    if ($longitud <= 10) {
+                
+                        $puesto3 = departamentosAreasModel::where('ID_DEPARTAMENTO_AREA', $val->INTERNAS_CONQUIEN_DPT)->value('NOMBRE');
+                        $decodedName = html_entity_decode(mb_convert_encoding($puesto3, 'UTF-8', 'UTF-8'));
+                
+                        $sheet->setCellValue('B' . $fila1, $decodedName);
+                
+                        if (!is_null($val->INTERNAS_PARAQUE_DPT)) {
+                            $sheet->setCellValue('J' . $fila1, $val->INTERNAS_PARAQUE_DPT);
+                        }
+                
+                        if (!is_null($val->INTERNAS_FRECUENCIA_DPT)) {
+                            $internas = strtoupper($val->INTERNAS_FRECUENCIA_DPT);
+                            if ($internas == 'DIARIA') {
+                                $sheet->setCellValue('T' . $fila1, 'X');
+                            } else if ($internas == 'SEMANAL') {
+                                $sheet->setCellValue('U' . $fila1, 'X');
+                            } else if ($internas == 'MENSUAL') {
+                                $sheet->setCellValue('V' . $fila1, 'X');
+                            } else if ($internas == 'SEMESTRAL') {
+                                $sheet->setCellValue('W' . $fila1, 'X');
+                            } else if ($internas == 'ANUAL') {
+                                $sheet->setCellValue('X' . $fila1, 'X');
+                            }
+                        }
+                
+                        $fila1++;
+                    }
+                
+                    $longitud++;
+                }
+                
+
+              
+              
+              
+                $fila2 = 98;
+                $longitud = 1;
+                foreach ($externas as $key => $val) {
+                
+                    if ($longitud <= 10) {
+                                    
+
+                        $puesto4 = catalogorelacionesexternaModel::where('ID_CATALOGO_RELACIONESEXTERNAS', $val->EXTERNAS_CONQUIEN_DPT)->value('NOMBRE_RELACIONEXTERNA');
+                        $decodedName = html_entity_decode(mb_convert_encoding($puesto4, 'UTF-8', 'UTF-8'));
+                
+                        $sheet->setCellValue('B' . $fila2, $decodedName);
+                
+                        if (!is_null($val->EXTERNAS_PARAQUE_DPT)) {
+                            $sheet->setCellValue('J' . $fila2, $val->EXTERNAS_PARAQUE_DPT);
+                        }
+                
+                        if (!is_null($val->EXTERNAS_FRECUENCIA_DPT)) {
+                            $externa = strtoupper($val->EXTERNAS_FRECUENCIA_DPT);
+                            if ($externa == 'DIARIA') {
+                                $sheet->setCellValue('T' . $fila2, 'X');
+                            } else if ($externa == 'SEMANAL') {
+                                $sheet->setCellValue('U' . $fila2, 'X');
+                            } else if ($externa == 'MENSUAL') {
+                                $sheet->setCellValue('V' . $fila2, 'X');
+                            } else if ($externa == 'SEMESTRAL') {
+                                $sheet->setCellValue('W' . $fila2, 'X');
+                            } else if ($externa == 'ANUAL') {
+                                $sheet->setCellValue('X' . $fila2, 'X');
+                            }
+                        }
+                
+                        $fila2++;
+                    }
+                
+                    $longitud++;
+                }
+                
 
 
-
-
+        
+    
+        
 
 
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
@@ -1851,6 +1842,10 @@ class makeExcelController extends Controller{
 
 
         }
+
+
+
+        
     
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
     

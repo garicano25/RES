@@ -356,7 +356,7 @@
                           @endforeach
                         </select>
                       </td>
-                      <td>
+                      <td>ESCALA_INTEGRIDAD
                         <textarea class="form-control" style="width: 100%;" id="INTERNAS_PARAQUE1_DPT" name="INTERNAS_PARAQUE_DPT[]" rows="2"></textarea>
                       </td>
                       <td>
@@ -365,8 +365,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
                         </select>
                       </td>
                     </tr>
@@ -388,8 +388,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
                         </select>
                       </td>
                     </tr>
@@ -411,8 +411,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
                         </select>
                       </td>
                     </tr>
@@ -434,8 +434,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
                         </select>
                       </td>
                     </tr>
@@ -457,8 +457,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
                         </select>
                       </td>
                     </tr>
@@ -480,8 +480,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
                         </select>
                       </td>
                     </tr>
@@ -504,8 +504,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
                         </select>
                       </td>
                     </tr>
@@ -527,8 +527,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
                         </select>
                       </td>
                     </tr>
@@ -550,8 +550,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
 
                         </select>
                       </td>
@@ -574,8 +574,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
 
                         </select>
                       </td>
@@ -626,8 +626,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
                         </select>
                       </td>
                     </tr>
@@ -649,8 +649,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
                         </select>
                       </td>
                     </tr>
@@ -672,8 +672,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
                         </select>
                       </td>
                     </tr>
@@ -695,8 +695,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
                         </select>
                       </td>
                     </tr>
@@ -718,8 +718,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
                         </select>
                       </td>
                     </tr>
@@ -741,8 +741,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
                         </select>
                       </td>
                     </tr>
@@ -765,8 +765,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
                         </select>
                       </td>
                     </tr>
@@ -788,8 +788,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
                         </select>
                       </td>
                     </tr>
@@ -806,13 +806,13 @@
                         <textarea class="form-control" style="width: 100%;" id="EXTERNAS_PARAQUE9_DPT" name="EXTERNAS_PARAQUE_DPT[]" rows="2"></textarea>
                       </td>
                       <td>
-                        <select class="form-control" id="EXTERNAS_FRECUENCIA8_DPT" name="EXTERNAS_FRECUENCIA_DPT[]">
+                        <select class="form-control" id="EXTERNAS_FRECUENCIA9_DPT" name="EXTERNAS_FRECUENCIA_DPT[]">
                           <option selected disabled>Seleccione una opción</option>
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
                         </select>
                       </td>
                     </tr>
@@ -834,8 +834,8 @@
                           <option value="Diaria">Diaria</option>
                           <option value="Semanal">Semanal</option>
                           <option value="Mensual">Mensual</option>
-                          <option value="Semest.">Semest.</option>
-                          <option value="Anual.">Anual.</option>
+                          <option value="Semestral">Semestral</option>
+                          <option value="Anual">Anual</option>
                         </select>
                       </td>
                     </tr>
@@ -865,7 +865,8 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><b>1.- Innovación:</b> genera soluciones innovadoras en el ambiente laboral, planteando ideas creativas e incorporando nuevas prácticas para alcanzar mejores resultados.
+                      <td>
+                        <b>1.- Innovación:</b> genera soluciones innovadoras en el ambiente laboral, planteando ideas creativas e incorporando nuevas prácticas para alcanzar mejores resultados.
                       </td>
                       <td>
                         <input class="form-check-input" type="radio" name="ESCALA_INNOVACION" id="ESCALA_INNOVACION_BAJO" value="BAJO">

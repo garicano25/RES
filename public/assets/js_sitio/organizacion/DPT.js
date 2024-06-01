@@ -516,33 +516,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // CREAR UN NUEVO DPT
 $(document).ready(function () {
-    // Abrir modal y bloquear checkboxes
     $("#nuevo_dpt").click(function (e) {
         e.preventDefault();
         // Mostrar modal
         $("#miModal_DPT").modal("show");
 
-        // Bloquear todos los checkboxes y descripciones al abrir el modal
         $('.toggle-switch-cargo').each(function () {
             this.checked = false; // Desmarcar todos los checkboxes
             toggleDescription(this.name === 'FUNCIONES_CARGO_DPT[]' ? 'cargo' : 'gestion', this.value, false);
         });
 
-        // Vaciar el select #PUESTOS_INTERACTUAN_DPT
         var selectize = $('#PUESTOS_INTERACTUAN_DPT')[0].selectize;
         selectize.clear();
     });
 
-    // Event listener para los checkboxes
     document.querySelectorAll('.toggle-switch-cargo').forEach(switchInput => {
         switchInput.addEventListener('change', function () {
-            const id = this.value; // Obtén el valor del checkbox
+            const id = this.value; 
             const tablePrefix = this.name === 'FUNCIONES_CARGO_DPT[]' ? 'cargo' : 'gestion';
             toggleDescription(tablePrefix, id, this.checked);
         });
     });
 
-    // Función para alternar la descripción
     function toggleDescription(tablePrefix, id, checked) {
         const description = document.getElementById(`desc-${tablePrefix}-${id}`);
         if (description) {

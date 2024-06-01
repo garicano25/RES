@@ -46,7 +46,7 @@
                             <div class="row mb-3">
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label>Nombre del puesto *</label>
+                                        <label>Nombre de la categoría *</label>
                                         <select class="form-control" id="DEPARTAMENTO_AREA_ID" name="DEPARTAMENTO_AREA_ID" required>
                                             <option selected disabled>Seleccione una opción...</option>
                                             @foreach ($areas as $area)
@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label>Área de trabajador</label>
+                                        <label>Área de trabajo</label>
                                         <input type="text" class="form-control" id="AREA_TRABAJADOR_PPT" name="AREA_TRABAJADOR_PPT">
                                     </div>
                                 </div>
@@ -72,7 +72,7 @@
                             <div class="row mb-3">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Propósito o finalidad del puesto</label>
+                                        <label>Propósito o finalidad de la categoría</label>
                                         <textarea class="form-control " id="PROPOSITO_FINALIDAD_PPT" name="PROPOSITO_FINALIDAD_PPT" rows="3"></textarea>
                                     </div>
                                 </div>
@@ -2378,7 +2378,7 @@
                                                     <input type="checkbox" id="INTEGRIDAD_REQUERIDA_PPT" name="INTEGRIDAD_REQUERIDA_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="INTEGRIDAD_DESEABLE_PPT" name="INTEGRIDAD_REQUERIDA_PPT" value="X">
+                                                    <input type="checkbox" id="INTEGRIDAD_DESEABLE_PPT" name="INTEGRIDAD_DESEABLE_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
                                                     <input type="checkbox" id="INTEGRIDAD_NO_REQUERIDA_PPT" name="INTEGRIDAD_NO_REQUERIDA_PPT" value="X">
