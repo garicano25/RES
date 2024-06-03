@@ -99,7 +99,7 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                        <a class="nav-link BOTON" href="/Listavacantes" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Reclutamiento</span><span class="d-none d-lg-inline">Reclutamiento</span>
                         </a>
                     </li>
@@ -154,6 +154,9 @@
                                 </li> 
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/RelacionesExternas')}}">Relaciones externas</a>
+                                </li> 
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/Nuevavacantes')}}">Catálogo de Vacantes </a>
                                 </li> 
                             </ul>
                         </li>

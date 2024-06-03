@@ -310,15 +310,29 @@
             <div class="row mb-3">
               <table class="table-sm">
                 <thead>
-                  <tr>
-                    <th class="header">Descripción</th>
-                    <th class="header">Activar/Desactivar</th>
-                  </tr>
+                    <tr>
+                        <th class="header">Descripción</th>
+                        <th class="header">Activar/Desactivar</th>
+                    </tr>
                 </thead>
-                <tbody id="tbodyFuncionesGestion">
-
+                <tbody>
+                    @foreach ($gestion as $gestiones)
+                    <tr>
+                      <td id="desc-gestion-{{ $gestiones->ID_CATALOGO_FUNCIONESGESTION }}" class="description blocked">
+                          {{ $gestiones->DESCRIPCION_FUNCION_GESTION }}
+                      </td>
+                      <td>
+                          <div class="switch-container">
+                              <label class="switch">
+                                  <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_GESTION_DPT[]" value="{{ $gestiones->ID_CATALOGO_FUNCIONESGESTION }}">
+                                  <span class="slider"></span>
+                              </label>
+                          </div>
+                      </td>
+                  </tr>
+                    @endforeach
                 </tbody>
-              </table>
+            </table>
             </div>
 
 

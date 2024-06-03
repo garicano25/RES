@@ -113,3 +113,7 @@ Route::get('/Tablarelacionesexterna', [catalogosrelacionesexternasController::cl
 
 //BANCO DE CV
 Route::get('/vacantes', function () {return view('RH.reclutamiento.bancocv');});
+Route::get('/Nuevavacantes', function () {return view('RH.reclutamiento.vacantes');});
+
+
+Route::get('/Listavacantes', function () {return view('RH.reclutamiento.reclutamiento');});

@@ -28,10 +28,10 @@ use App\Models\organizacion\formulariorequerimientoModel;
 use App\Models\organizacion\areasModel;
 use App\Models\organizacion\formulariodptModel;
 use App\Models\organizacion\relacionesexternasModel;
-
 use App\Models\organizacion\relacionesinternasModel;
 use App\Models\organizacion\catalogorelacionesexternaModel;
-
+use App\Models\organizacion\catalogofuncionescargoModel;
+use App\Models\organizacion\catalogofuncionesgestionModel;
 
 
 
@@ -1216,6 +1216,41 @@ class makeExcelController extends Controller{
             $puestosStr = implode(', ', $puestos1); 
             
             
+          // Obtener las descripciones de las funciones
+            $puestos2 = catalogofuncionescargoModel::whereIn('ID_CATALOGO_FUNCIONESCARGO', $val->FUNCIONES_CARGO_DPT)->pluck('DESCRIPCION_FUNCION_CARGO')->toArray();
+
+            // Empezar por la celda B29
+            $startRow = 26;
+            $column = 'B';
+
+
+            // FUNCIONES CRAGO
+
+            foreach ($puestos2 as $index => $descripcion) {
+                $currentCell = $column . ($startRow + $index);
+                $sheet->setCellValue($currentCell, ($index + 1) . '.- ' . $descripcion);
+            }
+
+
+            //FUNCIONES GESTION
+
+
+
+             // Obtener las descripciones de las funciones
+             $puestos3 = catalogofuncionesgestionModel::whereIn('ID_CATALOGO_FUNCIONESGESTION', $val->FUNCIONES_GESTION_DPT)->pluck('DESCRIPCION_FUNCION_GESTION')->toArray();
+
+             $startRow = 54;
+             $column = 'B';
+ 
+ 
+ 
+             foreach ($puestos3 as $index => $descripcion) {
+                 $currentCell = $column . ($startRow + $index);
+                 $sheet->setCellValue($currentCell, ($index + 1) . '.- ' . $descripcion);
+             }
+
+
+
             //DATOS 
 
             $sheet->setCellValue('G7', str_replace(['[', ']', '"'], '', $puesto));
@@ -1247,6 +1282,7 @@ class makeExcelController extends Controller{
             }
 
 
+            // PERSONAS QUE INTERACTUAN 
             $sheet->setCellValue('H18', $puestosStr);
 
            
