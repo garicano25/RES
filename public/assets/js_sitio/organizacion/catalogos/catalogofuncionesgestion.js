@@ -170,7 +170,6 @@ $('#Tablafuncionesgestion tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablafuncionesgestion.row(tr);
     ID_CATALOGO_FUNCIONESGESTION = row.data().ID_CATALOGO_FUNCIONESGESTION;
 
-    console.log(row.data());
 
     editarDatoTabla(row.data(), 'formularioFUNCIONESGESTION', 'miModal_FUNCIONESGESTION',1);
 });

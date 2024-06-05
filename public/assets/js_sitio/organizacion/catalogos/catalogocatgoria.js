@@ -1,15 +1,15 @@
 //VARIABLES
-ID_CATALOGO_ASESOR = 0
+ID_CATALOGO_CATEGORIA = 0
 
 
 
 
-const ModalArea = document.getElementById('miModal_ASESORES')
+const ModalArea = document.getElementById('miModal_categoria')
 ModalArea.addEventListener('hidden.bs.modal', event => {
     
     
-    ID_CATALOGO_ASESOR = 0
-    document.getElementById('formularioASESOR').reset();
+    ID_CATALOGO_CATEGORIA = 0
+    document.getElementById('formularioCATEGORIAS').reset();
    
 
 })
@@ -19,10 +19,10 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 
 
 
-$("#guardarFormASESOR").click(function (e) {
+$("#guardarFormcategorias").click(function (e) {
     e.preventDefault();
 
-    if (ID_CATALOGO_ASESOR == 0) {
+    if (ID_CATALOGO_CATEGORIA == 0) {
         
         alertMensajeConfirm({
             title: "¿Desea guardar la información?",
@@ -30,8 +30,8 @@ $("#guardarFormASESOR").click(function (e) {
             icon: "question",
         },async function () { 
 
-            await loaderbtn('guardarFormASESOR')
-            await ajaxAwaitFormData({ api: 1, ID_CATALOGO_ASESOR: ID_CATALOGO_ASESOR }, 'asesorSave', 'formularioASESOR', 'guardarFormASESOR', { callbackAfter: true, callbackBefore: true }, () => {
+            await loaderbtn('guardarFormcategorias')
+            await ajaxAwaitFormData({ api: 1, ID_CATALOGO_CATEGORIA: ID_CATALOGO_CATEGORIA }, 'CategoriaSave', 'formularioCATEGORIAS', 'guardarFormcategorias', { callbackAfter: true, callbackBefore: true }, () => {
         
                
 
@@ -48,11 +48,11 @@ $("#guardarFormASESOR").click(function (e) {
             }, function (data) {
                     
 
-                    ID_CATALOGO_ASESOR = data.asesor.ID_CATALOGO_ASESOR
+                ID_CATALOGO_CATEGORIA = data.categoria.ID_CATALOGO_CATEGORIA
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
-                     $('#miModal_ASESORES').modal('hide')
-                    document.getElementById('formularioASESOR').reset();
-                    Tablaasesores.ajax.reload()
+                     $('#miModal_categoria').modal('hide')
+                    document.getElementById('formularioCATEGORIAS').reset();
+                    Tablacategoria.ajax.reload()
 
            
                 
@@ -70,8 +70,8 @@ $("#guardarFormASESOR").click(function (e) {
             icon: "question",
         },async function () { 
 
-            await loaderbtn('guardarFormASESOR')
-            await ajaxAwaitFormData({ api: 1, ID_CATALOGO_ASESOR: ID_CATALOGO_ASESOR }, 'asesorSave', 'formularioASESOR', 'guardarFormASESOR', { callbackAfter: true, callbackBefore: true }, () => {
+            await loaderbtn('guardarFormcategorias')
+            await ajaxAwaitFormData({ api: 1, ID_CATALOGO_CATEGORIA: ID_CATALOGO_CATEGORIA }, 'CategoriaSave', 'formularioCATEGORIAS', 'guardarFormcategorias', { callbackAfter: true, callbackBefore: true }, () => {
         
                 Swal.fire({
                     icon: 'info',
@@ -88,11 +88,11 @@ $("#guardarFormASESOR").click(function (e) {
                 setTimeout(() => {
 
                     
-                    ID_CATALOGO_ASESOR = data.asesor.ID_CATALOGO_ASESOR
+                    ID_CATALOGO_CATEGORIA = data.categoria.ID_CATALOGO_CATEGORIA
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
-                     $('#miModal_ASESORES').modal('hide')
-                    document.getElementById('formularioASESOR').reset();
-                    Tablaasesores.ajax.reload()
+                     $('#miModal_categoria').modal('hide')
+                    document.getElementById('formularioCATEGORIAS').reset();
+                    Tablacategoria.ajax.reload()
 
 
                 }, 300);  
@@ -103,7 +103,7 @@ $("#guardarFormASESOR").click(function (e) {
 });
 
 
-var Tablaasesores = $("#Tablaasesores").DataTable({
+var Tablacategoria = $("#Tablacategoria").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
     lengthMenu: [
@@ -122,12 +122,12 @@ var Tablaasesores = $("#Tablaasesores").DataTable({
         data: {},
         method: 'GET',
         cache: false,
-        url: '/Tablaasesores',
+        url: '/Tablacategoria',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablaasesores.columns.adjust().draw();
+            Tablacategoria.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -137,42 +137,41 @@ var Tablaasesores = $("#Tablaasesores").DataTable({
     },
     order: [[0, 'asc']], // Ordena por la primera columna (ID_CATALOGO_ASESOR) en orden ascendente
     columns: [
-        { data: 'ID_CATALOGO_ASESOR' },
-        { data: 'NOMBRE_ASESOR' },
-        { data: 'DESCRIPCION_ASESOR' },
+        { data: 'ID_CATALOGO_CATEGORIA' },
+        { data: 'NOMBRE_CATEGORIA' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all' },
         { targets: 1, title: 'Nombre', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'Descripción', className: 'all text-center descripcion-column' },
-        { targets: 3, title: 'Editar', className: 'all text-center' },
-        { targets: 4, title: 'Eliminar', className: 'all text-center' }
+        { targets: 2, title: 'Editar', className: 'all text-center' },
+        { targets: 3, title: 'Eliminar', className: 'all text-center' }
     ]
 });
 
 
-$('#Tablaasesores tbody').on('click', 'td>button.ELIMINAR', function () {
+$('#Tablacategoria tbody').on('click', 'td>button.ELIMINAR', function () {
 
     var tr = $(this).closest('tr');
-    var row = Tablaasesores.row(tr);
+    var row = Tablacategoria.row(tr);
 
     data = {
         api: 1,
         ELIMINAR: 1,
-        ID_CATALOGO_ASESOR: row.data().ID_CATALOGO_ASESOR
+        ID_CATALOGO_CATEGORIA: row.data().ID_CATALOGO_CATEGORIA
     }
     
-    eliminarDatoTabla(data, [Tablaasesores], 'asesorDelete')
+    eliminarDatoTabla(data, [Tablacategoria], 'CategoriaDelete')
 
 })
 
 
-$('#Tablaasesores tbody').on('click', 'td>button.EDITAR', function () {
+$('#Tablacategoria tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablaasesores.row(tr);
-    ID_CATALOGO_ASESOR = row.data().ID_CATALOGO_ASESOR;
+    var row = Tablacategoria.row(tr);
+    ID_CATALOGO_CATEGORIA = row.data().ID_CATALOGO_CATEGORIA;
 
-    editarDatoTabla(row.data(), 'formularioASESOR', 'miModal_ASESORES');
+    editarDatoTabla(row.data(), 'formularioCATEGORIAS', 'miModal_categoria', 1);
 });
+

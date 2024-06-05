@@ -11,6 +11,9 @@ use App\Http\Controllers\organizacion\catalogosfuncionescargoController;
 use App\Http\Controllers\organizacion\catalogosfuncionesgestionController;
 use App\Http\Controllers\organizacion\catalogosrelacionesexternasController;
 use App\Http\Controllers\organizacion\requerimientoPersonalController;
+use App\Http\Controllers\organizacion\catalogocategoriaControlller;
+// Controladores de reclutamiento
+ use App\Http\Controllers\reclutamiento\catalogovacantesController;
 
 // RUTA PRINCIPAL 
 Route::get('/', function () {return view('tablero.index');});
@@ -63,7 +66,6 @@ Route::get('/Tablarequerimiento', [requerimientoPersonalController::class, 'Tabl
 Route::get('/makeExcelRP/{id_formulario}', [makeExcelController::class, 'makeExcelRP']);
 
 
-//==============================================  CATALOGOS  ============================================== 
 
 
 //catalogo de jerarquia
@@ -91,29 +93,36 @@ Route::get('/Tablaafuncionescargo', [catalogosfuncionescargoController::class, '
 
 //catalogo de funciones  gestiones
 
-
-
 Route::get('/Funcionesgestión', function () {return view('RH.organizacion.Catálogos.catálogo_funcionesgestion');});
 Route::post('/GestionSave', [catalogosfuncionesgestionController::class, 'store']);
 Route::get('/GestionDelete', [catalogosfuncionesgestionController::class, 'store']);
 Route::get('/Tablafuncionesgestion', [catalogosfuncionesgestionController::class, 'Tablafuncionesgestion']);
 
 // catalogo de relaciones externas 
-
 Route::get('/RelacionesExternas', function () {return view('RH.organizacion.Catálogos.catálogo_relacionesexternas');});
 Route::post('/ExternaSave', [catalogosrelacionesexternasController::class, 'store']);
 Route::get('/ExternaDelete', [catalogosrelacionesexternasController::class, 'store']);
 Route::get('/Tablarelacionesexterna', [catalogosrelacionesexternasController::class, 'Tablarelacionesexterna']);
 
 
+// catalogo de Categorías
+
+Route::get('/Categorías', function () {return view('RH.organizacion.Catálogos.catalogos_categorias');});
+Route::post('/CategoriaSave', [catalogocategoriaControlller::class, 'store']);
+Route::get('CategoriaDelete', [catalogocategoriaControlller::class, 'store']);
+Route::get('/Tablacategoria', [catalogocategoriaControlller::class, 'Tablacategoria']);
 
 
 //==============================================  RECLUTAMIENTO  ============================================== 
 
 
-//BANCO DE CV
 Route::get('/vacantes', function () {return view('RH.reclutamiento.bancocv');});
-Route::get('/Nuevavacantes', function () {return view('RH.reclutamiento.vacantes');});
+
+// catalogo de vacantes
+Route::get('/CatálogoDeVacantes', [catalogovacantesController::class, 'index']);
+Route::post('/VacantesSave', [catalogovacantesController::class, 'store']);
+Route::get('/VacanteDelete', [catalogovacantesController::class, 'store']);
+Route::get('/Tablavacantes', [catalogovacantesController::class, 'Tablavacantes']);
 
 
 Route::get('/Listavacantes', function () {return view('RH.reclutamiento.reclutamiento');});

@@ -177,7 +177,6 @@ $('#Tablajerarquia tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablajerarquia.row(tr);
     ID_CATALOGO_JERARQUIA = row.data().ID_CATALOGO_JERARQUIA;
 
-    console.log(row.data());
 
     editarDatoTabla(row.data(), 'formularioJERARQUIA', 'miModal_JERARQUIA');
 });

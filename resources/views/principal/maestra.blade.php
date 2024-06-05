@@ -156,8 +156,11 @@
                                 <li><a class="dropdown-item" href="{{url('/RelacionesExternas')}}">Relaciones externas</a>
                                 </li> 
                                 <hr class="dropdown-divider">
-                                <li><a class="dropdown-item" href="{{url('/Nuevavacantes')}}">Catálogo de Vacantes </a>
+                                <li><a class="dropdown-item" href="{{url('/CatálogoDeVacantes')}}">Catálogo de Vacantes </a>
                                 </li> 
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/Categorías')}}">Catálogo de Categorías </a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -215,12 +218,12 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Animación -->
     <script src="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.js"></script>
-    <!-- Funciones generales -->
-    <script src="/assets/js_sitio/funciones.js"></script>
     <!-- Select opcion selectize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
-
-
+    
+    
+    <!-- Funciones generales -->
+    <script src="/assets/js_sitio/funciones.js"></script>
 
 
     @if(request()->is('vacantes'))
@@ -268,9 +271,13 @@
     <script src="/assets/js_sitio/organizacion/requerimiento.js"></script>
     @endif
 
+    @if(request()->is('CatálogoDeVacantes'))
+    <script src="/assets/js_sitio/reclutamiento/catalogos/catalogo_vacantes.js"></script>
+    @endif
 
-
-    
+    @if(request()->is('Categorías'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogocatgoria.js"></script>
+    @endif
 
 </body>
 

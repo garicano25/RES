@@ -392,7 +392,6 @@ $(document).ready(function () {
         var form = "formularioDPT";
         var data = row.data();
         
-        // Inicializar el array para las opciones guardadas
         var savedOptions = [];
 
         // Obtener el valor de PUESTOS_INTERACTUAN_DPT
@@ -419,7 +418,6 @@ $(document).ready(function () {
             selectizeInstance.setValue(savedOptions);
         }
 
-        // Mostrar datos adicionales si es necesario
         editarDatoTabla(data, form, 'miModal_DPT', 1);
         mostrarFunciones(data, form);
     });
