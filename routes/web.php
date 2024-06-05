@@ -12,8 +12,12 @@ use App\Http\Controllers\organizacion\catalogosfuncionesgestionController;
 use App\Http\Controllers\organizacion\catalogosrelacionesexternasController;
 use App\Http\Controllers\organizacion\requerimientoPersonalController;
 use App\Http\Controllers\organizacion\catalogocategoriaControlller;
+
 // Controladores de reclutamiento
  use App\Http\Controllers\reclutamiento\catalogovacantesController;
+use App\Http\Controllers\reclutamiento\PuestoController;
+
+
 
 // RUTA PRINCIPAL 
 Route::get('/', function () {return view('tablero.index');});
@@ -116,7 +120,11 @@ Route::get('/Tablacategoria', [catalogocategoriaControlller::class, 'Tablacatego
 //==============================================  RECLUTAMIENTO  ============================================== 
 
 
-Route::get('/vacantes', function () {return view('RH.reclutamiento.bancocv');});
+Route::get('/PostulaciónDePuesto', function () {return view('RH.reclutamiento.bancocv');});
+
+// Route::get('/Vacantes', function () {return view('RH.reclutamiento.puestos');});
+Route::get('/Vacantes', [PuestoController::class, 'index']);
+
 
 // catalogo de vacantes
 Route::get('/CatálogoDeVacantes', [catalogovacantesController::class, 'index']);

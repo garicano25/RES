@@ -24,21 +24,130 @@
     <!-- Select opcion selectize -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" />
 
-
-
-</head>
-<body>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.2.0/css/bootstrap.min.css">
+    <style>
     
 
+        /* /* .card {
+            border: 1px solid #dee2e6;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-bottom: 10px; /* Adds space between the cards */
+            border-radius: 10px; /* Makes borders rounded */
+        }
 
+        .card:hover {
+            transform: scale(1.05);
+        }
 
+        .list-group-item {
+            margin-bottom: 10px; /* Adds space between list items */
+            border: 1px solid #dee2e6;
+            border-radius: 10px; /* Makes borders rounded */
+            padding: 15px; /* Adds padding inside the list items */
+        }
 
+        .list-group-item.active-link {
+            border-color: #007bff;
+            background-color: #f0f8ff;
+            border-radius: 10px; /* Keeps borders rounded when active */
+        }
 
+        .details-pane {
+            display: none;
+            position: relative;
+            width: 100%;
+            height: auto;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+            margin-top: 10px; /* Space between the top of the container and the card */
+            border-radius: 10px; /* Makes borders rounded */
+        }
 
+        .details-pane.active {
+            display: block;
+            border-color: #007bff;
+            border-radius: 10px; /* Keeps borders rounded when active */
+        }
 
+        .details-pane p {
+            white-space: pre-wrap; /* Makes sure the text wraps inside the card */
+            word-wrap: break-word; /* Ensures long words break correctly */
+            font-size: 1rem; /* Ensures all text is the same size */
+            line-height: 1.5; /* Improves readability */
+        }
 
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
+        .logo-container img {
+            max-width: 100%;
+            height: auto; */
+        } */
+    </style>
+  
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Logo Section -->
+        <div class="row">
+            <div class="col-12 logo-container">
+                <img src="path/to/your/logo.png" alt="Company Logo">
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-md-4">
+                <div class="list-group">
+                    @foreach($vacantes as $vacante)
+                        @php
+                            $slug = \Illuminate\Support\Str::slug($vacante->CATEGORIA_VACANTE);
+                        @endphp
+                        <a href="javascript:void(0)" class="list-group-item list-group-item-action" onclick="showDetails('{{ $slug }}')" id="link-{{ $slug }}">
+                            <h5 class="mb-1">{{ $vacante->CATEGORIA_VACANTE }}</h5>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+            <div class="col-md-8 position-relative">
+                @foreach($vacantes as $vacante)
+                    @php
+                        $slug = \Illuminate\Support\Str::slug($vacante->CATEGORIA_VACANTE);
+                    @endphp
+                    <div class="details-pane" id="details-{{ $slug }}">
+                        <h5 class="card-title">{{ $vacante->CATEGORIA_VACANTE }}</h5>
+                        <hr>
+                        <p>{{ $vacante->DESCRIPCION_VACANTE }}</p>
+                        <p><strong>Requisitos:</strong></p>
+                        <p>{{ $vacante->REQUISITOS_VACANTES }}</p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+    <script>
+        function showDetails(slug) {
+            // Hide all details panes and remove active class from links
+            document.querySelectorAll('.details-pane').forEach(function(pane) {
+                pane.classList.remove('active');
+            });
+            document.querySelectorAll('.list-group-item').forEach(function(link) {
+                link.classList.remove('active-link');
+            });
+
+            // Show the selected details pane and add active class to the clicked link
+            document.getElementById('details-' + slug).classList.add('active');
+            document.getElementById('link-' + slug).classList.add('active-link');
+        }
+    </script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>
 
       <!-- Jquery 3.6.4-->
       <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

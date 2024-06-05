@@ -51,7 +51,7 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav1">
                 <ul class="navbar-nav">
                     <li class="nav-item" style="margin-right: 25px;">
-                        <a class="nav-link" href="{{ url('/vacantes') }}">
+                        <a class="nav-link" href="{{ url('/Vacantes') }}">
                             <i class="bi bi-file-earmark-person-fill text-white" style="font-size: 24px;"></i>
                         </a>
                     </li>

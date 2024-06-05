@@ -6,7 +6,7 @@
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
-        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-filetype-ppt"></i>&nbsp;Perfil del puesto de trabajo&nbsp;(PPT)</h3>
+        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-filetype-ppt"></i>&nbsp;Perfil de puesto de trabajo&nbsp;(PPT)</h3>
 
 
         <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_ppt"  id="nuevo_ppt" style="margin-left: auto;">
@@ -31,7 +31,7 @@
         <div class="modal-content">
             <form method="post" enctype="multipart/form-data" id="formularioPPT" style="background-color: #ffffff;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="miModalLabel">Perfil del puesto de trabajo&nbsp;(PPT)</h5>
+                    <h5 class="modal-title" id="miModalLabel">Perfil de puesto de trabajo&nbsp;(PPT)</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
