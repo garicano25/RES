@@ -2433,3 +2433,32 @@ function loaderbtn(btn) {
 }
 
 
+function validarFormulario(form) {
+    
+    var formulario = form;
+
+    // Busca todos los elementos input dentro del formulario y agrega la clase
+    formulario.find('input[required]:not([disabled]), textarea[required]:not([disabled]), select[required]:not([disabled])').addClass('validar').removeClass('error');
+
+
+  
+    // Busca todos los elementos con la clase "validar"
+    var campos = $('.validar');
+    var formularioValido = true;
+
+    // Recorre los campos para verificar que tengan un valor no vacío
+    campos.each(function () {
+      if ($(this).val().trim() === '') {
+          
+          $(this).addClass('error');
+        
+          formularioValido = false;
+          return false; // Detiene la iteración si se encuentra un campo vacío
+          
+          
+        }
+    });
+
+    return formularioValido;
+}
+

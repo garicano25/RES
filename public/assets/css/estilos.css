@@ -36,6 +36,10 @@
     /* padding: 10px; */
 }
 
+.error {
+    border: 2px solid red;
+}
+
 /* Filas pares
  tr:nth-child(even) {
     background-color: rgba(0, 124, 186, 0.850);

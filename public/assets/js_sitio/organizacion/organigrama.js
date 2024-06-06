@@ -177,8 +177,9 @@ $('#nav-encargados-tab').on('click', function () { TablaEncargado.columns.adjust
 $("#guardarArea").click(function (e) {
     e.preventDefault();
     
-    var valida = this.form.checkValidity();
-    if (valida) { 
+    formularioValido = validarFormulario($('#formArea'))
+
+    if (formularioValido) {
 
         if (ID_AREA == 0) {
             
@@ -186,10 +187,10 @@ $("#guardarArea").click(function (e) {
                 title: "¿Desea guardar esta nueva área?",
                 text: "Al guardarla, se agregara al organigrama",
                 icon: "question",
-            },async function () { 
+            }, async function () {
 
                 await loaderbtn('guardarArea')
-                await ajaxAwaitFormData({ api: 1, ID_AREA: ID_AREA }, 'areasSave', 'formArea', 'guardarArea', { callbackAfter: true}, false, function (data) {
+                await ajaxAwaitFormData({ api: 1, ID_AREA: ID_AREA }, 'areasSave', 'formArea', 'guardarArea', { callbackAfter: true }, false, function (data) {
                         
                     setTimeout(() => {
 
@@ -215,14 +216,14 @@ $("#guardarArea").click(function (e) {
             }, 1)
             
         } else {
-             alertMensajeConfirm({
+            alertMensajeConfirm({
                 title: "¿Desea editar el área actual?",
                 text: "Al guardarla, se editara en el organigrama",
                 icon: "question",
-            },async function () { 
+            }, async function () {
 
                 await loaderbtn('guardarArea')
-                await ajaxAwaitFormData({ api: 1, ID_AREA: ID_AREA }, 'areasSave', 'formArea', 'guardarArea', { callbackAfter: true}, false, function (data) {
+                await ajaxAwaitFormData({ api: 1, ID_AREA: ID_AREA }, 'areasSave', 'formArea', 'guardarArea', { callbackAfter: true }, false, function (data) {
                         
                     setTimeout(() => {
 
@@ -232,10 +233,14 @@ $("#guardarArea").click(function (e) {
                         alertToast('Área editada exitosamente', 'success', 3000)
                         TablaAreas.ajax.reload()
 
-                    }, 300);  
+                    }, 300);
                 })
             }, 1)
         }
+    } else {
+        // Muestra un mensaje de error o realiza alguna otra acción
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
     }
 });
 
