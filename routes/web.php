@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
+// Controladores de organizacion
+
 use App\Http\Controllers\organizacion\areasController;
 use App\Http\Controllers\organizacion\pptController;
 use App\Http\Controllers\organizacion\dptController;
@@ -12,6 +15,7 @@ use App\Http\Controllers\organizacion\catalogosfuncionesgestionController;
 use App\Http\Controllers\organizacion\catalogosrelacionesexternasController;
 use App\Http\Controllers\organizacion\requerimientoPersonalController;
 use App\Http\Controllers\organizacion\catalogocategoriaControlller;
+use App\Http\Controllers\organizacion\catalogogeneroControlller;
 
 // Controladores de reclutamiento
  use App\Http\Controllers\reclutamiento\catalogovacantesController;
@@ -27,6 +31,7 @@ Route::get('/', function () {return view('tablero.index');});
 //==============================================  ORGANIZACION  ============================================== 
 
 // ORGANIGRAMA
+
 Route::get('/organigrama', function () {return view('RH.organizacion.organigrama');});
 Route::post('/areasSave', [areasController::class, 'store']);
 Route::get('/areasDelete', [areasController::class, 'store']);
@@ -36,8 +41,8 @@ Route::get('/TablaEncargados/{area_id}', [areasController::class, 'TablaEncargad
 Route::get('/listaEncagadosAreas/{area_id}', [areasController::class, 'listaEncagadosAreas']);
 Route::get('/getDataOrganigrama/{area_id}/{esGeneral}', [areasController::class, 'getDataOrganigrama']);
 
-
 //PPT
+
 Route::get('/PPT', [pptController::class, 'index']);
 Route::post('/pptSave', [pptController::class, 'store']);
 Route::get('/TablaPPT', [pptController::class, 'TablaPPT']);
@@ -46,81 +51,76 @@ Route::get('/revisarPPT/{id_formulario}', [pptController::class, 'revisarPPT']);
 Route::get('/makeExcelPPT/{id_formulario}', [makeExcelController::class, 'makeExcelPPT']);
 // Route::get('/PPTDelete', [pptController::class, 'store']);
 
-
-
 // DPT
+
 Route::get('/DPT', [dptController::class, 'index']);
 Route::post('/dptSave', [dptController::class, 'store']);
 Route::get('/TablaDPT', [dptController::class, 'TablaDPT']);
 // Route::get('/autorizarDPT/{id_formulario}', [dptController::class, 'autorizarDPT']);
 // Route::get('/revisarDPT/{id_formulario}', [dptController::class, 'revisarDPT']);
-
 Route::get('/makeExcelDPT/{id_formulario}', [makeExcelController::class, 'makeExcelDPT']);
-
 Route::get('/infoReportan/{ID}/{LIDER}', [dptController::class, 'infoReportan']);
 
-
 // REQUERIMIENTO PERSONAL 
-Route::get('/RequisiciónDePersonal', [requerimientoPersonalController::class, 'index']);
-
-
+Route::get('/RequisiciónDePe
+rsonal', [requerimientoPersonalController::class, 'index']);
 Route::post('/RequerimientoSave', [requerimientoPersonalController::class, 'store']);
 Route::get('/RequerimientoDelete', [requerimientoPersonalController::class, 'store']);
 Route::get('/Tablarequerimiento', [requerimientoPersonalController::class, 'Tablarequerimiento']);
 Route::get('/makeExcelRP/{id_formulario}', [makeExcelController::class, 'makeExcelRP']);
 
+//catálogo de jerarquia
 
-
-
-//catalogo de jerarquia
-Route::get('/Jerárquico', function () {return view('RH.organizacion.Catálogos.catálogo_Jerárquico');});
+Route::get('/Jerárquico', function () {return view('RH.Catálogos.catálogo_Jerárquico');});
 Route::post('/jerarquiaSave', [catalogosController::class, 'store']);
 Route::get('/jerarquiaDelete', [catalogosController::class, 'store']);
 Route::get('/Tablajerarquia', [catalogosController::class, 'Tablajerarquia']);
 
-//catalogo de asesores
+//catálogo de asesores
 
-
-Route::get('/Asesores', function () {return view('RH.organizacion.Catálogos.catálogo_asesores');});
+Route::get('/Asesores', function () {return view('RH.Catálogos.catálogo_asesores');});
 Route::post('/asesorSave', [catalogosasesoresController::class, 'store']);
 Route::get('/asesorDelete', [catalogosasesoresController::class, 'store']);
 Route::get('/Tablaasesores', [catalogosasesoresController::class, 'Tablaasesores']);
 
-//catalogo de funciones cargo
-
-
+//catálogo de funciones cargo
 
 Route::get('/FuncionesCargo', [catalogosfuncionescargoController::class, 'index']);
 Route::post('/CargoSave', [catalogosfuncionescargoController::class, 'store']);
 Route::get('/CargoDelete', [catalogosfuncionescargoController::class, 'store']);
 Route::get('/Tablaafuncionescargo', [catalogosfuncionescargoController::class, 'Tablaafuncionescargo']);
 
-//catalogo de funciones  gestiones
+//catálogo de funciones  gestiones
 
-Route::get('/Funcionesgestión', function () {return view('RH.organizacion.Catálogos.catálogo_funcionesgestion');});
+Route::get('/Funcionesgestión', function () {return view('RH.Catálogos.catálogo_funcionesgestion');});
 Route::post('/GestionSave', [catalogosfuncionesgestionController::class, 'store']);
 Route::get('/GestionDelete', [catalogosfuncionesgestionController::class, 'store']);
 Route::get('/Tablafuncionesgestion', [catalogosfuncionesgestionController::class, 'Tablafuncionesgestion']);
 
-// catalogo de relaciones externas 
-Route::get('/RelacionesExternas', function () {return view('RH.organizacion.Catálogos.catálogo_relacionesexternas');});
+// catálogo de relaciones externas 
+Route::get('/RelacionesExternas', function () {return view('RH.Catálogos.catálogo_relacionesexternas');});
 Route::post('/ExternaSave', [catalogosrelacionesexternasController::class, 'store']);
 Route::get('/ExternaDelete', [catalogosrelacionesexternasController::class, 'store']);
 Route::get('/Tablarelacionesexterna', [catalogosrelacionesexternasController::class, 'Tablarelacionesexterna']);
 
+// catálogo de Categorías
 
-// catalogo de Categorías
-
-Route::get('/Categorías', function () {return view('RH.organizacion.Catálogos.catalogos_categorias');});
+Route::get('/Categorías', function () {return view('RH.Catálogos.catalogo_categorias');});
 Route::post('/CategoriaSave', [catalogocategoriaControlller::class, 'store']);
 Route::get('CategoriaDelete', [catalogocategoriaControlller::class, 'store']);
 Route::get('/Tablacategoria', [catalogocategoriaControlller::class, 'Tablacategoria']);
 
+//  catálogo de Género 
+
+Route::get('/Género', function () {return view('RH.Catálogos.catalogo_genero');});
+Route::post('/GeneroSave', [catalogogeneroControlller::class, 'store']);
+Route::get('/GeneroDelete', [catalogogeneroControlller::class, 'store']);
+Route::get('/Tablageneros', [catalogogeneroControlller::class, 'Tablageneros']);
 
 //==============================================  RECLUTAMIENTO  ============================================== 
 
 
-Route::get('/PostulaciónDePuesto', function () {return view('RH.reclutamiento.bancocv');});
+Route::get('/Formulario-vacantes', function () {return view('RH.reclutamiento.bancocv');});
 
 // Route::get('/Vacantes', function () {return view('RH.reclutamiento.puestos');});
 Route::get('/Vacantes', [PuestoController::class, 'index']);

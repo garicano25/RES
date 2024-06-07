@@ -50,9 +50,9 @@
 
                     </div>
                         <div class="mb-3">
-                            <label  for="LIDER_SI">Si</label>
+                       <label  for="LIDER_SI">Si</label>
                           <input  class="mx-2" type="radio" id="LIDER_SI" name="ES_LIDER_CATEGORIA" value="1">
-                          <label for="LIDER_NO">No</label>
+                        <label for="LIDER_NO">No</label>
                           <input class="mx-2" type="radio" id="LIDER_NO" name="ES_LIDER_CATEGORIA" value="0">
                       </div>
                 </div>

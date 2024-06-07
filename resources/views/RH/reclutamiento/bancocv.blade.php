@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <link rel="icon" type="image/png" sizes="20x20" href="/assets/images/iconologo.png">
+    <title>Results in Performance</title>
+
 
 
       <!-- Bootstrap  iconos v1.11.3 -->
@@ -27,7 +29,8 @@
   
       <!-- Select opcion selectize -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" />
-  
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.2.0/css/bootstrap.min.css">
+
   
       <!--Archivo css -->
       <link rel="stylesheet" href="assets/css/estilos.css">
@@ -35,116 +38,202 @@
 <body>
     
 
-
-
     <style>
-        .header {
-            background-color: rgb(255, 255, 255); 
-            padding: 20px;
-            display: flex;
-            align-items: center; 
-            justify-content: space-between; 
-            -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); 
-            -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); 
-            box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); 
+
+            body {
+            font-family: 'Poppins', sans-serif;
+            /* background-color: #007DBA; */
         }
-    
-        .logo-img {
-            width: 150px;
-            margin-right: 15px; 
+        .card {
+        max-width: 700px; 
+        margin: 20px auto; 
+        border: 2px solid #007DBA; 
+        /* min-height: 500px;  */
+}
+        .card-img-top {
+            display: block;
+            margin: 0 auto;
+            width: 50%; 
+            height: auto; 
         }
-    
-        .header-text {
-            flex: 1; 
-            display: flex;
-            align-items: center; 
-            justify-content: center; 
+
+        #contador {
+            font-size: 12px;
+            color: gray; /* Color del contador */
         }
-    
-        h1 {
-            margin: 0;
-            color: rgb(0, 0, 0); 
-            font-family: Poppins;
-    
+
+        #mensaje {
+            margin-top: 5px;
+            color: red; /* Color del mensaje */
         }
-        .form-label-puestos {
-            font-family: Poppins;
-    
-        font-size: 1.5rem; 
-        e fuente más grande 
-        margin: auto;
-        text-align: center;
-        display: block; 
-        width: fit-content; 
-    }   
+   
+
+       
+
+        .modal-header img {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            max-height: 50px;
+        }
+
+        .modal-footer {
+            justify-content: center;
+        }
+
+        .modal-content {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(16, 16, 16, 0.958);
+        }
+
+        .modal-body {
+            font-size: 1rem;
+        }
+
+        .modal-backdrop.show {
+            opacity: 1;
+        }
+
+        .modal-backdrop {
+            background-color: rgba(16, 16, 16, 0.963); /* Fondo completamente opaco */
+        }
     </style>
-    
-    <header class="header mt-5 mb-4">
-        <img src="/assets/images/Negroancho.png" alt="Logo" class="logo-img"> 
-        <div class="header-text">
-            <h1>Vacantes</h1> 
+</head>
+<body>
+    <div class="card">
+        <img src="/assets/images/Colorancho.png" class="card-img-top" alt="Imagen superior">
+        <div class="card-body">
+            <form method="post"  enctype="multipart/form-data" id="formularioBANCO">
+                <div class="mb-3">
+                    <label>Nombre(s)</label>
+                    <input type="text" class="form-control" id="NOMBRE_CV" name="NOMBRE_CV" required>
+                </div>
+                <div class="mb-3">
+                    <label>Primero Apellido </label>
+                    <input type="text" class="form-control" id="PRIMER_APELLIDO_CV" name="PRIMER_APELLIDO_CV" required>
+                </div>
+                <div class="mb-3">
+                    <label>Primero Apellido </label>
+                    <input type="text" class="form-control" id="SEGUNDP_APELLIDO_CV" name="SEGUNDP_APELLIDO_CV" required>
+                </div>
+                <div class="mb-3">
+                    <label>Curp</label>
+                    <input type="text" class="form-control" id="CURP_CV" name="CURP_CV" maxlength="18" required>
+                    <div id="contador" class="text-end"></div>
+                    <div id="mensaje"></div>
+                </div>  
+                <div class="mb-3">
+                    <label>Fecha de nacimiento</label>
+                    <div class="d-flex justify-content-between">
+                        <select class="form-select me-2" id="dia" name="DIA_FECHA_CV" required>
+                            <option value="" selected disabled>Día</option>
+                            <!-- Genera los días del 1 al 31 -->
+                            <script>
+                                for (let i = 1; i <= 31; i++) {
+                                    document.write('<option value="' + i + '">' + i + '</option>');
+                                }
+                            </script>
+                        </select>
+                        <select class="form-select me-2" id="mes" name="MES_FECHA_CV" required>
+                            <option value="" selected disabled>Mes</option>
+                            <option value="1">Enero</option>
+                            <option value="2">Febrero</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Mayo</option>
+                            <option value="6">Junio</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                        </select>
+                        <select class="form-select" id="ano" name="ANO_FECHA_CV" required>
+                            <option value="" selected disabled>Año</option>
+                            <!-- Genera los años desde 1900 hasta el año actual -->
+                            <script>
+                                const currentYear = new Date().getFullYear();
+                                for (let i = currentYear; i >= 1900; i--) {
+                                    document.write('<option value="' + i + '">' + i + '</option>');
+                                }
+                            </script>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="mb-3">
+                <labe class="text-center">Último grado académico cursado y terminado satisfactoriamente</labe>
+                </div>
+                <div class="mb-3">
+                    <select class="form-select" id="ULTIMO_GRADO_CV" name="ULTIMO_GRADO_CV" required>
+                        <option value="0" selected disabled>Seleccione una opción</option>
+                        <option value="1">Primaria</option>
+                        <option value="2">Secundaria</option>
+                        <option value="3">Preparatoria</option>
+                        <option value="4">Licenciatura</option>
+                        <option value="5">Posgrado</option>
+                    </select>
+                </div>
+        
+                <div class="mb-3" id="licenciatura-container" style="display: none;">
+                    <label>Nombre de la licenciatura</label>
+                    <input type="text" class="form-control" id="NOMBRE_LICENCIATURA_CV" name="NOMBRE_LICENCIATURA_CV">
+                </div>
+        
+                <div class="mb-3" id="posgrado-container" style="display: none;">
+                    <label>Tipo de posgrado</label>
+                    <select class="form-select" id="TIPO_POSGRADO_CV" name="TIPO_POSGRADO_CV">
+                        <option value="0" selected disabled>Seleccione una opción</option>
+                        <option value="1">Especialidad</option>
+                        <option value="2">Maestría</option>
+                        <option value="3">Doctorado</option>
+                        <option value="4">Post Doctorado</option>
+                    </select>
+                    <div class="mt-3" id="posgrado-nombre-container" style="display: none;">
+                        <label>Nombre del posgrado</label>
+                        <input type="text" class="form-control" id="NOMBRE_POSGRADO_CV" name="NOMBRE_POSGRADO_CV">
+                    </div>
+                </div>
+
+
+                {{-- <button type="submit" class="btn btn-primary">Enviar</button> --}}
+            </form>
         </div>
-    </header>
-     
+    </div>
     
-    
-    <div class="contenedor-contenido">
-        <form id="formulario">
-            <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre completo</label>
-                <input type="text" class="form-control"  name="NOMBRE_VACANTE"    id="NOMBRE_VACANTE" placeholder="Nombre completo" required>
+
+
+    <!-- Modal de Aviso de Privacidad -->
+    <div class="modal fade" id="avisoPrivacidadModal" tabindex="-1" aria-labelledby="avisoPrivacidadModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title " id="avisoPrivacidadModalLabel">Aviso de Privacidad</h5>
+                    <img src="/assets/images/Colorancho.png" alt="Imagen de Privacidad">
+                </div>
+                <div class="modal-body">
+                    <p><b>“RES”</b> trata datos sensibles los cuales se utilizan para la contratación de
+                        colaboradores. Los datos que utilizaremos para las finalidades descritas en el presente aviso de
+                        privacidad son los siguientes: <br><br>
+                     -Nombre completo <br>
+                     -CURP
+                    </p>
+                    <p class="text-center">Aceptar términos</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="aceptoTerminos">Sí</button>
+                    <button type="button" class="btn btn-secondary" id="noAceptoTerminos">No</button>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="correo" class="form-label">Correo electrónico</label>
-                <input type="email" class="form-control" name="CORREO_VACANTE" id="CORREO_VACANTE" placeholder="correo@example.com" required>
-            </div>
-            <div class="mb-3">
-                <label for="telefono" class="form-label">Teléfono</label>
-                <input type="number" class="form-control"  name="TELEFONO_VACANTE" id="TELEFONO_VACANTE" placeholder="Teléfono" required>
-            </div>
-            <div class="mb-3">
-                <label for="curp" class="form-label">CURP</label>
-                <input type="text" class="form-control" name="CURP_VACANTE"  id="CURP_VACANTE" placeholder="CURP" required>
-            </div>
-            <div class="mb-3">
-                <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
-                <input type="date" class="form-control" name="FECHA_NACIMIENTO_VACANTE"  id="FECHA_NACIMIENTO_VACANTE"  required> 
-            </div>
-            <div class="mb-3">
-                <label for="edad" class="form-label">Edad</label>
-                <input type="number" name="EDAD_VACANTE" class="form-control" id="EDAD_VACANTE"  required>
-            </div>
-            
-            <button type="button" class="btn btn-danger" id="btnSiguiente">Siguiente</button>
-            
-            <br><br>
-    
-    
-            <div class="mb-3 d-none" id="selectPuestos">
-                <label for="puestos" class="form-label form-label-puestos">Vacantes</label>
-                <select class="form-select"  name="PUESTO_VACANTES" id="PUESTO_VACANTES" required>
-                    <option selected disabled>Selecciona un puesto</option>
-                    <option value="1">Asistente RRHH</option>
-                    <option value="2">Asistente de planeación y logística</option>
-                    <option value="3">Intendente</option>
-                    <option value="4">Asistente contable</option>
-                    <option value="5">Asistente de nómina</option>
-                    <option value="6">Asistente de compras</option>
-                    <option value="7">Almacenista</option>
-                    <option value="8">Consultor</option>
-                    <option value="9">Instructor - Facilitador</option>
-                    <option value="10">Ejecutivo de ventas</option>
-                    <option value="11">Desarrollador de Software</option>
-    
-                </select>
-            </div>
-                
-            </div>
-        </form>
+        </div>
     </div>
 
-    
-    
+   
+
+
+
+
     <!-- Jquery 3.6.4-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!--Bootstrap -->
@@ -157,10 +246,14 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Animación -->
     <script src="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.js"></script>
-    <!-- Funciones generales -->
-    <script src="/assets/js_sitio/funciones.js"></script>
+   
     <!-- Select opcion selectize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>
+
+     <!-- Funciones generales -->
+     <script src="/assets/js_sitio/funciones.js"></script>
+    <script src="/assets/js_sitio/reclutamiento/banco_cv.js"></script>
 
 
 

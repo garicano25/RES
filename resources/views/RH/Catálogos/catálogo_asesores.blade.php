@@ -35,11 +35,11 @@
                 <div class="modal-body">
                     {!! csrf_field() !!}
                     <div class="mb-3">
-                        <label for="NOMBRE_ASESOR" class="col-form-label">Nombre Asesor *</label>
+                        <label>Nombre Asesor *</label>
                         <input type="text" class="form-control" id="NOMBRE_ASESOR" name="NOMBRE_ASESOR" required>
                     </div>
                     <div class="mb-3">
-                        <label for="DESCRIPCION_ASESOR" class="col-form-label">Descripción:</label>
+                        <label>Descripción:</label>
                         <textarea class="form-control" id="DESCRIPCION_ASESOR" name="DESCRIPCION_ASESOR" rows="8"></textarea>
                     </div>
                     <div class="mb-3">

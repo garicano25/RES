@@ -59,7 +59,7 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav1">
                 <ul class="navbar-nav">
                     <li class="nav-item" style="margin-right: 25px;">
-                        <a class="nav-link" href="{{ url('/Vacantes') }}">
+                        <a class="nav-link" href="{{ url('/Formulario-vacantes') }}">
                             <i class="bi bi-file-earmark-person-fill text-white" style="font-size: 24px;"></i>
                         </a>
                     </li>
@@ -169,6 +169,9 @@
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/Categorías')}}">Catálogo de Categorías </a>
                                 </li>
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/Género')}}">Catálogo de Género </a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -234,11 +237,7 @@
     <script src="/assets/js_sitio/funciones.js"></script>
 
 
-    @if(request()->is('vacantes'))
-    <!-- Banco CV -->
-    <script src="/assets/js_sitio/bancocv.js"></script>
-    @endif
-
+   
 
     @if(request()->is('organigrama'))
     <!-- organización -->
@@ -284,9 +283,15 @@
     @endif
 
     @if(request()->is('Categorías'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogocatgoria.js"></script>
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogocategoria.js"></script>
+    @endif
+    
+    @if(request()->is('Género'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogogenero.js"></script>
     @endif
 
-</body>
+  
+    
+    </body>
 
 </html>

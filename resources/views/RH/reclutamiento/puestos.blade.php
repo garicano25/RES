@@ -29,12 +29,12 @@
     <style>
     
 
-        /* /* .card {
+     .card {
             border: 1px solid #dee2e6;
             cursor: pointer;
             transition: transform 0.2s;
-            margin-bottom: 10px; /* Adds space between the cards */
-            border-radius: 10px; /* Makes borders rounded */
+            margin-bottom: 10px; 
+            border-radius: 10px; 
         }
 
         .card:hover {

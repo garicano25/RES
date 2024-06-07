@@ -61,7 +61,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="descripcion-funcion" class="col-form-label">Descripción de la función:</label>
+                            <label>Descripción de la función:</label>
                             <textarea class="form-control" id="descripcion-funcion" name="DESCRIPCION_FUNCION_CARGO" rows="8" required></textarea>
                         </div>
                     </div>

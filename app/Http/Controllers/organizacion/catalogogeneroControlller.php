@@ -4,32 +4,17 @@ namespace App\Http\Controllers\organizacion;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\organizacion\catalogofuncionescargoModel;
+
+use App\Models\organizacion\catalogogeneroModel;
 
 use DB;
 
-class catalogosfuncionescargoController extends Controller
+class catalogogeneroControlller extends Controller
 {
-    public function index()
-    {
-        $areas = DB::select("
-            SELECT NOMBRE, ID_DEPARTAMENTO_AREA as ID
-            FROM departamentos_areas
-            WHERE ACTIVO = 1
-
-            UNION
-
-            SELECT NOMBRE_CARGO AS NOMBRE, ID_ENCARGADO_AREA AS ID
-            FROM encargados_areas
-        ");
-
-        return view('RH.Catálogos.catálogo_funcionescargo', compact('areas'));
-    }
-
-    public function Tablaafuncionescargo()
+    public function Tablageneros()
     {
         try {
-            $tabla = catalogofuncionescargoModel::get();
+            $tabla = catalogogeneroModel::get();
     
             foreach ($tabla as $value) {
             
@@ -51,52 +36,37 @@ class catalogosfuncionescargoController extends Controller
         }
     }
 
-
+    
     public function store(Request $request)
     {
-
         try {
             switch (intval($request->api)) {
                 case 1:
-
-                    
-                    if ($request->ID_CATALOGO_FUNCIONESCARGO == 0) {
-
-                        DB::statement('ALTER TABLE catalogo_funcionescargos AUTO_INCREMENT=1;');
-                        $cargos = catalogofuncionescargoModel::create($request->all());
+                    if ($request->ID_CATALOGO_GENERO == 0) {
+                        DB::statement('ALTER TABLE catalogo_generos AUTO_INCREMENT=1;');
+                        $generos = catalogogeneroModel::create($request->all());
                     } else { 
-
                         if (!isset($request->ELIMINAR)) {
-
-
-                            $cargos = catalogofuncionescargoModel::find($request->ID_CATALOGO_FUNCIONESCARGO);
-                            $cargos->update($request->all());
+                            $generos = catalogogeneroModel::find($request->ID_CATALOGO_GENERO);
+                            $generos->update($request->all());
                         } else {
-
-                            $cargos = catalogofuncionescargoModel::where('ID_CATALOGO_FUNCIONESCARGO', $request['ID_CATALOGO_FUNCIONESCARGO'])->delete();
-
+                            $generos = catalogogeneroModel::where('ID_CATALOGO_GENERO', $request['ID_CATALOGO_GENERO'])->delete();
                             $response['code']  = 1;
-                            $response['cargo']  = 'Eliminada';
+                            $response['genero']  = 'Eliminada';
                             return response()->json($response);
                         }
                     }
-
                     $response['code']  = 1;
-                    $response['cargo']  = $cargos;
+                    $response['genero']  = $generos;
                     return response()->json($response);
-
                     break;
-
                 default:
-
                     $response['code']  = 1;
                     $response['msj']  = 'Api no encontrada';
                     return response()->json($response);
             }
         } catch (Exception $e) {
-
-            return response()->json('Error al guardar las funciones');
+            return response()->json('Error al guardar el género');
         }
     }
-
 }
