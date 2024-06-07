@@ -98,7 +98,7 @@
         <!-- Logo Section -->
         <div class="row">
             <div class="col-12 logo-container">
-                <img src="path/to/your/logo.png" alt="Company Logo">
+                <img src="/assets/images/Colorancho" alt="Company Logo">
             </div>
         </div>
 

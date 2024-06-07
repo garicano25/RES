@@ -32,7 +32,7 @@
                     {!! csrf_field() !!}
                     <div class="mb-3">
                         <label>Categoría</label>
-                        <select class="form-control" id="CATEGORIA_VACANTE" name="CATEGORIA_VACANTE">
+                        <select class="form-control" id="CATEGORIA_VACANTE" name="CATEGORIA_VACANTE" required>
                             <option selected disabled>Seleccione una opción</option>
                             @foreach ($areas as $area)
                                 <option value="{{ $area->NOMBRE }}">{{ $area->NOMBRE }}</option>

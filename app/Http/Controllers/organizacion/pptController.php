@@ -71,6 +71,7 @@ class pptController extends Controller
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-circle"><i class="bi bi-ban"></i></button>';
                     $value->BTN_PPT = '<button type="button" class="btn btn-success btn-circle PPT"><i class="bi bi-file-earmark-excel-fill"></i></button>';
                     $value->BTN_ACCION = '<button type="button" class="btn btn-success btn-circle " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Finalizado PPT" title="Finalizado"><i class="bi bi-check-circle-fill"></i></button>';
+                    $value->BTN_ACCION = '<button type="button" class="btn btn-success btn-circle " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Finalizado PPT" title="Finalizado"><i class="bi bi-check-circle-fill"></i></button>';
                 }
 
 

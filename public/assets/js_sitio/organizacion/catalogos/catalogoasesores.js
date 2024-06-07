@@ -22,6 +22,10 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 $("#guardarFormASESOR").click(function (e) {
     e.preventDefault();
 
+    formularioValido = validarFormulario($('#formularioASESOR'))
+
+    if (formularioValido) {
+
     if (ID_CATALOGO_ASESOR == 0) {
         
         alertMensajeConfirm({
@@ -99,6 +103,12 @@ $("#guardarFormASESOR").click(function (e) {
             })
         }, 1)
     }
+
+} else {
+    // Muestra un mensaje de error o realiza alguna otra acción
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
     
 });
 
@@ -148,7 +158,7 @@ var Tablaasesores = $("#Tablaasesores").DataTable({
         { targets: 1, title: 'Nombre', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Descripción', className: 'all text-center descripcion-column' },
         { targets: 3, title: 'Editar', className: 'all text-center' },
-        { targets: 4, title: 'Eliminar', className: 'all text-center' }
+        { targets: 4, title: 'Inactivo', className: 'all text-center' }
     ]
 });
 

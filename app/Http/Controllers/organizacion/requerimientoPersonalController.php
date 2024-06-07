@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\organizacion\areasModel;
 use App\Models\organizacion\formulariorequerimientoModel;
+use App\Models\organizacion\departamentosAreasModel;
 
 
 use DB;
@@ -15,8 +16,10 @@ class requerimientoPersonalController extends Controller
 {
     public function index()
     {
+         $categoria = departamentosAreasModel::orderBy('NOMBRE', 'ASC')->get();
+
         $areas = areasModel::orderBy('NOMBRE', 'ASC')->get();
-        return view('RH.organizacion.requerimiento_personal', compact('areas'));
+        return view('RH.organizacion.requerimiento_personal', compact('areas','categoria'));
         
     }
 
@@ -32,6 +35,7 @@ class requerimientoPersonalController extends Controller
                 $value->BTN_ELIMINAR = '<button type="button" class="btn btn-danger btn-circle ELIMINAR"><i class="bi bi-trash3"></i></button>';
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-circle EDITAR"><i class="bi bi-pencil-square"></i></button>';
                 $value->BTN_RP = '<button type="button" class="btn btn-success btn-circle RP"><i class="bi bi-file-earmark-excel-fill"></i></button>';
+                $value->BTN_ACCION = '<button type="button" class="btn btn-success btn-circle " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Finalizado Requisición" title="Finalizado"><i class="bi bi-check-circle-fill"></i></button>';
 
             }
     

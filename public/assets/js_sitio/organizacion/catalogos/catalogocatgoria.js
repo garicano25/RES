@@ -22,6 +22,10 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 $("#guardarFormcategorias").click(function (e) {
     e.preventDefault();
 
+    formularioValido = validarFormulario($('#formularioCATEGORIAS'))
+
+    if (formularioValido) {
+
     if (ID_CATALOGO_CATEGORIA == 0) {
         
         alertMensajeConfirm({
@@ -99,6 +103,11 @@ $("#guardarFormcategorias").click(function (e) {
             })
         }, 1)
     }
+    } else {
+    // Muestra un mensaje de error o realiza alguna otra acción
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
     
 });
 
@@ -146,7 +155,7 @@ var Tablacategoria = $("#Tablacategoria").DataTable({
         { targets: 0, title: '#', className: 'all' },
         { targets: 1, title: 'Nombre', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Editar', className: 'all text-center' },
-        { targets: 3, title: 'Eliminar', className: 'all text-center' }
+        { targets: 3, title: 'Inactivo', className: 'all text-center' }
     ]
 });
 

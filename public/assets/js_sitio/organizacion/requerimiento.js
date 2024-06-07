@@ -23,6 +23,10 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 $("#guardarFormRP").click(function (e) {
     e.preventDefault();
 
+    formularioValido = validarFormulario($('#formularioRP'))
+
+    if (formularioValido) {
+
     if (ID_FORMULARO_REQUERIMIENTO == 0) {
         
         alertMensajeConfirm({
@@ -100,6 +104,12 @@ $("#guardarFormRP").click(function (e) {
             })
         }, 1)
     }
+
+} else {
+    // Muestra un mensaje de error o realiza alguna otra acción
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
     
 });
 
@@ -139,21 +149,25 @@ var Tablarequerimiento = $("#Tablarequerimiento").DataTable({
     order: [[0, 'asc']], // Ordena por la primera columna (ID_CATALOGO_ASESOR) en orden ascendente
     columns: [
         { data: 'ID_FORMULARO_REQUERIMIENTO' },
+        { data: 'PUESTO_RP' },
         { data: 'PRIORIDAD_RP' },
         { data: 'TIPO_VACANTE_RP' },
         { data: 'MOTIVO_VACANTE_RP' },
+        { data: 'BTN_ACCION' },
         { data: 'BTN_RP' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all' },
-        { targets: 1, title: 'Prioridad', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'Tipo de vacante', className: 'all text-center' },
-        { targets: 3, title: 'Motivo', className: 'all text-center' },
-        { targets: 4, title: 'Requerimiento', className: 'all text-center' },
-        { targets: 5, title: 'Editar', className: 'all text-center' },
-        { targets: 6, title: 'Eliminar', className: 'all text-center' }
+        { targets: 1, title: 'Categoría', className: 'all text-center nombre-column' },
+        { targets: 2, title: 'Prioridad', className: 'all text-center nombre-column' },
+        { targets: 3, title: 'Tipo de vacante', className: 'all text-center' },
+        { targets: 4, title: 'Motivo', className: 'all text-center' },
+        { targets: 5, title: 'Estatus', className: 'all text-center' },
+        { targets: 6, title: 'Descargar', className: 'all text-center' },
+        { targets: 7, title: 'Editar', className: 'all text-center' },
+        { targets: 8, title: 'Inactivo', className: 'all text-center' }
     ]
 });
 

@@ -63,6 +63,7 @@ TablaDPT = $("#TablaDPT").DataTable({
         { data: 'ELABORADO_POR' },
         { data: 'REVISADO_POR' },
         { data: 'AUTORIZADO_POR' },
+        { data: 'BTN_ACCION' },
         { data: 'BTN_DPT' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' },
@@ -75,9 +76,10 @@ TablaDPT = $("#TablaDPT").DataTable({
         { target: 2, title: 'Elaborado por', className: 'all text-center' },
         { target: 3, title: 'Revisado por', className: 'all text-center' },
         { target: 4, title: 'Autorizado por', className: 'all text-center' },
-        { target: 5, title: 'DPT', className: 'all text-center' },
-        { target: 6, title: 'Editar', className: 'all text-center' },
-        { target: 7, title: 'Eliminar', className: 'all text-center' },
+        { target: 5, title: 'Estatus', className: 'all text-center' },
+        { target: 6, title: 'Descargar', className: 'all text-center' },
+        { target: 7, title: 'Editar', className: 'all text-center' },
+        { target: 8, title: 'Inactivo', className: 'all text-center' },
 
 
 
@@ -87,6 +89,10 @@ TablaDPT = $("#TablaDPT").DataTable({
 
 $("#guardarFormDPT").click(function (e) {
         e.preventDefault();
+
+        formularioValido = validarFormulario($('#formularioDPT'))
+
+     if (formularioValido) {
 
         if (ID_FORMULARIO_DPT == 0) {
             alertMensajeConfirm({
@@ -141,7 +147,12 @@ $("#guardarFormDPT").click(function (e) {
                 });
             }, 1);
         }
-    });
+         } else {
+        // Muestra un mensaje de error o realiza alguna otra acción
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+    }
+});
 
 
 
@@ -394,14 +405,12 @@ $(document).ready(function () {
         
         var savedOptions = [];
 
-        // Obtener el valor de PUESTOS_INTERACTUAN_DPT
         var puestosInteractuan = data.PUESTOS_INTERACTUAN_DPT;
 
-        if (Array.isArray(puestosInteractuan)) { // Verificar si ya es un arreglo
+        if (Array.isArray(puestosInteractuan)) { 
             savedOptions = puestosInteractuan;
-        } else if (puestosInteractuan && puestosInteractuan.length > 2) { // Verificar si es una cadena JSON válida
+        } else if (puestosInteractuan && puestosInteractuan.length > 2) { 
             try {
-                // Intentar parsear la cadena JSON
                 savedOptions = JSON.parse(puestosInteractuan);
             } catch (e) {
                 console.error("Error al parsear JSON: ", e);
@@ -410,10 +419,8 @@ $(document).ready(function () {
             console.warn("PUESTOS_INTERACTUAN_DPT está vacío o no tiene un formato JSON válido.");
         }
         
-        // Limpiar las opciones seleccionadas antes de cargar las nuevas
         selectizeInstance.clear();
 
-        // Establecer las opciones seleccionadas si el JSON fue parseado correctamente
         if (Array.isArray(savedOptions)) {
             selectizeInstance.setValue(savedOptions);
         }

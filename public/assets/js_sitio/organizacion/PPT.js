@@ -78,10 +78,10 @@ TablaPPT = $("#TablaPPT").DataTable({
         { target: 2, title: 'Elaborado por', className: 'all text-center' },
         { target: 3, title: 'Revisado por', className: 'all text-center' },
         { target: 4, title: 'Autorizado por', className: 'all text-center' },
-        { target: 5, title: 'Acción', className: 'all text-center' },
-        { target: 6, title: 'PPT', className: 'all text-center' },
+        { target: 5, title: 'Estatus', className: 'all text-center' },
+        { target: 6, title: 'Descargar', className: 'all text-center' },
         { target: 7, title: 'Editar', className: 'all text-center' },
-        { target: 8, title: 'Eliminar', className: 'all text-center' },
+        { target: 8, title: 'Inactivo', className: 'all text-center' },
 
 
     ]
@@ -101,92 +101,102 @@ $("#miModal_PPT").modal("show");
 $("#guardarFormPPT").click(function (e) {
     e.preventDefault();
 
-    if (ID_FORMULARIO_PPT == 0) {
-        
-        alertMensajeConfirm({
-            title: "¿Desea guardar la información?",
-            text: "Al guardarla, se usara para la creación del PPT",
-            icon: "question",
-        },async function () { 
+    formularioValido = validarFormulario($('#formularioPPT'))
 
-            await loaderbtn('guardarFormPPT')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_PPT: ID_FORMULARIO_PPT }, 'pptSave', 'formularioPPT', 'guardarFormPPT', { callbackAfter: true, callbackBefore: true }, () => {
-        
-                // Swal.fire({
-                //     title: "Espere un momento!",
-                //     text: "Estamos guardando la información.",
-                //     imageUrl: "/assets/images/Gif.gif",
-                //     imageWidth: 350,
-                //     imageHeight: 305,
-                //     imageAlt: "Loader Gif",
-                //     showConfirmButton: false,
+    if (formularioValido) {
 
-                // });
-
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                })
-
-                $('.swal2-popup').addClass('ld ld-breath')
-        
-                
-            }, function (data) {
-                    
-                setTimeout(() => {
-
-                    ID_FORMULARIO_PPT = data.PPT.ID_FORMULARIO_PPT
-                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para hacer uso del PPT',null,null, 1500)
-                     $('#miModal_PPT').modal('hide')
-                    document.getElementById('formularioPPT').reset();
-                    TablaPPT.ajax.reload()
-
-                }, 300);
-                
-                
-            })
+        if (ID_FORMULARIO_PPT == 0) {
             
-            
-            
-        }, 1)
-        
-    } else {
             alertMensajeConfirm({
-            title: "¿Desea editar la información de este formulario?",
-            text: "Al guardarla, se editara la información del PPT",
-            icon: "question",
-        },async function () { 
+                title: "¿Desea guardar la información?",
+                text: "Al guardarla, se usara para la creación del PPT",
+                icon: "question",
+            },async function () { 
 
-            await loaderbtn('guardarFormPPT')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_PPT: ID_FORMULARIO_PPT }, 'pptSave', 'formularioPPT', 'guardarFormPPT', { callbackAfter: true, callbackBefore: true }, () => {
-        
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
+                await loaderbtn('guardarFormPPT')
+                await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_PPT: ID_FORMULARIO_PPT }, 'pptSave', 'formularioPPT', 'guardarFormPPT', { callbackAfter: true, callbackBefore: true }, () => {
+            
+                    // Swal.fire({
+                    //     title: "Espere un momento!",
+                    //     text: "Estamos guardando la información.",
+                    //     imageUrl: "/assets/images/Gif.gif",
+                    //     imageWidth: 350,
+                    //     imageHeight: 305,
+                    //     imageAlt: "Loader Gif",
+                    //     showConfirmButton: false,
+
+                    // });
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    })
+
+                    $('.swal2-popup').addClass('ld ld-breath')
+            
+                    
+                }, function (data) {
+                        
+                    setTimeout(() => {
+
+                        ID_FORMULARIO_PPT = data.PPT.ID_FORMULARIO_PPT
+                        alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para hacer uso del PPT',null,null, 1500)
+                        $('#miModal_PPT').modal('hide')
+                        document.getElementById('formularioPPT').reset();
+                        TablaPPT.ajax.reload()
+
+                    }, 300);
+                    
+                    
                 })
-
-                $('.swal2-popup').addClass('ld ld-breath')
-        
                 
-            }, function (data) {
+                
+                
+            }, 1)
+            
+        } else {
+                alertMensajeConfirm({
+                title: "¿Desea editar la información de este formulario?",
+                text: "Al guardarla, se editara la información del PPT",
+                icon: "question",
+            },async function () { 
+
+                await loaderbtn('guardarFormPPT')
+                await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_PPT: ID_FORMULARIO_PPT }, 'pptSave', 'formularioPPT', 'guardarFormPPT', { callbackAfter: true, callbackBefore: true }, () => {
+            
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    })
+
+                    $('.swal2-popup').addClass('ld ld-breath')
+            
                     
-                setTimeout(() => {
+                }, function (data) {
+                        
+                    setTimeout(() => {
 
-                    
-                    ID_FORMULARIO_PPT = data.PPT.ID_FORMULARIO_PPT
-                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
-                     $('#miModal_PPT').modal('hide')
-                    document.getElementById('formularioPPT').reset();
-                    TablaPPT.ajax.reload()
+                        
+                        ID_FORMULARIO_PPT = data.PPT.ID_FORMULARIO_PPT
+                        alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                        $('#miModal_PPT').modal('hide')
+                        document.getElementById('formularioPPT').reset();
+                        TablaPPT.ajax.reload()
 
 
-                }, 300);  
-            })
-        }, 1)
+                    }, 300);  
+                })
+            }, 1)
+        }
+    
+    } else {
+        // Muestra un mensaje de error o realiza alguna otra acción
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
     }
     
 });
@@ -437,3 +447,104 @@ function mostrarCursos(data,form){
     }
   }
 }
+
+
+
+// Solo seleccionar una opcion de word,excel,power point
+$('.word').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('.word').not(this).prop('checked', false);
+    }
+});
+
+$('.excel').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('.excel').not(this).prop('checked', false);
+    }
+});
+
+$('.power').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('.power').not(this).prop('checked', false);
+    }
+});
+
+// check de los cursos
+
+$('input[id^="CURSO"][id$="_REQUERIDO_PPT"], input[id^="CURSO"][id$="_DESEABLE_PPT"]').on('change', function() {
+
+    var row = $(this).closest('tr');
+    var requeridoCheckbox = row.find('input[id^="CURSO"][id$="_REQUERIDO_PPT"]');
+    var deseableCheckbox = row.find('input[id^="CURSO"][id$="_DESEABLE_PPT"]');
+    
+    if ($(this).is(':checked')) {
+        
+        if ($(this).is(requeridoCheckbox)) {
+            deseableCheckbox.prop('checked', false);
+        } else if ($(this).is(deseableCheckbox)) {
+            requeridoCheckbox.prop('checked', false);
+        }
+
+    }
+
+});
+
+// Habilidades ym competencias funcionales
+$('.innovacion').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('.innovacion').not(this).prop('checked', false);
+    }
+});
+
+$('.pasion').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('.pasion').not(this).prop('checked', false);
+    }
+});
+
+$('.servicio').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('.servicio').not(this).prop('checked', false);
+    }
+});
+
+$('.comunicacion').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('.comunicacion').not(this).prop('checked', false);
+    }
+});
+
+$('.trabajo').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('.trabajo').not(this).prop('checked', false);
+    }
+});
+
+$('.integridad').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('.integridad').not(this).prop('checked', false);
+    }    
+});
+
+$('.responsabilidad').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('.responsabilidad').not(this).prop('checked', false);
+    }
+});
+
+$('.adaptabilidad').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('.adaptabilidad').not(this).prop('checked', false);
+    }
+});
+$('.liderazgo').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('.liderazgo').not(this).prop('checked', false);
+    }
+});
+
+$('.decisiones').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('.decisiones').not(this).prop('checked', false);
+    }
+});

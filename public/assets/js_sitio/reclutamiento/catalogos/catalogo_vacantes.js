@@ -22,6 +22,10 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 $("#guardarFormvacantes").click(function (e) {
     e.preventDefault();
 
+    formularioValido = validarFormulario($('#formularioVACANTES'))
+
+    if (formularioValido) {
+
     if (ID_CATALOGO_VACANTE == 0) {
         
         alertMensajeConfirm({
@@ -99,6 +103,13 @@ $("#guardarFormvacantes").click(function (e) {
             })
         }, 1)
     }
+
+} else {
+    // Muestra un mensaje de error o realiza alguna otra acción
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
+    
     
 });
 

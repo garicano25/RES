@@ -34,7 +34,15 @@
 
     <!--Archivo css -->
     <link rel="stylesheet" href="assets/css/estilos.css">
+
+
     <link rel="stylesheet" href="assets/css/organigrama.css">
+
+
+    
+    @if(request()->is('DPT'))
+    <link rel="stylesheet" href="assets/css/dpt.css">
+    @endif
 
 
 

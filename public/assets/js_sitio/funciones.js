@@ -2434,31 +2434,44 @@ function loaderbtn(btn) {
 
 
 function validarFormulario(form) {
-    
-    var formulario = form;
+  var formulario = form;
 
-    // Busca todos los elementos input dentro del formulario y agrega la clase
-    formulario.find('input[required]:not([disabled]), textarea[required]:not([disabled]), select[required]:not([disabled])').addClass('validar').removeClass('error');
+  // Busca todos los elementos input dentro del formulario y agrega la clase
+  formulario.find('input[required]:not([disabled]), textarea[required]:not([disabled]), select[required]:not([disabled])').addClass('validar').removeClass('error');
 
+  // Busca todos los elementos con la clase "validar"
+  var campos = $('.validar');
+  var formularioValido = true;
 
-  
-    // Busca todos los elementos con la clase "validar"
-    var campos = $('.validar');
-    var formularioValido = true;
-
-    // Recorre los campos para verificar que tengan un valor no vacío
-    campos.each(function () {
-      if ($(this).val().trim() === '') {
-          
+  // Recorre los campos para verificar que tengan un valor no vacío
+  campos.each(function () {
+      var valorCampo = $(this).val();
+      if (valorCampo === '' || valorCampo === null) {
           $(this).addClass('error');
-        
           formularioValido = false;
-          return false; // Detiene la iteración si se encuentra un campo vacío
-          
-          
-        }
-    });
+      } else {
+          $(this).removeClass('error');
+      }
+  });
 
-    return formularioValido;
+  return formularioValido;
 }
+$(document).on('input change', 'input[required], textarea[required], select[required]', function() {
+  if ($(this).val() !== '' && $(this).val() !== null) {
+      $(this).removeClass('error');
+  }
+});
+
+
+document.querySelectorAll('.modal').forEach(modal => {
+  modal.addEventListener('hidden.bs.modal', event => {
+    const form = modal.querySelector('form');
+    if (form) {
+      form.reset();
+      form.querySelectorAll('.error').forEach(element => {
+        element.classList.remove('error');
+      });
+    }
+  });
+});
 

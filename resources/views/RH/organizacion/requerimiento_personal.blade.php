@@ -39,13 +39,13 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Fecha:</label>
-                                <input type="date" class="form-control " id="FECHA_RP" name="FECHA_RP">
+                                <input type="date" class="form-control " id="FECHA_RP" name="FECHA_RP" required>
                             </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Prioridad:</label>
-                                <select class="form-control" id="PRIORIDAD_RP" name="PRIORIDAD_RP">
+                                <select class="form-control" id="PRIORIDAD_RP" name="PRIORIDAD_RP" required >
                                   <option selected disabled>Seleccione una opción</option>
                                   <option value="Normal">Normal</option>
                                   <option value="Urgente">Urgente</option>
@@ -55,7 +55,7 @@
                         <div class="col-4">
                             <div class="form-group">
                                 <label>Tipo de vacante:</label>
-                                <select class="form-control" id="TIPO_VACANTE_RP" name="TIPO_VACANTE_RP">
+                                <select class="form-control" id="TIPO_VACANTE_RP" name="TIPO_VACANTE_RP" required>
                                   <option selected disabled>Seleccione una opción</option>
                                   <option value="Empleado nuevo">Empleado nuevo</option>
                                   <option value="Sustitución">Sustitución</option>
@@ -69,7 +69,7 @@
                         <div class="col-4">
                           <div class="form-group">
                               <label>Motivo de la vacante:</label>
-                              <select class="form-control" id="MOTIVO_VACANTE_RP" name="MOTIVO_VACANTE_RP">
+                              <select class="form-control" id="MOTIVO_VACANTE_RP" name="MOTIVO_VACANTE_RP" required>
                                 <option selected disabled>Seleccione una opción</option>
                                 <option value="Incremento trabajo">Incremento trabajo</option>
                                 <option value="Nueva categoría">Nueva categoría</option>
@@ -83,7 +83,7 @@
                         <div class="col-8">
                           <div class="form-group">
                               <label>Sustituye a: </label>
-                              <input type="text" class="form-control " id="SUSTITUYE_RP" name="SUSTITUYE_RP">
+                              <input type="text" class="form-control " id="SUSTITUYE_RP" name="SUSTITUYE_RP" required>
                           </div>
                         </div>
                       </div>
@@ -91,13 +91,13 @@
                         <div class="col-6">
                           <div class="form-group">
                               <label>Centro de costos:</label>
-                              <input type="text" class="form-control " id="CENTRO_COSTO_RP" name="CENTRO_COSTO_RP">
+                              <input type="text" class="form-control " id="CENTRO_COSTO_RP" name="CENTRO_COSTO_RP" required>
                           </div>
                         </div>
                         <div class="col-6">
                           <div class="form-group">
                               <label>Área: </label>
-                              <select class="form-control" id="AREA_RP" name="AREA_RP">
+                              <select class="form-control" id="AREA_RP" name="AREA_RP" required>
                                 <option selected disabled>Seleccione una opción</option>
                                 @foreach ($areas as $area)
                                     <option value="{{ $area->ID_AREA }}">{{ $area->NOMBRE }}</option>
@@ -113,7 +113,7 @@
                         <div class="col-2 text-center">
                           <div class="form-group">
                               <label>No. de vacantes</label>
-                              <input type="number" class="form-control " id="NO_VACANTES_RP" name="NO_VACANTES_RP">
+                              <input type="number" class="form-control " id="NO_VACANTES_RP" name="NO_VACANTES_RP" required>
                           </div>
                         </div>
                         <div class="col-1">
@@ -122,7 +122,12 @@
                         <div class="col-4 text-center">
                           <div class="form-group">
                               <label>Categoría</label>
-                              <input type="text" class="form-control " id="PUESTO_RP" name="PUESTO_RP">
+                              <select class="form-control" id="PUESTO_RP" name="PUESTO_RP" required>
+                                <option selected disabled>Seleccione una opción</option>
+                                @foreach ($categoria as $cat)
+                                    <option value="{{ $cat->ID_DEPARTAMENTO_AREA }}">{{ $cat->NOMBRE }}</option>
+                                @endforeach
+                            </select>   
                           </div>
                         </div>
                         <div class="col-1">
@@ -131,7 +136,7 @@
                         <div class="col-2 text-center">
                           <div class="form-group">
                               <label>Fecha de inicio</label>
-                              <input type="date" class="form-control " id="FECHA_INICIO_RP" name="FECHA_INICIO_RP">
+                              <input type="date" class="form-control " id="FECHA_INICIO_RP" name="FECHA_INICIO_RP" required>
                           </div>
                         </div>
                       </div>
@@ -247,7 +252,7 @@
                             <label></label>
                           </div>
                           <div class="col-4">
-                            <input type="text"  class="form-control text-center" id="SOLICITA_RP" name="SOLICITA_RP" placeholder="Firma">
+                            <input type="text"  class="form-control text-center" id="SOLICITA_RP" name="SOLICITA_RP" placeholder="Firma" required>
                           </div>
                           <div class="col-2">
                             <label></label>
@@ -263,7 +268,7 @@
                           <label></label>
                         </div>
                         <div class="col-4">
-                          <input type="text"  class="form-control text-center" id="NOMBRE_SOLICITA_RP" name="NOMBRE_SOLICITA_RP" placeholder="Nombre del solicitante">
+                          <input type="text"  class="form-control text-center" id="NOMBRE_SOLICITA_RP" name="NOMBRE_SOLICITA_RP" placeholder="Nombre del solicitante"  required>
                         </div>
                         <div class="col-2">
                           <label></label>
@@ -279,7 +284,7 @@
                         <label></label>
                       </div>
                       <div class="col-4">
-                        <input type="text"  class="form-control text-center" id="CARGO_SOLICITA_RP" name="CARGO_SOLICITA_RP" placeholder="Cargo del Solicitante">
+                        <input type="text"  class="form-control text-center" id="CARGO_SOLICITA_RP" name="CARGO_SOLICITA_RP" placeholder="Cargo del Solicitante" required>
                       </div>
                       <div class="col-2">
                         <label></label>

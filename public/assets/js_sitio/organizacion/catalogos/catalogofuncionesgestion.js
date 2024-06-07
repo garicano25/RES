@@ -143,7 +143,7 @@ var Tablafuncionesgestion = $("#Tablafuncionesgestion").DataTable({
         // { targets: 1, title: 'Para quién', className: 'all text-center nombre-column' },
         { targets: 1, title: 'Descrición', className: 'all text-center descripcion-column' },
         { targets: 2, title: 'Editar', className: 'all text-center' },
-        { targets: 3, title: 'Eliminar', className: 'all text-center' }
+        { targets: 3, title: 'Inactivo', className: 'all text-center' }
     ]
 });
 

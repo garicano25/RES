@@ -28,14 +28,13 @@
         <div class="modal-content">
             <form method="post" enctype="multipart/form-data" id="formularioCATEGORIAS" style="background-color: #ffffff;">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva Categoría
-                    </h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva Categoría *</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     {!! csrf_field() !!}
                     <div class="mb-3">
-                        <label>Nombre de la categoría</label>
+                        <label>Nombre de la categoría *</label>
                         <input type="text" class="form-control" id="NOMBRE_CATEGORIA" name="NOMBRE_CATEGORIA" required/>
                     </div>
                     <div class="mb-3">
@@ -43,8 +42,8 @@
                         <input type="text" class="form-control" id="LUGAR_CATEGORIA" name="LUGAR_CATEGORIA" required/>
                     </div>
                     <div class="mb-3 mt-3">
-                        <label>Propósito o finalidad de la categoría</label>
-                        <textarea name="PROPOSITO_CATEGORIA" id="PROPOSITO_CATEGORIA" class="form-control" rows="8"></textarea>
+                        <label>Propósito o finalidad de la categoría *</label>
+                        <textarea name="PROPOSITO_CATEGORIA" id="PROPOSITO_CATEGORIA" class="form-control" rows="8" required></textarea>
                     </div>
                     <div class="mb-3">
                         <label class="mt-2">Es lider</label>

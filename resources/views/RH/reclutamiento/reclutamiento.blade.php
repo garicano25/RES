@@ -8,7 +8,7 @@
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5 text-center" style="display: flex; justify-content: center; align-items: center; background-color: transparent;">
         <h3 style="color: #ffffff; margin: 0; display: flex; align-items: center;">
-            <i class="bi bi-person-lines-fill" style="margin-right: 0.5rem;"></i> Listado Vacantes
+            <i class="bi bi-file-earmark-text" style="margin-right: 0.5rem;"></i> Banco de CV
         </h3>
     </ol>
     

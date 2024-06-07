@@ -295,7 +295,7 @@ TablaAreas = $("#TablaAreas").DataTable({
         { target: 3, title: 'Categorías', className: 'all' },
         { target: 4, title: 'Organigrama', className: 'all text-center' },
         { target: 5, title: 'Editar', className: 'all text-center' },
-        { target: 6, title: 'Eliminar', className: 'all text-center' },
+        { target: 6, title: 'Inactivo', className: 'all text-center' },
 
     ]
 })

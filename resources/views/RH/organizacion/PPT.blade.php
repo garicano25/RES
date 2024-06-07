@@ -48,11 +48,10 @@
                                     <div class="form-group">
                                         <label>Nombre de la categoría *</label>
                                         <select class="form-control" id="DEPARTAMENTO_AREA_ID" name="DEPARTAMENTO_AREA_ID" required>
-                                            <option selected disabled>Seleccione una opción...</option>
+                                        <option  value="0" selected disabled>Seleccione una opción</option>
                                             @foreach ($areas as $area)
                                       <option value="{{ $area->ID }}" data-lugar="{{ $area->LUGAR}}" data-proposito="{{ $area->PROPOSITO }}" data-lider="{{ $area->LIDER }}">{{ $area->NOMBRE }}</option>
                                        @endforeach
-
                                         </select>
                                     </div>
                                 </div>
@@ -65,7 +64,7 @@
                                 <div class="col-4">
                                     <div class="form-group">
                                         <label>Área de trabajo</label>
-                                        <input type="text" class="form-control" id="AREA_TRABAJADOR_PPT" name="AREA_TRABAJADOR_PPT">
+                                        <input type="text" class="form-control" id="AREA_TRABAJADOR_PPT" name="AREA_TRABAJADOR_PPT"  readonly>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +72,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label>Propósito o finalidad de la categoría</label>
-                                        <textarea class="form-control " id="PROPOSITO_FINALIDAD_PPT" name="PROPOSITO_FINALIDAD_PPT" rows="3"></textarea>
+                                        <textarea class="form-control " id="PROPOSITO_FINALIDAD_PPT" name="PROPOSITO_FINALIDAD_PPT" rows="3" readonly></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -86,9 +85,9 @@
                             <div class="row mb-3">
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label>Edad (mínima / máxima)</label>
-                                        <select class="form-control" id="EDAD_PPT" name="EDAD_PPT">
-                                            <option selected disabled>Seleccione una opción</option>
+                                        <label>Edad (mínima / máxima) *</label>
+                                        <select class="form-control" id="EDAD_PPT" name="EDAD_PPT" required>
+                                            <option  value="0" selected disabled>Seleccione una opción</option>
                                             <option value="Indistinto">Indistinto</option>
                                             <option value="18-25">18-25</option>
                                             <option value="26-35">26-35</option>
@@ -112,9 +111,9 @@
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label>Género</label>
-                                        <select class="form-control" id="GENERO_PPT" name="GENERO_PPT">
-                                            <option selected disabled>Seleccione una opción</option>
+                                        <label>Género *</label>
+                                        <select class="form-control" id="GENERO_PPT" name="GENERO_PPT" required>
+                                            <option  value="0" selected disabled>Seleccione una opción</option>
                                             <option value="Indistinto">Indistinto</option>
                                             <option value="Masculino">Masculino</option>
                                             <option value="Femenino">Femenino</option>
@@ -138,9 +137,9 @@
                             <div class="row mb-3">
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label>Estado civil</label>
-                                        <select class="form-control" id="ESTADO_CIVIL_PPT" name="ESTADO_CIVIL_PPT">
-                                            <option selected disabled>Seleccione una opción</option>
+                                        <label>Estado civil *</label>
+                                        <select class="form-control" id="ESTADO_CIVIL_PPT" name="ESTADO_CIVIL_PPT" required>
+                                            <option  value="0" selected disabled>Seleccione una opción</option>
                                             <option value="Indistinto">Indistinto</option>
                                             <option value="Soltero(a)">Soltero (a)</option>
                                             <option value="Casado(a)">Casado (a)</option>
@@ -163,9 +162,9 @@
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label>Nacionalidad </label>
-                                        <select class="form-control" id="NACIONALIDAD_PPT" name="NACIONALIDAD_PPT">
-                                            <option selected disabled>Seleccione una opción</option>
+                                        <label>Nacionalidad *</label>
+                                        <select class="form-control" id="NACIONALIDAD_PPT" name="NACIONALIDAD_PPT" required>
+                                            <option  value="0" selected disabled>Seleccione una opción</option>
                                             <option value="Indistinto">Indistinto</option>
                                             <option value="Mexicana">Mexicana</option>
                                             <option value="Extranjero">Extranjero</option>
@@ -189,9 +188,9 @@
                             <div class="row mb-3">
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <label>Persona con discapacidad</label>
-                                        <select class="form-control" id="DISCAPACIDAD_PPT" name="DISCAPACIDAD_PPT">
-                                            <option selected disabled>Seleccione una opción</option>
+                                        <label>Persona con discapacidad *</label>
+                                        <select class="form-control" id="DISCAPACIDAD_PPT" name="DISCAPACIDAD_PPT" required>
+                                            <option  value="0" selected disabled>Seleccione una opción</option>
                                             <option value="Indistinto">Indistinto</option>
                                             <option value="Ninguna">Ninguna</option>
                                             <option value="Motriz">Motriz</option>
@@ -238,7 +237,7 @@
                                                     <div class="form-group">
                                                         <label>Secundaria</label>
                                                         <select class="form-control" id="SECUNDARIA_PPT" name="SECUNDARIA_PPT">
-                                                            <option selected disabled>Seleccione una opción</option>
+                                                            <option  value="0" selected disabled>Seleccione una opción</option>
                                                             <option value="Incompleta">Incompleta</option>
                                                             <option value="Completa">Completa</option>
                                                         </select>
@@ -266,7 +265,7 @@
                                                     <div class="form-group">
                                                         <label>Técnica básica</label>
                                                         <select class="form-control" id="TECNICA_PPT" name="TECNICA_PPT">
-                                                            <option selected disabled>Seleccione una opción</option>
+                                                            <option  value="0" selected disabled>Seleccione una opción</option>
                                                             <option value="Incompleta">Incompleta</option>
                                                             <option value="Completa">Completa</option>
                                                         </select>
@@ -294,7 +293,7 @@
                                                     <div class="form-group">
                                                         <label>Técnico superior</label>
                                                         <select class="form-control" id="TECNICO_PPT" name="TECNICO_PPT">
-                                                            <option selected disabled>Seleccione una opción</option>
+                                                            <option  value="0" selected disabled>Seleccione una opción</option>
                                                             <option value="Incompleta">Incompleta</option>
                                                             <option value="Completa">Completa</option>
                                                         </select>
@@ -353,9 +352,9 @@
                                             <div class="row">
                                                 <div class="col-8">
                                                     <div class="form-group">
-                                                        <label>Situación académica </label>
-                                                        <select class="form-control" id="SITUACION_PPT" name="SITUACION_PPT">
-                                                            <option selected disabled>Seleccione una opción</option>
+                                                        <label>Situación académica *</label>
+                                                        <select class="form-control" id="SITUACION_PPT" name="SITUACION_PPT" required>
+                                                            <option  value="0" selected disabled>Seleccione una opción</option>
                                                             <option value="Egresado">Egresado</option>
                                                             <option value="Bachiller">Bachiller</option>
                                                             <option value="Titulado">Titulado</option>
@@ -382,8 +381,8 @@
                                             <div class="row">
                                                 <div class="col-8">
                                                     <div class="form-group">
-                                                        <label>Cédula profesional</label>
-                                                        <select class="form-control" id="CEDULA_PPT" name="CEDULA_PPT">
+                                                        <label>Cédula profesional *</label>
+                                                        <select class="form-control" id="CEDULA_PPT" name="CEDULA_PPT" required>
                                                             <option selected disabled>Seleccione una opción</option>
                                                             <option value="Aplica">Aplica</option>
                                                             <option value="No aplica">No aplica</option>
@@ -552,8 +551,8 @@
                             <div class="row mb-3">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label>Área de conocimiento específica requerida</label>
-                                        <textarea class="form-control" id="AREA_REQUERIDA_PPT" name="AREA_REQUERIDA_PPT" rows="3"></textarea>
+                                        <label>Área de conocimiento específica requerida *</label>
+                                        <textarea class="form-control" id="AREA_REQUERIDA_PPT" name="AREA_REQUERIDA_PPT" rows="3" required></textarea>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -575,14 +574,14 @@
                                 </div>
                                 <div class="col-1">
                                     <div class="form-group text-center">
-                                        <label>Egresado &nbsp;&nbsp;&nbsp;</label>
+                                        <label for="ESPECIALIDAD_SI">Egresado &nbsp;&nbsp;&nbsp;</label>
                                         <input class="form-check-input " type="radio" name="EGRESADO_ESPECIALIDAD_PPT" id="ESPECIALIDAD_SI" value="*E" >
 
                                     </div>
                                 </div>
                                 <div class="col-1">
                                     <div class="form-group text-center">
-                                        <label>Grado/título</label>
+                                        <label for="ESPECIALIDAD_NO">Grado/título</label>
                                         <input class="form-check-input " type="radio" name="EGRESADO_ESPECIALIDAD_PPT" id="ESPECIALIDAD_NO" value="*D" >
                                     </div>
                                 </div>
@@ -601,8 +600,8 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label>Área de conocimiento requerida</label>
-                                        <input type="text" class="form-control" id="AREAREQUERIDA_CONOCIMIENTO_PPT" name="AREAREQUERIDA_CONOCIMIENTO_PPT">
+                                        <label>Área de conocimiento requerida *</label>
+                                        <input type="text" class="form-control" id="AREAREQUERIDA_CONOCIMIENTO_PPT" name="AREAREQUERIDA_CONOCIMIENTO_PPT" required>
                                     </div>
                                 </div>
                             </div>
@@ -612,13 +611,13 @@
                                 </div>
                                 <div class="col-1">
                                     <div class="form-group text-center">
-                                        <label>Egresado &nbsp;&nbsp;&nbsp;</label>
+                                        <label for="MAESTRIA_SI">Egresado &nbsp;&nbsp;&nbsp;</label>
                                         <input class="form-check-input " type="radio" name="EGRESADO_MAESTRIA_PPT" id="MAESTRIA_SI" value="*E" >
                                     </div>
                                 </div>
                                 <div class="col-1">
                                     <div class="form-group text-center">
-                                        <label>Grado/título</label>
+                                        <label for="MAESTRIA_NO">Grado/título</label>
                                         <input class="form-check-input " type="radio" name="EGRESADO_MAESTRIA_PPT" id="MAESTRIA_NO" value="*D" >
                                     </div>
                                 </div>
@@ -644,14 +643,14 @@
 
                                 <div class="col-1">
                                     <div class="form-group text-center">
-                                        <label>Egresado &nbsp;&nbsp;&nbsp;</label>
+                                        <label for="DOCTORADO_SI">Egresado &nbsp;&nbsp;&nbsp;</label>
                                         <input class="form-check-input " type="radio" name="EGRESADO_DOCTORADO_PPT" id="DOCTORADO_SI" value="*E" >
 
                                     </div>
                                 </div>
                                 <div class="col-1">
                                     <div class="form-group text-center">
-                                        <label>Grado/título</label>
+                                        <label for="DOCTORADO_NO">Grado/título</label>
                                         <input class="form-check-input " type="radio" name="EGRESADO_DOCTORADO_PPT" id="DOCTORADO_NO" value="*D" >
                                     </div>
                                 </div>
@@ -714,14 +713,15 @@
                                                     <input type="radio" id="WORD_APLICA_PPT_no" name="WORD_APLICA_PPT" value="no">                                                
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="WORD_BAJO_PPT" name="WORD_BAJO_PPT" value="X">
+                                                    <input type="checkbox" class="word" id="WORD_BAJO_PPT" name="WORD_BAJO_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="WORD_MEDIO_PPT" name="WORD_MEDIO_PPT" value="X">
+                                                    <input type="checkbox" class="word" id="WORD_MEDIO_PPT" name="WORD_MEDIO_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="WORD_ALTO_PPT" name="WORD_ALTO_PPT" value="X"> 
+                                                    <input type="checkbox" class="word" id="WORD_ALTO_PPT" name="WORD_ALTO_PPT" value="X"> 
                                                 </td>
+                                                
                                                 <td>
                                                     <div class="radio-container">
                                                         <label class="form-check-label" for="WORD_CUMPLE_SI">Si</label>
@@ -746,13 +746,13 @@
                                                         <input type="radio" id="EXCEL_APLICA_PPT_no" name="EXCEL_APLICA_PPT" value="no">                                                
                                                     </td>
                                                     <td class="text-center">
-                                                        <input type="checkbox" id="EXCEL_BAJO_PPT" name="EXCEL_BAJO_PPT" value="X">
+                                                        <input type="checkbox" class="excel" id="EXCEL_BAJO_PPT" name="EXCEL_BAJO_PPT" value="X">
                                                     </td>
                                                     <td class="text-center">
-                                                        <input type="checkbox" id="EXCEL_MEDIO_PPT" name="EXCEL_MEDIO_PPT" value="X">
+                                                        <input type="checkbox" class="excel" id="EXCEL_MEDIO_PPT" name="EXCEL_MEDIO_PPT" value="X">
                                                     </td>
                                                     <td class="text-center">
-                                                        <input type="checkbox" id="EXCEL_ALTO_PPT" name="EXCEL_ALTO_PPT" value="X">
+                                                        <input type="checkbox" class="excel" id="EXCEL_ALTO_PPT" name="EXCEL_ALTO_PPT" value="X">
                                                     </td>
                                                     <td>
                                                         <div class="radio-container">
@@ -779,13 +779,13 @@
                                                     <input type="radio" id="POWER_APLICA_PPT_no" name="POWER_APLICA_PPT" value="no">                                                
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="POWER_BAJO_PPT" name="POWER_BAJO_PPT" value="X">
+                                                    <input type="checkbox" class="power" id="POWER_BAJO_PPT" name="POWER_BAJO_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="POWER_MEDIO_PPT" name="POWER_MEDIO_PPT" value="X">
+                                                    <input type="checkbox" class="power" id="POWER_MEDIO_PPT" name="POWER_MEDIO_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="POWER_ALTO_PPT" name="POWER_ALTO_PPT" value="X">
+                                                    <input type="checkbox" class="power" id="POWER_ALTO_PPT" name="POWER_ALTO_PPT" value="X">
                                                 </td>
                                                 <td>
                                                     <div class="radio-container">
@@ -1918,8 +1918,8 @@
                                 </div>
                                 <div class="col-5">
                                     <div class="form-group">
-                                        <select class="form-control" id="EXPERIENCIA_LABORAL_GENERAL_PPT" name="EXPERIENCIA_LABORAL_GENERAL_PPT">
-                                            <option selected disabled>Seleccione una opción</option>
+                                        <select class="form-control" id="EXPERIENCIA_LABORAL_GENERAL_PPT" name="EXPERIENCIA_LABORAL_GENERAL_PPT" required>
+                                            <option  value="0" selected disabled>Seleccione una opción</option>
                                             <option value="No necesaria">No necesaria</option>
                                             <option value="Deseable">Deseable</option>
                                             <option value="Necesaria">Necesaria</option>  
@@ -1967,8 +1967,8 @@
                                 </div>
                                 <div class="col-5">
                                     <div class="form-group">
-                                        <select class="form-control" id="EXPERIENCIA_ESPECIFICA_PPT" name="EXPERIENCIA_ESPECIFICA_PPT">
-                                            <option selected disabled>Seleccione una opción</option>
+                                        <select class="form-control" id="EXPERIENCIA_ESPECIFICA_PPT" name="EXPERIENCIA_ESPECIFICA_PPT" required>
+                                            <option  value="0" selected disabled>Seleccione una opción</option>
                                             <option value="No necesaria">No necesaria</option>
                                             <option value="Deseable">Deseable</option>
                                             <option value="Necesaria">Necesaria</option>  
@@ -2223,7 +2223,7 @@
                             <div class="row mb-3">
                                 <div class="col-8">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="TIEMPO_EXPERIENCIA_PPT" name="TIEMPO_EXPERIENCIA_PPT">
+                                        <input type="text" class="form-control" id="TIEMPO_EXPERIENCIA_PPT" name="TIEMPO_EXPERIENCIA_PPT" required>
                                     </div>
                                 </div>
                                 <div class="col-2">
@@ -2262,13 +2262,13 @@
                                             <tr>
                                                 <td>Innovación</td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="INNOVACION_REQUERIDA_PPT" name="INNOVACION_REQUERIDA_PPT" value="X">
+                                                    <input type="checkbox"   class="innovacion" id="INNOVACION_REQUERIDA_PPT" name="INNOVACION_REQUERIDA_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="INNOVACION_DESEABLE_PPT" name="INNOVACION_DESEABLE_PPT" value="X">
+                                                    <input type="checkbox"  class="innovacion" id="INNOVACION_DESEABLE_PPT" name="INNOVACION_DESEABLE_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="INNOVACION_NO_REQUERIDA_PPT" name="INNOVACION_NO_REQUERIDA_PPT" value="X">
+                                                    <input type="checkbox"  class="innovacion" id="INNOVACION_NO_REQUERIDA_PPT" name="INNOVACION_NO_REQUERIDA_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="radio-container">
@@ -2285,13 +2285,13 @@
                                                 <td>Pasión</td>
                                             </td>
                                                 <td class="text-center">
-                                                <input type="checkbox" id="PASION_REQUERIDA_PPT" name="PASION_REQUERIDA_PPT" value="X">
+                                                <input type="checkbox"  class="pasion"  id="PASION_REQUERIDA_PPT" name="PASION_REQUERIDA_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="PASION_DESEABLE_PPT" name="PASION_DESEABLE_PPT" value="X">
+                                                    <input type="checkbox"  class="pasion" id="PASION_DESEABLE_PPT" name="PASION_DESEABLE_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="PASION_NO_REQUERIDA_PPT" name="PASION_NO_REQUERIDA_PPT" value="X">
+                                                    <input type="checkbox"  class="pasion" id="PASION_NO_REQUERIDA_PPT" name="PASION_NO_REQUERIDA_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="radio-container">
@@ -2308,14 +2308,14 @@
                                             <tr>
                                                 <td>Servicio (Orientación al cliente)</td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="SERVICIO_CLIENTE_REQUERIDA_PPT" name="SERVICIO_CLIENTE_REQUERIDA_PPT" value="X">
+                                                    <input type="checkbox" class="servicio" id="SERVICIO_CLIENTE_REQUERIDA_PPT" name="SERVICIO_CLIENTE_REQUERIDA_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="SERVICIO_CLIENTE_DESEABLE_PPT" name="SERVICIO_CLIENTE_DESEABLE_PPT" value="X">
+                                                    <input type="checkbox" class="servicio" id="SERVICIO_CLIENTE_DESEABLE_PPT" name="SERVICIO_CLIENTE_DESEABLE_PPT" value="X">
 
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="SERVICIO_CLIENTE_NO_REQUERIDA_PPT" name="SERVICIO_CLIENTE_NO_REQUERIDA_PPT" value="X">
+                                                    <input type="checkbox" class="servicio" id="SERVICIO_CLIENTE_NO_REQUERIDA_PPT" name="SERVICIO_CLIENTE_NO_REQUERIDA_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="radio-container">
@@ -2331,13 +2331,13 @@
                                             <tr>
                                                 <td>Comunicación eficaz</td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="COMUNICACION_EFICAZ_REQUERIDA_PPT" name="COMUNICACION_EFICAZ_REQUERIDA_PPT" value="X">
+                                                    <input type="checkbox"   class="comunicacion" id="COMUNICACION_EFICAZ_REQUERIDA_PPT" name="COMUNICACION_EFICAZ_REQUERIDA_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="COMUNICACION_EFICAZ_DESEABLE_PPT" name="COMUNICACION_EFICAZ_DESEABLE_PPT" value="X">
+                                                    <input type="checkbox"   class="comunicacion" id="COMUNICACION_EFICAZ_DESEABLE_PPT" name="COMUNICACION_EFICAZ_DESEABLE_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="COMUNICACION_EFICAZ_NO_REQUERIDA_PPT" name="COMUNICACION_EFICAZ_NO_REQUERIDA_PPT" value="X">
+                                                    <input type="checkbox"   class="comunicacion" id="COMUNICACION_EFICAZ_NO_REQUERIDA_PPT" name="COMUNICACION_EFICAZ_NO_REQUERIDA_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="radio-container">
@@ -2353,13 +2353,13 @@
                                             <tr>
                                                 <td>Trabajo en equipo</td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="TRABAJO_EQUIPO_REQUERIDA_PPT" name="TRABAJO_EQUIPO_REQUERIDA_PPT" value="X">
+                                                    <input type="checkbox" class="trabajo" id="TRABAJO_EQUIPO_REQUERIDA_PPT" name="TRABAJO_EQUIPO_REQUERIDA_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="TRABAJO_EQUIPO_DESEABLE_PPT" name="TRABAJO_EQUIPO_DESEABLE_PPT" value="X">
+                                                    <input type="checkbox" class="trabajo" id="TRABAJO_EQUIPO_DESEABLE_PPT" name="TRABAJO_EQUIPO_DESEABLE_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="TRABAJO_EQUIPO_NO_REQUERIDA_PPT" name="TRABAJO_EQUIPO_NO_REQUERIDA_PPT" value="X">
+                                                    <input type="checkbox" class="trabajo" id="TRABAJO_EQUIPO_NO_REQUERIDA_PPT" name="TRABAJO_EQUIPO_NO_REQUERIDA_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="radio-container">
@@ -2375,13 +2375,13 @@
                                             <tr>
                                                 <td>Integridad</td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="INTEGRIDAD_REQUERIDA_PPT" name="INTEGRIDAD_REQUERIDA_PPT" value="X">
+                                                    <input type="checkbox" class="integridad" id="INTEGRIDAD_REQUERIDA_PPT" name="INTEGRIDAD_REQUERIDA_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="INTEGRIDAD_DESEABLE_PPT" name="INTEGRIDAD_DESEABLE_PPT" value="X">
+                                                    <input type="checkbox" class="integridad" id="INTEGRIDAD_DESEABLE_PPT" name="INTEGRIDAD_DESEABLE_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="INTEGRIDAD_NO_REQUERIDA_PPT" name="INTEGRIDAD_NO_REQUERIDA_PPT" value="X">
+                                                    <input type="checkbox" class="integridad" id="INTEGRIDAD_NO_REQUERIDA_PPT" name="INTEGRIDAD_NO_REQUERIDA_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="radio-container">
@@ -2397,13 +2397,13 @@
                                             <tr>
                                                 <td>Responsabilidad social</td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="RESPONSABILIDAD_SOCIAL_REQUERIDA_PPT" name="RESPONSABILIDAD_SOCIAL_REQUERIDA_PPT" value="X">
+                                                    <input type="checkbox"  class="responsabilidad" id="RESPONSABILIDAD_SOCIAL_REQUERIDA_PPT" name="RESPONSABILIDAD_SOCIAL_REQUERIDA_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="RESPONSABILIDAD_SOCIAL_DESEABLE_PPT" name="RESPONSABILIDAD_SOCIAL_DESEABLE_PPT" value="X">
+                                                    <input type="checkbox"  class="responsabilidad" id="RESPONSABILIDAD_SOCIAL_DESEABLE_PPT" name="RESPONSABILIDAD_SOCIAL_DESEABLE_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="RESPONSABILIDAD_SOCIAL_NO_REQUERIDA_PPT" name="RESPONSABILIDAD_SOCIAL_NO_REQUERIDA_PPT" value="X">
+                                                    <input type="checkbox"  class="responsabilidad" id="RESPONSABILIDAD_SOCIAL_NO_REQUERIDA_PPT" name="RESPONSABILIDAD_SOCIAL_NO_REQUERIDA_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="radio-container">
@@ -2419,13 +2419,13 @@
                                             <tr>
                                                 <td>Adaptabilidad a los cambios del entorno</td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="ADAPTABILIDAD_REQUERIDA_PPT" name="ADAPTABILIDAD_REQUERIDA_PPT" value="X">
+                                                    <input type="checkbox" class="adaptabilidad" id="ADAPTABILIDAD_REQUERIDA_PPT" name="ADAPTABILIDAD_REQUERIDA_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="ADAPTABILIDAD_DESEABLE_PPT" name="ADAPTABILIDAD_DESEABLE_PPT" value="X">
+                                                    <input type="checkbox" class="adaptabilidad" id="ADAPTABILIDAD_DESEABLE_PPT" name="ADAPTABILIDAD_DESEABLE_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="ADAPTABILIDAD_NO_REQUERIDA_PPT" name="ADAPTABILIDAD_NO_REQUERIDA_PPT" value="X">                                                   
+                                                    <input type="checkbox" class="adaptabilidad" id="ADAPTABILIDAD_NO_REQUERIDA_PPT" name="ADAPTABILIDAD_NO_REQUERIDA_PPT" value="X">                                                   
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="radio-container">
@@ -2441,12 +2441,13 @@
                                             <tr>
                                                 <td>Liderazgo</td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="LIDERAZGO_REQUERIDA_PPT" name="LIDERAZGO_REQUERIDA_PPT" value="X">    
+                                                    <input type="checkbox"  class="liderazgo" id="LIDERAZGO_REQUERIDA_PPT" name="LIDERAZGO_REQUERIDA_PPT" value="X">    
                                                 </td>
                                                 <td class="text-center">
-                                                     <input type="checkbox" id="LIDERAZGO_DESEABLE_PPT" name="LIDERAZGO_DESEABLE_PPT" Value="X">                                                  </td>
+                                                     <input type="checkbox"  class="liderazgo" id="LIDERAZGO_DESEABLE_PPT" name="LIDERAZGO_DESEABLE_PPT" Value="X">                                               
+                                                </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="LIDERAZGO_NO_REQUERIDA_PPT" name="LIDERAZGO_NO_REQUERIDA_PPT" Value="X">     
+                                                    <input type="checkbox"  class="liderazgo" id="LIDERAZGO_NO_REQUERIDA_PPT" name="LIDERAZGO_NO_REQUERIDA_PPT" Value="X">     
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="radio-container">
@@ -2462,13 +2463,13 @@
                                             <tr>
                                                 <td>Toma de decisiones</td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="TOMA_DECISIONES_REQUERIDA_PPT" name="TOMA_DECISIONES_REQUERIDA_PPT" Value="X">   
+                                                    <input type="checkbox" class="decisiones" id="TOMA_DECISIONES_REQUERIDA_PPT" name="TOMA_DECISIONES_REQUERIDA_PPT" Value="X">   
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="TOMA_DECISIONES_DESEABLE_PPT" name="TOMA_DECISIONES_DESEABLE_PPT" Value="X">
+                                                    <input type="checkbox" class="decisiones" id="TOMA_DECISIONES_DESEABLE_PPT" name="TOMA_DECISIONES_DESEABLE_PPT" Value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" id="TOMA_DECISIONES_NO_REQUERIDA_PPT" name="TOMA_DECISIONES_NO_REQUERIDA_PPT" Value="X"> 
+                                                    <input type="checkbox" class="decisiones" id="TOMA_DECISIONES_NO_REQUERIDA_PPT" name="TOMA_DECISIONES_NO_REQUERIDA_PPT" Value="X"> 
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="radio-container">
