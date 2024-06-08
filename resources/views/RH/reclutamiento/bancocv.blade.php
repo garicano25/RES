@@ -34,6 +34,9 @@
   
       <!--Archivo css -->
       <link rel="stylesheet" href="assets/css/estilos.css">
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"> 
 </head>
 <body>
     
@@ -56,6 +59,12 @@
             width: 50%; 
             height: auto; 
         }
+
+
+        #ID_BANCO_CURP_CV {
+    text-transform: uppercase;
+}
+
 
         #contador {
             font-size: 12px;
@@ -97,13 +106,40 @@
         .modal-backdrop {
             background-color: rgba(16, 16, 16, 0.963); /* Fondo completamente opaco */
         }
+        .btn-light.btn-sm {
+    background-color: white;
+    color: black;
+    border: 1px solid #ced4da;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+}
+
+.btn-light.btn-sm:hover {
+    background-color: #e2e6ea;
+}
+
+.text-danger {
+    font-size: 0.875rem;
+    margin-top: 5px;
+}
+
+
     </style>
+
+
+
 </head>
 <body>
+
+  
+
     <div class="card">
         <img src="/assets/images/Colorancho.png" class="card-img-top" alt="Imagen superior">
         <div class="card-body">
-            <form method="post"  enctype="multipart/form-data" id="formularioBANCO">
+            <form method="post"  enctype="multipart/form-data" id="formularioBANCO">     
+                <div class="mb-3">
+                    <input type="hidden" class="form-control" id="AVISO_PRIVACIDAD" name="AVISO_PRIVACIDAD" value="1">
+                </div>
                 <div class="mb-3">
                     <label>Nombre(s)</label>
                     <input type="text" class="form-control" id="NOMBRE_CV" name="NOMBRE_CV" required>
@@ -118,7 +154,7 @@
                 </div>
                 <div class="mb-3">
                     <label>Curp</label>
-                    <input type="text" class="form-control" id="CURP_CV" name="CURP_CV" maxlength="18" required>
+                    <input type="text" class="form-control" id="ID_BANCO_CURP_CV" name="ID_BANCO_CURP_CV" maxlength="18" required>
                     <div id="contador" class="text-end"></div>
                     <div id="mensaje"></div>
                 </div>  
@@ -175,7 +211,6 @@
                         <option value="5">Posgrado</option>
                     </select>
                 </div>
-        
                 <div class="mb-3" id="licenciatura-container" style="display: none;">
                     <label>Nombre de la licenciatura</label>
                     <input type="text" class="form-control" id="NOMBRE_LICENCIATURA_CV" name="NOMBRE_LICENCIATURA_CV">
@@ -195,8 +230,25 @@
                         <input type="text" class="form-control" id="NOMBRE_POSGRADO_CV" name="NOMBRE_POSGRADO_CV">
                     </div>
                 </div>
-
-
+                <div class="mb-3 text-center">
+                  <label class="mt-4">Documentos</label>
+                </div>
+                <div class="mb-3">
+                    <label class="mt-4"><b>Solo subir archivos en PDF</b></label>
+                </div>
+                <div class="mb-3 d-flex align-items-center">
+                    <label class="form-label me-2">CURP</label>
+                    <input type="file" class="form-control" id="ARCHIVO_CURP_CV" name="ARCHIVO_CURP_CV" accept=".pdf" style="width: auto; flex: 1;">
+                    <button type="button" class="btn btn-light btn-sm ms-2" id="quitarCURP" style="display:none;">Quitar archivo</button>
+                </div>
+                <div id="CURP_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
+                <div class="mb-3 d-flex align-items-center">
+                    <label class="form-label me-2">CV</label>
+                    <input type="file" class="form-control" id="ARCHIVO_CV" name="ARCHIVO_CV" accept=".pdf" style="width: auto; flex: 1;">
+                    <button type="button" class="btn btn-light btn-sm ms-2" id="quitarCV" style="display:none;">Quitar archivo</button>
+                </div>
+                <div id="CV_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
+                
                 {{-- <button type="submit" class="btn btn-primary">Enviar</button> --}}
             </form>
         </div>
@@ -255,6 +307,13 @@
      <script src="/assets/js_sitio/funciones.js"></script>
     <script src="/assets/js_sitio/reclutamiento/banco_cv.js"></script>
 
+
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+    
+    
 
 
 </body>

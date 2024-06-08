@@ -562,6 +562,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row mb-3">
                                 <div class="col-12 ">
                                     <h6>Estudios de posgrado requeridos</h6>
@@ -569,24 +570,23 @@
                             </div>
 
                             <div class="row mb-1">
-                                <div class="col-1">
+                                <div class="col-1 mt-1">
                                     <label>Especialidad</label>
                                 </div>
-                                <div class="col-1">
+                                <div class="col-1 mt-1">
                                     <div class="form-group text-center">
-                                        <label for="ESPECIALIDAD_SI">Egresado &nbsp;&nbsp;&nbsp;</label>
-                                        <input class="form-check-input " type="radio" name="EGRESADO_ESPECIALIDAD_PPT" id="ESPECIALIDAD_SI" value="*E" >
+                                        <label for="ESPECIALIDAD_SI">Egresado</label>
+                                        <input class="form-check-input" type="radio" name="EGRESADO_ESPECIALIDAD_PPT" id="ESPECIALIDAD_SI" value="*E" >
 
                                     </div>
                                 </div>
-                                <div class="col-1">
+                                <div class="col-1 mt-1">
                                     <div class="form-group text-center">
                                         <label for="ESPECIALIDAD_NO">Grado/título</label>
                                         <input class="form-check-input " type="radio" name="EGRESADO_ESPECIALIDAD_PPT" id="ESPECIALIDAD_NO" value="*D" >
                                     </div>
                                 </div>
                                 <div class="col-2">
-                                    <br>
                                     <div class="radio-container">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input desabilitado" type="radio" name="ESPECIALIDAD_CUMPLE_PPT" id="ESPECIALIDAD_CUMPLE_SI" value="si" disabled>
@@ -606,23 +606,22 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-1 mt-4">
+                                <div class="col-1 mt-2">
                                     <label>Maestría</label>
                                 </div>
-                                <div class="col-1">
+                                <div class="col-1 mt-2">
                                     <div class="form-group text-center">
                                         <label for="MAESTRIA_SI">Egresado &nbsp;&nbsp;&nbsp;</label>
                                         <input class="form-check-input " type="radio" name="EGRESADO_MAESTRIA_PPT" id="MAESTRIA_SI" value="*E" >
                                     </div>
                                 </div>
-                                <div class="col-1">
+                                <div class="col-1 mt-2">
                                     <div class="form-group text-center">
                                         <label for="MAESTRIA_NO">Grado/título</label>
                                         <input class="form-check-input " type="radio" name="EGRESADO_MAESTRIA_PPT" id="MAESTRIA_NO" value="*D" >
                                     </div>
                                 </div>
-                                <div class="col-2">
-                                    <br>
+                                <div class="col-2 mt-2">
                                     <div class="radio-container">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input desabilitado" type="radio" name="MAESTRIA_CUMPLE_PPT" id="MAESTRIA_CUMPLE_SI" value="si" disabled>
@@ -636,26 +635,23 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
+                            <div class="row mb-1">
                                 <div class="col-1 mt-4">
                                     <label>Doctorado</label>
                                 </div>
-
-                                <div class="col-1">
+                                <div class="col-1 mt-4">
                                     <div class="form-group text-center">
                                         <label for="DOCTORADO_SI">Egresado &nbsp;&nbsp;&nbsp;</label>
                                         <input class="form-check-input " type="radio" name="EGRESADO_DOCTORADO_PPT" id="DOCTORADO_SI" value="*E" >
-
                                     </div>
                                 </div>
-                                <div class="col-1">
+                                <div class="col-1 mt-4 ">
                                     <div class="form-group text-center">
                                         <label for="DOCTORADO_NO">Grado/título</label>
                                         <input class="form-check-input " type="radio" name="EGRESADO_DOCTORADO_PPT" id="DOCTORADO_NO" value="*D" >
                                     </div>
                                 </div>
-                                <div class="col-2">
-                                    <br>
+                                <div class="col-2 mt-4">
                                     <div class="radio-container">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input desabilitado" type="radio" name="DOCTORADO_CUMPLE_PPT" id="DOCTORADO_CUMPLE_SI" value="si" disabled>
@@ -677,6 +673,8 @@
                             </div>
 
                             <!-- III. Conocimientos adicionales -->
+                            <br><br<br>
+                            <hr>
                             <div class="row mb-3">
                                 <div class="col-12 text-center">
                                     <h4>III. Conocimientos adicionales</h4>
