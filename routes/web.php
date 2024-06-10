@@ -62,8 +62,7 @@ Route::get('/makeExcelDPT/{id_formulario}', [makeExcelController::class, 'makeEx
 Route::get('/infoReportan/{ID}/{LIDER}', [dptController::class, 'infoReportan']);
 
 // REQUERIMIENTO PERSONAL 
-Route::get('/RequisiciónDePe
-rsonal', [requerimientoPersonalController::class, 'index']);
+Route::get('/RequisiciónDePersonal', [requerimientoPersonalController::class, 'index']);
 Route::post('/RequerimientoSave', [requerimientoPersonalController::class, 'store']);
 Route::get('/RequerimientoDelete', [requerimientoPersonalController::class, 'store']);
 Route::get('/Tablarequerimiento', [requerimientoPersonalController::class, 'Tablarequerimiento']);

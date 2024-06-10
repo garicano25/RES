@@ -44,14 +44,12 @@ class pptController extends Controller
                 $value->REVISADO_POR = is_null($value->REVISADO_NOMBRE_PPT) ? '<span class="badge text-bg-warning">Sin revisar</span>' : $value->REVISADO_NOMBRE_PPT . '<br>' . $value->REVISADO_FECHA_PPT;
                 $value->AUTORIZADO_POR = is_null($value->AUTORIZADO_NOMBRE_PPT) ? '<span class="badge text-bg-danger">Sin autorizar</span>' : $value->AUTORIZADO_NOMBRE_PPT . '<br>' . $value->AUTORIZADO_FECHA_PPT;
 
-
-
-               
+              
                 
                 ## CREADO Y AUN NO ESTA REVISADO NI AUTORIZADO
                 if(!is_null($value->ELABORADO_NOMBRE_PPT) && is_null($value->REVISADO_NOMBRE_PPT)&& is_null($value->AUTORIZADO_NOMBRE_PPT)){
 
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-danger btn-circle ELIMINAR"><i class="bi bi-trash3"></i></button>';
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-circle ELIMINAR"><i class="bi bi-power"></i></button>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-circle EDITAR"><i class="bi bi-pencil-square"></i></button>';
                     $value->BTN_PPT = '<button type="button" class="btn btn-secondary btn-circle "><i class="bi bi-ban"></i></button>';
                     $value->BTN_ACCION = '<button type="button" class="btn btn-primary btn-circle REVISAR" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Revisar PPT"><i class="bi bi-eye-fill"></i></button>';

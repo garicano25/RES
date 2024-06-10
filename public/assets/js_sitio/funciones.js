@@ -2379,7 +2379,7 @@ function editarDatoTabla( data, form = 'OnlyForm', modalID = 'ModalID', formComp
 
 function eliminarDatoTabla(data, arregloTable, url) {
      alertMensajeConfirm({
-            title: "¿Está seguro de eliminar este registro?",
+            title: "Confirme para desactivar este registro",
             text: "Está acción es irreversible",
             icon: "warning",
         }, function () { 
@@ -2402,8 +2402,8 @@ function eliminarDatoTabla(data, arregloTable, url) {
                     
                     Swal.fire({
                         icon: 'success',
-                        title: 'Registro eliminado',
-                        text: 'La eliminación fue realizada exitosamente',
+                        title: 'Registro desactivado',
+                        text: 'La desactivación fue realizada exitosamente',
                         timer: 2000,
                         timerProgressBar: true
                     })

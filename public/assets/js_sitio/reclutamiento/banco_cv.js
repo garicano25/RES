@@ -82,3 +82,12 @@ document.getElementById('quitarCV').addEventListener('click', function() {
     document.getElementById('CV_ERROR').style.display = 'none';
     this.style.display = 'none';
 });
+
+
+
+$(document).ready(function() {
+    $('#addTelefonoBtn').click(function() {
+        $('#additionalTelefonoFields').show();
+        $(this).hide();
+    });
+});
