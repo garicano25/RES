@@ -142,7 +142,7 @@
   
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="http://www.results-in-performance.com/">
                 <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
             </a>
             
@@ -171,14 +171,17 @@
                 <label>Segundo Apellido </label>
                 <input type="text" class="form-control" id="SEGUNDO_APELLIDO_CV" name="SEGUNDO_APELLIDO_CV" required>
             </div>
+          
             <div class="mb-3">
                 <label>Correo</label>
                 <input type="text" class="form-control" id="CORREO_CV" name="CORREO_CV" required>
             </div>
             <div class="mb-3">
-                <label>Número de teléfono</label>
-                <input type="number" class="form-control" id="NUMERO1_CV" name="NUMERO1_CV" required>
+                <label for="NUMERO1_CV">Número de teléfono</label>
+                <input type="tel" class="form-control" id="NUMERO1_CV" name="NUMERO1_CV" required>
             </div>
+         
+
             <div class="mb-3">
                 <label>Tipo de celular</label>
                 <select class="form-select" id="TIPO_TELEFONO1" name="TIPO_TELEFONO1" required>
@@ -188,11 +191,13 @@
                     <option value="3">Oficina</option>
                 </select>
             </div>
-           
+        
             <div class="mb-3">
-                <label>Número de contacto (opcional)</label>
-                <input type="number" class="form-control" id="CONTACTO2_CV" name="CONTACTO2_CV" >
+                <label >Número de contacto (opcional)</label>
+                <input type="tel" class="form-control" id="TELEFONO_CELULAR2_CV" name="TELEFONO_CELULAR2_CV">
             </div>
+           
+
            
             <div class="mb-3">
                 <label>Curp</label>
