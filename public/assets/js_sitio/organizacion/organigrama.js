@@ -602,8 +602,8 @@ function TablaDepartamentos(id_area) {
         ],
         columnDefs: [
             { target: 0, title: '#', className: 'all' },
-            { target: 1, title: 'Categoria', className: 'all' },
-            { target: 2, title: 'Eliminar', className: 'all text-center' },
+            { target: 1, title: 'categoría', className: 'all' },
+            { target: 2, title: 'Inactivo', className: 'all text-center' },
         ]
     })
 
@@ -624,6 +624,23 @@ $('#TablaCargos').on('click', 'button.ELIMINAR', function () {
 
 });
 
+
+
+
+$('#TablaEncargados').on('click', 'button.ELIMINAR', function () {
+    var tr = $(this).closest('tr');
+    var row = TablaEncargado.row(tr);
+    
+    console.log('sds')
+    var data = {
+        api: 3,
+        ID_ENCARGADO_AREA: row.data().ID_ENCARGADO_AREA
+    };
+
+    eliminarDatoTabla(data, [TablaEncargado], 'areasDelete');
+    
+
+});
 
 
 

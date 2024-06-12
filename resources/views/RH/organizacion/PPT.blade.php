@@ -706,10 +706,10 @@
                                                 <td>Word</td>
                                                 <td class="text-center">
                                                     <label for="WORD_APLICA_PPT_si">Si</label>
-                                                    <input type="radio" id="WORD_APLICA_PPT_si" name="WORD_APLICA_PPT" value="si">
+                                                    <input class="form-check-input" type="radio" name="WORD_APLICA_PPT" id="WORD_APLICA_PPT_si" value="si" >
                                                     <label for="WORD_APLICA_PPT_no">No</label>
-                                                    <input type="radio" id="WORD_APLICA_PPT_no" name="WORD_APLICA_PPT" value="no">                                                
-                                                </td>
+                                                    <input class="form-check-input" type="radio" name="WORD_APLICA_PPT" id="WORD_APLICA_PPT_no" value="no" >
+                                                                                                  </td>
                                                 <td class="text-center">
                                                     <input type="checkbox" class="word" id="WORD_BAJO_PPT" name="WORD_BAJO_PPT" value="X">
                                                 </td>
@@ -739,9 +739,9 @@
                                                     <td>Excel</td>
                                                     <td class="text-center">
                                                         <label for="EXCEL_APLICA_PPT_si">Si</label>
-                                                        <input type="radio" id="EXCEL_APLICA_PPT_si" name="EXCEL_APLICA_PPT" value="si">
+                                                        <input class="form-check-input" type="radio" name="EXCEL_APLICA_PPT" id="EXCEL_APLICA_PPT_si" value="si" >
                                                         <label for="EXCEL_APLICA_PPT_no">No</label>
-                                                        <input type="radio" id="EXCEL_APLICA_PPT_no" name="EXCEL_APLICA_PPT" value="no">                                                
+                                                        <input class="form-check-input" type="radio" name="EXCEL_APLICA_PPT" id="EXCEL_APLICA_PPT_no" value="no" >                                                                        
                                                     </td>
                                                     <td class="text-center">
                                                         <input type="checkbox" class="excel" id="EXCEL_BAJO_PPT" name="EXCEL_BAJO_PPT" value="X">
@@ -772,9 +772,10 @@
                                                 <td>Power Point</td>
                                                 <td class="text-center">
                                                     <label for="POWER_APLICA_PPT_si">Si</label>
-                                                    <input type="radio" id="POWER_APLICA_PPT_si" name="POWER_APLICA_PPT" value="si">
+                                                    <input class="form-check-input" type="radio" name="POWER_APLICA_PPT" id="POWER_APLICA_PPT_si" value="si" >
                                                     <label for="POWER_APLICA_PPT_no">No</label>
-                                                    <input type="radio" id="POWER_APLICA_PPT_no" name="POWER_APLICA_PPT" value="no">                                                
+                                                   <input class="form-check-input" type="radio" name="POWER_APLICA_PPT" id="POWER_APLICA_PPT_no" value="no" >                          
+
                                                 </td>
                                                 <td class="text-center">
                                                     <input type="checkbox" class="power" id="POWER_BAJO_PPT" name="POWER_BAJO_PPT" value="X">
@@ -806,17 +807,16 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th rowspan="2">Idioma</th>
-                                                <th colspan="5" class="text-center">Nivel de dominio en %</th>
+                                                <th colspan="10" class="text-center">Nivel de dominio</th>
                                             </tr>
                                             <tr>
-                                                <th>Aplica</th>
-                                                <th>Hablar</th>
-                                                <th>Escribir</th>
-                                                <th>Leer</th>
-                                                <th>Escuchar</th>
-                                                <th>Si</th>
-                                                <th>No</th>
+                                                <th class="text-center">Idioma</th>
+                                                <th class="text-center">Aplica</th>
+                                                <th class="text-center">Básico</th>
+                                                <th class="text-center">Intermedio</th>
+                                                <th class="text-center">Avanzado</th>
+                                                <th class="text-center">Si</th>
+                                                <th class="text-center">No</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -826,21 +826,23 @@
                                                     <input type="text" class="form-control" id="NOMBRE_IDIOMA1_PPT" name="NOMBRE_IDIOMA1_PPT">
                                                 </td>
 
-                                                <td>
-                                                    <input type="text" class="form-control text-center" id="APLICA_IDIOMA1_PPT" name="APLICA_IDIOMA1_PPT">
+                                                <td class="text-center">
+                                                    <label for="IDIOMA1_APLICA_PPT_si">Si</label>
+                                                    <input class="form-check-input" type="radio" name="APLICA_IDIOMA1_PPT" id="IDIOMA1_APLICA_PPT_si" value="si" >
+                                                    <label for="IDIOMA1_APLICA_PPT_no">No</label>
+                                                   <input class="form-check-input" type="radio" name="APLICA_IDIOMA1_PPT" id="IDIOMA1_APLICA_PPT_no" value="no" >                          
                                                 </td>
-                                                <td>
-                                                    <input type="number" class="form-control text-center" id="HABLAR_IDIOMA1_PPT" name="HABLAR_IDIOMA1_PPT">
+
+                                                <td class="text-center">
+                                                    <input type="checkbox"  id="BASICO_IDIOMA1_PPT" name="BASICO_IDIOMA1_PPT" value="X">
                                                 </td>
-                                                <td>
-                                                    <input type="number" class="form-control text-center" id="ESCRIBIR_IDIOMA1_PPT" name="ESCRIBIR_IDIOMA1_PPT">
+                                                <td class="text-center">
+                                                    <input type="checkbox"  id="INTERMEDIO_IDIOMA1_PPT" name="INTERMEDIO_IDIOMA1_PPT" value="X">
                                                 </td>
-                                                <td>
-                                                    <input type="number" class="form-control text-center" id="LEER_IDIOMA1_PPT" name="LEER_IDIOMA1_PPT">
+                                                <td class="text-center">
+                                                    <input type="checkbox"  id="AVANZADO_IDIOMA1_PPT" name="AVANZADO_IDIOMA1_PPT" value="X">
                                                 </td>
-                                                <td>
-                                                    <input type="number" class="form-control text-center" id="ESCUCHAR_IDIOMA1_PPT" name="ESCUCHAR_IDIOMA1_PPT">
-                                                </td>
+                                             
                                                 <td>
                                                     <div class="radio-container">
                                                         <label class="form-check-label" for="IDIOMA1_CUMPLE_SI">Si</label>
@@ -858,21 +860,23 @@
                                                 <td>
                                                     <input type="text" class="form-control" id="NOMBRE_IDIOMA2_PPT" name="NOMBRE_IDIOMA2_PPT">
                                                 </td>
-                                                <td>
-                                                    <input type="text" class="form-control text-center" id="APLICA_IDIOMA2_PPT" name="APLICA_IDIOMA2_PPT">
+
+                                                <td class="text-center">
+                                                    <label for="IDIOMA2_APLICA_PPT_si">Si</label>
+                                                    <input class="form-check-input" type="radio" name="APLICA_IDIOMA2_PPT" id="IDIOMA2_APLICA_PPT_si" value="si" >
+                                                    <label for="IDIOMA2_APLICA_PPT_no">No</label>
+                                                   <input class="form-check-input" type="radio" name="APLICA_IDIOMA2_PPT" id="IDIOMA2_APLICA_PPT_no" value="no" >                          
+                                                </td>                                        
+                                                <td class="text-center">
+                                                    <input type="checkbox"  id="BASICO_IDIOMA2_PPT" name="BASICO_IDIOMA2_PPT"  value="X">
                                                 </td>
-                                                <td>
-                                                    <input type="number" class="form-control text-center" id="HABLAR_IDIOMA2_PPT" name="HABLAR_IDIOMA2_PPT">
+                                                <td class="text-center">
+                                                    <input type="checkbox"  id="INTERMEDIO_IDIOMA2_PPT" name="INTERMEDIO_IDIOMA2_PPT"  value="X">
                                                 </td>
-                                                <td>
-                                                    <input type="number" class="form-control text-center" id="ESCRIBIR_IDIOMA2_PPT" name="ESCRIBIR_IDIOMA2_PPT">
+                                                <td class="text-center">
+                                                    <input type="checkbox"  id="AVANZADO_IDIOMA2_PPT" name="AVANZADO_IDIOMA2_PPT"  value="X">
                                                 </td>
-                                                <td>
-                                                    <input type="number" class="form-control text-center" id="LEER_IDIOMA2_PPT" name="LEER_IDIOMA2_PPT">
-                                                </td>
-                                                <td>
-                                                    <input type="number" class="form-control text-center" id="ESCUCHAR_IDIOMA2_PPT" name="ESCUCHAR_IDIOMA2_PPT">
-                                                </td>
+                                                
                                                 <td>
                                                     <div class="radio-container">
                                                         <label class="form-check-label" for="IDIOMA2_CUMPLE_SI">Si</label>
@@ -890,20 +894,20 @@
                                                 <td>
                                                     <input type="text" class="form-control" id="NOMBRE_IDIOMA3_PPT" name="NOMBRE_IDIOMA3_PPT">
                                                 </td>
-                                                <td>
-                                                    <input type="text" class="form-control text-center" id="APLICA_IDIOMA3_PPT" name="APLICA_IDIOMA3_PPT">
+                                                <td class="text-center">
+                                                    <label for="IDIOMA3_APLICA_PPT_si">Si</label>
+                                                    <input class="form-check-input" type="radio" name="APLICA_IDIOMA3_PPT" id="IDIOMA3_APLICA_PPT_si" value="si" >
+                                                    <label for="IDIOMA3_APLICA_PPT_no">No</label>
+                                                   <input class="form-check-input" type="radio" name="APLICA_IDIOMA3_PPT" id="IDIOMA3_APLICA_PPT_no" value="no" >                          
+                                                </td>                              
+                                                <td class="text-center">
+                                                    <input type="checkbox"  id="BASICO_IDIOMA3_PPT" name="BASICO_IDIOMA3_PPT"  value="X">
                                                 </td>
-                                                <td>
-                                                    <input type="number" class="form-control text-center" id="HABLAR_IDIOMA3_PPT" name="HABLAR_IDIOMA3_PPT">
+                                                <td class="text-center">
+                                                    <input type="checkbox"  id="INTERMEDIO_IDIOMA3_PPT" name="INTERMEDIO_IDIOMA3_PPT"  value="X">
                                                 </td>
-                                                <td>
-                                                    <input type="number" class="form-control text-center" id="ESCRIBIR_IDIOMA3_PPT" name="ESCRIBIR_IDIOMA3_PPT">
-                                                </td>
-                                                <td>
-                                                    <input type="number" class="form-control text-center" id="LEER_IDIOMA3_PPT" name="LEER_IDIOMA3_PPT">
-                                                </td>
-                                                <td>
-                                                    <input type="number" class="form-control text-center" id="ESCUCHAR_IDIOMA3_PPT" name="ESCUCHAR_IDIOMA3_PPT">
+                                                <td class="text-center">
+                                                    <input type="checkbox"  id="AVANZADO_IDIOMA3_PPT" name="AVANZADO_IDIOMA3_PPT"  value="X">
                                                 </td>
                                                 <td>
                                                     <div class="radio-container">

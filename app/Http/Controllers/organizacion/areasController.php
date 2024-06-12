@@ -15,11 +15,6 @@ use DB;
 class areasController extends Controller
 {
 
-
-
-
-
-
     public function TablaAreas()
     {
         try {

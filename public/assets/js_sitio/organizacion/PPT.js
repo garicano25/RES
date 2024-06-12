@@ -489,7 +489,7 @@ $('input[id^="CURSO"][id$="_REQUERIDO_PPT"], input[id^="CURSO"][id$="_DESEABLE_P
 
 });
 
-// Habilidades ym competencias funcionales
+// Habilidades y competencias funcionales
 $('.innovacion').on('change', function() {
     if ($(this).is(':checked')) {
         $('.innovacion').not(this).prop('checked', false);

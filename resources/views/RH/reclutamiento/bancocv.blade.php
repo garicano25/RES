@@ -29,7 +29,6 @@
   
       <!-- Select opcion selectize -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" />
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.2.0/css/bootstrap.min.css">
 
   
       <!--Archivo css -->
@@ -155,7 +154,8 @@
     <img src="/assets/images/Colorancho.png" class="card-img-top" alt="Imagen superior">
     <div class="card-body">
         <form method="post"  enctype="multipart/form-data" id="formularioBANCO">   
-
+            {!! csrf_field() !!}
+            
             <div class="mb-3">
                 <input type="hidden" class="form-control" id="AVISO_PRIVACIDAD" name="AVISO_PRIVACIDAD" value="1">
             </div>
@@ -178,7 +178,7 @@
             </div>
             <div class="mb-3">
                 <label for="NUMERO1_CV">Número de teléfono</label>
-                <input type="tel" class="form-control" id="NUMERO1_CV" name="NUMERO1_CV" required>
+                <input type="number" class="form-control" id="NUMERO1_CV" name="NUMERO1_CV" required>
             </div>
          
 
@@ -194,14 +194,14 @@
         
             <div class="mb-3">
                 <label >Número de contacto (opcional)</label>
-                <input type="tel" class="form-control" id="TELEFONO_CELULAR2_CV" name="TELEFONO_CELULAR2_CV">
+                <input type="number" class="form-control" id="TELEFONO_CELULAR2_CV" name="TELEFONO_CELULAR2_CV">
             </div>
            
 
            
             <div class="mb-3">
-                <label>Curp</label>
-                <input type="text" class="form-control" id="ID_BANCO_CURP_CV" name="ID_BANCO_CURP_CV" maxlength="18" required>
+                <label>CURP</label>
+                <input type="text" class="form-control" id="CURP_CV" name="CURP_CV" maxlength="18" required>
                 <div id="contador" class="text-end"></div>
                 <div id="mensaje"></div>
             </div>  
@@ -297,13 +297,25 @@
             </div>
             <div id="CV_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
 
-           
-          
-                                    
-                
-            
-            
-            {{-- <button type="submit" class="btn btn-primary">Enviar</button> --}}
+            <div class="mb-3">
+                <label class="col-form-label">Cuenta con Título/Cédula</label>
+                <div class="d-flex">
+                    <div class="form-check me-3">
+                        <label class="form-check-label" for="si">Si</label>
+                        <input class="form-check-input" type="radio" name="CUENTA_TITULO_CV" id="si" value="Si" >
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="no">No</label>
+                        <input class="form-check-input" type="radio" name="CUENTA_TITULO_CV" id="no" value="NO" >
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label >Observación</label>
+                <input type="text" class="form-control" id="OBSERVACIO_CV" name="OBSERVACIO_CV">
+            </div>            
+                     
+            <button type="submit" class="btn btn-success" id="guardarFormBancoCV">Guardar</button>
            
         </form>
     </div>
@@ -321,10 +333,15 @@
                 </div>
                 <div class="modal-body">
                     <p><b>“RES”</b> trata datos sensibles los cuales se utilizan para la contratación de
-                        colaboradores. Los datos que utilizaremos para las finalidades descritas en el presente aviso de
+                        colaboradores, envío de cotizaciones, asignación de órdenes de trabajo o de
+                        compra, completar diversos formatos y para generar los informes de consultoría.
+                        Los datos que utilizaremos para las finalidades descritas en el presente aviso de
                         privacidad son los siguientes: <br><br>
-                     -Nombre completo <br>
-                     -CURP
+
+                       <b> Para prospecto a colaboradores</b><br>
+                      -Nombre completo<BR>
+                     -CURP<BR>
+                     -Currículo Vitae
                     </p>
                     <p class="text-center">Aceptar términos</p>
                 </div>
@@ -356,7 +373,6 @@
    
     <!-- Select opcion selectize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>
 
      <!-- Funciones generales -->
      <script src="/assets/js_sitio/funciones.js"></script>
@@ -364,7 +380,6 @@
 
 
 
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
     

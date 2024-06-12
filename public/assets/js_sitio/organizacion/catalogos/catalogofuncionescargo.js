@@ -160,7 +160,7 @@ var Tablaafuncionescargo = $("#Tablaafuncionescargo").DataTable({
         { targets: 0, title: '#', className: 'all' },
         { targets: 1, title: 'Tipo de función', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Nombre de la categoría', className: 'all text-center nombre-column' },
-        { targets: 3, title: 'Descrición', className: 'all text-center descripcion-column' },
+        { targets: 3, title: 'Descripción', className: 'all text-center descripcion-column' },
         { targets: 4, title: 'Editar', className: 'all text-center' },
         { targets: 5, title: 'Inactivo', className: 'all text-center' }
     ]

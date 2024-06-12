@@ -181,6 +181,8 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
 
         $('#PUESTO_REPORTA_DPT').val('Consultando información...').prop('readonly', true)
         $('#PUESTO_LE_REPORTAN_DPT').val('Consultando información...').prop('readonly', true)
+        $('#PUESTOS_DIRECTOS_DPT').val('Consultando información...').prop('readonly', true)
+
 
     }, function (data) {
             info = data
@@ -272,11 +274,16 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
         if (lider == 1 || lider == 2) {
             $('#PUESTO_REPORTA_DPT').val(data.REPORTA).prop('readonly', true)
             $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN[0].REPORTAN).prop('readonly', true)
+        $('#PUESTOS_DIRECTOS_DPT').val(data.REPORTAN[0].REPORTAN).prop('readonly', true)
+
 
         } else {
 
             $('#PUESTO_REPORTA_DPT').val(data.REPORTA[0].REPORTA).prop('readonly', true)
             $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN).prop('readonly', true)
+        $('#PUESTOS_DIRECTOS_DPT').val(data.REPORTAN).prop('readonly', true)
+
+            
         }  
     })
 });

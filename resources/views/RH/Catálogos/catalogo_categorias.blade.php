@@ -46,7 +46,7 @@
                         <textarea name="PROPOSITO_CATEGORIA" id="PROPOSITO_CATEGORIA" class="form-control" rows="8" required></textarea>
                     </div>
                     <div class="mb-3">
-                        <label class="mt-2">Es lider</label>
+                        <label class="mt-2">Es líder</label>
 
                     </div>
                         <div class="mb-3">

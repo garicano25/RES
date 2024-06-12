@@ -20,6 +20,7 @@ use App\Http\Controllers\organizacion\catalogogeneroControlller;
 // Controladores de reclutamiento
  use App\Http\Controllers\reclutamiento\catalogovacantesController;
 use App\Http\Controllers\reclutamiento\PuestoController;
+use App\Http\Controllers\reclutamiento\bancocvController;
 
 
 
@@ -120,6 +121,13 @@ Route::get('/Tablageneros', [catalogogeneroControlller::class, 'Tablageneros']);
 
 
 Route::get('/Formulario-vacantes', function () {return view('RH.reclutamiento.bancocv');});
+
+
+Route::post('/BancoSave', [bancocvController::class, 'store']);
+// Route::get('/VacanteDelete', [bancocvController::class, 'store']);
+Route::get('/Tablabancocv', [bancocvController::class, 'Tablabancocv']);
+
+
 
 // Route::get('/Vacantes', function () {return view('RH.reclutamiento.puestos');});
 Route::get('/Vacantes', [PuestoController::class, 'index']);

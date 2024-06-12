@@ -82,12 +82,35 @@
                         </div>
                         <div class="col-8">
                           <div class="form-group">
-                              <label>Sustituye a: </label>
-                              <input type="text" class="form-control " id="SUSTITUYE_RP" name="SUSTITUYE_RP" required>
+                            <label>Área: </label>
+                            <select class="form-control" id="AREA_RP" name="AREA_RP" required>
+                              <option selected disabled>Seleccione una opción</option>
+                              @foreach ($areas as $area)
+                                  <option value="{{ $area->ID_AREA }}">{{ $area->NOMBRE }}</option>
+                              @endforeach
+                          </select> 
                           </div>
                         </div>
                       </div>
+
                       <div class="row mb-3">
+                        <div class="col-6">
+                            <label>Sustituye a: </label>
+                              <input type="text" class="form-control " id="SUSTITUYE_RP" name="SUSTITUYE_RP" required>
+                        </div>
+                        <div class="col-6">
+                              <label>Categoría</label>
+                              <select class="form-control" id="SUSTITUYE_CATEGORIA_RP" name="SUSTITUYE_CATEGORIA_RP" required>
+                                <option selected disabled>Seleccione una opción</option>
+                                @foreach ($categoria as $cat)
+                                    <option value="{{ $cat->ID_DEPARTAMENTO_AREA }}">{{ $cat->NOMBRE }}</option>
+                                @endforeach
+                            </select>   
+                       
+                        </div>
+                      </div>
+
+                      {{-- <div class="row mb-3">
                         <div class="col-6">
                           <div class="form-group">
                               <label>Centro de costos:</label>
@@ -105,7 +128,7 @@
                             </select>                         
                           </div>
                         </div>
-                      </div>
+                      </div> --}}
                       <div class="row mb-3">
                         <div class="col-1">
                           <label></label>

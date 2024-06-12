@@ -15,6 +15,7 @@ class formulariorequerimientoModel extends Model
         'TIPO_VACANTE_RP',
         'MOTIVO_VACANTE_RP',
         'SUSTITUYE_RP',
+        'SUSTITUYE_CATEGORIA_RP',
         'CENTRO_COSTO_RP',
         'AREA_RP',
         'NO_VACANTES_RP',
