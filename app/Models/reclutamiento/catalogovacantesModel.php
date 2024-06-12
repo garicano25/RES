@@ -14,7 +14,7 @@ class catalogovacantesModel extends Model
         'CATEGORIA_VACANTE',
         'DESCRIPCION_VACANTE',
         'REQUISITOS_VACANTES',
-        'ACTIVO',
+        'ACTIVO',   
     ];
 
 }

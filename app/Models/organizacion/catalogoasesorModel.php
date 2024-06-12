@@ -13,5 +13,6 @@ class catalogoasesorModel extends Model
         'NOMBRE_ASESOR',
         'DESCRIPCION_ASESOR',
         'ASESOR_ES',
+         'ACTIVO'
     ];
 }

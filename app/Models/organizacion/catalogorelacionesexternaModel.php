@@ -13,5 +13,6 @@ class catalogorelacionesexternaModel extends Model
     protected $table = 'catalogo_relacionesexternas';
     protected $fillable = [
         'NOMBRE_RELACIONEXTERNA',
+         'ACTIVO'
     ];
 }

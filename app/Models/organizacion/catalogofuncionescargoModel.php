@@ -14,5 +14,6 @@ class catalogofuncionescargoModel extends Model
         'TIPO_FUNCION_CARGO',
         'CATEGORIAS_CARGO',
         'DESCRIPCION_FUNCION_CARGO',
+         'ACTIVO'
     ];
 }

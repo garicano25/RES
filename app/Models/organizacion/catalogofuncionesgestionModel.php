@@ -15,9 +15,7 @@ class catalogofuncionesgestionModel extends Model
         'COLABORADOR_GESTION',
         'TODO_GESTION',
         'DESCRIPCION_FUNCION_GESTION',
-
-
-
+         'ACTIVO'
        
     ];
 

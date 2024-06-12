@@ -117,6 +117,11 @@ Route::post('/GeneroSave', [catalogogeneroControlller::class, 'store']);
 Route::get('/GeneroDelete', [catalogogeneroControlller::class, 'store']);
 Route::get('/Tablageneros', [catalogogeneroControlller::class, 'Tablageneros']);
 
+//catálogo de Puesto que se requiere como experiencia
+
+Route::get('/Puesto-experiencia', function () {return view('RH.Catálogos.catálogo_puestoexperiencia');});
+
+
 //==============================================  RECLUTAMIENTO  ============================================== 
 
 

@@ -14,6 +14,7 @@ class catalogocategoriaModel extends Model
         'LUGAR_CATEGORIA',
         'PROPOSITO_CATEGORIA',
         'ES_LIDER_CATEGORIA',
+         'ACTIVO'
 
     ];
 }

@@ -32,11 +32,11 @@ class formulariorequerimientoModel extends Model
         'VEHICULO_EMPRESA_RP',
         'SOLICITA_RP',
         'AUTORIZA_RP',
-
         'NOMBRE_SOLICITA_RP',
         'NOMBRE_AUTORIZA_RP',
         'CARGO_SOLICITA_RP',
         'CARGO_AUTORIZA_RP',
+         'ACTIVO'
         
     ];
 }

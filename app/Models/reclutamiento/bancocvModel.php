@@ -30,6 +30,7 @@ class bancocvModel extends Model
         'ARCHIVO_CV',
         'CUENTA_TITULO_CV',
         'OBSERVACIO_CV',
+         'ACTIVO'
 
     ];
 }

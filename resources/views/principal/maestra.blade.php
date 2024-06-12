@@ -172,6 +172,10 @@
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/Género')}}">Catálogo de Género </a>
                                 </li>
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/Puesto-experiencia')}}">Catálogo de puesto <br> experiencia </a>
+                                </li>
+                                
                             </ul>
                         </li>
                     </ul>

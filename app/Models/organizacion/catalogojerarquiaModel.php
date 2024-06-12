@@ -13,5 +13,6 @@ class catalogojerarquiaModel extends Model
     protected $fillable = [
         'NOMBRE_JERARQUIA',
         'DESCRIPCION_JERARQUIA',
+         'ACTIVO'
     ];
 }
