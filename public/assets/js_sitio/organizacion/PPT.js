@@ -62,7 +62,7 @@ TablaPPT = $("#TablaPPT").DataTable({
     },
     columns: [
         { data: 'ID_FORMULARIO_PPT' },
-        { data: 'DEPARTAMENTO_AREA_ID' },
+        { data: 'NOMBRE_CATEGORIA' },
         { data: 'ELABORADO_POR' },
         { data: 'REVISADO_POR' },
         { data: 'AUTORIZADO_POR' },

@@ -16,9 +16,12 @@ class requerimientoPersonalController extends Controller
 {
     public function index()
     {
-         $categoria = departamentosAreasModel::orderBy('NOMBRE', 'ASC')->get();
+         $categoria = DB::select("SELECT ID_CATALOGO_CATEGORIA  AS ID_DEPARTAMENTO_AREA, NOMBRE_CATEGORIA AS NOMBRE
+        FROM catalogo_categorias
+        WHERE ACTIVO = 1");
 
         $areas = areasModel::orderBy('NOMBRE', 'ASC')->get();
+
         return view('RH.organizacion.requerimiento_personal', compact('areas','categoria'));
         
     }
@@ -27,15 +30,17 @@ class requerimientoPersonalController extends Controller
     public function Tablarequerimiento()
     {
         try {
-            $tabla = formulariorequerimientoModel::get();
+            $tabla = DB::select("SELECT rec.*, cat.NOMBRE_CATEGORIA
+                                FROM formulario_requerimientos rec
+                                LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = rec.PUESTO_RP");
     
             foreach ($tabla as $value) {
             
                 // Botones
-                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-circle ELIMINAR"><i class="bi bi-power"></i></button>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-circle EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                $value->BTN_RP = '<button type="button" class="btn btn-success btn-circle RP"><i class="bi bi-file-earmark-excel-fill"></i></button>';
-                $value->BTN_ACCION = '<button type="button" class="btn btn-success btn-circle " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Finalizado Requisición" title="Finalizado"><i class="bi bi-check-circle-fill"></i></button>';
+                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                $value->BTN_RP = '<button type="button" class="btn btn-success  RP btn-custom rounded-pill"><i class="bi bi-file-earmark-excel-fill"></i></button>';
+                $value->BTN_ACCION = '<button type="button" class="btn btn-success btn-custom rounded-pill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Finalizado Requisición" title="Finalizado"><i class="bi bi-check-circle-fill"></i></button>';
 
             }
     
