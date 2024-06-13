@@ -34,7 +34,7 @@ Route::get('/', function () {return view('tablero.index');});
 
 // ORGANIGRAMA
 
-Route::get('/organigrama', function () {return view('RH.organizacion.organigrama');});
+Route::get('/organigrama', [areasController::class, 'index']);
 Route::post('/areasSave', [areasController::class, 'store']);
 Route::get('/areasDelete', [areasController::class, 'store']);
 Route::get('/TablaAreas', [areasController::class, 'TablaAreas']);
