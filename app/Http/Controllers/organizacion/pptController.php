@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\organizacion\cursospptModel;
 use App\Models\organizacion\formulariopptModel;
 use App\Models\organizacion\departamentosAreasModel;
-use App\Models\organizacion\catalogoexperienciaModel;
-
 
 use DB;
 
@@ -25,11 +23,7 @@ class pptController extends Controller
         FROM encargados_areas
         ");
 
-
-        $puesto = catalogoexperienciaModel::orderBy('NOMBRE_PUESTO', 'ASC')->get();
-
-
-        return view('RH.organizacion.PPT', compact('areas','puesto'));
+        return view('RH.organizacion.PPT', compact('areas'));
     }
 
     public function TablaPPT()

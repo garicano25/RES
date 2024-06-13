@@ -1991,314 +1991,232 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-12 d-flex align-items-center">
-                                    <h6 class="mb-0">Marque el nivel mínimo de puesto que se requiere como experiencia  &nbsp;</h6>
-                                    <button type="button" id="agregapuesto" title="Agregar otro puesto" class="btn btn-primary ml-3"><i class="bi bi-plus-circle"></i></button>
+                                <div class="col-12 ">
+                                    <h6>Marque el nivel mínimo de puesto que se requiere como experiencia</h6>
                                 </div>
                             </div>
 
-                           
-                            
+                            <div class="row mb-3">
+                                <div class="col-2 mt-1">
+                                    <label>Practicante profesional</label>
+                                </div>
+                                <div class="col-1">
+                                    <div class="form-group">
+                                        <input type="checkbox" id="PRACTICA_PROFESIONAL_PPT" name="PRACTICA_PROFESIONAL_PPT" value="X">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="PRACTICA_PROFESIONAL_CUMPLE_PPT" id="PRACTICA_PROFESIONAL_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="PRACTICA_PROFESIONAL_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="PRACTICA_PROFESIONAL_CUMPLE_PPT" id="PRACTICA_PROFESIONAL_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="PRACTICA_PROFESIONAL_CUMPLE_NO">No</label>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <div class="row mb-3" id="puesto1" style="display: none;">
+
                                 <div class="col-2 mt-1">
-                                    <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO1_NOMBRE" name="PUESTO1_NOMBRE"   >
-                                            <option value="0" disabled selected>Seleccione una opción</option>
-                                            @foreach ($puesto as $puestos)
-                                            <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                    <label>Auxiliar o Asistente</label>
                                 </div>
                                 <div class="col-1">
                                     <div class="form-group">
-                                        <input type="checkbox" id="PUESTO1" name="PUESTO1" value="X">
+                                        <input type="checkbox" id="AUXILIAR_ASISTENTE_PPT" name="AUXILIAR_ASISTENTE_PPT" value="X">
+
                                     </div>
                                 </div>
                                 <div class="col-2">
                                     <div class="radio-container">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO1_CUMPLE_PPT" id="PUESTO1_CUMPLE_SI" value="si" disabled>
-                                            <label class="form-check-label" for="PUESTO1_CUMPLE_SI">Si</label>
+                                            <input class="form-check-input desabilitado" type="radio" name="AUXILIAR_ASISTENTE_CUMPLE_PPT" id="AUXILIAR_ASISTENTE_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="AUXILIAR_ASISTENTE_CUMPLE_SI">Si</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO1_CUMPLE_PPT" id="PUESTO1_CUMPLE_NO" value="no" disabled>
-                                            <label class="form-check-label" for="PUESTO1_CUMPLE_NO">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2 mt-1">
-                                    <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO2_NOMBRE" name="PUESTO2_NOMBRE" >
-                                            <option value="0" disabled selected>Seleccione una opción</option>
-                                            @foreach ($puesto as $puestos)
-                                            <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-1">
-                                    <div class="form-group">
-                                        <input type="checkbox" id="PUESTO2" name="PUESTO2" value="X">
-                                    </div>
-                                </div>
-                                <div class="col-2">
-                                    <div class="radio-container">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO2_CUMPLE_PPT" id="PUESTO2_CUMPLE_SI" value="si" disabled>
-                                            <label class="form-check-label" for="PUESTO2_CUMPLE_SI">Si</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO2_CUMPLE_PPT" id="PUESTO2_CUMPLE_NO" value="no" disabled>
-                                            <label class="form-check-label" for="PUESTO2_CUMPLE_NO">No</label>
+                                            <input class="form-check-input desabilitado" type="radio" name="AUXILIAR_ASISTENTE_CUMPLE_PPT" id="AUXILIAR_ASISTENTE_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="AUXILIAR_ASISTENTE_CUMPLE_NO">No</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
-
-                            <div class="row mb-3" id="puesto2" style="display: none;">
-                                <div class="col-2 mt-1">
-                                    <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO3_NOMBRE" name="PUESTO3_NOMBRE" >
-                                            <option value="0" disabled selected>Seleccione una opción</option>
-                                            @foreach ($puesto as $puestos)
-                                            <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
-                                            @endforeach
-                                        </select>
+                            <div class="row mb-3">
+                                    <div class="col-2 mt-1">
+                                        <label>Analista o Especialista</label>
                                     </div>
+                                    <div class="col-1">
+                                        <div class="form-group">
+                                            <input type="checkbox" id="ANALISTA_ESPECIALISTA_PPT" name="ANALISTA_ESPECIALISTA_PPT" value="X">
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="radio-container">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input desabilitado" type="radio" name="ANALISTA_ESPECIALISTA_CUMPLE_PPT" id="ANALISTA_ESPECIALISTA_CUMPLE_SI" value="si" disabled>
+                                                <label class="form-check-label" for="ANALISTA_ESPECIALISTA_CUMPLE_SI">Si</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input desabilitado" type="radio" name="ANALISTA_ESPECIALISTA_CUMPLE_PPT" id="ANALISTA_ESPECIALISTA_CUMPLE_NO" value="no" disabled>
+                                                <label class="form-check-label" for="ANALISTA_ESPECIALISTA_CUMPLE_NO">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <div class="col-2 mt-1">
+                                    <label>Elaboración de reportes</label>
                                 </div>
                                 <div class="col-1">
                                     <div class="form-group">
-                                        <input type="checkbox" id="PUESTO3" name="PUESTO3" value="X">
+                                        <input type="checkbox" id="ELABORACION_REPORTES_PPT" name="ELABORACION_REPORTES_PPT" value="X">
                                     </div>
                                 </div>
+
                                 <div class="col-2">
                                     <div class="radio-container">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO3_CUMPLE_PPT" id="PUESTO3_CUMPLE_SI" value="si" disabled>
-                                            <label class="form-check-label" for="PUESTO3_CUMPLE_SI">Si</label>
+                                            <input class="form-check-input desabilitado" type="radio" name="ELABORACION_REPORTES_CUMPLE_PPT" id="ELABORACION_REPORTES_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="ELABORACION_REPORTES_CUMPLE_SI">Si</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO3_CUMPLE_PPT" id="PUESTO3_CUMPLE_NO" value="no" disabled>
-                                            <label class="form-check-label" for="PUESTO3_CUMPLE_NO">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2 mt-1">
-                                    <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO4_NOMBRE" name="PUESTO4_NOMBRE" >
-                                            <option value="0" disabled selected>Seleccione una opción</option>
-                                            @foreach ($puesto as $puestos)
-                                            <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-1">
-                                    <div class="form-group">
-                                        <input type="checkbox" id="PUESTO4" name="PUESTO4" value="X">
-                                    </div>
-                                </div>
-                                <div class="col-2">
-                                    <div class="radio-container">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO4_CUMPLE_PPT" id="PUESTO4_CUMPLE_SI" value="si" disabled>
-                                            <label class="form-check-label" for="PUESTO4_CUMPLE_SI">Si</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO4_CUMPLE_PPT" id="PUESTO4_CUMPLE_NO" value="no" disabled>
-                                            <label class="form-check-label" for="PUESTO4_CUMPLE_NO">No</label>
+                                            <input class="form-check-input desabilitado" type="radio" name="ELABORACION_REPORTES_CUMPLE_PPT" id="ELABORACION_REPORTES_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="ELABORACION_REPORTES_CUMPLE_NO">No</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
-
-                            <div class="row mb-3" id="puesto3" style="display: none;">
-                                <div class="col-2 mt-1">
-                                    <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO5_NOMBRE" name="PUESTO5_NOMBRE" >
-                                            <option value="0" disabled selected>Seleccione una opción</option>
-                                            @foreach ($puesto as $puestos)
-                                            <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-1">
-                                    <div class="form-group">
-                                        <input type="checkbox" id="PUESTO5" name="PUESTO5" value="X">
-                                    </div>
-                                </div>
-                                <div class="col-2">
-                                    <div class="radio-container">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO5_CUMPLE_PPT" id="PUESTO5_CUMPLE_SI" value="si" disabled>
-                                            <label class="form-check-label" for="PUESTO5_CUMPLE_SI">Si</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO5_CUMPLE_PPT" id="PUESTO5_CUMPLE_NO" value="no" disabled>
-                                            <label class="form-check-label" for="PUESTO5_CUMPLE_NO">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2 mt-1">
-                                    <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO6_NOMBRE" name="PUESTO6_NOMBRE" >
-                                            <option value="0" disabled selected>Seleccione una opción</option>
-                                            @foreach ($puesto as $puestos)
-                                            <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-1">
-                                    <div class="form-group">
-                                        <input type="checkbox" id="PUESTO6" name="PUESTO6" value="X">
-                                    </div>
-                                </div>
-                                <div class="col-2">
-                                    <div class="radio-container">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO6_CUMPLE_PPT" id="PUESTO6_CUMPLE_SI" value="si" disabled>
-                                            <label class="form-check-label" for="PUESTO6_CUMPLE_SI">Si</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO6_CUMPLE_PPT" id="PUESTO6_CUMPLE_NO" value="no" disabled>
-                                            <label class="form-check-label" for="PUESTO6_CUMPLE_NO">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                           
-
-                            <div class="row mb-3" id="puesto4" style="display: none;">
-                                <div class="col-2 mt-1">
-                                    <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO7_NOMBRE" name="PUESTO7_NOMBRE" >
-                                            <option value="0" disabled selected>Seleccione una opción</option>
-                                            @foreach ($puesto as $puestos)
-                                            <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-1">
-                                    <div class="form-group">
-                                        <input type="checkbox" id="PUESTO7" name="PUESTO7" value="X">
-                                    </div>
-                                </div>
-                                <div class="col-2">
-                                    <div class="radio-container">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO7_CUMPLE_PPT" id="PUESTO7_CUMPLE_SI" value="si" disabled>
-                                            <label class="form-check-label" for="PUESTO7_CUMPLE_SI">Si</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO7_CUMPLE_PPT" id="PUESTO7_CUMPLE_NO" value="no" disabled>
-                                            <label class="form-check-label" for="PUESTO7_CUMPLE_NO">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2 mt-1">
-                                    <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO8_NOMBRE" name="PUESTO8_NOMBRE" >
-                                            <option value="0" disabled selected>Seleccione una opción</option>
-                                            @foreach ($puesto as $puestos)
-                                            <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-1">
-                                    <div class="form-group">
-                                        <input type="checkbox" id="PUESTO8" name="PUESTO8" value="X">
-                                    </div>
-                                </div>
-                                <div class="col-2">
-                                    <div class="radio-container">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO8_CUMPLE_PPT" id="PUESTO8_CUMPLE_SI" value="si" disabled>
-                                            <label class="form-check-label" for="PUESTO8_CUMPLE_SI">Si</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO8_CUMPLE_PPT" id="PUESTO8_CUMPLE_NO" value="no" disabled>
-                                            <label class="form-check-label" for="PUESTO8_CUMPLE_NO">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                           
-
-
-
-                            <div class="row mb-3" id="puesto5" style="display: none;">
-                                <div class="col-2 mt-1">
-                                    <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO9_NOMBRE" name="PUESTO9_NOMBRE" >
-                                            <option value="0" disabled selected>Seleccione una opción</option>
-                                            @foreach ($puesto as $puestos)
-                                            <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-1">
-                                    <div class="form-group">
-                                        <input type="checkbox" id="PUESTO9" name="PUESTO9" value="X">
-                                    </div>
-                                </div>
-                                <div class="col-2">
-                                    <div class="radio-container">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO9_CUMPLE_PPT" id="PUESTO9_CUMPLE_SI" value="si" disabled>
-                                            <label class="form-check-label" for="PUESTO9_CUMPLE_SI">Si</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO9_CUMPLE_PPT" id="PUESTO9_CUMPLE_NO" value="no" disabled>
-                                            <label class="form-check-label" for="PUESTO9_CUMPLE_NO">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-2 mt-1">
-                                    <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO10_NOMBRE" name="PUESTO10_NOMBRE" >
-                                            <option value="0" disabled selected>Seleccione una opción</option>
-                                            @foreach ($puesto as $puestos)
-                                            <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-1">
-                                    <div class="form-group">
-                                        <input type="checkbox" id="PUESTO10" name="PUESTO10" value="X">
-                                    </div>
-                                </div>
-                                <div class="col-2">
-                                    <div class="radio-container">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO10_CUMPLE_PPT" id="PUESTO10_CUMPLE_SI" value="si" disabled>
-                                            <label class="form-check-label" for="PUESTO10_CUMPLE_SI">Si</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input desabilitado" type="radio" name="PUESTO10_CUMPLE_PPT" id="PUESTO10_CUMPLE_NO" value="no" disabled>
-                                            <label class="form-check-label" for="PUESTO10_CUMPLE_NO">No</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
                                                   
 
-                          
+                            <div class="row mb-3">
 
+                                <div class="col-2 mt-1">
+                                    <label>Técnico de muestreo</label>
+                                </div>
+                                <div class="col-1">
+                                    <div class="form-group">
+                                        <input type="checkbox" id="TECNICO_MUESTREO_PPT" name="TECNICO_MUESTREO_PPT" value="X">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="TECNICO_MUESTREO_CUMPLE_PPT" id="TECNICO_MUESTREO_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="TECNICO_MUESTREO_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="TECNICO_MUESTREO_CUMPLE_PPT" id="TECNICO_MUESTREO_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="TECNICO_MUESTREO_CUMPLE_NO">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2 mt-1">
+                                    <label>Consultor o asesor</label>
+                                </div>
+                                <div class="col-1">
+                                    <div class="form-group">
+                                        <input type="checkbox" id="CONSULTOR_ASESOR_PPT" name="CONSULTOR_ASESOR_PPT" value="X">
+                                      
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="CONSULTOR_ASESOR_CUMPLE_PPT" id="CONSULTOR_ASESOR_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="CONSULTOR_ASESOR_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="CONSULTOR_ASESOR_CUMPLE_PPT" id="CONSULTOR_ASESOR_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="CONSULTOR_ASESOR_CUMPLE_NO">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div class="row mb-3">
+                                <div class="col-2 mt-1">
+                                    <label>Supervisor o coordinador</label>
+                                </div>
+                                <div class="col-1">
+                                    <div class="form-group">
+                                        <input type="checkbox" id="SUPERVISOR_COORDINADOR_PPT" name="SUPERVISOR_COORDINADOR_PPT" value="X">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="SUPERVISOR_COORDINADOR_CUMPLE_PPT" id="SUPERVISOR_COORDINADOR_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="SUPERVISOR_COORDINADOR_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="SUPERVISOR_COORDINADOR_CUMPLE_PPT" id="SUPERVISOR_COORDINADOR_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="SUPERVISOR_COORDINADOR_CUMPLE_NO">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-2 mt-1">
+                                    <label>Signatario</label>
+                                </div>
+                                <div class="col-1">
+                                    <div class="form-group">
+                                        <input type="checkbox" id="SIGNATARIO_PPT" name="SIGNATARIO_PPT" value="X">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="SIGNATARIO_CUMPLE_PPT" id="SIGNATARIO_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="SIGNATARIO_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="SIGNATARIO_CUMPLE_PPT" id="SIGNATARIO_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="SIGNATARIO_CUMPLE_NO">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-2 mt-1">
+                                    <label>Jefe de área o departamento</label>
+                                </div>
+                                <div class="col-1">
+                                    <div class="form-group">
+                                        <input type="checkbox" id="JEFE_AREA_PPT" name="JEFE_AREA_PPT" value="X">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="JEFE_AREA_CUMPLE_PPT" id="JEFE_AREA_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="JEFE_AREA_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="JEFE_AREA_CUMPLE_PPT" id="JEFE_AREA_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="JEFE_AREA_CUMPLE_NO">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-2 mt-1">
+                                    <label>Gerente o Director</label>
+                                </div>
+                                <div class="col-1">
+                                    <div class="form-group">
+                                        <input type="checkbox" id="GERENTE_DIRECTOR_PPT" name="GERENTE_DIRECTOR_PPT" value="X">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="radio-container">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="GERENTE_DIRECTOR_CUMPLE_PPT" id="GERENTE_DIRECTOR_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="GERENTE_DIRECTOR_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="GERENTE_DIRECTOR_CUMPLE_PPT" id="GERENTE_DIRECTOR_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="GERENTE_DIRECTOR_CUMPLE_NO">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row mb-3">
                                 <div class="col-12 ">
                                     <h6>Indique el tiempo de experiencia específica requerida para el cargo</h6>
