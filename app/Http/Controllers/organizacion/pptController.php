@@ -15,12 +15,9 @@ class pptController extends Controller
     public function index()
     {
         $areas = DB::select("
-        SELECT NOMBRE, ID_DEPARTAMENTO_AREA as ID, LUGAR_TRABAJO_CATEGORIA AS LUGAR, PROPOSITO_FINALIDAD_CATEGORIA AS PROPOSITO, 0 AS LIDER
-        FROM departamentos_areas
+        SELECT ID_CATALOGO_CATEGORIA  AS ID, NOMBRE_CATEGORIA AS NOMBRE, LUGAR_CATEGORIA AS LUGAR, PROPOSITO_CATEGORIA AS PROPOSITO, ES_LIDER_CATEGORIA AS LIDER
+        FROM catalogo_categorias
         WHERE ACTIVO = 1
-        UNION
-        SELECT NOMBRE_CARGO AS NOMBRE, ID_ENCARGADO_AREA AS ID, LUGAR_TRABAJO_LIDER AS LUGAR, PROPOSITO_FINALIDAD_LIDER AS PROPOSITO, 1 AS LIDER
-        FROM encargados_areas
         ");
 
         return view('RH.organizacion.PPT', compact('areas'));
@@ -44,10 +41,10 @@ class pptController extends Controller
                 $value->REVISADO_POR = is_null($value->REVISADO_NOMBRE_PPT) ? '<span class="badge text-bg-warning">Sin revisar</span>' : $value->REVISADO_NOMBRE_PPT . '<br>' . $value->REVISADO_FECHA_PPT;
                 $value->AUTORIZADO_POR = is_null($value->AUTORIZADO_NOMBRE_PPT) ? '<span class="badge text-bg-danger">Sin autorizar</span>' : $value->AUTORIZADO_NOMBRE_PPT . '<br>' . $value->AUTORIZADO_FECHA_PPT;
 
-              
-                
+
+
                 ## CREADO Y AUN NO ESTA REVISADO NI AUTORIZADO
-                if(!is_null($value->ELABORADO_NOMBRE_PPT) && is_null($value->REVISADO_NOMBRE_PPT)&& is_null($value->AUTORIZADO_NOMBRE_PPT)){
+                if (!is_null($value->ELABORADO_NOMBRE_PPT) && is_null($value->REVISADO_NOMBRE_PPT) && is_null($value->AUTORIZADO_NOMBRE_PPT)) {
 
                     $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-circle ELIMINAR"><i class="bi bi-power"></i></button>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-circle EDITAR"><i class="bi bi-pencil-square"></i></button>';
@@ -55,7 +52,7 @@ class pptController extends Controller
                     $value->BTN_ACCION = '<button type="button" class="btn btn-primary btn-circle REVISAR" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Revisar PPT"><i class="bi bi-eye-fill"></i></button>';
 
                     ##CREADO Y REVISADO PERO NO AUTORIZADO
-                }else if (!is_null($value->ELABORADO_NOMBRE_PPT) && !is_null($value->REVISADO_NOMBRE_PPT) && is_null($value->AUTORIZADO_NOMBRE_PPT)) {
+                } else if (!is_null($value->ELABORADO_NOMBRE_PPT) && !is_null($value->REVISADO_NOMBRE_PPT) && is_null($value->AUTORIZADO_NOMBRE_PPT)) {
 
                     $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secondary btn-circle"><i class="bi bi-ban"></i></button>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-circle "><i class="bi bi-ban"></i></button>';
@@ -94,14 +91,15 @@ class pptController extends Controller
     }
 
 
-    public function revisarPPT($id_formulario){
+    public function revisarPPT($id_formulario)
+    {
 
         $fecha_actual = date('Y-m-d');
 
         $PPT = formulariopptModel::find($id_formulario);
         $PPT->REVISADO_NOMBRE_PPT = 'Usuario anónimo';
         $PPT->REVISADO_FIRMA_PPT = 'USER';
-        $PPT->REVISADO_FECHA_PPT = $fecha_actual; 
+        $PPT->REVISADO_FECHA_PPT = $fecha_actual;
 
         $PPT->save();
 
@@ -149,20 +147,20 @@ class pptController extends Controller
 
                         // GUARDAR LOS CURSOS
 
-                     
-                        
-                        if ($request->CURSO_PPT) {                          
+
+
+                        if ($request->CURSO_PPT) {
                             foreach ($request->CURSO_PPT as $key => $value) {
 
                                 $num = $key + 1;
-                                
+
                                 if ((!empty($request->CURSO_PPT[$key]))) {
 
                                     $guardar_curso = cursospptModel::create([
                                         'FORMULARIO_PPT_ID' => $PPT->ID_FORMULARIO_PPT,
                                         'CURSO_PPT' => $value,
-                                        'CURSO_REQUERIDO' =>isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
-                                        'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] :null,
+                                        'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
+                                        'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
                                         // 'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num]
                                     ]);
                                 }
@@ -172,9 +170,6 @@ class pptController extends Controller
                         $response['code']  = 1;
                         $response['PPT']  = $PPT;
                         return response()->json($response);
-
-                        
-                        
                     } else { //Editamos el ppt y eliminar ppt
 
 
@@ -187,18 +182,18 @@ class pptController extends Controller
 
 
                         // GUARDAR LOS CURSOS
-                         if ($request->CURSO_PPT) {                          
+                        if ($request->CURSO_PPT) {
                             foreach ($request->CURSO_PPT as $key => $value) {
-                                
+
                                 $num = $key + 1;
-                                
+
                                 if ((!empty($request->CURSO_PPT[$key]))) {
 
                                     $guardar_curso = cursospptModel::create([
                                         'FORMULARIO_PPT_ID' => $PPT->ID_FORMULARIO_PPT,
                                         'CURSO_PPT' => $value,
-                                        'CURSO_REQUERIDO' =>isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
-                                        'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] :null,
+                                        'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
+                                        'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
                                         // 'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num]
                                     ]);
                                 }
