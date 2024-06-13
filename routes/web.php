@@ -19,6 +19,8 @@ use App\Http\Controllers\organizacion\catalogogeneroControlller;
 use App\Http\Controllers\organizacion\catalogoexperienciaController;
 use App\Http\Controllers\organizacion\catalogocompetenciabasicaController;
 use App\Http\Controllers\organizacion\catalogotipovacanteController;
+use App\Http\Controllers\organizacion\catalogoCompotenciasGerencialesController;
+
 
 
 
@@ -176,3 +178,9 @@ Route::get('/Tablavacantes', [catalogovacantesController::class, 'Tablavacantes'
 
 
 Route::get('/Listavacantes', function () {return view('RH.reclutamiento.reclutamiento');});
+
+
+Route::get('/Competencias-gerenciales', function () {return view('RH.Catálogos.catalogo_competenciasGerenciales'); });
+Route::post('/GerencialesSave', [catalogoCompotenciasGerencialesController::class, 'store']);
+Route::get('/GerencialesDelete', [catalogoCompotenciasGerencialesController::class, 'store']);
+Route::get('/TablaCompetenciasGerenciales', [catalogoCompotenciasGerencialesController::class, 'TablaCompetenciasGerenciales']);

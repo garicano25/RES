@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="assets/css/organigrama.css">
 
 
-    
+
     @if(request()->is('DPT'))
     <link rel="stylesheet" href="assets/css/dpt.css">
     @endif
@@ -93,14 +93,14 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: 10px;">
-                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff;"  role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-diagram-3-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Organización</span><span class="d-none d-lg-inline">Organización</span>
-                        </a>                                             
+                        </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url('/organigrama') }}">Organigrama</a></li>
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/PPT')}}">PPT</a></li>
-                            <hr class="dropdown-divider">                            
+                            <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/DPT')}}">DPT</a></li>
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/RequisiciónDePersonal')}}">Requisición de personal </a></li>
@@ -144,28 +144,28 @@
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown" style="margin-left: 10px;">
                             <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> 
+                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
                                 <span class="d-lg-none">Catálogo</span>
                                 <span class="d-none d-lg-inline">Catálogo</span>
-                            </a>                                             
+                            </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{ url('/Jerárquico') }}">Catálogo nivel Jerárquico</a>
                                 </li>
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/FuncionesCargo')}}">Funciones clave del cargo</a>
                                 </li>
-                                <hr class="dropdown-divider">                            
+                                <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/Funcionesgestión')}}">Funciones del sistema <br> integrado de gestión</a>
-                                </li>    
+                                </li>
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/Asesores')}}">Catálogo de Asesores</a>
-                                </li> 
+                                </li>
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/RelacionesExternas')}}">Relaciones externas</a>
-                                </li> 
+                                </li>
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/CatálogoDeVacantes')}}">Catálogo de Vacantes </a>
-                                </li> 
+                                </li>
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/Categorías')}}">Catálogo de Categorías </a>
                                 </li>
@@ -179,11 +179,14 @@
                                 <li><a class="dropdown-item" href="{{url('/Competencias-básicas')}}">Catálogo de competencias básicas</a>
                                 </li>
                                 <hr class="dropdown-divider">
-                                <li><a class="dropdown-item" href="{{url('/Tipo-vacante')}}">Catálogo de Tipo  de vacante</a>
+                                <li><a class="dropdown-item" href="{{url('/Tipo-vacante')}}">Catálogo de Tipo de vacante</a>
+                                </li>
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/Competencias-gerenciales')}}">Catálogo de competencias gerenciales</a>
                                 </li>
 
 
-                             
+
                             </ul>
                         </li>
                     </ul>
@@ -243,13 +246,13 @@
     <script src="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.js"></script>
     <!-- Select opcion selectize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
-    
-    
+
+
     <!-- Funciones generales -->
     <script src="/assets/js_sitio/funciones.js"></script>
 
 
-   
+
 
     @if(request()->is('organigrama'))
     <!-- organización -->
@@ -264,7 +267,7 @@
     @if(request()->is('DPT'))
     <script src="/assets/js_sitio/organizacion/DPT.js"></script>
     @endif
-    
+
     @if(request()->is('Jerárquico'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogos.js"></script>
     @endif
@@ -273,7 +276,7 @@
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoasesores.js"></script>
     @endif
 
-  
+
     @if(request()->is('FuncionesCargo'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionescargo.js"></script>
     @endif
@@ -297,7 +300,7 @@
     @if(request()->is('Categorías'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogocategoria.js"></script>
     @endif
-    
+
     @if(request()->is('Género'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogogenero.js"></script>
     @endif
@@ -306,7 +309,7 @@
     @if(request()->is('Puesto-experiencia'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoexperiencia.js"></script>
     @endif
-  
+
 
     @if(request()->is('Competencias-básicas'))
     <script src="/assets/js_sitio/organizacion/catalogos/catálogocompetenciabasica.js"></script>
@@ -317,10 +320,14 @@
     <script src="/assets/js_sitio/organizacion/catalogos/catalogotipovacante.js"></script>
     @endif
 
+    @if(request()->is('Competencias-gerenciales'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogoCompetenciasGerenciales.js"></script>
+    @endif
 
-    
-    
-    
-    </body>
+
+
+
+
+</body>
 
 </html>
