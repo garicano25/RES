@@ -42,8 +42,8 @@
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-area-tab" data-bs-toggle="tab" data-bs-target="#nav-area" type="button" role="tab" aria-controls="nav-area" aria-selected="true">Área</button>
-            <button class="nav-link" id="nav-encargados-tab" data-bs-toggle="tab" data-bs-target="#nav-encargados" type="button" role="tab" aria-controls="nav-encargados" aria-selected="false" disabled>Líder de categoría</button>
-            <button class="nav-link" id="nav-cargos-tab" data-bs-toggle="tab" data-bs-target="#nav-cargos" type="button" role="tab" aria-controls="nav-cargos" aria-selected="false" disabled>categorías</button>
+            <button class="nav-link" id="nav-encargados-tab" data-bs-toggle="tab" data-bs-target="#nav-encargados" type="button" role="tab" aria-controls="nav-encargados" aria-selected="false" disabled>Categorías</button>
+
           </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -67,31 +67,38 @@
           </div>
           <div class="tab-pane fade" id="nav-encargados" role="tabpanel" aria-labelledby="nav-encargados-tab" tabindex="0">
             <!-- Formulario de encargado -->
-            <form id="formEncargado" class="mt-4">
+            <form id="formCategoria" class="mt-4 mb-5">
               {!! csrf_field() !!}
               <input type="hidden" name="TIPO_AREA_ID" value="4">
 
               <div class="row">
-                <div class="col-10">
-                  <div class="mb-3">
-                    <label class="form-label">Nombre de la categoría *</label>
-                    <input type="text" class="form-control" id="NOMBRE_CARGO" name="NOMBRE_CARGO" required>
-                  </div>
+                <div class="col-9">
+                  <label class="mb-2">Seleccione la categoría a agregar</label>
+                  <select class="form-control" id="CATEGORIA" name="CATEGORIA" required>
+                    <option selected disabled>Seleccione una opción</option>
+                    @foreach ($categorias as $categoria)
+                    <option value="{{ $categoria->ID_CATALOGO_CATEGORIA }}" data-lider="{{ $categoria->ES_LIDER_CATEGORIA }}">{{ $categoria->NOMBRE_CATEGORIA }}</option>
+                    @endforeach
+                  </select>
                 </div>
-                <div class="col-2 mt-4">
-                  <button type="submit" id="guardarEncargado" class="btn btn-success mt-2 ">Guardar</button>
+                <div class="col-3" style="margin-top: 35px;">
+                  <h4><span class="badge text-bg-warning" id="esLiderText">Categoría</span></h4>
+                  <input type="hidden" class="form-control" id="ES_LIDER" name="ES_LIDER">
                 </div>
+              </div>
 
-                <div class="col-12">
-                  <div class="mb-3">
-                    <input type="text" class="form-control" id="LUGAR_TRABAJO_LIDER" name="LUGAR_TRABAJO_LIDER" placeholder="Lugar de Trabajo" required>
-                  </div>
-
+              <div class="row mt-2">
+                <div class="col-9">
+                  <label class="mb-2">Lider a cargo</label>
+                  <select class="form-control" id="LIDER" name="LIDER" disabled>
+                    <option selected disabled>Seleccione una opción</option>
+                    @foreach ($lideres as $lider)
+                    <option value="{{ $lider->ID_CATALOGO_CATEGORIA }}" ">{{ $lider->NOMBRE_CATEGORIA }}</option>
+                    @endforeach
+                  </select>
                 </div>
-                <div class="col-12">
-                  <div class="mb-3">
-                    <textarea class="form-control" id="PROPOSITO_FINALIDAD_LIDER" name="PROPOSITO_FINALIDAD_LIDER" rows="2" placeholder="Propósito o finalidad el puesto"></textarea>
-                  </div>
+                <div class=" col-3" style="margin-top: 23px;">
+                      <button type="submit" id="guardarEncargado" class="btn btn-success mt-2 "><i class="bi bi-save"></i> Agregar categoría</button>
                 </div>
               </div>
             </form>
@@ -100,59 +107,7 @@
             <table id="TablaEncargados" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
 
             </table>
-          </div>
-          <div class="tab-pane fade" id="nav-cargos" role="tabpanel" aria-labelledby="nav-cargos-tab" tabindex="0">
-            <!-- Formulario de cargo -->
-            <form id="formDepartamentos" class="mt-4 mb-4">
-              {!! csrf_field() !!}
-              <input type="hidden" name="TIPO_AREA_ID" value="5">
-              <div class="row">
-                <div class="col-4 mt-3">
-                  <label class="form-label">Tiene un Líder a cargo? *</label>
-                  <div class="form-check form-check-inline mx-3">
-                    <input class="form-check-input" type="radio" name="TIENE_ENCARGADO" id="TIENE_ENCARGADO_SI" value="1" checked>
-                    <label class="form-check-label" for="TIENE_ENCARGADO_SI">Si</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="TIENE_ENCARGADO" id="TIENE_ENCARGADO_NO" value="0">
-                    <label class="form-check-label" for="TIENE_ENCARGADO_NO">No</label>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="form-floating">
-                    <select class="form-select" id="ENCARGADO_AREA_ID" name="ENCARGADO_AREA_ID"></select>
-                    <label for="ENCARGADO_AREA_ID">Líder de categoría</label>
-                  </div>
-                </div>
-              </div>
-              <div class="row mt-4">
-                <div class="col-10">
-                  <div class="mb-3">
-                    <input type="text" class="form-control" id="CARGO_DESCRIPCION" name="NOMBRE" placeholder="Nombre de la categoría" required>
-                  </div>
 
-                </div>
-                <div class="col-2 ">
-                  <button type="submit" id="guardarDepartamento" class="btn btn-success mt-2 ">Guardar</button>
-                </div>
-
-                <div class="col-12">
-                  <div class="mb-3">
-                    <input type="text" class="form-control" id="LUGAR_TRABAJO_CATEGORIA" name="LUGAR_TRABAJO_CATEGORIA" placeholder="Lugar de Trabajo" required>
-                  </div>
-
-                </div>
-                <div class="col-12">
-                  <div class="mb-3">
-                    <textarea class="form-control" id="PROPOSITO_FINALIDAD_CATEGORIA" name="PROPOSITO_FINALIDAD_CATEGORIA" rows="2" placeholder="Propósito o finalidad el puesto"></textarea>
-                  </div>
-                </div>
-              </div>
-            </form>
-            <!-- Tabla de las cargas -->
-            <table id="TablaCargos" class="table table-hover bg-white table-bordered text-center w-100 TableCustom mt-3">
-
-            </table>
           </div>
         </div>
       </div>
@@ -215,41 +170,41 @@
 
 <div class="modal fade" id="miModal_CATEGORIAS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-      <div class="modal-content">
-          <form method="post" enctype="multipart/form-data" id="formDepartamentos" style="background-color: #ffffff;">
-              <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Categoría</h1>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal-content">
+      <form method="post" enctype="multipart/form-data" id="formDepartamentos" style="background-color: #ffffff;">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Categoría</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {!! csrf_field() !!}
+          <div class="row mt-4">
+            <div class="col-10">
+              <div class="mb-3">
+                <input type="text" class="form-control" id="CARGO_DESCRIPCION" name="NOMBRE" placeholder="Nombre de la categoría" required>
               </div>
-              <div class="modal-body">
-                  {!! csrf_field() !!}
-                  <div class="row mt-4">
-                    <div class="col-10">
-                      <div class="mb-3">
-                        <input type="text" class="form-control" id="CARGO_DESCRIPCION" name="NOMBRE" placeholder="Nombre de la categoría" required>
-                      </div>
-    
-                    </div>
-                      
-                    <div class="col-12">
-                      <div class="mb-3">
-                        <input type="text" class="form-control" id="LUGAR_TRABAJO_CATEGORIA" name="LUGAR_TRABAJO_CATEGORIA" placeholder="Lugar de Trabajo" required>
-                      </div>
-    
-                    </div>
-                    <div class="col-12">
-                      <div class="mb-3">
-                        <textarea class="form-control" id="PROPOSITO_FINALIDAD_CATEGORIA" name="PROPOSITO_FINALIDAD_CATEGORIA" rows="2" placeholder="Propósito o finalidad el puesto"></textarea>
-                      </div>
-                    </div>
-                  </div>
+
+            </div>
+
+            <div class="col-12">
+              <div class="mb-3">
+                <input type="text" class="form-control" id="LUGAR_TRABAJO_CATEGORIA" name="LUGAR_TRABAJO_CATEGORIA" placeholder="Lugar de Trabajo" required>
               </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                  <button type="submit" class="btn btn-success" id="guardarDepartamento">Guardar</button>
+
+            </div>
+            <div class="col-12">
+              <div class="mb-3">
+                <textarea class="form-control" id="PROPOSITO_FINALIDAD_CATEGORIA" name="PROPOSITO_FINALIDAD_CATEGORIA" rows="2" placeholder="Propósito o finalidad el puesto"></textarea>
               </div>
-          </form>
-      </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-success" id="guardarDepartamento">Guardar</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 

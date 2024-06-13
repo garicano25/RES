@@ -607,3 +607,41 @@ $('.decisiones').on('change', function() {
         $('.decisiones').not(this).prop('checked', false);
     }
 });
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    let puestoIndex = 0;
+    const puestos = ['puesto1', 'puesto2', 'puesto3', 'puesto4', 'puesto5'];
+
+    document.getElementById('agregapuesto').addEventListener('click', function () {
+        if (puestoIndex < puestos.length) {
+            document.getElementById(puestos[puestoIndex]).style.display = 'flex';
+            puestoIndex++;
+        }
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const selects = document.querySelectorAll('.puesto');
+
+    selects.forEach(select => {
+        select.addEventListener('change', function () {
+            const selectedValues = Array.from(selects).map(s => s.value);
+            
+            selects.forEach(s => {
+                const currentValue = s.value;
+                const options = s.querySelectorAll('option');
+
+                options.forEach(option => {
+                    if (selectedValues.includes(option.value) && option.value !== currentValue) {
+                        option.style.display = 'none';
+                    } else {
+                        option.style.display = 'block';
+                    }
+                });
+            });
+        });
+    });
+});

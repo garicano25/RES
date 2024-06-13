@@ -2,8 +2,7 @@
 var ID_AREA = 0
 
 //TABLAS
-TablaCargos = null
-TablaEncargado = null
+TablaCategorias = null
 
 function resetDiagram() {
   
@@ -171,7 +170,7 @@ ModalOrganigrama.addEventListener('hidden.bs.modal', event => {
     $('.body').css('padding-right', '0px')
 })
 
-$('#nav-encargados-tab').on('click', function () { TablaEncargado.columns.adjust().draw() })
+$('#nav-encargados-tab').on('click', function () { TablaCategorias.columns.adjust().draw() })
 
 // ======================== AREAS =================================
 $("#guardarArea").click(function (e) {
@@ -202,7 +201,6 @@ $("#guardarArea").click(function (e) {
                         //Cargamos las tablas
                         TablaAreas.ajax.reload()
                         TablaEncargados(ID_AREA)
-                        TablaDepartamentos(ID_AREA)
 
                         
                         
@@ -229,7 +227,6 @@ $("#guardarArea").click(function (e) {
 
                         ID_AREA = data.area.ID_AREA
                         $('#nav-encargados-tab').prop('disabled', false)
-                        $('#nav-cargos-tab').prop('disabled', false)
                         alertToast('Área editada exitosamente', 'success', 3000)
                         TablaAreas.ajax.reload()
 
@@ -279,10 +276,10 @@ TablaAreas = $("#TablaAreas").DataTable({
         dataSrc: 'data'
     },
     columns: [
-        { data: 'ID_AREA' },
+        { data: 'COUNT' },
         { data: 'NOMBRE' },
-        { data: 'ENCARGADOS' },
-        { data: 'DEPARTAMENTOS' },
+        { data: 'LIDERES' },
+        { data: 'CATEGORIAS' },
         { data: 'BTN_ORGANIGRAMA' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' },
@@ -295,7 +292,7 @@ TablaAreas = $("#TablaAreas").DataTable({
         { target: 3, title: 'Categorías', className: 'all' },
         { target: 4, title: 'Organigrama', className: 'all text-center' },
         { target: 5, title: 'Editar', className: 'all text-center' },
-        { target: 6, title: 'Inactivo', className: 'all text-center' },
+        { target: 6, title: 'Estado', className: 'all text-center' },
 
     ]
 })
@@ -309,12 +306,12 @@ $('#TablaAreas tbody').on('click', 'td>button.EDITAR', function () {
 
     //Rellenamos los datos del formulario
     editarDatoTabla(row.data(), 'formArea', 'ModalArea')
+
     $('#nav-encargados-tab').prop('disabled', false)
     $('#nav-cargos-tab').prop('disabled', false)
 
     //CARGAMOS LA TABLA DE LOS DEPARTAMENTOS
     TablaEncargados(ID_AREA)
-    TablaDepartamentos(ID_AREA)
 
 })
 
@@ -402,7 +399,27 @@ $('#verOrganigramaGeneral').on('click', function () {
   
 })
 
-// ======================== ENCARGADOS DE LAS AREAS =================================
+// ======================== FUNCIONALIDADES DE LAS CATEGORIAS DE  AREAS =================================
+
+$('#CATEGORIA').on('change', function (e) {
+
+    var valorSeleccionado = $(this).find("option:selected");
+    var esLider = valorSeleccionado.data("lider");
+    
+    if (esLider == 1) {
+        $('#esLiderText').text('Es lider: Si')
+        $('#LIDER').prop('disabled', true).prop('required', false)
+        $('#LIDER').val('')
+        $('#ES_LIDER').val(1)
+
+    } else {
+        $('#esLiderText').text('Es lider: No')
+        $('#LIDER').prop('disabled', false).prop('required', true)
+        $('#LIDER').val('')
+        $('#ES_LIDER').val(0)
+    }
+})
+
 
 $("#guardarEncargado").click(function (e) {
     e.preventDefault();
@@ -412,20 +429,25 @@ $("#guardarEncargado").click(function (e) {
 
             
         alertMensajeConfirm({
-            title: "¿Desea agregar este Líder de categoría al área actual?",
+            title: "¿Desea agregar esta categoría al area actual?",
             text: "Al guardarlo, se agregara al organigrama",
             icon: "question",
         },async function () { 
 
             await loaderbtn('guardarEncargado')
-            await ajaxAwaitFormData({ api: 3, AREA_ID : ID_AREA  , ID_ENCARGADO_AREA: 0}, 'areasSave', 'formEncargado', 'guardarEncargado', { callbackAfter: true}, false, function (data) {
+
+            await ajaxAwaitFormData({ api: 2, AREA_ID : ID_AREA, NUEVO: 1 }, 'areasSave', 'formCategoria', 'guardarEncargado', { callbackAfter: true}, false, function (data) {
                     
                 setTimeout(() => {
+                    
+                    document.getElementById('formCategoria').reset();
+                    $('#esLiderText').text('Categoría')
 
-                    alertToast('Líder guardado exitosamente', 'success', 3000)
+                    alertToast('Categoría agregada exitosamente', 'success', 3000)
+
                     // TablaAreas.ajax.reload()
-                    TablaEncargado.ajax.reload()
-                    $('#NOMBRE_CARGO').val('')
+                    TablaCategorias.ajax.reload()
+                  
                     
                 }, 300);  
             })
@@ -436,12 +458,12 @@ $("#guardarEncargado").click(function (e) {
 
 function TablaEncargados(id_area) {
 
-    if (TablaEncargado != null) {
-        TablaEncargado.destroy()
+    if (TablaCategorias != null) {
+        TablaCategorias.destroy()
         
     }   
 
-    TablaEncargado = $("#TablaEncargados").DataTable({
+    TablaCategorias = $("#TablaEncargados").DataTable({
         language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json", },
         lengthChange: true,
         lengthMenu: [
@@ -465,128 +487,7 @@ function TablaEncargados(id_area) {
         
             },
             complete: function () {
-                TablaEncargado.columns.adjust().draw()
-            
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                alertErrorAJAX(jqXHR, textStatus, errorThrown);
-            },
-            dataSrc: 'data'
-        },
-        columns: [
-            { data: 'COUNT' },
-            { data: 'NOMBRE_CARGO' },
-            { data: 'BTN_ELIMINAR' },
-
-        ],
-        columnDefs: [
-            { target: 0, title: '#', className: 'all' },
-            { target: 1, title: 'Nombre de la categoría', className: 'all' },
-            { target: 2, title: 'Eliminar', className: 'all text-center' },
-        ]
-    })
-
-}
-
-$('input[name="TIENE_ENCARGADO"]').change(function() {
-	
-	var valor = $(this).val();
-	
-	if (valor === '1') {
-		
-        $('#ENCARGADO_AREA_ID').prop('required', true).prop('disabled', false);
-
-	} else if (valor === '0') {
-			
-        $('#ENCARGADO_AREA_ID').prop('required', false).prop('disabled', true);
-
-	}
-});
-
-$('#nav-cargos-tab').on('click', function () {
-    
-    TablaCargos.columns.adjust().draw()    
-    ajaxAwait({}, '/listaEncagadosAreas/' + ID_AREA, 'GET', { callbackAfter: true, callbackBefore: true }, () => {
-		
-        $('#ENCARGADO_AREA_ID').html('<option value="">Consultando...</option>').prop('disabled', true);
-        
-    }, function (data) {
-         
-		$('#ENCARGADO_AREA_ID').html(data.opciones).prop('disabled', false);
-        
-    })
-
-})
-
-
-
-
-// ======================== DEPARTAMENTOS DE LAS AREAS  =================================
-
-$("#guardarDepartamento").click(function (e) {
-    e.preventDefault();
-    
-    var valida = this.form.checkValidity();
-    if (valida) { 
-
-            
-        alertMensajeConfirm({
-            title: "¿Desea guardar esta categoría al área actual?",
-            text: "Al guardarlo, se agregara al organigrama",
-            icon: "question",
-        },async function () { 
-
-            await loaderbtn('guardarDepartamento')
-            await ajaxAwaitFormData({ api: 2, AREA_ID : ID_AREA  , ID_DEPARTAMENTO_AREA: 0}, 'areasSave', 'formDepartamentos', 'guardarDepartamento', { callbackAfter: true}, false, function (data) {
-                    
-                setTimeout(() => {
-
-                    alertToast('Categoría guardada exitosamente', 'success', 3000)
-                    TablaAreas.ajax.reload()
-                    TablaCargos.ajax.reload()
-                    
-                    $('#formDepartamentos').trigger("reset");
-                    
-                }, 300);  
-            })
-        }, 1)
-    }
-});
-
-
-
-function TablaDepartamentos(id_area) {
-
-    if (TablaCargos != null) {
-        TablaCargos.destroy()
-        
-    }   
-
-    TablaCargos = $("#TablaCargos").DataTable({
-        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json", },
-        lengthChange: true,
-        lengthMenu: [
-            [10, 25, 50, -1],
-            [10, 25, 50, 'All']
-        ],
-        info: false,
-        paging: true,
-        searching: true,
-        filtering: true,
-        scrollY: '65vh',
-        scrollCollapse: true,
-        responsive: true,
-        ajax: {
-            dataType: 'json',
-            data: {},
-            method: 'GET',
-            cache: false,
-            url: '/TablaCargos/'+ id_area,
-            beforeSend: function () {
-        
-            },
-            complete: function () {
-                TablaCargos.columns.adjust().draw()
+                TablaCategorias.columns.adjust().draw()
             
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -597,39 +498,28 @@ function TablaDepartamentos(id_area) {
         columns: [
             { data: 'COUNT' },
             { data: 'NOMBRE' },
-            { data: 'BTN_ELIMINAR' },
+            { data: 'ES_LIDER' },
+            { data: 'BTN_EDITAR' },
+            { data: 'BTN_ACTIVO' }
 
         ],
         columnDefs: [
             { target: 0, title: '#', className: 'all' },
-            { target: 1, title: 'categoría', className: 'all' },
-            { target: 2, title: 'Inactivo', className: 'all text-center' },
+            { target: 1, title: 'Nombre de la categoría', className: 'all' },
+            { target: 2, title: 'Es lider', className: 'all text-center' },
+            { target: 3, title: 'Editar', className: 'all text-center' },
+            { target: 4, title: 'Estado', className: 'all text-center' },
+
         ]
     })
 
 }
 
 
-$('#TablaCargos').on('click', 'button.ELIMINAR', function () {
-    var tr = $(this).closest('tr');
-    var row = TablaCargos.row(tr);
-
-    var data = {
-        api: 2,
-        ID_DEPARTAMENTO_AREA: row.data().ID_DEPARTAMENTO_AREA
-    };
-
-    eliminarDatoTabla(data, [TablaCargos, TablaAreas], 'areasDelete');
-    
-
-});
-
-
-
 
 $('#TablaEncargados').on('click', 'button.ELIMINAR', function () {
     var tr = $(this).closest('tr');
-    var row = TablaEncargado.row(tr);
+    var row = TablaCategorias.row(tr);
     
     console.log('sds')
     var data = {
@@ -637,7 +527,7 @@ $('#TablaEncargados').on('click', 'button.ELIMINAR', function () {
         ID_ENCARGADO_AREA: row.data().ID_ENCARGADO_AREA
     };
 
-    eliminarDatoTabla(data, [TablaEncargado], 'areasDelete');
+    eliminarDatoTabla(data, [TablaCategorias], 'areasDelete');
     
 
 });

@@ -142,3 +142,20 @@ input[type="radio"]:checked::before {
     background-color: #d1d1d1;
 }
 
+
+.btn-custom:hover{
+    /* box-shadow: 1px 1px 1px 1px rgba(32, 32, 32, 0.3)!important; */
+    transform: scale(1.1);
+-webkit-box-shadow: -4px 14px 32px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -4px 14px 32px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: -4px 14px 32px -5px rgba(0, 0, 0, 0.75);
+}
+
+
+
+/* Estilo para el enlace */
+.btn-custom {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    
+}

@@ -173,9 +173,11 @@
                                 <li><a class="dropdown-item" href="{{url('/Género')}}">Catálogo de Género </a>
                                 </li>
                                 <hr class="dropdown-divider">
-                                <li><a class="dropdown-item" href="{{url('/Puesto-experiencia')}}">Catálogo de puesto <br> experiencia </a>
+                                <li><a class="dropdown-item" href="{{url('/Puesto-experiencia')}}">Puesto que se requiere  <br> como experiencia</a>
                                 </li>
-                                
+
+
+
                             </ul>
                         </li>
                     </ul>
@@ -294,6 +296,10 @@
     <script src="/assets/js_sitio/organizacion/catalogos/catalogogenero.js"></script>
     @endif
 
+
+    @if(request()->is('Puesto-experiencia'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogoexperiencia.js"></script>
+    @endif
   
     
     </body>

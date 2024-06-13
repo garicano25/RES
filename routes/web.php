@@ -16,6 +16,7 @@ use App\Http\Controllers\organizacion\catalogosrelacionesexternasController;
 use App\Http\Controllers\organizacion\requerimientoPersonalController;
 use App\Http\Controllers\organizacion\catalogocategoriaControlller;
 use App\Http\Controllers\organizacion\catalogogeneroControlller;
+use App\Http\Controllers\organizacion\catalogoexperienciaController;
 
 // Controladores de reclutamiento
  use App\Http\Controllers\reclutamiento\catalogovacantesController;
@@ -33,7 +34,7 @@ Route::get('/', function () {return view('tablero.index');});
 
 // ORGANIGRAMA
 
-Route::get('/organigrama', function () {return view('RH.organizacion.organigrama');});
+Route::get('/organigrama', [areasController::class, 'index']);
 Route::post('/areasSave', [areasController::class, 'store']);
 Route::get('/areasDelete', [areasController::class, 'store']);
 Route::get('/TablaAreas', [areasController::class, 'TablaAreas']);
@@ -117,10 +118,19 @@ Route::post('/GeneroSave', [catalogogeneroControlller::class, 'store']);
 Route::get('/GeneroDelete', [catalogogeneroControlller::class, 'store']);
 Route::get('/Tablageneros', [catalogogeneroControlller::class, 'Tablageneros']);
 
-//catálogo de Puesto que se requiere como experiencia
 
-Route::get('/Puesto-experiencia', function () {return view('RH.Catálogos.catálogo_puestoexperiencia');});
 
+
+
+
+
+// Catálogo de Puesto que se requiere como experiencia
+
+
+Route::get('/Puesto-experiencia', function () {return view('RH.Catálogos.catálogo_experiencia');});
+Route::post('/PuestoSave', [catalogoexperienciaController::class, 'store']);
+Route::get('/PuestoDelete', [catalogoexperienciaController::class, 'store']);
+Route::get('/Tablaexperiencia', [catalogoexperienciaController::class, 'Tablaexperiencia']);
 
 //==============================================  RECLUTAMIENTO  ============================================== 
 
