@@ -74,36 +74,36 @@
 
             <div class="row mb-3">
               <div class="col-2">
-                  <label>Nivel jerárquico del puesto</label>
+                <label>Nivel jerárquico del puesto</label>
               </div>
               <div class="col-4">
-                  <div class="form-group">
-                      <select class="form-control" id="NIVEL_JERARQUICO_DPT" name="NIVEL_JERARQUICO_DPT" required>
-                          <option value="0" disabled selected>Seleccione una opción</option>
-                          @foreach ($nivel as $niveles)
-                          <option value="{{ $niveles->ID_CATALOGO_JERARQUIA }}" data-descripcion="{{ $niveles->DESCRIPCION_JERARQUIA }}">{{ $niveles->NOMBRE_JERARQUIA }}</option>
-                          @endforeach
-                      </select>
-                  </div>
+                <div class="form-group">
+                  <select class="form-control" id="NIVEL_JERARQUICO_DPT" name="NIVEL_JERARQUICO_DPT" required>
+                    <option value="0" disabled selected>Seleccione una opción</option>
+                    @foreach ($nivel as $niveles)
+                    <option value="{{ $niveles->ID_CATALOGO_JERARQUIA }}" data-descripcion="{{ $niveles->DESCRIPCION_JERARQUIA }}">{{ $niveles->NOMBRE_JERARQUIA }}</option>
+                    @endforeach
+                  </select>
+                </div>
               </div>
               <div class="col-2">
-                  <label>Puesto al que reporta</label>
+                <label>Puesto al que reporta</label>
               </div>
               <div class="col-4">
-                  <div class="form-group">
-                      <input type="text" class="form-control" id="PUESTO_REPORTA_DPT" name="PUESTO_REPORTA_DPT" readonly>
-                  </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="PUESTO_REPORTA_DPT" name="PUESTO_REPORTA_DPT" readonly>
+                </div>
               </div>
-          </div>
-          <div class="row mb-3">
+            </div>
+            <div class="row mb-3">
               <div class="col-2">
-                  <label>Descripción del nivel jerárquico</label>
+                <label>Descripción del nivel jerárquico</label>
               </div>
               <div class="col-10">
-                  <p id="DESCRIPCION_NIVEL_JERARQUICO"></p>
+                <p id="DESCRIPCION_NIVEL_JERARQUICO"></p>
               </div>
-          </div>
-          
+            </div>
+
 
             <div class="row mb-3">
               <div class="col-2">
@@ -122,12 +122,12 @@
               </div>
 
               <div class="col-10">
-                <select class="custom-select form-control" id="PUESTOS_INTERACTUAN_DPT" name="PUESTOS_INTERACTUAN_DPT[]" required multiple >
-                    @foreach ($categorias as $cat)
-                    <option value="{{ $cat->ID }}-{{$cat->LIDER}}">{{ $cat->NOMBRE }}</option>
-                    @endforeach
+                <select class="custom-select form-control" id="PUESTOS_INTERACTUAN_DPT" name="PUESTOS_INTERACTUAN_DPT[]" required multiple>
+                  @foreach ($categorias as $cat)
+                  <option value="{{ $cat->ID }}-{{$cat->LIDER}}">{{ $cat->NOMBRE }}</option>
+                  @endforeach
                 </select>
-            </div>
+              </div>
 
 
 
@@ -135,7 +135,7 @@
             <div class="row mb-3">
               <div class="col-4">
                 <label for="directos" class="form-label">Directos</label>
-                <input type="text" id="PUESTOS_DIRECTOS_DPT" name="PUESTOS_DIRECTOS_DPT" class="form-control"  readonly required>
+                <input type="text" id="PUESTOS_DIRECTOS_DPT" name="PUESTOS_DIRECTOS_DPT" class="form-control" readonly required>
               </div>
               <div class="col-4">
                 <label for="indirectos" class="form-label">Indirectos</label>
@@ -185,14 +185,14 @@
             <div class="row mb-3">
               <table class="table-sm">
                 <thead>
-                    <tr>
-                        <th class="header">Descripción</th>
-                        <th class="header">Activar/Desactivar</th>
-                    </tr>
+                  <tr>
+                    <th class="header">Descripción</th>
+                    <th class="header">Activar/Desactivar</th>
+                  </tr>
                 </thead>
                 <tbody id="tbodyFucnionesCargo"></tbody>
-            </table>
-           
+              </table>
+
             </div>
 
 
@@ -206,29 +206,29 @@
             <div class="row mb-3">
               <table class="table-sm">
                 <thead>
-                    <tr>
-                        <th class="header">Descripción</th>
-                        <th class="header">Activar/Desactivar</th>
-                    </tr>
+                  <tr>
+                    <th class="header">Descripción</th>
+                    <th class="header">Activar/Desactivar</th>
+                  </tr>
                 </thead>
                 <tbody>
-                    @foreach ($gestion as $gestiones)
-                    <tr>
-                      <td id="desc-gestion-{{ $gestiones->ID_CATALOGO_FUNCIONESGESTION }}" class="description blocked">
-                          {{ $gestiones->DESCRIPCION_FUNCION_GESTION }}
-                      </td>
-                      <td>
-                          <div class="switch-container">
-                              <label class="switch">
-                                  <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_GESTION_DPT[]" value="{{ $gestiones->ID_CATALOGO_FUNCIONESGESTION }}">
-                                  <span class="slider"></span>
-                              </label>
-                          </div>
-                      </td>
+                  @foreach ($gestion as $gestiones)
+                  <tr>
+                    <td id="desc-gestion-{{ $gestiones->ID_CATALOGO_FUNCIONESGESTION }}" class="description blocked">
+                      {{ $gestiones->DESCRIPCION_FUNCION_GESTION }}
+                    </td>
+                    <td>
+                      <div class="switch-container">
+                        <label class="switch">
+                          <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_GESTION_DPT[]" value="{{ $gestiones->ID_CATALOGO_FUNCIONESGESTION }}">
+                          <span class="slider"></span>
+                        </label>
+                      </div>
+                    </td>
                   </tr>
-                    @endforeach
+                  @endforeach
                 </tbody>
-            </table>
+              </table>
             </div>
 
 
@@ -777,49 +777,49 @@
 
                     <tr id="COMPETENCIA1" style="display: none;">
                       <td>
-                          <select class="form-control externa-select" id="NOMBRE_COMPETENCIA1" name="NOMBRE_COMPETENCIA1[]">
-                              <option selected disabled>Seleccione una opción</option>
-                              @foreach ($basicos as $basico)
-                              <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
-                              @endforeach
-                          </select>
+                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA1" name="NOMBRE_COMPETENCIA1[]">
+                          <option selected disabled>Seleccione una opción</option>
+                          @foreach ($basicos as $basico)
+                          <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
+                          @endforeach
+                        </select>
                       </td>
                       <td>
-                          <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA1" name="DESCRIPCION_COMPETENCIA1" rows="2" readonly></textarea>
+                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA1" name="DESCRIPCION_COMPETENCIA1" rows="2" readonly></textarea>
                       </td>
                       <td>
-                          <input class="form-check-input" type="radio" name="COMPETENCIA1_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
+                        <input class="form-check-input" type="radio" name="COMPETENCIA1_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
                       </td>
                       <td>
-                          <input class="form-check-input" type="radio" name="COMPETENCIA1_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
+                        <input class="form-check-input" type="radio" name="COMPETENCIA1_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
                       </td>
                       <td>
-                          <input class="form-check-input" type="radio" name="COMPETENCIA1_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
+                        <input class="form-check-input" type="radio" name="COMPETENCIA1_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
                       </td>
-                  </tr>
-                  
-                  <tr id="COMPETENCIA2" style="display: none;">
+                    </tr>
+
+                    <tr id="COMPETENCIA2" style="display: none;">
                       <td>
-                          <select class="form-control externa-select" id="NOMBRE_COMPETENCIA2" name="NOMBRE_COMPETENCIA2">
-                              <option selected disabled>Seleccione una opción</option>
-                              @foreach ($basicos as $basico)
-                              <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
-                              @endforeach
-                          </select>
-                      </td>
-                      <td>
-                          <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA2" name="DESCRIPCION_COMPETENCIA2" rows="2" readonly></textarea>
+                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA2" name="NOMBRE_COMPETENCIA2">
+                          <option selected disabled>Seleccione una opción</option>
+                          @foreach ($basicos as $basico)
+                          <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
+                          @endforeach
+                        </select>
                       </td>
                       <td>
-                          <input class="form-check-input" type="radio" name="COMPETENCIA2_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
+                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA2" name="DESCRIPCION_COMPETENCIA2" rows="2" readonly></textarea>
                       </td>
                       <td>
-                          <input class="form-check-input" type="radio" name="COMPETENCIA2_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
+                        <input class="form-check-input" type="radio" name="COMPETENCIA2_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
                       </td>
                       <td>
-                          <input class="form-check-input" type="radio" name="COMPETENCIA2_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
+                        <input class="form-check-input" type="radio" name="COMPETENCIA2_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
                       </td>
-                  </tr>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA2_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
+                      </td>
+                    </tr>
 
                     <tr id="COMPETENCIA3" style="display: none;">
                       <td>
@@ -828,10 +828,10 @@
                           @foreach ($basicos as $basico)
                           <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
                           @endforeach
-                      </select>
+                        </select>
                       </td>
                       <td>
-                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA3" name="DESCRIPCION_COMPETENCIA3" rows="2"  readonly></textarea>
+                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA3" name="DESCRIPCION_COMPETENCIA3" rows="2" readonly></textarea>
                       </td>
                       <td>
                         <input class="form-check-input" type="radio" name="COMPETENCIA3_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
@@ -852,10 +852,10 @@
                           @foreach ($basicos as $basico)
                           <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
                           @endforeach
-                      </select>
+                        </select>
                       </td>
                       <td>
-                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA4" name="DESCRIPCION_COMPETENCIA4" rows="2"  readonly></textarea>
+                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA4" name="DESCRIPCION_COMPETENCIA4" rows="2" readonly></textarea>
                       </td>
                       <td>
                         <input class="form-check-input" type="radio" name="COMPETENCIA4_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
@@ -877,10 +877,10 @@
                           @foreach ($basicos as $basico)
                           <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
                           @endforeach
-                      </select>
+                        </select>
                       </td>
                       <td>
-                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA5" name="DESCRIPCION_COMPETENCIA5" rows="2"  readonly></textarea>
+                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA5" name="DESCRIPCION_COMPETENCIA5" rows="2" readonly></textarea>
                       </td>
                       <td>
                         <input class="form-check-input" type="radio" name="COMPETENCIA5_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
@@ -900,10 +900,10 @@
                           @foreach ($basicos as $basico)
                           <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
                           @endforeach
-                      </select>
+                        </select>
                       </td>
                       <td>
-                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA6" name="DESCRIPCION_COMPETENCIA6" rows="2"  readonly></textarea>
+                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA6" name="DESCRIPCION_COMPETENCIA6" rows="2" readonly></textarea>
                       </td>
                       <td>
                         <input class="form-check-input" type="radio" name="COMPETENCIA6_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
@@ -916,54 +916,54 @@
                       </td>
                     </tr>
 
-                    
-                      <tr id="COMPETENCIA7" style="display: none;">
-                        <td>
-                          <select class="form-control externa-select" id="NOMBRE_COMPETENCIA7" name="NOMBRE_COMPETENCIA7">
-                            <option selected disabled>Seleccione una opción</option>
-                              @foreach ($basicos as $basico)
-                              <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
-                              @endforeach
-                          </select>
-                        </td>
-                        <td>
-                          <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA7" name="DESCRIPCION_COMPETENCIA7" rows="2"  readonly></textarea>
-                        </td>
-                        <td>
-                          <input class="form-check-input" type="radio" name="COMPETENCIA7_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
-                        </td>
-                        <td>
-                          <input class="form-check-input" type="radio" name="COMPETENCIA7_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
-                        </td>
-                        <td>
-                          <input class="form-check-input" type="radio" name="COMPETENCIA7_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
-                        </td>
-                      </tr>
+
+                    <tr id="COMPETENCIA7" style="display: none;">
+                      <td>
+                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA7" name="NOMBRE_COMPETENCIA7">
+                          <option selected disabled>Seleccione una opción</option>
+                          @foreach ($basicos as $basico)
+                          <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
+                          @endforeach
+                        </select>
+                      </td>
+                      <td>
+                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA7" name="DESCRIPCION_COMPETENCIA7" rows="2" readonly></textarea>
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA7_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA7_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA7_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
+                      </td>
+                    </tr>
 
 
-                      <tr id="COMPETENCIA8" style="display: none;">
-                        <td>
-                          <select class="form-control externa-select" id="NOMBRE_COMPETENCIA8" name="NOMBRE_COMPETENCIA8">
-                            <option selected disabled>Seleccione una opción</option>
-                              @foreach ($basicos as $basico)
-                              <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
-                              @endforeach
-                          </select>
-                        </td>
-                        <td>
-                          <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA8" name="DESCRIPCION_COMPETENCIA8" rows="2" readonly></textarea>
-                        </td>
-                        <td>
-                          <input class="form-check-input" type="radio" name="COMPETENCIA8_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
-                        </td>
-                        <td>
-                          <input class="form-check-input" type="radio" name="COMPETENCIA8_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
-                        </td>
-                        <td>
-                          <input class="form-check-input" type="radio" name="COMPETENCIA8_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
-                        </td>
-                      </tr>
-                  
+                    <tr id="COMPETENCIA8" style="display: none;">
+                      <td>
+                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA8" name="NOMBRE_COMPETENCIA8">
+                          <option selected disabled>Seleccione una opción</option>
+                          @foreach ($basicos as $basico)
+                          <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
+                          @endforeach
+                        </select>
+                      </td>
+                      <td>
+                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA8" name="DESCRIPCION_COMPETENCIA8" rows="2" readonly></textarea>
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA8_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA8_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA8_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
+                      </td>
+                    </tr>
+
                   </tbody>
                 </table>
               </div>
@@ -995,9 +995,9 @@
                       <td>
                         <select class="form-control externa-select" id="NOMBRE_COMPETENCIA11" name="NOMBRE_COMPETENCIA11">
                           <option selected disabled>Seleccione una opción</option>
-                            {{-- @foreach ($basicos as $basico)
-                            <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
-                            @endforeach --}}
+                          @foreach ($gerenciales as $basico)
+                          <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_GERENCIAL }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_GERENCIAL }}">{{ $basico->NOMBRE_COMPETENCIA_GERENCIAL }}</option>
+                          @endforeach
                         </select>
                       </td>
                       <td>
@@ -1019,9 +1019,9 @@
                       <td>
                         <select class="form-control externa-select" id="NOMBRE_COMPETENCIA12" name="NOMBRE_COMPETENCIA12">
                           <option selected disabled>Seleccione una opción</option>
-                            {{-- @foreach ($basicos as $basico)
-                            <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
-                            @endforeach --}}
+                          @foreach ($gerenciales as $basico)
+                          <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_GERENCIAL }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_GERENCIAL }}">{{ $basico->NOMBRE_COMPETENCIA_GERENCIAL }}</option>
+                          @endforeach
                         </select>
                       </td>
                       <td>
@@ -1043,9 +1043,9 @@
                       <td>
                         <select class="form-control externa-select" id="NOMBRE_COMPETENCIA13" name="NOMBRE_COMPETENCIA11">
                           <option selected disabled>Seleccione una opción</option>
-                            {{-- @foreach ($basicos as $basico)
-                            <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
-                            @endforeach --}}
+                          @foreach ($gerenciales as $basico)
+                          <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_GERENCIAL }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_GERENCIAL }}">{{ $basico->NOMBRE_COMPETENCIA_GERENCIAL }}</option>
+                          @endforeach
                         </select>
                       </td>
                       <td>
@@ -1067,9 +1067,9 @@
                       <td>
                         <select class="form-control externa-select" id="NOMBRE_COMPETENCIA14" name="NOMBRE_COMPETENCIA11">
                           <option selected disabled>Seleccione una opción</option>
-                            {{-- @foreach ($basicos as $basico)
-                            <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
-                            @endforeach --}}
+                          @foreach ($gerenciales as $basico)
+                          <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_GERENCIAL }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_GERENCIAL }}">{{ $basico->NOMBRE_COMPETENCIA_GERENCIAL }}</option>
+                          @endforeach
                         </select>
                       </td>
                       <td>
@@ -1086,11 +1086,11 @@
                       </td>
                     </tr>
 
-                 
 
 
 
-                   
+
+
 
                   </tbody>
                 </table>
