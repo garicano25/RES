@@ -13,6 +13,7 @@ class catalogogeneroModel extends Model
     protected $fillable = [
         'NOMBRE_GENERO',
         'DESCRIPCION_GENERO',
+         'ACTIVO'
              
     ];
 

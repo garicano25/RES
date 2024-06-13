@@ -469,6 +469,65 @@ $('.power').on('change', function() {
     }
 });
 
+//Solo seleccionar una opcion de los idomas 
+
+$('.idioma1').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('.idioma1').not(this).prop('checked', false);
+    }
+});
+
+
+$('.idioma2').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('.idioma2').not(this).prop('checked', false);
+    }
+});
+
+$('.idioma3').on('change', function() {
+    if ($(this).is(':checked')) {
+        $('.idioma3').not(this).prop('checked', false);
+    }
+});
+
+
+// AGREGAR IDOMAS
+
+document.getElementById('addIdiomaBtn').addEventListener('click', function(event) {
+    event.preventDefault();
+    document.getElementById('IDIOMA2').style.display = 'table-row';
+    this.style.display = 'none';
+    document.getElementById('addIdiomaBtn2').style.display = 'inline-block';
+    document.getElementById('removeIdiomaBtn2').style.display = 'inline-block';
+    document.getElementById('removeIdiomaBtn3').style.display = 'none'; // Asegura que el botón "Quitar idioma 3" esté oculto al agregar idioma 2
+});
+
+document.getElementById('addIdiomaBtn2').addEventListener('click', function(event) {
+    event.preventDefault();
+    document.getElementById('IDIOMA3').style.display = 'table-row';
+    this.style.display = 'none';
+    document.getElementById('removeIdiomaBtn3').style.display = 'inline-block';
+    document.getElementById('removeIdiomaBtn2').style.display = 'none'; // Oculta el botón "Quitar idioma 2" al agregar idioma 3
+});
+
+document.getElementById('removeIdiomaBtn2').addEventListener('click', function(event) {
+    event.preventDefault();
+    document.getElementById('IDIOMA2').style.display = 'none';
+    document.getElementById('addIdiomaBtn').style.display = 'inline-block';
+    document.getElementById('addIdiomaBtn2').style.display = 'none';
+    this.style.display = 'none';
+    document.getElementById('removeIdiomaBtn3').style.display = 'none'; // Oculta el botón "Quitar idioma 3" al quitar idioma 2
+});
+
+document.getElementById('removeIdiomaBtn3').addEventListener('click', function(event) {
+    event.preventDefault();
+    document.getElementById('IDIOMA3').style.display = 'none';
+    document.getElementById('addIdiomaBtn2').style.display = 'inline-block';
+    this.style.display = 'none';
+    document.getElementById('removeIdiomaBtn2').style.display = 'inline-block'; // Muestra el botón "Quitar idioma 2" al quitar idioma 3
+});
+
+
 // check de los cursos
 
 $('input[id^="CURSO"][id$="_REQUERIDO_PPT"], input[id^="CURSO"][id$="_DESEABLE_PPT"]').on('change', function() {

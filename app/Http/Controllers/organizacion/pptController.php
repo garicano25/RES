@@ -149,8 +149,6 @@ class pptController extends Controller
                         DB::statement('ALTER TABLE formulario_ppt AUTO_INCREMENT=1;');
                         $PPT = formulariopptModel::create($request->all());
 
-
-
                         // GUARDAR LOS CURSOS
 
 
@@ -179,9 +177,12 @@ class pptController extends Controller
                     } else { //Editamos el ppt y eliminar ppt
 
 
-                        $PPT = formulariopptModel::find($request->ID_FORMULARIO_PPT);
-                        $PPT->update($request->all());
 
+                        // Eliminar el registro existente
+                        $eliminar_ppt = formulariopptModel::where('ID_FORMULARIO_PPT', $request->ID_FORMULARIO_PPT)->delete();
+
+                        // Crear un nuevo registro con los datos actualizados
+                        $PPT = formulariopptModel::create($request->all());
 
                         //ELIMINAMOS LOS CURSOS ANTERIORES
                         $eliminar_cursos = cursospptModel::where('FORMULARIO_PPT_ID', $request["ID_FORMULARIO_PPT"])->delete();

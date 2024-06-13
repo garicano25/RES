@@ -72,6 +72,7 @@ class formulariodptModel extends Model
         'AUTORIZADO_NOMBRE_DPT',
         'AUTORIZADO_FIRMA_DPT',
         'AUTORIZADO_FECHA_DPT',
+         'ACTIVO'
     ];
 
 
