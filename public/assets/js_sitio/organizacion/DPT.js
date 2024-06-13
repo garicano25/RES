@@ -2,7 +2,6 @@
 ID_FORMULARIO_DPT = 0
 
 
-
 const ModalArea = document.getElementById('miModal_DPT');
 ModalArea.addEventListener('hidden.bs.modal', event => {
     ID_FORMULARIO_DPT = 0;
@@ -274,16 +273,15 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
         if (lider == 1 || lider == 2) {
             $('#PUESTO_REPORTA_DPT').val(data.REPORTA).prop('readonly', true)
             $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN[0].REPORTAN).prop('readonly', true)
-        $('#PUESTOS_DIRECTOS_DPT').val(data.REPORTAN[0].REPORTAN).prop('readonly', true)
+            $('#PUESTOS_DIRECTOS_DPT').val(data.REPORTAN[0].TOTAL).prop('readonly', true)
 
 
         } else {
 
             $('#PUESTO_REPORTA_DPT').val(data.REPORTA[0].REPORTA).prop('readonly', true)
             $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN).prop('readonly', true)
-        $('#PUESTOS_DIRECTOS_DPT').val(data.REPORTAN).prop('readonly', true)
+            $('#PUESTOS_DIRECTOS_DPT').val(0).prop('readonly', true)
 
-            
         }  
     })
 });
@@ -398,7 +396,13 @@ $(document).ready(function () {
         plugins: ['remove_button'],
         delimiter: ',',
         persist: false,
-        placeholder: 'Seleccione una opción'
+        placeholder: 'Seleccione una opción',
+        onItemAdd: function(value, $item) {
+            contarPuestosInderectos();
+        },
+        onItemRemove: function(value) {
+            contarPuestosInderectos();
+        }
     });
 
     var selectizeInstance = $select[0].selectize;
@@ -435,6 +439,14 @@ $(document).ready(function () {
         editarDatoTabla(data, form, 'miModal_DPT', 1);
         mostrarFunciones(data, form);
     });
+
+
+
+    //Funciones para contar el numero de puestos Inderectos que interactuan con una categia
+    function contarPuestosInderectos() {
+        var count = $select[0].selectize.items.length;
+        $('#PUESTOS_INDIRECTOS_DPT').val(count);
+    }
 });
 
 
@@ -813,3 +825,5 @@ $(document).ready(function() {
         $('#' + competenciaId).val(descripcion);
     });
 });
+
+

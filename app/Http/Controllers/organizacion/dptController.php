@@ -22,21 +22,16 @@ class dptController extends Controller
             public function index()
         {
             $areas = DB::select("
-            SELECT NOMBRE, ID_DEPARTAMENTO_AREA as ID, LUGAR_TRABAJO_CATEGORIA AS LUGAR, PROPOSITO_FINALIDAD_CATEGORIA AS PROPOSITO, 0 AS LIDER
-            FROM departamentos_areas
-            WHERE ACTIVO = 1
-            UNION
-            SELECT NOMBRE_CARGO AS NOMBRE, ID_ENCARGADO_AREA AS ID, LUGAR_TRABAJO_LIDER AS LUGAR, PROPOSITO_FINALIDAD_LIDER AS PROPOSITO, 1 AS LIDER
-            FROM encargados_areas
+                SELECT ID_CATALOGO_CATEGORIA  AS ID, NOMBRE_CATEGORIA AS NOMBRE, LUGAR_CATEGORIA AS LUGAR, PROPOSITO_CATEGORIA AS PROPOSITO, ES_LIDER_CATEGORIA AS LIDER
+                FROM catalogo_categorias
+                WHERE ACTIVO = 1
             ");
 
             $categorias = DB::select("
-            SELECT NOMBRE, ID_DEPARTAMENTO_AREA as ID, 0 AS LIDER
-            FROM departamentos_areas
-            WHERE ACTIVO = 1
-            UNION
-            SELECT NOMBRE_CARGO AS NOMBRE, ID_ENCARGADO_AREA AS ID,  1 AS LIDER
-            FROM encargados_areas");
+            SELECT ID_CATALOGO_CATEGORIA  AS ID, NOMBRE_CATEGORIA AS NOMBRE, ES_LIDER_CATEGORIA AS LIDER
+                FROM catalogo_categorias
+                WHERE ACTIVO = 1
+            ");
 
 
             $nivel = catalogojerarquiaModel::orderBy('NOMBRE_JERARQUIA', 'ASC')->get();
@@ -66,10 +61,10 @@ class dptController extends Controller
                 $value->AUTORIZADO_POR = is_null($value->AUTORIZADO_NOMBRE_DPT) ? '<span class="badge text-bg-danger">Sin autorizar</span>' : $value->AUTORIZADO_NOMBRE_DPT . '<br>' . $value->AUTORIZADO_FECHA_DPT;
     
                 // Botones
-                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-circle ELIMINAR"><i class="bi bi-power"></i></button>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-circle EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                $value->BTN_DPT = '<button type="button" class="btn btn-success btn-circle DPT"><i class="bi bi-file-earmark-excel-fill"></i></button>';
-                $value->BTN_ACCION = '<button type="button" class="btn btn-success btn-circle " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Finalizado DPT" title="Finalizado"><i class="bi bi-check-circle-fill"></i></button>';
+                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                $value->BTN_DPT = '<button type="button" class="btn btn-success btn-custom rounded-pill DPT"><i class="bi bi-file-earmark-excel-fill"></i></button>';
+                $value->BTN_ACCION = '<button type="button" class="btn btn-success btn-custom rounded-pill " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Finalizado DPT" title="Finalizado"><i class="bi bi-check-circle-fill"></i></button>';
 
             }
     
@@ -98,17 +93,13 @@ class dptController extends Controller
             ORDER BY TIPO_FUNCION_CARGO", [$ID]);
 
 
-            // $gestiones = DB::select("SELECT ID_CATALOGO_FUNCIONESGESTION ID, DESCRIPCION_FUNCION_GESTION DESCRIPCION, TIPO_FUNCION_GESTION TIPO
-            // FROM catalogo_funcionesgestiones
-            // WHERE CATEGORIAS_GESTION = ? OR TIPO_FUNCION_GESTION = 'generica'
-            // ORDER BY TIPO_FUNCION_GESTION",[$ID]);
-
             if ($LIDER == 1) {
 
-                $info = DB::select("SELECT GROUP_CONCAT(dep.NOMBRE SEPARATOR ', ') AS REPORTAN
-                                    FROM encargados_areas encargado
-                                    LEFT JOIN departamentos_areas dep ON dep.ENCARGADO_AREA_ID = encargado.ID_ENCARGADO_AREA
-                                    WHERE encargado.ID_ENCARGADO_AREA = ?", [$ID]);
+                $info = DB::select("SELECT GROUP_CONCAT(catCategoria.NOMBRE_CATEGORIA SEPARATOR ', ') AS REPORTAN, COUNT(relacion.CATEGORIA_ID) AS TOTAL
+                                    FROM lideres_categorias relacion
+                                    LEFT JOIN catalogo_categorias catLideres ON catLideres.ID_CATALOGO_CATEGORIA = relacion.LIDER_ID
+                                    LEFT JOIN catalogo_categorias catCategoria ON catCategoria.ID_CATALOGO_CATEGORIA = relacion.CATEGORIA_ID
+                                    WHERE relacion.LIDER_ID = ?", [$ID]);
 
             
                 // Respuesta
@@ -120,12 +111,11 @@ class dptController extends Controller
                 return response()->json($response);
             } else if  ($LIDER == 0){
 
-                $info = DB::select("SELECT IF(dep.TIENE_ENCARGADO = 1, encargado.NOMBRE_CARGO , 'Director') REPORTA
-                                    FROM departamentos_areas dep
-                                    LEFT JOIN encargados_areas  encargado ON encargado.ID_ENCARGADO_AREA = dep.ENCARGADO_AREA_ID
-                                    WHERE dep.ID_DEPARTAMENTO_AREA = ?", [$ID]);
-
-
+                $info = DB::select("SELECT IFNULL(catLideres.NOMBRE_CATEGORIA, 'Director') AS REPORTA, 0 AS TOTAL
+                                    FROM lideres_categorias relacion
+                                    LEFT JOIN catalogo_categorias catLideres ON catLideres.ID_CATALOGO_CATEGORIA = relacion.LIDER_ID
+                                    LEFT JOIN catalogo_categorias catCategoria ON catCategoria.ID_CATALOGO_CATEGORIA = relacion.CATEGORIA_ID
+                                    WHERE relacion.CATEGORIA_ID = ?", [$ID]);
               
                 // Respuesta
                 $response['code'] = 1;
