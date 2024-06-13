@@ -148,14 +148,18 @@ var Tablacategoria = $("#Tablacategoria").DataTable({
     columns: [
         { data: 'ID_CATALOGO_CATEGORIA' },
         { data: 'NOMBRE_CATEGORIA' },
+        { data: 'LUGAR_CATEGORIA' },
+        { data: 'PROPOSITO_CATEGORIA' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all' },
         { targets: 1, title: 'Nombre', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'Editar', className: 'all text-center' },
-        { targets: 3, title: 'Inactivo', className: 'all text-center' }
+        { targets: 2, title: 'Lugar de trabajo', className: 'all text-center nombre-column' },
+        { targets: 3, title: 'Proposito', className: 'all ' },
+        { targets: 4, title: 'Editar', className: 'all text-center' },
+        { targets: 5, title: 'Estado', className: 'all text-center' }
     ]
 });
 
