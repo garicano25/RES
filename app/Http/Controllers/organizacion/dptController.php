@@ -11,6 +11,8 @@ use App\Models\organizacion\catalogojerarquiaModel;
 use App\Models\organizacion\catalogorelacionesexternaModel;
 use App\Models\organizacion\catalogofuncionescargoModel;
 use App\Models\organizacion\catalogofuncionesgestionModel;
+use App\Models\organizacion\catalogocompetenciabasicaModel;
+
 
 
 use DB;
@@ -41,7 +43,9 @@ class dptController extends Controller
             $externo = catalogorelacionesexternaModel::orderBy('NOMBRE_RELACIONEXTERNA', 'ASC')->get();
             $cargo = catalogofuncionescargoModel::orderBy('DESCRIPCION_FUNCION_CARGO', 'ASC')->get();
             $gestion = catalogofuncionesgestionModel::orderBy('DESCRIPCION_FUNCION_GESTION', 'ASC')->get();
-            return view('RH.organizacion.DPT', compact('areas','nivel','externo','cargo','gestion','categorias'));
+            $basicos = catalogocompetenciabasicaModel::orderBy('NOMBRE_COMPETENCIA_BASICA', 'ASC')->get();
+
+            return view('RH.organizacion.DPT', compact('areas','nivel','externo','cargo','gestion','categorias','basicos'));
         }
   
 

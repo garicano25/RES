@@ -17,11 +17,16 @@ use App\Http\Controllers\organizacion\requerimientoPersonalController;
 use App\Http\Controllers\organizacion\catalogocategoriaControlller;
 use App\Http\Controllers\organizacion\catalogogeneroControlller;
 use App\Http\Controllers\organizacion\catalogoexperienciaController;
+use App\Http\Controllers\organizacion\catalogocompetenciabasicaController;
+
+
+
 
 // Controladores de reclutamiento
  use App\Http\Controllers\reclutamiento\catalogovacantesController;
 use App\Http\Controllers\reclutamiento\PuestoController;
 use App\Http\Controllers\reclutamiento\bancocvController;
+
 
 
 
@@ -131,6 +136,13 @@ Route::get('/Puesto-experiencia', function () {return view('RH.Catálogos.catál
 Route::post('/PuestoSave', [catalogoexperienciaController::class, 'store']);
 Route::get('/PuestoDelete', [catalogoexperienciaController::class, 'store']);
 Route::get('/Tablaexperiencia', [catalogoexperienciaController::class, 'Tablaexperiencia']);
+
+// Catálogo Competencias básicas o cardinales 
+
+Route::get('/Competencias-básicas', function () {return view('RH.Catálogos.catálogo_competenciasbasicas');});
+Route::post('/BasicoSave', [catalogocompetenciabasicaController::class, 'store']);
+Route::get('/BasicoDelete', [catalogocompetenciabasicaController::class, 'store']);
+Route::get('/Tablacompetenciabasica', [catalogocompetenciabasicaController::class, 'Tablacompetenciabasica']);
 
 //==============================================  RECLUTAMIENTO  ============================================== 
 

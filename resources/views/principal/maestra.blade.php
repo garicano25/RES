@@ -173,9 +173,11 @@
                                 <li><a class="dropdown-item" href="{{url('/Género')}}">Catálogo de Género </a>
                                 </li>
                                 <hr class="dropdown-divider">
-                                <li><a class="dropdown-item" href="{{url('/Puesto-experiencia')}}">Puesto que se requiere  <br> como experiencia</a>
+                                <li><a class="dropdown-item" href="{{url('/Puesto-experiencia')}}">Catálogo de Puesto que se requiere</a>
                                 </li>
-
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/Competencias-básicas')}}">Catálogo de competencias básicas</a>
+                                </li>
 
 
                             </ul>
@@ -301,6 +303,14 @@
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoexperiencia.js"></script>
     @endif
   
+
+    @if(request()->is('Competencias-básicas'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catálogocompetenciabasica.js"></script>
+    @endif
+
+
+
+    
     
     </body>
 

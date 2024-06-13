@@ -74,28 +74,36 @@
 
             <div class="row mb-3">
               <div class="col-2">
-                <label>Nivel jerárquico del puesto</label>
+                  <label>Nivel jerárquico del puesto</label>
               </div>
               <div class="col-4">
-                <div class="form-group">
-                  <select class="form-control" id="NIVEL_JERARQUICO_DPT" name="NIVEL_JERARQUICO_DPT" required>
-                    <option value="0" disabled selected>Seleccione una opción</option>
-                    @foreach ($nivel as $niveles)
-                    <option value="{{ $niveles->ID_CATALOGO_JERARQUIA }}">{{ $niveles->NOMBRE_JERARQUIA }}</option>
-                    @endforeach
-                  </select>
-                </div>
+                  <div class="form-group">
+                      <select class="form-control" id="NIVEL_JERARQUICO_DPT" name="NIVEL_JERARQUICO_DPT" required>
+                          <option value="0" disabled selected>Seleccione una opción</option>
+                          @foreach ($nivel as $niveles)
+                          <option value="{{ $niveles->ID_CATALOGO_JERARQUIA }}" data-descripcion="{{ $niveles->DESCRIPCION_JERARQUIA }}">{{ $niveles->NOMBRE_JERARQUIA }}</option>
+                          @endforeach
+                      </select>
+                  </div>
               </div>
               <div class="col-2">
-                <label>Puesto al que reporta</label>
+                  <label>Puesto al que reporta</label>
               </div>
               <div class="col-4">
-                <div class="form-group">
-                  <input type="text" class="form-control" id="PUESTO_REPORTA_DPT" name="PUESTO_REPORTA_DPT" readonly>
-                </div>
+                  <div class="form-group">
+                      <input type="text" class="form-control" id="PUESTO_REPORTA_DPT" name="PUESTO_REPORTA_DPT" readonly>
+                  </div>
               </div>
-            </div>
-
+          </div>
+          <div class="row mb-3">
+              <div class="col-2">
+                  <label>Descripción del nivel jerárquico</label>
+              </div>
+              <div class="col-10">
+                  <p id="DESCRIPCION_NIVEL_JERARQUICO"></p>
+              </div>
+          </div>
+          
 
             <div class="row mb-3">
               <div class="col-2">
@@ -127,7 +135,7 @@
             <div class="row mb-3">
               <div class="col-4">
                 <label for="directos" class="form-label">Directos</label>
-                <input type="text" id="PUESTOS_DIRECTOS_DPT" name="PUESTOS_DIRECTOS_DPT" class="form-control" required>
+                <input type="text" id="PUESTOS_DIRECTOS_DPT" name="PUESTOS_DIRECTOS_DPT" class="form-control"  readonly required>
               </div>
               <div class="col-4">
                 <label for="indirectos" class="form-label">Indirectos</label>
@@ -149,16 +157,22 @@
 
             <div class="row mb-3">
               <div class="col-2">
-                <label for="horario-entrada" class="form-label">Horario de entrada</label>
+                <label>&nbsp;&nbsp;Horario de entrada</label>
               </div>
-              <div class="col-4 ">
+              <div class="col-2 ">
                 <input type="time" id="HORARIO_ENTRADA_DPT" name="HORARIO_ENTRADA_DPT" class="form-control text-center" required>
               </div>
               <div class="col-2">
-                <label for="horario-salida" class="form-label">Horario de salida</label>
+                <label>&nbsp;&nbsp;Horario de salida</label>
               </div>
-              <div class="col-4">
+              <div class="col-2">
                 <input type="time" id="HORARIO_SALIDA_DPT" name="HORARIO_SALIDA_DPT" class="form-control text-center" required>
+              </div>
+              <div class="col-2">
+                <label>&nbsp;&nbsp;Horas de comida</label>
+              </div>
+              <div class="col-2">
+                <input type="number" id="HORARIO_SALIDA_DPT" name="HORAS_COMIDA_PPT" class="form-control text-center" required>
               </div>
             </div>
 
@@ -752,112 +766,204 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th style="width: 70%;">Competencia</th>
+                      <th style="width: 15%;">Competencia &nbsp;<button id="agregarCompetencia" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></th>
+                      <th class="text-center" style="width: 50%;">Descripción</th>
                       <th style="width: 3%;">Bajo</th>
                       <th style="width: 3%;">Medio</th>
                       <th style="width: 3%;">Alto</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+
+                    <tr id="COMPETENCIA1" style="display: none;">
                       <td>
-                        <b>1.- Innovación:</b> genera soluciones innovadoras en el ambiente laboral, planteando ideas creativas e incorporando nuevas prácticas para alcanzar mejores resultados.
+                          <select class="form-control externa-select" id="NOMBRE_COMPETENCIA1" name="NOMBRE_COMPETENCIA1[]">
+                              <option selected disabled>Seleccione una opción</option>
+                              @foreach ($basicos as $basico)
+                              <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
+                              @endforeach
+                          </select>
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_INNOVACION" id="ESCALA_INNOVACION_BAJO" value="BAJO">
+                          <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA1" name="DESCRIPCION_COMPETENCIA1" rows="2" readonly></textarea>
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_INNOVACION" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
+                          <input class="form-check-input" type="radio" name="COMPETENCIA1_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_INNOVACION" id="ESCALA_INNOVACION_ALTO" value="ALTO">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><b>2.- Pasión:</b> muestra compromiso para lograr metas dirigiéndose a las personas, a los equipos que forman parte del trabajo y a la organización, a fin de obtener el triple resultado (financiero, social y ambiental). Se esfuerza por ser el mejor generador de valor a nuestros clientes, accionistas y empleados.</td>
-                      <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_PASION" id="ESCALA_PASION_BAJO" value="BAJO">
+                          <input class="form-check-input" type="radio" name="COMPETENCIA1_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_PASION" id="ESCALA_PASION_MEDIO" value="MEDIO">
+                          <input class="form-check-input" type="radio" name="COMPETENCIA1_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
+                      </td>
+                  </tr>
+                  
+                  <tr id="COMPETENCIA2" style="display: none;">
+                      <td>
+                          <select class="form-control externa-select" id="NOMBRE_COMPETENCIA2" name="NOMBRE_COMPETENCIA2">
+                              <option selected disabled>Seleccione una opción</option>
+                              @foreach ($basicos as $basico)
+                              <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
+                              @endforeach
+                          </select>
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_PASION" id="ESCALA_PASION_ALTO" value="ALTO">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><b>3.- Servicio (orientación al cliente):</b> excede las expectativas al esforzarse por conocer y resolver los problemas de los clientes internos/externos; buscando ayudar y obtener relaciones a largo plazo. Crea prácticas que satisfacen las necesidades tanto del cliente como de la organización.</td>
-                      <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_SERVICIO" id="ESCALA_SERVICIO_BAJO" value="BAJO">
+                          <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA2" name="DESCRIPCION_COMPETENCIA2" rows="2" readonly></textarea>
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_SERVICIO" id="ESCALA_SERVICIO_MEDIO" value="MEDIO">
+                          <input class="form-check-input" type="radio" name="COMPETENCIA2_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_SERVICIO" id="ESCALA_SERVICIO_ALTO" value="ALTO">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><b>4.- Comunicación eficaz:</b> capacidad para escuchar y entender al otro, para transmitir en forma clara y oportuna la información requerida por los demás, a fin de alcanzar los objetivos organizacionales y para mantener canales de comunicación abiertos y redes de contacto formales e informales que abarquen los diferentes niveles de la organización.</td>
-                      <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_COMUNICACION" id="ESCALA_COMUNICACION_BAJO" value="BAJO">
+                          <input class="form-check-input" type="radio" name="COMPETENCIA2_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_COMUNICACION" id="ESCALA_COMUNICACION_MEDIO" value="MEDIO">
+                          <input class="form-check-input" type="radio" name="COMPETENCIA2_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
+                      </td>
+                  </tr>
+
+                    <tr id="COMPETENCIA3" style="display: none;">
+                      <td>
+                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA3" name="NOMBRE_COMPETENCIA3">
+                          <option selected disabled>Seleccione una opción</option>
+                          @foreach ($basicos as $basico)
+                          <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
+                          @endforeach
+                      </select>
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_COMUNICACION" id="ESCALA_COMUNICACION_ALTO" value="ALTO">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><b>5.- Trabajo en equipo:</b> posee la habilidad para participar en una meta común incluso cuando no es de interés personal; tiene la capacidad para comprender la repercusión del trabajo en equipo para mantener relaciones productivas y lograr resultados.</td>
-                      <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_TRABAJO" id="ESCALA_TRABAJO_BAJO" value="BAJO">
+                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA3" name="DESCRIPCION_COMPETENCIA3" rows="2"  readonly></textarea>
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_TRABAJO" id="ESCALA_TRABAJO_MEDIO" value="MEDIO">
+                        <input class="form-check-input" type="radio" name="COMPETENCIA3_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_TRABAJO" id="ESCALA_TRABAJO_ALTO" value="ALTO">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><b>6.- Integridad:</b> actúa con honestidad, comunicando sus intenciones, ideas y sentimientos de manera abierta y directa. Es conguente con lo que dice y hace con base en los lineamientos establecidos en nuestro código de ética.</td>
-                      <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_INTEGRIDAD" id="ESCALA_INTEGRIDAD_BAJO" value="BAJO">
+                        <input class="form-check-input" type="radio" name="COMPETENCIA3_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_INTEGRIDAD" id="ESCALA_INTEGRIDAD_MEDIO" value="MEDIO">
-                      </td>
-                      <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_INTEGRIDAD" id="ESCALA_INTEGRIDAD_ALTO" value="ALTO">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><b>7.- Responsabilidad social:</b> se compromete socialmente con los trabajadores, las comunidades donde interactuamos y el medio ambiente, contribuyendo a la construcción del bien común.</td>
-                      <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_RESPONSABILIDAD" id="ESCALA_RESPONSABILIDAD_BAJO" value="BAJO">
-                      </td>
-                      <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_RESPONSABILIDAD" id="ESCALA_RESPONSABILIDAD_MEDIO" value="MEDIO">
-                      </td>
-                      <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_RESPONSABILIDAD" id="ESCALA_RESPONSABILIDAD_ALTO" value="ALTO">
+                        <input class="form-check-input" type="radio" name="COMPETENCIA3_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
                       </td>
                     </tr>
 
-                    <tr>
-                      <td><b>8.- Adaptabilidad a los cambios del entorno:</b> muestra capacidad para adaptarse a los cambios, mostrando flexibilidad y apertura para alcanzar objetivos cuando surgen dificultades, trabajo eficientemente durante cambios significativos de responsabilidades de puesto o cambios en el medio laboral.</td>
+
+                    <tr id="COMPETENCIA4" style="display: none;">
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_ADAPTIBILIDAD" id="ESCALA_ADAPTIBILIDAD_BAJO" value="BAJO">
+                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA4" name="NOMBRE_COMPETENCIA4">
+                          <option selected disabled>Seleccione una opción</option>
+                          @foreach ($basicos as $basico)
+                          <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
+                          @endforeach
+                      </select>
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_ADAPTIBILIDAD" id="ESCALA_ADAPTIBILIDAD_MEDIO" value="MEDIO">
+                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA4" name="DESCRIPCION_COMPETENCIA4" rows="2"  readonly></textarea>
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_ADAPTIBILIDAD" id="ESCALA_ADAPTIBILIDAD_ALTO" value="ALTO">
+                        <input class="form-check-input" type="radio" name="COMPETENCIA4_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA4_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA4_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
                       </td>
                     </tr>
+
+
+
+                    <tr id="COMPETENCIA5" style="display: none;">
+                      <td>
+                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA5" name="NOMBRE_COMPETENCIA5">
+                          <option selected disabled>Seleccione una opción</option>
+                          @foreach ($basicos as $basico)
+                          <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
+                          @endforeach
+                      </select>
+                      </td>
+                      <td>
+                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA5" name="DESCRIPCION_COMPETENCIA5" rows="2"  readonly></textarea>
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA5_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA5_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA5_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
+                      </td>
+                    </tr>
+
+                    <tr id="COMPETENCIA6" style="display: none;">
+                      <td>
+                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA6" name="NOMBRE_COMPETENCIA6">
+                          <option selected disabled>Seleccione una opción</option>
+                          @foreach ($basicos as $basico)
+                          <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
+                          @endforeach
+                      </select>
+                      </td>
+                      <td>
+                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA6" name="DESCRIPCION_COMPETENCIA6" rows="2"  readonly></textarea>
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA6_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA6_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA6_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
+                      </td>
+                    </tr>
+
+                    
+                      <tr id="COMPETENCIA7" style="display: none;">
+                        <td>
+                          <select class="form-control externa-select" id="NOMBRE_COMPETENCIA7" name="NOMBRE_COMPETENCIA7">
+                            <option selected disabled>Seleccione una opción</option>
+                              @foreach ($basicos as $basico)
+                              <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
+                              @endforeach
+                          </select>
+                        </td>
+                        <td>
+                          <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA7" name="DESCRIPCION_COMPETENCIA7" rows="2"  readonly></textarea>
+                        </td>
+                        <td>
+                          <input class="form-check-input" type="radio" name="COMPETENCIA7_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
+                        </td>
+                        <td>
+                          <input class="form-check-input" type="radio" name="COMPETENCIA7_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
+                        </td>
+                        <td>
+                          <input class="form-check-input" type="radio" name="COMPETENCIA7_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
+                        </td>
+                      </tr>
+
+
+                      <tr id="COMPETENCIA8" style="display: none;">
+                        <td>
+                          <select class="form-control externa-select" id="NOMBRE_COMPETENCIA8" name="NOMBRE_COMPETENCIA8">
+                            <option selected disabled>Seleccione una opción</option>
+                              @foreach ($basicos as $basico)
+                              <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
+                              @endforeach
+                          </select>
+                        </td>
+                        <td>
+                          <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA8" name="DESCRIPCION_COMPETENCIA8" rows="2" readonly></textarea>
+                        </td>
+                        <td>
+                          <input class="form-check-input" type="radio" name="COMPETENCIA8_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
+                        </td>
+                        <td>
+                          <input class="form-check-input" type="radio" name="COMPETENCIA8_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
+                        </td>
+                        <td>
+                          <input class="form-check-input" type="radio" name="COMPETENCIA8_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
+                        </td>
+                      </tr>
+                  
                   </tbody>
                 </table>
               </div>
@@ -876,38 +982,116 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th style="width: 70%;">Competencia</th>
+                      <th style="width: 15%;">Competencia &nbsp;<button id="agregarCompetencia1" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></th>
+                      <th class="text-center" style="width: 50%;">Descripción</th>
                       <th style="width: 3%;">Bajo</th>
                       <th style="width: 3%;">Medio</th>
                       <th style="width: 3%;">Alto</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td><b>1.- Liderazgo:</b> habilidad necesaria para orientar la acción de los grupos humanos en una dirección determinada, inspirando valores de acción y anticipando escenarios de desarrollo de la acción de ese grupo. Muestra habilidad para fijar objetivos, establece claramente directivas, fija objetivos, prioridades con la capacidad de comunicarlos. Tiene energía la transmite a otros y motiva e inspira confianza.
+
+                    <tr id="GERENCIALES1" style="display: none;">
+                      <td>
+                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA11" name="NOMBRE_COMPETENCIA11">
+                          <option selected disabled>Seleccione una opción</option>
+                            {{-- @foreach ($basicos as $basico)
+                            <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
+                            @endforeach --}}
+                        </select>
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_LIDERAZGO" id="ESCALA_LIDERAZGO_BAJO" value="BAJO">
+                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA11" name="DESCRIPCION_COMPETENCIA11" rows="2" readonly></textarea>
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_LIDERAZGO" id="ESCALA_LIDERAZGO_MEDIO" value="MEDIO">
+                        <input class="form-check-input" type="radio" name="COMPETENCIA11_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_LIDERAZGO" id="ESCALA_LIDERAZGO_ALTO" value="ALTO">
+                        <input class="form-check-input" type="radio" name="COMPETENCIA11_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA11_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
                       </td>
                     </tr>
-                    <tr>
-                      <td>2.- Toma de decisiones: capacidad de elegir la mejor opción entre varias para conseguir el objetivo buscado de forma sistemática, comprometiéndose, y siendo coherentes, identifica la causa raíz de los problemas, usa métodos efectivos para seleccionar el curso de acción o las soluciones adecuadas.</td>
+
+
+                    <tr id="GERENCIALES2" style="display: none;">
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_TOMADECISION" id="ESCALA_TOMADECISION_BAJO" value="BAJO">
+                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA12" name="NOMBRE_COMPETENCIA12">
+                          <option selected disabled>Seleccione una opción</option>
+                            {{-- @foreach ($basicos as $basico)
+                            <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
+                            @endforeach --}}
+                        </select>
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_TOMADECISION" id="ESCALA_TOMADECISION_MEDIO" value="MEDIO">
+                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA12" name="DESCRIPCION_COMPETENCIA12" rows="2" readonly></textarea>
                       </td>
                       <td>
-                        <input class="form-check-input" type="radio" name="ESCALA_TOMADECISION" id="ESCALA_TOMADECISION_ALTO" value="ALTO">
+                        <input class="form-check-input" type="radio" name="COMPETENCIA12_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA12_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA12_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
                       </td>
                     </tr>
+
+
+                    <tr id="GERENCIALES3" style="display: none;">
+                      <td>
+                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA13" name="NOMBRE_COMPETENCIA11">
+                          <option selected disabled>Seleccione una opción</option>
+                            {{-- @foreach ($basicos as $basico)
+                            <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
+                            @endforeach --}}
+                        </select>
+                      </td>
+                      <td>
+                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA13" name="DESCRIPCION_COMPETENCIA13" rows="2" readonly></textarea>
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA13_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA13_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA13_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
+                      </td>
+                    </tr>
+
+
+                    <tr id="GERENCIALES4" style="display: none;">
+                      <td>
+                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA14" name="NOMBRE_COMPETENCIA11">
+                          <option selected disabled>Seleccione una opción</option>
+                            {{-- @foreach ($basicos as $basico)
+                            <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
+                            @endforeach --}}
+                        </select>
+                      </td>
+                      <td>
+                        <textarea class="form-control" style="width: 100%;" id="DESCRIPCION_COMPETENCIA14" name="DESCRIPCION_COMPETENCIA14" rows="2" readonly></textarea>
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA14_ESCALA" id="ESCALA_INNOVACION_BAJO" value="BAJO">
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA14_ESCALA" id="ESCALA_INNOVACION_MEDIO" value="MEDIO">
+                      </td>
+                      <td>
+                        <input class="form-check-input" type="radio" name="COMPETENCIA14_ESCALA" id="ESCALA_INNOVACION_ALTO" value="ALTO">
+                      </td>
+                    </tr>
+
+                 
+
+
+
+                   
+
                   </tbody>
                 </table>
               </div>

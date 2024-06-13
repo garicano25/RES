@@ -735,4 +735,81 @@ function mostrarFunciones(data,form){
 
 }
 
-    
+
+$(document).ready(function() {
+    // Capturar el cambio en el select de nivel jerárquico
+    $('#NIVEL_JERARQUICO_DPT').on('change', function() {
+        var descripcion = $(this).find('option:selected').data('descripcion');
+        $('#DESCRIPCION_NIVEL_JERARQUICO').text(descripcion);
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+$(document).ready(function() {
+    var contadorCompetencias = 1;
+
+    $('#agregarCompetencia').on('click', function(e) {
+        e.preventDefault(); // Evitar que se envíe el formulario al hacer clic en el botón
+
+        var idCompetencia = 'COMPETENCIA' + contadorCompetencias;
+
+        // Mostrar el siguiente tr según el contador
+        $('#' + idCompetencia).fadeIn();
+
+        contadorCompetencias++;
+
+        // Si se alcanza COMPETENCIA8, ocultar el botón "Agregar Competencia"
+        if (contadorCompetencias > 8) {
+            $('#agregarCompetencia').hide();
+        }
+    });
+
+    // Manejar el cambio en los selects para mostrar la descripción
+    $('select[id^="NOMBRE_COMPETENCIA"]').on('change', function() {
+        var selectedOption = $(this).find('option:selected');
+        var descripcion = selectedOption.data('descripcion');
+        var competenciaId = $(this).attr('id').replace('NOMBRE_COMPETENCIA', 'DESCRIPCION_COMPETENCIA');
+        $('#' + competenciaId).val(descripcion);
+    });
+});
+
+
+
+
+
+$(document).ready(function() {
+    var contadorCompetencias1 = 1;
+
+    $('#agregarCompetencia1').on('click', function(e) {
+        e.preventDefault(); // Evitar que se envíe el formulario al hacer clic en el botón
+
+        var idCompetencia1 = 'GERENCIALES' + contadorCompetencias1;
+
+        // Mostrar el siguiente tr según el contador
+        $('#' + idCompetencia1).fadeIn();
+
+        contadorCompetencias1++;
+
+        // Si se alcanza COMPETENCIA8, ocultar el botón "Agregar Competencia"
+        if (contadorCompetencias1 > 4) {
+            $('#agregarCompetencia1').hide();
+        }
+    });
+
+    // Manejar el cambio en los selects para mostrar la descripción
+    $('select[id^="NOMBRE_COMPETENCIA"]').on('change', function() {
+        var selectedOption = $(this).find('option:selected');
+        var descripcion = selectedOption.data('descripcion');
+        var competenciaId = $(this).attr('id').replace('NOMBRE_COMPETENCIA', 'DESCRIPCION_COMPETENCIA');
+        $('#' + competenciaId).val(descripcion);
+    });
+});
