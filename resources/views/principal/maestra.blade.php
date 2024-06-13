@@ -178,8 +178,12 @@
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/Competencias-básicas')}}">Catálogo de competencias básicas</a>
                                 </li>
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/Tipo-vacante')}}">Catálogo de Tipo  de vacante</a>
+                                </li>
 
 
+                             
                             </ul>
                         </li>
                     </ul>
@@ -309,7 +313,12 @@
     @endif
 
 
+    @if(request()->is('Tipo-vacante'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogotipovacante.js"></script>
+    @endif
 
+
+    
     
     
     </body>

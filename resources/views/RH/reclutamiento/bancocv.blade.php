@@ -328,7 +328,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title " id="avisoPrivacidadModalLabel">Aviso de Privacidad</h5>
+                    <h5 class="modal-title" id="avisoPrivacidadModalLabel">Aviso de Privacidad</h5>
                     <img src="/assets/images/Colorancho.png" alt="Imagen de Privacidad">
                 </div>
                 <div class="modal-body">
@@ -337,11 +337,17 @@
                         compra, completar diversos formatos y para generar los informes de consultoría.
                         Los datos que utilizaremos para las finalidades descritas en el presente aviso de
                         privacidad son los siguientes: <br><br>
-
-                       <b> Para prospecto a colaboradores</b><br>
-                      -Nombre completo<BR>
-                     -CURP<BR>
-                     -Currículo Vitae
+    
+                       <b> Para prospecto a colaboradores:</b><br>
+                      -Nombre completo<br>
+                     -CURP<br>
+                     -Currículo Vitae<br>
+                     -Teléfono celular<br>
+                     -Correo electrónico
+                    </p>
+                    <p ><b>Nota:</b> Para poder consultar el aviso de privacidad completo y los derechos de ARCO.</p>
+                    <p >Entre a nuestra página web 
+                        <a href="http://results-in-performance.com" target="_blank">aquí</a>.
                     </p>
                     <p class="text-center">Aceptar términos</p>
                 </div>
@@ -352,6 +358,7 @@
             </div>
         </div>
     </div>
+    
 
    
 

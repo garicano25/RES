@@ -18,6 +18,7 @@ use App\Http\Controllers\organizacion\catalogocategoriaControlller;
 use App\Http\Controllers\organizacion\catalogogeneroControlller;
 use App\Http\Controllers\organizacion\catalogoexperienciaController;
 use App\Http\Controllers\organizacion\catalogocompetenciabasicaController;
+use App\Http\Controllers\organizacion\catalogotipovacanteController;
 
 
 
@@ -143,6 +144,13 @@ Route::get('/Competencias-básicas', function () {return view('RH.Catálogos.cat
 Route::post('/BasicoSave', [catalogocompetenciabasicaController::class, 'store']);
 Route::get('/BasicoDelete', [catalogocompetenciabasicaController::class, 'store']);
 Route::get('/Tablacompetenciabasica', [catalogocompetenciabasicaController::class, 'Tablacompetenciabasica']);
+
+
+
+Route::get('/Tipo-vacante', function () {return view('RH.Catálogos.catálogo_tipovacante');});
+Route::post('/TipoSave', [catalogotipovacanteController::class, 'store']);
+Route::get('/TipoDelete', [catalogotipovacanteController::class, 'store']);
+Route::get('/Tablatipovacantes', [catalogotipovacanteController::class, 'Tablatipovacantes']);
 
 //==============================================  RECLUTAMIENTO  ============================================== 
 

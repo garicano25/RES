@@ -10,6 +10,9 @@ use App\Models\organizacion\formulariorequerimientoModel;
 use App\Models\organizacion\departamentosAreasModel;
 
 
+use App\Models\organizacion\catalogotipovacanteModel;
+
+
 use DB;
 
 class requerimientoPersonalController extends Controller
@@ -22,7 +25,10 @@ class requerimientoPersonalController extends Controller
 
         $areas = areasModel::orderBy('NOMBRE', 'ASC')->get();
 
-        return view('RH.organizacion.requerimiento_personal', compact('areas','categoria'));
+        $tipos = catalogotipovacanteModel::orderBy('NOMBRE_TIPOVACANTE', 'ASC')->get();
+
+
+        return view('RH.organizacion.requerimiento_personal', compact('areas','categoria','tipos'));
         
     }
 

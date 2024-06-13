@@ -57,10 +57,9 @@
                                 <label>Tipo de vacante:</label>
                                 <select class="form-control" id="TIPO_VACANTE_RP" name="TIPO_VACANTE_RP" required>
                                   <option selected disabled>Seleccione una opción</option>
-                                  <option value="Empleado nuevo">Empleado nuevo</option>
-                                  <option value="Sustitución">Sustitución</option>
-                                  <option value="Cubrir incapacidad">Cubrir incapacidad</option>
-                                  <option value="Reingreso">Reingreso</option>
+                                  @foreach ($tipos as $tipo)
+                                      <option value="{{ $tipo->ID_CATALOGO_TIPOVACANTE }}">{{ $tipo->NOMBRE_TIPOVACANTE }}</option>
+                                  @endforeach
                               </select>                          
                             </div>
                         </div>
