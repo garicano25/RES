@@ -33,7 +33,9 @@ class pptController extends Controller
     {
         try {
 
-            $tabla = formulariopptModel::get();
+            $tabla = DB::select('SELECT ppt.*, cat.NOMBRE_CATEGORIA
+                                                FROM formulario_ppt ppt
+                                                LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = ppt.DEPARTAMENTO_AREA_ID');
 
 
             foreach ($tabla as $key => $value) {

@@ -7,11 +7,11 @@
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
-    <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-person-lines-fill"></i>&nbsp;Nueva vacante</h3>
+        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-person-lines-fill"></i>&nbsp;Nueva vacante</h3>
 
 
         <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_jerarquia" data-bs-toggle="modal" data-bs-target="#miModal_vacantes" style="margin-left: auto;">
-            Nueva  &nbsp;<i class="bi bi-plus-circle"></i>
+            Nueva &nbsp;<i class="bi bi-plus-circle"></i>
         </button>
     </ol>
     <div class="card-body">
@@ -35,9 +35,9 @@
                         <select class="form-control" id="CATEGORIA_VACANTE" name="CATEGORIA_VACANTE" required>
                             <option selected disabled>Seleccione una opción</option>
                             @foreach ($areas as $area)
-                                <option value="{{ $area->NOMBRE }}">{{ $area->NOMBRE }}</option>
+                            <option value="{{ $area->ID_DEPARTAMENTO_AREA }}">{{ $area->NOMBRE }}</option>
                             @endforeach
-                        </select> 
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label>Descripción de la vacante</label>
@@ -57,6 +57,6 @@
     </div>
 </div>
 
-    
+
 
 @endsection

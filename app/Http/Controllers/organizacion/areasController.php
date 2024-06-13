@@ -20,11 +20,12 @@ use DB;
 class areasController extends Controller
 {
 
-    public function index(){
+    public function index()
+    {
 
         $categorias = catalogocategoriaModel::where('ACTIVO', 1)->get();
         $lideres = catalogocategoriaModel::where('ACTIVO', 1)->where('ES_LIDER_CATEGORIA', 1)->get();
-       
+
         return view('RH.organizacion.organigrama', compact('categorias', 'lideres'));
     }
 
@@ -202,18 +203,15 @@ class areasController extends Controller
                 $COUNT += 1;
 
 
-                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom ELIMINAR rounded-pill"><i class="bi bi-power"></i></button>';
+                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR "><i class="bi bi-power"></i></button>';
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom EDITAR rounded-pill"><i class="bi bi-pencil-square"></i></button>';
                 $value->BTN_ORGANIGRAMA = '<button type="button" class="btn btn-success btn-custom ORGANIGRAMA rounded-pill"><i class="bi bi-diagram-3-fill"></i></button>';
-
-
             }
 
             // respuesta
             $dato['data'] = $tabla;
             $dato["msj"] = 'Información consultada correctamente';
             return response()->json($dato);
-
         } catch (Exception $e) {
 
             $dato["msj"] = 'Error ' . $e->getMessage();
@@ -255,31 +253,26 @@ class areasController extends Controller
 
 
 
-                if ($value->LIDER == 1){
+                if ($value->LIDER == 1) {
 
                     $value->ES_LIDER = '<span class="badge rounded-pill text-bg-success"><i class="bi bi-check-lg"></i></span>';
-
-                }else{
+                } else {
 
                     $value->ES_LIDER = '<span class="badge rounded-pill text-bg-danger"><i class="bi bi-x-lg"></i></span>';
-
-
                 }
 
                 // // Botones
                 // if (auth()->user()->hasRoles(['Superusuario', 'Administrador', 'Reconocimiento', 'CoordinadorHI'])  && ($recsensorial->recsensorial_bloqueado + 0) == 0) {
 
 
-                if($value->ACTIVO == 1){
+                if ($value->ACTIVO == 1) {
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill " ><i class="bi bi-pencil-square EDITAR"></i></button>';
 
                     $value->BTN_ACTIVO = '<button type="button" class="btn btn-info btn-custom rounded-pill"> <i class="bi bi-toggle-on DESACTIVAR"></i></button>';
-
-                }else{
+                } else {
 
                     $value->BTN_EDITAR = '<i class="bi bi-ban"></i>';
                     $value->BTN_ACTIVO = '<button type="button" class="btn btn-info rounded-pill  btn-custom" ><i class="bi bi-toggle-off ACTIVAR"></i></button>';
-
                 }
 
 
@@ -302,26 +295,26 @@ class areasController extends Controller
         }
     }
 
-  
-    public function getDataOrganigrama($area_id, $esGeneral){
+
+    public function getDataOrganigrama($area_id, $esGeneral)
+    {
         try {
 
             $resultados = DB::select('CALL sp_obtener_json_organigrama_b(?, ?)', [$area_id, $esGeneral]);
 
             $arreglo_json = [];
             foreach ($resultados as $resultado) {
-            
+
                 $json = json_decode($resultado->JSON_DIRECCION, true);
-           
+
                 $arreglo_json[] = $json;
             }
-            
+
 
 
             $response['code']  = 1;
             $response['data']  = json_encode($arreglo_json);
             return response()->json($response);
-
         } catch (Exception  $e) {
 
             return response()->json('Error al ejecutar el Procedure');
@@ -364,7 +357,7 @@ class areasController extends Controller
 
                     break;
 
-                //GUARDAR CATEGORIAS
+                    //GUARDAR CATEGORIAS
                 case 2:
                     //Verificamos si es un nuevo registro para ver en donde lo guardamos
                     if ($request->NUEVO == 1) {
@@ -381,8 +374,7 @@ class areasController extends Controller
                             $response['code']  = 1;
                             $response['categoria']  = $categoria;
                             return response()->json($response);
-
-                        }else{
+                        } else {
 
                             DB::statement('ALTER TABLE lideres_categorias AUTO_INCREMENT=1;');
                             // ASIGNAMOS VALORES PARA ALMACENAR EN LA BASE DE DATOS
@@ -397,7 +389,6 @@ class areasController extends Controller
                             $response['categoria']  = $categoria;
                             return response()->json($response);
                         }
-
                     } else { //Eliminar encargado del area
 
                         $encargados = encargadosAreasModel::where('ID_ENCARGADO_AREA', $request['ID_ENCARGADO_AREA'])->delete();

@@ -12,16 +12,9 @@ class catalogosfuncionescargoController extends Controller
 {
     public function index()
     {
-        $areas = DB::select("
-            SELECT NOMBRE, ID_DEPARTAMENTO_AREA as ID
-            FROM departamentos_areas
-            WHERE ACTIVO = 1
-
-            UNION
-
-            SELECT NOMBRE_CARGO AS NOMBRE, ID_ENCARGADO_AREA AS ID
-            FROM encargados_areas
-        ");
+        $areas = DB::select("SELECT ID_CATALOGO_CATEGORIA  AS ID, NOMBRE_CATEGORIA AS NOMBRE
+        FROM catalogo_categorias
+        WHERE ACTIVO = 1");
 
         return view('RH.Catálogos.catálogo_funcionescargo', compact('areas'));
     }
@@ -29,13 +22,15 @@ class catalogosfuncionescargoController extends Controller
     public function Tablaafuncionescargo()
     {
         try {
-            $tabla = catalogofuncionescargoModel::get();
+            $tabla = DB::select('SELECT fun.*, IFNULL(cat.NOMBRE_CATEGORIA, "No aplica") as NOMBRE_CATEGORIA
+                                FROM catalogo_funcionescargos fun
+                                LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = fun.CATEGORIAS_CARGO');
     
             foreach ($tabla as $value) {
             
                 // Botones
-                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-circle ELIMINAR"><i class="bi bi-power"></i></button>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-circle EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
             }
     
             // Respuesta

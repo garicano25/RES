@@ -149,7 +149,7 @@ var Tablarequerimiento = $("#Tablarequerimiento").DataTable({
     order: [[0, 'asc']], // Ordena por la primera columna (ID_CATALOGO_ASESOR) en orden ascendente
     columns: [
         { data: 'ID_FORMULARO_REQUERIMIENTO' },
-        { data: 'PUESTO_RP' },
+        { data: 'NOMBRE_CATEGORIA' },
         { data: 'PRIORIDAD_RP' },
         { data: 'TIPO_VACANTE_RP' },
         { data: 'MOTIVO_VACANTE_RP' },

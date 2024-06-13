@@ -151,7 +151,7 @@ var Tablaafuncionescargo = $("#Tablaafuncionescargo").DataTable({
     columns: [
         { data: 'ID_CATALOGO_FUNCIONESCARGO' },
         { data: 'TIPO_FUNCION_CARGO' },
-        { data: 'CATEGORIAS_CARGO' },
+        { data: 'NOMBRE_CATEGORIA' },
         { data: 'DESCRIPCION_FUNCION_CARGO'},
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' }

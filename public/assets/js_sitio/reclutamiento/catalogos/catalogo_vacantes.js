@@ -149,7 +149,7 @@ var Tablavacantes = $("#Tablavacantes").DataTable({
     order: [[0, 'asc']], // Ordena por la primera columna (ID_CATALOGO_ASESOR) en orden ascendente
     columns: [
         { data: 'ID_CATALOGO_VACANTE' },
-        { data: 'CATEGORIA_VACANTE' },
+        { data: 'NOMBRE_CATEGORIA' },
         { data: 'DESCRIPCION_VACANTE' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' }
@@ -185,7 +185,6 @@ $('#Tablavacantes tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablavacantes.row(tr);
     ID_CATALOGO_VACANTE = row.data().ID_CATALOGO_VACANTE;
 
-    console.log(row.data());
+    editarDatoTabla(row.data(), 'formularioVACANTES', 'miModal_vacantes', 1);
 
-    editarDatoTabla(row.data(), 'formularioVACANTES', 'miModal_vacantes');
 });
