@@ -15,9 +15,6 @@ class bancocvModel extends Model
         'PRIMER_APELLIDO_CV',
         'SEGUNDO_APELLIDO_CV',
         'CORREO_CV',
-        'NUMERO1_CV',
-        'TIPO_TELEFONO1',
-        'TELEFONO_CELULAR2_CV',
         'CURP_CV',
         'DIA_FECHA_CV',
         'MES_FECHA_CV',
@@ -28,8 +25,14 @@ class bancocvModel extends Model
         'NOMBRE_POSGRADO_CV',
         'ARCHIVO_CURP_CV',
         'ARCHIVO_CV',
-        'CUENTA_TITULO_CV',
-        'OBSERVACIO_CV',
+        'CUENTA_TITULO_LICENCIATURA_CV',
+        'CEDULA_TITULO_LICENCIATURA_CV',
+        'CUENTA_TITULO_POSGRADO_CV',
+        'CEDULA_TITULO_POSGRADO_CV',
+        'ETIQUETA_TELEFONO1',
+        'TELEFONO1',
+        'ETIQUETA_TELEFONO2',
+        'TELEFONO2',
          'ACTIVO'
 
     ];

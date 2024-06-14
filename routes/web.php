@@ -80,14 +80,14 @@ Route::get('/makeExcelRP/{id_formulario}', [makeExcelController::class, 'makeExc
 
 //catálogo de jerarquia
 
-Route::get('/Jerárquico', function () {return view('RH.Catálogos.catálogo_Jerárquico');});
+Route::get('/Jerárquico', function () {return view('RH.Catalogos.catalogo_Jerárquico');});
 Route::post('/jerarquiaSave', [catalogosController::class, 'store']);
 Route::get('/jerarquiaDelete', [catalogosController::class, 'store']);
 Route::get('/Tablajerarquia', [catalogosController::class, 'Tablajerarquia']);
 
 //catálogo de asesores
 
-Route::get('/Asesores', function () {return view('RH.Catálogos.catálogo_asesores');});
+Route::get('/Asesores', function () {return view('RH.Catalogos.catalogo_asesores');});
 Route::post('/asesorSave', [catalogosasesoresController::class, 'store']);
 Route::get('/asesorDelete', [catalogosasesoresController::class, 'store']);
 Route::get('/Tablaasesores', [catalogosasesoresController::class, 'Tablaasesores']);
@@ -101,55 +101,56 @@ Route::get('/Tablaafuncionescargo', [catalogosfuncionescargoController::class, '
 
 //catálogo de funciones  gestiones
 
-Route::get('/Funcionesgestión', function () {return view('RH.Catálogos.catálogo_funcionesgestion');});
+Route::get('/Funcionesgestión', function () {return view('RH.Catalogos.catalogo_funcionesgestion');});
 Route::post('/GestionSave', [catalogosfuncionesgestionController::class, 'store']);
 Route::get('/GestionDelete', [catalogosfuncionesgestionController::class, 'store']);
 Route::get('/Tablafuncionesgestion', [catalogosfuncionesgestionController::class, 'Tablafuncionesgestion']);
 
 // catálogo de relaciones externas 
-Route::get('/RelacionesExternas', function () {return view('RH.Catálogos.catálogo_relacionesexternas');});
+Route::get('/RelacionesExternas', function () {return view('RH.Catalogos.catalogo_relacionesexternas');});
 Route::post('/ExternaSave', [catalogosrelacionesexternasController::class, 'store']);
 Route::get('/ExternaDelete', [catalogosrelacionesexternasController::class, 'store']);
 Route::get('/Tablarelacionesexterna', [catalogosrelacionesexternasController::class, 'Tablarelacionesexterna']);
 
 // catálogo de Categorías
 
-Route::get('/Categorías', function () {return view('RH.Catálogos.catalogo_categorias');});
+Route::get('/Categorías', function () {return view('RH.Catalogos.catalogo_categorias');});
 Route::post('/CategoriaSave', [catalogocategoriaControlller::class, 'store']);
 Route::get('CategoriaDelete', [catalogocategoriaControlller::class, 'store']);
 Route::get('/Tablacategoria', [catalogocategoriaControlller::class, 'Tablacategoria']);
 
 //  catálogo de Género 
 
-Route::get('/Género', function () {return view('RH.Catálogos.catalogo_genero');});
+Route::get('/Género', function () {return view('RH.Catalogos.catalogo_genero');});
 Route::post('/GeneroSave', [catalogogeneroControlller::class, 'store']);
 Route::get('/GeneroDelete', [catalogogeneroControlller::class, 'store']);
 Route::get('/Tablageneros', [catalogogeneroControlller::class, 'Tablageneros']);
 
 
-
-
-
-
-
 // Catálogo de Puesto que se requiere como experiencia
 
 
-Route::get('/Puesto-experiencia', function () {return view('RH.Catálogos.catálogo_experiencia');});
+Route::get('/Puesto-experiencia', function () {return view('RH.Catalogos.catalogo_experiencia');});
 Route::post('/PuestoSave', [catalogoexperienciaController::class, 'store']);
 Route::get('/PuestoDelete', [catalogoexperienciaController::class, 'store']);
 Route::get('/Tablaexperiencia', [catalogoexperienciaController::class, 'Tablaexperiencia']);
 
 // Catálogo Competencias básicas o cardinales 
 
-Route::get('/Competencias-básicas', function () {return view('RH.Catálogos.catálogo_competenciasbasicas');});
+Route::get('/Competencias-básicas', function () {return view('RH.Catalogos.catalogo_competenciasbasicas');});
 Route::post('/BasicoSave', [catalogocompetenciabasicaController::class, 'store']);
 Route::get('/BasicoDelete', [catalogocompetenciabasicaController::class, 'store']);
 Route::get('/Tablacompetenciabasica', [catalogocompetenciabasicaController::class, 'Tablacompetenciabasica']);
 
 
+// Catálogo Competencias gerenciales 
 
-Route::get('/Tipo-vacante', function () {return view('RH.Catálogos.catálogo_tipovacante');});
+Route::get('/Competencias-gerenciales', function () {return view('RH.Catalogos.catalogo_competenciasGerenciales'); });
+Route::post('/GerencialesSave', [catalogoCompotenciasGerencialesController::class, 'store']);
+Route::get('/GerencialesDelete', [catalogoCompotenciasGerencialesController::class, 'store']);
+Route::get('/TablaCompetenciasGerenciales', [catalogoCompotenciasGerencialesController::class, 'TablaCompetenciasGerenciales']);
+
+Route::get('/Tipo-vacante', function () {return view('RH.Catalogos.catalogo_tipovacante');});
 Route::post('/TipoSave', [catalogotipovacanteController::class, 'store']);
 Route::get('/TipoDelete', [catalogotipovacanteController::class, 'store']);
 Route::get('/Tablatipovacantes', [catalogotipovacanteController::class, 'Tablatipovacantes']);
@@ -161,9 +162,12 @@ Route::get('/Formulario-vacantes', function () {return view('RH.reclutamiento.ba
 
 
 Route::post('/BancoSave', [bancocvController::class, 'store']);
-// Route::get('/VacanteDelete', [bancocvController::class, 'store']);
+Route::get('/BancoDelete', [bancocvController::class, 'store']);
 Route::get('/Tablabancocv', [bancocvController::class, 'Tablabancocv']);
 
+
+Route::get('/curppdf/{ID_BANCO_CV}', [bancocvController::class, 'curppdf']);
+Route::get('/cvpdf/{ID_BANCO_CV}', [bancocvController::class, 'cvpdf']);
 
 
 // Route::get('/Vacantes', function () {return view('RH.reclutamiento.puestos');});
@@ -180,7 +184,7 @@ Route::get('/Tablavacantes', [catalogovacantesController::class, 'Tablavacantes'
 Route::get('/Listavacantes', function () {return view('RH.reclutamiento.reclutamiento');});
 
 
-Route::get('/Competencias-gerenciales', function () {return view('RH.Catálogos.catalogo_competenciasGerenciales'); });
+Route::get('/Competencias-gerenciales', function () {return view('RH.Catalogos.catalogo_competenciasGerenciales'); });
 Route::post('/GerencialesSave', [catalogoCompotenciasGerencialesController::class, 'store']);
 Route::get('/GerencialesDelete', [catalogoCompotenciasGerencialesController::class, 'store']);
 Route::get('/TablaCompetenciasGerenciales', [catalogoCompotenciasGerencialesController::class, 'TablaCompetenciasGerenciales']);

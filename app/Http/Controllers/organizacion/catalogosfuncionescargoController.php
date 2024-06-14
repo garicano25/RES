@@ -16,7 +16,7 @@ class catalogosfuncionescargoController extends Controller
         FROM catalogo_categorias
         WHERE ACTIVO = 1");
 
-        return view('RH.Catálogos.catálogo_funcionescargo', compact('areas'));
+        return view('RH.Catalogos.catalogo_funcionescargo', compact('areas'));
     }
 
     public function Tablaafuncionescargo()

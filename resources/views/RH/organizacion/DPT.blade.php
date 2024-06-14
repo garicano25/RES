@@ -168,8 +168,8 @@
               <div class="col-2">
                 <input type="time" id="HORARIO_SALIDA_DPT" name="HORARIO_SALIDA_DPT" class="form-control text-center" required>
               </div>
-              <div class="col-2">
-                <label>&nbsp;&nbsp;Horas de comida</label>
+              <div class="col-1">
+                <label>Horas de comida</label>
               </div>
               <div class="col-2">
                 <input type="number" id="HORARIO_SALIDA_DPT" name="HORAS_COMIDA_PPT" class="form-control text-center" required>

@@ -47,7 +47,7 @@
             /* background-color: #007DBA; */
         }
         .card {
-        max-width: 750px; 
+        max-width: 800px; 
         margin: 20px auto; 
         border: 2px solid #007DBA; 
         /* min-height: 500px;  */
@@ -131,6 +131,14 @@
             .add-button i {
                 margin-right: 5px;
             }
+
+            .small-checkbox {
+    width: 20px;
+    height: 20px;
+}
+
+
+
     </style>
 
 
@@ -176,26 +184,51 @@
                 <label>Correo</label>
                 <input type="text" class="form-control" id="CORREO_CV" name="CORREO_CV" required>
             </div>
-            <div class="mb-3">
-                <label for="NUMERO1_CV">Número de teléfono</label>
-                <input type="number" class="form-control" id="NUMERO1_CV" name="NUMERO1_CV" required>
-            </div>
+          
          
 
-            <div class="mb-3">
-                <label>Tipo de celular</label>
-                <select class="form-select" id="TIPO_TELEFONO1" name="TIPO_TELEFONO1" required>
-                    <option value="0" selected disabled>Seleccione una opción</option>
-                    <option value="1">Móvil</option>
-                    <option value="2">Casa</option>
-                    <option value="3">Oficina</option>
-                </select>
+            <div class="mb-3 d-flex align-items-center">
+
+                <div class="col-2">
+                    <label>Etiqueta</label>
+                    <select class="form-select" id="ETIQUETA_TELEFONO1" name="ETIQUETA_TELEFONO1" required>
+                        <option value="0" selected disabled></option>
+                        <option value="Móvil">Móvil</option>
+                        <option value="Trabajo">Trabajo</option>
+                        <option value="Principal">Principal</option>
+                        <option value="Casa">Casa</option>
+                    </select>
+                </div>
+                <div class="col-10 mx-2">        
+                    <label for="NUMERO1_CV" class="me-2">Teléfono 1</label>
+                <input type="number" class="form-control col-auto" id="TELEFONO1" name="TELEFONO1" required>
+                </div>
+                
             </div>
+            
+
+            <div class="mb-3 d-flex align-items-center">
+
+                <div class="col-2">
+                    <label>Etiqueta</label>
+                    <select class="form-select" id="ETIQUETA_TELEFONO2" name="ETIQUETA_TELEFONO2" required>
+                        <option value="0" selected disabled></option>
+                        <option value="Móvil">Móvil</option>
+                        <option value="Trabajo">Trabajo</option>
+                        <option value="Principal">Principal</option>
+                        <option value="Casa">Casa</option>
+                    </select>
+                </div>
+                <div class="col-10 mx-2">        
+                    <label for="NUMERO1_CV" class="me-2">Teléfono 2</label>
+                <input type="number" class="form-control col-auto" id="TELEFONO2" name="TELEFONO2" required>
+                </div>
+                
+            </div>
+
+
         
-            <div class="mb-3">
-                <label >Número de contacto (opcional)</label>
-                <input type="number" class="form-control" id="TELEFONO_CELULAR2_CV" name="TELEFONO_CELULAR2_CV">
-            </div>
+           
            
 
            
@@ -258,11 +291,42 @@
                     <option value="5">Posgrado</option>
                 </select>
             </div>
-            <div class="mb-3" id="licenciatura-container" style="display: none;">
+            <div class="mb-3" id="licenciatura-nombre-container" style="display: none;">
                 <label>Nombre de la licenciatura</label>
                 <input type="text" class="form-control" id="NOMBRE_LICENCIATURA_CV" name="NOMBRE_LICENCIATURA_CV">
             </div>
     
+
+
+            <div class="mb-3" id="licenciatura-titulo-container" style="display: none;">
+                <label class="col-form-label">¿Cuenta con Título?</label>
+                <div class="d-flex">
+                    <div class="form-check me-3">
+                        <label class="form-check-label" for="si">Si</label>
+                        <input class="form-check-input" type="radio" name="CUENTA_TITULO_LICENCIATURA_CV" id="si" value="Si" >
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="no">No</label>
+                        <input class="form-check-input" type="radio" name="CUENTA_TITULO_LICENCIATURA_CV" id="no" value="NO" >
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3" id="licenciatura-cedula-container" style="display: none;">
+                <label class="col-form-label">¿Cuenta con Cédula profesional?</label>
+                <div class="d-flex">
+                    <div class="form-check me-3">
+                        <label class="form-check-label" for="si">Si</label>
+                        <input class="form-check-input" type="radio" name="CEDULA_TITULO_LICENCIATURA_CV" id="si" value="Si" >
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="no">No</label>
+                        <input class="form-check-input" type="radio" name="CEDULA_TITULO_LICENCIATURA_CV" id="no" value="NO" >
+                    </div>
+                </div>
+            </div>
+
+
             <div class="mb-3" id="posgrado-container" style="display: none;">
                 <label>Tipo de posgrado</label>
                 <select class="form-select" id="TIPO_POSGRADO_CV" name="TIPO_POSGRADO_CV">
@@ -276,12 +340,40 @@
                     <label>Nombre del posgrado</label>
                     <input type="text" class="form-control" id="NOMBRE_POSGRADO_CV" name="NOMBRE_POSGRADO_CV">
                 </div>
+                <div class="mb-3" id="posgrado-titulo-container" style="display: none;">
+                    <label class="col-form-label">¿Cuenta con Título?</label>
+                    <div class="d-flex">
+                        <div class="form-check me-3">
+                            <label class="form-check-label" for="titulo-posgrado-si">Si</label>
+                            <input class="form-check-input" type="radio" name="CUENTA_TITULO_POSGRADO_CV" id="titulo-posgrado-si" value="Si">
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label" for="titulo-posgrado-no">No</label>
+                            <input class="form-check-input" type="radio" name="CUENTA_TITULO_POSGRADO_CV" id="titulo-posgrado-no" value="No">
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3" id="posgrado-cedula-container" style="display: none;">
+                    <label class="col-form-label">¿Cuenta con Cédula profesional?</label>
+                    <div class="d-flex">
+                        <div class="form-check me-3">
+                            <label class="form-check-label" for="cedula-posgrado-si">Si</label>
+                            <input class="form-check-input" type="radio" name="CEDULA_TITULO_POSGRADO_CV" id="cedula-posgrado-si" value="Si">
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label" for="cedula-posgrado-no">No</label>
+                            <input class="form-check-input" type="radio" name="CEDULA_TITULO_POSGRADO_CV" id="cedula-posgrado-no" value="No">
+                        </div>
+                    </div>
+                </div>
             </div>
+            
+
             <div class="mb-3 text-center">
                 <label class="mt-4">Documentos</label>
             </div>
             <div class="mb-3">
-                <label class="mt-4"><b>Solo subir archivos en PDF</b></label>
+                <label class="mt-4"><b>Cargar archivos en PDF (Máximo 2&nbsp;MB)</b></label>
             </div>
             <div class="mb-3 d-flex align-items-center">
                 <label>CURP. &nbsp;</label>
@@ -297,25 +389,16 @@
             </div>
             <div id="CV_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
 
-            <div class="mb-3">
-                <label class="col-form-label">Cuenta con Título/Cédula</label>
-                <div class="d-flex">
-                    <div class="form-check me-3">
-                        <label class="form-check-label" for="si">Si</label>
-                        <input class="form-check-input" type="radio" name="CUENTA_TITULO_CV" id="si" value="Si" >
-                    </div>
-                    <div class="form-check">
-                        <label class="form-check-label" for="no">No</label>
-                        <input class="form-check-input" type="radio" name="CUENTA_TITULO_CV" id="no" value="NO" >
-                    </div>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label >Observación</label>
-                <input type="text" class="form-control" id="OBSERVACIO_CV" name="OBSERVACIO_CV">
-            </div>            
                      
-            <button type="submit" class="btn btn-success" id="guardarFormBancoCV">Guardar</button>
+                     
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input small-checkbox" id="aceptaTerminos">
+                <label class="form-check-label" for="aceptaTerminos">He aceptado los términos y condiciones del aviso de privacidad de Results In Performance</label>
+            </div>
+            <button type="submit" class="btn btn-success" id="guardarFormBancoCV" disabled>Guardar</button>
+            
+            
+            
            
         </form>
     </div>
@@ -345,7 +428,7 @@
                      -Teléfono celular<br>
                      -Correo electrónico
                     </p>
-                    <p ><b>Nota:</b> Para poder consultar el aviso de privacidad completo y los derechos de ARCO.</p>
+                    <p ><b>Nota:</b> Si desea consultar el aviso de privacidad completo y los derechos de ARCO.</p>
                     <p >Entre a nuestra página web 
                         <a href="http://results-in-performance.com" target="_blank">aquí</a>.
                     </p>

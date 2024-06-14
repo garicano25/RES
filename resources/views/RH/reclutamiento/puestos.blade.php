@@ -106,10 +106,14 @@
 
 
 
+
     <div class="container mt-5">
-        
+        <h2 class="text-center"><b>¡ESTAS SON NUESTRAS VACANTES DISPONIBLES!</b></h2>
+        <br><br>
+
 
         <div class="row">
+
             <div class="col-md-4">
                 <div class="list-group">
                     @foreach($vacantes as $vacante)

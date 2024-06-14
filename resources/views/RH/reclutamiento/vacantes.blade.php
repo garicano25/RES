@@ -20,6 +20,7 @@
 </div>
 
 
+
 <div class="modal fade" id="miModal_vacantes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -35,7 +36,7 @@
                         <select class="form-control" id="CATEGORIA_VACANTE" name="CATEGORIA_VACANTE" required>
                             <option selected disabled>Seleccione una opción</option>
                             @foreach ($areas as $area)
-                            <option value="{{ $area->ID_DEPARTAMENTO_AREA }}">{{ $area->NOMBRE }}</option>
+                            <option value="{{ $area->NOMBRE_CATEGORIA }}">{{ $area->NOMBRE_CATEGORIA }}</option>
                             @endforeach
                         </select>
                     </div>

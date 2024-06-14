@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\reclutamiento\catalogovacantesModel;
-use App\Models\organizacion\departamentosAreasModel;
+use App\Models\organizacion\catalogocategoriaModel;
 
 use DB;
 
@@ -17,9 +17,15 @@ class catalogovacantesController extends Controller
    
         public function index()
     {
-        $areas = DB::select("SELECT ID_CATALOGO_CATEGORIA  AS ID_DEPARTAMENTO_AREA, NOMBRE_CATEGORIA AS NOMBRE
-        FROM catalogo_categorias
-        WHERE ACTIVO = 1");
+        // $areas = DB::select("SELECT NOMBRE_CATEGORIA  AS ID_DEPARTAMENTO_AREA, NOMBRE_CATEGORIA AS NOMBRE
+        // FROM catalogo_categorias
+        // WHERE ACTIVO = 1");
+
+    
+
+            $areas = catalogocategoriaModel::orderBy('NOMBRE_CATEGORIA', 'ASC')->get();
+
+
 
         return view('RH.reclutamiento.vacantes', compact('areas'));
    

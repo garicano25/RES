@@ -52,8 +52,9 @@ class dptController extends Controller
     public function TablaDPT()
     {
         try {
-            $tabla = formulariodptModel::get();
-    
+            $tabla = DB::select('SELECT dpt.*, cat.NOMBRE_CATEGORIA
+                                                FROM formulario_dpt dpt
+                                                LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = dpt.DEPARTAMENTOS_AREAS_ID');
             foreach ($tabla as $value) {
                 // Obtención de relaciones internas y externas
                 $value->INTERNAS = relacionesinternasModel::where('FORMULARIO_DPT_ID', $value->ID_FORMULARIO_DPT)->get();

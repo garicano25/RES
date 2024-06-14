@@ -5,37 +5,62 @@ namespace App\Http\Controllers\reclutamiento;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Storage;
 use App\Models\reclutamiento\bancocvModel;
 
 use DB;
 
 class bancocvController extends Controller
 {
-    // public function Tablavacantes()
-    // {
-    //     try {
-    //         $tabla = catalogovacantesModel::get();
+    public function Tablabancocv()
+    {
+        try {
+            $tabla = bancocvModel::get();
     
-    //         foreach ($tabla as $value) {
+            foreach ($tabla as $value) {
             
-    //             // Botones
-    //             $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-circle ELIMINAR"><i class="bi bi-power"></i></button>';
-    //             $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-circle EDITAR"><i class="bi bi-pencil-square"></i></button>';
-    //         }
+                // Botones
+                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-danger btn-circle ELIMINAR"><i class="bi bi-trash3-fill"></i></button>';
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-circle EDITAR"><i class="bi bi-eye-fill"></i></button>';
+            }
     
-    //         // Respuesta
-    //         return response()->json([
-    //             'data' => $tabla,
-    //             'msj' => 'Información consultada correctamente'
-    //         ]);
-    //     } catch (Exception $e) {
-    //         return response()->json([
-    //             'msj' => 'Error ' . $e->getMessage(),
-    //             'data' => 0
-    //         ]);
-    //     }
-    // }
+            // Respuesta
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
 
+// PDF CURP
+    public function curppdf($ID_BANCO_CV)
+    {
+        try {
+            $pdf = bancocvModel::findOrFail($ID_BANCO_CV);
+            return Storage::response($pdf->ARCHIVO_CURP_CV);
+        } catch (Exception $e) {
+            // Respuesta
+            return 'Error al consultar PDF, intentelo de nuevo';
+        }
+    }
+
+
+// PDF CV
+    public function cvpdf($ID_BANCO_CV)
+    {
+        try {
+            $pdf = bancocvModel::findOrFail($ID_BANCO_CV);
+            return Storage::response($pdf->ARCHIVO_CV);
+        } catch (Exception $e) {
+            // Respuesta
+            return 'Error al consultar PDF, intentelo de nuevo';
+        }
+    }
     
     public function store(Request $request)
     {

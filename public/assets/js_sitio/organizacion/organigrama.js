@@ -407,13 +407,13 @@ $('#CATEGORIA').on('change', function (e) {
     var esLider = valorSeleccionado.data("lider");
     
     if (esLider == 1) {
-        $('#esLiderText').text('Es lider: Si')
+        $('#esLiderText').text('Es líder: Si')
         $('#LIDER').prop('disabled', true).prop('required', false)
         $('#LIDER').val('')
         $('#ES_LIDER').val(1)
 
     } else {
-        $('#esLiderText').text('Es lider: No')
+        $('#esLiderText').text('Es líder: No')
         $('#LIDER').prop('disabled', false).prop('required', true)
         $('#LIDER').val('')
         $('#ES_LIDER').val(0)
@@ -506,7 +506,7 @@ function TablaEncargados(id_area) {
         columnDefs: [
             { target: 0, title: '#', className: 'all' },
             { target: 1, title: 'Nombre de la categoría', className: 'all' },
-            { target: 2, title: 'Es lider', className: 'all text-center' },
+            { target: 2, title: 'Es líder', className: 'all text-center' },
             { target: 3, title: 'Editar', className: 'all text-center' },
             { target: 4, title: 'Estado', className: 'all text-center' },
 

@@ -58,7 +58,7 @@ TablaDPT = $("#TablaDPT").DataTable({
     },
     columns: [
         { data: 'ID_FORMULARIO_DPT' },
-        { data: 'DEPARTAMENTOS_AREAS_ID', name: 'DEPARTAMENTOS_AREAS_ID' }, // Utiliza el nombre correcto 'DEPARTAMENTOS_AREAS_ID'
+        { data: 'NOMBRE_CATEGORIA' }, 
         { data: 'ELABORADO_POR' },
         { data: 'REVISADO_POR' },
         { data: 'AUTORIZADO_POR' },

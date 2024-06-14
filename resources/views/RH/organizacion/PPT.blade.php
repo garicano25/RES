@@ -701,7 +701,7 @@
                                         </thead>
                                         <tbody>
 
-                                            <tr style="height: 25px;"></tr> 
+                                            <tr style="height: 5px;"></tr> 
 
                                             <tr>
                                                 <td>Word</td>
@@ -734,7 +734,7 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                            <tr style="height: 25px;"></tr> 
+                                            <tr style="height: 5px;"></tr> 
 
                                                 <tr>
                                                     <td>Excel</td>
@@ -767,7 +767,7 @@
                                                     </td>
                                                 </tr>
                                             
-                                                <tr style="height: 25px;"></tr> 
+                                                <tr style="height: 5px;"></tr> 
 
                                             <tr>
                                                 <td>Power Point</td>
@@ -833,13 +833,13 @@
                                                     <input class="form-check-input" type="radio" name="APLICA_IDIOMA1_PPT" id="IDIOMA1_APLICA_PPT_no" value="no">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox"  id="BASICO_IDIOMA1_PPT" name="BASICO_IDIOMA1_PPT" value="X">
+                                                    <input type="checkbox" class="idioma1"  id="BASICO_IDIOMA1_PPT" name="BASICO_IDIOMA1_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox"  id="INTERMEDIO_IDIOMA1_PPT" name="INTERMEDIO_IDIOMA1_PPT" value="X">
+                                                    <input type="checkbox"   class="idioma1" id="INTERMEDIO_IDIOMA1_PPT" name="INTERMEDIO_IDIOMA1_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox"  id="AVANZADO_IDIOMA1_PPT" name="AVANZADO_IDIOMA1_PPT" value="X">
+                                                    <input type="checkbox"   class="idioma1" id="AVANZADO_IDIOMA1_PPT" name="AVANZADO_IDIOMA1_PPT" value="X">
                                                 </td>
                                              
                                                 <td>
@@ -866,13 +866,13 @@
                                                     <input class="form-check-input" type="radio" name="APLICA_IDIOMA2_PPT" id="IDIOMA2_APLICA_PPT_no" value="no">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox"  id="BASICO_IDIOMA2_PPT" name="BASICO_IDIOMA2_PPT"  value="X">
+                                                    <input type="checkbox"   class="idioma2" id="BASICO_IDIOMA2_PPT" name="BASICO_IDIOMA2_PPT"  value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox"  id="INTERMEDIO_IDIOMA2_PPT" name="INTERMEDIO_IDIOMA2_PPT"  value="X">
+                                                    <input type="checkbox"   class="idioma2" id="INTERMEDIO_IDIOMA2_PPT" name="INTERMEDIO_IDIOMA2_PPT"  value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox"  id="AVANZADO_IDIOMA2_PPT" name="AVANZADO_IDIOMA2_PPT"  value="X">
+                                                    <input type="checkbox"   class="idioma2" id="AVANZADO_IDIOMA2_PPT" name="AVANZADO_IDIOMA2_PPT"  value="X">
                                                 </td>
                                                 
                                                 <td>
@@ -899,13 +899,13 @@
                                                     <input class="form-check-input" type="radio" name="APLICA_IDIOMA3_PPT" id="IDIOMA3_APLICA_PPT_no" value="no">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox"  id="BASICO_IDIOMA3_PPT" name="BASICO_IDIOMA3_PPT"  value="X">
+                                                    <input type="checkbox"   class="idioma3" id="BASICO_IDIOMA3_PPT" name="BASICO_IDIOMA3_PPT"  value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox"  id="INTERMEDIO_IDIOMA3_PPT" name="INTERMEDIO_IDIOMA3_PPT"  value="X">
+                                                    <input type="checkbox"   class="idioma3" id="INTERMEDIO_IDIOMA3_PPT" name="INTERMEDIO_IDIOMA3_PPT"  value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox"  id="AVANZADO_IDIOMA3_PPT" name="AVANZADO_IDIOMA3_PPT"  value="X">
+                                                    <input type="checkbox"   class="idioma3" id="AVANZADO_IDIOMA3_PPT" name="AVANZADO_IDIOMA3_PPT"  value="X">
                                                 </td>
                                                 <td>
                                                     <div class="radio-container">

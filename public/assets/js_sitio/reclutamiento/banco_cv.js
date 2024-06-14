@@ -98,10 +98,183 @@ $("#guardarFormBancoCV").click(function (e) {
 
 
 
+var Tablabancocv = $("#Tablabancocv").DataTable({
+    language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+    lengthChange: true,
+    lengthMenu: [
+        [10, 25, 50, -1],
+        [10, 25, 50, 'All']
+    ],
+    info: false,
+    paging: true,
+    searching: true,
+    filtering: true,
+    scrollY: '65vh',
+    scrollCollapse: true,
+    responsive: true,
+    ajax: {
+        dataType: 'json',
+        data: {},
+        method: 'GET',
+        cache: false,
+        url: '/Tablabancocv',
+        beforeSend: function () {
+            mostrarCarga();
+        },
+        complete: function () {
+            Tablabancocv.columns.adjust().draw();
+            ocultarCarga();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alertErrorAJAX(jqXHR, textStatus, errorThrown);
+        },
+        dataSrc: 'data'
+    },
+    order: [[0, 'asc']],
+    columns: [
+        { data: 'ID_BANCO_CV' },
+        { data: 'CURP_CV' },
+        { 
+            data: null,
+            render: function (data, type, row) {
+                return row.NOMBRE_CV + ' ' + row.PRIMER_APELLIDO_CV + ' ' + row.SEGUNDO_APELLIDO_CV;
+            }
+        },
+        { data: 'CORREO_CV' },
+        { data: 'TELEFONO1' },
+        { data: 'TELEFONO2' },
+        { 
+            data: 'ARCHIVO_CURP_CV',
+            render: function (data, type, row) {
+                return `<button class="btn btn-danger btn-view-pdf" data-url="/storage/${data}">
+                            <i class="bi bi-filetype-pdf"></i>
+                        </button>`;
+            }
+        },
+        { 
+            data: 'ARCHIVO_CV',
+            render: function (data, type, row) {
+                return `<button class="btn btn-danger btn-view-pdf" data-url="/storage/${data}">
+                            <i class="bi bi-filetype-pdf"></i>
+                        </button>`;
+            }
+        },
+        { data: 'BTN_EDITAR' },
+        { data: 'BTN_ELIMINAR' }
+    ],
+    columnDefs: [
+        { targets: 0, title: '#', className: 'all' },
+        { targets: 1, title: 'CURP', className: 'all text-center nombre-column' },
+        { targets: 2, title: 'Nombre Completo', className: 'all text-center nombre-column' },
+        { targets: 3, title: 'Correo', className: 'all text-center nombre-column' },
+        { targets: 4, title: 'Telefono 1', className: 'all text-center nombre-column' },
+        { targets: 5, title: 'Telefono 2', className: 'all text-center nombre-column' },
+        { targets: 6, title: 'CURP', className: 'all text-center nombre-column' },
+        { targets: 7, title: 'CV', className: 'all text-center nombre-column' },
+        { targets: 8, title: 'Editar', className: 'all text-center' },
+        { targets: 9, title: 'Eliminar', className: 'all text-center' }
+    ]
+});
+
+// Evento para abrir el modal con el PDF
+$('#Tablabancocv').on('click', '.btn-view-pdf', function () {
+    var pdfUrl = $(this).data('url');
+    $('#pdfIframe').attr('src', pdfUrl);
+    $('#pdfModal').modal('show');
+});
 
 
 
+$('#Tablabancocv tbody').on('click', 'td>button.ELIMINAR', function () {
 
+    var tr = $(this).closest('tr');
+    var row = Tablabancocv.row(tr);
+
+    data = {
+        api: 1,
+        ELIMINAR: 1,
+        ID_BANCO_CV: row.data().ID_BANCO_CV
+    }
+    
+    eliminarDatoTabla(data, [Tablabancocv], 'BancoDelete')
+
+})
+
+function calcularEdad(fechaNacimiento) {
+    const hoy = new Date();
+    const nacimiento = new Date(fechaNacimiento);
+    let edad = hoy.getFullYear() - nacimiento.getFullYear();
+    const mesDiferencia = hoy.getMonth() - nacimiento.getMonth();
+    
+    if (mesDiferencia < 0 || (mesDiferencia === 0 && hoy.getDate() < nacimiento.getDate())) {
+        edad--;
+    }
+
+    return edad;
+}
+
+$('#Tablabancocv tbody').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablabancocv.row(tr);
+    var data = row.data();
+
+    // Ocultar todos los campos del formulario inicialmente
+    $('#formularioBANCO input, #formularioBANCO select, #formularioBANCO textarea').hide();
+
+    // Mostrar y llenar los inputs de tipo text y number que tengan datos
+    $('#formularioBANCO input[type="text"], #formularioBANCO input[type="number"], #formularioBANCO textarea').each(function () {
+        var inputName = $(this).attr('name');
+        if (inputName && data[inputName]) {
+            $(this).val(data[inputName]).prop('disabled', true).show();
+        } else {
+            $(this).val('').hide();
+        }
+    });
+
+    // Mostrar y llenar los select que tengan datos
+    $('#formularioBANCO select').each(function () {
+        var selectName = $(this).attr('name');
+        if (selectName && data[selectName]) {
+            $(this).val(data[selectName]).prop('disabled', true).show();
+        } else {
+            $(this).val('').hide();
+        }
+    });
+
+    // Mostrar y llenar los radio buttons que tengan datos
+    $('#formularioBANCO input[type="radio"]').each(function () {
+        var radioName = $(this).attr('name');
+        if (radioName && data[radioName]) {
+            if ($(this).val() == data[radioName]) {
+                $(this).prop('checked', true);
+            }
+            $(this).prop('disabled', true).show();
+        } else {
+            $(this).hide();
+        }
+    });
+
+    // Mostrar y llenar los checkboxes que tengan datos
+    $('#formularioBANCO input[type="checkbox"]').each(function () {
+        var checkboxName = $(this).attr('name');
+        if (checkboxName && data[checkboxName]) {
+            $(this).prop('checked', data[checkboxName] == 1 ? true : false);
+            $(this).prop('disabled', true).show();
+        } else {
+            $(this).hide();
+        }
+    });
+
+    // Calcular y mostrar la edad
+    if (data.DIA_FECHA_CV && data.MES_FECHA_CV && data.ANO_FECHA_CV) {
+        const fechaNacimiento = `${data.ANO_FECHA_CV}-${data.MES_FECHA_CV}-${data.DIA_FECHA_CV}`;
+        const edad = calcularEdad(fechaNacimiento);
+        $('#EDAD').val(edad).prop('disabled', true).show();
+    }
+
+    // Mostrar el modal
+    $('#miModal_VACANTES').modal('show');
+});
 
 document.getElementById('CURP_CV').addEventListener('input', function() {
     this.value = this.value.toUpperCase();
@@ -118,17 +291,26 @@ document.getElementById('CURP_CV').addEventListener('input', function() {
 });
 
 
-
 document.getElementById('ULTIMO_GRADO_CV').addEventListener('change', function() {
     var selectedValue = this.value;
-    document.getElementById('licenciatura-container').style.display = selectedValue === '4' ? 'block' : 'none';
+    
+    document.getElementById('licenciatura-nombre-container').style.display = selectedValue === '4' ? 'block' : 'none';
+    document.getElementById('licenciatura-titulo-container').style.display = selectedValue === '4' ? 'block' : 'none';
+    document.getElementById('licenciatura-cedula-container').style.display = selectedValue === '4' ? 'block' : 'none';
+    
     document.getElementById('posgrado-container').style.display = selectedValue === '5' ? 'block' : 'none';
     document.getElementById('posgrado-nombre-container').style.display = 'none';
+    document.getElementById('posgrado-titulo-container').style.display = 'none';
+    document.getElementById('posgrado-cedula-container').style.display = 'none';
 });
 
 document.getElementById('TIPO_POSGRADO_CV').addEventListener('change', function() {
-    document.getElementById('posgrado-nombre-container').style.display = this.value !== '0' ? 'block' : 'none';
+    var display = this.value !== '0' ? 'block' : 'none';
+    document.getElementById('posgrado-nombre-container').style.display = display;
+    document.getElementById('posgrado-titulo-container').style.display = display;
+    document.getElementById('posgrado-cedula-container').style.display = display;
 });
+
 
 
 
@@ -190,9 +372,15 @@ document.getElementById('quitarCV').addEventListener('click', function() {
 
 
 
-$(document).ready(function() {
-    $('#addTelefonoBtn').click(function() {
-        $('#additionalTelefonoFields').show();
-        $(this).hide();
-    });
+document.getElementById('aceptaTerminos').addEventListener('change', function() {
+    var guardarBtn = document.getElementById('guardarFormBancoCV');
+    guardarBtn.disabled = !this.checked;
+});
+
+document.getElementById('guardarFormBancoCV').addEventListener('click', function(event) {
+    var aceptaTerminos = document.getElementById('aceptaTerminos').checked;
+    if (!aceptaTerminos) {
+        event.preventDefault(); // Evita el envío del formulario
+        alert('Debe aceptar los términos y condiciones para continuar.');
+    }
 });

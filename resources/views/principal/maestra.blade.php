@@ -327,6 +327,13 @@
 
 
 
+    
+
+
+    @if(request()->is('Listavacantes'))
+    <script src="/assets/js_sitio/reclutamiento/banco_cv.js"></script>
+    @endif
+
 
 </body>
 

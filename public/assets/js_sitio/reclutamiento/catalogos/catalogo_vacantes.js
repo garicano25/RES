@@ -149,7 +149,7 @@ var Tablavacantes = $("#Tablavacantes").DataTable({
     order: [[0, 'asc']], // Ordena por la primera columna (ID_CATALOGO_ASESOR) en orden ascendente
     columns: [
         { data: 'ID_CATALOGO_VACANTE' },
-        { data: 'NOMBRE_CATEGORIA' },
+        { data: 'CATEGORIA_VACANTE' },
         { data: 'DESCRIPCION_VACANTE' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' }
@@ -157,7 +157,17 @@ var Tablavacantes = $("#Tablavacantes").DataTable({
     columnDefs: [
         { targets: 0, title: '#', className: 'all' },
         { targets: 1, title: 'Nombre de la categoría', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'Descripción de la vacantes', className: 'all text-center descripcion-column' },
+        {
+            targets: 2,
+            title: 'Descripción de la vacantes',
+            className: 'all text-center descripcion-column',
+            render: function(data, type, row, meta) {
+                if (type === 'display' && data.length > 100) {
+                    return data.substr(0, 500) + '...'; // Muestra solo los primeros 100 caracteres
+                }
+                return data;
+            }
+        },
         { targets: 3, title: 'Editar', className: 'all text-center' },
         { targets: 4, title: 'Eliminar', className: 'all text-center' }
     ]

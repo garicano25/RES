@@ -89,7 +89,7 @@
 
               <div class="row mt-2">
                 <div class="col-9">
-                  <label class="mb-2">Lider a cargo</label>
+                  <label class="mb-2">Líder a cargo</label>
                   <select class="form-control" id="LIDER" name="LIDER" disabled>
                     <option selected disabled>Seleccione una opción</option>
                     @foreach ($lideres as $lider)
