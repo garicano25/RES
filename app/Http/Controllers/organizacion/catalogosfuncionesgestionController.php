@@ -19,10 +19,13 @@ class catalogosfuncionesgestionController extends Controller
             $tabla = catalogofuncionesgestionModel::get();
     
             foreach ($tabla as $value) {
-            
-                // Botones
-                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill ELIMINAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                }
             }
     
             // Respuesta
@@ -56,16 +59,12 @@ public function store(Request $request)
                 } else { 
 
                     if (!isset($request->ELIMINAR)) {
-
-
                         $gestiones = catalogofuncionesgestionModel::find($request->ID_CATALOGO_FUNCIONESGESTION);
                         $gestiones->update($request->all());
                     } else {
-
-                        $gestiones = catalogofuncionesgestionModel::where('ID_CATALOGO_FUNCIONESGESTION', $request['ID_CATALOGO_FUNCIONESGESTION'])->delete();
-
+                        $gestiones = catalogofuncionesgestionModel::where('ID_CATALOGO_FUNCIONESGESTION', $request['ID_CATALOGO_FUNCIONESGESTION'])->update(['ACTIVO' => 0]);
                         $response['code']  = 1;
-                        $response['gestion']  = 'Eliminada';
+                        $response['gestion']  = 'Desactivada';
                         return response()->json($response);
                     }
                 }

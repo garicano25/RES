@@ -194,6 +194,67 @@ $('#Tablafuncionesgestion tbody').on('click', 'td>button.ELIMINAR', function () 
 
 
 
+$(document).ready(function() {
+    $('#Tablafuncionesgestion tbody').on('click', 'td>button.VISUALIZAR', function () {
+        var tr = $(this).closest('tr');
+        var row = Tablafuncionesgestion.row(tr);
+        
+        hacerSoloLectura(row.data(), '#miModal_FUNCIONESGESTION');
+
+        ID_CATALOGO_FUNCIONESGESTION = row.data().ID_CATALOGO_FUNCIONESGESTION;
+        editarDatoTabla(row.data(), 'formularioFUNCIONESGESTION', 'miModal_FUNCIONESGESTION',1);
+    });
+
+    $('#miModal_FUNCIONESGESTION').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_FUNCIONESGESTION');
+    });
+});
+
+function hacerSoloLectura(data, modalSelector) {
+    var formElements = $(modalSelector).find(':input, select');
+
+    formElements.each(function() {
+        if ($(this).is(':checkbox') || $(this).is(':radio') || $(this).is('select')) {
+            $(this).prop('disabled', true);
+        } else {
+            $(this).prop('disabled', true);
+        }
+    });
+
+    $(modalSelector).find('button').hide();
+
+    for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+            var element = $(modalSelector).find('[name="' + key + '"]');
+            if (element.length) {
+                if (element.is(':radio') || element.is(':checkbox')) {
+                    element.prop('checked', data[key]);
+                } else {
+                    element.val(data[key]);
+                }
+            }
+        }
+    }
+}
+
+function resetFormulario(modalSelector) {
+    var form = $(modalSelector).find('form')[0];
+    if (form) {
+        form.reset();
+    }
+
+    var formElements = $(modalSelector).find(':input, select');
+    formElements.each(function() {
+        $(this).prop('disabled', false);
+        $(this).prop('disabled', false);
+    });
+
+    $(modalSelector).find('button').show();
+}
+
+
+
+
 $('#Tablafuncionesgestion tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablafuncionesgestion.row(tr);

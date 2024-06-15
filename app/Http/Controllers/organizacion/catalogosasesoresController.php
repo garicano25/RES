@@ -20,12 +20,14 @@ class catalogosasesoresController extends Controller
             $tabla = catalogoasesorModel::get();
     
             foreach ($tabla as $value) {
-            
-                // Botones
-                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill ELIMINAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                }
             }
-    
             // Respuesta
             return response()->json([
                 'data' => $tabla,
@@ -49,15 +51,16 @@ class catalogosasesoresController extends Controller
                         DB::statement('ALTER TABLE catalogo_asesores AUTO_INCREMENT=1;');
                         $asesores = catalogoasesorModel::create($request->all());
                     } else { 
+
                         if (!isset($request->ELIMINAR)) {
-                            $asesores = catalogoasesorModel::find($request->ID_CATALOGO_ASESOR);
-                            $asesores->update($request->all());
-                        } else {
-                            $asesores = catalogoasesorModel::where('ID_CATALOGO_ASESOR', $request['ID_CATALOGO_ASESOR'])->delete();
-                            $response['code']  = 1;
-                            $response['asesor']  = 'Eliminada';
-                            return response()->json($response);
-                        }
+                        $asesores = catalogoasesorModel::find($request->ID_CATALOGO_ASESOR);
+                        $asesores->update($request->all());
+                    } else {
+                        $asesores = catalogoasesorModel::where('ID_CATALOGO_ASESOR', $request['ID_CATALOGO_ASESOR'])->update(['ACTIVO' => 0]);
+                        $response['code']  = 1;
+                        $response['asesor']  = 'Desactivada';
+                        return response()->json($response);
+                    }
                     }
                     $response['code']  = 1;
                     $response['asesor']  = $asesores;

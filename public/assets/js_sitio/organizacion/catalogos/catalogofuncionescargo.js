@@ -239,7 +239,6 @@ $('#Tablaafuncionescargo tbody').on('click', 'td>button.EDITAR', function () {
 
 
 $(document).ready(function() {
-    // Para miModal_FUNCIONESCARGO
     $('#Tablaafuncionescargo tbody').on('click', 'td>button.VISUALIZAR', function () {
         var tr = $(this).closest('tr');
         var row = Tablaafuncionescargo.row(tr);
@@ -247,7 +246,7 @@ $(document).ready(function() {
         hacerSoloLectura(row.data(), '#miModal_FUNCIONESCARGO');
 
         ID_CATALOGO_FUNCIONESCARGO = row.data().ID_CATALOGO_FUNCIONESCARGO;
-        editarDatoTabla(row.data(), 'formularioFUNCIONESCARGO', 'miModal_FUNCIONESCARGO');
+        editarDatoTabla(row.data(), 'formularioFUNCIONESCARGO', 'miModal_FUNCIONESCARGO',1);
     });
 
     $('#miModal_FUNCIONESCARGO').on('hidden.bs.modal', function () {
@@ -256,10 +255,10 @@ $(document).ready(function() {
 });
 
 function hacerSoloLectura(data, modalSelector) {
-    var formElements = $(modalSelector).find(':input');
+    var formElements = $(modalSelector).find(':input, select');
 
     formElements.each(function() {
-        if ($(this).is(':checkbox') || $(this).is(':radio')) {
+        if ($(this).is(':checkbox') || $(this).is(':radio') || $(this).is('select')) {
             $(this).prop('disabled', true);
         } else {
             $(this).prop('disabled', true);
@@ -272,7 +271,11 @@ function hacerSoloLectura(data, modalSelector) {
         if (data.hasOwnProperty(key)) {
             var element = $(modalSelector).find('[name="' + key + '"]');
             if (element.length) {
-                element.val(data[key]);
+                if (element.is(':radio') || element.is(':checkbox')) {
+                    element.prop('checked', data[key]);
+                } else {
+                    element.val(data[key]);
+                }
             }
         }
     }
@@ -284,7 +287,7 @@ function resetFormulario(modalSelector) {
         form.reset();
     }
 
-    var formElements = $(modalSelector).find(':input');
+    var formElements = $(modalSelector).find(':input, select');
     formElements.each(function() {
         $(this).prop('disabled', false);
         $(this).prop('disabled', false);

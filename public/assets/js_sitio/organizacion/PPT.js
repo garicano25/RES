@@ -67,7 +67,7 @@ TablaPPT = $("#TablaPPT").DataTable({
         { data: 'REVISADO_POR' },
         { data: 'AUTORIZADO_POR' },
         { data: 'BTN_ACCION' },
-        { data: 'BTN_PPT' },
+        // { data: 'BTN_PPT' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' },
         
@@ -79,9 +79,9 @@ TablaPPT = $("#TablaPPT").DataTable({
         { target: 3, title: 'Revisado por', className: 'all text-center' },
         { target: 4, title: 'Autorizado por', className: 'all text-center' },
         { target: 5, title: 'Estatus', className: 'all text-center' },
-        { target: 6, title: 'Descargar', className: 'all text-center' },
-        { target: 7, title: 'Editar', className: 'all text-center' },
-        { target: 8, title: 'Inactivo', className: 'all text-center' },
+        // { target: 6, title: 'Descargar', className: 'all text-center' },
+        { target: 6, title: 'Editar', className: 'all text-center' },
+        { target: 7, title: 'Inactivo', className: 'all text-center' },
 
 
     ]

@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <select class="form-select" id="CATEGORIAS_CARGO" name="CATEGORIAS_CARGO" required>
+                        <select class="form-select" id="CATEGORIAS_CARGO" name="CATEGORIAS_CARGO" required >
                             <option value="0" selected disabled>Seleccione una opción</option>
                             @foreach ($areas as $area)
                             <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
