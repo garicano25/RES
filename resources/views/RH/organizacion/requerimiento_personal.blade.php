@@ -70,13 +70,10 @@
                               <label>Motivo de la vacante:</label>
                               <select class="form-control" id="MOTIVO_VACANTE_RP" name="MOTIVO_VACANTE_RP" required>
                                 <option selected disabled>Seleccione una opción</option>
-                                <option value="Incremento trabajo">Incremento trabajo</option>
-                                <option value="Nueva categoría">Nueva categoría</option>
-                                <option value="Cambio de contrato">Cambio de contrato</option>
-                                <option value="Promoción">Promoción</option>
-                                <option value="Terminación">Terminación</option>
-                                <option value="Renuncia">Renuncia</option>
-                            </select>                          
+                                  @foreach ($motivos as $motivo)
+                                      <option value="{{ $motivo->ID_CATALOGO_MOTIVOVACANTE }}">{{ $motivo->NOMBRE_MOTIVO_VACANTE }}</option>
+                                  @endforeach
+                              </select>                              
                           </div>
                         </div>
                         <div class="col-8">

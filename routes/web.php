@@ -20,6 +20,7 @@ use App\Http\Controllers\organizacion\catalogoexperienciaController;
 use App\Http\Controllers\organizacion\catalogocompetenciabasicaController;
 use App\Http\Controllers\organizacion\catalogotipovacanteController;
 use App\Http\Controllers\organizacion\catalogoCompotenciasGerencialesController;
+use App\Http\Controllers\organizacion\catalogomotivovacanteControlller;
 
 
 
@@ -59,13 +60,14 @@ Route::get('/TablaPPT', [pptController::class, 'TablaPPT']);
 Route::get('/autorizarPPT/{id_formulario}', [pptController::class, 'autorizarPPT']);
 Route::get('/revisarPPT/{id_formulario}', [pptController::class, 'revisarPPT']);
 Route::get('/makeExcelPPT/{id_formulario}', [makeExcelController::class, 'makeExcelPPT']);
-// Route::get('/PPTDelete', [pptController::class, 'store']);
+Route::get('/PPTDelete', [pptController::class, 'store']);
 
 // DPT
 
 Route::get('/DPT', [dptController::class, 'index']);
 Route::post('/dptSave', [dptController::class, 'store']);
 Route::get('/TablaDPT', [dptController::class, 'TablaDPT']);
+Route::get('/dptDelete', [pptController::class, 'store']);
 // Route::get('/autorizarDPT/{id_formulario}', [dptController::class, 'autorizarDPT']);
 // Route::get('/revisarDPT/{id_formulario}', [dptController::class, 'revisarDPT']);
 Route::get('/makeExcelDPT/{id_formulario}', [makeExcelController::class, 'makeExcelDPT']);
@@ -150,10 +152,19 @@ Route::post('/GerencialesSave', [catalogoCompotenciasGerencialesController::clas
 Route::get('/GerencialesDelete', [catalogoCompotenciasGerencialesController::class, 'store']);
 Route::get('/TablaCompetenciasGerenciales', [catalogoCompotenciasGerencialesController::class, 'TablaCompetenciasGerenciales']);
 
+// Catálogo de Tipoo de vacantes
 Route::get('/Tipo-vacante', function () {return view('RH.Catalogos.catalogo_tipovacante');});
 Route::post('/TipoSave', [catalogotipovacanteController::class, 'store']);
 Route::get('/TipoDelete', [catalogotipovacanteController::class, 'store']);
 Route::get('/Tablatipovacantes', [catalogotipovacanteController::class, 'Tablatipovacantes']);
+
+
+// Catálogo de  Motivo de vacantes 
+
+Route::get('/Motivo-vacante', function () {return view('RH.Catalogos.catalogo_motivovacante');});
+Route::post('/MotivoSave', [catalogomotivovacanteControlller::class, 'store']);
+Route::get('/MotivoDelete', [catalogomotivovacanteControlller::class, 'store']);
+Route::get('/Tablamotivovacante', [catalogomotivovacanteControlller::class, 'Tablamotivovacante']);
 
 //==============================================  RECLUTAMIENTO  ============================================== 
 
@@ -184,7 +195,3 @@ Route::get('/Tablavacantes', [catalogovacantesController::class, 'Tablavacantes'
 Route::get('/Listavacantes', function () {return view('RH.reclutamiento.reclutamiento');});
 
 
-Route::get('/Competencias-gerenciales', function () {return view('RH.Catalogos.catalogo_competenciasGerenciales'); });
-Route::post('/GerencialesSave', [catalogoCompotenciasGerencialesController::class, 'store']);
-Route::get('/GerencialesDelete', [catalogoCompotenciasGerencialesController::class, 'store']);
-Route::get('/TablaCompetenciasGerenciales', [catalogoCompotenciasGerencialesController::class, 'TablaCompetenciasGerenciales']);

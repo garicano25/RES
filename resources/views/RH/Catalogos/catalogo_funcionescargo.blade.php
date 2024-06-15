@@ -7,7 +7,7 @@
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
-        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-list-ul"></i>&nbsp; Funciones y responsabilidades clave del cargo
+        <h3 style="color: #ffffff; margin: 0;">&nbsp; Funciones y responsabilidades clave del cargo
         </h3>
 
 

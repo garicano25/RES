@@ -87,13 +87,13 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item dropdown" style="margin-left: 10px;">
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="/" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-speedometer" style="margin-right: 5px;"></i> <span class="d-lg-none">Tablero</span><span class="d-none d-lg-inline">Tablero</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown" style="margin-left: 10px;">
-                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-diagram-3-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Organización</span><span class="d-none d-lg-inline">Organización</span>
                         </a>
                         <ul class="dropdown-menu">
@@ -106,44 +106,44 @@
                             <li><a class="dropdown-item" href="{{url('/RequisiciónDePersonal')}}">Requisición de personal </a></li>
                         </ul>
                     </li>
-                    <li class="nav-item dropdown" style="margin-left: 10px;">
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="/Listavacantes" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Reclutamiento</span><span class="d-none d-lg-inline">Reclutamiento</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown" style="margin-left: 10px;">
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-person-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Selección</span><span class="d-none d-lg-inline">Selección</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown" style="margin-left: 10px;">
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-person-badge-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Contratación</span><span class="d-none d-lg-inline">Contratación</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown" style="margin-left: 10px;">
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-briefcase-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Rec.Empleados</span><span class="d-none d-lg-inline">Rec.Empleados</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown" style="margin-left: 10px;">
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-person-bounding-box" style="margin-right: 5px;"></i> <span class="d-lg-none">Capacitación</span><span class="d-none d-lg-inline">Capacitación</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown" style="margin-left: 10px;">
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-clipboard-data-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Eval.desempeño</span><span class="d-none d-lg-inline">Eval.desempeño</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown" style="margin-left: 10px;">
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-person-dash-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Desvinculación</span><span class="d-none d-lg-inline">Desvinculación</span>
                         </a>
                     </li>
                     <ul class="navbar-nav">
-                        <li class="nav-item dropdown" style="margin-left: 10px;">
-                            <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <li class="nav-item dropdown" style="margin-left: 8px;">
+                            <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
                                 <span class="d-lg-none">Catálogo</span>
                                 <span class="d-none d-lg-inline">Catálogo</span>
@@ -184,13 +184,19 @@
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/Competencias-gerenciales')}}">Catálogo de competencias gerenciales</a>
                                 </li>
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/Motivo-vacante')}}">Catálogo de Motivo vacante</a>
+                                </li>
 
 
 
+
+
+                                
                             </ul>
                         </li>
                     </ul>
-                    <li class="nav-item dropdown" style="margin-left: 10px;">
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-people-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Usuarios</span><span class="d-none d-lg-inline">Usuarios</span>
                         </a>
@@ -324,16 +330,17 @@
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoCompetenciasGerenciales.js"></script>
     @endif
 
-
-
-
-    
-
-
     @if(request()->is('Listavacantes'))
     <script src="/assets/js_sitio/reclutamiento/banco_cv.js"></script>
     @endif
 
+    @if(request()->is('Motivo-vacante'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogomotivovacante.js"></script>
+    @endif
+
+
+
+  
 
 </body>
 

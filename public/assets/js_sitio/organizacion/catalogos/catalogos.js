@@ -193,3 +193,57 @@ $('#Tablajerarquia tbody').on('click', 'td>button.EDITAR', function () {
 
 
 
+$(document).ready(function() {
+    // Para miModal_JERARQUIA
+    $('#Tablajerarquia tbody').on('click', 'td>button.VISUALIZAR', function () {
+        var tr = $(this).closest('tr');
+        var row = Tablajerarquia.row(tr);
+        
+        hacerSoloLectura(row.data(), '#miModal_JERARQUIA');
+
+        ID_CATALOGO_JERARQUIA = row.data().ID_CATALOGO_JERARQUIA;
+        editarDatoTabla(row.data(), 'formularioJERARQUIA', 'miModal_JERARQUIA');
+    });
+
+    $('#miModal_JERARQUIA').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_JERARQUIA');
+    });
+});
+
+function hacerSoloLectura(data, modalSelector) {
+    var formElements = $(modalSelector).find(':input');
+
+    formElements.each(function() {
+        if ($(this).is(':checkbox') || $(this).is(':radio')) {
+            $(this).prop('disabled', true);
+        } else {
+            $(this).prop('disabled', true);
+        }
+    });
+
+    $(modalSelector).find('button').hide();
+
+    for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+            var element = $(modalSelector).find('[name="' + key + '"]');
+            if (element.length) {
+                element.val(data[key]);
+            }
+        }
+    }
+}
+
+function resetFormulario(modalSelector) {
+    var form = $(modalSelector).find('form')[0];
+    if (form) {
+        form.reset();
+    }
+
+    var formElements = $(modalSelector).find(':input');
+    formElements.each(function() {
+        $(this).prop('disabled', false);
+        $(this).prop('disabled', false);
+    });
+
+    $(modalSelector).find('button').show();
+}

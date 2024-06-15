@@ -20,8 +20,8 @@ class bancocvController extends Controller
             foreach ($tabla as $value) {
             
                 // Botones
-                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-danger btn-circle ELIMINAR"><i class="bi bi-trash3-fill"></i></button>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-circle EDITAR"><i class="bi bi-eye-fill"></i></button>';
+                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-danger btn-custom rounded-pill ELIMINAR"><i class="bi bi-trash3-fill"></i></button>';
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye-fill"></i></button>';
             }
     
             // Respuesta

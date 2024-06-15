@@ -11,7 +11,7 @@ use App\Models\organizacion\departamentosAreasModel;
 
 
 use App\Models\organizacion\catalogotipovacanteModel;
-
+use App\Models\organizacion\catalogomotivovacanteModel;
 
 use DB;
 
@@ -26,9 +26,10 @@ class requerimientoPersonalController extends Controller
         $areas = areasModel::orderBy('NOMBRE', 'ASC')->get();
 
         $tipos = catalogotipovacanteModel::orderBy('NOMBRE_TIPOVACANTE', 'ASC')->get();
+        $motivos = catalogomotivovacanteModel::orderBy('NOMBRE_MOTIVO_VACANTE', 'ASC')->get();
 
 
-        return view('RH.organizacion.requerimiento_personal', compact('areas','categoria','tipos'));
+        return view('RH.organizacion.requerimiento_personal', compact('areas','categoria','tipos','motivos'));
         
     }
 

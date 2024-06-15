@@ -10,7 +10,7 @@
 
       <div class="contenedor-contenido">
         <ol class="breadcrumb mb-5">
-            <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-diagram-2-fill"></i>&nbsp;Nivel Jerárquico del puesto	</h3>
+            <h3 style="color: #ffffff; margin: 0;">&nbsp;Nivel Jerárquico del puesto	</h3>
     
     
             <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_jerarquia" data-bs-toggle="modal" data-bs-target="#miModal_JERARQUIA" style="margin-left: auto;">

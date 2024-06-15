@@ -20,6 +20,11 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 $("#guardarFormFuncionesgestion").click(function (e) {
     e.preventDefault();
 
+    
+    formularioValido = validarFormulario($('#formularioFUNCIONESGESTION'))
+
+    if (formularioValido) {
+
     if (ID_CATALOGO_FUNCIONESGESTION == 0) {
         
         alertMensajeConfirm({
@@ -95,6 +100,11 @@ $("#guardarFormFuncionesgestion").click(function (e) {
             })
         }, 1)
     }
+} else {
+    // Muestra un mensaje de error o realiza alguna otra acción
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
     
 });
 
@@ -133,19 +143,38 @@ var Tablafuncionesgestion = $("#Tablafuncionesgestion").DataTable({
     order: [[0, 'asc']], 
     columns: [
         { data: 'ID_CATALOGO_FUNCIONESGESTION' },
-        // { data: 'TIPO_FUNCION_GESTION' },
+        { 
+            data: null,
+            render: function (data, type, row) {
+                let selectedGestion = [];
+                if (row.DIRECTOR_GESTION && row.DIRECTOR_GESTION !== 'null') {
+                    selectedGestion.push('Director');
+                }
+                if (row.LIDER_GESTION && row.LIDER_GESTION !== 'null') {
+                    selectedGestion.push('Líder categoría');
+                }
+                if (row.COLABORADOR_GESTION && row.COLABORADOR_GESTION !== 'null') {
+                    selectedGestion.push('Colaborador');
+                }
+                if (row.TODO_GESTION && row.TODO_GESTION !== 'null') {
+                    selectedGestion.push('Todos');
+                }
+                return selectedGestion.join(', ');
+            }
+        },
         { data: 'DESCRIPCION_FUNCION_GESTION'},
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all' },
-        // { targets: 1, title: 'Para quién', className: 'all text-center nombre-column' },
-        { targets: 1, title: 'Descripción', className: 'all text-center descripcion-column' },
-        { targets: 2, title: 'Editar', className: 'all text-center' },
-        { targets: 3, title: 'Inactivo', className: 'all text-center' }
+        { targets: 1, title: 'Para quién', className: 'all text-center nombre-column' },
+        { targets: 2, title: 'Descripción', className: 'all text-center descripcion-column' },
+        { targets: 3, title: 'Editar', className: 'all text-center' },
+        { targets: 4, title: 'Inactivo', className: 'all text-center' }
     ]
 });
+
 
 
 $('#Tablafuncionesgestion tbody').on('click', 'td>button.ELIMINAR', function () {

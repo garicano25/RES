@@ -85,10 +85,6 @@ ol {
     margin-left: 5px;
 }
 
-.nav-link {
-    font-size: 14px; 
-    padding: 4px 9px; }
-
 
 
     .nombre-column {
@@ -158,4 +154,17 @@ input[type="radio"]:checked::before {
     display: inline-block;
     transition: transform 0.3s ease;
     
+}
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+    /* background-color: #007DBA; */
+}
+
+
+
+.nav-link {
+    font-size: 12px;
+    padding: 4px 9px;
 }

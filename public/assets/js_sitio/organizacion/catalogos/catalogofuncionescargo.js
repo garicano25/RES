@@ -34,6 +34,10 @@ $(document).on('change', 'input[name="TIPO_FUNCION_CARGO"]', function() {
 $("#guardarFormFuncionescargo").click(function (e) {
     e.preventDefault();
 
+    formularioValido = validarFormulario($('#formularioFUNCIONESCARGO'))
+
+    if (formularioValido) {
+
     if (ID_CATALOGO_FUNCIONESCARGO == 0) {
         
         alertMensajeConfirm({
@@ -111,6 +115,11 @@ $("#guardarFormFuncionescargo").click(function (e) {
             })
         }, 1)
     }
+} else {
+    // Muestra un mensaje de error o realiza alguna otra acción
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
     
 });
 
@@ -224,3 +233,62 @@ $('#Tablaafuncionescargo tbody').on('click', 'td>button.EDITAR', function () {
 
     handleRadioChange();
 });
+
+
+
+
+
+$(document).ready(function() {
+    // Para miModal_FUNCIONESCARGO
+    $('#Tablaafuncionescargo tbody').on('click', 'td>button.VISUALIZAR', function () {
+        var tr = $(this).closest('tr');
+        var row = Tablaafuncionescargo.row(tr);
+        
+        hacerSoloLectura(row.data(), '#miModal_FUNCIONESCARGO');
+
+        ID_CATALOGO_FUNCIONESCARGO = row.data().ID_CATALOGO_FUNCIONESCARGO;
+        editarDatoTabla(row.data(), 'formularioFUNCIONESCARGO', 'miModal_FUNCIONESCARGO');
+    });
+
+    $('#miModal_FUNCIONESCARGO').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_FUNCIONESCARGO');
+    });
+});
+
+function hacerSoloLectura(data, modalSelector) {
+    var formElements = $(modalSelector).find(':input');
+
+    formElements.each(function() {
+        if ($(this).is(':checkbox') || $(this).is(':radio')) {
+            $(this).prop('disabled', true);
+        } else {
+            $(this).prop('disabled', true);
+        }
+    });
+
+    $(modalSelector).find('button').hide();
+
+    for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+            var element = $(modalSelector).find('[name="' + key + '"]');
+            if (element.length) {
+                element.val(data[key]);
+            }
+        }
+    }
+}
+
+function resetFormulario(modalSelector) {
+    var form = $(modalSelector).find('form')[0];
+    if (form) {
+        form.reset();
+    }
+
+    var formElements = $(modalSelector).find(':input');
+    formElements.each(function() {
+        $(this).prop('disabled', false);
+        $(this).prop('disabled', false);
+    });
+
+    $(modalSelector).find('button').show();
+}

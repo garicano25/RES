@@ -164,19 +164,18 @@ var Tablageneros = $("#Tablageneros").DataTable({
 
 
 $('#Tablageneros tbody').on('click', 'td>button.ELIMINAR', function () {
-
     var tr = $(this).closest('tr');
     var row = Tablageneros.row(tr);
 
     data = {
         api: 1,
-        ELIMINAR: 1,
+        ELIMINAR: 1, 
         ID_CATALOGO_GENERO: row.data().ID_CATALOGO_GENERO
     }
     
-    eliminarDatoTabla(data, [Tablageneros], 'GeneroDelete')
-
+    eliminarDatoTabla(data, [Tablageneros], 'GeneroDelete');
 })
+
 
 
 $('#Tablageneros tbody').on('click', 'td>button.EDITAR', function () {
@@ -186,3 +185,62 @@ $('#Tablageneros tbody').on('click', 'td>button.EDITAR', function () {
 
     editarDatoTabla(row.data(), 'formularioGenero', 'miModal_Genero');
 });
+
+
+
+$(document).ready(function() {
+    $('#Tablageneros tbody').on('click', 'td>button.VISUALIZAR', function () {
+        var tr = $(this).closest('tr');
+        var row = Tablageneros.row(tr);
+        
+        hacerSoloLectura(row.data());
+
+        ID_CATALOGO_GENERO = row.data().ID_CATALOGO_GENERO;
+        editarDatoTabla(row.data(), 'formularioGenero', 'miModal_Genero');
+    });
+
+    // Resetear el modal cuando se cierra
+    $('#miModal_Genero').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_Genero');
+    });
+});
+
+function hacerSoloLectura(data) {
+    var formElements = $('#miModal_Genero').find(':input');
+
+    formElements.each(function() {
+        if ($(this).is(':checkbox') || $(this).is(':radio')) {
+            $(this).prop('disabled', true);
+        } else {
+            $(this).prop('disabled', true);
+        }
+    });
+
+    $('#miModal_Genero').find('button').hide();
+
+    // Asignar valores a los campos del formulario basado en los nombres de los campos en data
+    for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+            var element = $('#miModal_Genero').find('[name="' + key + '"]');
+            if (element.length) {
+                element.val(data[key]);
+            }
+        }
+    }
+}
+
+function resetFormulario(modalSelector) {
+    var form = $(modalSelector).find('form')[0];
+    if (form) {
+        form.reset();
+    }
+
+    var formElements = $(modalSelector).find(':input');
+    formElements.each(function() {
+        $(this).prop('disabled', false);
+        $(this).prop('disabled', false);
+    });
+
+    $(modalSelector).find('button').show();
+}
+

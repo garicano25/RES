@@ -180,10 +180,8 @@ class pptController extends Controller
 
 
 
-                        // Eliminar el registro existente
                         $eliminar_ppt = formulariopptModel::where('ID_FORMULARIO_PPT', $request->ID_FORMULARIO_PPT)->delete();
 
-                        // Crear un nuevo registro con los datos actualizados
                         $PPT = formulariopptModel::create($request->all());
 
                         //ELIMINAMOS LOS CURSOS ANTERIORES

@@ -17,10 +17,13 @@ class catalogogeneroControlller extends Controller
             $tabla = catalogogeneroModel::get();
     
             foreach ($tabla as $value) {
-            
-                // Botones
-                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-circle ELIMINAR"><i class="bi bi-power"></i></button>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-circle EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill ELIMINAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                }
             }
     
             // Respuesta
@@ -35,6 +38,7 @@ class catalogogeneroControlller extends Controller
             ]);
         }
     }
+    
 
     
     public function store(Request $request)
@@ -46,13 +50,14 @@ class catalogogeneroControlller extends Controller
                         DB::statement('ALTER TABLE catalogo_generos AUTO_INCREMENT=1;');
                         $generos = catalogogeneroModel::create($request->all());
                     } else { 
+                        
                         if (!isset($request->ELIMINAR)) {
                             $generos = catalogogeneroModel::find($request->ID_CATALOGO_GENERO);
                             $generos->update($request->all());
                         } else {
-                            $generos = catalogogeneroModel::where('ID_CATALOGO_GENERO', $request['ID_CATALOGO_GENERO'])->delete();
+                            $generos = catalogogeneroModel::where('ID_CATALOGO_GENERO', $request['ID_CATALOGO_GENERO'])->update(['ACTIVO' => 0]);
                             $response['code']  = 1;
-                            $response['genero']  = 'Eliminada';
+                            $response['genero']  = 'Desactivada';
                             return response()->json($response);
                         }
                     }
@@ -69,4 +74,5 @@ class catalogogeneroControlller extends Controller
             return response()->json('Error al guardar el género');
         }
     }
+    
 }

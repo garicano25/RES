@@ -42,16 +42,16 @@
         }
 
         .list-group-item {
-            margin-bottom: 10px; /* Adds space between list items */
+            margin-bottom: 10px; 
             border: 1px solid #dee2e6;
-            border-radius: 10px; /* Makes borders rounded */
-            padding: 15px; /* Adds padding inside the list items */
+            border-radius: 10px; 
+            padding: 15px; 
         }
 
         .list-group-item.active-link {
             border-color: #007bff;
             background-color: #f0f8ff;
-            border-radius: 10px; /* Keeps borders rounded when active */
+            border-radius: 10px; 
         }
 
         .details-pane {
@@ -64,21 +64,21 @@
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             overflow-y: auto;
-            margin-top: 10px; /* Space between the top of the container and the card */
-            border-radius: 10px; /* Makes borders rounded */
+            margin-top: 10px; 
+            border-radius: 10px; 
         }
 
         .details-pane.active {
             display: block;
             border-color: #007bff;
-            border-radius: 10px; /* Keeps borders rounded when active */
+            border-radius: 10px; 
         }
 
         .details-pane p {
-            white-space: pre-wrap; /* Makes sure the text wraps inside the card */
-            word-wrap: break-word; /* Ensures long words break correctly */
-            font-size: 1rem; /* Ensures all text is the same size */
-            line-height: 1.5; /* Improves readability */
+            white-space: pre-wrap; 
+            word-wrap: break-word; 
+            font-size: 1rem; 
+            line-height: 1.5; 
         }
 
         .logo-container {
@@ -88,8 +88,14 @@
 
         .logo-container img {
             max-width: 100%;
-            height: auto; */
-        } */
+            height: auto; 
+        } 
+
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* background-color: #007DBA; */
+        }
     </style>
   
 </head>
@@ -108,7 +114,7 @@
 
 
     <div class="container mt-5">
-        <h2 class="text-center"><b>¡ESTAS SON NUESTRAS VACANTES DISPONIBLES!</b></h2>
+        <h2 class="text-center">¡ESTAS SON NUESTRAS <b>VACANTES</b> DISPONIBLES!</h2>
         <br><br>
 
 
@@ -122,7 +128,9 @@
                         @endphp
                         <a href="javascript:void(0)" class="list-group-item list-group-item-action" onclick="showDetails('{{ $slug }}')" id="link-{{ $slug }}">
                             <h5 class="mb-1">{{ $vacante->CATEGORIA_VACANTE }}</h5>
+                            <label class="text-center">Villahermosa Tabasco</label>
                         </a>
+                        
                     @endforeach
                 </div>
             </div>
@@ -134,6 +142,7 @@
                     <div class="details-pane" id="details-{{ $slug }}">
                         <h5 class="card-title">{{ $vacante->CATEGORIA_VACANTE }}</h5>
                         <hr>
+                        <p><strong>Descripción:</strong></p>
                         <p>{{ $vacante->DESCRIPCION_VACANTE }}</p>
                         <p><strong>Requisitos:</strong></p>
                         <p>{{ $vacante->REQUISITOS_VACANTES }}</p>

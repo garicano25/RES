@@ -18,10 +18,13 @@ class catalogosController extends Controller
             $tabla = catalogojerarquiaModel::get();
     
             foreach ($tabla as $value) {
-            
-                // Botones
-                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-circle ELIMINAR"><i class="bi bi-power"></i></button>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-circle EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill ELIMINAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                }
             }
     
             // Respuesta
@@ -53,16 +56,12 @@ class catalogosController extends Controller
                     } else { 
 
                         if (!isset($request->ELIMINAR)) {
-
-
                             $jerarquias = catalogojerarquiaModel::find($request->ID_CATALOGO_JERARQUIA);
                             $jerarquias->update($request->all());
                         } else {
-
-                            $jerarquias = catalogojerarquiaModel::where('ID_CATALOGO_JERARQUIA', $request['ID_CATALOGO_JERARQUIA'])->delete();
-
+                            $jerarquias = catalogojerarquiaModel::where('ID_CATALOGO_JERARQUIA', $request['ID_CATALOGO_JERARQUIA'])->update(['ACTIVO' => 0]);
                             $response['code']  = 1;
-                            $response['jerarquia']  = 'Eliminada';
+                            $response['jerarquia']  = 'Desactivada';
                             return response()->json($response);
                         }
                     }

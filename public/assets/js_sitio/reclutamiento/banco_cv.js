@@ -97,7 +97,6 @@ $("#guardarFormBancoCV").click(function (e) {
 
 
 
-
 var Tablabancocv = $("#Tablabancocv").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
@@ -133,8 +132,7 @@ var Tablabancocv = $("#Tablabancocv").DataTable({
     order: [[0, 'asc']],
     columns: [
         { data: 'ID_BANCO_CV' },
-        { data: 'CURP_CV' },
-        { 
+        { data: 'CURP_CV' }, { 
             data: null,
             render: function (data, type, row) {
                 return row.NOMBRE_CV + ' ' + row.PRIMER_APELLIDO_CV + ' ' + row.SEGUNDO_APELLIDO_CV;
@@ -146,18 +144,16 @@ var Tablabancocv = $("#Tablabancocv").DataTable({
         { 
             data: 'ARCHIVO_CURP_CV',
             render: function (data, type, row) {
-                return `<button class="btn btn-danger btn-view-pdf" data-url="/storage/${data}">
-                            <i class="bi bi-filetype-pdf"></i>
-                        </button>`;
-            }
+                return '<button class="btn btn-danger btn-custom rounded-pill pdf-button" data-pdf="/' + data + '"> <i class="bi bi-filetype-pdf"></i></button>';
+            },
+            className: 'text-center'
         },
         { 
             data: 'ARCHIVO_CV',
             render: function (data, type, row) {
-                return `<button class="btn btn-danger btn-view-pdf" data-url="/storage/${data}">
-                            <i class="bi bi-filetype-pdf"></i>
-                        </button>`;
-            }
+                return '<button class="btn btn-danger btn-custom rounded-pill pdf-button" data-pdf="/' + data + '"> <i class="bi bi-filetype-pdf"></i></button>';
+            },
+            className: 'text-center'
         },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' }
@@ -167,21 +163,23 @@ var Tablabancocv = $("#Tablabancocv").DataTable({
         { targets: 1, title: 'CURP', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Nombre Completo', className: 'all text-center nombre-column' },
         { targets: 3, title: 'Correo', className: 'all text-center nombre-column' },
-        { targets: 4, title: 'Telefono 1', className: 'all text-center nombre-column' },
-        { targets: 5, title: 'Telefono 2', className: 'all text-center nombre-column' },
+        { targets: 4, title: 'Teléfono 1', className: 'all text-center nombre-column' },
+        { targets: 5, title: 'Teléfono 2', className: 'all text-center nombre-column' },
         { targets: 6, title: 'CURP', className: 'all text-center nombre-column' },
         { targets: 7, title: 'CV', className: 'all text-center nombre-column' },
-        { targets: 8, title: 'Editar', className: 'all text-center' },
+        { targets: 8, title: 'Visualizar', className: 'all text-center' },
         { targets: 9, title: 'Eliminar', className: 'all text-center' }
     ]
 });
 
-// Evento para abrir el modal con el PDF
-$('#Tablabancocv').on('click', '.btn-view-pdf', function () {
-    var pdfUrl = $(this).data('url');
+// Event listener para abrir el modal con el PDF
+$('#Tablabancocv').on('click', '.pdf-button', function (e) {
+    e.preventDefault();
+    var pdfUrl = $(this).data('pdf');
     $('#pdfIframe').attr('src', pdfUrl);
     $('#pdfModal').modal('show');
 });
+
 
 
 

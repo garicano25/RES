@@ -6,7 +6,7 @@
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
-        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-people-fill"></i>&nbsp;Asesores</h3>
+        <h3 style="color: #ffffff; margin: 0;">&nbsp;Asesores</h3>
 
 
         <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_asesores" data-bs-toggle="modal" data-bs-target="#miModal_ASESORES" style="margin-left: auto;">

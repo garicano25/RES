@@ -7,7 +7,7 @@
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
-    <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-list-ul"></i>&nbsp;Funciones y responsabilidades del sistema integrado de gestión (SIG)</h3>
+    <h3 style="color: #ffffff; margin: 0;">&nbsp;Funciones y responsabilidades del sistema integrado de gestión (SIG)</h3>
 
 
         <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_jerarquia" data-bs-toggle="modal" data-bs-target="#miModal_FUNCIONESGESTION" style="margin-left: auto;">

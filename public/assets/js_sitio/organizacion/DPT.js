@@ -289,104 +289,6 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
 
 
 
-// $(document).ready(function () {
-//     // Inicializar Selectize
-//     var $select = $('#PUESTOS_INTERACTUAN_DPT').selectize({
-//         plugins: ['remove_button'],
-//         delimiter: ',',
-//         persist: false,
-//         placeholder: 'Seleccione una opción'
-//     });
-//         var selectizeInstance = $select[0].selectize;
-// });
-
-
-
-  
-
-// // Variable global para almacenar las funciones disponibles
-// var funcionesDisponibles = [];
-
-// // Función para obtener las descripciones de las funciones según sus IDs
-// function obtenerDescripcionesFunciones(funcionIds) {
-//     var descripciones = [];
-//     funcionIds.forEach(function(funcionId) {
-//         var idString = String(funcionId);
-//         var funcion = funcionesDisponibles.find(f => f.ID === idString);
-//         if (funcion) {
-//             descripciones.push(funcion.DESCRIPCION);
-//         } else {
-//             descripciones.push('Descripción no encontrada para ID ' + idString);
-//         }
-//     });
-//     return descripciones;
-// }
-
-// // Función para marcar las funciones específicas guardadas en la tabla
-// function marcarFuncionesEspecificas(funcionesGuardadas) {
-//     funcionesGuardadas.forEach(function(funcionId) {
-//         var descripcion = obtenerDescripcionesFunciones([funcionId])[0];
-//         var rowHtml = `<tr>
-//             <td>${descripcion}</td>
-//             <td>
-//                 <div class="switch-container">
-//                     <label class="switch">
-//                         <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_CARGO_DPT[]" value="${funcionId}" checked>
-//                         <span class="slider"></span>
-//                     </label>
-//                 </div>
-//             </td>
-//         </tr>`;
-//         $('#tbodyFucnionesCargo').append(rowHtml);
-//     });
-// }
-
-// // Evento al hacer click en el botón EDITAR en la tabla
-// $('#TablaDPT tbody').on('click', 'td>button.EDITAR', function () {
-//     var tr = $(this).closest('tr');
-//     var row = TablaDPT.row(tr);
-//     ID_FORMULARIO_DPT = row.data().ID_FORMULARIO_DPT;
-//     var form = "formularioDPT";
-//     var data = row.data();
-    
-//     console.log('Datos recibidos:', data);
-    
-//     // Obtener las funciones guardadas en la base de datos
-//     var funcionesGuardadas = [];
-    
-//     if (Array.isArray(data.FUNCIONES_CARGO_DPT)) {
-//         funcionesGuardadas = data.FUNCIONES_CARGO_DPT;
-//     } else if (data.FUNCIONES_CARGO_DPT) {
-//         try {
-//             funcionesGuardadas = JSON.parse(data.FUNCIONES_CARGO_DPT);
-//         } catch (e) {
-//             console.error("Error al parsear JSON de FUNCIONES_CARGO_DPT: ", e);
-//         }
-//     }
-
-//     console.log('Funciones guardadas:', funcionesGuardadas);
-
-//     // Limpiar la tabla antes de agregar las funciones
-//     $('#tbodyFucnionesCargo').empty();
-
-//     // Marcar las funciones guardadas en la tabla
-//     marcarFuncionesEspecificas(funcionesGuardadas);
-
-//     // Otras acciones que necesites realizar al editar
-//     editarDatoTabla(data, form, 'miModal_DPT', 1);
-//     mostrarFunciones(data, form);
-
-//     // Obtener las funciones disponibles para el área seleccionada
-//     var areaSeleccionada = $('#DEPARTAMENTOS_AREAS_ID').val();
-//     console.log('Área seleccionada:', areaSeleccionada);
-
-
-
-//     // Marcar las funciones específicas guardadas en la tabla
-//     marcarFuncionesEspecificas(funcionesGuardadas);
-// });
-
-
 
 //FUNCION EDITAR   Y QUE SE MUESTREN LOS SELECT
 
@@ -477,6 +379,21 @@ $(document).on('change', '.toggle-switch-cargo', function() {
 });
 
 
+
+
+
+$('#TablaDPT tbody').on('click', 'td>button.ELIMINAR', function () {
+    var tr = $(this).closest('tr');
+    var row = TablaDPT.row(tr);
+
+    data = {
+        api: 1,
+        ELIMINAR: 1, 
+        ID_FORMULARIO_DPT: row.data().ID_FORMULARIO_DPT
+    }
+    
+    eliminarDatoTabla(data, [TablaDPT], 'dptDelete');
+})
 
 
 

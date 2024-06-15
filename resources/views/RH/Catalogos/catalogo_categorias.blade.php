@@ -7,7 +7,7 @@
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
-    <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-grid"></i>&nbsp;Nueva Categoría</h3>
+    <h3 style="color: #ffffff; margin: 0;">&nbsp;Nueva Categoría</h3>
 
    
         <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_categoria" style="margin-left: auto;">

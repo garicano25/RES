@@ -4,16 +4,18 @@ namespace App\Http\Controllers\organizacion;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\organizacion\catalogorelacionesexternaModel;
+
+
+use App\Models\organizacion\catalogomotivovacanteModel;
 
 use DB;
 
-class catalogosrelacionesexternasController extends Controller
+class catalogomotivovacanteControlller extends Controller
 {
-    public function Tablarelacionesexterna()
+    public function Tablamotivovacante()
     {
         try {
-            $tabla = catalogorelacionesexternaModel::get();
+            $tabla = catalogomotivovacanteModel::get();
     
             foreach ($tabla as $value) {
             
@@ -45,29 +47,29 @@ class catalogosrelacionesexternasController extends Controller
                 case 1:
 
                     
-                    if ($request->ID_CATALOGO_RELACIONESEXTERNAS == 0) {
+                    if ($request->ID_CATALOGO_MOTIVOVACANTE == 0) {
 
-                        DB::statement('ALTER TABLE catalogo_relacionesexternas AUTO_INCREMENT=1;');
-                        $externas = catalogorelacionesexternaModel::create($request->all());
+                        DB::statement('ALTER TABLE catalogo_motivovacantes AUTO_INCREMENT=1;');
+                        $motivos = catalogomotivovacanteModel::create($request->all());
                     } else { 
 
                         if (!isset($request->ELIMINAR)) {
 
 
-                            $externas = catalogorelacionesexternaModel::find($request->ID_CATALOGO_RELACIONESEXTERNAS);
-                            $externas->update($request->all());
+                            $motivos = catalogomotivovacanteModel::find($request->ID_CATALOGO_MOTIVOVACANTE);
+                            $motivos->update($request->all());
                         } else {
 
-                            $externas = catalogorelacionesexternaModel::where('ID_CATALOGO_RELACIONESEXTERNAS', $request['ID_CATALOGO_RELACIONESEXTERNAS'])->delete();
+                            $motivos = catalogomotivovacanteModel::where('ID_CATALOGO_MOTIVOVACANTE', $request['ID_CATALOGO_MOTIVOVACANTE'])->delete();
 
                             $response['code']  = 1;
-                            $response['externa']  = 'Eliminada';
+                            $rbtn-custom rounded-pill']  = 'Eliminada';
                             return response()->json($response);
                         }
                     }
 
                     $response['code']  = 1;
-                    $response['externa']  = $externas;
+                    $response['motivo']  = $motivos;
                     return response()->json($response);
 
                     break;
@@ -83,5 +85,4 @@ class catalogosrelacionesexternasController extends Controller
             return response()->json('Error al guardar las Relaciones');
         }
     }
-
 }
