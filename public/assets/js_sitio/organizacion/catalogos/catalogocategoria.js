@@ -144,13 +144,14 @@ var Tablacategoria = $("#Tablacategoria").DataTable({
         },
         dataSrc: 'data'
     },
-    order: [[0, 'asc']], // Ordena por la primera columna (ID_CATALOGO_ASESOR) en orden ascendente
+    order: [[0, 'asc']], 
     columns: [
         { data: 'ID_CATALOGO_CATEGORIA' },
         { data: 'NOMBRE_CATEGORIA' },
         { data: 'LUGAR_CATEGORIA' },
         { data: 'PROPOSITO_CATEGORIA' },
         { data: 'BTN_EDITAR' },
+        { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
@@ -159,7 +160,8 @@ var Tablacategoria = $("#Tablacategoria").DataTable({
         { targets: 2, title: 'Lugar de trabajo', className: 'all text-center nombre-column' },
         { targets: 3, title: 'Propósito o finalidad de la categoría', className: 'all ' },
         { targets: 4, title: 'Editar', className: 'all text-center' },
-        { targets: 5, title: 'Estado', className: 'all text-center' }
+        { targets: 5, title: 'Visualizar', className: 'all text-center' },
+        { targets: 6, title: 'Inactivo', className: 'all text-center' }
     ]
 });
 
@@ -188,3 +190,62 @@ $('#Tablacategoria tbody').on('click', 'td>button.EDITAR', function () {
     editarDatoTabla(row.data(), 'formularioCATEGORIAS', 'miModal_categoria', 1);
 });
 
+
+
+$(document).ready(function() {
+    $('#Tablacategoria tbody').on('click', 'td>button.VISUALIZAR', function () {
+        var tr = $(this).closest('tr');
+        var row = Tablacategoria.row(tr);
+        
+        hacerSoloLectura(row.data(), '#miModal_categoria');
+
+        ID_CATALOGO_CATEGORIA = row.data().ID_CATALOGO_CATEGORIA;
+        editarDatoTabla(row.data(), 'formularioCATEGORIAS', 'miModal_categoria',1);
+    });
+
+    $('#miModal_categoria').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_categoria');
+    });
+});
+
+function hacerSoloLectura(data, modalSelector) {
+    var formElements = $(modalSelector).find(':input, select');
+
+    formElements.each(function() {
+        if ($(this).is(':checkbox') || $(this).is(':radio') || $(this).is('select')) {
+            $(this).prop('disabled', true);
+        } else {
+            $(this).prop('disabled', true);
+        }
+    });
+
+    $(modalSelector).find('button').hide();
+
+    for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+            var element = $(modalSelector).find('[name="' + key + '"]');
+            if (element.length) {
+                if (element.is(':radio') || element.is(':checkbox')) {
+                    element.prop('checked', data[key]);
+                } else {
+                    element.val(data[key]);
+                }
+            }
+        }
+    }
+}
+
+function resetFormulario(modalSelector) {
+    var form = $(modalSelector).find('form')[0];
+    if (form) {
+        form.reset();
+    }
+
+    var formElements = $(modalSelector).find(':input, select');
+    formElements.each(function() {
+        $(this).prop('disabled', false);
+        $(this).prop('disabled', false);
+    });
+
+    $(modalSelector).find('button').show();
+}

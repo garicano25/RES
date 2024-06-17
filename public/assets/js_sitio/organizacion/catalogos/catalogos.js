@@ -152,6 +152,7 @@ var Tablajerarquia = $("#Tablajerarquia").DataTable({
         { data: 'NOMBRE_JERARQUIA' },
         { data: 'DESCRIPCION_JERARQUIA' },
         { data: 'BTN_EDITAR' },
+        { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
@@ -159,7 +160,8 @@ var Tablajerarquia = $("#Tablajerarquia").DataTable({
         { targets: 1, title: 'Nombre', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Descripción', className: 'all text-center descripcion-column' },
         { targets: 3, title: 'Editar', className: 'all text-center' },
-        { targets: 4, title: 'Inactivo', className: 'all text-center' }
+        { targets: 4, title: 'Visualizar', className: 'all text-center' },
+        { targets: 5, title: 'Inactivo', className: 'all text-center' }
     ]
 });
 
@@ -194,7 +196,7 @@ $('#Tablajerarquia tbody').on('click', 'td>button.EDITAR', function () {
 
 
 $(document).ready(function() {
-    // Para miModal_JERARQUIA
+
     $('#Tablajerarquia tbody').on('click', 'td>button.VISUALIZAR', function () {
         var tr = $(this).closest('tr');
         var row = Tablajerarquia.row(tr);

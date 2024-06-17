@@ -17,12 +17,21 @@ class catalogocategoriaControlller extends Controller
     {
         try {
             $tabla = catalogocategoriaModel::get();
-    
-            foreach ($tabla as $value) {
-            
-                // Botones
-                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+
+
+           foreach ($tabla as $value) {
+                if ($value->ACTIVO == 0) {
+
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill ELIMINAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+
+                } else {
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+                }
             }
     
             // Respuesta
@@ -49,13 +58,16 @@ class catalogocategoriaControlller extends Controller
                         DB::statement('ALTER TABLE catalogo_categorias AUTO_INCREMENT=1;');
                         $categorias = catalogocategoriaModel::create($request->all());
                     } else { 
+
                         if (!isset($request->ELIMINAR)) {
+
                             $categorias = catalogocategoriaModel::find($request->ID_CATALOGO_CATEGORIA);
                             $categorias->update($request->all());
+
                         } else {
-                            $categorias = catalogocategoriaModel::where('ID_CATALOGO_CATEGORIA', $request['ID_CATALOGO_CATEGORIA'])->delete();
+                            $categorias = catalogocategoriaModel::where('ID_CATALOGO_CATEGORIA', $request['ID_CATALOGO_CATEGORIA'])->update(['ACTIVO' => 0]);
                             $response['code']  = 1;
-                            $response['categoria']  = 'Eliminada';
+                            $response['categoria']  = 'Desactivada';
                             return response()->json($response);
                         }
                     }

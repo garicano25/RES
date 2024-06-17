@@ -428,10 +428,9 @@
                      -Teléfono celular<br>
                      -Correo electrónico
                     </p>
-                    <p ><b>Nota:</b> Si desea consultar el aviso de privacidad completo y los derechos de ARCO.</p>
-                    <p >Entre a nuestra página web 
-                        <a href="http://results-in-performance.com" target="_blank">aquí</a>.
-                    </p>
+                    <p ><b>Nota:</b> Si desea consultar el aviso de privacidad completo y los derechos de ARCO,
+                        entre a nuestra página web <a href="http://results-in-performance.com" target="_blank">aquí</a>.</p>
+    
                     <p class="text-center">Aceptar términos</p>
                 </div>
                 <div class="modal-footer">

@@ -164,6 +164,7 @@ var Tablafuncionesgestion = $("#Tablafuncionesgestion").DataTable({
         },
         { data: 'DESCRIPCION_FUNCION_GESTION'},
         { data: 'BTN_EDITAR' },
+        { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
@@ -171,7 +172,8 @@ var Tablafuncionesgestion = $("#Tablafuncionesgestion").DataTable({
         { targets: 1, title: 'Para quién', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Descripción', className: 'all text-center descripcion-column' },
         { targets: 3, title: 'Editar', className: 'all text-center' },
-        { targets: 4, title: 'Inactivo', className: 'all text-center' }
+        { targets: 4, title: 'Visualizar', className: 'all text-center' },
+        { targets: 5, title: 'Inactivo', className: 'all text-center' }
     ]
 });
 

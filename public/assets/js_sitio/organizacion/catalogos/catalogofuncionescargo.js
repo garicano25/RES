@@ -163,6 +163,7 @@ var Tablaafuncionescargo = $("#Tablaafuncionescargo").DataTable({
         { data: 'NOMBRE_CATEGORIA' },
         { data: 'DESCRIPCION_FUNCION_CARGO'},
         { data: 'BTN_EDITAR' },
+        { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
@@ -171,7 +172,8 @@ var Tablaafuncionescargo = $("#Tablaafuncionescargo").DataTable({
         { targets: 2, title: 'Nombre de la categoría', className: 'all text-center nombre-column' },
         { targets: 3, title: 'Descripción', className: 'all text-center descripcion-column' },
         { targets: 4, title: 'Editar', className: 'all text-center' },
-        { targets: 5, title: 'Inactivo', className: 'all text-center' }
+        { targets: 5, title: 'Visualizar', className: 'all text-center' },
+        { targets: 6, title: 'Inactivo', className: 'all text-center' }
     ]
 });
 

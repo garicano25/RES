@@ -151,6 +151,7 @@ var Tablaasesores = $("#Tablaasesores").DataTable({
         { data: 'NOMBRE_ASESOR' },
         { data: 'DESCRIPCION_ASESOR' },
         { data: 'BTN_EDITAR' },
+        { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
@@ -158,7 +159,8 @@ var Tablaasesores = $("#Tablaasesores").DataTable({
         { targets: 1, title: 'Nombre', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Descripción', className: 'all text-center descripcion-column' },
         { targets: 3, title: 'Editar', className: 'all text-center' },
-        { targets: 4, title: 'Inactivo', className: 'all text-center' }
+        { targets: 4, title: 'Visualizar', className: 'all text-center' },
+        { targets: 5, title: 'Inactivo', className: 'all text-center' }
     ]
 });
 
@@ -184,7 +186,7 @@ $('#Tablaasesores tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablaasesores.row(tr);
     ID_CATALOGO_ASESOR = row.data().ID_CATALOGO_ASESOR;
 
-    editarDatoTabla(row.data(), 'formularioASESOR', 'miModal_ASESORES');
+    editarDatoTabla(row.data(), 'formularioASESOR', 'miModal_ASESORES',1);
 });
 
 
@@ -197,7 +199,7 @@ $(document).ready(function() {
         hacerSoloLectura(row.data(), '#miModal_ASESORES');
 
         ID_CATALOGO_ASESOR = row.data().ID_CATALOGO_ASESOR;
-        editarDatoTabla(row.data(), 'formularioFformularioASESORUNCIONESGESTION', 'miModal_ASESORES',1);
+        editarDatoTabla(row.data(), 'formularioASESOR', 'miModal_ASESORES',1);
     });
 
     $('#miModal_ASESORES').on('hidden.bs.modal', function () {
