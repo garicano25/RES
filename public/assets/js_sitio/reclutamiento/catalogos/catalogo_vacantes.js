@@ -146,11 +146,13 @@ var Tablavacantes = $("#Tablavacantes").DataTable({
         },
         dataSrc: 'data'
     },
-    order: [[0, 'asc']], // Ordena por la primera columna (ID_CATALOGO_ASESOR) en orden ascendente
+    order: [[0, 'asc']], 
     columns: [
         { data: 'ID_CATALOGO_VACANTE' },
         { data: 'CATEGORIA_VACANTE' },
         { data: 'DESCRIPCION_VACANTE' },
+        { data: 'created_at' },
+        { data: 'updated_at' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' }
     ],
@@ -168,8 +170,10 @@ var Tablavacantes = $("#Tablavacantes").DataTable({
                 return data;
             }
         },
-        { targets: 3, title: 'Editar', className: 'all text-center' },
-        { targets: 4, title: 'Eliminar', className: 'all text-center' }
+        { targets: 3, title: 'Fecha de publicación', className: 'all text-center' },
+        { targets: 4, title: 'Fecha de expiración', className: 'all text-center' },
+        { targets: 5, title: 'Editar', className: 'all text-center' },
+        { targets: 6, title: 'Eliminar', className: 'all text-center' }
     ]
 });
 

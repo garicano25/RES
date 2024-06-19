@@ -205,45 +205,6 @@ $(document).ready(function() {
     });
 });
 
-function hacerSoloLectura(data, modalSelector) {
-    var formElements = $(modalSelector).find(':input, select');
 
-    formElements.each(function() {
-        if ($(this).is(':checkbox') || $(this).is(':radio') || $(this).is('select')) {
-            $(this).prop('disabled', true);
-        } else {
-            $(this).prop('disabled', true);
-        }
-    });
 
-    $(modalSelector).find('button').hide();
-
-    for (var key in data) {
-        if (data.hasOwnProperty(key)) {
-            var element = $(modalSelector).find('[name="' + key + '"]');
-            if (element.length) {
-                if (element.is(':radio') || element.is(':checkbox')) {
-                    element.prop('checked', data[key]);
-                } else {
-                    element.val(data[key]);
-                }
-            }
-        }
-    }
-}
-
-function resetFormulario(modalSelector) {
-    var form = $(modalSelector).find('form')[0];
-    if (form) {
-        form.reset();
-    }
-
-    var formElements = $(modalSelector).find(':input, select');
-    formElements.each(function() {
-        $(this).prop('disabled', false);
-        $(this).prop('disabled', false);
-    });
-
-    $(modalSelector).find('button').show();
-}
 

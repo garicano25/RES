@@ -179,20 +179,14 @@
                                 <li><a class="dropdown-item" href="{{url('/Competencias-básicas')}}">Catálogo de competencias básicas</a>
                                 </li>
                                 <hr class="dropdown-divider">
-                                <li><a class="dropdown-item" href="{{url('/Tipo-vacante')}}">Catálogo de Tipo de vacante</a>
-                                </li>
-                                <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/Competencias-gerenciales')}}">Catálogo de competencias gerenciales</a>
                                 </li>
                                 <hr class="dropdown-divider">
-                                <li><a class="dropdown-item" href="{{url('/Motivo-vacante')}}">Catálogo de Motivo vacante</a>
+                                <li><a class="dropdown-item" href="{{url('/Tipo-vacante')}}">Catálogo de Tipo de vacante</a>
                                 </li>
-
-
-
-
-
-                                
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/Motivo-vacante')}}">Catálogo de Motivo vacante</a>
+                                </li>                                
                             </ul>
                         </li>
                     </ul>

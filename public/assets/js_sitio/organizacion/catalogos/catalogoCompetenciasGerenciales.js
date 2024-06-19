@@ -141,12 +141,13 @@ var TablaCompetenciasGerenciales = $("#TablaCompetenciasGerenciales").DataTable(
         },
         dataSrc: 'data'
     },
-    order: [[0, 'asc']], // Ordena por la primera columna (ID_CATALOGO_ASESOR) en orden ascendente
+    order: [[0, 'asc']], 
     columns: [
         { data: 'ID_CATALOGO_COMPETENCIA_GERENCIAL' },
         { data: 'NOMBRE_COMPETENCIA_GERENCIAL' },
         { data: 'DESCRIPCION_COMPETENCIA_GERENCIAL' },
         { data: 'BTN_EDITAR' },
+        { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
@@ -154,7 +155,8 @@ var TablaCompetenciasGerenciales = $("#TablaCompetenciasGerenciales").DataTable(
         { targets: 1, title: 'Nombre', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Descripción', className: 'all text-center descripcion-column' },
         { targets: 3, title: 'Editar', className: 'all text-center' },
-        { targets: 4, title: 'Inactivo', className: 'all text-center' }
+        { targets: 4, title: 'Visualizar', className: 'all text-center' },
+        { targets: 5, title: 'Inactivo', className: 'all text-center' }
     ]
 });
 
@@ -182,3 +184,22 @@ $('#TablaCompetenciasGerenciales tbody').on('click', 'td>button.EDITAR', functio
 
     editarDatoTabla(row.data(), 'forCompetenciasGerenciales', 'miModal_COMPETENCIAGERENCIALES');
 });
+
+
+
+$(document).ready(function() {
+    $('#TablaCompetenciasGerenciales tbody').on('click', 'td>button.VISUALIZAR', function () {
+        var tr = $(this).closest('tr');
+        var row = TablaCompetenciasGerenciales.row(tr);
+        
+        hacerSoloLectura(row.data(), '#miModal_COMPETENCIAGERENCIALES');
+
+        ID_CATALOGO_COMPETENCIA_GERENCIAL = row.data().ID_CATALOGO_COMPETENCIA_GERENCIAL;
+        editarDatoTabla(row.data(), 'forCompetenciasGerenciales', 'miModal_COMPETENCIAGERENCIALES',1);
+    });
+
+    $('#miModal_COMPETENCIAGERENCIALES').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_COMPETENCIAGERENCIALES');
+    });
+});
+

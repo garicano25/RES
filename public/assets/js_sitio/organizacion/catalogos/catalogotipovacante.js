@@ -145,18 +145,20 @@ var Tablatipovacantes = $("#Tablatipovacantes").DataTable({
         },
         dataSrc: 'data'
     },
-    order: [[0, 'asc']], // Ordena por la primera columna (ID_CATALOGO_ASESOR) en orden ascendente
+    order: [[0, 'asc']], 
     columns: [
         { data: 'ID_CATALOGO_TIPOVACANTE' },
         { data: 'NOMBRE_TIPOVACANTE' },
         { data: 'BTN_EDITAR' },
+        { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all' },
         { targets: 1, title: 'Nombre', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Editar', className: 'all text-center' },
-        { targets: 3, title: 'Inactivo', className: 'all text-center' }
+        { targets: 3, title: 'Visualizar', className: 'all text-center' },
+        { targets: 4, title: 'Inactivo', className: 'all text-center' }
     ]
 });
 
@@ -184,6 +186,22 @@ $('#Tablatipovacantes tbody').on('click', 'td>button.EDITAR', function () {
 
 
     editarDatoTabla(row.data(), 'formularioTIPOVACANTE', 'miModal_TIPOVACANTE');
+});
+
+$(document).ready(function() {
+    $('#Tablatipovacantes tbody').on('click', 'td>button.VISUALIZAR', function () {
+        var tr = $(this).closest('tr');
+        var row = Tablatipovacantes.row(tr);
+        
+        hacerSoloLectura(row.data(), '#miModal_TIPOVACANTE');
+
+        ID_CATALOGO_TIPOVACANTE = row.data().ID_CATALOGO_TIPOVACANTE;
+        editarDatoTabla(row.data(), 'formularioTIPOVACANTE', 'miModal_TIPOVACANTE',1);
+    });
+
+    $('#miModal_TIPOVACANTE').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_TIPOVACANTE');
+    });
 });
 
 

@@ -145,7 +145,7 @@ var Tablamotivovacante = $("#Tablamotivovacante").DataTable({
         },
         dataSrc: 'data'
     },
-    order: [[0, 'asc']], // Ordena por la primera columna (ID_CATALOGO_ASESOR) en orden ascendente
+    order: [[0, 'asc']], 
     columns: [
         { data: 'ID_CATALOGO_MOTIVOVACANTE' },
         { data: 'NOMBRE_MOTIVO_VACANTE' },

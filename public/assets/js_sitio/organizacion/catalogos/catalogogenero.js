@@ -94,8 +94,8 @@ $("#guardarFormGENERO").click(function (e) {
                     
                     ID_CATALOGO_GENERO = data.genero.ID_CATALOGO_GENERO
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
-                     $('#miModal_ASESORES').modal('hide')
-                    document.getElementById('formularioASESOR').reset();
+                    $('#miModal_Genero').modal('hide')
+                    document.getElementById('formularioGenero').reset();
                     Tablageneros.ajax.reload()
 
 
@@ -145,12 +145,13 @@ var Tablageneros = $("#Tablageneros").DataTable({
         },
         dataSrc: 'data'
     },
-    order: [[0, 'asc']], // Ordena por la primera columna (ID_CATALOGO_ASESOR) en orden ascendente
+    order: [[0, 'asc']],
     columns: [
         { data: 'ID_CATALOGO_GENERO' },
         { data: 'NOMBRE_GENERO' },
         { data: 'DESCRIPCION_GENERO' },
         { data: 'BTN_EDITAR' },
+        { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
@@ -158,7 +159,8 @@ var Tablageneros = $("#Tablageneros").DataTable({
         { targets: 1, title: 'Nombre', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Descripción', className: 'all text-center descripcion-column' },
         { targets: 3, title: 'Editar', className: 'all text-center' },
-        { targets: 4, title: 'Inactivo', className: 'all text-center' }
+        { targets: 4, title: 'Visualizar', className: 'all text-center' },
+        { targets: 5, title: 'Inactivo', className: 'all text-center' }
     ]
 });
 
@@ -188,59 +190,21 @@ $('#Tablageneros tbody').on('click', 'td>button.EDITAR', function () {
 
 
 
+
+
 $(document).ready(function() {
     $('#Tablageneros tbody').on('click', 'td>button.VISUALIZAR', function () {
         var tr = $(this).closest('tr');
         var row = Tablageneros.row(tr);
         
-        hacerSoloLectura(row.data());
+        hacerSoloLectura(row.data(), '#miModal_Genero');
 
         ID_CATALOGO_GENERO = row.data().ID_CATALOGO_GENERO;
-        editarDatoTabla(row.data(), 'formularioGenero', 'miModal_Genero');
+        editarDatoTabla(row.data(), 'formularioGenero', 'miModal_Genero',1);
     });
 
-    // Resetear el modal cuando se cierra
     $('#miModal_Genero').on('hidden.bs.modal', function () {
         resetFormulario('#miModal_Genero');
     });
 });
-
-function hacerSoloLectura(data) {
-    var formElements = $('#miModal_Genero').find(':input');
-
-    formElements.each(function() {
-        if ($(this).is(':checkbox') || $(this).is(':radio')) {
-            $(this).prop('disabled', true);
-        } else {
-            $(this).prop('disabled', true);
-        }
-    });
-
-    $('#miModal_Genero').find('button').hide();
-
-    // Asignar valores a los campos del formulario basado en los nombres de los campos en data
-    for (var key in data) {
-        if (data.hasOwnProperty(key)) {
-            var element = $('#miModal_Genero').find('[name="' + key + '"]');
-            if (element.length) {
-                element.val(data[key]);
-            }
-        }
-    }
-}
-
-function resetFormulario(modalSelector) {
-    var form = $(modalSelector).find('form')[0];
-    if (form) {
-        form.reset();
-    }
-
-    var formElements = $(modalSelector).find(':input');
-    formElements.each(function() {
-        $(this).prop('disabled', false);
-        $(this).prop('disabled', false);
-    });
-
-    $(modalSelector).find('button').show();
-}
 

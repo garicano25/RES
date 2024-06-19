@@ -145,18 +145,20 @@ var Tablaexperiencia = $("#Tablaexperiencia").DataTable({
         },
         dataSrc: 'data'
     },
-    order: [[0, 'asc']], // Ordena por la primera columna (ID_CATALOGO_ASESOR) en orden ascendente
+    order: [[0, 'asc']], 
     columns: [
         { data: 'ID_CATALOGO_EXPERIENCIA' },
         { data: 'NOMBRE_PUESTO' },
         { data: 'BTN_EDITAR' },
+        { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all' },
         { targets: 1, title: 'Nombre', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Editar', className: 'all text-center' },
-        { targets: 3, title: 'Inactivo', className: 'all text-center' }
+        { targets: 3, title: 'Visualizar', className: 'all text-center' },
+        { targets: 4, title: 'Inactivo', className: 'all text-center' }
     ]
 });
 
@@ -183,4 +185,22 @@ $('#Tablaexperiencia tbody').on('click', 'td>button.EDITAR', function () {
     ID_CATALOGO_EXPERIENCIA = row.data().ID_CATALOGO_EXPERIENCIA;
 
     editarDatoTabla(row.data(), 'formularioEXPERIENCIA', 'miModal_EXPERIENCIA');
+});
+
+
+
+$(document).ready(function() {
+    $('#Tablaexperiencia tbody').on('click', 'td>button.VISUALIZAR', function () {
+        var tr = $(this).closest('tr');
+        var row = Tablaexperiencia.row(tr);
+        
+        hacerSoloLectura(row.data(), '#miModal_EXPERIENCIA');
+
+        ID_CATALOGO_EXPERIENCIA = row.data().ID_CATALOGO_EXPERIENCIA;
+        editarDatoTabla(row.data(), 'formularioEXPERIENCIA', 'miModal_EXPERIENCIA',1);
+    });
+
+    $('#miModal_EXPERIENCIA').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_EXPERIENCIA');
+    });
 });

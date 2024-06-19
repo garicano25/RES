@@ -18,10 +18,18 @@ class catalogocompetenciabasicaController extends Controller
             $tabla = catalogocompetenciabasicaModel::get();
     
             foreach ($tabla as $value) {
-            
-                // Botones
-                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                if ($value->ACTIVO == 0) {
+
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill ELIMINAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+
+                } else {
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+                }
             }
     
             // Respuesta
@@ -48,12 +56,14 @@ class catalogocompetenciabasicaController extends Controller
                         $basicos = catalogocompetenciabasicaModel::create($request->all());
                     } else { 
                         if (!isset($request->ELIMINAR)) {
+
                             $basicos = catalogocompetenciabasicaModel::find($request->ID_CATALOGO_COMPETENCIA_BASICA);
                             $basicos->update($request->all());
+
                         } else {
-                            $basicos = catalogocompetenciabasicaModel::where('ID_CATALOGO_COMPETENCIA_BASICA', $request['ID_CATALOGO_COMPETENCIA_BASICA'])->delete();
+                            $basicos = catalogocompetenciabasicaModel::where('ID_CATALOGO_COMPETENCIA_BASICA', $request['ID_CATALOGO_COMPETENCIA_BASICA'])->update(['ACTIVO' => 0]);
                             $response['code']  = 1;
-                            $response['basico']  = 'Eliminada';
+                            $response['basico']  = 'Desactivada';
                             return response()->json($response);
                         }
                     }

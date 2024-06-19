@@ -86,3 +86,5 @@ class catalogomotivovacanteControlller extends Controller
         }
     }
 }
+
+                

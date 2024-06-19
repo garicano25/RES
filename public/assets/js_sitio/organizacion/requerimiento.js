@@ -146,7 +146,7 @@ var Tablarequerimiento = $("#Tablarequerimiento").DataTable({
         },
         dataSrc: 'data'
     },
-    order: [[0, 'asc']], // Ordena por la primera columna (ID_CATALOGO_ASESOR) en orden ascendente
+    order: [[0, 'asc']], 
     columns: [
         { data: 'ID_FORMULARO_REQUERIMIENTO' },
         { data: 'NOMBRE_CATEGORIA' },

@@ -19,10 +19,18 @@ class catalogoexperienciaController extends Controller
             $tabla = catalogoexperienciaModel::get();
     
             foreach ($tabla as $value) {
-            
-                // Botones
-                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                if ($value->ACTIVO == 0) {
+
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill ELIMINAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+
+                } else {
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+                }
             }
     
             // Respuesta
@@ -49,12 +57,14 @@ class catalogoexperienciaController extends Controller
                         $puestos = catalogoexperienciaModel::create($request->all());
                     } else { 
                         if (!isset($request->ELIMINAR)) {
+
                             $puestos = catalogoexperienciaModel::find($request->ID_CATALOGO_EXPERIENCIA);
                             $puestos->update($request->all());
+
                         } else {
-                            $puestos = catalogoexperienciaModel::where('ID_CATALOGO_EXPERIENCIA', $request['ID_CATALOGO_EXPERIENCIA'])->delete();
+                            $puestos = catalogoexperienciaModel::where('ID_CATALOGO_EXPERIENCIA', $request['ID_CATALOGO_EXPERIENCIA'])->update(['ACTIVO' => 0]);
                             $response['code']  = 1;
-                            $response['puesto']  = 'Eliminada';
+                            $response['puesto']  = 'Desactivada';
                             return response()->json($response);
                         }
                     }
