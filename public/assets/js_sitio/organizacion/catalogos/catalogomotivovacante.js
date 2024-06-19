@@ -150,13 +150,15 @@ var Tablamotivovacante = $("#Tablamotivovacante").DataTable({
         { data: 'ID_CATALOGO_MOTIVOVACANTE' },
         { data: 'NOMBRE_MOTIVO_VACANTE' },
         { data: 'BTN_EDITAR' },
+        { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all' },
         { targets: 1, title: 'Nombre', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Editar', className: 'all text-center' },
-        { targets: 3, title: 'Inactivo', className: 'all text-center' }
+        { targets: 3, title: 'Visualizar', className: 'all text-center' },
+        { targets: 4, title: 'Inactivo', className: 'all text-center' }
     ]
 });
 
@@ -187,4 +189,22 @@ $('#Tablamotivovacante tbody').on('click', 'td>button.EDITAR', function () {
 });
 
 
+
+
+
+$(document).ready(function() {
+    $('#Tablamotivovacante tbody').on('click', 'td>button.VISUALIZAR', function () {
+        var tr = $(this).closest('tr');
+        var row = Tablamotivovacante.row(tr);
+        
+        hacerSoloLectura(row.data(), '#miModal_MOTIVOVACANTE');
+
+        ID_CATALOGO_MOTIVOVACANTE = row.data().ID_CATALOGO_MOTIVOVACANTE;
+        editarDatoTabla(row.data(), 'formularioMOTIVOVACANTE', 'miModal_MOTIVOVACANTE',1);
+    });
+
+    $('#miModal_MOTIVOVACANTE').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_MOTIVOVACANTE');
+    });
+});
 

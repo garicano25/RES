@@ -4,8 +4,6 @@ namespace App\Http\Controllers\organizacion;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-
 use App\Models\organizacion\catalogomotivovacanteModel;
 
 use DB;
@@ -18,11 +16,18 @@ class catalogomotivovacanteControlller extends Controller
             $tabla = catalogomotivovacanteModel::get();
     
             foreach ($tabla as $value) {
-            
-                // Botones
-                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                
+                if ($value->ACTIVO == 0) {
+
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill ELIMINAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+
+                } else {
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+                }
             }
     
             // Respuesta
@@ -55,15 +60,13 @@ class catalogomotivovacanteControlller extends Controller
 
                         if (!isset($request->ELIMINAR)) {
 
-
                             $motivos = catalogomotivovacanteModel::find($request->ID_CATALOGO_MOTIVOVACANTE);
                             $motivos->update($request->all());
+
                         } else {
-
-                            $motivos = catalogomotivovacanteModel::where('ID_CATALOGO_MOTIVOVACANTE', $request['ID_CATALOGO_MOTIVOVACANTE'])->delete();
-
+                            $motivos = catalogomotivovacanteModel::where('ID_CATALOGO_MOTIVOVACANTE', $request['ID_CATALOGO_MOTIVOVACANTE'])->update(['ACTIVO' => 0]);
                             $response['code']  = 1;
-                            $rbtn-custom rounded-pill']  = 'Eliminada';
+                            $response['motivo']  = 'Desactivada';
                             return response()->json($response);
                         }
                     }
@@ -79,12 +82,11 @@ class catalogomotivovacanteControlller extends Controller
                     $response['code']  = 1;
                     $response['msj']  = 'Api no encontrada';
                     return response()->json($response);
+                }
+            } catch (Exception $e) {
+    
+                return response()->json('Error al guardar la información');
             }
-        } catch (Exception $e) {
-
-            return response()->json('Error al guardar las Relaciones');
         }
     }
-}
-
-                
+            

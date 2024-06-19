@@ -146,15 +146,28 @@ var Tablavacantes = $("#Tablavacantes").DataTable({
         },
         dataSrc: 'data'
     },
-    order: [[0, 'asc']], 
+    order: [[0, 'asc']],
     columns: [
         { data: 'ID_CATALOGO_VACANTE' },
         { data: 'CATEGORIA_VACANTE' },
         { data: 'DESCRIPCION_VACANTE' },
-        { data: 'created_at' },
-        { data: 'updated_at' },
-        { data: 'BTN_EDITAR' },
-        { data: 'BTN_ELIMINAR' }
+        { 
+            data: 'created_at',
+            render: function(data, type, row) {
+                return data.split(' ')[0]; // Extrae solo la parte de la fecha
+            }
+        },
+        { 
+            data: 'updated_at',
+            render: function(data, type, row) {
+                return data.split(' ')[0]; // Extrae solo la parte de la fecha
+            }
+        },
+        { data: null,
+            render: function (data, type, row) {
+                return row.BTN_EDITAR + ' ' +  ' ' + row.BTN_VISUALIZAR + ' ' + ' ' + row.BTN_ELIMINAR;
+            }
+        }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all' },
@@ -165,17 +178,17 @@ var Tablavacantes = $("#Tablavacantes").DataTable({
             className: 'all text-center descripcion-column',
             render: function(data, type, row, meta) {
                 if (type === 'display' && data.length > 100) {
-                    return data.substr(0, 500) + '...'; // Muestra solo los primeros 100 caracteres
+                    return data.substr(0, 400) + '...'; // Muestra solo los primeros 100 caracteres
                 }
                 return data;
             }
         },
         { targets: 3, title: 'Fecha de publicación', className: 'all text-center' },
         { targets: 4, title: 'Fecha de expiración', className: 'all text-center' },
-        { targets: 5, title: 'Editar', className: 'all text-center' },
-        { targets: 6, title: 'Eliminar', className: 'all text-center' }
+        { targets: 5, title: 'Botones', className: 'all text-center' }
     ]
 });
+
 
 
 $('#Tablavacantes tbody').on('click', 'td>button.ELIMINAR', function () {
@@ -201,4 +214,34 @@ $('#Tablavacantes tbody').on('click', 'td>button.EDITAR', function () {
 
     editarDatoTabla(row.data(), 'formularioVACANTES', 'miModal_vacantes', 1);
 
+});
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const botonAgregar = document.getElementById('botonAgregar');
+    botonAgregar.addEventListener('click', function(e) {
+        e.preventDefault();
+        agregarInput();
+    });
+
+    function agregarInput() {
+        const divInput = document.createElement('div');
+        divInput.classList.add('form-group', 'row', 'input-container', 'mb-3');
+        divInput.innerHTML = `
+            <div class="col-10">
+                <input type="text" name="REQUISITOS_VACANTES" id="REQUISITOS_VACANTES" class="form-control" placeholder="Escribe los Requerimientos de la vacante aquí">
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn btn-danger botonEliminar"><i class="bi bi-trash3-fill"></i></button>
+            </div>
+        `;
+        const contenedor = document.getElementById('inputs-container');
+        contenedor.appendChild(divInput);
+
+        const botonEliminar = divInput.querySelector('.botonEliminar');
+        botonEliminar.addEventListener('click', function() {
+            contenedor.removeChild(divInput);
+        });
+    }
 });

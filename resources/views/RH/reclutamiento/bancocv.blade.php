@@ -313,7 +313,7 @@
             </div>
 
             <div class="mb-3" id="licenciatura-cedula-container" style="display: none;">
-                <label class="col-form-label">¿Cuenta con Cédula profesional?</label>
+                <label class="col-form-label">¿Cuenta con cédula profesional?</label>
                 <div class="d-flex">
                     <div class="form-check me-3">
                         <label class="form-check-label" for="si">Si</label>
@@ -354,7 +354,7 @@
                     </div>
                 </div>
                 <div class="mb-3" id="posgrado-cedula-container" style="display: none;">
-                    <label class="col-form-label">¿Cuenta con Cédula profesional?</label>
+                    <label class="col-form-label">¿Cuenta con cédula profesional?</label>
                     <div class="d-flex">
                         <div class="form-check me-3">
                             <label class="form-check-label" for="cedula-posgrado-si">Si</label>
@@ -415,7 +415,7 @@
                     <img src="/assets/images/Colorancho.png" alt="Imagen de Privacidad">
                 </div>
                 <div class="modal-body">
-                    <p><b>“RES”</b> trata datos sensibles los cuales se utilizan para la contratación de
+                    <p><b>“RESULTS”</b> trata datos sensibles los cuales se utilizan para la contratación de
                         colaboradores, envío de cotizaciones, asignación de órdenes de trabajo o de
                         compra, completar diversos formatos y para generar los informes de consultoría.
                         Los datos que utilizaremos para las finalidades descritas en el presente aviso de

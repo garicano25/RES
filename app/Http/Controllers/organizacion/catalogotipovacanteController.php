@@ -84,7 +84,7 @@ class catalogotipovacanteController extends Controller
             }
         } catch (Exception $e) {
 
-            return response()->json('Error al guardar las Relaciones');
+            return response()->json('Error al guardar la información');
         }
     }
 }

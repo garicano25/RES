@@ -132,8 +132,8 @@ var Tablabancocv = $("#Tablabancocv").DataTable({
     order: [[0, 'asc']],
     columns: [
         { data: 'ID_BANCO_CV' },
-        { data: 'CURP_CV' }, { 
-            data: null,
+        { data: 'CURP_CV' }, 
+        { data: null,
             render: function (data, type, row) {
                 return row.NOMBRE_CV + ' ' + row.PRIMER_APELLIDO_CV + ' ' + row.SEGUNDO_APELLIDO_CV;
             }

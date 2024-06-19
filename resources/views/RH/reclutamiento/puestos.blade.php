@@ -111,6 +111,9 @@
     </nav>
 
 
+    @php
+    use Carbon\Carbon;
+    @endphp
 
 
     <div class="container mt-5">
@@ -123,17 +126,18 @@
             <div class="col-md-4">
                 <div class="list-group">
                     @foreach($vacantes as $vacante)
-                        @php
-                            $slug = \Illuminate\Support\Str::slug($vacante->CATEGORIA_VACANTE);
-                        @endphp
-                        <a href="javascript:void(0)" class="list-group-item list-group-item-action" onclick="showDetails('{{ $slug }}')" id="link-{{ $slug }}">
-                            <h5 class="mb-1">{{ $vacante->CATEGORIA_VACANTE }}</h5>
-                            <label class="text-center">Villahermosa Tabasco</label>
-                            <h5 class="mb-1">{{ $vacante->created_at }}</h5>
-
-                        </a>
-                        
-                    @endforeach
+                    @php
+                        $slug = \Illuminate\Support\Str::slug($vacante->CATEGORIA_VACANTE);
+                        $fechaFormateada = Carbon::parse($vacante->created_at)->locale('es')->isoFormat('D [de] MMMM [del] YYYY');
+                    @endphp
+                    <a href="javascript:void(0)" class="list-group-item list-group-item-action" onclick="showDetails('{{ $slug }}')" id="link-{{ $slug }}">
+                        <h5 class="mb-1">{{ $vacante->CATEGORIA_VACANTE }}</h5>
+                        <label class="text-center">Villahermosa Tabasco</label> <br>
+                        <label class="mb-1">{{ $fechaFormateada }}</label>
+                    </a>
+                @endforeach
+                
+                
                 </div>
             </div>
             <div class="col-md-8 position-relative">

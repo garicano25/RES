@@ -45,8 +45,9 @@
                         <textarea name="DESCRIPCION_VACANTE" id="DESCRIPCION_VACANTE" class="form-control" rows="8" placeholder="Escribe la descripción de la vacante aquí"></textarea>
                     </div>
                     <div class="mb-3">
-                        <label>Requerimientos de la vacante</label>
-                        <textarea name="REQUISITOS_VACANTES" id="REQUISITOS_VACANTES" class="form-control" rows="2" placeholder="Escribe los Requerimientos de la vacante aquí"></textarea>
+                        <label >Requerimiento de Vacantes:</label>
+                        <button id="botonAgregar" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar requerimiento"><i class="bi bi-plus-circle-fill"></i></button>
+                        <div id="inputs-container" class="mt-3"></div>
                     </div>
                 </div>
                 <div class="modal-footer">
