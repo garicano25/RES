@@ -188,6 +188,8 @@ $('#Tablatipovacantes tbody').on('click', 'td>button.EDITAR', function () {
     editarDatoTabla(row.data(), 'formularioTIPOVACANTE', 'miModal_TIPOVACANTE');
 });
 
+
+
 $(document).ready(function() {
     $('#Tablatipovacantes tbody').on('click', 'td>button.VISUALIZAR', function () {
         var tr = $(this).closest('tr');

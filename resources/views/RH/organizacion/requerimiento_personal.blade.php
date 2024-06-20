@@ -95,7 +95,7 @@
                               <input type="text" class="form-control " id="SUSTITUYE_RP" name="SUSTITUYE_RP" required>
                         </div>
                         <div class="col-6">
-                              <label>Categoría</label>
+                              <label>Categoría a sustituir</label>
                               <select class="form-control" id="SUSTITUYE_CATEGORIA_RP" name="SUSTITUYE_CATEGORIA_RP" required>
                                 <option selected disabled>Seleccione una opción</option>
                                 @foreach ($categoria as $cat)

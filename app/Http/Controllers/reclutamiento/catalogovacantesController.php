@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\reclutamiento\catalogovacantesModel;
 use App\Models\organizacion\catalogocategoriaModel;
+use App\Models\reclutamiento\requerimientoModel;
 
 use DB;
 
@@ -41,6 +42,10 @@ class catalogovacantesController extends Controller
                                 LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE");
     
             foreach ($tabla as $value) {
+
+                $value->REQUERIMIENTO = requerimientoModel::where('CATALOGO_VACANTES_ID', $value->ID_CATALOGO_VACANTE)->get();
+
+                
                 if ($value->ACTIVO == 0) {
 
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR" data-bs-toggle="tooltip" data-bs-placement="top" title="Visualizar registro"><i class="bi bi-eye"></i></button>';
@@ -70,27 +75,44 @@ class catalogovacantesController extends Controller
 
     
     public function store(Request $request)
-    
     {
         try {
             switch (intval($request->api)) {
                 case 1:
+                    DB::beginTransaction(); // Start transaction
+    
                     if ($request->ID_CATALOGO_VACANTE == 0) {
                         DB::statement('ALTER TABLE catalogo_vacantes AUTO_INCREMENT=1;');
-                        $vacantes = catalogovacantesModel::create($request->all());
+                        $vacante = catalogovacantesModel::create($request->all());
                     } else { 
                         if (!isset($request->ELIMINAR)) {
-                            $vacantes = catalogovacantesModel::find($request->ID_CATALOGO_VACANTE);
-                            $vacantes->update($request->all());
+                            $vacante = catalogovacantesModel::find($request->ID_CATALOGO_VACANTE);
+                            $vacante->update($request->all());
+    
+                            // Eliminar los requerimientos existentes
+                            requerimientoModel::where('CATALOGO_VACANTES_ID', $request->ID_CATALOGO_VACANTE)->delete();
                         } else {
-                            $vacantes = catalogovacantesModel::where('ID_CATALOGO_VACANTE', $request['ID_CATALOGO_VACANTE'])->delete();
+                            $vacante = catalogovacantesModel::where('ID_CATALOGO_VACANTE', $request['ID_CATALOGO_VACANTE'])->delete();
                             $response['code']  = 1;
                             $response['vacante']  = 'Eliminada';
+                            DB::commit();
                             return response()->json($response);
                         }
                     }
+    
+                    // Guardar los nuevos requerimientos
+                    if ($request->has('NOMBRE_REQUERIMINETO')) {
+                        foreach ($request->NOMBRE_REQUERIMINETO as $requerimiento) {
+                            requerimientoModel::create([
+                                'CATALOGO_VACANTES_ID' => $vacante->ID_CATALOGO_VACANTE,
+                                'NOMBRE_REQUERIMINETO' => $requerimiento
+                            ]);
+                        }
+                    }
+    
                     $response['code']  = 1;
-                    $response['vacante']  = $vacantes;
+                    $response['vacante']  = $vacante;
+                    DB::commit(); // Commit transaction
                     return response()->json($response);
                     break;
                 default:
@@ -99,6 +121,7 @@ class catalogovacantesController extends Controller
                     return response()->json($response);
             }
         } catch (Exception $e) {
+            DB::rollBack(); // Rollback transaction on error
             return response()->json('Error al guardar la nueva vacante');
         }
     }

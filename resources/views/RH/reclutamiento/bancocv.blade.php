@@ -222,16 +222,10 @@
                 <div class="col-10 mx-2">        
                     <label for="NUMERO1_CV" class="me-2">Teléfono 2</label>
                 <input type="number" class="form-control col-auto" id="TELEFONO2" name="TELEFONO2" required>
-                </div>
-                
-            </div>
-
-
-        
-           
+                </div>                
+            </div>      
            
 
-           
             <div class="mb-3">
                 <label>CURP</label>
                 <input type="text" class="form-control" id="CURP_CV" name="CURP_CV" maxlength="18" required>
@@ -390,16 +384,11 @@
             <div id="CV_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
 
                      
-                     
             <div class="form-check mb-3">
                 <input type="checkbox" class="form-check-input small-checkbox" id="aceptaTerminos">
                 <label class="form-check-label" for="aceptaTerminos">He aceptado los términos y condiciones del aviso de privacidad de Results In Performance</label>
             </div>
-            <button type="submit" class="btn btn-success" id="guardarFormBancoCV" disabled>Guardar</button>
-            
-            
-            
-           
+            <button type="submit" class="btn btn-success" id="guardarFormBancoCV" disabled>Guardar</button>           
         </form>
     </div>
 </div>

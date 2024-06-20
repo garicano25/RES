@@ -41,7 +41,7 @@
           <div class="row">
             <div class="col-6">
               <div class="form-group">
-                <label>Nombre categorías</label>
+                <label>Nombre de la categoría *</label>
                 <select class="form-control" id="DEPARTAMENTOS_AREAS_ID" name="DEPARTAMENTOS_AREAS_ID" required>
                   <option value="0" disabled selected>Seleccione una opción</option>
                   @foreach ($areas as $area)

@@ -2521,3 +2521,7 @@ function resetFormulario(modalSelector) {
 
   $(modalSelector).find('button').show();
 }
+
+
+
+

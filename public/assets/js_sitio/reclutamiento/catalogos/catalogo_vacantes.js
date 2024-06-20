@@ -4,16 +4,12 @@ ID_CATALOGO_VACANTE = 0
 
 
 
-const ModalArea = document.getElementById('miModal_vacantes')
+const ModalArea = document.getElementById('miModal_vacantes');
 ModalArea.addEventListener('hidden.bs.modal', event => {
-    
-    
-    ID_CATALOGO_VACANTE = 0
+    ID_CATALOGO_VACANTE = 0;
     document.getElementById('formularioVACANTES').reset();
-   
-
-})
-
+    document.getElementById('inputs-container').innerHTML = '';
+});
 
 
 
@@ -150,42 +146,40 @@ var Tablavacantes = $("#Tablavacantes").DataTable({
     columns: [
         { data: 'ID_CATALOGO_VACANTE' },
         { data: 'CATEGORIA_VACANTE' },
+        { data: 'LUGAR_VACANTE' },
         { data: 'DESCRIPCION_VACANTE' },
         { 
             data: 'created_at',
             render: function(data, type, row) {
-                return data.split(' ')[0]; // Extrae solo la parte de la fecha
+                return data.split(' ')[0]; 
             }
         },
-        { 
-            data: 'updated_at',
-            render: function(data, type, row) {
-                return data.split(' ')[0]; // Extrae solo la parte de la fecha
-            }
-        },
+        { data: 'FECHA_EXPIRACION' },
         { data: null,
             render: function (data, type, row) {
-                return row.BTN_EDITAR + ' ' +  ' ' + row.BTN_VISUALIZAR + ' ' + ' ' + row.BTN_ELIMINAR;
+                return row.BTN_EDITAR + ' ' + row.BTN_VISUALIZAR + ' ' + row.BTN_ELIMINAR;
             }
         }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all' },
-        { targets: 1, title: 'Nombre de la categoría', className: 'all text-center nombre-column' },
+        { targets: 1, title: 'Nombre de la categoría', className: 'all text-center descripcion-column' },
+        { targets: 2, title: 'Lugar de trabajo', className: 'all text-center descripcion-column' },
+
         {
-            targets: 2,
+            targets: 3,
             title: 'Descripción de la vacantes',
             className: 'all text-center descripcion-column',
             render: function(data, type, row, meta) {
                 if (type === 'display' && data.length > 100) {
-                    return data.substr(0, 400) + '...'; // Muestra solo los primeros 100 caracteres
+                    return data.substr(0, 201) + '...'; 
                 }
                 return data;
             }
         },
-        { targets: 3, title: 'Fecha de publicación', className: 'all text-center' },
-        { targets: 4, title: 'Fecha de expiración', className: 'all text-center' },
-        { targets: 5, title: 'Botones', className: 'all text-center' }
+        { targets: 4, title: 'Fecha de publicación', className: 'all text-center descripcion-column' },
+        { targets: 5, title: 'Fecha de expiración', className: 'all text-center descripcion-column' },
+        { targets: 6, title: 'Botones', className: 'all text-center' }
     ]
 });
 
@@ -212,10 +206,36 @@ $('#Tablavacantes tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablavacantes.row(tr);
     ID_CATALOGO_VACANTE = row.data().ID_CATALOGO_VACANTE;
 
+    // Llamar a la función para cargar los datos del formulario
     editarDatoTabla(row.data(), 'formularioVACANTES', 'miModal_vacantes', 1);
 
+    // Cargar los requerimientos existentes
+    cargarRequerimientos(row.data().REQUERIMIENTO);
 });
 
+function cargarRequerimientos(requerimientos) {
+    const contenedor = document.getElementById('inputs-container');
+    contenedor.innerHTML = ''; // Limpiar el contenedor
+
+    requerimientos.forEach(function(requerimiento) {
+        const divInput = document.createElement('div');
+        divInput.classList.add('form-group', 'row', 'input-container', 'mb-3');
+        divInput.innerHTML = `
+            <div class="col-10">
+                <input type="text" name="NOMBRE_REQUERIMINETO[]" class="form-control" value="${requerimiento.NOMBRE_REQUERIMINETO}" placeholder="Escribe los Requerimientos de la vacante aquí">
+            </div>
+            <div class="col-2">
+                <button type="button" class="btn btn-danger botonEliminar"><i class="bi bi-trash3-fill"></i></button>
+            </div>
+        `;
+        contenedor.appendChild(divInput);
+
+        const botonEliminar = divInput.querySelector('.botonEliminar');
+        botonEliminar.addEventListener('click', function() {
+            contenedor.removeChild(divInput);
+        });
+    });
+}
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -230,7 +250,7 @@ document.addEventListener("DOMContentLoaded", function() {
         divInput.classList.add('form-group', 'row', 'input-container', 'mb-3');
         divInput.innerHTML = `
             <div class="col-10">
-                <input type="text" name="REQUISITOS_VACANTES" id="REQUISITOS_VACANTES" class="form-control" placeholder="Escribe los Requerimientos de la vacante aquí">
+                <input type="text" name="NOMBRE_REQUERIMINETO[]" class="form-control" placeholder="Escribe los Requerimientos de la vacante aquí">
             </div>
             <div class="col-2">
                 <button type="button" class="btn btn-danger botonEliminar"><i class="bi bi-trash3-fill"></i></button>
@@ -244,4 +264,23 @@ document.addEventListener("DOMContentLoaded", function() {
             contenedor.removeChild(divInput);
         });
     }
+});
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const postularseButtons = document.querySelectorAll('.postularse-btn');
+
+    postularseButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            const curpInputDiv = this.nextElementSibling;
+            if (curpInputDiv.style.display === 'none' || curpInputDiv.style.display === '') {
+                curpInputDiv.style.display = 'block';
+            } else {
+                curpInputDiv.style.display = 'none';
+            }
+        });
+    });
 });

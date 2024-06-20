@@ -13,7 +13,10 @@ class catalogovacantesModel extends Model
     protected $fillable = [
         'CATEGORIA_VACANTE',
         'DESCRIPCION_VACANTE',
-        'REQUISITOS_VACANTES',
+        'LUGAR_VACANTE',
+        'FECHA_EXPIRACION',
+
+        'DESCRIPCION',
         'ACTIVO',   
     ];
 

@@ -289,6 +289,7 @@ document.getElementById('CURP_CV').addEventListener('input', function() {
 });
 
 
+
 document.getElementById('ULTIMO_GRADO_CV').addEventListener('change', function() {
     var selectedValue = this.value;
     

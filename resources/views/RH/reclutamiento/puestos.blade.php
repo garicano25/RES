@@ -131,8 +131,10 @@
                         $fechaFormateada = Carbon::parse($vacante->created_at)->locale('es')->isoFormat('D [de] MMMM [del] YYYY');
                     @endphp
                     <a href="javascript:void(0)" class="list-group-item list-group-item-action" onclick="showDetails('{{ $slug }}')" id="link-{{ $slug }}">
-                        <h5 class="mb-1">{{ $vacante->CATEGORIA_VACANTE }}</h5>
-                        <label class="text-center">Villahermosa Tabasco</label> <br>
+                        <h5 class="mb-1">{{ $vacante->CATEGORIA_VACANTE }}</h5> <br>
+                        <label><b>Lugar de trabajo:</b> </label>
+                        <label class="text-center">{{ $vacante->LUGAR_VACANTE }}</label>  <br><br>
+                        <label><b>Fecha de publicación:</b></label>
                         <label class="mb-1">{{ $fechaFormateada }}</label>
                     </a>
                 @endforeach
@@ -143,20 +145,53 @@
             <div class="col-md-8 position-relative">
                 @foreach($vacantes as $vacante)
                     @php
-                        $slug = \Illuminate\Support\Str::slug($vacante->CATEGORIA_VACANTE);
+                                            $slug = \Illuminate\Support\Str::slug($vacante->CATEGORIA_VACANTE);
+                        $fechaFormateada = Carbon::parse($vacante->created_at)->locale('es')->isoFormat('D [de] MMMM [del] YYYY');
+                        $requisitosFormateados = nl2br(e($vacante->DESCRIPCION));
                     @endphp
                     <div class="details-pane" id="details-{{ $slug }}">
-                        <h5 class="card-title">{{ $vacante->CATEGORIA_VACANTE }}</h5>
+                        <h5 class="card-title text-center">{{ $vacante->CATEGORIA_VACANTE }}</h5> <br>
+                        <label><b>Lugar de trabajo:</b> </label>
+                        <label>{{ $vacante->LUGAR_VACANTE }}</label> <br>
+                        <label><b>Fecha de publicación:</b></label>
+                        <label class="mb-1">{{ $fechaFormateada }}</label>
                         <hr>
                         <p><strong>Descripción:</strong></p>
                         <p>{{ $vacante->DESCRIPCION_VACANTE }}</p>
                         <p><strong>Requisitos:</strong></p>
-                        <p>{{ $vacante->REQUISITOS_VACANTES }}</p>
+                        <p>{{ $vacante->DESCRIPCION }}</p>
+
+                        <button type="button" class="btn btn-primary postularse-btn" data-bs-toggle="modal" data-bs-target="#postularseModal" data-vacante="{{ $slug }}">Postularse</button>
                     </div>
                 @endforeach
             </div>
+        
+            
         </div>
     </div>
+
+
+    <div class="modal fade" id="postularseModal" tabindex="-1" aria-labelledby="postularseModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="postularseModalLabel">Escribir CURP</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="curpInput">Escribe tu CURP:</label>
+                        <input type="text" id="curpInput" name="curp" class="form-control" placeholder="Escribe tu CURP aquí">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="submitCurpBtn">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         function showDetails(slug) {
             // Hide all details panes and remove active class from links
