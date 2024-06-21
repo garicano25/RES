@@ -2,6 +2,28 @@ ID_BANCO_CV = 0
 
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    var avisoModal = new bootstrap.Modal(document.getElementById('avisoPrivacidadModal'), {
+        backdrop: 'static',
+        keyboard: false
+    });
+    avisoModal.show();
+
+    document.getElementById('aceptoTerminos').addEventListener('click', function() {
+        avisoModal.hide();
+    });
+
+    document.getElementById('noAceptoTerminos').addEventListener('click', function() {
+        window.location.href = 'http://results-in-performance.com/';
+    });
+});
+
+
+
+
+
+
+
 
 $("#guardarFormBancoCV").click(function (e) {
     e.preventDefault();
@@ -38,7 +60,10 @@ $("#guardarFormBancoCV").click(function (e) {
 
                 ID_BANCO_CV = data.bancocv.ID_BANCO_CV
                     alertMensaje('success','Información guardada correctamente',null,null, 1500)
+                    $('#miModal_BANCOCV').modal('hide')
                     document.getElementById('formularioBANCO').reset();
+                    Tablabancocv.ajax.reload()
+
                          
                  })
             
@@ -73,7 +98,9 @@ $("#guardarFormBancoCV").click(function (e) {
                     
                     ID_BANCO_CV = data.bancocv.ID_BANCO_CV
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                    $('#miModal_BANCOCV').modal('hide')
                     document.getElementById('formularioBANCO').reset();
+                    Tablabancocv.ajax.reload()
                 
 
 
@@ -144,14 +171,14 @@ var Tablabancocv = $("#Tablabancocv").DataTable({
         { 
             data: 'ARCHIVO_CURP_CV',
             render: function (data, type, row) {
-                return '<button class="btn btn-danger btn-custom rounded-pill pdf-button" data-pdf="/' + data + '"> <i class="bi bi-filetype-pdf"></i></button>';
+                return '<button class="btn btn-outline-danger btn-custom rounded-pill pdf-button"data-pdf="/' + data + '"> <i class="bi bi-filetype-pdf"></i></button>';
             },
             className: 'text-center'
         },
         { 
             data: 'ARCHIVO_CV',
             render: function (data, type, row) {
-                return '<button class="btn btn-danger btn-custom rounded-pill pdf-button" data-pdf="/' + data + '"> <i class="bi bi-filetype-pdf"></i></button>';
+                return '<button class="btn btn-outline-danger btn-custom rounded-pill pdf-button" data-pdf="/' + data + '"> <i class="bi bi-filetype-pdf"></i></button>';
             },
             className: 'text-center'
         },
@@ -179,6 +206,9 @@ $('#Tablabancocv').on('click', '.pdf-button', function (e) {
     $('#pdfIframe').attr('src', pdfUrl);
     $('#pdfModal').modal('show');
 });
+
+
+
 
 
 
@@ -211,68 +241,59 @@ function calcularEdad(fechaNacimiento) {
     return edad;
 }
 
-$('#Tablabancocv tbody').on('click', 'td>button.EDITAR', function () {
-    var tr = $(this).closest('tr');
-    var row = Tablabancocv.row(tr);
-    var data = row.data();
 
-    // Ocultar todos los campos del formulario inicialmente
-    $('#formularioBANCO input, #formularioBANCO select, #formularioBANCO textarea').hide();
+$(document).ready(function() {
+    $('#Tablabancocv tbody').on('click', 'td>button.EDITAR', function () {
+        var tr = $(this).closest('tr');
+        var row = Tablabancocv.row(tr);
+        
+        console.log(row.data().ANIO_FECHA_CV)
+        hacerSoloLectura(row.data(), '#miModal_VACANTES');
 
-    // Mostrar y llenar los inputs de tipo text y number que tengan datos
-    $('#formularioBANCO input[type="text"], #formularioBANCO input[type="number"], #formularioBANCO textarea').each(function () {
-        var inputName = $(this).attr('name');
-        if (inputName && data[inputName]) {
-            $(this).val(data[inputName]).prop('disabled', true).show();
-        } else {
-            $(this).val('').hide();
+        ID_BANCO_CV = row.data().ID_BANCO_CV;
+        editarDatoTabla(row.data(), 'formularioCATEGORIAS', 'miModal_VACANTES',1);
+ 
+        if (row.data().DIA_FECHA_CV && row.data().MES_FECHA_CV && row.data().ANIO_FECHA_CV) {
+            const fechaNacimiento = `${row.data().ANIO_FECHA_CV}-${row.data().MES_FECHA_CV}-${row.data().DIA_FECHA_CV}`;
+            const edad = calcularEdad(fechaNacimiento);
+            $('#EDAD').val(edad).prop('disabled', true).show();
         }
+
+        setTimeout(() => {
+            $('#ANIO_FECHA_CV').val(row.data().ANIO_FECHA_CV);
+        }, 100);
+    });
+    
+
+    $('#miModal_VACANTES').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_VACANTES');
     });
 
-    // Mostrar y llenar los select que tengan datos
-    $('#formularioBANCO select').each(function () {
-        var selectName = $(this).attr('name');
-        if (selectName && data[selectName]) {
-            $(this).val(data[selectName]).prop('disabled', true).show();
-        } else {
-            $(this).val('').hide();
+    $('#miModal_VACANTES').on('show.bs.modal', function () {
+                          
+        var html = '<option value="0" selected disabled>Seleccione una opción</option>'
+        const currentYear = new Date().getFullYear();
+        for (let i = currentYear; i >= 1950; i--) {
+            html +='<option value="' + i + '">' + i + '</option>';
         }
+
+
+        $('#ANIO_FECHA_CV').html(html);
+
+
     });
-
-    // Mostrar y llenar los radio buttons que tengan datos
-    $('#formularioBANCO input[type="radio"]').each(function () {
-        var radioName = $(this).attr('name');
-        if (radioName && data[radioName]) {
-            if ($(this).val() == data[radioName]) {
-                $(this).prop('checked', true);
-            }
-            $(this).prop('disabled', true).show();
-        } else {
-            $(this).hide();
-        }
-    });
-
-    // Mostrar y llenar los checkboxes que tengan datos
-    $('#formularioBANCO input[type="checkbox"]').each(function () {
-        var checkboxName = $(this).attr('name');
-        if (checkboxName && data[checkboxName]) {
-            $(this).prop('checked', data[checkboxName] == 1 ? true : false);
-            $(this).prop('disabled', true).show();
-        } else {
-            $(this).hide();
-        }
-    });
-
-    // Calcular y mostrar la edad
-    if (data.DIA_FECHA_CV && data.MES_FECHA_CV && data.ANO_FECHA_CV) {
-        const fechaNacimiento = `${data.ANO_FECHA_CV}-${data.MES_FECHA_CV}-${data.DIA_FECHA_CV}`;
-        const edad = calcularEdad(fechaNacimiento);
-        $('#EDAD').val(edad).prop('disabled', true).show();
-    }
-
-    // Mostrar el modal
-    $('#miModal_VACANTES').modal('show');
+  
 });
+
+
+
+
+
+
+function validarCURP(curp) {
+    const regex = /^[A-Z]{4}\d{6}[HM][A-Z]{5}[A-Z0-9]{2}$/;
+    return regex.test(curp);
+}
 
 document.getElementById('CURP_CV').addEventListener('input', function() {
     this.value = this.value.toUpperCase();
@@ -281,12 +302,33 @@ document.getElementById('CURP_CV').addEventListener('input', function() {
     contador.textContent = curp.length + '/18';
 
     var mensaje = document.getElementById('mensaje');
+    var error = document.getElementById('error');
     if (curp.length === 18) {
-        mensaje.textContent = 'Confirma tu CURP antes de continuar';
+        if (validarCURP(curp)) {
+            mensaje.textContent = 'CURP válida. Confirma tu CURP antes de continuar.';
+            error.textContent = '';
+        } else {
+            mensaje.textContent = '';
+            error.textContent = 'CURP inválida. Por favor, verifica el formato.';
+        }
     } else {
         mensaje.textContent = '';
+        error.textContent = '';
     }
 });
+
+$(document).ready(function() {
+    $('#formularioBANCO').on('submit', function(event) {
+        const curp = $('#CURP_CV').val();
+        if (!validarCURP(curp)) {
+            $('#error').text('CURP inválida. Por favor, verifica el formato.');
+            event.preventDefault();
+        } else {
+            $('#error').text('');
+        }
+    });
+});
+
 
 
 
@@ -312,22 +354,6 @@ document.getElementById('TIPO_POSGRADO_CV').addEventListener('change', function(
 
 
 
-
-document.addEventListener('DOMContentLoaded', function() {
-    var avisoModal = new bootstrap.Modal(document.getElementById('avisoPrivacidadModal'), {
-        backdrop: 'static',
-        keyboard: false
-    });
-    avisoModal.show();
-
-    document.getElementById('aceptoTerminos').addEventListener('click', function() {
-        avisoModal.hide();
-    });
-
-    document.getElementById('noAceptoTerminos').addEventListener('click', function() {
-        window.location.href = 'http://results-in-performance.com/';
-    });
-});
 
 
 
@@ -383,3 +409,18 @@ document.getElementById('guardarFormBancoCV').addEventListener('click', function
         alert('Debe aceptar los términos y condiciones para continuar.');
     }
 });
+
+
+
+
+
+
+const ModalArea = document.getElementById('miModal_BANCOCV')
+ModalArea.addEventListener('hidden.bs.modal', event => {
+    
+    
+    ID_BANCO_CV = 0
+    document.getElementById('formularioBANCO').reset();
+   
+
+})

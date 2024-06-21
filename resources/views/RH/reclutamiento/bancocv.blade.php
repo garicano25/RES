@@ -61,7 +61,7 @@
 
 
         #ID_BANCO_CURP_CV {
-    text-transform: uppercase;
+         text-transform: uppercase;
     }
 
 
@@ -70,11 +70,21 @@
             color: gray; /* Color del contador */
         }
 
-        #mensaje {
+        /* #mensaje {
             margin-top: 5px;
-            color: red; /* Color del mensaje */
-        }
+            color: red;  
+        } */
    
+
+        #mensaje {
+            font-size: 0.9em;
+            color: green;
+        }
+        
+        #error {
+            font-size: 0.9em;
+            color: red;
+        }
 
        
 
@@ -229,9 +239,10 @@
             <div class="mb-3">
                 <label>CURP</label>
                 <input type="text" class="form-control" id="CURP_CV" name="CURP_CV" maxlength="18" required>
-                <div id="contador" class="text-end"></div>
+                <div id="contador" class="text-end">0/18</div>
                 <div id="mensaje"></div>
-            </div>  
+                <div id="error"></div>
+            </div> 
             <div class="mb-3">
                 <label>Fecha de nacimiento</label>
                 <div class="d-flex justify-content-between">

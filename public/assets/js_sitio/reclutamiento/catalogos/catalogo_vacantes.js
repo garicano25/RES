@@ -147,6 +147,8 @@ var Tablavacantes = $("#Tablavacantes").DataTable({
         { data: 'ID_CATALOGO_VACANTE' },
         { data: 'CATEGORIA_VACANTE' },
         { data: 'LUGAR_VACANTE' },
+        { data: 'LA_VACANTES_ES' },
+
         { data: 'DESCRIPCION_VACANTE' },
         { 
             data: 'created_at',
@@ -163,11 +165,13 @@ var Tablavacantes = $("#Tablavacantes").DataTable({
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all' },
-        { targets: 1, title: 'Nombre de la categoría', className: 'all text-center descripcion-column' },
-        { targets: 2, title: 'Lugar de trabajo', className: 'all text-center descripcion-column' },
+        { targets: 1, title: 'Nombre de la categoría', className: ' descripcion-column' },
+        { targets: 2, title: 'Lugar de trabajo', className: ' descripcion-column' },
+        { targets: 3, title: 'La vacantes es', className: ' descripcion-column' },
+
 
         {
-            targets: 3,
+            targets: 4,
             title: 'Descripción de la vacantes',
             className: 'all text-center descripcion-column',
             render: function(data, type, row, meta) {
@@ -177,9 +181,9 @@ var Tablavacantes = $("#Tablavacantes").DataTable({
                 return data;
             }
         },
-        { targets: 4, title: 'Fecha de publicación', className: 'all text-center descripcion-column' },
-        { targets: 5, title: 'Fecha de expiración', className: 'all text-center descripcion-column' },
-        { targets: 6, title: 'Botones', className: 'all text-center' }
+        { targets: 5, title: 'Fecha de publicación', className: ' descripcion-column' },
+        { targets: 6, title: 'Fecha de expiración', className: ' descripcion-column' },
+        { targets: 7, title: 'Botones', className: 'all text-center' }
     ]
 });
 

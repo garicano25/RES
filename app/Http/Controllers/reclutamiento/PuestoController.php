@@ -10,12 +10,12 @@ class PuestoController extends Controller
 {
 
 
-
     public function index()
     {
-        $vacantes = catalogovacantesModel::all();
+        $vacantes = catalogovacantesModel::where('LA_VACANTES_ES', 'Pública')->get();
         return view('RH.reclutamiento.puestos', compact('vacantes'));
     }
-
+    
+    
 
 }

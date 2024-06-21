@@ -18,7 +18,7 @@ class bancocvModel extends Model
         'CURP_CV',
         'DIA_FECHA_CV',
         'MES_FECHA_CV',
-        'ANO_FECHA_CV',
+        'ANIO_FECHA_CV',
         'ULTIMO_GRADO_CV',
         'NOMBRE_LICENCIATURA_CV',
         'TIPO_POSGRADO_CV',

@@ -31,6 +31,20 @@
                 </div>
                 <div class="modal-body">
                     {!! csrf_field() !!}
+
+
+
+                    <div class="mb-3">
+                        <label>La vacante es: *</label>
+                        <select class="form-select" id="LA_VACANTES_ES" name="LA_VACANTES_ES" required>
+                            <option value="0" disabled selected>Seleccione una opción</option>
+                            <option value="Pública">Pública</option>
+                            <option value="Privada">Privada</option>
+                        </select>
+                    </div>
+
+
+
                     <div class="mb-3">
                         <label>Categoría</label>
                         <select class="form-control" id="CATEGORIA_VACANTE" name="CATEGORIA_VACANTE" required>
