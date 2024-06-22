@@ -192,6 +192,8 @@ Route::get('/VacanteDelete', [catalogovacantesController::class, 'store']);
 Route::get('/Tablavacantes', [catalogovacantesController::class, 'Tablavacantes']);
 
 
+
+
 Route::get('/Listavacantes', function () {return view('RH.reclutamiento.reclutamiento');});
 
 

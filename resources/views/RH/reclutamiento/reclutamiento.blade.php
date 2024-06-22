@@ -30,12 +30,18 @@
           <div class="modal-content">
         <form method="post" enctype="multipart/form-data" id="formularioBANCO" style="background-color: #ffffff;">
             <div class="modal-header">
-                <h5 class="modal-title" id="miModalLabel">Información</h5>
+                <h5 class="modal-title" id="miModalLabel">Datos Personales</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
                 <div class="modal-body">
                     {!! csrf_field() !!}
                 
+
+
+                                <div class="mb-3">
+                                    <label>Nombre(s)</label>
+                                    <input type="text" class="form-control" id="NOMBRE_CV" name="NOMBRE_CV" required>
+                                </div>
                                 <div class="mb-3">
                                     <label>Nombre(s)</label>
                                     <input type="text" class="form-control" id="NOMBRE_CV" name="NOMBRE_CV" required>

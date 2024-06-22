@@ -58,7 +58,7 @@
                                 <select class="form-control" id="TIPO_VACANTE_RP" name="TIPO_VACANTE_RP" required>
                                   <option selected disabled>Seleccione una opción</option>
                                   @foreach ($tipos as $tipo)
-                                      <option value="{{ $tipo->ID_CATALOGO_TIPOVACANTE }}">{{ $tipo->NOMBRE_TIPOVACANTE }}</option>
+                                      <option value="{{ $tipo->NOMBRE_TIPOVACANTE }}">{{ $tipo->NOMBRE_TIPOVACANTE }}</option>
                                   @endforeach
                               </select>                          
                             </div>
@@ -71,7 +71,7 @@
                               <select class="form-control" id="MOTIVO_VACANTE_RP" name="MOTIVO_VACANTE_RP" required>
                                 <option selected disabled>Seleccione una opción</option>
                                   @foreach ($motivos as $motivo)
-                                      <option value="{{ $motivo->ID_CATALOGO_MOTIVOVACANTE }}">{{ $motivo->NOMBRE_MOTIVO_VACANTE }}</option>
+                                      <option value="{{ $motivo->NOMBRE_MOTIVO_VACANTE }}">{{ $motivo->NOMBRE_MOTIVO_VACANTE }}</option>
                                   @endforeach
                               </select>                              
                           </div>
