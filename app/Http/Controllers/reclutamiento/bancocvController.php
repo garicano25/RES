@@ -7,11 +7,22 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
 use App\Models\reclutamiento\bancocvModel;
-
+use App\Models\reclutamiento\catalogovacantesModel;
 use DB;
 
 class bancocvController extends Controller
 {
+
+
+    public function index()
+    {
+        $vacantes = catalogovacantesModel::where('LA_VACANTES_ES', 'Privada')->get();
+        return view('RH.reclutamiento.reclutamiento', compact('vacantes'));
+    }
+    
+
+
+
     public function Tablabancocv()
     {
         try {

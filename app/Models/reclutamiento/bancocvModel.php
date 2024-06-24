@@ -11,6 +11,7 @@ class bancocvModel extends Model
     protected $table = 'formulario_bancocv';
     protected $fillable = [
         'AVISO_PRIVACIDAD',
+        'VACANTES_POSTULACION',
         'NOMBRE_CV',
         'PRIMER_APELLIDO_CV',
         'SEGUNDO_APELLIDO_CV',

@@ -3,7 +3,19 @@
 @section('contenido')
 
 
+<style>
 
+#mensaje {
+            font-size: 0.9em;
+            color: green;
+        }
+        
+        #error {
+            font-size: 0.9em;
+            color: red;
+        }
+
+</style>
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5 text-center" style="display: flex; justify-content: center; align-items: center; background-color: transparent;">
@@ -35,9 +47,19 @@
             </div>
                 <div class="modal-body">
                     {!! csrf_field() !!}
-                
 
 
+                                <div class="mb-3">
+                                    <div class="form-group">
+                                        <label>Seleccione la vacante:</label>
+                                        <select class="form-control" id="VACANTES_POSTULACION" name="VACANTES_POSTULACION" required>
+                                        <option selected disabled>Seleccione una opción</option>
+                                        @foreach ($vacantes as $vacante)
+                                            <option value="{{ $vacante->ID_CATALOGO_VACANTE }}">{{ $vacante->CATEGORIA_VACANTE }}</option>
+                                        @endforeach
+                                    </select>                          
+                                    </div>
+                                </div>
                                 <div class="mb-3">
                                     <label>Nombre(s)</label>
                                     <input type="text" class="form-control" id="NOMBRE_CV" name="NOMBRE_CV" required>

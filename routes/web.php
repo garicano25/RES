@@ -193,7 +193,8 @@ Route::get('/Tablavacantes', [catalogovacantesController::class, 'Tablavacantes'
 
 
 
+Route::get('/Listavacantes', [bancocvController::class, 'index']);
 
-Route::get('/Listavacantes', function () {return view('RH.reclutamiento.reclutamiento');});
+// Route::get('/Listavacantes', function () {return view('RH.reclutamiento.reclutamiento');});
 
 
