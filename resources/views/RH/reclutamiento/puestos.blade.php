@@ -175,16 +175,24 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="postularseModalLabel">Escribir CURP</h5>
+                    <h5 class="modal-title" id="postularseModalLabel">Nota Importante</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <p>Para postularse asegúrese de estar registrado en el banco de CV. <br>
+                    Si no está registrado o desea actualizar su CV, ingrese <a href="http://127.0.0.1:8001/Formulario-vacantes" target="_blank">aquí</a>.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="notRegisteredBtn">No estoy registrado</button>
+                    <button type="button" class="btn btn-success" id="registeredBtn">Sí estoy registrado</button>
+                </div>
+                <div class="modal-body" id="curpInputContainer" style="display:none;">
                     <div class="mb-3">
                         <label for="curpInput">Escribe tu CURP:</label>
                         <input type="text" id="curpInput" name="curp" class="form-control" placeholder="Escribe tu CURP aquí">
                     </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" id="curpButtonsContainer" style="display:none;">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary" id="submitCurpBtn">Enviar</button>
                 </div>
@@ -194,7 +202,6 @@
 
     <script>
         function showDetails(slug) {
-            // Hide all details panes and remove active class from links
             document.querySelectorAll('.details-pane').forEach(function(pane) {
                 pane.classList.remove('active');
             });
@@ -202,10 +209,26 @@
                 link.classList.remove('active-link');
             });
 
-            // Show the selected details pane and add active class to the clicked link
             document.getElementById('details-' + slug).classList.add('active');
             document.getElementById('link-' + slug).classList.add('active-link');
         }
+
+
+
+        document.getElementById('notRegisteredBtn').addEventListener('click', function() {
+        window.location.href = 'http://127.0.0.1:8001/Formulario-vacantes';
+    });
+
+    document.getElementById('registeredBtn').addEventListener('click', function() {
+        document.getElementById('curpInputContainer').style.display = 'block';
+        document.getElementById('curpButtonsContainer').style.display = 'block';
+        document.querySelector('.modal-footer').style.display = 'none';
+    });
+
+    document.getElementById('submitCurpBtn').addEventListener('click', function() {
+        // Lógica para enviar la CURP
+    });
+
     </script>
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.2.0/js/bootstrap.bundle.min.js"></script>
