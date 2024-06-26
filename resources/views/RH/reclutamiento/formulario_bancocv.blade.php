@@ -160,7 +160,9 @@
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover;">
         <div class="container-fluid">
             <a class="navbar-brand" href="http://www.results-in-performance.com/">
-                <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
+                <img src="/assets/images/rip_logoblanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
+                {{-- <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo"> --}}
+
             </a>
             
         </div>
@@ -169,7 +171,9 @@
 
 
 <div class="card">
-    <img src="/assets/images/Colorancho.png" class="card-img-top" alt="Imagen superior">
+    <img src="/assets/images/rip_logocolores.png" class="card-img-top" alt="Imagen superior">
+
+    {{-- <img src="/assets/images/Colorancho.png" class="card-img-top" alt="Imagen superior"> --}}
     <div class="card-body">
         <form method="post"  enctype="multipart/form-data" id="formularioBANCO">   
             {!! csrf_field() !!}
@@ -412,7 +416,8 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="avisoPrivacidadModalLabel">Aviso de Privacidad</h5>
-                    <img src="/assets/images/Colorancho.png" alt="Imagen de Privacidad">
+                    <img src="/assets/images/rip_logocolores.png" alt="Imagen de Privacidad">                    
+                    {{-- <img src="/assets/images/Colorancho.png" alt="Imagen de Privacidad"> --}}
                 </div>
                 <div class="modal-body">
                     <p><b>“RESULTS”</b> trata datos sensibles los cuales se utilizan para la contratación de

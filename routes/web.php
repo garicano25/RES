@@ -168,19 +168,20 @@ Route::get('/Tablamotivovacante', [catalogomotivovacanteControlller::class, 'Tab
 
 //==============================================  RECLUTAMIENTO  ============================================== 
 
-
-Route::get('/Formulario-vacantes', function () {return view('RH.reclutamiento.bancocv');});
-
-
+// Formulario de Banco de CV externo a la aplicación
+Route::get('/Formulario-vacantes', function () {return view('RH.reclutamiento.formulario_bancocv');});
 Route::post('/BancoSave', [bancocvController::class, 'store']);
+
+//  Tabla para poder la información del formulario de Banco de CV 
+Route::get('/Listavacantes', [bancocvController::class, 'index']);
 Route::get('/BancoDelete', [bancocvController::class, 'store']);
 Route::get('/Tablabancocv', [bancocvController::class, 'Tablabancocv']);
 
-
+// Rutas para poder ver los archivos CURP Y CV del banco de cv
 Route::get('/curppdf/{ID_BANCO_CV}', [bancocvController::class, 'curppdf']);
 Route::get('/cvpdf/{ID_BANCO_CV}', [bancocvController::class, 'cvpdf']);
 
-
+// Ruta para ver las vacantes externa en la aplicación
 // Route::get('/Vacantes', function () {return view('RH.reclutamiento.puestos');});
 Route::get('/Vacantes', [PuestoController::class, 'index']);
 
@@ -192,8 +193,7 @@ Route::get('/VacanteDelete', [catalogovacantesController::class, 'store']);
 Route::get('/Tablavacantes', [catalogovacantesController::class, 'Tablavacantes']);
 
 
-
-Route::get('/Listavacantes', [bancocvController::class, 'index']);
+// Vacantes 
 
 // Route::get('/Listavacantes', function () {return view('RH.reclutamiento.reclutamiento');});
 

@@ -82,6 +82,8 @@ class bancocvController extends Controller
                         DB::statement('ALTER TABLE formulario_bancocv AUTO_INCREMENT=1;');
                         $bancocvs = bancocvModel::create($request->all());
                     } else {
+
+                        
                         if (!isset($request->ELIMINAR)) {
                             $bancocvs = bancocvModel::find($request->ID_BANCO_CV);
                             $bancocvs->update($request->all());
