@@ -40,7 +40,7 @@
                     {!! csrf_field() !!}
                     <div class="row">
                         <input type="hidden" class="form-control" id="USUARIO_ID" name="USUARIO_ID" value="0">
-
+                        
                     </div>
                     <div class="row">
                         <div class="row mb-3">
@@ -2057,6 +2057,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-1">
+                                    <button type="button" class="btn btn-danger eliminar-puesto" data-puesto="puesto1"><i class="bi bi-trash"></i></button>
+                                </div>
                             </div>
 
 
@@ -2115,6 +2118,9 @@
                                             <label class="form-check-label" for="PUESTO4_CUMPLE_NO">No</label>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-1">
+                                    <button type="button" class="btn btn-danger eliminar-puesto" data-puesto="puesto2"><i class="bi bi-trash"></i></button>
                                 </div>
                             </div>
 
@@ -2175,6 +2181,9 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-1">
+                                    <button type="button" class="btn btn-danger eliminar-puesto" data-puesto="puesto3"><i class="bi bi-trash"></i></button>
+                                </div>
                             </div>
 
                            
@@ -2233,6 +2242,9 @@
                                             <label class="form-check-label" for="PUESTO8_CUMPLE_NO">No</label>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-1">
+                                    <button type="button" class="btn btn-danger eliminar-puesto" data-puesto="puesto4"><i class="bi bi-trash"></i></button>
                                 </div>
                             </div>
                            
@@ -2293,6 +2305,9 @@
                                             <label class="form-check-label" for="PUESTO10_CUMPLE_NO">No</label>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-1">
+                                    <button type="button" class="btn btn-danger eliminar-puesto" data-puesto="puesto5"><i class="bi bi-trash"></i></button>
                                 </div>
                             </div>
 

@@ -581,6 +581,58 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+// NO SELECCIONAR LAS MISMAS Competencias básicas o cardinales 
+document.addEventListener('DOMContentLoaded', function () {
+    const selects = document.querySelectorAll('.cardinales-select');
+
+    selects.forEach(select => {
+        select.addEventListener('change', function () {
+            const selectedValues = Array.from(selects).map(s => s.value);
+            
+            selects.forEach(s => {
+                const currentValue = s.value;
+                const options = s.querySelectorAll('option');
+
+                options.forEach(option => {
+                    if (selectedValues.includes(option.value) && option.value !== currentValue) {
+                        option.style.display = 'none';
+                    } else {
+                        option.style.display = 'block';
+                    }
+                });
+            });
+        });
+    });
+});
+
+// NO SELECCIONAR LAS MISMAS Competencias gerenciales o de mandos medios
+
+document.addEventListener('DOMContentLoaded', function () {
+    const selects = document.querySelectorAll('.gerenciales-select');
+
+    selects.forEach(select => {
+        select.addEventListener('change', function () {
+            const selectedValues = Array.from(selects).map(s => s.value);
+            
+            selects.forEach(s => {
+                const currentValue = s.value;
+                const options = s.querySelectorAll('option');
+
+                options.forEach(option => {
+                    if (selectedValues.includes(option.value) && option.value !== currentValue) {
+                        option.style.display = 'none';
+                    } else {
+                        option.style.display = 'block';
+                    }
+                });
+            });
+        });
+    });
+});
+
+
+
+
 // CREAR UN NUEVO DPT
 $(document).ready(function () {
     $("#nuevo_dpt").click(function (e) {

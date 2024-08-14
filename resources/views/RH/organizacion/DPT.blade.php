@@ -139,7 +139,7 @@
               </div>
               <div class="col-4">
                 <label for="indirectos" class="form-label">Indirectos</label>
-                <input type="text" id="PUESTOS_INDIRECTOS_DPT" name="PUESTOS_INDIRECTOS_DPT" class="form-control" required>
+                <input type="text" id="PUESTOS_INDIRECTOS_DPT" name="PUESTOS_INDIRECTOS_DPT" class="form-control" required readonly>
               </div>
               <div class="col-4 mt-4">
                 <label for="disponibilidad-viajar" class="form-label ml-5">Disponibilidad para viajar</label>
@@ -777,7 +777,7 @@
 
                     <tr id="COMPETENCIA1" style="display: none;">
                       <td>
-                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA1" name="NOMBRE_COMPETENCIA1[]">
+                        <select class="form-control cardinales-select" id="NOMBRE_COMPETENCIA1" name="NOMBRE_COMPETENCIA1">
                           <option selected disabled>Seleccione una opción</option>
                           @foreach ($basicos as $basico)
                           <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
@@ -800,7 +800,7 @@
 
                     <tr id="COMPETENCIA2" style="display: none;">
                       <td>
-                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA2" name="NOMBRE_COMPETENCIA2">
+                        <select class="form-control cardinales-select" id="NOMBRE_COMPETENCIA2" name="NOMBRE_COMPETENCIA2">
                           <option selected disabled>Seleccione una opción</option>
                           @foreach ($basicos as $basico)
                           <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
@@ -823,7 +823,7 @@
 
                     <tr id="COMPETENCIA3" style="display: none;">
                       <td>
-                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA3" name="NOMBRE_COMPETENCIA3">
+                        <select class="form-control cardinales-select" id="NOMBRE_COMPETENCIA3" name="NOMBRE_COMPETENCIA3">
                           <option selected disabled>Seleccione una opción</option>
                           @foreach ($basicos as $basico)
                           <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
@@ -847,7 +847,7 @@
 
                     <tr id="COMPETENCIA4" style="display: none;">
                       <td>
-                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA4" name="NOMBRE_COMPETENCIA4">
+                        <select class="form-control cardinales-select" id="NOMBRE_COMPETENCIA4" name="NOMBRE_COMPETENCIA4">
                           <option selected disabled>Seleccione una opción</option>
                           @foreach ($basicos as $basico)
                           <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
@@ -872,7 +872,7 @@
 
                     <tr id="COMPETENCIA5" style="display: none;">
                       <td>
-                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA5" name="NOMBRE_COMPETENCIA5">
+                        <select class="form-control cardinales-select" id="NOMBRE_COMPETENCIA5" name="NOMBRE_COMPETENCIA5">
                           <option selected disabled>Seleccione una opción</option>
                           @foreach ($basicos as $basico)
                           <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
@@ -895,7 +895,7 @@
 
                     <tr id="COMPETENCIA6" style="display: none;">
                       <td>
-                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA6" name="NOMBRE_COMPETENCIA6">
+                        <select class="form-control cardinales-select" id="NOMBRE_COMPETENCIA6" name="NOMBRE_COMPETENCIA6">
                           <option selected disabled>Seleccione una opción</option>
                           @foreach ($basicos as $basico)
                           <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
@@ -919,7 +919,7 @@
 
                     <tr id="COMPETENCIA7" style="display: none;">
                       <td>
-                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA7" name="NOMBRE_COMPETENCIA7">
+                        <select class="form-control cardinales-select" id="NOMBRE_COMPETENCIA7" name="NOMBRE_COMPETENCIA7">
                           <option selected disabled>Seleccione una opción</option>
                           @foreach ($basicos as $basico)
                           <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
@@ -943,7 +943,7 @@
 
                     <tr id="COMPETENCIA8" style="display: none;">
                       <td>
-                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA8" name="NOMBRE_COMPETENCIA8">
+                        <select class="form-control cardinales-select" id="NOMBRE_COMPETENCIA8" name="NOMBRE_COMPETENCIA8">
                           <option selected disabled>Seleccione una opción</option>
                           @foreach ($basicos as $basico)
                           <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_BASICA }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_BASICA }}">{{ $basico->NOMBRE_COMPETENCIA_BASICA }}</option>
@@ -993,7 +993,7 @@
 
                     <tr id="GERENCIALES1" style="display: none;">
                       <td>
-                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA11" name="NOMBRE_COMPETENCIA11">
+                        <select class="form-control gerenciales-select" id="NOMBRE_COMPETENCIA11" name="NOMBRE_COMPETENCIA11">
                           <option selected disabled>Seleccione una opción</option>
                           @foreach ($gerenciales as $basico)
                           <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_GERENCIAL }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_GERENCIAL }}">{{ $basico->NOMBRE_COMPETENCIA_GERENCIAL }}</option>
@@ -1017,7 +1017,7 @@
 
                     <tr id="GERENCIALES2" style="display: none;">
                       <td>
-                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA12" name="NOMBRE_COMPETENCIA12">
+                        <select class="form-control gerenciales-select" id="NOMBRE_COMPETENCIA12" name="NOMBRE_COMPETENCIA12">
                           <option selected disabled>Seleccione una opción</option>
                           @foreach ($gerenciales as $basico)
                           <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_GERENCIAL }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_GERENCIAL }}">{{ $basico->NOMBRE_COMPETENCIA_GERENCIAL }}</option>
@@ -1041,7 +1041,7 @@
 
                     <tr id="GERENCIALES3" style="display: none;">
                       <td>
-                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA13" name="NOMBRE_COMPETENCIA11">
+                        <select class="form-control gerenciales-select" id="NOMBRE_COMPETENCIA13" name="NOMBRE_COMPETENCIA11">
                           <option selected disabled>Seleccione una opción</option>
                           @foreach ($gerenciales as $basico)
                           <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_GERENCIAL }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_GERENCIAL }}">{{ $basico->NOMBRE_COMPETENCIA_GERENCIAL }}</option>
@@ -1065,7 +1065,7 @@
 
                     <tr id="GERENCIALES4" style="display: none;">
                       <td>
-                        <select class="form-control externa-select" id="NOMBRE_COMPETENCIA14" name="NOMBRE_COMPETENCIA11">
+                        <select class="form-control gerenciales-select" id="NOMBRE_COMPETENCIA14" name="NOMBRE_COMPETENCIA11">
                           <option selected disabled>Seleccione una opción</option>
                           @foreach ($gerenciales as $basico)
                           <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_GERENCIAL }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_GERENCIAL }}">{{ $basico->NOMBRE_COMPETENCIA_GERENCIAL }}</option>

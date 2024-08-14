@@ -1212,6 +1212,7 @@ class makeExcelController extends Controller{
             
             $puesto = departamentosAreasModel :: where('ID_DEPARTAMENTO_AREA',$val-> DEPARTAMENTOS_AREAS_ID)->pluck('NOMBRE');
           
+            
             $puestos1 = departamentosAreasModel::whereIn('ID_DEPARTAMENTO_AREA', $val->PUESTOS_INTERACTUAN_DPT)->pluck('NOMBRE')->toArray();
             $puestosStr = implode(', ', $puestos1); 
             
@@ -1617,44 +1618,45 @@ class makeExcelController extends Controller{
                 //IV. Relaciones internas estratégicas
 
 
-                header('Content-Type: text/html; charset=utf-8');
+header('Content-Type: text/html; charset=utf-8');
 
-                $fila1 = 83;
-                $longitud = 1;
-                foreach ($internas as $key => $val) {
-                
-                    if ($longitud <= 10) {
-                
-                        $puesto3 = departamentosAreasModel::where('ID_DEPARTAMENTO_AREA', $val->INTERNAS_CONQUIEN_DPT)->value('NOMBRE');
-                        $decodedName = html_entity_decode(mb_convert_encoding($puesto3, 'UTF-8', 'UTF-8'));
-                
-                        $sheet->setCellValue('B' . $fila1, $decodedName);
-                
-                        if (!is_null($val->INTERNAS_PARAQUE_DPT)) {
-                            $sheet->setCellValue('J' . $fila1, $val->INTERNAS_PARAQUE_DPT);
-                        }
-                
-                        if (!is_null($val->INTERNAS_FRECUENCIA_DPT)) {
-                            $internas = strtoupper($val->INTERNAS_FRECUENCIA_DPT);
-                            if ($internas == 'DIARIA') {
-                                $sheet->setCellValue('T' . $fila1, 'X');
-                            } else if ($internas == 'SEMANAL') {
-                                $sheet->setCellValue('U' . $fila1, 'X');
-                            } else if ($internas == 'MENSUAL') {
-                                $sheet->setCellValue('V' . $fila1, 'X');
-                            } else if ($internas == 'SEMESTRAL') {
-                                $sheet->setCellValue('W' . $fila1, 'X');
-                            } else if ($internas == 'ANUAL') {
-                                $sheet->setCellValue('X' . $fila1, 'X');
-                            }
-                        }
-                
-                        $fila1++;
-                    }
-                
-                    $longitud++;
-                }
-                
+$fila1 = 83;
+$longitud = 1;
+foreach ($internas as $key => $val) {
+
+    if ($longitud <= 10) {
+
+        $puesto3 = departamentosAreasModel::where('ID_DEPARTAMENTO_AREA', $val->INTERNAS_CONQUIEN_DPT)->value('NOMBRE');
+        $decodedName = html_entity_decode(mb_convert_encoding($puesto3, 'UTF-8', 'UTF-8'));
+
+        $sheet->setCellValue('B' . $fila1, $decodedName);
+
+
+        if (!is_null($val->INTERNAS_PARAQUE_DPT)) {
+            $sheet->setCellValue('J' . $fila1, $val->INTERNAS_PARAQUE_DPT);
+        }
+
+        if (!is_null($val->INTERNAS_FRECUENCIA_DPT)) {
+            $internas = strtoupper($val->INTERNAS_FRECUENCIA_DPT);
+            if ($internas == 'DIARIA') {
+                $sheet->setCellValue('T' . $fila1, 'X');
+            } else if ($internas == 'SEMANAL') {
+                $sheet->setCellValue('U' . $fila1, 'X');
+            } else if ($internas == 'MENSUAL') {
+                $sheet->setCellValue('V' . $fila1, 'X');
+            } else if ($internas == 'SEMESTRAL') {
+                $sheet->setCellValue('W' . $fila1, 'X');
+            } else if ($internas == 'ANUAL') {
+                $sheet->setCellValue('X' . $fila1, 'X');
+            }
+        }
+
+        $fila1++;
+    }
+
+    $longitud++;
+}
+
 
               
               
@@ -1771,8 +1773,8 @@ class makeExcelController extends Controller{
                 $sheet->setCellValue('H8', $val->SUSTITUYE_RP);        
             }
 
-            if (!is_null($val->CENTRO_COSTO_RP)) {
-                $sheet->setCellValue('H9', $val->CENTRO_COSTO_RP);        
+            if (!is_null($val->SUSTITUYE_CATEGORIA_RP)) {
+                $sheet->setCellValue('H9', $val->SUSTITUYE_CATEGORIA_RP);        
             }
 
             $sheet->setCellValue('X9', str_replace(['[', ']', '"'], '', $puesto)); 

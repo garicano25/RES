@@ -2,33 +2,46 @@
 ID_FORMULARIO_PPT = 0
 
 
+let puestoIndex = 0;  // Declarar puestoIndex fuera para que sea accesible globalmente
 
-
-const ModalArea = document.getElementById('miModal_PPT')
+const ModalArea = document.getElementById('miModal_PPT');
 ModalArea.addEventListener('hidden.bs.modal', event => {
+    ID_FORMULARIO_PPT = 0;
     
-    
-    ID_FORMULARIO_PPT = 0
     document.getElementById('formularioPPT').reset();
+    
     $('#formularioPPT input').prop('disabled', false);
     $('#formularioPPT textarea').prop('disabled', false);
     $('#formularioPPT select').prop('disabled', false);
     
-    $('.collapse').collapse('hide')
+    $('.collapse').collapse('hide');
     
     $('#guardarFormPPT').css('display', 'block').prop('disabled', false);
     $('#revisarFormPPT').css('display', 'none').prop('disabled', true);
     $('#AutorizarFormPPT').css('display', 'none').prop('disabled', true);
     $('.desabilitado').css('background','#E2EFDA').prop('disabled', true);
+    
+    for (let i = 2; i <= 3; i++) {
+        document.getElementById(`IDIOMA${i}`).style.display = 'none';
+    }
 
-})
+    document.getElementById('addIdiomaBtn').style.display = 'inline-block';
+    document.getElementById('addIdiomaBtn2').style.display = 'none';
+    document.getElementById('removeIdiomaBtn2').style.display = 'none';
+    document.getElementById('removeIdiomaBtn3').style.display = 'none';
+
+    for (let i = 1; i <= 5; i++) {
+        document.getElementById(`puesto${i}`).style.display = 'none';
+    }
+
+    puestoIndex = 0;
+});
 
 
 
 
-//INICIAMOS LA TABLA DE LAS AREAS
 TablaPPT = $("#TablaPPT").DataTable({
-    language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json", },
+    language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
     lengthMenu: [
         [10, 25, 50, -1],
@@ -53,7 +66,6 @@ TablaPPT = $("#TablaPPT").DataTable({
         complete: function () {
             TablaPPT.columns.adjust().draw()
             ocultarCarga()
-
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alertErrorAJAX(jqXHR, textStatus, errorThrown);
@@ -61,31 +73,35 @@ TablaPPT = $("#TablaPPT").DataTable({
         dataSrc: 'data'
     },
     columns: [
-        { data: 'ID_FORMULARIO_PPT' },
+        { data: null },  // Para que esta columna sea generada dinámicamente
         { data: 'NOMBRE_CATEGORIA' },
         { data: 'ELABORADO_POR' },
         { data: 'REVISADO_POR' },
         { data: 'AUTORIZADO_POR' },
         { data: 'BTN_ACCION' },
-        // { data: 'BTN_PPT' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' },
-        
     ],
     columnDefs: [
-        { target: 0, title: '#', className: 'all' },
+        {
+            target: 0,
+            title: '#',
+            className: 'all',
+            render: function (data, type, row, meta) {
+                return meta.row + 1; // Genera un número secuencial para cada fila
+            }
+        },
         { target: 1, title: 'Nombre categoría', className: 'all' },
         { target: 2, title: 'Elaborado por', className: 'all text-center' },
         { target: 3, title: 'Revisado por', className: 'all text-center' },
         { target: 4, title: 'Autorizado por', className: 'all text-center' },
         { target: 5, title: 'Estatus', className: 'all text-center' },
-        // { target: 6, title: 'Descargar', className: 'all text-center' },
         { target: 6, title: 'Editar', className: 'all text-center' },
         { target: 7, title: 'Inactivo', className: 'all text-center' },
-
-
     ]
-})
+});
+
+
 
 $("#nuevo_ppt").click(function (e) {
 e.preventDefault();
@@ -229,22 +245,100 @@ $('#TablaPPT tbody').on('click', 'td>button.ELIMINAR', function () {
 
 })
 
-$('#TablaPPT tbody').on('click', 'td>button.EDITAR', function () {
+// $('#TablaPPT tbody').on('click', 'td>button.EDITAR', function () {
 
 
-    var tr = $(this).closest('tr');
-    var row = TablaPPT.row(tr);
-    ID_FORMULARIO_PPT = row.data().ID_FORMULARIO_PPT
-    data = row.data();
-    form = "formularioPPT"
+//     var tr = $(this).closest('tr');
+//     var row = TablaPPT.row(tr);
+//     ID_FORMULARIO_PPT = row.data().ID_FORMULARIO_PPT
+//     data = row.data();
+//     form = "formularioPPT"
 
    
     
-    //Rellenamos los datos del formulario
-    editarDatoTabla(data,form,'miModal_PPT', 1)
-    mostrarCursos(data,form)
+//     //Rellenamos los datos del formulario
+//     editarDatoTabla(data,form,'miModal_PPT', 1)
+//     mostrarCursos(data,form)
   
-})
+// })
+
+
+
+
+$('#TablaPPT tbody').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = TablaPPT.row(tr);
+    ID_FORMULARIO_PPT = row.data().ID_FORMULARIO_PPT;
+    var data = row.data();
+    var form = "formularioPPT";
+
+    editarDatoTabla(data, form, 'miModal_PPT', 1);
+    mostrarCursos(data, form);
+
+    puestoIndex = 0;
+
+    for (let i = 1; i <= 5; i++) {
+        const puestoField = document.getElementById(`puesto${i}`);
+        const nombreField1 = document.getElementById(`PUESTO${(i * 2) - 1}_NOMBRE`);
+        const checkboxField1 = document.getElementById(`PUESTO${(i * 2) - 1}`);
+        const cumpleSiField1 = document.getElementById(`PUESTO${(i * 2) - 1}_CUMPLE_SI`);
+        const cumpleNoField1 = document.getElementById(`PUESTO${(i * 2) - 1}_CUMPLE_NO`);
+
+        const nombreField2 = document.getElementById(`PUESTO${i * 2}_NOMBRE`);
+        const checkboxField2 = document.getElementById(`PUESTO${i * 2}`);
+        const cumpleSiField2 = document.getElementById(`PUESTO${i * 2}_CUMPLE_SI`);
+        const cumpleNoField2 = document.getElementById(`PUESTO${i * 2}_CUMPLE_NO`);
+
+        if ((data[`PUESTO${(i * 2) - 1}_NOMBRE`] && data[`PUESTO${(i * 2) - 1}_NOMBRE`] !== "") ||
+            (data[`PUESTO${i * 2}_NOMBRE`] && data[`PUESTO${i * 2}_NOMBRE`] !== "")) {
+            
+            puestoField.style.display = 'flex';
+            puestoIndex = i;  
+            
+            if (data[`PUESTO${(i * 2) - 1}_NOMBRE`]) {
+                nombreField1.value = data[`PUESTO${(i * 2) - 1}_NOMBRE`];
+                checkboxField1.checked = data[`PUESTO${(i * 2) - 1}`] === 'X';
+                if (data[`PUESTO${(i * 2) - 1}_CUMPLE_PPT`] === 'si') {
+                    cumpleSiField1.checked = true;
+                } else if (data[`PUESTO${(i * 2) - 1}_CUMPLE_PPT`] === 'no') {
+                    cumpleNoField1.checked = true;
+                }
+            }
+
+            if (data[`PUESTO${i * 2}_NOMBRE`]) {
+                nombreField2.value = data[`PUESTO${i * 2}_NOMBRE`];
+                checkboxField2.checked = data[`PUESTO${i * 2}`] === 'X';
+                if (data[`PUESTO${i * 2}_CUMPLE_PPT`] === 'si') {
+                    cumpleSiField2.checked = true;
+                } else if (data[`PUESTO${i * 2}_CUMPLE_PPT`] === 'no') {
+                    cumpleNoField2.checked = true;
+                }
+            }
+
+        } else {
+            puestoField.style.display = 'none';
+        }
+    }
+
+    //  OBTENER LOS IDIOMAS
+    if (data['NOMBRE_IDIOMA2_PPT'] && data['NOMBRE_IDIOMA2_PPT'] !== "") {
+        document.getElementById('IDIOMA2').style.display = 'table-row';
+        document.getElementById('NOMBRE_IDIOMA2_PPT').value = data['NOMBRE_IDIOMA2_PPT'];
+        document.getElementById('addIdiomaBtn').style.display = 'none';
+    }
+
+    if (data['NOMBRE_IDIOMA3_PPT'] && data['NOMBRE_IDIOMA3_PPT'] !== "") {
+        document.getElementById('IDIOMA3').style.display = 'table-row';
+        document.getElementById('NOMBRE_IDIOMA3_PPT').value = data['NOMBRE_IDIOMA3_PPT'];
+        document.getElementById('addIdiomaBtn2').style.display = 'none';
+        document.getElementById('removeIdiomaBtn3').style.display = 'inline-block';
+    }
+});
+
+
+
+
+
 
 
 $('#TablaPPT tbody').on('click', 'td>button.REVISAR', function () {
@@ -611,7 +705,6 @@ $('.decisiones').on('change', function() {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    let puestoIndex = 0;
     const puestos = ['puesto1', 'puesto2', 'puesto3', 'puesto4', 'puesto5'];
 
     document.getElementById('agregapuesto').addEventListener('click', function () {
@@ -645,3 +738,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.eliminar-puesto').forEach(button => {
+        button.addEventListener('click', function () {
+            const puestoId = this.getAttribute('data-puesto');
+            document.getElementById(puestoId).style.display = 'none';
+
+            const inputs = document.getElementById(puestoId).querySelectorAll('input, select');
+            inputs.forEach(input => input.value = '');
+            const radios = document.getElementById(puestoId).querySelectorAll('input[type=radio]');
+            radios.forEach(radio => radio.checked = false);
+        });
+    });
+});
+
