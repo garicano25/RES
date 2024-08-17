@@ -2481,31 +2481,30 @@ document.querySelectorAll('.modal').forEach(modal => {
 
 //  funciones de para el boton de visualizar
 function hacerSoloLectura(data, modalSelector) {
-  var formElements = $(modalSelector).find(':input, select');
+    var formElements = $(modalSelector).find(':input, select');
 
-  formElements.each(function() {
-      if ($(this).is(':checkbox') || $(this).is(':radio') || $(this).is('select')) {
-          $(this).prop('disabled', true);
-      } else {
-          $(this).prop('disabled', true);
+    formElements.each(function() {
+        $(this).prop('disabled', true);
+    });
+
+    $(modalSelector).find('button').not('.btn-close, .btn-danger').hide();
+
+    $(modalSelector).find('.btn-close, .btn-danger').prop('disabled', false);
+
+for (var key in data) {
+     if (data.hasOwnProperty(key)) {
+        var element = $(modalSelector).find('[name="' + key + '"]');
+        if (element.length) {
+             if (element.is(':radio') || element.is(':checkbox')) {
+                 element.prop('checked', data[key]);
+         } else {
+            element.val(data[key]);
+        }
       }
-  });
-
-  $(modalSelector).find('button').hide();
-
-  for (var key in data) {
-      if (data.hasOwnProperty(key)) {
-          var element = $(modalSelector).find('[name="' + key + '"]');
-          if (element.length) {
-              if (element.is(':radio') || element.is(':checkbox')) {
-                  element.prop('checked', data[key]);
-              } else {
-                  element.val(data[key]);
-              }
-          }
-      }
+    }
   }
 }
+
 
 function resetFormulario(modalSelector) {
   var form = $(modalSelector).find('form')[0];

@@ -12,28 +12,20 @@
 
       <!-- Bootstrap  iconos v1.11.3 -->
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
       <!-- Bootstrap v.5.2 -->
       <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" rel="stylesheet">
-  
-  
       <!-- Datatables 1.13.1  v.5.2 -->
       <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
-  
       <!--Animación -->
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/loading.css@v2.0.0/dist/loading.css​">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/loading.css@v2.0.0/dist/loading.min.css">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/transition.css@v2.0.0/dist/transition.css">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/transition.css@v2.0.0/dist/transition.min.css">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.css">
-  
       <!-- Select opcion selectize -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" />
-
-  
       <!--Archivo css -->
       <link rel="stylesheet" href="assets/css/estilos.css">
-
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
       <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"> 
 </head>
@@ -196,7 +188,7 @@
           
             <div class="mb-3">
                 <label>Correo</label>
-                <input type="text" class="form-control" id="CORREO_CV" name="CORREO_CV" required>
+                <input type="email" class="form-control" id="CORREO_CV" name="CORREO_CV" required>
             </div>
           
          
@@ -248,6 +240,17 @@
                 <div id="error"></div>
             </div> 
             <div class="mb-3">
+                <label>Genero</label>
+                <select class="form-control" id="GENERO" name="GENERO" required>
+                    <option selected disabled>Seleccione una opción</option>
+                    @foreach ($generos as $genero)
+                        <option value="{{ $genero->ID_CATALOGO_GENERO }}">{{ $genero->NOMBRE_GENERO }}</option>
+                    @endforeach
+                </select> 
+            </div> 
+
+
+            <div class="mb-3">
                 <label>Fecha de nacimiento</label>
                 <div class="d-flex justify-content-between">
                     <select class="form-select me-2" id="dia" name="DIA_FECHA_CV" required>
@@ -274,7 +277,7 @@
                         <option value="11">Noviembre</option>
                         <option value="12">Diciembre</option>
                     </select>
-                    <select class="form-select" id="ano" name="ANO_FECHA_CV" required>
+                    <select class="form-select" id="ano" name="ANIO_FECHA_CV" required>
                         <option value="" selected disabled>Año</option>
                         <!-- Genera los años desde 1900 hasta el año actual -->
                         <script>
@@ -377,6 +380,37 @@
                 </div>
             </div>
             
+
+
+            <div class="mb-3 text-center">
+                <label class="mt-4"> Áreas de interés</label>
+            </div>
+
+            <div class="mb-3 d-flex">
+                <div class="col-6 me-1 text-center">
+                    <label>Administrativas</label>
+                    <select class="form-select" id="INTERES_ADMINISTRATIVA" name="INTERES_ADMINISTRATIVA[]" multiple>
+                       <option selected disabled></option>
+                        @foreach ($administrativas as $administrativa)
+                            <option value="{{ $administrativa->ID_CATALOGO_AREAINTERES }}">{{ $administrativa->NOMBRE_AREA }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+
+                <div class="col-6 text-center">
+                    <label>Operativas</label>
+                    <select class="form-select" id="INTERES_OPERATIVAS" name="INTERES_OPERATIVAS[]"  multiple>
+                       <option selected disabled></option>
+                        
+                        @foreach ($operativas as $operativa)
+                        <option value="{{ $operativa->ID_CATALOGO_AREAINTERES }}">{{ $operativa->NOMBRE_AREA }}</option>
+                    @endforeach
+                    </select>
+                </div>
+            </div>
+            
+
 
             <div class="mb-3 text-center">
                 <label class="mt-4">Documentos</label>

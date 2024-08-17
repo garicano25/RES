@@ -34,7 +34,17 @@ class bancocvModel extends Model
         'TELEFONO1',
         'ETIQUETA_TELEFONO2',
         'TELEFONO2',
-         'ACTIVO'
+         'ACTIVO',
+         'GENERO',
+         'INTERES_OPERATIVAS',
+         'INTERES_ADMINISTRATIVA'
 
     ];
+
+
+    protected $casts = [
+        'INTERES_OPERATIVAS' => 'array',
+        'INTERES_ADMINISTRATIVA' => 'array',
+    ];
+
 }

@@ -54,11 +54,13 @@ class catalogogeneroControlller extends Controller
                     if ($request->ID_CATALOGO_GENERO == 0) {
                         DB::statement('ALTER TABLE catalogo_generos AUTO_INCREMENT=1;');
                         $generos = catalogogeneroModel::create($request->all());
+                        
                     } else { 
                         
                         if (!isset($request->ELIMINAR)) {
                             $generos = catalogogeneroModel::find($request->ID_CATALOGO_GENERO);
                             $generos->update($request->all());
+
                         } else {
                             $generos = catalogogeneroModel::where('ID_CATALOGO_GENERO', $request['ID_CATALOGO_GENERO'])->update(['ACTIVO' => 0]);
                             $response['code']  = 1;

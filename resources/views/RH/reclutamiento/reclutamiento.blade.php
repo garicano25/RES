@@ -65,10 +65,6 @@
                                     <input type="text" class="form-control" id="NOMBRE_CV" name="NOMBRE_CV" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label>Nombre(s)</label>
-                                    <input type="text" class="form-control" id="NOMBRE_CV" name="NOMBRE_CV" required>
-                                </div>
-                                <div class="mb-3">
                                     <label>Primero Apellido </label>
                                     <input type="text" class="form-control" id="PRIMER_APELLIDO_CV" name="PRIMER_APELLIDO_CV" required>
                                 </div>
@@ -128,7 +124,19 @@
                                     <input type="text" class="form-control" id="CURP_CV" name="CURP_CV" maxlength="18" required>
                                     <div id="contador" class="text-end"></div>
                                     <div id="mensaje"></div>
-                                </div>  
+                                </div> 
+
+                                <div class="mb-3">
+                                    <label>Genero</label>
+                                    <select class="form-control" id="GENERO" name="GENERO" required>
+                                        <option selected disabled>Seleccione una opción</option>
+                                        @foreach ($generos as $genero)
+                                            <option value="{{ $genero->ID_CATALOGO_GENERO }}">{{ $genero->NOMBRE_GENERO }}</option>
+                                        @endforeach
+                                    </select> 
+                                </div> 
+            
+            
                                 <div class="mb-3">
                                     <label>Fecha de nacimiento</label>
                                     <div class="d-flex justify-content-between">
@@ -389,6 +397,18 @@
                                    <input type="text" class="form-control" id="CURP_CV" name="CURP_CV" maxlength="18" required>
                                 </div>
                             </div> 
+                        
+                            <div class="mb-3">
+                                <label>Genero</label>
+                                <select class="form-control" id="GENERO" name="GENERO" required>
+                                    <option selected disabled>Seleccione una opción</option>
+                                    @foreach ($generos as $genero)
+                                        <option value="{{ $genero->ID_CATALOGO_GENERO }}">{{ $genero->NOMBRE_GENERO }}</option>
+                                    @endforeach
+                                </select> 
+                            </div> 
+
+
 
                             <div class="row mb-3">
                                 <label>Fecha de nacimiento</label>
@@ -530,7 +550,48 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            <div class="mb-3 text-center">
+                                <label class="mt-4"> Áreas de interés</label>
+                            </div>
+                
+                            <div class="mb-3 d-flex">
+                                <div class="col-6 me-1 text-center">
+                                    <label>Administrativas</label>
+                                    <select class="form-select" id="INTERES_ADMINISTRATIVA" name="INTERES_ADMINISTRATIVA" multiple >
+                                       <option selected disabled></option>
+                                        @foreach ($administrativas as $administrativa)
+                                            <option value="{{ $administrativa->ID_CATALOGO_AREAINTERES }}">{{ $administrativa->NOMBRE_AREA }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                
+                
+                                <div class="col-6 text-center">
+                                    <label>Operativas</label>
+                                    <select class="form-select" id="INTERES_OPERATIVAS" name="INTERES_OPERATIVAS"  multiple>
+                                       <option selected disabled></option>
+                                        
+                                        @foreach ($operativas as $operativa)
+                                        <option value="{{ $operativa->ID_CATALOGO_AREAINTERES }}">{{ $operativa->NOMBRE_AREA }}</option>
+                                    @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            
+
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+
+
                     </div>
+
+
+
                 </div>
          </form>
         </div>

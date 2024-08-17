@@ -123,6 +123,7 @@
 
               <div class="col-10">
                 <select class="custom-select form-control" id="PUESTOS_INTERACTUAN_DPT" name="PUESTOS_INTERACTUAN_DPT[]" required multiple>
+                  <option selected disabled></option>
                   @foreach ($categorias as $cat)
                   <option value="{{ $cat->ID }}-{{$cat->LIDER}}">{{ $cat->NOMBRE }}</option>
                   @endforeach
@@ -1041,7 +1042,7 @@
 
                     <tr id="GERENCIALES3" style="display: none;">
                       <td>
-                        <select class="form-control gerenciales-select" id="NOMBRE_COMPETENCIA13" name="NOMBRE_COMPETENCIA11">
+                        <select class="form-control gerenciales-select" id="NOMBRE_COMPETENCIA13" name="NOMBRE_COMPETENCIA13">
                           <option selected disabled>Seleccione una opción</option>
                           @foreach ($gerenciales as $basico)
                           <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_GERENCIAL }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_GERENCIAL }}">{{ $basico->NOMBRE_COMPETENCIA_GERENCIAL }}</option>
@@ -1065,7 +1066,7 @@
 
                     <tr id="GERENCIALES4" style="display: none;">
                       <td>
-                        <select class="form-control gerenciales-select" id="NOMBRE_COMPETENCIA14" name="NOMBRE_COMPETENCIA11">
+                        <select class="form-control gerenciales-select" id="NOMBRE_COMPETENCIA14" name="NOMBRE_COMPETENCIA14">
                           <option selected disabled>Seleccione una opción</option>
                           @foreach ($gerenciales as $basico)
                           <option value="{{ $basico->ID_CATALOGO_COMPETENCIA_GERENCIAL }}" data-descripcion="{{ $basico->DESCRIPCION_COMPETENCIA_GERENCIAL }}">{{ $basico->NOMBRE_COMPETENCIA_GERENCIAL }}</option>
@@ -1296,7 +1297,7 @@
         </div>
         <div class="modal-footer mx-5">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-success" id="guardarFormDPT">Guardar</button>
+          <button type="submit" class="btn btn-success" id="guardarFormDPT"><i class="bi bi-floppy-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Guardar DPT"></i> Guardar</button>
         </div>
       </form>
     </div>

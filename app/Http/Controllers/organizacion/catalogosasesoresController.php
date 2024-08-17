@@ -48,7 +48,7 @@ class catalogosasesoresController extends Controller
     }
 
     
-    public function store(Request $request)
+public function store(Request $request)
     {
         try {
             switch (intval($request->api)) {
@@ -61,10 +61,11 @@ class catalogosasesoresController extends Controller
                         if (!isset($request->ELIMINAR)) {
                         $asesores = catalogoasesorModel::find($request->ID_CATALOGO_ASESOR);
                         $asesores->update($request->all());
+                        
                     } else {
                         $asesores = catalogoasesorModel::where('ID_CATALOGO_ASESOR', $request['ID_CATALOGO_ASESOR'])->update(['ACTIVO' => 0]);
                         $response['code']  = 1;
-                        $response['asesor']  = 'Desactivada';
+                        $response['asesor']  = '    ';
                         return response()->json($response);
                     }
                     }

@@ -114,7 +114,7 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url('/Listavacantes') }}">Banco de CV</a></li>
                             <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/')}}">Vacantes</a></li>
+                            <li><a class="dropdown-item" href="{{url('/Postulaciones')}}">Vacantes activas</a></li>
                         </ul>
                     </li>
                  
@@ -200,6 +200,9 @@
                                 </li>
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/Motivo-vacante')}}">Catálogo de Motivo vacante</a>
+                                </li>  
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/Área_interes')}}">Catálogo de áreas de interés</a>
                                 </li>                                
                             </ul>
                         </li>
@@ -338,17 +341,22 @@
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoCompetenciasGerenciales.js"></script>
     @endif
 
-    @if(request()->is('Listavacantes'))
+    @if(request()->is('Listavacantes') || request()->is('Postulaciones'))
     <script src="/assets/js_sitio/reclutamiento/banco_cv.js"></script>
     @endif
+
 
     @if(request()->is('Motivo-vacante'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogomotivovacante.js"></script>
     @endif
 
 
-    
+    @if(request()->is('Área_interes'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogoareainteres.js"></script>
+    @endif
 
+
+    
 
   
 

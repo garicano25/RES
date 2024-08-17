@@ -317,7 +317,7 @@
            </div>
            <div class="modal-footer mx-5">
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-              <button type="submit" class="btn btn-success" id="guardarFormRP"><i class="bi bi-floppy-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Guardar PPT"></i> Guardar</button>
+              <button type="submit" class="btn btn-success" id="guardarFormRP"><i class="bi bi-floppy-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Guardar Requisición de personal"></i> Guardar</button>
           </div>
       </form>
    </div>

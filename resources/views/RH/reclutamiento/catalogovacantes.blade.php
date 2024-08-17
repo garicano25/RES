@@ -50,13 +50,13 @@
                         <select class="form-control" id="CATEGORIA_VACANTE" name="CATEGORIA_VACANTE" required>
                             <option selected disabled>Seleccione una opción</option>
                             @foreach ($areas as $area)
-                            <option value="{{ $area->NOMBRE_CATEGORIA }}">{{ $area->NOMBRE_CATEGORIA }}</option>
+                            <option value="{{ $area->NOMBRE_CATEGORIA }}">{{ $area->NOMBRE_CATEGORIA }} </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="mb-3">
                         <label>Descripción de la vacante</label>
-                        <textarea name="DESCRIPCION_VACANTE" id="DESCRIPCION_VACANTE" class="form-control" rows="8" placeholder="Escribe la descripción de la vacante aquí"></textarea>
+                        <textarea name="DESCRIPCION_VACANTE" id="DESCRIPCION_VACANTE" class="form-control" rows="8" placeholder="Escribe la descripción de la vacante aquí" required></textarea>
                     </div>
                     <div class="mb-3">
                         <label>Lugar de la vacante</label>

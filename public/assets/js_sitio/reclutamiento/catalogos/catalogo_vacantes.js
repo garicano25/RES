@@ -54,13 +54,9 @@ $("#guardarFormvacantes").click(function (e) {
                     document.getElementById('formularioVACANTES').reset();
                     Tablavacantes.ajax.reload()
 
-           
-                
                 
             })
-            
-            
-            
+                    
         }, 1)
         
     } else {
@@ -110,6 +106,16 @@ $("#guardarFormvacantes").click(function (e) {
 });
 
 
+
+
+
+
+
+
+
+
+
+
 var Tablavacantes = $("#Tablavacantes").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
@@ -126,7 +132,6 @@ var Tablavacantes = $("#Tablavacantes").DataTable({
     responsive: true,
     ajax: {
         dataType: 'json',
-        data: {},
         method: 'GET',
         cache: false,
         url: '/Tablavacantes',
@@ -148,44 +153,42 @@ var Tablavacantes = $("#Tablavacantes").DataTable({
         { data: 'CATEGORIA_VACANTE' },
         { data: 'LUGAR_VACANTE' },
         { data: 'LA_VACANTES_ES' },
-
-        { data: 'DESCRIPCION_VACANTE' },
-        { 
-            data: 'created_at',
-            render: function(data, type, row) {
+        { data: 'DESCRIPCION_VACANTE', render: function(data, type, row) {
+                if (type === 'display' && data.length > 100) {
+                    return data.substr(0, 100) + '...'; 
+                }
+                return data;
+            } 
+        },
+        { data: 'created_at', render: function(data, type, row) {
                 return data.split(' ')[0]; 
+            } 
+        },
+        { data: 'FECHA_EXPIRACION', render: function (data, type, row) {
+                var diasRestantes = row.DIAS_RESTANTES;
+                var expirado = row.EXPIRADO;
+                var textColor = expirado ? '#D8000C' : (diasRestantes <= 3 ? '#b8b814' : 'black');
+                
+                return '<span style="color: ' + textColor + ';">' + data + ' (' + diasRestantes + ' días restantes)</span>';
             }
         },
-        { data: 'FECHA_EXPIRACION' },
-        { data: null,
-            render: function (data, type, row) {
+        { data: null, render: function (data, type, row) {
                 return row.BTN_EDITAR + ' ' + row.BTN_VISUALIZAR + ' ' + row.BTN_ELIMINAR;
             }
         }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all' },
-        { targets: 1, title: 'Nombre de la categoría', className: ' descripcion-column' },
-        { targets: 2, title: 'Lugar de trabajo', className: ' descripcion-column' },
-        { targets: 3, title: 'La vacantes es', className: ' descripcion-column' },
-
-
-        {
-            targets: 4,
-            title: 'Descripción de la vacantes',
-            className: 'all text-center descripcion-column',
-            render: function(data, type, row, meta) {
-                if (type === 'display' && data.length > 100) {
-                    return data.substr(0, 201) + '...'; 
-                }
-                return data;
-            }
-        },
-        { targets: 5, title: 'Fecha de publicación', className: ' descripcion-column' },
-        { targets: 6, title: 'Fecha de expiración', className: ' descripcion-column' },
-        { targets: 7, title: 'Botones', className: 'all text-center' }
+        { targets: 1, title: 'Nombre de la categoría', className: 'descripcion-column' },
+        { targets: 2, title: 'Lugar de trabajo', className: 'descripcion-column' },
+        { targets: 3, title: 'La vacante es', className: 'descripcion-column' },
+        { targets: 4, title: 'Descripción de la vacante', className: 'all text-center descripcion-column' },
+        { targets: 5, title: 'Fecha de publicación', className: 'descripcion-column' },
+        { targets: 6, title: 'Fecha de expiración', className: 'descripcion-column' },
+        { targets: 7, title: 'Acciones', className: 'all text-center' }
     ]
 });
+
 
 
 
@@ -208,14 +211,33 @@ $('#Tablavacantes tbody').on('click', 'td>button.ELIMINAR', function () {
 $('#Tablavacantes tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablavacantes.row(tr);
+    var categoriaVacante = row.data().CATEGORIA_VACANTE;
+
     ID_CATALOGO_VACANTE = row.data().ID_CATALOGO_VACANTE;
-
-    // Llamar a la función para cargar los datos del formulario
+    $('#exampleModalLabel').text(categoriaVacante);
     editarDatoTabla(row.data(), 'formularioVACANTES', 'miModal_vacantes', 1);
-
-    // Cargar los requerimientos existentes
     cargarRequerimientos(row.data().REQUERIMIENTO);
 });
+
+
+$(document).ready(function() {
+    $('#Tablavacantes tbody').on('click', 'td>button.VISUALIZAR', function () {
+        var tr = $(this).closest('tr');
+        var row = Tablavacantes.row(tr);
+        var categoriaVacante = row.data().CATEGORIA_VACANTE;
+
+        $('#exampleModalLabel').text(categoriaVacante);
+        hacerSoloLectura(row.data(), '#miModal_vacantes');
+        ID_CATALOGO_VACANTE = row.data().ID_CATALOGO_VACANTE;
+        editarDatoTabla(row.data(), 'formularioVACANTES', 'miModal_vacantes',1);
+        cargarRequerimientos(row.data().REQUERIMIENTO);
+    });
+
+    $('#miModal_vacantes').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_vacantes');
+    });
+});
+
 
 function cargarRequerimientos(requerimientos) {
     const contenedor = document.getElementById('inputs-container');

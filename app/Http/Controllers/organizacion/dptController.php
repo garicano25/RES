@@ -156,17 +156,20 @@ class dptController extends Controller
             ]);
         }
     }
+    
     public function store(Request $request)
     {
         try {
             switch (intval($request->api)) {
-                case 1:
-                                   
+                
+                case 1:                   
                     
                     if ($request->ID_FORMULARIO_DPT == 0) {
+
                         $funciones_cargo = $request->FUNCIONES_CARGO_DPT ? $request->FUNCIONES_CARGO_DPT : [];
                         $funciones_gestion = $request->FUNCIONES_GESTION_DPT ? $request->FUNCIONES_GESTION_DPT : [];
                         $puestos_interactuan = $request->PUESTOS_INTERACTUAN_DPT ? $request->PUESTOS_INTERACTUAN_DPT : [];
+
                     
                         DB::statement('ALTER TABLE formulario_dpt AUTO_INCREMENT=1;');
                         $DPT = formulariodptModel::create(array_merge($request->all(), [

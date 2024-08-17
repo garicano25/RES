@@ -2,24 +2,42 @@
 ID_FORMULARIO_DPT = 0
 
 
+var contadorCompetencias = 1;
+var contadorCompetencias1 = 1;
+
+
 const ModalArea = document.getElementById('miModal_DPT');
-ModalArea.addEventListener('hidden.bs.modal', event => {
+ModalArea.addEventListener('hidden.bs.modal', function(event) {
     ID_FORMULARIO_DPT = 0;
+
     document.getElementById('formularioDPT').reset();
+
     $('#formularioDPT input').prop('disabled', false);
     $('#formularioDPT textarea').prop('disabled', false);
     $('#formularioDPT select').prop('disabled', false);
 
     $('.collapse').collapse('hide');
 
-    $('#guardarFormDPT').css('display', 'block').prop('disabled', false);
-    $('#revisarFormDPT').css('display', 'none').prop('disabled', true);
-    $('#AutorizarFormDPT').css('display', 'none').prop('disabled', true);
-
-    // Resetea la tabla
     $('#tbodyFucnionesCargo').empty();
     $('#tbodyFuncionesGestion').empty();
+
+    for (let i = 1; i <= 8; i++) {
+        $('#COMPETENCIA' + i).hide();
+    }
+
+    for (let i = 1; i <= 4; i++) {
+        $('#GERENCIALES' + i).hide();
+    }
+
+    contadorCompetencias = 1;
+    contadorCompetencias1 = 1;
+
+    $('#agregarCompetencia').show();
+    $('#agregarCompetencia1').show();
 });
+
+
+
 
 
 
@@ -293,7 +311,7 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
 //FUNCION EDITAR   Y QUE SE MUESTREN LOS SELECT
 
 $(document).ready(function () {
-    // Inicializar Selectize
+
     var $select = $('#PUESTOS_INTERACTUAN_DPT').selectize({
         plugins: ['remove_button'],
         delimiter: ',',
@@ -317,9 +335,8 @@ $(document).ready(function () {
         var data = row.data();
         
         var savedOptions = [];
-
         var puestosInteractuan = data.PUESTOS_INTERACTUAN_DPT;
-
+    
         if (Array.isArray(puestosInteractuan)) { 
             savedOptions = puestosInteractuan;
         } else if (puestosInteractuan && puestosInteractuan.length > 2) { 
@@ -333,18 +350,69 @@ $(document).ready(function () {
         }
         
         selectizeInstance.clear();
-
+    
         if (Array.isArray(savedOptions)) {
             selectizeInstance.setValue(savedOptions);
         }
-
+    
         editarDatoTabla(data, form, 'miModal_DPT', 1);
         mostrarFunciones(data, form);
+    
+        // Mostrar solo las competencias básicas que tienen datos
+        for (let i = 1; i <= 8; i++) {
+            const competenciaField = document.getElementById(`COMPETENCIA${i}`);
+            const nombreField = document.getElementById(`NOMBRE_COMPETENCIA${i}`);
+            const descripcionField = document.getElementById(`DESCRIPCION_COMPETENCIA${i}`);
+            const escalaBajo = document.getElementById(`ESCALA_INNOVACION_BAJO`);
+            const escalaMedio = document.getElementById(`ESCALA_INNOVACION_MEDIO`);
+            const escalaAlto = document.getElementById(`ESCALA_INNOVACION_ALTO`);
+    
+            if (data[`NOMBRE_COMPETENCIA${i}`] && data[`NOMBRE_COMPETENCIA${i}`] !== "") {
+                competenciaField.style.display = 'table-row';
+                nombreField.value = data[`NOMBRE_COMPETENCIA${i}`];
+                descripcionField.value = data[`DESCRIPCION_COMPETENCIA${i}`];
+    
+                if (data[`COMPETENCIA${i}_ESCALA`] === 'BAJO') {
+                    escalaBajo.checked = true;
+                } else if (data[`COMPETENCIA${i}_ESCALA`] === 'MEDIO') {
+                    escalaMedio.checked = true;
+                } else if (data[`COMPETENCIA${i}_ESCALA`] === 'ALTO') {
+                    escalaAlto.checked = true;
+                }
+            } else {
+                competenciaField.style.display = 'none';
+            }
+        }
+    
+        // Mostrar solo las competencias gerenciales que tienen datos
+        for (let i = 1; i <= 4; i++) {
+            const gerencialField = document.getElementById(`GERENCIALES${i}`);
+            const nombreGerencialField = document.getElementById(`NOMBRE_COMPETENCIA${10 + i}`);
+            const descripcionGerencialField = document.getElementById(`DESCRIPCION_COMPETENCIA${10 + i}`);
+            const escalaBajoGerencial = document.getElementById(`ESCALA_INNOVACION_BAJO`);
+            const escalaMedioGerencial = document.getElementById(`ESCALA_INNOVACION_MEDIO`);
+            const escalaAltoGerencial = document.getElementById(`ESCALA_INNOVACION_ALTO`);
+    
+            if (data[`NOMBRE_COMPETENCIA${10 + i}`] && data[`NOMBRE_COMPETENCIA${10 + i}`] !== "") {
+                gerencialField.style.display = 'table-row';
+                nombreGerencialField.value = data[`NOMBRE_COMPETENCIA${10 + i}`];
+                descripcionGerencialField.value = data[`DESCRIPCION_COMPETENCIA${10 + i}`];
+    
+                if (data[`COMPETENCIA${10 + i}_ESCALA`] === 'BAJO') {
+                    escalaBajoGerencial.checked = true;
+                } else if (data[`COMPETENCIA${10 + i}_ESCALA`] === 'MEDIO') {
+                    escalaMedioGerencial.checked = true;
+                } else if (data[`COMPETENCIA${10 + i}_ESCALA`] === 'ALTO') {
+                    escalaAltoGerencial.checked = true;
+                }
+            } else {
+                gerencialField.style.display = 'none';
+            }
+        }
     });
+    
 
 
-
-    //Funciones para contar el numero de puestos Inderectos que interactuan con una categia
     function contarPuestosInderectos() {
         var count = $select[0].selectize.items.length;
         $('#PUESTOS_INDIRECTOS_DPT').val(count);
@@ -365,6 +433,8 @@ function toggleDescription(tablePrefix, id, checked) {
         }
     }
 }
+
+
 
 // MARCAR LOS CHECK Y QUE SE PONGAN LAS LETRAS EN NEGRO 
 $(document).on('change', '.toggle-switch-cargo', function() {
@@ -646,6 +716,8 @@ $(document).ready(function () {
 
         var selectize = $('#PUESTOS_INTERACTUAN_DPT')[0].selectize;
         selectize.clear();
+
+        
     });
 
     document.querySelectorAll('.toggle-switch-cargo').forEach(switchInput => {
@@ -734,57 +806,35 @@ $(document).ready(function() {
 
 
 
-
 $(document).ready(function() {
-    var contadorCompetencias = 1;
+ 
 
     $('#agregarCompetencia').on('click', function(e) {
-        e.preventDefault(); // Evitar que se envíe el formulario al hacer clic en el botón
-
-        var idCompetencia = 'COMPETENCIA' + contadorCompetencias;
-
-        // Mostrar el siguiente tr según el contador
-        $('#' + idCompetencia).fadeIn();
-
-        contadorCompetencias++;
-
-        // Si se alcanza COMPETENCIA8, ocultar el botón "Agregar Competencia"
-        if (contadorCompetencias > 8) {
-            $('#agregarCompetencia').hide();
+        e.preventDefault();
+    
+        if (contadorCompetencias <= 8) {
+            $('#COMPETENCIA' + contadorCompetencias).fadeIn();
+            contadorCompetencias++;
+    
+            if (contadorCompetencias > 8) {
+                $(this).hide();
+            }
         }
     });
-
-    // Manejar el cambio en los selects para mostrar la descripción
-    $('select[id^="NOMBRE_COMPETENCIA"]').on('change', function() {
-        var selectedOption = $(this).find('option:selected');
-        var descripcion = selectedOption.data('descripcion');
-        var competenciaId = $(this).attr('id').replace('NOMBRE_COMPETENCIA', 'DESCRIPCION_COMPETENCIA');
-        $('#' + competenciaId).val(descripcion);
-    });
-});
-
-
-
-
-
-$(document).ready(function() {
-    var contadorCompetencias1 = 1;
-
+    
     $('#agregarCompetencia1').on('click', function(e) {
-        e.preventDefault(); // Evitar que se envíe el formulario al hacer clic en el botón
-
-        var idCompetencia1 = 'GERENCIALES' + contadorCompetencias1;
-
-        // Mostrar el siguiente tr según el contador
-        $('#' + idCompetencia1).fadeIn();
-
-        contadorCompetencias1++;
-
-        // Si se alcanza COMPETENCIA8, ocultar el botón "Agregar Competencia"
-        if (contadorCompetencias1 > 4) {
-            $('#agregarCompetencia1').hide();
+        e.preventDefault();
+    
+        if (contadorCompetencias1 <= 4) {
+            $('#GERENCIALES' + contadorCompetencias1).fadeIn();
+            contadorCompetencias1++;
+    
+            if (contadorCompetencias1 > 4) {
+                $(this).hide();
+            }
         }
     });
+
 
     // Manejar el cambio en los selects para mostrar la descripción
     $('select[id^="NOMBRE_COMPETENCIA"]').on('change', function() {
@@ -794,5 +844,6 @@ $(document).ready(function() {
         $('#' + competenciaId).val(descripcion);
     });
 });
+
 
 

@@ -16,6 +16,8 @@ class catalogovacantesController extends Controller
 {
 
    
+
+    
         public function index()
     {
         // $areas = DB::select("SELECT NOMBRE_CATEGORIA  AS ID_DEPARTAMENTO_AREA, NOMBRE_CATEGORIA AS NOMBRE
@@ -35,46 +37,49 @@ class catalogovacantesController extends Controller
     
 
     public function Tablavacantes()
-    {
-        try {
-            $tabla = DB::select("SELECT vac.*, cat.NOMBRE_CATEGORIA
-                                FROM catalogo_vacantes vac
-                                LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE");
-    
-            foreach ($tabla as $value) {
+{
+    try {
+        $tabla = DB::select("
+            SELECT vac.*, cat.NOMBRE_CATEGORIA,
+                   DATEDIFF(vac.FECHA_EXPIRACION, CURDATE()) as DIAS_RESTANTES,
+                   (CASE WHEN vac.FECHA_EXPIRACION < CURDATE() THEN 1 ELSE 0 END) as EXPIRADO
+            FROM catalogo_vacantes vac
+            LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
+        ");
 
-                $value->REQUERIMIENTO = requerimientoModel::where('CATALOGO_VACANTES_ID', $value->ID_CATALOGO_VACANTE)->get();
+        foreach ($tabla as $value) {
+            // Relacionar los requerimientos con cada vacante
+            $value->REQUERIMIENTO = requerimientoModel::where('CATALOGO_VACANTES_ID', $value->ID_CATALOGO_VACANTE)->get();
 
-                
-                if ($value->ACTIVO == 0) {
+            // Agregar botones de acción con condiciones
+          if ($value->ACTIVO == 0) {
 
-                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR" data-bs-toggle="tooltip" data-bs-placement="top" title="Visualizar registro"><i class="bi bi-eye"></i></button>';
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill ELIMINAR"  disabled ><i class="bi bi-ban"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill ELIMINAR" disabled><i class="bi bi-ban"></i></button>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
 
                 } else {
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR" data-bs-toggle="tooltip" data-bs-placement="top" title="Desactivar registro"><i class="bi bi-power"></i></button>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar registro"><i class="bi bi-pencil-square"></i></button>';
-                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR" data-bs-toggle="tooltip" data-bs-placement="top" title="Visualizar registro"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
 
                 }
-            }
-    
-            // Respuesta
-            return response()->json([
-                'data' => $tabla,
-                'msj' => 'Información consultada correctamente'
-            ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'msj' => 'Error ' . $e->getMessage(),
-                'data' => 0
-            ]);
         }
+
+        return response()->json([
+            'data' => $tabla,
+            'msj' => 'Información consultada correctamente'
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'msj' => 'Error ' . $e->getMessage(),
+            'data' => 0
+        ]);
     }
+}
 
     
-    public function store(Request $request)
+public function store(Request $request)
     {
         try {
             switch (intval($request->api)) {
@@ -84,6 +89,7 @@ class catalogovacantesController extends Controller
                     if ($request->ID_CATALOGO_VACANTE == 0) {
                         DB::statement('ALTER TABLE catalogo_vacantes AUTO_INCREMENT=1;');
                         $vacante = catalogovacantesModel::create($request->all());
+
                     } else { 
                         if (!isset($request->ELIMINAR)) {
                             $vacante = catalogovacantesModel::find($request->ID_CATALOGO_VACANTE);
@@ -126,3 +132,7 @@ class catalogovacantesController extends Controller
         }
     }
 }
+
+
+
+

@@ -2,6 +2,8 @@ ID_BANCO_CV = 0
 
 
 
+
+
 document.addEventListener('DOMContentLoaded', function() {
     var avisoModal = new bootstrap.Modal(document.getElementById('avisoPrivacidadModal'), {
         backdrop: 'static',
@@ -63,6 +65,8 @@ $("#guardarFormBancoCV").click(function (e) {
                     $('#miModal_BANCOCV').modal('hide')
                     document.getElementById('formularioBANCO').reset();
                     Tablabancocv.ajax.reload()
+                    $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
+                    $('#INTERES_OPERATIVAS')[0].selectize.clear();
 
                          
                  })
@@ -92,16 +96,14 @@ $("#guardarFormBancoCV").click(function (e) {
         
                 
             }, function (data) {
-                    
                 setTimeout(() => {
-
-                    
                     ID_BANCO_CV = data.bancocv.ID_BANCO_CV
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                     $('#miModal_BANCOCV').modal('hide')
                     document.getElementById('formularioBANCO').reset();
                     Tablabancocv.ajax.reload()
-                
+                    $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
+                    $('#INTERES_OPERATIVAS')[0].selectize.clear();
 
 
                 }, 300);  
@@ -212,6 +214,90 @@ $('#Tablabancocv').on('click', '.pdf-button', function (e) {
 
 
 
+var Tablapostulaciones = $("#Tablapostulaciones").DataTable({
+    language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+    lengthChange: true,
+    lengthMenu: [
+        [10, 25, 50, -1],
+        [10, 25, 50, 'All']
+    ],
+    info: false,
+    paging: true,
+    searching: true,
+    filtering: true,
+    scrollY: '65vh',
+    scrollCollapse: true,
+    responsive: true,
+    ajax: {
+        dataType: 'json',
+        data: {},
+        method: 'GET',
+        cache: false,
+        url: '/Tablapostulaciones',
+        beforeSend: function () {
+            mostrarCarga();
+        },
+        complete: function () {
+            Tablapostulaciones.columns.adjust().draw();
+            ocultarCarga();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alertErrorAJAX(jqXHR, textStatus, errorThrown);
+        },
+        dataSrc: 'data'
+    },
+    order: [[0, 'asc']],
+    columns: [
+        { 
+            data: null,
+            render: function(data, type, row, meta) {
+                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
+            }
+        },
+        { data: 'CATEGORIA_VACANTE' },
+        { data: 'LUGAR_VACANTE' },
+        { data: 'LA_VACANTES_ES' },
+        { data: 'DESCRIPCION_VACANTE' },
+        { 
+            data: 'created_at',
+            render: function(data, type, row) {
+                return data.split(' ')[0]; 
+            }
+        },
+        { data: 'FECHA_EXPIRACION' },
+        { data: null,
+            render: function (data, type, row) {
+                return row.BTN_VISUALIZAR;
+            }
+        }
+    ],
+    columnDefs: [
+        { targets: 0, title: '#', className: 'all' },
+        { targets: 1, title: 'Nombre de la categoría', className: 'descripcion-column' },
+        { targets: 2, title: 'Lugar de trabajo', className: 'descripcion-column' },
+        { targets: 3, title: 'La vacantes es', className: 'descripcion-column' },
+        {
+            targets: 4,
+            title: 'Descripción de la vacantes',
+            className: 'all text-center descripcion-column',
+            render: function(data, type, row, meta) {
+                if (type === 'display' && data.length > 100) {
+                    return data.substr(0, 201) + '...'; 
+                }
+                return data;
+            }
+        },
+        { targets: 5, title: 'Fecha de publicación', className: 'descripcion-column' },
+        { targets: 6, title: 'Fecha de expiración', className: 'descripcion-column' },
+        { targets: 7, title: 'Botones', className: 'all text-center' }
+    ]
+});
+
+
+
+
+
+
 
 $('#Tablabancocv tbody').on('click', 'td>button.ELIMINAR', function () {
 
@@ -242,17 +328,93 @@ function calcularEdad(fechaNacimiento) {
 }
 
 
+
+
+
+
 $(document).ready(function() {
+
+    
+    var $select = $('#INTERES_ADMINISTRATIVA').selectize({
+        plugins: ['remove_button'],
+        delimiter: ',',
+        persist: false,
+        placeholder: 'Seleccione una opción',
+    });
+    var selectizeInstance = $select[0].selectize;
+
+    var $select1 = $('#INTERES_OPERATIVAS').selectize({
+        plugins: ['remove_button'],
+        delimiter: ',',
+        persist: false,
+        placeholder: 'Seleccione una opción',
+    });
+
+
+    var selectizeInstance1 = $select1[0].selectize;
+
+
+    $('#ULTIMO_GRADO_CV').on('change', function() {
+        var gradoSeleccionado = $(this).val();
+        $('#licenciatura-section').hide();
+        $('#posgrado-section').hide();
+
+        if (gradoSeleccionado === '4') { // Licenciatura
+            $('#licenciatura-section').show();
+        } else if (gradoSeleccionado === '5') { // Posgrado
+            $('#posgrado-section').show();
+        }
+    });
+
+    // Agregando el código para manejar la edición de datos desde la tabla
     $('#Tablabancocv tbody').on('click', 'td>button.EDITAR', function () {
         var tr = $(this).closest('tr');
         var row = Tablabancocv.row(tr);
-        
-        console.log(row.data().ANIO_FECHA_CV)
-        hacerSoloLectura(row.data(), '#miModal_VACANTES');
-
         ID_BANCO_CV = row.data().ID_BANCO_CV;
-        editarDatoTabla(row.data(), 'formularioCATEGORIAS', 'miModal_VACANTES',1);
- 
+        var data = row.data();
+
+        
+        var savedOptions = [];
+        var intereadmon = data.INTERES_ADMINISTRATIVA;
+    
+        if (Array.isArray(intereadmon)) { 
+            savedOptions = intereadmon;
+        } else if (intereadmon && intereadmon.length > 2) { 
+            try {
+                savedOptions = JSON.parse(intereadmon);
+            } catch (e) {
+                console.error("Error al parsear JSON: ", e);
+            }
+        }
+        selectizeInstance.clear();
+        if (Array.isArray(savedOptions)) {
+            selectizeInstance.setValue(savedOptions);
+        }
+
+
+        var savedOptions1 = [];
+        var intereope = data.INTERES_OPERATIVAS;
+        if (Array.isArray(intereope)) { 
+            savedOptions1 = intereope;
+        } else if (intereope && intereope.length > 2) { 
+            try {
+                savedOptions1 = JSON.parse(intereope);
+            } catch (e) {
+                console.error("Error al parsear JSON: ", e);
+            }
+        } 
+        selectizeInstance1.clear();
+        if (Array.isArray(savedOptions1)) {
+            selectizeInstance1.setValue(savedOptions1);
+        }
+
+
+
+
+        hacerSoloLectura(row.data(), '#miModal_VACANTES');
+        ID_BANCO_CV = row.data().ID_BANCO_CV;
+        editarDatoTabla(row.data(), 'formularioCATEGORIAS', 'miModal_VACANTES', 1);
+
         if (row.data().DIA_FECHA_CV && row.data().MES_FECHA_CV && row.data().ANIO_FECHA_CV) {
             const fechaNacimiento = `${row.data().ANIO_FECHA_CV}-${row.data().MES_FECHA_CV}-${row.data().DIA_FECHA_CV}`;
             const edad = calcularEdad(fechaNacimiento);
@@ -262,28 +424,49 @@ $(document).ready(function() {
         setTimeout(() => {
             $('#ANIO_FECHA_CV').val(row.data().ANIO_FECHA_CV);
         }, 100);
+
+        // Mostrar el div correspondiente basado en los datos de la fila seleccionada
+        if (row.data().ULTIMO_GRADO_CV === '4') {
+            $('#licenciatura-section').show();
+        } else if (row.data().ULTIMO_GRADO_CV === '5') {
+            $('#posgrado-section').show();
+        }
     });
-    
 
     $('#miModal_VACANTES').on('hidden.bs.modal', function () {
         resetFormulario('#miModal_VACANTES');
+        // Asegúrate de ocultar las secciones cuando el modal se cierre
+        $('#licenciatura-section').hide();
+        $('#posgrado-section').hide();
     });
 
     $('#miModal_VACANTES').on('show.bs.modal', function () {
-                          
-        var html = '<option value="0" selected disabled>Seleccione una opción</option>'
+        var html = '<option value="0" selected disabled>Seleccione una opción</option>';
         const currentYear = new Date().getFullYear();
         for (let i = currentYear; i >= 1950; i--) {
-            html +='<option value="' + i + '">' + i + '</option>';
+            html += '<option value="' + i + '">' + i + '</option>';
         }
-
-
         $('#ANIO_FECHA_CV').html(html);
-
-
     });
-  
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -295,27 +478,37 @@ function validarCURP(curp) {
     return regex.test(curp);
 }
 
-document.getElementById('CURP_CV').addEventListener('input', function() {
-    this.value = this.value.toUpperCase();
-    var curp = this.value;
-    var contador = document.getElementById('contador');
-    contador.textContent = curp.length + '/18';
+document.addEventListener('DOMContentLoaded', function() {
+    var curpInput = document.getElementById('CURP_CV');
 
-    var mensaje = document.getElementById('mensaje');
-    var error = document.getElementById('error');
-    if (curp.length === 18) {
-        if (validarCURP(curp)) {
-            mensaje.textContent = 'CURP válida. Confirma tu CURP antes de continuar.';
-            error.textContent = '';
-        } else {
-            mensaje.textContent = '';
-            error.textContent = 'CURP inválida. Por favor, verifica el formato.';
-        }
-    } else {
-        mensaje.textContent = '';
-        error.textContent = '';
+    // Solo añade el listener si el elemento existe
+    if (curpInput) {
+        curpInput.addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+            var curp = this.value;
+            var contador = document.getElementById('contador');
+            if (contador) {
+                contador.textContent = curp.length + '/18';
+            }
+
+            var mensaje = document.getElementById('mensaje');
+            var error = document.getElementById('error');
+            if (curp.length === 18) {
+                if (validarCURP(curp)) {
+                    if (mensaje) mensaje.textContent = 'CURP válida. Confirma tu CURP antes de continuar.';
+                    if (error) error.textContent = '';
+                } else {
+                    if (mensaje) mensaje.textContent = '';
+                    if (error) error.textContent = 'CURP inválida. Por favor, verifica el formato.';
+                }
+            } else {
+                if (mensaje) mensaje.textContent = '';
+                if (error) error.textContent = '';
+            }
+        });
     }
 });
+
 
 $(document).ready(function() {
     $('#formularioBANCO').on('submit', function(event) {
@@ -332,81 +525,145 @@ $(document).ready(function() {
 
 
 
-document.getElementById('ULTIMO_GRADO_CV').addEventListener('change', function() {
-    var selectedValue = this.value;
-    
-    document.getElementById('licenciatura-nombre-container').style.display = selectedValue === '4' ? 'block' : 'none';
-    document.getElementById('licenciatura-titulo-container').style.display = selectedValue === '4' ? 'block' : 'none';
-    document.getElementById('licenciatura-cedula-container').style.display = selectedValue === '4' ? 'block' : 'none';
-    
-    document.getElementById('posgrado-container').style.display = selectedValue === '5' ? 'block' : 'none';
-    document.getElementById('posgrado-nombre-container').style.display = 'none';
-    document.getElementById('posgrado-titulo-container').style.display = 'none';
-    document.getElementById('posgrado-cedula-container').style.display = 'none';
-});
+document.addEventListener('DOMContentLoaded', function() {
+    var ultimoGradoCV = document.getElementById('ULTIMO_GRADO_CV');
+    if (ultimoGradoCV) {
+        ultimoGradoCV.addEventListener('change', function() {
+            var selectedValue = this.value;
+            var licenciaturaNombre = document.getElementById('licenciatura-nombre-container');
+            var licenciaturaTitulo = document.getElementById('licenciatura-titulo-container');
+            var licenciaturaCedula = document.getElementById('licenciatura-cedula-container');
+            var posgradoContainer = document.getElementById('posgrado-container');
 
-document.getElementById('TIPO_POSGRADO_CV').addEventListener('change', function() {
-    var display = this.value !== '0' ? 'block' : 'none';
-    document.getElementById('posgrado-nombre-container').style.display = display;
-    document.getElementById('posgrado-titulo-container').style.display = display;
-    document.getElementById('posgrado-cedula-container').style.display = display;
-});
+            if (licenciaturaNombre) licenciaturaNombre.style.display = selectedValue === '4' ? 'block' : 'none';
+            if (licenciaturaTitulo) licenciaturaTitulo.style.display = selectedValue === '4' ? 'block' : 'none';
+            if (licenciaturaCedula) licenciaturaCedula.style.display = selectedValue === '4' ? 'block' : 'none';
+            if (posgradoContainer) posgradoContainer.style.display = selectedValue === '5' ? 'block' : 'none';
+            var posgradoNombre = document.getElementById('posgrado-nombre-container');
+            var posgradoTitulo = document.getElementById('posgrado-titulo-container');
+            var posgradoCedula = document.getElementById('posgrado-cedula-container');
 
-
-
-
-
-
-document.getElementById('ARCHIVO_CURP_CV').addEventListener('change', function() {
-    var archivo = this.files[0];
-    var errorElement = document.getElementById('CURP_ERROR');
-    if (archivo && archivo.type === 'application/pdf') {
-        errorElement.style.display = 'none';
-        document.getElementById('quitarCURP').style.display = 'block';
-    } else {
-        errorElement.style.display = 'block';
-        this.value = '';
-        document.getElementById('quitarCURP').style.display = 'none';
+            if (posgradoNombre) posgradoNombre.style.display = 'none';
+            if (posgradoTitulo) posgradoTitulo.style.display = 'none';
+            if (posgradoCedula) posgradoCedula.style.display = 'none';
+        });
     }
 });
 
-document.getElementById('quitarCURP').addEventListener('click', function() {
-    document.getElementById('ARCHIVO_CURP_CV').value = '';
-    document.getElementById('CURP_ERROR').style.display = 'none';
-    this.style.display = 'none';
-});
 
-document.getElementById('ARCHIVO_CV').addEventListener('change', function() {
-    var archivo = this.files[0];
-    var errorElement = document.getElementById('CV_ERROR');
-    if (archivo && archivo.type === 'application/pdf') {
-        errorElement.style.display = 'none';
-        document.getElementById('quitarCV').style.display = 'block';
-    } else {
-        errorElement.style.display = 'block';
-        this.value = '';
-        document.getElementById('quitarCV').style.display = 'none';
+document.addEventListener('DOMContentLoaded', function() {
+    var tipoPosgradoCV = document.getElementById('TIPO_POSGRADO_CV');
+    if (tipoPosgradoCV) {
+        tipoPosgradoCV.addEventListener('change', function() {
+            var display = this.value !== '0' ? 'block' : 'none';
+            var posgradoNombre = document.getElementById('posgrado-nombre-container');
+            var posgradoTitulo = document.getElementById('posgrado-titulo-container');
+            var posgradoCedula = document.getElementById('posgrado-cedula-container');
+
+            if (posgradoNombre) posgradoNombre.style.display = display;
+            if (posgradoTitulo) posgradoTitulo.style.display = display;
+            if (posgradoCedula) posgradoCedula.style.display = display;
+        });
     }
 });
 
-document.getElementById('quitarCV').addEventListener('click', function() {
-    document.getElementById('ARCHIVO_CV').value = '';
-    document.getElementById('CV_ERROR').style.display = 'none';
-    this.style.display = 'none';
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var archivoCurpCV = document.getElementById('ARCHIVO_CURP_CV');
+    if (archivoCurpCV) {
+        archivoCurpCV.addEventListener('change', function() {
+            var archivo = this.files[0];
+            var errorElement = document.getElementById('CURP_ERROR');
+            var quitarCurp = document.getElementById('quitarCURP');
+            if (archivo && archivo.type === 'application/pdf') {
+                if (errorElement) errorElement.style.display = 'none';
+                if (quitarCurp) quitarCurp.style.display = 'block';
+            } else {
+                if (errorElement) errorElement.style.display = 'block';
+                this.value = '';
+                if (quitarCurp) quitarCurp.style.display = 'none';
+            }
+        });
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var quitarCurp = document.getElementById('quitarCURP');
+    if (quitarCurp) {
+        quitarCurp.addEventListener('click', function() {
+            var archivoCurpCV = document.getElementById('ARCHIVO_CURP_CV');
+            var errorElement = document.getElementById('CURP_ERROR');
+            if (archivoCurpCV) archivoCurpCV.value = '';
+            if (errorElement) errorElement.style.display = 'none';
+            this.style.display = 'none';
+        });
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var archivoCV = document.getElementById('ARCHIVO_CV');
+    if (archivoCV) {
+        archivoCV.addEventListener('change', function() {
+            var archivo = this.files[0];
+            var errorElement = document.getElementById('CV_ERROR');
+            var quitarCV = document.getElementById('quitarCV');
+            if (archivo && archivo.type === 'application/pdf') {
+                if (errorElement) errorElement.style.display = 'none';
+                if (quitarCV) quitarCV.style.display = 'block';
+            } else {
+                if (errorElement) errorElement.style.display = 'block';
+                this.value = '';
+                if (quitarCV) quitarCV.style.display = 'none';
+            }
+        });
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var quitarCV = document.getElementById('quitarCV');
+    if (quitarCV) {
+        quitarCV.addEventListener('click', function() {
+            var archivoCV = document.getElementById('ARCHIVO_CV');
+            var errorElement = document.getElementById('CV_ERROR');
+            if (archivoCV) archivoCV.value = '';
+            if (errorElement) errorElement.style.display = 'none';
+            this.style.display = 'none';
+        });
+    }
 });
 
 
 
-document.getElementById('aceptaTerminos').addEventListener('change', function() {
+
+document.addEventListener('DOMContentLoaded', function() {
+    var aceptaTerminosCheckbox = document.getElementById('aceptaTerminos');
     var guardarBtn = document.getElementById('guardarFormBancoCV');
-    guardarBtn.disabled = !this.checked;
+
+    if (aceptaTerminosCheckbox && guardarBtn) {
+        aceptaTerminosCheckbox.addEventListener('change', function() {
+            guardarBtn.disabled = !this.checked;
+        });
+    }
 });
 
-document.getElementById('guardarFormBancoCV').addEventListener('click', function(event) {
-    var aceptaTerminos = document.getElementById('aceptaTerminos').checked;
-    if (!aceptaTerminos) {
-        event.preventDefault(); // Evita el envío del formulario
-        alert('Debe aceptar los términos y condiciones para continuar.');
+document.addEventListener('DOMContentLoaded', function() {
+    var botonGuardar = document.getElementById('guardarFormBancoCV');
+    if (botonGuardar) {
+        botonGuardar.addEventListener('click', function(event) {
+            var aceptaTerminosCheckbox = document.getElementById('aceptaTerminos');
+            if (aceptaTerminosCheckbox && !aceptaTerminosCheckbox.checked) {
+                event.preventDefault(); // Evita el envío del formulario
+                alert('Debe aceptar los términos y condiciones para continuar.');
+            }
+        });
     }
 });
 
@@ -415,12 +672,9 @@ document.getElementById('guardarFormBancoCV').addEventListener('click', function
 
 
 
-const ModalArea = document.getElementById('miModal_BANCOCV')
-ModalArea.addEventListener('hidden.bs.modal', event => {
-    
-    
-    ID_BANCO_CV = 0
-    document.getElementById('formularioBANCO').reset();
-   
 
-})
+
+
+
+
+
