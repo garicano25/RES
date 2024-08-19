@@ -366,7 +366,6 @@ $(document).ready(function() {
         }
     });
 
-    // Agregando el código para manejar la edición de datos desde la tabla
     $('#Tablabancocv tbody').on('click', 'td>button.EDITAR', function () {
         var tr = $(this).closest('tr');
         var row = Tablabancocv.row(tr);
@@ -425,7 +424,6 @@ $(document).ready(function() {
             $('#ANIO_FECHA_CV').val(row.data().ANIO_FECHA_CV);
         }, 100);
 
-        // Mostrar el div correspondiente basado en los datos de la fila seleccionada
         if (row.data().ULTIMO_GRADO_CV === '4') {
             $('#licenciatura-section').show();
         } else if (row.data().ULTIMO_GRADO_CV === '5') {
@@ -435,7 +433,6 @@ $(document).ready(function() {
 
     $('#miModal_VACANTES').on('hidden.bs.modal', function () {
         resetFormulario('#miModal_VACANTES');
-        // Asegúrate de ocultar las secciones cuando el modal se cierre
         $('#licenciatura-section').hide();
         $('#posgrado-section').hide();
     });
@@ -667,6 +664,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+
+  var $select = $('#INTERES_ADMINISTRATIVA').selectize({
+        plugins: ['remove_button'],
+        delimiter: ',',
+        persist: false,
+        placeholder: 'Seleccione una opción',
+    });
+    var selectizeInstance = $select[0].selectize;
+
+    var $select1 = $('#INTERES_OPERATIVAS').selectize({
+        plugins: ['remove_button'],
+        delimiter: ',',
+        persist: false,
+        placeholder: 'Seleccione una opción',
+    });
+
+
+    var selectizeInstance1 = $select1[0].selectize;
 
 
 

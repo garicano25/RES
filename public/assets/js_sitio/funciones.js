@@ -985,6 +985,24 @@ function alertMensaje(icon = 'success', title = '¡Completado!', text = 'Datos c
   })
 }
 
+
+
+function alertMensaje1(icon = 'success', title = '¡Completado!', text = 'Datos completados', footer = null, html = null, timer = null) {
+  Swal.fire({
+    icon: icon,
+    title: title,
+    text: text,
+    html: html,
+    footer: footer,
+    timer: timer,
+    showConfirmButton: false,  // No muestra el botón "OK"
+    timerProgressBar: true,    // Muestra una barra de progreso
+    
+  });
+}
+
+
+
 function alertMsj(options, callback = function () { }) {
 
   if (!options.hasOwnProperty('title'))

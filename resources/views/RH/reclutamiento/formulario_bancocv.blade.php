@@ -206,8 +206,8 @@
                     </select>
                 </div>
                 <div class="col-10 mx-2">        
-                    <label for="NUMERO1_CV" class="me-2">Teléfono 1</label>
-                <input type="number" class="form-control col-auto" id="TELEFONO1" name="TELEFONO1" required>
+                    <label class="me-2">Teléfono 1</label>
+                <input type="number" class="form-control col-auto" id="TELEFONO1" name="TELEFONO1" maxlength="10" required>
                 </div>
                 
             </div>
@@ -226,8 +226,8 @@
                     </select>
                 </div>
                 <div class="col-10 mx-2">        
-                    <label for="NUMERO1_CV" class="me-2">Teléfono 2</label>
-                <input type="number" class="form-control col-auto" id="TELEFONO2" name="TELEFONO2" required>
+                    <label class="me-2">Teléfono 2</label>
+                <input type="number" class="form-control col-auto" id="TELEFONO2" name="TELEFONO2"  maxlength="10" required>
                 </div>                
             </div>      
            
@@ -445,40 +445,40 @@
 
 
     <!-- Modal de Aviso de Privacidad -->
-    <div class="modal fade" id="avisoPrivacidadModal" tabindex="-1" aria-labelledby="avisoPrivacidadModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="avisoPrivacidadModalLabel">Aviso de Privacidad</h5>
-                    <img src="/assets/images/rip_logocolores.png" alt="Imagen de Privacidad">                    
-                    {{-- <img src="/assets/images/Colorancho.png" alt="Imagen de Privacidad"> --}}
-                </div>
-                <div class="modal-body">
-                    <p><b>“RESULTS”</b> trata datos sensibles los cuales se utilizan para la contratación de
-                        colaboradores, envío de cotizaciones, asignación de órdenes de trabajo o de
-                        compra, completar diversos formatos y para generar los informes de consultoría.
-                        Los datos que utilizaremos para las finalidades descritas en el presente aviso de
-                        privacidad son los siguientes: <br><br>
-    
-                       <b> Para prospecto a colaboradores:</b><br>
-                      -Nombre completo<br>
-                     -CURP<br>
-                     -Currículo Vitae<br>
-                     -Teléfono celular<br>
-                     -Correo electrónico
-                    </p>
-                    <p ><b>Nota:</b> Si desea consultar el aviso de privacidad completo y los derechos de ARCO,
-                        entre a nuestra página web <a href="http://results-in-performance.com" target="_blank">aquí</a>.</p>
-    
-                    <p class="text-center">Aceptar términos</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="aceptoTerminos">Sí</button>
-                    <button type="button" class="btn btn-secondary" id="noAceptoTerminos">No</button>
-                </div>
+<div class="modal fade" id="avisoPrivacidadModal" tabindex="-1" aria-labelledby="avisoPrivacidadModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="avisoPrivacidadModalLabel">Aviso de Privacidad</h5>
+                <img src="/assets/images/rip_logocolores.png" alt="Imagen de Privacidad">                    
+                {{-- <img src="/assets/images/Colorancho.png" alt="Imagen de Privacidad"> --}}
+            </div>
+            <div class="modal-body">
+                <p><b>“RESULTS”</b> trata datos sensibles los cuales se utilizan para la contratación de
+                    colaboradores, envío de cotizaciones, asignación de órdenes de trabajo o de
+                    compra, completar diversos formatos y para generar los informes de consultoría.
+                    Los datos que utilizaremos para las finalidades descritas en el presente aviso de
+                    privacidad son los siguientes: <br><br>
+
+                    <b> Para prospecto a colaboradores:</b><br>
+                    -Nombre completo<br>
+                    -CURP<br>
+                    -Currículo Vitae<br>
+                    -Teléfono celular<br>
+                    -Correo electrónico
+                </p>
+                <p ><b>Nota:</b> Si desea consultar el aviso de privacidad completo y los derechos de ARCO,
+                    entre a nuestra página web <a href="http://results-in-performance.com" target="_blank">aquí</a>.</p>
+
+                <p class="text-center">Aceptar términos</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="aceptoTerminos">Sí</button>
+                <button type="button" class="btn btn-secondary" id="noAceptoTerminos">No</button>
             </div>
         </div>
     </div>
+</div>
     
 
    

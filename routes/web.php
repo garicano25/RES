@@ -173,8 +173,10 @@ Route::get('/curppdf/{ID_BANCO_CV}', [bancocvController::class, 'curppdf']);
 Route::get('/cvpdf/{ID_BANCO_CV}', [bancocvController::class, 'cvpdf']);
 
 // Ruta para ver las vacantes externa en la aplicación
-// Route::get('/Vacantes', function () {return view('RH.reclutamiento.puestos');});
 Route::get('/Vacantes', [PuestoController::class, 'index']);
+Route::post('/actualizarinfo', [PuestoController::class, 'getCvInfo'])->name('actualizarinfo');
+Route::post('/ActualizarSave', [PuestoController::class, 'store']);
+
 
 
 // Catálogo de vacantes

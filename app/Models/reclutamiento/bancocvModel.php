@@ -26,6 +26,7 @@ class bancocvModel extends Model
         'NOMBRE_POSGRADO_CV',
         'ARCHIVO_CURP_CV',
         'ARCHIVO_CV',
+        
         'CUENTA_TITULO_LICENCIATURA_CV',
         'CEDULA_TITULO_LICENCIATURA_CV',
         'CUENTA_TITULO_POSGRADO_CV',
