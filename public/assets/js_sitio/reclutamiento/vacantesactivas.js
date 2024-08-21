@@ -61,9 +61,9 @@ var Tablapostulaciones = $("#Tablapostulaciones").DataTable({
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all text-center' },
-        { targets: 1, title: 'Nombre de la vacante', className: 'all text-center' },
+        { targets: 1, title: 'Nombre de la categoría', className: 'all text-center' },
         { targets: 2, title: 'Lugar de trabajo', className: 'all text-center' },
-        { targets: 3, title: 'Tipo de vacantwe', className: 'all text-center' },
+        { targets: 3, title: 'Tipo de vacante', className: 'all text-center' },
         {
             targets: 4,
             title: 'Descripción de la vacantes',
@@ -78,7 +78,7 @@ var Tablapostulaciones = $("#Tablapostulaciones").DataTable({
         { targets: 5, title: 'Fecha de publicación', className: 'all text-center' },
         { targets: 6, title: 'Fecha de expiración', className: 'all text-center' },
         { targets: 7, title: 'Total de postulaciones', className: 'all text-center' },
-        { targets: 8, title: 'Botones', className: 'all text-center' }
+        { targets: 8, title: 'Visualizar', className: 'all text-center' }
     ]
 });
 
@@ -87,9 +87,59 @@ var Tablapostulaciones = $("#Tablapostulaciones").DataTable({
 
 
 
+$(document).ready(function() {
+    $('#Tablapostulaciones tbody').on('click', 'td>button.VISUALIZAR', function () {
+        var tr = $(this).closest('tr');
+        var row = Tablapostulaciones.row(tr);
+        
+        hacerSoloLectura(row.data(), '#miModal_vacantes');
+
+        ID_CATALOGO_VACANTE = row.data().ID_CATALOGO_VACANTE;
+        editarDatoTabla(row.data(), 'formularioVACANTES', 'miModal_vacantes',1);
+        cargarRequerimientos(row.data().REQUERIMIENTO);
+
+        $('#botonAgregar').prop('disabled', true);
+
+    });
+
+    $('#miModal_vacantes').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_vacantes');
+    });
+});
 
 
 
+
+function cargarRequerimientos(requerimientos) {
+    const contenedor = document.getElementById('inputs-container');
+    contenedor.innerHTML = ''; // Limpiar el contenedor
+
+    requerimientos.forEach(function(requerimiento) {
+        const divInput = document.createElement('div');
+        divInput.classList.add('form-group', 'row', 'input-container', 'mb-3');
+        divInput.innerHTML = `
+            <div class="col-8  text-center">
+                <label></label>
+                <input type="text" name="NOMBRE_REQUERIMINETO[]" class="form-control" value="${requerimiento.NOMBRE_REQUERIMINETO}" placeholder="Escribe los Requerimientos de la vacante aquí">
+            </div>
+            <div class="col-2 text-center">
+                <label>%</label>
+                <input type="number" name="PORCENTAJE[]" class="form-control" value="${requerimiento.PORCENTAJE}">
+            </div>
+            <div class="col-2">
+                <label>Eliminar</label>
+
+                <button type="button" class="btn btn-danger botonEliminar"><i class="bi bi-trash3-fill"></i></button>
+            </div>
+        `;
+        contenedor.appendChild(divInput);
+
+        const botonEliminar = divInput.querySelector('.botonEliminar');
+        botonEliminar.addEventListener('click', function() {
+            contenedor.removeChild(divInput);
+        });
+    });
+}
 
 
 

@@ -12,6 +12,7 @@ class requerimientoModel extends Model
     protected $fillable = [
         'CATALOGO_VACANTES_ID',
         'NOMBRE_REQUERIMINETO',
+        'PORCENTAJE'
        
     ];
 }

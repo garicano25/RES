@@ -31,6 +31,9 @@ use App\Http\Controllers\organizacion\catalogoareainteresController;
  use App\Http\Controllers\reclutamiento\catalogovacantesController;
 use App\Http\Controllers\reclutamiento\PuestoController;
 use App\Http\Controllers\reclutamiento\bancocvController;
+use App\Http\Controllers\reclutamiento\vacantesactivasController;
+
+
 
 
 
@@ -114,7 +117,7 @@ Route::post('/CategoriaSave', [catalogocategoriaControlller::class, 'store']);
 Route::get('CategoriaDelete', [catalogocategoriaControlller::class, 'store']);
 Route::get('/Tablacategoria', [catalogocategoriaControlller::class, 'Tablacategoria']);
 
-//  catálogo de Género 
+//  Catálogo de Género 
 Route::get('/Género', function () {return view('RH.Catalogos.catalogo_genero');});
 Route::post('/GeneroSave', [catalogogeneroControlller::class, 'store']);
 Route::get('/GeneroDelete', [catalogogeneroControlller::class, 'store']);
@@ -127,15 +130,12 @@ Route::get('/PuestoDelete', [catalogoexperienciaController::class, 'store']);
 Route::get('/Tablaexperiencia', [catalogoexperienciaController::class, 'Tablaexperiencia']);
 
 // Catálogo Competencias básicas o cardinales 
-
 Route::get('/Competencias-básicas', function () {return view('RH.Catalogos.catalogo_competenciasbasicas');});
 Route::post('/BasicoSave', [catalogocompetenciabasicaController::class, 'store']);
 Route::get('/BasicoDelete', [catalogocompetenciabasicaController::class, 'store']);
 Route::get('/Tablacompetenciabasica', [catalogocompetenciabasicaController::class, 'Tablacompetenciabasica']);
 
-
 // Catálogo Competencias gerenciales 
-
 Route::get('/Competencias-gerenciales', function () {return view('RH.Catalogos.catalogo_competenciasGerenciales'); });
 Route::post('/GerencialesSave', [catalogoCompotenciasGerencialesController::class, 'store']);
 Route::get('/GerencialesDelete', [catalogoCompotenciasGerencialesController::class, 'store']);
@@ -147,9 +147,7 @@ Route::post('/TipoSave', [catalogotipovacanteController::class, 'store']);
 Route::get('/TipoDelete', [catalogotipovacanteController::class, 'store']);
 Route::get('/Tablatipovacantes', [catalogotipovacanteController::class, 'Tablatipovacantes']);
 
-
 // Catálogo de  Motivo de vacantes 
-
 Route::get('/Motivo-vacante', function () {return view('RH.Catalogos.catalogo_motivovacante');});
 Route::post('/MotivoSave', [catalogomotivovacanteControlller::class, 'store']);
 Route::get('/MotivoDelete', [catalogomotivovacanteControlller::class, 'store']);
@@ -158,8 +156,6 @@ Route::get('/Tablamotivovacante', [catalogomotivovacanteControlller::class, 'Tab
 //==============================================  RECLUTAMIENTO  ============================================== 
 
 // Formulario de Banco de CV externo a la aplicación
-// Route::get('/Formulario-vacantes', function () {return view('RH.reclutamiento.formulario_bancocv');});
-
 Route::get('/Formulario-vacantes', [bancocvController::class, 'index1']);
 Route::post('/BancoSave', [bancocvController::class, 'store']);
 
@@ -167,11 +163,6 @@ Route::post('/BancoSave', [bancocvController::class, 'store']);
 Route::get('/Listavacantes', [bancocvController::class, 'index']);
 Route::get('/BancoDelete', [bancocvController::class, 'store']);
 Route::get('/Tablabancocv', [bancocvController::class, 'Tablabancocv']);
-
-
-
-
-
 
 // Rutas para poder ver los archivos CURP Y CV del banco de cv
 Route::get('/curppdf/{ID_BANCO_CV}', [bancocvController::class, 'curppdf']);
@@ -181,8 +172,6 @@ Route::get('/cvpdf/{ID_BANCO_CV}', [bancocvController::class, 'cvpdf']);
 Route::get('/Vacantes', [PuestoController::class, 'index']);
 Route::post('/actualizarinfo', [PuestoController::class, 'getCvInfo'])->name('actualizarinfo');
 Route::post('/ActualizarSave', [PuestoController::class, 'store']);
-
-
 
 // Catálogo de vacantes
 Route::get('/CatálogoDeVacantes', [catalogovacantesController::class, 'index']);
@@ -198,11 +187,11 @@ Route::get('/Tablaareainteres', [catalogoareainteresController::class, 'Tablaare
 
 
 // visualizar la vacantes y poder ver los que se han postulado 
-Route::get('/Postulaciones', function () {return view('RH.reclutamiento.Vacantes_activas');});
-Route::get('/Tablapostulaciones', [bancocvController::class, 'Tablapostulaciones']);
-Route::get('/informacionpostulantes/{idVacante}', [bancocvController::class, 'informacionpostulantes']);
-Route::get('/reclutamiento/cv/{filename}', [bancocvController::class, 'getCV'])->name('getCV');
+Route::get('/Postulaciones', [vacantesactivasController::class, 'index']);
+Route::get('/Tablapostulaciones', [vacantesactivasController::class, 'Tablapostulaciones']);
+Route::get('/informacionpostulantes/{idVacante}', [vacantesactivasController::class, 'informacionpostulantes']);
+Route::get('/reclutamiento/cv/{filename}', [vacantesactivasController::class, 'getCV'])->name('getCV');
 
-// Route::get('/Listavacantes', function () {return view('RH.reclutamiento.reclutamiento');});
+
 
 

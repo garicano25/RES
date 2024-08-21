@@ -182,11 +182,10 @@ use Carbon\Carbon;
             
             <div class="text-start mb-3">
                 <a href="#" onclick="volverATabla()" style="color: red; text-decoration: none;">
-                    <span style="font-size: 1.2em; font-weight: bold;">&#x2190;</span> Volver a los resultados de búsqueda
+                    <span style="font-size: 1.2em; font-weight: bold;">&#x2190;</span> Volver
                 </a>
             </div>
 
-            <!-- Contenido de la card -->
             <h5 class="card-title text-center">{{ $vacante->NOMBRE_CATEGORIA  }}</h5> <br>
             <label><b>Lugar de trabajo:</b> </label>
             <label>{{ $vacante->LUGAR_VACANTE }}</label> <br>
@@ -202,7 +201,6 @@ use Carbon\Carbon;
                 @endforeach
             </ul>
             <!-- Botón para postularse -->
-            {{-- <button type="button" class="btn btn-primary postularse-btn" data-bs-toggle="modal" data-bs-target="#postularseModal" data-vacante="{{ $slug }}">Postularse</button> --}}
             <button type="button" class="btn btn-primary postularse-btn" data-bs-toggle="modal" data-bs-target="#postularseModal" data-vacante="{{ $slug }}">Postularse</button>
 
         </div>

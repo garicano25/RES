@@ -49,17 +49,7 @@
                     {!! csrf_field() !!}
 
 
-                                <div class="mb-3">
-                                    <div class="form-group">
-                                        <label>Seleccione la vacante:</label>
-                                        <select class="form-control" id="VACANTES_POSTULACION" name="VACANTES_POSTULACION" required>
-                                        <option selected disabled>Seleccione una opción</option>
-                                        @foreach ($vacantes as $vacante)
-                                            <option value="{{ $vacante->ID_CATALOGO_VACANTE }}">{{ $vacante->CATEGORIA_VACANTE }}</option>
-                                        @endforeach
-                                    </select>                          
-                                    </div>
-                                </div>
+                               
                                 <div class="mb-3">
                                     <label>Nombre(s)</label>
                                     <input type="text" class="form-control" id="NOMBRE_CV" name="NOMBRE_CV" required>
@@ -323,17 +313,6 @@
                         <div class="row">
 
 
-                            <div class="mb-3">
-                                <div class="form-group">
-                                    <label>Seleccione la vacante:</label>
-                                    <select class="form-control" id="VACANTES_POSTULACION" name="VACANTES_POSTULACION" required>
-                                    <option selected disabled>Seleccione una opción</option>
-                                    @foreach ($vacantes as $vacante)
-                                        <option value="{{ $vacante->ID_CATALOGO_VACANTE }}">{{ $vacante->CATEGORIA_VACANTE }}</option>
-                                    @endforeach
-                                </select>                          
-                                </div>
-                            </div>
                             <div class="row mb-3">
                                 <div class="col-6">
                                     <div class="form-group">

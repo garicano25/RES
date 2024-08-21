@@ -87,8 +87,8 @@ public function store(Request $request)
         try {
             switch (intval($request->api)) {
                 case 1:
-                    DB::beginTransaction(); // Start transaction
-    
+                    DB::beginTransaction(); 
+
                     if ($request->ID_CATALOGO_VACANTE == 0) {
                         DB::statement('ALTER TABLE catalogo_vacantes AUTO_INCREMENT=1;');
                         $vacante = catalogovacantesModel::create($request->all());
@@ -98,7 +98,6 @@ public function store(Request $request)
                             $vacante = catalogovacantesModel::find($request->ID_CATALOGO_VACANTE);
                             $vacante->update($request->all());
     
-                            // Eliminar los requerimientos existentes
                             requerimientoModel::where('CATALOGO_VACANTES_ID', $request->ID_CATALOGO_VACANTE)->delete();
                         } else {
                             $vacante = catalogovacantesModel::where('ID_CATALOGO_VACANTE', $request['ID_CATALOGO_VACANTE'])->delete();
@@ -110,14 +109,16 @@ public function store(Request $request)
                     }
     
                     // Guardar los nuevos requerimientos
-                    if ($request->has('NOMBRE_REQUERIMINETO')) {
-                        foreach ($request->NOMBRE_REQUERIMINETO as $requerimiento) {
+                   if ($request->has('NOMBRE_REQUERIMINETO')) {
+                        foreach ($request->NOMBRE_REQUERIMINETO as $index => $requerimiento) {
                             requerimientoModel::create([
                                 'CATALOGO_VACANTES_ID' => $vacante->ID_CATALOGO_VACANTE,
-                                'NOMBRE_REQUERIMINETO' => $requerimiento
+                                'NOMBRE_REQUERIMINETO' => $requerimiento,
+                                'PORCENTAJE' => $request->PORCENTAJE[$index]
                             ]);
                         }
                     }
+
     
                     $response['code']  = 1;
                     $response['vacante']  = $vacante;

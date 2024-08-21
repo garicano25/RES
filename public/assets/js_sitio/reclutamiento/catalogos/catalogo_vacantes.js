@@ -223,15 +223,19 @@ $('#Tablavacantes tbody').on('click', 'td>button.EDITAR', function () {
 });
 
 
+
 $(document).ready(function() {
     $('#Tablavacantes tbody').on('click', 'td>button.VISUALIZAR', function () {
         var tr = $(this).closest('tr');
         var row = Tablavacantes.row(tr);
+        
+        hacerSoloLectura(row.data(), '#miModal_vacantes');
 
-        $('#exampleModalLabel').text(categoriaVacante);
         ID_CATALOGO_VACANTE = row.data().ID_CATALOGO_VACANTE;
         editarDatoTabla(row.data(), 'formularioVACANTES', 'miModal_vacantes',1);
         cargarRequerimientos(row.data().REQUERIMIENTO);
+
+        $('#botonAgregar').prop('disabled', true);
     });
 
     $('#miModal_vacantes').on('hidden.bs.modal', function () {
@@ -240,18 +244,27 @@ $(document).ready(function() {
 });
 
 
+
+
 function cargarRequerimientos(requerimientos) {
     const contenedor = document.getElementById('inputs-container');
-    contenedor.innerHTML = ''; // Limpiar el contenedor
+    const botonGuardar = document.getElementById('guardarFormvacantes'); 
+    contenedor.innerHTML = ''; 
 
     requerimientos.forEach(function(requerimiento) {
         const divInput = document.createElement('div');
         divInput.classList.add('form-group', 'row', 'input-container', 'mb-3');
         divInput.innerHTML = `
-            <div class="col-10">
+            <div class="col-8 text-center">
+                <label></label>
                 <input type="text" name="NOMBRE_REQUERIMINETO[]" class="form-control" value="${requerimiento.NOMBRE_REQUERIMINETO}" placeholder="Escribe los Requerimientos de la vacante aquí">
             </div>
+            <div class="col-2 text-center">
+                <label>%</label>
+                <input type="number" name="PORCENTAJE[]" class="form-control porcentaje-input" value="${requerimiento.PORCENTAJE}" max="100" min="0" step="1" maxlength="3">
+            </div>
             <div class="col-2">
+                <label>Eliminar</label>
                 <button type="button" class="btn btn-danger botonEliminar"><i class="bi bi-trash3-fill"></i></button>
             </div>
         `;
@@ -260,13 +273,50 @@ function cargarRequerimientos(requerimientos) {
         const botonEliminar = divInput.querySelector('.botonEliminar');
         botonEliminar.addEventListener('click', function() {
             contenedor.removeChild(divInput);
+            validarPorcentajeTotal(); 
+        });
+
+        const inputPorcentaje = divInput.querySelector('.porcentaje-input');
+        inputPorcentaje.addEventListener('input', function() {
+            validarPorcentajeTotal(); // Validar cada vez que se cambia el valor
         });
     });
+
+    validarPorcentajeTotal();
+
+    function calcularSumaPorcentajes() {
+        const porcentajes = document.querySelectorAll('.porcentaje-input');
+        let total = 0;
+
+        porcentajes.forEach(function(input) {
+            total += parseInt(input.value) || 0;
+        });
+
+        return total;
+    }
+
+    function validarPorcentajeTotal() {
+        const total = calcularSumaPorcentajes();
+
+        if (total > 100) {
+            alertToast("La suma de los porcentajes no puede exceder el 100%.");
+            botonGuardar.disabled = true; 
+        } else {
+            botonGuardar.disabled = false; 
+        }
+    }
 }
+
+
+
+
+
 
 
 document.addEventListener("DOMContentLoaded", function() {
     const botonAgregar = document.getElementById('botonAgregar');
+    const botonGuardar = document.getElementById('guardarFormvacantes'); 
+
     botonAgregar.addEventListener('click', function(e) {
         e.preventDefault();
         agregarInput();
@@ -276,10 +326,16 @@ document.addEventListener("DOMContentLoaded", function() {
         const divInput = document.createElement('div');
         divInput.classList.add('form-group', 'row', 'input-container', 'mb-3');
         divInput.innerHTML = `
-            <div class="col-10">
+            <div class="col-8 text-center">
+                <label></label>
                 <input type="text" name="NOMBRE_REQUERIMINETO[]" class="form-control" placeholder="Escribe los Requerimientos de la vacante aquí">
             </div>
+            <div class="col-2 text-center">
+                <label>%</label>
+                <input type="number" name="PORCENTAJE[]" class="form-control porcentaje-input" max="100" min="0" step="1" maxlength="3">
+            </div>
             <div class="col-2">
+                <label>Eliminar</label>
                 <button type="button" class="btn btn-danger botonEliminar"><i class="bi bi-trash3-fill"></i></button>
             </div>
         `;
@@ -289,25 +345,55 @@ document.addEventListener("DOMContentLoaded", function() {
         const botonEliminar = divInput.querySelector('.botonEliminar');
         botonEliminar.addEventListener('click', function() {
             contenedor.removeChild(divInput);
+            validarPorcentajeTotal(); 
         });
+
+        const inputPorcentaje = divInput.querySelector('.porcentaje-input');
+        inputPorcentaje.addEventListener('input', function() {
+            if (this.value.length > 3) {
+                this.value = this.value.slice(0, 3); 
+            }
+            if (this.value > 100) {
+                this.value = 100; 
+            }
+            validarPorcentajeTotal();
+        });
+    }
+
+    function validarPorcentajeTotal() {
+        const porcentajes = document.querySelectorAll('.porcentaje-input');
+        let total = 0;
+
+        porcentajes.forEach(function(input) {
+            total += parseInt(input.value) || 0;
+        });
+
+        if (total > 100) {
+            alertToast("La suma de los porcentajes no puede exceder el 100%.");
+            botonGuardar.disabled = true; 
+            return false;
+        } else if (total === 100) {
+            alertToast("La suma de los porcentajes es exactamente 100%.");
+            botonGuardar.disabled = false; 
+        } else {
+            botonGuardar.disabled = false; 
+        }
     }
 });
 
 
 
+// document.addEventListener("DOMContentLoaded", function() {
+//     const postularseButtons = document.querySelectorAll('.postularse-btn');
 
-
-document.addEventListener("DOMContentLoaded", function() {
-    const postularseButtons = document.querySelectorAll('.postularse-btn');
-
-    postularseButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            const curpInputDiv = this.nextElementSibling;
-            if (curpInputDiv.style.display === 'none' || curpInputDiv.style.display === '') {
-                curpInputDiv.style.display = 'block';
-            } else {
-                curpInputDiv.style.display = 'none';
-            }
-        });
-    });
-});
+//     postularseButtons.forEach(function(button) {
+//         button.addEventListener('click', function() {
+//             const curpInputDiv = this.nextElementSibling;
+//             if (curpInputDiv.style.display === 'none' || curpInputDiv.style.display === '') {
+//                 curpInputDiv.style.display = 'block';
+//             } else {
+//                 curpInputDiv.style.display = 'none';
+//             }
+//         });
+//     });
+// });
