@@ -26,7 +26,10 @@ class catalogovacantesController extends Controller
 
     
 
-            $areas = catalogocategoriaModel::orderBy('NOMBRE_CATEGORIA', 'ASC')->get();
+        $areas = catalogocategoriaModel::where('ES_LIDER_CATEGORIA', 0)
+        ->orderBy('NOMBRE_CATEGORIA', 'ASC')
+        ->get();
+
 
 
 

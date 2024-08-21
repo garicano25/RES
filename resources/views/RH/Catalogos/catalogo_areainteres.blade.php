@@ -43,7 +43,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label>Nombre:</label>
+                        <label>Nombre *</label>
                         <input type="text" class="form-control" id="NOMBRE_AREA" name="NOMBRE_AREA" >
                     </div>
                     

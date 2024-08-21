@@ -149,8 +149,13 @@ var Tablavacantes = $("#Tablavacantes").DataTable({
     },
     order: [[0, 'asc']],
     columns: [
-        { data: 'ID_CATALOGO_VACANTE' },
-        { data: 'CATEGORIA_VACANTE' },
+        { 
+            data: null,
+            render: function(data, type, row, meta) {
+                return meta.row + 1;
+            }
+        },
+        { data: 'NOMBRE_CATEGORIA' },
         { data: 'LUGAR_VACANTE' },
         { data: 'LA_VACANTES_ES' },
         { data: 'DESCRIPCION_VACANTE', render: function(data, type, row) {
@@ -178,13 +183,13 @@ var Tablavacantes = $("#Tablavacantes").DataTable({
         }
     ],
     columnDefs: [
-        { targets: 0, title: '#', className: 'all' },
-        { targets: 1, title: 'Nombre de la categoría', className: 'descripcion-column' },
-        { targets: 2, title: 'Lugar de trabajo', className: 'descripcion-column' },
-        { targets: 3, title: 'La vacante es', className: 'descripcion-column' },
-        { targets: 4, title: 'Descripción de la vacante', className: 'all text-center descripcion-column' },
-        { targets: 5, title: 'Fecha de publicación', className: 'descripcion-column' },
-        { targets: 6, title: 'Fecha de expiración', className: 'descripcion-column' },
+        { targets: 0, title: '#', className: 'all  text-center' },
+        { targets: 1, title: 'Nombre de la categoría', className: 'all text-center' },
+        { targets: 2, title: 'Lugar de trabajo', className: 'all text-center' },
+        { targets: 3, title: 'Tipo de vacante ', className: 'all  text-center' },
+        { targets: 4, title: 'Descripción de la vacante', className: 'all text-center ' },
+        { targets: 5, title: 'Fecha de publicación', className: 'all  text-center' },
+        { targets: 6, title: 'Fecha de expiración', className: 'all  text-center' },
         { targets: 7, title: 'Acciones', className: 'all text-center' }
     ]
 });
@@ -211,10 +216,8 @@ $('#Tablavacantes tbody').on('click', 'td>button.ELIMINAR', function () {
 $('#Tablavacantes tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablavacantes.row(tr);
-    var categoriaVacante = row.data().CATEGORIA_VACANTE;
 
     ID_CATALOGO_VACANTE = row.data().ID_CATALOGO_VACANTE;
-    $('#exampleModalLabel').text(categoriaVacante);
     editarDatoTabla(row.data(), 'formularioVACANTES', 'miModal_vacantes', 1);
     cargarRequerimientos(row.data().REQUERIMIENTO);
 });
@@ -224,10 +227,8 @@ $(document).ready(function() {
     $('#Tablavacantes tbody').on('click', 'td>button.VISUALIZAR', function () {
         var tr = $(this).closest('tr');
         var row = Tablavacantes.row(tr);
-        var categoriaVacante = row.data().CATEGORIA_VACANTE;
 
         $('#exampleModalLabel').text(categoriaVacante);
-        hacerSoloLectura(row.data(), '#miModal_vacantes');
         ID_CATALOGO_VACANTE = row.data().ID_CATALOGO_VACANTE;
         editarDatoTabla(row.data(), 'formularioVACANTES', 'miModal_vacantes',1);
         cargarRequerimientos(row.data().REQUERIMIENTO);

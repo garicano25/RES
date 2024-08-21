@@ -258,7 +258,6 @@ document.getElementById('CURPS_INFO').addEventListener('blur', function() {
     var curp = this.value;
 
     if (curp.length === 18) {
-        // Bloquear los inputs del modal y mostrar mensaje de "Consultando información"
         bloquearInputs(true);
         Swal.fire({
             title: 'Consultando información',
@@ -285,14 +284,12 @@ document.getElementById('CURPS_INFO').addEventListener('blur', function() {
             return response.json();
         })
         .then(data => {
-            Swal.close();  // Cerrar el mensaje de "Consultando información"
-            bloquearInputs(false);  // Desbloquear los inputs
+            Swal.close();  
+            bloquearInputs(false);  
 
             if (data.message) {
-                // Mostrar alerta si no se encuentra la CURP
                 alertToast(data.message);
             } else {
-                // Rellenar los campos con la información obtenida
                 document.getElementById('NOMBRE_CV').value = data.NOMBRE_CV || '';
                 document.getElementById('PRIMER_APELLIDO_CV').value = data.PRIMER_APELLIDO_CV || '';
                 document.getElementById('SEGUNDO_APELLIDO_CV').value = data.SEGUNDO_APELLIDO_CV || '';
@@ -306,7 +303,6 @@ document.getElementById('CURPS_INFO').addEventListener('blur', function() {
                 document.getElementById('TIPO_POSGRADO_CV').value = data.TIPO_POSGRADO_CV || '';
                 document.getElementById('NOMBRE_POSGRADO_CV').value = data.NOMBRE_POSGRADO_CV || '';
 
-                // Rellenar las opciones de radio
                 if (data.CUENTA_TITULO_LICENCIATURA_CV) {
                     document.querySelector(`input[name="CUENTA_TITULO_LICENCIATURA_CV"][value="${data.CUENTA_TITULO_LICENCIATURA_CV}"]`).checked = true;
                 }
@@ -327,7 +323,6 @@ document.getElementById('CURPS_INFO').addEventListener('blur', function() {
                 document.getElementById('mes').value = data.MES_FECHA_CV || '';
                 document.getElementById('ano').value = data.ANIO_FECHA_CV || '';
 
-                // Asignar valores a los selects selectize
                 if (data.INTERES_ADMINISTRATIVA) {
                     selectizeInstance.setValue(data.INTERES_ADMINISTRATIVA);
                 }
@@ -338,19 +333,20 @@ document.getElementById('CURPS_INFO').addEventListener('blur', function() {
                 var ultimoGradoCV = document.getElementById('ULTIMO_GRADO_CV');
                 if (ultimoGradoCV) {
                     var event = new Event('change');
-                    ultimoGradoCV.dispatchEvent(event); // Dispara el evento 'change' para que la lógica de visualización se ejecute
+                    ultimoGradoCV.dispatchEvent(event); 
                 }
             }
         })
         .catch(error => {
-            Swal.close();  // Cerrar el mensaje de "Consultando información"
-            bloquearInputs(false);  // Desbloquear los inputs
-            alertToast('No se encontró la CURP o hubo un problema con la solicitud.');
+            Swal.close();  
+            bloquearInputs(false);  
+            alertToast('No se encontró ningún  registro con esa CURP.');
         });
     } else {
         alertToast('La CURP debe tener 18 caracteres.');
     }
 });
+
 
 function bloquearInputs(bloquear) {
     const inputs = document.querySelectorAll('#miModal_ACTUALIZARINFO input, #miModal_ACTUALIZARINFO select, #miModal_ACTUALIZARINFO textarea, #miModal_ACTUALIZARINFO button');
@@ -362,10 +358,19 @@ function bloquearInputs(bloquear) {
 
 
 
+
+
+let vacanteId = null;
+
+$(".postularse-btn").click(function (e) {
+    vacanteId = $(this).data('vacante'); 
+    console.log("ID de la vacante seleccionada:", vacanteId);
+});
+
 $("#guardarFormActualizar").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioACTUALIZARINFO'))
+    formularioValido = validarFormulario($('#formularioACTUALIZARINFO'));
 
     if (formularioValido) {
         alertMensajeConfirm({
@@ -373,7 +378,11 @@ $("#guardarFormActualizar").click(function (e) {
             icon: "question",
         }, async function () {
             await loaderbtn('guardarFormActualizar');
-            await ajaxAwaitFormData({ api: 1, ID_BANCO_CV: ID_BANCO_CV }, 'ActualizarSave', 'formularioACTUALIZARINFO', 'guardarFormActualizar', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ 
+                api: 1, 
+                ID_BANCO_CV: ID_BANCO_CV, 
+                VACANTES_ID: vacanteId 
+            }, 'ActualizarSave', 'formularioACTUALIZARINFO', 'guardarFormActualizar', { callbackAfter: true, callbackBefore: true }, () => {
                 Swal.fire({
                     icon: 'info',
                     title: 'Espere un momento',
@@ -385,14 +394,14 @@ $("#guardarFormActualizar").click(function (e) {
                 
             }, function (data) {
                 ID_BANCO_CV = data.bancocv.ID_BANCO_CV;
-                alertMensaje1('success', 'Información actualizada correctamente', null, null, null, 2500);
+                alertMensaje1('success', 'Información Actualizada y Postulación Correcta', null, null, null, 2500);
                 $('#miModal_ACTUALIZARINFO').modal('hide');
                 $('#postularseModal').modal('hide');
                 document.getElementById('formularioACTUALIZARINFO').reset();
                 $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
                 $('#INTERES_OPERATIVAS')[0].selectize.clear();
 
-                // Reiniciar ID_BANCO_CV a 0 después de cerrar el modal
+                
                 ID_BANCO_CV = 0;
             });
         }, 1);
@@ -400,5 +409,10 @@ $("#guardarFormActualizar").click(function (e) {
         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
     }
 });
+
+
+
+
+
 
 

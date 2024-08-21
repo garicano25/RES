@@ -341,9 +341,16 @@
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoCompetenciasGerenciales.js"></script>
     @endif
 
-    @if(request()->is('Listavacantes') || request()->is('Postulaciones'))
+    @if(request()->is('Listavacantes'))
     <script src="/assets/js_sitio/reclutamiento/banco_cv.js"></script>
     @endif
+
+
+
+    @if(request()->is('Postulaciones'))
+    <script src="/assets/js_sitio/reclutamiento/vacantesactivas.js"></script>
+    @endif
+
 
 
     @if(request()->is('Motivo-vacante'))

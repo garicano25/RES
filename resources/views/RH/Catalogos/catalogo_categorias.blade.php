@@ -28,7 +28,7 @@
         <div class="modal-content">
             <form method="post" enctype="multipart/form-data" id="formularioCATEGORIAS" style="background-color: #ffffff;">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva Categoría *</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva Categoría</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -38,7 +38,7 @@
                         <input type="text" class="form-control" id="NOMBRE_CATEGORIA" name="NOMBRE_CATEGORIA" required/>
                     </div>
                     <div class="mb-3">
-                        <label>Lugar de trabajo </label>
+                        <label>Lugar de trabajo *</label>
                         <input type="text" class="form-control" id="LUGAR_CATEGORIA" name="LUGAR_CATEGORIA" required/>
                     </div>
                     <div class="mb-3 mt-3">

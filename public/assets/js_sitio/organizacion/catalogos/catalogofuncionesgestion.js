@@ -142,7 +142,12 @@ var Tablafuncionesgestion = $("#Tablafuncionesgestion").DataTable({
     },
     order: [[0, 'asc']], 
     columns: [
-        { data: 'ID_CATALOGO_FUNCIONESGESTION' },
+        { 
+            data: null,
+            render: function(data, type, row, meta) {
+                return meta.row + 1; 
+            }
+        },
         { 
             data: null,
             render: function (data, type, row) {
@@ -168,8 +173,8 @@ var Tablafuncionesgestion = $("#Tablafuncionesgestion").DataTable({
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
-        { targets: 0, title: '#', className: 'all' },
-        { targets: 1, title: 'Para quién', className: 'all text-center nombre-column' },
+        { targets: 0, title: '#', className: 'all  text-center' },
+        { targets: 1, title: 'Función destinada a:', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Descripción', className: 'all text-center descripcion-column' },
         { targets: 3, title: 'Editar', className: 'all text-center' },
         { targets: 4, title: 'Visualizar', className: 'all text-center' },

@@ -132,9 +132,9 @@ body {
     </nav>
 
 
-    @php
-    use Carbon\Carbon;
-    @endphp
+@php
+use Carbon\Carbon;
+@endphp
 
 
 <div class="container mt-5">
@@ -157,7 +157,7 @@ body {
                         $fechaFormateada = Carbon::parse($vacante->created_at)->locale('es')->isoFormat('D [de] MMMM [del] YYYY');
                     @endphp
                     <tr>
-                        <td><a href="javascript:void(0)" onclick="showDetails('{{ $slug }}')">{{ $vacante->CATEGORIA_VACANTE }}</a></td>
+                        <td><a href="javascript:void(0)" onclick="showDetails('{{ $slug }}')">{{ $vacante->NOMBRE_CATEGORIA  }}</a></td>
                         <td>{{ $vacante->LUGAR_VACANTE }}</td>
                         <td>{{ $fechaFormateada }}</td>
                     </tr>
@@ -175,12 +175,11 @@ body {
 <div class="col-md-8 position-relative mx-auto" id="details-container">
     @foreach($vacantes as $vacante)
         @php
-            $slug = $vacante->ID_CATALOGO_VACANTE;  // Usar el ID en lugar del slug
+            $slug = $vacante->ID_CATALOGO_VACANTE;  
             $fechaFormateada = Carbon::parse($vacante->created_at)->locale('es')->isoFormat('D [de] MMMM [del] YYYY');
         @endphp
         <div class="details-pane card" id="details-{{ $slug }}" style="display: none; width: 80%; max-width: 1100px; margin: 0 auto;">
             
-            <!-- Enlace para regresar a la tabla -->
             <div class="text-start mb-3">
                 <a href="#" onclick="volverATabla()" style="color: red; text-decoration: none;">
                     <span style="font-size: 1.2em; font-weight: bold;">&#x2190;</span> Volver a los resultados de búsqueda
@@ -188,7 +187,7 @@ body {
             </div>
 
             <!-- Contenido de la card -->
-            <h5 class="card-title text-center">{{ $vacante->CATEGORIA_VACANTE }}</h5> <br>
+            <h5 class="card-title text-center">{{ $vacante->NOMBRE_CATEGORIA  }}</h5> <br>
             <label><b>Lugar de trabajo:</b> </label>
             <label>{{ $vacante->LUGAR_VACANTE }}</label> <br>
             <label><b>Fecha de publicación:</b></label>
@@ -203,7 +202,9 @@ body {
                 @endforeach
             </ul>
             <!-- Botón para postularse -->
+            {{-- <button type="button" class="btn btn-primary postularse-btn" data-bs-toggle="modal" data-bs-target="#postularseModal" data-vacante="{{ $slug }}">Postularse</button> --}}
             <button type="button" class="btn btn-primary postularse-btn" data-bs-toggle="modal" data-bs-target="#postularseModal" data-vacante="{{ $slug }}">Postularse</button>
+
         </div>
     @endforeach
 </div>
@@ -231,7 +232,7 @@ body {
             </div>
             <div class="modal-footer modal-footer-center">
                 <button type="button" class="btn btn-danger" id="notRegisteredBtn">No estoy registrado</button>
-                <button type="button" class="btn btn-warning" id="actualizarinfo">Actualizar CV</button>
+                <button type="button" class="btn btn-warning" id="actualizarinfo">Actualizar información y postularse a la vacante</button>
                 <button type="button" class="btn btn-success" id="registeredBtn">Sí estoy registrado</button>
             </div>
             <div class="modal-body" id="curpInputContainer" style="display:none;">
@@ -340,7 +341,7 @@ body {
                                 </div> 
 
                                 <div class="mb-3">
-                                    <label>Genero</label>
+                                    <label>Género</label>
                                     <select class="form-control" id="GENERO" name="GENERO" required>
                                         <option selected disabled>Seleccione una opción</option>
                                         @foreach ($generos as $genero)

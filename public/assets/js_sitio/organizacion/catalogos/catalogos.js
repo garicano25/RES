@@ -148,7 +148,12 @@ var Tablajerarquia = $("#Tablajerarquia").DataTable({
     },
     order: [[0, 'asc']], // Ordena por la primera columna (ID_CATALOGO_JERARQUIA) en orden ascendente
     columns: [
-        { data: 'ID_CATALOGO_JERARQUIA' },
+        { 
+            data: null,
+            render: function(data, type, row, meta) {
+                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
+            }
+        },
         { data: 'NOMBRE_JERARQUIA' },
         { data: 'DESCRIPCION_JERARQUIA' },
         { data: 'BTN_EDITAR' },
@@ -156,7 +161,7 @@ var Tablajerarquia = $("#Tablajerarquia").DataTable({
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
-        { targets: 0, title: '#', className: 'all' },
+        { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'Nombre', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Descripción', className: 'all text-center descripcion-column' },
         { targets: 3, title: 'Editar', className: 'all text-center' },

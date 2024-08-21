@@ -34,7 +34,7 @@
                     <div class="modal-body">
                         {!! csrf_field() !!}
                         <div class="mb-3">
-                            <label class="col-form-label">Para quién es la  Función:</label>
+                            <label class="col-form-label">Función destinada a *</label>
                             <div class="d-flex">
                                 <div class="form-check me-3">
                                     <label class="form-check-label" for="director">Director</label>
@@ -61,7 +61,7 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label>Descripción de la función:</label>
+                            <label>Descripción de la función *</label>
                             <textarea class="form-control" id="descripcion-funcion" name="DESCRIPCION_FUNCION_GESTION" rows="8" required></textarea>
                         </div>
                     </div>

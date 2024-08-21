@@ -50,7 +50,7 @@
                         <select class="form-control" id="CATEGORIA_VACANTE" name="CATEGORIA_VACANTE" required>
                             <option selected disabled>Seleccione una opción</option>
                             @foreach ($areas as $area)
-                            <option value="{{ $area->NOMBRE_CATEGORIA }}">{{ $area->NOMBRE_CATEGORIA }} </option>
+                            <option value="{{ $area->ID_CATALOGO_CATEGORIA }}">{{ $area->NOMBRE_CATEGORIA }} </option>
                             @endforeach
                         </select>
                     </div>

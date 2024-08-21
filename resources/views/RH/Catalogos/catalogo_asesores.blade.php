@@ -39,7 +39,7 @@
                         <input type="text" class="form-control" id="NOMBRE_ASESOR" name="NOMBRE_ASESOR" required>
                     </div>
                     <div class="mb-3">
-                        <label>Descripción:</label>
+                        <label>Descripción </label>
                         <textarea class="form-control" id="DESCRIPCION_ASESOR" name="DESCRIPCION_ASESOR" rows="8"></textarea>
                     </div>
                     <div class="mb-3">

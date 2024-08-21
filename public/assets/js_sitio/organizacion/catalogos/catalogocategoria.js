@@ -146,7 +146,12 @@ var Tablacategoria = $("#Tablacategoria").DataTable({
     },
     order: [[0, 'asc']], 
     columns: [
-        { data: 'ID_CATALOGO_CATEGORIA' },
+        { 
+            data: null,
+            render: function(data, type, row, meta) {
+                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
+            }
+        },
         { data: 'NOMBRE_CATEGORIA' },
         { data: 'LUGAR_CATEGORIA' },
         { data: 'PROPOSITO_CATEGORIA' },
@@ -155,10 +160,10 @@ var Tablacategoria = $("#Tablacategoria").DataTable({
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
-        { targets: 0, title: '#', className: 'all' },
+        { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'Nombre', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Lugar de trabajo', className: 'all text-center nombre-column' },
-        { targets: 3, title: 'Propósito o finalidad de la categoría', className: 'all ' },
+        { targets: 3, title: 'Propósito o finalidad de la categoría', className: 'all text-center' },
         { targets: 4, title: 'Editar', className: 'all text-center' },
         { targets: 5, title: 'Visualizar', className: 'all text-center' },
         { targets: 6, title: 'Inactivo', className: 'all text-center' }

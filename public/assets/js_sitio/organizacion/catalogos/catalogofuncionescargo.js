@@ -158,7 +158,12 @@ var Tablaafuncionescargo = $("#Tablaafuncionescargo").DataTable({
     },
     order: [[0, 'asc']], 
     columns: [
-        { data: 'ID_CATALOGO_FUNCIONESCARGO' },
+        { 
+            data: null,
+            render: function(data, type, row, meta) {
+                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
+            }
+        },
         { data: 'TIPO_FUNCION_CARGO' },
         { data: 'NOMBRE_CATEGORIA' },
         { data: 'DESCRIPCION_FUNCION_CARGO'},
@@ -167,7 +172,7 @@ var Tablaafuncionescargo = $("#Tablaafuncionescargo").DataTable({
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
-        { targets: 0, title: '#', className: 'all' },
+        { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'Tipo de función', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Nombre de la categoría', className: 'all text-center nombre-column' },
         { targets: 3, title: 'Descripción', className: 'all text-center descripcion-column' },

@@ -35,7 +35,7 @@
                 <div class="modal-body">
                     {!! csrf_field() !!}
                     <div class="mb-3">
-                        <label class="col-form-label">Tipo de Función:</label>
+                        <label class="col-form-label">Tipo de función *</label>
                         <div class="d-flex">
                             <div class="form-check me-3">
                                 <input class="form-check-input" type="radio" name="TIPO_FUNCION_CARGO" id="especifica" value="especifica" required>
@@ -48,6 +48,8 @@
                         </div>
                     </div>
                     <div class="mb-3">
+                        <label class="col-form-label">Nombre de la categoría *</label>
+
                         <select class="form-select" id="CATEGORIAS_CARGO" name="CATEGORIAS_CARGO" required >
                             <option value="0" selected disabled>Seleccione una opción</option>
                             @foreach ($areas as $area)
@@ -61,7 +63,7 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label>Descripción de la función:</label>
+                        <label>Descripción de la función *</label>
                         <textarea class="form-control" id="descripcion-funcion" name="DESCRIPCION_FUNCION_CARGO" rows="8" required></textarea>
                     </div>
                 </div>

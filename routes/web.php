@@ -168,6 +168,11 @@ Route::get('/Listavacantes', [bancocvController::class, 'index']);
 Route::get('/BancoDelete', [bancocvController::class, 'store']);
 Route::get('/Tablabancocv', [bancocvController::class, 'Tablabancocv']);
 
+
+
+
+
+
 // Rutas para poder ver los archivos CURP Y CV del banco de cv
 Route::get('/curppdf/{ID_BANCO_CV}', [bancocvController::class, 'curppdf']);
 Route::get('/cvpdf/{ID_BANCO_CV}', [bancocvController::class, 'cvpdf']);
@@ -195,6 +200,8 @@ Route::get('/Tablaareainteres', [catalogoareainteresController::class, 'Tablaare
 // visualizar la vacantes y poder ver los que se han postulado 
 Route::get('/Postulaciones', function () {return view('RH.reclutamiento.Vacantes_activas');});
 Route::get('/Tablapostulaciones', [bancocvController::class, 'Tablapostulaciones']);
+Route::get('/informacionpostulantes/{idVacante}', [bancocvController::class, 'informacionpostulantes']);
+Route::get('/reclutamiento/cv/{filename}', [bancocvController::class, 'getCV'])->name('getCV');
 
 // Route::get('/Listavacantes', function () {return view('RH.reclutamiento.reclutamiento');});
 

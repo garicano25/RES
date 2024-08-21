@@ -160,7 +160,12 @@ var Tablabancocv = $("#Tablabancocv").DataTable({
     },
     order: [[0, 'asc']],
     columns: [
-        { data: 'ID_BANCO_CV' },
+        { 
+            data: null,
+            render: function(data, type, row, meta) {
+                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
+            }
+        },
         { data: 'CURP_CV' }, 
         { data: null,
             render: function (data, type, row) {
@@ -188,7 +193,7 @@ var Tablabancocv = $("#Tablabancocv").DataTable({
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
-        { targets: 0, title: '#', className: 'all' },
+        { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'CURP', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Nombre Completo', className: 'all text-center nombre-column' },
         { targets: 3, title: 'Correo', className: 'all text-center nombre-column' },
@@ -213,85 +218,6 @@ $('#Tablabancocv').on('click', '.pdf-button', function (e) {
 
 
 
-
-var Tablapostulaciones = $("#Tablapostulaciones").DataTable({
-    language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-    lengthChange: true,
-    lengthMenu: [
-        [10, 25, 50, -1],
-        [10, 25, 50, 'All']
-    ],
-    info: false,
-    paging: true,
-    searching: true,
-    filtering: true,
-    scrollY: '65vh',
-    scrollCollapse: true,
-    responsive: true,
-    ajax: {
-        dataType: 'json',
-        data: {},
-        method: 'GET',
-        cache: false,
-        url: '/Tablapostulaciones',
-        beforeSend: function () {
-            mostrarCarga();
-        },
-        complete: function () {
-            Tablapostulaciones.columns.adjust().draw();
-            ocultarCarga();
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alertErrorAJAX(jqXHR, textStatus, errorThrown);
-        },
-        dataSrc: 'data'
-    },
-    order: [[0, 'asc']],
-    columns: [
-        { 
-            data: null,
-            render: function(data, type, row, meta) {
-                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
-            }
-        },
-        { data: 'CATEGORIA_VACANTE' },
-        { data: 'LUGAR_VACANTE' },
-        { data: 'LA_VACANTES_ES' },
-        { data: 'DESCRIPCION_VACANTE' },
-        { 
-            data: 'created_at',
-            render: function(data, type, row) {
-                return data.split(' ')[0]; 
-            }
-        },
-        { data: 'FECHA_EXPIRACION' },
-        { data: null,
-            render: function (data, type, row) {
-                return row.BTN_VISUALIZAR;
-            }
-        }
-    ],
-    columnDefs: [
-        { targets: 0, title: '#', className: 'all' },
-        { targets: 1, title: 'Nombre de la categoría', className: 'descripcion-column' },
-        { targets: 2, title: 'Lugar de trabajo', className: 'descripcion-column' },
-        { targets: 3, title: 'La vacantes es', className: 'descripcion-column' },
-        {
-            targets: 4,
-            title: 'Descripción de la vacantes',
-            className: 'all text-center descripcion-column',
-            render: function(data, type, row, meta) {
-                if (type === 'display' && data.length > 100) {
-                    return data.substr(0, 201) + '...'; 
-                }
-                return data;
-            }
-        },
-        { targets: 5, title: 'Fecha de publicación', className: 'descripcion-column' },
-        { targets: 6, title: 'Fecha de expiración', className: 'descripcion-column' },
-        { targets: 7, title: 'Botones', className: 'all text-center' }
-    ]
-});
 
 
 

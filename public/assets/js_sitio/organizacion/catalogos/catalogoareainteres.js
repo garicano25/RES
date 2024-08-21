@@ -158,9 +158,9 @@ var Tablaareainteres = $("#Tablaareainteres").DataTable({
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
-        { targets: 0, title: '#', className: 'all' },
+        { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'Tipo', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'Descripción', className: 'all text-center descripcion-column' },
+        { targets: 2, title: 'Nombre', className: 'all text-center' },
         { targets: 3, title: 'Editar', className: 'all text-center' },
         { targets: 4, title: 'Visualizar', className: 'all text-center' },
         { targets: 5, title: 'Inactivo', className: 'all text-center' }

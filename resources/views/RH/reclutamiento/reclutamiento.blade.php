@@ -127,7 +127,7 @@
                                 </div> 
 
                                 <div class="mb-3">
-                                    <label>Genero</label>
+                                    <label>Género</label>
                                     <select class="form-control" id="GENERO" name="GENERO" required>
                                         <option selected disabled>Seleccione una opción</option>
                                         @foreach ($generos as $genero)
@@ -399,7 +399,7 @@
                             </div> 
                         
                             <div class="mb-3">
-                                <label>Genero</label>
+                                <label>Género</label>
                                 <select class="form-control" id="GENERO" name="GENERO" required>
                                     <option selected disabled>Seleccione una opción</option>
                                     @foreach ($generos as $genero)
@@ -597,12 +597,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
 
 
 
