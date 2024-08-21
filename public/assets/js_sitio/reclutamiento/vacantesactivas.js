@@ -61,7 +61,7 @@ var Tablapostulaciones = $("#Tablapostulaciones").DataTable({
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all text-center' },
-        { targets: 1, title: 'Nombre de la categoría', className: 'all text-center' },
+        { targets: 1, title: 'Nombre de la vacante', className: 'all text-center' },
         { targets: 2, title: 'Lugar de trabajo', className: 'all text-center' },
         { targets: 3, title: 'Tipo de vacantwe', className: 'all text-center' },
         {
