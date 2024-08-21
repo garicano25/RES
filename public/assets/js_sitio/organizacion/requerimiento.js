@@ -148,7 +148,12 @@ var Tablarequerimiento = $("#Tablarequerimiento").DataTable({
     },
     order: [[0, 'asc']], 
     columns: [
-        { data: 'ID_FORMULARO_REQUERIMIENTO' },
+        { 
+            data: null,
+            render: function(data, type, row, meta) {
+                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
+            }
+        },
         { data: 'NOMBRE_CATEGORIA' },
         { data: 'PRIORIDAD_RP' },
         { data: 'TIPO_VACANTE_RP' },
@@ -159,7 +164,7 @@ var Tablarequerimiento = $("#Tablarequerimiento").DataTable({
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
-        { targets: 0, title: '#', className: 'all' },
+        { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'Categoría', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Prioridad', className: 'all text-center nombre-column' },
         { targets: 3, title: 'Tipo de vacante', className: 'all text-center' },

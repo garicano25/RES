@@ -147,14 +147,19 @@ var Tablatipovacantes = $("#Tablatipovacantes").DataTable({
     },
     order: [[0, 'asc']], 
     columns: [
-        { data: 'ID_CATALOGO_TIPOVACANTE' },
+        { 
+            data: null,
+            render: function(data, type, row, meta) {
+                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
+            }
+        },
         { data: 'NOMBRE_TIPOVACANTE' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
-        { targets: 0, title: '#', className: 'all' },
+        { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'Nombre', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Editar', className: 'all text-center' },
         { targets: 3, title: 'Visualizar', className: 'all text-center' },

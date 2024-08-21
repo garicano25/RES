@@ -35,7 +35,7 @@
                         <input type="text" class="form-control" id="NOMBRE_GENERO" name="NOMBRE_GENERO" required>
                     </div>
                     <div class="mb-3">
-                        <label>Descripción:</label>
+                        <label>Descripción </label>
                         <textarea class="form-control" id="DESCRIPCION_GENERO" name="DESCRIPCION_GENERO" rows="8"></textarea>
                     </div>
                      

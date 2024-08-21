@@ -75,7 +75,12 @@ TablaDPT = $("#TablaDPT").DataTable({
         dataSrc: 'data'
     },
     columns: [
-        { data: 'ID_FORMULARIO_DPT' },
+        { 
+            data: null,
+            render: function(data, type, row, meta) {
+                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
+            }
+        },
         { data: 'NOMBRE_CATEGORIA' }, 
         { data: 'ELABORADO_POR' },
         { data: 'REVISADO_POR' },
@@ -88,8 +93,8 @@ TablaDPT = $("#TablaDPT").DataTable({
         
     ],
     columnDefs: [
-        { target: 0, title: '#', className: 'all' },
-        { target: 1, title: 'Nombre categoría', className: 'all' },
+        { target: 0, title: '#', className: 'all  text-center' },
+        { target: 1, title: 'Nombre categoría', className: 'all  text-center' },
         { target: 2, title: 'Elaborado por', className: 'all text-center' },
         { target: 3, title: 'Revisado por', className: 'all text-center' },
         { target: 4, title: 'Autorizado por', className: 'all text-center' },

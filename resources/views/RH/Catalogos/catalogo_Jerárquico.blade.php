@@ -43,7 +43,7 @@
                     <input type="text" class="form-control" id="NOMBRE_JERARQUIA" name="NOMBRE_JERARQUIA" required/>
                     </div>
                     <div class="mb-3">
-                    <label>Descripción:</label>
+                    <label>Descripción</label>
                     <textarea class="form-control" id="DESCRIPCION_JERARQUIA" name="DESCRIPCION_JERARQUIA" rows="8"></textarea>
                     </div>
                 </div>

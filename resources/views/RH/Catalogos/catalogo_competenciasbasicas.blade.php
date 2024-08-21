@@ -39,7 +39,7 @@
                         <input type="text" class="form-control" id="NOMBRE_COMPETENCIA_BASICA" name="NOMBRE_COMPETENCIA_BASICA" required>
                     </div>
                     <div class="mb-3">
-                        <label>Descripción:</label>
+                        <label>Descripción </label>
                         <textarea class="form-control" id="DESCRIPCION_COMPETENCIA_BASICA" name="DESCRIPCION_COMPETENCIA_BASICA" rows="8"></textarea>
                     </div>                     
                     

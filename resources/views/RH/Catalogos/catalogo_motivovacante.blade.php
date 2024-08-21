@@ -39,7 +39,7 @@
                 <div class="modal-body">
                     {!! csrf_field() !!}
                     <div class="mb-3">
-                    <label>Nombre*</label>
+                    <label>Nombre *</label>
                     <input type="text" class="form-control" id="NOMBRE_MOTIVO_VACANTE" name="NOMBRE_MOTIVO_VACANTE" required>
                     </div>
                 </div>

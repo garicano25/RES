@@ -73,7 +73,12 @@ TablaPPT = $("#TablaPPT").DataTable({
         dataSrc: 'data'
     },
     columns: [
-        { data: null },  // Para que esta columna sea generada dinámicamente
+        { 
+            data: null,
+            render: function(data, type, row, meta) {
+                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
+            }
+        },  // Para que esta columna sea generada dinámicamente
         { data: 'NOMBRE_CATEGORIA' },
         { data: 'ELABORADO_POR' },
         { data: 'REVISADO_POR' },
@@ -83,15 +88,8 @@ TablaPPT = $("#TablaPPT").DataTable({
         { data: 'BTN_ELIMINAR' },
     ],
     columnDefs: [
-        {
-            target: 0,
-            title: '#',
-            className: 'all',
-            render: function (data, type, row, meta) {
-                return meta.row + 1; // Genera un número secuencial para cada fila
-            }
-        },
-        { target: 1, title: 'Nombre categoría', className: 'all' },
+        { target: 0,title: '#',className: 'all  text-center', },
+        { target: 1, title: 'Nombre categoría', className: 'all  text-center' },
         { target: 2, title: 'Elaborado por', className: 'all text-center' },
         { target: 3, title: 'Revisado por', className: 'all text-center' },
         { target: 4, title: 'Autorizado por', className: 'all text-center' },

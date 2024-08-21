@@ -143,7 +143,12 @@ var TablaCompetenciasGerenciales = $("#TablaCompetenciasGerenciales").DataTable(
     },
     order: [[0, 'asc']], 
     columns: [
-        { data: 'ID_CATALOGO_COMPETENCIA_GERENCIAL' },
+        { 
+            data: null,
+            render: function(data, type, row, meta) {
+                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
+            }
+        },
         { data: 'NOMBRE_COMPETENCIA_GERENCIAL' },
         { data: 'DESCRIPCION_COMPETENCIA_GERENCIAL' },
         { data: 'BTN_EDITAR' },
@@ -151,7 +156,7 @@ var TablaCompetenciasGerenciales = $("#TablaCompetenciasGerenciales").DataTable(
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
-        { targets: 0, title: '#', className: 'all' },
+        { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'Nombre', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Descripción', className: 'all text-center descripcion-column' },
         { targets: 3, title: 'Editar', className: 'all text-center' },
