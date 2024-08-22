@@ -12,6 +12,7 @@ class listapostulacionesModel extends Model
     protected $fillable = [
         'VACANTES_ID',
         'CURP',
+        'ACTIVO'
        
     ];
 }

@@ -19,6 +19,8 @@ class seleccionModel extends Model
         'SEGUNDO_APELLIDO_SELEC',
         'CORREO_SELEC',
         'TELEFONO1_SELECT',
-        'TELEFONO2_SELECT'
+        'TELEFONO2_SELECT',
+        'PORCENTAJE',
+        'ACTIVO'
     ];
 }

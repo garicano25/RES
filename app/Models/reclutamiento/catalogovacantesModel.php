@@ -17,7 +17,7 @@ class catalogovacantesModel extends Model
         'LUGAR_VACANTE',
         'FECHA_EXPIRACION',
         'DESCRIPCION',
-        'ACTIVO',   
+        'ACTIVO'   
     ];
 
 }

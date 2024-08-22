@@ -5,20 +5,24 @@ ID_BANCO_CV = 0
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    var avisoModal = new bootstrap.Modal(document.getElementById('avisoPrivacidadModal'), {
-        backdrop: 'static',
-        keyboard: false
-    });
-    avisoModal.show();
+    var avisoModalElement = document.getElementById('avisoPrivacidadModal');
+    if (avisoModalElement) {
+        var avisoModal = new bootstrap.Modal(avisoModalElement, {
+            backdrop: 'static',
+            keyboard: false
+        });
+        avisoModal.show();
 
-    document.getElementById('aceptoTerminos').addEventListener('click', function() {
-        avisoModal.hide();
-    });
+        document.getElementById('aceptoTerminos').addEventListener('click', function() {
+            avisoModal.hide();
+        });
 
-    document.getElementById('noAceptoTerminos').addEventListener('click', function() {
-        window.location.href = 'http://results-in-performance.com/';
-    });
+        document.getElementById('noAceptoTerminos').addEventListener('click', function() {
+            window.location.href = 'http://results-in-performance.com/';
+        });
+    }
 });
+
 
 
 

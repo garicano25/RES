@@ -38,7 +38,7 @@ var Tablapostulaciones = $("#Tablapostulaciones").DataTable({
         { 
             data: null,
             render: function(data, type, row, meta) {
-                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
+                return meta.row + 1; 
             }
         },
         { data: 'NOMBRE_CATEGORIA' },
@@ -112,7 +112,7 @@ $(document).ready(function() {
 
 function cargarRequerimientos(requerimientos) {
     const contenedor = document.getElementById('inputs-container');
-    contenedor.innerHTML = ''; // Limpiar el contenedor
+    contenedor.innerHTML = ''; 
 
     requerimientos.forEach(function(requerimiento) {
         const divInput = document.createElement('div');
@@ -144,10 +144,8 @@ function cargarRequerimientos(requerimientos) {
 
 
 
-
-
-
-function TotalPostulantes(idVacante) {
+// Función para mostrar la información de los postulantes
+function TotalPostulantes(idVacante, categoriaVacante) {
     Swal.fire({
         title: 'Consultando información',
         text: 'Por favor, espere...',
@@ -169,7 +167,7 @@ function TotalPostulantes(idVacante) {
 
                 response.postulantes.forEach((personalInfo, index) => {
                     let postulanteCard = `
-                        <div class="row mb-3 mt-5">
+                        <div class="row mb-3 mt-5" data-curp="${personalInfo.CURP_CV}">
                             <div class="col-md-4 d-flex flex-column justify-content-start">
                                 <div class="card mb-3">
                                     <div class="card-body">
@@ -196,19 +194,28 @@ function TotalPostulantes(idVacante) {
                                                     <td class="text-right">
                                                         <div class="d-flex justify-content-between align-items-center">
                                                             <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="radio" name="req-${req.NOMBRE_REQUERIMINETO}-${personalInfo.CURP_CV}" id="req-${req.NOMBRE_REQUERIMINETO}-si-${personalInfo.CURP_CV}" value="si">
+                                                                <input class="form-check-input" type="radio" name="req-${req.NOMBRE_REQUERIMINETO}-${personalInfo.CURP_CV}" id="req-${req.NOMBRE_REQUERIMINETO}-si-${personalInfo.CURP_CV}" value="${req.PORCENTAJE}" onchange="actualizarTotal('${personalInfo.CURP_CV}')">
                                                                 <label class="form-check-label me-3" for="req-${req.NOMBRE_REQUERIMINETO}-si-${personalInfo.CURP_CV}">Sí</label>
                                                             </div>
                                                             <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="radio" name="req-${req.NOMBRE_REQUERIMINETO}-${personalInfo.CURP_CV}" id="req-${req.NOMBRE_REQUERIMINETO}-no-${personalInfo.CURP_CV}" value="no">
-                                                                <label class="form-check-label" for="req-${req.NOMBRE_REQUERIMINETO}-no-${personalInfo.CURP_CV}">No</label>
+                                                                <input class="form-check-input" type="radio" name="req-${req.NOMBRE_REQUERIMINETO}-${personalInfo.CURP_CV}" id="req-${req.NOMBRE_REQUERIMINETO}-no-${personalInfo.CURP_CV}" value="0" onchange="actualizarTotal('${personalInfo.CURP_CV}')">
+                                                                <label class="form-check-label me-3" for="req-${req.NOMBRE_REQUERIMINETO}-no-${personalInfo.CURP_CV}">No</label>
                                                             </div>
+                                                            <span class="ms-3"><strong>${req.PORCENTAJE}%</strong></span>
                                                         </div>
                                                     </td>
                                                 </tr>
                                                 `).join('')}
                                             </tbody>
                                         </table>
+                                        <hr>
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span><strong>Total Cumplimiento:</strong></span>
+                                            <span id="total-cumplimiento-${personalInfo.CURP_CV}" class="total-porcentaje-circle">0%</span>
+                                        </div>
+                                        <div class="d-flex justify-content-center">
+                                            <button class="btn btn-success" onclick="seleccionarPostulante('${idVacante}', '${personalInfo.CURP_CV}', '${personalInfo.NOMBRE_CV}', '${personalInfo.PRIMER_APELLIDO_CV}', '${personalInfo.SEGUNDO_APELLIDO_CV}', '${personalInfo.CORREO_CV}', '${personalInfo.TELEFONO1}', '${personalInfo.TELEFONO2}', '${categoriaVacante}')">Seleccionar</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -251,7 +258,120 @@ function TotalPostulantes(idVacante) {
     });
 }
 
+function actualizarTotal(curp) {
+    const radios = document.querySelectorAll(`input[name^="req-"][name$="${curp}"]:checked`);
+    let total = 0;
 
+    radios.forEach(radio => {
+        total += parseInt(radio.value) || 0;
+    });
+
+    const totalSpan = document.getElementById(`total-cumplimiento-${curp}`);
+    totalSpan.textContent = `${total}%`;
+
+    // Cambiar el color del círculo según el rango
+    if (total >= 90) {
+        totalSpan.style.backgroundColor = 'green';
+    } else if (total >= 80 && total < 90) {
+        totalSpan.style.backgroundColor = 'orange';
+    } else {
+        totalSpan.style.backgroundColor = 'red';
+    }
+}
+
+function seleccionarPostulante(vacantesId, curp, nombre, primerApellido, segundoApellido, correo, telefono1, telefono2, categoriaVacante) {
+    const totalCumplimiento = document.getElementById(`total-cumplimiento-${curp}`).textContent.replace('%', '');
+
+    // Mostrar mensaje de confirmación
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: `Estás a punto de seleccionar a ${nombre} ${primerApellido} ${segundoApellido} para esta vacante.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, seleccionar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Mostrar el mensaje de espera
+            Swal.fire({
+                icon: 'info',
+                title: 'Espere un momento',
+                text: 'Estamos guardando la información',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                willOpen: () => {
+                    $('.swal2-popup').addClass('ld ld-breath');
+                }
+            });
+
+            // Enviar la información al servidor
+            $.ajax({
+                url: '/guardarSeleccion',
+                method: 'POST',
+                data: {
+                    VACANTES_ID: vacantesId,
+                    CATEGORIA_VACANTE: categoriaVacante,
+                    CURP: curp,
+                    NOMBRE_SELC: nombre,
+                    PRIMER_APELLIDO_SELEC: primerApellido,
+                    SEGUNDO_APELLIDO_SELEC: segundoApellido,
+                    CORREO_SELEC: correo,
+                    TELEFONO1_SELECT: telefono1,
+                    TELEFONO2_SELECT: telefono2,
+                    PORCENTAJE: totalCumplimiento  
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    Swal.close(); 
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Seleccionado',
+                        text: 'El postulante ha sido seleccionado y guardado exitosamente.',
+                        confirmButtonText: 'Aceptar'
+                    }).then(() => {
+                        // Verificar si el elemento existe
+                        const postulanteCard = document.querySelector(`#modalContent div[data-curp="${curp}"]`);
+                        
+                        if (postulanteCard) {
+                            // Añadir clase de animación de salida
+                            postulanteCard.classList.add('fade-out');
+
+                            // Esperar que la animación termine antes de eliminar
+                            setTimeout(() => {
+                                postulanteCard.remove();
+
+                                // Si no hay más postulantes, cerrar el modal
+                                if (document.querySelectorAll('#modalContent .row.mb-3.mt-5').length === 0) {
+                                    $('#modalFullScreen').modal('hide');
+                                }
+
+                                // Recargar la tabla después de cerrar el mensaje de éxito
+                                Tablapostulaciones.ajax.reload(null, false); 
+                            }, 500); // Tiempo de espera en milisegundos, debe coincidir con la duración de la animación
+                        } else {
+                            console.error(`Elemento con CURP ${curp} no encontrado.`);
+                        }
+                    });
+                },
+                error: function(error) {
+                    Swal.close(); 
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Hubo un problema al guardar la selección. Por favor, inténtelo de nuevo.',
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
+            });
+        }
+    });
+}
 
 
 

@@ -94,21 +94,22 @@ public function store(Request $request)
                         $vacante = catalogovacantesModel::create($request->all());
 
                     } else { 
+
                         if (!isset($request->ELIMINAR)) {
                             $vacante = catalogovacantesModel::find($request->ID_CATALOGO_VACANTE);
                             $vacante->update($request->all());
-    
                             requerimientoModel::where('CATALOGO_VACANTES_ID', $request->ID_CATALOGO_VACANTE)->delete();
+                      
                         } else {
-                            $vacante = catalogovacantesModel::where('ID_CATALOGO_VACANTE', $request['ID_CATALOGO_VACANTE'])->delete();
+
+                            $vacante = catalogovacantesModel::where('ID_CATALOGO_VACANTE', $request['ID_CATALOGO_VACANTE'])->update(['ACTIVO' => 0]);
                             $response['code']  = 1;
-                            $response['vacante']  = 'Eliminada';
+                            $response['vacante']  = 'Desactivada';
                             DB::commit();
                             return response()->json($response);
                         }
                     }
     
-                    // Guardar los nuevos requerimientos
                    if ($request->has('NOMBRE_REQUERIMINETO')) {
                         foreach ($request->NOMBRE_REQUERIMINETO as $index => $requerimiento) {
                             requerimientoModel::create([
@@ -122,7 +123,7 @@ public function store(Request $request)
     
                     $response['code']  = 1;
                     $response['vacante']  = $vacante;
-                    DB::commit(); // Commit transaction
+                    DB::commit(); 
                     return response()->json($response);
                     break;
                 default:
@@ -131,7 +132,7 @@ public function store(Request $request)
                     return response()->json($response);
             }
         } catch (Exception $e) {
-            DB::rollBack(); // Rollback transaction on error
+            DB::rollBack(); 
             return response()->json('Error al guardar la nueva vacante');
         }
     }

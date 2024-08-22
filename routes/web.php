@@ -28,10 +28,14 @@ use App\Http\Controllers\organizacion\catalogoareainteresController;
 
 
 // Controladores de reclutamiento
- use App\Http\Controllers\reclutamiento\catalogovacantesController;
+use App\Http\Controllers\reclutamiento\catalogovacantesController;
 use App\Http\Controllers\reclutamiento\PuestoController;
 use App\Http\Controllers\reclutamiento\bancocvController;
 use App\Http\Controllers\reclutamiento\vacantesactivasController;
+
+// Controladores de seleccion
+
+use App\Http\Controllers\seleccion\seleccionController;
 
 
 
@@ -186,12 +190,20 @@ Route::get('/interesDelete', [catalogoareainteresController::class, 'store']);
 Route::get('/Tablaareainteres', [catalogoareainteresController::class, 'Tablaareainteres']);
 
 
-// visualizar la vacantes y poder ver los que se han postulado 
+// visualizar la vacantes y poder ver los que se han postulado y poder mandar a selección
 Route::get('/Postulaciones', [vacantesactivasController::class, 'index']);
 Route::get('/Tablapostulaciones', [vacantesactivasController::class, 'Tablapostulaciones']);
 Route::get('/informacionpostulantes/{idVacante}', [vacantesactivasController::class, 'informacionpostulantes']);
 Route::get('/reclutamiento/cv/{filename}', [vacantesactivasController::class, 'getCV'])->name('getCV');
+Route::post('/guardarSeleccion', [vacantesactivasController::class, 'guardarSeleccion']);
 
+
+
+//==============================================  SELECCION  ============================================== 
+
+
+Route::get('/Selección', function () {return view('RH.Selección.seleccion');});
+Route::get('/Tablaseleccion', [seleccionController::class, 'Tablaseleccion']);
 
 
 

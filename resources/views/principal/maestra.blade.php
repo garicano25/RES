@@ -126,7 +126,7 @@
                     </li> --}}
 
                     <li class="nav-item dropdown" style="margin-left: 8px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                        <a class="nav-link BOTON" href="{{ url('/Selección') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-person-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Selección</span><span class="d-none d-lg-inline">Selección</span>
                         </a>
                     </li>
@@ -363,7 +363,11 @@
     @endif
 
 
-    
+    @if(request()->is('Selección'))
+    <script src="/assets/js_sitio/seleccion/seleccion.js"></script>
+    @endif
+
+    {{-- C:\xampp\htdocs\RES\public\assets\js_sitio\seleccion\seleccion.js --}}
 
   
 
