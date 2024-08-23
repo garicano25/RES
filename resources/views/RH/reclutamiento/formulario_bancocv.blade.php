@@ -32,116 +32,107 @@
 <body>
     
 
-    <style>
+<style>
 
-            body {
-            font-family: 'Poppins', sans-serif;
-            /* background-color: #007DBA; */
-        }
-        .card {
-        max-width: 800px; 
-        margin: 20px auto; 
-        border: 2px solid #007DBA; 
-        /* min-height: 500px;  */
+body {
+    font-family: 'Poppins', sans-serif;
+    /* background-color: #007DBA; */
 }
-        .card-img-top {
-            display: block;
-            margin: 0 auto;
-            width: 50%; 
-            height: auto; 
-        }
+.card {
+max-width: 800px; 
+margin: 20px auto; 
+border: 2px solid #007DBA; 
+}
+.card-img-top {
+    display: block;
+    margin: 0 auto;
+    width: 50%; 
+    height: auto; 
+}
 
 
-        #ID_BANCO_CURP_CV {
-         text-transform: uppercase;
-    }
+#contador {
+    font-size: 12px;
+    color: gray; 
+}
+
+/* #mensaje {
+    margin-top: 5px;
+    color: red;  
+} */
 
 
-        #contador {
-            font-size: 12px;
-            color: gray; /* Color del contador */
-        }
+#mensaje {
+    font-size: 0.9em;
+    color: green;
+}
 
-        /* #mensaje {
-            margin-top: 5px;
-            color: red;  
-        } */
-   
+#error {
+    font-size: 0.9em;
+    color: red;
+}
+.modal-header img {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    max-height: 50px;
+}
 
-        #mensaje {
-            font-size: 0.9em;
-            color: green;
-        }
-        
-        #error {
-            font-size: 0.9em;
-            color: red;
-        }
+.modal-footer {
+    justify-content: center;
+}
 
-       
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(16, 16, 16, 0.958);
+}
 
-        .modal-header img {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-            max-height: 50px;
-        }
+.modal-body {
+    font-size: 1rem;
+}
 
-        .modal-footer {
-            justify-content: center;
-        }
+.modal-backdrop.show {
+    opacity: 1;
+}
 
-        .modal-content {
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(16, 16, 16, 0.958);
-        }
+.modal-backdrop {
+    background-color: rgba(16, 16, 16, 0.963); /* Fondo completamente opaco */
+}
+.btn-light.btn-sm {
+background-color: white;
+color: black;
+border: 1px solid #ced4da;
+padding: 0.25rem 0.5rem;
+font-size: 0.875rem;
+}
 
-        .modal-body {
-            font-size: 1rem;
-        }
+.btn-light.btn-sm:hover {
+    background-color: #e2e6ea;
+}
 
-        .modal-backdrop.show {
-            opacity: 1;
-        }
-
-        .modal-backdrop {
-            background-color: rgba(16, 16, 16, 0.963); /* Fondo completamente opaco */
-        }
-        .btn-light.btn-sm {
-    background-color: white;
-    color: black;
-    border: 1px solid #ced4da;
-    padding: 0.25rem 0.5rem;
+.text-danger {
     font-size: 0.875rem;
-    }
+    margin-top: 5px;
+}
 
-    .btn-light.btn-sm:hover {
-        background-color: #e2e6ea;
-    }
+.add-button {
+padding: 5px 10px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.add-button i {
+margin-right: 5px;
+}
 
-    .text-danger {
-        font-size: 0.875rem;
-        margin-top: 5px;
-    }
-
-    .add-button {
-                padding: 5px 10px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            .add-button i {
-                margin-right: 5px;
-            }
-
-            .small-checkbox {
-    width: 20px;
-    height: 20px;
+.small-checkbox {
+width: 20px;
+height: 20px;
 }
 
 
 
-    </style>
+</style>
 
 
 

@@ -285,7 +285,7 @@ function seleccionarPostulante(vacantesId, curp, nombre, primerApellido, segundo
     // Mostrar mensaje de confirmación
     Swal.fire({
         title: '¿Estás seguro?',
-        text: `Estás a punto de seleccionar a ${nombre} ${primerApellido} ${segundoApellido} para esta vacante.`,
+        text: `Estás a punto de seleccionar a ${nombre} ${primerApellido} ${segundoApellido}.`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
