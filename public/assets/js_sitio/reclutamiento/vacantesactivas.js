@@ -210,11 +210,11 @@ function TotalPostulantes(idVacante, categoriaVacante) {
                                         </table>
                                         <hr>
                                         <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <span><strong>Total Cumplimiento:</strong></span>
+                                            <span><strong>Total cumplimiento:</strong></span>
                                             <span id="total-cumplimiento-${personalInfo.CURP_CV}" class="total-porcentaje-circle">0%</span>
                                         </div>
                                         <div class="d-flex justify-content-center">
-                                            <button class="btn btn-success" onclick="seleccionarPostulante('${idVacante}', '${personalInfo.CURP_CV}', '${personalInfo.NOMBRE_CV}', '${personalInfo.PRIMER_APELLIDO_CV}', '${personalInfo.SEGUNDO_APELLIDO_CV}', '${personalInfo.CORREO_CV}', '${personalInfo.TELEFONO1}', '${personalInfo.TELEFONO2}', '${categoriaVacante}')">Seleccionar</button>
+                                            <button class="btn btn-success" onclick="seleccionarPostulante('${idVacante}', '${personalInfo.CURP_CV}', '${personalInfo.NOMBRE_CV}', '${personalInfo.PRIMER_APELLIDO_CV}', '${personalInfo.SEGUNDO_APELLIDO_CV}', '${personalInfo.CORREO_CV}', '${personalInfo.TELEFONO1}', '${personalInfo.TELEFONO2}', '${categoriaVacante}')">Pre selección</button>
                                         </div>
                                     </div>
                                 </div>
@@ -269,7 +269,6 @@ function actualizarTotal(curp) {
     const totalSpan = document.getElementById(`total-cumplimiento-${curp}`);
     totalSpan.textContent = `${total}%`;
 
-    // Cambiar el color del círculo según el rango
     if (total >= 90) {
         totalSpan.style.backgroundColor = 'green';
     } else if (total >= 80 && total < 90) {
@@ -282,7 +281,6 @@ function actualizarTotal(curp) {
 function seleccionarPostulante(vacantesId, curp, nombre, primerApellido, segundoApellido, correo, telefono1, telefono2, categoriaVacante) {
     const totalCumplimiento = document.getElementById(`total-cumplimiento-${curp}`).textContent.replace('%', '');
 
-    // Mostrar mensaje de confirmación
     Swal.fire({
         title: '¿Estás seguro?',
         text: `Estás a punto de seleccionar a ${nombre} ${primerApellido} ${segundoApellido}.`,
@@ -294,7 +292,6 @@ function seleccionarPostulante(vacantesId, curp, nombre, primerApellido, segundo
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
-            // Mostrar el mensaje de espera
             Swal.fire({
                 icon: 'info',
                 title: 'Espere un momento',
@@ -306,7 +303,6 @@ function seleccionarPostulante(vacantesId, curp, nombre, primerApellido, segundo
                 }
             });
 
-            // Enviar la información al servidor
             $.ajax({
                 url: '/guardarSeleccion',
                 method: 'POST',
@@ -334,25 +330,21 @@ function seleccionarPostulante(vacantesId, curp, nombre, primerApellido, segundo
                         text: 'El postulante ha sido seleccionado y guardado exitosamente.',
                         confirmButtonText: 'Aceptar'
                     }).then(() => {
-                        // Verificar si el elemento existe
                         const postulanteCard = document.querySelector(`#modalContent div[data-curp="${curp}"]`);
                         
                         if (postulanteCard) {
-                            // Añadir clase de animación de salida
+
                             postulanteCard.classList.add('fade-out');
 
-                            // Esperar que la animación termine antes de eliminar
                             setTimeout(() => {
                                 postulanteCard.remove();
 
-                                // Si no hay más postulantes, cerrar el modal
                                 if (document.querySelectorAll('#modalContent .row.mb-3.mt-5').length === 0) {
                                     $('#modalFullScreen').modal('hide');
                                 }
 
-                                // Recargar la tabla después de cerrar el mensaje de éxito
                                 Tablapostulaciones.ajax.reload(null, false); 
-                            }, 500); // Tiempo de espera en milisegundos, debe coincidir con la duración de la animación
+                            }, 500); 
                         } else {
                             console.error(`Elemento con CURP ${curp} no encontrado.`);
                         }

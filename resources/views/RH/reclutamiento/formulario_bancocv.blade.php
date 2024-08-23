@@ -9,25 +9,24 @@
     <title>Results in Performance</title>
 
 
-
-      <!-- Bootstrap  iconos v1.11.3 -->
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-      <!-- Bootstrap v.5.2 -->
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" rel="stylesheet">
-      <!-- Datatables 1.13.1  v.5.2 -->
-      <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
-      <!--Animación -->
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/loading.css@v2.0.0/dist/loading.css​">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/loading.css@v2.0.0/dist/loading.min.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/transition.css@v2.0.0/dist/transition.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/transition.css@v2.0.0/dist/transition.min.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.css">
-      <!-- Select opcion selectize -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" />
-      <!--Archivo css -->
-      <link rel="stylesheet" href="assets/css/estilos.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"> 
+    <!-- Bootstrap  iconos v1.11.3 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Bootstrap v.5.2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Datatables 1.13.1  v.5.2 -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
+    <!--Animación -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/loading.css@v2.0.0/dist/loading.css​">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/loading.css@v2.0.0/dist/loading.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/transition.css@v2.0.0/dist/transition.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/transition.css@v2.0.0/dist/transition.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.css">
+    <!-- Select opcion selectize -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" />
+    <!--Archivo css -->
+    <link rel="stylesheet" href="assets/css/estilos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"> 
 </head>
 <body>
     
@@ -96,7 +95,7 @@ border: 2px solid #007DBA;
 }
 
 .modal-backdrop {
-    background-color: rgba(16, 16, 16, 0.963); /* Fondo completamente opaco */
+    background-color: rgba(16, 16, 16, 0.963); 
 }
 .btn-light.btn-sm {
 background-color: white;
@@ -140,16 +139,14 @@ height: 20px;
 <body>
 
   
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover;">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="http://www.results-in-performance.com/">
-                <img src="/assets/images/rip_logoblanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
-                {{-- <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo"> --}}
-
-            </a>
-            
-        </div>
-    </nav>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="http://www.results-in-performance.com/">
+            <img src="/assets/images/rip_logoblanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
+            {{-- <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo"> --}}
+        </a>
+    </div>
+</nav>
 
 
 
@@ -160,7 +157,6 @@ height: 20px;
     <div class="card-body">
         <form method="post"  enctype="multipart/form-data" id="formularioBANCO">   
             {!! csrf_field() !!}
-            
             <div class="mb-3">
                 <input type="hidden" class="form-control" id="AVISO_PRIVACIDAD" name="AVISO_PRIVACIDAD" value="1">
             </div>
@@ -176,7 +172,6 @@ height: 20px;
                 <label>Segundo Apellido </label>
                 <input type="text" class="form-control" id="SEGUNDO_APELLIDO_CV" name="SEGUNDO_APELLIDO_CV" required>
             </div>
-          
             <div class="mb-3">
                 <label>Correo</label>
                 <input type="email" class="form-control" id="CORREO_CV" name="CORREO_CV" required>
@@ -298,9 +293,6 @@ height: 20px;
                 <label>Nombre de la licenciatura</label>
                 <input type="text" class="form-control" id="NOMBRE_LICENCIATURA_CV" name="NOMBRE_LICENCIATURA_CV">
             </div>
-    
-
-
             <div class="mb-3" id="licenciatura-titulo-container" style="display: none;">
                 <label class="col-form-label">¿Cuenta con Título?</label>
                 <div class="d-flex">
@@ -314,7 +306,6 @@ height: 20px;
                     </div>
                 </div>
             </div>
-
             <div class="mb-3" id="licenciatura-cedula-container" style="display: none;">
                 <label class="col-form-label">¿Cuenta con cédula profesional?</label>
                 <div class="d-flex">
@@ -328,8 +319,6 @@ height: 20px;
                     </div>
                 </div>
             </div>
-
-
             <div class="mb-3" id="posgrado-container" style="display: none;">
                 <label>Tipo de posgrado</label>
                 <select class="form-select" id="TIPO_POSGRADO_CV" name="TIPO_POSGRADO_CV">
@@ -370,13 +359,9 @@ height: 20px;
                     </div>
                 </div>
             </div>
-            
-
-
             <div class="mb-3 text-center">
                 <label class="mt-4"> Áreas de interés</label>
             </div>
-
             <div class="mb-3 d-flex">
                 <div class="col-6 me-1 text-center">
                     <label>Administrativas</label>
@@ -387,8 +372,6 @@ height: 20px;
                         @endforeach
                     </select>
                 </div>
-
-
                 <div class="col-6 text-center">
                     <label>Operativas</label>
                     <select class="form-select" id="INTERES_OPERATIVAS" name="INTERES_OPERATIVAS[]"  multiple>
@@ -400,9 +383,6 @@ height: 20px;
                     </select>
                 </div>
             </div>
-            
-
-
             <div class="mb-3 text-center">
                 <label class="mt-4">Documentos</label>
             </div>
@@ -421,9 +401,7 @@ height: 20px;
                 <input type="file" class="form-control" id="ARCHIVO_CV" name="ARCHIVO_CV" accept=".pdf" style="width: auto; flex: 1;" required>
                 <button type="button" class="btn btn-light btn-sm ms-2" id="quitarCV" style="display:none;">Quitar archivo</button>
             </div>
-            <div id="CV_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
-
-                     
+            <div id="CV_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>   
             <div class="form-check mb-3">
                 <input type="checkbox" class="form-check-input small-checkbox" id="aceptaTerminos">
                 <label class="form-check-label" for="aceptaTerminos">He aceptado los términos y condiciones del aviso de privacidad de Results In Performance</label>
@@ -460,7 +438,6 @@ height: 20px;
                 </p>
                 <p ><b>Nota:</b> Si desea consultar el aviso de privacidad completo y los derechos de ARCO,
                     entre a nuestra página web <a href="http://results-in-performance.com" target="_blank">aquí</a>.</p>
-
                 <p class="text-center">Aceptar términos</p>
             </div>
             <div class="modal-footer">
@@ -489,15 +466,11 @@ height: 20px;
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!-- Animación -->
     <script src="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.js"></script>
-   
     <!-- Select opcion selectize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
-
      <!-- Funciones generales -->
      <script src="/assets/js_sitio/funciones.js"></script>
     <script src="/assets/js_sitio/reclutamiento/banco_cv.js"></script>
-
-
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>

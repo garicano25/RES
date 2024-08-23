@@ -32,7 +32,7 @@
                 <div class="modal-body">
                     {!! csrf_field() !!}
                     <div class="mb-3">
-                        <label>La vacante es: *</label>
+                        <label>Tipo de vacante *</label>
                         <select class="form-select" id="LA_VACANTES_ES" name="LA_VACANTES_ES" required>
                             <option value="0" disabled selected>Seleccione una opción</option>
                             <option value="Pública">Pública</option>
@@ -40,7 +40,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label>Categoría</label>
+                        <label>Categoría *</label>
                         <select class="form-control" id="CATEGORIA_VACANTE" name="CATEGORIA_VACANTE" required>
                             <option selected disabled>Seleccione una opción</option>
                             @foreach ($areas as $area)
@@ -49,19 +49,19 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label>Descripción de la vacante</label>
+                        <label>Descripción de la vacante *</label>
                         <textarea name="DESCRIPCION_VACANTE" id="DESCRIPCION_VACANTE" class="form-control" rows="8" placeholder="Escribe la descripción de la vacante aquí" required></textarea>
                     </div>
                     <div class="mb-3">
-                        <label>Lugar de la vacante</label>
+                        <label>Lugar de la vacante *</label>
                         <input  type="text" name="LUGAR_VACANTE" id="LUGAR_VACANTE" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label>Fecha de expiración de la vacante</label>
+                        <label>Fecha de expiración de la vacante *</label>
                         <input type="date" name="FECHA_EXPIRACION" id="FECHA_EXPIRACION"  class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label>Requerimiento de Vacantes:</label>
+                        <label>Requerimiento de vacantes:</label>
                         <button id="botonAgregar" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar requerimiento"><i class="bi bi-plus-circle-fill"></i></button>
                         <div id="inputs-container" class="mt-3"></div>
                     </div>
