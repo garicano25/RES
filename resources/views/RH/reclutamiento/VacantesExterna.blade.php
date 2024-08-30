@@ -234,18 +234,24 @@ use Carbon\Carbon;
                 <button type="button" class="btn btn-success" id="registeredBtn">Sí estoy registrado</button>
             </div>
             <div class="modal-body" id="curpInputContainer" style="display:none;">
+                <h6 class="text-center mb-4">Proceso de Postulación</h6>
                 <div class="mb-3">
-                    <label for="curpInput">Escribe tu CURP:</label>
+                    <label for="curpInput">Escribe tu CURP para continuar con tu postulación:</label>
                     <input type="text" id="curpInput" name="curp" class="form-control" placeholder="Escribe tu CURP aquí">
                 </div>
             </div>
-            <div class="modal-footer" id="curpButtonsContainer" style="display:none;">
+            
+            <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="submitCurpBtn">Enviar</button>
+                <button type="submit" class="btn btn-success" id="guardarFormpostularse" style="display:none;">Postularse</button>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
 
 
 <!-- ============================================================== -->

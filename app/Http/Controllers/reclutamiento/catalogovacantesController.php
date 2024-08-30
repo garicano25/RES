@@ -32,8 +32,9 @@ class catalogovacantesController extends Controller
 
 
 
+       
 
-        return view('RH.reclutamiento.catalogovacantes', compact('areas'));
+        return view('RH.Catalogos.catalogo_vacantes', compact('areas'));
    
     }
 

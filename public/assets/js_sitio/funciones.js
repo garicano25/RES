@@ -8,7 +8,6 @@ function mostrarCarga() {
     document.getElementById("modal-overlay").style.display = "block";
 }
 
-// Para ocultar el fondo oscurecido y la imagen de carga
 function ocultarCarga() {
     document.getElementById("modal-overlay").style.display = "none";
 }

@@ -101,7 +101,7 @@ TablaDPT = $("#TablaDPT").DataTable({
         { target: 5, title: 'Estatus', className: 'all text-center' },
         { target: 6, title: 'Descargar', className: 'all text-center' },
         { target: 7, title: 'Editar', className: 'all text-center' },
-        { target: 8, title: 'Inactivo', className: 'all text-center' },
+        { target: 8, title: 'Activo', className: 'all text-center' },
 
 
 

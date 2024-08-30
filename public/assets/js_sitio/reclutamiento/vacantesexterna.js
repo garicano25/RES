@@ -1,6 +1,6 @@
 
 ID_BANCO_CV = 0
-       
+ID_LISTA_POSTULANTES = 0
 
     document.getElementById('notRegisteredBtn').addEventListener('click', function() {
         window.location.href = 'http://127.0.0.1:8000/Formulario-vacantes';
@@ -12,8 +12,7 @@ ID_BANCO_CV = 0
         document.querySelector('.modal-footer').style.display = 'none';
     });
 
-    document.getElementById('submitCurpBtn').addEventListener('click', function() {
-    });
+   
 
 
 
@@ -151,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Ejecutar cuando la página se carga para mostrar los campos correctos si hay valores cargados
         toggleFields();
         
-        // Ejecutar cada vez que el usuario cambia la selección
+
         ultimoGradoCV.addEventListener('change', toggleFields);
     }
 });
@@ -367,6 +366,7 @@ $(".postularse-btn").click(function (e) {
     console.log("ID de la vacante seleccionada:", vacanteId);
 });
 
+
 $("#guardarFormActualizar").click(function (e) {
     e.preventDefault();
 
@@ -409,6 +409,53 @@ $("#guardarFormActualizar").click(function (e) {
         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
     }
 });
+
+
+
+
+
+
+
+document.getElementById('registeredBtn').addEventListener('click', function() {
+    document.getElementById('postularseModalLabel').style.display = 'none';
+    document.querySelector('#postularseModal .modal-body p').style.display = 'none';
+    document.querySelector('.modal-footer.modal-footer-center').style.display = 'none';
+
+    document.getElementById('curpInputContainer').style.display = 'block';
+});
+
+document.getElementById('curpInput').addEventListener('input', function() {
+    let curp = this.value;
+
+    if (curp.length === 18) {  
+        fetch('/actualizarinfo', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({ curp: curp })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alertToast(data.message, 'error', 2000);
+            } else {
+                alertToast(`CURP encontrada: ${data.NOMBRE_CV} ${data.PRIMER_APELLIDO_CV} ${data.SEGUNDO_APELLIDO_CV}`, 'success', 2000);
+
+                // Mostrar solo el botón "Postularse" después de la validación exitosa
+                document.getElementById('guardarFormpostularse').style.display = 'inline-block';
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+});
+
+
+
+
+
+
 
 
 

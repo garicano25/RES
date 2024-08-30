@@ -166,7 +166,7 @@ var Tablacategoria = $("#Tablacategoria").DataTable({
         { targets: 3, title: 'Propósito o finalidad de la categoría', className: 'all text-center' },
         { targets: 4, title: 'Editar', className: 'all text-center' },
         { targets: 5, title: 'Visualizar', className: 'all text-center' },
-        { targets: 6, title: 'Inactivo', className: 'all text-center' }
+        { targets: 6, title: 'Activo', className: 'all text-center' }
     ]
 });
 

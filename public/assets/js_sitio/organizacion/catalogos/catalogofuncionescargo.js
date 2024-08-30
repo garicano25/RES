@@ -178,7 +178,7 @@ var Tablaafuncionescargo = $("#Tablaafuncionescargo").DataTable({
         { targets: 3, title: 'Descripción', className: 'all text-center descripcion-column' },
         { targets: 4, title: 'Editar', className: 'all text-center' },
         { targets: 5, title: 'Visualizar', className: 'all text-center' },
-        { targets: 6, title: 'Inactivo', className: 'all text-center' }
+        { targets: 6, title: 'Activo', className: 'all text-center' }
     ]
 });
 

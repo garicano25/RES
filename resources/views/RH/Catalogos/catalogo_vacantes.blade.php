@@ -52,9 +52,15 @@
                         <label>Descripción de la vacante *</label>
                         <textarea name="DESCRIPCION_VACANTE" id="DESCRIPCION_VACANTE" class="form-control" rows="8" placeholder="Escribe la descripción de la vacante aquí" required></textarea>
                     </div>
-                    <div class="mb-3">
-                        <label>Lugar de la vacante *</label>
-                        <input  type="text" name="LUGAR_VACANTE" id="LUGAR_VACANTE" class="form-control" required>
+                    <div class="row  mb-3">
+                        <div class="col-3">
+                            <label>N° vacante *</label>
+                            <input  type="text" name="NUMERO_VACANTE" id="NUMERO_VACANTE" class="form-control" required>
+                        </div>
+                        <div class="col-9">
+                            <label>Lugar de la vacante *</label>
+                            <input  type="text" name="LUGAR_VACANTE" id="LUGAR_VACANTE" class="form-control" required>
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label>Fecha de expiración de la vacante *</label>
@@ -64,6 +70,7 @@
                         <label>Requerimiento de vacantes:</label>
                         <button id="botonAgregar" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar requerimiento"><i class="bi bi-plus-circle-fill"></i></button>
                         <div id="inputs-container" class="mt-3"></div>
+                        
                     </div>
                     
 

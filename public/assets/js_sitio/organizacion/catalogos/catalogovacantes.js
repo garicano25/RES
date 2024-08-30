@@ -3,12 +3,17 @@ ID_CATALOGO_VACANTE = 0
 
 
 
-
 const ModalArea = document.getElementById('miModal_vacantes');
 ModalArea.addEventListener('hidden.bs.modal', event => {
     ID_CATALOGO_VACANTE = 0;
     document.getElementById('formularioVACANTES').reset();
     document.getElementById('inputs-container').innerHTML = '';
+    
+    // Resetear el porcentaje a 0
+    const totalElement = document.getElementById('totalPorcentajes');
+    if (totalElement) {
+        totalElement.textContent = 'Total: 0%';
+    }
 });
 
 
@@ -109,13 +114,6 @@ $("#guardarFormvacantes").click(function (e) {
 
 
 
-
-
-
-
-
-
-
 var Tablavacantes = $("#Tablavacantes").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
@@ -177,10 +175,9 @@ var Tablavacantes = $("#Tablavacantes").DataTable({
                 return '<span style="color: ' + textColor + ';">' + data + ' (' + diasRestantes + ' días restantes)</span>';
             }
         },
-        { data: null, render: function (data, type, row) {
-                return row.BTN_EDITAR + ' ' + row.BTN_VISUALIZAR + ' ' + row.BTN_ELIMINAR;
-            }
-        }
+        { data: 'BTN_EDITAR' },
+        { data: 'BTN_VISUALIZAR'},
+        { data: 'BTN_ELIMINAR'},
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
@@ -190,9 +187,12 @@ var Tablavacantes = $("#Tablavacantes").DataTable({
         { targets: 4, title: 'Descripción de la vacante', className: 'all text-center ' },
         { targets: 5, title: 'Fecha de publicación', className: 'all  text-center' },
         { targets: 6, title: 'Fecha de expiración', className: 'all  text-center' },
-        { targets: 7, title: 'Acciones', className: 'all text-center' }
+        { targets: 7, title: 'Editar', className: 'all  text-center' },
+        { targets: 8, title: 'Visualizar', className: 'all  text-center' },
+        { targets: 9, title: 'Activo', className: 'all  text-center' },
     ]
 });
+
 
 
 
@@ -264,7 +264,7 @@ function cargarRequerimientos(requerimientos) {
                 <input type="number" name="PORCENTAJE[]" class="form-control porcentaje-input" value="${requerimiento.PORCENTAJE}" max="100" min="0" step="1" maxlength="3">
             </div>
             <div class="col-2">
-                <label>Eliminar</label>
+                <br>
                 <button type="button" class="btn btn-danger botonEliminar"><i class="bi bi-trash3-fill"></i></button>
             </div>
         `;
@@ -278,10 +278,11 @@ function cargarRequerimientos(requerimientos) {
 
         const inputPorcentaje = divInput.querySelector('.porcentaje-input');
         inputPorcentaje.addEventListener('input', function() {
-            validarPorcentajeTotal(); // Validar cada vez que se cambia el valor
+            validarPorcentajeTotal(); 
         });
     });
 
+   
     validarPorcentajeTotal();
 
     function calcularSumaPorcentajes() {
@@ -297,6 +298,8 @@ function cargarRequerimientos(requerimientos) {
 
     function validarPorcentajeTotal() {
         const total = calcularSumaPorcentajes();
+        const totalElement = document.getElementById('totalPorcentajes');
+        totalElement.textContent = `Total: ${total}%`;
 
         if (total > 100) {
             alertToast("La suma de los porcentajes no puede exceder el 100%.");
@@ -335,7 +338,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <input type="number" name="PORCENTAJE[]" class="form-control porcentaje-input" max="100" min="0" step="1" maxlength="3">
             </div>
             <div class="col-2">
-                <label>Eliminar</label>
+                <br>
                 <button type="button" class="btn btn-danger botonEliminar"><i class="bi bi-trash3-fill"></i></button>
             </div>
         `;
@@ -358,6 +361,9 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             validarPorcentajeTotal();
         });
+
+        // Actualizar el total al agregar un nuevo input
+        validarPorcentajeTotal();
     }
 
     function validarPorcentajeTotal() {
@@ -367,6 +373,10 @@ document.addEventListener("DOMContentLoaded", function() {
         porcentajes.forEach(function(input) {
             total += parseInt(input.value) || 0;
         });
+
+        // Mostrar el total sumado al final
+        const totalElement = document.getElementById('totalPorcentajes');
+        totalElement.textContent = `Total: ${total}%`;
 
         if (total > 100) {
             alertToast("La suma de los porcentajes no puede exceder el 100%.");
@@ -379,7 +389,19 @@ document.addEventListener("DOMContentLoaded", function() {
             botonGuardar.disabled = false; 
         }
     }
+
+    // Crear el elemento para mostrar el total
+    const totalContainer = document.createElement('div');
+    totalContainer.classList.add('mt-3');
+    totalContainer.style.textAlign = 'center'; // Añadir estilo inline para centrar el texto
+    totalContainer.innerHTML = `
+        <h5 id="totalPorcentajes">Total: 0%</h5>
+    `;
+    const contenedor = document.getElementById('inputs-container');
+    contenedor.parentNode.appendChild(totalContainer);
 });
+
+
 
 
 

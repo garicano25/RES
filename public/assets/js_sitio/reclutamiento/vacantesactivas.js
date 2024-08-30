@@ -214,7 +214,7 @@ function TotalPostulantes(idVacante, categoriaVacante) {
                                             <span id="total-cumplimiento-${personalInfo.CURP_CV}" class="total-porcentaje-circle">0%</span>
                                         </div>
                                         <div class="d-flex justify-content-center">
-                                            <button class="btn btn-success" onclick="seleccionarPostulante('${idVacante}', '${personalInfo.CURP_CV}', '${personalInfo.NOMBRE_CV}', '${personalInfo.PRIMER_APELLIDO_CV}', '${personalInfo.SEGUNDO_APELLIDO_CV}', '${personalInfo.CORREO_CV}', '${personalInfo.TELEFONO1}', '${personalInfo.TELEFONO2}', '${categoriaVacante}')">Pre selección</button>
+                                            <button class="btn btn-success" onclick="seleccionarPostulante('${idVacante}', '${personalInfo.CURP_CV}', '${personalInfo.NOMBRE_CV}', '${personalInfo.PRIMER_APELLIDO_CV}', '${personalInfo.SEGUNDO_APELLIDO_CV}', '${personalInfo.CORREO_CV}', '${personalInfo.TELEFONO1}', '${personalInfo.TELEFONO2}', '${categoriaVacante}')">Preselección</button>
                                         </div>
                                     </div>
                                 </div>

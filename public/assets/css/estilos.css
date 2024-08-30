@@ -201,3 +201,20 @@ body {
     }
 }
 
+
+
+
+
+/* Asegúrate de que los encabezados se vean bien alineados */
+table.dataTable thead th {
+    vertical-align: middle;
+    padding: 8px 15px;
+    background-color: #3498db;
+    color: white;
+    border-bottom: 2px solid #ddd;
+}
+
+
+
+
+

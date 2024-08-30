@@ -311,7 +311,7 @@
     @endif
 
     @if(request()->is('CatálogoDeVacantes'))
-    <script src="/assets/js_sitio/reclutamiento/catalogos/catalogo_vacantes.js"></script>
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogovacantes.js"></script>
     @endif
 
     @if(request()->is('Categorías'))

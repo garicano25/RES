@@ -163,7 +163,7 @@ var Tablaareainteres = $("#Tablaareainteres").DataTable({
         { targets: 2, title: 'Nombre', className: 'all text-center' },
         { targets: 3, title: 'Editar', className: 'all text-center' },
         { targets: 4, title: 'Visualizar', className: 'all text-center' },
-        { targets: 5, title: 'Inactivo', className: 'all text-center' }
+        { targets: 5, title: 'Activo', className: 'all text-center' }
     ]
 });
 

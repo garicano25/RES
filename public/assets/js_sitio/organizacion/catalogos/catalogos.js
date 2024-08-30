@@ -166,7 +166,7 @@ var Tablajerarquia = $("#Tablajerarquia").DataTable({
         { targets: 2, title: 'Descripción', className: 'all text-center descripcion-column' },
         { targets: 3, title: 'Editar', className: 'all text-center' },
         { targets: 4, title: 'Visualizar', className: 'all text-center' },
-        { targets: 5, title: 'Inactivo', className: 'all text-center' }
+        { targets: 5, title: 'Activo', className: 'all text-center' }
     ]
 });
 

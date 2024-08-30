@@ -172,7 +172,7 @@ var Tablarequerimiento = $("#Tablarequerimiento").DataTable({
         { targets: 5, title: 'Estatus', className: 'all text-center' },
         { targets: 6, title: 'Descargar', className: 'all text-center' },
         { targets: 7, title: 'Editar', className: 'all text-center' },
-        { targets: 8, title: 'Inactivo', className: 'all text-center' }
+        { targets: 8, title: 'Activo', className: 'all text-center' }
     ]
 });
 

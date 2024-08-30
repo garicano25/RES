@@ -15,6 +15,7 @@ class catalogovacantesModel extends Model
         'CATEGORIA_VACANTE',
         'DESCRIPCION_VACANTE',
         'LUGAR_VACANTE',
+        'NUMERO_VACANTE',
         'FECHA_EXPIRACION',
         'DESCRIPCION',
         'ACTIVO'   

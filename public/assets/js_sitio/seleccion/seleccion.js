@@ -36,40 +36,22 @@ var Tablaseleccion = $("#Tablaseleccion").DataTable({
         dataSrc: 'data'
     },
     order: [[0, 'asc']], 
-    columns: [
+    columns:[
         { 
             data: null,
             render: function(data, type, row, meta) {
-                return meta.row + 1; 
+                return meta.row + 1;
             }
         },
         { data: 'NOMBRE_CATEGORIA' },
-        { data: 'CURP' }, 
-        { data: null,
-            render: function (data, type, row) {
-                return row.NOMBRE_SELC + ' ' + row.PRIMER_APELLIDO_SELEC + ' ' + row.SEGUNDO_APELLIDO_SELEC;
-            }
-        },
-        { data: 'CORREO_SELEC' },
-        { data: null,
-            render: function (data, type, row) {
-                return row.TELEFONO1_SELECT + ','+ ' ' + row.TELEFONO2_SELECT;
-            }
-        },
-        { data: 'PORCENTAJE' },
-        { data: 'BTN_ELIMINAR' },
-        { data: 'BTN_VISUALIZAR' },
+        { data: 'NUMERO_VACANTE' },
+        { data: 'FECHA_EXPIRACION' },
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
-        { targets: 1, title: 'Nombre de la vacante', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'CURP', className: 'all text-center' },
-        { targets: 3, title: 'Nombre completo', className: 'all text-center' },
-        { targets: 4, title: 'Correo', className: 'all text-center' },
-        { targets: 5, title: 'Teléfonos', className: 'all text-center' },
-        { targets: 6, title: '% de selección', className: 'all text-center' },
-        { targets: 7, title: 'Eliminar', className: 'all text-center' },
-        { targets: 8, title: 'Visualizar', className: 'all text-center' },
+        { targets: 1, title: 'Nombre de la categoría', className: 'all text-center' },
+        { targets: 2, title: 'N° de vacante', className: 'all text-center' },
+        { targets: 3, title: 'Fecha límite', className: 'all  text-center' },
 
     ]
 });

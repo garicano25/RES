@@ -163,7 +163,7 @@ var Tablamotivovacante = $("#Tablamotivovacante").DataTable({
         { targets: 1, title: 'Nombre', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Editar', className: 'all text-center' },
         { targets: 3, title: 'Visualizar', className: 'all text-center' },
-        { targets: 4, title: 'Inactivo', className: 'all text-center' }
+        { targets: 4, title: 'Activo', className: 'all text-center' }
     ]
 });
 
