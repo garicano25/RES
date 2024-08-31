@@ -366,49 +366,6 @@ $(".postularse-btn").click(function (e) {
 });
 
 
-$("#guardarFormActualizar").click(function (e) {
-    e.preventDefault();
-
-    formularioValido = validarFormulario($('#formularioACTUALIZARINFO'));
-
-    if (formularioValido) {
-        alertMensajeConfirm({
-            title: "¿Desea guardar la información?",
-            icon: "question",
-        }, async function () {
-            await loaderbtn('guardarFormActualizar');
-            await ajaxAwaitFormData({ 
-                api: 1, 
-                ID_BANCO_CV: ID_BANCO_CV, 
-                VACANTES_ID: vacanteId 
-            }, 'ActualizarSave', 'formularioACTUALIZARINFO', 'guardarFormActualizar', { callbackAfter: true, callbackBefore: true }, () => {
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                });
-
-                $('.swal2-popup').addClass('ld ld-breath');
-                
-            }, function (data) {
-                ID_BANCO_CV = data.bancocv.ID_BANCO_CV;
-                alertMensaje1('success', 'Información Actualizada y Postulación Correcta', null, null, null, 2500);
-                $('#miModal_ACTUALIZARINFO').modal('hide');
-                $('#postularseModal').modal('hide');
-                document.getElementById('formularioACTUALIZARINFO').reset();
-                $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
-                $('#INTERES_OPERATIVAS')[0].selectize.clear();
-
-                
-                ID_BANCO_CV = 0;
-            });
-        }, 1);
-    } else {
-        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
-    }
-});
-
 
 
 
@@ -419,13 +376,13 @@ document.getElementById('registeredBtn').addEventListener('click', function() {
     document.getElementById('postularseModalLabel').style.display = 'none';
     document.querySelector('#postularseModal .modal-body p').style.display = 'none';
     document.querySelector('.modal-footer.modal-footer-center').style.display = 'none';
-
+    
     document.getElementById('curpInputContainer').style.display = 'block';
 });
 
 document.getElementById('curpInput').addEventListener('input', function() {
     let curp = this.value;
-
+    
     if (curp.length === 18) {  
         fetch('/actualizarinfo', {
             method: 'POST',
@@ -441,7 +398,7 @@ document.getElementById('curpInput').addEventListener('input', function() {
                 alertToast(data.message, 'error', 2000);
             } else {
                 alertToast(`CURP encontrada: ${data.NOMBRE_CV} ${data.PRIMER_APELLIDO_CV} ${data.SEGUNDO_APELLIDO_CV}`, 'success', 2000);
-
+                
                 // Mostrar solo el botón "Postularse" después de la validación exitosa
                 document.getElementById('guardarFormpostularse').style.display = 'inline-block';
             }
@@ -454,50 +411,138 @@ document.getElementById('curpInput').addEventListener('input', function() {
 
 
 
-$("#guardarFormpostularse").click(function (e) {
-    e.preventDefault();
+// $("#guardarFormActualizar").click(function (e) {
+//     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioPostularse'));
+//     formularioValido = validarFormulario($('#formularioACTUALIZARINFO'));
 
-    if (formularioValido) {
-        alertMensajeConfirm({
-            title: "¿Desea postularte a esta vacante?",
-            icon: "question",
-        }, async function () {
-            await loaderbtn('guardarFormpostularse');
-            await ajaxAwaitFormData({ 
-                api: 1,  
-                ID_LISTA_POSTULANTES: ID_LISTA_POSTULANTES, 
-                VACANTES_ID: vacanteId  
-            }, 'PostularseSave', 'formularioPostularse', 'guardarFormpostularse', { callbackAfter: true, callbackBefore: true }, () => {
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                });
+//     if (formularioValido) {
+//         alertMensajeConfirm({
+//             title: "¿Desea guardar la información?",
+//             icon: "question",
+//         }, async function () {
+//             await loaderbtn('guardarFormActualizar');
+//             await ajaxAwaitFormData({ 
+//                 api: 1, 
+//                 ID_BANCO_CV: ID_BANCO_CV, 
+//                 VACANTES_ID: vacanteId 
+//             }, 'ActualizarSave', 'formularioACTUALIZARINFO', 'guardarFormActualizar', { callbackAfter: true, callbackBefore: true }, () => {
+//                 Swal.fire({
+//                     icon: 'info',
+//                     title: 'Espere un momento',
+//                     text: 'Estamos guardando la información',
+//                     showConfirmButton: false
+//                 });
 
-                $('.swal2-popup').addClass('ld ld-breath');
+//                 $('.swal2-popup').addClass('ld ld-breath');
                 
-            }, function (data) {
-                if (mensajeAjax(data) === 1) {
-                    ID_LISTA_POSTULANTES = data.lista.ID_LISTA_POSTULANTES; 
-                    alertMensaje1('success', 'Te has postulado exitosamente', null, null, null, 2500);
-                    $('#postularseModal').modal('hide');
-                    document.getElementById('formularioPostularse').reset();
-                    ID_LISTA_POSTULANTES = 0; 
-                }
-            })
-        }, 1);
-    } else {
-        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
-    }
+//             }, function (data) {
+//                 ID_BANCO_CV = data.bancocv.ID_BANCO_CV;
+//                 alertMensaje1('success', 'Información Actualizada y Postulación Correcta', null, null, null, 2500);
+//                 $('#miModal_ACTUALIZARINFO').modal('hide');
+//                 $('#postularseModal').modal('hide');
+//                 document.getElementById('formularioACTUALIZARINFO').reset();
+//                 $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
+//                 $('#INTERES_OPERATIVAS')[0].selectize.clear();
+
+                
+//                 ID_BANCO_CV = 0;
+//             });
+//         }, 1);
+//     } else {
+//         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+//     }
+// });
+
+// $("#guardarFormpostularse").click(function (e) {
+//     e.preventDefault();
+
+//     formularioValido = validarFormulario($('#formularioPostularse'));
+
+//     if (formularioValido) {
+//         alertMensajeConfirm({
+//             title: "¿Desea postularte a esta vacante?",
+//             icon: "question",
+//         }, async function () {
+//             await loaderbtn('guardarFormpostularse');
+//             await ajaxAwaitFormData({ 
+//                 api: 1,  
+//                 ID_LISTA_POSTULANTES: ID_LISTA_POSTULANTES, 
+//                 VACANTES_ID: vacanteId  
+//             }, 'PostularseSave', 'formularioPostularse', 'guardarFormpostularse', { callbackAfter: true, callbackBefore: true }, () => {
+//                 Swal.fire({
+//                     icon: 'info',
+//                     title: 'Espere un momento',
+//                     text: 'Estamos guardando la información',
+//                     showConfirmButton: false
+//                 });
+
+//                 $('.swal2-popup').addClass('ld ld-breath');
+                
+//             }, function (data) {
+//                 if (mensajeAjax(data) === 1) {
+//                     ID_LISTA_POSTULANTES = data.lista.ID_LISTA_POSTULANTES; 
+//                     alertMensaje1('success', 'Te has postulado exitosamente', null, null, null, 2500);
+//                     $('#postularseModal').modal('hide');
+//                     document.getElementById('formularioPostularse').reset();
+//                     ID_LISTA_POSTULANTES = 0; 
+//                 }
+//             })
+//         }, 1);
+//     } else {
+//         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+//     }
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Función para resetear la validación de un formulario
+
+
+
+
+
+
+
+
+
+function resetValidation(form) {
+    form.find('.is-invalid').removeClass('is-invalid');
+    form.find('.error').removeClass('error');
+    form.find('.invalid-feedback').hide();
+    form.off('submit');
+}
+
+$('#actualizarinfo').click(function () {
+    $('#postularseModal').modal('hide');
+    $('#miModal_ACTUALIZARINFO').modal('show');
 });
-
-
 
 $('#postularseModal').on('hidden.bs.modal', function () {
     $('#formularioPostularse')[0].reset();
+    resetValidation($('#formularioPostularse'));
 
     $('#postularseModalLabel').show();
     $('#postularseModal .modal-body p').show();
@@ -507,15 +552,122 @@ $('#postularseModal').on('hidden.bs.modal', function () {
     $('#guardarFormpostularse').hide();
 });
 
+$('#miModal_ACTUALIZARINFO').on('hidden.bs.modal', function () {
+    $('#formularioACTUALIZARINFO').trigger('reset');
+    resetValidation($('#formularioACTUALIZARINFO'));
 
+    $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
+    $('#INTERES_OPERATIVAS')[0].selectize.clear();
+});
 
+function validarCamposRequeridos(form) {
+    let camposRequeridos = form.find('[required]');
+    let valido = true;
 
+    camposRequeridos.each(function() {
+        if ($(this).val().trim() === '') {
+            valido = false;
+            $(this).addClass('is-invalid');
+            $(this).next('.invalid-feedback').show();
+        }
+    });
 
+    return valido;
+}
 
+$("#guardarFormpostularse").click(function (e) {
+    e.preventDefault();
+    resetValidation($('#formularioPostularse'));
 
+    let camposValidos = validarCamposRequeridos($('#formularioPostularse'));
 
+    if (camposValidos) {
+        let formularioValido = validarFormulario($('#formularioPostularse'));
 
+        if (formularioValido) {
+            alertMensajeConfirm({
+                title: "¿Desea postularte a esta vacante?",
+                icon: "question",
+            }, async function () {
+                await loaderbtn('guardarFormpostularse');
+                await ajaxAwaitFormData({ 
+                    api: 1,  
+                    ID_LISTA_POSTULANTES: ID_LISTA_POSTULANTES, 
+                    VACANTES_ID: vacanteId  
+                }, 'PostularseSave', 'formularioPostularse', 'guardarFormpostularse', { callbackAfter: true, callbackBefore: true }, () => {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
 
+                    $('.swal2-popup').addClass('ld ld-breath');
+                    
+                }, function (data) {
+                    if (mensajeAjax(data) === 1) {
+                        ID_LISTA_POSTULANTES = data.lista.ID_LISTA_POSTULANTES; 
+                        alertMensaje1('success', 'Te has postulado exitosamente', null, null, null, 2500);
+                        $('#postularseModal').modal('hide');
+                        document.getElementById('formularioPostularse').reset();
+                        ID_LISTA_POSTULANTES = 0; 
+                    }
+                })
+            }, 1);
+        } else {
+            alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+        }
+    }
+});
+
+$("#guardarFormActualizar").click(function (e) {
+    e.preventDefault();
+    resetValidation($('#formularioACTUALIZARINFO'));
+
+    let camposValidos = validarCamposRequeridos($('#formularioACTUALIZARINFO'));
+
+    if (camposValidos) {
+        let formularioValido = validarFormulario($('#formularioACTUALIZARINFO'));
+
+        if (formularioValido) {
+            alertMensajeConfirm({
+                title: "¿Desea guardar la información?",
+                icon: "question",
+            }, async function () {
+                await loaderbtn('guardarFormActualizar');
+                await ajaxAwaitFormData({ 
+                    api: 1, 
+                    ID_BANCO_CV: ID_BANCO_CV, 
+                    VACANTES_ID: vacanteId 
+                }, 'ActualizarSave', 'formularioACTUALIZARINFO', 'guardarFormActualizar', { callbackAfter: true, callbackBefore: true }, () => {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+                    
+                }, function (data) {
+                    ID_BANCO_CV = data.bancocv.ID_BANCO_CV;
+                    alertMensaje1('success', 'Información Actualizada y Postulación Correcta', null, null, null, 2500);
+                    $('#miModal_ACTUALIZARINFO').modal('hide');
+                    $('#postularseModal').modal('hide');
+                    document.getElementById('formularioACTUALIZARINFO').reset();
+                    $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
+                    $('#INTERES_OPERATIVAS')[0].selectize.clear();
+
+                    ID_BANCO_CV = 0;
+                });
+            }, 1);
+        } else {
+            alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+        }
+    } else {
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+    }
+});
 
 
 

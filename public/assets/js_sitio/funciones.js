@@ -2559,7 +2559,6 @@ function validarFormulario(form) {
   var campos = $('.validar');
   var formularioValido = true;
 
-  // Recorre los campos para verificar que tengan un valor no vacío
   campos.each(function () {
       var valorCampo = $(this).val();
       if (valorCampo === '' || valorCampo === null) {

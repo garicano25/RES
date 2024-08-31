@@ -52,7 +52,7 @@ body {
 }
 
 #tabla-vacantes {
-    width: 113% !important;
+    width: 103% !important;
     max-width: none;
     margin: 0 auto;
     display: table; /* Asegura que se comporte como tabla */
@@ -503,8 +503,8 @@ use Carbon\Carbon;
                                             @endforeach
                                         </select>
                                     </div>
-                    
-                    
+                
+                                    
                                     <div class="col-6 text-center">
                                         <label>Operativas</label>
                                         <select class="form-select" id="INTERES_OPERATIVAS" name="INTERES_OPERATIVAS[]"  multiple>
@@ -516,7 +516,6 @@ use Carbon\Carbon;
                                         </select>
                                     </div>
                                 </div>
-
 
                                 <div class="mb-3 text-center">
                                     <label class="mt-4">Documentos</label>
