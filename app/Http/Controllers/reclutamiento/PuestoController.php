@@ -61,71 +61,11 @@ public function getCvInfo(Request $request)
 
 
 
-// public function store(Request $request)
-// {
-//     try {
-//         switch (intval($request->api)) {
-//             case 1:
-//                 $bancocvs = bancocvModel::where('CURP_CV', $request->CURP_CV)->first();
-
-//                 if ($bancocvs) {
-//                     $interes_admon = $request->INTERES_ADMINISTRATIVA ? $request->INTERES_ADMINISTRATIVA : $bancocvs->INTERES_ADMINISTRATIVA;
-//                     $interes_ope = $request->INTERES_OPERATIVAS ? $request->INTERES_OPERATIVAS : $bancocvs->INTERES_OPERATIVAS;
-
-//                     $bancocvs->update(array_merge($bancocvs->toArray(), $request->except(['ARCHIVO_CURP_CV', 'ARCHIVO_CV']), [
-//                         'INTERES_ADMINISTRATIVA' => $interes_admon,
-//                         'INTERES_OPERATIVAS' => $interes_ope,
-//                     ]));
-
-//                     if ($request->hasFile('ARCHIVO_CURP_CV')) {
-//                         $curpFile = $request->file('ARCHIVO_CURP_CV');
-//                         $curpFileName = $request->CURP_CV . '.' . $curpFile->getClientOriginalExtension();
-//                         $curpFilePath = 'reclutamiento/CURP/' . $curpFileName;
-//                         $curpFile->storeAs('reclutamiento/CURP', $curpFileName);
-//                         $bancocvs->ARCHIVO_CURP_CV = $curpFilePath;
-//                     }
-
-//                     if ($request->hasFile('ARCHIVO_CV')) {
-//                         $cvFile = $request->file('ARCHIVO_CV');
-//                         $cvFileName = $request->CURP_CV . '.' . $cvFile->getClientOriginalExtension();
-//                         $cvFilePath = 'reclutamiento/CV/' . $cvFileName;
-//                         $cvFile->storeAs('reclutamiento/CV', $cvFileName);
-//                         $bancocvs->ARCHIVO_CV = $cvFilePath;
-//                     }
-
-//                     $bancocvs->save();
-
-//                     listapostulacionesModel::create([
-//                         'VACANTES_ID' => $request->VACANTES_ID,
-//                         'CURP' => $request->CURP_CV,
-//                     ]);
-
-//                     $response['code'] = 1;
-//                     $response['bancocv'] = $bancocvs;
-//                     return response()->json($response);
-//                 } else {
-//                     $response['code'] = 0;
-//                     $response['msj'] = 'No se encontró un registro con esa CURP';
-//                     return response()->json($response);
-//                 }
-
-//             default:
-//                 $response['code'] = 0;
-//                 $response['msj'] = 'Api no encontrada';
-//                 return response()->json($response);
-//         }
-//     } catch (Exception $e) {
-//         return response()->json(['code' => 0, 'msj' => 'Error al actualizar la información', 'error' => $e->getMessage()]);
-//     }
-// }
-
-
-    public function store(Request $request)
+public function store(Request $request)
 {
     try {
         switch (intval($request->api)) {
             case 1:
-                // Lógica existente para la API 1
                 $bancocvs = bancocvModel::where('CURP_CV', $request->CURP_CV)->first();
 
                 if ($bancocvs) {
@@ -168,22 +108,6 @@ public function getCvInfo(Request $request)
                     $response['msj'] = 'No se encontró un registro con esa CURP';
                     return response()->json($response);
                 }
-            
-            case 2:
-                // Nueva lógica para la API 2
-                $curp = $request->CURP_CV;
-                $vacantesId = $request->VACANTES_ID;
-
-                // Guardar la postulación en la tabla lista_postulantes
-                listapostulacionesModel::create([
-                    'VACANTES_ID' => $vacantesId,
-                    'CURP' => $curp,
-                    'ACTIVO' => 1 // Suponiendo que ACTIVO es un campo booleano para activar la postulación
-                ]);
-
-                $response['code'] = 1;
-                $response['msj'] = 'Postulación registrada correctamente';
-                return response()->json($response);
 
             default:
                 $response['code'] = 0;
@@ -191,9 +115,54 @@ public function getCvInfo(Request $request)
                 return response()->json($response);
         }
     } catch (Exception $e) {
-        return response()->json(['code' => 0, 'msj' => 'Error al realizar la postulación', 'error' => $e->getMessage()]);
+        return response()->json(['code' => 0, 'msj' => 'Error al actualizar la información', 'error' => $e->getMessage()]);
     }
 }
 
+
+
+
+
+
+public function store1(Request $request)
+{
+    try {
+        switch (intval($request->api)) {
+            case 1:
+                $existePostulacion = listapostulacionesModel::where('VACANTES_ID', $request->VACANTES_ID)
+                                                          ->where('CURP', $request->CURP)
+                                                          ->exists();
+
+                if ($existePostulacion) {
+                    $response['code']  = 0;
+                    $response['msj']  = 'Ya te has postulado a esta vacante';
+                    return response()->json($response);
+                }
+
+                if ($request->ID_LISTA_POSTULANTES == 0) {
+                    // Reinicia el auto-incremento si es necesario
+                    DB::statement('ALTER TABLE lista_postulantes AUTO_INCREMENT=1;');
+
+                    // Crear el registro en la tabla lista_postulantes
+                    $listas = listapostulacionesModel::create([
+                        'VACANTES_ID' => $request->VACANTES_ID,
+                        'CURP' => $request->CURP,
+                    ]);
+
+                    $response['code']  = 1;
+                    $response['lista']  = $listas;
+                    return response()->json($response);
+                } 
+
+                break;
+            default:
+                $response['code']  = 0;
+                $response['msj']  = 'Api no encontrada';
+                return response()->json($response);
+        }
+    } catch (Exception $e) {
+        return response()->json(['code' => 0, 'msj' => 'Error al guardar la postulación', 'error' => $e->getMessage()]);
+    }
+}
 
 }

@@ -8,7 +8,6 @@ ID_LISTA_POSTULANTES = 0
 
     document.getElementById('registeredBtn').addEventListener('click', function() {
         document.getElementById('curpInputContainer').style.display = 'block';
-        document.getElementById('curpButtonsContainer').style.display = 'block';
         document.querySelector('.modal-footer').style.display = 'none';
     });
 
@@ -449,6 +448,63 @@ document.getElementById('curpInput').addEventListener('input', function() {
         })
         .catch(error => console.error('Error:', error));
     }
+});
+
+
+
+
+
+$("#guardarFormpostularse").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormulario($('#formularioPostularse'));
+
+    if (formularioValido) {
+        alertMensajeConfirm({
+            title: "¿Desea postularte a esta vacante?",
+            icon: "question",
+        }, async function () {
+            await loaderbtn('guardarFormpostularse');
+            await ajaxAwaitFormData({ 
+                api: 1,  
+                ID_LISTA_POSTULANTES: ID_LISTA_POSTULANTES, 
+                VACANTES_ID: vacanteId  
+            }, 'PostularseSave', 'formularioPostularse', 'guardarFormpostularse', { callbackAfter: true, callbackBefore: true }, () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                });
+
+                $('.swal2-popup').addClass('ld ld-breath');
+                
+            }, function (data) {
+                if (mensajeAjax(data) === 1) {
+                    ID_LISTA_POSTULANTES = data.lista.ID_LISTA_POSTULANTES; 
+                    alertMensaje1('success', 'Te has postulado exitosamente', null, null, null, 2500);
+                    $('#postularseModal').modal('hide');
+                    document.getElementById('formularioPostularse').reset();
+                    ID_LISTA_POSTULANTES = 0; 
+                }
+            })
+        }, 1);
+    } else {
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+    }
+});
+
+
+
+$('#postularseModal').on('hidden.bs.modal', function () {
+    $('#formularioPostularse')[0].reset();
+
+    $('#postularseModalLabel').show();
+    $('#postularseModal .modal-body p').show();
+    $('.modal-footer.modal-footer-center').show();
+
+    $('#curpInputContainer').hide();
+    $('#guardarFormpostularse').hide();
 });
 
 

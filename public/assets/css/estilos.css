@@ -205,7 +205,29 @@ body {
 
 
 
-/* Asegúrate de que los encabezados se vean bien alineados */
+table.dataTable {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 15px;
+    overflow: hidden; 
+}
+
+table.dataTable thead th:first-child {
+    border-top-left-radius: 15px;
+}
+
+table.dataTable thead th:last-child {
+    border-top-right-radius: 15px;
+}
+
+table.dataTable tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 15px;
+}
+
+table.dataTable tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 15px;
+}
+
 table.dataTable thead th {
     vertical-align: middle;
     padding: 8px 15px;
@@ -216,5 +238,18 @@ table.dataTable thead th {
 
 
 
+.btn-circle {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 50%;
+}
 
 
+.custom-header {
+    background-color: rgb(188, 219, 143) !important;
+    color: white; /* Color del texto, si lo deseas */
+}

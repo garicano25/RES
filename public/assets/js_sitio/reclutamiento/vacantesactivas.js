@@ -283,7 +283,7 @@ function seleccionarPostulante(vacantesId, curp, nombre, primerApellido, segundo
 
     Swal.fire({
         title: '¿Estás seguro?',
-        text: `Estás a punto de seleccionar a ${nombre} ${primerApellido} ${segundoApellido}.`,
+        text: `Estás a punto de preseleccionar a ${nombre} ${primerApellido} ${segundoApellido}.`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',

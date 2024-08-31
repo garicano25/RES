@@ -51,13 +51,13 @@
         <div class="modal-content">
             <form method="post" enctype="multipart/form-data" id="formularioVACANTES" style="background-color: #ffffff;">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva vacante</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     {!! csrf_field() !!}
                     <div class="mb-3">
-                        <label>La vacante es: *</label>
+                        <label>Tipo de vacante *</label>
+                    
                         <select class="form-select" id="LA_VACANTES_ES" name="LA_VACANTES_ES" required>
                             <option value="0" disabled selected>Seleccione una opción</option>
                             <option value="Pública">Pública</option>

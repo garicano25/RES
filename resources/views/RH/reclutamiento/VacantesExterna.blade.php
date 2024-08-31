@@ -200,7 +200,6 @@ use Carbon\Carbon;
                     <li>{{ $requerimiento }}</li>
                 @endforeach
             </ul>
-            <!-- Botón para postularse -->
             <button type="button" class="btn btn-primary postularse-btn" data-bs-toggle="modal" data-bs-target="#postularseModal" data-vacante="{{ $slug }}">Postularse</button>
 
         </div>
@@ -218,36 +217,40 @@ use Carbon\Carbon;
 <!-- ============================================================== -->
 <!-- MODAL -->
 <!-- ============================================================== -->
+
 <div class="modal fade" id="postularseModal" tabindex="-1" aria-labelledby="postularseModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="postularseModalLabel">Nota Importante</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p>Para postularse asegúrese de estar registrado en el banco de CV. <br></p>
-            </div>
-            <div class="modal-footer modal-footer-center">
-                <button type="button" class="btn btn-danger" id="notRegisteredBtn">No estoy registrado</button>
-                <button type="button" class="btn btn-warning" id="actualizarinfo">Actualizar información y postularse a la vacante</button>
-                <button type="button" class="btn btn-success" id="registeredBtn">Sí estoy registrado</button>
-            </div>
-            <div class="modal-body" id="curpInputContainer" style="display:none;">
-                <h6 class="text-center mb-4">Proceso de Postulación</h6>
-                <div class="mb-3">
-                    <label for="curpInput">Escribe tu CURP para continuar con tu postulación:</label>
-                    <input type="text" id="curpInput" name="curp" class="form-control" placeholder="Escribe tu CURP aquí">
+            <form method="post" enctype="multipart/form-data" id="formularioPostularse" style="background-color: #ffffff;">
+                {!! csrf_field() !!}  
+                <div class="modal-header">
+                    <h5 class="modal-title" id="postularseModalLabel">Nota Importante</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </div>
-            
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-success" id="guardarFormpostularse" style="display:none;">Postularse</button>
-            </div>
+                <div class="modal-body">
+                    <p>Para postularse asegúrese de estar registrado en el banco de CV. <br></p>
+                </div>
+                <div class="modal-footer modal-footer-center">
+                    <button type="button" class="btn btn-danger" id="notRegisteredBtn">No estoy registrado</button>
+                    <button type="button" class="btn btn-warning" id="actualizarinfo">Actualizar información y postularse a la vacante</button>
+                    <button type="button" class="btn btn-success" id="registeredBtn">Sí estoy registrado</button>
+                </div>
+                <div class="modal-body" id="curpInputContainer" style="display:none;">
+                    <h6 class="text-center mb-4">Proceso de Postulación</h6>
+                    <div class="mb-3">
+                        <label for="curpInput">Escribe tu CURP para continuar con tu postulación:</label>
+                        <input type="text" id="curpInput" name="CURP" class="form-control" placeholder="Escribe tu CURP aquí">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" id="guardarFormpostularse" style="display:none;">Postularse</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+
 
 
 

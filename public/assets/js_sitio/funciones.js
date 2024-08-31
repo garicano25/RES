@@ -1180,12 +1180,89 @@ function alertPassConfirm(alert = {
 }
 
 
+// function mensajeAjax(data, modulo = null) {
+//   if (modulo != null) {
+//     text = ' No pudimos cargar'
+//   }
+
+//     try {
+//     switch (data['code']) {
+//       case 1:
+//         return 1;
+//         break;
+//       case 2:
+//         Swal.fire({
+//           icon: 'error',
+//           title: 'Oops...',
+//           text: '¡Ha ocurrido un error!',
+//           footer: 'Respuesta: ' + data['response']['msj']
+//         })
+//         break;
+//       case "repetido":
+//         Swal.fire({
+//           icon: 'error',
+//           title: 'Oops...',
+//           text: '¡Usted ya está registrado!',
+//           footer: 'Utilice su CURP para registrarse en una nueva prueba'
+//         })
+//         break;
+//       case "login":
+//         Swal.fire({
+//           icon: 'error',
+//           title: 'Oops...',
+//           text: 'Respuesta: ' + data['response']['msj']
+//         })
+//         break;
+//       case "Token": case "Usernovalid":
+//         alertMensajeConfirm({
+//           title: "¡Sesión no valida!",
+//           text: "El token de su sesión ha caducado, vuelva iniciar sesión",
+//           footer: "Redireccionando pantalla...",
+//           icon: "info",
+//           confirmButtonColor: "#d33",
+//           confirmButtonText: "Aceptar",
+//           cancelButtonText: false,
+//           allowOutsideClick: false,
+//           timer: 4000,
+//           timerProgressBar: true,
+//         }, function () {
+//           destroySession();
+//           window.location.replace(http + servidor + "/" + appname + "/vista/login/");
+//         })
+
+//         break;
+//       case "turnero":
+//         alertMensajeConfirm({
+//           title: "Oops",
+//           text: `${data['response']['msj']}`,
+//           footer: "Tal vez deberias intentarlo nuevamente",
+//           icon: "warning",
+//         })
+
+//         break;
+//       default:
+//         Swal.fire({
+//           icon: 'error',
+//           title: 'Oops...',
+//           text: 'Hubo un problema!',
+//           footer: 'No sabemos que pasó, reporta este problema...'
+//         })
+//     }
+//   } catch (error) {
+//     alertMensaje('warning', 'Error:', 'No se puedo resolver un conflicto interno con validación, si el problema persiste reporte al encargado de area de esto.', '[Error: api no valida, "response: {code: XXXX}", no existe]')
+//     return 0
+//   }
+//   return 0;
+// }
+
+
+
 function mensajeAjax(data, modulo = null) {
   if (modulo != null) {
     text = ' No pudimos cargar'
   }
 
-    try {
+  try {
     switch (data['code']) {
       case 1:
         return 1;
@@ -1196,7 +1273,7 @@ function mensajeAjax(data, modulo = null) {
           title: 'Oops...',
           text: '¡Ha ocurrido un error!',
           footer: 'Respuesta: ' + data['response']['msj']
-        })
+        });
         break;
       case "repetido":
         Swal.fire({
@@ -1204,14 +1281,14 @@ function mensajeAjax(data, modulo = null) {
           title: 'Oops...',
           text: '¡Usted ya está registrado!',
           footer: 'Utilice su CURP para registrarse en una nueva prueba'
-        })
+        });
         break;
       case "login":
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: 'Respuesta: ' + data['response']['msj']
-        })
+        });
         break;
       case "Token": case "Usernovalid":
         alertMensajeConfirm({
@@ -1228,32 +1305,52 @@ function mensajeAjax(data, modulo = null) {
         }, function () {
           destroySession();
           window.location.replace(http + servidor + "/" + appname + "/vista/login/");
-        })
-
+        });
         break;
       case "turnero":
         alertMensajeConfirm({
           title: "Oops",
           text: `${data['response']['msj']}`,
-          footer: "Tal vez deberias intentarlo nuevamente",
+          footer: "Tal vez deberías intentarlo nuevamente",
           icon: "warning",
-        })
-
+        });
         break;
+        case 0:
+          // Caso específico para la postulación a una vacante
+          if (data.msj === 'Ya te has postulado a esta vacante') {
+            Swal.fire({
+              icon: 'warning',
+              title: 'Ya estás postulado a esta vacante',
+              text: 'Nos pondremos en contacto contigo pronto.',
+              confirmButtonText: 'Entendido'
+            });
+          } else {
+            // Manejo general de otros posibles errores con code 0
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: data.msj || 'Hubo un problema!',
+              footer: 'Por favor, reporta este problema...'
+            });
+          }
+          break;
+      
+      
       default:
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: 'Hubo un problema!',
-          footer: 'No sabemos que pasó, reporta este problema...'
-        })
+          footer: 'No sabemos qué pasó, reporta este problema...'
+        });
     }
   } catch (error) {
-    alertMensaje('warning', 'Error:', 'No se puedo resolver un conflicto interno con validación, si el problema persiste reporte al encargado de area de esto.', '[Error: api no valida, "response: {code: XXXX}", no existe]')
-    return 0
+    alertMensaje('warning', 'Error:', 'No se pudo resolver un conflicto interno con la validación, si el problema persiste reporte al encargado de área de esto.', '[Error: api no valida, "response: {code: XXXX}", no existe]');
+    return 0;
   }
   return 0;
 }
+
 
 function alertErrorAJAX(jqXHR, exception, data) {
   var msg = '';

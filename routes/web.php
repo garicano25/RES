@@ -176,6 +176,7 @@ Route::get('/cvpdf/{ID_BANCO_CV}', [bancocvController::class, 'cvpdf']);
 Route::get('/Vacantes', [PuestoController::class, 'index']);
 Route::post('/actualizarinfo', [PuestoController::class, 'getCvInfo'])->name('actualizarinfo');
 Route::post('/ActualizarSave', [PuestoController::class, 'store']);
+Route::post('/PostularseSave', [PuestoController::class, 'store1']);
 
 // Catálogo de vacantes
 Route::get('/CatálogoDeVacantes', [catalogovacantesController::class, 'index']);
@@ -204,6 +205,7 @@ Route::post('/guardarSeleccion', [vacantesactivasController::class, 'guardarSele
 
 Route::get('/Selección', function () {return view('RH.Selección.seleccion');});
 Route::get('/Tablaseleccion', [seleccionController::class, 'Tablaseleccion']);
+Route::get('/getRelatedData/{categoriaVacanteId}', [seleccionController::class, 'getRelatedData']);
 
 
 
