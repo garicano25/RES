@@ -558,7 +558,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label>Área de conocimiento del trabajador</label>
-                                    <input type="text" class="form-control desabilitado" id="AREA_CONOCIMIENTOTRABAJADOR_PPT" name="AREA_CONOCIMIENTOTRABAJADOR_PPT" disabled>
+                                    <input type="text" class="form-control desabilitado" id="AREA_CONOCIMIENTO_PPT" name="AREA_CONOCIMIENTO_PPT" disabled>
                                 </div>
                             </div>
                         </div>
@@ -667,7 +667,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label>Área de conocimiento del trabajador</label>
-                                    <input type="text" class="form-control desabilitado" id="AREA_CONOCIMINETO_TRABAJADOR_PPT" name="AREA_CONOCIMINETO_TRABAJADOR_PPT" disabled>
+                                    <input type="text" class="form-control desabilitado" id="AREA_CONOCIMIENTO_TRABAJADOR_PPT" name="AREA_CONOCIMIENTO_TRABAJADOR_PPT" disabled>
                                 </div>
                             </div>
                         </div>
@@ -2608,10 +2608,10 @@
                                             <tr>
                                                 <td>Disponibilidad para viajar</td>
                                                 <td class="text-center">
-                                                    <input class="form-check-input" type="radio" name="DISPONIBILAD_VIAJAR_PPT" id="VIAJAR_SI" value="si">
+                                                    <input class="form-check-input" type="radio" name="DISPONIBILIDAD_VIAJAR_PPT" id="VIAJAR_SI" value="si">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input class="form-check-input" type="radio" name="DISPONIBILAD_VIAJAR_PPT" id="VIAJAR_NO" value="no">
+                                                    <input class="form-check-input" type="radio" name="DISPONIBILIDAD_VIAJAR_PPT" id="VIAJAR_NO" value="no">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -2674,7 +2674,7 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <select class="form-control" id="DISPONIBILADVIAJAR_OPCION_PPT" name="DISPONIBILADVIAJAR_OPCION_PPT">
+                                                    <select class="form-control" id="DISPONIBILIDAD_VIAJAR_OPCION_PPT" name="DISPONIBILIDAD_VIAJAR_OPCION_PPT">
                                                         <option selected disabled>Seleccione una opción</option>
                                                         <option value="No">No</option>
                                                         <option value="Nacional">Nacional</option>
@@ -2684,12 +2684,12 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="radio-container">
-                                                        <input class="form-check-input desabilitado" type="radio" name="DISPONIBILADVIAJAR_OPCION_CUMPLE" id="DISPONIBILADVIAJAR_OPCION_SI" value="si" disabled>
+                                                        <input class="form-check-input desabilitado" type="radio" name="DISPONIBILIDAD_VIAJAR_OPCION_CUMPLE" id="DISPONIBILADVIAJAR_OPCION_SI" value="si" disabled>
                                                     </div>
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="radio-container">
-                                                        <input class="form-check-input desabilitado" type="radio" name="DISPONIBILADVIAJAR_OPCION_CUMPLE" id="DISPONIBILADVIAJAR_OPCION_NO" value="No" disabled>
+                                                        <input class="form-check-input desabilitado" type="radio" name="DISPONIBILIDAD_VIAJAR_OPCION_CUMPLE" id="DISPONIBILADVIAJAR_OPCION_NO" value="No" disabled>
                                                     </div>
                                                 </td>
                                             </tr>

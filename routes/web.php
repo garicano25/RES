@@ -202,10 +202,10 @@ Route::post('/guardarSeleccion', [vacantesactivasController::class, 'guardarSele
 
 //==============================================  SELECCION  ============================================== 
 
-
-Route::get('/Selección', function () {return view('RH.Selección.seleccion');});
+Route::get('/Selección', [seleccionController::class, 'index']);
+// Route::get('/Selección', function () {return view('RH.Selección.seleccion');});
 Route::get('/Tablaseleccion', [seleccionController::class, 'Tablaseleccion']);
-Route::get('/getRelatedData/{categoriaVacanteId}', [seleccionController::class, 'getRelatedData']);
+Route::get('/consultarSeleccion/{categoriaVacanteId}', [seleccionController::class, 'consultarSeleccion']);
 
-
+Route::get('/get-formulario-ppt/{id}', [seleccionController::class, 'getFormularioPPT']);
 

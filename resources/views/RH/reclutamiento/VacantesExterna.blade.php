@@ -314,12 +314,9 @@ use Carbon\Carbon;
                                     </div>
                                     <div class="col-10 mx-2">        
                                         <label for="NUMERO1_CV" class="me-2">Teléfono 1</label>
-                                    <input type="number" class="form-control col-auto" id="TELEFONO1" name="TELEFONO1" required>
+                                        <input type="number" class="form-control col-auto" id="TELEFONO1" name="TELEFONO1" required>
                                     </div>
-                                    
                                 </div>
-                                
-                    
                                 <div class="mb-3 d-flex align-items-center">
                     
                                     <div class="col-2">
@@ -337,8 +334,6 @@ use Carbon\Carbon;
                                     <input type="number" class="form-control col-auto" id="TELEFONO2" name="TELEFONO2" required>
                                     </div>                
                                 </div>      
-                               
-                    
                                 <div class="mb-3">
                                     <label>CURP</label>
                                     <input type="text" class="form-control" id="CURP_CV" name="CURP_CV" maxlength="18" required>
@@ -346,7 +341,6 @@ use Carbon\Carbon;
                                     <div id="mensaje"></div>
                                     <div id="error"></div>
                                 </div> 
-
                                 <div class="mb-3">
                                     <label>Género</label>
                                     <select class="form-control" id="GENERO" name="GENERO" required>
@@ -356,9 +350,6 @@ use Carbon\Carbon;
                                         @endforeach
                                     </select> 
                                 </div> 
-                    
-            
-            
                                 <div class="mb-3">
                                     <label>Fecha de nacimiento</label>
                                     <div class="d-flex justify-content-between">
@@ -416,9 +407,6 @@ use Carbon\Carbon;
                                     <label>Nombre de la licenciatura</label>
                                     <input type="text" class="form-control" id="NOMBRE_LICENCIATURA_CV" name="NOMBRE_LICENCIATURA_CV">
                                 </div>
-                        
-                    
-                    
                                 <div class="mb-3" id="licenciatura-titulo-container" style="display: none;">
                                     <label class="col-form-label">¿Cuenta con Título?</label>
                                     <div class="d-flex">
@@ -432,7 +420,6 @@ use Carbon\Carbon;
                                         </div>
                                     </div>
                                 </div>
-                    
                                 <div class="mb-3" id="licenciatura-cedula-container" style="display: none;">
                                     <label class="col-form-label">¿Cuenta con cédula profesional?</label>
                                     <div class="d-flex">
@@ -446,8 +433,6 @@ use Carbon\Carbon;
                                         </div>
                                     </div>
                                 </div>
-                    
-                    
                                 <div class="mb-3" id="posgrado-container" style="display: none;">
                                     <label>Tipo de posgrado</label>
                                     <select class="form-select" id="TIPO_POSGRADO_CV" name="TIPO_POSGRADO_CV">
@@ -503,8 +488,6 @@ use Carbon\Carbon;
                                             @endforeach
                                         </select>
                                     </div>
-                
-                                    
                                     <div class="col-6 text-center">
                                         <label>Operativas</label>
                                         <select class="form-select" id="INTERES_OPERATIVAS" name="INTERES_OPERATIVAS[]"  multiple>
@@ -516,7 +499,6 @@ use Carbon\Carbon;
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="mb-3 text-center">
                                     <label class="mt-4">Documentos</label>
                                 </div>
@@ -535,9 +517,7 @@ use Carbon\Carbon;
                                     <input type="file" class="form-control" id="ARCHIVO_CV" name="ARCHIVO_CV" accept=".pdf" style="width: auto; flex: 1;" required>
                                     <button type="button" class="btn btn-light btn-sm ms-2" id="quitarCV" style="display:none;">Quitar archivo</button>
                                 </div>
-                                <div id="CV_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
-                    
-                                         
+                                <div id="CV_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>   
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                                     <button type="submit" class="btn btn-success" id="guardarFormActualizar">Guardar</button>

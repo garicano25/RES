@@ -270,6 +270,9 @@ $('#TablaPPT tbody').on('click', 'td>button.EDITAR', function () {
     var data = row.data();
     var form = "formularioPPT";
 
+    $('.desabilitado').css('background','#E2EFDA');
+
+
     editarDatoTabla(data, form, 'miModal_PPT', 1);
     mostrarCursos(data, form);
 

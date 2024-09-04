@@ -249,7 +249,11 @@ table.dataTable thead th {
 }
 
 
-.custom-header {
-    background-color: rgb(188, 219, 143) !important;
-    color: white; /* Color del texto, si lo deseas */
+
+
+
+.custom-header th {
+    background-color: rgb(178, 226, 109) !important;
+    color: white; 
+    border: 2px solid rgb(178, 226, 109) !important; 
 }

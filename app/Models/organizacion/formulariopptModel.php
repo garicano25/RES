@@ -13,6 +13,7 @@ class formulariopptModel extends Model
     protected $table = 'formulario_ppt';
     protected $fillable = [
         'USUARIO_ID',
+
         'DEPARTAMENTO_AREA_ID',
         'NOMBRE_TRABAJADOR_PPT',
         'AREA_TRABAJADOR_PPT',
@@ -49,7 +50,7 @@ class formulariopptModel extends Model
         'AREA4_PPT',
         'AREA4_CUMPLE_PPT',
         'AREA_REQUERIDA_PPT',
-        'AREA_CONOCIMIENTOTRABAJADOR_PPT',
+        'AREA_CONOCIMIENTO_PPT',
         'EGRESADO_ESPECIALIDAD_PPT',
         'GRADUADO_ESPECIALIDA_PPT',
         'ESPECIALIDAD_CUMPLE_PPT',
@@ -60,7 +61,7 @@ class formulariopptModel extends Model
         'EGRESADO_DOCTORADO_PPT',
         'GRADUADO_DOCTORADO_PPT',
         'DOCTORADO_CUMPLE_PPT',
-        'AREA_CONOCIMINETO_TRABAJADOR_PPT',
+        'AREA_CONOCIMIENTO_TRABAJADOR_PPT',
         'WORD_APLICA_PPT',
         'WORD_BAJO_PPT',
         'WORD_MEDIO_PPT',
@@ -172,13 +173,13 @@ class formulariopptModel extends Model
         'TOMA_DECISIONES_DESEABLE_PPT',
         'TOMA_DECISIONES_NO_REQUERIDA_PPT',
         'TOMA_DECISIONES_CUMPLE_PPT',
-        'DISPONIBILAD_VIAJAR_PPT',
+        'DISPONIBILIDAD_VIAJAR_PPT',
         'REQUIERE_PASAPORTE_PPT',
         'REQUIERE_VISA_PPT',
         'REQUIERE_LICENCIA_PPT',
         'CAMBIO_RESIDENCIA_PPT',
-        'DISPONIBILADVIAJAR_OPCION_PPT',
-        'DISPONIBILADVIAJAR_OPCION_CUMPLE',
+        'DISPONIBILIDAD_VIAJAR_OPCION_PPT',
+        'DISPONIBILIDAD_VIAJAR_OPCION_CUMPLE',
         'REQUIEREPASAPORTE_OPCION_PPT',
         'REQUIEREPASAPORTE_OPCION_CUMPLE',
         'REQUIERE_VISA_OPCION_PPT',
@@ -188,6 +189,8 @@ class formulariopptModel extends Model
         'CAMBIORESIDENCIA_OPCION_PPT',
         'CAMBIORESIDENCIA_OPCION_CUMPLE',
         'OBSERVACIONES_PPT',
+
+
         'ELABORADO_NOMBRE_PPT',
         'ELABORADO_FIRMA_PPT',
         'ELABORADO_FECHA_PPT',

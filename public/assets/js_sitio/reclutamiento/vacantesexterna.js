@@ -2,29 +2,30 @@
 ID_BANCO_CV = 0
 ID_LISTA_POSTULANTES = 0
 
-    document.getElementById('notRegisteredBtn').addEventListener('click', function() {
-        window.location.href = 'http://127.0.0.1:8000/Formulario-vacantes';
-    });
+document.getElementById('notRegisteredBtn').addEventListener('click', function() {
+    window.location.href = 'http://127.0.0.1:8000/Formulario-vacantes';
+});
 
-    document.getElementById('registeredBtn').addEventListener('click', function() {
-        document.getElementById('curpInputContainer').style.display = 'block';
-        document.querySelector('.modal-footer').style.display = 'none';
-    });
+document.getElementById('registeredBtn').addEventListener('click', function() {
+    document.getElementById('curpInputContainer').style.display = 'block';
+    document.querySelector('.modal-footer').style.display = 'none';
+});
 
    
 
 
 
-    function showDetails(slug) {
-    document.querySelector('.table').style.display = 'none';
-    
-    var detailsPanes = document.querySelectorAll('.details-pane');
-    detailsPanes.forEach(function(pane) {
-        pane.style.display = 'none';  
-    });
+function showDetails(slug) {
+document.querySelector('.table').style.display = 'none';
 
-    document.getElementById('details-' + slug).style.display = 'block';  
+var detailsPanes = document.querySelectorAll('.details-pane');
+detailsPanes.forEach(function(pane) {
+    pane.style.display = 'none';  
+});
+
+document.getElementById('details-' + slug).style.display = 'block';  
 }
+
 
 function volverATabla() {
     document.querySelectorAll('.details-pane').forEach(function(panel) {
@@ -39,6 +40,9 @@ function volverATabla() {
         console.error('No se encontró el elemento con id "tabla-vacantes". Asegúrate de que existe.');
     }
 }
+
+
+
 
 
 document.getElementById('actualizarinfo').addEventListener('click', function() {
@@ -362,7 +366,7 @@ let vacanteId = null;
 
 $(".postularse-btn").click(function (e) {
     vacanteId = $(this).data('vacante'); 
-    console.log("ID de la vacante seleccionada:", vacanteId);
+    // console.log("ID de la vacante seleccionada:", vacanteId);
 });
 
 

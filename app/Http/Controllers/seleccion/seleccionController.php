@@ -6,12 +6,33 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\selección\seleccionModel;
+use App\Models\organizacion\catalogoexperienciaModel;
+
 use DB;
 
 
 class seleccionController extends Controller
 {
     
+
+
+    public function index()
+    {
+        $areas = DB::select("
+        SELECT ID_CATALOGO_CATEGORIA  AS ID, NOMBRE_CATEGORIA AS NOMBRE
+        FROM catalogo_categorias
+        WHERE ACTIVO = 1
+        ");
+
+
+        $puesto = catalogoexperienciaModel::orderBy('NOMBRE_PUESTO', 'ASC')->get();
+
+
+        return view('RH.Selección.seleccion', compact('areas','puesto'));
+    }
+
+
+
 
 public function Tablaseleccion()
 {
@@ -24,7 +45,7 @@ public function Tablaseleccion()
             LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
             WHERE vac.ACTIVO = 1
             AND vac.FECHA_EXPIRACION >= CURDATE()
-        ");
+");
         
         // Respuesta
         return response()->json([
@@ -39,14 +60,14 @@ public function Tablaseleccion()
     }
 }
 
-public function getRelatedData($categoriaVacanteId)
+public function consultarSeleccion($categoriaVacanteId)
 {
-    $relatedData = DB::table('formulario_seleccion')
+    $consultar = DB::table('formulario_seleccion')
         ->where('CATEGORIA_VACANTE', $categoriaVacanteId)
-        ->where('ACTIVO', 1)  // Filtrar solo los registros que tienen ACTIVO = 1
+        ->where('ACTIVO', 1)  
         ->get();
         
-    if ($relatedData->isEmpty()) {
+    if ($consultar->isEmpty()) {
         return response()->json([
             'data' => [],
             'message' => 'No hay información relacionada para esta categoría.'
@@ -54,10 +75,50 @@ public function getRelatedData($categoriaVacanteId)
     }
     
     return response()->json([
-        'data' => $relatedData
+        'data' => $consultar
     ]);
 }
     
+
+
+// public function getFormularioPPT($departamentoAreaId)
+// {
+//     // Buscar los datos en la tabla formulario_ppt por el ID de departamento
+//     $formulario = DB::table('formulario_ppt')
+//                     ->where('DEPARTAMENTO_AREA_ID', $departamentoAreaId)
+//                     ->first();
+
+//     if ($formulario) {
+//         // Retornar la información en formato JSON
+//         return response()->json($formulario);
+//     } else {
+//         // Si no hay resultados, devolver un error
+//         return response()->json(['error' => 'No se encontró información.'], 404);
+//     }
+// }
+
+
+
+
+public function getFormularioPPT($departamentoAreaId)
+{
+    $formulario = DB::table('formulario_ppt')
+                    ->where('DEPARTAMENTO_AREA_ID', $departamentoAreaId)
+                    ->first();
+
+    if ($formulario) {
+        $cursos = DB::table('cursos_ppt')
+                    ->where('FORMULARIO_PPT_ID', $formulario->ID_FORMULARIO_PPT)
+                    ->get();
+
+        return response()->json([
+            'formulario' => $formulario,
+            'cursos' => $cursos
+        ]);
+    } else {
+        return response()->json(['error' => 'No se encontró información.'], 404);
+    }
+}
 
     
 
