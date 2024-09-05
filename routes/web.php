@@ -206,6 +206,8 @@ Route::get('/Selección', [seleccionController::class, 'index']);
 // Route::get('/Selección', function () {return view('RH.Selección.seleccion');});
 Route::get('/Tablaseleccion', [seleccionController::class, 'Tablaseleccion']);
 Route::get('/consultarSeleccion/{categoriaVacanteId}', [seleccionController::class, 'consultarSeleccion']);
+Route::get('/consultarformppt/{id}', [seleccionController::class, 'consultarformppt']);
+Route::post('/SeleccionSave', [seleccionController::class, 'store']);
+Route::get('/Tablapptseleccion', [seleccionController::class, 'Tablapptseleccion']);
 
-Route::get('/get-formulario-ppt/{id}', [seleccionController::class, 'getFormularioPPT']);
 

@@ -130,16 +130,7 @@ $("#guardarFormPPT").click(function (e) {
                 await loaderbtn('guardarFormPPT')
                 await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_PPT: ID_FORMULARIO_PPT }, 'pptSave', 'formularioPPT', 'guardarFormPPT', { callbackAfter: true, callbackBefore: true }, () => {
             
-                    // Swal.fire({
-                    //     title: "Espere un momento!",
-                    //     text: "Estamos guardando la información.",
-                    //     imageUrl: "/assets/images/Gif.gif",
-                    //     imageWidth: 350,
-                    //     imageHeight: 305,
-                    //     imageAlt: "Loader Gif",
-                    //     showConfirmButton: false,
-
-                    // });
+              
 
                     Swal.fire({
                         icon: 'info',

@@ -53,12 +53,15 @@
                           Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
                       </button>
                       </ol>
-                      <div class="card-body">
-                          <table id="Tablapptseleccion" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
-                              <!-- Aquí va el contenido de la tabla -->
-                          </table>
-                      </div>
+                      <div class="card-body position-relative">
+                        <i id="loadingIcon" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                        
+                        <table id="Tablapptseleccion" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                            </table>
+                    </div>                  
                   </div>
+
+                  
                     <!-- PRUEBAS -->
                     <div class="card mb-3">
                       <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
@@ -147,8 +150,8 @@
             {!! csrf_field() !!}
 
               <div class="mb-3">
-                <label class="form-label">Comentario de la entrevista</label>
-                <textarea class="form-control" id="comentarios" name="comentarios" rows="4"></textarea>
+                <label class="form-label">Comentario de la entrevista *</label>
+                <textarea class="form-control" id="comentarios" name="comentarios" rows="4" required></textarea>
             </div>
             <div class="mb-3"  style="display: none">
                 <label  class="form-label">% de la Entrevista</label>
@@ -182,7 +185,7 @@
 <div class="modal modal-fullscreen fade" id="miModal_ppt" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-fullscreen">
       <div class="modal-content">
-          <form method="post" enctype="multipart/form-data" id="formularioPPT" style="background-color: #ffffff;">
+          <form method="post" enctype="multipart/form-data" id="formularioSeleccionPPT" style="background-color: #ffffff;">
               <div class="modal-header">
                   <h5 class="modal-title" id="miModalLabel">Perfil de puesto de trabajo&nbsp;(PPT)</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -191,10 +194,7 @@
 
               <div class="modal-body">
                   {!! csrf_field() !!}
-                  <div class="row">
-                      <input type="hidden" class="form-control" id="USUARIO_ID" name="USUARIO_ID" value="0">
-                      
-                  </div>
+                 
                   <div class="row">
                       <div class="row mb-3">
                           <div class="col-4">
@@ -2156,6 +2156,10 @@
                           
 
                           <div class="row mb-3" id="puesto1" style="display: flex;">
+                            <div class="col-1">
+                                <div class="form-group">
+                                </div>
+                            </div>
                               <div class="col-2 mt-1">
                                   <div class="form-group">
                                       <select class="form-control puesto" id="PUESTO1_NOMBRE" name="PUESTO1_NOMBRE"   >
@@ -2216,6 +2220,10 @@
 
 
                           <div class="row mb-3" id="puesto2" style="display: flex;">
+                            <div class="col-1">
+                                <div class="form-group">
+                                </div>
+                            </div>
                               <div class="col-2 mt-1">
                                   <div class="form-group">
                                       <select class="form-control puesto" id="PUESTO3_NOMBRE" name="PUESTO3_NOMBRE" >
@@ -2276,6 +2284,10 @@
 
 
                           <div class="row mb-3" id="puesto3" style="display: flex;">
+                            <div class="col-1">
+                                <div class="form-group">
+                                </div>
+                            </div>
                               <div class="col-2 mt-1">
                                   <div class="form-group">
                                       <select class="form-control puesto" id="PUESTO5_NOMBRE" name="PUESTO5_NOMBRE" >
@@ -2336,6 +2348,11 @@
                          
 
                           <div class="row mb-3" id="puesto4" style="display: flex;">
+                            <div class="col-1">
+                                <div class="form-group">
+                                </div>
+                            </div>
+
                               <div class="col-2 mt-1">
                                   <div class="form-group">
                                       <select class="form-control puesto" id="PUESTO7_NOMBRE" name="PUESTO7_NOMBRE" >
@@ -2397,7 +2414,7 @@
                           <div class="row mb-3" id="puesto5" style="display: flex;">
                             <div class="col-1">
                                 <div class="form-group">
-                                                                    </div>
+                                </div>
                             </div>
 
                               <div class="col-2 mt-1">
@@ -2991,11 +3008,7 @@
 
               <div class="modal-footer mx-5">
                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                  <button type="submit" class="btn btn-success" id="guardarFormPPT"><i class="bi bi-floppy-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Guardar PPT"></i> Guardar</button>
-
-                  <button type="button" class="btn btn-success" id="revisarFormPPT" style="display: none;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Marcar como revisado formato de PPT" disabled><i class="bi bi-card-checklist"></i> Revisado</button>
-
-                  <button type="button" class="btn btn-success" id="AutorizarFormPPT" style="display: none;" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Autorizar formato PPT" disabled><i class="bi bi-clipboard-check-fill"></i> Autorizar</button>
+                  <button type="submit" class="btn btn-success" id="guardarFormSeleccionPPT"><i class="bi bi-floppy-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Guardar PPT"></i> Guardar</button>
               </div>
           </form>
       </div>

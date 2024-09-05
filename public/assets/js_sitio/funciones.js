@@ -2552,7 +2552,7 @@ function loaderbtn(btn) {
 function validarFormulario(form) {
   var formulario = form;
 
-  // Busca todos los elementos input dentro del formulario y agrega la clase
+  // Busca todos los elementos input, textarea y select dentro del formulario y agrega la clase "validar"
   formulario.find('input[required]:not([disabled]), textarea[required]:not([disabled]), select[required]:not([disabled])').addClass('validar').removeClass('error');
 
   // Busca todos los elementos con la clase "validar"
@@ -2560,8 +2560,21 @@ function validarFormulario(form) {
   var formularioValido = true;
 
   campos.each(function () {
+      var tipoCampo = $(this).attr('type');
       var valorCampo = $(this).val();
-      if (valorCampo === '' || valorCampo === null) {
+
+      // Verifica si el campo es un radio o checkbox y si hay uno seleccionado
+      if (tipoCampo === 'radio' || tipoCampo === 'checkbox') {
+          var nombreGrupo = $(this).attr('name');
+          if ($('input[name="' + nombreGrupo + '"]:checked').length === 0) {
+              $('input[name="' + nombreGrupo + '"]').addClass('error');
+              formularioValido = false;
+          } else {
+              $('input[name="' + nombreGrupo + '"]').removeClass('error');
+          }
+      } 
+      // Valida otros tipos de campos (text, email, etc.)
+      else if (valorCampo === '' || valorCampo === null) {
           $(this).addClass('error');
           formularioValido = false;
       } else {
@@ -2571,11 +2584,24 @@ function validarFormulario(form) {
 
   return formularioValido;
 }
+
+// Evento para eliminar la clase "error" cuando el campo cambia o recibe entrada
 $(document).on('input change', 'input[required], textarea[required], select[required]', function() {
-  if ($(this).val() !== '' && $(this).val() !== null) {
-      $(this).removeClass('error');
+  var tipoCampo = $(this).attr('type');
+
+  // Si es radio o checkbox, solo remueve el error cuando uno del grupo es seleccionado
+  if (tipoCampo === 'radio' || tipoCampo === 'checkbox') {
+      var nombreGrupo = $(this).attr('name');
+      if ($('input[name="' + nombreGrupo + '"]:checked').length > 0) {
+          $('input[name="' + nombreGrupo + '"]').removeClass('error');
+      }
+  } else {
+      if ($(this).val() !== '' && $(this).val() !== null) {
+          $(this).removeClass('error');
+      }
   }
 });
+
 
 
 document.querySelectorAll('.modal').forEach(modal => {
