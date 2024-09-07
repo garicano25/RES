@@ -172,20 +172,24 @@ var Tablajerarquia = $("#Tablajerarquia").DataTable({
 
 
 
-$('#Tablajerarquia tbody').on('click', 'td>button.ELIMINAR', function () {
 
+$('#Tablajerarquia tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablajerarquia.row(tr);
 
+    var estado = $(this).is(':checked') ? 1 : 0;
+
     data = {
         api: 1,
-        ELIMINAR: 1,
+        ELIMINAR: estado == 0 ? 1 : 0, 
         ID_CATALOGO_JERARQUIA: row.data().ID_CATALOGO_JERARQUIA
-    }
-    
-    eliminarDatoTabla(data, [Tablajerarquia], 'jerarquiaDelete')
+    };
 
-})
+    eliminarDatoTabla(data, [Tablajerarquia], 'jerarquiaDelete');
+});
+
+
+
 
 
 $('#Tablajerarquia tbody').on('click', 'td>button.EDITAR', function () {

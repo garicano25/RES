@@ -30,100 +30,118 @@
           </div>
           <div class="modal-body">
               <div class="container-fluid">
-                  <!-- ENTREVISTAS  -->
-                  <div class="card mb-3">
-                      <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
-                          <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-people-fill"></i>&nbsp;Entrevista</h3>
-                          <button type="button" class="btn btn-light waves-effect waves-light " id="nueva_entrevista" style="margin-left: auto;">
-                            Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
-                        </button>
-                      </ol>
-                      <div class="card-body">
-                          <table id="Tablaentrevistaseleccion" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
-                              <!-- Aquí va el contenido de la tabla -->
-                          </table>
-                      </div>
-                  </div>
-            
-                  <!-- PPT -->
-                  <div class="card mb-3">
-                      <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
-                        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-filetype-ppt"></i>&nbsp;Perfil de puesto de trabajo&nbsp;(PPT)</h3>
-                        <button type="button" class="btn btn-light waves-effect waves-light " id="nuevo_ppt" style="margin-left: auto;">
-                          Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
-                      </button>
-                      </ol>
-                      <div class="card-body position-relative">
-                        <i id="loadingIcon" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
-                        
-                        <table id="Tablapptseleccion" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
-                            </table>
-                    </div>                  
-                  </div>
 
-                  
-                    <!-- PRUEBAS -->
-                    <div class="card mb-3">
-                      <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
-                        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-check2-square"></i>&nbsp;Pruebas de conocimientos</h3>
-                        <button type="button" class="btn btn-light waves-effect waves-light " id="nuevo_pruebas" style="margin-left: auto;">
-                          Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
-                      </button>
-                      </ol>
-                      <div class="card-body">
-                          <table id="Tablapruebas" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
-                              <!-- Aquí va el contenido de la tabla -->
-                          </table>
-                      </div>
-                  </div>
-
-
-                   <!-- EXPERIENCIA -->
-                   <div class="card mb-3">
-                    <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
-                      <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-briefcase-fill"></i>&nbsp;Experiencia laboral</h3>
-                      <button type="button" class="btn btn-light waves-effect waves-light " id="nuevo_experiencia" style="margin-left: auto;">
-                        Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
-                    </button>
-                    </ol>
-                    <div class="card-body">
-                        <table id="Tablaexperiencia" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
-                            <!-- Aquí va el contenido de la tabla -->
-                        </table>
+                <div class="row">
+                    <!-- ENTREVISTAS  -->
+                    <div class="col-6 mb-3">
+                        <div class="card h-100 cardseleccion ">
+                            <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
+                                <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-people-fill"></i>&nbsp;Entrevista</h3>
+                                <button type="button" class="btn btn-light waves-effect waves-light" id="nueva_entrevista" style="margin-left: auto;">
+                                    Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                                </button>
+                            </ol>
+                            <div class="card-body position-relative">
+                                <i id="loadingIcon" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                                <table id="Tablaentrevistaseleccion" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- PPT -->
+                    <div class="col-6 mb-3 ">
+                        <div class="card h-100 cardseleccion">
+                            <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
+                                <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-filetype-ppt"></i>&nbsp;Perfil de puesto de trabajo&nbsp;(PPT)</h3>
+                                <button type="button" class="btn btn-light waves-effect waves-light" id="nuevo_ppt" style="margin-left: auto;">
+                                    Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                                </button>
+                            </ol>
+                            <div class="card-body position-relative">
+                                <i id="loadingIcon1" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                                <table id="Tablapptseleccion" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                
 
-
-                <!-- BURO LABORAL  -->
-                <div class="card mb-3">
-                  <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
-                    <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-clipboard-data-fill"></i>&nbsp;Buro laboral</h3>
-                    <button type="button" class="btn btn-light waves-effect waves-light" id="nuevo_buro" style="margin-left: auto;">
-                      Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
-                  </button>
-                  </ol>
-                  <div class="card-body">
-                      <table id="Tablaburo" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
-                          <!-- Aquí va el contenido de la tabla -->
-                      </table>
-                  </div>
-              </div>
-
-
-              <!-- INTELIGENCIA  LABORAL  -->
-              <div class="card mb-3">
-                <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
-                  <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-clipboard-data"></i>&nbsp;Inteligencia laboral</h3>
-                  <button type="button" class="btn btn-light waves-effect waves-light " id="nuevo_inteligencia" style="margin-left: auto;">
-                    Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
-                </button>
-                </ol>
-                <div class="card-body">
-                    <table id="Tablainteligencia" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
-                        <!-- Aquí va el contenido de la tabla -->
-                    </table>
+                  
+                <div class="row">
+                    <!-- PRUEBAS -->
+                    <div class="col-6 mb-3">
+                        <div class="card h-100 cardseleccion">
+                            <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
+                                <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-check2-square"></i>&nbsp;Pruebas de conocimientos</h3>
+                                <button type="button" class="btn btn-light waves-effect waves-light" id="nuevo_pruebas" style="margin-left: auto;">
+                                    Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                                </button>
+                            </ol>
+                            <div class="card-body position-relative">
+                                <table id="Tablapruebas" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- EXPERIENCIA -->
+                    <div class="col-6 mb-3">
+                        <div class="card h-100 cardseleccion">
+                            <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
+                                <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-briefcase-fill"></i>&nbsp;Experiencia laboral</h3>
+                                <button type="button" class="btn btn-light waves-effect waves-light" id="nuevo_experiencia" style="margin-left: auto;">
+                                    Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                                </button>
+                            </ol>
+                            <div class="card-body position-relative">
+                                <table id="Tablaexperiencia" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                
+
+
+                <div class="row">
+                    <!-- BURO LABORAL  -->
+                    <div class="col-6 mb-3">
+                        <div class="card h-100 cardseleccion">
+                            <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
+                                <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-clipboard-data-fill"></i>&nbsp;Buro laboral</h3>
+                                <button type="button" class="btn btn-light waves-effect waves-light" id="nuevo_buro" style="margin-left: auto;">
+                                    Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                                </button>
+                            </ol>
+                            <div class="card-body position-relative">
+                                <table id="Tablaburo" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- INTELIGENCIA LABORAL  -->
+
+
+                    <div class="col-6 mb-3">
+                        <div class="card h-100 cardseleccion">
+                            <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
+                                <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-clipboard-data-fill"></i>&nbsp;Inteligencia laboral</h3>
+                                <button type="button" class="btn btn-light waves-effect waves-light" id="nuevo_inteligencia" style="margin-left: auto;">
+                                    Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                                </button>
+                            </ol>
+                            <div class="card-body position-relative">
+                                <table id="Tablainteligencia" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
 
               </div>
           </div>
@@ -151,23 +169,23 @@
 
               <div class="mb-3">
                 <label class="form-label">Comentario de la entrevista *</label>
-                <textarea class="form-control" id="comentarios" name="comentarios" rows="4" required></textarea>
+                <textarea class="form-control" id="COMENTARIO_ENTREVISTA" name="COMENTARIO_ENTREVISTA" rows="4" required></textarea>
             </div>
             <div class="mb-3"  style="display: none">
                 <label  class="form-label">% de la Entrevista</label>
                 <input type="hidden" class="form-control" id="porcentajeEntrevista" name="porcentajeEntrevista" min="0" max="100">
             </div>
             <div class="mb-3">
-                <label for="archivoEvidencia" class="form-label text-center">Evidencia</label>
+                <label  class="form-label text-center">Evidencia</label>
                 <div class="input-group">
-                  <input type="file" class="form-control" id="archivoEvidencia" name="archivoEvidencia" accept=".pdf">
+                  <input type="file" class="form-control" id="ARCHIVO_ENTREVISTA" name="ARCHIVO_ENTREVISTA" accept=".pdf">
                   <button type="button" class="btn btn-light btn-sm ms-2" id="quitarEvidencia" style="display:none;">Quitar archivo</button>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-success" id="">Guardar</button>
+          <button type="submit" class="btn btn-success" id="guardarFormSeleccionEntrevista">Guardar</button>
         </div>
         </form>
     </div>

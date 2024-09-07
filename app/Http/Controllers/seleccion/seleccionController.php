@@ -8,7 +8,9 @@ use Illuminate\Http\Request;
 use App\Models\selección\seleccionModel;
 use App\Models\selección\seleccionpptModel;
 use App\Models\selección\cursospptseleccionModel;
+use App\Models\selección\entrevistaseleccionModel;
 
+use Illuminate\Support\Facades\Storage;
 
 
 use App\Models\organizacion\catalogoexperienciaModel;
@@ -24,10 +26,12 @@ class seleccionController extends Controller
     public function index()
     {
         $areas = DB::select("
-        SELECT ID_CATALOGO_CATEGORIA  AS ID, NOMBRE_CATEGORIA AS NOMBRE
-        FROM catalogo_categorias
-        WHERE ACTIVO = 1
-        ");
+        SELECT DISTINCT cat.ID_CATALOGO_CATEGORIA AS ID, cat.NOMBRE_CATEGORIA AS NOMBRE
+        FROM catalogo_categorias cat
+        INNER JOIN catalogo_vacantes vac ON vac.CATEGORIA_VACANTE = cat.ID_CATALOGO_CATEGORIA
+        WHERE cat.ACTIVO = 1
+    ");
+    
 
 
         $puesto = catalogoexperienciaModel::orderBy('NOMBRE_PUESTO', 'ASC')->get();
@@ -49,8 +53,7 @@ public function Tablaseleccion()
             FROM catalogo_vacantes vac
             LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
             WHERE vac.ACTIVO = 1
-            AND vac.FECHA_EXPIRACION >= CURDATE()
-");
+            AND vac.FECHA_EXPIRACION >= CURDATE()");
         
         // Respuesta
         return response()->json([
@@ -82,9 +85,9 @@ public function Tablapptseleccion(Request $request)
                              WHERE ppt.CURP = ?', [$curp]);
 
         foreach ($tabla as $key => $value) {
-            // Obtener los cursos del formulario
+
             $cursos = cursospptseleccionModel::where('SELECCION_PPT_ID', $value->ID_PPT_SELECCION)->get();
-            $value->CURSOS = $cursos;
+               $value->CURSOS = $cursos;
 
             if ($value->ACTIVO == 0) {
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
@@ -100,6 +103,41 @@ public function Tablapptseleccion(Request $request)
         $dato["msj"] = 'Error ' . $e->getMessage();
         $dato['data'] = 0;
         return response()->json($dato);
+    }
+}
+
+
+
+
+
+
+
+public function Tablaentrevistaseleccion(Request $request)
+{
+    try {
+        $curp = $request->get('curp');
+
+        $tabla = entrevistaseleccionModel::where('CURP', $curp)->get();
+
+        foreach ($tabla as $value) {
+            if ($value->ACTIVO == 0) {
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+            } else {
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+            }
+        }
+
+        // Responder con la tabla y el mensaje de éxito
+        return response()->json([
+            'data' => $tabla,
+            'msj' => 'Información consultada correctamente'
+        ]);
+    } catch (Exception $e) {
+        // En caso de error, responder con el mensaje de error
+        return response()->json([
+            'msj' => 'Error ' . $e->getMessage(),
+            'data' => 0
+        ]);
     }
 }
 
@@ -178,22 +216,24 @@ public function store(Request $request)
                     // GUARDAR LOS CURSOS
 
 
+
                     if ($request->CURSO_PPT) {
                         foreach ($request->CURSO_PPT as $key => $value) {
-                    
+
                             $num = $key + 1;
-                    
-                            // Se permite guardar aunque el campo CURSO_PPT esté vacío
-                            $guardar_curso = cursospptseleccionModel::create([
-                                'SELECCION_PPT_ID' => $PPT->ID_PPT_SELECCION,
-                                'CURSO_PPT' => $value ?? null, 
-                                'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
-                                'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
-                                'CURSO_CUMPLE_PPT' => isset($request->CURSO_CUMPLE_PPT[$num]) ? $request->CURSO_CUMPLE_PPT[$num] : null,
-                            ]);
+
+                            if ((!empty($request->CURSO_PPT[$key]))) {
+
+                                $guardar_curso = cursospptseleccionModel::create([
+                                    'SELECCION_PPT_ID' => $PPT->ID_PPT_SELECCION,
+                                    'CURSO_PPT' => $value,
+                                    'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
+                                    'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
+                                    'CURSO_CUMPLE_PPT' =>  isset($request->CURSO_CUMPLE_PPT[$num]) ? $request->CURSO_CUMPLE_PPT[$num] : null,
+                                ]);
+                            }
                         }
                     }
-                    
 
                     $response['code']  = 1;
                     $response['PPT']  = $PPT;
@@ -219,11 +259,12 @@ public function store(Request $request)
                             if ((!empty($request->CURSO_PPT[$key]))) {
 
                                 $guardar_curso = cursospptseleccionModel::create([
-                                    'FORMULARIO_PPT_ID' => $PPT->ID_FORMULARIO_PPT,
+                                    'SELECCION_PPT_ID' => $PPT->ID_PPT_SELECCION,
                                     'CURSO_PPT' => $value,
                                     'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
                                     'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
-                                    'CURSO_CUMPLE_PPT' => isset($request->CURSO_CUMPLE_PPT[$num]) ? $request->CURSO_CUMPLE_PPT[$num] : null,                                ]);
+                                    'CURSO_CUMPLE_PPT' =>  isset($request->CURSO_CUMPLE_PPT[$num]) ? $request->CURSO_CUMPLE_PPT[$num] : null,
+                                ]);
                             }
                         }
                     }
@@ -236,6 +277,53 @@ public function store(Request $request)
                 break;
 
                 
+                case 2:
+
+                    if ($request->ID_ENTREVISTA_SELECCION == 0) {
+                        DB::statement('ALTER TABLE seleccion_entrevista AUTO_INCREMENT=1;');
+                        $entrevistas = entrevistaseleccionModel::create($request->all());
+                    } else {
+                        if (!isset($request->ELIMINAR)) {
+                            $entrevistas = entrevistaseleccionModel::find($request->ID_ENTREVISTA_SELECCION);
+                            $entrevistas->update($request->all());
+                        } else {
+                            $entrevistas = entrevistaseleccionModel::where('ID_ENTREVISTA_SELECCION', $request['ID_ENTREVISTA_SELECCION'])->update(['ACTIVO' => 0]);
+                            $response['code']  = 1;
+                            $response['entrevista']  = 'Desactivada';
+                            return response()->json($response);
+                        }
+                    }
+                
+                    if ($request->hasFile('ARCHIVO_ENTREVISTA')) {
+                        $curpFolder = 'reclutamiento/' . $request->CURP;
+                    
+                        $entrevistaFolder = $curpFolder . '/ENTREVISTA/';
+                        
+                        if (!Storage::exists($curpFolder)) {
+                            Storage::makeDirectory($curpFolder);
+                        }
+                        
+                        if (!Storage::exists($entrevistaFolder)) {
+                            Storage::makeDirectory($entrevistaFolder);
+                        }
+                        
+                        $entrevistaFile = $request->file('ARCHIVO_ENTREVISTA');
+                        $entrevistaFileName = 'ENTREVISTA_' . $request->CURP . '.' . $entrevistaFile->getClientOriginalExtension();
+                        $entrevistaFile->storeAs($entrevistaFolder, $entrevistaFileName);
+                        
+                        $entrevistas->ARCHIVO_ENTREVISTA = $entrevistaFolder . $entrevistaFileName;
+                        $entrevistas->save(); // Guardar cambios
+                    }
+                
+                    $response['code']  = 1;
+                    $response['entrevista']  = $entrevistas;
+                    return response()->json($response);
+                
+                    break;
+                
+
+
+
 
             default:
 
@@ -248,6 +336,9 @@ public function store(Request $request)
     }
 }
 
-
-
 }
+
+
+
+
+

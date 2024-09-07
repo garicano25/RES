@@ -209,5 +209,7 @@ Route::get('/consultarSeleccion/{categoriaVacanteId}', [seleccionController::cla
 Route::get('/consultarformppt/{id}', [seleccionController::class, 'consultarformppt']);
 Route::post('/SeleccionSave', [seleccionController::class, 'store']);
 Route::get('/Tablapptseleccion', [seleccionController::class, 'Tablapptseleccion']);
+Route::get('/Tablaentrevistaseleccion', [seleccionController::class, 'Tablaentrevistaseleccion']);
+
 
 

@@ -240,7 +240,7 @@ $('#Tablabancocv tbody').on('click', 'td>button.ELIMINAR', function () {
         ID_BANCO_CV: row.data().ID_BANCO_CV
     }
     
-    eliminarDatoTabla(data, [Tablabancocv], 'BancoDelete')
+    eliminarDatoTabla1(data, [Tablabancocv], 'BancoDelete')
 
 })
 
@@ -336,7 +336,6 @@ $(document).ready(function() {
         if (Array.isArray(savedOptions1)) {
             selectizeInstance1.setValue(savedOptions1);
         }
-
 
 
 

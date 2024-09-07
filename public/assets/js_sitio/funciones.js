@@ -2493,49 +2493,98 @@ function editarDatoTabla( data, form = 'OnlyForm', modalID = 'ModalID', formComp
 }
 
 
-function eliminarDatoTabla(data, arregloTable, url) {
-     alertMensajeConfirm({
-            title: "Confirme para desactivar este registro",
-            text: "Está acción es irreversible",
-            icon: "warning",
-        }, function () { 
-            
-        
-        $.ajax({
-                type: "GET",
-                dataType: "json",
-                url: url,
-                data: data,
-                cache: false,
-                success:function(dato)
-                {
 
-                  for (var i = 0; i < arregloTable.length; i++) {
-                    arregloTable[i].ajax.reload();
-                  }
-                  
-                  setTimeout(() => {
-                    
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Registro desactivado',
-                        text: 'La desactivación fue realizada exitosamente',
-                        timer: 2000,
-                        timerProgressBar: true
-                    })
 
-                  }, 1000);
-
-                },
-                error: function(dato){
-                    return false;
-                }
-            })
+function eliminarDatoTabla1(data, arregloTable, url) {
+  alertMensajeConfirm({
+         title: "Confirme para eliminar este registro",
+         text: "Está acción es irreversible",
+         icon: "warning",
+     }, function () { 
          
-       
-        }, 1)
+     
+     $.ajax({
+             type: "GET",
+             dataType: "json",
+             url: url,
+             data: data,
+             cache: false,
+             success:function(dato)
+             {
+
+               for (var i = 0; i < arregloTable.length; i++) {
+                 arregloTable[i].ajax.reload();
+               }
+               
+               setTimeout(() => {
+                 
+                 Swal.fire({
+                     icon: 'success',
+                     title: 'Registro eliminado',
+                     text: 'La eliminación fue realizada exitosamente',
+                     timer: 2000,
+                     timerProgressBar: true
+                 })
+
+               }, 1000);
+
+             },
+             error: function(dato){
+                 return false;
+             }
+         })
+      
+    
+     }, 1)
 
 }
+
+
+
+
+function eliminarDatoTabla(data, arregloTable, url) {
+  var accion = data.ELIMINAR == 1 ? 'desactivar' : 'activar'; 
+  
+  alertMensajeConfirm({
+      title: "Confirme para " + accion + " este registro",
+      text: "Esta acción cambiará el estado del registro",
+      icon: "warning",
+  }, function () { 
+      $.ajax({
+          type: "GET",
+          dataType: "json",
+          url: url, 
+          data: data,
+          cache: false,
+          success:function(dato) {
+              for (var i = 0; i < arregloTable.length; i++) {
+                  arregloTable[i].ajax.reload();
+              }
+
+              setTimeout(() => {
+                  Swal.fire({
+                      icon: 'success',
+                      title: 'Registro ' + accion,
+                      text: 'La acción fue realizada exitosamente',
+                      timer: 2000,
+                      timerProgressBar: true
+                  });
+              }, 1000);
+          },
+          error: function(dato) {
+              return false;
+          }
+      });
+  }, 1);
+}
+
+
+
+
+
+
+
+
 
 function loaderbtn(btn) {
     return new Promise(function (resolve, reject) { 

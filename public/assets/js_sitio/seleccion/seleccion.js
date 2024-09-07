@@ -1,6 +1,10 @@
 
 ID_PPT_SELECCION = 0
+ID_ENTREVISTA_SELECCION = 0
+
 var Tablapptseleccion;
+var Tablaentrevistaseleccion;
+
 var curpSeleccionada;  
 
 var Tablaseleccion = $("#Tablaseleccion").DataTable({
@@ -154,80 +158,22 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
 
 
 
+const fullScreenModal = document.getElementById('FullScreenModal');
 
+fullScreenModal.addEventListener('hidden.bs.modal', function (event) {
+    const modalsToClose = ['Modal_entrevistas', 'miModal_ppt', 'Modal_pruebas'];
 
+    modalsToClose.forEach(modalId => {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            const modalInstance = bootstrap.Modal.getInstance(modal);
+            if (modalInstance) {
+                modalInstance.hide();
+            }
+        }
+    });
+});
 
-// $('#FullScreenModal').on('show.bs.modal', function (event) {
-//     var button = $(event.relatedTarget); 
-//     curpSeleccionada = button.data('curp');  
-
-//     if ($.fn.DataTable.isDataTable('#Tablapptseleccion')) {
-//         Tablapptseleccion.clear().destroy();
-//     }
-
-//     Tablapptseleccion = $("#Tablapptseleccion").DataTable({
-//         language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-//         lengthChange: true,
-//         lengthMenu: [
-//             [10, 25, 50, -1],
-//             [10, 25, 50, 'All']
-//         ],
-//         info: false,
-//         paging: true,
-//         searching: true,
-//         filtering: true,
-//         scrollY: '65vh',
-//         scrollCollapse: true,
-//         responsive: true,
-//         ajax: {
-//             dataType: 'json',
-//             data: { curp: curpSeleccionada }, 
-//             method: 'GET',
-//             cache: false,
-//             url: '/Tablapptseleccion',  // Cambia este endpoint si es necesario
-//             beforeSend: function () {
-//                 // Mostrar el ícono de carga y añadir la animación de rotación
-//                 $('#loadingIcon').css('display', 'inline-block');
-//             },
-//             complete: function () {
-//                 // Ocultar el ícono de carga cuando los datos estén listos
-//                 $('#loadingIcon').css('display', 'none');
-//                 Tablapptseleccion.columns.adjust().draw();  // Ajustar las columnas
-//             },
-//             error: function (jqXHR, textStatus, errorThrown) {
-//                 $('#loadingIcon').css('display', 'none');
-//                 alertErrorAJAX(jqXHR, textStatus, errorThrown);  // Manejo de errores
-//             },
-//             dataSrc: 'data'
-//         },
-//         columns: [
-//             { 
-//                 data: null,
-//                 render: function(data, type, row, meta) {
-//                     return meta.row + 1;  // Contador para las filas
-//                 },
-//                 className: 'text-center'
-//             },  
-//             { data: 'NOMBRE_CATEGORIA', className: 'text-center' },
-//             { data: 'NOMBRE_TRABAJADOR_PPT', className: 'text-center' },
-//             { data: 'BTN_EDITAR', className: 'text-center' }
-//         ],
-//         columnDefs: [
-//             { target: 0, title: '#', className: 'all text-center' },
-//             { target: 1, title: 'Nombre categoría', className: 'all text-center' },
-//             { target: 2, title: 'Nombre del trabajador', className: 'all text-center' },
-//             { target: 3, title: 'Editar', className: 'all text-center' }
-//         ]
-//     });
-    
-// });
-
-
-
-
-
-
-// ABRIR LOS MODALES 
 
 
 
@@ -236,62 +182,234 @@ $('#FullScreenModal').on('show.bs.modal', function (event) {
     curpSeleccionada = button.data('curp');  
 
 
+// <!-- ============================================================== -->
+// <!-- ENTREVISTA -->
+// <!-- ============================================================== -->
 
 
-    if ($.fn.DataTable.isDataTable('#Tablapptseleccion')) {
-        Tablapptseleccion.clear().destroy();
-    }
 
-    Tablapptseleccion = $("#Tablapptseleccion").DataTable({
-        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-        lengthChange: true,
-        lengthMenu: [
-            [10, 25, 50, -1],
-            [10, 25, 50, 'All']
-        ],
-        info: false,
-        paging: true,
-        searching: true,
-        filtering: true,
-        scrollY: '65vh',
-        scrollCollapse: true,
-        responsive: true,
-        ajax: {
-            dataType: 'json',
-            data: { curp: curpSeleccionada }, 
-            method: 'GET',
-            cache: false,
-            url: '/Tablapptseleccion',  
-            beforeSend: function () {
-                $('#loadingIcon').css('display', 'inline-block');
-            },
-            complete: function () {
-                $('#loadingIcon').css('display', 'none');
-                Tablapptseleccion.columns.adjust().draw();
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                $('#loadingIcon').css('display', 'none');
-                alertErrorAJAX(jqXHR, textStatus, errorThrown);
-            },
-            dataSrc: 'data'
+
+if ($.fn.DataTable.isDataTable('#Tablaentrevistaseleccion')) {
+    Tablaentrevistaseleccion.clear().destroy();
+}
+
+
+Tablaentrevistaseleccion = $("#Tablaentrevistaseleccion").DataTable({
+    language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+    lengthChange: true,
+    lengthMenu: [
+        [10, 25, 50, -1],
+        [10, 25, 50, 'All']
+    ],
+    info: false,
+    paging: true,
+    searching: true,
+    filtering: true,
+    scrollY: '65vh',
+    scrollCollapse: true,
+    responsive: true,
+    ajax: {
+        dataType: 'json',
+        data: { curp: curpSeleccionada }, 
+        method: 'GET',
+        cache: false,
+        url: '/Tablaentrevistaseleccion',  
+        beforeSend: function () {
+            $('#loadingIcon').css('display', 'inline-block');
         },
-        columns: [
-            { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
-            { data: 'NOMBRE_CATEGORIA', className: 'text-center' },
-            { data: 'NOMBRE_TRABAJADOR_PPT', className: 'text-center' },
-            { data: 'BTN_EDITAR', className: 'text-center' }
-        ],
-        columnDefs: [
-            { target: 0, title: '#', className: 'all text-center' },
-            { target: 1, title: 'Nombre categoría', className: 'all text-center' },
-            { target: 2, title: 'Nombre del trabajador', className: 'all text-center' },
-            { target: 3, title: 'Editar', className: 'all text-center' }
-        ]
-    });
+        complete: function () {
+            $('#loadingIcon').css('display', 'none');
+            Tablaentrevistaseleccion.columns.adjust().draw();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $('#loadingIcon').css('display', 'none');
+            alertErrorAJAX(jqXHR, textStatus, errorThrown);
+        },
+        dataSrc: 'data'
+    },
+    columns: [
+        { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+        { data: 'COMENTARIO_ENTREVISTA', className: 'text-center' },
+        { 
+            data: 'ARCHIVO_ENTREVISTA',
+            render: function (data, type, row) {
+                return '<button class="btn btn-danger btn-custom rounded-pill pdf-button"data-pdf="/' + data + '"> <i class="bi bi-filetype-pdf"></i></button>';
+            },
+            className: 'text-center'
+        },
+        { data: 'BTN_EDITAR', className: 'text-center' }
+    ],
+    columnDefs: [
+        { target: 0, title: '#', className: 'all text-center' },
+        { target: 1, title: 'Comentario de la entrevista', className: 'all text-center' },
+        { target: 2, title: 'Evidencia', className: 'all text-center' },
+        { target: 3, title: 'Editar', className: 'all text-center' }
+    ]
+});
+
+
+$('#Tablaentrevistaseleccion tbody').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablaentrevistaseleccion.row(tr);
+    ID_ENTREVISTA_SELECCION = row.data().ID_ENTREVISTA_SELECCION;
+    var data = row.data();
+    var form = "formularioENTREVISTA";
+    
+
+    editarDatoTabla(data, form, 'Modal_entrevistas', 1);
+    
+
+
 });
 
 
 
+// <!-- ============================================================== -->
+// <!-- PPT  -->
+// <!-- ============================================================== -->
+
+if ($.fn.DataTable.isDataTable('#Tablapptseleccion')) {
+    Tablapptseleccion.clear().destroy();
+}
+
+Tablapptseleccion = $("#Tablapptseleccion").DataTable({
+    language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+    lengthChange: true,
+    lengthMenu: [
+        [10, 25, 50, -1],
+        [10, 25, 50, 'All']
+    ],
+    info: false,
+    paging: true,
+    searching: true,
+    filtering: true,
+    scrollY: '65vh',
+    scrollCollapse: true,
+    responsive: true,
+    ajax: {
+        dataType: 'json',
+        data: { curp: curpSeleccionada }, 
+        method: 'GET',
+        cache: false,
+        url: '/Tablapptseleccion',  
+        beforeSend: function () {
+            $('#loadingIcon1').css('display', 'inline-block');
+        },
+        complete: function () {
+            $('#loadingIcon1').css('display', 'none');
+            Tablapptseleccion.columns.adjust().draw();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $('#loadingIcon1').css('display', 'none');
+            alertErrorAJAX(jqXHR, textStatus, errorThrown);
+        },
+        dataSrc: 'data'
+    },
+    columns: [
+        { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+        { data: 'NOMBRE_CATEGORIA', className: 'text-center' },
+        { data: 'NOMBRE_TRABAJADOR_PPT', className: 'text-center' },
+        { data: 'BTN_EDITAR', className: 'text-center' }
+    ],
+    columnDefs: [
+        { target: 0, title: '#', className: 'all text-center' },
+        { target: 1, title: 'Nombre categoría', className: 'all text-center' },
+        { target: 2, title: 'Nombre del trabajador', className: 'all text-center' },
+        { target: 3, title: 'Editar', className: 'all text-center' }
+    ]
+});
+
+
+$('#Tablapptseleccion tbody').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablapptseleccion.row(tr);
+    ID_PPT_SELECCION = row.data().ID_PPT_SELECCION;
+    var data = row.data();
+    var form = "formularioSeleccionPPT";
+    
+
+    editarDatoTabla(data, form, 'miModal_ppt', 1);
+    mostrarCursos(data, form);
+
+});
+
+
+
+function mostrarCursos(data,form){
+
+//RECORREMOS LOS CURSOS SI ES QUE EXISTE
+if ('CURSOS' in data) {
+    if (data.CURSOS.length > 0) { 
+        var cursos = data.CURSOS
+        var count = 1    
+    
+        // Supongamos que 'data' es el array que contiene los objetos de datos
+        cursos.forEach(function (obj) {
+        
+        
+
+        // cumple = obj.CURSO_CUMPLE_PPT.toUpperCase(); 
+
+        $('#' + form).find(`textarea[id='CURSO${count}_PPT']`).val(obj.CURSO_PPT)
+    
+        
+    //    $('#' + form).find(`input[id='CURSO${count}_CUMPLE_${cumple}'][value='${obj.CURSO_CUMPLE_PPT}'][type='radio']`).prop('checked', true)
+
+
+        if (obj.CURSO_DESEABLE == null) {
+            
+            $('#' + form).find(`input[id='CURSO${count}_REQUERIDO_PPT'][type='checkbox']`).prop('checked', true)
+
+        } else {
+            
+            $('#' + form).find(`input[id='CURSO${count}_DESEABLE_PPT'][type='checkbox']`).prop('checked', true)
+
+        }
+
+        count++
+        });
+
+
+        cursosTotales = data.CURSOS.length 
+        if (cursosTotales <= 10) {
+
+        $('#cursoTemasCollapse').collapse('show')
+
+
+        } else if (cursosTotales > 10 && cursosTotales <= 20) {
+            $('#cursoTemasCollapse').collapse('show')
+            $('#cursoTemas1Collapse').collapse('show')
+            
+
+        } else if (cursosTotales > 20 && cursosTotales <= 30) {
+            $('#cursoTemasCollapse').collapse('show')
+            $('#cursoTemas1Collapse').collapse('show')
+            $('#cursoTemas2Collapse').collapse('show')
+
+
+        } else if (cursosTotales > 30){
+            
+            $('.collapse').collapse('show')
+        
+
+
+        }
+
+    }
+    }
+}
+
+
+
+
+
+});
+
+
+
+// <!-- ============================================================== -->
+// <!-- ABRIR  TODOS LOS MODALES -->
+// <!-- ============================================================== -->
 
 
 $("#nueva_entrevista").click(function (e) {
@@ -311,9 +429,25 @@ $("#nuevo_pruebas").click(function (e) {
     $("#Modal_pruebas").modal("show");
 })
 
-/// MODAL ENTREVISTA 
+
+// <!-- ============================================================== -->
+// <!-- MODAL ENTREVISTA -->
+// <!-- ============================================================== -->
 
 
+const ModalEntrevista = document.getElementById('Modal_entrevistas');
+ModalEntrevista.addEventListener('hidden.bs.modal', event => {
+    ID_ENTREVISTA_SELECCION = 0;
+    document.getElementById('formularioENTREVISTA').reset();
+    $('.collapse').collapse('hide');
+    $('#guardarFormSeleccionEntrevista').css('display', 'block').prop('disabled', false);
+
+
+    document.querySelectorAll('#formularioENTREVISTA [required]').forEach(input => {
+        input.removeAttribute('required');
+    });
+   
+});
 
 document.getElementById('archivoEvidencia').addEventListener('change', function() {
     if (this.files.length > 0) {
@@ -321,14 +455,115 @@ document.getElementById('archivoEvidencia').addEventListener('change', function(
     }
   });
 
-  // Quitar el archivo seleccionado
   document.getElementById('quitarEvidencia').addEventListener('click', function() {
     document.getElementById('archivoEvidencia').value = '';
     this.style.display = 'none';
   });
 
+
+
+  $("#guardarFormSeleccionEntrevista").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormulario($('#formularioENTREVISTA'));
+
+    if (formularioValido) {
+
+        if (ID_ENTREVISTA_SELECCION == 0) {
+
+            alertMensajeConfirm({
+                title: "¿Desea guardar la información?",
+                text: "Al guardarla, se usará para la creación del PPT",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarFormSeleccionEntrevista');
+                await ajaxAwaitFormData({ 
+                    api: 2, 
+                    ID_ENTREVISTA_SELECCION: ID_ENTREVISTA_SELECCION, 
+                    CURP: curpSeleccionada 
+                }, 'SeleccionSave', 'formularioENTREVISTA', 'guardarFormSeleccionEntrevista', { callbackAfter: true, callbackBefore: true }, () => {
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+
+                }, function (data) {
+
+                    setTimeout(() => {
+                        ID_ENTREVISTA_SELECCION = data.entrevista.ID_ENTREVISTA_SELECCION;
+                        alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
+                        $('#Modal_entrevistas').modal('hide');
+                        document.getElementById('formularioENTREVISTA').reset();
+
+
+                        if ($.fn.DataTable.isDataTable('#Tablaentrevistaseleccion')) {
+                            Tablaentrevistaseleccion.ajax.reload(null, false); // Recargar la tabla sin reiniciar la paginación
+                        }
+
+                    }, 300);
+
+                });
+
+            }, 1);
+
+        } else {
+
+            alertMensajeConfirm({
+                title: "¿Desea editar la información de este formulario?",
+                text: "Al guardarla, se editará la información del PPT",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarFormSeleccionPPT');
+                await ajaxAwaitFormData({ 
+                    api: 2, 
+                    ID_ENTREVISTA_SELECCION: ID_ENTREVISTA_SELECCION, 
+                    CURP: curpSeleccionada 
+                }, 'SeleccionSave', 'formularioENTREVISTA', 'guardarFormSeleccionEntrevista', { callbackAfter: true, callbackBefore: true }, () => {
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+
+                }, function (data) {
+
+                    setTimeout(() => {
+                        ID_ENTREVISTA_SELECCION = data.entrevista.ID_ENTREVISTA_SELECCION;
+                        alertMensaje('success', 'Información editada correctamente', 'Información guardada');
+                        $('#Modal_entrevistas').modal('hide');
+                        document.getElementById('formularioENTREVISTA').reset();
+
+
+                        if ($.fn.DataTable.isDataTable('#Tablaentrevistaseleccion')) {
+                            Tablaentrevistaseleccion.ajax.reload(null, false); 
+                        }
+
+                    }, 300);
+                });
+
+            }, 1);
+        }
+
+    } else {
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+    }
+});
+
+
+
 // <!-- ============================================================== -->
-// <!-- PPT  -->
+// <!--MODAL  PPT  -->
 // <!-- ============================================================== -->
 
 const ModalArea = document.getElementById('miModal_ppt');
@@ -337,11 +572,11 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     document.getElementById('formularioSeleccionPPT').reset();
     $('.collapse').collapse('hide');
     $('#guardarFormSeleccionPPT').css('display', 'block').prop('disabled', false);
-   
+    
+    document.querySelectorAll('#formularioSeleccionPPT [required]').forEach(input => {
+        input.removeAttribute('required');
+    });
 });
-
-
-
 
 // Solo seleccionar una opcion de word,excel,power point
 $('.word').on('change', function() {
@@ -444,9 +679,6 @@ $('.decisiones').on('change', function() {
     }
 });
 
-
-
-
 $('#miModal_ppt').on('shown.bs.modal', function () {
     $(this).find('input, select, textarea').each(function() {
         if ($(this).hasClass('desabilitado') || 
@@ -479,7 +711,6 @@ $('#miModal_ppt').on('shown.bs.modal', function () {
         }
     });
 });
-
 
 
 document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', function() {
@@ -1366,21 +1597,6 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 $("#guardarFormSeleccionPPT").click(function (e) {
     e.preventDefault();
 
@@ -1483,8 +1699,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
     }
 });
-
-
 
 
 
