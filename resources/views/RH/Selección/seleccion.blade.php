@@ -392,6 +392,13 @@
                           </div>
                       </div>
 
+                      <div class="row mb-3">
+                        <div class="col-12 text-center">
+                            <hr>
+                        </div>
+
+
+ 
                       <!-- II. Formación académica -->
                       <div class="row mb-3">
                           <div class="col-12 text-center">
@@ -2080,6 +2087,12 @@
                               </div>
                           </div>
 
+                          <div class="row mb-3">
+                            <div class="col-12 text-center">
+                                <hr>
+                            </div>
+
+
                           <!-- IV. Experiencia -->
                           <div class="row mb-3">
                               <div class="col-12 text-center">
@@ -2521,6 +2534,12 @@
                                   </div>
                               </div>
                           </div>
+
+                          <div class="row mb-3">
+                            <div class="col-12 text-center">
+                                <hr>
+                            </div>
+
                           <!-- V. Habilidades y competencias funcionales -->
                           <div class="row mb-3">
                               <div class="col-12 text-center">
@@ -2768,6 +2787,12 @@
                                   </table>
                               </div>
                           </div>
+
+                          <div class="row mb-3">
+                            <div class="col-12 text-center">
+                                <hr>
+                            </div>
+
                           <!-- VI. Otros -->
                           <div class="row mb-3">
                               <div class="col-12 text-center">
@@ -2961,6 +2986,17 @@
                                   </table>
                               </div>
                           </div>
+
+                          <div class="row mb-3">
+                            <div class="col-4 mx-auto  text-center">
+                                <div class="form-group">
+                                    <label>Suma total del porcentaje del PPT</label>
+                                    <input type="number" class="form-control floating-input" id="SUMA_TOTAL" name="SUMA_TOTAL" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    
                           <!-- X. Observaciones -->
                           <div class="row mb-3">
                               <div class="col-12 text-center">

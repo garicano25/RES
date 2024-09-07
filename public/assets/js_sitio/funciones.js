@@ -2412,81 +2412,80 @@ function popperHover(container = 'ID_CLASS', tooltip = 'ID_CLASS', callback = (s
 function editarDatoTabla( data, form = 'OnlyForm', modalID = 'ModalID', formComplete = 0) {
   
     //Limpiamos el form en donde vamos a insertar nuestros datos
-    $('#'+ form).each(function(){
-        this.reset();
-    });
+  $('#'+ form).each(function(){
+      this.reset();
+  });
 
   //La variable formComplete nos sirve para decir si es un formulario completo con select, radio, checkbox, textarea, y text, number
-  if (formComplete == 0) {
-    //Recorremos e insertamos los datos en los campos
-    for (var key in data) {
-      if (data.hasOwnProperty(key)) {
-        if (!key.startsWith("btn") && key !== "created_at" && key !== "updated_at") {
-              
-          var input = $('#' + form).find(`input[name='${key}']`);
-          if (input.length) {
-            input.val(data[key]);
-          } else {
-            $('#' + form).find(`textarea[name='${key}']`).val(data[key]);
-          }
+if (formComplete == 0) {
+  //Recorremos e insertamos los datos en los campos
+  for (var key in data) {
+    if (data.hasOwnProperty(key)) {
+      if (!key.startsWith("btn") && key !== "created_at" && key !== "updated_at") {
+            
+        var input = $('#' + form).find(`input[name='${key}']`);
+        if (input.length) {
+          input.val(data[key]);
+        } else {
+          $('#' + form).find(`textarea[name='${key}']`).val(data[key]);
         }
       }
     }
+  }
 
-    //Abrimos el modal
-    $('#' + modalID).modal('show');
+  //Abrimos el modal
+  $('#' + modalID).modal('show');
 
-  } else {
+} else {
     
     //RECOREMOS EL FOMULARIO PRINCIPAL
-    for (var key in data) {
-      if (data.hasOwnProperty(key)) {
+for (var key in data) {
+  if (data.hasOwnProperty(key)) {
 
 
-        if (!key.startsWith("BTN") && key !== "created_at" && key !== "updated_at") {
-              
-          var input = $('#' + form).find(`input[name='${key}'][type='text'], input[name='${key}'][type='number']`);
-          var date = $('#' + form).find(`input[name='${key}'][type='date']`);
-          var time = $('#' + form).find(`input[name='${key}'][type='time']`);
-          var textarea = $('#' + form).find(`textarea[name='${key}']`).val(data[key]);
-          var select = $('#' + form).find(`select[name='${key}']`).val(data[key]);
-
+    if (!key.startsWith("BTN") && key !== "created_at" && key !== "updated_at") {
           
-          if (input.length) {
-            input.val(data[key]);
-            
-          } else if (textarea.length) {
-            textarea.val(data[key]);
-            
-          } else if (select.length) {
+      var input = $('#' + form).find(`input[name='${key}'][type='text'], input[name='${key}'][type='number']`);
+      var date = $('#' + form).find(`input[name='${key}'][type='date']`);
+      var time = $('#' + form).find(`input[name='${key}'][type='time']`);
+      var textarea = $('#' + form).find(`textarea[name='${key}']`).val(data[key]);
+      var select = $('#' + form).find(`select[name='${key}']`).val(data[key]);
 
-            select.val(data[key])
-
-          }  else if (date.length) {
-
-            date.val(data[key])
-
-          }else if (time.length) {
-
-            time.val(data[key])
-
-          } else {
-
-            $('#' + form).find(`input[name='${key}'][value='${data[key]}'][type='radio']`).prop('checked', true)
-                   
-            $('#' + form).find(`input[name='${key}'][value='${data[key]}'][type='checkbox']`).prop('checked', true)
-          }
-          
-        }
-      }
-    }
-
-
-
-    //Abrimos el modal
-    $('#' + modalID).modal('show');
       
+      if (input.length) {
+        input.val(data[key]);
+        
+      } else if (textarea.length) {
+        textarea.val(data[key]);
+        
+      } else if (select.length) {
+
+        select.val(data[key])
+
+      }  else if (date.length) {
+
+        date.val(data[key])
+
+      }else if (time.length) {
+
+        time.val(data[key])
+
+      } else {
+
+        $('#' + form).find(`input[name='${key}'][value='${data[key]}'][type='radio']`).prop('checked', true)
+                
+        $('#' + form).find(`input[name='${key}'][value='${data[key]}'][type='checkbox']`).prop('checked', true)
+      }
+      
+    }
   }
+}
+
+
+  //Abrimos el modal
+  $('#' + modalID).modal('show');
+    
+}
 
     
 

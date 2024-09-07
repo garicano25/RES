@@ -215,8 +215,6 @@ public function store(Request $request)
 
                     // GUARDAR LOS CURSOS
 
-
-
                     if ($request->CURSO_PPT) {
                         foreach ($request->CURSO_PPT as $key => $value) {
 
@@ -312,7 +310,7 @@ public function store(Request $request)
                         $entrevistaFile->storeAs($entrevistaFolder, $entrevistaFileName);
                         
                         $entrevistas->ARCHIVO_ENTREVISTA = $entrevistaFolder . $entrevistaFileName;
-                        $entrevistas->save(); // Guardar cambios
+                        $entrevistas->save(); 
                     }
                 
                     $response['code']  = 1;
