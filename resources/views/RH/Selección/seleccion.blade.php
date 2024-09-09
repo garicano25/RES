@@ -31,23 +31,73 @@
           <div class="modal-body">
               <div class="container-fluid">
 
+
                 <div class="row">
-                    <!-- ENTREVISTAS  -->
-                    <div class="col-6 mb-3">
-                        <div class="card h-100 cardseleccion ">
+
+                    <div class="col-12 mb-3">
+                        <div class="card h-100 cardseleccion">
                             <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
-                                <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-people-fill"></i>&nbsp;Entrevista</h3>
-                                <button type="button" class="btn btn-light waves-effect waves-light" id="nueva_entrevista" style="margin-left: auto;">
-                                    Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                                <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-pdf-fill"></i>&nbsp;Formato de Autorización</h3>
+                                <button type="button" class="btn btn-light waves-effect waves-light" style="margin-left: 10px;" id="verPdfButton">
+                                    <i class="bi bi-file-earmark-pdf-fill"></i> &nbsp; Ver 
+                                </button>
+                                <button type="button" class="btn btn-light waves-effect waves-light" id="nuevo_autorizacion" style="margin-left: auto;">
+                                    Subir Autorización &nbsp;<i class="bi bi-plus-circle"></i>
                                 </button>
                             </ol>
                             <div class="card-body position-relative">
-                                <i id="loadingIcon" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
-                                <table id="Tablaentrevistaseleccion" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
+                                <i id="loadingIcon2" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                                <table id="Tablaautorizacion" class="table table-hover bg-white table-bordered text-center w-100 TableSelecciones">
                                 </table>
                             </div>
                         </div>
                     </div>
+
+                </div>
+
+
+
+
+
+                
+                <div class="row">
+
+                    <!-- INTELIGENCIA LABORAL  -->
+                    <div class="col-6 mb-3">
+                        <div class="card h-100 cardseleccion">
+                            <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
+                                <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-lightbulb-fill"></i>&nbsp;Inteligencia laboral</h3>
+                                <button type="button" class="btn btn-light waves-effect waves-light" id="nuevo_inteligencia" style="margin-left: auto;">
+                                    Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                                </button>
+                            </ol>
+                            <div class="card-body position-relative">
+                                <table id="Tablainteligencia" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- BURO LABORAL  -->
+                    <div class="col-6 mb-3">
+                        <div class="card h-100 cardseleccion">
+                            <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
+                                <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-clipboard-data-fill"></i>&nbsp;Buro laboral</h3>
+                                <button type="button" class="btn btn-light waves-effect waves-light" id="nuevo_buro" style="margin-left: auto;">
+                                    Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                                </button>
+                            </ol>
+                            <div class="card-body position-relative">
+                                <table id="Tablaburo" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                   
                 
                     <!-- PPT -->
                     <div class="col-6 mb-3 ">
@@ -65,6 +115,27 @@
                             </div>
                         </div>
                     </div>
+
+                     <!-- EXPERIENCIA -->
+                     <div class="col-6 mb-3">
+                        <div class="card h-100 cardseleccion">
+                            <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
+                                <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-person"></i>&nbsp;Referencias laboral</h3>
+                                <button type="button" class="btn btn-light waves-effect waves-light" id="nuevo_experiencia" style="margin-left: auto;">
+                                    Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                                </button>
+                            </ol>
+                            <div class="card-body position-relative">
+                                <table id="Tablaexperiencia" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    
                 </div>
                 
 
@@ -86,61 +157,28 @@
                         </div>
                     </div>
                 
-                    <!-- EXPERIENCIA -->
-                    <div class="col-6 mb-3">
-                        <div class="card h-100 cardseleccion">
+
+                     <!-- ENTREVISTAS  -->
+                     <div class="col-6 mb-3">
+                        <div class="card h-100 cardseleccion ">
                             <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
-                                <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-briefcase-fill"></i>&nbsp;Experiencia laboral</h3>
-                                <button type="button" class="btn btn-light waves-effect waves-light" id="nuevo_experiencia" style="margin-left: auto;">
+                                <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-people-fill"></i>&nbsp;Entrevista</h3>
+                                <button type="button" class="btn btn-light waves-effect waves-light" id="nueva_entrevista" style="margin-left: auto;">
                                     Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
                                 </button>
                             </ol>
                             <div class="card-body position-relative">
-                                <table id="Tablaexperiencia" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-
-
-                <div class="row">
-                    <!-- BURO LABORAL  -->
-                    <div class="col-6 mb-3">
-                        <div class="card h-100 cardseleccion">
-                            <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
-                                <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-clipboard-data-fill"></i>&nbsp;Buro laboral</h3>
-                                <button type="button" class="btn btn-light waves-effect waves-light" id="nuevo_buro" style="margin-left: auto;">
-                                    Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
-                                </button>
-                            </ol>
-                            <div class="card-body position-relative">
-                                <table id="Tablaburo" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <!-- INTELIGENCIA LABORAL  -->
-
-
-                    <div class="col-6 mb-3">
-                        <div class="card h-100 cardseleccion">
-                            <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
-                                <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-clipboard-data-fill"></i>&nbsp;Inteligencia laboral</h3>
-                                <button type="button" class="btn btn-light waves-effect waves-light" id="nuevo_inteligencia" style="margin-left: auto;">
-                                    Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
-                                </button>
-                            </ol>
-                            <div class="card-body position-relative">
-                                <table id="Tablainteligencia" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
+                                <i id="loadingIcon" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                                <table id="Tablaentrevistaseleccion" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
                                 </table>
                             </div>
                         </div>
                     </div>
 
                 </div>
+                
+
+
                 
 
               </div>
@@ -151,6 +189,90 @@
       </div>
   </div>
 </div>
+
+
+
+<!-- ============================================================== -->
+<!-- MODAL AUTORIZACION-->
+<!-- ============================================================== -->
+
+<div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pdfModalLabel">Formato de Autorización (PS-RH-FO-02)</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <iframe id="pdfIframe" src="" width="100%" height="500px"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="verPdfModal" tabindex="-1" aria-labelledby="verPdfModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="verPdfModalLabel">Documento de Autorización</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="loadingMessage" style="text-align: center;">Cargando documento...</div>
+                <iframe id="pdfIframe1" src="" width="100%" height="500px" style="display: none;"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="Modal_autorizacion" tabindex="-1" aria-labelledby="EntrevistaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <form method="post" enctype="multipart/form-data" id="formularioAUTORIZACION" >
+  
+          <div class="modal-header">
+            <h5 class="modal-title" id="comentariosModalLabel">Subir documento de autorización</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              {!! csrf_field() !!}
+
+              <div class="mb-3">
+                <label class="form-label text-center">Documento de autorización</label>
+                <div class="input-group">
+                    <input type="file" class="form-control" id="ARCHIVO_AUTORIZACION" name="ARCHIVO_AUTORIZACION" accept=".pdf" required>
+                    <button type="button" class="btn btn-light btn-sm ms-2" id="quitarformato" style="display:none;">Quitar archivo</button>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-success" id="guardarFormSeleccionAutorizacion">Guardar</button>
+          </div>
+          </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
 
 <!-- ============================================================== -->
 <!-- MODAL ENTREVISTA -->
@@ -3074,38 +3196,7 @@
 <!-- ============================================================== -->
 <!-- MODAL  PRUEBAS -->
 <!-- ============================================================== -->
-<div class="modal fade" id="Modal_pruebas" tabindex="-1" aria-labelledby="EntrevistaLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-        <form method="post" enctype="multipart/form-data" id="formularioPRUEBAS" >
 
-        <div class="modal-header">
-          <h5 class="modal-title" id="comentariosModalLabel">Pruebas</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            {!! csrf_field() !!}
-
-              <div class="mb-3">
-                <label class="form-label">Nombre de la prueba</label>
-                <textarea class="form-control" id="comentarios" name="comentarios" rows="4"></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="archivoEvidencia" class="form-label text-center">Evidencia</label>
-                <div class="input-group">
-                  <input type="file" class="form-control" id="archivoEvidencia" name="archivoEvidencia" accept=".pdf">
-                  <button type="button" class="btn btn-light btn-sm ms-2" id="quitarEvidencia" style="display:none;">Quitar archivo</button>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-success" id="">Guardar</button>
-      </div>
-        </form>
-    </div>
-  </div>
-</div>
 
 
 

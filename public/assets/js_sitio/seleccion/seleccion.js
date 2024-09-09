@@ -1,11 +1,13 @@
 
 ID_PPT_SELECCION = 0
 ID_ENTREVISTA_SELECCION = 0
-
+ID_AUTORIZACION_SELECCION = 0
 var Tablapptseleccion;
 var Tablaentrevistaseleccion;
-
+var Tablaautorizacion;
 var curpSeleccionada;  
+
+
 
 var Tablaseleccion = $("#Tablaseleccion").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
@@ -161,7 +163,7 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
 const fullScreenModal = document.getElementById('FullScreenModal');
 
 fullScreenModal.addEventListener('hidden.bs.modal', function (event) {
-    const modalsToClose = ['Modal_entrevistas', 'miModal_ppt', 'Modal_pruebas'];
+    const modalsToClose = ['Modal_entrevistas', 'miModal_ppt', 'Modal_pruebas','verPdfModal','pdfModal'];
 
     modalsToClose.forEach(modalId => {
         const modal = document.getElementById(modalId);
@@ -180,6 +182,129 @@ fullScreenModal.addEventListener('hidden.bs.modal', function (event) {
 $('#FullScreenModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget); 
     curpSeleccionada = button.data('curp');  
+
+
+
+
+ // <!-- ============================================================== -->
+// <!-- AUTORIZACION  -->
+// <!-- ============================================================== -->
+
+if ($.fn.DataTable.isDataTable('#Tablaautorizacion')) {
+    Tablaautorizacion.clear().destroy();
+}
+
+Tablaautorizacion = $("#Tablaautorizacion").DataTable({
+    language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+    lengthChange: true,
+    lengthMenu: [
+        [10, 25, 50, -1],
+        [10, 25, 50, 'All']
+    ],
+    info: false,
+    paging: true,
+    searching: true,
+    filtering: true,
+    scrollY: '65vh',
+    scrollCollapse: true,
+    responsive: true,
+    ajax: {
+        dataType: 'json',
+        data: { curp: curpSeleccionada },
+        method: 'GET',
+        cache: false,
+        url: '/Tablaautorizacion',
+        beforeSend: function () {
+            $('#loadingIcon2').css('display', 'inline-block');
+        },
+        complete: function () {
+            $('#loadingIcon2').css('display', 'none');
+            Tablaautorizacion.columns.adjust().draw();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $('#loadingIcon2').css('display', 'none');
+            alertErrorAJAX(jqXHR, textStatus, errorThrown);
+        },
+        dataSrc: 'data'
+    },
+    columns: [
+        { data: 'BTN_ARCHIVO', className: 'text-center' }
+    ],
+    columnDefs: [
+        { target: 0, title: '', className: 'all text-center' },  
+    ]
+});
+
+$('#Tablaautorizacion thead').css('display', 'none');
+
+
+
+
+
+
+
+
+
+
+let currentRequest = null; 
+$(document).off('click', '.btn-ver-pdf').on('click', '.btn-ver-pdf', function() {
+    const curp = $(this).data('curp');
+
+    resetModal();
+
+    const timestamp = new Date().getTime();
+
+    var pdfModal = new bootstrap.Modal(document.getElementById('verPdfModal'));
+    pdfModal.show();
+
+    if (currentRequest && currentRequest.readyState !== 4) {
+        currentRequest.abort();
+    }
+
+    setTimeout(function() {
+        currentRequest = $.ajax({
+            url: '/ver-archivo/' + curp + '?t=' + timestamp, 
+            method: 'GET',
+            success: function(response) {
+                $('#pdfIframe1').attr('src', '/ver-archivo/' + curp + '?t=' + timestamp).show(); 
+                $('#loadingMessage').hide(); 
+            },
+            error: function(jqXHR, textStatus) {
+                if (textStatus !== 'abort') {
+                    $('#loadingMessage').text('Error al cargar el archivo.');
+                }
+            }
+        });
+    }, 300); 
+});
+
+function resetModal() {
+    $('#pdfIframe1').attr('src', '').hide();
+    $('#loadingMessage').text('Cargando documento...').show();
+
+    if (currentRequest && currentRequest.readyState !== 4) {
+        currentRequest.abort(); 
+    }
+
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
+    $('body').css('padding-right', ''); 
+}
+
+$('#verPdfModal').on('hidden.bs.modal', function () {
+    resetModal();
+});
+
+
+
+
+
+
+
+
+
+
+
 
 
 // <!-- ============================================================== -->
@@ -412,10 +537,18 @@ if ('CURSOS' in data) {
 // <!-- ============================================================== -->
 
 
+
+$("#nuevo_autorizacion").click(function (e) {
+    e.preventDefault();
+    $("#Modal_autorizacion").modal("show");
+})
+
+
 $("#nueva_entrevista").click(function (e) {
     e.preventDefault();
     $("#Modal_entrevistas").modal("show");
 })
+
 
 $("#nuevo_ppt").click(function (e) {
     e.preventDefault();
@@ -424,10 +557,155 @@ $("#nuevo_ppt").click(function (e) {
     $("#miModal_ppt").modal("show");
 })
 
-$("#nuevo_pruebas").click(function (e) {
+
+
+// <!-- ============================================================== -->
+// <!-- MODAL AUTORIZACION-->
+// <!-- ============================================================== -->
+
+document.getElementById('verPdfButton').addEventListener('click', function () {
+    const pdfUrl = '/ver-pdf'; 
+
+    document.getElementById('pdfIframe').src = pdfUrl;
+
+    var pdfModal = new bootstrap.Modal(document.getElementById('pdfModal'));
+    pdfModal.show();
+});
+
+
+// Seleccionamos los elementos
+const archivoAutorizacion = document.getElementById('ARCHIVO_AUTORIZACION');
+const quitarFormatoBtn = document.getElementById('quitarformato');
+
+archivoAutorizacion.addEventListener('change', function () {
+    if (archivoAutorizacion.files.length > 0) {
+        quitarFormatoBtn.style.display = 'inline-block';
+    }
+});
+
+quitarFormatoBtn.addEventListener('click', function () {
+    archivoAutorizacion.value = '';
+    quitarFormatoBtn.style.display = 'none';
+});
+
+
+const ModalAutorizacion = document.getElementById('Modal_autorizacion');
+ModalAutorizacion.addEventListener('hidden.bs.modal', event => {
+    ID_AUTORIZACION_SELECCION = 0;
+    document.getElementById('formularioAUTORIZACION').reset();
+    $('.collapse').collapse('hide');
+    $('#guardarFormSeleccionAutorizacion').css('display', 'block').prop('disabled', false);
+
+
+    document.querySelectorAll('#formularioAUTORIZACION [required]').forEach(input => {
+        input.removeAttribute('required');
+    });
+   
+});
+
+
+
+
+$("#guardarFormSeleccionAutorizacion").click(function (e) {
     e.preventDefault();
-    $("#Modal_pruebas").modal("show");
-})
+
+    formularioValido = validarFormulario($('#formularioAUTORIZACION'));
+
+    if (formularioValido) {
+
+        if (ID_AUTORIZACION_SELECCION == 0) {
+
+            alertMensajeConfirm({
+                title: "¿Desea guardar la información?",
+                text: "Al guardarla, la información podra ser usada ",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarFormSeleccionAutorizacion');
+                await ajaxAwaitFormData({ 
+                    api: 3, 
+                    ID_AUTORIZACION_SELECCION: ID_AUTORIZACION_SELECCION, 
+                    CURP: curpSeleccionada 
+                }, 'SeleccionSave', 'formularioAUTORIZACION', 'guardarFormSeleccionAutorizacion', { callbackAfter: true, callbackBefore: true }, () => {
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+
+                }, function (data) {
+
+                    setTimeout(() => {
+                        ID_AUTORIZACION_SELECCION = data.autorizacion.ID_AUTORIZACION_SELECCION;
+                        alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
+                        $('#Modal_autorizacion').modal('hide');
+                        document.getElementById('formularioAUTORIZACION').reset();
+
+
+                        if ($.fn.DataTable.isDataTable('#Tablaautorizacion')) {
+                            Tablaautorizacion.ajax.reload(null, false); // Recargar la tabla sin reiniciar la paginación
+                        }
+
+                    }, 300);
+
+                });
+
+            }, 1);
+
+        } else {
+
+            alertMensajeConfirm({
+                title: "¿Desea editar la información de este formulario?",
+                text: "Al guardarla, se editará la información",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarFormSeleccionAutorizacion');
+                await ajaxAwaitFormData({ 
+                    api: 3, 
+                    ID_AUTORIZACION_SELECCION: ID_AUTORIZACION_SELECCION, 
+                    CURP: curpSeleccionada 
+                }, 'SeleccionSave', 'formularioAUTORIZACION', 'guardarFormSeleccionAutorizacion', { callbackAfter: true, callbackBefore: true }, () => {
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+
+                }, function (data) {
+
+                    setTimeout(() => {
+                        ID_AUTORIZACION_SELECCION = data.autorizacion.ID_AUTORIZACION_SELECCION;
+                        alertMensaje('success', 'Información editada correctamente', 'Información guardada');
+                        $('#Modal_autorizacion').modal('hide');
+                        document.getElementById('formularioAUTORIZACION').reset();
+
+
+                        if ($.fn.DataTable.isDataTable('#Tablaautorizacion')) {
+                            Tablaautorizacion.ajax.reload(null, false); 
+                        }
+
+                    }, 300);
+                });
+
+            }, 1);
+        }
+
+    } else {
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+    }
+});
+
+
+
 
 
 // <!-- ============================================================== -->
@@ -449,16 +727,6 @@ ModalEntrevista.addEventListener('hidden.bs.modal', event => {
    
 });
 
-document.getElementById('archivoEvidencia').addEventListener('change', function() {
-    if (this.files.length > 0) {
-      document.getElementById('quitarEvidencia').style.display = 'inline-block';
-    }
-  });
-
-  document.getElementById('quitarEvidencia').addEventListener('click', function() {
-    document.getElementById('archivoEvidencia').value = '';
-    this.style.display = 'none';
-  });
 
 
 
@@ -473,7 +741,7 @@ document.getElementById('archivoEvidencia').addEventListener('change', function(
 
             alertMensajeConfirm({
                 title: "¿Desea guardar la información?",
-                text: "Al guardarla, se usará para la creación del PPT",
+                text: "Al guardarla, la información podra ser usada ",
                 icon: "question",
             }, async function () {
 
@@ -516,11 +784,11 @@ document.getElementById('archivoEvidencia').addEventListener('change', function(
 
             alertMensajeConfirm({
                 title: "¿Desea editar la información de este formulario?",
-                text: "Al guardarla, se editará la información del PPT",
+                text: "Al guardarla, se editará la información",
                 icon: "question",
             }, async function () {
 
-                await loaderbtn('guardarFormSeleccionPPT');
+                await loaderbtn('guardarFormSeleccionEntrevista');
                 await ajaxAwaitFormData({ 
                     api: 2, 
                     ID_ENTREVISTA_SELECCION: ID_ENTREVISTA_SELECCION, 

@@ -326,8 +326,8 @@ function seleccionarPostulante(vacantesId, curp, nombre, primerApellido, segundo
 
                     Swal.fire({
                         icon: 'success',
-                        title: 'Seleccionado',
-                        text: 'El postulante ha sido seleccionado y guardado exitosamente.',
+                        title: 'Preseleccionado ',
+                        text: 'El postulante ha sido preseleccionado  y guardado exitosamente.',
                         confirmButtonText: 'Aceptar'
                     }).then(() => {
                         const postulanteCard = document.querySelector(`#modalContent div[data-curp="${curp}"]`);
@@ -356,7 +356,7 @@ function seleccionarPostulante(vacantesId, curp, nombre, primerApellido, segundo
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Hubo un problema al guardar la selección. Por favor, inténtelo de nuevo.',
+                        text: 'Hubo un problema al guardar la preselección. Por favor, inténtelo de nuevo.',
                         confirmButtonText: 'Aceptar'
                     });
                 }

@@ -9,6 +9,9 @@ use App\Models\selección\seleccionModel;
 use App\Models\selección\seleccionpptModel;
 use App\Models\selección\cursospptseleccionModel;
 use App\Models\selección\entrevistaseleccionModel;
+use App\Models\selección\autorizacionseleccionModel;
+
+
 
 use Illuminate\Support\Facades\Storage;
 
@@ -142,6 +145,64 @@ public function Tablaentrevistaseleccion(Request $request)
 }
 
 
+public function Tablaautorizacion(Request $request)
+{
+    try {
+        $curp = $request->get('curp');
+        $tabla = autorizacionseleccionModel::where('CURP', $curp)->get();
+
+        foreach ($tabla as $value) {
+         
+                // Generar botón para abrir el archivo en un modal
+                if ($value->ARCHIVO_AUTORIZACION) {
+                    $value->BTN_ARCHIVO = '<button type="button" class="btn btn-info btn-custom rounded-pill btn-ver-pdf" data-curp="' . $value->CURP . '"><i class="bi bi-eye"></i> Ver archivo</button>';
+                } else {
+                    $value->BTN_ARCHIVO = '<button type="button" class="btn btn-secondary btn-custom rounded-pill" disabled><i class="bi bi-file-earmark-excel"></i> Sin archivo</button>';
+                }
+            
+        }
+
+        return response()->json([
+            'data' => $tabla,
+            'msj' => 'Información consultada correctamente'
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'msj' => 'Error ' . $e->getMessage(),
+            'data' => 0
+        ]);
+    }
+}
+
+
+
+
+public function visualizarArchivo($curp)
+{
+    // Buscar la autorización según la CURP
+    $autorizacion = autorizacionseleccionModel::where('CURP', $curp)->first();
+
+    // Verificar que se encontró la autorización y que el archivo existe
+    if ($autorizacion && Storage::exists($autorizacion->ARCHIVO_AUTORIZACION)) {
+        // Generar la ruta completa del archivo en el almacenamiento privado
+        $filePath = storage_path('app/' . $autorizacion->ARCHIVO_AUTORIZACION);
+
+        // Devolver el archivo para que se visualice en el navegador
+        return response()->file($filePath, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="'.basename($filePath).'"'
+        ]);
+    } else {
+        return response()->json(['error' => 'Archivo no encontrado'], 404);
+    }
+}
+
+
+
+
+
+
+
 
 
 
@@ -192,6 +253,23 @@ public function consultarformppt($departamentoAreaId)
         return response()->json(['error' => 'No se encontró información.'], 404);
     }
 }
+
+
+
+public function mostrarPDF()
+{
+    $filePath = storage_path('app/Formatos/PS-RH-FO-02.pdf');
+    
+    if (file_exists($filePath)) {
+        return response()->file($filePath, [
+            'Content-Type' => 'application/pdf',
+        ]);
+    } else {
+        return response()->json(['error' => 'Archivo no encontrado'], 404);
+    }
+}
+
+
 
     
 
@@ -319,6 +397,51 @@ public function store(Request $request)
                 
                     break;
                 
+
+                    case 3:
+
+                        if ($request->ID_AUTORIZACION_SELECCION == 0) {
+                            DB::statement('ALTER TABLE seleccion_autorizacion AUTO_INCREMENT=1;');
+                            $autorizaciones = autorizacionseleccionModel::create($request->all());
+                        } else {
+                            if (!isset($request->ELIMINAR)) {
+                                $autorizaciones = autorizacionseleccionModel::find($request->ID_AUTORIZACION_SELECCION);
+                                $autorizaciones->update($request->all());
+                            } else {
+                                $autorizaciones = autorizacionseleccionModel::where('ID_AUTORIZACION_SELECCION', $request['ID_AUTORIZACION_SELECCION'])->update(['ACTIVO' => 0]);
+                                $response['code']  = 1;
+                                $response['autorizacion']  = 'Desactivada';
+                                return response()->json($response);
+                            }
+                        }
+                    
+                        if ($request->hasFile('ARCHIVO_AUTORIZACION')) {
+                            $curpFolder = 'reclutamiento/' . $request->CURP;
+                        
+                            $autorizacionFolder = $curpFolder . '/AUTORIZACION/';
+                            
+                            if (!Storage::exists($curpFolder)) {
+                                Storage::makeDirectory($curpFolder);
+                            }
+                            
+                            if (!Storage::exists($autorizacionFolder)) {
+                                Storage::makeDirectory($autorizacionFolder);
+                            }
+                            
+                            $autorizacionFile = $request->file('ARCHIVO_AUTORIZACION');
+                            $autorizacionFileName = 'AUTORIZACION_' . $request->CURP . '.' . $autorizacionFile->getClientOriginalExtension();
+                            $autorizacionFile->storeAs($autorizacionFolder, $autorizacionFileName);
+                            
+                            $autorizaciones->ARCHIVO_AUTORIZACION = $autorizacionFolder . $autorizacionFileName;
+                            $autorizaciones->save(); 
+                        }
+                    
+                        $response['code']  = 1;
+                        $response['autorizacion']  = $autorizaciones;
+                        return response()->json($response);
+                    
+                        break;
+
 
 
 
