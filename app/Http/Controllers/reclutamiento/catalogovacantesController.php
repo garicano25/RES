@@ -127,6 +127,8 @@ public function store(Request $request)
                     DB::commit(); 
                     return response()->json($response);
                     break;
+
+                    
                 default:
                     $response['code']  = 1;
                     $response['msj']  = 'Api no encontrada';

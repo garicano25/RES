@@ -33,6 +33,7 @@ use App\Http\Controllers\reclutamiento\PuestoController;
 use App\Http\Controllers\reclutamiento\bancocvController;
 use App\Http\Controllers\reclutamiento\vacantesactivasController;
 
+
 // Controladores de seleccion
 
 use App\Http\Controllers\seleccion\seleccionController;
@@ -204,14 +205,24 @@ Route::post('/guardarSeleccion', [vacantesactivasController::class, 'guardarSele
 
 Route::get('/Selección', [seleccionController::class, 'index']);
 // Route::get('/Selección', function () {return view('RH.Selección.seleccion');});
+
+// tabla de selección
+
 Route::get('/Tablaseleccion', [seleccionController::class, 'Tablaseleccion']);
-Route::get('/consultarSeleccion/{categoriaVacanteId}', [seleccionController::class, 'consultarSeleccion']);
-Route::get('/consultarformppt/{id}', [seleccionController::class, 'consultarformppt']);
-Route::post('/SeleccionSave', [seleccionController::class, 'store']);
 Route::get('/Tablapptseleccion', [seleccionController::class, 'Tablapptseleccion']);
 Route::get('/Tablaautorizacion', [seleccionController::class, 'Tablaautorizacion']);
 Route::get('/Tablainteligencia', [seleccionController::class, 'Tablainteligencia']);
 Route::get('/Tablaburo', [seleccionController::class, 'Tablaburo']);
-Route::get('/ver-archivo/{curp}', [seleccionController::class, 'visualizarArchivo']);
 Route::get('/Tablaentrevistaseleccion', [seleccionController::class, 'Tablaentrevistaseleccion']);
+Route::get('/Tablareferencia', [seleccionController::class, 'Tablareferencia']);
+
+// guardar 
+Route::post('/SeleccionSave', [seleccionController::class, 'store']);
+
+// consultar información
+Route::get('/consultarSeleccion/{categoriaVacanteId}', [seleccionController::class, 'consultarSeleccion']);
+Route::get('/consultarformppt/{id}', [seleccionController::class, 'consultarformppt']);
+
+// ver archivos
+Route::get('/ver-archivo/{curp}', [seleccionController::class, 'visualizarArchivo']);
 Route::get('/ver-pdf', [seleccionController::class, 'mostrarPDF'])->name('ver-pdf');

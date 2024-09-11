@@ -405,17 +405,3 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-// document.addEventListener("DOMContentLoaded", function() {
-//     const postularseButtons = document.querySelectorAll('.postularse-btn');
-
-//     postularseButtons.forEach(function(button) {
-//         button.addEventListener('click', function() {
-//             const curpInputDiv = this.nextElementSibling;
-//             if (curpInputDiv.style.display === 'none' || curpInputDiv.style.display === '') {
-//                 curpInputDiv.style.display = 'block';
-//             } else {
-//                 curpInputDiv.style.display = 'none';
-//             }
-//         });
-//     });
-// });

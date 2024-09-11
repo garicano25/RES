@@ -12,6 +12,9 @@ use App\Models\selección\entrevistaseleccionModel;
 use App\Models\selección\autorizacionseleccionModel;
 use App\Models\selección\inteligenciaseleccionModel;
 use App\Models\selección\buroseleccionModel;
+use App\Models\selección\referenciaseleccionModel;
+use App\Models\selección\referenciasempresasModel;
+
 
 
 
@@ -292,6 +295,48 @@ public function Tablaburo(Request $request)
 
 
 
+
+public function Tablareferencia(Request $request)
+{
+    try {
+        $curp = $request->get('curp');
+
+        // Obtener las referencias de selección
+        $tabla = referenciaseleccionModel::where('CURP', $curp)->get();
+
+        // Variable para almacenar las filas que se enviarán al DataTable
+        $rows = [];
+
+        // Recorrer cada fila de la tabla principal
+        foreach ($tabla as $value) {
+            // Obtener las referencias relacionadas
+            $referencias = referenciasempresasModel::where('SELECCION_REFERENCIA_ID', $value->ID_REFERENCIAS_SELECCION)->get();
+
+            // Para cada referencia, creamos una fila separada en $rows
+            foreach ($referencias as $referencia) {
+                $rows[] = [
+                    'NOMBRE_EMPRESA' => $referencia->NOMBRE_EMPRESA,
+                    'COMENTARIO' => $referencia->COMENTARIO,
+                    'ARCHIVO_RESULTADO' => $referencia->ARCHIVO_RESULTADO,
+                    'BTN_EDITAR' => ($value->ACTIVO == 0) ? 
+                        '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>' :
+                        '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
+                    'BTN_DOCUMENTO' => '<button class="btn btn-danger btn-custom rounded-pill pdf-button" data-pdf="/competencias/' . $referencia->ARCHIVO_RESULTADO . '"> <i class="bi bi-file-pdf-fill"></i></button>'
+                ];
+            }
+        }
+
+        return response()->json([
+            'data' => $rows,
+            'msj' => 'Información consultada correctamente'
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'msj' => 'Error ' . $e->getMessage(),
+            'data' => 0
+        ]);
+    }
+}
 
 
 
@@ -639,7 +684,82 @@ public function store(Request $request)
                     
                         break;
                 
+
+                        case 6:
+                        DB::beginTransaction(); 
+                    
+                        // Verificar si se va a crear un nuevo registro o actualizar uno existente
+                        if ($request->ID_REFERENCIAS_SELECCION == 0) {
+                            DB::statement('ALTER TABLE seleccion_referencias_laboral AUTO_INCREMENT=1;');
+                            $vacante = referenciaseleccionModel::create($request->all());
+                        } else { 
+                            if (!isset($request->ELIMINAR)) {
+                                $vacante = referenciaseleccionModel::find($request->ID_REFERENCIAS_SELECCION);
+                                $vacante->update($request->all());
+                                referenciasempresasModel::where('SELECCION_REFERENCIA_ID', $request->ID_REFERENCIAS_SELECCION)->delete();
+                            } else {
+                                $vacante = referenciaseleccionModel::where('ID_REFERENCIAS_SELECCION', $request['ID_REFERENCIAS_SELECCION'])->update(['ACTIVO' => 0]);
+                                $response['code']  = 1;
+                                $response['vacante']  = 'Desactivada';
+                                DB::commit();
+                                return response()->json($response);
+                            }
+                        }
+                    
+                        if ($request->has('NOMBRE_EMPRESA')) {
+                            foreach ($request->NOMBRE_EMPRESA as $index => $nombreEmpresa) {
+                                $comentario = isset($request->COMENTARIO[$index]) ? $request->COMENTARIO[$index] : null;
+                    
+                                $cumpleKey = "CUMPLE_" . ($index + 1); 
+                                $cumple = $request->input($cumpleKey) ?? null;
                                 
+                                $referencia = referenciasempresasModel::create([
+                                    'SELECCION_REFERENCIA_ID' => $vacante->ID_REFERENCIAS_SELECCION,
+                                    'NOMBRE_EMPRESA' => $nombreEmpresa,
+                                    'COMENTARIO' => $comentario, 
+                                    'CUMPLE' => $cumple, 
+                                ]);
+                    
+                                if ($request->hasFile("ARCHIVO_RESULTADO.$index")) {
+                                    $curpFolder = 'reclutamiento/' . $request->CURP;
+                                    $referenciaFolder = $curpFolder . '/Referencias Laborales/';
+                    
+                                    if (!Storage::exists($curpFolder)) {
+                                        Storage::makeDirectory($curpFolder);
+                                    }
+                    
+                                    if (!Storage::exists($referenciaFolder)) {
+                                        Storage::makeDirectory($referenciaFolder);
+                                    }
+                    
+                                    // Guardar el archivo
+                                    $archivoFile = $request->file("ARCHIVO_RESULTADO.$index");
+                                    $archivoFileName = $nombreEmpresa . '_' . $request->CURP . '.' . $archivoFile->getClientOriginalExtension();
+                                    $archivoFile->storeAs($referenciaFolder, $archivoFileName);
+                    
+                                    // Actualizar el registro de la empresa con la ruta del archivo
+                                    $referencia->ARCHIVO_RESULTADO = $referenciaFolder . $archivoFileName;
+                                    $referencia->save();
+                                }
+                            }
+                        }
+                    
+                        $response['code']  = 1;
+                        $response['vacante']  = $vacante;
+                        DB::commit(); 
+                        return response()->json($response);
+                        break;
+                    
+                                
+
+
+        
+                        
+                        
+
+                            
+
+
 
 
 
@@ -651,7 +771,7 @@ public function store(Request $request)
         }
     } catch (Exception $e) {
 
-        return response()->json('Error al guardar el Area');
+        return response()->json('Error al guardar');
     }
 }
 

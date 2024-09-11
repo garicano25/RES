@@ -4,6 +4,9 @@ ID_ENTREVISTA_SELECCION = 0
 ID_AUTORIZACION_SELECCION = 0
 ID_INTELIGENCIA_SELECCION =0
 ID_BURO_SELECCION =0
+ID_REFERENCIAS_SELECCION  = 0;
+
+
 var Tablapptseleccion;
 var Tablaentrevistaseleccion;
 var Tablaautorizacion;
@@ -496,7 +499,87 @@ $('#Tablaburo tbody').on('click', 'td>button.EDITAR', function () {
     editarDatoTabla(data, "formularioBURO", 'Modal_buro', 1);
 });
 
+// <!-- ============================================================== -->
+// <!-- REFERENCIA LABORAL -->
+// <!-- ============================================================== -->
 
+
+
+
+if ($.fn.DataTable.isDataTable('#Tablareferencia')) {
+    Tablareferencia.clear().destroy();
+}
+
+
+ Tablareferencia = $("#Tablareferencia").DataTable({
+    language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+    lengthChange: true,
+    lengthMenu: [
+        [10, 25, 50, -1],
+        [10, 25, 50, 'All']
+    ],
+    info: false,
+    paging: true,
+    searching: true,
+    filtering: true,
+    scrollY: '65vh',
+    scrollCollapse: true,
+    responsive: true,
+    ajax: {
+        dataType: 'json',
+        data: { curp: curpSeleccionada }, 
+        method: 'GET',
+        cache: false,
+        url: '/Tablareferencia',  
+        beforeSend: function () {
+            $('#loadingIcon5').css('display', 'inline-block');
+        },
+        complete: function () {
+            $('#loadingIcon5').css('display', 'none');
+            Tablareferencia.columns.adjust().draw();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $('#loadingIcon').css('display', 'none');
+            alertErrorAJAX(jqXHR, textStatus, errorThrown);
+        },
+        dataSrc: 'data'
+    },
+    columns: [
+        { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+        { 
+            data: 'NOMBRE_EMPRESA',  
+            render: function (data, type, row) {
+                return data;
+            },
+            className: 'text-center'
+        },
+        { 
+            data: 'COMENTARIO',  
+            render: function (data, type, row) {
+                return data;
+            },
+            className: 'text-center'
+        },
+        { 
+            data: 'ARCHIVO_RESULTADO', 
+            render: function (data, type, row) {
+                if (data) {
+                    return '<button class="btn btn-danger btn-custom rounded-pill pdf-button" data-pdf="/competencias/' + data + '"> <i class="bi bi-file-pdf-fill"></i></button>';
+                }
+                return 'Sin archivo';
+            },
+            className: 'text-center'
+        },
+        { data: 'BTN_EDITAR', className: 'text-center' }
+    ],
+    columnDefs: [
+        { target: 0, title: '#', className: 'all text-center' },
+        { target: 1, title: 'Empresa', className: 'all text-center' },
+        { target: 2, title: 'Comentario', className: 'all text-center' },
+        { target: 3, title: 'Archivo', className: 'all text-center' },
+        { target: 4, title: 'Editar', className: 'all text-center' }
+    ]
+});
 
 
 
@@ -1002,9 +1085,6 @@ ModalInteligencia.addEventListener('hidden.bs.modal', event => {
 });
 
 
-
-
-
 $("#guardarFormSeleccionInteligencia").click(function (e) {
     e.preventDefault();
 
@@ -1411,8 +1491,272 @@ $("#guardarFormSeleccionBuro").click(function (e) {
 
 
 
+// <!-- ============================================================== -->
+// <!-- MODAL REFERENCIAS LABORALES -->
+// <!-- ============================================================== -->
+
+// Abrir el modal al hacer clic en el botón
+$("#nuevo_experiencia").click(function (e) {
+    e.preventDefault();
+    $("#Modal_referencias").modal("show");
+
+});
+
+const ModalReferencias = document.getElementById('Modal_referencias');
+ModalReferencias.addEventListener('hidden.bs.modal', event => {
+
+    ID_REFERENCIAS_SELECCION  = 0;
+    $('.collapse').collapse('hide')
+    $('#guardarFormSeleccionReferencias').css('display', 'block').prop('disabled', false);
+
+    document.getElementById('formularioReferencias').reset();
+
+    totalEmpresas = 0;
+    empresasCumplen = 0;
+    contador = 0;
+
+    resetInputs();
+
+    actualizarPorcentajesReferencias();
+
+    document.getElementById('contenedor-empresa').style.display = 'none';
+
+    document.querySelectorAll('#formularioReferencias [required]').forEach(input => {
+        input.removeAttribute('required');
+    });
+});
 
 
+
+
+
+let experienciaSi, experienciaNo, contenedorEmpresa, contenedorInputs, contador = 0;
+let totalEmpresas = 0;  // Contador para las empresas agregadas
+let empresasCumplen = 0; // Contador para las empresas que cumplen
+
+// Inicializar elementos y eventos
+function initReferenciasLaborales() {
+    experienciaSi = document.getElementById('experiencia_si');
+    experienciaNo = document.getElementById('experiencia_no');
+    contenedorEmpresa = document.getElementById('contenedor-empresa');
+    contenedorInputs = document.getElementById('inputs-container');
+
+    // Asegurar que el estado inicial sea el correcto
+    toggleContenedorEmpresa();
+
+    // Asignar eventos a los radio buttons
+    experienciaSi.addEventListener('change', toggleContenedorEmpresa);
+    experienciaNo.addEventListener('change', toggleContenedorEmpresa);
+
+    // Asignar evento al botón de agregar empresa
+    const botonAgregar = document.getElementById('botonAgregar');
+    botonAgregar.addEventListener('click', function (e) {
+        e.preventDefault();
+        agregarInput();
+    });
+}
+
+// Función para mostrar u ocultar el contenedor
+function toggleContenedorEmpresa() {
+    if (experienciaSi.checked) {
+        contenedorEmpresa.style.display = 'block';  
+    } else {
+        contenedorEmpresa.style.display = 'none';   
+        resetInputs(); 
+    }
+}
+
+// Función para eliminar todos los inputs dinámicos
+function resetInputs() {
+    while (contenedorInputs.firstChild) {
+        contenedorInputs.removeChild(contenedorInputs.firstChild);
+    }
+    totalEmpresas = 0;   // Reiniciar el total de empresas
+    empresasCumplen = 0; // Reiniciar el total de empresas que cumplen
+    actualizarPorcentajesReferencias(); // Reiniciar el porcentaje
+}
+
+// Función para agregar inputs dinámicos
+function agregarInput() {
+    contador++; // Incrementar el contador para cada nuevo grupo de inputs
+    totalEmpresas++; // Incrementar el número total de empresas
+
+    const divInput = document.createElement('div');
+    divInput.classList.add('form-group', 'row', 'input-container', 'mb-3'); 
+    divInput.innerHTML = `
+        <div class="col-3 text-center">
+            <label for="nombreEmpresa">Nombre de la empresa</label>
+            <input type="text" name="NOMBRE_EMPRESA[]" class="form-control">
+        </div>
+        <div class="col-3 text-center">
+            <label for="comentario">Comentario</label>
+            <textarea type="text" name="COMENTARIO[]" class="form-control" rows="1"></textarea>
+        </div>
+        <div class="col-1 text-center">
+            <label for="cumple">¿Cumple?</label><br>
+            <input type="radio" class="form-check-input" name="CUMPLE_${contador}" value="Sí" id="cumple_si_${contador}"> 
+            <label for="cumple_si_${contador}">Sí</label>
+            <input type="radio" class="form-check-input" name="CUMPLE_${contador}" value="No" id="cumple_no_${contador}">
+            <label for="cumple_no_${contador}">No</label>
+        </div>
+        <div class="col-4 text-center">
+            <label for="archivoResultado">Cargar documento</label>
+            <input type="file" name="ARCHIVO_RESULTADO[]" class="form-control archivo-input" accept=".pdf">
+            <span class="errorArchivoResultado text-danger" style="display: none;">Solo se permiten archivos PDF</span>
+            <button type="button" class="btn quitarArchivo" style="display: none;">Quitar archivo</button>
+        </div>
+        <div class="col-1">
+            <br>
+            <button type="button" class="btn btn-danger botonEliminar"><i class="bi bi-trash3-fill"></i></button>
+        </div>
+    `;
+
+    contenedorInputs.appendChild(divInput);
+
+    // Añadir eventos para los radios (Sí o No)
+    const cumpleSi = divInput.querySelector(`#cumple_si_${contador}`);
+    const cumpleNo = divInput.querySelector(`#cumple_no_${contador}`);
+
+    cumpleSi.addEventListener('change', actualizarPorcentajeCumplimiento);
+    cumpleNo.addEventListener('change', actualizarPorcentajeCumplimiento);
+
+    // Eliminar input dinámico
+    const botonEliminar = divInput.querySelector('.botonEliminar');
+    botonEliminar.addEventListener('click', function () {
+        contenedorInputs.removeChild(divInput);
+        totalEmpresas--;
+        actualizarPorcentajesReferencias();
+    });
+}
+
+// Función para actualizar el porcentaje basado en las empresas que cumplen
+function actualizarPorcentajeCumplimiento() {
+    empresasCumplen = 0;
+
+    // Recorremos todos los inputs dinámicos
+    for (let i = 1; i <= contador; i++) {
+        const radioCumple = document.querySelector(`input[name="CUMPLE_${i}"]:checked`);
+        if (radioCumple && radioCumple.value === "Sí") {
+            empresasCumplen++;
+        }
+    }
+
+    actualizarPorcentajesReferencias();
+}
+
+// Función para calcular y actualizar el porcentaje total
+function actualizarPorcentajesReferencias() {
+    const porcentajeTotalInputs = document.getElementById('PORCENTAJE_TOTAL_REFERENCIAS');
+
+    if (totalEmpresas > 0) {
+        const porcentaje = (empresasCumplen / totalEmpresas) * 100;
+        porcentajeTotalInputs.value = Math.round(porcentaje); // Redondear el resultado al número entero más cercano
+    } else {
+        porcentajeTotalInputs.value = 0; // Si no hay empresas, el porcentaje es 0
+    }
+}
+
+// Iniciar todo cuando el DOM esté cargado
+document.addEventListener('DOMContentLoaded', initReferenciasLaborales);
+
+
+$("#guardarFormSeleccionReferencias").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormulario($('#formularioReferencias'));
+
+    if (formularioValido) {
+
+        if (ID_REFERENCIAS_SELECCION == 0) {
+
+            alertMensajeConfirm({
+                title: "¿Desea guardar la información?",
+                text: "Al guardarla, la información podra ser usada ",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarFormSeleccionReferencias');
+                await ajaxAwaitFormData({ 
+                    api: 6, 
+                    ID_REFERENCIAS_SELECCION: ID_REFERENCIAS_SELECCION, 
+                    CURP: curpSeleccionada 
+                }, 'SeleccionSave', 'formularioReferencias', 'guardarFormSeleccionReferencias', { callbackAfter: true, callbackBefore: true }, () => {
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+
+                }, function (data) {
+
+                    setTimeout(() => {
+                        ID_REFERENCIAS_SELECCION = data.vacante.ID_REFERENCIAS_SELECCION;
+                        alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
+                        $('#Modal_referencias').modal('hide');
+                        document.getElementById('formularioReferencias').reset();
+
+
+                        // if ($.fn.DataTable.isDataTable('#Tablaentrevistaseleccion')) {
+                        //     Tablaentrevistaseleccion.ajax.reload(null, false); // Recargar la tabla sin reiniciar la paginación
+                        // }
+
+                    }, 300);
+
+                });
+
+            }, 1);
+
+        } else {
+
+            alertMensajeConfirm({
+                title: "¿Desea editar la información de este formulario?",
+                text: "Al guardarla, se editará la información",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarFormSeleccionEntrevista');
+                await ajaxAwaitFormData({ 
+                    api: 6, 
+                    ID_REFERENCIAS_SELECCION: ID_REFERENCIAS_SELECCION, 
+                    CURP: curpSeleccionada 
+                }, 'SeleccionSave', 'formularioReferencias', 'guardarFormSeleccionReferencias', { callbackAfter: true, callbackBefore: true }, () => {
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+
+                }, function (data) {
+
+                    setTimeout(() => {
+                        ID_REFERENCIAS_SELECCION = data.vacante.ID_REFERENCIAS_SELECCION;
+                        alertMensaje('success', 'Información editada correctamente', 'Información guardada');
+                        $('#Modal_referencias').modal('hide');
+                        document.getElementById('formularioReferencias').reset();
+
+
+                        // if ($.fn.DataTable.isDataTable('#Tablaentrevistaseleccion')) {
+                        //     Tablaentrevistaseleccion.ajax.reload(null, false); 
+                        // }
+
+                    }, 300);
+                });
+
+            }, 1);
+        }
+
+    } else {
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+    }
+});
 
 // <!-- ============================================================== -->
 // <!-- MODAL ENTREVISTA -->

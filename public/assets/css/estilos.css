@@ -466,3 +466,8 @@ table.dataTable tbody tr:last-child td:last-child {
     background-color: green;
     opacity: 1;
 }
+
+
+.modal-xl {
+    max-width: 78%; 
+}

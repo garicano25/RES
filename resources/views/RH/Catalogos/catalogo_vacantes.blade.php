@@ -66,6 +66,7 @@
                         <label>Fecha de expiración de la vacante *</label>
                         <input type="date" name="FECHA_EXPIRACION" id="FECHA_EXPIRACION"  class="form-control" required>
                     </div>
+                    
                     <div class="mb-3">
                         <label>Requerimiento de vacantes:</label>
                         <button id="botonAgregar" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar requerimiento"><i class="bi bi-plus-circle-fill"></i></button>
