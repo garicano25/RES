@@ -72,6 +72,7 @@
                                 </button>
                             </ol>
                             <div class="card-body position-relative">
+                                <i id="loadingIcon3" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
                                 <table id="Tablainteligencia" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
                                 </table>
                             </div>
@@ -81,12 +82,13 @@
                     <div class="col-6 mb-3">
                         <div class="card h-100 cardseleccion">
                             <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
-                                <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-clipboard-data-fill"></i>&nbsp;Buro laboral</h3>
+                                <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-clipboard-data-fill"></i>&nbsp;Buró laboral</h3>
                                 <button type="button" class="btn btn-light waves-effect waves-light" id="nuevo_buro" style="margin-left: auto;">
                                     Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
                                 </button>
                             </ol>
                             <div class="card-body position-relative">
+                                <i id="loadingIcon4" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
                                 <table id="Tablaburo" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
                                 </table>
                             </div>
@@ -131,15 +133,8 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
-                    
                 </div>
                 
-
-                  
                 <div class="row">
                     <!-- PRUEBAS -->
                     <div class="col-6 mb-3">
@@ -156,8 +151,6 @@
                             </div>
                         </div>
                     </div>
-                
-
                      <!-- ENTREVISTAS  -->
                      <div class="col-6 mb-3">
                         <div class="card h-100 cardseleccion ">
@@ -174,13 +167,8 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 
-
-
-                
-
               </div>
           </div>
           <div class="modal-footer">
@@ -235,13 +223,7 @@
 
 
 
-
-
-
-
-
-
-<div class="modal fade" id="Modal_autorizacion" tabindex="-1" aria-labelledby="EntrevistaLabel" aria-hidden="true">
+<div class="modal fade" id="Modal_autorizacion" tabindex="-1" aria-labelledby="AutorizacionLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
           <form method="post" enctype="multipart/form-data" id="formularioAUTORIZACION" >
@@ -254,11 +236,12 @@
               {!! csrf_field() !!}
 
               <div class="mb-3">
-                <label class="form-label text-center">Documento de autorización</label>
+                <label class="form-label text-center">Documento de autorización *</label>
                 <div class="input-group">
                     <input type="file" class="form-control" id="ARCHIVO_AUTORIZACION" name="ARCHIVO_AUTORIZACION" accept=".pdf" required>
                     <button type="button" class="btn btn-light btn-sm ms-2" id="quitarformato" style="display:none;">Quitar archivo</button>
                 </div>
+                <small id="errorArchivo" class="text-danger" style="display:none;">El archivo debe ser un PDF.</small>
             </div>
           </div>
           <div class="modal-footer">
@@ -269,6 +252,177 @@
       </div>
     </div>
   </div>
+
+<!-- ============================================================== -->
+<!-- MODAL INTELIGENCIA LABORAL-->
+<!-- ============================================================== -->
+<div class="modal fade" id="Modal_inteligencia" tabindex="-1" aria-labelledby="InteligenciaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <form method="post" enctype="multipart/form-data" id="formularioINTELIGENCIA" >
+  
+          <div class="modal-header">
+            <h5 class="modal-title" id="ModalLabel">Inteligencia Laboral</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            {!! csrf_field() !!}
+            
+            <div class="mb-3">
+                <label class="form-label text-center">Documento Completo *</label>
+                <div class="input-group">
+                    <input type="file" class="form-control" id="ARCHIVO_COMPLETO" name="ARCHIVO_COMPLETO" accept=".pdf" required>
+                    <button type="button" class="btn btn-light btn-sm ms-2" id="quitarcompleto" style="display:none;">Quitar archivo</button>
+                </div>
+                <small id="errorArchivoCompleto" class="text-danger" style="display:none;">El archivo debe ser un PDF.</small>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label text-center">Documento Competencias *</label>
+                <div class="input-group">
+                    <input type="file" class="form-control" id="ARCHIVO_COMPETENCIAS" name="ARCHIVO_COMPETENCIAS" accept=".pdf" required>
+                    <button type="button" class="btn btn-light btn-sm ms-2" id="quitarcompetencias" style="display:none;">Quitar archivo</button>
+                </div>
+                <small id="errorArchivoCompetencias" class="text-danger" style="display:none;">El archivo debe ser un PDF.</small>
+            </div>
+        
+            <!-- Semáforo centrado con texto externo y título -->
+            <div class="traffic-light-wrapper">
+                <h3 class="traffic-light-title"><b>Riesgo</b></h3>
+                
+                <div class="traffic-light">
+                    <label class="light red">
+                        <input type="radio" name="RIESGO_PORCENTAJE" value="40">
+                        <span class="label">Alto</span>
+                    </label>
+                    <label class="light yellow">
+                        <input type="radio" name="RIESGO_PORCENTAJE" value="70">
+                        <span class="label">Medio</span>
+                    </label>
+                    <label class="light green">
+                        <input type="radio" name="RIESGO_PORCENTAJE" value="100">
+                        <span class="label">Bajo</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-success" id="guardarFormSeleccionInteligencia">Guardar</button>
+          </div>
+          </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================== -->
+<!-- MODAL BURO LABORAL-->
+<!-- ============================================================== -->
+<div class="modal fade" id="Modal_buro" tabindex="-1" aria-labelledby="BuroLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <form method="post" enctype="multipart/form-data" id="formularioBURO" >
+          <div class="modal-header">
+            <h5 class="modal-title" id="ModalLabel">Buró Laboral</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+                {!! csrf_field() !!}
+                <div class="mb-3">
+                    <label class="form-label text-center">Cargar resultado *</label>
+                    <div class="input-group">
+                        <input type="file" class="form-control" id="ARCHIVO_RESULTADO" name="ARCHIVO_RESULTADO" accept=".pdf" required>
+                        <button type="button" class="btn btn-light btn-sm ms-2" id="quitarResultado" style="display:none;">Quitar archivo</button>
+                    </div>
+                    <small id="errorArchivoResultado" class="text-danger" style="display:none;">El archivo debe ser un PDF.</small>
+                </div>
+            
+                <div class="mb-3">
+                    <label class="form-label">1 - Cédula profesional *</label>
+                    <div class="d-flex align-items-center">
+                        <input type="radio" name="CEDULA_PROFESIONAL" id="cedula_si" value="si" class="me-2">
+                        <label for="cedula_si" class="me-3">Sí</label>
+            
+                        <input type="radio" name="CEDULA_PROFESIONAL" id="cedula_no" value="no" class="me-2">
+                        <label for="cedula_no" class="me-3">No</label>
+            
+                        <input type="radio" name="CEDULA_PROFESIONAL" id="cedula_exterior" value="exterior" class="me-2">
+                        <label for="cedula_exterior" class="me-3">Exterior</label>
+                    </div>
+                </div>
+            
+                <div class="mb-3">
+                    <label class="form-label text-center">2 - Experiencia laboral </label>
+                    <div class="row justify-content-center">
+                        <div class="col-3 text-center mx-auto">
+                            <label>Reportadas en Buró *</label>
+                            <input type="number" class="form-control" id="EXPERIENCIA_BURO" name="EXPERIENCIA_BURO" min="0" required>
+                        </div>
+                        <div class="col-3 text-center mx-auto">
+                            <label>Reportadas en CV * </label>
+                            <input type="number" class="form-control" id="EXPERIENCIA_CV" name="EXPERIENCIA_CV" min="0" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label text-center">3 - Boletines/demandas </label>
+
+                    <div class="row justify-content-center mb-3">
+                        <div class="col-12 d-flex align-items-center">
+                            <label class="me-3">Laborales *</label>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" name="LABORALES_DEMANDA" id="laborales_si" value="si">
+                                <label for="laborales_si" class="form-check-label">Sí</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" name="LABORALES_DEMANDA" id="laborales_no" value="no">
+                                <label for="laborales_no" class="form-check-label">No</label>
+                            </div>
+                            <input type="number" class="form-control ms-3 text-center" id="NUMERO_LABORALES" name="NUMERO_LABORALES" placeholder="N°" readonly style="max-width: 100px;">
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center mb-3">
+                        <div class="col-12 d-flex align-items-center">
+                            <label class="me-3">Judiciales *</label>
+
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" name="JUDICIALES_DEMANDA" id="judiciales_si" value="si">
+                                <label for="judiciales_si" class="form-check-label">Sí</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" name="JUDICIALES_DEMANDA" id="judiciales_no" value="no">
+                                <label for="judiciales_no" class="form-check-label">No</label>
+                            </div>
+                            <input type="number" class="form-control ms-3 text-center" id="NUMERO_JUDICIALES" name="NUMERO_JUDICIALES" placeholder="N°" readonly style="max-width: 100px;">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label >Observaciones </label>
+                        <textarea class="form-control" id="OBSERVACIONES_BURO" name="OBSERVACIONES_BURO" rows="2" ></textarea>
+                    </div>
+                </div>
+              
+                <div class="row mb-3">
+                    <div class="col-4 mx-auto  text-center">
+                        <div class="form-group">
+                            <label>Suma total del %</label>
+                            <input type="number" class="form-control floating-input text-center" id="PORCENTAJE_TOTAL" name="PORCENTAJE_TOTAL" readonly>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-success" id="guardarFormSeleccionBuro">Guardar</button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+
 
 
 
@@ -300,7 +454,7 @@
             <div class="mb-3">
                 <label  class="form-label text-center">Evidencia</label>
                 <div class="input-group">
-                  <input type="file" class="form-control" id="ARCHIVO_ENTREVISTA" name="ARCHIVO_ENTREVISTA" accept=".pdf">
+                  <input type="file" class="form-control" id="ARCHIVO_ENTREVISTA" name="ARCHIVO_ENTREVISTA" accept=".pdf" required>
                   <button type="button" class="btn btn-light btn-sm ms-2" id="quitarEvidencia" style="display:none;">Quitar archivo</button>
                 </div>
             </div>

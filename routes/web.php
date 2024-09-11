@@ -209,13 +209,9 @@ Route::get('/consultarSeleccion/{categoriaVacanteId}', [seleccionController::cla
 Route::get('/consultarformppt/{id}', [seleccionController::class, 'consultarformppt']);
 Route::post('/SeleccionSave', [seleccionController::class, 'store']);
 Route::get('/Tablapptseleccion', [seleccionController::class, 'Tablapptseleccion']);
-
 Route::get('/Tablaautorizacion', [seleccionController::class, 'Tablaautorizacion']);
-
+Route::get('/Tablainteligencia', [seleccionController::class, 'Tablainteligencia']);
+Route::get('/Tablaburo', [seleccionController::class, 'Tablaburo']);
 Route::get('/ver-archivo/{curp}', [seleccionController::class, 'visualizarArchivo']);
-
 Route::get('/Tablaentrevistaseleccion', [seleccionController::class, 'Tablaentrevistaseleccion']);
 Route::get('/ver-pdf', [seleccionController::class, 'mostrarPDF'])->name('ver-pdf');
-
-
-

@@ -10,6 +10,10 @@ use App\Models\selección\seleccionpptModel;
 use App\Models\selección\cursospptseleccionModel;
 use App\Models\selección\entrevistaseleccionModel;
 use App\Models\selección\autorizacionseleccionModel;
+use App\Models\selección\inteligenciaseleccionModel;
+use App\Models\selección\buroseleccionModel;
+
+
 
 
 
@@ -200,6 +204,91 @@ public function visualizarArchivo($curp)
 
 
 
+public function Tablainteligencia(Request $request)
+{
+    try {
+        $curp = $request->get('curp');
+        $tabla = inteligenciaseleccionModel::where('CURP', $curp)->get();
+
+        foreach ($tabla as $value) {
+            // Lógica para el botón de editar
+            if ($value->ACTIVO == 0) {
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+            } else {
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+            }
+
+            // Lógica para el campo de riesgo
+            switch ($value->RIESGO_PORCENTAJE) {
+                case 100:
+                    $value->RIESGO = 'Bajo';
+                    break;
+                case 70:
+                    $value->RIESGO = 'Medio';
+                    break;
+                case 40:
+                    $value->RIESGO = 'Alto';
+                    break;
+                default:
+                    $value->RIESGO = 'Desconocido';
+                    break;
+            }
+
+            // Botones para documentos (Documento Competencias y Documento Completo)
+            $value->DOC_COMPETENCIAS = '<button class="btn btn-danger btn-custom rounded-pill pdf-button" data-pdf="/competencias/' . $value->ARCHIVO_COMPETENCIAS . '"> <i class="bi bi-file-pdf-fill"></i></button>';
+            $value->DOC_COMPLETO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button" data-pdf="/completo/' . $value->ARCHIVO_COMPLETO . '"> <i class="bi bi-file-pdf-fill"></i></button>';
+        }
+
+        return response()->json([
+            'data' => $tabla,
+            'msj' => 'Información consultada correctamente'
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'msj' => 'Error ' . $e->getMessage(),
+            'data' => 0
+        ]);
+    }
+}
+
+
+
+
+
+
+public function Tablaburo(Request $request)
+{
+    try {
+        $curp = $request->get('curp');
+
+        $tabla = buroseleccionModel::where('CURP', $curp)->get();
+
+        foreach ($tabla as $value) {
+            if ($value->ACTIVO == 0) {
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button" data-pdf="/competencias/' . $value->ARCHIVO_RESULTADO . '"> <i class="bi bi-file-pdf-fill"></i></button>';
+
+            } else {
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button" data-pdf="/competencias/' . $value->ARCHIVO_RESULTADO . '"> <i class="bi bi-file-pdf-fill"></i></button>';
+
+            }
+        }
+
+        // Responder con la tabla y el mensaje de éxito
+        return response()->json([
+            'data' => $tabla,
+            'msj' => 'Información consultada correctamente'
+        ]);
+    } catch (Exception $e) {
+        // En caso de error, responder con el mensaje de error
+        return response()->json([
+            'msj' => 'Error ' . $e->getMessage(),
+            'data' => 0
+        ]);
+    }
+}
+
 
 
 
@@ -361,20 +450,24 @@ public function store(Request $request)
                     } else {
                         if (!isset($request->ELIMINAR)) {
                             $entrevistas = entrevistaseleccionModel::find($request->ID_ENTREVISTA_SELECCION);
+                            
+                            if ($request->hasFile('ARCHIVO_ENTREVISTA') && $entrevistas->ARCHIVO_ENTREVISTA) {
+                                Storage::delete($entrevistas->ARCHIVO_ENTREVISTA);
+                            }
+                
                             $entrevistas->update($request->all());
                         } else {
                             $entrevistas = entrevistaseleccionModel::where('ID_ENTREVISTA_SELECCION', $request['ID_ENTREVISTA_SELECCION'])->update(['ACTIVO' => 0]);
-                            $response['code']  = 1;
-                            $response['entrevista']  = 'Desactivada';
+                            $response['code'] = 1;
+                            $response['entrevista'] = 'Desactivada';
                             return response()->json($response);
                         }
                     }
                 
                     if ($request->hasFile('ARCHIVO_ENTREVISTA')) {
                         $curpFolder = 'reclutamiento/' . $request->CURP;
-                    
                         $entrevistaFolder = $curpFolder . '/ENTREVISTA/';
-                        
+                
                         if (!Storage::exists($curpFolder)) {
                             Storage::makeDirectory($curpFolder);
                         }
@@ -382,17 +475,17 @@ public function store(Request $request)
                         if (!Storage::exists($entrevistaFolder)) {
                             Storage::makeDirectory($entrevistaFolder);
                         }
-                        
+                
                         $entrevistaFile = $request->file('ARCHIVO_ENTREVISTA');
                         $entrevistaFileName = 'ENTREVISTA_' . $request->CURP . '.' . $entrevistaFile->getClientOriginalExtension();
                         $entrevistaFile->storeAs($entrevistaFolder, $entrevistaFileName);
-                        
+                
                         $entrevistas->ARCHIVO_ENTREVISTA = $entrevistaFolder . $entrevistaFileName;
-                        $entrevistas->save(); 
+                        $entrevistas->save();
                     }
                 
-                    $response['code']  = 1;
-                    $response['entrevista']  = $entrevistas;
+                    $response['code'] = 1;
+                    $response['entrevista'] = $entrevistas;
                     return response()->json($response);
                 
                     break;
@@ -406,19 +499,123 @@ public function store(Request $request)
                         } else {
                             if (!isset($request->ELIMINAR)) {
                                 $autorizaciones = autorizacionseleccionModel::find($request->ID_AUTORIZACION_SELECCION);
+                                
+                                if ($request->hasFile('ARCHIVO_AUTORIZACION') && $autorizaciones->ARCHIVO_AUTORIZACION) {
+                                    Storage::delete($autorizaciones->ARCHIVO_AUTORIZACION);
+                                }
+                    
                                 $autorizaciones->update($request->all());
                             } else {
                                 $autorizaciones = autorizacionseleccionModel::where('ID_AUTORIZACION_SELECCION', $request['ID_AUTORIZACION_SELECCION'])->update(['ACTIVO' => 0]);
-                                $response['code']  = 1;
-                                $response['autorizacion']  = 'Desactivada';
+                                $response['code'] = 1;
+                                $response['autorizacion'] = 'Desactivada';
                                 return response()->json($response);
                             }
                         }
                     
-                        if ($request->hasFile('ARCHIVO_AUTORIZACION')) {
-                            $curpFolder = 'reclutamiento/' . $request->CURP;
+                    if ($request->hasFile('ARCHIVO_AUTORIZACION')) {
+                        $curpFolder = 'reclutamiento/' . $request->CURP;
+                        $autorizacionFolder = $curpFolder . '/AUTORIZACION/';
                         
-                            $autorizacionFolder = $curpFolder . '/AUTORIZACION/';
+                        if (!Storage::exists($curpFolder)) {
+                            Storage::makeDirectory($curpFolder);
+                        }
+                        
+                        if (!Storage::exists($autorizacionFolder)) {
+                            Storage::makeDirectory($autorizacionFolder);
+                        }
+                
+                        $autorizacionFile = $request->file('ARCHIVO_AUTORIZACION');
+                        $autorizacionFileName = 'AUTORIZACION_' . $request->CURP . '.' . $autorizacionFile->getClientOriginalExtension();
+                        $autorizacionFile->storeAs($autorizacionFolder, $autorizacionFileName);
+                
+                        $autorizaciones->ARCHIVO_AUTORIZACION = $autorizacionFolder . $autorizacionFileName;
+                        $autorizaciones->save();
+                    }
+                
+                    $response['code'] = 1;
+                    $response['autorizacion'] = $autorizaciones;
+                    return response()->json($response);
+                
+                    break;
+                
+
+                    case 4:
+                        if ($request->ID_INTELIGENCIA_SELECCION == 0) {
+                            DB::statement('ALTER TABLE seleccion_inteligencia AUTO_INCREMENT=1;');
+                            $inteligencias = inteligenciaseleccionModel::create($request->all());
+                        } else {
+                            if (!isset($request->ELIMINAR)) {
+                                $inteligencias = inteligenciaseleccionModel::find($request->ID_INTELIGENCIA_SELECCION);
+                                if ($request->hasFile('ARCHIVO_COMPLETO') && $inteligencias->ARCHIVO_COMPLETO) {
+                                    Storage::delete($inteligencias->ARCHIVO_COMPLETO);
+                                }
+                                if ($request->hasFile('ARCHIVO_COMPETENCIAS') && $inteligencias->ARCHIVO_COMPETENCIAS) {
+                                    Storage::delete($inteligencias->ARCHIVO_COMPETENCIAS);
+                                }
+                                $inteligencias->update($request->all());
+                            } else {
+                                $inteligencias = inteligenciaseleccionModel::where('ID_INTELIGENCIA_SELECCION', $request['ID_INTELIGENCIA_SELECCION'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['inteligencia'] = 'Desactivada';
+                                return response()->json($response);
+                            }
+                        }
+                    
+                        if ($request->hasFile('ARCHIVO_COMPLETO')) {
+                            $curpFolder = 'reclutamiento/' . $request->CURP . '/Inteligencia Laboral/';
+                            if (!Storage::exists($curpFolder)) {
+                                Storage::makeDirectory($curpFolder);
+                            }
+                            
+                            $completoFile = $request->file('ARCHIVO_COMPLETO');
+                            $completoFileName = 'COMPLETO_' . $request->CURP . '.' . $completoFile->getClientOriginalExtension();
+                            $completoFile->storeAs($curpFolder, $completoFileName);
+                            
+                            $inteligencias->ARCHIVO_COMPLETO = $curpFolder . $completoFileName;
+                        }
+                    
+                        if ($request->hasFile('ARCHIVO_COMPETENCIAS')) {
+                            $competenciasFile = $request->file('ARCHIVO_COMPETENCIAS');
+                            $competenciasFileName = 'COMPETENCIAS_' . $request->CURP . '.' . $competenciasFile->getClientOriginalExtension();
+                            $competenciasFile->storeAs($curpFolder, $competenciasFileName);
+                            
+                            $inteligencias->ARCHIVO_COMPETENCIAS = $curpFolder . $competenciasFileName;
+                        }
+                    
+                        $inteligencias->save();
+                    
+                        $response['code'] = 1;
+                        $response['inteligencia'] = $inteligencias;
+                        return response()->json($response);
+                    
+                        break;
+                    
+                    case 5:
+
+                        if ($request->ID_BURO_SELECCION == 0) {
+                            DB::statement('ALTER TABLE seleccion_buro_laboral AUTO_INCREMENT=1;');
+                            $autorizaciones = buroseleccionModel::create($request->all());
+                        } else {
+                            if (!isset($request->ELIMINAR)) {
+                                $autorizaciones = buroseleccionModel::find($request->ID_BURO_SELECCION);
+                                
+                                if ($request->hasFile('ARCHIVO_RESULTADO') && $autorizaciones->ID_BURO_SELECCION) {
+                                    Storage::delete($autorizaciones->ARCHIVO_RESULTADO);
+                                }
+                    
+                                $autorizaciones->update($request->all());
+                            } else {
+                                $autorizaciones = buroseleccionModel::where('ID_BURO_SELECCION', $request['ID_BURO_SELECCION'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['autorizacion'] = 'Desactivada';
+                                return response()->json($response);
+                            }
+                        }
+                    
+                        if ($request->hasFile('ARCHIVO_RESULTADO')) {
+                            $curpFolder = 'reclutamiento/' . $request->CURP;
+                            $autorizacionFolder = $curpFolder . '/Buro Laboral/';
                             
                             if (!Storage::exists($curpFolder)) {
                                 Storage::makeDirectory($curpFolder);
@@ -427,21 +624,22 @@ public function store(Request $request)
                             if (!Storage::exists($autorizacionFolder)) {
                                 Storage::makeDirectory($autorizacionFolder);
                             }
-                            
-                            $autorizacionFile = $request->file('ARCHIVO_AUTORIZACION');
-                            $autorizacionFileName = 'AUTORIZACION_' . $request->CURP . '.' . $autorizacionFile->getClientOriginalExtension();
+                    
+                            $autorizacionFile = $request->file('ARCHIVO_RESULTADO');
+                            $autorizacionFileName = 'BURO_LABORAL_' . $request->CURP . '.' . $autorizacionFile->getClientOriginalExtension();
                             $autorizacionFile->storeAs($autorizacionFolder, $autorizacionFileName);
-                            
-                            $autorizaciones->ARCHIVO_AUTORIZACION = $autorizacionFolder . $autorizacionFileName;
-                            $autorizaciones->save(); 
+                    
+                            $autorizaciones->ARCHIVO_RESULTADO = $autorizacionFolder . $autorizacionFileName;
+                            $autorizaciones->save();
                         }
                     
-                        $response['code']  = 1;
-                        $response['autorizacion']  = $autorizaciones;
+                        $response['code'] = 1;
+                        $response['autorizacion'] = $autorizaciones;
                         return response()->json($response);
                     
                         break;
-
+                
+                                
 
 
 

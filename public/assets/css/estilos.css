@@ -373,3 +373,96 @@ table.dataTable tbody tr:last-child td:last-child {
 }
 
 
+
+
+
+
+
+
+/* Título centrado */
+.traffic-light-title {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 10px; /* Añadir un poco de espacio debajo del título */
+}
+
+/* Centrar el semáforo en el modal */
+.traffic-light-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+}
+
+/* Contenedor del semáforo */
+.traffic-light {
+    display: flex;
+    flex-direction: row; /* Los semáforos alineados horizontalmente */
+    justify-content: center;
+    align-items: center;
+}
+
+.light {
+    display: flex;
+    flex-direction: column; /* Alinear el círculo y el texto en columna */
+    align-items: center; /* Asegurarse de que estén centrados */
+    margin: 0 10px; /* Separar los semáforos un poco más entre ellos */
+}
+
+/* Ocultar los radio buttons */
+.light input[type="radio"] {
+    display: none;
+}
+
+/* Estilos para los círculos */
+.light.red::before,
+.light.yellow::before,
+.light.green::before {
+    content: '';
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #333;
+    opacity: 0.3;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+/* Colores de los círculos apagados */
+.light.red::before {
+    background-color: #8B0000;
+}
+
+.light.yellow::before {
+    background-color: #CCCC00;
+}
+
+.light.green::before {
+    background-color: #006400;
+}
+
+/* Texto centrado y en negro */
+.label {
+    margin-top: 10px; /* Añadir espacio entre el círculo y el texto */
+    font-weight: bold;
+    font-size: 14px;
+    color: black;
+    display: inline-block;
+}
+
+/* Luces encendidas (activadas por JavaScript o CSS) */
+.active.red::before {
+    background-color: red;
+    opacity: 1;
+}
+
+.active.yellow::before {
+    background-color: yellow;
+    opacity: 1;
+}
+
+.active.green::before {
+    background-color: green;
+    opacity: 1;
+}

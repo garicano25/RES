@@ -2,9 +2,14 @@
 ID_PPT_SELECCION = 0
 ID_ENTREVISTA_SELECCION = 0
 ID_AUTORIZACION_SELECCION = 0
+ID_INTELIGENCIA_SELECCION =0
+ID_BURO_SELECCION =0
 var Tablapptseleccion;
 var Tablaentrevistaseleccion;
 var Tablaautorizacion;
+var Tablainteligencia;
+var Tablaburo;
+
 var curpSeleccionada;  
 
 
@@ -238,14 +243,6 @@ Tablaautorizacion = $("#Tablaautorizacion").DataTable({
 $('#Tablaautorizacion thead').css('display', 'none');
 
 
-
-
-
-
-
-
-
-
 let currentRequest = null; 
 $(document).off('click', '.btn-ver-pdf').on('click', '.btn-ver-pdf', function() {
     const curp = $(this).data('curp');
@@ -295,13 +292,209 @@ $('#verPdfModal').on('hidden.bs.modal', function () {
     resetModal();
 });
 
+// <!-- ============================================================== -->
+// <!-- INTELIGENCIA LABORAL -->
+// <!-- ============================================================== -->
+
+
+
+
+if ($.fn.DataTable.isDataTable('#Tablainteligencia')) {
+    Tablainteligencia.clear().destroy();
+}
+
+Tablainteligencia = $("#Tablainteligencia").DataTable({
+    language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+    lengthChange: true,
+    lengthMenu: [
+        [10, 25, 50, -1],
+        [10, 25, 50, 'All']
+    ],
+    info: false,
+    paging: true,
+    searching: true,
+    filtering: true,
+    scrollY: '65vh',
+    scrollCollapse: true,
+    responsive: true,
+    ajax: {
+        dataType: 'json',
+        data: { curp: curpSeleccionada }, 
+        method: 'GET',
+        cache: false,
+        url: '/Tablainteligencia',  
+        beforeSend: function () {
+            $('#loadingIcon3').css('display', 'inline-block');
+        },
+        complete: function () {
+            $('#loadingIcon3').css('display', 'none');
+            Tablainteligencia.columns.adjust().draw();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $('#loadingIcon3').css('display', 'none');
+            alertErrorAJAX(jqXHR, textStatus, errorThrown);
+        },
+        dataSrc: 'data'
+    },
+    columns: [
+        { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+        { data: 'RIESGO', className: 'text-center' },  
+        { 
+            data: 'DOC_COMPETENCIAS', 
+            render: function (data, type, row) {
+                return data;
+            },
+            className: 'text-center'
+        },
+        { 
+            data: 'DOC_COMPLETO',  
+            render: function (data, type, row) {
+                return data;
+            },
+            className: 'text-center'
+        },
+        { data: 'BTN_EDITAR', className: 'text-center' } 
+    ],
+    columnDefs: [
+        { target: 0, title: '#', className: 'all text-center' },
+        { target: 1, title: 'Riesgo', className: 'all text-center' },  
+        { target: 2, title: 'Documento Competencias', className: 'all text-center' },  
+        { target: 3, title: 'Documento Completo', className: 'all text-center' },  
+        { target: 4, title: 'Editar', className: 'all text-center' }
+    ]
+});
+
+
+
+$('#Tablainteligencia tbody').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablainteligencia.row(tr);
+    ID_INTELIGENCIA_SELECCION = row.data().ID_INTELIGENCIA_SELECCION;
+    var data = row.data();
+    var form = "formularioINTELIGENCIA";
+    
+    editarDatoTabla(data, form, 'Modal_inteligencia', 1);
+    
+    var riesgoPorcentaje = data.RIESGO_PORCENTAJE;  
+
+    document.querySelectorAll('input[name="RIESGO_PORCENTAJE"]').forEach(radio => {
+        radio.checked = false;
+    });
+    document.querySelectorAll('.light').forEach(light => {
+        light.classList.remove('active');
+    });
+
+    if (riesgoPorcentaje == 40) {
+        document.querySelector('input[name="RIESGO_PORCENTAJE"][value="40"]').checked = true;
+        document.querySelector('.light.red').classList.add('active');
+    } else if (riesgoPorcentaje == 70) {
+        document.querySelector('input[name="RIESGO_PORCENTAJE"][value="70"]').checked = true;
+        document.querySelector('.light.yellow').classList.add('active');
+    } else if (riesgoPorcentaje == 100) {
+        document.querySelector('input[name="RIESGO_PORCENTAJE"][value="100"]').checked = true;
+        document.querySelector('.light.green').classList.add('active');
+    }
+});
+
+
+
+// <!-- ============================================================== -->
+// <!-- BURO LABORAL -->
+// <!-- ============================================================== -->
+
+
+
+
+if ($.fn.DataTable.isDataTable('#Tablaburo')) {
+    Tablaburo.clear().destroy();
+}
+
+
+Tablaburo = $("#Tablaburo").DataTable({
+    language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+    lengthChange: true,
+    lengthMenu: [
+        [10, 25, 50, -1],
+        [10, 25, 50, 'All']
+    ],
+    info: false,
+    paging: true,
+    searching: true,
+    filtering: true,
+    scrollY: '65vh',
+    scrollCollapse: true,
+    responsive: true,
+    ajax: {
+        dataType: 'json',
+        data: { curp: curpSeleccionada }, 
+        method: 'GET',
+        cache: false,
+        url: '/Tablaburo',  
+        beforeSend: function () {
+            $('#loadingIcon4').css('display', 'inline-block');
+        },
+        complete: function () {
+            $('#loadingIcon4').css('display', 'none');
+            Tablaburo.columns.adjust().draw();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $('#loadingIcon').css('display', 'none');
+            alertErrorAJAX(jqXHR, textStatus, errorThrown);
+        },
+        dataSrc: 'data'
+    },
+    columns: [
+        { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+        { 
+            data: 'BTN_DOCUMENTO',  
+            render: function (data, type, row) {
+                return data;
+            },
+            className: 'text-center'
+        },
+        { data: 'BTN_EDITAR', className: 'text-center' }
+    ],
+    columnDefs: [
+        { target: 0, title: '#', className: 'all text-center' },
+        { target: 1, title: 'Resultado', className: 'all text-center' },
+        { target: 2, title: 'Editar', className: 'all text-center' }
+    ]
+});
 
 
 
 
 
+$('#Tablaburo tbody').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablaburo.row(tr);
+    var data = row.data(); // Obtiene los datos de la fila
+    ID_BURO_SELECCION = data.ID_BURO_SELECCION; // Asigna el ID para editar
 
+    document.getElementById('EXPERIENCIA_BURO').value = data.EXPERIENCIA_BURO || '';
+    document.getElementById('EXPERIENCIA_CV').value = data.EXPERIENCIA_CV || '';
 
+    if (data.CEDULA_PROFESIONAL) {
+        document.querySelector(`input[name="CEDULA_PROFESIONAL"][value="${data.CEDULA_PROFESIONAL}"]`).checked = true;
+        manejarCambioCedula(document.querySelector(`input[name="CEDULA_PROFESIONAL"][value="${data.CEDULA_PROFESIONAL}"]`));
+    }
+
+    if (data.LABORALES_DEMANDA) {
+        document.querySelector(`input[name="LABORALES_DEMANDA"][value="${data.LABORALES_DEMANDA}"]`).checked = true;
+        manejarCambioLaborales(document.querySelector(`input[name="LABORALES_DEMANDA"][value="${data.LABORALES_DEMANDA}"]`), document.getElementById('NUMERO_LABORALES'));
+    }
+
+    if (data.JUDICIALES_DEMANDA) {
+        document.querySelector(`input[name="JUDICIALES_DEMANDA"][value="${data.JUDICIALES_DEMANDA}"]`).checked = true;
+        manejarCambioJudiciales(document.querySelector(`input[name="JUDICIALES_DEMANDA"][value="${data.JUDICIALES_DEMANDA}"]`), document.getElementById('NUMERO_JUDICIALES'));
+    }
+
+    // Recalcular los porcentajes después de cargar los datos
+    manejarCambioExperiencia(document.getElementById('EXPERIENCIA_BURO'), document.getElementById('EXPERIENCIA_CV'));
+
+    // Abre el modal de edición (ajusta según la estructura de tu proyecto)
+    editarDatoTabla(data, "formularioBURO", 'Modal_buro', 1);
+});
 
 
 
@@ -382,8 +575,6 @@ $('#Tablaentrevistaseleccion tbody').on('click', 'td>button.EDITAR', function ()
     
 
     editarDatoTabla(data, form, 'Modal_entrevistas', 1);
-    
-
 
 });
 
@@ -526,17 +717,19 @@ if ('CURSOS' in data) {
 
 
 
-
-
 });
 
 
 
 // <!-- ============================================================== -->
-// <!-- ABRIR  TODOS LOS MODALES -->
+// <!--  TODOS LOS MODALES -->
 // <!-- ============================================================== -->
 
 
+
+// <!-- ============================================================== -->
+// <!-- MODAL AUTORIZACION-->
+// <!-- ============================================================== -->
 
 $("#nuevo_autorizacion").click(function (e) {
     e.preventDefault();
@@ -544,24 +737,6 @@ $("#nuevo_autorizacion").click(function (e) {
 })
 
 
-$("#nueva_entrevista").click(function (e) {
-    e.preventDefault();
-    $("#Modal_entrevistas").modal("show");
-})
-
-
-$("#nuevo_ppt").click(function (e) {
-    e.preventDefault();
-
-    $('.desabilitado1').css('background','#E2EFDA');
-    $("#miModal_ppt").modal("show");
-})
-
-
-
-// <!-- ============================================================== -->
-// <!-- MODAL AUTORIZACION-->
-// <!-- ============================================================== -->
 
 document.getElementById('verPdfButton').addEventListener('click', function () {
     const pdfUrl = '/ver-pdf'; 
@@ -573,19 +748,31 @@ document.getElementById('verPdfButton').addEventListener('click', function () {
 });
 
 
-// Seleccionamos los elementos
+
 const archivoAutorizacion = document.getElementById('ARCHIVO_AUTORIZACION');
 const quitarFormatoBtn = document.getElementById('quitarformato');
+const errorArchivo = document.getElementById('errorArchivo');
 
 archivoAutorizacion.addEventListener('change', function () {
     if (archivoAutorizacion.files.length > 0) {
-        quitarFormatoBtn.style.display = 'inline-block';
+        const file = archivoAutorizacion.files[0];
+        const fileType = file.type;
+
+        if (fileType !== 'application/pdf') {
+            errorArchivo.style.display = 'inline-block';
+            quitarFormatoBtn.style.display = 'none'; 
+            archivoAutorizacion.value = ''; 
+        } else {
+            errorArchivo.style.display = 'none';
+            quitarFormatoBtn.style.display = 'inline-block'; 
+        }
     }
 });
 
 quitarFormatoBtn.addEventListener('click', function () {
     archivoAutorizacion.value = '';
-    quitarFormatoBtn.style.display = 'none';
+    quitarFormatoBtn.style.display = 'none'; 
+    errorArchivo.style.display = 'none'; 
 });
 
 
@@ -647,7 +834,7 @@ $("#guardarFormSeleccionAutorizacion").click(function (e) {
 
 
                         if ($.fn.DataTable.isDataTable('#Tablaautorizacion')) {
-                            Tablaautorizacion.ajax.reload(null, false); // Recargar la tabla sin reiniciar la paginación
+                            Tablaautorizacion.ajax.reload(null, false); 
                         }
 
                     }, 300);
@@ -704,6 +891,525 @@ $("#guardarFormSeleccionAutorizacion").click(function (e) {
     }
 });
 
+// <!-- ============================================================== -->
+// <!-- MODAL INTELIGENCIA LABORAL-->
+// <!-- ============================================================== -->
+
+$("#nuevo_inteligencia").click(function (e) {
+    e.preventDefault();
+    $("#Modal_inteligencia").modal("show");
+})
+
+// Seleccionamos los elementos de Archivo Completo
+const archivocompleto = document.getElementById('ARCHIVO_COMPLETO');
+const quitarcompletoBtn = document.getElementById('quitarcompleto');
+const errorArchivoCompleto = document.getElementById('errorArchivoCompleto');
+
+archivocompleto.addEventListener('change', function () {
+    if (archivocompleto.files.length > 0) {
+        const file = archivocompleto.files[0];
+        const fileType = file.type;
+
+        if (fileType !== 'application/pdf') {
+            errorArchivoCompleto.style.display = 'inline-block';
+            quitarcompletoBtn.style.display = 'none';
+            archivocompleto.value = ''; 
+        } else {
+            errorArchivoCompleto.style.display = 'none';
+            quitarcompletoBtn.style.display = 'inline-block';
+        }
+    }
+});
+
+quitarcompletoBtn.addEventListener('click', function () {
+    archivocompleto.value = '';
+    quitarcompletoBtn.style.display = 'none';
+    errorArchivoCompleto.style.display = 'none';
+});
+
+// Seleccionamos los elementos de Archivo competencias 
+
+const archivocompetencias = document.getElementById('ARCHIVO_COMPETENCIAS');
+const quitarcompetenciasBtn = document.getElementById('quitarcompetencias');
+const errorArchivoCompetencias = document.getElementById('errorArchivoCompetencias');
+
+archivocompetencias.addEventListener('change', function () {
+    if (archivocompetencias.files.length > 0) {
+        const file = archivocompetencias.files[0];
+        const fileType = file.type;
+
+        if (fileType !== 'application/pdf') {
+            errorArchivoCompetencias.style.display = 'inline-block';
+            quitarcompetenciasBtn.style.display = 'none';
+            archivocompetencias.value = ''; 
+        } else {
+            errorArchivoCompetencias.style.display = 'none';
+            quitarcompetenciasBtn.style.display = 'inline-block';
+        }
+    }
+});
+
+quitarcompetenciasBtn.addEventListener('click', function () {
+    archivocompetencias.value = '';
+    quitarcompetenciasBtn.style.display = 'none';
+    errorArchivoCompetencias.style.display = 'none';
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const radios = document.querySelectorAll('input[name="RIESGO_PORCENTAJE"]');
+    const lights = document.querySelectorAll('.light');
+
+    radios.forEach(radio => {
+        radio.addEventListener('change', function () {
+            lights.forEach(light => {
+                light.classList.remove('active');
+            });
+
+            if (this.value == '40') {
+                document.querySelector('.light.red').classList.add('active');
+            } else if (this.value == '70') {
+                document.querySelector('.light.yellow').classList.add('active');
+            } else if (this.value == '100') {
+                document.querySelector('.light.green').classList.add('active');
+            }
+        });
+    });
+});
+
+
+const ModalInteligencia = document.getElementById('Modal_inteligencia');
+
+ModalInteligencia.addEventListener('hidden.bs.modal', event => {
+    // Resetear valores
+    ID_INTELIGENCIA_SELECCION = 0;
+    document.getElementById('formularioINTELIGENCIA').reset();
+    $('.collapse').collapse('hide');
+    $('#guardarFormSeleccionAutorizacion').css('display', 'block').prop('disabled', false);
+
+    document.querySelectorAll('#formularioINTELIGENCIA [required]').forEach(input => {
+        input.removeAttribute('required');
+    });
+
+    document.querySelectorAll('input[name="RIESGO_PORCENTAJE"]').forEach(radio => {
+        radio.checked = false; 
+    });
+
+    document.querySelectorAll('.light').forEach(light => {
+        light.classList.remove('active');
+    });
+});
+
+
+
+
+
+$("#guardarFormSeleccionInteligencia").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormulario($('#formularioINTELIGENCIA'));
+
+    if (formularioValido) {
+
+        if (ID_INTELIGENCIA_SELECCION == 0) {
+
+            alertMensajeConfirm({
+                title: "¿Desea guardar la información?",
+                text: "Al guardarla, la información podra ser usada ",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarFormSeleccionInteligencia');
+                await ajaxAwaitFormData({ 
+                    api: 4, 
+                    ID_INTELIGENCIA_SELECCION: ID_INTELIGENCIA_SELECCION, 
+                    CURP: curpSeleccionada 
+                }, 'SeleccionSave', 'formularioINTELIGENCIA', 'guardarFormSeleccionInteligencia', { callbackAfter: true, callbackBefore: true }, () => {
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+
+                }, function (data) {
+
+                    setTimeout(() => {
+                        ID_INTELIGENCIA_SELECCION = data.inteligencia.ID_INTELIGENCIA_SELECCION;
+                        alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
+                        $('#Modal_inteligencia').modal('hide');
+                        document.getElementById('formularioINTELIGENCIA').reset();
+
+
+                        if ($.fn.DataTable.isDataTable('#Tablainteligencia')) {
+                            Tablainteligencia.ajax.reload(null, false); 
+                        }
+
+                    }, 300);
+
+                });
+
+            }, 1);
+
+        } else {
+
+            alertMensajeConfirm({
+                title: "¿Desea editar la información de este formulario?",
+                text: "Al guardarla, se editará la información",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarFormSeleccionInteligencia');
+                await ajaxAwaitFormData({ 
+                    api: 4, 
+                    ID_INTELIGENCIA_SELECCION: ID_INTELIGENCIA_SELECCION, 
+                    CURP: curpSeleccionada 
+                }, 'SeleccionSave', 'formularioINTELIGENCIA', 'guardarFormSeleccionInteligencia', { callbackAfter: true, callbackBefore: true }, () => {
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+
+                }, function (data) {
+
+                    setTimeout(() => {
+                        ID_INTELIGENCIA_SELECCION = data.inteligencia.ID_INTELIGENCIA_SELECCION;
+                        alertMensaje('success', 'Información editada correctamente', 'Información guardada');
+                        $('#Modal_inteligencia').modal('hide');
+                        document.getElementById('formularioINTELIGENCIA').reset();
+
+
+                        if ($.fn.DataTable.isDataTable('#Tablainteligencia')) {
+                            Tablainteligencia.ajax.reload(null, false); 
+                        }
+
+                    }, 300);
+                });
+
+            }, 1);
+        }
+
+    } else {
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+    }
+});
+
+// <!-- ============================================================== -->
+// <!-- MODAL BURO LABORAL-->
+// <!-- ============================================================== -->
+
+
+
+
+
+$("#nuevo_buro").click(function (e) {
+    e.preventDefault();
+
+    // Función que reinicia los valores y el formulario al abrir el modal
+    function reiniciarModalAlAbrir() {
+        // Resetea el formulario completamente
+        document.getElementById('formularioBURO').reset();
+
+        // Reiniciar manualmente los valores de los campos
+        document.getElementById('PORCENTAJE_TOTAL').value = 0;
+        document.getElementById('EXPERIENCIA_BURO').value = '';
+        document.getElementById('EXPERIENCIA_CV').value = '';
+        document.getElementById('NUMERO_LABORALES').value = '';
+        document.getElementById('NUMERO_JUDICIALES').value = '';
+
+        // Reiniciar manualmente los valores de los radios
+        document.querySelectorAll('input[name="CEDULA_PROFESIONAL"]').forEach(radio => radio.checked = false);
+        document.querySelectorAll('input[name="LABORALES_DEMANDA"]').forEach(radio => radio.checked = false);
+        document.querySelectorAll('input[name="JUDICIALES_DEMANDA"]').forEach(radio => radio.checked = false);
+
+        // Reiniciar las variables internas de porcentaje
+        porcentajeLaborales = 0;
+        porcentajeJudiciales = 0;
+        porcentajeCedulaSeleccionado = 0;
+        porcentajeExperiencia = 0;
+
+        // Actualizar el valor del porcentaje total
+        document.getElementById('PORCENTAJE_TOTAL').value = 0;
+    }
+
+    // Llamar la función para reiniciar el modal
+    reiniciarModalAlAbrir();
+
+    // Mostrar el modal
+    $("#Modal_buro").modal("show");
+});
+
+
+
+
+
+const ModalBuro = document.getElementById('Modal_buro');
+
+ModalBuro.addEventListener('hidden.bs.modal', function () {
+    
+    // Función que reinicia los valores y el formulario al cerrar el modal
+    function reiniciarModalAlCerrar() {
+        // Resetea el formulario completamente
+        document.getElementById('formularioBURO').reset();
+
+        // Reiniciar manualmente los valores de los campos
+        document.getElementById('PORCENTAJE_TOTAL').value = 0;
+        document.getElementById('EXPERIENCIA_BURO').value = '';
+        document.getElementById('EXPERIENCIA_CV').value = '';
+        document.getElementById('NUMERO_LABORALES').value = '';
+        document.getElementById('NUMERO_JUDICIALES').value = '';
+
+        // Reiniciar manualmente los valores de los radios
+        document.querySelectorAll('input[name="CEDULA_PROFESIONAL"]').forEach(radio => radio.checked = false);
+        document.querySelectorAll('input[name="LABORALES_DEMANDA"]').forEach(radio => radio.checked = false);
+        document.querySelectorAll('input[name="JUDICIALES_DEMANDA"]').forEach(radio => radio.checked = false);
+
+        // Reiniciar las variables internas de porcentaje
+        porcentajeLaborales = 0;
+        porcentajeJudiciales = 0;
+        porcentajeCedulaSeleccionado = 0;
+        porcentajeExperiencia = 0;
+
+        // Asegurar que el valor del porcentaje total esté en 0
+        document.getElementById('PORCENTAJE_TOTAL').value = 0;
+    }
+
+    // Llamar la función para reiniciar el modal
+    reiniciarModalAlCerrar();
+});
+
+
+const archivoResultado = document.getElementById('ARCHIVO_RESULTADO');
+const quitarResultado = document.getElementById('quitarResultado');
+const errorArchivoResultado = document.getElementById('errorArchivoResultado');
+
+archivoResultado.addEventListener('change', function () {
+    if (archivoResultado.files.length > 0) {
+        const file = archivoResultado.files[0];
+        const fileType = file.type;
+
+        if (fileType !== 'application/pdf') {
+            errorArchivoResultado.style.display = 'inline-block';
+            quitarResultado.style.display = 'none';
+            archivoResultado.value = ''; 
+        } else {
+            errorArchivoResultado.style.display = 'none';
+            quitarResultado.style.display = 'inline-block';
+        }
+    }
+});
+
+quitarResultado.addEventListener('click', function () {
+    archivoResultado.value = '';
+    quitarResultado.style.display = 'none';
+    errorArchivoResultado.style.display = 'none';
+});
+
+
+let porcentajeLaborales = 0;
+let porcentajeJudiciales = 0;
+let porcentajeCedulaSeleccionado = 0;
+let porcentajeExperiencia = 0;
+
+function actualizarPorcentaje() {
+    const porcentajeTotalInput = document.getElementById('PORCENTAJE_TOTAL');
+    let porcentajeTotal = porcentajeCedulaSeleccionado + porcentajeExperiencia + porcentajeLaborales + porcentajeJudiciales;
+    porcentajeTotalInput.value = porcentajeTotal;
+}
+
+function actualizarInputNumero(input, habilitar) {
+    input.readOnly = !habilitar;
+    if (!habilitar) {
+        input.value = ""; 
+    }
+}
+
+function manejarCambioCedula(radio) {
+    const porcentajeCedula = {
+        'si': 20,
+        'no': 0,
+        'exterior': 20
+    };
+    porcentajeCedulaSeleccionado = porcentajeCedula[radio.value] || 0;
+    actualizarPorcentaje();
+}
+
+function manejarCambioLaborales(radio, numLaboralesInput) {
+    if (radio.value === 'no') {
+        actualizarInputNumero(numLaboralesInput, false);
+        porcentajeLaborales = 25;
+    } else {
+        actualizarInputNumero(numLaboralesInput, true);
+        porcentajeLaborales = 0;
+    }
+    actualizarPorcentaje();
+}
+
+function manejarCambioJudiciales(radio, numJudicialesInput) {
+    if (radio.value === 'no') {
+        actualizarInputNumero(numJudicialesInput, false);
+        porcentajeJudiciales = 25;
+    } else {
+        actualizarInputNumero(numJudicialesInput, true);
+        porcentajeJudiciales = 0;
+    }
+    actualizarPorcentaje();
+}
+
+function manejarCambioExperiencia(expBuroInput, expCvInput) {
+    porcentajeExperiencia = (expBuroInput.value === expCvInput.value && expBuroInput.value !== "") ? 30 : 0;
+    actualizarPorcentaje();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const radiosCedula = document.querySelectorAll('input[name="CEDULA_PROFESIONAL"]');
+    const expBuroInput = document.getElementById('EXPERIENCIA_BURO');
+    const expCvInput = document.getElementById('EXPERIENCIA_CV');
+    const radiosLaborales = document.querySelectorAll('input[name="LABORALES_DEMANDA"]');
+    const radiosJudiciales = document.querySelectorAll('input[name="JUDICIALES_DEMANDA"]');
+    const numLaboralesInput = document.getElementById('NUMERO_LABORALES');
+    const numJudicialesInput = document.getElementById('NUMERO_JUDICIALES');
+
+    radiosCedula.forEach(radio => {
+        radio.addEventListener('change', function () {
+            manejarCambioCedula(radio);
+        });
+    });
+
+    radiosLaborales.forEach(radio => {
+        radio.addEventListener('change', function () {
+            manejarCambioLaborales(radio, numLaboralesInput);
+        });
+    });
+
+    radiosJudiciales.forEach(radio => {
+        radio.addEventListener('change', function () {
+            manejarCambioJudiciales(radio, numJudicialesInput);
+        });
+    });
+
+    expBuroInput.addEventListener('input', function () {
+        manejarCambioExperiencia(expBuroInput, expCvInput);
+    });
+
+    expCvInput.addEventListener('input', function () {
+        manejarCambioExperiencia(expBuroInput, expCvInput);
+    });
+});
+
+
+
+
+
+
+$("#guardarFormSeleccionBuro").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormulario($('#formularioBURO'));
+
+    if (formularioValido) {
+
+        if (ID_BURO_SELECCION == 0) {
+
+            alertMensajeConfirm({
+                title: "¿Desea guardar la información?",
+                text: "Al guardarla, la información podra ser usada ",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarFormSeleccionBuro');
+                await ajaxAwaitFormData({ 
+                    api: 5, 
+                    ID_BURO_SELECCION: ID_BURO_SELECCION, 
+                    CURP: curpSeleccionada 
+                }, 'SeleccionSave', 'formularioBURO', 'guardarFormSeleccionBuro', { callbackAfter: true, callbackBefore: true }, () => {
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+
+                }, function (data) {
+
+                    setTimeout(() => {
+                        ID_BURO_SELECCION = data.autorizacion.ID_BURO_SELECCION;
+                        alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
+                        $('#Modal_buro').modal('hide');
+                        document.getElementById('formularioBURO').reset();
+
+
+                        if ($.fn.DataTable.isDataTable('#Tablaburo')) {
+                            Tablaburo.ajax.reload(null, false); // Recargar la tabla sin reiniciar la paginación
+                        }
+
+                    }, 300);
+
+                });
+
+            }, 1);
+
+        } else {
+
+            alertMensajeConfirm({
+                title: "¿Desea editar la información de este formulario?",
+                text: "Al guardarla, se editará la información",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarFormSeleccionEntrevista');
+                await ajaxAwaitFormData({ 
+                    api: 5, 
+                    ID_BURO_SELECCION: ID_BURO_SELECCION, 
+                    CURP: curpSeleccionada 
+                }, 'SeleccionSave', 'formularioBURO', 'guardarFormSeleccionBuro', { callbackAfter: true, callbackBefore: true }, () => {
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+
+                }, function (data) {
+
+                    setTimeout(() => {
+                        ID_BURO_SELECCION = data.autorizacion.ID_BURO_SELECCION;
+                        alertMensaje('success', 'Información editada correctamente', 'Información guardada');
+                        $('#Modal_buro').modal('hide');
+                        document.getElementById('formularioBURO').reset();
+
+
+                        if ($.fn.DataTable.isDataTable('#Tablaburo')) {
+                            Tablaburo.ajax.reload(null, false); 
+                        }
+
+                    }, 300);
+                });
+
+            }, 1);
+        }
+
+    } else {
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+    }
+});
+
+
 
 
 
@@ -711,6 +1417,15 @@ $("#guardarFormSeleccionAutorizacion").click(function (e) {
 // <!-- ============================================================== -->
 // <!-- MODAL ENTREVISTA -->
 // <!-- ============================================================== -->
+
+$("#nueva_entrevista").click(function (e) {
+    e.preventDefault();
+    $("#Modal_entrevistas").modal("show");
+})
+
+
+
+
 
 
 const ModalEntrevista = document.getElementById('Modal_entrevistas');
@@ -726,8 +1441,6 @@ ModalEntrevista.addEventListener('hidden.bs.modal', event => {
     });
    
 });
-
-
 
 
   $("#guardarFormSeleccionEntrevista").click(function (e) {
@@ -834,6 +1547,15 @@ ModalEntrevista.addEventListener('hidden.bs.modal', event => {
 // <!--MODAL  PPT  -->
 // <!-- ============================================================== -->
 
+
+
+$("#nuevo_ppt").click(function (e) {
+    e.preventDefault();
+
+    $('.desabilitado1').css('background','#E2EFDA');
+    $("#miModal_ppt").modal("show");
+})
+
 const ModalArea = document.getElementById('miModal_ppt');
 ModalArea.addEventListener('hidden.bs.modal', event => {
     ID_PPT_SELECCION = 0;
@@ -845,6 +1567,7 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
         input.removeAttribute('required');
     });
 });
+
 
 // Solo seleccionar una opcion de word,excel,power point
 $('.word').on('change', function() {
