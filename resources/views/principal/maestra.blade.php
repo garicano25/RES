@@ -367,7 +367,7 @@
     <script src="/assets/js_sitio/seleccion/seleccion.js"></script>
     @endif
 
-    {{-- C:\xampp\htdocs\RES\public\assets\js_sitio\seleccion\seleccion.js --}}
+
 
   
 

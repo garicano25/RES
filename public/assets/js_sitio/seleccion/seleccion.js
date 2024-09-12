@@ -547,39 +547,122 @@ if ($.fn.DataTable.isDataTable('#Tablareferencia')) {
     columns: [
         { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
         { 
-            data: 'NOMBRE_EMPRESA',  
+            data: 'REFERENCIAS',
             render: function (data, type, row) {
-                return data;
+                let referenciasHTML = '';
+                data.forEach(function(referencia) {
+                    referenciasHTML += '<strong>' + referencia.NOMBRE_EMPRESA + '</strong><br>' +
+                                       'Comentario: ' + referencia.COMENTARIO + '<br>' +
+                                       '<button class="btn btn-danger btn-custom rounded-pill pdf-button" data-pdf="/competencias/' + referencia.ARCHIVO_RESULTADO + '"> <i class="bi bi-file-pdf-fill"></i></button><br>';
+                });
+                return referenciasHTML;
             },
             className: 'text-center'
         },
         { 
-            data: 'COMENTARIO',  
-            render: function (data, type, row) {
-                return data;
-            },
+            data: 'BTN_EDITAR', 
             className: 'text-center'
-        },
-        { 
-            data: 'ARCHIVO_RESULTADO', 
-            render: function (data, type, row) {
-                if (data) {
-                    return '<button class="btn btn-danger btn-custom rounded-pill pdf-button" data-pdf="/competencias/' + data + '"> <i class="bi bi-file-pdf-fill"></i></button>';
-                }
-                return 'Sin archivo';
-            },
-            className: 'text-center'
-        },
-        { data: 'BTN_EDITAR', className: 'text-center' }
+        }
     ],
     columnDefs: [
         { target: 0, title: '#', className: 'all text-center' },
-        { target: 1, title: 'Empresa', className: 'all text-center' },
-        { target: 2, title: 'Comentario', className: 'all text-center' },
-        { target: 3, title: 'Archivo', className: 'all text-center' },
-        { target: 4, title: 'Editar', className: 'all text-center' }
+        { target: 1, title: 'Referencias', className: 'all text-center' },
+        { target: 2, title: 'Editar', className: 'all text-center' }
     ]
 });
+
+
+
+$('#Tablareferencia tbody').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablareferencia.row(tr);
+    ID_REFERENCIAS_SELECCION = row.data().ID_REFERENCIAS_SELECCION;
+    var data = row.data(); 
+    var form = "formularioReferencias";
+
+
+    editarDatoTabla(data, form, 'Modal_referencias', 1);
+
+    if (data.REFERENCIAS && data.REFERENCIAS.length > 0) {
+        cargarReferenciasParaEditar(data.REFERENCIAS); 
+    }
+
+    if (data.EXPERIENCIA_LABORAL === 'si') {
+        $('#contenedor-empresa').css('display', 'block');
+        $('#experiencia_si').prop('checked', true);
+    } else {
+        $('#contenedor-empresa').css('display', 'none');
+        $('#experiencia_no').prop('checked', true);
+    }
+});
+
+
+
+
+function cargarReferenciasParaEditar(referencias) {
+    // Limpiar el contenedor de inputs antes de agregar los nuevos valores
+    contenedorInputs.innerHTML = '';
+    totalEmpresas = 0;
+
+    referencias.forEach(function(referencia, index) {
+        contador++; // Incrementar el contador para cada nuevo grupo de inputs
+        totalEmpresas++; // Incrementar el número total de empresas
+
+        // Verificar el valor de CUMPLE
+        const cumpleValue = referencia.CUMPLE ? referencia.CUMPLE.trim() : '';
+        console.log("CUMPLE Value:", cumpleValue); // Asegúrate de que el valor de CUMPLE llegue correctamente
+
+        const divInput = document.createElement('div');
+        divInput.classList.add('form-group', 'row', 'input-container', 'mb-3');
+        divInput.innerHTML = `
+            <div class="col-3 text-center">
+                <label for="nombreEmpresa">Nombre de la empresa</label>
+                <input type="text" name="NOMBRE_EMPRESA[]" class="form-control" value="${referencia.NOMBRE_EMPRESA}">
+            </div>
+            <div class="col-3 text-center">
+                <label for="comentario">Comentario</label>
+                <textarea type="text" name="COMENTARIO[]" class="form-control" rows="1">${referencia.COMENTARIO}</textarea>
+            </div>
+            <div class="col-1 text-center">
+                <label for="cumple">¿Cumple?</label><br>
+                <input type="radio" class="form-check-input" name="CUMPLE_${contador}" value="Sí" id="cumple_si_${contador}" ${cumpleValue === 'Sí' ? 'checked' : ''}>
+                <label for="cumple_si_${contador}">Sí</label>
+                <input type="radio" class="form-check-input" name="CUMPLE_${contador}" value="No" id="cumple_no_${contador}" ${cumpleValue === 'No' ? 'checked' : ''}>
+                <label for="cumple_no_${contador}">No</label>
+            </div>
+            <div class="col-4 text-center">
+                <label for="archivoResultado">Cargar documento</label>
+                <input type="file" name="ARCHIVO_RESULTADO[]" class="form-control archivo-input" accept=".pdf">
+                <span class="errorArchivoResultado text-danger" style="display: none;">Solo se permiten archivos PDF</span>
+                <button type="button" class="btn quitarArchivo" style="display: none;">Quitar archivo</button>
+            </div>
+            <div class="col-1">
+                <br>
+                <button type="button" class="btn btn-danger botonEliminar"><i class="bi bi-trash3-fill"></i></button>
+            </div>
+        `;
+
+        contenedorInputs.appendChild(divInput);
+
+        // Añadir eventos para los radios (Sí o No)
+        const cumpleSi = divInput.querySelector(`#cumple_si_${contador}`);
+        const cumpleNo = divInput.querySelector(`#cumple_no_${contador}`);
+
+        cumpleSi.addEventListener('change', actualizarPorcentajeCumplimiento);
+        cumpleNo.addEventListener('change', actualizarPorcentajeCumplimiento);
+
+        // Eliminar input dinámico
+        const botonEliminar = divInput.querySelector('.botonEliminar');
+        botonEliminar.addEventListener('click', function () {
+            contenedorInputs.removeChild(divInput);
+            totalEmpresas--;
+            actualizarPorcentajesReferencias();
+        });
+    });
+}
+
+
+
 
 
 
@@ -735,7 +818,6 @@ $('#Tablapptseleccion tbody').on('click', 'td>button.EDITAR', function () {
 
 
 function mostrarCursos(data,form){
-
 //RECORREMOS LOS CURSOS SI ES QUE EXISTE
 if ('CURSOS' in data) {
     if (data.CURSOS.length > 0) { 
@@ -1506,10 +1588,10 @@ const ModalReferencias = document.getElementById('Modal_referencias');
 ModalReferencias.addEventListener('hidden.bs.modal', event => {
 
     ID_REFERENCIAS_SELECCION  = 0;
+    document.getElementById('formularioReferencias').reset();
     $('.collapse').collapse('hide')
     $('#guardarFormSeleccionReferencias').css('display', 'block').prop('disabled', false);
 
-    document.getElementById('formularioReferencias').reset();
 
     totalEmpresas = 0;
     empresasCumplen = 0;
@@ -1660,6 +1742,9 @@ function actualizarPorcentajesReferencias() {
 document.addEventListener('DOMContentLoaded', initReferenciasLaborales);
 
 
+
+
+
 $("#guardarFormSeleccionReferencias").click(function (e) {
     e.preventDefault();
 
@@ -1671,7 +1756,7 @@ $("#guardarFormSeleccionReferencias").click(function (e) {
 
             alertMensajeConfirm({
                 title: "¿Desea guardar la información?",
-                text: "Al guardarla, la información podra ser usada ",
+                text: "Al guardarla,  podra usarse",
                 icon: "question",
             }, async function () {
 
@@ -1694,15 +1779,19 @@ $("#guardarFormSeleccionReferencias").click(function (e) {
                 }, function (data) {
 
                     setTimeout(() => {
-                        ID_REFERENCIAS_SELECCION = data.vacante.ID_REFERENCIAS_SELECCION;
-                        alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
+                        ID_REFERENCIAS_SELECCION = data.vacantes.ID_REFERENCIAS_SELECCION;
+                        alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para hacer uso del PPT', null, null, 1500);
                         $('#Modal_referencias').modal('hide');
                         document.getElementById('formularioReferencias').reset();
+                
 
 
-                        // if ($.fn.DataTable.isDataTable('#Tablaentrevistaseleccion')) {
-                        //     Tablaentrevistaseleccion.ajax.reload(null, false); // Recargar la tabla sin reiniciar la paginación
-                        // }
+                        if ($.fn.DataTable.isDataTable('#Tablareferencia')) {
+                            Tablareferencia.ajax.reload(null, false); // Recargar la tabla sin reiniciar la paginación
+                        }
+
+
+
 
                     }, 300);
 
@@ -1714,11 +1803,11 @@ $("#guardarFormSeleccionReferencias").click(function (e) {
 
             alertMensajeConfirm({
                 title: "¿Desea editar la información de este formulario?",
-                text: "Al guardarla, se editará la información",
+                text: "Al guardarla, se editará la información del PPT",
                 icon: "question",
             }, async function () {
 
-                await loaderbtn('guardarFormSeleccionEntrevista');
+                await loaderbtn('guardarFormSeleccionReferencias');
                 await ajaxAwaitFormData({ 
                     api: 6, 
                     ID_REFERENCIAS_SELECCION: ID_REFERENCIAS_SELECCION, 
@@ -1737,15 +1826,16 @@ $("#guardarFormSeleccionReferencias").click(function (e) {
                 }, function (data) {
 
                     setTimeout(() => {
-                        ID_REFERENCIAS_SELECCION = data.vacante.ID_REFERENCIAS_SELECCION;
+                        ID_REFERENCIAS_SELECCION = data.vacantes.ID_REFERENCIAS_SELECCION;
                         alertMensaje('success', 'Información editada correctamente', 'Información guardada');
                         $('#Modal_referencias').modal('hide');
                         document.getElementById('formularioReferencias').reset();
+                     
 
 
-                        // if ($.fn.DataTable.isDataTable('#Tablaentrevistaseleccion')) {
-                        //     Tablaentrevistaseleccion.ajax.reload(null, false); 
-                        // }
+                        if ($.fn.DataTable.isDataTable('#Tablareferencia')) {
+                            Tablareferencia.ajax.reload(null, false); 
+                        }
 
                     }, 300);
                 });
@@ -1757,6 +1847,10 @@ $("#guardarFormSeleccionReferencias").click(function (e) {
         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
     }
 });
+
+
+
+
 
 // <!-- ============================================================== -->
 // <!-- MODAL ENTREVISTA -->

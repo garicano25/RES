@@ -434,7 +434,7 @@
 <!-- ============================================================== -->
 <!-- MODAL  REFERENCIAS LABORAL-->
 <!-- ============================================================== -->
-<div class="modal fade" id="Modal_referencias" tabindex="-1" aria-labelledby="InteligenciaLabel" aria-hidden="true">
+<div class="modal fade" id="Modal_referencias" tabindex="-1" aria-labelledby="ReferneciasLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <form method="post" enctype="multipart/form-data" id="formularioReferencias">
