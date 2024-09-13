@@ -203,7 +203,10 @@
                             </li>  
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Área_interes')}}">Catálogo de áreas de interés</a>
-                            </li>                                
+                            </li>  
+                            <hr class="dropdown-divider">
+                            <li><a class="dropdown-item" href="{{url('/Pruebas-conocimientos')}}">Catálogo de pruebas de conocimientos</a>
+                            </li>                               
                         </ul>
                     </li>
                 </ul>
@@ -345,13 +348,9 @@
     <script src="/assets/js_sitio/reclutamiento/banco_cv.js"></script>
     @endif
 
-
-
     @if(request()->is('Postulaciones'))
     <script src="/assets/js_sitio/reclutamiento/vacantesactivas.js"></script>
     @endif
-
-
 
     @if(request()->is('Motivo-vacante'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogomotivovacante.js"></script>
@@ -368,7 +367,9 @@
     @endif
 
 
-
+    @if(request()->is('Pruebas-conocimientos'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogopruebas.js"></script>
+    @endif
   
 
 </body>

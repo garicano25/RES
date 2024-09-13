@@ -12,6 +12,10 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     document.getElementById('formularioGenero').reset();
    
 
+    $('#miModal_Genero .modal-title').html('Agregar género');
+
+
+
 })
 
 
@@ -191,6 +195,9 @@ $('#Tablageneros tbody').on('click', 'td>button.EDITAR', function () {
     ID_CATALOGO_GENERO = row.data().ID_CATALOGO_GENERO;
 
     editarDatoTabla(row.data(), 'formularioGenero', 'miModal_Genero');
+
+    $('#miModal_Genero .modal-title').html(row.data().NOMBRE_GENERO);
+
 });
 
 
@@ -206,6 +213,9 @@ $(document).ready(function() {
 
         ID_CATALOGO_GENERO = row.data().ID_CATALOGO_GENERO;
         editarDatoTabla(row.data(), 'formularioGenero', 'miModal_Genero',1);
+
+    $('#miModal_Genero .modal-title').html(row.data().NOMBRE_GENERO);
+
     });
 
     $('#miModal_Genero').on('hidden.bs.modal', function () {

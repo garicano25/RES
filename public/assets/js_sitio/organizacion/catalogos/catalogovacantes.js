@@ -14,6 +14,10 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     if (totalElement) {
         totalElement.textContent = 'Total: 0%';
     }
+
+    $('#miModal_vacantes .modal-title').html('Nueva vacante');
+
+
 });
 
 
@@ -220,6 +224,11 @@ $('#Tablavacantes tbody').on('click', 'td>button.EDITAR', function () {
     ID_CATALOGO_VACANTE = row.data().ID_CATALOGO_VACANTE;
     editarDatoTabla(row.data(), 'formularioVACANTES', 'miModal_vacantes', 1);
     cargarRequerimientos(row.data().REQUERIMIENTO);
+
+
+
+	$('#miModal_vacantes .modal-title').html(row.data().NOMBRE_CATEGORIA);
+
 });
 
 
@@ -235,9 +244,13 @@ $(document).ready(function() {
         editarDatoTabla(row.data(), 'formularioVACANTES', 'miModal_vacantes',1);
         cargarRequerimientos(row.data().REQUERIMIENTO);
 
+        $('#miModal_vacantes .modal-title').html(row.data().NOMBRE_CATEGORIA);
+        
         $('#botonAgregar').prop('disabled', true);
     });
 
+
+    
     $('#miModal_vacantes').on('hidden.bs.modal', function () {
         resetFormulario('#miModal_vacantes');
     });

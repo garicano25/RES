@@ -11,6 +11,7 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     ID_CATALOGO_TIPOVACANTE = 0
     document.getElementById('formularioTIPOVACANTE').reset();
    
+    $('#miModal_TIPOVACANTE .modal-title').html('Tipo de vacante');
 
 })
 
@@ -191,6 +192,8 @@ $('#Tablatipovacantes tbody').on('click', 'td>button.EDITAR', function () {
 
 
     editarDatoTabla(row.data(), 'formularioTIPOVACANTE', 'miModal_TIPOVACANTE');
+     $('#miModal_TIPOVACANTE .modal-title').html(row.data().NOMBRE_TIPOVACANTE);
+
 });
 
 
@@ -204,6 +207,9 @@ $(document).ready(function() {
 
         ID_CATALOGO_TIPOVACANTE = row.data().ID_CATALOGO_TIPOVACANTE;
         editarDatoTabla(row.data(), 'formularioTIPOVACANTE', 'miModal_TIPOVACANTE',1);
+     $('#miModal_TIPOVACANTE .modal-title').html(row.data().NOMBRE_TIPOVACANTE);
+
+
     });
 
     $('#miModal_TIPOVACANTE').on('hidden.bs.modal', function () {

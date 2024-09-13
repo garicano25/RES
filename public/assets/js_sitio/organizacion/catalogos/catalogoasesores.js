@@ -11,6 +11,8 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     ID_CATALOGO_ASESOR = 0
     document.getElementById('formularioASESOR').reset();
    
+    $('#miModal_ASESORES .modal-title').html('Nuevo asesor');
+
 
 })
 
@@ -192,6 +194,9 @@ $('#Tablaasesores tbody').on('click', 'td>button.EDITAR', function () {
     ID_CATALOGO_ASESOR = row.data().ID_CATALOGO_ASESOR;
 
     editarDatoTabla(row.data(), 'formularioASESOR', 'miModal_ASESORES',1);
+
+    $('#miModal_ASESORES .modal-title').html(row.data().NOMBRE_ASESOR);
+
 });
 
 
@@ -205,6 +210,8 @@ $(document).ready(function() {
 
         ID_CATALOGO_ASESOR = row.data().ID_CATALOGO_ASESOR;
         editarDatoTabla(row.data(), 'formularioASESOR', 'miModal_ASESORES',1);
+         $('#miModal_ASESORES .modal-title').html(row.data().NOMBRE_ASESOR);
+
     });
 
     $('#miModal_ASESORES').on('hidden.bs.modal', function () {

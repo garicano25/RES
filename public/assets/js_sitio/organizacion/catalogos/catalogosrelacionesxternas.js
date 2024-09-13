@@ -12,6 +12,9 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     ID_CATALOGO_RELACIONESEXTERNAS = 0
     document.getElementById('formularioRELACIONESEXTERNAS').reset();
    
+    $('#miModal_RELACIONESEXTERNAS .modal-title').html('Nueva relación externa');
+
+    
 
 })
 
@@ -192,6 +195,9 @@ $('#Tablarelacionesexterna tbody').on('click', 'td>button.EDITAR', function () {
 
 
     editarDatoTabla(row.data(), 'formularioRELACIONESEXTERNAS', 'miModal_RELACIONESEXTERNAS');
+    $('#miModal_RELACIONESEXTERNAS .modal-title').html(row.data().NOMBRE_RELACIONEXTERNA);
+
+
 });
 
 $(document).ready(function() {
@@ -203,6 +209,9 @@ $(document).ready(function() {
 
         ID_CATALOGO_RELACIONESEXTERNAS = row.data().ID_CATALOGO_RELACIONESEXTERNAS;
         editarDatoTabla(row.data(), 'formularioRELACIONESEXTERNAS', 'miModal_RELACIONESEXTERNAS',1);
+    $('#miModal_RELACIONESEXTERNAS .modal-title').html(row.data().NOMBRE_RELACIONEXTERNA);
+
+
     });
 
     $('#miModal_RELACIONESEXTERNAS').on('hidden.bs.modal', function () {

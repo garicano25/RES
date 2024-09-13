@@ -11,6 +11,7 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     ID_CATALOGO_COMPETENCIA_GERENCIAL = 0
     document.getElementById('forCompetenciasGerenciales').reset();
    
+    $('#miModal_COMPETENCIAGERENCIALES .modal-title').html('Nueva competencia gerencial');
 
 })
 
@@ -188,6 +189,8 @@ $('#TablaCompetenciasGerenciales tbody').on('click', 'td>button.EDITAR', functio
     ID_CATALOGO_COMPETENCIA_GERENCIAL = row.data().ID_CATALOGO_COMPETENCIA_GERENCIAL;
 
     editarDatoTabla(row.data(), 'forCompetenciasGerenciales', 'miModal_COMPETENCIAGERENCIALES');
+     $('#miModal_COMPETENCIAGERENCIALES .modal-title').html(row.data().NOMBRE_COMPETENCIA_GERENCIAL);
+
 });
 
 
@@ -201,6 +204,8 @@ $(document).ready(function() {
 
         ID_CATALOGO_COMPETENCIA_GERENCIAL = row.data().ID_CATALOGO_COMPETENCIA_GERENCIAL;
         editarDatoTabla(row.data(), 'forCompetenciasGerenciales', 'miModal_COMPETENCIAGERENCIALES',1);
+     $('#miModal_COMPETENCIAGERENCIALES .modal-title').html(row.data().NOMBRE_COMPETENCIA_GERENCIAL);
+
     });
 
     $('#miModal_COMPETENCIAGERENCIALES').on('hidden.bs.modal', function () {

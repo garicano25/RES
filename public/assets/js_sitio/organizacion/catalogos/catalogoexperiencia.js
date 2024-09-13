@@ -11,6 +11,7 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     ID_CATALOGO_EXPERIENCIA = 0
     document.getElementById('formularioEXPERIENCIA').reset();
    
+    $('#miModal_EXPERIENCIA .modal-title').html('Nuevo puesto requerido');
 
 })
 
@@ -190,6 +191,7 @@ $('#Tablaexperiencia tbody').on('click', 'td>button.EDITAR', function () {
     ID_CATALOGO_EXPERIENCIA = row.data().ID_CATALOGO_EXPERIENCIA;
 
     editarDatoTabla(row.data(), 'formularioEXPERIENCIA', 'miModal_EXPERIENCIA');
+     $('#miModal_EXPERIENCIA .modal-title').html(row.data().NOMBRE_PUESTO);
 });
 
 
@@ -203,6 +205,8 @@ $(document).ready(function() {
 
         ID_CATALOGO_EXPERIENCIA = row.data().ID_CATALOGO_EXPERIENCIA;
         editarDatoTabla(row.data(), 'formularioEXPERIENCIA', 'miModal_EXPERIENCIA',1);
+
+         $('#miModal_EXPERIENCIA .modal-title').html(row.data().NOMBRE_PUESTO);
     });
 
     $('#miModal_EXPERIENCIA').on('hidden.bs.modal', function () {

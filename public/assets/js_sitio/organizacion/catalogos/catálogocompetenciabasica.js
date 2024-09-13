@@ -11,7 +11,10 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     ID_CATALOGO_COMPETENCIA_BASICA = 0
     document.getElementById('formularioCOMPETENCIABASICAS').reset();
    
+    $('#miModal_COMPETENCIABASICAS .modal-title').html('Nueva competencia básica o cardinales');
 
+
+    
 })
 
 
@@ -192,6 +195,8 @@ $('#Tablacompetenciabasica tbody').on('click', 'td>button.EDITAR', function () {
     ID_CATALOGO_COMPETENCIA_BASICA = row.data().ID_CATALOGO_COMPETENCIA_BASICA;
 
     editarDatoTabla(row.data(), 'formularioCOMPETENCIABASICAS', 'miModal_COMPETENCIABASICAS');
+     $('#miModal_COMPETENCIABASICAS .modal-title').html(row.data().NOMBRE_COMPETENCIA_BASICA);
+
 });
 
 
@@ -204,6 +209,9 @@ $(document).ready(function() {
 
         ID_CATALOGO_COMPETENCIA_BASICA = row.data().ID_CATALOGO_COMPETENCIA_BASICA;
         editarDatoTabla(row.data(), 'formularioCOMPETENCIABASICAS', 'miModal_COMPETENCIABASICAS',1);
+        $('#miModal_COMPETENCIABASICAS .modal-title').html(row.data().NOMBRE_COMPETENCIA_BASICA);
+
+
     });
 
     $('#miModal_COMPETENCIABASICAS').on('hidden.bs.modal', function () {

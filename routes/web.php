@@ -15,13 +15,11 @@ use App\Http\Controllers\organizacion\catalogosfuncionesgestionController;
 use App\Http\Controllers\organizacion\catalogosrelacionesexternasController;
 use App\Http\Controllers\organizacion\requerimientoPersonalController;
 use App\Http\Controllers\organizacion\catalogocategoriaControlller;
-use App\Http\Controllers\organizacion\catalogogeneroControlller;
 use App\Http\Controllers\organizacion\catalogoexperienciaController;
 use App\Http\Controllers\organizacion\catalogocompetenciabasicaController;
 use App\Http\Controllers\organizacion\catalogotipovacanteController;
 use App\Http\Controllers\organizacion\catalogoCompotenciasGerencialesController;
 use App\Http\Controllers\organizacion\catalogomotivovacanteControlller;
-use App\Http\Controllers\organizacion\catalogoareainteresController;
 
 
 
@@ -32,12 +30,14 @@ use App\Http\Controllers\reclutamiento\catalogovacantesController;
 use App\Http\Controllers\reclutamiento\PuestoController;
 use App\Http\Controllers\reclutamiento\bancocvController;
 use App\Http\Controllers\reclutamiento\vacantesactivasController;
+use App\Http\Controllers\organizacion\catalogoareainteresController;
+use App\Http\Controllers\organizacion\catalogogeneroControlller;
 
 
 // Controladores de seleccion
 
 use App\Http\Controllers\seleccion\seleccionController;
-
+use App\Http\Controllers\seleccion\catalogopruebasController;
 
 
 
@@ -185,7 +185,7 @@ Route::post('/VacantesSave', [catalogovacantesController::class, 'store']);
 Route::get('/VacanteDelete', [catalogovacantesController::class, 'store']);
 Route::get('/Tablavacantes', [catalogovacantesController::class, 'Tablavacantes']);
 
-// // Catálogo área de intereses
+//  Catálogo área de intereses
 Route::get('/Área_interes', function () {return view('RH.Catalogos.catalogo_areainteres');});
 Route::post('/interesSave', [catalogoareainteresController::class, 'store']);
 Route::get('/interesDelete', [catalogoareainteresController::class, 'store']);
@@ -206,7 +206,7 @@ Route::post('/guardarSeleccion', [vacantesactivasController::class, 'guardarSele
 Route::get('/Selección', [seleccionController::class, 'index']);
 // Route::get('/Selección', function () {return view('RH.Selección.seleccion');});
 
-// tabla de selección
+// tablas  de selección
 
 Route::get('/Tablaseleccion', [seleccionController::class, 'Tablaseleccion']);
 Route::get('/Tablapptseleccion', [seleccionController::class, 'Tablapptseleccion']);
@@ -216,7 +216,7 @@ Route::get('/Tablaburo', [seleccionController::class, 'Tablaburo']);
 Route::get('/Tablaentrevistaseleccion', [seleccionController::class, 'Tablaentrevistaseleccion']);
 Route::get('/Tablareferencia', [seleccionController::class, 'Tablareferencia']);
 
-// guardar 
+// Guadar
 Route::post('/SeleccionSave', [seleccionController::class, 'store']);
 
 // consultar información
@@ -226,3 +226,10 @@ Route::get('/consultarformppt/{id}', [seleccionController::class, 'consultarform
 // ver archivos
 Route::get('/ver-archivo/{curp}', [seleccionController::class, 'visualizarArchivo']);
 Route::get('/ver-pdf', [seleccionController::class, 'mostrarPDF'])->name('ver-pdf');
+
+
+//  Catálogo de pruebas de conocimientos
+Route::get('/Pruebas-conocimientos', function () {return view('RH.Catalogos.catalogo_pruebasconocimiento');});
+Route::post('/pruebaSave', [catalogopruebasController::class, 'store']);
+Route::get('/pruebaDelete', [catalogopruebasController::class, 'store']);
+Route::get('/Tablapruebaconocimiento', [catalogopruebasController::class, 'Tablapruebaconocimiento']);

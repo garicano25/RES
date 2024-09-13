@@ -29,7 +29,7 @@
         <div class="modal-content">
             <form method="post"  enctype="multipart/form-data" id="formularioEXPERIENCIA" style="background-color: #ffffff;">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Puesto que se requiere como experiencia</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo puesto requerido</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

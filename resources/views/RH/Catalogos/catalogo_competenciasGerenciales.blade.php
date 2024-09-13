@@ -29,7 +29,7 @@
         <div class="modal-content">
             <form method="post" enctype="multipart/form-data" id="forCompetenciasGerenciales" style="background-color: #ffffff;">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Competencias gerenciales</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva competencia gerencial</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

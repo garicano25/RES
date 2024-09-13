@@ -88,6 +88,7 @@ public function Tablajerarquia()
 
 
 
+
 public function store(Request $request)
 {
     try {
@@ -98,18 +99,27 @@ public function store(Request $request)
                     DB::statement('ALTER TABLE catalogo_jerarquias AUTO_INCREMENT=1;');
                     $jerarquias = catalogojerarquiaModel::create($request->all());
                 } else {
-
-                    if ($request->ELIMINAR == 1) {
-                        $jerarquias = catalogojerarquiaModel::where('ID_CATALOGO_JERARQUIA', $request['ID_CATALOGO_JERARQUIA'])->update(['ACTIVO' => 0]);
-                        $response['code'] = 1;
-                        $response['jerarquia'] = 'Desactivada';
+                    // Verificar si es para eliminar o editar
+                    if (isset($request->ELIMINAR)) {
+                        if ($request->ELIMINAR == 1) {
+                            // Desactivar jerarquía
+                            $jerarquias = catalogojerarquiaModel::where('ID_CATALOGO_JERARQUIA', $request['ID_CATALOGO_JERARQUIA'])->update(['ACTIVO' => 0]);
+                            $response['code'] = 1;
+                            $response['jerarquia'] = 'Desactivada';
+                        } else {
+                            // Activar jerarquía
+                            $jerarquias = catalogojerarquiaModel::where('ID_CATALOGO_JERARQUIA', $request['ID_CATALOGO_JERARQUIA'])->update(['ACTIVO' => 1]);
+                            $response['code'] = 1;
+                            $response['jerarquia'] = 'Activada';
+                        }
                     } else {
-                        $jerarquias = catalogojerarquiaModel::where('ID_CATALOGO_JERARQUIA', $request['ID_CATALOGO_JERARQUIA'])->update(['ACTIVO' => 1]);
+                        // Editar jerarquía existente
+                        $jerarquias = catalogojerarquiaModel::find($request->ID_CATALOGO_JERARQUIA);
+                        $jerarquias->update($request->all());
                         $response['code'] = 1;
-                        $response['jerarquia'] = 'Activada';
+                        $response['jerarquia'] = 'Actualizada';
                     }
                     return response()->json($response);
-                    
                 }
 
                 $response['code'] = 1;
@@ -125,6 +135,8 @@ public function store(Request $request)
         return response()->json('Error al guardar la jerarquía: ' . $e->getMessage());
     }
 }
+
+
 
 
 
