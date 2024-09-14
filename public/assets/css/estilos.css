@@ -471,3 +471,8 @@ table.dataTable tbody tr:last-child td:last-child {
 .modal-xl {
     max-width: 78%; 
 }
+
+
+.modal-lg {
+    max-width: 78%; 
+}

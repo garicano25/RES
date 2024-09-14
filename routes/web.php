@@ -225,7 +225,11 @@ Route::get('/consultarformppt/{id}', [seleccionController::class, 'consultarform
 
 // ver archivos
 Route::get('/ver-archivo/{curp}', [seleccionController::class, 'visualizarArchivo']);
-Route::get('/ver-pdf', [seleccionController::class, 'mostrarPDF'])->name('ver-pdf');
+
+
+
+
+
 
 
 //  Catálogo de pruebas de conocimientos

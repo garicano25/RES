@@ -217,8 +217,11 @@ public function Tablainteligencia(Request $request)
             // Lógica para el botón de editar
             if ($value->ACTIVO == 0) {
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                $value->DOC_COMPETENCIAS = '<button class="btn btn-danger btn-custom rounded-pill DOC_COMPETENCIAS"> <i class="bi bi-file-pdf-fill"></i></button>';
             } else {
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                $value->DOC_COMPETENCIAS = '<button class="btn btn-danger btn-custom rounded-pill  "> <i class="bi bi-file-pdf-fill"></i></button>';
+            
             }
 
             // Lógica para el campo de riesgo
@@ -238,7 +241,6 @@ public function Tablainteligencia(Request $request)
             }
 
             // Botones para documentos (Documento Competencias y Documento Completo)
-            $value->DOC_COMPETENCIAS = '<button class="btn btn-danger btn-custom rounded-pill pdf-button" data-pdf="/competencias/' . $value->ARCHIVO_COMPETENCIAS . '"> <i class="bi bi-file-pdf-fill"></i></button>';
             $value->DOC_COMPLETO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button" data-pdf="/completo/' . $value->ARCHIVO_COMPLETO . '"> <i class="bi bi-file-pdf-fill"></i></button>';
         }
 
@@ -251,6 +253,17 @@ public function Tablainteligencia(Request $request)
             'msj' => 'Error ' . $e->getMessage(),
             'data' => 0
         ]);
+    }
+}
+
+public function mostrarpdfcompetencias($documento_id)
+{
+    $documento = inteligenciaseleccionModel::findOrFail($documento_id);
+
+    if (Storage::exists($documento->ARCHIVO_COMPETENCIAS)) {
+        return Storage::response($documento->ARCHIVO_COMPETENCIAS);
+    } else {
+        abort(404, 'Archivo no encontrado');
     }
 }
 

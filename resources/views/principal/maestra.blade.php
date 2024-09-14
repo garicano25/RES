@@ -117,13 +117,6 @@
                         <li><a class="dropdown-item" href="{{url('/Postulaciones')}}">Vacantes activas</a></li>
                     </ul>
                 </li>
-                
-
-                {{-- <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link BOTON" href="/Listavacantes" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                        <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Reclutamiento</span><span class="d-none d-lg-inline">Reclutamiento</span>
-                    </a>
-                </li> --}}
 
                 <li class="nav-item dropdown" style="margin-left: 8px;">
                     <a class="nav-link BOTON" href="{{ url('/Selección') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">

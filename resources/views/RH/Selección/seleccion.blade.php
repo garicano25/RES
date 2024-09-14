@@ -124,20 +124,23 @@
                 
                 <div class="row">
                     <!-- PRUEBAS -->
+
                     <div class="col-6 mb-3">
-                        <div class="card h-100 cardseleccion">
+                        <div class="card h-100 cardseleccion ">
                             <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
                                 <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-check2-square"></i>&nbsp;Pruebas de conocimientos</h3>
-                                <button type="button" class="btn btn-light waves-effect waves-light" id="nuevo_pruebas" style="margin-left: auto;">
+                                <button type="button" class="btn btn-light waves-effect waves-light" id="nueva_prueba_conocimiento" style="margin-left: auto;">
                                     Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
                                 </button>
                             </ol>
                             <div class="card-body position-relative">
-                                <table id="Tablapruebas" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
+                                <i id="loadingIcon6" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                                <table id="Tabla" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
                                 </table>
                             </div>
                         </div>
                     </div>
+
                      <!-- ENTREVISTAS  -->
                      <div class="col-6 mb-3">
                         <div class="card h-100 cardseleccion ">
@@ -155,6 +158,7 @@
                         </div>
                     </div>
                 </div>
+
               </div>
           </div>
           <div class="modal-footer">
@@ -237,7 +241,7 @@
           </form>
       </div>
     </div>
-  </div>
+</div>
 
 <!-- ============================================================== -->
 <!-- MODAL INTELIGENCIA LABORAL-->
@@ -299,7 +303,7 @@
             </form>
         </div>
         </div>
-  </div>
+</div>
 
 
   
@@ -345,15 +349,6 @@
                             <input type="radio" class="form-check-input" name="CEDULA_PROFESIONAL" id="cedula_exterior" value="exterior">
                             <label for="cedula_exterior" class="form-check-label">Exterior</label>
                         </div>
-                        {{-- <input type="radio"   name="CEDULA_PROFESIONAL" id="cedula_si" value="si" class="me-2">
-                        <label for="cedula_si" class="me-3">Sí</label> --}}
-
-                        {{-- <input type="radio"   name="CEDULA_PROFESIONAL" id="cedula_no" value="no" class="me-2">
-                        <label for="cedula_no" class="me-3">No</label>
-            
-                        <input type="radio"  name="CEDULA_PROFESIONAL" id="cedula_exterior" value="exterior" class="me-2">
-                        <label for="cedula_exterior" class="me-3">Exterior</label> --}}
-
                     </div>
                 </div>
             
@@ -426,7 +421,7 @@
           </form>
       </div>
     </div>
-  </div>
+</div>
 
 
 
@@ -540,11 +535,57 @@
 
 
 <!-- ============================================================== -->
+<!-- MODAL  PRUEBAS -->
+<!-- ============================================================== -->
+
+
+<div class="modal fade" id="Modal_pruebas_concimiento" tabindex="-1" aria-labelledby="pruebasLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post" enctype="multipart/form-data" id="formularioPruebas">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel">Pruebas de conocimientos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {!! csrf_field() !!}
+
+                    
+                    <div id="contenedor-empresa" style="display: block;">
+                        <div class="mb-3">
+                            <label>Agregar pruebas</label>
+                            <button id="botonAgregarprueba" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar prueba"><i class="bi bi-plus-circle-fill"></i></button>
+                            <div id="inputs-prueba" class="mt-3"></div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-4 mx-auto text-center">
+                                <div class="form-group">
+                                    <label>Suma total del %</label>
+                                    <input type="number" class="form-control floating-input text-center" id="PORCENTAJE_TOTAL_PRUEBAS" name="PORCENTAJE_TOTAL_PRUEBAS" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" id="guardarFormSeleccionPruebas">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- ============================================================== -->
 <!-- MODAL PPT -->
 <!-- ============================================================== -->
 
 
-<div class="modal modal-fullscreen fade" id="miModal_ppt" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
+<div class="modal modal-fullscreen fade" id= "miModal_ppt" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-fullscreen">
       <div class="modal-content">
           <form method="post" enctype="multipart/form-data" id="formularioSeleccionPPT" style="background-color: #ffffff;">
@@ -3413,11 +3454,6 @@
   </div>
 </div>
 
-
-
-<!-- ============================================================== -->
-<!-- MODAL  PRUEBAS -->
-<!-- ============================================================== -->
 
 
 

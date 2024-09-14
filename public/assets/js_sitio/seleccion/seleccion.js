@@ -342,20 +342,8 @@ Tablainteligencia = $("#Tablainteligencia").DataTable({
     columns: [
         { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
         { data: 'RIESGO', className: 'text-center' },  
-        { 
-            data: 'DOC_COMPETENCIAS', 
-            render: function (data, type, row) {
-                return data;
-            },
-            className: 'text-center'
-        },
-        { 
-            data: 'DOC_COMPLETO',  
-            render: function (data, type, row) {
-                return data;
-            },
-            className: 'text-center'
-        },
+        { data: 'DOC_COMPETENCIAS', className: 'text-center' },  
+        { data: 'DOC_COMPLETO', className: 'text-center' },  
         { data: 'BTN_EDITAR', className: 'text-center' } 
     ],
     columnDefs: [
@@ -398,6 +386,10 @@ $('#Tablainteligencia tbody').on('click', 'td>button.EDITAR', function () {
         document.querySelector('.light.green').classList.add('active');
     }
 });
+
+
+
+
 
 
 
@@ -471,8 +463,8 @@ Tablaburo = $("#Tablaburo").DataTable({
 $('#Tablaburo tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablaburo.row(tr);
-    var data = row.data(); // Obtiene los datos de la fila
-    ID_BURO_SELECCION = data.ID_BURO_SELECCION; // Asigna el ID para editar
+    var data = row.data(); 
+    ID_BURO_SELECCION = data.ID_BURO_SELECCION;
 
     document.getElementById('EXPERIENCIA_BURO').value = data.EXPERIENCIA_BURO || '';
     document.getElementById('EXPERIENCIA_CV').value = data.EXPERIENCIA_CV || '';
@@ -492,12 +484,150 @@ $('#Tablaburo tbody').on('click', 'td>button.EDITAR', function () {
         manejarCambioJudiciales(document.querySelector(`input[name="JUDICIALES_DEMANDA"][value="${data.JUDICIALES_DEMANDA}"]`), document.getElementById('NUMERO_JUDICIALES'));
     }
 
-    // Recalcular los porcentajes después de cargar los datos
     manejarCambioExperiencia(document.getElementById('EXPERIENCIA_BURO'), document.getElementById('EXPERIENCIA_CV'));
 
-    // Abre el modal de edición (ajusta según la estructura de tu proyecto)
     editarDatoTabla(data, "formularioBURO", 'Modal_buro', 1);
 });
+
+
+
+
+
+// <!-- ============================================================== -->
+// <!-- PPT  -->
+// <!-- ============================================================== -->
+
+if ($.fn.DataTable.isDataTable('#Tablapptseleccion')) {
+    Tablapptseleccion.clear().destroy();
+}
+
+Tablapptseleccion = $("#Tablapptseleccion").DataTable({
+    language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+    lengthChange: true,
+    lengthMenu: [
+        [10, 25, 50, -1],
+        [10, 25, 50, 'All']
+    ],
+    info: false,
+    paging: true,
+    searching: true,
+    filtering: true,
+    scrollY: '65vh',
+    scrollCollapse: true,
+    responsive: true,
+    ajax: {
+        dataType: 'json',
+        data: { curp: curpSeleccionada }, 
+        method: 'GET',
+        cache: false,
+        url: '/Tablapptseleccion',  
+        beforeSend: function () {
+            $('#loadingIcon1').css('display', 'inline-block');
+        },
+        complete: function () {
+            $('#loadingIcon1').css('display', 'none');
+            Tablapptseleccion.columns.adjust().draw();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $('#loadingIcon1').css('display', 'none');
+            alertErrorAJAX(jqXHR, textStatus, errorThrown);
+        },
+        dataSrc: 'data'
+    },
+    columns: [
+        { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+        { data: 'NOMBRE_CATEGORIA', className: 'text-center' },
+        { data: 'NOMBRE_TRABAJADOR_PPT', className: 'text-center' },
+        { data: 'BTN_EDITAR', className: 'text-center' }
+    ],
+    columnDefs: [
+        { target: 0, title: '#', className: 'all text-center' },
+        { target: 1, title: 'Nombre categoría', className: 'all text-center' },
+        { target: 2, title: 'Nombre del trabajador', className: 'all text-center' },
+        { target: 3, title: 'Editar', className: 'all text-center' }
+    ]
+});
+
+
+$('#Tablapptseleccion tbody').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablapptseleccion.row(tr);
+    ID_PPT_SELECCION = row.data().ID_PPT_SELECCION;
+    var data = row.data();
+    var form = "formularioSeleccionPPT";
+    
+
+    editarDatoTabla(data, form, 'miModal_ppt', 1);
+    mostrarCursos(data, form);
+
+});
+
+
+
+function mostrarCursos(data,form){
+//RECORREMOS LOS CURSOS SI ES QUE EXISTE
+if ('CURSOS' in data) {
+    if (data.CURSOS.length > 0) { 
+        var cursos = data.CURSOS
+        var count = 1    
+    
+        // Supongamos que 'data' es el array que contiene los objetos de datos
+        cursos.forEach(function (obj) {
+        
+        
+
+        // cumple = obj.CURSO_CUMPLE_PPT.toUpperCase(); 
+
+        $('#' + form).find(`textarea[id='CURSO${count}_PPT']`).val(obj.CURSO_PPT)
+    
+        
+    //    $('#' + form).find(`input[id='CURSO${count}_CUMPLE_${cumple}'][value='${obj.CURSO_CUMPLE_PPT}'][type='radio']`).prop('checked', true)
+
+
+        if (obj.CURSO_DESEABLE == null) {
+            
+            $('#' + form).find(`input[id='CURSO${count}_REQUERIDO_PPT'][type='checkbox']`).prop('checked', true)
+
+        } else {
+            
+            $('#' + form).find(`input[id='CURSO${count}_DESEABLE_PPT'][type='checkbox']`).prop('checked', true)
+
+        }
+
+        count++
+        });
+
+
+        cursosTotales = data.CURSOS.length 
+        if (cursosTotales <= 10) {
+
+        $('#cursoTemasCollapse').collapse('show')
+
+
+        } else if (cursosTotales > 10 && cursosTotales <= 20) {
+            $('#cursoTemasCollapse').collapse('show')
+            $('#cursoTemas1Collapse').collapse('show')
+            
+
+        } else if (cursosTotales > 20 && cursosTotales <= 30) {
+            $('#cursoTemasCollapse').collapse('show')
+            $('#cursoTemas1Collapse').collapse('show')
+            $('#cursoTemas2Collapse').collapse('show')
+
+
+        } else if (cursosTotales > 30){
+            
+            $('.collapse').collapse('show')
+        
+
+
+        }
+
+    }
+    }
+}
+
+
 
 // <!-- ============================================================== -->
 // <!-- REFERENCIA LABORAL -->
@@ -664,6 +794,15 @@ function cargarReferenciasParaEditar(referencias) {
 
 
 
+// <!-- ============================================================== -->
+// <!-- PRUEBAS CONOCIMIENTO -->
+// <!-- ============================================================== -->
+
+
+
+
+
+
 
 
 // <!-- ============================================================== -->
@@ -745,140 +884,6 @@ $('#Tablaentrevistaseleccion tbody').on('click', 'td>button.EDITAR', function ()
 });
 
 
-
-// <!-- ============================================================== -->
-// <!-- PPT  -->
-// <!-- ============================================================== -->
-
-if ($.fn.DataTable.isDataTable('#Tablapptseleccion')) {
-    Tablapptseleccion.clear().destroy();
-}
-
-Tablapptseleccion = $("#Tablapptseleccion").DataTable({
-    language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-    lengthChange: true,
-    lengthMenu: [
-        [10, 25, 50, -1],
-        [10, 25, 50, 'All']
-    ],
-    info: false,
-    paging: true,
-    searching: true,
-    filtering: true,
-    scrollY: '65vh',
-    scrollCollapse: true,
-    responsive: true,
-    ajax: {
-        dataType: 'json',
-        data: { curp: curpSeleccionada }, 
-        method: 'GET',
-        cache: false,
-        url: '/Tablapptseleccion',  
-        beforeSend: function () {
-            $('#loadingIcon1').css('display', 'inline-block');
-        },
-        complete: function () {
-            $('#loadingIcon1').css('display', 'none');
-            Tablapptseleccion.columns.adjust().draw();
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            $('#loadingIcon1').css('display', 'none');
-            alertErrorAJAX(jqXHR, textStatus, errorThrown);
-        },
-        dataSrc: 'data'
-    },
-    columns: [
-        { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
-        { data: 'NOMBRE_CATEGORIA', className: 'text-center' },
-        { data: 'NOMBRE_TRABAJADOR_PPT', className: 'text-center' },
-        { data: 'BTN_EDITAR', className: 'text-center' }
-    ],
-    columnDefs: [
-        { target: 0, title: '#', className: 'all text-center' },
-        { target: 1, title: 'Nombre categoría', className: 'all text-center' },
-        { target: 2, title: 'Nombre del trabajador', className: 'all text-center' },
-        { target: 3, title: 'Editar', className: 'all text-center' }
-    ]
-});
-
-
-$('#Tablapptseleccion tbody').on('click', 'td>button.EDITAR', function () {
-    var tr = $(this).closest('tr');
-    var row = Tablapptseleccion.row(tr);
-    ID_PPT_SELECCION = row.data().ID_PPT_SELECCION;
-    var data = row.data();
-    var form = "formularioSeleccionPPT";
-    
-
-    editarDatoTabla(data, form, 'miModal_ppt', 1);
-    mostrarCursos(data, form);
-
-});
-
-
-
-function mostrarCursos(data,form){
-//RECORREMOS LOS CURSOS SI ES QUE EXISTE
-if ('CURSOS' in data) {
-    if (data.CURSOS.length > 0) { 
-        var cursos = data.CURSOS
-        var count = 1    
-    
-        // Supongamos que 'data' es el array que contiene los objetos de datos
-        cursos.forEach(function (obj) {
-        
-        
-
-        // cumple = obj.CURSO_CUMPLE_PPT.toUpperCase(); 
-
-        $('#' + form).find(`textarea[id='CURSO${count}_PPT']`).val(obj.CURSO_PPT)
-    
-        
-    //    $('#' + form).find(`input[id='CURSO${count}_CUMPLE_${cumple}'][value='${obj.CURSO_CUMPLE_PPT}'][type='radio']`).prop('checked', true)
-
-
-        if (obj.CURSO_DESEABLE == null) {
-            
-            $('#' + form).find(`input[id='CURSO${count}_REQUERIDO_PPT'][type='checkbox']`).prop('checked', true)
-
-        } else {
-            
-            $('#' + form).find(`input[id='CURSO${count}_DESEABLE_PPT'][type='checkbox']`).prop('checked', true)
-
-        }
-
-        count++
-        });
-
-
-        cursosTotales = data.CURSOS.length 
-        if (cursosTotales <= 10) {
-
-        $('#cursoTemasCollapse').collapse('show')
-
-
-        } else if (cursosTotales > 10 && cursosTotales <= 20) {
-            $('#cursoTemasCollapse').collapse('show')
-            $('#cursoTemas1Collapse').collapse('show')
-            
-
-        } else if (cursosTotales > 20 && cursosTotales <= 30) {
-            $('#cursoTemasCollapse').collapse('show')
-            $('#cursoTemas1Collapse').collapse('show')
-            $('#cursoTemas2Collapse').collapse('show')
-
-
-        } else if (cursosTotales > 30){
-            
-            $('.collapse').collapse('show')
-        
-
-
-        }
-
-    }
-    }
-}
 
 
 
@@ -1847,6 +1852,29 @@ $("#guardarFormSeleccionReferencias").click(function (e) {
         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
     }
 });
+
+
+
+
+// <!-- ============================================================== -->
+// <!-- MODAL REFERENCIAS LABORALES -->
+// <!-- ============================================================== -->
+
+
+$("#nueva_prueba_conocimiento").click(function (e) {
+    e.preventDefault();
+    $("#Modal_pruebas_concimiento").modal("show");
+
+});
+
+
+
+
+
+
+
+
+
 
 
 
