@@ -224,8 +224,7 @@ Route::get('/consultarSeleccion/{categoriaVacanteId}', [seleccionController::cla
 Route::get('/consultarformppt/{id}', [seleccionController::class, 'consultarformppt']);
 
 // ver archivos
-Route::get('/ver-archivo/{curp}', [seleccionController::class, 'visualizarArchivo']);
-
+Route::get('/ver-pdf', [seleccionController::class, 'mostrarPDF'])->name('ver-pdf');
 
 
 

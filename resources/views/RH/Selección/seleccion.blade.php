@@ -540,7 +540,7 @@
 
 
 <div class="modal fade" id="Modal_pruebas_concimiento" tabindex="-1" aria-labelledby="pruebasLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <form method="post" enctype="multipart/form-data" id="formularioPruebas">
 
@@ -550,9 +550,22 @@
                 </div>
                 <div class="modal-body">
                     {!! csrf_field() !!}
-
+                    <div class="mb-3 text-center"> 
+                        <label class="form-label">¿Requiere pruebas de conocimiento? *</label>
+                        <div class="d-flex justify-content-center align-items-center"> 
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" name="REQUIERE_PRUEBAS" id="prueba_si" value="si">
+                                <label for="prueba_si" class="form-check-label">Sí</label>
+                            </div>
                     
-                    <div id="contenedor-empresa" style="display: block;">
+                            <div class="form-check form-check-inline">
+                                <input type="radio" class="form-check-input" name="REQUIERE_PRUEBAS" id="prueba_no" value="no">
+                                <label for="prueba_no" class="form-check-label">No</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="contenedor-pruebas" style="display: none;">
                         <div class="mb-3">
                             <label>Agregar pruebas</label>
                             <button id="botonAgregarprueba" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar prueba"><i class="bi bi-plus-circle-fill"></i></button>
@@ -3457,6 +3470,28 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    var pruebas = @json($pruebas);
+</script>
 
 
 

@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Storage;
 
 
 use App\Models\organizacion\catalogoexperienciaModel;
+use App\Models\selección\catalogopruebasconocimientosModel;
 
 use DB;
 
@@ -45,9 +46,10 @@ class seleccionController extends Controller
 
 
         $puesto = catalogoexperienciaModel::orderBy('NOMBRE_PUESTO', 'ASC')->get();
+        $pruebas = catalogopruebasconocimientosModel::orderBy('NOMBRE_PRUEBA', 'ASC')->get();
 
 
-        return view('RH.Selección.seleccion', compact('areas','puesto'));
+        return view('RH.Selección.seleccion', compact('areas','puesto','pruebas'));
     }
 
 

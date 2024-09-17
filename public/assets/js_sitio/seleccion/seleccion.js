@@ -1857,7 +1857,7 @@ $("#guardarFormSeleccionReferencias").click(function (e) {
 
 
 // <!-- ============================================================== -->
-// <!-- MODAL REFERENCIAS LABORALES -->
+// <!-- MODAL PRUEBAS DE CONOCIMIENTO -->
 // <!-- ============================================================== -->
 
 
@@ -1869,10 +1869,123 @@ $("#nueva_prueba_conocimiento").click(function (e) {
 
 
 
+function togglePruebas() {
+    const contenedorPruebas = document.getElementById('contenedor-pruebas');
+    const experienciaSi = document.getElementById('prueba_si');
+    
+    if (experienciaSi.checked) {
+        contenedorPruebas.style.display = 'block';
+    } else {
+        contenedorPruebas.style.display = 'none'; 
+    }
+}
+
+// Escuchar cambios en los radios para mostrar/ocultar el div
+document.getElementById('prueba_si').addEventListener('change', togglePruebas);
+document.getElementById('prueba_no').addEventListener('change', togglePruebas);
+
+
+// Función global para agregar inputs dinámicos
+function agregarpruebas() {
+    const divInput = document.createElement('div');
+    divInput.classList.add('form-group', 'row', 'input-container', 'mb-3');
+
+    // Crear el select con las opciones dinámicas
+    let opcionesPruebas = '<option value="" disabled selected></option>';
+    pruebas.forEach(function(prueba) {
+        opcionesPruebas += `<option value="${prueba.NOMBRE_PRUEBA}">${prueba.NOMBRE_PRUEBA}</option>`;
+    });
+
+    divInput.innerHTML = `
+        <div class="col-3 text-center">
+            <label for="tipoPrueba">Nombre de la prueba</label>
+            <select name="TIPO_PRUEBA[]" class="form-control">
+                ${opcionesPruebas}
+            </select>
+        </div>
+        <div class="col-3 text-center">
+            <label for="cantidad">% de la prueba</label>
+            <input type="number" name="CANTIDAD[]" class="form-control" min="1" step="1">
+        </div>
+        <div class="col-4 text-center">
+            <label for="archivoResultado">Cargar documento</label>
+            <input type="file" name="ARCHIVO_RESULTADO[]" class="form-control archivo-input" accept=".pdf">
+            <button type="button" class="btn quitarArchivo" style="display: none;">Quitar archivo</button>
+        </div>
+        <div class="col-1">
+            <br>
+            <button type="button" class="btn btn-danger botonEliminar"><i class="bi bi-trash3-fill"></i></button>
+        </div>
+    `;
+
+    document.getElementById('inputs-prueba').appendChild(divInput);
+
+    // Actualizar inmediatamente las opciones para desactivar las seleccionadas en este nuevo select
+    actualizarOpcionespruebas();
+
+    // Escuchar el cambio en el select para actualizar opciones seleccionadas
+    divInput.querySelector('select[name="TIPO_PRUEBA[]"]').addEventListener('change', function() {
+        actualizarOpcionespruebas();
+    });
+
+    // Manejo para eliminar archivo
+    const archivoInput = divInput.querySelector('.archivo-input');
+    const quitarArchivoBtn = divInput.querySelector('.quitarArchivo');
+    archivoInput.addEventListener('change', function() {
+        quitarArchivoBtn.style.display = 'inline-block';
+    });
+    quitarArchivoBtn.addEventListener('click', function() {
+        archivoInput.value = ''; // Limpiar el input
+        quitarArchivoBtn.style.display = 'none';
+    });
+
+    // Eliminar input dinámico
+    const botonEliminar = divInput.querySelector('.botonEliminar');
+    botonEliminar.addEventListener('click', function () {
+        // Antes de eliminar, restaurar la opción seleccionada a la lista general
+        const selectedValue = divInput.querySelector('select[name="TIPO_PRUEBA[]"]').value;
+        if (selectedValue) {
+            // Si se seleccionó una opción, restaurarla
+            const selects = document.querySelectorAll('select[name="TIPO_PRUEBA[]"]');
+            selects.forEach(select => {
+                const existeOpcion = Array.from(select.options).some(option => option.value === selectedValue);
+                if (!existeOpcion) {
+                    const option = document.createElement('option');
+                    option.value = selectedValue;
+                    option.textContent = selectedValue;
+                    select.appendChild(option);
+                }
+            });
+        }
+
+        divInput.remove();
+        actualizarOpcionespruebas(); // Actualizar cuando se elimine un select
+    });
+}
+
+// Función global para actualizar las opciones seleccionadas en todos los selects
+function actualizarOpcionespruebas() {
+    const selects = document.querySelectorAll('select[name="TIPO_PRUEBA[]"]');
+    const seleccionadas = Array.from(selects).map(select => select.value).filter(v => v); // Obtener solo los valores seleccionados
+
+    selects.forEach(select => {
+        const currentValue = select.value;
+        const opciones = select.querySelectorAll('option');
+        opciones.forEach(option => {
+            if (seleccionadas.includes(option.value) && option.value !== currentValue) {
+                option.remove(); // Eliminar opción de otros selects
+            }
+        });
+    });
+}
+
+// Evento del botón para agregar una nueva prueba
+document.getElementById('botonAgregarprueba').addEventListener('click', agregarpruebas);
 
 
 
-
+// Inicializar estado del contenedor de pruebas
+togglePruebas();
 
 
 
