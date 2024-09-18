@@ -15,31 +15,46 @@ document.getElementById('registeredBtn').addEventListener('click', function() {
 
 
 
+
+
+
 function showDetails(slug) {
-document.querySelector('.table').style.display = 'none';
+    // Ocultar el panel izquierdo y el panel derecho
+    document.getElementById('panel-izquierdo').style.display = 'none';
+    document.getElementById('vacantes-container').style.display = 'none';
 
-var detailsPanes = document.querySelectorAll('.details-pane');
-detailsPanes.forEach(function(pane) {
-    pane.style.display = 'none';  
-});
+    // Mostrar el contenedor de detalles
+    document.getElementById('details-container').style.display = 'block';
 
-document.getElementById('details-' + slug).style.display = 'block';  
-}
-
-
-function volverATabla() {
-    document.querySelectorAll('.details-pane').forEach(function(panel) {
-        panel.style.display = 'none';
-    });
-
-    var tablaVacantes = document.getElementById('tabla-vacantes');
-    if (tablaVacantes) {
-        tablaVacantes.style.display = 'table';
-        tablaVacantes.classList.add('table', 'table-responsive');  
-    } else {
-        console.error('No se encontró el elemento con id "tabla-vacantes". Asegúrate de que existe.');
+    // Mostrar el detalle específico
+    var detailsPane = document.getElementById('details-' + slug);
+    if (detailsPane) {
+        detailsPane.style.display = 'block';
     }
 }
+
+function volverATabla() {
+    // Mostrar el panel izquierdo y el panel derecho
+    document.getElementById('panel-izquierdo').style.display = 'block';
+    document.getElementById('vacantes-container').style.display = 'block';
+
+    // Ocultar el contenedor de detalles
+    document.getElementById('details-container').style.display = 'none';
+
+    // Ocultar todos los detalles específicos
+    var detailPanes = document.querySelectorAll('.details-pane');
+    detailPanes.forEach(function(pane) {
+        pane.style.display = 'none';
+    });
+}
+
+
+
+
+
+
+
+
 
 
 

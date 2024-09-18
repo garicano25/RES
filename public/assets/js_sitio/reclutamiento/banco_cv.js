@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-$("#guardarFormBancoCV").click(function (e) {
+$("#guardarFormBancoCVS").click(function (e) {
     e.preventDefault();
 
     formularioValido = validarFormulario($('#formularioBANCO'))
@@ -46,8 +46,8 @@ $("#guardarFormBancoCV").click(function (e) {
             icon: "question",
         },async function () { 
 
-            await loaderbtn('guardarFormBancoCV')
-            await ajaxAwaitFormData({ api: 1, ID_BANCO_CV: ID_BANCO_CV }, 'BancoSave', 'formularioBANCO', 'guardarFormBancoCV', { callbackAfter: true, callbackBefore: true }, () => {
+            await loaderbtn('guardarFormBancoCVS')
+            await ajaxAwaitFormData({ api: 1, ID_BANCO_CV: ID_BANCO_CV }, 'BancoSave', 'formularioBANCO', 'guardarFormBancoCVS', { callbackAfter: true, callbackBefore: true }, () => {
         
                
 
@@ -62,21 +62,14 @@ $("#guardarFormBancoCV").click(function (e) {
         
                 
             }, function (data) {
-                    
-
                 ID_BANCO_CV = data.bancocv.ID_BANCO_CV
                     alertMensaje('success','Información guardada correctamente',null,null, 1500)
                     $('#miModal_BANCOCV').modal('hide')
                     document.getElementById('formularioBANCO').reset();
                     Tablabancocv.ajax.reload()
                     $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
-                    $('#INTERES_OPERATIVAS')[0].selectize.clear();
-
-                         
+                    $('#INTERES_OPERATIVAS')[0].selectize.clear();             
                  })
-            
-            
-            
         }, 1)
         
     } else {
@@ -86,8 +79,8 @@ $("#guardarFormBancoCV").click(function (e) {
             icon: "question",
         },async function () { 
 
-            await loaderbtn('guardarFormBancoCV')
-            await ajaxAwaitFormData({ api: 1, ID_BANCO_CV: ID_BANCO_CV }, 'BancoSave', 'formularioBANCO', 'guardarFormBancoCV', { callbackAfter: true, callbackBefore: true }, () => {
+            await loaderbtn('guardarFormBancoCVS')
+            await ajaxAwaitFormData({ api: 1, ID_BANCO_CV: ID_BANCO_CV }, 'BancoSave', 'formularioBANCO', 'guardarFormBancoCVS', { callbackAfter: true, callbackBefore: true }, () => {
         
                 Swal.fire({
                     icon: 'info',
@@ -128,6 +121,113 @@ $("#guardarFormBancoCV").click(function (e) {
 
 
 
+$("#guardarFormBancoCV").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormulario($('#formularioBANCO'));
+
+    if (formularioValido) {
+
+        if (ID_BANCO_CV == 0) {
+
+            alertMensajeConfirm({
+                title: "¿Desea guardar la información?",
+                text: "Al guardarla, se podrá usar",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarFormBancoCV');
+                await ajaxAwaitFormData({ api: 1, ID_BANCO_CV: ID_BANCO_CV }, 'BancoSave', 'formularioBANCO', 'guardarFormBancoCV', { callbackAfter: true, callbackBefore: true }, () => {
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+
+                }, function (data) {
+
+                    ID_BANCO_CV = data.bancocv.ID_BANCO_CV;
+
+                    // Mostrar la alerta de éxito y esperar la confirmación
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Información guardada correctamente',
+                        confirmButtonText: 'OK',
+                    }).then(() => {
+                        // Recargar la página cuando se presione "OK"
+                        window.location.reload();
+                    });
+
+                    $('#miModal_BANCOCV').modal('hide');
+                    document.getElementById('formularioBANCO').reset();
+                    // Tablabancocv.ajax.reload();
+                    $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
+                    $('#INTERES_OPERATIVAS')[0].selectize.clear();
+
+                    ID_BANCO_CV = 0;
+
+                    document.getElementById('guardarFormBancoCV').disabled = true;
+                    document.getElementById('aceptaTerminos').checked = false;
+                });
+
+            }, 1);
+
+        } else {
+            alertMensajeConfirm({
+                title: "¿Desea editar la información de este formulario?",
+                text: "Al guardarla, se podrá usar",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarFormBancoCV');
+                await ajaxAwaitFormData({ api: 1, ID_BANCO_CV: ID_BANCO_CV }, 'BancoSave', 'formularioBANCO', 'guardarFormBancoCV', { callbackAfter: true, callbackBefore: true }, () => {
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+
+                }, function (data) {
+                    setTimeout(() => {
+                        ID_BANCO_CV = data.bancocv.ID_BANCO_CV;
+
+                        // Mostrar la alerta de éxito y esperar la confirmación
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Información editada correctamente',
+                            confirmButtonText: 'OK',
+                        }).then(() => {
+                            window.location.reload();
+                        });
+
+                        $('#miModal_BANCOCV').modal('hide');
+                        document.getElementById('formularioBANCO').reset();
+                        // Tablabancocv.ajax.reload();
+                        $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
+                        $('#INTERES_OPERATIVAS')[0].selectize.clear();
+
+                        ID_BANCO_CV = 0;
+
+                        document.getElementById('guardarFormBancoCV').disabled = true;
+                        document.getElementById('aceptaTerminos').checked = false;
+                    }, 300);
+                });
+            }, 1);
+        }
+
+    } else {
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+    }
+});
+
 
 
 var Tablabancocv = $("#Tablabancocv").DataTable({
@@ -167,7 +267,7 @@ var Tablabancocv = $("#Tablabancocv").DataTable({
         { 
             data: null,
             render: function(data, type, row, meta) {
-                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
+                return meta.row + 1; 
             }
         },
         { data: 'CURP_CV' }, 
@@ -594,23 +694,23 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-  var $select = $('#INTERES_ADMINISTRATIVA').selectize({
-        plugins: ['remove_button'],
-        delimiter: ',',
-        persist: false,
-        placeholder: 'Seleccione una opción',
-    });
-    var selectizeInstance = $select[0].selectize;
+var $select = $('#INTERES_ADMINISTRATIVA').selectize({
+    plugins: ['remove_button'],
+    delimiter: ',',
+    persist: false,
+    placeholder: 'Seleccione una opción',
+});
+var selectizeInstance = $select[0].selectize;
 
-    var $select1 = $('#INTERES_OPERATIVAS').selectize({
-        plugins: ['remove_button'],
-        delimiter: ',',
-        persist: false,
-        placeholder: 'Seleccione una opción',
-    });
+var $select1 = $('#INTERES_OPERATIVAS').selectize({
+    plugins: ['remove_button'],
+    delimiter: ',',
+    persist: false,
+    placeholder: 'Seleccione una opción',
+});
 
 
-    var selectizeInstance1 = $select1[0].selectize;
+var selectizeInstance1 = $select1[0].selectize;
 
 
 

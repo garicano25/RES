@@ -281,7 +281,7 @@
                                          
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                                    <button type="submit" class="btn btn-success" id="guardarFormBancoCV">Guardar</button>
+                                    <button type="submit" class="btn btn-success" id="guardarFormBancoCVS">Guardar</button>
                                 </div>
                                                                    
                             </form>

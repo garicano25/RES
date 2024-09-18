@@ -26,6 +26,8 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.2.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+
    
    
 <style>
@@ -51,35 +53,6 @@ body {
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); 
 }
 
-#tabla-vacantes {
-    width: 103% !important;
-    max-width: none;
-    margin: 0 auto;
-    display: table; /* Asegura que se comporte como tabla */
-
-}
-
-
-#tabla-vacantes {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-#tabla-vacantes th, #tabla-vacantes td {
-    border-bottom: 1px solid #ccc;  /* Línea gris entre celdas */
-    text-align: left;
-    padding: 10px;  /* Espaciado dentro de las celdas */
-}
-
-#tabla-vacantes th {
-    border-bottom: 2px solid #ccc;  /* Línea más gruesa en el encabezado */
-    font-weight: bold;
-}
-
-#tabla-vacantes td {
-    background-color: transparent;  /* Sin fondo en las celdas */
-}
-
 
 
 
@@ -90,18 +63,6 @@ a:hover {
     text-decoration: underline;
 }
 
-
-
-.
-.logo-container {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.logo-container img {
-    max-width: 100%;
-    height: auto; 
-} 
 
 
 
@@ -116,28 +77,129 @@ body {
     font-family: 'Poppins', sans-serif;
     /* background-color: #007DBA; */
 }
+
+
+
+.card {
+    transition: 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+} 
+
+
+.img-fluid {
+    max-width: 90%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .img-fluid {
+        max-width: 300px; 
+    }
+
+
+
+
+}
+
+@media (max-width: 576px) {
+    .img-fluid {
+        max-width: 200px; 
+    }
+}
+
+.col-md-12 {
+    width: 85%;
+}
+
+
+.col-md-4 {
+    width: 41.333333%;
+}
+
+.col-md-8 {
+    flex: 0 0 auto;
+    width: 58.666667%;
+}
+
+
+
 </style>
   
 </head>
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover;">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="/assets/images/rip_logoblanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
-                {{-- <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo"> --}}
-            </a>
-            
-        </div>
-    </nav>
-
 
 @php
 use Carbon\Carbon;
 @endphp
 
 
-<div class="container mt-5">
+
+
+
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Panel Izquierdo -->
+        <div id="panel-izquierdo" class="col-md-4" style="background-color: #236192; padding: 60px; color: white; height: 100vh;">
+            <h1 style="font-size: 2.5em;">Encuentra el <span style="color: #A4D65E;">trabajo</span> que <span style="font-family: 'Satisfy', cursive;">quieres</span><span style="font-size: 2em;">→</span></h1>
+
+            <div class="text-center mt-5">
+                <img src="/assets/images/image.png" alt="Logo Blanco" class="img-fluid">
+            </div>
+
+            <div class="d-flex justify-content-center mt-5">
+                <div class="text-center mx-3">
+                    <img src="/assets/images/medalla.png" alt="Postúlate" style="width: 100px; height: 100px;">
+                    <p style="font-size: 1.2em;">Postúlate gratis</p>
+                </div>
+                <div class="text-center mx-3">
+                    <img src="/assets/images/documentos.png" alt="Descubre Vacantes" style="width: 100px; height: 100px;">
+                    <p style="font-size: 1.2em;">Descubre vacantes</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="vacantes-container" class="col-md-8" style="background-color: #F7F9FB; padding: 60px;">
+            <!-- Título más grande -->
+            <h1 style="color: #A4D65E; font-size: 3em; font-weight: bold;">Vacantes disponibles</h1>
+            <br>
+            <div class="row">
+                @foreach($vacantes as $vacante)
+                    @php
+                        $slug = $vacante->ID_CATALOGO_VACANTE;
+                        $fechaFormateada = Carbon::parse($vacante->created_at)->locale('es')->isoFormat('D [de] MMMM [del] YYYY');
+                    @endphp
+
+                    <div class="col-md-12 mb-4">
+                        <div class="card p-4" style="background-color: #A4D65E; border-radius: 15px; cursor: pointer;" onclick="showDetails('{{ $slug }}')">
+                            <div class="card-body text-white">
+                                <h6 style="font-size: 1.2em;">{{ $fechaFormateada }}</h6>
+                                <h3 class="card-title" style="font-size: 1.5em;">{{ $vacante->NOMBRE_CATEGORIA }}</h3>
+                                <p style="font-size: 1.1em;"><i class="bi bi-geo-alt-fill"></i> {{ $vacante->LUGAR_VACANTE }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+{{-- <div class="container mt-5">
     <h2 class="text-center">¡ESTAS SON NUESTRAS <b>VACANTES</b> DISPONIBLES!</h2>
     <br><br>
     <div class="row">
@@ -166,27 +228,25 @@ use Carbon\Carbon;
             </table>
         </div>
     </div>
-</div>
+</div> --}}
 
-        
-            
 
-            
-<div class="col-md-8 position-relative mx-auto" id="details-container">
+
+
+<div id="details-container" class="col-md-8 position-relative mx-auto" style="display: none;">
     @foreach($vacantes as $vacante)
         @php
-            $slug = $vacante->ID_CATALOGO_VACANTE;  
+            $slug = $vacante->ID_CATALOGO_VACANTE;
             $fechaFormateada = Carbon::parse($vacante->created_at)->locale('es')->isoFormat('D [de] MMMM [del] YYYY');
         @endphp
         <div class="details-pane card" id="details-{{ $slug }}" style="display: none; width: 80%; max-width: 1100px; margin: 0 auto;">
-            
             <div class="text-start mb-3">
                 <a href="#" onclick="volverATabla()" style="color: red; text-decoration: none;">
                     <span style="font-size: 1.2em; font-weight: bold;">&#x2190;</span> Volver
                 </a>
             </div>
 
-            <h5 class="card-title text-center">{{ $vacante->NOMBRE_CATEGORIA  }}</h5> <br>
+            <h5 class="card-title text-center">{{ $vacante->NOMBRE_CATEGORIA }}</h5> <br>
             <label><b>Lugar de trabajo:</b> </label>
             <label>{{ $vacante->LUGAR_VACANTE }}</label> <br>
             <label><b>Fecha de publicación:</b></label>
@@ -201,19 +261,13 @@ use Carbon\Carbon;
                 @endforeach
             </ul>
             <button type="button" class="btn btn-primary postularse-btn" data-bs-toggle="modal" data-bs-target="#postularseModal" data-vacante="{{ $slug }}">Postularse</button>
-
         </div>
     @endforeach
 </div>
 
-            
-            
-        
 
-            
-    </div>
-</div>
 
+    
 <!-- ============================================================== -->
 <!-- MODAL -->
 <!-- ============================================================== -->
