@@ -329,6 +329,95 @@ function cargarRequerimientos(requerimientos) {
 
 
 
+
+
+// document.addEventListener("DOMContentLoaded", function() {
+//     const botonAgregar = document.getElementById('botonAgregar');
+//     const botonGuardar = document.getElementById('guardarFormvacantes'); 
+
+//     botonAgregar.addEventListener('click', function(e) {
+//         e.preventDefault();
+//         agregarInput();
+//     });
+
+//     function agregarInput() {
+//         const divInput = document.createElement('div');
+//         divInput.classList.add('form-group', 'row', 'input-container', 'mb-3');
+//         divInput.innerHTML = `
+//             <div class="col-8 text-center">
+//                 <label></label>
+//                 <input type="text" name="NOMBRE_REQUERIMINETO[]" class="form-control" placeholder="Escribe los Requerimientos de la vacante aquí">
+//             </div>
+//             <div class="col-2 text-center">
+//                 <label>%</label>
+//                 <input type="number" name="PORCENTAJE[]" class="form-control porcentaje-input" max="100" min="0" step="1" maxlength="3">
+//             </div>
+//             <div class="col-2">
+//                 <br>
+//                 <button type="button" class="btn btn-danger botonEliminar"><i class="bi bi-trash3-fill"></i></button>
+//             </div>
+//         `;
+//         const contenedor = document.getElementById('inputs-container');
+//         contenedor.appendChild(divInput);
+
+//         const botonEliminar = divInput.querySelector('.botonEliminar');
+//         botonEliminar.addEventListener('click', function() {
+//             contenedor.removeChild(divInput);
+//             validarPorcentajeTotal(); 
+//         });
+
+//         const inputPorcentaje = divInput.querySelector('.porcentaje-input');
+//         inputPorcentaje.addEventListener('input', function() {
+//             if (this.value.length > 3) {
+//                 this.value = this.value.slice(0, 3); 
+//             }
+//             if (this.value > 100) {
+//                 this.value = 100; 
+//             }
+//             validarPorcentajeTotal();
+//         });
+
+//         // Actualizar el total al agregar un nuevo input
+//         validarPorcentajeTotal();
+//     }
+
+//     function validarPorcentajeTotal() {
+//         const porcentajes = document.querySelectorAll('.porcentaje-input');
+//         let total = 0;
+
+//         porcentajes.forEach(function(input) {
+//             total += parseInt(input.value) || 0;
+//         });
+
+//         // Mostrar el total sumado al final
+//         const totalElement = document.getElementById('totalPorcentajes');
+//         totalElement.textContent = `Total: ${total}%`;
+
+//         if (total > 100) {
+//             alertToast("La suma de los porcentajes no puede exceder el 100%.");
+//             botonGuardar.disabled = true; 
+//             return false;
+//         } else if (total === 100) {
+//             alertToast("La suma de los porcentajes es exactamente 100%.");
+//             botonGuardar.disabled = false; 
+//         } else {
+//             botonGuardar.disabled = false; 
+//         }
+//     }
+
+//     // Crear el elemento para mostrar el total
+//     const totalContainer = document.createElement('div');
+//     totalContainer.classList.add('mt-3');
+//     totalContainer.style.textAlign = 'center'; // Añadir estilo inline para centrar el texto
+//     totalContainer.innerHTML = `
+//         <h5 id="totalPorcentajes">Total: 0%</h5>
+//     `;
+//     const contenedor = document.getElementById('inputs-container');
+//     contenedor.parentNode.appendChild(totalContainer);
+// });
+
+
+
 document.addEventListener("DOMContentLoaded", function() {
     const botonAgregar = document.getElementById('botonAgregar');
     const botonGuardar = document.getElementById('guardarFormvacantes'); 
@@ -399,7 +488,7 @@ document.addEventListener("DOMContentLoaded", function() {
             alertToast("La suma de los porcentajes es exactamente 100%.");
             botonGuardar.disabled = false; 
         } else {
-            botonGuardar.disabled = false; 
+            botonGuardar.disabled = true; // Desactivar el botón si el total es menor a 100%
         }
     }
 
@@ -413,6 +502,17 @@ document.addEventListener("DOMContentLoaded", function() {
     const contenedor = document.getElementById('inputs-container');
     contenedor.parentNode.appendChild(totalContainer);
 });
+
+
+
+
+
+
+
+
+
+
+
 
 
 

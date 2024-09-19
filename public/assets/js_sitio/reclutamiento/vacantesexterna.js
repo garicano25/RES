@@ -18,13 +18,18 @@ document.getElementById('registeredBtn').addEventListener('click', function() {
 
 
 
+
+
 function showDetails(slug) {
-    // Ocultar el panel izquierdo y el panel derecho
     document.getElementById('panel-izquierdo').style.display = 'none';
     document.getElementById('vacantes-container').style.display = 'none';
 
-    // Mostrar el contenedor de detalles
     document.getElementById('details-container').style.display = 'block';
+
+    var detailPanes = document.querySelectorAll('.details-pane');
+    detailPanes.forEach(function(pane) {
+        pane.style.display = 'none';
+    });
 
     // Mostrar el detalle específico
     var detailsPane = document.getElementById('details-' + slug);
@@ -47,6 +52,7 @@ function volverATabla() {
         pane.style.display = 'none';
     });
 }
+
 
 
 

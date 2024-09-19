@@ -55,15 +55,9 @@ body {
 
 
 
-
-
-
-
 a:hover {
     text-decoration: underline;
 }
-
-
 
 
 .modal-footer-center {
@@ -99,16 +93,24 @@ body {
     .img-fluid {
         max-width: 300px; 
     }
-
-
-
-
+    .text-pane {
+        right: 10px;
+        width: 200px; 
+    }
+    .vertical-text {
+        font-size: 5em;
+  }
 }
 
 @media (max-width: 576px) {
     .img-fluid {
         max-width: 200px; 
     }
+
+    .text-pane {
+        display: none; 
+    }
+
 }
 
 .col-md-12 {
@@ -123,6 +125,66 @@ body {
 .col-md-8 {
     flex: 0 0 auto;
     width: 58.666667%;
+}
+
+
+
+/* CARD DE LOS DETALLES  */
+
+
+.custom-card {
+    max-width: 950px; 
+    background-color: #FFFFFF;
+    border-radius: 0 30px 0 0; 
+    border: 1px solid #e0e0e0;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    margin: 0; 
+    padding: 20px;
+    position: relative;
+    left: 40px; 
+    display: flex;
+    flex-direction: column;
+}
+
+#details-container {
+    display: flex;
+    justify-content: flex-start; 
+    align-items: flex-start;
+    padding-left: 50px; 
+}
+
+.text-pane {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed; 
+    right: 70px; 
+    top: 44%; 
+    transform: translateY(-50%); 
+    width: 300px; 
+    height: auto; 
+    background-color: transparent; 
+    z-index: 1000; 
+}
+
+.vertical-text {
+    font-size: 7em; 
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.2); 
+    text-align: left; 
+    line-height: 1.2; 
+    writing-mode: vertical-rl; 
+    text-orientation: mixed; 
+    transform: rotate(180deg); 
+}
+
+.custom-card .btn-primary {
+    background-color: #A4D65E;
+    border: none;
+}
+
+body, html {
+    overflow-x: hidden; 
 }
 
 
@@ -146,7 +208,7 @@ use Carbon\Carbon;
 <div class="container-fluid">
     <div class="row">
         <!-- Panel Izquierdo -->
-        <div id="panel-izquierdo" class="col-md-4" style="background-color: #236192; padding: 60px; color: white; height: 100vh;">
+        <div id="panel-izquierdo" class="col-md-4" style="background-color: rgb(50 95 131); padding: 60px; color: white; height: 100vh;">
             <h1 style="font-size: 2.5em;">Encuentra el <span style="color: #A4D65E;">trabajo</span> que <span style="font-family: 'Satisfy', cursive;">quieres</span><span style="font-size: 2em;">→</span></h1>
 
             <div class="text-center mt-5">
@@ -173,7 +235,7 @@ use Carbon\Carbon;
                 @foreach($vacantes as $vacante)
                     @php
                         $slug = $vacante->ID_CATALOGO_VACANTE;
-                        $fechaFormateada = Carbon::parse($vacante->created_at)->locale('es')->isoFormat('D [de] MMMM [del] YYYY');
+                        $fechaFormateada = Carbon::parse($vacante->updated_at)->locale('es')->isoFormat('D [de] MMMM [del] YYYY');
                     @endphp
 
                     <div class="col-md-12 mb-4">
@@ -233,11 +295,11 @@ use Carbon\Carbon;
 
 
 
-<div id="details-container" class="col-md-8 position-relative mx-auto" style="display: none;">
+{{-- <div id="details-container" class="col-md-8 position-relative mx-auto" style="display: none;">
     @foreach($vacantes as $vacante)
         @php
             $slug = $vacante->ID_CATALOGO_VACANTE;
-            $fechaFormateada = Carbon::parse($vacante->created_at)->locale('es')->isoFormat('D [de] MMMM [del] YYYY');
+            $fechaFormateada = Carbon::parse($vacante->updated_at)->locale('es')->isoFormat('D [de] MMMM [del] YYYY');
         @endphp
         <div class="details-pane card" id="details-{{ $slug }}" style="display: none; width: 80%; max-width: 1100px; margin: 0 auto;">
             <div class="text-start mb-3">
@@ -263,11 +325,69 @@ use Carbon\Carbon;
             <button type="button" class="btn btn-primary postularse-btn" data-bs-toggle="modal" data-bs-target="#postularseModal" data-vacante="{{ $slug }}">Postularse</button>
         </div>
     @endforeach
-</div>
+</div> --}}
 
 
 
-    
+
+
+
+
+<div id="details-container" class="position-relative" style="display: none; background-color: rgb(50 95 131); padding: 30px; min-height: 100vh; width: 100%; position: fixed; top: 0; left: 0; z-index: 9999; overflow-y: auto;">
+    <div class="content-wrapper" style="display: flex; width: 100%; position: relative;">
+        @foreach($vacantes as $vacante)
+            @php
+                $slug = $vacante->ID_CATALOGO_VACANTE;
+                $fechaFormateada = Carbon::parse($vacante->updated_at)->locale('es')->isoFormat('D [de] MMMM [del] YYYY');
+            @endphp
+            <div class="details-pane custom-card" id="details-{{ $slug }}" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <a href="#" onclick="volverATabla()" style="color: #A4D65E; text-decoration: none;">
+                        <span style="font-size: 1.2em; font-weight: bold;">&#x2190;</span> Volver
+                    </a>
+                </div>
+
+                <h2 class="card-title my-4" style="color: #A4D65E; font-size: 2.5em;">{{ $vacante->NOMBRE_CATEGORIA }}</h2>
+                <div class="d-flex align-items-center mb-3">
+                    <i class="bi bi-geo-alt-fill" style="font-size: 1.5em; color: #A4D65E; margin-right: 10px;"></i> 
+                    <span style="color: #555; font-size: 1.2em;">{{ $vacante->LUGAR_VACANTE }}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style="color: #555; font-size: 1.2em;">{{ $fechaFormateada }}</span>
+                </div>
+                <br><br>
+                <p style="color: #555; line-height: 1.6;">{{ $vacante->DESCRIPCION_VACANTE }}</p>
+                <p style="color: #A4D65E; font-size: 1.2em;"><strong>Requisitos:</strong></p>
+                <ul style="color: #555;">
+                    @foreach($vacante->requerimientos as $requerimiento)
+                        <li>{{ $requerimiento }}</li>
+                    @endforeach
+                </ul>
+                <div class="text-end mt-4">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postularseModal" data-vacante="{{ $slug }}" style="background-color: #A4D65E; border: none;">Postularse</button>
+                </div>
+            </div>
+        @endforeach
+        <!-- Contenedor del texto "RESULTS IN PERFORMANCE" -->
+        <div class="text-pane">
+            <div class="vertical-text">
+                RESULTS IN PERFORMANCE
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- ============================================================== -->
 <!-- MODAL -->
 <!-- ============================================================== -->
