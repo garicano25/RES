@@ -201,20 +201,41 @@ var Tablavacantes = $("#Tablavacantes").DataTable({
 
 
 
-$('#Tablavacantes tbody').on('click', 'td>button.ELIMINAR', function () {
+// $('#Tablavacantes tbody').on('click', 'td>button.ELIMINAR', function () {
 
+//     var tr = $(this).closest('tr');
+//     var row = Tablavacantes.row(tr);
+
+//     data = {
+//         api: 1,
+//         ELIMINAR: 1,
+//         ID_CATALOGO_VACANTE: row.data().ID_CATALOGO_VACANTE
+//     }
+    
+//     eliminarDatoTabla(data, [Tablavacantes], 'VacanteDelete')
+
+// })
+
+
+
+
+$('#Tablavacantes tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablavacantes.row(tr);
 
+    var estado = $(this).is(':checked') ? 1 : 0;
+
     data = {
         api: 1,
-        ELIMINAR: 1,
+        ELIMINAR: estado == 0 ? 1 : 0, 
         ID_CATALOGO_VACANTE: row.data().ID_CATALOGO_VACANTE
-    }
-    
-    eliminarDatoTabla(data, [Tablavacantes], 'VacanteDelete')
+    };
 
-})
+    eliminarDatoTabla(data, [Tablavacantes], 'VacanteDelete');
+});
+
+
+
 
 
 $('#Tablavacantes tbody').on('click', 'td>button.EDITAR', function () {

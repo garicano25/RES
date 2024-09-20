@@ -21,16 +21,13 @@ class catalogosasesoresController extends Controller
     
             foreach ($tabla as $value) {
                 if ($value->ACTIVO == 0) {
-
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill ELIMINAR" disabled><i class="bi bi-ban"></i></button>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_ASESOR . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
                 } else {
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_ASESOR . '" checked><span class="slider round"></span></label>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-
                 }
             }
             
@@ -58,16 +55,26 @@ public function store(Request $request)
                         $asesores = catalogoasesorModel::create($request->all());
                     } else { 
 
-                        if (!isset($request->ELIMINAR)) {
-                        $asesores = catalogoasesorModel::find($request->ID_CATALOGO_ASESOR);
-                        $asesores->update($request->all());
-                        
-                    } else {
-                        $asesores = catalogoasesorModel::where('ID_CATALOGO_ASESOR', $request['ID_CATALOGO_ASESOR'])->update(['ACTIVO' => 0]);
-                        $response['code']  = 1;
-                        $response['asesor']  = '    ';
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                             
+                                $asesores = catalogoasesorModel::where('ID_CATALOGO_ASESOR', $request['ID_CATALOGO_ASESOR'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['asesor'] = 'Desactivada';
+                            } else {
+                                $asesores = catalogoasesorModel::where('ID_CATALOGO_ASESOR', $request['ID_CATALOGO_ASESOR'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['asesor'] = 'Activada';
+                            }
+                        } else {
+                            $asesores = catalogoasesorModel::find($request->ID_CATALOGO_ASESOR);
+                            $asesores->update($request->all());
+                            $response['code'] = 1;
+                            $response['asesor'] = 'Actualizada';
+                        }
                         return response()->json($response);
-                    }
+
+                    
                     }
                     $response['code']  = 1;
                     $response['asesor']  = $asesores;

@@ -169,20 +169,23 @@ var Tablaexperiencia = $("#Tablaexperiencia").DataTable({
 });
 
 
-$('#Tablaexperiencia tbody').on('click', 'td>button.ELIMINAR', function () {
 
+$('#Tablaexperiencia tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablaexperiencia.row(tr);
 
+    var estado = $(this).is(':checked') ? 1 : 0;
+
     data = {
         api: 1,
-        ELIMINAR: 1,
+        ELIMINAR: estado == 0 ? 1 : 0, 
         ID_CATALOGO_EXPERIENCIA: row.data().ID_CATALOGO_EXPERIENCIA
-    }
-    
-    eliminarDatoTabla(data, [Tablaexperiencia], 'PuestoDelete')
+    };
 
-})
+    eliminarDatoTabla(data, [Tablaexperiencia], 'PuestoDelete');
+});
+
+
 
 
 $('#Tablaexperiencia tbody').on('click', 'td>button.EDITAR', function () {

@@ -35,13 +35,12 @@ public function Tablaareainteres()
                 $value->TIPO_AREA_TEXTO = 'Desconocido';
             }
 
-            // Configuración de los botones
             if ($value->ACTIVO == 0) {
                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill ELIMINAR" disabled><i class="bi bi-ban"></i></button>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_AREAINTERES . '"><span class="slider round"></span></label>';
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
             } else {
-                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_AREAINTERES . '" checked><span class="slider round"></span></label>';
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
             }
@@ -71,16 +70,24 @@ public function store(Request $request)
                         $areas = cataloareainteresModel::create($request->all());
                     } else { 
 
-                        if (!isset($request->ELIMINAR)) {
-                        $areas = cataloareainteresModel::find($request->ID_CATALOGO_AREAINTERES);
-                        $areas->update($request->all());
-                        
-                    } else {
-                        $areas = cataloareainteresModel::where('ID_CATALOGO_AREAINTERES', $request['ID_CATALOGO_AREAINTERES'])->update(['ACTIVO' => 0]);
-                        $response['code']  = 1;
-                        $response['area']  = '    ';
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $areas = cataloareainteresModel::where('ID_CATALOGO_AREAINTERES', $request['ID_CATALOGO_AREAINTERES'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['area'] = 'Desactivada';
+                            } else {
+                                $areas = cataloareainteresModel::where('ID_CATALOGO_AREAINTERES', $request['ID_CATALOGO_AREAINTERES'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['area'] = 'Activada';
+                            }
+                        } else {
+                            $areas = cataloareainteresModel::find($request->ID_CATALOGO_AREAINTERES);
+                            $areas->update($request->all());
+                            $response['code'] = 1;
+                            $response['area'] = 'Actualizada';
+                        }
                         return response()->json($response);
-                    }
+
                     }
                     $response['code']  = 1;
                     $response['area']  = $areas;

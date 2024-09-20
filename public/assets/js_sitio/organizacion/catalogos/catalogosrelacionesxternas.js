@@ -172,20 +172,24 @@ var Tablarelacionesexterna = $("#Tablarelacionesexterna").DataTable({
 });
 
 
-$('#Tablarelacionesexterna tbody').on('click', 'td>button.ELIMINAR', function () {
 
+
+
+$('#Tablarelacionesexterna tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablarelacionesexterna.row(tr);
 
+    var estado = $(this).is(':checked') ? 1 : 0;
+
     data = {
         api: 1,
-        ELIMINAR: 1,
+        ELIMINAR: estado == 0 ? 1 : 0, 
         ID_CATALOGO_RELACIONESEXTERNAS: row.data().ID_CATALOGO_RELACIONESEXTERNAS
-    }
-    
-    eliminarDatoTabla(data, [Tablarelacionesexterna], 'ExternaDelete')
+    };
 
-})
+    eliminarDatoTabla(data, [Tablarelacionesexterna], 'ExternaDelete');
+});
+
 
 
 $('#Tablarelacionesexterna tbody').on('click', 'td>button.EDITAR', function () {

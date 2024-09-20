@@ -174,18 +174,20 @@ var Tablageneros = $("#Tablageneros").DataTable({
 });
 
 
-$('#Tablageneros tbody').on('click', 'td>button.ELIMINAR', function () {
+$('#Tablageneros tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablageneros.row(tr);
 
+    var estado = $(this).is(':checked') ? 1 : 0;
+
     data = {
         api: 1,
-        ELIMINAR: 1, 
+        ELIMINAR: estado == 0 ? 1 : 0, 
         ID_CATALOGO_GENERO: row.data().ID_CATALOGO_GENERO
-    }
-    
+    };
+
     eliminarDatoTabla(data, [Tablageneros], 'GeneroDelete');
-})
+});
 
 
 

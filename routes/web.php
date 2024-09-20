@@ -205,26 +205,37 @@ Route::post('/guardarSeleccion', [vacantesactivasController::class, 'guardarSele
 
 Route::get('/Selección', [seleccionController::class, 'index']);
 // Route::get('/Selección', function () {return view('RH.Selección.seleccion');});
-
-// tablas  de selección
-
 Route::get('/Tablaseleccion', [seleccionController::class, 'Tablaseleccion']);
-Route::get('/Tablapptseleccion', [seleccionController::class, 'Tablapptseleccion']);
-Route::get('/Tablaautorizacion', [seleccionController::class, 'Tablaautorizacion']);
-Route::get('/Tablainteligencia', [seleccionController::class, 'Tablainteligencia']);
-Route::get('/Tablaburo', [seleccionController::class, 'Tablaburo']);
-Route::get('/Tablaentrevistaseleccion', [seleccionController::class, 'Tablaentrevistaseleccion']);
-Route::get('/Tablareferencia', [seleccionController::class, 'Tablareferencia']);
-
-// Guadar
 Route::post('/SeleccionSave', [seleccionController::class, 'store']);
-
-// consultar información
 Route::get('/consultarSeleccion/{categoriaVacanteId}', [seleccionController::class, 'consultarSeleccion']);
+
+
+
+// AUTORIZACION
+Route::get('/ver-archivo/{curp}', [seleccionController::class, 'visualizarArchivo']);
+Route::get('/ver-pdf', [seleccionController::class, 'mostrarPDF'])->name('ver-pdf');
+Route::get('/Tablaautorizacion', [seleccionController::class, 'Tablaautorizacion']);
+
+//  Inteligencia laboral
+Route::get('/Tablainteligencia', [seleccionController::class, 'Tablainteligencia']);
+
+//  Buró laboral
+Route::get('/Tablaburo', [seleccionController::class, 'Tablaburo']);
+
+//  Perfil de puesto de trabajo (PPT)
+Route::get('/Tablapptseleccion', [seleccionController::class, 'Tablapptseleccion']);
 Route::get('/consultarformppt/{id}', [seleccionController::class, 'consultarformppt']);
 
-// ver archivos
-Route::get('/ver-pdf', [seleccionController::class, 'mostrarPDF'])->name('ver-pdf');
+//Referencias laboral
+Route::get('/Tablareferencia', [seleccionController::class, 'Tablareferencia']);
+
+// Pruebas de conocimientos
+
+// Entrevista
+Route::get('/Tablaentrevistaseleccion', [seleccionController::class, 'Tablaentrevistaseleccion']);
+
+
+
 
 
 

@@ -18,16 +18,13 @@ class catalogoCompotenciasGerencialesController extends Controller
 
             foreach ($tabla as $value) {
                 if ($value->ACTIVO == 0) {
-
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill ELIMINAR" disabled><i class="bi bi-ban"></i></button>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_COMPETENCIA_GERENCIAL . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
                 } else {
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_COMPETENCIA_GERENCIAL . '" checked><span class="slider round"></span></label>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-
                 }
             }
 
@@ -55,17 +52,23 @@ class catalogoCompotenciasGerencialesController extends Controller
                         $basicos = catalogoCompotenciasGerencialesModel::create($request->all());
                     } else {
 
-                        if (!isset($request->ELIMINAR)) {
-
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $basicos = catalogoCompotenciasGerencialesModel::where('ID_CATALOGO_COMPETENCIA_GERENCIAL', $request['ID_CATALOGO_COMPETENCIA_GERENCIAL'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['basico'] = 'Desactivada';
+                            } else {
+                                $basicos = catalogoCompotenciasGerencialesModel::where('ID_CATALOGO_COMPETENCIA_GERENCIAL', $request['ID_CATALOGO_COMPETENCIA_GERENCIAL'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['basico'] = 'Activada';
+                            }
+                        } else {
                             $basicos = catalogoCompotenciasGerencialesModel::find($request->ID_CATALOGO_COMPETENCIA_GERENCIAL);
                             $basicos->update($request->all());
-
-                        } else {
-                            $basicos = catalogoCompotenciasGerencialesModel::where('ID_CATALOGO_COMPETENCIA_GERENCIAL', $request['ID_CATALOGO_COMPETENCIA_GERENCIAL'])->update(['ACTIVO' => 0]);
-                            $response['code']  = 1;
-                            $response['basico']  = 'Desactivada';
-                            return response()->json($response);
+                            $response['code'] = 1;
+                            $response['basico'] = 'Actualizada';
                         }
+                        return response()->json($response);
                     }
                     $response['code']  = 1;
                     $response['basico']  = $basicos;

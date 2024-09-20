@@ -16,16 +16,13 @@ class catalogotipovacanteController extends Controller
     
             foreach ($tabla as $value) {
                 if ($value->ACTIVO == 0) {
-
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill ELIMINAR" disabled><i class="bi bi-ban"></i></button>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_TIPOVACANTE . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
                 } else {
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_TIPOVACANTE . '" checked><span class="slider round"></span></label>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-
                 }
             }
     
@@ -57,17 +54,23 @@ class catalogotipovacanteController extends Controller
                         $tipos = catalogotipovacanteModel::create($request->all());
                     } else { 
 
-                        if (!isset($request->ELIMINAR)) {
-
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $tipos = catalogotipovacanteModel::where('ID_CATALOGO_TIPOVACANTE', $request['ID_CATALOGO_TIPOVACANTE'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['tipo'] = 'Desactivada';
+                            } else {
+                                $tipos = catalogotipovacanteModel::where('ID_CATALOGO_TIPOVACANTE', $request['ID_CATALOGO_TIPOVACANTE'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['tipo'] = 'Activada';
+                            }
+                        } else {
                             $tipos = catalogotipovacanteModel::find($request->ID_CATALOGO_TIPOVACANTE);
                             $tipos->update($request->all());
-
-                        } else {
-                            $tipos = catalogotipovacanteModel::where('ID_CATALOGO_TIPOVACANTE', $request['ID_CATALOGO_TIPOVACANTE'])->update(['ACTIVO' => 0]);
-                            $response['code']  = 1;
-                            $response['tipo']  = 'Desactivada';
-                            return response()->json($response);
+                            $response['code'] = 1;
+                            $response['tipo'] = 'Actualizada';
                         }
+                        return response()->json($response);
                     }
 
                     $response['code']  = 1;

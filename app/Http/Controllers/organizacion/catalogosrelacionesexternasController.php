@@ -17,16 +17,13 @@ class catalogosrelacionesexternasController extends Controller
     
             foreach ($tabla as $value) {
                 if ($value->ACTIVO == 0) {
-
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill ELIMINAR" disabled><i class="bi bi-ban"></i></button>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_RELACIONESEXTERNAS . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
                 } else {
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_RELACIONESEXTERNAS . '" checked><span class="slider round"></span></label>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-
                 }
             }
     
@@ -58,16 +55,23 @@ class catalogosrelacionesexternasController extends Controller
                         $externas = catalogorelacionesexternaModel::create($request->all());
                     } else { 
 
-                        if (!isset($request->ELIMINAR)) {
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $externas = catalogorelacionesexternaModel::where('ID_CATALOGO_RELACIONESEXTERNAS', $request['ID_CATALOGO_RELACIONESEXTERNAS'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['externa'] = 'Desactivada';
+                            } else {
+                                $externas = catalogorelacionesexternaModel::where('ID_CATALOGO_RELACIONESEXTERNAS', $request['ID_CATALOGO_RELACIONESEXTERNAS'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['externa'] = 'Activada';
+                            }
+                        } else {
                             $externas = catalogorelacionesexternaModel::find($request->ID_CATALOGO_RELACIONESEXTERNAS);
                             $externas->update($request->all());
-                            
-                        } else {
-                            $externas = catalogorelacionesexternaModel::where('ID_CATALOGO_RELACIONESEXTERNAS', $request['ID_CATALOGO_RELACIONESEXTERNAS'])->update(['ACTIVO' => 0]);
-                            $response['code']  = 1;
-                            $response['externa']  = 'Desactivada';
-                            return response()->json($response);
+                            $response['code'] = 1;
+                            $response['externa'] = 'Actualizada';
                         }
+                        return response()->json($response);
                     }
 
                     $response['code']  = 1;

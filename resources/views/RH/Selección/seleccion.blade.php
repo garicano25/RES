@@ -491,45 +491,6 @@
 
 
 
-<!-- ============================================================== -->
-<!-- MODAL ENTREVISTA -->
-<!-- ============================================================== -->
-<div class="modal fade" id="Modal_entrevistas" tabindex="-1" aria-labelledby="EntrevistaLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-        <form method="post" enctype="multipart/form-data" id="formularioENTREVISTA" >
-
-        <div class="modal-header">
-          <h5 class="modal-title" id="comentariosModalLabel">Comentario</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            {!! csrf_field() !!}
-
-              <div class="mb-3">
-                <label class="form-label">Comentario de la entrevista *</label>
-                <textarea class="form-control" id="COMENTARIO_ENTREVISTA" name="COMENTARIO_ENTREVISTA" rows="4" required></textarea>
-            </div>
-            <div class="mb-3"  style="display: none">
-                <label  class="form-label">% de la Entrevista</label>
-                <input type="hidden" class="form-control" id="porcentajeEntrevista" name="porcentajeEntrevista" min="0" max="100">
-            </div>
-            <div class="mb-3">
-                <label  class="form-label text-center">Evidencia</label>
-                <div class="input-group">
-                  <input type="file" class="form-control" id="ARCHIVO_ENTREVISTA" name="ARCHIVO_ENTREVISTA" accept=".pdf" required>
-                  <button type="button" class="btn btn-light btn-sm ms-2" id="quitarEvidencia" style="display:none;">Quitar archivo</button>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-success" id="guardarFormSeleccionEntrevista">Guardar</button>
-        </div>
-        </form>
-    </div>
-  </div>
-</div>
 
 
 
@@ -593,6 +554,63 @@
 </div>
 
 
+
+<!-- ============================================================== -->
+<!-- MODAL ENTREVISTA -->
+<!-- ============================================================== -->
+<div class="modal fade" id="Modal_entrevistas" tabindex="-1" aria-labelledby="EntrevistaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <form method="post" enctype="multipart/form-data" id="formularioENTREVISTA" >
+  
+          <div class="modal-header">
+            <h5 class="modal-title" id="comentariosModalLabel">Comentario</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              {!! csrf_field() !!}
+  
+              <div class="mb-3">
+                  <label class="form-label">Nombre del entrevistador *</label>
+                  <input type="text" class="form-control" id="NOMBRE_ENTREVISTA" name="NOMBRE_ENTREVISTA" required>
+                </div>
+                
+                <div class="row mb-3">
+                  <div class="col-6">
+                    <label  class="form-label">Fecha *</label>
+                    <input type="date" class="form-control" id="FECHA_ENTREVISTA" name="FECHA_ENTREVISTA" required>
+                  </div>
+                  <div class="col-6">
+                    <label  class="form-label">% de la entrevista</label>
+                    <input type="number" class="form-control" id="PORCENTAJE_ENTREVISTA" name="PORCENTAJE_ENTREVISTA" min="0" max="100" required>
+                  </div>
+                </div>
+  
+  
+                <div class="mb-3">
+                  <label class="form-label">Comentario de la entrevista *</label>
+                  <textarea class="form-control" id="COMENTARIO_ENTREVISTA" name="COMENTARIO_ENTREVISTA" rows="4" required></textarea>
+              </div>
+           
+              <div class="mb-3" style="display: none">>
+                  <label  class="form-label text-center">Evidencia</label>
+                  <div class="input-group">
+                    <input type="file" class="form-control" id="ARCHIVO_ENTREVISTA" name="ARCHIVO_ENTREVISTA" accept=".pdf" required>
+                    <button type="button" class="btn btn-light btn-sm ms-2" id="quitarEvidencia" style="display:none;">Quitar archivo</button>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-success" id="guardarFormSeleccionEntrevista">Guardar</button>
+          </div>
+          </form>
+      </div>
+    </div>
+  </div>
+
+  
+  
 <!-- ============================================================== -->
 <!-- MODAL PPT -->
 <!-- ============================================================== -->

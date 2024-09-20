@@ -69,7 +69,6 @@ class dptController extends Controller
                 $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                 $value->BTN_DPT = '<button type="button" class="btn btn-success btn-custom rounded-pill DPT"><i class="bi bi-file-earmark-excel-fill"></i></button>';
-                $value->BTN_ACCION = '<button type="button" class="btn btn-success btn-custom rounded-pill " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Finalizado DPT" title="Finalizado"><i class="bi bi-check-circle-fill"></i></button>';
 
             }
     

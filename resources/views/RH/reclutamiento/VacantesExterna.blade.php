@@ -32,15 +32,17 @@
    
 <style>
     
-
-    
-body {
+    body {
     font-family: 'Poppins', sans-serif;
 }
-    #details-container {
+
+#details-container {
     width: 100%;
     display: flex;
     justify-content: center;
+    /* position: relative; /* Asegura el posicionamiento relativo */
+    /* z-index: 999; Asegúrate de que esté por debajo de SweetAlert */
+    overflow-y: auto; 
 }
 
 .details-pane {
@@ -53,12 +55,9 @@ body {
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); 
 }
 
-
-
 a:hover {
     text-decoration: underline;
 }
-
 
 .modal-footer-center {
     display: flex;
@@ -66,13 +65,9 @@ a:hover {
     align-items: center;
 }
 
-
 body {
     font-family: 'Poppins', sans-serif;
-    /* background-color: #007DBA; */
 }
-
-
 
 .card {
     transition: 0.3s ease-in-out;
@@ -81,42 +76,68 @@ body {
 .card:hover {
     transform: translateY(-10px);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-} 
-
+}
 
 .img-fluid {
     max-width: 90%;
     height: auto;
 }
 
+@media (max-width: 1200px) {
+    .vertical-text {
+        font-size: 6em !important; 
+    }
+}
+
+@media (max-width: 992px) {
+    .vertical-text {
+        font-size: 6vw; 
+    }
+}
+
 @media (max-width: 768px) {
     .img-fluid {
-        max-width: 300px; 
+        max-width: 300px !important;
     }
-    .text-pane {
-        right: 10px;
-        width: 200px; 
-    }
+
     .vertical-text {
-        font-size: 5em;
-  }
+        font-size: 5vw; 
+    }
 }
 
 @media (max-width: 576px) {
     .img-fluid {
-        max-width: 200px; 
+        max-width: 200px !important;
     }
 
-    .text-pane {
-        display: none; 
+    .vertical-text {
+        font-size: 4vw; 
+    }
+}
+
+@media (max-width: 480px) {
+    .img-fluid {
+        max-width: 150px !important;
     }
 
+    .vertical-text {
+        font-size: 3vw; 
+    }
+}
+
+@media (max-width: 360px) {
+    .img-fluid {
+        max-width: 120px !important;
+    }
+
+    .vertical-text {
+        font-size: 2.5em !important; 
+    }
 }
 
 .col-md-12 {
     width: 85%;
 }
-
 
 .col-md-4 {
     width: 41.333333%;
@@ -126,11 +147,6 @@ body {
     flex: 0 0 auto;
     width: 58.666667%;
 }
-
-
-
-/* CARD DE LOS DETALLES  */
-
 
 .custom-card {
     max-width: 950px; 
@@ -168,14 +184,14 @@ body {
 }
 
 .vertical-text {
-    font-size: 7em; 
+    font-size: 5vw; 
     font-weight: bold;
-    color: rgba(255, 255, 255, 0.2); 
-    text-align: left; 
-    line-height: 1.2; 
-    writing-mode: vertical-rl; 
-    text-orientation: mixed; 
-    transform: rotate(180deg); 
+    color: rgba(255, 255, 255, 0.2);
+    text-align: left;
+    line-height: 1.2;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
 }
 
 .custom-card .btn-primary {
@@ -184,7 +200,13 @@ body {
 }
 
 body, html {
-    overflow-x: hidden; 
+    overflow-x: hidden;
+    overflow-y: auto; 
+}
+
+/* SweetAlert Styles */
+.swal2-container {
+    z-index: 10050 !important; 
 }
 
 
@@ -363,7 +385,7 @@ use Carbon\Carbon;
                     @endforeach
                 </ul>
                 <div class="text-end mt-4">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postularseModal" data-vacante="{{ $slug }}" style="background-color: #A4D65E; border: none;">Postularse</button>
+                    <button type="button" class="btn btn-primary postularse-btn" data-bs-toggle="modal" data-bs-target="#postularseModal" data-vacante="{{ $slug }}">Postularse</button>
                 </div>
             </div>
         @endforeach
@@ -373,7 +395,7 @@ use Carbon\Carbon;
                 RESULTS IN PERFORMANCE
             </div>
         </div>
-    </div>
+</div>
 
 
 

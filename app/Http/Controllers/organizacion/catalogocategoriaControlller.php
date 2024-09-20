@@ -20,18 +20,15 @@ class catalogocategoriaControlller extends Controller
 
 
            foreach ($tabla as $value) {
-                if ($value->ACTIVO == 0) {
-
-                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill ELIMINAR" disabled><i class="bi bi-ban"></i></button>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-
-                } else {
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-
-                }
+            if ($value->ACTIVO == 0) {
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_CATEGORIA . '"><span class="slider round"></span></label>';
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+            } else {
+                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_CATEGORIA . '" checked><span class="slider round"></span></label>';
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+            }
             }
     
             // Respuesta
@@ -59,17 +56,23 @@ class catalogocategoriaControlller extends Controller
                         $categorias = catalogocategoriaModel::create($request->all());
                     } else { 
 
-                        if (!isset($request->ELIMINAR)) {
-
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $categorias = catalogocategoriaModel::where('ID_CATALOGO_CATEGORIA', $request['ID_CATALOGO_CATEGORIA'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['categoria'] = 'Desactivada';
+                            } else {
+                                $categorias = catalogocategoriaModel::where('ID_CATALOGO_CATEGORIA', $request['ID_CATALOGO_CATEGORIA'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['categoria'] = 'Activada';
+                            }
+                        } else {
                             $categorias = catalogocategoriaModel::find($request->ID_CATALOGO_CATEGORIA);
                             $categorias->update($request->all());
-
-                        } else {
-                            $categorias = catalogocategoriaModel::where('ID_CATALOGO_CATEGORIA', $request['ID_CATALOGO_CATEGORIA'])->update(['ACTIVO' => 0]);
-                            $response['code']  = 1;
-                            $response['categoria']  = 'Desactivada';
-                            return response()->json($response);
+                            $response['code'] = 1;
+                            $response['categoria'] = 'Actualizada';
                         }
+                        return response()->json($response);
                     }
                     $response['code']  = 1;
                     $response['categoria']  = $categorias;

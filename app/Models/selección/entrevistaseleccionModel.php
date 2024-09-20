@@ -15,6 +15,9 @@ class entrevistaseleccionModel extends Model
     protected $fillable = [
         'CURP',
         'COMENTARIO_ENTREVISTA',
+        'NOMBRE_ENTREVISTA',
+        'FECHA_ENTREVISTA',
+        'PORCENTAJE_ENTREVISTA',
         'ARCHIVO_ENTREVISTA',
         'ACTIVO'
     ];

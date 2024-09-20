@@ -20,16 +20,13 @@ class catalogoexperienciaController extends Controller
     
             foreach ($tabla as $value) {
                 if ($value->ACTIVO == 0) {
-
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill ELIMINAR" disabled><i class="bi bi-ban"></i></button>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_EXPERIENCIA . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
                 } else {
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_EXPERIENCIA . '" checked><span class="slider round"></span></label>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-
                 }
             }
     
@@ -56,17 +53,24 @@ class catalogoexperienciaController extends Controller
                         DB::statement('ALTER TABLE catalogo_experienciapuesto AUTO_INCREMENT=1;');
                         $puestos = catalogoexperienciaModel::create($request->all());
                     } else { 
-                        if (!isset($request->ELIMINAR)) {
 
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $puestos = catalogoexperienciaModel::where('ID_CATALOGO_EXPERIENCIA', $request['ID_CATALOGO_EXPERIENCIA'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['puesto'] = 'Desactivada';
+                            } else {
+                                $puestos = catalogoexperienciaModel::where('ID_CATALOGO_EXPERIENCIA', $request['ID_CATALOGO_EXPERIENCIA'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['puesto'] = 'Activada';
+                            }
+                        } else {
                             $puestos = catalogoexperienciaModel::find($request->ID_CATALOGO_EXPERIENCIA);
                             $puestos->update($request->all());
-
-                        } else {
-                            $puestos = catalogoexperienciaModel::where('ID_CATALOGO_EXPERIENCIA', $request['ID_CATALOGO_EXPERIENCIA'])->update(['ACTIVO' => 0]);
-                            $response['code']  = 1;
-                            $response['puesto']  = 'Desactivada';
-                            return response()->json($response);
+                            $response['code'] = 1;
+                            $response['puesto'] = 'Actualizada';
                         }
+                        return response()->json($response);
                     }
                     $response['code']  = 1;
                     $response['puesto']  = $puestos;

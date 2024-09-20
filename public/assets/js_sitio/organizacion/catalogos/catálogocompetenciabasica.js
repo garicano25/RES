@@ -173,20 +173,25 @@ var Tablacompetenciabasica = $("#Tablacompetenciabasica").DataTable({
 });
 
 
-$('#Tablacompetenciabasica tbody').on('click', 'td>button.ELIMINAR', function () {
 
+
+
+
+$('#Tablacompetenciabasica tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablacompetenciabasica.row(tr);
 
+    var estado = $(this).is(':checked') ? 1 : 0;
+
     data = {
         api: 1,
-        ELIMINAR: 1,
+        ELIMINAR: estado == 0 ? 1 : 0, 
         ID_CATALOGO_COMPETENCIA_BASICA: row.data().ID_CATALOGO_COMPETENCIA_BASICA
-    }
-    
-    eliminarDatoTabla(data, [Tablacompetenciabasica], 'BasicoDelete')
+    };
 
-})
+    eliminarDatoTabla(data, [Tablacompetenciabasica], 'BasicoDelete');
+});
+
 
 
 $('#Tablacompetenciabasica tbody').on('click', 'td>button.EDITAR', function () {

@@ -57,7 +57,6 @@ class pptController extends Controller
                     $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                     $value->BTN_PPT = '<button type="button" class="btn btn-success btn-custom rounded-pill PPT"><i class="bi bi-file-earmark-excel-fill"></i></button>';
-                    $value->BTN_ACCION = '<button type="button" class="btn btn-success btn-custom rounded-pill " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Finalizado PPT" title="Finalizado"><i class="bi bi-check-circle-fill"></i></button>';
     
                     ##CREADO Y REVISADO PERO NO AUTORIZADO
                 } else if (!is_null($value->ELABORADO_NOMBRE_PPT) && !is_null($value->REVISADO_NOMBRE_PPT) && is_null($value->AUTORIZADO_NOMBRE_PPT)) {
@@ -65,7 +64,6 @@ class pptController extends Controller
                     $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secondary btn-circle"><i class="bi bi-ban"></i></button>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-circle "><i class="bi bi-ban"></i></button>';
                     $value->BTN_PPT = '<button type="button" class="btn btn-secondary btn-circle "><i class="bi bi-ban"></i></button>';
-                    $value->BTN_ACCION = '<button type="button" class="btn btn-primary btn-circle AUTORIZAR" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Autorizar PPT"><i class="bi bi-clipboard-check-fill"></i></button>';
 
                     ## CREADO, REVISADO Y AUTORIZADO
                 } else if (!is_null($value->ELABORADO_NOMBRE_PPT) && !is_null($value->REVISADO_NOMBRE_PPT) && !is_null($value->AUTORIZADO_NOMBRE_PPT)) {
@@ -73,7 +71,6 @@ class pptController extends Controller
                     $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secondary btn-circle "><i class="bi bi-ban"></i></button>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-circle"><i class="bi bi-ban"></i></button>';
                     $value->BTN_PPT = '<button type="button" class="btn btn-success btn-circle PPT"><i class="bi bi-file-earmark-excel-fill"></i></button>';
-                    $value->BTN_ACCION = '<button type="button" class="btn btn-success btn-circle " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Finalizado PPT" title="Finalizado"><i class="bi bi-check-circle-fill"></i></button>';
                     $value->BTN_ACCION = '<button type="button" class="btn btn-success btn-circle " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Finalizado PPT" title="Finalizado"><i class="bi bi-check-circle-fill"></i></button>';
                 }
 

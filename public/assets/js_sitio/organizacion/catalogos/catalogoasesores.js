@@ -172,20 +172,24 @@ var Tablaasesores = $("#Tablaasesores").DataTable({
 });
 
 
-$('#Tablaasesores tbody').on('click', 'td>button.ELIMINAR', function () {
 
+
+
+$('#Tablaasesores tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablaasesores.row(tr);
 
+    var estado = $(this).is(':checked') ? 1 : 0;
+
     data = {
         api: 1,
-        ELIMINAR: 1,
+        ELIMINAR: estado == 0 ? 1 : 0, 
         ID_CATALOGO_ASESOR: row.data().ID_CATALOGO_ASESOR
-    }
-    
-    eliminarDatoTabla(data, [Tablaasesores], 'asesorDelete')
+    };
 
-})
+    eliminarDatoTabla(data, [Tablaasesores], 'asesorDelete');
+});
+
 
 
 $('#Tablaasesores tbody').on('click', 'td>button.EDITAR', function () {

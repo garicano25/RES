@@ -77,24 +77,46 @@ public function store(Request $request)
                         'INTERES_OPERATIVAS' => $interes_ope,
                     ]));
 
+                    // if ($request->hasFile('ARCHIVO_CURP_CV')) {
+                    //     $curpFile = $request->file('ARCHIVO_CURP_CV');
+                    //     $curpFileName = $request->CURP_CV . '.' . $curpFile->getClientOriginalExtension();
+                    //     $curpFilePath = 'reclutamiento/CURP/' . $curpFileName;
+                    //     $curpFile->storeAs('reclutamiento/CURP', $curpFileName);
+                    //     $bancocvs->ARCHIVO_CURP_CV = $curpFilePath;
+                    // }
+
+                    // if ($request->hasFile('ARCHIVO_CV')) {
+                    //     $cvFile = $request->file('ARCHIVO_CV');
+                    //     $cvFileName = $request->CURP_CV . '.' . $cvFile->getClientOriginalExtension();
+                    //     $cvFilePath = 'reclutamiento/CV/' . $cvFileName;
+                    //     $cvFile->storeAs('reclutamiento/CV', $cvFileName);
+                    //     $bancocvs->ARCHIVO_CV = $cvFilePath;
+                    // }
+
+                    // $bancocvs->save();
+
+
+
                     if ($request->hasFile('ARCHIVO_CURP_CV')) {
                         $curpFile = $request->file('ARCHIVO_CURP_CV');
-                        $curpFileName = $request->CURP_CV . '.' . $curpFile->getClientOriginalExtension();
-                        $curpFilePath = 'reclutamiento/CURP/' . $curpFileName;
-                        $curpFile->storeAs('reclutamiento/CURP', $curpFileName);
-                        $bancocvs->ARCHIVO_CURP_CV = $curpFilePath;
+                        $curpFolder = 'reclutamiento/' . $request->CURP_CV;
+                        $curpFileFolder = $curpFolder . '/CURP/';
+                        $curpFileName = 'CURP_' . $request->CURP_CV . '.' . $curpFile->getClientOriginalExtension();
+                        $curpFile->storeAs($curpFileFolder, $curpFileName);
+                        $bancocvs->ARCHIVO_CURP_CV = $curpFileFolder . $curpFileName;
                     }
-
+                    
+                    // Guardar el archivo CV
                     if ($request->hasFile('ARCHIVO_CV')) {
                         $cvFile = $request->file('ARCHIVO_CV');
-                        $cvFileName = $request->CURP_CV . '.' . $cvFile->getClientOriginalExtension();
-                        $cvFilePath = 'reclutamiento/CV/' . $cvFileName;
-                        $cvFile->storeAs('reclutamiento/CV', $cvFileName);
-                        $bancocvs->ARCHIVO_CV = $cvFilePath;
+                        $cvFileFolder = $curpFolder . '/CV/';
+                        $cvFileName = 'CV_' . $request->CURP_CV . '.' . $cvFile->getClientOriginalExtension();
+                        $cvFile->storeAs($cvFileFolder, $cvFileName);                    
+                        $bancocvs->ARCHIVO_CV = $cvFileFolder . $cvFileName;
                     }
 
-                    $bancocvs->save();
 
+                    
                     listapostulacionesModel::create([
                         'VACANTES_ID' => $request->VACANTES_ID,
                         'CURP' => $request->CURP_CV,

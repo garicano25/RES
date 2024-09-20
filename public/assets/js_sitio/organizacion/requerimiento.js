@@ -158,7 +158,6 @@ var Tablarequerimiento = $("#Tablarequerimiento").DataTable({
         { data: 'PRIORIDAD_RP' },
         { data: 'TIPO_VACANTE_RP' },
         { data: 'MOTIVO_VACANTE_RP' },
-        { data: 'BTN_ACCION' },
         { data: 'BTN_RP' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' }
@@ -169,28 +168,31 @@ var Tablarequerimiento = $("#Tablarequerimiento").DataTable({
         { targets: 2, title: 'Prioridad', className: 'all text-center nombre-column' },
         { targets: 3, title: 'Tipo de vacante', className: 'all text-center' },
         { targets: 4, title: 'Motivo', className: 'all text-center' },
-        { targets: 5, title: 'Estatus', className: 'all text-center' },
-        { targets: 6, title: 'Descargar', className: 'all text-center' },
-        { targets: 7, title: 'Editar', className: 'all text-center' },
-        { targets: 8, title: 'Activo', className: 'all text-center' }
+        { targets: 5, title: 'Descargar', className: 'all text-center' },
+        { targets: 6, title: 'Editar', className: 'all text-center' },
+        { targets: 7, title: 'Activo', className: 'all text-center' }
     ]
 });
 
 
-$('#Tablarequerimiento tbody').on('click', 'td>button.ELIMINAR', function () {
 
+$('#Tablarequerimiento tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablarequerimiento.row(tr);
 
+    var estado = $(this).is(':checked') ? 1 : 0;
+
     data = {
         api: 1,
-        ELIMINAR: 1,
+        ELIMINAR: estado == 0 ? 1 : 0, 
         ID_FORMULARO_REQUERIMIENTO: row.data().ID_FORMULARO_REQUERIMIENTO
-    }
-    
-    eliminarDatoTabla(data, [Tablarequerimiento], 'RequerimientoDelete')
+    };
 
-})
+    eliminarDatoTabla(data, [Tablarequerimiento], 'RequerimientoDelete');
+});
+
+
+
 
 
 $('#Tablarequerimiento tbody').on('click', 'td>button.EDITAR', function () {

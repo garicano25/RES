@@ -2543,6 +2543,8 @@ function eliminarDatoTabla1(data, arregloTable, url) {
 
 function eliminarDatoTabla(data, arregloTable, url) {
   var accion = data.ELIMINAR == 1 ? 'desactivar' : 'activar'; 
+  var accion1 = data.ELIMINAR == 1 ? 'desactivado' : 'actviado'; 
+
   
   alertMensajeConfirm({
       title: "Confirme para " + accion + " este registro",
@@ -2563,7 +2565,7 @@ function eliminarDatoTabla(data, arregloTable, url) {
               setTimeout(() => {
                   Swal.fire({
                       icon: 'success',
-                      title: 'Registro ' + accion,
+                      title: 'Registro ' + accion1,
                       text: 'La acción fue realizada exitosamente',
                       timer: 2000,
                       timerProgressBar: true

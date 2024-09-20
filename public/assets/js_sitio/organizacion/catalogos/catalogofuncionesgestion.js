@@ -184,20 +184,21 @@ var Tablafuncionesgestion = $("#Tablafuncionesgestion").DataTable({
 
 
 
-$('#Tablafuncionesgestion tbody').on('click', 'td>button.ELIMINAR', function () {
 
+$('#Tablafuncionesgestion tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablafuncionesgestion.row(tr);
 
+    var estado = $(this).is(':checked') ? 1 : 0;
+
     data = {
         api: 1,
-        ELIMINAR: 1,
+        ELIMINAR: estado == 0 ? 1 : 0, 
         ID_CATALOGO_FUNCIONESGESTION: row.data().ID_CATALOGO_FUNCIONESGESTION
-    }
-    
-    eliminarDatoTabla(data, [Tablafuncionesgestion], 'GestionDelete')
+    };
 
-})
+    eliminarDatoTabla(data, [Tablafuncionesgestion], 'GestionDelete');
+});
 
 
 

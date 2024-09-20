@@ -167,20 +167,24 @@ var TablaCompetenciasGerenciales = $("#TablaCompetenciasGerenciales").DataTable(
 });
 
 
-$('#TablaCompetenciasGerenciales tbody').on('click', 'td>button.ELIMINAR', function () {
 
+
+
+$('#TablaCompetenciasGerenciales tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = TablaCompetenciasGerenciales.row(tr);
+    var estado = $(this).is(':checked') ? 1 : 0;
 
     data = {
         api: 1,
-        ELIMINAR: 1,
+        ELIMINAR: estado == 0 ? 1 : 0, 
         ID_CATALOGO_COMPETENCIA_GERENCIAL: row.data().ID_CATALOGO_COMPETENCIA_GERENCIAL
-    }
-    
-    eliminarDatoTabla(data, [TablaCompetenciasGerenciales], 'GerencialesDelete')
+    };
 
-})
+    eliminarDatoTabla(data, [TablaCompetenciasGerenciales], 'GerencialesDelete');
+});
+
+
 
 
 $('#TablaCompetenciasGerenciales tbody').on('click', 'td>button.EDITAR', function () {

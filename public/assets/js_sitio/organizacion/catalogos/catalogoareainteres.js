@@ -168,20 +168,22 @@ var Tablaareainteres = $("#Tablaareainteres").DataTable({
 });
 
 
-$('#Tablaareainteres tbody').on('click', 'td>button.ELIMINAR', function () {
 
+$('#Tablaareainteres tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablaareainteres.row(tr);
 
+    var estado = $(this).is(':checked') ? 1 : 0;
+
     data = {
         api: 1,
-        ELIMINAR: 1,
+        ELIMINAR: estado == 0 ? 1 : 0, 
         ID_CATALOGO_AREAINTERES: row.data().ID_CATALOGO_AREAINTERES
-    }
-    
-    eliminarDatoTabla(data, [Tablaareainteres], 'interesDelete')
+    };
 
-})
+    eliminarDatoTabla(data, [Tablaareainteres], 'interesDelete');
+});
+
 
 
 $('#Tablaareainteres tbody').on('click', 'td>button.EDITAR', function () {

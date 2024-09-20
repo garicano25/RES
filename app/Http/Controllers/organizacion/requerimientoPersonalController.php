@@ -43,11 +43,28 @@ class requerimientoPersonalController extends Controller
     
             foreach ($tabla as $value) {
             
-                // Botones
-                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                $value->BTN_RP = '<button type="button" class="btn btn-success  RP btn-custom rounded-pill"><i class="bi bi-file-earmark-excel-fill"></i></button>';
-                $value->BTN_ACCION = '<button type="button" class="btn btn-success btn-custom rounded-pill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Finalizado Requisición" title="Finalizado"><i class="bi bi-check-circle-fill"></i></button>';
+                // // Botones
+                // $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                // $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                // $value->BTN_RP = '<button type="button" class="btn btn-success  RP btn-custom rounded-pill"><i class="bi bi-file-earmark-excel-fill"></i></button>';
+
+
+
+
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARO_REQUERIMIENTO . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_RP = '<button type="button" class="btn btn-success  RP btn-custom rounded-pill" disabled><i class="bi bi-ban"></i></button>';
+
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARO_REQUERIMIENTO . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_RP = '<button type="button" class="btn btn-success  RP btn-custom rounded-pill"><i class="bi bi-file-earmark-excel-fill"></i></button>';
+
+                }
+
+
+
 
             }
     
@@ -80,19 +97,23 @@ class requerimientoPersonalController extends Controller
                         $requerimientos = formulariorequerimientoModel::create($request->all());
                     } else { 
 
-                        if (!isset($request->ELIMINAR)) {
-
-
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $requerimientos = formulariorequerimientoModel::where('ID_FORMULARO_REQUERIMIENTO', $request['ID_FORMULARO_REQUERIMIENTO'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['requerimiento'] = 'Desactivada';
+                            } else {
+                                $requerimientos = formulariorequerimientoModel::where('ID_FORMULARO_REQUERIMIENTO', $request['ID_FORMULARO_REQUERIMIENTO'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['requerimiento'] = 'Activada';
+                            }
+                        } else {
                             $requerimientos = formulariorequerimientoModel::find($request->ID_FORMULARO_REQUERIMIENTO);
                             $requerimientos->update($request->all());
-                        } else {
-
-                            $requerimientos = formulariorequerimientoModel::where('ID_FORMULARO_REQUERIMIENTO', $request['ID_FORMULARO_REQUERIMIENTO'])->delete();
-
-                            $response['code']  = 1;
-                            $response['requerimiento']  = 'Eliminada';
-                            return response()->json($response);
+                            $response['code'] = 1;
+                            $response['requerimiento'] = 'Actualizada';
                         }
+                        return response()->json($response);
                     }
 
                     $response['code']  = 1;

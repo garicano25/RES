@@ -168,20 +168,25 @@ var Tablamotivovacante = $("#Tablamotivovacante").DataTable({
 });
 
 
-$('#Tablamotivovacante tbody').on('click', 'td>button.ELIMINAR', function () {
 
+
+$('#Tablamotivovacante tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablamotivovacante.row(tr);
 
+    var estado = $(this).is(':checked') ? 1 : 0;
+
     data = {
         api: 1,
-        ELIMINAR: 1,
+        ELIMINAR: estado == 0 ? 1 : 0, 
         ID_CATALOGO_MOTIVOVACANTE: row.data().ID_CATALOGO_MOTIVOVACANTE
-    }
-    
-    eliminarDatoTabla(data, [Tablamotivovacante], 'MotivoDelete')
+    };
 
-})
+    eliminarDatoTabla(data, [Tablamotivovacante], 'MotivoDelete');
+});
+
+
+
 
 
 $('#Tablamotivovacante tbody').on('click', 'td>button.EDITAR', function () {

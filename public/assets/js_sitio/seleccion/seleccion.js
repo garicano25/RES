@@ -853,19 +853,14 @@ Tablaentrevistaseleccion = $("#Tablaentrevistaseleccion").DataTable({
     columns: [
         { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
         { data: 'COMENTARIO_ENTREVISTA', className: 'text-center' },
-        { 
-            data: 'ARCHIVO_ENTREVISTA',
-            render: function (data, type, row) {
-                return '<button class="btn btn-danger btn-custom rounded-pill pdf-button"data-pdf="/' + data + '"> <i class="bi bi-filetype-pdf"></i></button>';
-            },
-            className: 'text-center'
-        },
+        { data: 'PORCENTAJE_ENTREVISTA', className: 'text-center' },
+
         { data: 'BTN_EDITAR', className: 'text-center' }
     ],
     columnDefs: [
         { target: 0, title: '#', className: 'all text-center' },
         { target: 1, title: 'Comentario de la entrevista', className: 'all text-center' },
-        { target: 2, title: 'Evidencia', className: 'all text-center' },
+        { target: 2, title: '% de la entrevista', className: 'all text-center' },
         { target: 3, title: 'Editar', className: 'all text-center' }
     ]
 });

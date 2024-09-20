@@ -32,6 +32,7 @@ use App\Models\organizacion\relacionesinternasModel;
 use App\Models\organizacion\catalogorelacionesexternaModel;
 use App\Models\organizacion\catalogofuncionescargoModel;
 use App\Models\organizacion\catalogofuncionesgestionModel;
+use App\Models\organizacion\catalogocategoriaModel;
 
 
 
@@ -1210,10 +1211,10 @@ class makeExcelController extends Controller{
         foreach ($form as $key => $val) {
             
             
-            $puesto = departamentosAreasModel :: where('ID_DEPARTAMENTO_AREA',$val-> DEPARTAMENTOS_AREAS_ID)->pluck('NOMBRE');
+            $puesto = catalogocategoriaModel :: where('ID_CATALOGO_CATEGORIA',$val-> DEPARTAMENTOS_AREAS_ID)->pluck('NOMBRE_CATEGORIA');
           
             
-            $puestos1 = departamentosAreasModel::whereIn('ID_DEPARTAMENTO_AREA', $val->PUESTOS_INTERACTUAN_DPT)->pluck('NOMBRE')->toArray();
+            $puestos1 = catalogocategoriaModel::whereIn('ID_CATALOGO_CATEGORIA', $val->PUESTOS_INTERACTUAN_DPT)->pluck('NOMBRE_CATEGORIA')->toArray();
             $puestosStr = implode(', ', $puestos1); 
             
             
@@ -1221,14 +1222,14 @@ class makeExcelController extends Controller{
             $puestos2 = catalogofuncionescargoModel::whereIn('ID_CATALOGO_FUNCIONESCARGO', $val->FUNCIONES_CARGO_DPT)->pluck('DESCRIPCION_FUNCION_CARGO')->toArray();
 
             // Empezar por la celda B29
-            $startRow = 26;
+            $startRow1 = 26;
             $column = 'B';
 
 
             // FUNCIONES CRAGO
 
             foreach ($puestos2 as $index => $descripcion) {
-                $currentCell = $column . ($startRow + $index);
+                $currentCell = $column . ($startRow1 + $index);
                 $sheet->setCellValue($currentCell, ($index + 1) . '.- ' . $descripcion);
             }
 
@@ -1308,13 +1309,15 @@ class makeExcelController extends Controller{
 
 
             if (!is_null($val->HORARIO_ENTRADA_DPT)) {
-                $sheet->setCellValue('H22', $val->HORARIO_ENTRADA_DPT);        
+                $formattedHoraEntrada = date('H:i', strtotime($val->HORARIO_ENTRADA_DPT));
+                $sheet->setCellValue('H22', $formattedHoraEntrada);        
             }
-
-
+            
             if (!is_null($val->HORARIO_SALIDA_DPT)) {
-                $sheet->setCellValue('S22', $val->HORARIO_SALIDA_DPT);        
+                $formattedHoraSalida = date('H:i', strtotime($val->HORARIO_SALIDA_DPT));
+                $sheet->setCellValue('S22', $formattedHoraSalida);        
             }
+            
 
 
             // VI. Competencias básicas o cardinales																						
@@ -1626,7 +1629,7 @@ foreach ($internas as $key => $val) {
 
     if ($longitud <= 10) {
 
-        $puesto3 = departamentosAreasModel::where('ID_DEPARTAMENTO_AREA', $val->INTERNAS_CONQUIEN_DPT)->value('NOMBRE');
+        $puesto3 = catalogocategoriaModel::where('ID_CATALOGO_CATEGORIA', $val->INTERNAS_CONQUIEN_DPT)->value('NOMBRE_CATEGORIA');
         $decodedName = html_entity_decode(mb_convert_encoding($puesto3, 'UTF-8', 'UTF-8'));
 
         $sheet->setCellValue('B' . $fila1, $decodedName);
@@ -1660,43 +1663,43 @@ foreach ($internas as $key => $val) {
 
               
               
-              
-                $fila2 = 98;
-                $longitud = 1;
-                foreach ($externas as $key => $val) {
-                
-                    if ($longitud <= 10) {
-                                    
 
-                        $puesto4 = catalogorelacionesexternaModel::where('ID_CATALOGO_RELACIONESEXTERNAS', $val->EXTERNAS_CONQUIEN_DPT)->value('NOMBRE_RELACIONEXTERNA');
-                        $decodedName = html_entity_decode(mb_convert_encoding($puesto4, 'UTF-8', 'UTF-8'));
-                
-                        $sheet->setCellValue('B' . $fila2, $decodedName);
-                
-                        if (!is_null($val->EXTERNAS_PARAQUE_DPT)) {
-                            $sheet->setCellValue('J' . $fila2, $val->EXTERNAS_PARAQUE_DPT);
-                        }
-                
-                        if (!is_null($val->EXTERNAS_FRECUENCIA_DPT)) {
-                            $externa = strtoupper($val->EXTERNAS_FRECUENCIA_DPT);
-                            if ($externa == 'DIARIA') {
-                                $sheet->setCellValue('T' . $fila2, 'X');
-                            } else if ($externa == 'SEMANAL') {
-                                $sheet->setCellValue('U' . $fila2, 'X');
-                            } else if ($externa == 'MENSUAL') {
-                                $sheet->setCellValue('V' . $fila2, 'X');
-                            } else if ($externa == 'SEMESTRAL') {
-                                $sheet->setCellValue('W' . $fila2, 'X');
-                            } else if ($externa == 'ANUAL') {
-                                $sheet->setCellValue('X' . $fila2, 'X');
-                            }
-                        }
-                
-                        $fila2++;
-                    }
-                
-                    $longitud++;
-                }
+$fila2 = 98;
+$longitud = 1;
+foreach ($externas as $key => $val) {
+
+    if ($longitud <= 10) {
+                    
+
+        $puesto4 = catalogorelacionesexternaModel::where('ID_CATALOGO_RELACIONESEXTERNAS', $val->EXTERNAS_CONQUIEN_DPT)->value('NOMBRE_RELACIONEXTERNA');
+        $decodedName = html_entity_decode(mb_convert_encoding($puesto4, 'UTF-8', 'UTF-8'));
+
+        $sheet->setCellValue('B' . $fila2, $decodedName);
+
+        if (!is_null($val->EXTERNAS_PARAQUE_DPT)) {
+            $sheet->setCellValue('J' . $fila2, $val->EXTERNAS_PARAQUE_DPT);
+        }
+
+        if (!is_null($val->EXTERNAS_FRECUENCIA_DPT)) {
+            $externa = strtoupper($val->EXTERNAS_FRECUENCIA_DPT);
+            if ($externa == 'DIARIA') {
+                $sheet->setCellValue('T' . $fila2, 'X');
+            } else if ($externa == 'SEMANAL') {
+                $sheet->setCellValue('U' . $fila2, 'X');
+            } else if ($externa == 'MENSUAL') {
+                $sheet->setCellValue('V' . $fila2, 'X');
+            } else if ($externa == 'SEMESTRAL') {
+                $sheet->setCellValue('W' . $fila2, 'X');
+            } else if ($externa == 'ANUAL') {
+                $sheet->setCellValue('X' . $fila2, 'X');
+            }
+        }
+
+        $fila2++;
+    }
+
+    $longitud++;
+}
                 
 
 

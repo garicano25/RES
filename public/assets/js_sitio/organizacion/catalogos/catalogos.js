@@ -8,12 +8,12 @@ Tablajerarquia = null
 
 
 
-    const Modaljerarquia = document.getElementById('miModal_JERARQUIA');
+const Modaljerarquia = document.getElementById('miModal_JERARQUIA');
 
-    Modaljerarquia.addEventListener('hidden.bs.modal', event => {
-        ID_CATALOGO_JERARQUIA = 0;
-        document.getElementById('formularioJERARQUIA').reset();   
-    });
+Modaljerarquia.addEventListener('hidden.bs.modal', event => {
+    ID_CATALOGO_JERARQUIA = 0;
+    document.getElementById('formularioJERARQUIA').reset();   
+});
 
   
 

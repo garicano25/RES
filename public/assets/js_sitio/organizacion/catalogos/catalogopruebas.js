@@ -158,7 +158,12 @@ var Tablapruebaconocimiento = $("#Tablapruebaconocimiento").DataTable({
             }
         },
         { data: 'NOMBRE_PRUEBA' },
-        { data: 'DESCRIPCION_PRUEBA' },
+        { 
+            data: 'DESCRIPCION_PRUEBA',
+            render: function(data, type, row) {
+                return data && data.trim() !== '' ? data : 'NA';
+            }
+        },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }

@@ -173,22 +173,23 @@ var Tablacategoria = $("#Tablacategoria").DataTable({
 });
 
 
-$('#Tablacategoria tbody').on('click', 'td>button.ELIMINAR', function () {
 
+
+$('#Tablacategoria tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablacategoria.row(tr);
 
+    var estado = $(this).is(':checked') ? 1 : 0;
+
     data = {
         api: 1,
-        ELIMINAR: 1,
+        ELIMINAR: estado == 0 ? 1 : 0, 
         ID_CATALOGO_CATEGORIA: row.data().ID_CATALOGO_CATEGORIA
-    }
-    
-    eliminarDatoTabla(data, [Tablacategoria], 'CategoriaDelete')
+    };
 
+    eliminarDatoTabla(data, [Tablacategoria], 'CategoriaDelete');
+});
 
-
-})
 
 
 $('#Tablacategoria tbody').on('click', 'td>button.EDITAR', function () {

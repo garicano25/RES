@@ -183,20 +183,24 @@ var Tablaafuncionescargo = $("#Tablaafuncionescargo").DataTable({
 });
 
 
-$('#Tablaafuncionescargo tbody').on('click', 'td>button.ELIMINAR', function () {
 
+
+$('#Tablaafuncionescargo tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablaafuncionescargo.row(tr);
 
+    var estado = $(this).is(':checked') ? 1 : 0;
+
     data = {
         api: 1,
-        ELIMINAR: 1,
+        ELIMINAR: estado == 0 ? 1 : 0, 
         ID_CATALOGO_FUNCIONESCARGO: row.data().ID_CATALOGO_FUNCIONESCARGO
-    }
-    
-    eliminarDatoTabla(data, [Tablaafuncionescargo], 'CargoDelete')
+    };
 
-})
+    eliminarDatoTabla(data, [Tablaafuncionescargo], 'CargoDelete');
+});
+
+
 
 
 function handleRadioChange() {

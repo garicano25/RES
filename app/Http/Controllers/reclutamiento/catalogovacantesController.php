@@ -56,18 +56,15 @@ class catalogovacantesController extends Controller
             $value->REQUERIMIENTO = requerimientoModel::where('CATALOGO_VACANTES_ID', $value->ID_CATALOGO_VACANTE)->get();
 
             // Agregar botones de acción con condiciones
-          if ($value->ACTIVO == 0) {
-
-                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill ELIMINAR" disabled><i class="bi bi-ban"></i></button>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-
-                } else {
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-
-                }
+            if ($value->ACTIVO == 0) {
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_VACANTE . '"><span class="slider round"></span></label>';
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+            } else {
+                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_VACANTE . '" checked><span class="slider round"></span></label>';
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+            }
         }
 
         return response()->json([
@@ -83,64 +80,128 @@ class catalogovacantesController extends Controller
 }
 
     
-public function store(Request $request)
-    {
-        try {
-            switch (intval($request->api)) {
-                case 1:
-                    DB::beginTransaction(); 
+// public function store(Request $request)
+//     {
+//         try {
+//             switch (intval($request->api)) {
+//                 case 1:
+//                     DB::beginTransaction(); 
 
-                    if ($request->ID_CATALOGO_VACANTE == 0) {
-                        DB::statement('ALTER TABLE catalogo_vacantes AUTO_INCREMENT=1;');
-                        $vacante = catalogovacantesModel::create($request->all());
+//                     if ($request->ID_CATALOGO_VACANTE == 0) {
+//                         DB::statement('ALTER TABLE catalogo_vacantes AUTO_INCREMENT=1;');
+//                         $vacante = catalogovacantesModel::create($request->all());
 
-                    } else { 
+//                     } else { 
 
-                        if (!isset($request->ELIMINAR)) {
-                            $vacante = catalogovacantesModel::find($request->ID_CATALOGO_VACANTE);
-                            $vacante->update($request->all());
-                            requerimientoModel::where('CATALOGO_VACANTES_ID', $request->ID_CATALOGO_VACANTE)->delete();
+//                         if (!isset($request->ELIMINAR)) {
+//                             $vacante = catalogovacantesModel::find($request->ID_CATALOGO_VACANTE);
+//                             $vacante->update($request->all());
+//                             requerimientoModel::where('CATALOGO_VACANTES_ID', $request->ID_CATALOGO_VACANTE)->delete();
                       
-                        } else {
+//                         } else {
 
-                            $vacante = catalogovacantesModel::where('ID_CATALOGO_VACANTE', $request['ID_CATALOGO_VACANTE'])->update(['ACTIVO' => 0]);
-                            $response['code']  = 1;
-                            $response['vacante']  = 'Desactivada';
-                            DB::commit();
-                            return response()->json($response);
-                        }
-                    }
+//                             $vacante = catalogovacantesModel::where('ID_CATALOGO_VACANTE', $request['ID_CATALOGO_VACANTE'])->update(['ACTIVO' => 0]);
+//                             $response['code']  = 1;
+//                             $response['vacante']  = 'Desactivada';
+//                             DB::commit();
+//                             return response()->json($response);
+//                         }
+//                     }
     
-                   if ($request->has('NOMBRE_REQUERIMINETO')) {
-                        foreach ($request->NOMBRE_REQUERIMINETO as $index => $requerimiento) {
-                            requerimientoModel::create([
-                                'CATALOGO_VACANTES_ID' => $vacante->ID_CATALOGO_VACANTE,
-                                'NOMBRE_REQUERIMINETO' => $requerimiento,
-                                'PORCENTAJE' => $request->PORCENTAJE[$index]
-                            ]);
-                        }
-                    }
+//                    if ($request->has('NOMBRE_REQUERIMINETO')) {
+//                         foreach ($request->NOMBRE_REQUERIMINETO as $index => $requerimiento) {
+//                             requerimientoModel::create([
+//                                 'CATALOGO_VACANTES_ID' => $vacante->ID_CATALOGO_VACANTE,
+//                                 'NOMBRE_REQUERIMINETO' => $requerimiento,
+//                                 'PORCENTAJE' => $request->PORCENTAJE[$index]
+//                             ]);
+//                         }
+//                     }
 
     
-                    $response['code']  = 1;
-                    $response['vacante']  = $vacante;
-                    DB::commit(); 
-                    return response()->json($response);
-                    break;
+//                     $response['code']  = 1;
+//                     $response['vacante']  = $vacante;
+//                     DB::commit(); 
+//                     return response()->json($response);
+//                     break;
 
                     
-                default:
-                    $response['code']  = 1;
-                    $response['msj']  = 'Api no encontrada';
-                    return response()->json($response);
-            }
-        } catch (Exception $e) {
-            DB::rollBack(); 
-            return response()->json('Error al guardar la nueva vacante');
+//                 default:
+//                     $response['code']  = 1;
+//                     $response['msj']  = 'Api no encontrada';
+//                     return response()->json($response);
+//             }
+//         } catch (Exception $e) {
+//             DB::rollBack(); 
+//             return response()->json('Error al guardar la nueva vacante');
+//         }
+//     }
+// }
+
+
+public function store(Request $request)
+{
+    try {
+        switch (intval($request->api)) {
+            case 1:
+                DB::beginTransaction();
+
+                if ($request->ID_CATALOGO_VACANTE == 0) {
+                    // Crear una nueva vacante
+                    DB::statement('ALTER TABLE catalogo_vacantes AUTO_INCREMENT=1;');
+                    $vacante = catalogovacantesModel::create($request->all());
+                } else {
+                    // Verificar si se solicita eliminar/activar la vacante
+                    if (isset($request->ELIMINAR)) {
+                        if ($request->ELIMINAR == 1) {
+                            // Desactivar vacante
+                            $vacante = catalogovacantesModel::where('ID_CATALOGO_VACANTE', $request['ID_CATALOGO_VACANTE'])->update(['ACTIVO' => 0]);
+                            $response['code'] = 1;
+                            $response['vacante'] = 'Desactivada';
+                        } else {
+                            // Activar vacante
+                            $vacante = catalogovacantesModel::where('ID_CATALOGO_VACANTE', $request['ID_CATALOGO_VACANTE'])->update(['ACTIVO' => 1]);
+                            $response['code'] = 1;
+                            $response['vacante'] = 'Activada';
+                        }
+                        DB::commit();
+                        return response()->json($response);
+                    } else {
+                        // Actualizar vacante existente
+                        $vacante = catalogovacantesModel::find($request->ID_CATALOGO_VACANTE);
+                        $vacante->update($request->all());
+
+                        // Eliminar requerimientos existentes para la vacante
+                        requerimientoModel::where('CATALOGO_VACANTES_ID', $request->ID_CATALOGO_VACANTE)->delete();
+                    }
+                }
+
+                // Crear o actualizar requerimientos de la vacante
+                if ($request->has('NOMBRE_REQUERIMINETO')) {
+                    foreach ($request->NOMBRE_REQUERIMINETO as $index => $requerimiento) {
+                        requerimientoModel::create([
+                            'CATALOGO_VACANTES_ID' => $vacante->ID_CATALOGO_VACANTE,
+                            'NOMBRE_REQUERIMINETO' => $requerimiento,
+                            'PORCENTAJE' => $request->PORCENTAJE[$index]
+                        ]);
+                    }
+                }
+
+                $response['code'] = 1;
+                $response['vacante'] = $vacante;
+                DB::commit();
+                return response()->json($response);
+                break;
+
+            default:
+                $response['code'] = 1;
+                $response['msj'] = 'Api no encontrada';
+                return response()->json($response);
         }
+    } catch (Exception $e) {
+        DB::rollBack();
+        return response()->json('Error al guardar la nueva vacante');
     }
 }
-
-
-
+}
 
