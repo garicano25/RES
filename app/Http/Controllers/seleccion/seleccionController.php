@@ -218,12 +218,17 @@ public function Tablainteligencia(Request $request)
         foreach ($tabla as $value) {
             // Lógica para el botón de editar
             if ($value->ACTIVO == 0) {
+                
+                
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-                $value->DOC_COMPETENCIAS = '<button class="btn btn-danger btn-custom rounded-pill DOC_COMPETENCIAS"> <i class="bi bi-file-pdf-fill"></i></button>';
+                $value->BTN_COMPLETO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-completo" data-id="' . $value->ID_INTELIGENCIA_SELECCION . '" title="Ver COMPLETO"> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_COMPETENCIAS = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-competencias" data-id="' . $value->ID_INTELIGENCIA_SELECCION . '" title="Ver COMPETENCIAS"> <i class="bi bi-filetype-pdf"></i></button>';
+    
             } else {
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                $value->DOC_COMPETENCIAS = '<button class="btn btn-danger btn-custom rounded-pill  "> <i class="bi bi-file-pdf-fill"></i></button>';
-            
+                $value->BTN_COMPLETO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-completo" data-id="' . $value->ID_INTELIGENCIA_SELECCION . '" title="Ver COMPLETO"> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_COMPETENCIAS = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-competencias" data-id="' . $value->ID_INTELIGENCIA_SELECCION . '" title="Ver COMPETENCIAS"> <i class="bi bi-filetype-pdf"></i></button>';
+    
             }
 
             // Lógica para el campo de riesgo
@@ -242,8 +247,6 @@ public function Tablainteligencia(Request $request)
                     break;
             }
 
-            // Botones para documentos (Documento Competencias y Documento Completo)
-            $value->DOC_COMPLETO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button" data-pdf="/completo/' . $value->ARCHIVO_COMPLETO . '"> <i class="bi bi-file-pdf-fill"></i></button>';
         }
 
         return response()->json([
@@ -258,18 +261,18 @@ public function Tablainteligencia(Request $request)
     }
 }
 
-public function mostrarpdfcompetencias($documento_id)
-{
-    $documento = inteligenciaseleccionModel::findOrFail($documento_id);
 
-    if (Storage::exists($documento->ARCHIVO_COMPETENCIAS)) {
-        return Storage::response($documento->ARCHIVO_COMPETENCIAS);
-    } else {
-        abort(404, 'Archivo no encontrado');
-    }
+public function mostrarcompetencias($id)
+{
+    $archivo = inteligenciaseleccionModel::findOrFail($id)->ARCHIVO_COMPETENCIAS;
+    return Storage::response($archivo);
 }
 
-
+public function mostrarcompleto($id)
+{
+    $archivo = inteligenciaseleccionModel::findOrFail($id)->ARCHIVO_COMPLETO;
+    return Storage::response($archivo);
+}
 
 
 
@@ -284,11 +287,11 @@ public function Tablaburo(Request $request)
         foreach ($tabla as $value) {
             if ($value->ACTIVO == 0) {
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button" data-pdf="/competencias/' . $value->ARCHIVO_RESULTADO . '"> <i class="bi bi-file-pdf-fill"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-buro" data-id="' . $value->ID_BURO_SELECCION . '" title="Ver buro"> <i class="bi bi-filetype-pdf"></i></button>';
 
             } else {
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button" data-pdf="/competencias/' . $value->ARCHIVO_RESULTADO . '"> <i class="bi bi-file-pdf-fill"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-buro" data-id="' . $value->ID_BURO_SELECCION . '" title="Ver buro"> <i class="bi bi-filetype-pdf"></i></button>';
 
             }
         }
@@ -308,50 +311,15 @@ public function Tablaburo(Request $request)
 }
 
 
+public function mostrarburo($id)
+{
+    $archivo = buroseleccionModel::findOrFail($id)->ARCHIVO_RESULTADO;
+    return Storage::response($archivo);
+}
 
 
 
-// public function Tablareferencia(Request $request)
-// {
-//     try {
-//         $curp = $request->get('curp');
 
-//         // Obtener las referencias de selección
-//         $tabla = referenciaseleccionModel::where('CURP', $curp)->get();
-
-//         // Variable para almacenar las filas que se enviarán al DataTable
-//         $rows = [];
-
-//         // Recorrer cada fila de la tabla principal
-//         foreach ($tabla as $value) {
-//             // Obtener las referencias relacionadas
-//             $referencias = referenciasempresasModel::where('SELECCION_REFERENCIA_ID', $value->ID_REFERENCIAS_SELECCION)->get();
-
-//             // Para cada referencia, creamos una fila separada en $rows
-//             foreach ($referencias as $referencia) {
-//                 $rows[] = [
-//                     'NOMBRE_EMPRESA' => $referencia->NOMBRE_EMPRESA,
-//                     'COMENTARIO' => $referencia->COMENTARIO,
-//                     'ARCHIVO_RESULTADO' => $referencia->ARCHIVO_RESULTADO,
-//                     'BTN_EDITAR' => ($value->ACTIVO == 0) ? 
-//                         '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>' :
-//                         '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
-//                     'BTN_DOCUMENTO' => '<button class="btn btn-danger btn-custom rounded-pill pdf-button" data-pdf="/competencias/' . $referencia->ARCHIVO_RESULTADO . '"> <i class="bi bi-file-pdf-fill"></i></button>'
-//                 ];
-//             }
-//         }
-
-//         return response()->json([
-//             'data' => $rows,
-//             'msj' => 'Información consultada correctamente'
-//         ]);
-//     } catch (Exception $e) {
-//         return response()->json([
-//             'msj' => 'Error ' . $e->getMessage(),
-//             'data' => 0
-//         ]);
-//     }
-// }
 
 
 public function Tablareferencia(Request $request)
@@ -404,7 +372,6 @@ public function Tablareferencia(Request $request)
         ]);
     }
 }
-
 
 
 public function consultarSeleccion($categoriaVacanteId)

@@ -342,8 +342,12 @@ Tablainteligencia = $("#Tablainteligencia").DataTable({
     columns: [
         { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
         { data: 'RIESGO', className: 'text-center' },  
-        { data: 'DOC_COMPETENCIAS', className: 'text-center' },  
-        { data: 'DOC_COMPLETO', className: 'text-center' },  
+        { 
+            data: 'BTN_COMPETENCIAS'  
+        }, 
+        { 
+            data: 'BTN_COMPLETO'  
+        },
         { data: 'BTN_EDITAR', className: 'text-center' } 
     ],
     columnDefs: [
@@ -354,6 +358,96 @@ Tablainteligencia = $("#Tablainteligencia").DataTable({
         { target: 4, title: 'Editar', className: 'all text-center' }
     ]
 });
+
+
+$('#Tablainteligencia').on('click', '.ver-archivo-completo', function () {
+    var id = $(this).data('id');
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+    var url = '/mostrarcompleto/' + id;
+    abrirModal(url, ' Documento completo');
+});
+
+// Evento para abrir el modal con CV
+$('#Tablainteligencia').on('click', '.ver-archivo-competencias', function () {
+    var id = $(this).data('id');
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO');
+        return;
+    }
+    var url = '/mostrarcompetencias/' + id;
+    abrirModal(url, 'Documento competencias');
+});
+
+// Función para abrir el modal con el archivo
+
+function abrirModal(url, title) {
+    // Eliminar cualquier modal existente antes de agregar uno nuevo
+    $('#modalVerArchivo').remove();
+    $('.modal-backdrop').remove(); // Eliminar el backdrop para evitar problemas de superposición
+
+    $.ajax({
+        url: url,
+        method: 'HEAD', // Solo hacemos una comprobación sin traer el archivo completo
+        success: function () {
+            // Si el archivo existe, mostramos el modal con el iframe
+            var modalContent = `
+                <div class="modal fade" id="modalVerArchivo" tabindex="-1" aria-labelledby="modalVerArchivoLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalVerArchivoLabel">${title}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <iframe src="${url}" width="100%" height="500px"></iframe>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            $('body').append(modalContent);
+            $('#modalVerArchivo').modal('show');
+            $('#modalVerArchivo').on('hidden.bs.modal', function () {
+                $(this).remove(); // Elimina el modal al cerrarse
+            });
+        },
+        error: function () {
+            // Si el archivo no se encuentra, mostramos un modal con un mensaje de error
+            var errorModalContent = `
+                <div class="modal fade" id="modalVerArchivo" tabindex="-1" aria-labelledby="modalVerArchivoLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalVerArchivoLabel">${title}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <h5 class="text-danger">Archivo no encontrado.</h5>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            $('body').append(errorModalContent);
+            $('#modalVerArchivo').modal('show');
+            $('#modalVerArchivo').on('hidden.bs.modal', function () {
+                $(this).remove(); // Elimina el modal al cerrarse
+            });
+        }
+    });
+}
+
+
+
 
 
 
@@ -441,11 +535,7 @@ Tablaburo = $("#Tablaburo").DataTable({
     columns: [
         { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
         { 
-            data: 'BTN_DOCUMENTO',  
-            render: function (data, type, row) {
-                return data;
-            },
-            className: 'text-center'
+            data: 'BTN_DOCUMENTO'  
         },
         { data: 'BTN_EDITAR', className: 'text-center' }
     ],
@@ -455,6 +545,84 @@ Tablaburo = $("#Tablaburo").DataTable({
         { target: 2, title: 'Editar', className: 'all text-center' }
     ]
 });
+
+
+
+// Evento para abrir el modal con CV
+$('#Tablaburo').on('click', '.ver-archivo-buro', function () {
+    var id = $(this).data('id');
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO');
+        return;
+    }
+    var url = '/mostrarburo/' + id;
+    abrirModal(url, 'Documento Buró');
+});
+
+// Función para abrir el modal con el archivo
+
+function abrirModal(url, title) {
+    // Eliminar cualquier modal existente antes de agregar uno nuevo
+    $('#modalVerArchivo').remove();
+    $('.modal-backdrop').remove(); // Eliminar el backdrop para evitar problemas de superposición
+
+    $.ajax({
+        url: url,
+        method: 'HEAD', // Solo hacemos una comprobación sin traer el archivo completo
+        success: function () {
+            // Si el archivo existe, mostramos el modal con el iframe
+            var modalContent = `
+                <div class="modal fade" id="modalVerArchivo" tabindex="-1" aria-labelledby="modalVerArchivoLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalVerArchivoLabel">${title}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <iframe src="${url}" width="100%" height="500px"></iframe>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            $('body').append(modalContent);
+            $('#modalVerArchivo').modal('show');
+            $('#modalVerArchivo').on('hidden.bs.modal', function () {
+                $(this).remove(); // Elimina el modal al cerrarse
+            });
+        },
+        error: function () {
+            // Si el archivo no se encuentra, mostramos un modal con un mensaje de error
+            var errorModalContent = `
+                <div class="modal fade" id="modalVerArchivo" tabindex="-1" aria-labelledby="modalVerArchivoLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalVerArchivoLabel">${title}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <h5 class="text-danger">Archivo no encontrado.</h5>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            $('body').append(errorModalContent);
+            $('#modalVerArchivo').modal('show');
+            $('#modalVerArchivo').on('hidden.bs.modal', function () {
+                $(this).remove(); // Elimina el modal al cerrarse
+            });
+        }
+    });
+}
 
 
 

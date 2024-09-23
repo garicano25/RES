@@ -44,7 +44,7 @@
                 <label>Nombre de la categoría *</label>
                 <select class="form-control" id="DEPARTAMENTOS_AREAS_ID" name="DEPARTAMENTOS_AREAS_ID" required>
                   <option value="0" disabled selected>Seleccione una opción</option>
-                  @foreach ($areas as $area)
+                  @foreach ($areas1 as $area)
                   <option value="{{ $area->ID }}" data-lugar="{{ $area->LUGAR}}" data-proposito="{{ $area->PROPOSITO }}" data-lider="{{ $area->LIDER }}">{{ $area->NOMBRE }}</option>
                   @endforeach
                 </select>
@@ -136,11 +136,11 @@
             <div class="row mb-3">
               <div class="col-4">
                 <label for="directos" class="form-label">Directos</label>
-                <input type="text" id="PUESTOS_DIRECTOS_DPT" name="PUESTOS_DIRECTOS_DPT" class="form-control" readonly required>
+                <input type="text" id="PUESTOS_DIRECTOS_DPT" name="PUESTOS_DIRECTOS_DPT" class="form-control" readonly >
               </div>
               <div class="col-4">
                 <label for="indirectos" class="form-label">Indirectos</label>
-                <input type="text" id="PUESTOS_INDIRECTOS_DPT" name="PUESTOS_INDIRECTOS_DPT" class="form-control" required readonly>
+                <input type="text" id="PUESTOS_INDIRECTOS_DPT" name="PUESTOS_INDIRECTOS_DPT" class="form-control"  readonly>
               </div>
               <div class="col-4 mt-4">
                 <label for="disponibilidad-viajar" class="form-label ml-5">Disponibilidad para viajar</label>

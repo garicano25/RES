@@ -455,20 +455,35 @@ $(document).on('change', '.toggle-switch-cargo', function() {
 
 
 
-$('#TablaDPT tbody').on('click', 'td>button.ELIMINAR', function () {
+// $('#TablaDPT tbody').on('click', 'td>button.ELIMINAR', function () {
+//     var tr = $(this).closest('tr');
+//     var row = TablaDPT.row(tr);
+
+//     data = {
+//         api: 1,
+//         ELIMINAR: 1, 
+//         ID_FORMULARIO_DPT: row.data().ID_FORMULARIO_DPT
+//     }
+    
+//     eliminarDatoTabla(data, [TablaDPT], 'dptDelete');
+// })
+
+
+
+$('#TablaDPT tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = TablaDPT.row(tr);
 
+    var estado = $(this).is(':checked') ? 1 : 0;
+
     data = {
         api: 1,
-        ELIMINAR: 1, 
+        ELIMINAR: estado == 0 ? 1 : 0, 
         ID_FORMULARIO_DPT: row.data().ID_FORMULARIO_DPT
-    }
-    
+    };
+
     eliminarDatoTabla(data, [TablaDPT], 'dptDelete');
-})
-
-
+});
 
 // $('#TablaDPT tbody').on('click', 'td>button.REVISAR', function () {
 

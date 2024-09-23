@@ -165,7 +165,7 @@ height: 20px;
                 <input type="text" class="form-control" id="NOMBRE_CV" name="NOMBRE_CV" required>
             </div>
             <div class="mb-3">
-                <label>Primero Apellido </label>
+                <label>Primer Apellido </label>
                 <input type="text" class="form-control" id="PRIMER_APELLIDO_CV" name="PRIMER_APELLIDO_CV" required>
             </div>
             <div class="mb-3">
@@ -215,16 +215,31 @@ height: 20px;
                     <label class="me-2">Teléfono 2</label>
                 <input type="number" class="form-control col-auto" id="TELEFONO2" name="TELEFONO2"  maxlength="10" required>
                 </div>                
-            </div>      
-           
+            </div>    
 
             <div class="mb-3">
+                <label>Nacionalidad</label>
+                <select class="form-control" id="NACIONALIDAD" name="NACIONALIDAD" required>
+                    <option value="0" selected disabled></option>
+                        <option value="1">Mexicana</option>
+                        <option value="2">Extranjera</option>
+                </select> 
+            </div> 
+
+
+            <div class="mb-3" id="campo-pasaporte" style="display: none;">
+                <label>Número de pasaporte</label>
+                <input type="text" class="form-control" id="ID_PASAPORTE" name="TEMP_PASAPORTE">
+            </div>
+            
+            <div class="mb-3" id="campo-curp" style="display: none;">
                 <label>CURP</label>
-                <input type="text" class="form-control" id="CURP_CV" name="CURP_CV" maxlength="18" required>
+                <input type="text" class="form-control" id="CURP_CV" name="TEMP_CURP" maxlength="18">
                 <div id="contador" class="text-end">0/18</div>
                 <div id="mensaje"></div>
                 <div id="error"></div>
-            </div> 
+            </div>
+
             <div class="mb-3">
                 <label>Género</label>
                 <select class="form-control" id="GENERO" name="GENERO" required>
@@ -390,12 +405,12 @@ height: 20px;
                 <label class="mt-4"><b>Cargar archivos en PDF (Máximo 2&nbsp;MB)</b></label>
             </div>
             <div class="mb-3 d-flex align-items-center">
-                <label>CURP. &nbsp;</label>
+                <label id="label-archivo">CURP. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                 <input type="file" class="form-control" id="ARCHIVO_CURP_CV" name="ARCHIVO_CURP_CV" accept=".pdf" style="width: auto; flex: 1;" required>
                 <button type="button" class="btn btn-light btn-sm ms-2" id="quitarCURP" style="display:none;">Quitar archivo</button>
             </div>
             <div id="CURP_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
-
+            
             <div class="mb-3 d-flex align-items-center">
                 <label>CV. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                 <input type="file" class="form-control" id="ARCHIVO_CV" name="ARCHIVO_CV" accept=".pdf" style="width: auto; flex: 1;" required>

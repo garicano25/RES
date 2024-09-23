@@ -166,6 +166,20 @@ function TotalPostulantes(idVacante, categoriaVacante) {
                 let content = '';
 
                 response.postulantes.forEach((personalInfo, index) => {
+                    // Usa la nueva ruta que apunta al controlador y se basa en la base de datos
+                    let archivoCVContent = '';
+                    if (personalInfo.ARCHIVO_CV) {
+                        archivoCVContent = `
+                            <iframe src="/obtener-cv/${personalInfo.CURP_CV}" width="100%" height="100%" style="border: none;"></iframe>
+                        `;
+                    } else {
+                        archivoCVContent = `
+                            <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
+                                <h5 class="text-danger">Archivo CV no encontrado.</h5>
+                            </div>
+                        `;
+                    }
+
                     let postulanteCard = `
                         <div class="row mb-3 mt-5" data-curp="${personalInfo.CURP_CV}">
                             <div class="col-md-4 d-flex flex-column justify-content-start">
@@ -222,7 +236,7 @@ function TotalPostulantes(idVacante, categoriaVacante) {
                             <div class="col-md-8">
                                 <div class="card h-100">
                                     <div class="card-body p-0">
-                                        <iframe src="/reclutamiento/cv/${personalInfo.CURP_CV}" width="100%" height="100%" style="border: none;"></iframe>
+                                        ${archivoCVContent}
                                     </div>
                                 </div>
                             </div>
@@ -257,6 +271,12 @@ function TotalPostulantes(idVacante, categoriaVacante) {
         }
     });
 }
+
+
+
+
+
+
 
 function actualizarTotal(curp) {
     const radios = document.querySelectorAll(`input[name^="req-"][name$="${curp}"]:checked`);

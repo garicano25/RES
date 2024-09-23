@@ -19,9 +19,19 @@ class requerimientoPersonalController extends Controller
 {
     public function index()
     {
-         $categoria = DB::select("SELECT ID_CATALOGO_CATEGORIA  AS ID_DEPARTAMENTO_AREA, NOMBRE_CATEGORIA AS NOMBRE
+        $categoria = DB::select("
+        SELECT c.ID_CATALOGO_CATEGORIA AS ID_DEPARTAMENTO_AREA, 
+               c.NOMBRE_CATEGORIA AS NOMBRE
+        FROM catalogo_categorias c
+        INNER JOIN formulario_dpt f ON c.ID_CATALOGO_CATEGORIA = f.DEPARTAMENTOS_AREAS_ID
+        WHERE c.ACTIVO = 1
+    ");
+    
+
+        $todascategoria = DB::select("SELECT ID_CATALOGO_CATEGORIA  AS ID_DEPARTAMENTO_AREA, NOMBRE_CATEGORIA AS NOMBRE
         FROM catalogo_categorias
         WHERE ACTIVO = 1");
+
 
         $areas = areasModel::orderBy('NOMBRE', 'ASC')->get();
 
@@ -29,7 +39,7 @@ class requerimientoPersonalController extends Controller
         $motivos = catalogomotivovacanteModel::orderBy('NOMBRE_MOTIVO_VACANTE', 'ASC')->get();
 
 
-        return view('RH.organizacion.requerimiento_personal', compact('areas','categoria','tipos','motivos'));
+        return view('RH.organizacion.requerimiento_personal', compact('areas','categoria','tipos','motivos','todascategoria'));
         
     }
 

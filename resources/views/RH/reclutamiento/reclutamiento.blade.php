@@ -55,7 +55,7 @@
                                     <input type="text" class="form-control" id="NOMBRE_CV" name="NOMBRE_CV" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label>Primero Apellido </label>
+                                    <label>Primer Apellido </label>
                                     <input type="text" class="form-control" id="PRIMER_APELLIDO_CV" name="PRIMER_APELLIDO_CV" required>
                                 </div>
                                 <div class="mb-3">
@@ -108,13 +108,28 @@
                                     </div>                
                                 </div>      
                                
-                    
                                 <div class="mb-3">
-                                    <label>CURP</label>
-                                    <input type="text" class="form-control" id="CURP_CV" name="CURP_CV" maxlength="18" required>
-                                    <div id="contador" class="text-end"></div>
-                                    <div id="mensaje"></div>
+                                    <label>Nacionalidad</label>
+                                    <select class="form-control" id="NACIONALIDAD" name="NACIONALIDAD" required>
+                                        <option value="0" selected disabled></option>
+                                            <option value="1">Mexicana</option>
+                                            <option value="2">Extranjera</option>
+                                    </select> 
                                 </div> 
+                    
+                                <div class="mb-3" id="campo-pasaporte" style="display: none;">
+                                    <label>Número de pasaporte</label>
+                                    <input type="text" class="form-control" id="ID_PASAPORTE" name="TEMP_PASAPORTE">
+                                </div>
+                                
+                                <div class="mb-3" id="campo-curp" style="display: none;">
+                                    <label>CURP</label>
+                                    <input type="text" class="form-control" id="CURP_CV" name="TEMP_CURP" maxlength="18">
+                                    <div id="contador" class="text-end">0/18</div>
+                                    <div id="mensaje"></div>
+                                    <div id="error"></div>
+                                </div>
+                    
 
                                 <div class="mb-3">
                                     <label>Género</label>
@@ -265,7 +280,7 @@
                                     <label class="mt-4"><b>Cargar archivos en PDF (Máximo 2&nbsp;MB)</b></label>
                                 </div>
                                 <div class="mb-3 d-flex align-items-center">
-                                    <label>CURP. &nbsp;</label>
+                                    <label id="label-archivo">CURP. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                     <input type="file" class="form-control" id="ARCHIVO_CURP_CV" name="ARCHIVO_CURP_CV" accept=".pdf" style="width: auto; flex: 1;" required>
                                     <button type="button" class="btn btn-light btn-sm ms-2" id="quitarCURP" style="display:none;">Quitar archivo</button>
                                 </div>
@@ -322,7 +337,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">                            
-                                    <label>Primero Apellido </label>
+                                    <label>Primer Apellido </label>
                                     <input type="text" class="form-control" id="PRIMER_APELLIDO_CV" name="PRIMER_APELLIDO_CV" required>
                                     </div>
                                 </div>
@@ -370,13 +385,30 @@
                                 </div>                           
                             </div>
 
-                            <div class="row mb-3">
-                                <div class="col-12">
-                                   <label>CURP</label>
-                                   <input type="text" class="form-control" id="CURP_CV" name="CURP_CV" maxlength="18" required>
-                                </div>
+                            <div class="mb-3">
+                                <label>Nacionalidad</label>
+                                <select class="form-control" id="NACIONALIDAD" name="NACIONALIDAD" required>
+                                    <option value="0" selected disabled></option>
+                                        <option value="1">Mexicana</option>
+                                        <option value="2">Extranjera</option>
+                                </select> 
                             </div> 
-                        
+                
+                            <div id="campo-pasaporte"  style="display: none;">
+                                <div class="mb-3">
+                                    <label>Número de pasaporte</label>
+                                    <input type="text" class="form-control" id="ID_PASAPORTE" name="CURP_CV">
+                                </div>
+                            </div>
+
+                            <div id="campo-curp"  style="display: none;">
+                                <div class="mb-3">
+                                    <label>CURP</label>
+                                    <input type="text" class="form-control" id="CURP_CV" name="CURP_CV" maxlength="18">
+                                </div>
+                            </div>
+
+
                             <div class="mb-3">
                                 <label>Género</label>
                                 <select class="form-control" id="GENERO" name="GENERO" required>
@@ -590,20 +622,6 @@
 
 
 
-<!-- Modal para mostrar PDF -->
-<div class="modal fade" id="pdfModal" tabindex="-1" aria-labelledby="pdfModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="pdfModalLabel">PDF</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <iframe id="pdfIframe" src="" frameborder="0" style="width: 100%; height: 80vh;"></iframe>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 

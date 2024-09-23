@@ -133,94 +133,186 @@ class pptController extends Controller
 
 
 
-    public function store(Request $request)
-    {
+public function store(Request $request)
+{
 
-        try {
-            switch (intval($request->api)) {
-                    //Guardar Area
-                case 1:
+    try {
+        switch (intval($request->api)) {
+                //Guardar Area
+            case 1:
 
-                    //Guardamos Area
-                    if ($request->ID_FORMULARIO_PPT == 0) {
+                //Guardamos Area
+                if ($request->ID_FORMULARIO_PPT == 0) {
 
-                        //GUARDAR EL FORMULARIO
-                        DB::statement('ALTER TABLE formulario_ppt AUTO_INCREMENT=1;');
-                        $PPT = formulariopptModel::create($request->all());
+                    //GUARDAR EL FORMULARIO
+                    DB::statement('ALTER TABLE formulario_ppt AUTO_INCREMENT=1;');
+                    $PPT = formulariopptModel::create($request->all());
 
-                        // GUARDAR LOS CURSOS
+                    // GUARDAR LOS CURSOS
 
 
 
-                        if ($request->CURSO_PPT) {
-                            foreach ($request->CURSO_PPT as $key => $value) {
+                    if ($request->CURSO_PPT) {
+                        foreach ($request->CURSO_PPT as $key => $value) {
 
-                                $num = $key + 1;
+                            $num = $key + 1;
 
-                                if ((!empty($request->CURSO_PPT[$key]))) {
+                            if ((!empty($request->CURSO_PPT[$key]))) {
 
-                                    $guardar_curso = cursospptModel::create([
-                                        'FORMULARIO_PPT_ID' => $PPT->ID_FORMULARIO_PPT,
-                                        'CURSO_PPT' => $value,
-                                        'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
-                                        'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
-                                        // 'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num]
-                                    ]);
-                                }
+                                $guardar_curso = cursospptModel::create([
+                                    'FORMULARIO_PPT_ID' => $PPT->ID_FORMULARIO_PPT,
+                                    'CURSO_PPT' => $value,
+                                    'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
+                                    'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
+                                    // 'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num]
+                                ]);
                             }
                         }
-
-                        $response['code']  = 1;
-                        $response['PPT']  = $PPT;
-                        return response()->json($response);
-                    } else { //Editamos el ppt y eliminar ppt
-
-
-
-                        $eliminar_ppt = formulariopptModel::where('ID_FORMULARIO_PPT', $request->ID_FORMULARIO_PPT)->delete();
-
-                        $PPT = formulariopptModel::create($request->all());
-
-                        //ELIMINAMOS LOS CURSOS ANTERIORES
-                        $eliminar_cursos = cursospptModel::where('FORMULARIO_PPT_ID', $request["ID_FORMULARIO_PPT"])->delete();
-
-
-                        // GUARDAR LOS CURSOS
-                        if ($request->CURSO_PPT) {
-                            foreach ($request->CURSO_PPT as $key => $value) {
-
-                                $num = $key + 1;
-
-                                if ((!empty($request->CURSO_PPT[$key]))) {
-
-                                    $guardar_curso = cursospptModel::create([
-                                        'FORMULARIO_PPT_ID' => $PPT->ID_FORMULARIO_PPT,
-                                        'CURSO_PPT' => $value,
-                                        'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
-                                        'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
-                                        // 'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num]
-                                    ]);
-                                }
-                            }
-                        }
-
-                        $response['code']  = 1;
-                        $response['PPT']  = $PPT;
-                        return response()->json($response);
                     }
 
-                    break;
-
-                    
-
-                default:
-
-                    $response['code']  = 2;
+                    $response['code']  = 1;
+                    $response['PPT']  = $PPT;
                     return response()->json($response);
-            }
-        } catch (Exception $e) {
+                } else { //Editamos el ppt y eliminar ppt
 
-            return response()->json('Error al guardar el Area');
+
+
+                    $eliminar_ppt = formulariopptModel::where('ID_FORMULARIO_PPT', $request->ID_FORMULARIO_PPT)->delete();
+
+                    $PPT = formulariopptModel::create($request->all());
+
+                    //ELIMINAMOS LOS CURSOS ANTERIORES
+                    $eliminar_cursos = cursospptModel::where('FORMULARIO_PPT_ID', $request["ID_FORMULARIO_PPT"])->delete();
+
+
+                    // GUARDAR LOS CURSOS
+                    if ($request->CURSO_PPT) {
+                        foreach ($request->CURSO_PPT as $key => $value) {
+
+                            $num = $key + 1;
+
+                            if ((!empty($request->CURSO_PPT[$key]))) {
+
+                                $guardar_curso = cursospptModel::create([
+                                    'FORMULARIO_PPT_ID' => $PPT->ID_FORMULARIO_PPT,
+                                    'CURSO_PPT' => $value,
+                                    'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
+                                    'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
+                                    // 'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num]
+                                ]);
+                            }
+                        }
+                    }
+
+                    $response['code']  = 1;
+                    $response['PPT']  = $PPT;
+                    return response()->json($response);
+                }
+
+                break;
+
+                
+
+            default:
+
+                $response['code']  = 2;
+                return response()->json($response);
         }
+    } catch (Exception $e) {
+
+        return response()->json('Error al guardar el Area');
     }
+}
+
+
+
+
+// public function store(Request $request)
+// {
+//     try {
+//         switch (intval($request->api)) {
+//             case 1:
+//                 // Lógica para activar o desactivar
+//                 if (isset($request->ELIMINAR)) {
+//                     if ($request->ELIMINAR == 1) {
+//                         // Desactivar el registro
+//                         $ppt = formulariopptModel::where('ID_FORMULARIO_PPT', $request['ID_FORMULARIO_PPT'])->update(['ACTIVO' => 0]);
+//                         $response['code'] = 1;
+//                         $response['PPT'] = 'Desactivado';
+//                     } else {
+//                         // Activar el registro
+//                         $ppt = formulariopptModel::where('ID_FORMULARIO_PPT', $request['ID_FORMULARIO_PPT'])->update(['ACTIVO' => 1]);
+//                         $response['code'] = 1;
+//                         $response['PPT'] = 'Activado';
+//                     }
+//                     return response()->json($response);
+//                 }
+
+//                 // Guardar o actualizar el formulario PPT
+//                 if ($request->ID_FORMULARIO_PPT == 0) {
+//                     // Crear un nuevo registro en formulario_ppt
+//                     DB::statement('ALTER TABLE formulario_ppt AUTO_INCREMENT=1;');
+//                     $PPT = formulariopptModel::create($request->all());
+
+//                     // Guardar los cursos
+//                     if ($request->CURSO_PPT) {
+//                         foreach ($request->CURSO_PPT as $key => $value) {
+//                             $num = $key + 1;
+//                             if (!empty($request->CURSO_PPT[$key])) {
+//                                 cursospptModel::create([
+//                                     'FORMULARIO_PPT_ID' => $PPT->ID_FORMULARIO_PPT,
+//                                     'CURSO_PPT' => $value,
+//                                     'CURSO_REQUERIDO' => $request->CURSO_REQUERIDO_PPT[$num] ?? null,
+//                                     'CURSO_DESEABLE' => $request->CURSO_DESEABLE_PPT[$num] ?? null,
+//                                 ]);
+//                             }
+//                         }
+//                     }
+
+//                     $response['code'] = 1;
+//                     $response['PPT'] = $PPT;
+//                     return response()->json($response);
+
+//                 } else {
+//                     // Editar el formulario PPT
+//                     // Eliminar el registro anterior de PPT
+//                     $eliminar_ppt = formulariopptModel::where('ID_FORMULARIO_PPT', $request->ID_FORMULARIO_PPT)->delete();
+
+//                     // Crear un nuevo registro de PPT
+//                     $PPT = formulariopptModel::create($request->all());
+
+//                     // Eliminar los cursos anteriores
+//                     $eliminar_cursos = cursospptModel::where('FORMULARIO_PPT_ID', $request["ID_FORMULARIO_PPT"])->delete();
+
+//                     // Guardar los cursos nuevos
+//                     if ($request->CURSO_PPT) {
+//                         foreach ($request->CURSO_PPT as $key => $value) {
+//                             $num = $key + 1;
+//                             if (!empty($request->CURSO_PPT[$key])) {
+//                                 cursospptModel::create([
+//                                     'FORMULARIO_PPT_ID' => $PPT->ID_FORMULARIO_PPT,
+//                                     'CURSO_PPT' => $value,
+//                                     'CURSO_REQUERIDO' => $request->CURSO_REQUERIDO_PPT[$num] ?? null,
+//                                     'CURSO_DESEABLE' => $request->CURSO_DESEABLE_PPT[$num] ?? null,
+//                                 ]);
+//                             }
+//                         }
+//                     }
+
+//                     $response['code'] = 1;
+//                     $response['PPT'] = $PPT;
+//                     return response()->json($response);
+//                 }
+
+//                 break;
+
+//             default:
+//                 $response['code'] = 2;
+//                 return response()->json($response);
+//         }
+//     } catch (Exception $e) {
+//         return response()->json(['code' => 0, 'message' => 'Error al guardar el Área', 'error' => $e->getMessage()]);
+//     }
+// }
+
 }

@@ -229,7 +229,6 @@ $("#guardarFormBancoCV").click(function (e) {
 });
 
 
-
 var Tablabancocv = $("#Tablabancocv").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
@@ -271,7 +270,8 @@ var Tablabancocv = $("#Tablabancocv").DataTable({
             }
         },
         { data: 'CURP_CV' }, 
-        { data: null,
+        { 
+            data: null,
             render: function (data, type, row) {
                 return row.NOMBRE_CV + ' ' + row.PRIMER_APELLIDO_CV + ' ' + row.SEGUNDO_APELLIDO_CV;
             }
@@ -280,25 +280,17 @@ var Tablabancocv = $("#Tablabancocv").DataTable({
         { data: 'TELEFONO1' },
         { data: 'TELEFONO2' },
         { 
-            data: 'ARCHIVO_CURP_CV',
-            render: function (data, type, row) {
-                return '<button class="btn btn-outline-danger btn-custom rounded-pill pdf-button"data-pdf="/' + data + '"> <i class="bi bi-filetype-pdf"></i></button>';
-            },
-            className: 'text-center'
+            data: 'BTN_CURP'  // Botón para ver CURP
         },
         { 
-            data: 'ARCHIVO_CV',
-            render: function (data, type, row) {
-                return '<button class="btn btn-outline-danger btn-custom rounded-pill pdf-button" data-pdf="/' + data + '"> <i class="bi bi-filetype-pdf"></i></button>';
-            },
-            className: 'text-center'
+            data: 'BTN_CV'  // Botón para ver CV
         },
-        { data: 'BTN_EDITAR' },
-        { data: 'BTN_ELIMINAR' }
+        { data: 'BTN_EDITAR' }, // Botón para editar
+        { data: 'BTN_ELIMINAR' } // Botón para eliminar
     ],
     columnDefs: [
-        { targets: 0, title: '#', className: 'all  text-center' },
-        { targets: 1, title: 'CURP', className: 'all text-center nombre-column' },
+        { targets: 0, title: '#', className: 'all text-center' },
+        { targets: 1, title: 'CURP/ N° PASAPORTE', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Nombre Completo', className: 'all text-center nombre-column' },
         { targets: 3, title: 'Correo', className: 'all text-center nombre-column' },
         { targets: 4, title: 'Teléfono 1', className: 'all text-center nombre-column' },
@@ -310,15 +302,91 @@ var Tablabancocv = $("#Tablabancocv").DataTable({
     ]
 });
 
-// Event listener para abrir el modal con el PDF
-$('#Tablabancocv').on('click', '.pdf-button', function (e) {
-    e.preventDefault();
-    var pdfUrl = $(this).data('pdf');
-    $('#pdfIframe').attr('src', pdfUrl);
-    $('#pdfModal').modal('show');
+
+
+
+// Evento para abrir el modal con CURP
+$('#Tablabancocv').on('click', '.ver-archivo-curp', function () {
+    var id = $(this).data('id');
+    if (!id) {
+        alert('ID no encontrado para el CURP.');
+        return;
+    }
+    var url = '/mostrarCurpCv/' + id;
+    abrirModal(url, ' CURP / PASAPORTE');
 });
 
+// Evento para abrir el modal con CV
+$('#Tablabancocv').on('click', '.ver-archivo-cv', function () {
+    var id = $(this).data('id');
+    if (!id) {
+        alert('ID no encontrado para el CV.');
+        return;
+    }
+    var url = '/mostrarCv/' + id;
+    abrirModal(url, 'CV');
+});
 
+// Función para abrir el modal con el archivo
+
+function abrirModal(url, title) {
+    $.ajax({
+        url: url,
+        method: 'HEAD', // Solo hacemos una comprobación sin traer el archivo completo
+        success: function () {
+            // Si el archivo existe, mostramos el modal con el iframe
+            var modalContent = `
+                <div class="modal fade" id="modalVerArchivo" tabindex="-1" aria-labelledby="modalVerArchivoLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalVerArchivoLabel">${title}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <iframe src="${url}" width="100%" height="500px"></iframe>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            $('body').append(modalContent);
+            $('#modalVerArchivo').modal('show');
+            $('#modalVerArchivo').on('hidden.bs.modal', function () {
+                $(this).remove(); // Elimina el modal al cerrarse
+            });
+        },
+        error: function () {
+            // Si el archivo no se encuentra, mostramos un modal con un mensaje de error
+            var errorModalContent = `
+                <div class="modal fade" id="modalVerArchivo" tabindex="-1" aria-labelledby="modalVerArchivoLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalVerArchivoLabel">${title}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <h5 class="text-danger">Archivo no encontrado.</h5>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            $('body').append(errorModalContent);
+            $('#modalVerArchivo').modal('show');
+            $('#modalVerArchivo').on('hidden.bs.modal', function () {
+                $(this).remove(); // Elimina el modal al cerrarse
+            });
+        }
+    });
+}
 
 
 
@@ -365,6 +433,9 @@ function calcularEdad(fechaNacimiento) {
 $(document).ready(function() {
 
     
+ 
+
+
     var $select = $('#INTERES_ADMINISTRATIVA').selectize({
         plugins: ['remove_button'],
         delimiter: ',',
@@ -396,11 +467,29 @@ $(document).ready(function() {
         }
     });
 
+
+
     $('#Tablabancocv tbody').on('click', 'td>button.EDITAR', function () {
         var tr = $(this).closest('tr');
         var row = Tablabancocv.row(tr);
         ID_BANCO_CV = row.data().ID_BANCO_CV;
         var data = row.data();
+
+             
+
+        $('#CURP_CV').attr('name', 'TEMP_CURP'); // Cambiar el nombre del input CURP temporalmente
+        $('#ID_PASAPORTE').attr('name', 'TEMP_PASAPORTE'); // Cambiar el nombre del input Pasaporte temporalmente
+    
+        // Mostrar el campo correspondiente y asignar el nombre correcto
+        if (row.data().NACIONALIDAD === '1') { // Nacionalidad Mexicana
+            $('#campo-curp').show(); // Mostrar CURP
+            $('#campo-pasaporte').hide(); // Ocultar Pasaporte
+            $('#CURP_CV').attr('name', 'CURP_CV'); // Asignar nombre correcto para CURP
+        } else if (row.data().NACIONALIDAD === '2') { // Nacionalidad Extranjera
+            $('#campo-pasaporte').show(); // Mostrar Pasaporte
+            $('#campo-curp').hide(); // Ocultar CURP
+            $('#ID_PASAPORTE').attr('name', 'CURP_CV'); // Asignar nombre correcto para Pasaporte
+        }
 
         
         var savedOptions = [];
@@ -453,12 +542,23 @@ $(document).ready(function() {
             $('#ANIO_FECHA_CV').val(row.data().ANIO_FECHA_CV);
         }, 100);
 
+
         if (row.data().ULTIMO_GRADO_CV === '4') {
             $('#licenciatura-section').show();
         } else if (row.data().ULTIMO_GRADO_CV === '5') {
             $('#posgrado-section').show();
+            
         }
+
+  
+
+
+      
+     
     });
+
+
+
 
     $('#miModal_VACANTES').on('hidden.bs.modal', function () {
         resetFormulario('#miModal_VACANTES');
@@ -474,11 +574,62 @@ $(document).ready(function() {
         }
         $('#ANIO_FECHA_CV').html(html);
     });
+
+
 });
 
 
 
 
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+        var selectNacionalidad = document.getElementById('NACIONALIDAD');
+
+        if (selectNacionalidad) {
+            selectNacionalidad.addEventListener('change', function() {
+                var nacionalidad = this.value;
+
+                var campoCurp = document.getElementById('campo-curp');
+                var campoPasaporte = document.getElementById('campo-pasaporte');
+                var labelArchivo = document.getElementById('label-archivo');
+                var archivoCurpCv = document.getElementById('ARCHIVO_CURP_CV');
+
+                // Ocultar ambos campos al cambiar la selección
+                if (campoCurp) campoCurp.style.display = 'none';
+                if (campoPasaporte) campoPasaporte.style.display = 'none';
+
+                // Cambiar el texto del label y atributos según la selección
+                if (nacionalidad == '1') {
+                    // Mostrar campo CURP para nacionalidad mexicana
+                    if (campoCurp) {
+                        campoCurp.style.display = 'block';
+                        document.getElementById('CURP_CV').setAttribute('name', 'CURP_CV');
+                    }
+                    if (labelArchivo) labelArchivo.innerText = 'CURP. ';
+                    if (archivoCurpCv) {
+                        archivoCurpCv.setAttribute('name', 'ARCHIVO_CURP_CV');
+                        archivoCurpCv.setAttribute('required', true);
+                    }
+                    // Resetear name del pasaporte
+                    document.getElementById('ID_PASAPORTE').setAttribute('name', 'TEMP_PASAPORTE');
+                } else if (nacionalidad == '2') {
+                    // Mostrar campo Pasaporte para nacionalidad extranjera
+                    if (campoPasaporte) {
+                        campoPasaporte.style.display = 'block';
+                        document.getElementById('ID_PASAPORTE').setAttribute('name', 'CURP_CV');
+                    }
+                    if (labelArchivo) labelArchivo.innerText = 'Pasaporte.  ';
+                    if (archivoCurpCv) {
+                        archivoCurpCv.setAttribute('name', 'ARCHIVO_PASAPORTE_CV');
+                        archivoCurpCv.removeAttribute('required');
+                    }
+                    // Resetear name del CURP
+                    document.getElementById('CURP_CV').setAttribute('name', 'TEMP_CURP');
+                }
+            });
+        }
+    });
 
 
 

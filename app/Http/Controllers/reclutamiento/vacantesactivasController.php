@@ -8,6 +8,9 @@ use App\Models\reclutamiento\requerimientoModel;
 use App\Models\organizacion\catalogocategoriaModel;
 use App\Models\selección\seleccionModel;
 use App\Models\reclutamiento\listapostulacionesModel;
+use App\Models\reclutamiento\bancocvModel;
+
+use Illuminate\Support\Facades\Storage;
 
 
 use DB;
@@ -79,6 +82,9 @@ public function Tablapostulaciones()
 
 
 
+
+
+
 public function informacionpostulantes($idVacante)
 {
     try {
@@ -92,7 +98,7 @@ public function informacionpostulantes($idVacante)
                 fb.CORREO_CV,
                 fb.TELEFONO1,
                 fb.TELEFONO2,
-                fb.ARCHIVO_CV,
+                fb.ARCHIVO_CV, -- La ruta completa del archivo en la base de datos
                 lp.VACANTES_ID
             FROM lista_postulantes lp
             LEFT JOIN formulario_bancocv fb ON lp.CURP = fb.CURP_CV
@@ -122,16 +128,35 @@ public function informacionpostulantes($idVacante)
 }
 
 
-public function getCV($filename)
+
+
+public function mostrarCvPorCurp($curp)
 {
-    $path = storage_path('app/Reclutamiento/CV/' . $filename . '.pdf');  
+    try {
+        // Busca el postulante por el CURP y obtiene la ruta del archivo
+        $postulante = bancocvModel::where('CURP_CV', $curp)->firstOrFail();
 
-    if (!file_exists($path)) {
-        abort(404, 'El archivo no fue encontrado.');
+        // Utiliza la ruta completa almacenada en la base de datos
+        $rutaArchivo = $postulante->ARCHIVO_CV;
+
+        // Verifica si el archivo existe en el almacenamiento
+        if (Storage::exists($rutaArchivo)) {
+            // Devuelve el archivo
+            return Storage::response($rutaArchivo);
+        } else {
+            // Si no se encuentra el archivo, muestra un mensaje de error
+            return response()->json(['msj' => 'Archivo no encontrado'], 404);
+        }
+    } catch (Exception $e) {
+        return response()->json(['msj' => 'Error al obtener el archivo: ' . $e->getMessage()], 500);
     }
-
-    return response()->file($path);
 }
+
+
+
+
+
+
 
 
 

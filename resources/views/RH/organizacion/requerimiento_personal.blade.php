@@ -98,7 +98,7 @@
                               <label>Categoría a sustituir</label>
                               <select class="form-control" id="SUSTITUYE_CATEGORIA_RP" name="SUSTITUYE_CATEGORIA_RP" required>
                                 <option selected disabled>Seleccione una opción</option>
-                                @foreach ($categoria as $cat)
+                                @foreach ($todascategoria as $cat)
                                     <option value="{{ $cat->ID_DEPARTAMENTO_AREA }}">{{ $cat->NOMBRE }}</option>
                                 @endforeach
                             </select>   

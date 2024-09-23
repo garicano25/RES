@@ -26,9 +26,17 @@ class catalogovacantesController extends Controller
 
     
 
+        // $areas = catalogocategoriaModel::where('ES_LIDER_CATEGORIA', 0)
+        // ->orderBy('NOMBRE_CATEGORIA', 'ASC')
+        // ->get();
+
         $areas = catalogocategoriaModel::where('ES_LIDER_CATEGORIA', 0)
-        ->orderBy('NOMBRE_CATEGORIA', 'ASC')
-        ->get();
+    ->whereIn('ID_CATALOGO_CATEGORIA', function($query) {
+        $query->select('PUESTO_RP')
+              ->from('formulario_requerimientos');
+    })
+    ->orderBy('NOMBRE_CATEGORIA', 'ASC')
+    ->get();
 
 
 

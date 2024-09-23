@@ -16,6 +16,7 @@ class bancocvModel extends Model
         'PRIMER_APELLIDO_CV',
         'SEGUNDO_APELLIDO_CV',
         'CORREO_CV',
+        'NACIONALIDAD',
         'CURP_CV',
         'DIA_FECHA_CV',
         'MES_FECHA_CV',

@@ -73,7 +73,7 @@ Route::get('/PPTDelete', [pptController::class, 'store']);
 Route::get('/DPT', [dptController::class, 'index']);
 Route::post('/dptSave', [dptController::class, 'store']);
 Route::get('/TablaDPT', [dptController::class, 'TablaDPT']);
-Route::get('/dptDelete', [pptController::class, 'store']);
+Route::get('/dptDelete', [dptController::class, 'store']);
 // Route::get('/autorizarDPT/{id_formulario}', [dptController::class, 'autorizarDPT']);
 // Route::get('/revisarDPT/{id_formulario}', [dptController::class, 'revisarDPT']);
 Route::get('/makeExcelDPT/{id_formulario}', [makeExcelController::class, 'makeExcelDPT']);
@@ -169,9 +169,10 @@ Route::get('/Listavacantes', [bancocvController::class, 'index']);
 Route::get('/BancoDelete', [bancocvController::class, 'store']);
 Route::get('/Tablabancocv', [bancocvController::class, 'Tablabancocv']);
 
-// Rutas para poder ver los archivos CURP Y CV del banco de cv
-Route::get('/curppdf/{ID_BANCO_CV}', [bancocvController::class, 'curppdf']);
-Route::get('/cvpdf/{ID_BANCO_CV}', [bancocvController::class, 'cvpdf']);
+Route::get('/mostrarCurpCv/{id}', [bancocvController::class, 'mostrarCurpCv']);
+Route::get('/mostrarCv/{id}', [bancocvController::class, 'mostrarCv']);
+
+
 
 // Ruta para ver las vacantes externa en la aplicación
 Route::get('/Vacantes', [PuestoController::class, 'index']);
@@ -196,7 +197,10 @@ Route::get('/Tablaareainteres', [catalogoareainteresController::class, 'Tablaare
 Route::get('/Postulaciones', [vacantesactivasController::class, 'index']);
 Route::get('/Tablapostulaciones', [vacantesactivasController::class, 'Tablapostulaciones']);
 Route::get('/informacionpostulantes/{idVacante}', [vacantesactivasController::class, 'informacionpostulantes']);
-Route::get('/reclutamiento/cv/{filename}', [vacantesactivasController::class, 'getCV'])->name('getCV');
+Route::get('/obtener-cv/{curp}', [vacantesactivasController::class, 'mostrarCvPorCurp'])->name('mostrarCvPorCurp');
+
+
+
 Route::post('/guardarSeleccion', [vacantesactivasController::class, 'guardarSeleccion']);
 
 
@@ -218,9 +222,12 @@ Route::get('/Tablaautorizacion', [seleccionController::class, 'Tablaautorizacion
 
 //  Inteligencia laboral
 Route::get('/Tablainteligencia', [seleccionController::class, 'Tablainteligencia']);
+Route::get('/mostrarcompetencias/{id}', [seleccionController::class, 'mostrarcompetencias']);
+Route::get('/mostrarcompleto/{id}', [seleccionController::class, 'mostrarcompleto']);
 
 //  Buró laboral
 Route::get('/Tablaburo', [seleccionController::class, 'Tablaburo']);
+Route::get('/mostrarburo/{id}', [seleccionController::class, 'mostrarburo']);
 
 //  Perfil de puesto de trabajo (PPT)
 Route::get('/Tablapptseleccion', [seleccionController::class, 'Tablapptseleccion']);
