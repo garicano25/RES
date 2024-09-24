@@ -91,7 +91,7 @@ TablaPPT = $("#TablaPPT").DataTable({
         { target: 1, title: 'Nombre categoría', className: 'all  text-center' },
         { target: 2, title: 'Elaborado por', className: 'all text-center' },
         { target: 3, title: 'Revisado por', className: 'all text-center' },
-        { target: 4, title: 'Autorizado por', className: 'all text-center' },
+        { target: 4, title: 'Aprobado por', className: 'all text-center' },
         { target: 5, title: 'Editar', className: 'all text-center' },
         { target: 6, title: 'Activo', className: 'all text-center' },
     ]

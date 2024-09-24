@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
+
+//  USUARIOS
+
+use App\Http\Controllers\usuario\usuarioController;
+use App\Http\Controllers\AuthController;
 // Controladores de organizacion
 
 use App\Http\Controllers\organizacion\areasController;
@@ -44,11 +49,39 @@ use App\Http\Controllers\seleccion\catalogopruebasController;
 
 
 // RUTA PRINCIPAL 
-Route::get('/', function () {return view('tablero.index');});
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
+//==============================================  login  ============================================== 
+// Rutas para login
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/tablero', function () {
+        return view('tablero.index');
+    })->name('dashboard');
+});
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+//==============================================  USUARIO  ============================================== 
+
+
+Route::get('/usuario', function () {return view('usuario.usuario');});
+
+Route::post('/usuarioSave', [usuarioController::class, 'store']);
+Route::get('/Tablausuarios', [usuarioController::class, 'Tablausuarios']);
+
+Route::get('/usuarioDelete', [usuarioController::class, 'store']);
+Route::get('/usuariofoto/{id}', [usuarioController::class, 'mostrarFotoUsuario']);
 
 
 
 //==============================================  ORGANIZACION  ============================================== 
+Route::get('/tablero', function () {return view('tablero.index');});
 
 // ORGANIGRAMA
 Route::get('/organigrama', [areasController::class, 'index']);

@@ -295,7 +295,7 @@ var Tablabancocv = $("#Tablabancocv").DataTable({
         { targets: 3, title: 'Correo', className: 'all text-center nombre-column' },
         { targets: 4, title: 'Teléfono 1', className: 'all text-center nombre-column' },
         { targets: 5, title: 'Teléfono 2', className: 'all text-center nombre-column' },
-        { targets: 6, title: 'CURP', className: 'all text-center nombre-column' },
+        { targets: 6, title: 'CURP / PASAPORTE ', className: 'all text-center ' },
         { targets: 7, title: 'CV', className: 'all text-center nombre-column' },
         { targets: 8, title: 'Visualizar', className: 'all text-center' },
         { targets: 9, title: 'Eliminar', className: 'all text-center' }
@@ -549,6 +549,17 @@ $(document).ready(function() {
             $('#posgrado-section').show();
             
         }
+
+
+        
+        if (row.data().NACIONALIDAD === '1') {
+            $('#campo-curp12').show();
+        } else if (row.data().NACIONALIDAD === '2') {
+            $('#campo-pasaporte12').show();
+            
+        }
+
+
 
   
 

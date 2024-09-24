@@ -63,7 +63,7 @@ var Tablaseleccion = $("#Tablaseleccion").DataTable({
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all text-center' },
-        { targets: 1, title: 'Nombre de la categoría', className: 'all text-center clickable' },
+        { targets: 1, title: 'Nombre de la vacante', className: 'all text-center clickable' },
         { targets: 2, title: 'N° de vacante', className: 'all text-center' },
         { targets: 3, title: 'Fecha límite', className: 'all text-center' },
     ]

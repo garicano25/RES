@@ -117,12 +117,12 @@
                                     </select> 
                                 </div> 
                     
-                                <div class="mb-3" id="campo-pasaporte" style="display: none;">
+                                <div class="mb-3" id="campo-pasaporte12" style="display: none;">
                                     <label>Número de pasaporte</label>
                                     <input type="text" class="form-control" id="ID_PASAPORTE" name="TEMP_PASAPORTE">
                                 </div>
                                 
-                                <div class="mb-3" id="campo-curp" style="display: none;">
+                                <div class="mb-3" id="campo-curp12" style="display: none;">
                                     <label>CURP</label>
                                     <input type="text" class="form-control" id="CURP_CV" name="TEMP_CURP" maxlength="18">
                                     <div id="contador" class="text-end">0/18</div>

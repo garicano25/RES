@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" type="image/png" sizes="20x20" href="/assets/images/iconologo.png">
+    <link rel="icon" type="image/png" sizes="20x20" href="/assets/images/favicon.png">
     <title>Results in Performance</title>
 
 
@@ -31,6 +31,7 @@
     <!-- Select opcion selectize -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" />
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/css/dropify.min.css">
 
     <!--Archivo css -->
     <link rel="stylesheet" href="assets/css/estilos.css">
@@ -45,6 +46,34 @@
     @endif
 
 
+    <style>
+
+.dropdown-menu {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+    text-align: center;
+}
+
+.dropdown-item button {
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: center;
+    padding: 8px;
+}
+
+.dropdown-item button:hover {
+    background-color: #f8f9fa;
+}
+
+.dropdown-item span.badge {
+    font-size: 0.85rem;
+}
+
+
+        </style>
 
 
 </head>
@@ -58,7 +87,7 @@
             </a>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav1">
                 <ul class="navbar-nav">
-                    <li class="nav-item" style="margin-right: 25px;">
+                    {{-- <li class="nav-item" style="margin-right: 25px;">
                         <a class="nav-link" href="{{ url('/Formulario-vacantes') }}">
                             <i class="bi bi-file-earmark-person-fill text-white" style="font-size: 24px;"></i>
                         </a>
@@ -68,11 +97,38 @@
                         <a class="nav-link" href="#">
                             <i class="bi bi-chat-left-fill text-white" style="font-size: 24px;"></i>
                         </a>
-                    </li>
-                    <li class="nav-item" style="margin-right: 45px;">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-person-fill text-white" style="font-size: 24px;"></i>
-                        </a>
+                    </li> --}}
+                    <li class="nav-item dropdown" style="margin-right: 45px;">
+                        @auth
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-fill text-white" style="font-size: 24px;"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 250px;">
+                                <li class="dropdown-item text-center">
+                                    <strong>{{ Auth::user()->EMPLEADO_NOMBRE }}</strong>
+                                    <br>
+                                    <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
+                                </li>
+                                <li class="dropdown-divider"></li>
+                                {{-- <li>
+                                    <a class="dropdown-item text-center" href="{{ route('perfil') }}">
+                                        <i class="bi bi-person-lines-fill"></i> Mi perfil
+                                    </a>
+                                </li> --}}
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item text-center" style="color: red;">
+                                            <i class="bi bi-power"></i> Cerrar sesión
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        @else
+                            <script>
+                                window.location.href = "{{ route('login') }}"; // Redirige al login si no está autenticado
+                            </script>
+                        @endauth
                     </li>
                 </ul>
             </div>
@@ -88,7 +144,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link BOTON" href="/" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                    <a class="nav-link BOTON" href="{{ url('/tablero') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                         <i class="bi bi-speedometer" style="margin-right: 5px;"></i> <span class="d-lg-none">Tablero</span><span class="d-none d-lg-inline">Tablero</span>
                     </a>
                 </li>
@@ -204,7 +260,7 @@
                     </li>
                 </ul>
                 <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                    <a class="nav-link BOTON" href="{{ url('/usuario') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                         <i class="bi bi-people-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Usuarios</span><span class="d-none d-lg-inline">Usuarios</span>
                     </a>
                 </li>
@@ -260,6 +316,11 @@
     <!-- Select opcion selectize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
 
+
+        <!-- dropify -->
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
 
     <!-- Funciones generales -->
     <script src="/assets/js_sitio/funciones.js"></script>
@@ -365,6 +426,11 @@
     @endif
   
 
+
+    @if(request()->is('usuario'))
+    <script src="/assets/js_sitio/usuario/usuario.js"></script>
+    @endif
+  
 </body>
 
 </html>
