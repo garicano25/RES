@@ -348,10 +348,13 @@ $('#TablaAreas tbody').on('click', 'td>button.ORGANIGRAMA', function () {
             text: 'Estamos cargando la información para el organigrama',
             showConfirmButton: false
         })
+
+        $('.swal2-popup').addClass('ld ld-breath')
         
     }, function (data) {
 
         swal.close()
+        $('.swal2-popup').removeClass('ld ld-breath')
         dataJsonOrganigrama = JSON.parse(data.data)
         //Ejcutamos la funcion que crear el organigrama
         init(dataJsonOrganigrama)
@@ -424,35 +427,34 @@ $('#CATEGORIA').on('change', function (e) {
 $("#guardarEncargado").click(function (e) {
     e.preventDefault();
     
-    var valida = this.form.checkValidity();
-    if (valida) { 
+  
 
-            
-        alertMensajeConfirm({
-            title: "¿Desea agregar esta categoría al area actual?",
-            text: "Al guardarlo, se agregara al organigrama",
-            icon: "question",
-        },async function () { 
+        
+    alertMensajeConfirm({
+        title: "¿Desea agregar esta categoría al area actual?",
+        text: "Al guardarlo, se agregara al organigrama",
+        icon: "question",
+    },async function () { 
 
-            await loaderbtn('guardarEncargado')
+        await loaderbtn('guardarEncargado')
 
-            await ajaxAwaitFormData({ api: 2, AREA_ID : ID_AREA, NUEVO: 1 }, 'areasSave', 'formCategoria', 'guardarEncargado', { callbackAfter: true}, false, function (data) {
-                    
-                setTimeout(() => {
-                    
-                    document.getElementById('formCategoria').reset();
-                    $('#esLiderText').text('Categoría')
+        await ajaxAwaitFormData({ api: 2, AREA_ID : ID_AREA, NUEVO: 1 }, 'areasSave', 'formCategoria', 'guardarEncargado', { callbackAfter: true}, false, function (data) {
+                
+            setTimeout(() => {
+                
+                document.getElementById('formCategoria').reset();
+                $('#esLiderText').text('Categoría')
 
-                    alertToast('Categoría agregada exitosamente', 'success', 3000)
+                alertToast('Categoría agregada exitosamente', 'success', 3000)
 
-                    // TablaAreas.ajax.reload()
-                    TablaCategorias.ajax.reload()
-                  
-                    
-                }, 300);  
-            })
-        }, 1)
-    }
+                TablaAreas.ajax.reload()
+                TablaCategorias.ajax.reload()
+                
+                
+            }, 300);  
+        })
+    }, 1)
+    
 });
 
 

@@ -181,21 +181,18 @@ class areasController extends Controller
     {
         try {
 
-            $tabla = DB::select("SELECT 
-                                    a.NOMBRE AS NOMBRE,
-                                    a.ID_AREA,
-                                    a.DESCRIPCION,
-                                    GROUP_CONCAT(DISTINCT CONCAT('<li>', catLider.NOMBRE_CATEGORIA, '</li>') ORDER BY catLider.NOMBRE_CATEGORIA SEPARATOR '') AS LIDERES,
-                                    GROUP_CONCAT(DISTINCT CONCAT('<li>', catCategoria.NOMBRE_CATEGORIA, '</li>') ORDER BY catCategoria.NOMBRE_CATEGORIA SEPARATOR '') AS CATEGORIAS
-                                FROM 
-                                    lideres_categorias relacion
-                                LEFT JOIN 
-                                    areas a ON a.ID_AREA = relacion.AREA_ID
-                                LEFT JOIN 
-                                    catalogo_categorias catLider ON catLider.ID_CATALOGO_CATEGORIA = relacion.LIDER_ID
-                                LEFT JOIN 
-                                    catalogo_categorias catCategoria ON catCategoria.ID_CATALOGO_CATEGORIA = relacion.CATEGORIA_ID
-                                GROUP BY a.NOMBRE , a.ID_AREA, a.DESCRIPCION");
+            $tabla = DB::select("SELECT a.ID_AREA,
+                                        a.NOMBRE AS NOMBRE,
+                                        a.DESCRIPCION AS DESCRIPCION,
+                                        IFNULL(GROUP_CONCAT(DISTINCT CONCAT('<li>', IFNULL(ccl.NOMBRE_CATEGORIA, cl.NOMBRE_CATEGORIA) , '</li>')  SEPARATOR ''), 'Sin Lider') AS LIDERES,
+                                        IFNULL(GROUP_CONCAT(DISTINCT CONCAT('<li>', ccc.NOMBRE_CATEGORIA, '</li>') ORDER BY ccc.NOMBRE_CATEGORIA SEPARATOR ''),'Sin Categorias') AS CATEGORIAS
+                            FROM areas a 
+                            LEFT JOIN lideres_categorias lc ON lc.AREA_ID = a.ID_AREA
+                            LEFT JOIN catalogo_categorias ccl ON ccl.ID_CATALOGO_CATEGORIA = lc.LIDER_ID
+                            LEFT JOIN catalogo_categorias ccc ON ccc.ID_CATALOGO_CATEGORIA = lc.CATEGORIA_ID
+                            LEFT JOIN areas_lideres al ON al.AREA_ID = a.ID_AREA
+                            LEFT JOIN catalogo_categorias cl ON cl.ID_CATALOGO_CATEGORIA = al.LIDER_ID
+                            GROUP BY a.ID_AREA");
             $COUNT = 1;
             foreach ($tabla as $key => $value) {
 

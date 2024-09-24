@@ -72,6 +72,7 @@
               <input type="hidden" name="TIPO_AREA_ID" value="4">
 
               <div class="row">
+                <span class="mb-3 text-center text-danger"><i class="bi bi-info-circle"></i> Asegurece de agregar primero los lideres del área si tiene alguno.</span>
                 <div class="col-9">
                   <label class="mb-2">Seleccione la categoría a agregar</label>
                   <select class="form-control" id="CATEGORIA" name="CATEGORIA" required>
