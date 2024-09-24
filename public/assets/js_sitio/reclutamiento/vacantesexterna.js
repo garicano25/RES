@@ -3,7 +3,7 @@ ID_BANCO_CV = 0
 ID_LISTA_POSTULANTES = 0
 
 document.getElementById('notRegisteredBtn').addEventListener('click', function() {
-    window.location.href = 'http://127.0.0.1:8000/Formulario-vacantes';
+    window.location.href = 'https://results-erp.results-in-performance.com/Formulario-vacantes';
 });
 
 document.getElementById('registeredBtn').addEventListener('click', function() {
