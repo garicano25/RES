@@ -78,6 +78,11 @@ Route::get('/Tablausuarios', [usuarioController::class, 'Tablausuarios']);
 Route::get('/usuarioDelete', [usuarioController::class, 'store']);
 Route::get('/usuariofoto/{id}', [usuarioController::class, 'mostrarFotoUsuario']);
 
+//==============================================  RRHH  ============================================== 
+
+Route::get('/inicio', function () {return view('RH.externa.diseño');});
+
+//==============================================  EXTERNO  ============================================== 
 
 
 //==============================================  ORGANIZACION  ============================================== 

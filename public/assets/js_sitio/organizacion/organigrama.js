@@ -501,7 +501,6 @@ function TablaEncargados(id_area) {
             { data: 'COUNT' },
             { data: 'NOMBRE' },
             { data: 'ES_LIDER' },
-            { data: 'BTN_EDITAR' },
             { data: 'BTN_ACTIVO' }
 
         ],
@@ -509,8 +508,7 @@ function TablaEncargados(id_area) {
             { target: 0, title: '#', className: 'all' },
             { target: 1, title: 'Nombre de la categoría', className: 'all' },
             { target: 2, title: 'Es líder', className: 'all text-center' },
-            { target: 3, title: 'Editar', className: 'all text-center' },
-            { target: 4, title: 'Estado', className: 'all text-center' },
+            { target: 3, title: 'Estado', className: 'all text-center' },
 
         ]
     })

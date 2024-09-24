@@ -227,7 +227,7 @@ use Carbon\Carbon;
 
 
 
-<div class="container-fluid">
+{{-- <div class="container-fluid">
     <div class="row">
         <!-- Panel Izquierdo -->
         <div id="panel-izquierdo" class="col-md-4" style="background-color: rgb(50 95 131); padding: 60px; color: white; height: 100vh;">
@@ -273,8 +273,66 @@ use Carbon\Carbon;
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Panel Izquierdo -->
+        <div id="panel-izquierdo" class="col-md-4" style="background-color: rgb(50 95 131); padding: 60px; color: white; height: 100vh;">
+            <h1 style="font-size: 2.5em;">Encuentra el <span style="color: #A4D65E;">trabajo</span> que <span style="font-family: 'Satisfy', cursive;">quieres</span><span style="font-size: 2em;">→</span></h1>
+
+            <div class="text-center mt-5">
+                <img src="/assets/images/image.png" alt="Logo Blanco" class="img-fluid">
+            </div>
+
+            <div class="d-flex justify-content-center mt-5">
+                <div class="text-center mx-3">
+                    <img src="/assets/images/medalla.png" alt="Postúlate" style="width: 100px; height: 100px;">
+                    <p style="font-size: 1.2em;">Postúlate gratis</p>
+                </div>
+                <div class="text-center mx-3">
+                    <img src="/assets/images/documentos.png" alt="Descubre Vacantes" style="width: 100px; height: 100px;">
+                    <p style="font-size: 1.2em;">Descubre vacantes</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="vacantes-container" class="col-md-8" style="background-color: #F7F9FB; padding: 60px;">
+            <!-- Título más grande -->
+            @if(count($vacantes) > 0)
+                <h1 style="color: #A4D65E; font-size: 3em; font-weight: bold;">Vacantes disponibles</h1>
+                <br>
+                <div class="row">
+                    @foreach($vacantes as $vacante)
+                        @php
+                            $slug = $vacante->ID_CATALOGO_VACANTE;
+                            $fechaFormateada = Carbon::parse($vacante->updated_at)->locale('es')->isoFormat('D [de] MMMM [del] YYYY');
+                        @endphp
+
+                        <div class="col-md-12 mb-4">
+                            <div class="card p-4" style="background-color: #A4D65E; border-radius: 15px; cursor: pointer;" onclick="showDetails('{{ $slug }}')">
+                                <div class="card-body text-white">
+                                    <h6 style="font-size: 1.2em;">{{ $fechaFormateada }}</h6>
+                                    <h3 class="card-title" style="font-size: 1.5em;">{{ $vacante->NOMBRE_CATEGORIA }}</h3>
+                                    <p style="font-size: 1.1em;"><i class="bi bi-geo-alt-fill"></i> {{ $vacante->LUGAR_VACANTE }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <!-- Mensaje de no hay vacantes disponibles -->
+                <div class="d-flex flex-column justify-content-center align-items-center" style="height: 100%;">
+                    <h3 style="color: #333; font-size: 2em; margin-top: 20px;">No hay vacantes disponibles por el momento</h3>
+                    <p style="font-size: 1.5em; color: #777; margin-top: 20px;">Por favor, vuelve a revisar más tarde.</p>
+                </div>
+            @endif
+        </div>
+    </div>
+</div>
 
 
 
