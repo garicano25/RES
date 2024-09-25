@@ -403,7 +403,7 @@
     @endif
 
     @if(request()->is('Postulaciones'))
-    <script src="/assets/js_sitio/reclutamiento/vacantesactivas.js"></script>
+    <script src="/assets/js_sitio/reclutamiento/vacantesactivas.js?v=1.0"></script>
     @endif
 
     @if(request()->is('Motivo-vacante'))
@@ -417,7 +417,7 @@
 
 
     @if(request()->is('Selección'))
-    <script src="/assets/js_sitio/seleccion/seleccion.js"></script>
+    <script src="/assets/js_sitio/seleccion/seleccion.js?v=1.0"></script>
     @endif
 
 

@@ -29,18 +29,39 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
-                <div id="modalContent"></div>
+                <!-- Contenedor para mostrar el total de resultados -->
+                
+                <!-- Tabs -->
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="postulante-tab" data-bs-toggle="tab" data-bs-target="#postulante" type="button" role="tab" aria-controls="postulante" aria-selected="true">
+                            Postulante <span class="badge bg-danger" id="postulante-count">0</span>
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="preseleccionar-tab" data-bs-toggle="tab" data-bs-target="#preseleccionar" type="button" role="tab" aria-controls="preseleccionar" aria-selected="false">
+                            Preseleccionar <span class="badge bg-warning" id="preseleccionar-count">0</span>
+                        </button>
+                    </li>
+                </ul>
+                
+                <br>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="postulante" role="tabpanel" aria-labelledby="postulante-tab">
+                        <div id="modalContent"></div>
+                    </div>
+                    <div class="tab-pane fade" id="preseleccionar" role="tabpanel" aria-labelledby="preseleccionar-tab">
+                    </div>
+                </div>
             </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
             </div>
-
-
         </div>
     </div>
 </div>
+
 
 
 

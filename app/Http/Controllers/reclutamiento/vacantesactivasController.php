@@ -9,6 +9,8 @@ use App\Models\organizacion\catalogocategoriaModel;
 use App\Models\selección\seleccionModel;
 use App\Models\reclutamiento\listapostulacionesModel;
 use App\Models\reclutamiento\bancocvModel;
+use App\Models\reclutamiento\vacantesactivasModel;
+
 
 use Illuminate\Support\Facades\Storage;
 
@@ -26,8 +28,6 @@ class vacantesactivasController extends Controller
     $areas = catalogocategoriaModel::where('ES_LIDER_CATEGORIA', 0)
     ->orderBy('NOMBRE_CATEGORIA', 'ASC')
     ->get();
-
-
 
 
     return view('RH.reclutamiento.Vacantes_activas', compact('areas'));
@@ -80,7 +80,32 @@ public function Tablapostulaciones()
 
 
 
+public function informacionPreseleccion($idVacante)
+{
+    try {
+        $preseleccionados = DB::table('vacantes_activas')
+            ->where('VACANTES_ID', $idVacante)
+            ->where('ACTIVO', 1)
+            ->select(
+                'CURP',
+                'NOMBRE_AC',
+                'PRIMER_APELLIDO_AC',
+                'SEGUNDO_APELLIDO_AC',
+                'CORREO_AC',
+                'TELEFONO1_AC',
+                'TELEFONO2_AC',
+                'PORCENTAJE'
+            )
+            ->get();
 
+        return response()->json($preseleccionados);
+    } catch (Exception $e) {
+        return response()->json([
+            'msj' => 'Error ' . $e->getMessage(),
+            'data' => 0
+        ]);
+    }
+}
 
 
 
@@ -155,20 +180,47 @@ public function mostrarCvPorCurp($curp)
 
 
 
-
-
-
-
-
-
-
-public function guardarSeleccion(Request $request)
+public function guardarPostulantes(Request $request)
 {
-    try {
-        // Actualizar la tabla lista_postulantes, estableciendo ACTIVO en 0 para la CURP especificada
-        listapostulacionesModel::where('CURP', $request->CURP)
-            ->where('VACANTES_ID', $request->VACANTES_ID)
+    $postulantes = $request->input('postulantes');
+
+    foreach ($postulantes as $postulante) {
+        // Primero desactivar registros anteriores de la misma CURP y VACANTE
+        listapostulacionesModel::where('CURP', $postulante['CURP'])
+            ->where('VACANTES_ID', $postulante['VACANTES_ID'])
             ->update(['ACTIVO' => 0]);
+
+        vacantesactivasModel::create([
+            'VACANTES_ID' => $postulante['VACANTES_ID'],
+            'CATEGORIA_VACANTE' => $postulante['CATEGORIA_VACANTE'],
+            'CURP' => $postulante['CURP'],
+            'NOMBRE_AC' => $postulante['NOMBRE_AC'],
+            'PRIMER_APELLIDO_AC' => $postulante['PRIMER_APELLIDO_AC'],
+            'SEGUNDO_APELLIDO_AC' => $postulante['SEGUNDO_APELLIDO_AC'],
+            'CORREO_AC' => $postulante['CORREO_AC'],
+            'TELEFONO1_AC' => $postulante['TELEFONO1_AC'],
+            'TELEFONO2_AC' => $postulante['TELEFONO2_AC'],
+            'PORCENTAJE' => $postulante['PORCENTAJE'],
+            'ACTIVO' => 1
+        ]);
+    }
+
+    return response()->json(['message' => 'Información guardada con éxito.'], 200);
+}
+
+
+
+
+
+
+public function guardarPreseleccion(Request $request)
+    {
+        try {
+
+        vacantesactivasModel::where('CURP', $request->CURP)
+        ->where('VACANTES_ID', $request->VACANTES_ID)
+        ->update(['ACTIVO' => 0]);
+
 
         // Guardar la información del postulante seleccionado en formulario_seleccion
         SeleccionModel::create([
@@ -181,14 +233,16 @@ public function guardarSeleccion(Request $request)
             'CORREO_SELEC' => $request->CORREO_SELEC,
             'TELEFONO1_SELECT' => $request->TELEFONO1_SELECT,
             'TELEFONO2_SELECT' => $request->TELEFONO2_SELECT,
-            'PORCENTAJE' => $request->PORCENTAJE  // Guardar el total del cumplimiento
+            'PORCENTAJE' => $request->PORCENTAJE,
         ]);
 
         return response()->json(['message' => 'Postulante seleccionado exitosamente.'], 200);
-    } catch (\Exception $e) {
+    } catch (Exception $e) {
         return response()->json(['message' => 'Error al seleccionar postulante: ' . $e->getMessage()], 500);
     }
 }
+
+
 
 
 

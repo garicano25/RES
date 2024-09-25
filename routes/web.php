@@ -235,11 +235,11 @@ Route::get('/Tablaareainteres', [catalogoareainteresController::class, 'Tablaare
 Route::get('/Postulaciones', [vacantesactivasController::class, 'index']);
 Route::get('/Tablapostulaciones', [vacantesactivasController::class, 'Tablapostulaciones']);
 Route::get('/informacionpostulantes/{idVacante}', [vacantesactivasController::class, 'informacionpostulantes']);
+Route::get('/informacionpreseleccion/{idVacante}', [VacantesactivasController::class, 'informacionPreseleccion']);
 Route::get('/obtener-cv/{curp}', [vacantesactivasController::class, 'mostrarCvPorCurp'])->name('mostrarCvPorCurp');
+Route::post('/guardarPostulantes', [vacantesactivasController::class, 'guardarPostulantes']);
+Route::post('/guardarPreseleccion', [vacantesactivasController::class, 'guardarPreseleccion']);
 
-
-
-Route::post('/guardarSeleccion', [vacantesactivasController::class, 'guardarSeleccion']);
 
 
 

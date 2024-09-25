@@ -110,9 +110,12 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
                                     <th class="text-center">Nombre Completo</th>
                                     <th class="text-center">CURP</th>
                                     <th class="text-center">Contacto</th>
-                                    <th class="text-center">% Entrevista</th>
+                                    <th class="text-center">% Inteligencia laboral</th>
+                                    <th class="text-center">% Buró laboral</th>
                                     <th class="text-center">% PPT</th>
-                                    <th class="text-center">% Pruebas</th>
+                                    <th class="text-center">% Referencias laboral</th>
+                                    <th class="text-center">%  Pruebas de conocimientos</th>
+                                    <th class="text-center">% Entrevista</th>
                                     <th class="text-center">Mostrar</th>
                                     <th class="text-center">Seleccionar</th>
 
@@ -131,6 +134,10 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
                                 <td class="text-center">
                                     <button type="button" class="btn btn-primary btn-circle" id="AbrirModalFull" data-bs-toggle="modal" data-bs-target="#FullScreenModal" data-curp="${item.CURP}">
                                     <i class="bi bi-eye-fill"></i>
