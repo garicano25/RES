@@ -51,36 +51,48 @@ class pptController extends Controller
 
 
 
-                ## CREADO Y AUN NO ESTA REVISADO NI AUTORIZADO
-                if (!is_null($value->ELABORADO_NOMBRE_PPT) && is_null($value->REVISADO_NOMBRE_PPT) && is_null($value->AUTORIZADO_NOMBRE_PPT)) {
+                // ## CREADO Y AUN NO ESTA REVISADO NI AUTORIZADO
+                // if (!is_null($value->ELABORADO_NOMBRE_PPT) && is_null($value->REVISADO_NOMBRE_PPT) && is_null($value->AUTORIZADO_NOMBRE_PPT)) {
 
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                    $value->BTN_PPT = '<button type="button" class="btn btn-success btn-custom rounded-pill PPT"><i class="bi bi-file-earmark-excel-fill"></i></button>';
+                //     $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
+                //     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                //     $value->BTN_PPT = '<button type="button" class="btn btn-success btn-custom rounded-pill PPT"><i class="bi bi-file-earmark-excel-fill"></i></button>';
     
-                    ##CREADO Y REVISADO PERO NO AUTORIZADO
-                } else if (!is_null($value->ELABORADO_NOMBRE_PPT) && !is_null($value->REVISADO_NOMBRE_PPT) && is_null($value->AUTORIZADO_NOMBRE_PPT)) {
+                //     ##CREADO Y REVISADO PERO NO AUTORIZADO
+                // } else if (!is_null($value->ELABORADO_NOMBRE_PPT) && !is_null($value->REVISADO_NOMBRE_PPT) && is_null($value->AUTORIZADO_NOMBRE_PPT)) {
 
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secondary btn-circle"><i class="bi bi-ban"></i></button>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-circle "><i class="bi bi-ban"></i></button>';
-                    $value->BTN_PPT = '<button type="button" class="btn btn-secondary btn-circle "><i class="bi bi-ban"></i></button>';
+                //     $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secondary btn-circle"><i class="bi bi-ban"></i></button>';
+                //     $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-circle "><i class="bi bi-ban"></i></button>';
+                //     $value->BTN_PPT = '<button type="button" class="btn btn-secondary btn-circle "><i class="bi bi-ban"></i></button>';
 
-                    ## CREADO, REVISADO Y AUTORIZADO
-                } else if (!is_null($value->ELABORADO_NOMBRE_PPT) && !is_null($value->REVISADO_NOMBRE_PPT) && !is_null($value->AUTORIZADO_NOMBRE_PPT)) {
+                //     ## CREADO, REVISADO Y AUTORIZADO
+                // } else if (!is_null($value->ELABORADO_NOMBRE_PPT) && !is_null($value->REVISADO_NOMBRE_PPT) && !is_null($value->AUTORIZADO_NOMBRE_PPT)) {
 
-                    $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secondary btn-circle "><i class="bi bi-ban"></i></button>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-circle"><i class="bi bi-ban"></i></button>';
-                    $value->BTN_PPT = '<button type="button" class="btn btn-success btn-circle PPT"><i class="bi bi-file-earmark-excel-fill"></i></button>';
-                    $value->BTN_ACCION = '<button type="button" class="btn btn-success btn-circle " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Finalizado PPT" title="Finalizado"><i class="bi bi-check-circle-fill"></i></button>';
+                //     $value->BTN_ELIMINAR = '<button type="button" class="btn btn-secondary btn-circle "><i class="bi bi-ban"></i></button>';
+                //     $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-circle"><i class="bi bi-ban"></i></button>';
+                //     $value->BTN_PPT = '<button type="button" class="btn btn-success btn-circle PPT"><i class="bi bi-file-earmark-excel-fill"></i></button>';
+                //     $value->BTN_ACCION = '<button type="button" class="btn btn-success btn-circle " data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Finalizado PPT" title="Finalizado"><i class="bi bi-check-circle-fill"></i></button>';
+                // }
+
+
+
+
+                if ($value->ACTIVO == 0) {
+                    // Botones  
+                    $value->BTN_PPT = '<button type="button" class="btn btn-success btn-custom rounded-pill DPT"disabled><i class="bi bi-ban"></i></button>';   
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_DPT . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+    
+    
+                } else {
+    
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_DPT . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_PPT = '<button type="button" class="btn btn-success btn-custom rounded-pill DPT"><i class="bi bi-file-earmark-excel-fill"></i></button>';
                 }
 
+                
 
-
-
-                // } else {
-
-                //     $value->boton_eliminar = '<button type="button" class="btn btn-secondary btn-circle"><i class="fa fa-ban"></i></button>';
-                // }
             }
 
             // respuesta
