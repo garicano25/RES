@@ -296,11 +296,3 @@ Route::get('/Tablapruebaconocimiento', [catalogopruebasController::class, 'Tabla
 
 
 
-Route::get('/clear-cache', function () {
-    Artisan::call('config:cache');
-    Artisan::call('config:clear');
-    Artisan::call('cache:clear');
-    Artisan::call('route:clear');
-    Artisan::call('view:clear');
-    return 'Application cache cleared';
-});
