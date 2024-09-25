@@ -98,7 +98,7 @@ public function informacionpostulantes($idVacante)
                 fb.CORREO_CV,
                 fb.TELEFONO1,
                 fb.TELEFONO2,
-                fb.ARCHIVO_CV, -- La ruta completa del archivo en la base de datos
+                fb.ARCHIVO_CV, 
                 lp.VACANTES_ID
             FROM lista_postulantes lp
             LEFT JOIN formulario_bancocv fb ON lp.CURP = fb.CURP_CV

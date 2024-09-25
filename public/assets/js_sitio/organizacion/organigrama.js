@@ -417,7 +417,7 @@ $('#CATEGORIA').on('change', function (e) {
 
     } else {
         $('#esLiderText').text('Es líder: No')
-        $('#LIDER').prop('disabled', false).prop('required', true)
+        $('#LIDER').prop('disabled', false).prop('required', false)
         $('#LIDER').val('')
         $('#ES_LIDER').val(0)
     }
@@ -428,7 +428,9 @@ $("#guardarEncargado").click(function (e) {
     e.preventDefault();
     
   
+    formularioValido = validarFormulario($('#formCategoria'))
 
+    if (formularioValido) {
         
     alertMensajeConfirm({
         title: "¿Desea agregar esta categoría al area actual?",
@@ -454,7 +456,12 @@ $("#guardarEncargado").click(function (e) {
             }, 300);  
         })
     }, 1)
-    
+} else {
+    // Muestra un mensaje de error o realiza alguna otra acción
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
+
 });
 
 

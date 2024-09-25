@@ -217,37 +217,22 @@ $("#DEPARTAMENTO_AREA_ID").on("change", function () {
 
 });
 
-$('#TablaPPT tbody').on('click', 'td>button.ELIMINAR', function () {
 
+
+$('#TablaPPT tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = TablaPPT.row(tr);
 
+    var estado = $(this).is(':checked') ? 1 : 0;
+
     data = {
         api: 1,
-        ELIMINAR: 1,
+        ELIMINAR: estado == 0 ? 1 : 0, 
         ID_FORMULARIO_PPT: row.data().ID_FORMULARIO_PPT
-    }
-    
-    eliminarDatoTabla(data, [TablaPPT], 'PPTDelete')
+    };
 
-})
-
-// $('#TablaPPT tbody').on('click', 'td>button.EDITAR', function () {
-
-
-//     var tr = $(this).closest('tr');
-//     var row = TablaPPT.row(tr);
-//     ID_FORMULARIO_PPT = row.data().ID_FORMULARIO_PPT
-//     data = row.data();
-//     form = "formularioPPT"
-
-   
-    
-//     //Rellenamos los datos del formulario
-//     editarDatoTabla(data,form,'miModal_PPT', 1)
-//     mostrarCursos(data,form)
-  
-// })
+    eliminarDatoTabla(data, [TablaPPT], 'pptDelete');
+});
 
 
 

@@ -80,13 +80,13 @@ class pptController extends Controller
                 if ($value->ACTIVO == 0) {
                     // Botones  
                     $value->BTN_PPT = '<button type="button" class="btn btn-success btn-custom rounded-pill DPT"disabled><i class="bi bi-ban"></i></button>';   
-                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_DPT . '"><span class="slider round"></span></label>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_PPT . '"><span class="slider round"></span></label>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
     
     
                 } else {
     
-                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_DPT . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_PPT . '" checked><span class="slider round"></span></label>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                     $value->BTN_PPT = '<button type="button" class="btn btn-success btn-custom rounded-pill DPT"><i class="bi bi-file-earmark-excel-fill"></i></button>';
                 }
@@ -152,6 +152,22 @@ public function store(Request $request)
         switch (intval($request->api)) {
                 //Guardar Area
             case 1:
+
+                if (isset($request->ELIMINAR)) {
+                    // Si existe la solicitud de eliminar, cambiar el estado de ACTIVO
+                    if ($request->ELIMINAR == 1) {
+                        $PPT = formulariopptModel::where('ID_FORMULARIO_PPT', $request['ID_FORMULARIO_PPT'])->update(['ACTIVO' => 0]);
+                        $response['code'] = 1;
+                        $response['PPT'] = 'Desactivado';
+                    } else {
+                        $PPT = formulariopptModel::where('ID_FORMULARIO_PPT', $request['ID_FORMULARIO_PPT'])->update(['ACTIVO' => 1]);
+                        $response['code'] = 1;
+                        $response['PPT'] = 'Activado';
+                    }
+                    return response()->json($response);
+                } 
+
+
 
                 //Guardamos Area
                 if ($request->ID_FORMULARIO_PPT == 0) {

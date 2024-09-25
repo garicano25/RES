@@ -330,12 +330,12 @@
 
     @if(request()->is('organigrama'))
     <!-- organización -->
-    <script src="/assets/js_sitio/organizacion/organigrama.js"></script>
+    <script src="/assets/js_sitio/organizacion/organigrama.js?v=1.0"></script>
     <script src="/assets/js/GOJs/go.js"></script>
     @endif
 
     @if(request()->is('PPT'))
-    <script src="/assets/js_sitio/organizacion/PPT.js"></script>
+    <script src="/assets/js_sitio/organizacion/PPT.js?v=1.0"></script>
     @endif
 
     @if(request()->is('DPT'))

@@ -105,7 +105,7 @@ Route::get('/TablaPPT', [pptController::class, 'TablaPPT']);
 Route::get('/autorizarPPT/{id_formulario}', [pptController::class, 'autorizarPPT']);
 Route::get('/revisarPPT/{id_formulario}', [pptController::class, 'revisarPPT']);
 Route::get('/makeExcelPPT/{id_formulario}', [makeExcelController::class, 'makeExcelPPT']);
-Route::get('/PPTDelete', [pptController::class, 'store']);
+Route::get('pptDelete', [pptController::class, 'store']);
 
 // DPT
 Route::get('/DPT', [dptController::class, 'index']);
