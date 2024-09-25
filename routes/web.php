@@ -292,3 +292,15 @@ Route::get('/Pruebas-conocimientos', function () {return view('RH.Catalogos.cata
 Route::post('/pruebaSave', [catalogopruebasController::class, 'store']);
 Route::get('/pruebaDelete', [catalogopruebasController::class, 'store']);
 Route::get('/Tablapruebaconocimiento', [catalogopruebasController::class, 'Tablapruebaconocimiento']);
+
+
+
+
+Route::get('/clear-cache', function () {
+    Artisan::call('config:cache');
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('view:clear');
+    return 'Application cache cleared';
+});
