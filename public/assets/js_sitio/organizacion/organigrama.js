@@ -151,6 +151,10 @@ function init(dataJsonOrganigrama) {
 }
 
 
+
+
+
+
 //LIMPIAMOS EL FORMULARIO DE AREAS CADA VEZ QUE ESTE SE CIERRE
 const ModalArea = document.getElementById('ModalArea')
 ModalArea.addEventListener('hidden.bs.modal', event => {
@@ -364,7 +368,6 @@ $('#TablaAreas tbody').on('click', 'td>button.ORGANIGRAMA', function () {
         
     })
 
-    
   
 })
 
@@ -398,7 +401,6 @@ $('#verOrganigramaGeneral').on('click', function () {
         
     })
 
-    
   
 })
 
@@ -542,3 +544,67 @@ $('#TablaEncargados').on('click', 'button.ELIMINAR', function () {
 
 
   
+
+
+$('#Capturarorganigrama').on('click', function () {
+    var organigramaDiv = document.getElementById('myDiagramDiv');
+
+    // Congelar el renderizado del organigrama antes de capturar
+    myDiagram.startTransaction("captura");
+
+    // Deshabilitar animaciones para evitar parpadeos
+    myDiagram.animationManager.isEnabled = false;
+
+    setTimeout(() => {
+        // Obtener los límites del contenido del diagrama (coordenadas relativas al diagrama)
+        var bounds = myDiagram.documentBounds;
+
+        // Usar `html2canvas` para capturar el `div` del organigrama
+        html2canvas(organigramaDiv, {
+            useCORS: true, // Permitir CORS si es necesario
+            scale: 2, // Aumenta la escala para mejor calidad
+            backgroundColor: null, // Hace que el fondo sea transparente
+            scrollX: 0, // Asegura que no haya desplazamiento horizontal
+            scrollY: -window.scrollY // Compensa el desplazamiento vertical de la ventana
+        }).then(function (canvas) {
+            // Crear un nuevo canvas para recortar la imagen
+            var croppedCanvas = document.createElement('canvas');
+            var croppedContext = croppedCanvas.getContext('2d');
+
+            // Definir dimensiones del canvas recortado según los límites del organigrama
+            var width = Math.ceil(bounds.width); // Ancho del organigrama
+            var height = Math.ceil(bounds.height); // Altura del organigrama
+
+            // Ajustar las dimensiones del nuevo canvas
+            croppedCanvas.width = width * 2; // Escala x2 para mejor calidad
+            croppedCanvas.height = height * 2;
+
+            // Copiar la parte visible del canvas al nuevo canvas recortado
+            croppedContext.drawImage(canvas,
+                (bounds.x - organigramaDiv.getBoundingClientRect().left) * 2, // Ajuste horizontal
+                (bounds.y - organigramaDiv.getBoundingClientRect().top) * 2, // Ajuste vertical
+                width * 2, height * 2, // Dimensiones del recorte
+                0, 0, width * 2, height * 2 // Posición en el nuevo canvas
+            );
+
+            // Convertir el nuevo canvas a una imagen en formato PNG
+            var imgData = croppedCanvas.toDataURL("image/png");
+
+            // Crear un enlace para descargar la imagen
+            var downloadLink = document.createElement('a');
+            downloadLink.href = imgData;
+            downloadLink.download = 'organigrama.png'; // Nombre del archivo
+            document.body.appendChild(downloadLink); // Agregar el enlace al cuerpo
+            downloadLink.click(); // Simular el clic para descargar la imagen
+            document.body.removeChild(downloadLink); // Eliminar el enlace después de la descarga
+
+            // Restaurar la configuración original después de la captura
+            myDiagram.commitTransaction("captura");
+        }).catch(function (error) {
+            console.error('Error capturando el organigrama:', error);
+
+            // Restaurar la configuración original en caso de error
+            myDiagram.commitTransaction("captura");
+        });
+    }, 100); // Tiempo de espera para asegurar renderizado
+});

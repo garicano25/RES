@@ -1545,23 +1545,23 @@ class makeExcelController extends Controller{
 
 
               // Agregar la imagen en la celda B144
-              $imagePath = public_path('/assets/images/organigramaaa.png'); // Asegúrate de que la ruta sea correcta
+            //   $imagePath = public_path('/assets/images/organigramaaa.png'); // Asegúrate de que la ruta sea correcta
         
-              $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-              $drawing->setName('Organigrama');
-              $drawing->setDescription('Organigrama');
-              $drawing->setPath($imagePath);
-              $drawing->setCoordinates('B144');
+            //   $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+            //   $drawing->setName('Organigrama');
+            //   $drawing->setDescription('Organigrama');
+            //   $drawing->setPath($imagePath);
+            //   $drawing->setCoordinates('B144');
               
-              // Ajustar el tamaño de la imagen para que sea grande
-              $drawing->setHeight($sheet->getRowDimension(144)->getRowHeight() * 175); 
-              $drawing->setWidth($sheet->getColumnDimension('B')->getWidth() * 175); 
+            //   // Ajustar el tamaño de la imagen para que sea grande
+            //   $drawing->setHeight($sheet->getRowDimension(144)->getRowHeight() * 175); 
+            //   $drawing->setWidth($sheet->getColumnDimension('B')->getWidth() * 175); 
               
-              // Centrar la imagen en la celda
-              $drawing->setOffsetX(($sheet->getColumnDimension('B')->getWidth() * 370 - $drawing->getWidth()) / 2);
-              $drawing->setOffsetY(($sheet->getRowDimension(144)->getRowHeight() * 250 - $drawing->getHeight()) / 2);
+            //   // Centrar la imagen en la celda
+            //   $drawing->setOffsetX(($sheet->getColumnDimension('B')->getWidth() * 370 - $drawing->getWidth()) / 2);
+            //   $drawing->setOffsetY(($sheet->getRowDimension(144)->getRowHeight() * 250 - $drawing->getHeight()) / 2);
       
-              $drawing->setWorksheet($spreadsheet->getActiveSheet());
+            //   $drawing->setWorksheet($spreadsheet->getActiveSheet());
         
 
 

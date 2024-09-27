@@ -203,7 +203,7 @@ height: 20px;
 
                 <div class="col-2">
                     <label>Etiqueta</label>
-                    <select class="form-select" id="ETIQUETA_TELEFONO2" name="ETIQUETA_TELEFONO2" required>
+                    <select class="form-select" id="ETIQUETA_TELEFONO2" name="ETIQUETA_TELEFONO2" >
                         <option value="0" selected disabled></option>
                         <option value="Móvil">Móvil</option>
                         <option value="Trabajo">Trabajo</option>
@@ -212,8 +212,8 @@ height: 20px;
                     </select>
                 </div>
                 <div class="col-10 mx-2">        
-                    <label class="me-2">Teléfono 2</label>
-                <input type="number" class="form-control col-auto" id="TELEFONO2" name="TELEFONO2"  maxlength="10" required>
+                    <label class="me-2">Teléfono 2 (opcional)</label>
+                <input type="number" class="form-control col-auto" id="TELEFONO2" name="TELEFONO2"  maxlength="10" >
                 </div>                
             </div>    
 

@@ -48,12 +48,13 @@ use App\Http\Controllers\seleccion\catalogopruebasController;
 
 
 
+
+//==============================================  login  ============================================== 
 // RUTA PRINCIPAL 
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
-//==============================================  login  ============================================== 
 // Rutas para login
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -78,12 +79,12 @@ Route::get('/Tablausuarios', [usuarioController::class, 'Tablausuarios']);
 Route::get('/usuarioDelete', [usuarioController::class, 'store']);
 Route::get('/usuariofoto/{id}', [usuarioController::class, 'mostrarFotoUsuario']);
 
-//==============================================  RRHH  ============================================== 
-
-Route::get('/inicio', function () {return view('RH.externa.diseño');});
 
 //==============================================  EXTERNO  ============================================== 
+Route::get('/inicio', function () {return view('RH.externa.diseño');});
 
+
+//==============================================  RRHH  ============================================== 
 
 //==============================================  ORGANIZACION  ============================================== 
 Route::get('/tablero', function () {return view('tablero.index');});
@@ -211,7 +212,6 @@ Route::get('/mostrarCurpCv/{id}', [bancocvController::class, 'mostrarCurpCv']);
 Route::get('/mostrarCv/{id}', [bancocvController::class, 'mostrarCv']);
 
 
-
 // Ruta para ver las vacantes externa en la aplicación
 Route::get('/Vacantes', [PuestoController::class, 'index']);
 Route::post('/actualizarinfo', [PuestoController::class, 'getCvInfo'])->name('actualizarinfo');
@@ -234,11 +234,16 @@ Route::get('/Tablaareainteres', [catalogoareainteresController::class, 'Tablaare
 // visualizar la vacantes y poder ver los que se han postulado y poder mandar a selección
 Route::get('/Postulaciones', [vacantesactivasController::class, 'index']);
 Route::get('/Tablapostulaciones', [vacantesactivasController::class, 'Tablapostulaciones']);
+
+// Poder visualizar la informaciónd de los postulantes y guardarlos 
 Route::get('/informacionpostulantes/{idVacante}', [vacantesactivasController::class, 'informacionpostulantes']);
-Route::get('/informacionpreseleccion/{idVacante}', [VacantesactivasController::class, 'informacionPreseleccion']);
 Route::get('/obtener-cv/{curp}', [vacantesactivasController::class, 'mostrarCvPorCurp'])->name('mostrarCvPorCurp');
 Route::post('/guardarPostulantes', [vacantesactivasController::class, 'guardarPostulantes']);
+
+// Poder visualizar la informacion de los que se van a  preseleccionar y  mandarlos a selección
 Route::post('/guardarPreseleccion', [vacantesactivasController::class, 'guardarPreseleccion']);
+Route::get('/informacionpreseleccion/{idVacante}', [VacantesactivasController::class, 'informacionPreseleccion']);
+Route::post('/actualizarDisponibilidad', [VacantesactivasController::class, 'actualizarDisponibilidad']);
 
 
 

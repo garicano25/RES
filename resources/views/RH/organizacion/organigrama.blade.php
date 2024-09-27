@@ -128,12 +128,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
-
-        <div class="md:flex flex-col md:flex-row md:min-h-screen w-full mx-auto">
-
-          <div id="allSampleContent" class="p-4 w-full ">
-
+        <div class="d-flex flex-column w-100 h-100">
+          <div id="allSampleContent" class="w-100 h-100 p-4 position-relative">
             <style type="text/css">
               #myOverviewDiv {
                 position: absolute;
@@ -142,29 +138,26 @@
                 top: 10px;
                 left: 10px;
                 background-color: #f2f2f2;
-                z-index: 300;
-                /* make sure its in front */
+                z-index: 300; /* Asegura que esté en frente */
                 border: solid 1px #7986cb;
-
               }
             </style>
 
-
-            <div id="sample" style="position: relative;" class="justify-content-center align-items-center">
-              <div id="myDiagramDiv" style="background-color: #ffffff; width: 100%; height: 77rem"></div>
+            <div id="sample" class="d-flex justify-content-center align-items-center position-relative h-100">
+              <div id="myDiagramDiv" style="background-color: #ffffff; width: 100%; height: 100%;"></div>
               <div id="myOverviewDiv"></div>
-
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-            <button type="button" class="btn btn-success">Capturar</button>
-          </div>
         </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+        {{-- <button type="button" id="Capturarorganigrama" class="btn btn-success">Capturar</button> --}}
       </div>
     </div>
   </div>
 </div>
+
 
 
 <!-- Modal Ccategoría !-->

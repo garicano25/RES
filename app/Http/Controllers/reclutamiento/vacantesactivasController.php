@@ -38,7 +38,7 @@ class vacantesactivasController extends Controller
 
 
 
-    
+// TABLA PARA VER TODAS LAS POSTULACIONES     
 public function Tablapostulaciones()
 {
     try {
@@ -79,7 +79,7 @@ public function Tablapostulaciones()
     
 
 
-
+// FUNCION  PARA CONSULTAR LAS PERSONAS QUE SE CREARON  PARA PODER PRESELECCIONAR 
 public function informacionPreseleccion($idVacante)
 {
     try {
@@ -94,7 +94,8 @@ public function informacionPreseleccion($idVacante)
                 'CORREO_AC',
                 'TELEFONO1_AC',
                 'TELEFONO2_AC',
-                'PORCENTAJE'
+                'PORCENTAJE',
+                'DISPONIBLE'
             )
             ->get();
 
@@ -109,7 +110,7 @@ public function informacionPreseleccion($idVacante)
 
 
 
-
+//  FUNCION PARA CONSULTAR LAS PERSONAS QUE SE POSTULARON 
 public function informacionpostulantes($idVacante)
 {
     try {
@@ -153,7 +154,7 @@ public function informacionpostulantes($idVacante)
 }
 
 
-
+//  FUNCION PARA MOSTRAR EL CV DE LA PERSONA QUE SE POSTULO A LA VACANTE 
 
 public function mostrarCvPorCurp($curp)
 {
@@ -178,32 +179,29 @@ public function mostrarCvPorCurp($curp)
 }
 
 
+//  FUNCION PARA GUARDAR LOS POSTULANTES 
 
-
-public function guardarPostulantes(Request $request)
+public function guardarPostulantes (Request $request)
 {
-    $postulantes = $request->input('postulantes');
+    $postulante = $request->all(); 
 
-    foreach ($postulantes as $postulante) {
-        // Primero desactivar registros anteriores de la misma CURP y VACANTE
-        listapostulacionesModel::where('CURP', $postulante['CURP'])
-            ->where('VACANTES_ID', $postulante['VACANTES_ID'])
-            ->update(['ACTIVO' => 0]);
+    listapostulacionesModel::where('CURP', $postulante['CURP'])
+        ->where('VACANTES_ID', $postulante['VACANTES_ID'])
+        ->update(['ACTIVO' => 0]);
 
-        vacantesactivasModel::create([
-            'VACANTES_ID' => $postulante['VACANTES_ID'],
-            'CATEGORIA_VACANTE' => $postulante['CATEGORIA_VACANTE'],
-            'CURP' => $postulante['CURP'],
-            'NOMBRE_AC' => $postulante['NOMBRE_AC'],
-            'PRIMER_APELLIDO_AC' => $postulante['PRIMER_APELLIDO_AC'],
-            'SEGUNDO_APELLIDO_AC' => $postulante['SEGUNDO_APELLIDO_AC'],
-            'CORREO_AC' => $postulante['CORREO_AC'],
-            'TELEFONO1_AC' => $postulante['TELEFONO1_AC'],
-            'TELEFONO2_AC' => $postulante['TELEFONO2_AC'],
-            'PORCENTAJE' => $postulante['PORCENTAJE'],
-            'ACTIVO' => 1
-        ]);
-    }
+    vacantesactivasModel::create([
+        'VACANTES_ID' => $postulante['VACANTES_ID'],
+        'CATEGORIA_VACANTE' => $postulante['CATEGORIA_VACANTE'],
+        'CURP' => $postulante['CURP'],
+        'NOMBRE_AC' => $postulante['NOMBRE_AC'],
+        'PRIMER_APELLIDO_AC' => $postulante['PRIMER_APELLIDO_AC'],
+        'SEGUNDO_APELLIDO_AC' => $postulante['SEGUNDO_APELLIDO_AC'],
+        'CORREO_AC' => $postulante['CORREO_AC'],
+        'TELEFONO1_AC' => $postulante['TELEFONO1_AC'],
+        'TELEFONO2_AC' => $postulante['TELEFONO2_AC'],
+        'PORCENTAJE' => $postulante['PORCENTAJE'],
+        'ACTIVO' => 1
+    ]);
 
     return response()->json(['message' => 'Información guardada con éxito.'], 200);
 }
@@ -212,6 +210,7 @@ public function guardarPostulantes(Request $request)
 
 
 
+//  FUNCION PARA GUARDAR LAS PERSONAS QUE SE PRESELECCIONARON  Y MANDARLO A SELECCIO  
 
 public function guardarPreseleccion(Request $request)
     {
@@ -222,7 +221,6 @@ public function guardarPreseleccion(Request $request)
         ->update(['ACTIVO' => 0]);
 
 
-        // Guardar la información del postulante seleccionado en formulario_seleccion
         SeleccionModel::create([
             'VACANTES_ID' => $request->VACANTES_ID,
             'CATEGORIA_VACANTE' => $request->CATEGORIA_VACANTE,
@@ -242,6 +240,36 @@ public function guardarPreseleccion(Request $request)
     }
 }
 
+ 
+// FUNCION PARA ACTULIZAR LA DISPONIBLIDAD DE LAS PERSONAS ANTES DE PRESELECCIONAR 
+
+public function actualizarDisponibilidad(Request $request)
+{
+    try {
+        // Validar los datos recibidos
+        $request->validate([
+            'VACANTES_ID' => 'required|integer',
+            'CURP' => 'required|string',
+            'DISPONIBLE' => 'required|string|in:si,no'
+        ]);
+
+        // Actualizar la disponibilidad en la tabla 'vacantes_activas'
+        $vacante = vacantesactivasModel::where('VACANTES_ID', $request->VACANTES_ID)
+            ->where('CURP', $request->CURP)
+            ->first();
+
+        if ($vacante) {
+            $vacante->DISPONIBLE = $request->DISPONIBLE;
+            $vacante->save();
+
+            return response()->json(['message' => 'Disponibilidad actualizada con éxito.'], 200);
+        } else {
+            return response()->json(['message' => 'Registro no encontrado.'], 404);
+        }
+    } catch (Exception $e) {
+        return response()->json(['message' => 'Error al actualizar la disponibilidad: ' . $e->getMessage()], 500);
+    }
+}
 
 
 

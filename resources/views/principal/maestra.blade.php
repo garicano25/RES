@@ -330,8 +330,10 @@
 
     @if(request()->is('organigrama'))
     <!-- organización -->
-    <script src="/assets/js_sitio/organizacion/organigrama.js?v=1.0"></script>
+    <script src="/assets/js_sitio/organizacion/organigrama.js?v=2.0"></script>
     <script src="/assets/js/GOJs/go.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     @endif
 
     @if(request()->is('PPT'))
@@ -403,7 +405,7 @@
     @endif
 
     @if(request()->is('Postulaciones'))
-    <script src="/assets/js_sitio/reclutamiento/vacantesactivas.js?v=1.0"></script>
+    <script src="/assets/js_sitio/reclutamiento/vacantesactivas.js?v=2.0"></script>
     @endif
 
     @if(request()->is('Motivo-vacante'))

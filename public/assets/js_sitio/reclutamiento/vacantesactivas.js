@@ -147,171 +147,11 @@ function cargarRequerimientos(requerimientos) {
 // Función para mostrar la información de los postulantes
 
 
-// function TotalPostulantes(idVacante, categoriaVacante) {
-//     Swal.fire({
-//         title: 'Consultando información',
-//         text: 'Por favor, espere...',
-//         allowOutsideClick: false,
-//         showConfirmButton: false,
-//         didOpen: () => {
-//             Swal.showLoading();
-//         }
-//     });
-
-//     $.ajax({
-//         url: '/informacionpostulantes/' + idVacante,
-//         method: 'GET',
-//         success: function(response) {
-//             Swal.close();
-
-//             if (response.postulantes.length > 0) {
-//                 let postulanteContent = '';
-//                 let preseleccionContent = '';
-
-//                 // Generar el contenido para la pestaña de Postulante
-//                 response.postulantes.forEach((personalInfo, index) => {
-//                     let archivoCVContent = '';
-//                     if (personalInfo.ARCHIVO_CV) {
-//                         archivoCVContent = `
-//                             <iframe src="/obtener-cv/${personalInfo.CURP_CV}" width="100%" height="100%" style="border: none;"></iframe>
-//                         `;
-//                     } else {
-//                         archivoCVContent = `
-//                             <div class="d-flex justify-content-center align-items-center" style="height: 100%;">
-//                                 <h5 class="text-danger">Archivo CV no encontrado.</h5>
-//                             </div>
-//                         `;
-//                     }
-
-//                     let postulanteCard = `
-//                         <div class="row mb-3 mt-5" data-curp="${personalInfo.CURP_CV}">
-//                             <div class="col-md-4 d-flex flex-column justify-content-start">
-//                                 <div class="card mb-3">
-//                                     <div class="card-body">
-//                                         <h5 class="card-title">Información Personal</h5>
-//                                         <p class="card-text"><strong>Nombre:</strong> ${personalInfo.NOMBRE_CV} ${personalInfo.PRIMER_APELLIDO_CV} ${personalInfo.SEGUNDO_APELLIDO_CV}</p>
-//                                         <p class="card-text"><strong>Correo:</strong> ${personalInfo.CORREO_CV}</p>
-//                                         <p class="card-text"><strong>Teléfonos:</strong> ${personalInfo.TELEFONO1}, ${personalInfo.TELEFONO2}</p>
-//                                     </div>
-//                                 </div>
-//                                 <div class="card flex-grow-1">
-//                                     <div class="card-body">
-//                                         <h5 class="card-title">Requerimientos de la Vacante</h5>
-//                                         <table class="table table-borderless">
-//                                             <thead>
-//                                                 <tr>
-//                                                     <th style="width: 70%;"></th>
-//                                                     <th style="width: 30%; text-align: right;">Cumple</th>
-//                                                 </tr>
-//                                             </thead>
-//                                             <tbody>
-//                                                 ${response.requerimientos.map((req, i) => `
-//                                                 <tr>
-//                                                     <td><strong>${i + 1}. ${req.NOMBRE_REQUERIMINETO}</strong></td>
-//                                                     <td class="text-right">
-//                                                         <div class="d-flex justify-content-between align-items-center">
-//                                                             <div class="form-check form-check-inline">
-//                                                                 <input class="form-check-input" type="radio" name="req-${req.NOMBRE_REQUERIMINETO}-${personalInfo.CURP_CV}" id="req-${req.NOMBRE_REQUERIMINETO}-si-${personalInfo.CURP_CV}" value="${req.PORCENTAJE}" onchange="actualizarTotal('${personalInfo.CURP_CV}')">
-//                                                                 <label class="form-check-label me-3" for="req-${req.NOMBRE_REQUERIMINETO}-si-${personalInfo.CURP_CV}">Sí</label>
-//                                                             </div>
-//                                                             <div class="form-check form-check-inline">
-//                                                                 <input class="form-check-input" type="radio" name="req-${req.NOMBRE_REQUERIMINETO}-${personalInfo.CURP_CV}" id="req-${req.NOMBRE_REQUERIMINETO}-no-${personalInfo.CURP_CV}" value="0" onchange="actualizarTotal('${personalInfo.CURP_CV}')">
-//                                                                 <label class="form-check-label me-3" for="req-${req.NOMBRE_REQUERIMINETO}-no-${personalInfo.CURP_CV}">No</label>
-//                                                             </div>
-//                                                             <span class="ms-3"><strong>${req.PORCENTAJE}%</strong></span>
-//                                                         </div>
-//                                                     </td>
-//                                                 </tr>
-//                                                 `).join('')}
-//                                             </tbody>
-//                                         </table>
-//                                         <hr>
-//                                         <div class="d-flex justify-content-between align-items-center mb-3">
-//                                             <span><strong>Total cumplimiento:</strong></span>
-//                                             <span id="total-cumplimiento-${personalInfo.CURP_CV}" class="total-porcentaje-circle">0%</span>
-//                                         </div>
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                             <div class="col-md-8">
-//                                 <div class="card h-100">
-//                                     <div class="card-body p-0">
-//                                         ${archivoCVContent}
-//                                     </div>
-//                                 </div>
-//                             </div>
-//                         </div>
-//                     `;
-//                     postulanteContent += postulanteCard;
-//                 });
-
-//                 // Realizar una nueva consulta para obtener los datos de preselección
-//                 $.ajax({
-//                     url: '/informacionpreseleccion/' + idVacante,
-//                     method: 'GET',
-//                     success: function(preseleccionResponse) {
-//                         preseleccionResponse.forEach((preseleccionInfo, index) => {
-//                             let preseleccionCard = `
-//                                 <div class="row mb-3 mt-5" data-curp="${preseleccionInfo.CURP}">
-//                                     <div class="col-md-12">
-//                                         <div class="card mb-3">
-//                                             <div class="card-body">
-//                                                 <h5 class="card-title">Información de Preselección</h5>
-//                                                 <p class="card-text"><strong>Nombre:</strong> ${preseleccionInfo.NOMBRE_AC} ${preseleccionInfo.PRIMER_APELLIDO_AC} ${preseleccionInfo.SEGUNDO_APELLIDO_AC}</p>
-//                                                 <p class="card-text"><strong>Correo:</strong> ${preseleccionInfo.CORREO_AC}</p>
-//                                                 <p class="card-text"><strong>Teléfonos:</strong> ${preseleccionInfo.TELEFONO1_AC}, ${preseleccionInfo.TELEFONO2_AC}</p>
-//                                                 <p class="card-text"><strong>Porcentaje de Cumplimiento:</strong> ${preseleccionInfo.PORCENTAJE}%</p>
-//                                             </div>
-//                                         </div>
-//                                     </div>
-//                                 </div>
-//                             `;
-//                             preseleccionContent += preseleccionCard;
-//                         });
-
-//                         // Cargar contenido en ambos tabs
-//                         $('#postulante').html(postulanteContent);
-//                         $('#preseleccionar').html(preseleccionContent);
-
-//                         var myModal = new bootstrap.Modal(document.getElementById('modalFullScreen'), {
-//                             keyboard: true
-//                         });
-//                         myModal.show();
-//                     },
-//                     error: function(error) {
-//                         Swal.fire({
-//                             icon: 'error',
-//                             title: 'Error',
-//                             text: 'Hubo un problema al consultar la información de preselección. Por favor, inténtelo de nuevo.',
-//                             confirmButtonText: 'Aceptar'
-//                         });
-//                     }
-//                 });
-
-//             } else {
-//                 Swal.fire({
-//                     icon: 'info',
-//                     title: 'No hay registros',
-//                     text: 'No se encontraron postulantes para esta vacante.',
-//                     confirmButtonText: 'Aceptar'
-//                 });
-//             }
-//         },
-//         error: function(error) {
-//             Swal.close();
-//             Swal.fire({
-//                 icon: 'error',
-//                 title: 'Error',
-//                 text: 'Hubo un problema al consultar la información. Por favor, inténtelo de nuevo.',
-//                 confirmButtonText: 'Aceptar'
-//             });
-//         }
-//     });
-// }
 
 
 let idVacanteGlobal;
 let categoriaVacanteGlobal;
+
 
 function TotalPostulantes(idVacante, categoriaVacante) {
     // Asignar valores a las variables globales
@@ -394,6 +234,9 @@ function TotalPostulantes(idVacante, categoriaVacante) {
                                             <span><strong>Total cumplimiento:</strong></span>
                                             <span id="total-cumplimiento-${personalInfo.CURP_CV}" class="total-porcentaje-circle">0%</span>
                                         </div>
+                                        <div class="text-center mt-4">
+                                            <button class="btn btn-success guardar-postulante" data-curp="${personalInfo.CURP_CV}" data-id="${idVacante}" data-categoria="${categoriaVacante}">Guardar Información</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -408,21 +251,30 @@ function TotalPostulantes(idVacante, categoriaVacante) {
                     `;
                     postulanteContent += postulanteCard;
                 });
-
-                postulanteContent += `
-                    <div class="text-center mt-4">
-                        <button id="guardarPostulantes" class="btn btn-success">Guardar Información</button>
-                    </div>
-                `;
             } else {
                 postulanteContent = '<p class="text-center mt-3">No se encontraron postulantes para esta vacante.</p>';
             }
+
+            // Mostrar el modal después de cargar el contenido (independientemente de si hay registros)
+            var myModal = new bootstrap.Modal(document.getElementById('modalFullScreen'), {
+                keyboard: true
+            });
+            myModal.show();
 
             // Actualizar el contador del tab de Postulantes
             $('#postulante-count').text(totalPostulantes);
 
             // Cargar contenido en el tab de postulante
             $('#postulante').html(postulanteContent);
+
+            // Manejador de clic para cada botón "Guardar Información"
+            $('.guardar-postulante').click(function() {
+                let curp = $(this).data('curp');
+                let idVacante = $(this).data('id');
+                let categoriaVacante = $(this).data('categoria');
+                let postulante = response.postulantes.find(p => p.CURP_CV === curp);
+                guardarInformacionPostulante(idVacante, categoriaVacante, postulante);
+            });
 
             // Realizar una nueva consulta para obtener el conteo de preseleccionados
             $.ajax({
@@ -434,16 +286,11 @@ function TotalPostulantes(idVacante, categoriaVacante) {
                     // Actualizar el contador del tab de Preselección
                     $('#preseleccionar-count').text(totalPreseleccionados);
 
-                    // Mostrar el modal
-                    var myModal = new bootstrap.Modal(document.getElementById('modalFullScreen'), {
-                        keyboard: true
-                    });
-                    myModal.show();
+                    // Mostrar el modal (si no se ha mostrado antes
+                    if (!myModal._isShown) {
+                        myModal.show();
+                    }
 
-                    // Manejador de clic para guardar la información
-                    $('#guardarPostulantes').click(function() {
-                        guardarInformacionPostulantes(idVacante, categoriaVacante, response.postulantes);
-                    });
                 },
                 error: function(error) {
                     Swal.fire({
@@ -470,27 +317,25 @@ function TotalPostulantes(idVacante, categoriaVacante) {
 
 
 
-function guardarInformacionPostulantes(idVacante, categoriaVacante, postulantes) {
-    let datos = postulantes.map(postulante => {
-        let totalCumplimiento = $(`#total-cumplimiento-${postulante.CURP_CV}`).text().replace('%', '');
-        return {
-            VACANTES_ID: idVacante,
-            CATEGORIA_VACANTE: categoriaVacante,
-            CURP: postulante.CURP_CV,
-            NOMBRE_AC: postulante.NOMBRE_CV,
-            PRIMER_APELLIDO_AC: postulante.PRIMER_APELLIDO_CV,
-            SEGUNDO_APELLIDO_AC: postulante.SEGUNDO_APELLIDO_CV,
-            CORREO_AC: postulante.CORREO_CV,
-            TELEFONO1_AC: postulante.TELEFONO1,
-            TELEFONO2_AC: postulante.TELEFONO2,
-            PORCENTAJE: totalCumplimiento
-        };
-    });
+function guardarInformacionPostulante(idVacante, categoriaVacante, postulante) {
+    let totalCumplimiento = $(`#total-cumplimiento-${postulante.CURP_CV}`).text().replace('%', '');
+    let datos = {
+        VACANTES_ID: idVacante,
+        CATEGORIA_VACANTE: categoriaVacante,
+        CURP: postulante.CURP_CV,
+        NOMBRE_AC: postulante.NOMBRE_CV,
+        PRIMER_APELLIDO_AC: postulante.PRIMER_APELLIDO_CV,
+        SEGUNDO_APELLIDO_AC: postulante.SEGUNDO_APELLIDO_CV,
+        CORREO_AC: postulante.CORREO_CV,
+        TELEFONO1_AC: postulante.TELEFONO1,
+        TELEFONO2_AC: postulante.TELEFONO2,
+        PORCENTAJE: totalCumplimiento
+    };
 
-    // SweetAlert de confirmación
+
     Swal.fire({
         title: '¿Está seguro?',
-        text: '¿Desea enviar la información de los postulantes?',
+        text: '¿Desea enviar la información de este postulante?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Sí, enviar',
@@ -507,9 +352,7 @@ function guardarInformacionPostulantes(idVacante, categoriaVacante, postulantes)
                 headers: {
                     'X-CSRF-TOKEN': token // Agregar el token CSRF en el encabezado
                 },
-                data: {
-                    postulantes: datos
-                },
+                data: datos,
                 success: function(response) {
                     Swal.fire({
                         icon: 'success',
@@ -517,18 +360,15 @@ function guardarInformacionPostulantes(idVacante, categoriaVacante, postulantes)
                         text: 'La información se guardó correctamente.',
                         confirmButtonText: 'Aceptar'
                     }).then(() => {
-                        // Eliminar las tarjetas de los postulantes que se guardaron
-                        datos.forEach(postulante => {
-                            $(`div[data-curp="postulante-${postulante.CURP}"]`).remove();
-                        });
+                        // Eliminar la tarjeta del postulante guardado
+                        $(`div[data-curp="postulante-${postulante.CURP_CV}"]`).remove();
 
                         // Actualizar el contador de la pestaña de Postulantes
                         let remainingPostulantes = $('#postulante .row[data-curp]').length;
                         $('#postulante-count').text(remainingPostulantes);
 
-                        // Si no quedan más postulantes, eliminar el botón de guardar
+                        // Si no quedan más postulantes, mostrar mensaje
                         if (remainingPostulantes === 0) {
-                            $('#guardarPostulantes').remove();
                             $('#postulante').append('<p class="text-center mt-3">No se encontraron más postulantes para guardar.</p>');
                         }
 
@@ -596,117 +436,7 @@ function guardarInformacionPostulantes(idVacante, categoriaVacante, postulantes)
 }
 
 
-// $(document).ready(function () {
-//     // Evento al hacer clic en la pestaña de "Preseleccionar"
-//     $('#preseleccionar-tab').on('click', function () {
-//         let idVacante = idVacanteGlobal;
-//         let categoriaVacante = categoriaVacanteGlobal;
 
-//         // Verificar que las variables globales estén definidas antes de hacer la solicitud AJAX
-//         if (idVacante && categoriaVacante) {
-//             $.ajax({
-//                 url: '/informacionpreseleccion/' + idVacante,
-//                 method: 'GET',
-//                 beforeSend: function () {
-//                     // Mostrar un spinner o mensaje de carga en el tab de preselección
-//                     $('#preseleccionar').html('<div class="text-center mt-3"><div class="spinner-border" role="status"><span class="visualmente-oculto"></span></div></div>');
-//                 },
-//                 success: function (preseleccionResponse) {
-//                     let preseleccionContent = '';
-//                     let totalPreseleccionados = preseleccionResponse.length;
-
-//                     if (totalPreseleccionados > 0) {
-//                         // Construcción de la tabla completa usando JavaScript
-//                         preseleccionContent += `
-//                             <div class="table-responsive">
-//                                 <table class="table table-bordered">
-//                                     <thead>
-//                                         <tr>
-//                                             <th>Nombre</th>
-//                                             <th>Correo</th>
-//                                             <th>Teléfonos</th>
-//                                             <th>% de Cumplimiento</th>
-//                                             <th>Disponibilidad</th>
-//                                             <th></th>
-//                                         </tr>
-//                                     </thead>
-//                                     <tbody>
-//                         `;
-
-//                         preseleccionResponse.forEach((preseleccionInfo, index) => {
-//                             preseleccionContent += `
-//                                 <tr data-curp="${preseleccionInfo.CURP}">
-//                                     <td>${preseleccionInfo.NOMBRE_AC} ${preseleccionInfo.PRIMER_APELLIDO_AC} ${preseleccionInfo.SEGUNDO_APELLIDO_AC}</td>
-//                                     <td>${preseleccionInfo.CORREO_AC}</td>
-//                                     <td>${preseleccionInfo.TELEFONO1_AC}, ${preseleccionInfo.TELEFONO2_AC}</td>
-//                                     <td>${preseleccionInfo.PORCENTAJE}%</td>
-//                                     <td class="radio-group">
-//                                         <div class="form-check form-check-inline">
-//                                             <input class="form-check-input" type="radio" name="disponible-${index}" id="disponible-si-${index}" value="si" onchange="toggleButtonState(${index}, true)">
-//                                             <label class="form-check-label" for="disponible-si-${index}">Sí</label>
-//                                         </div>
-//                                         <div class="form-check form-check-inline">
-//                                             <input class="form-check-input" type="radio" name="disponible-${index}" id="disponible-no-${index}" value="no" onchange="toggleButtonState(${index}, false)">
-//                                             <label class="form-check-label" for="disponible-no-${index}">No</label>
-//                                         </div>
-//                                     </td>
-//                                     <td>
-//                                         <button class="btn btn-success btn-action" id="action-button-${index}" disabled>Preseleccionar</button>
-//                                     </td>
-//                                 </tr>
-//                             `;
-//                         });
-
-//                         // Cerrar la tabla y el div de responsive
-//                         preseleccionContent += `
-//                                     </tbody>
-//                                 </table>
-//                             </div>
-//                         `;
-//                     } else {
-//                         // Mensaje si no hay registros de preselección
-//                         preseleccionContent = '<p class="text-center mt-3">No se encontraron registros de preseleccionados para esta vacante.</p>';
-//                     }
-
-//                     // Actualizar el contador del tab de Preselección
-//                     $('#preseleccionar-count').text(totalPreseleccionados);
-
-//                     // Cargar contenido en el tab de preseleccionar
-//                     $('#preseleccionar').html(preseleccionContent);
-//                 },
-//                 error: function (error) {
-//                     Swal.fire({
-//                         icon: 'error',
-//                         title: 'Error',
-//                         text: 'Hubo un problema al consultar la información de preselección. Por favor, inténtelo de nuevo.',
-//                         confirmButtonText: 'Aceptar'
-//                     });
-//                 }
-//             });
-//         } else {
-//             // Mostrar un mensaje de error si las variables no están definidas
-//             Swal.fire({
-//                 icon: 'error',
-//                 title: 'Error',
-//                 text: 'No se pudo obtener la información de la vacante. Por favor, inténtelo de nuevo.',
-//                 confirmButtonText: 'Aceptar'
-//             });
-//         }
-//     });
-
-//     // Función para habilitar o deshabilitar el botón según la disponibilidad seleccionada
-//     window.toggleButtonState = function(index, isAvailable) {
-//         const button = $(`#action-button-${index}`);
-//         if (isAvailable) {
-//             button.removeAttr('disabled');
-//             button.removeClass('btn-secondary').addClass('btn-primary');
-//         } else {
-//             button.attr('disabled', 'disabled');
-//             button.removeClass('btn-primary').addClass('btn-secondary');
-//         }
-//     };
-
-// });
 
 $(document).ready(function () {
     // Evento al hacer clic en la pestaña de "Preseleccionar"
@@ -746,6 +476,12 @@ $(document).ready(function () {
                         `;
 
                         preseleccionResponse.forEach((preseleccionInfo, index) => {
+                            // Determinar el valor inicial de los radios basado en 'DISPONIBLE'
+                            let checkedSi = preseleccionInfo.DISPONIBLE === 'si' ? 'checked' : '';
+                            let checkedNo = preseleccionInfo.DISPONIBLE === 'no' ? 'checked' : '';
+                            let buttonDisabled = preseleccionInfo.DISPONIBLE === 'si' ? '' : 'disabled';
+                            let buttonClass = preseleccionInfo.DISPONIBLE === 'si' ? 'btn-primary' : 'btn-secondary';
+
                             preseleccionContent += `
                                 <tr data-curp="${preseleccionInfo.CURP}">
                                     <td>${preseleccionInfo.NOMBRE_AC} ${preseleccionInfo.PRIMER_APELLIDO_AC} ${preseleccionInfo.SEGUNDO_APELLIDO_AC}</td>
@@ -754,16 +490,16 @@ $(document).ready(function () {
                                     <td>${preseleccionInfo.PORCENTAJE}%</td>
                                     <td class="radio-group">
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="disponible-${index}" id="disponible-si-${index}" value="si" onchange="toggleButtonState(${index}, true)">
+                                            <input class="form-check-input" type="radio" name="disponible-${index}" id="disponible-si-${index}" value="si" ${checkedSi} onchange="actualizarDisponibilidad(${index}, '${preseleccionInfo.CURP}', true)">
                                             <label class="form-check-label" for="disponible-si-${index}">Sí</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="disponible-${index}" id="disponible-no-${index}" value="no" onchange="toggleButtonState(${index}, false)">
+                                            <input class="form-check-input" type="radio" name="disponible-${index}" id="disponible-no-${index}" value="no" ${checkedNo} onchange="actualizarDisponibilidad(${index}, '${preseleccionInfo.CURP}', false)">
                                             <label class="form-check-label" for="disponible-no-${index}">No</label>
                                         </div>
                                     </td>
                                     <td>
-                                        <button class="btn btn-success btn-action" id="action-button-${index}" disabled onclick="guardarPreseleccion(${index}, '${preseleccionInfo.CURP}', '${preseleccionInfo.NOMBRE_AC}', '${preseleccionInfo.PRIMER_APELLIDO_AC}', '${preseleccionInfo.SEGUNDO_APELLIDO_AC}', '${preseleccionInfo.CORREO_AC}', '${preseleccionInfo.TELEFONO1_AC}', '${preseleccionInfo.TELEFONO2_AC}', ${preseleccionInfo.PORCENTAJE})">Preseleccionar</button>
+                                        <button class="btn btn-success btn-action ${buttonClass}" id="action-button-${index}" ${buttonDisabled} onclick="guardarPreseleccion(${index}, '${preseleccionInfo.CURP}', '${preseleccionInfo.NOMBRE_AC}', '${preseleccionInfo.PRIMER_APELLIDO_AC}', '${preseleccionInfo.SEGUNDO_APELLIDO_AC}', '${preseleccionInfo.CORREO_AC}', '${preseleccionInfo.TELEFONO1_AC}', '${preseleccionInfo.TELEFONO2_AC}', ${preseleccionInfo.PORCENTAJE})">Preseleccionar</button>
                                     </td>
                                 </tr>
                             `;
@@ -807,15 +543,41 @@ $(document).ready(function () {
     });
 
     // Función para habilitar o deshabilitar el botón según la disponibilidad seleccionada
-    window.toggleButtonState = function(index, isAvailable) {
+    window.actualizarDisponibilidad = function(index, curp, isAvailable) {
         const button = $(`#action-button-${index}`);
-        if (isAvailable) {
-            button.removeAttr('disabled');
-            button.removeClass('btn-secondary').addClass('btn-primary');
-        } else {
-            button.attr('disabled', 'disabled');
-            button.removeClass('btn-primary').addClass('btn-secondary');
-        }
+        const vacanteID = idVacanteGlobal;
+
+        // Actualizar la base de datos con la disponibilidad seleccionada
+        $.ajax({
+            url: '/actualizarDisponibilidad', // Asegúrate de que esta URL apunte a la ruta correcta en tu backend
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                VACANTES_ID: vacanteID,
+                CURP: curp,
+                DISPONIBLE: isAvailable ? 'si' : 'no'
+            },
+            success: function(response) {
+                // Cambiar el estado del botón de preselección
+                if (isAvailable) {
+                    button.removeAttr('disabled');
+                    button.removeClass('btn-secondary').addClass('btn-primary');
+                } else {
+                    button.attr('disabled', 'disabled');
+                    button.removeClass('btn-primary').addClass('btn-secondary');
+                }
+            },
+            error: function(error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un problema al actualizar la disponibilidad. Por favor, inténtelo de nuevo.',
+                    confirmButtonText: 'Aceptar'
+                });
+            }
+        });
     };
 
     // Función para guardar la información del postulante preseleccionado con SweetAlert de confirmación
@@ -857,7 +619,6 @@ $(document).ready(function () {
                     TELEFONO1_SELECT: telefono1,
                     TELEFONO2_SELECT: telefono2,
                     PORCENTAJE: porcentaje,
-                   
                 };
 
                 // Enviar la información al servidor mediante una petición AJAX
@@ -872,7 +633,7 @@ $(document).ready(function () {
                         Swal.fire({
                             icon: 'success',
                             title: 'Preseleccionado ',
-                            text: 'El postulante ha sido preseleccionado  y guardado exitosamente.',
+                            text: 'El postulante ha sido preseleccionado y guardado exitosamente.',
                             confirmButtonText: 'Aceptar'
                         }).then(() => {
                             // Eliminar la fila correspondiente al postulante guardado
@@ -945,92 +706,7 @@ function actualizarTotal(curp) {
     }
 }
 
-function seleccionarPostulante(vacantesId, curp, nombre, primerApellido, segundoApellido, correo, telefono1, telefono2, categoriaVacante) {
-    const totalCumplimiento = document.getElementById(`total-cumplimiento-${curp}`).textContent.replace('%', '');
 
-    Swal.fire({
-        title: '¿Estás seguro?',
-        text: `Estás a punto de preseleccionar a ${nombre} ${primerApellido} ${segundoApellido}.`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, seleccionar',
-        cancelButtonText: 'Cancelar'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                icon: 'info',
-                title: 'Espere un momento',
-                text: 'Estamos guardando la información',
-                showConfirmButton: false,
-                allowOutsideClick: false,
-                willOpen: () => {
-                    $('.swal2-popup').addClass('ld ld-breath');
-                }
-            });
-
-            $.ajax({
-                url: '/guardarSeleccion',
-                method: 'POST',
-                data: {
-                    VACANTES_ID: vacantesId,
-                    CATEGORIA_VACANTE: categoriaVacante,
-                    CURP: curp,
-                    NOMBRE_SELC: nombre,
-                    PRIMER_APELLIDO_SELEC: primerApellido,
-                    SEGUNDO_APELLIDO_SELEC: segundoApellido,
-                    CORREO_SELEC: correo,
-                    TELEFONO1_SELECT: telefono1,
-                    TELEFONO2_SELECT: telefono2,
-                    PORCENTAJE: totalCumplimiento  
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(response) {
-                    Swal.close(); 
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Preseleccionado ',
-                        text: 'El postulante ha sido preseleccionado  y guardado exitosamente.',
-                        confirmButtonText: 'Aceptar'
-                    }).then(() => {
-                        const postulanteCard = document.querySelector(`#modalContent div[data-curp="${curp}"]`);
-                        
-                        if (postulanteCard) {
-
-                            postulanteCard.classList.add('fade-out');
-
-                            setTimeout(() => {
-                                postulanteCard.remove();
-
-                                if (document.querySelectorAll('#modalContent .row.mb-3.mt-5').length === 0) {
-                                    $('#modalFullScreen').modal('hide');
-                                }
-
-                                Tablapostulaciones.ajax.reload(null, false); 
-                            }, 500); 
-                        } else {
-                            console.error(`Elemento con CURP ${curp} no encontrado.`);
-                        }
-                    });
-                },
-                error: function(error) {
-                    Swal.close(); 
-
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Hubo un problema al guardar la preselección. Por favor, inténtelo de nuevo.',
-                        confirmButtonText: 'Aceptar'
-                    });
-                }
-            });
-        }
-    });
-}
 
 
 

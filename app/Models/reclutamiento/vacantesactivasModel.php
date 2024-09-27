@@ -20,6 +20,7 @@ class vacantesactivasModel extends Model
         'TELEFONO1_AC',
         'TELEFONO2_AC',
         'PORCENTAJE',
+        'DISPONIBLE',
         'ACTIVO'
     ];
 }
