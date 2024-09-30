@@ -226,3 +226,82 @@ $(document).ready(function() {
     });
 });
 
+
+
+function agregarpruebas() {
+    const divInput = document.createElement('div');
+    divInput.classList.add('form-group', 'row', 'input-container', 'mb-3');
+
+    let opcionesPruebas = '<option value="" disabled selected></option>';
+    pruebas.forEach(function(prueba) {
+        opcionesPruebas += `<option value="${prueba.NOMBRE_PRUEBA}">${prueba.NOMBRE_PRUEBA}</option>`;
+    });
+
+    divInput.innerHTML = `
+        <div class="col-5 text-center">
+            <label for="tipoPrueba">Nombre de la prueba</label>
+            <select name="TIPO_PRUEBA[]" class="form-control">
+                ${opcionesPruebas}
+            </select>
+        </div>
+        <div class="col-5 text-center">
+            <label for="cantidad">% de la prueba</label>
+            <input type="number" name="PORCENTAJE[]" class="form-control"  max="100" min="0" step="1" maxlength="3">
+        </div>
+        <div class="col-1">
+            <br>
+            <button type="button" class="btn btn-danger botonEliminar"><i class="bi bi-trash3-fill"></i></button>
+        </div>
+    `;
+
+    document.getElementById('inputs-prueba').appendChild(divInput);
+
+    actualizarOpcionespruebas();
+
+    divInput.querySelector('select[name="TIPO_PRUEBA[]"]').addEventListener('change', function() {
+        actualizarOpcionespruebas();
+    });
+
+    const botonEliminar = divInput.querySelector('.botonEliminar');
+    botonEliminar.addEventListener('click', function () {
+        const selectedValue = divInput.querySelector('select[name="TIPO_PRUEBA[]"]').value;
+        if (selectedValue) {
+            const selects = document.querySelectorAll('select[name="TIPO_PRUEBA[]"]');
+            selects.forEach(select => {
+                const existeOpcion = Array.from(select.options).some(option => option.value === selectedValue);
+                if (!existeOpcion) {
+                    const option = document.createElement('option');
+                    option.value = selectedValue;
+                    option.textContent = selectedValue;
+                    select.appendChild(option);
+                }
+            });
+        }
+
+        divInput.remove();
+        actualizarOpcionespruebas(); 
+    });
+}
+
+function actualizarOpcionespruebas() {
+    const selects = document.querySelectorAll('select[name="TIPO_PRUEBA[]"]');
+    const seleccionadas = Array.from(selects).map(select => select.value).filter(v => v); 
+
+    selects.forEach(select => {
+        const currentValue = select.value;
+        const opciones = select.querySelectorAll('option');
+        opciones.forEach(option => {
+            if (seleccionadas.includes(option.value) && option.value !== currentValue) {
+                option.remove(); 
+            }
+        });
+    });
+}
+
+// Evento del botón para agregar una nueva prueba
+document.getElementById('botonAgregarprueba').addEventListener('click', agregarpruebas);
+
+
+
+
+

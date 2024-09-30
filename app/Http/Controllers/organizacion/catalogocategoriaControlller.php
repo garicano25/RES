@@ -6,13 +6,30 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\organizacion\catalogocategoriaModel;
+use App\Models\selección\catalogopruebasconocimientosModel;
 
 
 use DB;
 
 
+
+
+
+
+
 class catalogocategoriaControlller extends Controller
 {
+
+
+ public function index()
+{
+    $pruebas = catalogopruebasconocimientosModel::orderBy('NOMBRE_PRUEBA', 'ASC')->get();
+    return view('RH.Catalogos.catalogo_categorias', compact('pruebas'));
+}
+
+
+
+
     public function Tablacategoria()
     {
         try {

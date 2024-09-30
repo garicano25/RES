@@ -322,6 +322,57 @@ public function mostrarburo($id)
 
 
 
+// public function Tablareferencia(Request $request)
+// {
+//     try {
+//         $curp = $request->get('curp');
+
+//         // Obtener las referencias de selección
+//         $tabla = referenciaseleccionModel::where('CURP', $curp)->get();
+
+//         // Variable para almacenar las filas que se enviarán al DataTable
+//         $rows = [];
+
+//         // Recorrer cada fila de la tabla principal
+//         foreach ($tabla as $value) {
+//             // Obtener las referencias relacionadas
+//             $referencias = referenciasempresasModel::where('SELECCION_REFERENCIA_ID', $value->ID_REFERENCIAS_SELECCION)->get();
+
+//             // Preparar la información agrupada
+//             $referenciasAgrupadas = [];
+//             foreach ($referencias as $referencia) {
+//                 $referenciasAgrupadas[] = [
+//                     'NOMBRE_EMPRESA' => $referencia->NOMBRE_EMPRESA,
+//                     'COMENTARIO' => $referencia->COMENTARIO,
+//                     'CUMPLE' => $referencia->CUMPLE,
+//                     'ARCHIVO_RESULTADO' => $referencia->ARCHIVO_RESULTADO
+//                 ];
+//             }
+
+//             // Crear una fila para cada referencia de selección con sus referencias agrupadas
+//             $rows[] = [
+//                 'ID_REFERENCIAS_SELECCION' => $value->ID_REFERENCIAS_SELECCION,
+//                 'EXPERIENCIA_LABORAL' => $value->EXPERIENCIA_LABORAL,
+//                 'PORCENTAJE_TOTAL_REFERENCIAS' => $value->PORCENTAJE_TOTAL_REFERENCIAS,
+//                 'REFERENCIAS' => $referenciasAgrupadas, // Incluye todas las referencias agrupadas
+//                 'BTN_EDITAR' => ($value->ACTIVO == 0) ? 
+//                     '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>' :
+//                     '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
+//             ];
+//         }
+
+//         return response()->json([
+//             'data' => $rows,
+//             'msj' => 'Información consultada correctamente'
+//         ]);
+//     } catch (Exception $e) {
+//         return response()->json([
+//             'msj' => 'Error ' . $e->getMessage(),
+//             'data' => 0
+//         ]);
+//     }
+// }
+
 public function Tablareferencia(Request $request)
 {
     try {
@@ -345,7 +396,8 @@ public function Tablareferencia(Request $request)
                     'NOMBRE_EMPRESA' => $referencia->NOMBRE_EMPRESA,
                     'COMENTARIO' => $referencia->COMENTARIO,
                     'CUMPLE' => $referencia->CUMPLE,
-                    'ARCHIVO_RESULTADO' => $referencia->ARCHIVO_RESULTADO
+                    'ARCHIVO_RESULTADO' => $referencia->ARCHIVO_RESULTADO,
+                    'BTN_DOCUMENTO' => '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-referencias" data-id="' . $referencia->ID_LABORAL_SELECCION . '" title="Ver referencias"> <i class="bi bi-filetype-pdf"></i></button>'
                 ];
             }
 
@@ -372,6 +424,15 @@ public function Tablareferencia(Request $request)
         ]);
     }
 }
+
+
+
+public function mostrareferencias($id)
+{
+    $archivo = referenciasempresasModel::findOrFail($id)->ARCHIVO_RESULTADO;
+    return Storage::response($archivo);
+}
+
 
 
 public function consultarSeleccion($categoriaVacanteId)

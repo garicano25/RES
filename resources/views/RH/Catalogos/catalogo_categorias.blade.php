@@ -55,7 +55,16 @@
                         <label for="LIDER_NO">No</label>
                           <input class="mx-2" type="radio" id="LIDER_NO" name="ES_LIDER_CATEGORIA" value="0">
                       </div>
+                      <div id="pruebas-contenedor">
+                        <div class="mb-3">
+                            <label>Agregar pruebas</label>
+                            <button id="botonAgregarprueba" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar prueba"><i class="bi bi-plus-circle-fill"></i></button>
+                            <div id="inputs-prueba" class="mt-3"></div>
+                        </div>
                 </div>
+
+                </div>
+             
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-success" id="guardarFormcategorias">Guardar</button>
@@ -64,6 +73,13 @@
         </div>
     </div>
 </div>
+
+
+
+
+<script>
+    var pruebas = @json($pruebas);
+</script>
 
     
 

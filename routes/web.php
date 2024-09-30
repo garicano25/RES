@@ -156,7 +156,8 @@ Route::get('/ExternaDelete', [catalogosrelacionesexternasController::class, 'sto
 Route::get('/Tablarelacionesexterna', [catalogosrelacionesexternasController::class, 'Tablarelacionesexterna']);
 
 // catálogo de Categorías
-Route::get('/Categorías', function () {return view('RH.Catalogos.catalogo_categorias');});
+Route::get('/Categorías', [catalogocategoriaControlller::class, 'index']);
+// Route::get('/Categorías', function () {return view('RH.Catalogos.catalogo_categorias');});
 Route::post('/CategoriaSave', [catalogocategoriaControlller::class, 'store']);
 Route::get('CategoriaDelete', [catalogocategoriaControlller::class, 'store']);
 Route::get('/Tablacategoria', [catalogocategoriaControlller::class, 'Tablacategoria']);
@@ -278,6 +279,7 @@ Route::get('/consultarformppt/{id}', [seleccionController::class, 'consultarform
 
 //Referencias laboral
 Route::get('/Tablareferencia', [seleccionController::class, 'Tablareferencia']);
+Route::get('/mostrareferencias/{id}', [seleccionController::class, 'mostrareferencias']);
 
 // Pruebas de conocimientos
 
