@@ -218,12 +218,15 @@ $(document).ready(function() {
 
         $('#miModal_categoria .modal-title').html(row.data().NOMBRE_CATEGORIA);
 
+        $('#botonAgregarprueba').prop('disabled', true);
 
     });
 
     $('#miModal_categoria').on('hidden.bs.modal', function () {
         resetFormulario('#miModal_categoria');
     });
+
+
 });
 
 

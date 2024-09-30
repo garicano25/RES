@@ -138,14 +138,13 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
                             <td></td>
                             <td></td>
                             <td></td>
-                    
                             <td class="text-center">
                                 <button type="button" class="btn btn-primary btn-circle" id="AbrirModalFull" data-bs-toggle="modal" data-bs-target="#FullScreenModal" data-curp="${item.CURP}" data-nombre="${item.NOMBRE_SELC} ${item.PRIMER_APELLIDO_SELEC} ${item.SEGUNDO_APELLIDO_SELEC}">
                                     <i class="bi bi-eye-fill"></i>
                                 </button>
                             </td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-success" id="MandarContratacion">
+                                <button type="button" class="btn btn-success" id="MandarContratacion" disabled>
                                     <i class="bi bi-check-square-fill"></i>
                                 </button>
                             </td>

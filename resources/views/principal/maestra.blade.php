@@ -227,10 +227,10 @@
                             <li><a class="dropdown-item" href="{{url('/RelacionesExternas')}}">Relaciones externas</a>
                             </li>
                             <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/CatálogoDeVacantes')}}">Catálogo de Vacantes </a>
+                            <li><a class="dropdown-item" href="{{url('/Categorías')}}">Catálogo de Categorías </a>
                             </li>
                             <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/Categorías')}}">Catálogo de Categorías </a>
+                            <li><a class="dropdown-item" href="{{url('/CatálogoDeVacantes')}}">Catálogo de Vacantes </a>
                             </li>
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Género')}}">Catálogo de Género </a>
