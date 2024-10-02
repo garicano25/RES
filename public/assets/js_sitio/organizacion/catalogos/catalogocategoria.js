@@ -12,7 +12,12 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     document.getElementById('formularioCATEGORIAS').reset();
    
     $('#miModal_categoria .modal-title').html('Nueva Categoría');
-
+    document.getElementById('inputs-prueba').innerHTML = '';
+    
+    const totalElement = document.getElementById('totalPorcentajes');
+    if (totalElement) {
+        totalElement.textContent = 'Total: 0%';
+    }
 
 })
 
@@ -192,16 +197,36 @@ $('#Tablacategoria tbody').on('change', 'td>label>input.ELIMINAR', function () {
 
 
 
+// $('#Tablacategoria tbody').on('click', 'td>button.EDITAR', function () {
+//     var tr = $(this).closest('tr');
+//     var row = Tablacategoria.row(tr);
+//     ID_CATALOGO_CATEGORIA = row.data().ID_CATALOGO_CATEGORIA;
+
+//     editarDatoTabla(row.data(), 'formularioCATEGORIAS', 'miModal_categoria', 1);
+
+//     $('#miModal_categoria .modal-title').html(row.data().NOMBRE_CATEGORIA);
+
+
+// });
+
+
+
 $('#Tablacategoria tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablacategoria.row(tr);
     ID_CATALOGO_CATEGORIA = row.data().ID_CATALOGO_CATEGORIA;
 
+    // Recuperar los datos de la categoría para editar
     editarDatoTabla(row.data(), 'formularioCATEGORIAS', 'miModal_categoria', 1);
 
+    // Cambiar el título del modal
     $('#miModal_categoria .modal-title').html(row.data().NOMBRE_CATEGORIA);
 
+    cargarRequerimientos(row.data().REQUERIMIENTO);
 
+
+    // Mostrar el modal
+    $('#miModal_categoria').modal('show');
 });
 
 
@@ -220,6 +245,12 @@ $(document).ready(function() {
 
         $('#botonAgregarprueba').prop('disabled', true);
 
+
+    cargarRequerimientos(row.data().REQUERIMIENTO);
+
+
+
+
     });
 
     $('#miModal_categoria').on('hidden.bs.modal', function () {
@@ -231,16 +262,26 @@ $(document).ready(function() {
 
 
 
-function agregarpruebas() {
-    const divInput = document.createElement('div');
-    divInput.classList.add('form-group', 'row', 'input-container', 'mb-3');
 
-    let opcionesPruebas = '<option value="" disabled selected></option>';
-    pruebas.forEach(function(prueba) {
-        opcionesPruebas += `<option value="${prueba.NOMBRE_PRUEBA}">${prueba.NOMBRE_PRUEBA}</option>`;
-    });
 
-    divInput.innerHTML = `
+function cargarRequerimientos(requerimientos) {
+    const contenedor = document.getElementById('inputs-prueba');
+    const botonGuardar = document.getElementById('guardarFormcategorias'); 
+    contenedor.innerHTML = ''; 
+
+    requerimientos.forEach(function(requerimiento) {
+        const divInput = document.createElement('div');
+        divInput.classList.add('form-group', 'row', 'input-prueba', 'mb-3');
+
+        let opcionesPruebas = '<option value="" disabled selected></option>';
+        pruebas.forEach(function(prueba) {
+            const selected = prueba.NOMBRE_PRUEBA === requerimiento.TIPO_PRUEBA ? 'selected' : '';
+            opcionesPruebas += `<option value="${prueba.NOMBRE_PRUEBA}" ${selected}>${prueba.NOMBRE_PRUEBA}</option>`;
+        });
+
+
+
+        divInput.innerHTML = `
         <div class="col-5 text-center">
             <label for="tipoPrueba">Nombre de la prueba</label>
             <select name="TIPO_PRUEBA[]" class="form-control">
@@ -249,62 +290,159 @@ function agregarpruebas() {
         </div>
         <div class="col-5 text-center">
             <label for="cantidad">% de la prueba</label>
-            <input type="number" name="PORCENTAJE[]" class="form-control"  max="100" min="0" step="1" maxlength="3">
+            <input type="number" name="PORCENTAJE[]" class="form-control porcentaje-input" value="${requerimiento.PORCENTAJE}" max="100" min="0" step="1" maxlength="3">
         </div>
         <div class="col-1">
             <br>
             <button type="button" class="btn btn-danger botonEliminar"><i class="bi bi-trash3-fill"></i></button>
         </div>
     `;
+        contenedor.appendChild(divInput);
 
-    document.getElementById('inputs-prueba').appendChild(divInput);
+        const botonEliminar = divInput.querySelector('.botonEliminar');
+        botonEliminar.addEventListener('click', function() {
+            contenedor.removeChild(divInput);
+            validarPorcentajeTotal(); 
+        });
 
-    actualizarOpcionespruebas();
-
-    divInput.querySelector('select[name="TIPO_PRUEBA[]"]').addEventListener('change', function() {
-        actualizarOpcionespruebas();
-    });
-
-    const botonEliminar = divInput.querySelector('.botonEliminar');
-    botonEliminar.addEventListener('click', function () {
-        const selectedValue = divInput.querySelector('select[name="TIPO_PRUEBA[]"]').value;
-        if (selectedValue) {
-            const selects = document.querySelectorAll('select[name="TIPO_PRUEBA[]"]');
-            selects.forEach(select => {
-                const existeOpcion = Array.from(select.options).some(option => option.value === selectedValue);
-                if (!existeOpcion) {
-                    const option = document.createElement('option');
-                    option.value = selectedValue;
-                    option.textContent = selectedValue;
-                    select.appendChild(option);
-                }
-            });
-        }
-
-        divInput.remove();
-        actualizarOpcionespruebas(); 
-    });
-}
-
-function actualizarOpcionespruebas() {
-    const selects = document.querySelectorAll('select[name="TIPO_PRUEBA[]"]');
-    const seleccionadas = Array.from(selects).map(select => select.value).filter(v => v); 
-
-    selects.forEach(select => {
-        const currentValue = select.value;
-        const opciones = select.querySelectorAll('option');
-        opciones.forEach(option => {
-            if (seleccionadas.includes(option.value) && option.value !== currentValue) {
-                option.remove(); 
-            }
+        const inputPorcentaje = divInput.querySelector('.porcentaje-input');
+        inputPorcentaje.addEventListener('input', function() {
+            validarPorcentajeTotal(); 
         });
     });
+
+   
+    validarPorcentajeTotal();
+
+    function calcularSumaPorcentajes() {
+        const porcentajes = document.querySelectorAll('.porcentaje-input');
+        let total = 0;
+
+        porcentajes.forEach(function(input) {
+            total += parseInt(input.value) || 0;
+        });
+
+        return total;
+    }
+
+    function validarPorcentajeTotal() {
+        const total = calcularSumaPorcentajes();
+        const totalElement = document.getElementById('totalPorcentajes');
+        totalElement.textContent = `Total: ${total}%`;
+
+        if (total > 100) {
+            alertToast("La suma de los porcentajes no puede exceder el 100%.");
+            botonGuardar.disabled = true; 
+        } else {
+            botonGuardar.disabled = false; 
+        }
+    }
 }
 
-// Evento del botón para agregar una nueva prueba
-document.getElementById('botonAgregarprueba').addEventListener('click', agregarpruebas);
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const botonAgregar = document.getElementById('botonAgregarprueba');
+    const botonGuardar = document.getElementById('guardarFormcategorias'); 
+
+    botonAgregar.addEventListener('click', function(e) {
+        e.preventDefault();
+        agregarInput();
+    });
+
+    function agregarInput() {
+        const divInput = document.createElement('div');
+        divInput.classList.add('form-group', 'row', 'input-prueba', 'mb-3');
+
+        let opcionesPruebas = '<option value="" disabled selected></option>';
+        pruebas.forEach(function(prueba) {
+            opcionesPruebas += `<option value="${prueba.NOMBRE_PRUEBA}">${prueba.NOMBRE_PRUEBA}</option>`;
+        });
+
+        
+
+        divInput.innerHTML = `
+        <div class="col-5 text-center">
+            <label for="tipoPrueba">Nombre de la prueba</label>
+            <select name="TIPO_PRUEBA[]" class="form-control">
+                ${opcionesPruebas}
+            </select>
+        </div>
+        <div class="col-5 text-center">
+            <label for="cantidad">% de la prueba</label>
+            <input type="number" name="PORCENTAJE[]" class="form-control porcentaje-input" max="100" min="0" step="1" maxlength="3">
+        </div>
+        <div class="col-1">
+            <br>
+            <button type="button" class="btn btn-danger botonEliminar"><i class="bi bi-trash3-fill"></i></button>
+        </div>
+    `;
+        const contenedor = document.getElementById('inputs-prueba');
+        contenedor.appendChild(divInput);
+
+        const botonEliminar = divInput.querySelector('.botonEliminar');
+        botonEliminar.addEventListener('click', function() {
+            contenedor.removeChild(divInput);
+            validarPorcentajeTotal(); 
+        });
+
+        const inputPorcentaje = divInput.querySelector('.porcentaje-input');
+        inputPorcentaje.addEventListener('input', function() {
+            if (this.value.length > 3) {
+                this.value = this.value.slice(0, 3); 
+            }
+            if (this.value > 100) {
+                this.value = 100; 
+            }
+            validarPorcentajeTotal();
+        });
+
+        validarPorcentajeTotal();
+    }
+
+    function validarPorcentajeTotal() {
+        const porcentajes = document.querySelectorAll('.porcentaje-input');
+        let total = 0;
+
+        porcentajes.forEach(function(input) {
+            total += parseInt(input.value) || 0;
+        });
+
+        // Mostrar el total sumado al final
+        const totalElement = document.getElementById('totalPorcentajes');
+        totalElement.textContent = `Total: ${total}%`;
+
+        if (total > 100) {
+            alertToast("La suma de los porcentajes no puede exceder el 100%.");
+            botonGuardar.disabled = true; 
+            return false;
+        } else if (total === 100) {
+            alertToast("La suma de los porcentajes es exactamente 100%.");
+            botonGuardar.disabled = false; 
+        } else {
+            botonGuardar.disabled = true; 
+        }
+    }
+
+    // Crear el elemento para mostrar el total
+    const totalContainer = document.createElement('div');
+    totalContainer.classList.add('mt-3');
+    totalContainer.style.textAlign = 'center'; 
+    totalContainer.innerHTML = `
+        <h5 id="totalPorcentajes">Total: 0%</h5>
+    `;
+    const contenedor = document.getElementById('inputs-prueba');
+    contenedor.parentNode.appendChild(totalContainer);
+});

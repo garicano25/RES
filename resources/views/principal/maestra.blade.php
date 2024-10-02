@@ -374,7 +374,7 @@
     @endif
 
     @if(request()->is('Categorías'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogocategoria.js?v=1.0"></script>
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogocategoria.js?v=2.0"></script>
     @endif
 
     @if(request()->is('Género'))
@@ -419,7 +419,7 @@
 
 
     @if(request()->is('Selección'))
-    <script src="/assets/js_sitio/seleccion/seleccion.js?v=2.0"></script>
+    <script src="/assets/js_sitio/seleccion/seleccion.js?v=3.0"></script>
     @endif
 
 
