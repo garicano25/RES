@@ -33,6 +33,8 @@ use App\Models\organizacion\catalogorelacionesexternaModel;
 use App\Models\organizacion\catalogofuncionescargoModel;
 use App\Models\organizacion\catalogofuncionesgestionModel;
 use App\Models\organizacion\catalogocategoriaModel;
+use App\Models\organizacion\catalogoCompotenciasGerencialesModel;
+use App\Models\organizacion\catalogocompetenciabasicaModel;
 
 
 
@@ -63,6 +65,7 @@ class makeExcelController extends Controller{
             //DATOS DE LA PERSONA
 
             $sheet->setCellValue('G6', str_replace(['[', ']', '"'], '', $puesto)); 
+
             $sheet->setCellValue('G7', $val->NOMBRE_TRABAJADOR_PPT);
             $sheet->setCellValue('G8', $val->AREA_TRABAJADOR_PPT);
             $sheet->setCellValue('G9', $val->PROPOSITO_FINALIDAD_PPT);
@@ -1323,12 +1326,25 @@ class makeExcelController extends Controller{
             // VI. Competencias básicas o cardinales																						
 
 
-            if (!is_null($val->ESCALA_INNOVACION)) {
+            // COMPETECIA BASICDA 1
+            $competenciabasica1 = catalogocompetenciabasicaModel::where('ID_CATALOGO_COMPETENCIA_BASICA', $val->NOMBRE_COMPETENCIA1)->pluck('NOMBRE_COMPETENCIA_BASICA')->first();
+            $competenciabasica1Name = html_entity_decode(mb_convert_encoding($competenciabasica1, 'UTF-8', 'UTF-8'));
+            
+            
 
-                if (strtoupper($val->ESCALA_INNOVACION) == 'BAJO') {
+            $sheet->setCellValue('B111', $competenciabasica1Name);
+
+            if (!is_null($val->DESCRIPCION_COMPETENCIA1)) {
+                $sheet->setCellValue('H111', $val->DESCRIPCION_COMPETENCIA1);        
+            }
+
+
+            if (!is_null($val->COMPETENCIA1_ESCALA)) {
+
+                if (strtoupper($val->COMPETENCIA1_ESCALA) == 'BAJO') {
                     $sheet->setCellValue('S111', 'X');
 
-                } else  if (strtoupper($val->ESCALA_INNOVACION) == 'MEDIO') {
+                } else  if (strtoupper($val->COMPETENCIA1_ESCALA) == 'MEDIO') {
 
                      $sheet->setCellValue('U111', 'X');
                 }else {
@@ -1336,15 +1352,27 @@ class makeExcelController extends Controller{
                }
             }
 
+           // COMPETECIA BASICDA 2
+
+            $competenciabasica2 = catalogocompetenciabasicaModel::where('ID_CATALOGO_COMPETENCIA_BASICA', $val->NOMBRE_COMPETENCIA2)->pluck('NOMBRE_COMPETENCIA_BASICA')->first();
+            $competenciabasica2Name = html_entity_decode(mb_convert_encoding($competenciabasica2, 'UTF-8', 'UTF-8'));
+            
+            
+
+            $sheet->setCellValue('B112', $competenciabasica2Name);
+
+            if (!is_null($val->DESCRIPCION_COMPETENCIA2)) {
+                $sheet->setCellValue('H112', $val->DESCRIPCION_COMPETENCIA2);        
+            }
 
 
-            if (!is_null($val->ESCALA_PASION)) {
+            if (!is_null($val->COMPETENCIA2_ESCALA)) {
 
-                if (strtoupper($val->ESCALA_PASION) == 'BAJO') {
+                if (strtoupper($val->COMPETENCIA2_ESCALA) == 'BAJO') {
                     $sheet->setCellValue('S112', 'X');
 
-                } else  if (strtoupper($val->ESCALA_PASION) == 'MEDIO') {
-                    
+                } else  if (strtoupper($val->COMPETENCIA2_ESCALA) == 'MEDIO') {
+
                      $sheet->setCellValue('U112', 'X');
                 }else {
                     $sheet->setCellValue('W112', 'X');
@@ -1352,270 +1380,457 @@ class makeExcelController extends Controller{
             }
 
 
+              // COMPETECIA BASICDA 3
 
-            if (!is_null($val->ESCALA_SERVICIO)) {
-
-                if (strtoupper($val->ESCALA_SERVICIO) == 'BAJO') {
-                    $sheet->setCellValue('S113', 'X');
-
-                } else  if (strtoupper($val->ESCALA_SERVICIO) == 'MEDIO') {
-                    
-                     $sheet->setCellValue('U113', 'X');
-                }else {
-                    $sheet->setCellValue('W113', 'X');
-               }
-            }
-
-
-            if (!is_null($val->ESCALA_COMUNICACION)) {
-
-                if (strtoupper($val->ESCALA_COMUNICACION) == 'BAJO') {
-                    $sheet->setCellValue('S114', 'X');
-
-                } else  if (strtoupper($val->ESCALA_COMUNICACION) == 'MEDIO') {
-                    
-                     $sheet->setCellValue('U114', 'X');
-                }else {
-                    $sheet->setCellValue('W114', 'X');
-               }
-            }
-
-
-            if (!is_null($val->ESCALA_TRABAJO)) {
-
-                if (strtoupper($val->ESCALA_TRABAJO) == 'BAJO') {
-                    $sheet->setCellValue('S115', 'X');
-
-                } else  if (strtoupper($val->ESCALA_TRABAJO) == 'MEDIO') {
-                    
-                     $sheet->setCellValue('U115', 'X');
-                }else {
-                    $sheet->setCellValue('W115', 'X');
-               }
-            }
-
-
-
-            if (!is_null($val->ESCALA_INTEGRIDAD)) {
-
-                if (strtoupper($val->ESCALA_INTEGRIDAD) == 'BAJO') {
-                    $sheet->setCellValue('S116', 'X');
-
-                } else  if (strtoupper($val->ESCALA_INTEGRIDAD) == 'MEDIO') {
-                    
-                     $sheet->setCellValue('U116', 'X');
-                }else {
-                    $sheet->setCellValue('W116', 'X');
-               }
-            }
-
-
-            if (!is_null($val->ESCALA_RESPONSABILIDAD)) {
-
-                if (strtoupper($val->ESCALA_RESPONSABILIDAD) == 'BAJO') {
-                    $sheet->setCellValue('S121', 'X');
-
-                } else  if (strtoupper($val->ESCALA_RESPONSABILIDAD) == 'MEDIO') {
-                    
-                     $sheet->setCellValue('U121', 'X');
-                }else {
-                    $sheet->setCellValue('W121', 'X');
-               }
-            }
-
-
-            if (!is_null($val->ESCALA_ADAPTIBILIDAD)) {
-
-                if (strtoupper($val->ESCALA_ADAPTIBILIDAD) == 'BAJO') {
-                    $sheet->setCellValue('S122', 'X');
-
-                } else  if (strtoupper($val->ESCALA_ADAPTIBILIDAD) == 'MEDIO') {
-                    
-                     $sheet->setCellValue('U122', 'X');
-                }else {
-                    $sheet->setCellValue('W122', 'X');
-               }
-            }
-
-
-            // VII. Competencias gerenciales o de mandos medios																						
-
-            if (!is_null($val->ESCALA_LIDERAZGO)) {
-
-                if (strtoupper($val->ESCALA_LIDERAZGO) == 'BAJO') {
-                    $sheet->setCellValue('S126', 'X');
-
-                } else  if (strtoupper($val->ESCALA_LIDERAZGO) == 'MEDIO') {
-                    
-                     $sheet->setCellValue('U126', 'X');
-                }else {
-                    $sheet->setCellValue('W126', 'X');
-               }
-            }
-
-
-            if (!is_null($val->ESCALA_TOMADECISION)) {
-
-                if (strtoupper($val->ESCALA_TOMADECISION) == 'BAJO') {
-                    $sheet->setCellValue('S127', 'X');
-
-                } else  if (strtoupper($val->ESCALA_TOMADECISION) == 'MEDIO') {
-                    
-                     $sheet->setCellValue('U127', 'X');
-                }else {
-                    $sheet->setCellValue('W127', 'X');
-               }
-            }
-
-
-            //VIII. Autoridad																						
-
-
-
-            if (!is_null($val->DE_INFORMACION_DPT)) {
-                if (strtoupper($val->DE_INFORMACION_DPT) == 'SI') {
-                    $sheet->setCellValue('E132', 'X');
-                } else {
-                     $sheet->setCellValue('H132', 'X');
-                }
-            }
-
-
-            
-            if (!is_null($val->DE_RECURSOS_DPT)) {
-                if (strtoupper($val->DE_RECURSOS_DPT) == 'SI') {
-                    $sheet->setCellValue('P132', 'X');
-                } else {
-                     $sheet->setCellValue('S132', 'X');
-                }
-            }
-
-            
-            if (!is_null($val->DE_INFORMACION_ESPECIFIQUE_DPT)) {
-                $sheet->setCellValue('B133', $val->DE_INFORMACION_ESPECIFIQUE_DPT);        
-            }
-
-            if (!is_null($val->DE_RECURSOS_ESPECIFIQUE_DPT)) {
-                $sheet->setCellValue('M133', $val->DE_RECURSOS_ESPECIFIQUE_DPT);        
-            }
-
-
-            if (!is_null($val->DE_EQUIPOS_DPT)) {
-                if (strtoupper($val->DE_EQUIPOS_DPT) == 'SI') {
-                    $sheet->setCellValue('E136', 'X');
-                } else {
-                     $sheet->setCellValue('H136', 'X');
-                }
-            }
-
-
-            if (!is_null($val->DE_VEHICULOS_DPT)) {
-                if (strtoupper($val->DE_VEHICULOS_DPT) == 'SI') {
-                    $sheet->setCellValue('P136', 'X');
-                } else {
-                     $sheet->setCellValue('S136', 'X');
-                }
-            }
-
-
-            if (!is_null($val->DE_EQUIPOS_ESPECIFIQUE_DPT)) {
-                $sheet->setCellValue('B137', $val->DE_EQUIPOS_ESPECIFIQUE_DPT);        
-            }
-
-
-            if (!is_null($val->DE_VEHICULOS_ESPECIFIQUE_DPT)) {
-                $sheet->setCellValue('M137', $val->DE_VEHICULOS_ESPECIFIQUE_DPT);        
-            }
-
-
-
-            //IX. Observaciones																						
-
-            if (!is_null($val->OBSERVACIONES_DPT)) {
-                $sheet->setCellValue('B140', $val->OBSERVACIONES_DPT);        
-            }
-
-
-            //X. Organigrama																						
-
-
-            // if (!is_null($val->ORGANIGRAMA_DPT)) {
-            //     $sheet->setCellValue('B144', $val->ORGANIGRAMA_DPT);        
-            // }
-
-
-              // Agregar la imagen en la celda B144
-            //   $imagePath = public_path('/assets/images/organigramaaa.png'); // Asegúrate de que la ruta sea correcta
-        
-            //   $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-            //   $drawing->setName('Organigrama');
-            //   $drawing->setDescription('Organigrama');
-            //   $drawing->setPath($imagePath);
-            //   $drawing->setCoordinates('B144');
+              $competenciabasica3 = catalogocompetenciabasicaModel::where('ID_CATALOGO_COMPETENCIA_BASICA', $val->NOMBRE_COMPETENCIA3)->pluck('NOMBRE_COMPETENCIA_BASICA')->first();
+              $competenciabasica3Name = html_entity_decode(mb_convert_encoding($competenciabasica3, 'UTF-8', 'UTF-8'));
               
-            //   // Ajustar el tamaño de la imagen para que sea grande
-            //   $drawing->setHeight($sheet->getRowDimension(144)->getRowHeight() * 175); 
-            //   $drawing->setWidth($sheet->getColumnDimension('B')->getWidth() * 175); 
               
-            //   // Centrar la imagen en la celda
-            //   $drawing->setOffsetX(($sheet->getColumnDimension('B')->getWidth() * 370 - $drawing->getWidth()) / 2);
-            //   $drawing->setOffsetY(($sheet->getRowDimension(144)->getRowHeight() * 250 - $drawing->getHeight()) / 2);
+  
+              $sheet->setCellValue('B113', $competenciabasica3Name);
+  
+              if (!is_null($val->DESCRIPCION_COMPETENCIA3)) {
+                  $sheet->setCellValue('H113', $val->DESCRIPCION_COMPETENCIA3);        
+              }
+  
+  
+              if (!is_null($val->COMPETENCIA3_ESCALA)) {
+  
+                  if (strtoupper($val->COMPETENCIA3_ESCALA) == 'BAJO') {
+                      $sheet->setCellValue('S113', 'X');
+  
+                  } else  if (strtoupper($val->COMPETENCIA3_ESCALA) == 'MEDIO') {
+  
+                       $sheet->setCellValue('U113', 'X');
+                  }else {
+                      $sheet->setCellValue('W113', 'X');
+                 }
+              }
+
+
+                // COMPETECIA BASICDA 4
+
+                $competenciabasica4 = catalogocompetenciabasicaModel::where('ID_CATALOGO_COMPETENCIA_BASICA', $val->NOMBRE_COMPETENCIA4)->pluck('NOMBRE_COMPETENCIA_BASICA')->first();
+                $competenciabasica4Name = html_entity_decode(mb_convert_encoding($competenciabasica4, 'UTF-8', 'UTF-8'));
+                
+                
+    
+                $sheet->setCellValue('B114', $competenciabasica4Name);
+    
+                if (!is_null($val->DESCRIPCION_COMPETENCIA4)) {
+                    $sheet->setCellValue('H114', $val->DESCRIPCION_COMPETENCIA4);        
+                }
+    
+    
+                if (!is_null($val->COMPETENCIA4_ESCALA)) {
+    
+                    if (strtoupper($val->COMPETENCIA4_ESCALA) == 'BAJO') {
+                        $sheet->setCellValue('S114', 'X');
+    
+                    } else  if (strtoupper($val->COMPETENCIA4_ESCALA) == 'MEDIO') {
+    
+                         $sheet->setCellValue('U114', 'X');
+                    }else {
+                        $sheet->setCellValue('W114', 'X');
+                   }
+                }
+
+
+
+
+
+                  // COMPETECIA BASICDA 5
+
+              $competenciabasica5 = catalogocompetenciabasicaModel::where('ID_CATALOGO_COMPETENCIA_BASICA', $val->NOMBRE_COMPETENCIA5)->pluck('NOMBRE_COMPETENCIA_BASICA')->first();
+              $competenciabasica5Name = html_entity_decode(mb_convert_encoding($competenciabasica5, 'UTF-8', 'UTF-8'));
+              
+              
+  
+              $sheet->setCellValue('B115', $competenciabasica5Name);
+  
+              if (!is_null($val->DESCRIPCION_COMPETENCIA5)) {
+                  $sheet->setCellValue('H115', $val->DESCRIPCION_COMPETENCIA5);        
+              }
+  
+  
+              if (!is_null($val->COMPETENCIA5_ESCALA)) {
+  
+                  if (strtoupper($val->COMPETENCIA5_ESCALA) == 'BAJO') {
+                      $sheet->setCellValue('S115', 'X');
+  
+                  } else  if (strtoupper($val->COMPETENCIA5_ESCALA) == 'MEDIO') {
+  
+                       $sheet->setCellValue('U115', 'X');
+                  }else {
+                      $sheet->setCellValue('W115', 'X');
+                 }
+              }
+
+                // COMPETECIA BASICDA 6
+
+                $competenciabasica6 = catalogocompetenciabasicaModel::where('ID_CATALOGO_COMPETENCIA_BASICA', $val->NOMBRE_COMPETENCIA6)->pluck('NOMBRE_COMPETENCIA_BASICA')->first();
+                $competenciabasica6Name = html_entity_decode(mb_convert_encoding($competenciabasica6, 'UTF-8', 'UTF-8'));
+                
+                
+    
+                $sheet->setCellValue('B116', $competenciabasica6Name);
+    
+                if (!is_null($val->DESCRIPCION_COMPETENCIA6)) {
+                    $sheet->setCellValue('H116', $val->DESCRIPCION_COMPETENCIA6);        
+                }
+    
+    
+                if (!is_null($val->COMPETENCIA6_ESCALA)) {
+    
+                    if (strtoupper($val->COMPETENCIA6_ESCALA) == 'BAJO') {
+                        $sheet->setCellValue('S116', 'X');
+    
+                    } else  if (strtoupper($val->COMPETENCIA6_ESCALA) == 'MEDIO') {
+    
+                         $sheet->setCellValue('U116', 'X');
+                    }else {
+                        $sheet->setCellValue('W116', 'X');
+                   }
+                }
+
+
+
+                  // COMPETECIA BASICDA 7
+
+              $competenciabasica7 = catalogocompetenciabasicaModel::where('ID_CATALOGO_COMPETENCIA_BASICA', $val->NOMBRE_COMPETENCIA7)->pluck('NOMBRE_COMPETENCIA_BASICA')->first();
+              $competenciabasica7Name = html_entity_decode(mb_convert_encoding($competenciabasica7, 'UTF-8', 'UTF-8'));
+              
+              
+  
+              $sheet->setCellValue('B121', $competenciabasica7Name);
+  
+              if (!is_null($val->DESCRIPCION_COMPETENCIA7)) {
+                  $sheet->setCellValue('H121', $val->DESCRIPCION_COMPETENCIA7);        
+              }
+  
+  
+              if (!is_null($val->COMPETENCIA7_ESCALA)) {
+  
+                  if (strtoupper($val->COMPETENCIA7_ESCALA) == 'BAJO') {
+                      $sheet->setCellValue('S121', 'X');
+  
+                  } else  if (strtoupper($val->COMPETENCIA7_ESCALA) == 'MEDIO') {
+  
+                       $sheet->setCellValue('U121', 'X');
+                  }else {
+                      $sheet->setCellValue('W121', 'X');
+                 }
+              }
+
+
+
+                // COMPETECIA BASICDA 8
+
+                $competenciabasica8 = catalogocompetenciabasicaModel::where('ID_CATALOGO_COMPETENCIA_BASICA', $val->NOMBRE_COMPETENCIA8)->pluck('NOMBRE_COMPETENCIA_BASICA')->first();
+                $competenciabasica8Name = html_entity_decode(mb_convert_encoding($competenciabasica8, 'UTF-8', 'UTF-8'));
+                
+                
+    
+                $sheet->setCellValue('B122', $competenciabasica8Name);
+    
+                if (!is_null($val->DESCRIPCION_COMPETENCIA8)) {
+                    $sheet->setCellValue('H122', $val->DESCRIPCION_COMPETENCIA8);        
+                }
+    
+    
+                if (!is_null($val->COMPETENCIA8_ESCALA)) {
+    
+                    if (strtoupper($val->COMPETENCIA8_ESCALA) == 'BAJO') {
+                        $sheet->setCellValue('S122', 'X');
+    
+                    } else  if (strtoupper($val->COMPETENCIA8_ESCALA) == 'MEDIO') {
+    
+                         $sheet->setCellValue('U122', 'X');
+                    }else {
+                        $sheet->setCellValue('W122', 'X');
+                   }
+                }
+
+
+                            // VII. Competencias gerenciales o de mandos medios																						
+
+                            
+
+                // COMPETECIA GERENCIALES 11
+
+
+                $competenciabasica11 = catalogoCompotenciasGerencialesModel::where('ID_CATALOGO_COMPETENCIA_GERENCIAL', $val->NOMBRE_COMPETENCIA11)->pluck('NOMBRE_COMPETENCIA_GERENCIAL')->first();
+                $competenciabasica11Name = html_entity_decode(mb_convert_encoding($competenciabasica11, 'UTF-8', 'UTF-8'));
+                
+                
+    
+                $sheet->setCellValue('B126', $competenciabasica11Name);
+    
+                if (!is_null($val->DESCRIPCION_COMPETENCIA11)) {
+                    $sheet->setCellValue('H126', $val->DESCRIPCION_COMPETENCIA11);        
+                }
+    
+    
+                if (!is_null($val->COMPETENCIA11_ESCALA)) {
+    
+                    if (strtoupper($val->COMPETENCIA11_ESCALA) == 'BAJO') {
+                        $sheet->setCellValue('S126', 'X');
+    
+                    } else  if (strtoupper($val->COMPETENCIA11_ESCALA) == 'MEDIO') {
+    
+                         $sheet->setCellValue('U126', 'X');
+                    }else {
+                        $sheet->setCellValue('W126', 'X');
+                   }
+                }
+
+
+
+
+
+
+
+                // COMPETECIA GERENCIALES 12
+                
+                $competenciabasica12 = catalogoCompotenciasGerencialesModel::where('ID_CATALOGO_COMPETENCIA_GERENCIAL', $val->NOMBRE_COMPETENCIA12)->pluck('NOMBRE_COMPETENCIA_GERENCIAL')->first();
+                $competenciabasica12Name = html_entity_decode(mb_convert_encoding($competenciabasica12, 'UTF-8', 'UTF-8'));
+                
+                
+    
+                $sheet->setCellValue('B127', $competenciabasica12Name);
+    
+                if (!is_null($val->DESCRIPCION_COMPETENCIA12)) {
+                    $sheet->setCellValue('H127', $val->DESCRIPCION_COMPETENCIA12);        
+                }
+    
+    
+                if (!is_null($val->COMPETENCIA12_ESCALA)) {
+    
+                    if (strtoupper($val->COMPETENCIA12_ESCALA) == 'BAJO') {
+                        $sheet->setCellValue('S127', 'X');
+    
+                    } else  if (strtoupper($val->COMPETENCIA12_ESCALA) == 'MEDIO') {
+    
+                         $sheet->setCellValue('U127', 'X');
+                    }else {
+                        $sheet->setCellValue('W127', 'X');
+                   }
+                }
+
+                
+
+                // COMPETECIA GERENCIALES 13
+
+                
+                $competenciabasica13 = catalogoCompotenciasGerencialesModel::where('ID_CATALOGO_COMPETENCIA_GERENCIAL', $val->NOMBRE_COMPETENCIA13)->pluck('NOMBRE_COMPETENCIA_GERENCIAL')->first();
+                $competenciabasica13Name = html_entity_decode(mb_convert_encoding($competenciabasica13, 'UTF-8', 'UTF-8'));
+                
+                
+    
+                $sheet->setCellValue('B128', $competenciabasica13Name);
+    
+                if (!is_null($val->DESCRIPCION_COMPETENCIA13)) {
+                    $sheet->setCellValue('H128', $val->DESCRIPCION_COMPETENCIA13);        
+                }
+    
+    
+                if (!is_null($val->COMPETENCIA13_ESCALA)) {
+    
+                    if (strtoupper($val->COMPETENCIA13_ESCALA) == 'BAJO') {
+                        $sheet->setCellValue('S128', 'X');
+    
+                    } else  if (strtoupper($val->COMPETENCIA13_ESCALA) == 'MEDIO') {
+    
+                         $sheet->setCellValue('U128', 'X');
+                    }else {
+                        $sheet->setCellValue('W128', 'X');
+                   }
+                }
+
+
+
+
+
+                  // COMPETECIA GERENCIALES 14
+
+                
+                  $competenciabasica14 = catalogoCompotenciasGerencialesModel::where('ID_CATALOGO_COMPETENCIA_GERENCIAL', $val->NOMBRE_COMPETENCIA14)->pluck('NOMBRE_COMPETENCIA_GERENCIAL')->first();
+                  $competenciabasica14Name = html_entity_decode(mb_convert_encoding($competenciabasica14, 'UTF-8', 'UTF-8'));
+                  
+                  
       
-            //   $drawing->setWorksheet($spreadsheet->getActiveSheet());
-        
+                  $sheet->setCellValue('B129', $competenciabasica14Name);
+      
+                  if (!is_null($val->DESCRIPCION_COMPETENCIA14)) {
+                      $sheet->setCellValue('H129', $val->DESCRIPCION_COMPETENCIA14);        
+                  }
+      
+      
+                  if (!is_null($val->COMPETENCIA14_ESCALA)) {
+      
+                      if (strtoupper($val->COMPETENCIA14_ESCALA) == 'BAJO') {
+                          $sheet->setCellValue('S129', 'X');
+      
+                      } else  if (strtoupper($val->COMPETENCIA14_ESCALA) == 'MEDIO') {
+      
+                           $sheet->setCellValue('U129', 'X');
+                      }else {
+                          $sheet->setCellValue('W129', 'X');
+                     }
+                  }
 
 
-            
-            if (!is_null($val->ELABORADO_NOMBRE_DPT)) {
-                $sheet->setCellValue('B163', $val->ELABORADO_NOMBRE_DPT);        
-            }
-
-
-            if (!is_null($val->ELABORADO_FIRMA_DPT)) {
-                $sheet->setCellValue('B165', $val->ELABORADO_FIRMA_DPT);        
-            }
-
-            if (!is_null($val->ELABORADO_FECHA_DPT)) {
-                $sheet->setCellValue('B168', $val->ELABORADO_FECHA_DPT);        
-            }
 
 
 
-
-            if (!is_null($val->REVISADO_NOMBRE_DPT)) {
-                $sheet->setCellValue('I163', $val->REVISADO_NOMBRE_DPT);        
-            }
+                        //VIII. Autoridad																						
 
 
-            if (!is_null($val->REVISADO_FIRMA_DPT)) {
-                $sheet->setCellValue('I165', $val->REVISADO_FIRMA_DPT);        
-            }
+
+                        if (!is_null($val->DE_INFORMACION_DPT)) {
+                            if (strtoupper($val->DE_INFORMACION_DPT) == 'SI') {
+                                $sheet->setCellValue('E134', 'X');
+                            } else {
+                                $sheet->setCellValue('H134', 'X');
+                            }
+                        }
 
 
-            if (!is_null($val->REVISADO_FECHA_DPT)) {
-                $sheet->setCellValue('I168', $val->REVISADO_FECHA_DPT);        
-            }
+
+                        if (!is_null($val->DE_RECURSOS_DPT)) {
+                            if (strtoupper($val->DE_RECURSOS_DPT) == 'SI') {
+                                $sheet->setCellValue('P134', 'X');
+                            } else {
+                                $sheet->setCellValue('S134', 'X');
+                            }
+                        }
 
 
-            if (!is_null($val->AUTORIZADO_NOMBRE_DPT)) {
-                $sheet->setCellValue('Q163', $val->AUTORIZADO_NOMBRE_DPT);        
-            }
+                        if (!is_null($val->DE_INFORMACION_ESPECIFIQUE_DPT)) {
+                            $sheet->setCellValue('B135', $val->DE_INFORMACION_ESPECIFIQUE_DPT);        
+                        }
+
+                        if (!is_null($val->DE_RECURSOS_ESPECIFIQUE_DPT)) {
+                            $sheet->setCellValue('M135', $val->DE_RECURSOS_ESPECIFIQUE_DPT);        
+                        }
 
 
-            if (!is_null($val->AUTORIZADO_FIRMA_DPT)) {
-                $sheet->setCellValue('Q165', $val->AUTORIZADO_FIRMA_DPT);        
-            }
+                        if (!is_null($val->DE_EQUIPOS_DPT)) {
+                            if (strtoupper($val->DE_EQUIPOS_DPT) == 'SI') {
+                                $sheet->setCellValue('E138', 'X');
+                            } else {
+                                $sheet->setCellValue('H138', 'X');
+                            }
+                        }
 
 
-            if (!is_null($val->AUTORIZADO_FECHA_DPT)) {
-                $sheet->setCellValue('Q168', $val->AUTORIZADO_FECHA_DPT);        
-            }
-															
+                        if (!is_null($val->DE_VEHICULOS_DPT)) {
+                            if (strtoupper($val->DE_VEHICULOS_DPT) == 'SI') {
+                                $sheet->setCellValue('P138', 'X');
+                            } else {
+                                $sheet->setCellValue('S138', 'X');
+                            }
+                        }
 
+
+                        if (!is_null($val->DE_EQUIPOS_ESPECIFIQUE_DPT)) {
+                            $sheet->setCellValue('B139', $val->DE_EQUIPOS_ESPECIFIQUE_DPT);        
+                        }
+
+
+                        if (!is_null($val->DE_VEHICULOS_ESPECIFIQUE_DPT)) {
+                            $sheet->setCellValue('M139', $val->DE_VEHICULOS_ESPECIFIQUE_DPT);        
+                        }
+
+
+
+                        //IX. Observaciones																						
+
+                        if (!is_null($val->OBSERVACIONES_DPT)) {
+                            $sheet->setCellValue('B143', $val->OBSERVACIONES_DPT);        
+                        }
+
+
+                        //X. Organigrama																						
+
+
+                        // if (!is_null($val->ORGANIGRAMA_DPT)) {
+                        //     $sheet->setCellValue('B144', $val->ORGANIGRAMA_DPT);        
+                        // }
+
+
+                        // Agregar la imagen en la celda B144
+                        //   $imagePath = public_path('/assets/images/organigramaaa.png'); // Asegúrate de que la ruta sea correcta
+
+                        //   $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+                        //   $drawing->setName('Organigrama');
+                        //   $drawing->setDescription('Organigrama');
+                        //   $drawing->setPath($imagePath);
+                        //   $drawing->setCoordinates('B144');
+                        
+                        //   // Ajustar el tamaño de la imagen para que sea grande
+                        //   $drawing->setHeight($sheet->getRowDimension(144)->getRowHeight() * 175); 
+                        //   $drawing->setWidth($sheet->getColumnDimension('B')->getWidth() * 175); 
+                        
+                        //   // Centrar la imagen en la celda
+                        //   $drawing->setOffsetX(($sheet->getColumnDimension('B')->getWidth() * 370 - $drawing->getWidth()) / 2);
+                        //   $drawing->setOffsetY(($sheet->getRowDimension(144)->getRowHeight() * 250 - $drawing->getHeight()) / 2);
+
+                        //   $drawing->setWorksheet($spreadsheet->getActiveSheet());
+
+
+
+
+                        if (!is_null($val->ELABORADO_NOMBRE_DPT)) {
+                            $sheet->setCellValue('B166', $val->ELABORADO_NOMBRE_DPT);        
+                        }
+
+
+                        if (!is_null($val->ELABORADO_FIRMA_DPT)) {
+                            $sheet->setCellValue('B168', $val->ELABORADO_FIRMA_DPT);        
+                        }
+
+                        if (!is_null($val->ELABORADO_FECHA_DPT)) {
+                            $sheet->setCellValue('B171', $val->ELABORADO_FECHA_DPT);        
+                        }
+
+
+
+
+                        if (!is_null($val->REVISADO_NOMBRE_DPT)) {
+                            $sheet->setCellValue('I166', $val->REVISADO_NOMBRE_DPT);        
+                        }
+
+
+                        if (!is_null($val->REVISADO_FIRMA_DPT)) {
+                            $sheet->setCellValue('I168', $val->REVISADO_FIRMA_DPT);        
+                        }
+
+
+                        if (!is_null($val->REVISADO_FECHA_DPT)) {
+                            $sheet->setCellValue('I171', $val->REVISADO_FECHA_DPT);        
+                        }
+
+
+                        if (!is_null($val->AUTORIZADO_NOMBRE_DPT)) {
+                            $sheet->setCellValue('Q166', $val->AUTORIZADO_NOMBRE_DPT);        
+                        }
+
+
+                        if (!is_null($val->AUTORIZADO_FIRMA_DPT)) {
+                            $sheet->setCellValue('Q168', $val->AUTORIZADO_FIRMA_DPT);        
+                        }
+
+
+                        if (!is_null($val->AUTORIZADO_FECHA_DPT)) {
+                            $sheet->setCellValue('Q171', $val->AUTORIZADO_FECHA_DPT);        
+                        }
+                                                                        
 
             
          
         }
+
 
 
                 //IV. Relaciones internas estratégicas
@@ -1750,6 +1965,12 @@ foreach ($externas as $key => $val) {
         // RECORRER LOS DATOS OBTENIDOS DEL FORMULARIO
         foreach ($form as $key => $val) {
 
+
+
+
+
+
+
             $puesto = areasModel::where('ID_AREA', $val->AREA_RP)->pluck('NOMBRE');
 
 
@@ -1776,9 +1997,13 @@ foreach ($externas as $key => $val) {
                 $sheet->setCellValue('H8', $val->SUSTITUYE_RP);        
             }
 
-            if (!is_null($val->SUSTITUYE_CATEGORIA_RP)) {
-                $sheet->setCellValue('H9', $val->SUSTITUYE_CATEGORIA_RP);        
-            }
+
+            
+            
+            $puesto1 = catalogocategoriaModel :: where('ID_CATALOGO_CATEGORIA',$val-> SUSTITUYE_CATEGORIA_RP)->pluck('NOMBRE_CATEGORIA');
+            $sheet->setCellValue('H9', str_replace(['[', ']', '"'], '', $puesto1));
+
+
 
             $sheet->setCellValue('X9', str_replace(['[', ']', '"'], '', $puesto)); 
 
@@ -1787,10 +2012,12 @@ foreach ($externas as $key => $val) {
                 $sheet->setCellValue('F13', $val->NO_VACANTES_RP);        
             }
 
-            if (!is_null($val->PUESTO_RP)) {
-                $sheet->setCellValue('L13', $val->PUESTO_RP);        
-            }
 
+            $puesto2 = catalogocategoriaModel :: where('ID_CATALOGO_CATEGORIA',$val-> PUESTO_RP)->pluck('NOMBRE_CATEGORIA');
+            $sheet->setCellValue('L13', str_replace(['[', ']', '"'], '', $puesto2));
+
+
+            
             if (!is_null($val->FECHA_INICIO_RP)) {
                 $sheet->setCellValue('W13', $val->FECHA_INICIO_RP);        
             }

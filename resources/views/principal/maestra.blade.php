@@ -374,7 +374,7 @@
     @endif
 
     @if(request()->is('Categorías'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogocategoria.js?v=2.0"></script>
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogocategoria.js?v=3.0"></script>
     @endif
 
     @if(request()->is('Género'))

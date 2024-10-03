@@ -27,6 +27,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.2.0/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;700&display=swap" rel="stylesheet">
 
    
    
@@ -66,7 +67,7 @@ a:hover {
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Maven Pro', Arial, sans-serif; /* Aplicar la fuente Maven Pro */
 }
 
 .card {

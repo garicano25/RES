@@ -197,17 +197,7 @@ $('#Tablacategoria tbody').on('change', 'td>label>input.ELIMINAR', function () {
 
 
 
-// $('#Tablacategoria tbody').on('click', 'td>button.EDITAR', function () {
-//     var tr = $(this).closest('tr');
-//     var row = Tablacategoria.row(tr);
-//     ID_CATALOGO_CATEGORIA = row.data().ID_CATALOGO_CATEGORIA;
 
-//     editarDatoTabla(row.data(), 'formularioCATEGORIAS', 'miModal_categoria', 1);
-
-//     $('#miModal_categoria .modal-title').html(row.data().NOMBRE_CATEGORIA);
-
-
-// });
 
 
 

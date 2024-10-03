@@ -99,7 +99,7 @@
                               <select class="form-control" id="SUSTITUYE_CATEGORIA_RP" name="SUSTITUYE_CATEGORIA_RP" required>
                                 <option selected disabled>Seleccione una opción</option>
                                 @foreach ($todascategoria as $cat)
-                                    <option value="{{ $cat->ID_DEPARTAMENTO_AREA }}">{{ $cat->NOMBRE }}</option>
+                                    <option value="{{ $cat->ID_CATALOGO_CATEGORIA }}">{{ $cat->NOMBRE }}</option>
                                 @endforeach
                             </select>   
                        

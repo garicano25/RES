@@ -28,7 +28,7 @@ class requerimientoPersonalController extends Controller
     ");
     
 
-        $todascategoria = DB::select("SELECT ID_CATALOGO_CATEGORIA  AS ID_DEPARTAMENTO_AREA, NOMBRE_CATEGORIA AS NOMBRE
+        $todascategoria = DB::select("SELECT ID_CATALOGO_CATEGORIA  AS ID_CATALOGO_CATEGORIA, NOMBRE_CATEGORIA AS NOMBRE
         FROM catalogo_categorias
         WHERE ACTIVO = 1");
 
