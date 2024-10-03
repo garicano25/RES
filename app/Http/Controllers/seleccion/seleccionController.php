@@ -782,20 +782,15 @@ case 3:
             case 6:
                 DB::beginTransaction();
             
-                // Verificar si es un nuevo registro o una actualización
                 if ($request->ID_REFERENCIAS_SELECCION == 0) {
-                    // Crear un nuevo registro en la tabla `referenciaseleccionModel`
                     DB::statement('ALTER TABLE seleccion_referencias_laboral AUTO_INCREMENT=1;');
                     $vacante = referenciaseleccionModel::create($request->all());
                 } else {
-                    // Obtener el registro actual para conservar los valores antiguos
                     $vacante = referenciaseleccionModel::find($request->ID_REFERENCIAS_SELECCION);
             
-                    // Actualizar el registro existente en lugar de eliminarlo
                     $vacante->update($request->all());
                 }
             
-                // Guardar o actualizar las referencias de las empresas
                 if ($request->has('NOMBRE_EMPRESA')) {
                     foreach ($request->NOMBRE_EMPRESA as $index => $nombreEmpresa) {
                         $comentario = isset($request->COMENTARIO[$index]) ? $request->COMENTARIO[$index] : null;
@@ -803,23 +798,18 @@ case 3:
                         $cumpleKey = "CUMPLE_" . ($index + 1);
                         $cumple = $request->input($cumpleKey) ?? null;
             
-                        // Verificar si ya existe una referencia para actualizar
                         $referencia = referenciasempresasModel::where('SELECCION_REFERENCIA_ID', $vacante->ID_REFERENCIAS_SELECCION)
                             ->where('NOMBRE_EMPRESA', $nombreEmpresa)
                             ->first();
             
                         if ($referencia) {
-                            // Mantener la ruta del archivo anterior si no se sube uno nuevo
                             $archivoAnterior = $referencia->ARCHIVO_RESULTADO;
             
-                            // Verificar si se subió un nuevo archivo
                             if ($request->hasFile("ARCHIVO_RESULTADO.$index")) {
-                                // Si ya existe un archivo para esta referencia, eliminar el anterior
                                 if ($archivoAnterior) {
                                     Storage::delete($archivoAnterior);
                                 }
             
-                                // Generar la ruta de guardado del nuevo archivo
                                 $curpFolder = 'reclutamiento/' . $request->CURP;
                                 $referenciaFolder = $curpFolder . '/Referencias Laborales/';
             
@@ -831,25 +821,20 @@ case 3:
                                     Storage::makeDirectory($referenciaFolder);
                                 }
             
-                                // Guardar el nuevo archivo
                                 $archivoFile = $request->file("ARCHIVO_RESULTADO.$index");
                                 $archivoFileName = $nombreEmpresa . '_' . $request->CURP . '.' . $archivoFile->getClientOriginalExtension();
                                 $archivoFile->storeAs($referenciaFolder, $archivoFileName);
             
-                                // Actualizar el registro de la empresa con la nueva ruta del archivo
                                 $referencia->ARCHIVO_RESULTADO = $referenciaFolder . $archivoFileName;
                             } else {
-                                // Mantener el archivo anterior si no se subió uno nuevo
                                 $referencia->ARCHIVO_RESULTADO = $archivoAnterior;
                             }
             
-                            // Actualizar el resto de la referencia
                             $referencia->NOMBRE_EMPRESA = $nombreEmpresa;
                             $referencia->COMENTARIO = $comentario;
                             $referencia->CUMPLE = $cumple;
                             $referencia->save();
                         } else {
-                            // Crear una nueva referencia si no existe
                             $referencia = referenciasempresasModel::create([
                                 'SELECCION_REFERENCIA_ID' => $vacante->ID_REFERENCIAS_SELECCION,
                                 'NOMBRE_EMPRESA' => $nombreEmpresa,
@@ -857,7 +842,6 @@ case 3:
                                 'CUMPLE' => $cumple,
                             ]);
             
-                            // Manejar el archivo para la nueva referencia
                             if ($request->hasFile("ARCHIVO_RESULTADO.$index")) {
                                 $curpFolder = 'reclutamiento/' . $request->CURP;
                                 $referenciaFolder = $curpFolder . '/Referencias Laborales/';
@@ -870,12 +854,10 @@ case 3:
                                     Storage::makeDirectory($referenciaFolder);
                                 }
             
-                                // Guardar el nuevo archivo
                                 $archivoFile = $request->file("ARCHIVO_RESULTADO.$index");
                                 $archivoFileName = $nombreEmpresa . '_' . $request->CURP . '.' . $archivoFile->getClientOriginalExtension();
                                 $archivoFile->storeAs($referenciaFolder, $archivoFileName);
             
-                                // Actualizar el registro con la nueva ruta del archivo
                                 $referencia->ARCHIVO_RESULTADO = $referenciaFolder . $archivoFileName;
                                 $referencia->save();
                             }
