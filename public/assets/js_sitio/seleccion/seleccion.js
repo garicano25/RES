@@ -15,6 +15,7 @@ var Tablaburo;
 var Tablareferencia;
 
 var curpSeleccionada;  
+var categoriaId = null;  
 
 
 
@@ -76,6 +77,104 @@ var Tablaseleccion = $("#Tablaseleccion").DataTable({
 
 
 
+// $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
+//     var tr = $(this).closest('tr');
+//     var row = Tablaseleccion.row(tr);
+
+//     if (row.child.isShown()) {
+//         row.child.hide();
+//         tr.removeClass('shown');
+//     } else {
+//         Swal.fire({
+//             title: 'Consultando información',
+//             text: 'Por favor, espere...',
+//             allowOutsideClick: false,
+//             showConfirmButton: false,
+//             didOpen: () => {
+//                 Swal.showLoading();
+//             }
+//         });
+
+//         var categoriaId = row.data().CATEGORIA_VACANTE;
+//         $.ajax({
+//             url: '/consultarSeleccion/' + categoriaId,
+//             method: 'GET',
+//             success: function(response) {
+//                 Swal.close(); 
+//                 if (response.data.length === 0) {
+//                     Swal.fire('Sin información', 'No hay información relacionada para esta categoría.', 'info');
+//                 } else {
+//                     var innerTable = `
+//                         <table class="table text-center">
+//                             <thead class="custom-header">
+//                                 <tr>
+//                                     <th>#</th>
+//                                     <th class="text-center">Nombre Completo</th>
+//                                     <th class="text-center">CURP</th>
+//                                     <th class="text-center">Contacto</th>
+//                                     <th class="text-center">% Inteligencia laboral</th>
+//                                     <th class="text-center">% Buró laboral</th>
+//                                     <th class="text-center">% PPT</th>
+//                                     <th class="text-center">% Referencias laboral</th>
+//                                     <th class="text-center">%  Pruebas de conocimientos</th>
+//                                     <th class="text-center">% Entrevista</th>
+//                                     <th class="text-center">Mostrar</th>
+//                                     <th class="text-center">Seleccionar</th>
+
+//                                 </tr>
+//                             </thead>
+//                             <tbody>
+//                     `;
+
+//                     response.data.forEach(function(item, index) {
+//                         innerTable += `
+//                         <tr>
+//                             <td>${index + 1}</td>
+//                             <td>${item.NOMBRE_SELC} ${item.PRIMER_APELLIDO_SELEC} ${item.SEGUNDO_APELLIDO_SELEC}</td>
+//                             <td class="text-center">${item.CURP}</td>
+//                             <td class="text-center">${item.CORREO_SELEC}<br>${item.TELEFONO1_SELECT}, ${item.TELEFONO2_SELECT}</td>
+//                             <td></td>
+//                             <td></td>
+//                             <td></td>
+//                             <td></td>
+//                             <td></td>
+//                             <td></td>
+//                             <td class="text-center">
+//                                 <button type="button" class="btn btn-primary btn-circle" id="AbrirModalFull" data-bs-toggle="modal" data-bs-target="#FullScreenModal" data-curp="${item.CURP}" data-nombre="${item.NOMBRE_SELC} ${item.PRIMER_APELLIDO_SELEC} ${item.SEGUNDO_APELLIDO_SELEC}">
+//                                     <i class="bi bi-eye-fill"></i>
+//                                 </button>
+//                             </td>
+//                             <td class="text-center">
+//                                 <button type="button" class="btn btn-success" id="MandarContratacion" disabled>
+//                                     <i class="bi bi-check-square-fill"></i>
+//                                 </button>
+//                             </td>
+//                         </tr>
+//                     `;
+//                     });
+
+//                     innerTable += `
+//                             </tbody>
+//                         </table>
+//                     `;
+                    
+//                     row.child(innerTable).show();
+//                     tr.addClass('shown');
+//                 }
+//             },
+//             error: function(jqXHR, textStatus, errorThrown) {
+//                 Swal.close(); 
+//                 alertErrorAJAX(jqXHR, textStatus, errorThrown);
+//             }
+//         });
+//     }
+// });
+
+
+
+
+
+
 $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
     var tr = $(this).closest('tr');
     var row = Tablaseleccion.row(tr);
@@ -94,7 +193,8 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
             }
         });
 
-        var categoriaId = row.data().CATEGORIA_VACANTE;
+        categoriaId = row.data().CATEGORIA_VACANTE;
+
         $.ajax({
             url: '/consultarSeleccion/' + categoriaId,
             method: 'GET',
@@ -115,11 +215,10 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
                                     <th class="text-center">% Buró laboral</th>
                                     <th class="text-center">% PPT</th>
                                     <th class="text-center">% Referencias laboral</th>
-                                    <th class="text-center">%  Pruebas de conocimientos</th>
+                                    <th class="text-center">% Pruebas de conocimientos</th>
                                     <th class="text-center">% Entrevista</th>
                                     <th class="text-center">Mostrar</th>
                                     <th class="text-center">Seleccionar</th>
-
                                 </tr>
                             </thead>
                             <tbody>
@@ -156,7 +255,7 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
                             </tbody>
                         </table>
                     `;
-                    
+
                     row.child(innerTable).show();
                     tr.addClass('shown');
                 }
@@ -168,8 +267,6 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
         });
     }
 });
-
-
 
 
 
@@ -1930,11 +2027,52 @@ $("#guardarFormSeleccionReferencias").click(function (e) {
 // <!-- ============================================================== -->
 
 
+// $("#nueva_prueba_conocimiento").click(function (e) {
+//     e.preventDefault();
+//     $("#Modal_pruebas_concimiento").modal("show");
+
+// });
+
+
 $("#nueva_prueba_conocimiento").click(function (e) {
     e.preventDefault();
+
+    // Utilizar el ID de la categoría seleccionada
+    if (!categoriaId) {
+        Swal.fire('Error', 'No se ha seleccionado ninguna categoría.', 'error');
+        return;
+    }
+
     $("#Modal_pruebas_concimiento").modal("show");
 
+    // Hacer la petición AJAX para obtener los requerimientos de la categoría seleccionada
+    $.ajax({
+        url: '/obtenerRequerimientos/' + categoriaId,  // Ruta en tu backend para obtener los requerimientos
+        method: 'GET',
+        success: function(response) {
+            if (response.data.length > 0) {
+                var pruebasHTML = '';
+
+                response.data.forEach(function(requerimiento) {
+                    pruebasHTML += `
+                        <div class="col-5 text-center">
+                            <label for="tipoPrueba">${requerimiento.TIPO_PRUEBA}</label>
+                            <input type="number" value="${requerimiento.PORCENTAJE}" class="form-control" readonly>
+                        </div>
+                    `;
+                });
+
+                $('#obtenerpruebas').html(pruebasHTML);  // Mostrar los requerimientos en el div correspondiente
+            } else {
+                $('#obtenerpruebas').html('<p>No hay pruebas asociadas a esta categoría.</p>');
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Swal.fire('Error', 'No se pudieron cargar las pruebas de conocimiento.', 'error');
+        }
+    });
 });
+
 
 
 

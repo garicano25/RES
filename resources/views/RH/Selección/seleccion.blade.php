@@ -543,6 +543,13 @@
                         </div>
                     </div>
 
+
+                    <div id="prueba-categoria"">
+                        <div id="obtenerpruebas" class="mt-3"></div>
+
+                    </div>
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>

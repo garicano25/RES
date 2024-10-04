@@ -282,6 +282,7 @@ Route::get('/Tablareferencia', [seleccionController::class, 'Tablareferencia']);
 Route::get('/mostrareferencias/{id}', [seleccionController::class, 'mostrareferencias']);
 
 // Pruebas de conocimientos
+Route::get('/obtenerRequerimientos/{id}', [seleccionController::class, 'obtenerRequerimientos']);
 
 // Entrevista
 Route::get('/Tablaentrevistaseleccion', [seleccionController::class, 'Tablaentrevistaseleccion']);

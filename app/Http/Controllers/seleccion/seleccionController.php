@@ -456,6 +456,30 @@ public function consultarSeleccion($categoriaVacanteId)
     
 
 
+public function obtenerRequerimientos($categoriaId)
+{
+    try {
+        // Consulta a la base de datos para obtener los requerimientos de la categoría seleccionada
+        $requerimientos = DB::table('requerimientos_categorias')
+            ->where('CATALOGO_CATEGORIAS_ID', $categoriaId)
+            ->get();
+
+        if ($requerimientos->isEmpty()) {
+            return response()->json([
+                'data' => [],
+                'message' => 'No hay requerimientos asociados a esta categoría.'
+            ]);
+        }
+
+        return response()->json([
+            'data' => $requerimientos
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'error' => 'Error al obtener los requerimientos: ' . $e->getMessage()
+        ], 500);
+    }
+}
 
 
 
