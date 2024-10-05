@@ -188,67 +188,67 @@ function TotalPostulantes(idVacante, categoriaVacante) {
                     `;
 
                     let postulanteCard = `
-                        <div class="row mb-3 mt-1" data-curp="postulante-${personalInfo.CURP_CV}">
-                            <div class="col-md-4 d-flex flex-column justify-content-start">
-                                <div class="card mb-3">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Información Personal</h5>
-                                        <p class="card-text"><strong>Nombre:</strong> ${personalInfo.NOMBRE_CV} ${personalInfo.PRIMER_APELLIDO_CV} ${personalInfo.SEGUNDO_APELLIDO_CV}</p>
-                                        <p class="card-text"><strong>Correo:</strong> ${personalInfo.CORREO_CV}</p>
-                                        <p class="card-text"><strong>Teléfonos:</strong> ${personalInfo.TELEFONO1}, ${personalInfo.TELEFONO2}</p>
-                                    </div>
-                                </div>
-                                <div class="card flex-grow-1">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Requerimientos de la Vacante</h5>
-                                        <table class="table table-borderless">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 70%;"></th>
-                                                    <th style="width: 30%; text-align: right;">Cumple</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                ${response.requerimientos.map((req, i) => `
-                                                <tr>
-                                                    <td><strong>${i + 1}. ${req.NOMBRE_REQUERIMINETO}</strong></td>
-                                                    <td class="text-right">
-                                                        <div class="d-flex justify-content-between align-items-center">
-                                                            <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="radio" name="req-${req.NOMBRE_REQUERIMINETO}-${personalInfo.CURP_CV}" id="req-${req.NOMBRE_REQUERIMINETO}-si-${personalInfo.CURP_CV}" value="${req.PORCENTAJE}" onchange="actualizarTotal('${personalInfo.CURP_CV}')">
-                                                                <label class="form-check-label me-3" for="req-${req.NOMBRE_REQUERIMINETO}-si-${personalInfo.CURP_CV}">Sí</label>
-                                                            </div>
-                                                            <div class="form-check form-check-inline">
-                                                                <input class="form-check-input" type="radio" name="req-${req.NOMBRE_REQUERIMINETO}-${personalInfo.CURP_CV}" id="req-${req.NOMBRE_REQUERIMINETO}-no-${personalInfo.CURP_CV}" value="0" onchange="actualizarTotal('${personalInfo.CURP_CV}')">
-                                                                <label class="form-check-label me-3" for="req-${req.NOMBRE_REQUERIMINETO}-no-${personalInfo.CURP_CV}">No</label>
-                                                            </div>
-                                                            <span class="ms-3"><strong>${req.PORCENTAJE}%</strong></span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                `).join('')}
-                                            </tbody>
-                                        </table>
-                                        <hr>
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <span><strong>Total cumplimiento:</strong></span>
-                                            <span id="total-cumplimiento-${personalInfo.CURP_CV}" class="total-porcentaje-circle">0%</span>
-                                        </div>
-                                        <div class="text-center mt-4">
-                                            <button class="btn btn-success guardar-postulante" data-curp="${personalInfo.CURP_CV}" data-id="${idVacante}" data-categoria="${categoriaVacante}">Guardar Información</button>
-                                        </div>
-                                    </div>
+                    <div class="row mb-3 mt-1" data-curp="postulante-${personalInfo.CURP_CV}">
+                        <div class="col-md-4 d-flex flex-column justify-content-start">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Información Personal</h5>
+                                    <p class="card-text"><strong>Nombre:</strong> ${personalInfo.NOMBRE_CV || ''} ${personalInfo.PRIMER_APELLIDO_CV || ''} ${personalInfo.SEGUNDO_APELLIDO_CV || ''}</p>
+                                    <p class="card-text"><strong>Correo:</strong> ${personalInfo.CORREO_CV || ''}</p>
+                                    <p class="card-text"><strong>Teléfonos:</strong> ${(personalInfo.TELEFONO1 || '') + (personalInfo.TELEFONO2 ? ', ' + personalInfo.TELEFONO2 : '')}</p>
                                 </div>
                             </div>
-                            <div class="col-md-8">
-                                <div class="card h-100">
-                                    <div class="card-body p-0">
-                                        ${archivoCVContent}
+                            <div class="card flex-grow-1">
+                                <div class="card-body">
+                                    <h5 class="card-title">Requerimientos de la Vacante</h5>
+                                    <table class="table table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 70%;"></th>
+                                                <th style="width: 30%; text-align: right;">Cumple</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${response.requerimientos.map((req, i) => `
+                                            <tr>
+                                                <td><strong>${i + 1}. ${req.NOMBRE_REQUERIMINETO}</strong></td>
+                                                <td class="text-right">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="req-${req.NOMBRE_REQUERIMINETO}-${personalInfo.CURP_CV}" id="req-${req.NOMBRE_REQUERIMINETO}-si-${personalInfo.CURP_CV}" value="${req.PORCENTAJE}" onchange="actualizarTotal('${personalInfo.CURP_CV}')">
+                                                            <label class="form-check-label me-3" for="req-${req.NOMBRE_REQUERIMINETO}-si-${personalInfo.CURP_CV}">Sí</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="req-${req.NOMBRE_REQUERIMINETO}-${personalInfo.CURP_CV}" id="req-${req.NOMBRE_REQUERIMINETO}-no-${personalInfo.CURP_CV}" value="0" onchange="actualizarTotal('${personalInfo.CURP_CV}')">
+                                                            <label class="form-check-label me-3" for="req-${req.NOMBRE_REQUERIMINETO}-no-${personalInfo.CURP_CV}">No</label>
+                                                        </div>
+                                                        <span class="ms-3"><strong>${req.PORCENTAJE}%</strong></span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                    <hr>
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <span><strong>Total cumplimiento:</strong></span>
+                                        <span id="total-cumplimiento-${personalInfo.CURP_CV}" class="total-porcentaje-circle">0%</span>
+                                    </div>
+                                    <div class="text-center mt-4">
+                                        <button class="btn btn-success guardar-postulante" data-curp="${personalInfo.CURP_CV}" data-id="${idVacante}" data-categoria="${categoriaVacante}">Guardar Información</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    `;
+                        <div class="col-md-8">
+                            <div class="card h-100">
+                                <div class="card-body p-0">
+                                    ${archivoCVContent}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
                     postulanteContent += postulanteCard;
                 });
             } else {
@@ -483,26 +483,27 @@ $(document).ready(function () {
                             let buttonClass = preseleccionInfo.DISPONIBLE === 'si' ? 'btn-primary' : 'btn-secondary';
 
                             preseleccionContent += `
-                                <tr data-curp="${preseleccionInfo.CURP}">
-                                    <td>${preseleccionInfo.NOMBRE_AC} ${preseleccionInfo.PRIMER_APELLIDO_AC} ${preseleccionInfo.SEGUNDO_APELLIDO_AC}</td>
-                                    <td>${preseleccionInfo.CORREO_AC}</td>
-                                    <td>${preseleccionInfo.TELEFONO1_AC}, ${preseleccionInfo.TELEFONO2_AC}</td>
-                                    <td>${preseleccionInfo.PORCENTAJE}%</td>
-                                    <td class="radio-group">
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="disponible-${index}" id="disponible-si-${index}" value="si" ${checkedSi} onchange="actualizarDisponibilidad(${index}, '${preseleccionInfo.CURP}', true)">
-                                            <label class="form-check-label" for="disponible-si-${index}">Sí</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="disponible-${index}" id="disponible-no-${index}" value="no" ${checkedNo} onchange="actualizarDisponibilidad(${index}, '${preseleccionInfo.CURP}', false)">
-                                            <label class="form-check-label" for="disponible-no-${index}">No</label>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-success btn-action ${buttonClass}" id="action-button-${index}" ${buttonDisabled} onclick="guardarPreseleccion(${index}, '${preseleccionInfo.CURP}', '${preseleccionInfo.NOMBRE_AC}', '${preseleccionInfo.PRIMER_APELLIDO_AC}', '${preseleccionInfo.SEGUNDO_APELLIDO_AC}', '${preseleccionInfo.CORREO_AC}', '${preseleccionInfo.TELEFONO1_AC}', '${preseleccionInfo.TELEFONO2_AC}', ${preseleccionInfo.PORCENTAJE})">Preseleccionar</button>
-                                    </td>
-                                </tr>
-                            `;
+                            <tr data-curp="${preseleccionInfo.CURP}">
+                                <td>${preseleccionInfo.NOMBRE_AC || ''} ${preseleccionInfo.PRIMER_APELLIDO_AC || ''} ${preseleccionInfo.SEGUNDO_APELLIDO_AC || ''}</td>
+                                <td>${preseleccionInfo.CORREO_AC || ''}</td>
+                                <td>${(preseleccionInfo.TELEFONO1_AC || '') + (preseleccionInfo.TELEFONO2_AC ? ', ' + preseleccionInfo.TELEFONO2_AC : '')}</td>
+                                <td>${preseleccionInfo.PORCENTAJE != null ? preseleccionInfo.PORCENTAJE + '%' : ''}</td>
+                                <td class="radio-group">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="disponible-${index}" id="disponible-si-${index}" value="si" ${checkedSi} onchange="actualizarDisponibilidad(${index}, '${preseleccionInfo.CURP}', true)">
+                                        <label class="form-check-label" for="disponible-si-${index}">Sí</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="disponible-${index}" id="disponible-no-${index}" value="no" ${checkedNo} onchange="actualizarDisponibilidad(${index}, '${preseleccionInfo.CURP}', false)">
+                                        <label class="form-check-label" for="disponible-no-${index}">No</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button class="btn btn-success btn-action ${buttonClass}" id="action-button-${index}" ${buttonDisabled} onclick="guardarPreseleccion(${index}, '${preseleccionInfo.CURP}', '${preseleccionInfo.NOMBRE_AC || ''}', '${preseleccionInfo.PRIMER_APELLIDO_AC || ''}', '${preseleccionInfo.SEGUNDO_APELLIDO_AC || ''}', '${preseleccionInfo.CORREO_AC || ''}', '${preseleccionInfo.TELEFONO1_AC || ''}', '${preseleccionInfo.TELEFONO2_AC || ''}', ${preseleccionInfo.PORCENTAJE != null ? preseleccionInfo.PORCENTAJE : ''})">Preseleccionar</button>
+                                </td>
+                            </tr>
+                        `;
+                        
                         });
 
                         // Cerrar la tabla y el div de responsive

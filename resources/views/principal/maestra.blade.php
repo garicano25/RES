@@ -323,7 +323,7 @@
     <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
 
     <!-- Funciones generales -->
-    <script src="/assets/js_sitio/funciones.js"></script>
+    <script src="/assets/js_sitio/funciones.js?v=1.0"></script>
 
 
 
@@ -401,11 +401,11 @@
     @endif
 
     @if(request()->is('Listavacantes'))
-    <script src="/assets/js_sitio/reclutamiento/banco_cv.js"></script>
+    <script src="/assets/js_sitio/reclutamiento/banco_cv.js?v=1.0"></script>
     @endif
 
     @if(request()->is('Postulaciones'))
-    <script src="/assets/js_sitio/reclutamiento/vacantesactivas.js?v=2.0"></script>
+    <script src="/assets/js_sitio/reclutamiento/vacantesactivas.js?v=3.0"></script>
     @endif
 
     @if(request()->is('Motivo-vacante'))
@@ -419,7 +419,7 @@
 
 
     @if(request()->is('Selección'))
-    <script src="/assets/js_sitio/seleccion/seleccion.js?v=4.0"></script>
+    <script src="/assets/js_sitio/seleccion/seleccion.js?v=5.0"></script>
     @endif
 
 

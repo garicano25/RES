@@ -526,27 +526,9 @@
                         </div>
                     </div>
                     
-                    <div id="contenedor-pruebas" style="display: none;">
-                        <div class="mb-3">
-                            <label>Agregar pruebas</label>
-                            <button id="botonAgregarprueba" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar prueba"><i class="bi bi-plus-circle-fill"></i></button>
-                            <div id="inputs-prueba" class="mt-3"></div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-4 mx-auto text-center">
-                                <div class="form-group">
-                                    <label>Suma total del %</label>
-                                    <input type="number" class="form-control floating-input text-center" id="PORCENTAJE_TOTAL_PRUEBAS" name="PORCENTAJE_TOTAL_PRUEBAS" readonly>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
                     <div id="prueba-categoria"">
-                        <div id="obtenerpruebas" class="mt-3"></div>
-
+                        <div id="obtenerpruebas" class="mt-3">
+                        </div>
                     </div>
 
 
@@ -602,7 +584,7 @@
               <div class="mb-3" style="display: none">>
                   <label  class="form-label text-center">Evidencia</label>
                   <div class="input-group">
-                    <input type="file" class="form-control" id="ARCHIVO_ENTREVISTA" name="ARCHIVO_ENTREVISTA" accept=".pdf" required>
+                    <input type="file" class="form-control" id="ARCHIVO_ENTREVISTA" name="ARCHIVO_ENTREVISTA" accept=".pdf" >
                     <button type="button" class="btn btn-light btn-sm ms-2" id="quitarEvidencia" style="display:none;">Quitar archivo</button>
                   </div>
               </div>

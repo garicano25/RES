@@ -2606,7 +2606,7 @@ function validarFormulario(form) {
   formulario.find('input[required]:not([disabled]), textarea[required]:not([disabled]), select[required]:not([disabled])').addClass('validar').removeClass('error');
 
   // Busca todos los elementos con la clase "validar"
-  var campos = $('.validar');
+  var campos =  formulario.find('.validar');
   var formularioValido = true;
 
   campos.each(function () {
@@ -2665,6 +2665,60 @@ document.querySelectorAll('.modal').forEach(modal => {
     }
   });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+function validarFormularioV1(form) {
+  var formulario = $('#'+form);
+
+
+
+  // Busca todos los elementos input, textarea y select dentro del formulario y agrega la clase "validar"
+  formulario.find('input[required]:not([disabled]), textarea[required]:not([disabled]), select[required]:not([disabled])').addClass('validar').removeClass('error');
+
+  // Busca todos los elementos con la clase "validar"
+  var campos =  $(`#${form} .validar`);
+  
+  console.log(campos)
+
+
+  var formularioValido = true;
+
+  campos.each(function () {
+      var tipoCampo = $(this).attr('type');
+      var valorCampo = $(this).val();
+
+      // Verifica si el campo es un radio o checkbox y si hay uno seleccionado
+      if (tipoCampo === 'radio' || tipoCampo === 'checkbox') {
+          var nombreGrupo = $(this).attr('name');
+          if ($('input[name="' + nombreGrupo + '"]:checked').length === 0) {
+              $('input[name="' + nombreGrupo + '"]').addClass('error');
+              formularioValido = false;
+          } else {
+              $('input[name="' + nombreGrupo + '"]').removeClass('error');
+          }
+      } 
+      // Valida otros tipos de campos (text, email, etc.)
+      else if (valorCampo === '' || valorCampo === null) {
+          $(this).addClass('error');
+          formularioValido = false;
+      } else {
+          $(this).removeClass('error');
+      }
+  });
+
+  return formularioValido;
+}
+
 
 
 

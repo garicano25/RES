@@ -197,6 +197,7 @@ class seleccionpptModel extends Model
         'AUTORIZADO_NOMBRE_PPT',
         'AUTORIZADO_FIRMA_PPT',
         'AUTORIZADO_FECHA_PPT',
+        'SUMA_TOTAL',
          'ACTIVO'
     ];
 }

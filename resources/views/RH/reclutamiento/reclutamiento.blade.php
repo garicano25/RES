@@ -83,7 +83,7 @@
                                         </select>
                                     </div>
                                     <div class="col-10 mx-2">        
-                                        <label for="NUMERO1_CV" class="me-2">Teléfono 1</label>
+                                        <label class="me-2">Teléfono 1</label>
                                     <input type="number" class="form-control col-auto" id="TELEFONO1" name="TELEFONO1" required>
                                     </div>
                                     
@@ -94,7 +94,7 @@
                     
                                     <div class="col-2">
                                         <label>Etiqueta</label>
-                                        <select class="form-select" id="ETIQUETA_TELEFONO2" name="ETIQUETA_TELEFONO2" required>
+                                        <select class="form-select" id="ETIQUETA_TELEFONO2" name="ETIQUETA_TELEFONO2" >
                                             <option value="0" selected disabled></option>
                                             <option value="Móvil">Móvil</option>
                                             <option value="Trabajo">Trabajo</option>
@@ -103,8 +103,8 @@
                                         </select>
                                     </div>
                                     <div class="col-10 mx-2">        
-                                        <label for="NUMERO1_CV" class="me-2">Teléfono 2</label>
-                                    <input type="number" class="form-control col-auto" id="TELEFONO2" name="TELEFONO2" required>
+                                        <label  class="me-2">Teléfono 2 (opcional)</label>
+                                    <input type="number" class="form-control col-auto" id="TELEFONO2" name="TELEFONO2" >
                                     </div>                
                                 </div>      
                                
@@ -318,7 +318,7 @@
 <div class="modal modal-fullscreen fade" id="miModal_VACANTES" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
           <div class="modal-content">
-        <form method="post" enctype="multipart/form-data" id="formularioBANCO" style="background-color: #ffffff;">
+        <form method="post" enctype="multipart/form-data" id="formularioBANCOSS" style="background-color: #ffffff;">
             <div class="modal-header">
                 <h5 class="modal-title" id="miModalLabel">Información</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

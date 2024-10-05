@@ -226,29 +226,30 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
 
                     response.data.forEach(function(item, index) {
                         innerTable += `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td>${item.NOMBRE_SELC} ${item.PRIMER_APELLIDO_SELEC} ${item.SEGUNDO_APELLIDO_SELEC}</td>
-                            <td class="text-center">${item.CURP}</td>
-                            <td class="text-center">${item.CORREO_SELEC}<br>${item.TELEFONO1_SELECT}, ${item.TELEFONO2_SELECT}</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-primary btn-circle" id="AbrirModalFull" data-bs-toggle="modal" data-bs-target="#FullScreenModal" data-curp="${item.CURP}" data-nombre="${item.NOMBRE_SELC} ${item.PRIMER_APELLIDO_SELEC} ${item.SEGUNDO_APELLIDO_SELEC}">
-                                    <i class="bi bi-eye-fill"></i>
-                                </button>
-                            </td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-success" id="MandarContratacion" disabled>
-                                    <i class="bi bi-check-square-fill"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    `;
+                                    <tr>
+                                        <td>${index + 1}</td>
+                                        <td>${item.NOMBRE_SELC || ''} ${item.PRIMER_APELLIDO_SELEC || ''} ${item.SEGUNDO_APELLIDO_SELEC || ''}</td>
+                                        <td class="text-center">${item.CURP || ''}</td>
+                                        <td class="text-center">${item.CORREO_SELEC || ''}<br>${(item.TELEFONO1_SELECT || '') + (item.TELEFONO2_SELECT ? ', ' + item.TELEFONO2_SELECT : '')}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-primary btn-circle" id="AbrirModalFull" data-bs-toggle="modal" data-bs-target="#FullScreenModal" data-curp="${item.CURP || ''}" data-nombre="${item.NOMBRE_SELC || ''} ${item.PRIMER_APELLIDO_SELEC || ''} ${item.SEGUNDO_APELLIDO_SELEC || ''}">
+                                                <i class="bi bi-eye-fill"></i>
+                                            </button>
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-success" id="MandarContratacion" disabled>
+                                                <i class="bi bi-check-square-fill"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                `;
+
                     });
 
                     innerTable += `
@@ -487,7 +488,6 @@ $('#Tablainteligencia').on('click', '.ver-archivo-competencias', function () {
     abrirModal(url, 'Documento competencias');
 });
 
-// Función para abrir el modal con el archivo
 
 
 
@@ -1132,7 +1132,7 @@ ModalAutorizacion.addEventListener('hidden.bs.modal', event => {
 $("#guardarFormSeleccionAutorizacion").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioAUTORIZACION'));
+    formularioValido = validarFormularioV1('formularioAUTORIZACION');
 
     if (formularioValido) {
 
@@ -1341,7 +1341,7 @@ ModalInteligencia.addEventListener('hidden.bs.modal', event => {
 $("#guardarFormSeleccionInteligencia").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioINTELIGENCIA'));
+    formularioValido = validarFormularioV1('formularioINTELIGENCIA');
 
     if (formularioValido) {
 
@@ -1647,7 +1647,7 @@ document.addEventListener('DOMContentLoaded', function () {
 $("#guardarFormSeleccionBuro").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioBURO'));
+    formularioValido = validarFormularioV1('formularioBURO');
 
     if (formularioValido) {
 
@@ -1919,7 +1919,7 @@ document.addEventListener('DOMContentLoaded', initReferenciasLaborales);
 $("#guardarFormSeleccionReferencias").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioReferencias'));
+    formularioValido = validarFormularioV1('formularioReferencias');
 
     if (formularioValido) {
 
@@ -2057,7 +2057,7 @@ $("#nueva_prueba_conocimiento").click(function (e) {
                     pruebasHTML += `
                         <div class="col-5 text-center">
                             <label for="tipoPrueba">${requerimiento.TIPO_PRUEBA}</label>
-                            <input type="number" value="${requerimiento.PORCENTAJE}" class="form-control" readonly>
+                            <input type="hidden" value="${requerimiento.PORCENTAJE}" class="form-control" readonly>
                         </div>
                     `;
                 });
@@ -2075,125 +2075,10 @@ $("#nueva_prueba_conocimiento").click(function (e) {
 
 
 
-
-function togglePruebas() {
-    const contenedorPruebas = document.getElementById('contenedor-pruebas');
-    const experienciaSi = document.getElementById('prueba_si');
+const Modalpruebas = document.getElementById('Modal_pruebas_concimiento');
+Modalpruebas.addEventListener('hidden.bs.modal', event => {
     
-    if (experienciaSi.checked) {
-        contenedorPruebas.style.display = 'block';
-    } else {
-        contenedorPruebas.style.display = 'none'; 
-    }
-}
-
-// Escuchar cambios en los radios para mostrar/ocultar el div
-document.getElementById('prueba_si').addEventListener('change', togglePruebas);
-document.getElementById('prueba_no').addEventListener('change', togglePruebas);
-
-
-// Función global para agregar inputs dinámicos
-function agregarpruebas() {
-    const divInput = document.createElement('div');
-    divInput.classList.add('form-group', 'row', 'input-container', 'mb-3');
-
-    // Crear el select con las opciones dinámicas
-    let opcionesPruebas = '<option value="" disabled selected></option>';
-    pruebas.forEach(function(prueba) {
-        opcionesPruebas += `<option value="${prueba.NOMBRE_PRUEBA}">${prueba.NOMBRE_PRUEBA}</option>`;
-    });
-
-    divInput.innerHTML = `
-        <div class="col-3 text-center">
-            <label for="tipoPrueba">Nombre de la prueba</label>
-            <select name="TIPO_PRUEBA[]" class="form-control">
-                ${opcionesPruebas}
-            </select>
-        </div>
-        <div class="col-3 text-center">
-            <label for="cantidad">% de la prueba</label>
-            <input type="number" name="CANTIDAD[]" class="form-control" min="1" step="1">
-        </div>
-        <div class="col-4 text-center">
-            <label for="archivoResultado">Cargar documento</label>
-            <input type="file" name="ARCHIVO_RESULTADO[]" class="form-control archivo-input" accept=".pdf">
-            <button type="button" class="btn quitarArchivo" style="display: none;">Quitar archivo</button>
-        </div>
-        <div class="col-1">
-            <br>
-            <button type="button" class="btn btn-danger botonEliminar"><i class="bi bi-trash3-fill"></i></button>
-        </div>
-    `;
-
-    document.getElementById('inputs-prueba').appendChild(divInput);
-
-    // Actualizar inmediatamente las opciones para desactivar las seleccionadas en este nuevo select
-    actualizarOpcionespruebas();
-
-    // Escuchar el cambio en el select para actualizar opciones seleccionadas
-    divInput.querySelector('select[name="TIPO_PRUEBA[]"]').addEventListener('change', function() {
-        actualizarOpcionespruebas();
-    });
-
-    // Manejo para eliminar archivo
-    const archivoInput = divInput.querySelector('.archivo-input');
-    const quitarArchivoBtn = divInput.querySelector('.quitarArchivo');
-    archivoInput.addEventListener('change', function() {
-        quitarArchivoBtn.style.display = 'inline-block';
-    });
-    quitarArchivoBtn.addEventListener('click', function() {
-        archivoInput.value = ''; // Limpiar el input
-        quitarArchivoBtn.style.display = 'none';
-    });
-
-    // Eliminar input dinámico
-    const botonEliminar = divInput.querySelector('.botonEliminar');
-    botonEliminar.addEventListener('click', function () {
-        // Antes de eliminar, restaurar la opción seleccionada a la lista general
-        const selectedValue = divInput.querySelector('select[name="TIPO_PRUEBA[]"]').value;
-        if (selectedValue) {
-            // Si se seleccionó una opción, restaurarla
-            const selects = document.querySelectorAll('select[name="TIPO_PRUEBA[]"]');
-            selects.forEach(select => {
-                const existeOpcion = Array.from(select.options).some(option => option.value === selectedValue);
-                if (!existeOpcion) {
-                    const option = document.createElement('option');
-                    option.value = selectedValue;
-                    option.textContent = selectedValue;
-                    select.appendChild(option);
-                }
-            });
-        }
-
-        divInput.remove();
-        actualizarOpcionespruebas(); // Actualizar cuando se elimine un select
-    });
-}
-
-// Función global para actualizar las opciones seleccionadas en todos los selects
-function actualizarOpcionespruebas() {
-    const selects = document.querySelectorAll('select[name="TIPO_PRUEBA[]"]');
-    const seleccionadas = Array.from(selects).map(select => select.value).filter(v => v); // Obtener solo los valores seleccionados
-
-    selects.forEach(select => {
-        const currentValue = select.value;
-        const opciones = select.querySelectorAll('option');
-        opciones.forEach(option => {
-            if (seleccionadas.includes(option.value) && option.value !== currentValue) {
-                option.remove(); // Eliminar opción de otros selects
-            }
-        });
-    });
-}
-
-// Evento del botón para agregar una nueva prueba
-document.getElementById('botonAgregarprueba').addEventListener('click', agregarpruebas);
-
-
-
-// Inicializar estado del contenedor de pruebas
-togglePruebas();
-
+});
 
 
 
@@ -2216,23 +2101,29 @@ $("#nueva_entrevista").click(function (e) {
 
 const ModalEntrevista = document.getElementById('Modal_entrevistas');
 ModalEntrevista.addEventListener('hidden.bs.modal', event => {
+
     ID_ENTREVISTA_SELECCION = 0;
     document.getElementById('formularioENTREVISTA').reset();
+
     $('.collapse').collapse('hide');
+   
     $('#guardarFormSeleccionEntrevista').css('display', 'block').prop('disabled', false);
 
 
-    document.querySelectorAll('#formularioENTREVISTA [required]').forEach(input => {
-        input.removeAttribute('required');
-    });
+
+    // // Remueve la clase 'validar' y cualquier otra clase que desees de todos los inputs
+    // $('#formularioENTREVISTA input').each(function() {
+    //     $(this).removeClass('validar'); 
+    // });
    
+
 });
 
 
   $("#guardarFormSeleccionEntrevista").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioENTREVISTA'));
+    formularioValido = validarFormularioV1('formularioENTREVISTA');
 
     if (formularioValido) {
 
@@ -3386,7 +3277,7 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
 $("#guardarFormSeleccionPPT").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioSeleccionPPT'));
+    formularioValido = validarFormularioV1('formularioSeleccionPPT');
 
     if (formularioValido) {
 

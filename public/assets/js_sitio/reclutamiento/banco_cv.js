@@ -29,6 +29,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+const ModalBANCO = document.getElementById('miModal_BANCOCV');
+ModalBANCO.addEventListener('hidden.bs.modal', event => {
+    ID_BANCO_CV = 0;
+    document.getElementById('formularioBANCO').reset();
+    $('.collapse').collapse('hide');
+    $('#guardarFormBancoCVS').css('display', 'block').prop('disabled', false);
+ 
+});
+
+
+
+const ModalVACANTES = document.getElementById('miModal_VACANTES');
+ModalVACANTES.addEventListener('hidden.bs.modal', event => {
+    ID_BANCO_CV = 0;
+    document.getElementById('formularioBANCOSS').reset();
+    $('.collapse').collapse('hide');
+
+ 
+});
+
+
+
+
 
 
 $("#guardarFormBancoCVS").click(function (e) {
@@ -603,6 +626,60 @@ $(document).ready(function() {
 
                 var campoCurp = document.getElementById('campo-curp');
                 var campoPasaporte = document.getElementById('campo-pasaporte');
+                var labelArchivo = document.getElementById('label-archivo');
+                var archivoCurpCv = document.getElementById('ARCHIVO_CURP_CV');
+
+                // Ocultar ambos campos al cambiar la selección
+                if (campoCurp) campoCurp.style.display = 'none';
+                if (campoPasaporte) campoPasaporte.style.display = 'none';
+
+                // Cambiar el texto del label y atributos según la selección
+                if (nacionalidad == '1') {
+                    // Mostrar campo CURP para nacionalidad mexicana
+                    if (campoCurp) {
+                        campoCurp.style.display = 'block';
+                        document.getElementById('CURP_CV').setAttribute('name', 'CURP_CV');
+                    }
+                    if (labelArchivo) labelArchivo.innerText = 'CURP. ';
+                    if (archivoCurpCv) {
+                        archivoCurpCv.setAttribute('name', 'ARCHIVO_CURP_CV');
+                        archivoCurpCv.setAttribute('required', true);
+                    }
+                    // Resetear name del pasaporte
+                    document.getElementById('ID_PASAPORTE').setAttribute('name', 'TEMP_PASAPORTE');
+                } else if (nacionalidad == '2') {
+                    // Mostrar campo Pasaporte para nacionalidad extranjera
+                    if (campoPasaporte) {
+                        campoPasaporte.style.display = 'block';
+                        document.getElementById('ID_PASAPORTE').setAttribute('name', 'CURP_CV');
+                    }
+                    if (labelArchivo) labelArchivo.innerText = 'Pasaporte.  ';
+                    if (archivoCurpCv) {
+                        archivoCurpCv.setAttribute('name', 'ARCHIVO_PASAPORTE_CV');
+                        archivoCurpCv.removeAttribute('required');
+                    }
+                    // Resetear name del CURP
+                    document.getElementById('CURP_CV').setAttribute('name', 'TEMP_CURP');
+                }
+            });
+        }
+    });
+
+
+
+
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectNacionalidad = document.getElementById('NACIONALIDAD');
+
+        if (selectNacionalidad) {
+            selectNacionalidad.addEventListener('change', function() {
+                var nacionalidad = this.value;
+
+                var campoCurp = document.getElementById('campo-curp12');
+                var campoPasaporte = document.getElementById('campo-pasaporte12');
                 var labelArchivo = document.getElementById('label-archivo');
                 var archivoCurpCv = document.getElementById('ARCHIVO_CURP_CV');
 
