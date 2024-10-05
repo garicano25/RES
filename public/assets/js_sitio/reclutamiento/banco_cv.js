@@ -29,26 +29,48 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-const ModalBANCO = document.getElementById('miModal_BANCOCV');
-ModalBANCO.addEventListener('hidden.bs.modal', event => {
-    ID_BANCO_CV = 0;
-    document.getElementById('formularioBANCO').reset();
-    $('.collapse').collapse('hide');
-    $('#guardarFormBancoCVS').css('display', 'block').prop('disabled', false);
+// const ModalBANCO = document.getElementById('miModal_BANCOCV');
+// ModalBANCO.addEventListener('hidden.bs.modal', event => {
+//     ID_BANCO_CV = 0;
+//     document.getElementById('formularioBANCO').reset();
+//     $('.collapse').collapse('hide');
+//     $('#guardarFormBancoCVS').css('display', 'block').prop('disabled', false);
  
-});
+// });
 
 
+
+// const ModalVACANTES = document.getElementById('miModal_VACANTES');
+// ModalVACANTES.addEventListener('hidden.bs.modal', event => {
+//     ID_BANCO_CV = 0;
+//     document.getElementById('formularioBANCOSS').reset();
+//     $('.collapse').collapse('hide');
+
+ 
+// });
+
+
+
+
+
+const ModalBANCO = document.getElementById('miModal_BANCOCV');
+if (ModalBANCO) {
+    ModalBANCO.addEventListener('hidden.bs.modal', event => {
+        ID_BANCO_CV = 0;
+        document.getElementById('formularioBANCO').reset();
+        $('.collapse').collapse('hide');
+        $('#guardarFormBancoCVS').css('display', 'block').prop('disabled', false);
+    });
+}
 
 const ModalVACANTES = document.getElementById('miModal_VACANTES');
-ModalVACANTES.addEventListener('hidden.bs.modal', event => {
-    ID_BANCO_CV = 0;
-    document.getElementById('formularioBANCOSS').reset();
-    $('.collapse').collapse('hide');
-
- 
-});
-
+if (ModalVACANTES) {
+    ModalVACANTES.addEventListener('hidden.bs.modal', event => {
+        ID_BANCO_CV = 0;
+        document.getElementById('formularioBANCOSS').reset();
+        $('.collapse').collapse('hide');
+    });
+}
 
 
 

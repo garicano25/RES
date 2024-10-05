@@ -401,7 +401,7 @@
     @endif
 
     @if(request()->is('Listavacantes'))
-    <script src="/assets/js_sitio/reclutamiento/banco_cv.js?v=1.0"></script>
+    <script src="/assets/js_sitio/reclutamiento/banco_cv.js?v=2.0"></script>
     @endif
 
     @if(request()->is('Postulaciones'))

@@ -314,12 +314,12 @@ height: 20px;
                 <label class="col-form-label">¿Cuenta con Título?</label>
                 <div class="d-flex">
                     <div class="form-check me-3">
-                        <label class="form-check-label" for="si">Si</label>
-                        <input class="form-check-input" type="radio" name="CUENTA_TITULO_LICENCIATURA_CV" id="si" value="Si" >
+                        <label class="form-check-label" for="si_titulo">Si</label>
+                        <input class="form-check-input" type="radio" name="CUENTA_TITULO_LICENCIATURA_CV" id="si_titulo" value="Si" >
                     </div>
                     <div class="form-check">
-                        <label class="form-check-label" for="no">No</label>
-                        <input class="form-check-input" type="radio" name="CUENTA_TITULO_LICENCIATURA_CV" id="no" value="NO" >
+                        <label class="form-check-label" for="no_titulo">No</label>
+                        <input class="form-check-input" type="radio" name="CUENTA_TITULO_LICENCIATURA_CV" id="no_titulo" value="NO" >
                     </div>
                 </div>
             </div>
@@ -327,12 +327,12 @@ height: 20px;
                 <label class="col-form-label">¿Cuenta con cédula profesional?</label>
                 <div class="d-flex">
                     <div class="form-check me-3">
-                        <label class="form-check-label" for="si">Si</label>
-                        <input class="form-check-input" type="radio" name="CEDULA_TITULO_LICENCIATURA_CV" id="si" value="Si" >
+                        <label class="form-check-label" for="si_cedula">Si</label>
+                        <input class="form-check-input" type="radio" name="CEDULA_TITULO_LICENCIATURA_CV" id="si_cedula" value="Si" >
                     </div>
                     <div class="form-check">
-                        <label class="form-check-label" for="no">No</label>
-                        <input class="form-check-input" type="radio" name="CEDULA_TITULO_LICENCIATURA_CV" id="no" value="NO" >
+                        <label class="form-check-label" for="no_cedula">No</label>
+                        <input class="form-check-input" type="radio" name="CEDULA_TITULO_LICENCIATURA_CV" id="no_cedula" value="NO" >
                     </div>
                 </div>
             </div>
