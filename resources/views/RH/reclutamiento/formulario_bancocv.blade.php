@@ -419,6 +419,9 @@ height: 20px;
                 <button type="button" class="btn btn-light btn-sm ms-2" id="quitarCV" style="display:none;">Quitar archivo</button>
             </div>
             <div id="CV_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>   
+
+
+            
             <div class="form-check mb-3">
                 <input type="checkbox" class="form-check-input small-checkbox" id="aceptaTerminos">
                 <label class="form-check-label" for="aceptaTerminos">He aceptado los términos y condiciones del aviso de privacidad de Results In Performance</label>

@@ -529,6 +529,18 @@
                     <div id="prueba-categoria"">
                         <div id="obtenerpruebas" class="mt-3">
                         </div>
+
+                        <div class="row mb-3">
+                            <div class="col-4 mx-auto text-center">
+                                <div class="form-group">
+                                    <label>Suma total del %</label>
+                                    <input type="number" class="form-control floating-input text-center" id="PORCENTAJE_TOTAL_PRUEBA" name="PORCENTAJE_TOTAL_PRUEBA" readonly>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        
                     </div>
 
 

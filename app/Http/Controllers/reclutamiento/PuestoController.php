@@ -61,73 +61,74 @@ public function getCvInfo(Request $request)
 
 
 
+
+
+
+
 public function store(Request $request)
 {
     try {
         switch (intval($request->api)) {
             case 1:
+                // Obtener el valor de CURP o Pasaporte (los dos se almacenan en CURP_CV)
+                $identificador = $request->CURP_CV ? $request->CURP_CV : 'extranjero_' . time();
+                
+                // Buscar en la base de datos por CURP o Pasaporte
                 $bancocvs = bancocvModel::where('CURP_CV', $request->CURP_CV)->first();
 
                 if ($bancocvs) {
-                    $interes_admon = $request->INTERES_ADMINISTRATIVA ? $request->INTERES_ADMINISTRATIVA : $bancocvs->INTERES_ADMINISTRATIVA;
-                    $interes_ope = $request->INTERES_OPERATIVAS ? $request->INTERES_OPERATIVAS : $bancocvs->INTERES_OPERATIVAS;
+                    // Actualizar INTERES_ADMINISTRATIVA e INTERES_OPERATIVAS si es necesario
+                    $interes_admon = $request->INTERES_ADMINISTRATIVA ?? $bancocvs->INTERES_ADMINISTRATIVA;
+                    $interes_ope = $request->INTERES_OPERATIVAS ?? $bancocvs->INTERES_OPERATIVAS;
 
-                    $bancocvs->update(array_merge($bancocvs->toArray(), $request->except(['ARCHIVO_CURP_CV', 'ARCHIVO_CV']), [
+                    // Actualizar otros campos
+                    $bancocvs->update(array_merge($bancocvs->toArray(), $request->except(['ARCHIVO_CURP_CV', 'ARCHIVO_PASAPORTE_CV', 'ARCHIVO_CV']), [
                         'INTERES_ADMINISTRATIVA' => $interes_admon,
                         'INTERES_OPERATIVAS' => $interes_ope,
                     ]));
 
-                    // if ($request->hasFile('ARCHIVO_CURP_CV')) {
-                    //     $curpFile = $request->file('ARCHIVO_CURP_CV');
-                    //     $curpFileName = $request->CURP_CV . '.' . $curpFile->getClientOriginalExtension();
-                    //     $curpFilePath = 'reclutamiento/CURP/' . $curpFileName;
-                    //     $curpFile->storeAs('reclutamiento/CURP', $curpFileName);
-                    //     $bancocvs->ARCHIVO_CURP_CV = $curpFilePath;
-                    // }
+                    // Guardar archivos (CURP o Pasaporte)
+                    $curpFolder = 'reclutamiento/' . $identificador; // Carpeta base para almacenar archivos
 
-                    // if ($request->hasFile('ARCHIVO_CV')) {
-                    //     $cvFile = $request->file('ARCHIVO_CV');
-                    //     $cvFileName = $request->CURP_CV . '.' . $cvFile->getClientOriginalExtension();
-                    //     $cvFilePath = 'reclutamiento/CV/' . $cvFileName;
-                    //     $cvFile->storeAs('reclutamiento/CV', $cvFileName);
-                    //     $bancocvs->ARCHIVO_CV = $cvFilePath;
-                    // }
-
-                    // $bancocvs->save();
-
-
-
-                    if ($request->hasFile('ARCHIVO_CURP_CV')) {
-                        $curpFile = $request->file('ARCHIVO_CURP_CV');
-                        $curpFolder = 'reclutamiento/' . $request->CURP_CV;
-                        $curpFileFolder = $curpFolder . '/CURP/';
-                        $curpFileName = 'CURP_' . $request->CURP_CV . '.' . $curpFile->getClientOriginalExtension();
-                        $curpFile->storeAs($curpFileFolder, $curpFileName);
-                        $bancocvs->ARCHIVO_CURP_CV = $curpFileFolder . $curpFileName;
+                    // Guardar archivo CURP o Pasaporte
+                    if ($request->hasFile('ARCHIVO_CURP_CV') || $request->hasFile('ARCHIVO_PASAPORTE_CV')) {
+                        if ($request->hasFile('ARCHIVO_CURP_CV')) {
+                            $curpFile = $request->file('ARCHIVO_CURP_CV');
+                            $curpFileFolder = $curpFolder . '/CURP/';
+                            $curpFileName = 'CURP_' . $identificador . '.' . $curpFile->getClientOriginalExtension();
+                            $curpFile->storeAs($curpFileFolder, $curpFileName);
+                            $bancocvs->ARCHIVO_CURP_CV = $curpFileFolder . $curpFileName;
+                        } elseif ($request->hasFile('ARCHIVO_PASAPORTE_CV')) {
+                            $pasaporteFile = $request->file('ARCHIVO_PASAPORTE_CV');
+                            $pasaporteFileFolder = $curpFolder . '/PASAPORTE/';
+                            $pasaporteFileName = 'PASAPORTE_' . $identificador . '.' . $pasaporteFile->getClientOriginalExtension();
+                            $pasaporteFile->storeAs($pasaporteFileFolder, $pasaporteFileName);
+                            $bancocvs->ARCHIVO_CURP_CV = $pasaporteFileFolder . $pasaporteFileName; // Usa el mismo campo
+                        }
                     }
-                    
+
                     // Guardar el archivo CV
                     if ($request->hasFile('ARCHIVO_CV')) {
                         $cvFile = $request->file('ARCHIVO_CV');
                         $cvFileFolder = $curpFolder . '/CV/';
-                        $cvFileName = 'CV_' . $request->CURP_CV . '.' . $cvFile->getClientOriginalExtension();
-                        $cvFile->storeAs($cvFileFolder, $cvFileName);                    
+                        $cvFileName = 'CV_' . $identificador . '.' . $cvFile->getClientOriginalExtension();
+                        $cvFile->storeAs($cvFileFolder, $cvFileName);
                         $bancocvs->ARCHIVO_CV = $cvFileFolder . $cvFileName;
                     }
 
-
-                    
+                    // Crear la postulación
                     listapostulacionesModel::create([
                         'VACANTES_ID' => $request->VACANTES_ID,
-                        'CURP' => $request->CURP_CV,
+                        'CURP' => $request->CURP_CV, // Ya sea CURP o Pasaporte
                     ]);
 
                     $response['code'] = 1;
                     $response['bancocv'] = $bancocvs;
                     return response()->json($response);
                 } else {
+                    // Mensaje de error si no se encuentra el registro
                     $response['code'] = 0;
-                    $response['msj'] = 'No se encontró un registro con esa CURP';
+                    $response['msj'] = 'No se encontró un registro con esa CURP o Pasaporte';
                     return response()->json($response);
                 }
 
@@ -140,6 +141,9 @@ public function store(Request $request)
         return response()->json(['code' => 0, 'msj' => 'Error al actualizar la información', 'error' => $e->getMessage()]);
     }
 }
+
+
+
 
 
 

@@ -7,12 +7,13 @@ ID_BURO_SELECCION =0
 ID_REFERENCIAS_SELECCION  = 0;
 
 
-var Tablapptseleccion;
-var Tablaentrevistaseleccion;
 var Tablaautorizacion;
 var Tablainteligencia;
 var Tablaburo;
 var Tablareferencia;
+var Tablapptseleccion;
+
+var Tablaentrevistaseleccion;
 
 var curpSeleccionada;  
 var categoriaId = null;  
@@ -2034,44 +2035,31 @@ $("#guardarFormSeleccionReferencias").click(function (e) {
 // });
 
 
+
+
+
 $("#nueva_prueba_conocimiento").click(function (e) {
     e.preventDefault();
 
-    // Utilizar el ID de la categoría seleccionada
-    if (!categoriaId) {
-        Swal.fire('Error', 'No se ha seleccionado ninguna categoría.', 'error');
-        return;
-    }
+    $('input[name="REQUIERE_PRUEBAS"]').prop('checked', false);
 
+    $("#prueba-categoria").hide();
+    
     $("#Modal_pruebas_concimiento").modal("show");
 
-    // Hacer la petición AJAX para obtener los requerimientos de la categoría seleccionada
-    $.ajax({
-        url: '/obtenerRequerimientos/' + categoriaId,  // Ruta en tu backend para obtener los requerimientos
-        method: 'GET',
-        success: function(response) {
-            if (response.data.length > 0) {
-                var pruebasHTML = '';
-
-                response.data.forEach(function(requerimiento) {
-                    pruebasHTML += `
-                        <div class="col-5 text-center">
-                            <label for="tipoPrueba">${requerimiento.TIPO_PRUEBA}</label>
-                            <input type="hidden" value="${requerimiento.PORCENTAJE}" class="form-control" readonly>
-                        </div>
-                    `;
-                });
-
-                $('#obtenerpruebas').html(pruebasHTML);  // Mostrar los requerimientos en el div correspondiente
-            } else {
-                $('#obtenerpruebas').html('<p>No hay pruebas asociadas a esta categoría.</p>');
-            }
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            Swal.fire('Error', 'No se pudieron cargar las pruebas de conocimiento.', 'error');
+    $('input[name="REQUIERE_PRUEBAS"]').change(function () {
+        var seleccion = $(this).val();  
+        if (seleccion === 'si') {
+            cargarPruebasDeConocimiento();  
+        } else {
+            
+            $("#prueba-categoria").hide();
+            $('#obtenerpruebas').html(''); 
         }
     });
 });
+
+
 
 
 
@@ -2080,6 +2068,98 @@ Modalpruebas.addEventListener('hidden.bs.modal', event => {
     
 });
 
+
+
+
+function cargarPruebasDeConocimiento() {
+    // Verificar si es una nueva creación y si existe el ID de la categoría
+    if (!categoriaId) {
+        Swal.fire('Error', 'No se ha seleccionado ninguna categoría.', 'error');
+        return;
+    }
+
+    // Mostrar el div donde se cargarán las pruebas
+    $("#prueba-categoria").show();
+
+    // Hacer la solicitud AJAX para obtener los requerimientos de la categoría seleccionada
+    $.ajax({
+        url: '/obtenerRequerimientos/' + categoriaId,  // Ruta en tu backend para obtener los requerimientos
+        method: 'GET',
+        success: function(response) {
+            if (response.data.length > 0) {
+                var pruebasHTML = '';
+
+                response.data.forEach(function(requerimiento, index) {
+                    pruebasHTML += `
+                        <div class="col-12 mb-3">
+                            <div class="row">
+                                <div class="col-4 text-center" >
+                                    <label for="tipoPrueba_${index}">Nombre de la prueba</label>
+                                    <input type="text"  name="TIPO_PRUEBA[]" value="${requerimiento.TIPO_PRUEBA}" class="form-control" readonly>
+                                </div>
+                                
+                                <div class="col-3" style="display: none;>
+                                    <label for="porcentajePrueba_${index}">Porcentaje asignado</label>
+                                    <input type="number"  name="PORCENTAJE_PRUEBA[]" value="${requerimiento.PORCENTAJE}" class="form-control" readonly>
+                                </div>
+
+                                <div class="col-3 text-center">
+                                    <label for="totalPorcentaje_${index}">Porcentaje</label>
+                                    <input type="number"  name="TOTAL_PORCENTAJE[]"  class="form-control">
+                                </div>
+
+                                <div class="col-5 text-center">
+                                    <label ">Cargar documento</label>
+                                    <input type="file" name="ARCHIVO_RESULTADO[]" class="form-control archivo-input" accept=".pdf">
+                                    <span class="errorArchivoResultado text-danger" style="display: none;">Solo se permiten archivos PDF</span>
+                                    <button type="button" class="btn quitarArchivo mt-2" style="display: none;">Quitar archivo</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                $('#obtenerpruebas').html(pruebasHTML);  // Mostrar los requerimientos en el div correspondiente
+                inicializarEventosPruebas();  // Llamar a la función para manejar los archivos y eventos
+            } else {
+                $('#obtenerpruebas').html('<p>No hay pruebas asociadas a esta categoría.</p>');
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Swal.fire('Error', 'No se pudieron cargar las pruebas de conocimiento.', 'error');
+        }
+    });
+}
+
+// Función para inicializar los eventos relacionados con los archivos
+function inicializarEventosPruebas() {
+    // Evento para mostrar el botón "Quitar archivo" cuando se selecciona un archivo
+    $('.archivo-input').on('change', function () {
+        var archivo = $(this).val();
+        if (archivo) {
+            $(this).siblings('.quitarArchivo').show();  // Mostrar el botón "Quitar archivo"
+        }
+    });
+
+    // Evento para quitar el archivo seleccionado y ocultar el botón
+    $('.quitarArchivo').on('click', function () {
+        $(this).siblings('.archivo-input').val('');  // Limpiar el input file
+        $(this).hide();  // Ocultar el botón "Quitar archivo"
+    });
+
+    // Validar que el archivo sea un PDF
+    $('.archivo-input').on('change', function () {
+        var archivo = $(this).val();
+        var extension = archivo.split('.').pop().toLowerCase();
+        if (extension !== 'pdf') {
+            $(this).siblings('.errorArchivoResultado').show();  // Mostrar mensaje de error
+            $(this).val('');  // Limpiar el input file
+            $(this).siblings('.quitarArchivo').hide();  // Ocultar el botón "Quitar archivo"
+        } else {
+            $(this).siblings('.errorArchivoResultado').hide();  // Ocultar mensaje de error
+        }
+    });
+}
 
 
 

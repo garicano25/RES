@@ -273,6 +273,71 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    var selectNacionalidad = document.getElementById('NACIONALIDAD');
+    var form = document.querySelector('form'); // Asumiendo que este es tu formulario
+
+    // Escuchar el cambio de la nacionalidad
+    if (selectNacionalidad) {
+        selectNacionalidad.addEventListener('change', function() {
+            var nacionalidad = this.value;
+
+            var campoCurp = document.getElementById('campo-curp');
+            var campoPasaporte = document.getElementById('campo-pasaporte');
+            var labelArchivo = document.getElementById('label-archivo');
+            var archivoCurpCv = document.getElementById('ARCHIVO_CURP_CV');
+
+            // Ocultar ambos campos al cambiar la selección
+            if (campoCurp) campoCurp.style.display = 'none';
+            if (campoPasaporte) campoPasaporte.style.display = 'none';
+
+            // Cambiar el texto del label y atributos según la selección
+            if (nacionalidad == '1') {
+                // Mostrar campo CURP para nacionalidad mexicana
+                if (campoCurp) {
+                    campoCurp.style.display = 'block';
+                    document.getElementById('CURP_CV').setAttribute('name', 'CURP_CV');  // Asignar a CURP_CV
+                }
+                if (labelArchivo) labelArchivo.innerText = 'CURP. ';
+                if (archivoCurpCv) {
+                    archivoCurpCv.setAttribute('name', 'ARCHIVO_CURP_CV');
+                    archivoCurpCv.setAttribute('required', true);
+                }
+                // Resetear name del pasaporte
+                document.getElementById('ID_PASAPORTE').setAttribute('name', 'TEMP_PASAPORTE');
+            } else if (nacionalidad == '2') {
+                // Mostrar campo Pasaporte para nacionalidad extranjera
+                if (campoPasaporte) {
+                    campoPasaporte.style.display = 'block';
+                    document.getElementById('ID_PASAPORTE').setAttribute('name', 'CURP_CV');  // Asignar a CURP_CV
+                }
+                if (labelArchivo) labelArchivo.innerText = 'Pasaporte.  ';
+                if (archivoCurpCv) {
+                    archivoCurpCv.setAttribute('name', 'ARCHIVO_PASAPORTE_CV');
+                    archivoCurpCv.removeAttribute('required');
+                }
+                // Resetear name del CURP
+                document.getElementById('CURP_CV').setAttribute('name', 'TEMP_CURP');
+            }
+        });
+    }
+
+    // Cambiar el name del campo visible (CURP o Pasaporte) justo antes de enviar el formulario
+    form.addEventListener('submit', function(event) {
+        var nacionalidad = selectNacionalidad.value;
+
+        if (nacionalidad == '1') {
+            // Nacionalidad mexicana, asignamos name="CURP_CV" a CURP
+            document.getElementById('CURP_CV').setAttribute('name', 'CURP_CV');
+            document.getElementById('ID_PASAPORTE').setAttribute('name', 'TEMP_PASAPORTE');
+        } else if (nacionalidad == '2') {
+            // Nacionalidad extranjera, asignamos name="CURP_CV" al pasaporte
+            document.getElementById('ID_PASAPORTE').setAttribute('name', 'CURP_CV');
+            document.getElementById('CURP_CV').setAttribute('name', 'TEMP_CURP');
+        }
+    });
+});
+
 
 
 
@@ -280,7 +345,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('CURPS_INFO').addEventListener('blur', function() {
     var curp = this.value;
 
-    if (curp.length === 18) {
+    if (curp) { // Solo se verifica que haya un valor, sin importar la longitud
         bloquearInputs(true);
         Swal.fire({
             title: 'Consultando información',
@@ -325,7 +390,32 @@ document.getElementById('CURPS_INFO').addEventListener('blur', function() {
                 document.getElementById('NOMBRE_LICENCIATURA_CV').value = data.NOMBRE_LICENCIATURA_CV || '';
                 document.getElementById('TIPO_POSGRADO_CV').value = data.TIPO_POSGRADO_CV || '';
                 document.getElementById('NOMBRE_POSGRADO_CV').value = data.NOMBRE_POSGRADO_CV || '';
+                document.getElementById('NACIONALIDAD').value = data.NACIONALIDAD || '';
 
+                if (data.NACIONALIDAD === '1') {
+                    $('#campo-curp').show();       
+                    $('#campo-pasaporte').hide();  
+                
+                    document.getElementById('CURP_CV').setAttribute('name', 'CURP_CV');
+                    document.getElementById('ID_PASAPORTE').setAttribute('name', 'TEMP_PASAPORTE');
+                }
+                
+                
+                else if (data.NACIONALIDAD === '2') {
+                    $('#campo-pasaporte').show();  
+                    $('#campo-curp').hide();      
+                
+                    document.getElementById('ID_PASAPORTE').setAttribute('name', 'CURP_CV');
+                    document.getElementById('CURP_CV').setAttribute('name', 'TEMP_CURP');
+                
+
+                    document.getElementById('label-archivo').innerText = 'Pasaporte';
+
+
+
+                }
+
+                
                 if (data.CUENTA_TITULO_LICENCIATURA_CV) {
                     document.querySelector(`input[name="CUENTA_TITULO_LICENCIATURA_CV"][value="${data.CUENTA_TITULO_LICENCIATURA_CV}"]`).checked = true;
                 }
@@ -363,12 +453,13 @@ document.getElementById('CURPS_INFO').addEventListener('blur', function() {
         .catch(error => {
             Swal.close();  
             bloquearInputs(false);  
-            alertToast('No se encontró ningún  registro con esa CURP.');
+            alertToast('No se encontró ningún registro con esa CURP.');
         });
     } else {
-        alertToast('La CURP debe tener 18 caracteres.');
+        alertToast('Debe ingresar un valor para la CURP.');
     }
 });
+
 
 
 function bloquearInputs(bloquear) {
@@ -448,7 +539,7 @@ document.getElementById('curpInput').addEventListener('input', function() {
 
 
 
-// Función para resetear la validación de un formulario
+
 
 
 
@@ -549,6 +640,10 @@ $("#guardarFormpostularse").click(function (e) {
         }
     }
 });
+
+
+
+
 
 $("#guardarFormActualizar").click(function (e) {
     e.preventDefault();
