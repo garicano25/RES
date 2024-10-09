@@ -2688,7 +2688,7 @@ function validarFormularioV1(form) {
   // Busca todos los elementos con la clase "validar"
   var campos =  $(`#${form} .validar`);
   
-  console.log(campos)
+  // console.log(campos)
 
 
   var formularioValido = true;

@@ -134,8 +134,8 @@
                                 </button>
                             </ol>
                             <div class="card-body position-relative">
-                                <i id="loadingIcon6" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
-                                <table id="Tabla" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
+                                <i id="loadingIcon7" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                                <table id="Tablapruebaconocimientoseleccion" class="table table-hover bg-white table-bordered text-center w-100 TableSeleccion">
                                 </table>
                             </div>
                         </div>
@@ -258,15 +258,8 @@
             <div class="modal-body">
                 {!! csrf_field() !!}
                 
-                <div class="mb-3">
-                    <label class="form-label text-center">Documento Completo *</label>
-                    <div class="input-group">
-                        <input type="file" class="form-control" id="ARCHIVO_COMPLETO" name="ARCHIVO_COMPLETO" accept=".pdf" required>
-                        <button type="button" class="btn btn-light btn-sm ms-2" id="quitarcompleto" style="display:none;">Quitar archivo</button>
-                    </div>
-                    <small id="errorArchivoCompleto" class="text-danger" style="display:none;">El archivo debe ser un PDF.</small>
-                </div>
-                
+
+
                 <div class="mb-3">
                     <label class="form-label text-center">Documento Competencias *</label>
                     <div class="input-group">
@@ -276,6 +269,19 @@
                     <small id="errorArchivoCompetencias" class="text-danger" style="display:none;">El archivo debe ser un PDF.</small>
                 </div>
             
+
+
+                
+                <div class="mb-3">
+                    <label class="form-label text-center">Documento Completo *</label>
+                    <div class="input-group">
+                        <input type="file" class="form-control" id="ARCHIVO_COMPLETO" name="ARCHIVO_COMPLETO" accept=".pdf" required>
+                        <button type="button" class="btn btn-light btn-sm ms-2" id="quitarcompleto" style="display:none;">Quitar archivo</button>
+                    </div>
+                    <small id="errorArchivoCompleto" class="text-danger" style="display:none;">El archivo debe ser un PDF.</small>
+                </div>
+                
+                
                 <!-- Semáforo centrado con texto externo y título -->
                 <div class="traffic-light-wrapper">
                     <h3 class="traffic-light-title"><b>Riesgo</b></h3>
@@ -526,7 +532,7 @@
                         </div>
                     </div>
                     
-                    <div id="prueba-categoria"">
+                    <div id="prueba-categoria">
                         <div id="obtenerpruebas" class="mt-3">
                         </div>
 
@@ -534,7 +540,7 @@
                             <div class="col-4 mx-auto text-center">
                                 <div class="form-group">
                                     <label>Suma total del %</label>
-                                    <input type="number" class="form-control floating-input text-center" id="PORCENTAJE_TOTAL_PRUEBA" name="PORCENTAJE_TOTAL_PRUEBA" readonly>
+                                    <input type="number" class="form-control floating-input text-center" id="porcentajeTotalPrueba" name="PORCENTAJE_TOTAL_PRUEBA" readonly>
                                 </div>
                             </div>
                         </div>

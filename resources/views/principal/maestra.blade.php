@@ -33,7 +33,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/css/dropify.min.css">
 
-    <!--Archivo css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css">    <!--Archivo css -->
     <link rel="stylesheet" href="assets/css/estilos.css">
 
 
@@ -180,7 +180,7 @@
                     </a>
                 </li>
                 <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                    <a class="nav-link BOTON" href="{{url('/Contratación')}}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                         <i class="bi bi-person-badge-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Contratación</span><span class="d-none d-lg-inline">Contratación</span>
                     </a>
                 </li>
@@ -269,169 +269,202 @@
     </div>
 </nav>
 
-    <!-- Modal de carga -->
-    <style>
-        #modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            /* Ajusta la opacidad aquí */
-            z-index: 999;
-            display: none;
-            /* Empieza oculto */
-        }
+<!-- Modal de carga -->
+<style>
+    #modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Ajusta la opacidad aquí */
+        z-index: 999;
+        display: none;
+        /* Empieza oculto */
+    }
 
-        #loading-image {
-            position: absolute;
-            top: 40%;
-            left: 28%;
-        }
-    </style>
-    <div id="modal-overlay">
-        <img src="/assets/images/Colorancho.png" class="ld ld-bounce" alt="Cargando" style="max-width: 100%; max-height: 214px;" id="loading-image">
-    </div>
-
-
-    <div style="margin-top: 25px;">
-        @yield('contenido')
-    </div>
+    #loading-image {
+        position: absolute;
+        top: 40%;
+        left: 28%;
+    }
+</style>
+<div id="modal-overlay">
+    <img src="/assets/images/Colorancho.png" class="ld ld-bounce" alt="Cargando" style="max-width: 100%; max-height: 214px;" id="loading-image">
+</div>
 
 
-
-    <!-- Jquery 3.6.4-->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <!--Bootstrap -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
-    <!-- Datatables 1.13.1  v.5.2 -->
-    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
-    <!-- sweetalert -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <!-- Animación -->
-    <script src="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.js"></script>
-    <!-- Select opcion selectize -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
-
-
-        <!-- dropify -->
-
-    
-    <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
-
-    <!-- Funciones generales -->
-    <script src="/assets/js_sitio/funciones.js?v=1.0"></script>
+<div style="margin-top: 25px;">
+    @yield('contenido')
+</div>
 
 
 
-
-    @if(request()->is('organigrama'))
-    <!-- organización -->
-    <script src="/assets/js_sitio/organizacion/organigrama.js?v=2.0"></script>
-    <script src="/assets/js/GOJs/go.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-    @endif
-
-    @if(request()->is('PPT'))
-    <script src="/assets/js_sitio/organizacion/PPT.js?v=1.0"></script>
-    @endif
-
-    @if(request()->is('DPT'))
-    <script src="/assets/js_sitio/organizacion/DPT.js"></script>
-    @endif
-
-    @if(request()->is('Jerárquico'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogos.js"></script>
-    @endif
-
-    @if(request()->is('Asesores'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogoasesores.js"></script>
-    @endif
+<!-- Jquery 3.6.4-->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!--Bootstrap -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+<!-- Datatables 1.13.1  v.5.2 -->
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+<!-- sweetalert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- Animación -->
+<script src="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.js"></script>
+<!-- Select opcion selectize -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
 
 
-    @if(request()->is('FuncionesCargo'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionescargo.js"></script>
-    @endif
+<!-- datepicker -->
 
-    @if(request()->is('Funcionesgestión'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionesgestion.js"></script>
-    @endif
-
-    @if(request()->is('RelacionesExternas'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogosrelacionesxternas.js"></script>
-    @endif
-
-    @if(request()->is('RequisiciónDePersonal'))
-    <script src="/assets/js_sitio/organizacion/requerimiento.js"></script>
-    @endif
-
-    @if(request()->is('CatálogoDeVacantes'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogovacantes.js"></script>
-    @endif
-
-    @if(request()->is('Categorías'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogocategoria.js?v=3.0"></script>
-    @endif
-
-    @if(request()->is('Género'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogogenero.js"></script>
-    @endif
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js"></script>
 
 
-    @if(request()->is('Puesto-experiencia'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogoexperiencia.js"></script>
-    @endif
+
+<!-- Dropify -->
+
+<script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
+
+<!-- Funciones generales -->
+<script src="/assets/js_sitio/funciones.js?v=2.0"></script>
 
 
-    @if(request()->is('Competencias-básicas'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catálogocompetenciabasica.js"></script>
-    @endif
+<script>
+    $(document).ready(function() {
+        // Inicializar campos datepicker con opciones en español
+        $('.mydatepicker').datepicker({
+            format: 'yyyy-mm-dd', // Formato de fecha
+            weekStart: 1, // Día que inicia la semana, 1 = Lunes
+            autoclose: true, // Cierra automáticamente el calendario
+            todayHighlight: true, // Marca el día de hoy en el calendario
+            language: 'es' // Configura el idioma en español
+        });
+
+        // Mostrar la fecha seleccionada en el input
+        $('.mydatepicker').on('click', function() {
+            $(this).datepicker('setDate', $(this).val()); // Mostrar fecha del input y marcar en el calendario
+        });
+    });
+</script>
 
 
-    @if(request()->is('Tipo-vacante'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogotipovacante.js"></script>
-    @endif
-
-    @if(request()->is('Competencias-gerenciales'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogoCompetenciasGerenciales.js"></script>
-    @endif
-
-    @if(request()->is('Listavacantes'))
-    <script src="/assets/js_sitio/reclutamiento/banco_cv.js?v=2.0"></script>
-    @endif
-
-    @if(request()->is('Postulaciones'))
-    <script src="/assets/js_sitio/reclutamiento/vacantesactivas.js?v=3.0"></script>
-    @endif
-
-    @if(request()->is('Motivo-vacante'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogomotivovacante.js"></script>
-    @endif
 
 
-    @if(request()->is('Área_interes'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogoareainteres.js"></script>
-    @endif
+@if(request()->is('organigrama'))
+<!-- organización -->
+<script src="/assets/js_sitio/organizacion/organigrama.js?v=2.0"></script>
+<script src="/assets/js/GOJs/go.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+@endif
+
+@if(request()->is('PPT'))
+<script src="/assets/js_sitio/organizacion/PPT.js?v=1.0"></script>
+@endif
+
+@if(request()->is('DPT'))
+<script src="/assets/js_sitio/organizacion/DPT.js"></script>
+@endif
+
+@if(request()->is('Jerárquico'))
+<script src="/assets/js_sitio/organizacion/catalogos/catalogos.js"></script>
+@endif
+
+@if(request()->is('Asesores'))
+<script src="/assets/js_sitio/organizacion/catalogos/catalogoasesores.js"></script>
+@endif
 
 
-    @if(request()->is('Selección'))
-    <script src="/assets/js_sitio/seleccion/seleccion.js?v=6.0"></script>
-    @endif
+@if(request()->is('FuncionesCargo'))
+<script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionescargo.js"></script>
+@endif
+
+@if(request()->is('Funcionesgestión'))
+<script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionesgestion.js"></script>
+@endif
+
+@if(request()->is('RelacionesExternas'))
+<script src="/assets/js_sitio/organizacion/catalogos/catalogosrelacionesxternas.js"></script>
+@endif
+
+@if(request()->is('RequisiciónDePersonal'))
+<script src="/assets/js_sitio/organizacion/requerimiento.js"></script>
+@endif
+
+@if(request()->is('CatálogoDeVacantes'))
+<script src="/assets/js_sitio/organizacion/catalogos/catalogovacantes.js"></script>
+@endif
+
+@if(request()->is('Categorías'))
+<script src="/assets/js_sitio/organizacion/catalogos/catalogocategoria.js?v=3.0"></script>
+@endif
+
+@if(request()->is('Género'))
+<script src="/assets/js_sitio/organizacion/catalogos/catalogogenero.js"></script>
+@endif
 
 
-    @if(request()->is('Pruebas-conocimientos'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogopruebas.js"></script>
-    @endif
-  
+@if(request()->is('Puesto-experiencia'))
+<script src="/assets/js_sitio/organizacion/catalogos/catalogoexperiencia.js"></script>
+@endif
 
 
-    @if(request()->is('usuario'))
-    <script src="/assets/js_sitio/usuario/usuario.js"></script>
-    @endif
+@if(request()->is('Competencias-básicas'))
+<script src="/assets/js_sitio/organizacion/catalogos/catálogocompetenciabasica.js"></script>
+@endif
+
+
+@if(request()->is('Tipo-vacante'))
+<script src="/assets/js_sitio/organizacion/catalogos/catalogotipovacante.js"></script>
+@endif
+
+@if(request()->is('Competencias-gerenciales'))
+<script src="/assets/js_sitio/organizacion/catalogos/catalogoCompetenciasGerenciales.js"></script>
+@endif
+
+@if(request()->is('Listavacantes'))
+<script src="/assets/js_sitio/reclutamiento/banco_cv.js?v=2.0"></script>
+@endif
+
+@if(request()->is('Postulaciones'))
+<script src="/assets/js_sitio/reclutamiento/vacantesactivas.js?v=3.0"></script>
+@endif
+
+@if(request()->is('Motivo-vacante'))
+<script src="/assets/js_sitio/organizacion/catalogos/catalogomotivovacante.js"></script>
+@endif
+
+
+@if(request()->is('Área_interes'))
+<script src="/assets/js_sitio/organizacion/catalogos/catalogoareainteres.js"></script>
+@endif
+
+
+@if(request()->is('Selección'))
+<script src="/assets/js_sitio/seleccion/seleccion.js?v=7.0"></script>
+@endif
+
+
+@if(request()->is('Pruebas-conocimientos'))
+<script src="/assets/js_sitio/organizacion/catalogos/catalogopruebas.js"></script>
+@endif
+
+
+
+@if(request()->is('Contratación'))
+<script src="/assets/js_sitio/contratacion/contratacion.js"></script>
+@endif
+
+
+
+
+
+@if(request()->is('usuario'))
+<script src="/assets/js_sitio/usuario/usuario.js"></script>
+@endif
   
 </body>
 

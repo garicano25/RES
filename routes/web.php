@@ -45,9 +45,9 @@ use App\Http\Controllers\seleccion\seleccionController;
 use App\Http\Controllers\seleccion\catalogopruebasController;
 
 
+// Controladores de contratacion
 
-
-
+use App\Http\Controllers\contratacion\contratacionController;
 
 //==============================================  login  ============================================== 
 // RUTA PRINCIPAL 
@@ -256,6 +256,8 @@ Route::get('/Selección', [seleccionController::class, 'index']);
 Route::get('/Tablaseleccion', [seleccionController::class, 'Tablaseleccion']);
 Route::post('/SeleccionSave', [seleccionController::class, 'store']);
 Route::get('/consultarSeleccion/{categoriaVacanteId}', [seleccionController::class, 'consultarSeleccion']);
+// Route::get('/consultarSeleccion/{categoriaVacanteId}/{curp}', [seleccionController::class, 'consultarSeleccion']);
+// Route::get('/obtenerPorcentajes/{curp}', [seleccionController::class, 'obtenerPorcentajesPorCurp']);
 
 
 
@@ -283,15 +285,13 @@ Route::get('/mostrareferencias/{id}', [seleccionController::class, 'mostrarefere
 
 // Pruebas de conocimientos
 Route::get('/obtenerRequerimientos/{id}', [seleccionController::class, 'obtenerRequerimientos']);
+Route::get('/Tablapruebaconocimientoseleccion', [seleccionController::class, 'Tablapruebaconocimientoseleccion']);
+Route::get('/mostrarprueba/{id}', [seleccionController::class, 'mostrarprueba']);
+
+
 
 // Entrevista
 Route::get('/Tablaentrevistaseleccion', [seleccionController::class, 'Tablaentrevistaseleccion']);
-
-
-
-
-
-
 
 
 
@@ -302,5 +302,10 @@ Route::get('/pruebaDelete', [catalogopruebasController::class, 'store']);
 Route::get('/Tablapruebaconocimiento', [catalogopruebasController::class, 'Tablapruebaconocimiento']);
 
 
+//==============================================  CONTRATACION  ============================================== 
 
+
+Route::get('/Contratación', function () {return view('RH.contratacion.contratacion');});
+Route::post('/contratoSave', [contratacionController::class, 'store']);
+Route::get('/Tablacontratacion', [contratacionController::class, 'Tablacontratacion']);
 

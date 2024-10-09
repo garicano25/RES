@@ -5,6 +5,7 @@ ID_AUTORIZACION_SELECCION = 0
 ID_INTELIGENCIA_SELECCION =0
 ID_BURO_SELECCION =0
 ID_REFERENCIAS_SELECCION  = 0;
+ID_PRUEBAS_SELECCION =0;
 
 
 var Tablaautorizacion;
@@ -12,8 +13,9 @@ var Tablainteligencia;
 var Tablaburo;
 var Tablareferencia;
 var Tablapptseleccion;
-
 var Tablaentrevistaseleccion;
+var Tablapruebaconocimientoseleccion;
+
 
 var curpSeleccionada;  
 var categoriaId = null;  
@@ -175,7 +177,6 @@ var Tablaseleccion = $("#Tablaseleccion").DataTable({
 
 
 
-
 $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
     var tr = $(this).closest('tr');
     var row = Tablaseleccion.row(tr);
@@ -194,13 +195,16 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
             }
         });
 
-        categoriaId = row.data().CATEGORIA_VACANTE;
+                categoriaId = row.data().CATEGORIA_VACANTE;
+
 
         $.ajax({
-            url: '/consultarSeleccion/' + categoriaId,
+            url: '/consultarSeleccion/' + categoriaId, // Ahora solo enviamos la categoría
             method: 'GET',
             success: function(response) {
-                Swal.close(); 
+                Swal.close();
+                console.log(response);  // Ver datos recibidos
+
                 if (response.data.length === 0) {
                     Swal.fire('Sin información', 'No hay información relacionada para esta categoría.', 'info');
                 } else {
@@ -218,6 +222,7 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
                                     <th class="text-center">% Referencias laboral</th>
                                     <th class="text-center">% Pruebas de conocimientos</th>
                                     <th class="text-center">% Entrevista</th>
+                                    <th class="text-center">% Total</th>
                                     <th class="text-center">Mostrar</th>
                                     <th class="text-center">Seleccionar</th>
                                 </tr>
@@ -226,18 +231,27 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
                     `;
 
                     response.data.forEach(function(item, index) {
+                        var inteligenciaLaboral = item.PORCENTAJE_INTELIGENCIA || '';
+                        var buroLaboral = item.PORCENTAJE_BURO || '';
+                        var ppt = item.PORCENTAJE_PPT || '';
+                        var referenciasLaboral = item.PORCENTAJE_REFERENCIAS || '';
+                        var pruebaConocimiento = item.PORCENTAJE_PRUEBA || '';
+                        var entrevista = item.PORCENTAJE_ENTREVISTA || '';
+                        var total = item.TOTAL || '';
+
                         innerTable += `
                                     <tr>
                                         <td>${index + 1}</td>
                                         <td>${item.NOMBRE_SELC || ''} ${item.PRIMER_APELLIDO_SELEC || ''} ${item.SEGUNDO_APELLIDO_SELEC || ''}</td>
                                         <td class="text-center">${item.CURP || ''}</td>
                                         <td class="text-center">${item.CORREO_SELEC || ''}<br>${(item.TELEFONO1_SELECT || '') + (item.TELEFONO2_SELECT ? ', ' + item.TELEFONO2_SELECT : '')}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td class="text-center">${inteligenciaLaboral}</td>
+                                        <td class="text-center">${buroLaboral}</td>
+                                        <td class="text-center">${ppt}</td>
+                                        <td class="text-center">${referenciasLaboral}</td>
+                                        <td class="text-center">${pruebaConocimiento}</td>
+                                        <td class="text-center">${entrevista}</td>
+                                        <td class="text-center">${total}</td>
                                         <td class="text-center">
                                             <button type="button" class="btn btn-primary btn-circle" id="AbrirModalFull" data-bs-toggle="modal" data-bs-target="#FullScreenModal" data-curp="${item.CURP || ''}" data-nombre="${item.NOMBRE_SELC || ''} ${item.PRIMER_APELLIDO_SELEC || ''} ${item.SEGUNDO_APELLIDO_SELEC || ''}">
                                                 <i class="bi bi-eye-fill"></i>
@@ -250,7 +264,6 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
                                         </td>
                                     </tr>
                                 `;
-
                     });
 
                     innerTable += `
@@ -264,11 +277,25 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 Swal.close(); 
+                console.error('Error: ', textStatus, errorThrown);
                 alertErrorAJAX(jqXHR, textStatus, errorThrown);
             }
         });
     }
 });
+
+
+
+function calcularTotal(inteligencia, buro, ppt, referencias, prueba, entrevista) {
+    var total = (parseFloat(inteligencia) * 0.20) +
+                (parseFloat(buro) * 0.15) +
+                (parseFloat(ppt) * 0.15) +
+                (parseFloat(referencias) * 0.10) +
+                (parseFloat(prueba) * 0.10) +
+                (parseFloat(entrevista) * 0.30);
+    
+    return Math.round(total);
+}
 
 
 
@@ -825,7 +852,7 @@ Tablareferencia = $("#Tablareferencia").DataTable({
             Tablareferencia.columns.adjust().draw();
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            $('#loadingIcon').css('display', 'none');
+            $('#loadingIcon5').css('display', 'none');
             alertErrorAJAX(jqXHR, textStatus, errorThrown);
         },
         dataSrc: 'data'
@@ -972,6 +999,149 @@ $('#Tablareferencia').on('click', '.ver-archivo-referencias', function () {
 
 
 
+
+
+if ($.fn.DataTable.isDataTable('#Tablapruebaconocimientoseleccion')) {
+    Tablapruebaconocimientoseleccion.clear().destroy();
+}
+
+Tablapruebaconocimientoseleccion = $("#Tablapruebaconocimientoseleccion").DataTable({
+    language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+    lengthChange: true,
+    lengthMenu: [
+        [10, 25, 50, -1],
+        [10, 25, 50, 'All']
+    ],
+    info: false,
+    paging: true,
+    searching: true,
+    filtering: true,
+    scrollY: '65vh',
+    scrollCollapse: true,
+    responsive: true,
+    ajax: {
+        dataType: 'json',
+        data: { curp: curpSeleccionada }, 
+        method: 'GET',
+        cache: false,
+        url: '/Tablapruebaconocimientoseleccion',  
+        beforeSend: function () {
+            $('#loadingIcon7').css('display', 'inline-block');
+        },
+        complete: function () {
+            $('#loadingIcon7').css('display', 'none');
+            Tablapruebaconocimientoseleccion.columns.adjust().draw();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $('#loadingIcon7').css('display', 'none');
+            alertErrorAJAX(jqXHR, textStatus, errorThrown);
+        },
+        dataSrc: 'data'
+    },
+    columns: [
+        { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+        { 
+            data: 'REFERENCIAS',
+            render: function (data, type, row) {
+                let referenciasHTML = '';
+                data.forEach(function(referencia) {
+                    referenciasHTML += '<strong>' + referencia.TIPO_PRUEBA + '</strong><br>' +
+                                       referencia.BTN_DOCUMENTO + '<br>';
+                });
+                return referenciasHTML;
+            },
+            className: 'text-center'
+        },
+        { 
+            data: 'BTN_EDITAR', 
+            className: 'text-center'
+        }
+    ],
+    columnDefs: [
+        { target: 0, title: '#', className: 'all text-center' },
+        { target: 1, title: 'Referencias', className: 'all text-center' },
+        { target: 2, title: 'Editar', className: 'all text-center' }
+    ]
+});
+
+
+
+$('#Tablapruebaconocimientoseleccion').on('click', '.ver-archivo-pruebas', function () {
+    var id = $(this).data('id');
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO');
+        return;
+    }
+    var url = '/mostrarprueba/' + id;
+    abrirModal(url, 'Archivo prueba');
+});
+
+
+
+$('#Tablapruebaconocimientoseleccion tbody').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablapruebaconocimientoseleccion.row(tr);
+    ID_PRUEBAS_SELECCION = row.data().ID_PRUEBAS_SELECCION;
+    var data = row.data(); 
+    var form = "formularioPruebas";
+
+
+    editarDatoTabla(data, form, 'Modal_pruebas_concimiento', 1);
+
+    
+    cargarPruebasGuardadas(data.REFERENCIAS);
+
+
+    if (data.REQUIERE_PRUEBAS === 'si') {
+        $('#prueba-categoria').css('display', 'block');
+        $('#prueba_si').prop('checked', true);
+    } else {
+        $('#prueba-categoria').css('display', 'none');
+        $('#prueba_no').prop('checked', true);
+    }
+});
+
+
+
+function cargarPruebasGuardadas(referencias) {
+    var pruebasHTML = '';
+
+    // Iterar sobre las referencias (pruebas guardadas)
+    referencias.forEach(function(requerimiento, index) {
+        pruebasHTML += `
+            <div class="col-12 mb-3">
+                <div class="row">
+                    <div class="col-4 text-center">
+                        <label>Nombre de la prueba</label>
+                        <input type="text" name="TIPO_PRUEBA[]" value="${requerimiento.TIPO_PRUEBA}" class="form-control" readonly>
+                    </div>
+                    
+                    <div class="col-3"  style="display: none;">
+                        <label>Porcentaje asignado</label>
+                        <input type="hidden" name="PORCENTAJE_PRUEBA[]" value="${requerimiento.PORCENTAJE_PRUEBA}" class="form-control" readonly>
+                        <input type="number" value="${requerimiento.PORCENTAJE_PRUEBA}" class="form-control" readonly>
+                    </div>
+
+                    <div class="col-3 text-center">
+                        <label>Porcentaje ingresado</label>
+                        <input type="number" name="TOTAL_PORCENTAJE[]" value="${requerimiento.TOTAL_PORCENTAJE}" class="form-control" oninput="calcularPorcentajeTotal()">
+                    </div>
+
+                    <div class="col-5 text-center">
+                        <label>Cargar documento</label>
+                        <input type="file" name="ARCHIVO_RESULTADO[]" class="form-control archivo-input" accept=".pdf">
+                        <span class="errorArchivoResultado text-danger" style="display: none;">Solo se permiten archivos PDF</span>
+                        <button type="button" class="btn quitarArchivo mt-2" style="display: none;">Quitar archivo</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    // Insertar el HTML generado en el div correspondiente
+    $('#obtenerpruebas').html(pruebasHTML);  
+    inicializarEventosPruebas();  // Llamar a la función para manejar los archivos y eventos
+}
 
 
 
@@ -1337,6 +1507,10 @@ ModalInteligencia.addEventListener('hidden.bs.modal', event => {
         light.classList.remove('active');
     });
 });
+
+
+
+
 
 
 $("#guardarFormSeleccionInteligencia").click(function (e) {
@@ -1952,7 +2126,7 @@ $("#guardarFormSeleccionReferencias").click(function (e) {
 
                     setTimeout(() => {
                         ID_REFERENCIAS_SELECCION = data.vacantes.ID_REFERENCIAS_SELECCION;
-                        alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para hacer uso del PPT', null, null, 1500);
+                        alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
                         $('#Modal_referencias').modal('hide');
                         document.getElementById('formularioReferencias').reset();
                 
@@ -1975,7 +2149,7 @@ $("#guardarFormSeleccionReferencias").click(function (e) {
 
             alertMensajeConfirm({
                 title: "¿Desea editar la información de este formulario?",
-                text: "Al guardarla, se editará la información del PPT",
+                text: "Al guardarla, se editará la información",
                 icon: "question",
             }, async function () {
 
@@ -2028,14 +2202,6 @@ $("#guardarFormSeleccionReferencias").click(function (e) {
 // <!-- ============================================================== -->
 
 
-// $("#nueva_prueba_conocimiento").click(function (e) {
-//     e.preventDefault();
-//     $("#Modal_pruebas_concimiento").modal("show");
-
-// });
-
-
-
 
 
 $("#nueva_prueba_conocimiento").click(function (e) {
@@ -2063,25 +2229,34 @@ $("#nueva_prueba_conocimiento").click(function (e) {
 
 
 
+
+
 const Modalpruebas = document.getElementById('Modal_pruebas_concimiento');
 Modalpruebas.addEventListener('hidden.bs.modal', event => {
-    
+
+    ID_PRUEBAS_SELECCION  = 0;
+    document.getElementById('formularioPruebas').reset();
+    $('.collapse').collapse('hide')
+    $('#guardarFormSeleccionPruebas').css('display', 'block').prop('disabled', false);
+
+    document.getElementById('prueba-categoria').style.display = 'none';
 });
 
 
 
 
+
+
+
+
 function cargarPruebasDeConocimiento() {
-    // Verificar si es una nueva creación y si existe el ID de la categoría
     if (!categoriaId) {
         Swal.fire('Error', 'No se ha seleccionado ninguna categoría.', 'error');
         return;
     }
 
-    // Mostrar el div donde se cargarán las pruebas
     $("#prueba-categoria").show();
 
-    // Hacer la solicitud AJAX para obtener los requerimientos de la categoría seleccionada
     $.ajax({
         url: '/obtenerRequerimientos/' + categoriaId,  // Ruta en tu backend para obtener los requerimientos
         method: 'GET',
@@ -2093,23 +2268,24 @@ function cargarPruebasDeConocimiento() {
                     pruebasHTML += `
                         <div class="col-12 mb-3">
                             <div class="row">
-                                <div class="col-4 text-center" >
-                                    <label for="tipoPrueba_${index}">Nombre de la prueba</label>
-                                    <input type="text"  name="TIPO_PRUEBA[]" value="${requerimiento.TIPO_PRUEBA}" class="form-control" readonly>
+                                <div class="col-4 text-center">
+                                    <label>Nombre de la prueba</label>
+                                    <input type="text" name="TIPO_PRUEBA[]" value="${requerimiento.TIPO_PRUEBA}" class="form-control" readonly>
                                 </div>
                                 
-                                <div class="col-3" style="display: none;>
-                                    <label for="porcentajePrueba_${index}">Porcentaje asignado</label>
-                                    <input type="number"  name="PORCENTAJE_PRUEBA[]" value="${requerimiento.PORCENTAJE}" class="form-control" readonly>
+                                <div class="col-3" style="display: none;">
+                                    <label>Porcentaje asignado</label>
+                                    <input type="hidden" name="PORCENTAJE_PRUEBA[]" value="${requerimiento.PORCENTAJE}" class="form-control" readonly>
+                                    <input type="number" value="${requerimiento.PORCENTAJE}" class="form-control" readonly>
                                 </div>
 
                                 <div class="col-3 text-center">
-                                    <label for="totalPorcentaje_${index}">Porcentaje</label>
-                                    <input type="number"  name="TOTAL_PORCENTAJE[]"  class="form-control">
+                                    <label>Porcentaje ingresado</label>
+                                    <input type="number" name="TOTAL_PORCENTAJE[]" class="form-control" oninput="calcularPorcentajeTotal()">
                                 </div>
 
                                 <div class="col-5 text-center">
-                                    <label ">Cargar documento</label>
+                                    <label>Cargar documento</label>
                                     <input type="file" name="ARCHIVO_RESULTADO[]" class="form-control archivo-input" accept=".pdf">
                                     <span class="errorArchivoResultado text-danger" style="display: none;">Solo se permiten archivos PDF</span>
                                     <button type="button" class="btn quitarArchivo mt-2" style="display: none;">Quitar archivo</button>
@@ -2119,8 +2295,8 @@ function cargarPruebasDeConocimiento() {
                     `;
                 });
 
-                $('#obtenerpruebas').html(pruebasHTML);  // Mostrar los requerimientos en el div correspondiente
-                inicializarEventosPruebas();  // Llamar a la función para manejar los archivos y eventos
+                $('#obtenerpruebas').html(pruebasHTML);  
+                inicializarEventosPruebas();  
             } else {
                 $('#obtenerpruebas').html('<p>No hay pruebas asociadas a esta categoría.</p>');
             }
@@ -2131,35 +2307,176 @@ function cargarPruebasDeConocimiento() {
     });
 }
 
-// Función para inicializar los eventos relacionados con los archivos
+function calcularPorcentajeTotal() {
+    var sumaTotal = 0;
+    var camposLlenos = false; 
+
+    $('input[name="PORCENTAJE_PRUEBA[]"]').each(function(index) {
+        var porcentajePrueba = parseFloat($(this).val()) || 0;  
+        var totalPorcentaje = parseFloat($('input[name="TOTAL_PORCENTAJE[]"]').eq(index).val());  
+
+        if (isNaN(totalPorcentaje)) {
+            return;
+        }
+
+        camposLlenos = true; 
+
+        var porcentajeFinal = porcentajePrueba;  
+
+        if (totalPorcentaje === 100) {
+            porcentajeFinal = porcentajePrueba;  
+        } else if (totalPorcentaje >= 60 && totalPorcentaje <= 79) {
+            porcentajeFinal = (porcentajePrueba * 0.70);  
+        } else if (totalPorcentaje < 60) {
+            porcentajeFinal = (porcentajePrueba * 0.50);  
+        }
+
+        sumaTotal += porcentajeFinal;
+    });
+
+    if (!camposLlenos) {
+        $('#porcentajeTotalPrueba').val('');
+    } else {
+        $('#porcentajeTotalPrueba').val(Math.round(sumaTotal));  
+    }
+}
+
+
+
+
+
 function inicializarEventosPruebas() {
-    // Evento para mostrar el botón "Quitar archivo" cuando se selecciona un archivo
     $('.archivo-input').on('change', function () {
         var archivo = $(this).val();
         if (archivo) {
-            $(this).siblings('.quitarArchivo').show();  // Mostrar el botón "Quitar archivo"
+            $(this).siblings('.quitarArchivo').show();  
         }
     });
 
-    // Evento para quitar el archivo seleccionado y ocultar el botón
     $('.quitarArchivo').on('click', function () {
-        $(this).siblings('.archivo-input').val('');  // Limpiar el input file
-        $(this).hide();  // Ocultar el botón "Quitar archivo"
+        $(this).siblings('.archivo-input').val('');  
+        $(this).hide();  
     });
 
-    // Validar que el archivo sea un PDF
     $('.archivo-input').on('change', function () {
         var archivo = $(this).val();
         var extension = archivo.split('.').pop().toLowerCase();
         if (extension !== 'pdf') {
-            $(this).siblings('.errorArchivoResultado').show();  // Mostrar mensaje de error
-            $(this).val('');  // Limpiar el input file
-            $(this).siblings('.quitarArchivo').hide();  // Ocultar el botón "Quitar archivo"
+            $(this).siblings('.errorArchivoResultado').show(); 
+            $(this).val('');  
+            $(this).siblings('.quitarArchivo').hide();  
         } else {
-            $(this).siblings('.errorArchivoResultado').hide();  // Ocultar mensaje de error
+            $(this).siblings('.errorArchivoResultado').hide(); 
         }
     });
 }
+
+
+
+
+
+$("#guardarFormSeleccionPruebas").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormularioV1('formularioPruebas');
+
+    if (formularioValido) {
+
+        if (ID_PRUEBAS_SELECCION == 0) {
+
+            alertMensajeConfirm({
+                title: "¿Desea guardar la información?",
+                text: "Al guardarla,  podra usarse",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarFormSeleccionReferencias');
+                await ajaxAwaitFormData({ 
+                    api: 7, 
+                    ID_PRUEBAS_SELECCION: ID_PRUEBAS_SELECCION, 
+                    CURP: curpSeleccionada 
+                }, 'SeleccionSave', 'formularioPruebas', 'guardarFormSeleccionPruebas', { callbackAfter: true, callbackBefore: true }, () => {
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+
+                }, function (data) {
+
+                    setTimeout(() => {
+                        ID_PRUEBAS_SELECCION = data.vacantes.ID_PRUEBAS_SELECCION;
+                        alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para  usarse', null, null, 1500);
+                        $('#Modal_pruebas_concimiento').modal('hide');
+                        document.getElementById('formularioPruebas').reset();
+                
+
+
+                        if ($.fn.DataTable.isDataTable('#Tablapruebaconocimientoseleccion')) {
+                            Tablapruebaconocimientoseleccion.ajax.reload(null, false); // Recargar la tabla sin reiniciar la paginación
+                        }
+
+
+
+
+                    }, 300);
+
+                });
+
+            }, 1);
+
+        } else {
+
+            alertMensajeConfirm({
+                title: "¿Desea editar la información de este formulario?",
+                text: "Al guardarla, se editará la información",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarFormSeleccionReferencias');
+                await ajaxAwaitFormData({ 
+                    api: 7, 
+                    ID_PRUEBAS_SELECCION: ID_PRUEBAS_SELECCION, 
+                    CURP: curpSeleccionada 
+                }, 'SeleccionSave', 'formularioPruebas', 'guardarFormSeleccionPruebas', { callbackAfter: true, callbackBefore: true }, () => {
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+
+                }, function (data) {
+
+                    setTimeout(() => {
+                        ID_PRUEBAS_SELECCION = data.vacantes.ID_PRUEBAS_SELECCION;
+                        alertMensaje('success', 'Información editada correctamente', 'Información guardada');
+                        $('#Modal_referencias').modal('hide');
+                        document.getElementById('formularioReferencias').reset();
+                     
+
+
+                        if ($.fn.DataTable.isDataTable('#Tablapruebaconocimientoseleccion')) {
+                            Tablapruebaconocimientoseleccion.ajax.reload(null, false); 
+                        }
+
+                    }, 300);
+                });
+
+            }, 1);
+        }
+
+    } else {
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+    }
+});
 
 
 
@@ -2492,10 +2809,11 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
                 let formulario = data.formulario;
 
 
-                if (document.getElementById('NOMBRE_TRABAJADOR_PPT')) {
-                    document.getElementById('NOMBRE_TRABAJADOR_PPT').value = formulario.NOMBRE_TRABAJADOR_PPT || '';
-                }
-                
+               
+                let nombreTrabajador = document.getElementById('NOMBRE_TRABAJADOR_PPT').value;
+
+
+
                 if (document.getElementById('AREA_TRABAJADOR_PPT')) {
                     document.getElementById('AREA_TRABAJADOR_PPT').value = formulario.AREA_TRABAJADOR_PPT || '';
                 }
@@ -2503,12 +2821,7 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
                 if (document.getElementById('PROPOSITO_FINALIDAD_PPT')) {
                     document.getElementById('PROPOSITO_FINALIDAD_PPT').value = formulario.PROPOSITO_FINALIDAD_PPT || '';
                 }
-                
-
-
-                // document.getElementById('NOMBRE_TRABAJADOR_PPT').value = formulario.NOMBRE_TRABAJADOR_PPT || '';
-                // document.getElementById('AREA_TRABAJADOR_PPT').value = formulario.AREA_TRABAJADOR_PPT || '';
-                // document.getElementById('PROPOSITO_FINALIDAD_PPT').value = formulario.PROPOSITO_FINALIDAD_PPT || '';
+                          
               
                 if (document.getElementById('EDAD_PPT')) {
                     document.getElementById('EDAD_PPT').value = formulario.EDAD_PPT || '';
@@ -3269,6 +3582,11 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
                     document.getElementById('AUTORIZADO_FECHA_PPT').value = formulario.AUTORIZADO_FECHA_PPT || '';
                 }
                                 
+
+                document.getElementById('NOMBRE_TRABAJADOR_PPT').value = nombreTrabajador;
+
+
+
 
              // Rellenar los campos de los cursos
              let cursos = data.cursos;
