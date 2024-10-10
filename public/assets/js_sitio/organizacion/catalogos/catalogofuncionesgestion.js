@@ -101,7 +101,6 @@ $("#guardarFormFuncionesgestion").click(function (e) {
         }, 1)
     }
 } else {
-    // Muestra un mensaje de error o realiza alguna otra acción
     alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
 
 }

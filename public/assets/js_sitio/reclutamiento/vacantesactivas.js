@@ -255,19 +255,15 @@ function TotalPostulantes(idVacante, categoriaVacante) {
                 postulanteContent = '<p class="text-center mt-3">No se encontraron postulantes para esta vacante.</p>';
             }
 
-            // Mostrar el modal después de cargar el contenido (independientemente de si hay registros)
             var myModal = new bootstrap.Modal(document.getElementById('modalFullScreen'), {
                 keyboard: true
             });
             myModal.show();
 
-            // Actualizar el contador del tab de Postulantes
             $('#postulante-count').text(totalPostulantes);
 
-            // Cargar contenido en el tab de postulante
             $('#postulante').html(postulanteContent);
 
-            // Manejador de clic para cada botón "Guardar Información"
             $('.guardar-postulante').click(function() {
                 let curp = $(this).data('curp');
                 let idVacante = $(this).data('id');
@@ -276,17 +272,14 @@ function TotalPostulantes(idVacante, categoriaVacante) {
                 guardarInformacionPostulante(idVacante, categoriaVacante, postulante);
             });
 
-            // Realizar una nueva consulta para obtener el conteo de preseleccionados
             $.ajax({
                 url: '/informacionpreseleccion/' + idVacante,
                 method: 'GET',
                 success: function(preseleccionResponse) {
                     let totalPreseleccionados = preseleccionResponse.length;
 
-                    // Actualizar el contador del tab de Preselección
                     $('#preseleccionar-count').text(totalPreseleccionados);
 
-                    // Mostrar el modal (si no se ha mostrado antes
                     if (!myModal._isShown) {
                         myModal.show();
                     }
@@ -342,15 +335,13 @@ function guardarInformacionPostulante(idVacante, categoriaVacante, postulante) {
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
-            // Obtener el token CSRF
             let token = $('meta[name="csrf-token"]').attr('content');
 
-            // Enviar la información al servidor mediante una petición AJAX
             $.ajax({
                 url: '/guardarPostulantes',
                 method: 'POST',
                 headers: {
-                    'X-CSRF-TOKEN': token // Agregar el token CSRF en el encabezado
+                    'X-CSRF-TOKEN': token 
                 },
                 data: datos,
                 success: function(response) {
@@ -360,19 +351,15 @@ function guardarInformacionPostulante(idVacante, categoriaVacante, postulante) {
                         text: 'La información se guardó correctamente.',
                         confirmButtonText: 'Aceptar'
                     }).then(() => {
-                        // Eliminar la tarjeta del postulante guardado
                         $(`div[data-curp="postulante-${postulante.CURP_CV}"]`).remove();
 
-                        // Actualizar el contador de la pestaña de Postulantes
                         let remainingPostulantes = $('#postulante .row[data-curp]').length;
                         $('#postulante-count').text(remainingPostulantes);
 
-                        // Si no quedan más postulantes, mostrar mensaje
                         if (remainingPostulantes === 0) {
                             $('#postulante').append('<p class="text-center mt-3">No se encontraron más postulantes para guardar.</p>');
                         }
 
-                        // Realizar una nueva solicitud para obtener los datos actualizados de preselección
                         $.ajax({
                             url: '/informacionpreseleccion/' + idVacante,
                             method: 'GET',
@@ -380,7 +367,6 @@ function guardarInformacionPostulante(idVacante, categoriaVacante, postulante) {
                                 let totalPreseleccionados = preseleccionResponse.length;
                                 $('#preseleccionar-count').text(totalPreseleccionados);
 
-                                // Si estás en el tab de preseleccionar, actualizar su contenido también
                                 if ($('#preseleccionar-tab').hasClass('active')) {
                                     let preseleccionContent = '';
 
@@ -407,7 +393,6 @@ function guardarInformacionPostulante(idVacante, categoriaVacante, postulante) {
                                         preseleccionContent = '<p class="text-center mt-3">No se encontraron registros de preseleccionados para esta vacante.</p>';
                                     }
 
-                                    // Cargar contenido en el tab de preseleccionar
                                     $('#preseleccionar').html(preseleccionContent);
                                 }
                             },
@@ -439,18 +424,15 @@ function guardarInformacionPostulante(idVacante, categoriaVacante, postulante) {
 
 
 $(document).ready(function () {
-    // Evento al hacer clic en la pestaña de "Preseleccionar"
     $('#preseleccionar-tab').on('click', function () {
         let idVacante = idVacanteGlobal;
         let categoriaVacante = categoriaVacanteGlobal;
 
-        // Verificar que las variables globales estén definidas antes de hacer la solicitud AJAX
         if (idVacante && categoriaVacante) {
             $.ajax({
                 url: '/informacionpreseleccion/' + idVacante,
                 method: 'GET',
                 beforeSend: function () {
-                    // Mostrar un spinner o mensaje de carga en el tab de preselección
                     $('#preseleccionar').html('<div class="text-center mt-3"><div class="spinner-border" role="status"><span class="visualmente-oculto"></span></div></div>');
                 },
                 success: function (preseleccionResponse) {
@@ -458,7 +440,6 @@ $(document).ready(function () {
                     let totalPreseleccionados = preseleccionResponse.length;
 
                     if (totalPreseleccionados > 0) {
-                        // Construcción de la tabla completa usando JavaScript
                         preseleccionContent += `
                             <div class="table-responsive">
                                 <table class="table table-bordered">
@@ -476,7 +457,6 @@ $(document).ready(function () {
                         `;
 
                         preseleccionResponse.forEach((preseleccionInfo, index) => {
-                            // Determinar el valor inicial de los radios basado en 'DISPONIBLE'
                             let checkedSi = preseleccionInfo.DISPONIBLE === 'si' ? 'checked' : '';
                             let checkedNo = preseleccionInfo.DISPONIBLE === 'no' ? 'checked' : '';
                             let buttonDisabled = preseleccionInfo.DISPONIBLE === 'si' ? '' : 'disabled';
@@ -506,21 +486,17 @@ $(document).ready(function () {
                         
                         });
 
-                        // Cerrar la tabla y el div de responsive
                         preseleccionContent += `
                                     </tbody>
                                 </table>
                             </div>
                         `;
                     } else {
-                        // Mensaje si no hay registros de preselección
                         preseleccionContent = '<p class="text-center mt-3">No se encontraron registros de preseleccionados para esta vacante.</p>';
                     }
 
-                    // Actualizar el contador del tab de Preselección
                     $('#preseleccionar-count').text(totalPreseleccionados);
 
-                    // Cargar contenido en el tab de preseleccionar
                     $('#preseleccionar').html(preseleccionContent);
                 },
                 error: function (error) {
@@ -533,7 +509,6 @@ $(document).ready(function () {
                 }
             });
         } else {
-            // Mostrar un mensaje de error si las variables no están definidas
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
@@ -543,14 +518,12 @@ $(document).ready(function () {
         }
     });
 
-    // Función para habilitar o deshabilitar el botón según la disponibilidad seleccionada
     window.actualizarDisponibilidad = function(index, curp, isAvailable) {
         const button = $(`#action-button-${index}`);
         const vacanteID = idVacanteGlobal;
 
-        // Actualizar la base de datos con la disponibilidad seleccionada
         $.ajax({
-            url: '/actualizarDisponibilidad', // Asegúrate de que esta URL apunte a la ruta correcta en tu backend
+            url: '/actualizarDisponibilidad', 
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -561,7 +534,6 @@ $(document).ready(function () {
                 DISPONIBLE: isAvailable ? 'si' : 'no'
             },
             success: function(response) {
-                // Cambiar el estado del botón de preselección
                 if (isAvailable) {
                     button.removeAttr('disabled');
                     button.removeClass('btn-secondary').addClass('btn-primary');
@@ -581,7 +553,6 @@ $(document).ready(function () {
         });
     };
 
-    // Función para guardar la información del postulante preseleccionado con SweetAlert de confirmación
     window.guardarPreseleccion = function(index, curp, nombre, primerApellido, segundoApellido, correo, telefono1, telefono2, porcentaje) {
         const vacanteID = idVacanteGlobal;
         const categoriaVacante = categoriaVacanteGlobal;
@@ -608,7 +579,6 @@ $(document).ready(function () {
                     }
                 });
 
-                // Crear el objeto de datos para enviar
                 const data = {
                     VACANTES_ID: vacanteID,
                     CATEGORIA_VACANTE: categoriaVacante,
@@ -622,7 +592,6 @@ $(document).ready(function () {
                     PORCENTAJE: porcentaje,
                 };
 
-                // Enviar la información al servidor mediante una petición AJAX
                 $.ajax({
                     url: '/guardarPreseleccion',
                     method: 'POST',
@@ -637,14 +606,11 @@ $(document).ready(function () {
                             text: 'El postulante ha sido preseleccionado y guardado exitosamente.',
                             confirmButtonText: 'Aceptar'
                         }).then(() => {
-                            // Eliminar la fila correspondiente al postulante guardado
                             $(`tr[data-curp="${curp}"]`).remove();
 
-                            // Actualizar el contador de la pestaña de Preselección
                             let remainingPreseleccionados = $('#preseleccionar tbody tr').length;
                             $('#preseleccionar-count').text(remainingPreseleccionados);
 
-                            // Mostrar un mensaje si no quedan más registros
                             if (remainingPreseleccionados === 0) {
                                 $('#preseleccionar').html('<p class="text-center mt-3">No se encontraron más preseleccionados para guardar.</p>');
                             }
@@ -665,16 +631,12 @@ $(document).ready(function () {
 });
 
 
- // Evento cuando el modal se cierra completamente
  $('#modalFullScreen').on('hidden.bs.modal', function () {
-    // Restablecer contenido del modal
-    $('#modalContent').empty(); // Vaciar el contenido del tab "Postulante"
-    $('#postulante-count').text('0'); // Reiniciar contador de postulantes
+    $('#modalContent').empty(); 
+    $('#postulante-count').text('0'); 
 
-    $('#preseleccionar').empty(); // Vaciar el contenido del tab "Preseleccionar"
-    $('#preseleccionar-count').text('0'); // Reiniciar contador de preseleccionados
-
-    // Reiniciar el estado de la pestaña activa al abrir el modal
+    $('#preseleccionar').empty(); 
+    $('#preseleccionar-count').text('0');
     $('#postulante-tab').addClass('active');
     $('#preseleccionar-tab').removeClass('active');
     $('#postulante').addClass('show active');

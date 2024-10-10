@@ -366,96 +366,96 @@
 @endif
 
 @if(request()->is('DPT'))
-<script src="/assets/js_sitio/organizacion/DPT.js"></script>
+<script src="/assets/js_sitio/organizacion/DPT.js?v=1.0"></script>
 @endif
 
 @if(request()->is('Jerárquico'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogos.js"></script>
+<script src="/assets/js_sitio/organizacion/catalogos/catalogos.js?v=1.0"></script>
 @endif
 
 @if(request()->is('Asesores'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogoasesores.js"></script>
+<script src="/assets/js_sitio/organizacion/catalogos/catalogoasesores.js?v=1.0"></script>
 @endif
 
 
 @if(request()->is('FuncionesCargo'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionescargo.js"></script>
+<script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionescargo.js?v=1.0"></script>
 @endif
 
 @if(request()->is('Funcionesgestión'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionesgestion.js"></script>
+<script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionesgestion.js?v=2.0"></script>
 @endif
 
 @if(request()->is('RelacionesExternas'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogosrelacionesxternas.js"></script>
+<script src="/assets/js_sitio/organizacion/catalogos/catalogosrelacionesxternas.js?v=1.0"></script>
 @endif
 
 @if(request()->is('RequisiciónDePersonal'))
-<script src="/assets/js_sitio/organizacion/requerimiento.js"></script>
+<script src="/assets/js_sitio/organizacion/requerimiento.js?v=1.0"></script>
 @endif
 
 @if(request()->is('CatálogoDeVacantes'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogovacantes.js"></script>
+<script src="/assets/js_sitio/organizacion/catalogos/catalogovacantes.js?v=1.0"></script>
 @endif
 
 @if(request()->is('Categorías'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogocategoria.js?v=3.0"></script>
+<script src="/assets/js_sitio/organizacion/catalogos/catalogocategoria.js?v=4.0"></script>
 @endif
 
 @if(request()->is('Género'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogogenero.js"></script>
+<script src="/assets/js_sitio/organizacion/catalogos/catalogogenero.js?v=1.0"></script>
 @endif
 
 
 @if(request()->is('Puesto-experiencia'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogoexperiencia.js"></script>
+<script src="/assets/js_sitio/organizacion/catalogos/catalogoexperiencia.js?v=1.0"></script>
 @endif
 
 
 @if(request()->is('Competencias-básicas'))
-<script src="/assets/js_sitio/organizacion/catalogos/catálogocompetenciabasica.js"></script>
+<script src="/assets/js_sitio/organizacion/catalogos/catálogocompetenciabasica.js?v=1.0"></script>
 @endif
 
 
 @if(request()->is('Tipo-vacante'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogotipovacante.js"></script>
+<script src="/assets/js_sitio/organizacion/catalogos/catalogotipovacante.js?v=1.0"></script>
 @endif
 
 @if(request()->is('Competencias-gerenciales'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogoCompetenciasGerenciales.js"></script>
+<script src="/assets/js_sitio/organizacion/catalogos/catalogoCompetenciasGerenciales.js?v=1.0"></script>
 @endif
 
 @if(request()->is('Listavacantes'))
-<script src="/assets/js_sitio/reclutamiento/banco_cv.js?v=2.0"></script>
+<script src="/assets/js_sitio/reclutamiento/banco_cv.js?v=3.0"></script>
 @endif
 
 @if(request()->is('Postulaciones'))
-<script src="/assets/js_sitio/reclutamiento/vacantesactivas.js?v=3.0"></script>
+<script src="/assets/js_sitio/reclutamiento/vacantesactivas.js?v=4.0"></script>
 @endif
 
 @if(request()->is('Motivo-vacante'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogomotivovacante.js"></script>
+<script src="/assets/js_sitio/organizacion/catalogos/catalogomotivovacante.js?v=1.0"></script>
 @endif
 
 
 @if(request()->is('Área_interes'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogoareainteres.js"></script>
+<script src="/assets/js_sitio/organizacion/catalogos/catalogoareainteres.js?v=1.0"></script>
 @endif
 
 
 @if(request()->is('Selección'))
-<script src="/assets/js_sitio/seleccion/seleccion.js?v=7.0"></script>
+<script src="/assets/js_sitio/seleccion/seleccion.js?v=8.0"></script>
 @endif
 
 
 @if(request()->is('Pruebas-conocimientos'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogopruebas.js"></script>
+<script src="/assets/js_sitio/organizacion/catalogos/catalogopruebas.js?v=1.0"></script>
 @endif
 
 
 
 @if(request()->is('Contratación'))
-<script src="/assets/js_sitio/contratacion/contratacion.js"></script>
+<script src="/assets/js_sitio/contratacion/contratacion.js?v=1.0"></script>
 @endif
 
 
@@ -463,7 +463,7 @@
 
 
 @if(request()->is('usuario'))
-<script src="/assets/js_sitio/usuario/usuario.js"></script>
+<script src="/assets/js_sitio/usuario/usuario.js?v=1.0"></script>
 @endif
   
 </body>

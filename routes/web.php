@@ -305,7 +305,13 @@ Route::get('/Tablapruebaconocimiento', [catalogopruebasController::class, 'Tabla
 //==============================================  CONTRATACION  ============================================== 
 
 
+// DATOS GENERALES
 Route::get('/Contratación', function () {return view('RH.contratacion.contratacion');});
 Route::post('/contratoSave', [contratacionController::class, 'store']);
 Route::get('/Tablacontratacion', [contratacionController::class, 'Tablacontratacion']);
+Route::get('/usuariocolaborador/{id}', [contratacionController::class, 'mostrarfotocolaborador']);
 
+
+// DOCUMENTOS DE SOPORTE
+Route::get('/Tabladocumentosoporte', [contratacionController::class, 'Tabladocumentosoporte']);
+Route::get('/mostrardocumentosoporte/{id}', [contratacionController::class, 'mostrardocumentosoporte']);

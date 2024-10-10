@@ -31,7 +31,6 @@ function showDetails(slug) {
         pane.style.display = 'none';
     });
 
-    // Mostrar el detalle específico
     var detailsPane = document.getElementById('details-' + slug);
     if (detailsPane) {
         detailsPane.style.display = 'block';
@@ -39,14 +38,11 @@ function showDetails(slug) {
 }
 
 function volverATabla() {
-    // Mostrar el panel izquierdo y el panel derecho
     document.getElementById('panel-izquierdo').style.display = 'block';
     document.getElementById('vacantes-container').style.display = 'block';
 
-    // Ocultar el contenedor de detalles
     document.getElementById('details-container').style.display = 'none';
 
-    // Ocultar todos los detalles específicos
     var detailPanes = document.querySelectorAll('.details-pane');
     detailPanes.forEach(function(pane) {
         pane.style.display = 'none';
@@ -101,7 +97,6 @@ function validarCURP(curp) {
 document.addEventListener('DOMContentLoaded', function() {
     var curpInput = document.getElementById('CURP_CV');
 
-    // Solo añade el listener si el elemento existe
     if (curpInput) {
         curpInput.addEventListener('input', function() {
             this.value = this.value.toUpperCase();
@@ -171,7 +166,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (ultimoGradoCV) {
-        // Ejecutar cuando la página se carga para mostrar los campos correctos si hay valores cargados
         toggleFields();
         
 
@@ -275,9 +269,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 document.addEventListener('DOMContentLoaded', function() {
     var selectNacionalidad = document.getElementById('NACIONALIDAD');
-    var form = document.querySelector('form'); // Asumiendo que este es tu formulario
+    var form = document.querySelector('form'); 
 
-    // Escuchar el cambio de la nacionalidad
     if (selectNacionalidad) {
         selectNacionalidad.addEventListener('change', function() {
             var nacionalidad = this.value;
@@ -287,51 +280,42 @@ document.addEventListener('DOMContentLoaded', function() {
             var labelArchivo = document.getElementById('label-archivo');
             var archivoCurpCv = document.getElementById('ARCHIVO_CURP_CV');
 
-            // Ocultar ambos campos al cambiar la selección
             if (campoCurp) campoCurp.style.display = 'none';
             if (campoPasaporte) campoPasaporte.style.display = 'none';
 
-            // Cambiar el texto del label y atributos según la selección
             if (nacionalidad == '1') {
-                // Mostrar campo CURP para nacionalidad mexicana
                 if (campoCurp) {
                     campoCurp.style.display = 'block';
-                    document.getElementById('CURP_CV').setAttribute('name', 'CURP_CV');  // Asignar a CURP_CV
+                    document.getElementById('CURP_CV').setAttribute('name', 'CURP_CV');  
                 }
                 if (labelArchivo) labelArchivo.innerText = 'CURP. ';
                 if (archivoCurpCv) {
                     archivoCurpCv.setAttribute('name', 'ARCHIVO_CURP_CV');
                     archivoCurpCv.setAttribute('required', true);
                 }
-                // Resetear name del pasaporte
                 document.getElementById('ID_PASAPORTE').setAttribute('name', 'TEMP_PASAPORTE');
             } else if (nacionalidad == '2') {
-                // Mostrar campo Pasaporte para nacionalidad extranjera
                 if (campoPasaporte) {
                     campoPasaporte.style.display = 'block';
-                    document.getElementById('ID_PASAPORTE').setAttribute('name', 'CURP_CV');  // Asignar a CURP_CV
+                    document.getElementById('ID_PASAPORTE').setAttribute('name', 'CURP_CV');  
                 }
                 if (labelArchivo) labelArchivo.innerText = 'Pasaporte.  ';
                 if (archivoCurpCv) {
                     archivoCurpCv.setAttribute('name', 'ARCHIVO_PASAPORTE_CV');
                     archivoCurpCv.removeAttribute('required');
                 }
-                // Resetear name del CURP
                 document.getElementById('CURP_CV').setAttribute('name', 'TEMP_CURP');
             }
         });
     }
 
-    // Cambiar el name del campo visible (CURP o Pasaporte) justo antes de enviar el formulario
     form.addEventListener('submit', function(event) {
         var nacionalidad = selectNacionalidad.value;
 
         if (nacionalidad == '1') {
-            // Nacionalidad mexicana, asignamos name="CURP_CV" a CURP
             document.getElementById('CURP_CV').setAttribute('name', 'CURP_CV');
             document.getElementById('ID_PASAPORTE').setAttribute('name', 'TEMP_PASAPORTE');
         } else if (nacionalidad == '2') {
-            // Nacionalidad extranjera, asignamos name="CURP_CV" al pasaporte
             document.getElementById('ID_PASAPORTE').setAttribute('name', 'CURP_CV');
             document.getElementById('CURP_CV').setAttribute('name', 'TEMP_CURP');
         }
@@ -345,7 +329,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('CURPS_INFO').addEventListener('blur', function() {
     var curp = this.value;
 
-    if (curp) { // Solo se verifica que haya un valor, sin importar la longitud
+    if (curp) { 
         bloquearInputs(true);
         Swal.fire({
             title: 'Consultando información',
@@ -515,7 +499,6 @@ document.getElementById('curpInput').addEventListener('input', function() {
             } else {
                 alertToast(`CURP encontrada: ${data.NOMBRE_CV} ${data.PRIMER_APELLIDO_CV} ${data.SEGUNDO_APELLIDO_CV}`, 'success', 2000);
                 
-                // Mostrar solo el botón "Postularse" después de la validación exitosa
                 document.getElementById('guardarFormpostularse').style.display = 'inline-block';
             }
         })

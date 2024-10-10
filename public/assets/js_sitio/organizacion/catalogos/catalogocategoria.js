@@ -111,7 +111,6 @@ $("#guardarFormcategorias").click(function (e) {
         }, 1)
     }
     } else {
-    // Muestra un mensaje de error o realiza alguna otra acción
     alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
 
 }
@@ -156,7 +155,7 @@ var Tablacategoria = $("#Tablacategoria").DataTable({
         { 
             data: null,
             render: function(data, type, row, meta) {
-                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
+                return meta.row + 1; 
             }
         },
         { data: 'NOMBRE_CATEGORIA' },
@@ -206,16 +205,13 @@ $('#Tablacategoria tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablacategoria.row(tr);
     ID_CATALOGO_CATEGORIA = row.data().ID_CATALOGO_CATEGORIA;
 
-    // Recuperar los datos de la categoría para editar
     editarDatoTabla(row.data(), 'formularioCATEGORIAS', 'miModal_categoria', 1);
 
-    // Cambiar el título del modal
     $('#miModal_categoria .modal-title').html(row.data().NOMBRE_CATEGORIA);
 
     cargarRequerimientos(row.data().REQUERIMIENTO);
 
 
-    // Mostrar el modal
     $('#miModal_categoria').modal('show');
 });
 
@@ -410,7 +406,6 @@ document.addEventListener("DOMContentLoaded", function() {
             total += parseInt(input.value) || 0;
         });
 
-        // Mostrar el total sumado al final
         const totalElement = document.getElementById('totalPorcentajes');
         totalElement.textContent = `Total: ${total}%`;
 

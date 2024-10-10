@@ -5,7 +5,7 @@ Tablausuarios = null
 
 $(document).ready(function() {
     $('#btnNuevoUsuario').on('click', function() {
-        limpiarFormularioUsuario(); // Limpiar el formulario antes de abrir el modal
+        limpiarFormularioUsuario(); 
 
         // Inicializar Dropify
         $('#FOTO_USUARIO').dropify({
@@ -136,7 +136,6 @@ $("#guardarFormUSUARIO").click(function (e) {
         }, 1)
     }
 } else {
-    // Muestra un mensaje de error o realiza alguna otra acción
     alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
 
 }
@@ -240,18 +239,14 @@ $('#Tablausuarios tbody').on('click', 'td>button.EDITAR', function () {
 
         var archivo = row.data().FOTO_USUARIO;
         var extension = archivo.substring(archivo.lastIndexOf("."));
-        // Obtener FOTO
         var imagenUrl = '/usuariofoto/' + row.data().ID_USUARIO + extension;
 
-        // Mostrar Foto en el INPUT
         if ($('#FOTO_USUARIO').data('dropify')) {
             $('#FOTO_USUARIO').dropify().data('dropify').destroy();
-            // $('.dropify-wrapper').css('height', 400);
             $('#FOTO_USUARIO').dropify().data('dropify').settings.defaultFile = imagenUrl;
             $('#FOTO_USUARIO').dropify().data('dropify').init();
         }
         else {
-            // $('#signatariofoto').attr('data-height', 400);
             $('#FOTO_USUARIO').attr('data-default-file', imagenUrl);
             $('#FOTO_USUARIO').dropify({
                 messages: {
@@ -298,39 +293,33 @@ function validarContrasenas() {
     var password = $('#PASSWORD').val();
     var password2 = $('#PASSWORD_2').val();
     var mensaje = $('#PASSWORD_MENSAJE');
-    var botonGuardar = $('#guardarFormUSUARIO'); // Referencia al botón de guardar
+    var botonGuardar = $('#guardarFormUSUARIO'); 
 
-    // Reiniciar el mensaje y deshabilitar el botón
     mensaje.text('');
     mensaje.hide();
-    botonGuardar.prop('disabled', true); // Desactivar el botón de guardar por defecto
+    botonGuardar.prop('disabled', true);
 
-    // No mostrar el mensaje si ambos campos están vacíos
     if (password.length === 0 && password2.length === 0) {
         return;
     }
 
-    // Mostrar el mensaje solo si se ha ingresado algo en uno de los campos
     if (password.length > 0 || password2.length > 0) {
         mensaje.show();
     }
 
-    // Validar si la longitud de la contraseña es menor a 6 caracteres
     if (password.length < 6) {
         mensaje.text('* La contraseña debe tener mínimo 6 caracteres *').css('color', 'red');
         return;
     }
 
-    // Validar si las contraseñas no coinciden
     if (password !== password2) {
         mensaje.text('* Las contraseñas no son iguales *').css('color', 'red');
     } else {
         mensaje.text('Las contraseñas coinciden.').css('color', 'green');
-        botonGuardar.prop('disabled', false); // Activar el botón de guardar si todo está correcto
+        botonGuardar.prop('disabled', false); 
     }
 }
 
-// Función global para mostrar/ocultar contraseñas
 function togglePasswordVisibility(button) {
     var input = $(button.data('toggle'));
     var icon = button.find('i');
@@ -344,17 +333,14 @@ function togglePasswordVisibility(button) {
     }
 }
 
-// Función global para limpiar el formulario y mensajes de error
 function limpiarFormularioUsuario() {
-    $('#formularioUSUARIO')[0].reset(); // Resetear el formulario
+    $('#formularioUSUARIO')[0].reset(); 
 
-    // Limpiar los campos de contraseña y mensajes
     $('#PASSWORD').val('');
     $('#PASSWORD_2').val('');
     $('#PASSWORD_MENSAJE').text('').hide();
-    $('#guardarFormUSUARIO').prop('disabled', true); // Desactivar el botón de guardar por defecto
+    $('#guardarFormUSUARIO').prop('disabled', true); 
 
-    // Reiniciar la imagen del dropify
     var drEvent = $('#FOTO_USUARIO').dropify().data('dropify');
     drEvent.resetPreview();
     drEvent.clearElement();

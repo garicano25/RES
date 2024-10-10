@@ -12,11 +12,9 @@ class usuarioModel extends Authenticatable
 {
     use Notifiable;
 
-    // Nombre de la tabla y clave primaria
     protected $table = 'usuarios';
     protected $primaryKey = 'ID_USUARIO';
 
-    // Campos que se pueden rellenar en la base de datos
     protected $fillable = [
         'USUARIO_TIPO',
         'EMPLEADO_NOMBRE',
@@ -33,15 +31,12 @@ class usuarioModel extends Authenticatable
         'ACTIVO'
     ];
 
-    // Campos ocultos para arrays
     protected $hidden = [
         'PASSWORD', 'PASSWORD_2', 'remember_token',
     ];
 
-    // Campo de la contraseña para la autenticación
     protected $rememberTokenName = 'remember_token';
 
-    // Sobrescribir el método getAuthPassword para usar el campo PASSWORD
     public function getAuthPassword()
     {
         return $this->PASSWORD;

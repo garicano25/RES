@@ -2767,3 +2767,66 @@ function resetFormulario(modalSelector) {
 
 
 
+
+/// VER DOCUMENTOS 
+
+function abrirModal(url, title) {
+  $('#modalVerArchivo').remove();
+  $('.modal-backdrop').remove(); 
+
+  $.ajax({
+      url: url,
+      method: 'HEAD', 
+      success: function () {
+          var modalContent = `
+              <div class="modal fade" id="modalVerArchivo" tabindex="-1" aria-labelledby="modalVerArchivoLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="modalVerArchivoLabel">${title}</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                              <iframe src="${url}" width="100%" height="500px"></iframe>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          `;
+          $('body').append(modalContent);
+          $('#modalVerArchivo').modal('show');
+          $('#modalVerArchivo').on('hidden.bs.modal', function () {
+              $(this).remove(); // Elimina el modal al cerrarse
+          });
+      },
+      error: function () {
+          var errorModalContent = `
+              <div class="modal fade" id="modalVerArchivo" tabindex="-1" aria-labelledby="modalVerArchivoLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="modalVerArchivoLabel">${title}</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body text-center">
+                              <h5 class="text-danger">Archivo no encontrado.</h5>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          `;
+          $('body').append(errorModalContent);
+          $('#modalVerArchivo').modal('show');
+          $('#modalVerArchivo').on('hidden.bs.modal', function () {
+              $(this).remove(); 
+          });
+      }
+  });
+}
+

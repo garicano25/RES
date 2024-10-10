@@ -199,11 +199,11 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
 
 
         $.ajax({
-            url: '/consultarSeleccion/' + categoriaId, // Ahora solo enviamos la categoría
+            url: '/consultarSeleccion/' + categoriaId, 
             method: 'GET',
             success: function(response) {
                 Swal.close();
-                console.log(response);  // Ver datos recibidos
+                console.log(response);  
 
                 if (response.data.length === 0) {
                     Swal.fire('Sin información', 'No hay información relacionada para esta categoría.', 'info');
@@ -621,7 +621,6 @@ Tablaburo = $("#Tablaburo").DataTable({
 
 
 
-// Evento para abrir el modal con CV
 $('#Tablaburo').on('click', '.ver-archivo-buro', function () {
     var id = $(this).data('id');
     if (!id) {
@@ -632,7 +631,6 @@ $('#Tablaburo').on('click', '.ver-archivo-buro', function () {
     abrirModal(url, 'Documento Buró');
 });
 
-// Función para abrir el modal con el archivo
 
 
 
@@ -749,13 +747,11 @@ $('#Tablapptseleccion tbody').on('click', 'td>button.EDITAR', function () {
 
 
 function mostrarCursos(data,form){
-//RECORREMOS LOS CURSOS SI ES QUE EXISTE
 if ('CURSOS' in data) {
     if (data.CURSOS.length > 0) { 
         var cursos = data.CURSOS
         var count = 1    
     
-        // Supongamos que 'data' es el array que contiene los objetos de datos
         cursos.forEach(function (obj) {
         
         
@@ -914,17 +910,15 @@ $('#Tablareferencia tbody').on('click', 'td>button.EDITAR', function () {
 
 
 function cargarReferenciasParaEditar(referencias) {
-    // Limpiar el contenedor de inputs antes de agregar los nuevos valores
     contenedorInputs.innerHTML = '';
     totalEmpresas = 0;
 
     referencias.forEach(function(referencia, index) {
-        contador++; // Incrementar el contador para cada nuevo grupo de inputs
-        totalEmpresas++; // Incrementar el número total de empresas
+        contador++; 
+        totalEmpresas++; 
 
-        // Verificar el valor de CUMPLE
         const cumpleValue = referencia.CUMPLE ? referencia.CUMPLE.trim() : '';
-        console.log("CUMPLE Value:", cumpleValue); // Asegúrate de que el valor de CUMPLE llegue correctamente
+        console.log("CUMPLE Value:", cumpleValue);
 
         const divInput = document.createElement('div');
         divInput.classList.add('form-group', 'row', 'input-container', 'mb-3');
@@ -958,14 +952,12 @@ function cargarReferenciasParaEditar(referencias) {
 
         contenedorInputs.appendChild(divInput);
 
-        // Añadir eventos para los radios (Sí o No)
         const cumpleSi = divInput.querySelector(`#cumple_si_${contador}`);
         const cumpleNo = divInput.querySelector(`#cumple_no_${contador}`);
 
         cumpleSi.addEventListener('change', actualizarPorcentajeCumplimiento);
         cumpleNo.addEventListener('change', actualizarPorcentajeCumplimiento);
 
-        // Eliminar input dinámico
         const botonEliminar = divInput.querySelector('.botonEliminar');
         botonEliminar.addEventListener('click', function () {
             contenedorInputs.removeChild(divInput);
@@ -977,7 +969,6 @@ function cargarReferenciasParaEditar(referencias) {
 
 
 
-// Evento para abrir el modal con CV
 $('#Tablareferencia').on('click', '.ver-archivo-referencias', function () {
     var id = $(this).data('id');
     if (!id) {
@@ -988,7 +979,6 @@ $('#Tablareferencia').on('click', '.ver-archivo-referencias', function () {
     abrirModal(url, 'Archivo de referencias');
 });
 
-// Función para abrir el modal con el archivo
 
 
 
@@ -1106,7 +1096,6 @@ $('#Tablapruebaconocimientoseleccion tbody').on('click', 'td>button.EDITAR', fun
 function cargarPruebasGuardadas(referencias) {
     var pruebasHTML = '';
 
-    // Iterar sobre las referencias (pruebas guardadas)
     referencias.forEach(function(requerimiento, index) {
         pruebasHTML += `
             <div class="col-12 mb-3">
@@ -1138,9 +1127,8 @@ function cargarPruebasGuardadas(referencias) {
         `;
     });
 
-    // Insertar el HTML generado en el div correspondiente
     $('#obtenerpruebas').html(pruebasHTML);  
-    inicializarEventosPruebas();  // Llamar a la función para manejar los archivos y eventos
+    inicializarEventosPruebas();  
 }
 
 
@@ -1407,7 +1395,6 @@ $("#nuevo_inteligencia").click(function (e) {
     $("#Modal_inteligencia").modal("show");
 })
 
-// Seleccionamos los elementos de Archivo Completo
 const archivocompleto = document.getElementById('ARCHIVO_COMPLETO');
 const quitarcompletoBtn = document.getElementById('quitarcompleto');
 const errorArchivoCompleto = document.getElementById('errorArchivoCompleto');
@@ -1434,7 +1421,6 @@ quitarcompletoBtn.addEventListener('click', function () {
     errorArchivoCompleto.style.display = 'none';
 });
 
-// Seleccionamos los elementos de Archivo competencias 
 
 const archivocompetencias = document.getElementById('ARCHIVO_COMPETENCIAS');
 const quitarcompetenciasBtn = document.getElementById('quitarcompetencias');
@@ -1622,34 +1608,27 @@ $("#guardarFormSeleccionInteligencia").click(function (e) {
 $("#nuevo_buro").click(function (e) {
     e.preventDefault();
 
-    // Función que reinicia los valores y el formulario al abrir el modal
     function reiniciarModalAlAbrir() {
-        // Resetea el formulario completamente
         document.getElementById('formularioBURO').reset();
 
-        // Reiniciar manualmente los valores de los campos
         document.getElementById('PORCENTAJE_TOTAL').value = 0;
         document.getElementById('EXPERIENCIA_BURO').value = '';
         document.getElementById('EXPERIENCIA_CV').value = '';
         document.getElementById('NUMERO_LABORALES').value = '';
         document.getElementById('NUMERO_JUDICIALES').value = '';
 
-        // Reiniciar manualmente los valores de los radios
         document.querySelectorAll('input[name="CEDULA_PROFESIONAL"]').forEach(radio => radio.checked = false);
         document.querySelectorAll('input[name="LABORALES_DEMANDA"]').forEach(radio => radio.checked = false);
         document.querySelectorAll('input[name="JUDICIALES_DEMANDA"]').forEach(radio => radio.checked = false);
 
-        // Reiniciar las variables internas de porcentaje
         porcentajeLaborales = 0;
         porcentajeJudiciales = 0;
         porcentajeCedulaSeleccionado = 0;
         porcentajeExperiencia = 0;
 
-        // Actualizar el valor del porcentaje total
         document.getElementById('PORCENTAJE_TOTAL').value = 0;
     }
 
-    // Llamar la función para reiniciar el modal
     reiniciarModalAlAbrir();
 
     // Mostrar el modal
@@ -1664,34 +1643,27 @@ const ModalBuro = document.getElementById('Modal_buro');
 
 ModalBuro.addEventListener('hidden.bs.modal', function () {
     
-    // Función que reinicia los valores y el formulario al cerrar el modal
     function reiniciarModalAlCerrar() {
-        // Resetea el formulario completamente
         document.getElementById('formularioBURO').reset();
 
-        // Reiniciar manualmente los valores de los campos
         document.getElementById('PORCENTAJE_TOTAL').value = 0;
         document.getElementById('EXPERIENCIA_BURO').value = '';
         document.getElementById('EXPERIENCIA_CV').value = '';
         document.getElementById('NUMERO_LABORALES').value = '';
         document.getElementById('NUMERO_JUDICIALES').value = '';
 
-        // Reiniciar manualmente los valores de los radios
         document.querySelectorAll('input[name="CEDULA_PROFESIONAL"]').forEach(radio => radio.checked = false);
         document.querySelectorAll('input[name="LABORALES_DEMANDA"]').forEach(radio => radio.checked = false);
         document.querySelectorAll('input[name="JUDICIALES_DEMANDA"]').forEach(radio => radio.checked = false);
 
-        // Reiniciar las variables internas de porcentaje
         porcentajeLaborales = 0;
         porcentajeJudiciales = 0;
         porcentajeCedulaSeleccionado = 0;
         porcentajeExperiencia = 0;
 
-        // Asegurar que el valor del porcentaje total esté en 0
         document.getElementById('PORCENTAJE_TOTAL').value = 0;
     }
 
-    // Llamar la función para reiniciar el modal
     reiniciarModalAlCerrar();
 });
 
@@ -1860,7 +1832,7 @@ $("#guardarFormSeleccionBuro").click(function (e) {
 
 
                         if ($.fn.DataTable.isDataTable('#Tablaburo')) {
-                            Tablaburo.ajax.reload(null, false); // Recargar la tabla sin reiniciar la paginación
+                            Tablaburo.ajax.reload(null, false); 
                         }
 
                     }, 300);
@@ -1959,24 +1931,20 @@ ModalReferencias.addEventListener('hidden.bs.modal', event => {
 
 
 let experienciaSi, experienciaNo, contenedorEmpresa, contenedorInputs, contador = 0;
-let totalEmpresas = 0;  // Contador para las empresas agregadas
-let empresasCumplen = 0; // Contador para las empresas que cumplen
+let totalEmpresas = 0;  
+let empresasCumplen = 0; 
 
-// Inicializar elementos y eventos
 function initReferenciasLaborales() {
     experienciaSi = document.getElementById('experiencia_si');
     experienciaNo = document.getElementById('experiencia_no');
     contenedorEmpresa = document.getElementById('contenedor-empresa');
     contenedorInputs = document.getElementById('inputs-container');
 
-    // Asegurar que el estado inicial sea el correcto
     toggleContenedorEmpresa();
 
-    // Asignar eventos a los radio buttons
     experienciaSi.addEventListener('change', toggleContenedorEmpresa);
     experienciaNo.addEventListener('change', toggleContenedorEmpresa);
 
-    // Asignar evento al botón de agregar empresa
     const botonAgregar = document.getElementById('botonAgregar');
     botonAgregar.addEventListener('click', function (e) {
         e.preventDefault();
@@ -1984,7 +1952,6 @@ function initReferenciasLaborales() {
     });
 }
 
-// Función para mostrar u ocultar el contenedor
 function toggleContenedorEmpresa() {
     if (experienciaSi.checked) {
         contenedorEmpresa.style.display = 'block';  
@@ -1994,20 +1961,18 @@ function toggleContenedorEmpresa() {
     }
 }
 
-// Función para eliminar todos los inputs dinámicos
 function resetInputs() {
     while (contenedorInputs.firstChild) {
         contenedorInputs.removeChild(contenedorInputs.firstChild);
     }
-    totalEmpresas = 0;   // Reiniciar el total de empresas
-    empresasCumplen = 0; // Reiniciar el total de empresas que cumplen
-    actualizarPorcentajesReferencias(); // Reiniciar el porcentaje
+    totalEmpresas = 0;  
+    empresasCumplen = 0; 
+    actualizarPorcentajesReferencias(); 
 }
 
-// Función para agregar inputs dinámicos
 function agregarInput() {
-    contador++; // Incrementar el contador para cada nuevo grupo de inputs
-    totalEmpresas++; // Incrementar el número total de empresas
+    contador++; 
+    totalEmpresas++; 
 
     const divInput = document.createElement('div');
     divInput.classList.add('form-group', 'row', 'input-container', 'mb-3'); 
@@ -2041,14 +2006,12 @@ function agregarInput() {
 
     contenedorInputs.appendChild(divInput);
 
-    // Añadir eventos para los radios (Sí o No)
     const cumpleSi = divInput.querySelector(`#cumple_si_${contador}`);
     const cumpleNo = divInput.querySelector(`#cumple_no_${contador}`);
 
     cumpleSi.addEventListener('change', actualizarPorcentajeCumplimiento);
     cumpleNo.addEventListener('change', actualizarPorcentajeCumplimiento);
 
-    // Eliminar input dinámico
     const botonEliminar = divInput.querySelector('.botonEliminar');
     botonEliminar.addEventListener('click', function () {
         contenedorInputs.removeChild(divInput);
@@ -2057,7 +2020,6 @@ function agregarInput() {
     });
 }
 
-// Función para actualizar el porcentaje basado en las empresas que cumplen
 function actualizarPorcentajeCumplimiento() {
     empresasCumplen = 0;
 
@@ -2072,15 +2034,14 @@ function actualizarPorcentajeCumplimiento() {
     actualizarPorcentajesReferencias();
 }
 
-// Función para calcular y actualizar el porcentaje total
 function actualizarPorcentajesReferencias() {
     const porcentajeTotalInputs = document.getElementById('PORCENTAJE_TOTAL_REFERENCIAS');
 
     if (totalEmpresas > 0) {
         const porcentaje = (empresasCumplen / totalEmpresas) * 100;
-        porcentajeTotalInputs.value = Math.round(porcentaje); // Redondear el resultado al número entero más cercano
+        porcentajeTotalInputs.value = Math.round(porcentaje); 
     } else {
-        porcentajeTotalInputs.value = 0; // Si no hay empresas, el porcentaje es 0
+        porcentajeTotalInputs.value = 0; 
     }
 }
 
@@ -2133,7 +2094,7 @@ $("#guardarFormSeleccionReferencias").click(function (e) {
 
 
                         if ($.fn.DataTable.isDataTable('#Tablareferencia')) {
-                            Tablareferencia.ajax.reload(null, false); // Recargar la tabla sin reiniciar la paginación
+                            Tablareferencia.ajax.reload(null, false); 
                         }
 
 
@@ -2258,7 +2219,7 @@ function cargarPruebasDeConocimiento() {
     $("#prueba-categoria").show();
 
     $.ajax({
-        url: '/obtenerRequerimientos/' + categoriaId,  // Ruta en tu backend para obtener los requerimientos
+        url: '/obtenerRequerimientos/' + categoriaId,  
         method: 'GET',
         success: function(response) {
             if (response.data.length > 0) {
@@ -2558,7 +2519,7 @@ ModalEntrevista.addEventListener('hidden.bs.modal', event => {
 
 
                         if ($.fn.DataTable.isDataTable('#Tablaentrevistaseleccion')) {
-                            Tablaentrevistaseleccion.ajax.reload(null, false); // Recargar la tabla sin reiniciar la paginación
+                            Tablaentrevistaseleccion.ajax.reload(null, false); 
                         }
 
                     }, 300);
@@ -2765,7 +2726,6 @@ $('#miModal_ppt').on('shown.bs.modal', function () {
             $(this).prop('required', false);
 
         } else {
-            // Acciones específicas para los elementos que NO tienen las clases
             if ($(this).attr('type') === 'text' || $(this).is('textarea')) {
                 $(this).prop('readonly', true); 
                 $(this).prop('required', false);
@@ -3710,7 +3670,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
                         alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para hacer uso del PPT', null, null, 1500);
                         $('#miModal_ppt').modal('hide');
                         document.getElementById('formularioSeleccionPPT').reset();
-                        // Tablapptseleccion.ajax.reload();
 
 
                         if ($.fn.DataTable.isDataTable('#Tablapptseleccion')) {
@@ -3761,7 +3720,7 @@ $("#guardarFormSeleccionPPT").click(function (e) {
 
 
                         if ($.fn.DataTable.isDataTable('#Tablapptseleccion')) {
-                            Tablapptseleccion.ajax.reload(null, false); // Recargar la tabla sin reiniciar la paginación
+                            Tablapptseleccion.ajax.reload(null, false);
                         }
 
                     }, 300);
@@ -3781,70 +3740,7 @@ $("#guardarFormSeleccionPPT").click(function (e) {
 
 
 
-//  FUNCION GLOBAL PARA VER LOS ARCHIVOS 
 
-function abrirModal(url, title) {
-    // Eliminar cualquier modal existente antes de agregar uno nuevo
-    $('#modalVerArchivo').remove();
-    $('.modal-backdrop').remove(); // Eliminar el backdrop para evitar problemas de superposición
-
-    $.ajax({
-        url: url,
-        method: 'HEAD', // Solo hacemos una comprobación sin traer el archivo completo
-        success: function () {
-            // Si el archivo existe, mostramos el modal con el iframe
-            var modalContent = `
-                <div class="modal fade" id="modalVerArchivo" tabindex="-1" aria-labelledby="modalVerArchivoLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalVerArchivoLabel">${title}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <iframe src="${url}" width="100%" height="500px"></iframe>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            $('body').append(modalContent);
-            $('#modalVerArchivo').modal('show');
-            $('#modalVerArchivo').on('hidden.bs.modal', function () {
-                $(this).remove(); // Elimina el modal al cerrarse
-            });
-        },
-        error: function () {
-            // Si el archivo no se encuentra, mostramos un modal con un mensaje de error
-            var errorModalContent = `
-                <div class="modal fade" id="modalVerArchivo" tabindex="-1" aria-labelledby="modalVerArchivoLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modalVerArchivoLabel">${title}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body text-center">
-                                <h5 class="text-danger">Archivo no encontrado.</h5>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            $('body').append(errorModalContent);
-            $('#modalVerArchivo').modal('show');
-            $('#modalVerArchivo').on('hidden.bs.modal', function () {
-                $(this).remove(); // Elimina el modal al cerrarse
-            });
-        }
-    });
-}
 
 
 

@@ -151,7 +151,7 @@ var Tablatipovacantes = $("#Tablatipovacantes").DataTable({
         { 
             data: null,
             render: function(data, type, row, meta) {
-                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
+                return meta.row + 1; 
             }
         },
         { data: 'NOMBRE_TIPOVACANTE' },

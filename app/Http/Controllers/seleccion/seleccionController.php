@@ -4,6 +4,7 @@ namespace App\Http\Controllers\seleccion;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 use App\Models\selección\seleccionModel;
 use App\Models\selección\seleccionpptModel;
@@ -15,12 +16,15 @@ use App\Models\selección\buroseleccionModel;
 use App\Models\selección\referenciaseleccionModel;
 use App\Models\selección\referenciasempresasModel;
 
+use App\Models\selección\pruebaseleccionModel;
+use App\Models\selección\referenciaspruebaseleccionModel;
 
 
 
 
 
-use Illuminate\Support\Facades\Storage;
+
+
 
 
 use App\Models\organizacion\catalogoexperienciaModel;
@@ -435,25 +439,189 @@ public function mostrareferencias($id)
 
 
 
+
+
+
+
+public function Tablapruebaconocimientoseleccion(Request $request)
+{
+    try {
+        $curp = $request->get('curp');
+
+        // Obtener las referencias de selección
+        $tabla = pruebaseleccionModel::where('CURP', $curp)->get();
+
+        // Variable para almacenar las filas que se enviarán al DataTable
+        $rows = [];
+
+        // Recorrer cada fila de la tabla principal
+        foreach ($tabla as $value) {
+            $referencias = referenciaspruebaseleccionModel::where('SELECCION_PRUEBAS_ID', $value->ID_PRUEBAS_SELECCION)->get();
+
+            // Preparar la información agrupada
+            $referenciasAgrupadas = [];
+            foreach ($referencias as $referencia) {
+                $referenciasAgrupadas[] = [
+                    'TIPO_PRUEBA' => $referencia->TIPO_PRUEBA,
+                    'PORCENTAJE_PRUEBA' => $referencia->PORCENTAJE_PRUEBA,
+                    'TOTAL_PORCENTAJE' => $referencia->TOTAL_PORCENTAJE,
+                    'ARCHIVO_RESULTADO' => $referencia->ARCHIVO_RESULTADO,
+                    'BTN_DOCUMENTO' => '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-pruebas" data-id="' . $referencia->ID_REFERENCIASPRUEBAS_SELECCION . '" title="Ver prueba"> <i class="bi bi-filetype-pdf"></i></button>'
+                ];
+            }
+
+            // Crear una fila para cada referencia de selección con sus referencias agrupadas
+            $rows[] = [
+                'ID_PRUEBAS_SELECCION' => $value->ID_PRUEBAS_SELECCION,
+                'REQUIERE_PRUEBAS' => $value->REQUIERE_PRUEBAS,
+                'PORCENTAJE_TOTAL_PRUEBA' => $value->PORCENTAJE_TOTAL_PRUEBA,
+                'REFERENCIAS' => $referenciasAgrupadas, // Incluye todas las referencias agrupadas
+                'BTN_EDITAR' => ($value->ACTIVO == 0) ? 
+                    '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>' :
+                    '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
+            ];
+        }
+
+        return response()->json([
+            'data' => $rows,
+            'msj' => 'Información consultada correctamente'
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'msj' => 'Error ' . $e->getMessage(),
+            'data' => 0
+        ]);
+    }
+}
+
+
+public function mostrarprueba($id)
+{
+    $archivo = referenciaspruebaseleccionModel::findOrFail($id)->ARCHIVO_RESULTADO;
+    return Storage::response($archivo);
+}
+
+
+
+
+
+
+// public function consultarSeleccion($categoriaVacanteId)
+// {
+//     $consultar = DB::table('formulario_seleccion')
+//         ->where('CATEGORIA_VACANTE', $categoriaVacanteId)
+//         ->where('ACTIVO', 1)  
+//         ->get();
+        
+//     if ($consultar->isEmpty()) {
+//         return response()->json([
+//             'data' => [],
+//             'message' => 'No hay información relacionada para esta categoría.'
+//         ]);
+//     }
+    
+//     return response()->json([
+//         'data' => $consultar
+//     ]);
+// }
+
+
+
+
+
+
+
 public function consultarSeleccion($categoriaVacanteId)
 {
+    // Consulta principal para obtener las personas relacionadas a la categoría
     $consultar = DB::table('formulario_seleccion')
         ->where('CATEGORIA_VACANTE', $categoriaVacanteId)
-        ->where('ACTIVO', 1)  
+        ->where('ACTIVO', 1)
         ->get();
-        
+
     if ($consultar->isEmpty()) {
         return response()->json([
             'data' => [],
             'message' => 'No hay información relacionada para esta categoría.'
         ]);
     }
-    
+
+    // Recorrer cada persona para obtener los porcentajes basados en su CURP
+    foreach ($consultar as $persona) {
+        $curp = $persona->CURP;
+
+        // Consultar los valores de porcentajes basados en la CURP de la persona
+        $inteligencia = DB::table('seleccion_inteligencia')->where('CURP', $curp)->value('RIESGO_PORCENTAJE');
+        $buroLaboral = DB::table('seleccion_buro_laboral')->where('CURP', $curp)->value('PORCENTAJE_TOTAL');
+        $ppt = DB::table('seleccion_ppt')->where('CURP', $curp)->value('SUMA_TOTAL');
+        $referenciasLaboral = DB::table('seleccion_referencias_laboral')->where('CURP', $curp)->value('PORCENTAJE_TOTAL_REFERENCIAS');
+        $experienciaLaboral = DB::table('seleccion_referencias_laboral')->where('CURP', $curp)->value('EXPERIENCIA_LABORAL');
+        $pruebaConocimiento = DB::table('seleccion_prueba_conocimiento')->where('CURP', $curp)->value('PORCENTAJE_TOTAL_PRUEBA');
+        $entrevista = DB::table('seleccion_entrevista')->where('CURP', $curp)->value('PORCENTAJE_ENTREVISTA');
+
+        // Validar que todos los valores de los porcentajes estén presentes
+        if (is_null($inteligencia) || is_null($buroLaboral) || is_null($ppt) || is_null($referenciasLaboral) || is_null($pruebaConocimiento) || is_null($entrevista)) {
+            // Si falta algún valor, asignamos ** a todos los porcentajes y no se calculará el total
+            $persona->PORCENTAJE_INTELIGENCIA = '**';
+            $persona->PORCENTAJE_BURO = '**';
+            $persona->PORCENTAJE_PPT = '**';
+            $persona->PORCENTAJE_REFERENCIAS = '**';
+            $persona->PORCENTAJE_PRUEBA = '**';
+            $persona->PORCENTAJE_ENTREVISTA = '**';
+            $persona->TOTAL = '**';
+        } else {
+            // Definir los porcentajes según el escenario
+            if ($experienciaLaboral == 'SI') {
+                $porcentajes = [
+                    'inteligencia' => 0.20,
+                    'buroLaboral' => 0.15,
+                    'ppt' => 0.15,
+                    'referenciasLaboral' => 0.10,
+                    'pruebaConocimiento' => 0.10,
+                    'entrevista' => 0.30
+                ];
+            } else {
+                $porcentajes = [
+                    'inteligencia' => 0.20,
+                    'buroLaboral' => 0.15,
+                    'ppt' => 0.20,
+                    'referenciasLaboral' => 0.00,
+                    'pruebaConocimiento' => 0.10,
+                    'entrevista' => 0.35
+                ];
+            }
+
+            // Calcular el total multiplicando por los porcentajes y redondear
+            $total = round(
+                ($inteligencia * $porcentajes['inteligencia']) +
+                ($buroLaboral * $porcentajes['buroLaboral']) +
+                ($ppt * $porcentajes['ppt']) +
+                ($referenciasLaboral * $porcentajes['referenciasLaboral']) +
+                ($pruebaConocimiento * $porcentajes['pruebaConocimiento']) +
+                ($entrevista * $porcentajes['entrevista'])
+            );
+
+            // Añadir los porcentajes a cada persona en el resultado
+            $persona->PORCENTAJE_INTELIGENCIA = $inteligencia;
+            $persona->PORCENTAJE_BURO = $buroLaboral;
+            $persona->PORCENTAJE_PPT = $ppt;
+            $persona->PORCENTAJE_REFERENCIAS = $referenciasLaboral;
+            $persona->PORCENTAJE_PRUEBA = $pruebaConocimiento;
+            $persona->PORCENTAJE_ENTREVISTA = $entrevista;
+            $persona->TOTAL = $total;  // Total redondeado
+        }
+    }
+
     return response()->json([
         'data' => $consultar
     ]);
 }
-    
+
+
+
+
+
+
 
 
 public function obtenerRequerimientos($categoriaId)
@@ -532,7 +700,7 @@ public function store(Request $request)
 
     try {
         switch (intval($request->api)) {
-                //Guardar Area
+
         case 1:
 
     //Guardamos Area
@@ -603,6 +771,7 @@ public function store(Request $request)
 
     break;
 
+    
                 
 case 2:
 
@@ -895,6 +1064,107 @@ case 3:
                 return response()->json($response);
                 break;
             
+
+
+
+
+
+
+
+                case 7:
+                    DB::beginTransaction();
+                
+                    if ($request->ID_PRUEBAS_SELECCION == 0) {
+                        DB::statement('ALTER TABLE seleccion_prueba_conocimiento AUTO_INCREMENT=1;');
+                        $vacante = pruebaseleccionModel::create($request->all());
+                    } else {
+                        $vacante = pruebaseleccionModel::find($request->ID_PRUEBAS_SELECCION);
+                
+                        $vacante->update($request->all());
+                    }
+                
+                    if ($request->has('TIPO_PRUEBA')) {
+                        foreach ($request->TIPO_PRUEBA as $index => $nombreEmpresa) {
+
+                            $PORCENTAJE_PRUEBA = isset($request->PORCENTAJE_PRUEBA[$index]) ? $request->PORCENTAJE_PRUEBA[$index] : null;
+                            $TOTAL_PORCENTAJE = isset($request->TOTAL_PORCENTAJE[$index]) ? $request->TOTAL_PORCENTAJE[$index] : null;
+                                         
+                     
+                
+                            $referencia = referenciaspruebaseleccionModel::where('SELECCION_PRUEBAS_ID', $vacante->ID_PRUEBAS_SELECCION)
+                                ->where('TIPO_PRUEBA', $nombreEmpresa)
+                                ->first();
+                
+                            if ($referencia) {
+                                $archivoAnterior = $referencia->ARCHIVO_RESULTADO;
+                
+                                if ($request->hasFile("ARCHIVO_RESULTADO.$index")) {
+                                    if ($archivoAnterior) {
+                                        Storage::delete($archivoAnterior);
+                                    }
+                
+                                    $curpFolder = 'reclutamiento/' . $request->CURP;
+                                    $referenciaFolder = $curpFolder . '/Pruebas de conocimiento/';
+                
+                                    if (!Storage::exists($curpFolder)) {
+                                        Storage::makeDirectory($curpFolder);
+                                    }
+                
+                                    if (!Storage::exists($referenciaFolder)) {
+                                        Storage::makeDirectory($referenciaFolder);
+                                    }
+                
+                                    $archivoFile = $request->file("ARCHIVO_RESULTADO.$index");
+                                    $archivoFileName = $nombreEmpresa . '_' . $request->CURP . '.' . $archivoFile->getClientOriginalExtension();
+                                    $archivoFile->storeAs($referenciaFolder, $archivoFileName);
+                
+                                    $referencia->ARCHIVO_RESULTADO = $referenciaFolder . $archivoFileName;
+                                } else {
+                                    $referencia->ARCHIVO_RESULTADO = $archivoAnterior;
+                                }
+                
+                                $referencia->TIPO_PRUEBA = $nombreEmpresa;
+                                $referencia->PORCENTAJE_PRUEBA = $PORCENTAJE_PRUEBA;
+                                $referencia->TOTAL_PORCENTAJE = $TOTAL_PORCENTAJE;
+                                $referencia->save();
+                            } else {
+                                $referencia = referenciaspruebaseleccionModel::create([
+                                    'SELECCION_PRUEBAS_ID' => $vacante->ID_PRUEBAS_SELECCION,
+                                    'TIPO_PRUEBA' => $nombreEmpresa,
+                                    'PORCENTAJE_PRUEBA' => $PORCENTAJE_PRUEBA,
+                                    'TOTAL_PORCENTAJE' => $TOTAL_PORCENTAJE,
+                                ]);
+                
+                                if ($request->hasFile("ARCHIVO_RESULTADO.$index")) {
+                                    $curpFolder = 'reclutamiento/' . $request->CURP;
+                                    $referenciaFolder = $curpFolder . '/Pruebas de conocimiento/';
+                
+                                    if (!Storage::exists($curpFolder)) {
+                                        Storage::makeDirectory($curpFolder);
+                                    }
+                
+                                    if (!Storage::exists($referenciaFolder)) {
+                                        Storage::makeDirectory($referenciaFolder);
+                                    }
+                
+                                    $archivoFile = $request->file("ARCHIVO_RESULTADO.$index");
+                                    $archivoFileName = $nombreEmpresa . '_' . $request->CURP . '.' . $archivoFile->getClientOriginalExtension();
+                                    $archivoFile->storeAs($referenciaFolder, $archivoFileName);
+                
+                                    $referencia->ARCHIVO_RESULTADO = $referenciaFolder . $archivoFileName;
+                                    $referencia->save();
+                                }
+                            }
+                        }
+                    }
+                
+                    $response['code']  = 1;
+                    $response['vacantes']  = $vacante;
+                    DB::commit();
+                    return response()->json($response);
+                    break;
+
+
 
 
         

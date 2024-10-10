@@ -109,7 +109,6 @@ $("#guardarFormRELACIONESEXTERNAS").click(function (e) {
     }
 
 } else {
-    // Muestra un mensaje de error o realiza alguna otra acción
     alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
 
 }
@@ -154,7 +153,7 @@ var Tablarelacionesexterna = $("#Tablarelacionesexterna").DataTable({
         { 
             data: null,
             render: function(data, type, row, meta) {
-                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
+                return meta.row + 1; 
             }
         },
         { data: 'NOMBRE_RELACIONEXTERNA' },
