@@ -584,11 +584,14 @@
                 
                 <div class="row mb-3">
                   <div class="col-6">
-                    <label  class="form-label">Fecha *</label>
-                    <input type="date" class="form-control" id="FECHA_ENTREVISTA" name="FECHA_ENTREVISTA" required>
+                    <label >Fecha *</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ENTREVISTA" name="FECHA_ENTREVISTA" required>
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                    </div>
                   </div>
                   <div class="col-6">
-                    <label  class="form-label">% de la entrevista</label>
+                    <label >% de la entrevista</label>
                     <input type="number" class="form-control" id="PORCENTAJE_ENTREVISTA" name="PORCENTAJE_ENTREVISTA" min="0" max="100" required>
                   </div>
                 </div>
@@ -3442,43 +3445,55 @@
                           </div>
 
                           <div class="row mb-3">
-                              <div class="col-4 text-center">
-                                  <h6>Elaborado por</h6>
-                                  <input type="text" class="form-control text-center" id="ELABORADO_NOMBRE_PPT" name="ELABORADO_NOMBRE_PPT" required>
-                                  <div>Nombre</div>
-                                  <br>
-                                  <input type="text" class="form-control text-center" id="ELABORADO_FIRMA_PPT" name="ELABORADO_FIRMA_PPT" required>
-                                  <div>Firma</div>
-                                  <br>
-                                  <input type="date" class="form-control text-center" id="ELABORADO_FECHA_PPT" name="ELABORADO_FECHA_PPT" required>
-                                  <div>Fecha</div>
-                                  <br>
-                              </div>
-                              <div class="col-4 text-center">
-                                  <h6>Revisado por</h6>
-                                  <input type="text" class="form-control text-center" id="REVISADO_NOMBRE_PPT" name="REVISADO_NOMBRE_PPT">
-                                  <div>Nombre</div>
-                                  <br>
-                                  <input type="text" class="form-control text-center" id="REVISADO_FIRMA_PPT" name="REVISADO_FIRMA_PPT">
-                                  <div>Firma</div>
-                                  <br>
-                                  <input type="date" class="form-control text-center" id="REVISADO_FECHA_PPT" name="REVISADO_FECHA_PPT">
-                                  <div>Fecha</div>
-                                  <br>
-                              </div>
-                              <div class="col-4 text-center">
-                                  <h6>Autorizado por</h6>
-                                  <input type="text" class="form-control text-center" id="AUTORIZADO_NOMBRE_PPT" name="AUTORIZADO_NOMBRE_PPT">
-                                  <div>Nombre</div>
-                                  <br>
-                                  <input type="text" class="form-control text-center" id="AUTORIZADO_FIRMA_PPT" name="AUTORIZADO_FIRMA_PPT">
-                                  <div>Firma</div>
-                                  <br>
-                                  <input type="date" class="form-control text-center" id="AUTORIZADO_FECHA_PPT" name="AUTORIZADO_FECHA_PPT">
-                                  <div>Fecha</div>
-                                  <br>
-                              </div>
-                          </div>
+                            <div class="col-4 text-center">
+                                <h6>Elaborado por</h6>
+                                <input type="text" class="form-control text-center" id="ELABORADO_NOMBRE_PPT" name="ELABORADO_NOMBRE_PPT" required>
+                                <div>Nombre</div>
+                                <br>
+                                <input type="text" class="form-control text-center" id="ELABORADO_FIRMA_PPT" name="ELABORADO_FIRMA_PPT" required>
+                                <div>Firma</div>
+                                <br>
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="ELABORADO_FECHA_PPT" name="ELABORADO_FECHA_PPT" required>
+                                <i class="bi bi-calendar-event"></i>
+
+                                {{-- <input type="date" class="form-control text-center" id="ELABORADO_FECHA_PPT" name="ELABORADO_FECHA_PPT" required> --}}
+                                <div>Fecha</div>
+                                <br>
+                            </div>
+                            <div class="col-4 text-center">
+                                <h6>Revisado por</h6>
+                                <input type="text" class="form-control text-center" id="REVISADO_NOMBRE_PPT" name="REVISADO_NOMBRE_PPT">
+                                <div>Nombre</div>
+                                <br>
+                                <input type="text" class="form-control text-center" id="REVISADO_FIRMA_PPT" name="REVISADO_FIRMA_PPT">
+                                <div>Firma</div>
+                                <br>
+
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="REVISADO_FECHA_PPT" name="REVISADO_FECHA_PPT" >
+                                <i class="bi bi-calendar-event"></i>
+
+                                {{-- <input type="date" class="form-control text-center" id="REVISADO_FECHA_PPT" name="REVISADO_FECHA_PPT"> --}}
+                                <div>Fecha</div>
+                                <br>
+                            </div>
+                            <div class="col-4 text-center">
+                                <h6>Autorizado por</h6>
+                                <input type="text" class="form-control text-center" id="AUTORIZADO_NOMBRE_PPT" name="AUTORIZADO_NOMBRE_PPT">
+                                <div>Nombre</div>
+                                <br>
+                                <input type="text" class="form-control text-center" id="AUTORIZADO_FIRMA_PPT" name="AUTORIZADO_FIRMA_PPT">
+                                <div>Firma</div>
+                                <br>
+
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="AUTORIZADO_FECHA_PPT" name="AUTORIZADO_FECHA_PPT" >
+                                <i class="bi bi-calendar-event"></i>
+
+
+                                {{-- <input type="date" class="form-control text-center" id="AUTORIZADO_FECHA_PPT" name="AUTORIZADO_FECHA_PPT"> --}}
+                                <div>Fecha</div>
+                                <br>
+                            </div>
+                        </div>
 
                   </div>
               </div>

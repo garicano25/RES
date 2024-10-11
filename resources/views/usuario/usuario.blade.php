@@ -152,12 +152,9 @@
                                     </div>
                                 </div>
                                 <div class="col-6 campo_dato_empleado">
-                                    <div class="form-group">
-                                        <label>Fecha de nacimiento *</label>
-                                        <div class="input-group">
-                                            <input type="date" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="EMPLEADO_FECHANACIMIENTO" name="EMPLEADO_FECHANACIMIENTO" required>
-                                            <span class="input-group-addon"><i class="icon-calender"></i></span>
-                                        </div>
+                                    <label>Fecha de nacimiento *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="EMPLEADO_FECHANACIMIENTO" name="EMPLEADO_FECHANACIMIENTO" required>
                                     </div>
                                 </div>
                                 <div class="col-6 campo_dato_empleado">

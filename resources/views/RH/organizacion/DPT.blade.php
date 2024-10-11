@@ -1258,13 +1258,16 @@
           <div class="row mb-3 mt-5">
             <div class="col-4 text-center">
               <h6>Elaborado por</h6>
-              <input type="text" class="form-control text-center" id="ELABORADO_NOMBRE_DPT" name="ELABORADO_NOMBRE_DPT">
+              <input type="text" class="form-control text-center" id="ELABORADO_NOMBRE_DPT" name="ELABORADO_NOMBRE_DPT" required>
               <div>Nombre</div>
               <br>
-              <input type="text" class="form-control text-center" id="ELABORADO_FIRMA_DPT" name="ELABORADO_FIRMA_DPT">
+              <input type="text" class="form-control text-center" id="ELABORADO_FIRMA_DPT" name="ELABORADO_FIRMA_DPT" required>
               <div>Firma</div>
               <br>
-              <input type="date" class="form-control text-center" id="ELABORADO_FECHA_DPT" name="ELABORADO_FECHA_DPT">
+
+              <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="ELABORADO_FECHA_DPT" name="ELABORADO_FECHA_DPT" required>
+              <i class="bi bi-calendar-event"></i>             
+              {{-- <input type="date" class="form-control text-center" id="ELABORADO_FECHA_DPT" name="ELABORADO_FECHA_DPT"> --}}
               <div>Fecha</div>
               <br>
             </div>
@@ -1276,7 +1279,12 @@
               <input type="text" class="form-control text-center" id="REVISADO_FIRMA_DPT" name="REVISADO_FIRMA_DPT">
               <div>Firma</div>
               <br>
-              <input type="date" class="form-control text-center" id="REVISADO_FECHA_DPT" name="REVISADO_FECHA_DPT">
+
+              <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="REVISADO_FECHA_DPT" name="REVISADO_FECHA_DPT" >
+              <i class="bi bi-calendar-event"></i>
+
+
+              {{-- <input type="date" class="form-control text-center" id="REVISADO_FECHA_DPT" name="REVISADO_FECHA_DPT"> --}}
               <div>Fecha</div>
               <br>
             </div>
@@ -1288,7 +1296,9 @@
               <input type="text" class="form-control text-center" id="AUTORIZADO_FIRMA_DPT" name="AUTORIZADO_FIRMA_DPT">
               <div>Firma</div>
               <br>
-              <input type="date" class="form-control text-center" id="AUTORIZADO_FECHA_DPT" name="AUTORIZADO_FECHA_DPT">
+              <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="AUTORIZADO_FECHA_DPT" name="AUTORIZADO_FECHA_DPT" >
+              <i class="bi bi-calendar-event"></i>
+              {{-- <input type="date" class="form-control text-center" id="AUTORIZADO_FECHA_DPT" name="AUTORIZADO_FECHA_DPT"> --}}
               <div>Fecha</div>
               <br>
             </div>

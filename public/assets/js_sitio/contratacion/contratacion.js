@@ -440,19 +440,19 @@ function actualizarStepsConCurp(curp) {
 
 
 document.getElementById('step2').addEventListener('click', function() {
-    // Ocultar el contenido de todos los steps
     document.querySelectorAll('[id$="-content"]').forEach(function(content) {
         content.style.display = 'none';
     });
 
     document.getElementById('step2-content').style.display = 'block';
 
-    if (!tablaDocumentosCargada) {
+    if (tablaDocumentosCargada) {
+        Tabladocumentosoporte.columns.adjust().draw(); 
+    } else {
         cargarTablaDocumentosSoporte();
         tablaDocumentosCargada = true; 
     }
 });
-
 
 
 
@@ -593,7 +593,6 @@ $("#guardarDOCUMENTOSOPORTE").click(function (e) {
 });
 
 
-
 function cargarTablaDocumentosSoporte() {
     if ($.fn.DataTable.isDataTable('#Tabladocumentosoporte')) {
         Tabladocumentosoporte.clear().destroy();
@@ -624,7 +623,7 @@ function cargarTablaDocumentosSoporte() {
             },
             complete: function () {
                 $('#loadingIcon').css('display', 'none');
-                Tabladocumentosoporte.columns.adjust().draw();
+                Tabladocumentosoporte.columns.adjust().draw(); 
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 $('#loadingIcon').css('display', 'none');
@@ -646,7 +645,6 @@ function cargarTablaDocumentosSoporte() {
         ]
     });
 }
-
 
 $('#Tabladocumentosoporte').on('click', '.ver-archivo-documentosoporte', function () {
     var id = $(this).data('id');
@@ -695,5 +693,78 @@ $('#Tabladocumentosoporte').on('click', 'td>button.EDITAR', function () {
 
 
 
+
+
+
+
+ // <!-- ============================================================== -->
+// <!-- STEP 3  -->
+// <!-- ============================================================== -->
+
+
+document.getElementById('step3').addEventListener('click', function() {
+    document.querySelectorAll('[id$="-content"]').forEach(function(content) {
+        content.style.display = 'none';
+    });
+
+    document.getElementById('step3-content').style.display = 'block';
+
+    if (!tablaDocumentosCargada) {
+        cargarTablaDocumentosSoporte();
+        tablaDocumentosCargada = true; 
+    }
+});
+
+
+
+
+
+ // <!-- ============================================================== -->
+// <!-- STEP 8  -->
+// <!-- ============================================================== -->
+
+
+
+
+document.getElementById('step8').addEventListener('click', function() {
+    document.querySelectorAll('[id$="-content"]').forEach(function(content) {
+        content.style.display = 'none';
+    });
+
+    document.getElementById('step8-content').style.display = 'block';
+
+    // if (!tablaDocumentosCargada) {
+    //     cargarTablaDocumentosSoporte();
+    //     tablaDocumentosCargada = true; 
+    // }
+});
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var archivorecibo = document.getElementById('DOCUMENTO_RECIBO');
+    var quitarecibo = document.getElementById('quitar_recibo');
+    var errorecibo = document.getElementById('RECIBO_ERROR');
+
+    if (archivorecibo) {
+        archivorecibo.addEventListener('change', function() {
+            var archivo = this.files[0];
+            if (archivo && archivo.type === 'application/pdf') {
+                if (errorecibo) errorecibo.style.display = 'none';
+                if (quitarecibo) quitarecibo.style.display = 'block';
+            } else {
+                if (errorecibo) errorecibo.style.display = 'block';
+                this.value = '';
+                if (quitarecibo) quitarecibo.style.display = 'none';
+            }
+        });
+        quitarecibo.addEventListener('click', function() {
+            archivorecibo.value = ''; 
+            quitarecibo.style.display = 'none'; 
+            if (errorecibo) errorecibo.style.display = 'none'; 
+        });
+    }
+});
 
 

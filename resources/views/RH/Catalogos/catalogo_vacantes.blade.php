@@ -64,7 +64,10 @@
                     </div>
                     <div class="mb-3">
                         <label>Fecha de expiración de la vacante *</label>
-                        <input type="date" name="FECHA_EXPIRACION" id="FECHA_EXPIRACION"  class="form-control" required>
+                        <div class="input-group">
+                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_EXPIRACION" name="FECHA_EXPIRACION" required>
+                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        </div>
                     </div>
                     
                     <div class="mb-3">

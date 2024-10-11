@@ -362,7 +362,7 @@
 @endif
 
 @if(request()->is('PPT'))
-<script src="/assets/js_sitio/organizacion/PPT.js?v=1.0"></script>
+<script src="/assets/js_sitio/organizacion/PPT.js?v=2.0"></script>
 @endif
 
 @if(request()->is('DPT'))
@@ -455,7 +455,7 @@
 
 
 @if(request()->is('Contratación'))
-<script src="/assets/js_sitio/contratacion/contratacion.js?v=1.0"></script>
+<script src="/assets/js_sitio/contratacion/contratacion.js?v=2.0"></script>
 @endif
 
 

@@ -37,10 +37,11 @@
                   <div class="row">
                     <div class="row mb-3">
                         <div class="col-4">
-                            <div class="form-group">
-                                <label>Fecha:</label>
-                                <input type="date" class="form-control " id="FECHA_RP" name="FECHA_RP" required>
-                            </div>
+                          <label >Fecha *</label>
+                          <div class="input-group">
+                              <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_RP" name="FECHA_RP" required>
+                              <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                          </div>
                         </div>
                         <div class="col-4">
                             <div class="form-group">
@@ -153,9 +154,10 @@
                           <label></label>
                         </div>
                         <div class="col-2 text-center">
-                          <div class="form-group">
-                              <label>Fecha de inicio</label>
-                              <input type="date" class="form-control " id="FECHA_INICIO_RP" name="FECHA_INICIO_RP" required>
+                          <label >Fecha de inicio *</label>
+                          <div class="input-group">
+                              <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INICIO_RP" name="FECHA_INICIO_RP" required>
+                              <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                           </div>
                         </div>
                       </div>

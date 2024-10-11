@@ -2,7 +2,7 @@
 ID_FORMULARIO_PPT = 0
 
 
-let puestoIndex = 0;  // Declarar puestoIndex fuera para que sea accesible globalmente
+let puestoIndex = 0;  
 
 const ModalArea = document.getElementById('miModal_PPT');
 ModalArea.addEventListener('hidden.bs.modal', event => {
@@ -76,9 +76,9 @@ TablaPPT = $("#TablaPPT").DataTable({
         { 
             data: null,
             render: function(data, type, row, meta) {
-                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
+                return meta.row + 1; 
             }
-        },  // Para que esta columna sea generada dinámicamente
+        },  
         { data: 'NOMBRE_CATEGORIA' },
         { data: 'ELABORADO_POR' },
         { data: 'REVISADO_POR' },
