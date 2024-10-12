@@ -310,7 +310,6 @@ public function store(Request $request)
         switch (intval($request->api)) {
             case 1:
                 if (isset($request->ELIMINAR)) {
-                    // Si existe la solicitud de eliminar, cambiar el estado de ACTIVO
                     if ($request->ELIMINAR == 1) {
                         $dpt = formulariodptModel::where('ID_FORMULARIO_DPT', $request['ID_FORMULARIO_DPT'])->update(['ACTIVO' => 0]);
                         $response['code'] = 1;

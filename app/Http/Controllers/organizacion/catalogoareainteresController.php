@@ -26,7 +26,6 @@ public function Tablaareainteres()
 
         foreach ($tabla as $value) {
             
-            // Asignar el texto correspondiente al valor de TIPO_AREA
             if ($value->TIPO_AREA == 1) {
                 $value->TIPO_AREA_TEXTO = 'Administrativas';
             } elseif ($value->TIPO_AREA == 2) {

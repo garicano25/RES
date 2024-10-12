@@ -159,18 +159,13 @@ public function informacionpostulantes($idVacante)
 public function mostrarCvPorCurp($curp)
 {
     try {
-        // Busca el postulante por el CURP y obtiene la ruta del archivo
         $postulante = bancocvModel::where('CURP_CV', $curp)->firstOrFail();
 
-        // Utiliza la ruta completa almacenada en la base de datos
         $rutaArchivo = $postulante->ARCHIVO_CV;
 
-        // Verifica si el archivo existe en el almacenamiento
         if (Storage::exists($rutaArchivo)) {
-            // Devuelve el archivo
             return Storage::response($rutaArchivo);
         } else {
-            // Si no se encuentra el archivo, muestra un mensaje de error
             return response()->json(['msj' => 'Archivo no encontrado'], 404);
         }
     } catch (Exception $e) {
@@ -246,14 +241,12 @@ public function guardarPreseleccion(Request $request)
 public function actualizarDisponibilidad(Request $request)
 {
     try {
-        // Validar los datos recibidos
         $request->validate([
             'VACANTES_ID' => 'required|integer',
             'CURP' => 'required|string',
             'DISPONIBLE' => 'required|string|in:si,no'
         ]);
 
-        // Actualizar la disponibilidad en la tabla 'vacantes_activas'
         $vacante = vacantesactivasModel::where('VACANTES_ID', $request->VACANTES_ID)
             ->where('CURP', $request->CURP)
             ->first();

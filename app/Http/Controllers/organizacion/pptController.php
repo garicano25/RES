@@ -150,11 +150,9 @@ public function store(Request $request)
 
     try {
         switch (intval($request->api)) {
-                //Guardar Area
             case 1:
 
                 if (isset($request->ELIMINAR)) {
-                    // Si existe la solicitud de eliminar, cambiar el estado de ACTIVO
                     if ($request->ELIMINAR == 1) {
                         $PPT = formulariopptModel::where('ID_FORMULARIO_PPT', $request['ID_FORMULARIO_PPT'])->update(['ACTIVO' => 0]);
                         $response['code'] = 1;
@@ -169,14 +167,11 @@ public function store(Request $request)
 
 
 
-                //Guardamos Area
                 if ($request->ID_FORMULARIO_PPT == 0) {
 
-                    //GUARDAR EL FORMULARIO
                     DB::statement('ALTER TABLE formulario_ppt AUTO_INCREMENT=1;');
                     $PPT = formulariopptModel::create($request->all());
 
-                    // GUARDAR LOS CURSOS
 
 
 

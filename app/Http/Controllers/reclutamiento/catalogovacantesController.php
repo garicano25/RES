@@ -60,10 +60,8 @@ class catalogovacantesController extends Controller
         ");
 
         foreach ($tabla as $value) {
-            // Relacionar los requerimientos con cada vacante
             $value->REQUERIMIENTO = requerimientoModel::where('CATALOGO_VACANTES_ID', $value->ID_CATALOGO_VACANTE)->get();
 
-            // Agregar botones de acción con condiciones
             if ($value->ACTIVO == 0) {
                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_VACANTE . '"><span class="slider round"></span></label>';
@@ -155,19 +153,15 @@ public function store(Request $request)
                 DB::beginTransaction();
 
                 if ($request->ID_CATALOGO_VACANTE == 0) {
-                    // Crear una nueva vacante
                     DB::statement('ALTER TABLE catalogo_vacantes AUTO_INCREMENT=1;');
                     $vacante = catalogovacantesModel::create($request->all());
                 } else {
-                    // Verificar si se solicita eliminar/activar la vacante
                     if (isset($request->ELIMINAR)) {
                         if ($request->ELIMINAR == 1) {
-                            // Desactivar vacante
                             $vacante = catalogovacantesModel::where('ID_CATALOGO_VACANTE', $request['ID_CATALOGO_VACANTE'])->update(['ACTIVO' => 0]);
                             $response['code'] = 1;
                             $response['vacante'] = 'Desactivada';
                         } else {
-                            // Activar vacante
                             $vacante = catalogovacantesModel::where('ID_CATALOGO_VACANTE', $request['ID_CATALOGO_VACANTE'])->update(['ACTIVO' => 1]);
                             $response['code'] = 1;
                             $response['vacante'] = 'Activada';
@@ -175,16 +169,13 @@ public function store(Request $request)
                         DB::commit();
                         return response()->json($response);
                     } else {
-                        // Actualizar vacante existente
                         $vacante = catalogovacantesModel::find($request->ID_CATALOGO_VACANTE);
                         $vacante->update($request->all());
 
-                        // Eliminar requerimientos existentes para la vacante
                         requerimientoModel::where('CATALOGO_VACANTES_ID', $request->ID_CATALOGO_VACANTE)->delete();
                     }
                 }
 
-                // Crear o actualizar requerimientos de la vacante
                 if ($request->has('NOMBRE_REQUERIMINETO')) {
                     foreach ($request->NOMBRE_REQUERIMINETO as $index => $requerimiento) {
                         requerimientoModel::create([

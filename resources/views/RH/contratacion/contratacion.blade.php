@@ -133,8 +133,8 @@
                                                     <i class="bi bi-person-circle"></i>&nbsp;<span class="text-success div_trabajador_nombre">NOMBRE DEL COLABORADOR</span>
                                                 </h7>
                                                 <br>
-                                                <small style="color: #AAAAAA; font-size: 12px;">Cargo</small> &nbsp;
-                                                <small style="color: #AAAAAA; font-size: 12px;">Número</small>
+                                                <span class="text-success div_trabajador_cargo" style="color: #AAAAAA; font-size: 12px;">Cargo</span> &nbsp;
+                                                <span class="text-success div_trabajador_numeoro" style="color: #AAAAAA; font-size: 12px;">Número</span>
                                             </td>
                                         </tr>
                                     </tbody>

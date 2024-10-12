@@ -227,14 +227,11 @@ public function store(Request $request)
     try {
         switch (intval($request->api)) {
             case 1:
-                // Verificar si es un nuevo registro o una actualización
                 if ($request->ID_BANCO_CV == 0) {
 
-                    // Inicialización de intereses
                     $interes_admon = $request->INTERES_ADMINISTRATIVA ? $request->INTERES_ADMINISTRATIVA : [];
                     $interes_ope = $request->INTERES_OPERATIVAS ? $request->INTERES_OPERATIVAS : [];
 
-                    // Crear un nuevo registro
                     DB::statement('ALTER TABLE formulario_bancocv AUTO_INCREMENT=1;');
                     $bancocvs = bancocvModel::create(array_merge($request->all(), [
                         'INTERES_ADMINISTRATIVA' => $interes_admon,
@@ -242,9 +239,7 @@ public function store(Request $request)
                     ]));
 
                 } else {
-                    // Actualización de un registro existente
                     if (!isset($request->ELIMINAR)) {
-                        // Actualizar el registro
                         $bancocvs = bancocvModel::find($request->ID_BANCO_CV);
 
                         $interes_admon = $request->INTERES_ADMINISTRATIVA ? $request->INTERES_ADMINISTRATIVA : [];
@@ -256,7 +251,6 @@ public function store(Request $request)
                         ]));
 
                     } else {
-                        // Eliminar el registro
                         bancocvModel::where('ID_BANCO_CV', $request->ID_BANCO_CV)->delete();
                         $response['code'] = 1;
                         $response['bancocv'] = 'Eliminada';
@@ -264,11 +258,9 @@ public function store(Request $request)
                     }
                 }
 
-                // Manejar archivos (CURP o Pasaporte)
-                $identificador = $request->CURP_CV ? $request->CURP_CV : 'extranjero_' . time(); // Identificador para la carpeta
-                $curpFolder = 'reclutamiento/' . $identificador; // Carpeta base para almacenar archivos
+                $identificador = $request->CURP_CV ? $request->CURP_CV : 'extranjero_' . time(); 
+                $curpFolder = 'reclutamiento/' . $identificador; 
 
-                // Guardar archivo CURP o Pasaporte
                 if ($request->hasFile('ARCHIVO_CURP_CV') || $request->hasFile('ARCHIVO_PASAPORTE_CV')) {
                     if ($request->hasFile('ARCHIVO_CURP_CV')) {
                         $curpFile = $request->file('ARCHIVO_CURP_CV');
@@ -285,7 +277,6 @@ public function store(Request $request)
                     }
                 }
 
-                // Guardar el archivo CV
                 if ($request->hasFile('ARCHIVO_CV')) {
                     $cvFile = $request->file('ARCHIVO_CV');
                     $cvFileFolder = $curpFolder . '/CV/';
@@ -294,7 +285,6 @@ public function store(Request $request)
                     $bancocvs->ARCHIVO_CV = $cvFileFolder . $cvFileName;
                 }
 
-                // Guardar los cambios en la base de datos
                 $bancocvs->save();
 
                 $response['code'] = 1;

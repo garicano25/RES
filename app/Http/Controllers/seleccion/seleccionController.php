@@ -143,13 +143,11 @@ public function Tablaentrevistaseleccion(Request $request)
             }
         }
 
-        // Responder con la tabla y el mensaje de éxito
         return response()->json([
             'data' => $tabla,
             'msj' => 'Información consultada correctamente'
         ]);
     } catch (Exception $e) {
-        // En caso de error, responder con el mensaje de error
         return response()->json([
             'msj' => 'Error ' . $e->getMessage(),
             'data' => 0
@@ -166,7 +164,6 @@ public function Tablaautorizacion(Request $request)
 
         foreach ($tabla as $value) {
          
-                // Generar botón para abrir el archivo en un modal
                 if ($value->ARCHIVO_AUTORIZACION) {
                     $value->BTN_ARCHIVO = '<button type="button" class="btn btn-info btn-custom rounded-pill btn-ver-pdf" data-curp="' . $value->CURP . '"><i class="bi bi-eye"></i> Ver archivo</button>';
                 } else {
@@ -192,15 +189,10 @@ public function Tablaautorizacion(Request $request)
 
 public function visualizarArchivo($curp)
 {
-    // Buscar la autorización según la CURP
     $autorizacion = autorizacionseleccionModel::where('CURP', $curp)->first();
 
-    // Verificar que se encontró la autorización y que el archivo existe
     if ($autorizacion && Storage::exists($autorizacion->ARCHIVO_AUTORIZACION)) {
-        // Generar la ruta completa del archivo en el almacenamiento privado
         $filePath = storage_path('app/' . $autorizacion->ARCHIVO_AUTORIZACION);
-
-        // Devolver el archivo para que se visualice en el navegador
         return response()->file($filePath, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline; filename="'.basename($filePath).'"'
@@ -220,7 +212,6 @@ public function Tablainteligencia(Request $request)
         $tabla = inteligenciaseleccionModel::where('CURP', $curp)->get();
 
         foreach ($tabla as $value) {
-            // Lógica para el botón de editar
             if ($value->ACTIVO == 0) {
                 
                 
@@ -235,7 +226,6 @@ public function Tablainteligencia(Request $request)
     
             }
 
-            // Lógica para el campo de riesgo
             switch ($value->RIESGO_PORCENTAJE) {
                 case 100:
                     $value->RIESGO = 'Bajo';
@@ -300,13 +290,11 @@ public function Tablaburo(Request $request)
             }
         }
 
-        // Responder con la tabla y el mensaje de éxito
         return response()->json([
             'data' => $tabla,
             'msj' => 'Información consultada correctamente'
         ]);
     } catch (Exception $e) {
-        // En caso de error, responder con el mensaje de error
         return response()->json([
             'msj' => 'Error ' . $e->getMessage(),
             'data' => 0
@@ -382,18 +370,13 @@ public function Tablareferencia(Request $request)
     try {
         $curp = $request->get('curp');
 
-        // Obtener las referencias de selección
         $tabla = referenciaseleccionModel::where('CURP', $curp)->get();
 
-        // Variable para almacenar las filas que se enviarán al DataTable
         $rows = [];
 
-        // Recorrer cada fila de la tabla principal
         foreach ($tabla as $value) {
-            // Obtener las referencias relacionadas
             $referencias = referenciasempresasModel::where('SELECCION_REFERENCIA_ID', $value->ID_REFERENCIAS_SELECCION)->get();
 
-            // Preparar la información agrupada
             $referenciasAgrupadas = [];
             foreach ($referencias as $referencia) {
                 $referenciasAgrupadas[] = [
@@ -405,12 +388,11 @@ public function Tablareferencia(Request $request)
                 ];
             }
 
-            // Crear una fila para cada referencia de selección con sus referencias agrupadas
             $rows[] = [
                 'ID_REFERENCIAS_SELECCION' => $value->ID_REFERENCIAS_SELECCION,
                 'EXPERIENCIA_LABORAL' => $value->EXPERIENCIA_LABORAL,
                 'PORCENTAJE_TOTAL_REFERENCIAS' => $value->PORCENTAJE_TOTAL_REFERENCIAS,
-                'REFERENCIAS' => $referenciasAgrupadas, // Incluye todas las referencias agrupadas
+                'REFERENCIAS' => $referenciasAgrupadas, 
                 'BTN_EDITAR' => ($value->ACTIVO == 0) ? 
                     '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>' :
                     '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
@@ -448,17 +430,13 @@ public function Tablapruebaconocimientoseleccion(Request $request)
     try {
         $curp = $request->get('curp');
 
-        // Obtener las referencias de selección
         $tabla = pruebaseleccionModel::where('CURP', $curp)->get();
 
-        // Variable para almacenar las filas que se enviarán al DataTable
         $rows = [];
 
-        // Recorrer cada fila de la tabla principal
         foreach ($tabla as $value) {
             $referencias = referenciaspruebaseleccionModel::where('SELECCION_PRUEBAS_ID', $value->ID_PRUEBAS_SELECCION)->get();
 
-            // Preparar la información agrupada
             $referenciasAgrupadas = [];
             foreach ($referencias as $referencia) {
                 $referenciasAgrupadas[] = [
@@ -470,12 +448,11 @@ public function Tablapruebaconocimientoseleccion(Request $request)
                 ];
             }
 
-            // Crear una fila para cada referencia de selección con sus referencias agrupadas
             $rows[] = [
                 'ID_PRUEBAS_SELECCION' => $value->ID_PRUEBAS_SELECCION,
                 'REQUIERE_PRUEBAS' => $value->REQUIERE_PRUEBAS,
                 'PORCENTAJE_TOTAL_PRUEBA' => $value->PORCENTAJE_TOTAL_PRUEBA,
-                'REFERENCIAS' => $referenciasAgrupadas, // Incluye todas las referencias agrupadas
+                'REFERENCIAS' => $referenciasAgrupadas, 
                 'BTN_EDITAR' => ($value->ACTIVO == 0) ? 
                     '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>' :
                     '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
@@ -533,7 +510,6 @@ public function mostrarprueba($id)
 
 public function consultarSeleccion($categoriaVacanteId)
 {
-    // Consulta principal para obtener las personas relacionadas a la categoría
     $consultar = DB::table('formulario_seleccion')
         ->where('CATEGORIA_VACANTE', $categoriaVacanteId)
         ->where('ACTIVO', 1)
@@ -546,11 +522,9 @@ public function consultarSeleccion($categoriaVacanteId)
         ]);
     }
 
-    // Recorrer cada persona para obtener los porcentajes basados en su CURP
     foreach ($consultar as $persona) {
         $curp = $persona->CURP;
 
-        // Consultar los valores de porcentajes basados en la CURP de la persona
         $inteligencia = DB::table('seleccion_inteligencia')->where('CURP', $curp)->value('RIESGO_PORCENTAJE');
         $buroLaboral = DB::table('seleccion_buro_laboral')->where('CURP', $curp)->value('PORCENTAJE_TOTAL');
         $ppt = DB::table('seleccion_ppt')->where('CURP', $curp)->value('SUMA_TOTAL');
@@ -559,9 +533,7 @@ public function consultarSeleccion($categoriaVacanteId)
         $pruebaConocimiento = DB::table('seleccion_prueba_conocimiento')->where('CURP', $curp)->value('PORCENTAJE_TOTAL_PRUEBA');
         $entrevista = DB::table('seleccion_entrevista')->where('CURP', $curp)->value('PORCENTAJE_ENTREVISTA');
 
-        // Validar que todos los valores de los porcentajes estén presentes
         if (is_null($inteligencia) || is_null($buroLaboral) || is_null($ppt) || is_null($referenciasLaboral) || is_null($pruebaConocimiento) || is_null($entrevista)) {
-            // Si falta algún valor, asignamos ** a todos los porcentajes y no se calculará el total
             $persona->PORCENTAJE_INTELIGENCIA = '**';
             $persona->PORCENTAJE_BURO = '**';
             $persona->PORCENTAJE_PPT = '**';
@@ -570,7 +542,6 @@ public function consultarSeleccion($categoriaVacanteId)
             $persona->PORCENTAJE_ENTREVISTA = '**';
             $persona->TOTAL = '**';
         } else {
-            // Definir los porcentajes según el escenario
             if ($experienciaLaboral == 'SI') {
                 $porcentajes = [
                     'inteligencia' => 0.20,
@@ -591,7 +562,6 @@ public function consultarSeleccion($categoriaVacanteId)
                 ];
             }
 
-            // Calcular el total multiplicando por los porcentajes y redondear
             $total = round(
                 ($inteligencia * $porcentajes['inteligencia']) +
                 ($buroLaboral * $porcentajes['buroLaboral']) +
@@ -601,14 +571,13 @@ public function consultarSeleccion($categoriaVacanteId)
                 ($entrevista * $porcentajes['entrevista'])
             );
 
-            // Añadir los porcentajes a cada persona en el resultado
             $persona->PORCENTAJE_INTELIGENCIA = $inteligencia;
             $persona->PORCENTAJE_BURO = $buroLaboral;
             $persona->PORCENTAJE_PPT = $ppt;
             $persona->PORCENTAJE_REFERENCIAS = $referenciasLaboral;
             $persona->PORCENTAJE_PRUEBA = $pruebaConocimiento;
             $persona->PORCENTAJE_ENTREVISTA = $entrevista;
-            $persona->TOTAL = $total;  // Total redondeado
+            $persona->TOTAL = $total;  
         }
     }
 
@@ -627,7 +596,6 @@ public function consultarSeleccion($categoriaVacanteId)
 public function obtenerRequerimientos($categoriaId)
 {
     try {
-        // Consulta a la base de datos para obtener los requerimientos de la categoría seleccionada
         $requerimientos = DB::table('requerimientos_categorias')
             ->where('CATALOGO_CATEGORIAS_ID', $categoriaId)
             ->get();
@@ -703,10 +671,8 @@ public function store(Request $request)
 
         case 1:
 
-    //Guardamos Area
     if ($request->ID_PPT_SELECCION == 0) {
 
-        //GUARDAR EL FORMULARIO
         DB::statement('ALTER TABLE seleccion_ppt AUTO_INCREMENT=1;');
         $PPT = seleccionpptModel::create($request->all());
 

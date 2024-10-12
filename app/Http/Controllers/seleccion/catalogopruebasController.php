@@ -53,25 +53,20 @@ public function store(Request $request)
         switch (intval($request->api)) {
             case 1:
                 if ($request->ID_CATALOGO_PRUEBA_CONOCIMIENTO == 0) {
-                    // Crear nueva prueba de conocimiento
                     DB::statement('ALTER TABLE catalogo_pruebas_conocimientos AUTO_INCREMENT=1;');
                     $pruebas = catalogopruebasconocimientosModel::create($request->all());
                 } else {
-                    // Verificar si es para eliminar o editar
                     if (isset($request->ELIMINAR)) {
                         if ($request->ELIMINAR == 1) {
-                            // Desactivar prueba
                             $pruebas = catalogopruebasconocimientosModel::where('ID_CATALOGO_PRUEBA_CONOCIMIENTO', $request['ID_CATALOGO_PRUEBA_CONOCIMIENTO'])->update(['ACTIVO' => 0]);
                             $response['code'] = 1;
                             $response['prueba'] = 'Desactivada';
                         } else {
-                            // Activar prueba
                             $pruebas = catalogopruebasconocimientosModel::where('ID_CATALOGO_PRUEBA_CONOCIMIENTO', $request['ID_CATALOGO_PRUEBA_CONOCIMIENTO'])->update(['ACTIVO' => 1]);
                             $response['code'] = 1;
                             $response['prueba'] = 'Activada';
                         }
                     } else {
-                        // Editar prueba existente
                         $pruebas = catalogopruebasconocimientosModel::find($request->ID_CATALOGO_PRUEBA_CONOCIMIENTO);
                         $pruebas->update($request->all());
                         $response['code'] = 1;

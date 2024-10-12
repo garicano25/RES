@@ -55,6 +55,8 @@ $(document).ready(function() {
         // $('#step1-content').css("display", 'block'); 
         // $('#step2-content, #step3-content, #step4-content, #step5-content, #step6-content, #step7-content, #step8-content').css("display", 'none'); // Ocultar los demás steps
 
+        $( "#informacionacademica" ).css('display', 'none');
+        $( "#experienciacolaborador" ).css('display', 'none');
 
 
         $( "#step2" ).css('display', 'none');
@@ -158,6 +160,9 @@ $("#guardarDatosGenerales").click(function (e) {
 
                     ID_FORMULARIO_CONTRATACION = data.contrato.ID_FORMULARIO_CONTRATACION;
                     $('#step2, #step3, #step4, #step5, #step6, #step7, #step8').css("display", "flex");
+                    $( "#informacionacademica" ).css('display', 'block');
+                    $( "#experienciacolaborador" ).css('display', 'block');
+            
                     alertMensaje('success','Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
                     Tablacontratacion.ajax.reload();
                 });
