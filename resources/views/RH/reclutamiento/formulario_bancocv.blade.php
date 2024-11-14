@@ -35,101 +35,101 @@
 
 <style>
 
-body {
-    font-family: 'Maven Pro', Arial, sans-serif; /* Aplicar la fuente Maven Pro */
-    /* background-color: #007DBA; */
-}
-.card {
-max-width: 800px; 
-margin: 20px auto; 
-border: 2px solid #007DBA; 
-}
-.card-img-top {
-    display: block;
-    margin: 0 auto;
-    width: 50%; 
-    height: auto; 
-}
+    body {
+        font-family: 'Maven Pro', Arial, sans-serif; /* Aplicar la fuente Maven Pro */
+        /* background-color: #007DBA; */
+    }
+    .card {
+    max-width: 800px; 
+    margin: 20px auto; 
+    border: 2px solid #007DBA; 
+    }
+    .card-img-top {
+        display: block;
+        margin: 0 auto;
+        width: 50%; 
+        height: auto; 
+    }
 
 
-#contador {
-    font-size: 12px;
-    color: gray; 
-}
+    #contador {
+        font-size: 12px;
+        color: gray; 
+    }
 
-/* #mensaje {
-    margin-top: 5px;
-    color: red;  
-} */
+    /* #mensaje {
+        margin-top: 5px;
+        color: red;  
+    } */
 
 
-#mensaje {
-    font-size: 0.9em;
-    color: green;
-}
+    #mensaje {
+        font-size: 0.9em;
+        color: green;
+    }
 
-#error {
-    font-size: 0.9em;
-    color: red;
-}
-.modal-header img {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    max-height: 50px;
-}
+    #error {
+        font-size: 0.9em;
+        color: red;
+    }
+    .modal-header img {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        max-height: 50px;
+    }
 
-.modal-footer {
-    justify-content: center;
-}
+    .modal-footer {
+        justify-content: center;
+    }
 
-.modal-content {
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(16, 16, 16, 0.958);
-}
+    .modal-content {
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(16, 16, 16, 0.958);
+    }
 
-.modal-body {
-    font-size: 1rem;
-}
+    .modal-body {
+        font-size: 1rem;
+    }
 
-.modal-backdrop.show {
-    opacity: 1;
-}
+    .modal-backdrop.show {
+        opacity: 1;
+    }
 
-.modal-backdrop {
-    background-color: rgba(16, 16, 16, 0.963); 
-}
-.btn-light.btn-sm {
-background-color: white;
-color: black;
-border: 1px solid #ced4da;
-padding: 0.25rem 0.5rem;
-font-size: 0.875rem;
-}
-
-.btn-light.btn-sm:hover {
-    background-color: #e2e6ea;
-}
-
-.text-danger {
+    .modal-backdrop {
+        background-color: rgba(16, 16, 16, 0.963); 
+    }
+    .btn-light.btn-sm {
+    background-color: white;
+    color: black;
+    border: 1px solid #ced4da;
+    padding: 0.25rem 0.5rem;
     font-size: 0.875rem;
-    margin-top: 5px;
-}
+    }
 
-.add-button {
-padding: 5px 10px;
-display: flex;
-align-items: center;
-justify-content: center;
-}
-.add-button i {
-margin-right: 5px;
-}
+    .btn-light.btn-sm:hover {
+        background-color: #e2e6ea;
+    }
 
-.small-checkbox {
-width: 20px;
-height: 20px;
-}
+    .text-danger {
+        font-size: 0.875rem;
+        margin-top: 5px;
+    }
+
+    .add-button {
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+    .add-button i {
+    margin-right: 5px;
+    }
+
+    .small-checkbox {
+    width: 20px;
+    height: 20px;
+    }
 
 
 

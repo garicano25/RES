@@ -49,14 +49,18 @@ $(document).ready(function() {
 
         $('#datosgenerales-tab').closest('li').css("display", 'block');
         
-        // $('.multisteps-form__progress-btn').not('#step1').css("display", 'none');
         
 
-        // $('#step1-content').css("display", 'block'); 
-        // $('#step2-content, #step3-content, #step4-content, #step5-content, #step6-content, #step7-content, #step8-content').css("display", 'none'); // Ocultar los demás steps
+     
 
-        $( "#informacionacademica" ).css('display', 'none');
-        $( "#experienciacolaborador" ).css('display', 'none');
+
+
+        // Mostrar el step1 y ocultar todos los demás steps
+        $("#step1").css('display', 'flex');
+        $("#step1-content").css('display', 'block');
+
+
+
 
 
         $( "#step2" ).css('display', 'none');
@@ -117,95 +121,13 @@ $(document).ready(function() {
         $('#FormularioCONTRATACION').each(function(){
             this.reset();
         });
+
+        $(".listadeBeneficiario").empty();
+
+
+
     });
 });
-
-
-
-
-
-
-
-
-$("#guardarDatosGenerales").click(function (e) {
-    e.preventDefault();
-
-    formularioValido = validarFormularioV1('FormularioCONTRATACION');
-
-    if (formularioValido) {
-        if (ID_FORMULARIO_CONTRATACION == 0) {
-            
-            alertMensajeConfirm({
-                title: "¿Desea guardar la información?",
-                text: "Al guardarla, se podrá usar",
-                icon: "question",
-            }, async function () {
-
-                await loaderbtn('guardarDatosGenerales');
-                await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_CONTRATACION: ID_FORMULARIO_CONTRATACION }, 'contratoSave', 'FormularioCONTRATACION', 'guardarDatosGenerales', { callbackAfter: true, callbackBefore: true }, () => {
-                    
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Espere un momento',
-                        text: 'Estamos guardando la información',
-                        showConfirmButton: false
-                    });
-
-                    $('.swal2-popup').addClass('ld ld-breath');
-                    
-                }, function (data) {
-
-                    curpSeleccionada = data.contrato.CURP;
-                    // console.log("CURP seleccionada: ", curpSeleccionada);
-
-                    ID_FORMULARIO_CONTRATACION = data.contrato.ID_FORMULARIO_CONTRATACION;
-                    $('#step2, #step3, #step4, #step5, #step6, #step7, #step8').css("display", "flex");
-                    $( "#informacionacademica" ).css('display', 'block');
-                    $( "#experienciacolaborador" ).css('display', 'block');
-            
-                    alertMensaje('success','Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
-                    Tablacontratacion.ajax.reload();
-                });
-            }, 1);
-            
-        } else {
-            alertMensajeConfirm({
-                title: "¿Desea editar la información de este formulario?",
-                text: "Al guardarla, se podrá usar",
-                icon: "question",
-            }, async function () {
-
-                await loaderbtn('guardarDatosGenerales');
-                await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_CONTRATACION: ID_FORMULARIO_CONTRATACION }, 'contratoSave', 'FormularioCONTRATACION', 'guardarDatosGenerales', { callbackAfter: true, callbackBefore: true }, () => {
-
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Espere un momento',
-                        text: 'Estamos guardando la información',
-                        showConfirmButton: false
-                    });
-
-                    $('.swal2-popup').addClass('ld ld-breath');
-
-                }, function (data) {
-                    
-                    setTimeout(() => {
-
-                        ID_FORMULARIO_CONTRATACION = data.contrato.ID_FORMULARIO_CONTRATACION;
-                        alertMensaje('success', 'Información editada correctamente', 'Información guardada');
-                        Tablacontratacion.ajax.reload();
-
-                    }, 300);
-                });
-            }, 1);
-        }
-    } else {
-        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
-    }
-});
-
-
-
 
 
 var Tablacontratacion = $("#Tablacontratacion").DataTable({
@@ -290,8 +212,6 @@ function reloadTablaContratacion() {
 // <!-- ============================================================== -->
 
 
-
-
 document.getElementById('step1').addEventListener('click', function() {
     document.querySelectorAll('[id$="-content"]').forEach(function(content) {
         content.style.display = 'none';
@@ -299,6 +219,169 @@ document.getElementById('step1').addEventListener('click', function() {
 
     document.getElementById('step1-content').style.display = 'block';
 });
+
+$("#guardarDatosGenerales").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormularioV1('FormularioCONTRATACION');
+
+    if (formularioValido) {
+        // Generar lista de beneficiarios
+        var beneficiarios = [];
+        $(".generarlistadebeneficiario").each(function() {
+            var beneficiario = {
+                'NOMBRE_BENEFICIARIO': $(this).find("input[name='NOMBRE_BENEFICIARIO']").val(),
+                'PARENTESCO_BENEFICIARIO': $(this).find("input[name='PARENTESCO_BENEFICIARIO']").val(),
+                'PORCENTAJE_BENEFICIARIO': $(this).find("input[name='PORCENTAJE_BENEFICIARIO']").val(),
+                'TELEFONO1_BENEFICIARIO': $(this).find("input[name='TELEFONO1_BENEFICIARIO']").val(),
+                'TELEFONO2_BENEFICIARIO': $(this).find("input[name='TELEFONO2_BENEFICIARIO']").val()
+            };
+            beneficiarios.push(beneficiario);
+        });
+
+        const requestData = {
+            api: 1,
+            ID_FORMULARIO_CONTRATACION: ID_FORMULARIO_CONTRATACION,
+            BENEFICIARIOS_JSON: JSON.stringify(beneficiarios)
+        };
+
+        if (ID_FORMULARIO_CONTRATACION == 0) {
+            alertMensajeConfirm({
+                title: "¿Desea guardar la información?",
+                text: "Al guardarla, se podrá usar",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarDatosGenerales');
+                await ajaxAwaitFormData(requestData, 'contratoSave', 'FormularioCONTRATACION', 'guardarDatosGenerales', { callbackAfter: true, callbackBefore: true }, () => {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+                    
+                }, function (data) {
+                    curpSeleccionada = data.contrato.CURP;
+                    ID_FORMULARIO_CONTRATACION = data.contrato.ID_FORMULARIO_CONTRATACION;
+                    $('#step2, #step3, #step4, #step5, #step6, #step7, #step8').css("display", "flex");
+                    $("#informacionacademica").css('display', 'block');
+                    $("#experienciacolaborador").css('display', 'block');
+
+                    alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
+                    Tablacontratacion.ajax.reload();
+                });
+            }, 1);
+            
+        } else {
+            alertMensajeConfirm({
+                title: "¿Desea editar la información de este formulario?",
+                text: "Al guardarla, se podrá usar",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarDatosGenerales');
+                await ajaxAwaitFormData(requestData, 'contratoSave', 'FormularioCONTRATACION', 'guardarDatosGenerales', { callbackAfter: true, callbackBefore: true }, () => {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+
+                }, function (data) {
+                    setTimeout(() => {
+                        ID_FORMULARIO_CONTRATACION = data.contrato.ID_FORMULARIO_CONTRATACION;
+                        alertMensaje('success', 'Información editada correctamente', 'Información guardada');
+                        Tablacontratacion.ajax.reload();
+                    }, 300);
+                });
+            }, 1);
+        }
+    } else {
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+    }
+});
+
+// $("#guardarDatosGenerales").click(function (e) {
+//     e.preventDefault();
+
+//     formularioValido = validarFormularioV1('FormularioCONTRATACION');
+
+//     if (formularioValido) {
+//         if (ID_FORMULARIO_CONTRATACION == 0) {
+            
+//             alertMensajeConfirm({
+//                 title: "¿Desea guardar la información?",
+//                 text: "Al guardarla, se podrá usar",
+//                 icon: "question",
+//             }, async function () {
+
+//                 await loaderbtn('guardarDatosGenerales');
+//                 await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_CONTRATACION: ID_FORMULARIO_CONTRATACION }, 'contratoSave', 'FormularioCONTRATACION', 'guardarDatosGenerales', { callbackAfter: true, callbackBefore: true }, () => {
+                    
+//                     Swal.fire({
+//                         icon: 'info',
+//                         title: 'Espere un momento',
+//                         text: 'Estamos guardando la información',
+//                         showConfirmButton: false
+//                     });
+
+//                     $('.swal2-popup').addClass('ld ld-breath');
+                    
+//                 }, function (data) {
+
+//                     curpSeleccionada = data.contrato.CURP;
+
+//                     ID_FORMULARIO_CONTRATACION = data.contrato.ID_FORMULARIO_CONTRATACION;
+//                     $('#step2, #step3, #step4, #step5, #step6, #step7, #step8').css("display", "flex");
+//                     $( "#informacionacademica" ).css('display', 'block');
+//                     $( "#experienciacolaborador" ).css('display', 'block');
+            
+//                     alertMensaje('success','Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
+//                     Tablacontratacion.ajax.reload();
+//                 });
+//             }, 1);
+            
+//         } else {
+//             alertMensajeConfirm({
+//                 title: "¿Desea editar la información de este formulario?",
+//                 text: "Al guardarla, se podrá usar",
+//                 icon: "question",
+//             }, async function () {
+
+//                 await loaderbtn('guardarDatosGenerales');
+//                 await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_CONTRATACION: ID_FORMULARIO_CONTRATACION }, 'contratoSave', 'FormularioCONTRATACION', 'guardarDatosGenerales', { callbackAfter: true, callbackBefore: true }, () => {
+
+//                     Swal.fire({
+//                         icon: 'info',
+//                         title: 'Espere un momento',
+//                         text: 'Estamos guardando la información',
+//                         showConfirmButton: false
+//                     });
+
+//                     $('.swal2-popup').addClass('ld ld-breath');
+
+//                 }, function (data) {
+                    
+//                     setTimeout(() => {
+
+//                         ID_FORMULARIO_CONTRATACION = data.contrato.ID_FORMULARIO_CONTRATACION;
+//                         alertMensaje('success', 'Información editada correctamente', 'Información guardada');
+//                         Tablacontratacion.ajax.reload();
+
+//                     }, 300);
+//                 });
+//             }, 1);
+//         }
+//     } else {
+//         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+//     }
+// });
 
 
 $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
@@ -353,7 +436,6 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     $("#CURP").val(curp);
     curpSeleccionada = curp;
 
-    
     // Llenar el formulario con los datos correspondientes
     $("#NOMBRE_COLABORADOR").val(row.data().NOMBRE_COLABORADOR);
     $("#PRIMER_APELLIDO").val(row.data().PRIMER_APELLIDO);
@@ -362,7 +444,6 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     $("#DIA_COLABORADOR").val(row.data().DIA_COLABORADOR);
     $("#MES_COLABORADOR").val(row.data().MES_COLABORADOR);
     $("#ANIO_COLABORADOR").val(row.data().ANIO_COLABORADOR);
-    // $("#EDAD_COLABORADOR").val(row.data().EDAD_COLABORADOR);
     $("#LUGAR_NACIMIENTO").val(row.data().LUGAR_NACIMIENTO);
     $("#TELEFONO_COLABORADOR").val(row.data().TELEFONO_COLABORADOR);
     $("#CORREO_COLABORADOR").val(row.data().CORREO_COLABORADOR);
@@ -389,16 +470,14 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
 
     actualizarStepsConCurp(curp);
 
-
-
-    tablaDocumentosCargada = false; 
-
+    tablaDocumentosCargada = false;
 
     $('#datosgenerales-tab').tab('show');
 
+    $(".listadeBeneficiario").empty();
+    obtenerDatosBeneficiarios(row);
 
     $(".div_trabajador_nombre").html(row.data().NOMBRE_COLABORADOR + ' ' + row.data().PRIMER_APELLIDO + ' ' + row.data().SEGUNDO_APELLIDO);
-
 
     if (row.data().DIA_COLABORADOR && row.data().MES_COLABORADOR && row.data().ANIO_COLABORADOR) {
         const fechaNacimiento = `${row.data().ANIO_COLABORADOR}-${row.data().MES_COLABORADOR}-${row.data().DIA_COLABORADOR}`;
@@ -409,11 +488,7 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     setTimeout(() => {
         $('#ANIO_COLABORADOR').val(row.data().ANIO_COLABORADOR);
     }, 100);
-
-
 });
-
-
 
 function calcularEdad(fechaNacimiento) {
     const hoy = new Date();
@@ -427,15 +502,156 @@ function calcularEdad(fechaNacimiento) {
 
     return edad;
 }
-    
-
-
-
+   
 function actualizarStepsConCurp(curp) {
     $("#CURP").val(curp);
     curpSeleccionada = curp;
 }
 
+// AGREGAR CONTACTO BENEFICIARIO
+
+document.addEventListener("DOMContentLoaded", function() {
+    const botonAgregar = document.getElementById('botonagregarbeneficiario');
+    botonAgregar.addEventListener('click', agregarBeneficiario);
+
+    function agregarBeneficiario() {
+        const divContacto = document.createElement('div');
+        divContacto.classList.add('row', 'generarlistadebeneficiario','m-3');
+        divContacto.innerHTML = `
+       
+            <div class="col-lg-12 col-sm-1">
+                    <div class="form-group">
+                    <h5><i class="bi bi-person"></i> Agregar beneficiario</h5>                    
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="form-group">
+                        <label>Nombre completo *</label>
+                            <input type="text" class="form-control"  name="NOMBRE_BENEFICIARIO"required >
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="form-group">
+                        <label>Parentesco *</label>
+                        <input type="text" class="form-control"  name="PARENTESCO_BENEFICIARIO" required>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-6">
+                    <div class="form-group">
+                         <label>Porcentaje *</label>
+                            <input type="number" class="form-control"  name="PORCENTAJE_BENEFICIARIO" required>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-6">
+                    <div class="form-group">
+                       <label>Teléfono  1 </label>
+                        <input type="number" class="form-control"  name="TELEFONO1_BENEFICIARIO" required>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-6">
+                    <div class="form-group">
+                         <label>Teléfono  2 </label>
+                        <input type="number" class="form-control"  name="TELEFONO2_BENEFICIARIO" >
+                    </div>
+                </div>
+                <br>
+                <div class="col-12 mt-4">
+                    <div class="form-group" style="text-align: center;">
+                        <button type="button" class="btn btn-danger botonEliminarBeneficiario">Eliminar beneficiario <i class="bi bi-trash-fill"></i></button>
+                    </div>
+                </div>
+            
+        `;
+        const contenedor = document.querySelector('.listadeBeneficiario');
+        contenedor.appendChild(divContacto);
+
+        const botonEliminar = divContacto.querySelector('.botonEliminarBeneficiario');
+        botonEliminar.addEventListener('click', function() {
+            contenedor.removeChild(divContacto);
+        });
+    }
+});
+
+// OBTENER CONTACTO BENEFICIARIO
+
+function obtenerDatosBeneficiarios(data) {
+    let row = data.data().BENEFICIARIOS_JSON;
+    var beneficiarios = JSON.parse(row);
+    
+    // Contador para llevar el número de contacto
+    let contadorBeneficiario = 1;
+
+    // Recorrer cada contacto
+    $.each(beneficiarios, function(index, contacto) {
+        // Acceder a cada propiedad del contacto
+        var nombre = contacto.NOMBRE_BENEFICIARIO;
+        var parentesco = contacto.PARENTESCO_BENEFICIARIO;
+        var porcentaje = contacto.PORCENTAJE_BENEFICIARIO;
+        var telefono1 = contacto.TELEFONO1_BENEFICIARIO;
+        var telefono2 = contacto.TELEFONO2_BENEFICIARIO;
+        
+
+        const divContacto = document.createElement('div');
+        divContacto.classList.add('row');
+        divContacto.classList.add('generarlistadebeneficiario','m-2'); 
+        divContacto.innerHTML = `
+        <div class="col-lg-12 col-sm-1">
+            <div class="form-group d-flex align-items-center">
+                <h5><i class="bi bi-person"></i> Beneficiario N° ${contadorBeneficiario}  &nbsp; </h5>
+    
+            </div>
+        </div>
+
+
+        <div class="col-lg-3 col-sm-6">
+                    <div class="form-group">
+                        <label>Nombre completo *</label>
+                            <input type="text" class="form-control"  name="NOMBRE_BENEFICIARIO"   value="${nombre}"required >
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="form-group">
+                        <label>Parentesco *</label>
+                        <input type="text" class="form-control"  name="PARENTESCO_BENEFICIARIO"  value="${parentesco}" required>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-6">
+                    <div class="form-group">
+                         <label>Porcentaje *</label>
+                            <input type="number" class="form-control"  name="PORCENTAJE_BENEFICIARIO"  value="${porcentaje}" required>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-6">
+                    <div class="form-group">
+                       <label>Teléfono  1 </label>
+                        <input type="number" class="form-control"  name="TELEFONO1_BENEFICIARIO"  value="${telefono1}" required>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-6">
+                    <div class="form-group">
+                         <label>Teléfono  2 </label>
+                        <input type="number" class="form-control"  name="TELEFONO2_BENEFICIARIO"  value="${telefono2}">
+                    </div>
+                </div>
+
+            <div class="col-12 mt-4">
+                        <div class="form-group" style="text-align: center;">
+                            <button type="button" class="btn btn-danger botonEliminarBeneficiario">Eliminar beneficiario <i class="bi bi-trash-fill"></i></button>
+                        </div>
+                </div>
+        `;
+        const contenedor = document.querySelector('.listadeBeneficiario');
+        contenedor.appendChild(divContacto);
+
+        contadorBeneficiario++;
+
+        const botonEliminar = divContacto.querySelector('.botonEliminarBeneficiario');
+        botonEliminar.addEventListener('click', function() {
+            contenedor.removeChild(divContacto);
+        });
+
+    });
+}
 
 
 
@@ -449,13 +665,15 @@ document.getElementById('step2').addEventListener('click', function() {
         content.style.display = 'none';
     });
 
-    document.getElementById('step2-content').style.display = 'block';
+    const step2Content = document.getElementById('step2-content');
+    step2Content.style.display = 'block';
+    console.log('Step 2 content visible:', step2Content.style.display);
 
     if (tablaDocumentosCargada) {
-        Tabladocumentosoporte.columns.adjust().draw(); 
+        Tabladocumentosoporte.columns.adjust().draw();
     } else {
         cargarTablaDocumentosSoporte();
-        tablaDocumentosCargada = true; 
+        tablaDocumentosCargada = true;
     }
 });
 
@@ -486,8 +704,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
-
 document.addEventListener('DOMContentLoaded', function() {
     var tipoArea = document.getElementById('TIPO_DOCUMENTO');
     var nombreDocumento = document.getElementById('NOMBRE_DOCUMENTO');
@@ -495,7 +711,7 @@ document.addEventListener('DOMContentLoaded', function() {
     tipoArea.addEventListener('change', function() {
         var selectedOption = this.options[this.selectedIndex].text; 
 
-        if (this.value == '14') {
+        if (this.value == '13') {
             nombreDocumento.removeAttribute('readonly');
             nombreDocumento.value = ''; 
         } else {
@@ -597,7 +813,6 @@ $("#guardarDOCUMENTOSOPORTE").click(function (e) {
     
 });
 
-
 function cargarTablaDocumentosSoporte() {
     if ($.fn.DataTable.isDataTable('#Tabladocumentosoporte')) {
         Tabladocumentosoporte.clear().destroy();
@@ -674,11 +889,6 @@ Modaldocumentosoporte.addEventListener('hidden.bs.modal', event => {
 
 })
 
-
-
-
-
-
 $('#Tabladocumentosoporte').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tabladocumentosoporte.row(tr);
@@ -690,15 +900,6 @@ $('#Tabladocumentosoporte').on('click', 'td>button.EDITAR', function () {
      $('#miModal_DOCUMENTOS_SOPORTE .modal-title').html(row.data().NOMBRE_DOCUMENTO);
 
 });
-
-
-
-
-
-
-
-
-
 
 
 
@@ -714,11 +915,122 @@ document.getElementById('step3').addEventListener('click', function() {
 
     document.getElementById('step3-content').style.display = 'block';
 
-    if (!tablaDocumentosCargada) {
-        cargarTablaDocumentosSoporte();
-        tablaDocumentosCargada = true; 
+  
+  
+});
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var archivocontrato = document.getElementById('DOCUMENTO_CONTRATO');
+    var quitarcontrato = document.getElementById('quitar_contrato');
+    var errorElement = document.getElementById('DOCUEMNTO_ERROR_CONTRATO');
+
+    if (archivocontrato) {
+        archivocontrato.addEventListener('change', function() {
+            var archivoscontrato = this.files[0];
+            if (archivoscontrato && archivo.type === 'application/pdf') {
+                if (errorElement) errorElement.style.display = 'none';
+                if (quitarcontrato) quitarcontrato.style.display = 'block';
+            } else {
+                if (errorElement) errorElement.style.display = 'block';
+                this.value = '';
+                if (quitarcontrato) quitarcontrato.style.display = 'none';
+            }
+        });
+        quitarcontrato.addEventListener('click', function() {
+            archivocontrato.value = ''; 
+            quitarcontrato.style.display = 'none'; 
+            if (errorElement) errorElement.style.display = 'none'; 
+        });
     }
 });
+
+
+
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var tipoArea = document.getElementById('TIPO_DOCUMENTO_CONTRATO');
+    var nombreDocumento = document.getElementById('NOMBRE_DOCUMENTO_CONTRATO');
+
+    tipoArea.addEventListener('change', function() {
+        var selectedOption = this.options[this.selectedIndex].text; 
+
+        if (this.value == '16') {
+            nombreDocumento.removeAttribute('readonly');
+            nombreDocumento.value = ''; 
+        } else {
+            nombreDocumento.setAttribute('readonly', true);
+            nombreDocumento.value = selectedOption; 
+        }
+    });
+});
+
+
+
+document.getElementById("TIPO_DOCUMENTO_CONTRATO").addEventListener("change", function() {
+    const contratoDiv = document.getElementById("CONTRATO");
+    const vigenciaDiv = document.getElementById("VIGENCIA");
+
+    const contratoInputs = contratoDiv.querySelectorAll("input, select");
+    const vigenciaInputs = vigenciaDiv.querySelectorAll("input");
+
+    if (this.value == "3") {
+        contratoDiv.style.display = "block";
+        vigenciaDiv.style.display = "none";
+
+        contratoInputs.forEach(element => element.required = true);
+        vigenciaInputs.forEach(element => element.required = false);
+    } else if (this.value == "4") {
+        contratoDiv.style.display = "none";
+        vigenciaDiv.style.display = "block";
+
+        contratoInputs.forEach(element => element.required = false);
+        vigenciaInputs.forEach(input => input.required = true);
+    } else {
+        contratoDiv.style.display = "none";
+        vigenciaDiv.style.display = "none";
+
+        contratoInputs.forEach(element => element.required = false);
+        vigenciaInputs.forEach(input => input.required = false);
+    }
+});
+
+
+
+const ModalContrato = document.getElementById('miModal_CONTRATO');
+ModalContrato.addEventListener('hidden.bs.modal', event => {
+    
+
+
+    // ID_DOCUMENTO_SOPORTE = 0
+
+    document.getElementById('formularioCONTRATO').reset();
+    $('#miModal_CONTRATO .modal-title').html('Contratos y anexos');
+
+    const contratoDiv = document.getElementById("CONTRATO");
+    const vigenciaDiv = document.getElementById("VIGENCIA");
+    
+    contratoDiv.style.display = "none";
+    vigenciaDiv.style.display = "none";
+
+    const contratoInputs = contratoDiv.querySelectorAll("input, select");
+    const vigenciaInputs = vigenciaDiv.querySelectorAll("input");
+    
+    contratoInputs.forEach(element => element.required = false);
+    vigenciaInputs.forEach(element => element.required = false);
+
+    // Opcional: resetear el valor del select principal
+    document.getElementById('TIPO_DOCUMENTO_CONTRATO').value = "0";
+});
+
 
 
 
@@ -738,10 +1050,7 @@ document.getElementById('step8').addEventListener('click', function() {
 
     document.getElementById('step8-content').style.display = 'block';
 
-    // if (!tablaDocumentosCargada) {
-    //     cargarTablaDocumentosSoporte();
-    //     tablaDocumentosCargada = true; 
-    // }
+  
 });
 
 

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 
 //  USUARIOS
@@ -306,7 +308,10 @@ Route::get('/Tablapruebaconocimiento', [catalogopruebasController::class, 'Tabla
 
 
 // DATOS GENERALES
-Route::get('/Contratación', function () {return view('RH.contratacion.contratacion');});
+// Route::get('/Contratación', function () {return view('RH.contratacion.contratacion');});
+
+Route::get('/Contratación', [contratacionController::class, 'index']);
+
 Route::post('/contratoSave', [contratacionController::class, 'store']);
 Route::get('/Tablacontratacion', [contratacionController::class, 'Tablacontratacion']);
 Route::get('/usuariocolaborador/{id}', [contratacionController::class, 'mostrarfotocolaborador']);

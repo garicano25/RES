@@ -41,30 +41,7 @@ public function index1()
 
 
 
-// public function Tablabancocv()
-// {
-//     try {
-//         $tabla = bancocvModel::get();
 
-//         foreach ($tabla as $value) {
-        
-//             // Botones
-//             $value->BTN_ELIMINAR = '<button type="button" class="btn btn-danger btn-custom rounded-pill ELIMINAR"><i class="bi bi-trash3-fill"></i></button>';
-//             $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye-fill"></i></button>';
-//         }
-
-//         // Respuesta
-//         return response()->json([
-//             'data' => $tabla,
-//             'msj' => 'Información consultada correctamente'
-//         ]);
-//     } catch (Exception $e) {
-//         return response()->json([
-//             'msj' => 'Error ' . $e->getMessage(),
-//             'data' => 0
-//         ]);
-//     }
-// }
 
 
 public function Tablabancocv()

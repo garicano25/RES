@@ -44,6 +44,7 @@ class contratacionModel extends Model
         'PORCENTAJE_BENEFICIARIO',
         'TELEFONO1_BENEFICIARIO',
         'TELEFONO2_BENEFICIARIO',
+        'BENEFICIARIOS_JSON',
         'ACTIVO',
 
       

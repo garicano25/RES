@@ -179,11 +179,22 @@
                         <i class="bi bi-person-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Selección</span><span class="d-none d-lg-inline">Selección</span>
                     </a>
                 </li>
+
+
                 <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link BOTON" href="{{url('/Contratación')}}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                    <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-person-badge-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Contratación</span><span class="d-none d-lg-inline">Contratación</span>
                     </a>
+                    <ul class="dropdown-menu">
+                        {{-- <li><a class="dropdown-item" href="{{ url('/#') }}">Pendientes por contratar</a></li> --}}
+                        <li><a class="dropdown-item" href="#">Pendientes por contratar</a></li>
+
+                        <hr class="dropdown-divider">
+                        <li><a class="dropdown-item" href="{{url('/Contratación')}}">Lista de colaboradores</a></li>
+                    </ul>
                 </li>
+
+
                 <li class="nav-item dropdown" style="margin-left: 8px;">
                     <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                         <i class="bi bi-briefcase-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Rec.Empleados</span><span class="d-none d-lg-inline">Rec.Empleados</span>
@@ -453,6 +464,9 @@
 @endif
 
 
+@if(request()->is('usuario'))
+<script src="/assets/js_sitio/usuario/usuario.js?v=1.0"></script>
+@endif
 
 @if(request()->is('Contratación'))
 <script src="/assets/js_sitio/contratacion/contratacion.js?v=2.0"></script>
@@ -462,9 +476,7 @@
 
 
 
-@if(request()->is('usuario'))
-<script src="/assets/js_sitio/usuario/usuario.js?v=1.0"></script>
-@endif
+
   
 </body>
 

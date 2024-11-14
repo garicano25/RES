@@ -21,6 +21,21 @@ class contratacionController extends Controller
 {
     
 
+    public function index()
+    {
+        $areas = DB::select("
+        SELECT ID_CATALOGO_CATEGORIA  AS ID, NOMBRE_CATEGORIA AS NOMBRE, LUGAR_CATEGORIA AS LUGAR, PROPOSITO_CATEGORIA AS PROPOSITO, ES_LIDER_CATEGORIA AS LIDER
+        FROM catalogo_categorias
+        WHERE ACTIVO = 1
+        ");
+
+
+
+
+        return view('RH.contratacion.contratacion', compact('areas'));
+    }
+
+
 
     
 public function Tablacontratacion()
@@ -106,6 +121,7 @@ public function Tabladocumentosoporte(Request $request)
 }
 
 
+
 public function mostrardocumentosoporte($id)
 {
     $archivo = documentosoporteModel::findOrFail($id)->DOCUMENTO_SOPORTE;
@@ -140,6 +156,10 @@ public function store(Request $request)
 
                     DB::statement('ALTER TABLE formulario_contratacion AUTO_INCREMENT=1;');
                     $contratos = contratacionModel::create($request->except('FOTO_USUARIO')); 
+
+
+                    $contratos = contratacionModel::create($request->except('beneficiarios'));
+
 
                     if ($request->hasFile('FOTO_USUARIO')) {
                         $imagen = $request->file('FOTO_USUARIO');
