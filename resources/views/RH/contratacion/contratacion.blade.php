@@ -233,10 +233,14 @@
                                         <label>Iniciales</label>
                                         <input type="text" class="form-control" id="INICIALES_COLABORADOR" name="INICIALES_COLABORADOR">
                                     </div>
+                                    {{-- <div class="col-12 mb-3 text-center">
+                                        <label>Fecha de nacimiento</label>
+                                    </div> --}}
+
                                     <div class="col-3 mb-3">
-                                        <label>Día</label>
+                                        <label></label>
                                         <select class="form-select me-2" id="DIA_COLABORADOR" name="DIA_COLABORADOR" required>
-                                            <option value="" selected disabled></option>
+                                            <option value="" selected disabled>Día</option>
                                             <script>
                                                 for (let i = 1; i <= 31; i++) {
                                                     document.write('<option value="' + i + '">' + i + '</option>');
@@ -244,10 +248,10 @@
                                             </script>
                                         </select>
                                     </div>
-                                    <div class="col-3 mb-3">
-                                        <label>Mes</label>
+                                    <div class="col-3 mb-3 text-center">
+                                        <label>Fecha de nacimiento</label>
                                         <select class="form-select me-2" id="MES_COLABORADOR" name="MES_COLABORADOR" required>
-                                            <option value="" selected disabled></option>
+                                            <option value="" selected disabled>Mes</option>
                                             <option value="1">Enero</option>
                                             <option value="2">Febrero</option>
                                             <option value="3">Marzo</option>
@@ -262,10 +266,11 @@
                                             <option value="12">Diciembre</option>
                                         </select>
                                     </div>
+                                  
                                     <div class="col-3 mb-3">
-                                        <label>Año</label>
+                                        <label></label>
                                         <select class="form-select me-2" id="ANIO_COLABORADOR" name="ANIO_COLABORADOR" required>
-                                            <option value="" selected disabled></option>
+                                            <option value="" selected disabled>Año</option>
                                             <script>
                                                 const currentYear = new Date().getFullYear();
                                                 for (let i = currentYear; i >= 1900; i--) {
@@ -295,6 +300,8 @@
                                             <option value="2">Casado (a)</option>
                                             <option value="3">Divorciado (a)</option>
                                             <option value="4">Viudo (a)</option>
+                                            <option value="5">Unión libre</option>
+
                                         </select>
                                     </div>
                                     <div class="col-3 mb-3">
@@ -339,7 +346,7 @@
                                 </div>         
                                 
                                 <div class="col-4 mb-3">
-                                    <label >Estado</label>
+                                    <label >Estado/Departamento/Provincia</label>
                                     <input type="text" class="form-control" id="ESTADO_LUGAR_NACIMIENTO" name="ESTADO_LUGAR_NACIMIENTO" >
                                 </div>  
 
@@ -391,81 +398,65 @@
                                     <h5><b>Domicilio</b></h5>
                                 </div>  
 
-                                <div class="col-4 mb-3">
-                                    <label>C.P *</label>
-                                    <input type="text" class="form-control" id="CODIGO_POSTAL" name="CODIGO_POSTAL" required>
+                                <div class="col-3 mb-3">
+                                    <label>Código Postal *</label>
+                                    <input type="number" class="form-control" id="CODIGO_POSTAL" name="CODIGO_POSTAL" required>
                                 </div>
 
-                                <div class="col-4 mb-3">
-                                    <label>Estado *</label>
-                                    <select class="form-control" id="ESTADO_COLABORADOR" name="ESTADO_COLABORADOR" required>
-                                        <option value=""></option>
-                                        <option value="1">Aguascalientes</option>
-                                        <option value="2">Baja California</option>
-                                        <option value="3">Baja California Sur</option>
-                                        <option value="4">Campeche</option>
-                                        <option value="5">Chiapas</option>
-                                        <option value="6">Chihuahua</option>
-                                        <option value="7">Ciudad de México</option>
-                                        <option value="8">Coahuila</option>
-                                        <option value="9">Colima</option>
-                                        <option value="10">Durango</option>
-                                        <option value="11">Guanajuato</option>
-                                        <option value="12">Guerrero</option>
-                                        <option value="13">Hidalgo</option>
-                                        <option value="14">Jalisco</option>
-                                        <option value="15">México</option>
-                                        <option value="16">Michoacán</option>
-                                        <option value="17">Morelos</option>
-                                        <option value="18">Nayarit</option>
-                                        <option value="19">Nuevo León</option>
-                                        <option value="20">Oaxaca</option>
-                                        <option value="21">Puebla</option>
-                                        <option value="22">Querétaro</option>
-                                        <option value="23">Quintana Roo</option>
-                                        <option value="24">San Luis Potosí</option>
-                                        <option value="25">Sinaloa</option>
-                                        <option value="26">Sonora</option>
-                                        <option value="27">Tabasco</option>
-                                        <option value="28">Tamaulipas</option>
-                                        <option value="29">Tlaxcala</option>
-                                        <option value="30">Veracruz</option>
-                                        <option value="31">Yucatán</option>
-                                        <option value="32">Zacatecas</option>
-                                    </select>
+                                <div class="col-3 mb-3">
+                                    <label>Tipo de Vialidad *</label>
+                                    <input type="text" class="form-control" id="TIPO_VIALIDAD" name="TIPO_VIALIDAD" required>
                                 </div>
 
-                                <div class="col-4 mb-3">
-                                    <label>Municipio/Alcaldía *</label>
-                                    <input type="text" class="form-control" id="CIUDAD_COLABORADOR" name="CIUDAD_COLABORADOR" required>
-                                </div>
-                            
-                                <div class="col-6 mb-3">
-                                    <label>Colonia *</label>
-                                    <input type="text" class="form-control" id="COLONIA_COLABORADOR" name="COLONIA_COLABORADOR" required>
+                                <div class="col-3 mb-3">
+                                    <label>Nombre de la Vialidad *</label>
+                                    <input type="text" class="form-control" id="NOMBRE_VIALIDAD" name="NOMBRE_VIALIDAD" required>
                                 </div>
 
 
-                                <div class="col-6 mb-3">
-                                    <label>Calle, numero, interior / exterior *</label>
-                                    <input type="text" class="form-control" id="CALLE_COLABORADOR" name="CALLE_COLABORADOR" required>
-                                </div>
-                            
-                                <div class="col-12 mb-3 ">
-                                    <label>¿Entre qué calles está? (opcional)</label>
-                                </div> 
-
-
-                                <div class="col-6 mb-3">
-                                    <label>Calle 1</label>
-                                    <input type="text" class="form-control" id="CALLE1_COLABORADOR" name="CALLE1_COLABORADOR" >
+                                <div class="col-3 mb-3">
+                                    <label>Número Exterior </label>
+                                    <input type="number" class="form-control" id="NUMERO_EXTERIOR" name="NUMERO_EXTERIOR" >
                                 </div>
 
 
-                                <div class="col-6 mb-3">
-                                    <label>Calle 2</label>
-                                    <input type="text" class="form-control" id="CALLE2_COLABORADOR" name="CALLE2_COLABORADOR" >
+                                <div class="col-3 mb-3">
+                                    <label>Número Interior </label>
+                                    <input type="number" class="form-control" id="NUMERO_INTERIOR" name="NUMERO_INTERIOR" >
                                 </div>
+
+                                <div class="col-3 mb-3">
+                                    <label>Nombre de la colonia *</label>
+                                    <input type="text" class="form-control" id="NOMBRE_COLONIA" name="NOMBRE_COLONIA" required>
+                                </div>
+
+
+                                <div class="col-3 mb-3">
+                                    <label>Nombre de la Localidad *</label>
+                                    <input type="text" class="form-control" id="NOMBRE_LOCALIDAD" name="NOMBRE_LOCALIDAD" required>
+                                </div>
+
+                                <div class="col-3 mb-3">
+                                    <label>Nombre del Municipio o Demarcación Territorial *</label>
+                                    <input type="text" class="form-control" id="NOMBRE_MUNICIPIO" name="NOMBRE_MUNICIPIO" required>
+                                </div>
+                               
+                                <div class="col-3 mb-3">
+                                    <label>Nombre de la Entidad Federativa *</label>
+                                    <input type="text" class="form-control" id="NOMBRE_ENTIDAD" name="NOMBRE_ENTIDAD" required>
+                                </div>
+                                <div class="col-3 mb-3">
+                                    <label>Entre Calle</label>
+                                    <input type="text" class="form-control" id="ENTRE_CALLE" name="ENTRE_CALLE" >
+                                </div>
+                                <div class="col-3 mb-3">
+                                    <label>Y Calle</label>
+                                    <input type="text" class="form-control" id="ENTRE_CALLE_2" name="ENTRE_CALLE_2" >
+                                </div>
+
+
+                               
+
 
 
                                 <div class="col-12 mb-3 text-center mt-5">

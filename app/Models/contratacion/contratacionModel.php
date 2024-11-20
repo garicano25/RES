@@ -45,18 +45,17 @@ class contratacionModel extends Model
         'TELEFONO1_BENEFICIARIO',
         'TELEFONO2_BENEFICIARIO',
         'BENEFICIARIOS_JSON',
-        'CIUDAD_LUGAR_NACIMIENTO',
-        'ESTADO_LUGAR_NACIMIENTO',
-        'PAIS_LUGAR_NACIMIENTO',
-        'TIPO_DOCUMENTO_IDENTIFICACION',
-        'EMISION_DOCUMENTO',
-        'VIGENCIA_DOCUMENTO',
-        'NUMERO_DOCUMENTO',
-        'EXPEDIDO_DOCUMENTO',
-        'CALLE1_COLABORADOR',
-        'CALLE2_COLABORADOR',
+        'TIPO_VIALIDAD',
+        'NOMBRE_VIALIDAD',
+        'NUMERO_EXTERIOR',
+        'NUMERO_INTERIOR',
+        'NOMBRE_COLONIA',
+        'NOMBRE_LOCALIDAD',
+        'NOMBRE_MUNICIPIO',
+        'NOMBRE_ENTIDAD',
+        'ENTRE_CALLE',
+        'ENTRE_CALLE_2',
         'ACTIVO',
 
-      
     ];
 }

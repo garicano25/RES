@@ -413,6 +413,21 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     $("#CALLE1_COLABORADOR").val(row.data().CALLE1_COLABORADOR);
     $("#CALLE2_COLABORADOR").val(row.data().CALLE2_COLABORADOR);
 
+    $("#TIPO_VIALIDAD").val(row.data().TIPO_VIALIDAD);
+    $("#NOMBRE_VIALIDAD").val(row.data().NOMBRE_VIALIDAD);
+    $("#NUMERO_EXTERIOR").val(row.data().NUMERO_EXTERIOR);
+    $("#NUMERO_INTERIOR").val(row.data().NUMERO_INTERIOR);
+    $("#NOMBRE_COLONIA").val(row.data().NOMBRE_COLONIA);
+    $("#NOMBRE_LOCALIDAD").val(row.data().NOMBRE_LOCALIDAD);
+    $("#NOMBRE_MUNICIPIO").val(row.data().NOMBRE_MUNICIPIO);
+    $("#NOMBRE_ENTIDAD").val(row.data().NOMBRE_ENTIDAD);
+    $("#ENTRE_CALLE").val(row.data().ENTRE_CALLE);
+    $("#ENTRE_CALLE_2").val(row.data().ENTRE_CALLE_2);
+
+
+
+
+
 
     actualizarStepsConCurp(curp);
 
