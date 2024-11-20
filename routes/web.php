@@ -200,6 +200,19 @@ Route::post('/MotivoSave', [catalogomotivovacanteControlller::class, 'store']);
 Route::get('/MotivoDelete', [catalogomotivovacanteControlller::class, 'store']);
 Route::get('/Tablamotivovacante', [catalogomotivovacanteControlller::class, 'Tablamotivovacante']);
 
+
+
+
+// CATALOGOS
+Route::get('/Catálogo_ppt', function () {return view('RH.Catalogos.catalogo_ppt');});
+Route::get('/Catálogo_dpt', function () {return view('RH.Catalogos.catalogo_dpt');});
+Route::get('/Catálogo_requisición', function () {return view('RH.Catalogos.catalogo_requisicion');});
+Route::get('/Catálogo_generales', function () {return view('RH.Catalogos.catalogo_generales');});
+
+
+
+
+
 //==============================================  RECLUTAMIENTO  ============================================== 
 
 // Formulario de Banco de CV externo a la aplicación
@@ -320,3 +333,10 @@ Route::get('/usuariocolaborador/{id}', [contratacionController::class, 'mostrarf
 // DOCUMENTOS DE SOPORTE
 Route::get('/Tabladocumentosoporte', [contratacionController::class, 'Tabladocumentosoporte']);
 Route::get('/mostrardocumentosoporte/{id}', [contratacionController::class, 'mostrardocumentosoporte']);
+
+
+// CONTRATOS Y ANEXOS 
+
+
+Route::get('/Tablacontratosyanexos', [contratacionController::class, 'Tablacontratosyanexos']);
+Route::get('/mostrarcontratosyanexos/{id}', [contratacionController::class, 'mostrarcontratosyanexos']);

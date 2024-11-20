@@ -223,50 +223,62 @@
                             <span class="d-none d-lg-inline">Catálogo</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url('/Jerárquico') }}">Catálogo nivel Jerárquico</a>
+                            {{-- <li><a class="dropdown-item" href="{{ url('/Jerárquico') }}">Catálogo nivel Jerárquico</a>
+                            </li>
+                            <hr class="dropdown-divider"> --}}
+                            <li><a class="dropdown-item" href="{{url('/Catálogo_ppt')}}">Catálogos de PPT</a>
                             </li>
                             <hr class="dropdown-divider">
+                            <li><a class="dropdown-item" href="{{url('/Catálogo_dpt')}}">Catálogos de DPT</a>
+                            </li>
+                            <hr class="dropdown-divider">
+                            <li><a class="dropdown-item" href="{{url('/Catálogo_requisición')}}">Catálogos de Requisición</a>
+                            </li>
+                            <hr class="dropdown-divider">
+                            <li><a class="dropdown-item" href="{{url('/Catálogo_generales')}}">Catálogos generales</a>
+                            </li>
+                            {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/FuncionesCargo')}}">Funciones clave del cargo</a>
                             </li>
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Funcionesgestión')}}">Funciones del sistema <br> integrado de gestión</a>
-                            </li>
-                            <hr class="dropdown-divider">
+                            </li> --}}
+                            {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Asesores')}}">Catálogo de Asesores</a>
-                            </li>
-                            <hr class="dropdown-divider">
+                            </li> --}}
+                            {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/RelacionesExternas')}}">Relaciones externas</a>
-                            </li>
-                            <hr class="dropdown-divider">
+                            </li> --}}
+                            {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Categorías')}}">Catálogo de Categorías </a>
-                            </li>
-                            <hr class="dropdown-divider">
+                            </li> --}}
+                            {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/CatálogoDeVacantes')}}">Catálogo de Vacantes </a>
-                            </li>
-                            <hr class="dropdown-divider">
+                            </li> --}}
+                            {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Género')}}">Catálogo de Género </a>
-                            </li>
-                            <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/Puesto-experiencia')}}">Catálogo de Puesto que se requiere</a>
-                            </li>
-                            <hr class="dropdown-divider">
+                            </li> --}}
+                            {{-- <hr class="dropdown-divider">
+                            <li><a class="dropdown-item" href="{{url('/Puesto-experiencia')}}">Catálogo de Puesto que se requiere como experiencia</a>
+                            </li> --}}
+                            {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Competencias-básicas')}}">Catálogo de competencias básicas</a>
                             </li>
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Competencias-gerenciales')}}">Catálogo de competencias gerenciales</a>
-                            </li>
-                            <hr class="dropdown-divider">
+                            </li> --}}
+                            {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Tipo-vacante')}}">Catálogo de Tipo de vacante</a>
-                            </li>
-                            <hr class="dropdown-divider">
+                            </li> --}}
+                            {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Motivo-vacante')}}">Catálogo de Motivo vacante</a>
-                            </li>  
-                            <hr class="dropdown-divider">
+                            </li>   --}}
+                            {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Área_interes')}}">Catálogo de áreas de interés</a>
-                            </li>  
-                            <hr class="dropdown-divider">
+                            </li>   --}}
+                            {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Pruebas-conocimientos')}}">Catálogo de pruebas de conocimientos</a>
-                            </li>                               
+                            </li>                                --}}
                         </ul>
                     </li>
                 </ul>
@@ -469,7 +481,7 @@
 @endif
 
 @if(request()->is('Contratación'))
-<script src="/assets/js_sitio/contratacion/contratacion.js?v=2.0"></script>
+<script src="/assets/js_sitio/contratacion/contratacion.js?v=3.0"></script>
 @endif
 
 

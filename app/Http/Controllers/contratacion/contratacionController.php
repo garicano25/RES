@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\contratacion\contratacionModel;
 use App\Models\contratacion\documentosoporteModel;
 
+use App\Models\contratacion\contratosanexosModel;
+
+
 
 
 
@@ -133,6 +136,58 @@ public function mostrardocumentosoporte($id)
 
 
 // STEP 3 
+
+
+public function Tablacontratosyanexos(Request $request)
+{
+    try {
+        $curp = $request->get('curp');
+
+        $tabla = contratosanexosModel::where('CURP', $curp)->get();
+
+
+        $tabla = DB::select("SELECT rec.*, cat.NOMBRE_CATEGORIA
+        FROM contratos_anexos_contratacion rec
+        LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = rec.NOMBRE_CARGO");
+
+        foreach ($tabla as $value) {
+            if ($value->ACTIVO == 0) {
+
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR" ><i class="bi bi-eye"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+            } else {
+
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+
+            }
+        }
+
+        return response()->json([
+            'data' => $tabla,
+            'msj' => 'Información consultada correctamente'
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'msj' => 'Error ' . $e->getMessage(),
+            'data' => 0
+        ]);
+    }
+}
+
+
+public function mostrarcontratosyanexos($id)
+{
+    $archivo = contratosanexosModel::findOrFail($id)->DOCUMENTO_CONTRATO;
+    return Storage::response($archivo);
+}
+
+
+
 // STEP 4 
 // STEP 5 
 // STEP 6  
@@ -228,7 +283,7 @@ public function store(Request $request)
                             $curp = $request->CURP;
                             $idDocumento = $soportes->ID_DOCUMENTO_SOPORTE;
 
-                            $nombreArchivo = preg_replace('/[^A-Za-z0-9\-]/', '_', $request->NOMBRE_DOCUMENTO) . '.' . $documento->getClientOriginalExtension();
+                            $nombreArchivo =  preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO) . '.' . $documento->getClientOriginalExtension();
 
                             $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte/' . $idDocumento;
                             $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
@@ -262,7 +317,7 @@ public function store(Request $request)
                                 $curp = $request->CURP;
                                 $idDocumento = $soportes->ID_DOCUMENTO_SOPORTE;
 
-                                $nombreArchivo = preg_replace('/[^A-Za-z0-9\-]/', '_', $request->NOMBRE_DOCUMENTO) . '.' . $documento->getClientOriginalExtension();
+                                $nombreArchivo =  preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO) . '.' . $documento->getClientOriginalExtension();
 
                                 $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte/' . $idDocumento;
                                 $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
@@ -280,6 +335,74 @@ public function store(Request $request)
                     $response['soporte'] = $soportes;
                     return response()->json($response);
                     break;
+
+
+
+                      // STEP 3 CONTRATOS Y ANEXOS 
+
+                case 3:
+                    if ($request->ID_CONTRATOS_ANEXOS == 0) {
+                        DB::statement('ALTER TABLE contratos_anexos_contratacion AUTO_INCREMENT=1;');
+                        $soportes = contratosanexosModel::create($request->except('DOCUMENTO_CONTRATO')); 
+
+                        if ($request->hasFile('DOCUMENTO_CONTRATO')) {
+                            $documento = $request->file('DOCUMENTO_CONTRATO');
+                            $curp = $request->CURP;
+                            $idDocumento = $soportes->ID_CONTRATOS_ANEXOS;
+
+                            $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_CONTRATO) . '.' . $documento->getClientOriginalExtension();
+
+                            $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de contratos y anexos/' . $idDocumento;
+                            $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                            $soportes->DOCUMENTO_CONTRATO = $rutaCompleta;
+                            $soportes->save();
+                        }
+                    } else {
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $soportes = contratosanexosModel::where('ID_CONTRATOS_ANEXOS', $request['ID_CONTRATOS_ANEXOS'])
+                                    ->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['soporte'] = 'Desactivada';
+                            } else {
+                                $soportes = contratosanexosModel::where('ID_CONTRATOS_ANEXOS', $request['ID_CONTRATOS_ANEXOS'])
+                                    ->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['soporte'] = 'Activada';
+                            }
+                        } else {
+                            $soportes = contratosanexosModel::find($request->ID_CONTRATOS_ANEXOS);
+                            $soportes->update($request->except('DOCUMENTO_CONTRATO'));
+
+                            if ($request->hasFile('DOCUMENTO_CONTRATO')) {
+                                if ($soportes->DOCUMENTO_CONTRATO && Storage::exists($soportes->DOCUMENTO_CONTRATO)) {
+                                    Storage::delete($soportes->DOCUMENTO_CONTRATO); 
+                                }
+
+                                $documento = $request->file('DOCUMENTO_CONTRATO');
+                                $curp = $request->CURP;
+                                $idDocumento = $soportes->ID_CONTRATOS_ANEXOS;
+
+                                $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_CONTRATO) . '.' . $documento->getClientOriginalExtension();
+
+                                $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de contratos y anexos/' . $idDocumento;
+                                $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                                $soportes->DOCUMENTO_CONTRATO = $rutaCompleta;
+                                $soportes->save();
+                            }
+
+                            $response['code'] = 1;
+                            $response['soporte'] = 'Actualizada';
+                        }
+                    }
+
+                    $response['code'] = 1;
+                    $response['soporte'] = $soportes;
+                    return response()->json($response);
+                    break;
+
 
 
 

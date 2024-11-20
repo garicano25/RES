@@ -55,6 +55,7 @@ class dptController extends Controller
             $cargo = catalogofuncionescargoModel::orderBy('DESCRIPCION_FUNCION_CARGO', 'ASC')->get();
             $gestion = catalogofuncionesgestionModel::orderBy('DESCRIPCION_FUNCION_GESTION', 'ASC')->get();
             $basicos = catalogocompetenciabasicaModel::orderBy('NOMBRE_COMPETENCIA_BASICA', 'ASC')->get();
+            
             $gerenciales = catalogoCompotenciasGerencialesModel::orderBy('NOMBRE_COMPETENCIA_GERENCIAL', 'ASC')->get();
 
 

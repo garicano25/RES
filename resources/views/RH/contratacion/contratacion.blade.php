@@ -154,7 +154,7 @@
                                     <div class="step-circle">
                                         <i class="bi bi-file-earmark-text-fill"></i>
                                     </div>
-                                    <span>Contrato y anexos</span>
+                                    <span>Contratos y anexos</span>
                                 </div>
                                 <div class="multisteps-form__progress-btn" id="step4">
                                     <div class="step-circle">
@@ -583,7 +583,7 @@
                     </ol>
                     <div class="card-body position-relative">
                         <i id="loadingIcon1" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
-                        <table id="Tabladocumentosoporte" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                        <table id="Tablacontratosyanexos" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
                         </table>
                     </div>
                 </div>
@@ -778,7 +778,7 @@
                     <div class="row  mb-3"  id="VIGENCIA" style="display: none">
                         <label>Vigencia *</label>
                         <div class="input-group">
-                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="VIGENCIA_ACUERDO" name="VIGENCIA_ACUERDO" required>
+                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="VIGENCIA_ACUERDO" name="VIGENCIA_ACUERDO">
                             <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
 
                         </div>
@@ -806,7 +806,7 @@
 </div>
 
 <!-- ============================================================== -->
-<!-- MODAL RECIBO DE NOMINA-->
+<!-- MODAL RECIBO -->
 <!-- ============================================================== -->
 
 
