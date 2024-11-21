@@ -35,7 +35,18 @@
           <div class="modal-body">
               {!! csrf_field() !!}
                   <div class="row">
+
                     <div class="row mb-3">
+                      
+                      <span class="mb-3 text-danger col-7"><i class="bi bi-info-circle"></i>&nbsp; Si la requisición de personal se realizó antes del 2024-11-01</span>
+                      <button type="button" class="btn btn-info col-2" id="PRESIONAR_AQUI" style="">Presione aquí</button>
+
+                      <input type="hidden" class="form-control"  id="ANTES_DE1" name="ANTES_DE1"  value="0">
+                    </div>
+                    <div id="MOSTRAR_TODO" style="display: block" >
+
+
+                      <div class="row mb-3 mt-4">
                         <div class="col-4">
                           <label >Fecha *</label>
                           <div class="input-group">
@@ -107,25 +118,6 @@
                         </div>
                       </div>
 
-                      {{-- <div class="row mb-3">
-                        <div class="col-6">
-                          <div class="form-group">
-                              <label>Centro de costos:</label>
-                              <input type="text" class="form-control " id="CENTRO_COSTO_RP" name="CENTRO_COSTO_RP" required>
-                          </div>
-                        </div>
-                        <div class="col-6">
-                          <div class="form-group">
-                              <label>Área: </label>
-                              <select class="form-control" id="AREA_RP" name="AREA_RP" required>
-                                <option selected disabled>Seleccione una opción</option>
-                                @foreach ($areas as $area)
-                                    <option value="{{ $area->ID_AREA }}">{{ $area->NOMBRE }}</option>
-                                @endforeach
-                            </select>                         
-                          </div>
-                        </div>
-                      </div> --}}
                       <div class="row mb-3">
                         <div class="col-1">
                           <label></label>
@@ -301,20 +293,70 @@
                     </div>
 
                     <div class="row mb-3">
-                      <div class="col-1">
-                        <label></label>
+                        <div class="col-1">
+                          <label></label>
+                        </div>
+                        <div class="col-4">
+                          <input type="text"  class="form-control text-center" id="CARGO_SOLICITA_RP" name="CARGO_SOLICITA_RP" placeholder="Cargo del Solicitante" required>
+                        </div>
+                        <div class="col-2">
+                          <label></label>
+
+                        </div>
+                        <div class="col-4">
+                          <input type="text"  class="form-control text-center" id="CARGO_AUTORIZA_RP" name="CARGO_AUTORIZA_RP" placeholder="Cargo del que Autoriza">
+                        </div>
+                    </div>
+                  </div>
+
+
+                    <div id="MOSTRAR_ANTES" style="display: none">
+                      <div class="row mb-3 mt-4">
+
+                        <div class="col-4">
+                          <div class="form-group">
+                              <label class="form-label text-center">Categoría</label>
+                           <select class="form-control" id="PUESTO_RP" name="PUESTO_RP" >
+                              <option value="0" selected disabled>Seleccione una opción</option>
+                              @foreach ($areas1 as $area2)
+                              <option value="{{ $area2->ID }}">{{ $area2->NOMBRE }}</option>
+                              @endforeach
+                          </select>
+
+
+
+                          </div>
+                        </div>
+                        <div class="col-4">
+                          <label class="form-label text-center">Documento*</label>
+                          <div class="input-group">
+                              <input type="file" class="form-control" id="DOCUMENTO_REQUISICION" name="DOCUMENTO_REQUISICION" accept=".pdf" >
+                              <button type="button" class="btn btn-light btn-sm ms-2" id="quitarformato" style="display:none;">Quitar archivo</button>
+                          </div>
+                          <small id="errorArchivo" class="text-danger" style="display:none;">El archivo debe ser un PDF.</small>
                       </div>
-                      <div class="col-4">
-                        <input type="text"  class="form-control text-center" id="CARGO_SOLICITA_RP" name="CARGO_SOLICITA_RP" placeholder="Cargo del Solicitante" required>
+
+                      <div class="col-4 text-center">
+                        <label class="form-label text-center">Fecha de creación *</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="aaaa-mm-dd" id="FECHA_CREACION" name="FECHA_CREACION" required>
+                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        </div>
                       </div>
-                      <div class="col-2">
-                        <label></label>
 
                       </div>
-                      <div class="col-4">
-                        <input type="text"  class="form-control text-center" id="CARGO_AUTORIZA_RP" name="CARGO_AUTORIZA_RP" placeholder="Cargo del que Autoriza">
-                      </div>
-                  </div>
+
+                    </div>
+
+                  
+
+
+
+
+
+
+
+
                 </div>
            </div>
            <div class="modal-footer mx-5">
@@ -336,7 +378,9 @@
 
 
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/th
 
 
 

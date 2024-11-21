@@ -4,16 +4,23 @@ Tablarequerimiento = null
 
 
 
+const ModalArea = document.getElementById('miModal_REQUERIMIENTO');
 
-const ModalArea = document.getElementById('miModal_REQUERIMIENTO')
 ModalArea.addEventListener('hidden.bs.modal', event => {
-    
-    
-    ID_FORMULARO_REQUERIMIENTO = 0
+    ID_FORMULARO_REQUERIMIENTO = 0;
     document.getElementById('formularioRP').reset();
-   
 
-})
+    document.getElementById('MOSTRAR_TODO').style.display = "block";
+    document.getElementById('MOSTRAR_ANTES').style.display = "none";
+
+    document.getElementById('ANTES_DE1').value = "0";
+
+    const requiredElements = document.querySelectorAll("#MOSTRAR_TODO [data-original-required]");
+    requiredElements.forEach(element => {
+        element.setAttribute("required", "required");
+    });
+});
+
 
 
 
@@ -233,4 +240,57 @@ $('#Tablarequerimiento tbody').on('click', 'td>button.RP', function () {
 
 
 
+
+
+
+const archivoAutorizacion = document.getElementById('DOCUMENTO_REQUISICION');
+const quitarFormatoBtn = document.getElementById('quitarformato');
+const errorArchivo = document.getElementById('errorArchivo');
+
+archivoAutorizacion.addEventListener('change', function () {
+    if (archivoAutorizacion.files.length > 0) {
+        const file = archivoAutorizacion.files[0];
+        const fileType = file.type;
+
+        if (fileType !== 'application/pdf') {
+            errorArchivo.style.display = 'inline-block';
+            quitarFormatoBtn.style.display = 'none'; 
+            archivoAutorizacion.value = ''; 
+        } else {
+            errorArchivo.style.display = 'none';
+            quitarFormatoBtn.style.display = 'inline-block'; 
+        }
+    }
+});
+
+quitarFormatoBtn.addEventListener('click', function () {
+    archivoAutorizacion.value = '';
+    quitarFormatoBtn.style.display = 'none'; 
+    errorArchivo.style.display = 'none'; 
+});
+
+
+$(document).ready(function () {
+    $("#PRESIONAR_AQUI").click(function () {
+        $("#MOSTRAR_TODO").hide();
+
+        $("#MOSTRAR_TODO").find("[required]").removeAttr("required");
+
+        $("#MOSTRAR_ANTES").show();
+
+        $("#ANTES_DE1").val("1");
+    });
+});
+
+
+
+$(document).ready(function () {
+    $('#FECHA_CREACION').datepicker({
+        format: "yyyy-mm-dd", 
+        endDate: "2024-11-01",
+        autoclose: true, 
+        todayHighlight: true, 
+        language: 'es' 
+    });
+});
 

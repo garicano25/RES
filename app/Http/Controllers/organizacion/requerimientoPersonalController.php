@@ -4,6 +4,7 @@ namespace App\Http\Controllers\organizacion;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 use App\Models\organizacion\areasModel;
 use App\Models\organizacion\formulariorequerimientoModel;
@@ -39,7 +40,15 @@ class requerimientoPersonalController extends Controller
         $motivos = catalogomotivovacanteModel::orderBy('NOMBRE_MOTIVO_VACANTE', 'ASC')->get();
 
 
-        return view('RH.organizacion.requerimiento_personal', compact('areas','categoria','tipos','motivos','todascategoria'));
+        $areas1 = DB::select("
+        SELECT ID_CATALOGO_CATEGORIA  AS ID, NOMBRE_CATEGORIA AS NOMBRE, LUGAR_CATEGORIA AS LUGAR, PROPOSITO_CATEGORIA AS PROPOSITO, ES_LIDER_CATEGORIA AS LIDER
+        FROM catalogo_categorias
+        WHERE ACTIVO = 1
+        ");
+
+
+
+        return view('RH.organizacion.requerimiento_personal', compact('areas','categoria','tipos','motivos','todascategoria','areas1'));
         
     }
 
@@ -53,12 +62,7 @@ class requerimientoPersonalController extends Controller
     
             foreach ($tabla as $value) {
             
-                // // Botones
-                // $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR"><i class="bi bi-power"></i></button>';
-                // $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                // $value->BTN_RP = '<button type="button" class="btn btn-success  RP btn-custom rounded-pill"><i class="bi bi-file-earmark-excel-fill"></i></button>';
-
-
+          
 
 
                 if ($value->ACTIVO == 0) {
@@ -70,6 +74,7 @@ class requerimientoPersonalController extends Controller
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARO_REQUERIMIENTO . '" checked><span class="slider round"></span></label>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                     $value->BTN_RP = '<button type="button" class="btn btn-success  RP btn-custom rounded-pill"><i class="bi bi-file-earmark-excel-fill"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-requerimiento" data-id="' . $value->ID_FORMULARO_REQUERIMIENTO . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
 
                 }
 
@@ -95,18 +100,26 @@ class requerimientoPersonalController extends Controller
 
     public function store(Request $request)
     {
-
         try {
             switch (intval($request->api)) {
                 case 1:
-
-                    
                     if ($request->ID_FORMULARO_REQUERIMIENTO == 0) {
-
                         DB::statement('ALTER TABLE formulario_requerimientos AUTO_INCREMENT=1;');
+                        
                         $requerimientos = formulariorequerimientoModel::create($request->all());
-                    } else { 
-
+                        
+                        if ($request->hasFile('DOCUMENTO_REQUISICION')) {
+                            $file = $request->file('DOCUMENTO_REQUISICION');
+                            
+                            $folderPath = "Requisición de personal/{$requerimientos->ID_FORMULARO_REQUERIMIENTO}";
+                            $fileName = $file->getClientOriginalName();
+                            
+                            $filePath = $file->storeAs($folderPath, $fileName);
+        
+                            $requerimientos->DOCUMENTO_REQUISICION = $filePath;
+                            $requerimientos->save();
+                        }
+                    } else {
                         if (isset($request->ELIMINAR)) {
                             if ($request->ELIMINAR == 1) {
                                 $requerimientos = formulariorequerimientoModel::where('ID_FORMULARO_REQUERIMIENTO', $request['ID_FORMULARO_REQUERIMIENTO'])->update(['ACTIVO' => 0]);
@@ -119,29 +132,46 @@ class requerimientoPersonalController extends Controller
                             }
                         } else {
                             $requerimientos = formulariorequerimientoModel::find($request->ID_FORMULARO_REQUERIMIENTO);
+                            
                             $requerimientos->update($request->all());
+        
+                            if ($request->hasFile('DOCUMENTO_REQUISICION')) {
+                                $file = $request->file('DOCUMENTO_REQUISICION');
+                                
+                                if ($requerimientos->DOCUMENTO_REQUISICION && Storage::exists($requerimientos->DOCUMENTO_REQUISICION)) {
+                                    Storage::delete($requerimientos->DOCUMENTO_REQUISICION);
+                                }
+        
+                                $folderPath = "Requisición de personal/{$requerimientos->ID_FORMULARO_REQUERIMIENTO}";
+                                $fileName = $file->getClientOriginalName();
+        
+                                $filePath = $file->storeAs($folderPath, $fileName);
+        
+                                $requerimientos->DOCUMENTO_REQUISICION = $filePath;
+                                $requerimientos->save();
+                            }
                             $response['code'] = 1;
                             $response['requerimiento'] = 'Actualizada';
                         }
                         return response()->json($response);
                     }
-
+        
                     $response['code']  = 1;
                     $response['requerimiento']  = $requerimientos;
                     return response()->json($response);
-
+        
                     break;
-
+        
                 default:
-
                     $response['code']  = 1;
                     $response['msj']  = 'Api no encontrada';
                     return response()->json($response);
             }
         } catch (Exception $e) {
-
-            return response()->json('Error al guardar las Relaciones');
+            return response()->json(['error' => 'Error al guardar las relaciones', 'message' => $e->getMessage()]);
         }
+        
+        
     }
 
 }

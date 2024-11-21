@@ -36,6 +36,9 @@ class formulariorequerimientoModel extends Model
         'NOMBRE_AUTORIZA_RP',
         'CARGO_SOLICITA_RP',
         'CARGO_AUTORIZA_RP',
+        'FECHA_CREACION',
+        'DOCUMENTO_REQUISICION',
+        'ANTES_DE1',
          'ACTIVO'
         
     ];

@@ -542,12 +542,9 @@ function obtenerDatosBeneficiarios(data) {
     let row = data.data().BENEFICIARIOS_JSON;
     var beneficiarios = JSON.parse(row);
     
-    // Contador para llevar el número de contacto
     let contadorBeneficiario = 1;
 
-    // Recorrer cada contacto
-    $.each(beneficiarios, function(index, contacto) {
-        // Acceder a cada propiedad del contacto
+     $.each(beneficiarios, function(index, contacto) {
         var nombre = contacto.NOMBRE_BENEFICIARIO;
         var parentesco = contacto.PARENTESCO_BENEFICIARIO;
         var porcentaje = contacto.PORCENTAJE_BENEFICIARIO;
