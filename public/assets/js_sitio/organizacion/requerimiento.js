@@ -3,22 +3,34 @@ ID_FORMULARO_REQUERIMIENTO = 0
 Tablarequerimiento = null
 
 
+$("#NUEVO_REQUISICION").click(function (e) {
+    e.preventDefault();
+
+    $("#miModal_REQUERIMIENTO").modal("show");
+
+    $("#MOSTRAR_TODO").show();
+    $("#MOSTRAR_ANTES").hide();
+
+   
+});
+
+
+
+
+
+
 
 const ModalArea = document.getElementById('miModal_REQUERIMIENTO');
 
 ModalArea.addEventListener('hidden.bs.modal', event => {
     ID_FORMULARO_REQUERIMIENTO = 0;
+
     document.getElementById('formularioRP').reset();
 
     document.getElementById('MOSTRAR_TODO').style.display = "block";
     document.getElementById('MOSTRAR_ANTES').style.display = "none";
 
-    document.getElementById('ANTES_DE1').value = "0";
-
-    const requiredElements = document.querySelectorAll("#MOSTRAR_TODO [data-original-required]");
-    requiredElements.forEach(element => {
-        element.setAttribute("required", "required");
-    });
+  
 });
 
 
@@ -30,7 +42,9 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 $("#guardarFormRP").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioRP'))
+
+    formularioValido = validarFormularioV2('formularioRP');
+
 
     if (formularioValido) {
 
@@ -159,12 +173,28 @@ var Tablarequerimiento = $("#Tablarequerimiento").DataTable({
             render: function(data, type, row, meta) {
                 return meta.row + 1; 
             }
+
+    
         },
         { data: 'NOMBRE_CATEGORIA' },
-        { data: 'PRIORIDAD_RP' },
-        { data: 'TIPO_VACANTE_RP' },
-        { data: 'MOTIVO_VACANTE_RP' },
-        { data: 'BTN_RP' },
+        { data: 'PRIORIDAD_RP',
+            className: 'text-center',
+            render: function(data) { return data ? data : 'N/A';}
+         },
+        { data: 'TIPO_VACANTE_RP',
+            className: 'text-center',
+            render: function(data) { return data ? data : 'N/A'; }
+         },
+        { data: 'MOTIVO_VACANTE_RP',
+            className: 'text-center',
+            render: function(data) { return data ? data : 'N/A'; }
+        },
+        { data: 'FECHA_CREACION' ,
+            className: 'text-center',
+            render: function(data) { return data ? data : 'N/A'; }
+        },
+
+        { data: 'BTN_RP' }, 
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' }
     ],
@@ -174,9 +204,10 @@ var Tablarequerimiento = $("#Tablarequerimiento").DataTable({
         { targets: 2, title: 'Prioridad', className: 'all text-center nombre-column' },
         { targets: 3, title: 'Tipo de vacante', className: 'all text-center' },
         { targets: 4, title: 'Motivo', className: 'all text-center' },
-        { targets: 5, title: 'Descargar', className: 'all text-center' },
-        { targets: 6, title: 'Editar', className: 'all text-center' },
-        { targets: 7, title: 'Activo', className: 'all text-center' }
+        { targets: 5, title: 'Fecha de creación', className: 'all text-center' },
+        { targets: 6, title: 'Descargar', className: 'all text-center' },
+        { targets: 7, title: 'Editar', className: 'all text-center' },
+        { targets: 8, title: 'Activo', className: 'all text-center' }
     ]
 });
 
@@ -200,19 +231,38 @@ $('#Tablarequerimiento tbody').on('change', 'td>label>input.ELIMINAR', function 
 
 
 
-
 $('#Tablarequerimiento tbody').on('click', 'td>button.EDITAR', function () {
-
-
     var tr = $(this).closest('tr');
     var row = Tablarequerimiento.row(tr);
-    ID_FORMULARO_REQUERIMIENTO = row.data().ID_FORMULARO_REQUERIMIENTO
+    ID_FORMULARO_REQUERIMIENTO = row.data().ID_FORMULARO_REQUERIMIENTO;
 
-    //Rellenamos los datos del formulario
-    editarDatoTabla(row.data(), 'formularioRP', 'miModal_REQUERIMIENTO', 1)
+    editarDatoTabla(row.data(), 'formularioRP', 'miModal_REQUERIMIENTO', 1);
+
+    if (row.data().ANTES_DE1 == 1) {
+        $('#MOSTRAR_ANTES').show();
+        $('#MOSTRAR_TODO').hide();
+
+        $('#MOSTRAR_TODO').find('[required]').removeAttr('required');
+
     
-  
-})
+    } else {
+        $('#MOSTRAR_TODO').show();
+        $('#MOSTRAR_ANTES').hide();
+
+        $('#MOSTRAR_ANTES').find('[required]').removeAttr('required');
+
+        
+    }
+
+    $("#miModal_REQUERIMIENTO").modal("show");
+});
+
+
+
+
+
+
+
 
 
 
@@ -237,6 +287,23 @@ $('#Tablarequerimiento tbody').on('click', 'td>button.RP', function () {
     }, 1)
 
 })
+
+
+$('#Tablarequerimiento').on('click', '.ver-archivo-requerimiento', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablarequerimiento.row(tr);
+    var id = $(this).data('id');
+
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+
+    var nombreDocumentoSoporte = row.data().NOMBRE_CATEGORIA;
+    var url = '/mostrardocumentorequisicion/' + id;
+    
+    abrirModal(url, nombreDocumentoSoporte);
+});
 
 
 

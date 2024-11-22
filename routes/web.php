@@ -126,6 +126,8 @@ Route::post('/RequerimientoSave', [requerimientoPersonalController::class, 'stor
 Route::get('/RequerimientoDelete', [requerimientoPersonalController::class, 'store']);
 Route::get('/Tablarequerimiento', [requerimientoPersonalController::class, 'Tablarequerimiento']);
 Route::get('/makeExcelRP/{id_formulario}', [makeExcelController::class, 'makeExcelRP']);
+Route::get('/mostrardocumentorequisicion/{id}', [requerimientoPersonalController::class, 'mostrardocumentorequisicion']);
+
 
 //catálogo de jerarquia
 Route::get('/Jerárquico', function () {return view('RH.Catalogos.catalogo_Jerárquico');});

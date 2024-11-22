@@ -228,6 +228,7 @@ document.getElementById('step1').addEventListener('click', function() {
     document.getElementById('step1-content').style.display = 'block';
 });
 
+
 $("#guardarDatosGenerales").click(function (e) {
     e.preventDefault();
 
@@ -475,131 +476,293 @@ function actualizarStepsConCurp(curp) {
 }
 
 // AGREGAR CONTACTO BENEFICIARIO
-document.addEventListener("DOMContentLoaded", function() {
+// document.addEventListener("DOMContentLoaded", function() {
+//     const botonAgregar = document.getElementById('botonagregarbeneficiario');
+//     botonAgregar.addEventListener('click', agregarBeneficiario);
+
+//     function agregarBeneficiario() {
+//         const divContacto = document.createElement('div');
+//         divContacto.classList.add('row', 'generarlistadebeneficiario','m-3');
+//         divContacto.innerHTML = `
+       
+//             <div class="col-lg-12 col-sm-1">
+//                     <div class="form-group">
+//                     <h5><i class="bi bi-person"></i> Agregar beneficiario</h5>                    
+//                     </div>
+//                 </div>
+//                 <div class="col-lg-3 col-sm-6">
+//                     <div class="form-group">
+//                         <label>Nombre completo *</label>
+//                             <input type="text" class="form-control"  name="NOMBRE_BENEFICIARIO"required >
+//                     </div>
+//                 </div>
+//                 <div class="col-lg-3 col-sm-6">
+//                     <div class="form-group">
+//                         <label>Parentesco *</label>
+//                         <input type="text" class="form-control"  name="PARENTESCO_BENEFICIARIO" required>
+//                     </div>
+//                 </div>
+//                 <div class="col-lg-2 col-sm-6">
+//                     <div class="form-group">
+//                          <label>Porcentaje *</label>
+//                             <input type="number" class="form-control"  name="PORCENTAJE_BENEFICIARIO" required>
+//                     </div>
+//                 </div>
+//                 <div class="col-lg-2 col-sm-6">
+//                     <div class="form-group">
+//                        <label>Teléfono  1 </label>
+//                         <input type="number" class="form-control"  name="TELEFONO1_BENEFICIARIO" required>
+//                     </div>
+//                 </div>
+//                 <div class="col-lg-2 col-sm-6">
+//                     <div class="form-group">
+//                          <label>Teléfono  2 </label>
+//                         <input type="number" class="form-control"  name="TELEFONO2_BENEFICIARIO" >
+//                     </div>
+//                 </div>
+//                 <br>
+//                 <div class="col-12 mt-4">
+//                     <div class="form-group" style="text-align: center;">
+//                         <button type="button" class="btn btn-danger botonEliminarBeneficiario">Eliminar beneficiario <i class="bi bi-trash-fill"></i></button>
+//                     </div>
+//                 </div>
+            
+//         `;
+//         const contenedor = document.querySelector('.listadeBeneficiario');
+//         contenedor.appendChild(divContacto);
+
+//         const botonEliminar = divContacto.querySelector('.botonEliminarBeneficiario');
+//         botonEliminar.addEventListener('click', function() {
+//             contenedor.removeChild(divContacto);
+//         });
+//     }
+// });
+
+// function obtenerDatosBeneficiarios(data) {
+//     let row = data.data().BENEFICIARIOS_JSON;
+//     var beneficiarios = JSON.parse(row);
+    
+//     let contadorBeneficiario = 1;
+
+//      $.each(beneficiarios, function(index, contacto) {
+//         var nombre = contacto.NOMBRE_BENEFICIARIO;
+//         var parentesco = contacto.PARENTESCO_BENEFICIARIO;
+//         var porcentaje = contacto.PORCENTAJE_BENEFICIARIO;
+//         var telefono1 = contacto.TELEFONO1_BENEFICIARIO;
+//         var telefono2 = contacto.TELEFONO2_BENEFICIARIO;
+        
+
+//         const divContacto = document.createElement('div');
+//         divContacto.classList.add('row');
+//         divContacto.classList.add('generarlistadebeneficiario','m-2'); 
+//         divContacto.innerHTML = `
+//         <div class="col-lg-12 col-sm-1">
+//             <div class="form-group d-flex align-items-center">
+//                 <h5><i class="bi bi-person"></i> Beneficiario N° ${contadorBeneficiario}  &nbsp; </h5>
+    
+//             </div>
+//         </div>
+
+
+//         <div class="col-lg-3 col-sm-6">
+//                     <div class="form-group">
+//                         <label>Nombre completo *</label>
+//                             <input type="text" class="form-control"  name="NOMBRE_BENEFICIARIO"   value="${nombre}"required >
+//                     </div>
+//                 </div>
+//                 <div class="col-lg-3 col-sm-6">
+//                     <div class="form-group">
+//                         <label>Parentesco *</label>
+//                         <input type="text" class="form-control"  name="PARENTESCO_BENEFICIARIO"  value="${parentesco}" required>
+//                     </div>
+//                 </div>
+//                 <div class="col-lg-2 col-sm-6">
+//                     <div class="form-group">
+//                          <label>Porcentaje *</label>
+//                             <input type="number" class="form-control"  name="PORCENTAJE_BENEFICIARIO"  value="${porcentaje}" required>
+//                     </div>
+//                 </div>
+//                 <div class="col-lg-2 col-sm-6">
+//                     <div class="form-group">
+//                        <label>Teléfono  1 </label>
+//                         <input type="number" class="form-control"  name="TELEFONO1_BENEFICIARIO"  value="${telefono1}" required>
+//                     </div>
+//                 </div>
+//                 <div class="col-lg-2 col-sm-6">
+//                     <div class="form-group">
+//                          <label>Teléfono  2 </label>
+//                         <input type="number" class="form-control"  name="TELEFONO2_BENEFICIARIO"  value="${telefono2}">
+//                     </div>
+//                 </div>
+
+//             <div class="col-12 mt-4">
+//                         <div class="form-group" style="text-align: center;">
+//                             <button type="button" class="btn btn-danger botonEliminarBeneficiario">Eliminar beneficiario <i class="bi bi-trash-fill"></i></button>
+//                         </div>
+//                 </div>
+//         `;
+//         const contenedor = document.querySelector('.listadeBeneficiario');
+//         contenedor.appendChild(divContacto);
+
+//         contadorBeneficiario++;
+
+//         const botonEliminar = divContacto.querySelector('.botonEliminarBeneficiario');
+//         botonEliminar.addEventListener('click', function() {
+//             contenedor.removeChild(divContacto);
+//         });
+
+//     });
+// }
+
+
+// Función para validar la suma de los porcentajes
+function validarPorcentajeBeneficiarios() {
+    let suma = 0;
+
+    // Iterar sobre todos los inputs con el name 'PORCENTAJE_BENEFICIARIO'
+    document.querySelectorAll("input[name='PORCENTAJE_BENEFICIARIO']").forEach(function (input) {
+        let valor = parseFloat(input.value) || 0; // Convertir a número o usar 0 si está vacío
+        suma += valor;
+    });
+
+    const botonGuardar = document.getElementById('guardarDatosGenerales');
+
+    if (suma > 100) {
+        alertToast("La suma de los porcentajes no puede exceder el 100%.");
+        botonGuardar.disabled = true; // Deshabilitar botón
+    } else if (suma === 100) {
+        botonGuardar.disabled = false; // Habilitar botón si suma es exactamente 100
+    } else {
+        botonGuardar.disabled = true; // Deshabilitar si suma no es 100
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
     const botonAgregar = document.getElementById('botonagregarbeneficiario');
-    botonAgregar.addEventListener('click', agregarBeneficiario);
+    botonAgregar.addEventListener('click', function () {
+        agregarBeneficiario();
+        validarPorcentajeBeneficiarios(); // Validar después de agregar un beneficiario
+    });
+
+    // Monitorear cambios en los campos de porcentaje
+    document.addEventListener('input', function (e) {
+        if (e.target.name === 'PORCENTAJE_BENEFICIARIO') {
+            validarPorcentajeBeneficiarios(); // Validar cada vez que cambia un porcentaje
+        }
+    });
 
     function agregarBeneficiario() {
         const divContacto = document.createElement('div');
-        divContacto.classList.add('row', 'generarlistadebeneficiario','m-3');
+        divContacto.classList.add('row', 'generarlistadebeneficiario', 'm-3');
         divContacto.innerHTML = `
-       
             <div class="col-lg-12 col-sm-1">
-                    <div class="form-group">
+                <div class="form-group">
                     <h5><i class="bi bi-person"></i> Agregar beneficiario</h5>                    
-                    </div>
                 </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="form-group">
-                        <label>Nombre completo *</label>
-                            <input type="text" class="form-control"  name="NOMBRE_BENEFICIARIO"required >
-                    </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="form-group">
+                    <label>Nombre completo *</label>
+                    <input type="text" class="form-control" name="NOMBRE_BENEFICIARIO" required>
                 </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="form-group">
-                        <label>Parentesco *</label>
-                        <input type="text" class="form-control"  name="PARENTESCO_BENEFICIARIO" required>
-                    </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="form-group">
+                    <label>Parentesco *</label>
+                    <input type="text" class="form-control" name="PARENTESCO_BENEFICIARIO" required>
                 </div>
-                <div class="col-lg-2 col-sm-6">
-                    <div class="form-group">
-                         <label>Porcentaje *</label>
-                            <input type="number" class="form-control"  name="PORCENTAJE_BENEFICIARIO" required>
-                    </div>
+            </div>
+            <div class="col-lg-2 col-sm-6">
+                <div class="form-group">
+                    <label>Porcentaje *</label>
+                    <input type="number" class="form-control" name="PORCENTAJE_BENEFICIARIO" required>
                 </div>
-                <div class="col-lg-2 col-sm-6">
-                    <div class="form-group">
-                       <label>Teléfono  1 </label>
-                        <input type="number" class="form-control"  name="TELEFONO1_BENEFICIARIO" required>
-                    </div>
+            </div>
+            <div class="col-lg-2 col-sm-6">
+                <div class="form-group">
+                    <label>Teléfono  1 </label>
+                    <input type="number" class="form-control" name="TELEFONO1_BENEFICIARIO" required>
                 </div>
-                <div class="col-lg-2 col-sm-6">
-                    <div class="form-group">
-                         <label>Teléfono  2 </label>
-                        <input type="number" class="form-control"  name="TELEFONO2_BENEFICIARIO" >
-                    </div>
+            </div>
+            <div class="col-lg-2 col-sm-6">
+                <div class="form-group">
+                    <label>Teléfono  2 </label>
+                    <input type="number" class="form-control" name="TELEFONO2_BENEFICIARIO">
                 </div>
-                <br>
-                <div class="col-12 mt-4">
-                    <div class="form-group" style="text-align: center;">
-                        <button type="button" class="btn btn-danger botonEliminarBeneficiario">Eliminar beneficiario <i class="bi bi-trash-fill"></i></button>
-                    </div>
+            </div>
+            <br>
+            <div class="col-12 mt-4">
+                <div class="form-group" style="text-align: center;">
+                    <button type="button" class="btn btn-danger botonEliminarBeneficiario">Eliminar beneficiario <i class="bi bi-trash-fill"></i></button>
                 </div>
-            
+            </div>
         `;
         const contenedor = document.querySelector('.listadeBeneficiario');
         contenedor.appendChild(divContacto);
 
         const botonEliminar = divContacto.querySelector('.botonEliminarBeneficiario');
-        botonEliminar.addEventListener('click', function() {
+        botonEliminar.addEventListener('click', function () {
             contenedor.removeChild(divContacto);
+            validarPorcentajeBeneficiarios(); // Revalidar al eliminar un beneficiario
         });
     }
 });
 
-// OBTENER CONTACTO BENEFICIARIO
 function obtenerDatosBeneficiarios(data) {
     let row = data.data().BENEFICIARIOS_JSON;
     var beneficiarios = JSON.parse(row);
-    
     let contadorBeneficiario = 1;
 
-     $.each(beneficiarios, function(index, contacto) {
+    $.each(beneficiarios, function (index, contacto) {
         var nombre = contacto.NOMBRE_BENEFICIARIO;
         var parentesco = contacto.PARENTESCO_BENEFICIARIO;
         var porcentaje = contacto.PORCENTAJE_BENEFICIARIO;
         var telefono1 = contacto.TELEFONO1_BENEFICIARIO;
         var telefono2 = contacto.TELEFONO2_BENEFICIARIO;
-        
 
         const divContacto = document.createElement('div');
-        divContacto.classList.add('row');
-        divContacto.classList.add('generarlistadebeneficiario','m-2'); 
+        divContacto.classList.add('row', 'generarlistadebeneficiario', 'm-2');
         divContacto.innerHTML = `
-        <div class="col-lg-12 col-sm-1">
-            <div class="form-group d-flex align-items-center">
-                <h5><i class="bi bi-person"></i> Beneficiario N° ${contadorBeneficiario}  &nbsp; </h5>
-    
+            <div class="col-lg-12 col-sm-1">
+                <div class="form-group d-flex align-items-center">
+                    <h5><i class="bi bi-person"></i> Beneficiario N° ${contadorBeneficiario} &nbsp;</h5>
+                </div>
             </div>
-        </div>
-
-
-        <div class="col-lg-3 col-sm-6">
-                    <div class="form-group">
-                        <label>Nombre completo *</label>
-                            <input type="text" class="form-control"  name="NOMBRE_BENEFICIARIO"   value="${nombre}"required >
-                    </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="form-group">
+                    <label>Nombre completo *</label>
+                    <input type="text" class="form-control" name="NOMBRE_BENEFICIARIO" value="${nombre}" required>
                 </div>
-                <div class="col-lg-3 col-sm-6">
-                    <div class="form-group">
-                        <label>Parentesco *</label>
-                        <input type="text" class="form-control"  name="PARENTESCO_BENEFICIARIO"  value="${parentesco}" required>
-                    </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="form-group">
+                    <label>Parentesco *</label>
+                    <input type="text" class="form-control" name="PARENTESCO_BENEFICIARIO" value="${parentesco}" required>
                 </div>
-                <div class="col-lg-2 col-sm-6">
-                    <div class="form-group">
-                         <label>Porcentaje *</label>
-                            <input type="number" class="form-control"  name="PORCENTAJE_BENEFICIARIO"  value="${porcentaje}" required>
-                    </div>
+            </div>
+            <div class="col-lg-2 col-sm-6">
+                <div class="form-group">
+                    <label>Porcentaje *</label>
+                    <input type="number" class="form-control" name="PORCENTAJE_BENEFICIARIO" value="${porcentaje}" required>
                 </div>
-                <div class="col-lg-2 col-sm-6">
-                    <div class="form-group">
-                       <label>Teléfono  1 </label>
-                        <input type="number" class="form-control"  name="TELEFONO1_BENEFICIARIO"  value="${telefono1}" required>
-                    </div>
+            </div>
+            <div class="col-lg-2 col-sm-6">
+                <div class="form-group">
+                    <label>Teléfono  1 </label>
+                    <input type="number" class="form-control" name="TELEFONO1_BENEFICIARIO" value="${telefono1}" required>
                 </div>
-                <div class="col-lg-2 col-sm-6">
-                    <div class="form-group">
-                         <label>Teléfono  2 </label>
-                        <input type="number" class="form-control"  name="TELEFONO2_BENEFICIARIO"  value="${telefono2}">
-                    </div>
+            </div>
+            <div class="col-lg-2 col-sm-6">
+                <div class="form-group">
+                    <label>Teléfono  2 </label>
+                    <input type="number" class="form-control" name="TELEFONO2_BENEFICIARIO" value="${telefono2}">
                 </div>
-
+            </div>
             <div class="col-12 mt-4">
-                        <div class="form-group" style="text-align: center;">
-                            <button type="button" class="btn btn-danger botonEliminarBeneficiario">Eliminar beneficiario <i class="bi bi-trash-fill"></i></button>
-                        </div>
+                <div class="form-group" style="text-align: center;">
+                    <button type="button" class="btn btn-danger botonEliminarBeneficiario">Eliminar beneficiario <i class="bi bi-trash-fill"></i></button>
                 </div>
+            </div>
         `;
         const contenedor = document.querySelector('.listadeBeneficiario');
         contenedor.appendChild(divContacto);
@@ -607,13 +770,15 @@ function obtenerDatosBeneficiarios(data) {
         contadorBeneficiario++;
 
         const botonEliminar = divContacto.querySelector('.botonEliminarBeneficiario');
-        botonEliminar.addEventListener('click', function() {
+        botonEliminar.addEventListener('click', function () {
             contenedor.removeChild(divContacto);
+            validarPorcentajeBeneficiarios(); // Revalidar al eliminar un beneficiario
         });
-
     });
-}
 
+    // Validar después de cargar los beneficiarios
+    validarPorcentajeBeneficiarios();
+}
 
 
  // <!-- ============================================================== -->

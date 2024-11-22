@@ -2722,6 +2722,50 @@ function validarFormularioV1(form) {
 
 
 
+function validarFormularioV2(form) {
+  var formulario = $('#' + form);
+
+  var visibleFields;
+  if ($('#MOSTRAR_ANTES').is(':visible')) {
+      visibleFields = $('#MOSTRAR_ANTES').find('input[required], textarea[required], select[required]');
+  } else if ($('#MOSTRAR_TODO').is(':visible')) {
+      visibleFields = $('#MOSTRAR_TODO').find('input[required], textarea[required], select[required]');
+  } else {
+      visibleFields = formulario.find('input[required], textarea[required], select[required]');
+  }
+
+  visibleFields = visibleFields.filter(':visible');
+  visibleFields.addClass('validar').removeClass('error');
+
+  var formularioValido = true;
+
+  visibleFields.each(function () {
+      var tipoCampo = $(this).attr('type');
+      var valorCampo = $(this).val();
+
+      if (tipoCampo === 'radio' || tipoCampo === 'checkbox') {
+          var nombreGrupo = $(this).attr('name');
+          if ($('input[name="' + nombreGrupo + '"]:checked').length === 0) {
+              $('input[name="' + nombreGrupo + '"]').addClass('error');
+              formularioValido = false;
+          } else {
+              $('input[name="' + nombreGrupo + '"]').removeClass('error');
+          }
+      } else if (valorCampo === '' || valorCampo === null) {
+          $(this).addClass('error');
+          formularioValido = false;
+      } else {
+          $(this).removeClass('error');
+      }
+  });
+
+  return formularioValido;
+}
+
+
+
+
+
 //  funciones de para el boton de visualizar
 function hacerSoloLectura(data, modalSelector) {
     var formElements = $(modalSelector).find(':input, select');

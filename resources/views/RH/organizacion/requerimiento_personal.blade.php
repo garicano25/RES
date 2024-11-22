@@ -8,7 +8,7 @@
   <ol class="breadcrumb mb-5">
     <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-fill"></i>&nbsp;Requisición de personal </h3>
 
-    <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_departamento" data-bs-toggle="modal" data-bs-target="#miModal_REQUERIMIENTO" style="margin-left: auto;">
+    <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_departamento" id="NUEVO_REQUISICION" style="margin-left: auto;">
       Nuevo <i class="bi bi-plus-circle"></i>
     </button>
 

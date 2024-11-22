@@ -209,28 +209,23 @@ public function store(Request $request)
             case 1:
                 if ($request->ID_FORMULARIO_CONTRATACION == 0) {
 
+                    // Restablecer el auto_increment si es necesario
                     DB::statement('ALTER TABLE formulario_contratacion AUTO_INCREMENT=1;');
-                    $contratos = contratacionModel::create($request->except('FOTO_USUARIO')); 
-
-
-                    $contratos = contratacionModel::create($request->except('beneficiarios'));
-
-
+                
+                    $data = $request->except(['FOTO_USUARIO', 'beneficiarios']);
+                    $contratos = contratacionModel::create($data);
+                
                     if ($request->hasFile('FOTO_USUARIO')) {
                         $imagen = $request->file('FOTO_USUARIO');
-                        
                         $curp = $request->CURP;
                         $rutaCarpeta = 'reclutamiento/' . $curp . '/IMAGEN COLABORADOR';
                         $nombreArchivo = 'foto_usuario.' . $imagen->getClientOriginalExtension();
-                        
                         $rutaCompleta = $imagen->storeAs($rutaCarpeta, $nombreArchivo);
-                        
+                
                         $contratos->FOTO_USUARIO = $rutaCompleta;
                         $contratos->save();
                     }
-
                 } else {
-
                     if (isset($request->ELIMINAR)) {
                         if ($request->ELIMINAR == 1) {
                             $contratos = contratacionModel::where('ID_FORMULARIO_CONTRATACION', $request['ID_FORMULARIO_CONTRATACION'])->update(['ACTIVO' => 0]);
@@ -242,24 +237,25 @@ public function store(Request $request)
                             $response['contrato'] = 'Activada';
                         }
                     } else {
+                        // Editar un contrato existente
                         $contratos = contratacionModel::find($request->ID_FORMULARIO_CONTRATACION);
                         $contratos->update($request->except('FOTO_USUARIO'));
-
+                
                         if ($request->hasFile('FOTO_USUARIO')) {
                             if ($contratos->FOTO_USUARIO && Storage::exists($contratos->FOTO_USUARIO)) {
                                 Storage::delete($contratos->FOTO_USUARIO);
                             }
-
+                
                             $imagen = $request->file('FOTO_USUARIO');
                             $curp = $request->CURP;
                             $rutaCarpeta = 'reclutamiento/' . $curp . '/IMAGEN COLABORADOR';
                             $nombreArchivo = 'foto_usuario.' . $imagen->getClientOriginalExtension();
                             $rutaCompleta = $imagen->storeAs($rutaCarpeta, $nombreArchivo);
-
+                
                             $contratos->FOTO_USUARIO = $rutaCompleta;
                             $contratos->save();
                         }
-
+                
                         $response['code'] = 1;
                         $response['contrato'] = 'Actualizada';
                     }
@@ -268,6 +264,7 @@ public function store(Request $request)
                 $response['code'] = 1;
                 $response['contrato'] = $contratos;
                 return response()->json($response);
+                
                 break;
 
 

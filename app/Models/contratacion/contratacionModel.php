@@ -55,6 +55,14 @@ class contratacionModel extends Model
         'NOMBRE_ENTIDAD',
         'ENTRE_CALLE',
         'ENTRE_CALLE_2',
+        'CIUDAD_LUGAR_NACIMIENTO',
+        'ESTADO_LUGAR_NACIMIENTO',
+        'PAIS_LUGAR_NACIMIENTO',
+        'TIPO_DOCUMENTO_IDENTIFICACION',
+        'VIGENCIA_DOCUMENTO',
+        'NUMERO_DOCUMENTO',
+        'EXPEDIDO_DOCUMENTO',
+        'EMISION_DOCUMENTO',
         'ACTIVO',
 
     ];
