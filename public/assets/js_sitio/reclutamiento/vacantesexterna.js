@@ -375,6 +375,7 @@ document.getElementById('CURPS_INFO').addEventListener('blur', function() {
                 document.getElementById('TIPO_POSGRADO_CV').value = data.TIPO_POSGRADO_CV || '';
                 document.getElementById('NOMBRE_POSGRADO_CV').value = data.NOMBRE_POSGRADO_CV || '';
                 document.getElementById('NACIONALIDAD').value = data.NACIONALIDAD || '';
+                
 
                 if (data.NACIONALIDAD === '1') {
                     $('#campo-curp').show();       
@@ -391,8 +392,7 @@ document.getElementById('CURPS_INFO').addEventListener('blur', function() {
                 
                     document.getElementById('ID_PASAPORTE').setAttribute('name', 'CURP_CV');
                     document.getElementById('CURP_CV').setAttribute('name', 'TEMP_CURP');
-                
-
+                    document.getElementById('ID_PASAPORTE').value = data.CURP_CV || '';
                     document.getElementById('label-archivo').innerText = 'Pasaporte';
 
 
@@ -432,6 +432,14 @@ document.getElementById('CURPS_INFO').addEventListener('blur', function() {
                     var event = new Event('change');
                     ultimoGradoCV.dispatchEvent(event); 
                 }
+
+                var tipoPosgradoCV = document.getElementById('TIPO_POSGRADO_CV');
+                if (tipoPosgradoCV) {
+                    var event = new Event('change');
+                    tipoPosgradoCV.dispatchEvent(event); 
+                }
+
+                
             }
         })
         .catch(error => {

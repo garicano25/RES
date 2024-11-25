@@ -414,7 +414,7 @@
 @endif
 
 @if(request()->is('RequisiciónDePersonal'))
-<script src="/assets/js_sitio/organizacion/requerimiento.js?v=1.0"></script>
+<script src="/assets/js_sitio/organizacion/requerimiento.js?v=2.0"></script>
 @endif
 
 @if(request()->is('CatálogoDeVacantes'))
@@ -481,7 +481,7 @@
 @endif
 
 @if(request()->is('Contratación'))
-<script src="/assets/js_sitio/contratacion/contratacion.js?v=3.0"></script>
+<script src="/assets/js_sitio/contratacion/contratacion.js?v=4.0"></script>
 @endif
 
 

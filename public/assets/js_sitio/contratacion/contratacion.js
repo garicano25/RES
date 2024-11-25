@@ -619,9 +619,8 @@ function actualizarStepsConCurp(curp) {
 function validarPorcentajeBeneficiarios() {
     let suma = 0;
 
-    // Iterar sobre todos los inputs con el name 'PORCENTAJE_BENEFICIARIO'
     document.querySelectorAll("input[name='PORCENTAJE_BENEFICIARIO']").forEach(function (input) {
-        let valor = parseFloat(input.value) || 0; // Convertir a número o usar 0 si está vacío
+        let valor = parseFloat(input.value) || 0; 
         suma += valor;
     });
 
@@ -629,11 +628,11 @@ function validarPorcentajeBeneficiarios() {
 
     if (suma > 100) {
         alertToast("La suma de los porcentajes no puede exceder el 100%.");
-        botonGuardar.disabled = true; // Deshabilitar botón
+        botonGuardar.disabled = true; 
     } else if (suma === 100) {
-        botonGuardar.disabled = false; // Habilitar botón si suma es exactamente 100
+        botonGuardar.disabled = false; 
     } else {
-        botonGuardar.disabled = true; // Deshabilitar si suma no es 100
+        botonGuardar.disabled = true; 
     }
 }
 
@@ -641,13 +640,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const botonAgregar = document.getElementById('botonagregarbeneficiario');
     botonAgregar.addEventListener('click', function () {
         agregarBeneficiario();
-        validarPorcentajeBeneficiarios(); // Validar después de agregar un beneficiario
+        validarPorcentajeBeneficiarios(); 
     });
 
-    // Monitorear cambios en los campos de porcentaje
     document.addEventListener('input', function (e) {
         if (e.target.name === 'PORCENTAJE_BENEFICIARIO') {
-            validarPorcentajeBeneficiarios(); // Validar cada vez que cambia un porcentaje
+            validarPorcentajeBeneficiarios(); 
         }
     });
 
@@ -703,7 +701,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const botonEliminar = divContacto.querySelector('.botonEliminarBeneficiario');
         botonEliminar.addEventListener('click', function () {
             contenedor.removeChild(divContacto);
-            validarPorcentajeBeneficiarios(); // Revalidar al eliminar un beneficiario
+            validarPorcentajeBeneficiarios(); 
         });
     }
 });
@@ -772,11 +770,10 @@ function obtenerDatosBeneficiarios(data) {
         const botonEliminar = divContacto.querySelector('.botonEliminarBeneficiario');
         botonEliminar.addEventListener('click', function () {
             contenedor.removeChild(divContacto);
-            validarPorcentajeBeneficiarios(); // Revalidar al eliminar un beneficiario
+            validarPorcentajeBeneficiarios(); 
         });
     });
 
-    // Validar después de cargar los beneficiarios
     validarPorcentajeBeneficiarios();
 }
 

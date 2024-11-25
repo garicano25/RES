@@ -28,23 +28,124 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-$("#guardarFormBancoCV").click(function (e) {
+// $("#guardarFormBancoCV").click(function (e) {
+//     e.preventDefault();
+
+//     formularioValido = validarFormulario($('#formularioBANCO'));
+
+//     if (formularioValido) {
+
+//         if (ID_BANCO_CV == 0) {
+
+//             alertMensajeConfirm({
+//                 title: "¿Desea guardar la información?",
+//                 text: "Al guardarla, se podrá usar",
+//                 icon: "question",
+//             }, async function () {
+
+//                 await loaderbtn('guardarFormBancoCV');
+//                 await ajaxAwaitFormData({ api: 1, ID_BANCO_CV: ID_BANCO_CV }, 'FormCVSave', 'formularioBANCO', 'guardarFormBancoCV', { callbackAfter: true, callbackBefore: true }, () => {
+
+//                     Swal.fire({
+//                         icon: 'info',
+//                         title: 'Espere un momento',
+//                         text: 'Estamos guardando la información',
+//                         showConfirmButton: false
+//                     });
+
+//                     $('.swal2-popup').addClass('ld ld-breath');
+
+//                 }, function (data) {
+
+//                     ID_BANCO_CV = data.bancocv.ID_BANCO_CV;
+
+//                     Swal.fire({
+//                         icon: 'success',
+//                         title: 'Información guardada correctamente',
+//                         confirmButtonText: 'OK',
+//                     }).then(() => {
+//                         window.location.reload();
+//                     });
+
+//                     $('#miModal_BANCOCV').modal('hide');
+//                     document.getElementById('formularioBANCO').reset();
+//                     // Tablabancocv.ajax.reload();
+//                     $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
+//                     $('#INTERES_OPERATIVAS')[0].selectize.clear();
+
+//                     ID_BANCO_CV = 0;
+
+//                     document.getElementById('guardarFormBancoCV').disabled = true;
+//                     document.getElementById('aceptaTerminos').checked = false;
+//                 });
+
+//             }, 1);
+
+//         } else {
+//             alertMensajeConfirm({
+//                 title: "¿Desea editar la información de este formulario?",
+//                 text: "Al guardarla, se podrá usar",
+//                 icon: "question",
+//             }, async function () {
+
+//                 await loaderbtn('guardarFormBancoCV');
+//                 await ajaxAwaitFormData({ api: 1, ID_BANCO_CV: ID_BANCO_CV }, 'FormCVSave', 'formularioBANCO', 'guardarFormBancoCV', { callbackAfter: true, callbackBefore: true }, () => {
+
+//                     Swal.fire({
+//                         icon: 'info',
+//                         title: 'Espere un momento',
+//                         text: 'Estamos guardando la información',
+//                         showConfirmButton: false
+//                     });
+
+//                     $('.swal2-popup').addClass('ld ld-breath');
+
+//                 }, function (data) {
+//                     setTimeout(() => {
+//                         ID_BANCO_CV = data.bancocv.ID_BANCO_CV;
+
+//                         Swal.fire({
+//                             icon: 'success',
+//                             title: 'Información editada correctamente',
+//                             confirmButtonText: 'OK',
+//                         }).then(() => {
+//                             window.location.reload();
+//                         });
+
+//                         $('#miModal_BANCOCV').modal('hide');
+//                         document.getElementById('formularioBANCO').reset();
+//                         $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
+//                         $('#INTERES_OPERATIVAS')[0].selectize.clear();
+
+//                         ID_BANCO_CV = 0;
+
+//                         document.getElementById('guardarFormBancoCV').disabled = true;
+//                         document.getElementById('aceptaTerminos').checked = false;
+//                     }, 300);
+//                 });
+//             }, 1);
+//         }
+
+//     } else {
+//         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+//     }
+// });
+
+
+$("#guardarFormBancoCV").click(async function (e) {
     e.preventDefault();
 
     formularioValido = validarFormulario($('#formularioBANCO'));
 
     if (formularioValido) {
-
         if (ID_BANCO_CV == 0) {
-
             alertMensajeConfirm({
                 title: "¿Desea guardar la información?",
                 text: "Al guardarla, se podrá usar",
                 icon: "question",
             }, async function () {
-
                 await loaderbtn('guardarFormBancoCV');
-                await ajaxAwaitFormData({ api: 1, ID_BANCO_CV: ID_BANCO_CV }, 'BancoSave', 'formularioBANCO', 'guardarFormBancoCV', { callbackAfter: true, callbackBefore: true }, () => {
+                await ajaxAwaitFormData({ api: 1, ID_BANCO_CV: ID_BANCO_CV }, 'FormCVSave', 'formularioBANCO', 'guardarFormBancoCV', { callbackAfter: true, callbackBefore: true }, () => {
 
                     Swal.fire({
                         icon: 'info',
@@ -56,7 +157,6 @@ $("#guardarFormBancoCV").click(function (e) {
                     $('.swal2-popup').addClass('ld ld-breath');
 
                 }, function (data) {
-
                     ID_BANCO_CV = data.bancocv.ID_BANCO_CV;
 
                     Swal.fire({
@@ -64,21 +164,25 @@ $("#guardarFormBancoCV").click(function (e) {
                         title: 'Información guardada correctamente',
                         confirmButtonText: 'OK',
                     }).then(() => {
-                        window.location.reload();
+                        document.getElementById('formulario_cv').style.display = 'none';
+                        document.getElementById('nav_var').style.display = 'block';
+
+                        const sectionFinalizado = document.getElementById('sectionFinalizado');
+                        sectionFinalizado.classList.remove('d-none');
+                        sectionFinalizado.classList.add('d-flex');
+
+                        // Reiniciar formulario
+                        document.getElementById('formularioBANCO').reset();
+                        $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
+                        $('#INTERES_OPERATIVAS')[0].selectize.clear();
+
+                        ID_BANCO_CV = 0;
+
+                        // Desactivar botón y reiniciar términos
+                        document.getElementById('guardarFormBancoCV').disabled = true;
+                        document.getElementById('aceptaTerminos').checked = false;
                     });
-
-                    $('#miModal_BANCOCV').modal('hide');
-                    document.getElementById('formularioBANCO').reset();
-                    // Tablabancocv.ajax.reload();
-                    $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
-                    $('#INTERES_OPERATIVAS')[0].selectize.clear();
-
-                    ID_BANCO_CV = 0;
-
-                    document.getElementById('guardarFormBancoCV').disabled = true;
-                    document.getElementById('aceptaTerminos').checked = false;
                 });
-
             }, 1);
 
         } else {
@@ -87,9 +191,8 @@ $("#guardarFormBancoCV").click(function (e) {
                 text: "Al guardarla, se podrá usar",
                 icon: "question",
             }, async function () {
-
                 await loaderbtn('guardarFormBancoCV');
-                await ajaxAwaitFormData({ api: 1, ID_BANCO_CV: ID_BANCO_CV }, 'BancoSave', 'formularioBANCO', 'guardarFormBancoCV', { callbackAfter: true, callbackBefore: true }, () => {
+                await ajaxAwaitFormData({ api: 1, ID_BANCO_CV: ID_BANCO_CV }, 'FormCVSave', 'formularioBANCO', 'guardarFormBancoCV', { callbackAfter: true, callbackBefore: true }, () => {
 
                     Swal.fire({
                         icon: 'info',
@@ -101,37 +204,40 @@ $("#guardarFormBancoCV").click(function (e) {
                     $('.swal2-popup').addClass('ld ld-breath');
 
                 }, function (data) {
-                    setTimeout(() => {
-                        ID_BANCO_CV = data.bancocv.ID_BANCO_CV;
+                    ID_BANCO_CV = data.bancocv.ID_BANCO_CV;
 
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Información editada correctamente',
-                            confirmButtonText: 'OK',
-                        }).then(() => {
-                            window.location.reload();
-                        });
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Información editada correctamente',
+                        confirmButtonText: 'OK',
+                    }).then(() => {
+                        // Ocultar los elementos actuales
+                        document.getElementById('formulario_cv').style.display = 'none';
+                        document.getElementById('nav_var').style.display = 'none';
 
-                        $('#miModal_BANCOCV').modal('hide');
+                        // Mostrar la sección finalizada
+                        const sectionFinalizado = document.getElementById('sectionFinalizado');
+                        sectionFinalizado.classList.remove('d-none');
+                        sectionFinalizado.classList.add('d-flex');
+
+                        // Reiniciar formulario
                         document.getElementById('formularioBANCO').reset();
                         $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
                         $('#INTERES_OPERATIVAS')[0].selectize.clear();
 
                         ID_BANCO_CV = 0;
 
+                        // Desactivar botón y reiniciar términos
                         document.getElementById('guardarFormBancoCV').disabled = true;
                         document.getElementById('aceptaTerminos').checked = false;
-                    }, 300);
+                    });
                 });
             }, 1);
         }
-
     } else {
         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
     }
 });
-
-
 
 
 
@@ -161,7 +267,6 @@ $("#guardarFormBancoCV").click(function (e) {
                     if (labelArchivo) labelArchivo.innerText = 'CURP. ';
                     if (archivoCurpCv) {
                         archivoCurpCv.setAttribute('name', 'ARCHIVO_CURP_CV');
-                        archivoCurpCv.setAttribute('required', true);
                     }
                     document.getElementById('ID_PASAPORTE').setAttribute('name', 'TEMP_PASAPORTE');
                 } else if (nacionalidad == '2') {
@@ -391,6 +496,7 @@ var $select = $('#INTERES_ADMINISTRATIVA').selectize({
 });
 var selectizeInstance = $select[0].selectize;
 
+
 var $select1 = $('#INTERES_OPERATIVAS').selectize({
     plugins: ['remove_button'],
     delimiter: ',',
@@ -407,6 +513,262 @@ var selectizeInstance1 = $select1[0].selectize;
 
 
 
+
+
+
+
+// document.querySelectorAll('#CURP_CV, #ID_PASAPORTE').forEach(element => {
+//     element.addEventListener('blur', function () {
+//         var curp = this.value;
+
+//         if (curp) {
+//             bloquearInputs(true);
+//             Swal.fire({
+//                 title: 'Consultando información',
+//                 text: 'Por favor, espere...',
+//                 allowOutsideClick: false,
+//                 showConfirmButton: false,
+//                 didOpen: () => {
+//                     Swal.showLoading();
+//                 }
+//             });
+
+//             fetch('/actualizarinfo', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                     'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+//                 },
+//                 body: JSON.stringify({ curp: curp })
+//             })
+//             .then(response => {
+//                 if (!response.ok) {
+//                     throw new Error('HTTP error, status = ' + response.status);
+//                 }
+//                 return response.json();
+//             })
+//             .then(data => {
+//                 Swal.close();
+//                 bloquearInputs(false);
+
+//                 if (data.message) {
+//                     alertToast(data.message);
+//                 } else {
+//                     document.getElementById('NOMBRE_CV').value = data.NOMBRE_CV || '';
+//                     document.getElementById('PRIMER_APELLIDO_CV').value = data.PRIMER_APELLIDO_CV || '';
+//                     document.getElementById('SEGUNDO_APELLIDO_CV').value = data.SEGUNDO_APELLIDO_CV || '';
+//                     document.getElementById('CORREO_CV').value = data.CORREO_CV || '';
+//                     document.getElementById('TELEFONO1').value = data.TELEFONO1 || '';
+//                     document.getElementById('TELEFONO2').value = data.TELEFONO2 || '';
+//                     document.getElementById('CURP_CV').value = data.CURP_CV || '';
+//                     document.getElementById('GENERO').value = data.GENERO || '';
+//                     document.getElementById('ULTIMO_GRADO_CV').value = data.ULTIMO_GRADO_CV || '';
+//                     document.getElementById('NOMBRE_LICENCIATURA_CV').value = data.NOMBRE_LICENCIATURA_CV || '';
+//                     document.getElementById('TIPO_POSGRADO_CV').value = data.TIPO_POSGRADO_CV || '';
+//                     document.getElementById('NOMBRE_POSGRADO_CV').value = data.NOMBRE_POSGRADO_CV || '';
+//                     document.getElementById('NACIONALIDAD').value = data.NACIONALIDAD || '';
+
+//                     if (data.NACIONALIDAD === '1') {
+//                         $('#campo-curp').show();
+//                         $('#campo-pasaporte').hide();
+
+//                         document.getElementById('CURP_CV').setAttribute('name', 'CURP_CV');
+//                         document.getElementById('ID_PASAPORTE').setAttribute('name', 'TEMP_PASAPORTE');
+//                     } else if (data.NACIONALIDAD === '2') {
+//                         $('#campo-pasaporte').show();
+//                         $('#campo-curp').hide();
+
+//                         document.getElementById('ID_PASAPORTE').setAttribute('name', 'CURP_CV');
+//                         document.getElementById('CURP_CV').setAttribute('name', 'TEMP_CURP');
+//                         document.getElementById('ID_PASAPORTE').value = data.CURP_CV || '';
+//                         document.getElementById('label-archivo').innerText = 'Pasaporte';
+//                     }
+
+//                     if (data.CUENTA_TITULO_LICENCIATURA_CV) {
+//                         document.querySelector(`input[name="CUENTA_TITULO_LICENCIATURA_CV"][value="${data.CUENTA_TITULO_LICENCIATURA_CV}"]`).checked = true;
+//                     }
+//                     if (data.CEDULA_TITULO_LICENCIATURA_CV) {
+//                         document.querySelector(`input[name="CEDULA_TITULO_LICENCIATURA_CV"][value="${data.CEDULA_TITULO_LICENCIATURA_CV}"]`).checked = true;
+//                     }
+//                     if (data.CUENTA_TITULO_POSGRADO_CV) {
+//                         document.querySelector(`input[name="CUENTA_TITULO_POSGRADO_CV"][value="${data.CUENTA_TITULO_POSGRADO_CV}"]`).checked = true;
+//                     }
+//                     if (data.CEDULA_TITULO_POSGRADO_CV) {
+//                         document.querySelector(`input[name="CEDULA_TITULO_POSGRADO_CV"][value="${data.CEDULA_TITULO_POSGRADO_CV}"]`).checked = true;
+//                     }
+
+//                     document.getElementById('ETIQUETA_TELEFONO1').value = data.ETIQUETA_TELEFONO1 || '';
+//                     document.getElementById('ETIQUETA_TELEFONO2').value = data.ETIQUETA_TELEFONO2 || '';
+
+//                     document.getElementById('dia').value = data.DIA_FECHA_CV || '';
+//                     document.getElementById('mes').value = data.MES_FECHA_CV || '';
+//                     document.getElementById('ano').value = data.ANIO_FECHA_CV || '';
+
+//                     if (data.INTERES_ADMINISTRATIVA) {
+//                         selectizeInstance.setValue(data.INTERES_ADMINISTRATIVA);
+//                     }
+
+//                     if (data.INTERES_OPERATIVAS) {
+//                         selectizeInstance1.setValue(data.INTERES_OPERATIVAS);
+//                     }
+
+//                     var ultimoGradoCV = document.getElementById('ULTIMO_GRADO_CV');
+//                     if (ultimoGradoCV) {
+//                         var event = new Event('change');
+//                         ultimoGradoCV.dispatchEvent(event);
+//                     }
+
+//                     var tipoPosgradoCV = document.getElementById('TIPO_POSGRADO_CV');
+//                     if (tipoPosgradoCV) {
+//                         var event = new Event('change');
+//                         tipoPosgradoCV.dispatchEvent(event);
+//                     }
+//                 }
+//             })
+//             .catch(error => {
+//                 Swal.close();
+//                 bloquearInputs(false);
+//                 alertToast('No se encontró ningún registro con esa CURP.');
+//             });
+//         } else {
+//             alertToast('Debe ingresar un valor para la CURP.');
+//         }
+//     });
+// });
+
+
+
+function bloquearInputs(bloquear) {
+    const inputs = document.querySelectorAll('#formularioBANCO input, #formularioBANCO select, #formularioBANCO textarea, #formularioBANCO button');
+    inputs.forEach(input => {
+        input.disabled = bloquear;
+    });
+}
+
+
+
+
+
+
+
+
+let consultaRealizada = false;
+
+document.querySelectorAll('#CURP_CV, #ID_PASAPORTE').forEach(element => {
+    element.addEventListener('change', function () {
+        var curp = this.value.trim();
+
+        if (curp && !consultaRealizada) {
+            consultaRealizada = true; 
+
+            fetch('/actualizarinfo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                },
+                body: JSON.stringify({ curp: curp })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('HTTP error, status = ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data && !data.message) {
+                    Swal.fire({
+                        title: 'Usted ya está registrado',
+                        text: '¿Desea actualizar su información?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sí, actualizar',
+                        cancelButtonText: 'No'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+
+                            document.getElementById('ID_BANCO_CV').value = data.ID_BANCO_CV || '';
+
+                            document.getElementById('NOMBRE_CV').value = data.NOMBRE_CV || '';
+                            document.getElementById('PRIMER_APELLIDO_CV').value = data.PRIMER_APELLIDO_CV || '';
+                            document.getElementById('SEGUNDO_APELLIDO_CV').value = data.SEGUNDO_APELLIDO_CV || '';
+                            document.getElementById('CORREO_CV').value = data.CORREO_CV || '';
+                            document.getElementById('TELEFONO1').value = data.TELEFONO1 || '';
+                            document.getElementById('TELEFONO2').value = data.TELEFONO2 || '';
+                            document.getElementById('CURP_CV').value = data.CURP_CV || '';
+                            document.getElementById('GENERO').value = data.GENERO || '';
+                            document.getElementById('ULTIMO_GRADO_CV').value = data.ULTIMO_GRADO_CV || '';
+                            document.getElementById('NOMBRE_LICENCIATURA_CV').value = data.NOMBRE_LICENCIATURA_CV || '';
+                            document.getElementById('TIPO_POSGRADO_CV').value = data.TIPO_POSGRADO_CV || '';
+                            document.getElementById('NOMBRE_POSGRADO_CV').value = data.NOMBRE_POSGRADO_CV || '';
+                            document.getElementById('NACIONALIDAD').value = data.NACIONALIDAD || '';
+
+                            if (data.NACIONALIDAD === '1') {
+                                document.getElementById('campo-curp').style.display = 'block';
+                                document.getElementById('campo-pasaporte').style.display = 'none';
+                            } else if (data.NACIONALIDAD === '2') {
+                                document.getElementById('campo-pasaporte').style.display = 'block';
+                                document.getElementById('campo-curp').style.display = 'none';
+                            }
+
+                            if (data.CUENTA_TITULO_LICENCIATURA_CV) {
+                                document.querySelector(`input[name="CUENTA_TITULO_LICENCIATURA_CV"][value="${data.CUENTA_TITULO_LICENCIATURA_CV}"]`).checked = true;
+                            }
+                            if (data.CEDULA_TITULO_LICENCIATURA_CV) {
+                                document.querySelector(`input[name="CEDULA_TITULO_LICENCIATURA_CV"][value="${data.CEDULA_TITULO_LICENCIATURA_CV}"]`).checked = true;
+                            }
+                            if (data.CUENTA_TITULO_POSGRADO_CV) {
+                                document.querySelector(`input[name="CUENTA_TITULO_POSGRADO_CV"][value="${data.CUENTA_TITULO_POSGRADO_CV}"]`).checked = true;
+                            }
+                            if (data.CEDULA_TITULO_POSGRADO_CV) {
+                                document.querySelector(`input[name="CEDULA_TITULO_POSGRADO_CV"][value="${data.CEDULA_TITULO_POSGRADO_CV}"]`).checked = true;
+                            }
+        
+                            document.getElementById('ETIQUETA_TELEFONO1').value = data.ETIQUETA_TELEFONO1 || '';
+                            document.getElementById('ETIQUETA_TELEFONO2').value = data.ETIQUETA_TELEFONO2 || '';
+        
+                            document.getElementById('dia').value = data.DIA_FECHA_CV || '';
+                            document.getElementById('mes').value = data.MES_FECHA_CV || '';
+                            document.getElementById('ano').value = data.ANIO_FECHA_CV || '';
+        
+                            if (data.INTERES_ADMINISTRATIVA) {
+                                selectizeInstance.setValue(data.INTERES_ADMINISTRATIVA);
+                            }
+        
+                            if (data.INTERES_OPERATIVAS) {
+                                selectizeInstance1.setValue(data.INTERES_OPERATIVAS);
+                            }
+        
+                            var ultimoGradoCV = document.getElementById('ULTIMO_GRADO_CV');
+                            if (ultimoGradoCV) {
+                                var event = new Event('change');
+                                ultimoGradoCV.dispatchEvent(event);
+                            }
+        
+                            var tipoPosgradoCV = document.getElementById('TIPO_POSGRADO_CV');
+                            if (tipoPosgradoCV) {
+                                var event = new Event('change');
+                                tipoPosgradoCV.dispatchEvent(event);
+                            }
+
+
+
+
+
+                        } else {
+                            document.getElementById('formularioBANCO').reset();
+                            consultaRealizada = false;
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                consultaRealizada = false;
+            });
+        }
+    });
+});
 
 
 

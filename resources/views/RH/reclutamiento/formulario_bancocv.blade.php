@@ -141,7 +141,7 @@
 <body>
 
   
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover;">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover; display: block" id="nav_var">
     <div class="container-fluid">
         <a class="navbar-brand" href="http://www.results-in-performance.com/">
             <img src="/assets/images/rip_logoblanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
@@ -152,7 +152,7 @@
 
 
 
-<div class="card">
+<div class="card" id="formulario_cv" style="display: block">
     <img src="/assets/images/rip_logocolores.png" class="card-img-top" alt="Imagen superior">
 
     {{-- <img src="/assets/images/Colorancho.png" class="card-img-top" alt="Imagen superior"> --}}
@@ -162,6 +162,12 @@
             <div class="mb-3">
                 <input type="hidden" class="form-control" id="AVISO_PRIVACIDAD" name="AVISO_PRIVACIDAD" value="1">
             </div>
+
+            
+
+            <input type="hidden" class="form-control" id="ID_BANCO_CV" name="ID_BANCO_CV" value="0">
+
+            
             <div class="mb-3">
                 <label>Nombre(s)</label>
                 <input type="text" class="form-control" id="NOMBRE_CV" name="NOMBRE_CV" required>
@@ -422,7 +428,7 @@
 
 
             
-            <div class="form-check mb-3">
+            <div class="form-check mb-3" id="ACEPTAR_TERMINOS" style="display: block">
                 <input type="checkbox" class="form-check-input small-checkbox" id="aceptaTerminos">
                 <label class="form-check-label" for="aceptaTerminos">He aceptado los términos y condiciones del aviso de privacidad de Results In Performance</label>
             </div>
@@ -431,6 +437,36 @@
     </div>
 </div>
     
+
+
+<section id="sectionFinalizado" class="container  mt-5 d-none justify-content-center " style="height: 100vh;">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="card text-center" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin: 10px;">
+                <div class="card-header" style="background-color: #88bd23; color: #fff; font-weight: bold; border-radius: 12px 12px 0 0;">
+                    <h6 class="card-title m-0" style="font-size: 1.5rem; font-weight: bold; color: #ffffff;">
+                        <i class="fa fa-check-circle" style="color: #ffffff;"></i>
+                        Información guardada correctamente
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <p class="lead mt-3 mb-3">
+                        <i class="fa fa-check-circle" style="color: #88bd23;"></i>
+                        Su información ha sido almacenada exitosamente.
+                    </p>
+                    <a href="https://results-in-performance.com/" class="btn" style="background-color: #28a745; color: #fff; padding: 10px 20px; font-size: 1.2rem; font-weight: bold; border-radius: 5px; text-decoration: none;">
+                        Regresar
+                    </a>
+                </div>
+                <div class="card-footer text-muted" style="background-color: #009bcf; color: #fff; font-weight: bold; border-radius: 0 0 12px 12px;">
+                    <h6 class="card-title m-0" style="font-size: 1rem; font-weight: bold; color: #ffffff;">
+                        Results In Performance
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 
     <!-- Modal de Aviso de Privacidad -->
@@ -491,7 +527,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
      <!-- Funciones generales -->
      <script src="/assets/js_sitio/funciones.js"></script>
-    <script src="/assets/js_sitio/reclutamiento/banco_cv.js"></script>
+    <script src="/assets/js_sitio/reclutamiento/banco_cv.js?v=1.0"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>

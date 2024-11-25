@@ -39,6 +39,8 @@ use App\Http\Controllers\reclutamiento\bancocvController;
 use App\Http\Controllers\reclutamiento\vacantesactivasController;
 use App\Http\Controllers\organizacion\catalogoareainteresController;
 use App\Http\Controllers\organizacion\catalogogeneroControlller;
+use App\Http\Controllers\reclutamiento\formCVController;
+
 
 
 // Controladores de seleccion
@@ -220,6 +222,11 @@ Route::get('/Catálogo_generales', function () {return view('RH.Catalogos.catalo
 // Formulario de Banco de CV externo a la aplicación
 Route::get('/Formulario-vacantes', [bancocvController::class, 'index1']);
 Route::post('/BancoSave', [bancocvController::class, 'store']);
+
+
+Route::post('/FormCVSave', [formCVController::class, 'store']);
+Route::post('/actualizarinfocv', [formCVController::class, 'actualizarinfocv'])->name('actualizarinfocv');
+
 
 //  Tabla para poder la información del formulario de Banco de CV 
 Route::get('/Listavacantes', [bancocvController::class, 'index']);

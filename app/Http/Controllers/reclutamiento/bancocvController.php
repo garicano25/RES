@@ -250,7 +250,7 @@ public function store(Request $request)
                         $pasaporteFileFolder = $curpFolder . '/PASAPORTE/';
                         $pasaporteFileName = 'PASAPORTE_' . $identificador . '.' . $pasaporteFile->getClientOriginalExtension();
                         $pasaporteFile->storeAs($pasaporteFileFolder, $pasaporteFileName);
-                        $bancocvs->ARCHIVO_CURP_CV = $pasaporteFileFolder . $pasaporteFileName; // Usa el mismo campo para almacenar el archivo del pasaporte.
+                        $bancocvs->ARCHIVO_CURP_CV = $pasaporteFileFolder . $pasaporteFileName;
                     }
                 }
 
