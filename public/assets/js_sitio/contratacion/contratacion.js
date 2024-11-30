@@ -1,12 +1,14 @@
 //VARIABLES GLOBALES
 var curpSeleccionada; 
+var contrato_id = null; 
+
 
 
 // ID DE LOS FORMULARIOS 
 ID_FORMULARIO_CONTRATACION = 0;
 ID_DOCUMENTO_SOPORTE = 0;
 ID_CONTRATOS_ANEXOS = 0;
-
+ID_RECIBOS_NOMINA = 0;
 
 
 
@@ -14,11 +16,12 @@ ID_CONTRATOS_ANEXOS = 0;
 var Tabladocumentosoporte;
 var tablaDocumentosCargada = false; 
 
-
-
 var Tablacontratosyanexos;
 var tablacontratosCargada = false; 
 
+
+var Tablarecibonomina;
+var tablareciboCargada = false; 
 
 
 Tablacontratacion = null
@@ -39,10 +42,25 @@ $('#myTab a').on('click', function (e) {
 
 
 $(document).ready(function() {
+
+
+
+    
     $("#contratos-tab").click(function () {
         $('#datosgenerales-tab').closest('li').css("display", 'none');
+        $('#contratosdoc-tab').closest('li').css("display", 'none');
+
     });
+    
+
+    $("#datosgenerales-tab").click(function () {
+        $('#contratosdoc-tab').closest('li').css("display", 'none');
+    });
+
+
+
 });
+
 
 
 
@@ -57,19 +75,9 @@ $(document).ready(function() {
 
         $('#datosgenerales-tab').closest('li').css("display", 'block');
         
-        
-
-     
-
-
-
-        // Mostrar el step1 y ocultar todos los demás steps
+    
         $("#step1").css('display', 'flex');
         $("#step1-content").css('display', 'block');
-
-
-
-
 
         $( "#step2" ).css('display', 'none');
         $( "#step2-content" ).css('display', 'none');
@@ -78,30 +86,13 @@ $(document).ready(function() {
         $( "#step3" ).css('display', 'none');
         $( "#step3-content" ).css('display', 'none');
 
-      
-        $( "#step4" ).css('display', 'none');
-        $( "#step4-content" ).css('display', 'none');
-
-      
-        $( "#step5" ).css('display', 'none');
-        $( "#step5-content" ).css('display', 'none');
-
-      
-        $( "#step6" ).css('display', 'none');
-        $( "#step6-content" ).css('display', 'none');
-
-      
+    
         $( "#step7" ).css('display', 'none');
         $( "#step7-content" ).css('display', 'none');
 
-      
-        $( "#step8" ).css('display', 'none');
-        $( "#step8-content" ).css('display', 'none');
+    
 
-      
-
-
-
+    
         $('#datosgenerales-tab').tab('show'); 
 
         var drEvent = $('#FOTO_USUARIO').dropify({
@@ -125,13 +116,13 @@ $(document).ready(function() {
         drEvent.resetPreview();  
         drEvent.clearElement();  
 
-        // Borrar el formulario
         $('#FormularioCONTRATACION').each(function(){
             this.reset();
         });
 
         $(".listadeBeneficiario").empty();
 
+        $("#steps_menu_tab1").click();
 
 
     });
@@ -215,7 +206,7 @@ function reloadTablaContratacion() {
 
 
 
- // <!-- ============================================================== -->
+// <!-- ============================================================== -->
 // <!-- STEP 1  -->
 // <!-- ============================================================== -->
 
@@ -227,7 +218,6 @@ document.getElementById('step1').addEventListener('click', function() {
 
     document.getElementById('step1-content').style.display = 'block';
 });
-
 
 $("#guardarDatosGenerales").click(function (e) {
     e.preventDefault();
@@ -326,10 +316,10 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     });
 
     $('#datosgenerales-tab').closest('li').css("display", 'block');
-    $('#step2, #step3, #step4, #step5, #step6, #step7, #step8').css("display", "flex");
+    $('#step2, #step3,#step7').css("display", "flex");
 
     $('#step1-content').css("display", 'block');
-    $('#step2-content, #step3-content, #step4-content, #step5-content, #step6-content, #step7-content, #step8-content').css("display", 'none');
+    $('#step2-content, #step3-content, #step7-content').css("display", 'none');
 
     if (row.data().FOTO_USUARIO) {
         var archivo = row.data().FOTO_USUARIO;
@@ -368,7 +358,6 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     $("#CURP").val(curp);
     curpSeleccionada = curp;
 
-    // Llenar el formulario con los datos correspondientes
     $("#NOMBRE_COLABORADOR").val(row.data().NOMBRE_COLABORADOR);
     $("#PRIMER_APELLIDO").val(row.data().PRIMER_APELLIDO);
     $("#SEGUNDO_APELLIDO").val(row.data().SEGUNDO_APELLIDO);
@@ -441,6 +430,8 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     $(".listadeBeneficiario").empty();
     obtenerDatosBeneficiarios(row);
 
+    $("#step1").click();
+
     $(".div_trabajador_nombre").html(row.data().NOMBRE_COLABORADOR + ' ' + row.data().PRIMER_APELLIDO + ' ' + row.data().SEGUNDO_APELLIDO);
 
     if (row.data().DIA_COLABORADOR && row.data().MES_COLABORADOR && row.data().ANIO_COLABORADOR) {
@@ -452,10 +443,12 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     setTimeout(() => {
         $('#ANIO_COLABORADOR').val(row.data().ANIO_COLABORADOR);
     }, 100);
+
+
+
+    $("#step1").click();
 });
 
-
-// CALCULAR LA EDAD 
 function calcularEdad(fechaNacimiento) {
     const hoy = new Date();
     const nacimiento = new Date(fechaNacimiento);
@@ -469,153 +462,11 @@ function calcularEdad(fechaNacimiento) {
     return edad;
 }
 
-// ACTULIZAR STEP CON LA CURP
 function actualizarStepsConCurp(curp) {
     $("#CURP").val(curp);
     curpSeleccionada = curp;
 }
 
-// AGREGAR CONTACTO BENEFICIARIO
-// document.addEventListener("DOMContentLoaded", function() {
-//     const botonAgregar = document.getElementById('botonagregarbeneficiario');
-//     botonAgregar.addEventListener('click', agregarBeneficiario);
-
-//     function agregarBeneficiario() {
-//         const divContacto = document.createElement('div');
-//         divContacto.classList.add('row', 'generarlistadebeneficiario','m-3');
-//         divContacto.innerHTML = `
-       
-//             <div class="col-lg-12 col-sm-1">
-//                     <div class="form-group">
-//                     <h5><i class="bi bi-person"></i> Agregar beneficiario</h5>                    
-//                     </div>
-//                 </div>
-//                 <div class="col-lg-3 col-sm-6">
-//                     <div class="form-group">
-//                         <label>Nombre completo *</label>
-//                             <input type="text" class="form-control"  name="NOMBRE_BENEFICIARIO"required >
-//                     </div>
-//                 </div>
-//                 <div class="col-lg-3 col-sm-6">
-//                     <div class="form-group">
-//                         <label>Parentesco *</label>
-//                         <input type="text" class="form-control"  name="PARENTESCO_BENEFICIARIO" required>
-//                     </div>
-//                 </div>
-//                 <div class="col-lg-2 col-sm-6">
-//                     <div class="form-group">
-//                          <label>Porcentaje *</label>
-//                             <input type="number" class="form-control"  name="PORCENTAJE_BENEFICIARIO" required>
-//                     </div>
-//                 </div>
-//                 <div class="col-lg-2 col-sm-6">
-//                     <div class="form-group">
-//                        <label>Teléfono  1 </label>
-//                         <input type="number" class="form-control"  name="TELEFONO1_BENEFICIARIO" required>
-//                     </div>
-//                 </div>
-//                 <div class="col-lg-2 col-sm-6">
-//                     <div class="form-group">
-//                          <label>Teléfono  2 </label>
-//                         <input type="number" class="form-control"  name="TELEFONO2_BENEFICIARIO" >
-//                     </div>
-//                 </div>
-//                 <br>
-//                 <div class="col-12 mt-4">
-//                     <div class="form-group" style="text-align: center;">
-//                         <button type="button" class="btn btn-danger botonEliminarBeneficiario">Eliminar beneficiario <i class="bi bi-trash-fill"></i></button>
-//                     </div>
-//                 </div>
-            
-//         `;
-//         const contenedor = document.querySelector('.listadeBeneficiario');
-//         contenedor.appendChild(divContacto);
-
-//         const botonEliminar = divContacto.querySelector('.botonEliminarBeneficiario');
-//         botonEliminar.addEventListener('click', function() {
-//             contenedor.removeChild(divContacto);
-//         });
-//     }
-// });
-
-// function obtenerDatosBeneficiarios(data) {
-//     let row = data.data().BENEFICIARIOS_JSON;
-//     var beneficiarios = JSON.parse(row);
-    
-//     let contadorBeneficiario = 1;
-
-//      $.each(beneficiarios, function(index, contacto) {
-//         var nombre = contacto.NOMBRE_BENEFICIARIO;
-//         var parentesco = contacto.PARENTESCO_BENEFICIARIO;
-//         var porcentaje = contacto.PORCENTAJE_BENEFICIARIO;
-//         var telefono1 = contacto.TELEFONO1_BENEFICIARIO;
-//         var telefono2 = contacto.TELEFONO2_BENEFICIARIO;
-        
-
-//         const divContacto = document.createElement('div');
-//         divContacto.classList.add('row');
-//         divContacto.classList.add('generarlistadebeneficiario','m-2'); 
-//         divContacto.innerHTML = `
-//         <div class="col-lg-12 col-sm-1">
-//             <div class="form-group d-flex align-items-center">
-//                 <h5><i class="bi bi-person"></i> Beneficiario N° ${contadorBeneficiario}  &nbsp; </h5>
-    
-//             </div>
-//         </div>
-
-
-//         <div class="col-lg-3 col-sm-6">
-//                     <div class="form-group">
-//                         <label>Nombre completo *</label>
-//                             <input type="text" class="form-control"  name="NOMBRE_BENEFICIARIO"   value="${nombre}"required >
-//                     </div>
-//                 </div>
-//                 <div class="col-lg-3 col-sm-6">
-//                     <div class="form-group">
-//                         <label>Parentesco *</label>
-//                         <input type="text" class="form-control"  name="PARENTESCO_BENEFICIARIO"  value="${parentesco}" required>
-//                     </div>
-//                 </div>
-//                 <div class="col-lg-2 col-sm-6">
-//                     <div class="form-group">
-//                          <label>Porcentaje *</label>
-//                             <input type="number" class="form-control"  name="PORCENTAJE_BENEFICIARIO"  value="${porcentaje}" required>
-//                     </div>
-//                 </div>
-//                 <div class="col-lg-2 col-sm-6">
-//                     <div class="form-group">
-//                        <label>Teléfono  1 </label>
-//                         <input type="number" class="form-control"  name="TELEFONO1_BENEFICIARIO"  value="${telefono1}" required>
-//                     </div>
-//                 </div>
-//                 <div class="col-lg-2 col-sm-6">
-//                     <div class="form-group">
-//                          <label>Teléfono  2 </label>
-//                         <input type="number" class="form-control"  name="TELEFONO2_BENEFICIARIO"  value="${telefono2}">
-//                     </div>
-//                 </div>
-
-//             <div class="col-12 mt-4">
-//                         <div class="form-group" style="text-align: center;">
-//                             <button type="button" class="btn btn-danger botonEliminarBeneficiario">Eliminar beneficiario <i class="bi bi-trash-fill"></i></button>
-//                         </div>
-//                 </div>
-//         `;
-//         const contenedor = document.querySelector('.listadeBeneficiario');
-//         contenedor.appendChild(divContacto);
-
-//         contadorBeneficiario++;
-
-//         const botonEliminar = divContacto.querySelector('.botonEliminarBeneficiario');
-//         botonEliminar.addEventListener('click', function() {
-//             contenedor.removeChild(divContacto);
-//         });
-
-//     });
-// }
-
-
-// Función para validar la suma de los porcentajes
 function validarPorcentajeBeneficiarios() {
     let suma = 0;
 
@@ -778,7 +629,7 @@ function obtenerDatosBeneficiarios(data) {
 }
 
 
- // <!-- ============================================================== -->
+// <!-- ============================================================== -->
 // <!-- STEP 2  -->
 // <!-- ============================================================== -->
 
@@ -797,6 +648,9 @@ document.getElementById('step2').addEventListener('click', function() {
         cargarTablaDocumentosSoporte();
         tablaDocumentosCargada = true;
     }
+
+    cargarDocumentosGuardados();
+
 });
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -878,11 +732,10 @@ $("#guardarDOCUMENTOSOPORTE").click(function (e) {
                     if ($.fn.DataTable.isDataTable('#Tabladocumentosoporte')) {
                         Tabladocumentosoporte.ajax.reload(null, false); 
                     }
+                    cargarDocumentosGuardados();
 
             })
-            
-            
-            
+             
         }, 1)
         
     } else {
@@ -918,6 +771,9 @@ $("#guardarDOCUMENTOSOPORTE").click(function (e) {
                         Tabladocumentosoporte.ajax.reload(null, false); 
                     }
 
+                    cargarDocumentosGuardados();
+
+
                 }, 300);  
             })
         }, 1)
@@ -931,7 +787,6 @@ $("#guardarDOCUMENTOSOPORTE").click(function (e) {
 });
 
 
-//  CARGAR TABLA DOCUMENTOS SOPORTE 
 function cargarTablaDocumentosSoporte() {
     if ($.fn.DataTable.isDataTable('#Tabladocumentosoporte')) {
         Tabladocumentosoporte.clear().destroy();
@@ -985,7 +840,6 @@ function cargarTablaDocumentosSoporte() {
     });
 }
 
-
 $('#Tabladocumentosoporte').on('click', '.ver-archivo-documentosoporte', function () {
     var tr = $(this).closest('tr');
     var row = Tabladocumentosoporte.row(tr);
@@ -1002,8 +856,6 @@ $('#Tabladocumentosoporte').on('click', '.ver-archivo-documentosoporte', functio
     abrirModal(url, nombreDocumentoSoporte);
 });
 
-
-
 const Modaldocumentosoporte = document.getElementById('miModal_DOCUMENTOS_SOPORTE')
 Modaldocumentosoporte.addEventListener('hidden.bs.modal', event => {
     
@@ -1012,6 +864,13 @@ Modaldocumentosoporte.addEventListener('hidden.bs.modal', event => {
    
     $('#miModal_DOCUMENTOS_SOPORTE .modal-title').html('Documento de soporte');
 
+    $('#TIPO_DOCUMENTO').prop('disabled', false); 
+    $('#NOMBRE_DOCUMENTO').prop('readonly', false); 
+
+
+    document.getElementById('quitar_documento').style.display = 'none';
+
+    document.getElementById('DOCUMENTO_ERROR').style.display = 'none';
 
 })
 
@@ -1021,15 +880,44 @@ $('#Tabladocumentosoporte').on('click', 'td>button.EDITAR', function () {
 
     ID_DOCUMENTO_SOPORTE = row.data().ID_DOCUMENTO_SOPORTE;
 
-     editarDatoTabla(row.data(), 'formularioDOCUMENTOS', 'miModal_DOCUMENTOS_SOPORTE', 1);
-  
-     $('#miModal_DOCUMENTOS_SOPORTE .modal-title').html(row.data().NOMBRE_DOCUMENTO);
+    editarDatoTabla(row.data(), 'formularioDOCUMENTOS', 'miModal_DOCUMENTOS_SOPORTE', 1);
 
+    $('#miModal_DOCUMENTOS_SOPORTE .modal-title').html(row.data().NOMBRE_DOCUMENTO);
+
+    $('#TIPO_DOCUMENTO').prop('disabled', true); 
+    $('#NOMBRE_DOCUMENTO').prop('readonly', true); 
 });
 
 
+function cargarDocumentosGuardados() {
+    if (!curpSeleccionada || curpSeleccionada.trim() === '') {
+        console.error('CURP no definida');
+        return;
+    }
 
- // <!-- ============================================================== -->
+    $.ajax({
+        url: '/obtenerguardados',
+        method: 'POST',
+        data: {
+            CURP: curpSeleccionada, 
+            _token: $('input[name="_token"]').val() 
+        },
+        success: function (data) {
+            let select = $('#TIPO_DOCUMENTO');
+            select.find('option').prop('disabled', false);
+
+            data.forEach(function (tipoDocumento) {
+                select.find(`option[value="${tipoDocumento}"]`).prop('disabled', true);
+            });
+
+        },
+        error: function (xhr, status, error) {
+            console.error('Error al cargar documentos guardados:', error);
+        }
+    });
+}
+
+// <!-- ============================================================== -->
 // <!-- STEP 3  -->
 // <!-- ============================================================== -->
 
@@ -1128,8 +1016,6 @@ document.getElementById("TIPO_DOCUMENTO_CONTRATO").addEventListener("change", fu
 const ModalContrato = document.getElementById('miModal_CONTRATO');
 ModalContrato.addEventListener('hidden.bs.modal', event => {
     
-
-
     ID_CONTRATOS_ANEXOS = 0
 
     document.getElementById('formularioCONTRATO').reset();
@@ -1147,8 +1033,13 @@ ModalContrato.addEventListener('hidden.bs.modal', event => {
     contratoInputs.forEach(element => element.required = false);
     vigenciaInputs.forEach(element => element.required = false);
 
-    // Opcional: resetear el valor del select principal
     document.getElementById('TIPO_DOCUMENTO_CONTRATO').value = "0";
+
+
+    
+    document.getElementById('quitar_contrato').style.display = 'none';
+
+    document.getElementById('DOCUEMNTO_ERROR_CONTRATO').style.display = 'none';
 });
 
 
@@ -1242,9 +1133,6 @@ $("#guardarCONTRATO").click(function (e) {
     
 });
 
-
-
-//  CARGAR TABLA CONTRATOS Y ANEXOS
 function cargarTablaContratosyanexos() {
     if ($.fn.DataTable.isDataTable('#Tablacontratosyanexos')) {
         Tablacontratosyanexos.clear().destroy();
@@ -1307,6 +1195,7 @@ function cargarTablaContratosyanexos() {
             }, 
             { data: 'BTN_DOCUMENTO', className: 'text-center' },
             { data: 'BTN_EDITAR', className: 'text-center' },
+            { data: 'BTN_CONTRATO', className: 'text-center' }
         ],
         columnDefs: [
             { targets: 0, title: '#', className: 'all text-center' },
@@ -1315,14 +1204,16 @@ function cargarTablaContratosyanexos() {
             { targets: 3, title: 'Vigencia del contrato', className: 'all text-center' },  
             { targets: 4, title: 'Vigencia del Acuerdo de <br> confidencialidad', className: 'all text-center' },  
             { targets: 5, title: 'Documento de soporte', className: 'all text-center' },  
-            { targets: 6, title: 'Editar', className: 'all text-center' },  
+            { targets: 6, title: 'Editar', className: 'all text-center' }, 
+            { targets: 7, title: 'Contrato', className: 'all text-center' },  
+
         ],
         rowCallback: function(row, data) {
             // Revisar vigencias y aplicar estilo si están próximas a vencer
             const diasContrato = calcularDiasRestantes(data.VIGENCIA_CONTRATO, true);
             const diasAcuerdo = calcularDiasRestantes(data.VIGENCIA_ACUERDO, true);
             
-            if ((diasContrato !== null && diasContrato <= 30) || (diasAcuerdo !== null && diasAcuerdo <= 30)) {
+            if ((diasContrato !== null && diasContrato <= 10) || (diasAcuerdo !== null && diasAcuerdo <= 10)) {
                 $(row).css({
                     "background-color": "#FFCCCC",
                     "border": "1px solid #FF0000",
@@ -1334,7 +1225,6 @@ function cargarTablaContratosyanexos() {
     });
 }
 
-// CALCULAR LOS DIAS RESTANTE Y DAR FORMATO
 function formatoFechaConDiasRestantes(fechaVencimiento) {
     if (!fechaVencimiento) return 'N/A';
 
@@ -1351,7 +1241,6 @@ function formatoFechaConDiasRestantes(fechaVencimiento) {
     }
 }
 
-// CALCULAR LOS DIAS RESTANTES 
 function calcularDiasRestantes(fechaVencimiento, returnNumber = false) {
     if (!fechaVencimiento) return null;
 
@@ -1402,22 +1291,45 @@ $('#Tablacontratosyanexos').on('click', '.ver-archivo-contratosyanexos', functio
     abrirModal(url, nombreDocumento);
 });
 
- // <!-- ============================================================== -->
-// <!-- STEP 8  -->
+
+
+
+$('#Tablacontratosyanexos').on('click', 'button.informacion', function () {
+
+    var tr = $(this).closest('tr');
+    var row = Tablacontratosyanexos.row(tr);
+
+
+    contrato_id = row.data().ID_CONTRATOS_ANEXOS;
+    NOMBRE_CATEGORIA = row.data().NOMBRE_CATEGORIA;
+    VIGENCIA_CONTRATO = row.data().VIGENCIA_CONTRATO;
+
+    
+
+
+    $('#contratosdoc-tab').closest('li').css("display", "block");
+    $("#contratosdoc-tab").click();
+
+
+    cargarTablaRecibosNomina();
+     
+
+});
+
+ 
+
+// <!-- ============================================================== -->
+// <!--                     DOCUMENTOS DE CONTRATOS                    -->
 // <!-- ============================================================== -->
 
 
 
 
-document.getElementById('step8').addEventListener('click', function() {
-    document.querySelectorAll('[id$="-content"]').forEach(function(content) {
-        content.style.display = 'none';
-    });
+// <!-- ============================================================== -->
+// <!--RECIBOS DE NOMINA-->
+// <!-- ============================================================== -->
 
-    document.getElementById('step8-content').style.display = 'block';
 
-  
-});
 
 
 
@@ -1448,3 +1360,173 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+
+
+$("#guardarRECIBONOMINA").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormularioV1('formularioRECIBO');
+
+    if (formularioValido) {
+
+    if (ID_RECIBOS_NOMINA == 0) {
+        
+        alertMensajeConfirm({
+            title: "¿Desea guardar la información?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarRECIBONOMINA')
+            await ajaxAwaitFormData({ api: 8,CONTRATO_ID:contrato_id, CURP: curpSeleccionada , ID_RECIBOS_NOMINA: ID_RECIBOS_NOMINA }, 'contratoSave', 'formularioRECIBO', 'guardarRECIBONOMINA', { callbackAfter: true, callbackBefore: true }, () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+                
+            }, function (data) {
+                    
+                ID_RECIBOS_NOMINA = data.soporte.ID_RECIBOS_NOMINA
+                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                     $('#miModal_RECIBOS_NOMINA').modal('hide')
+                    document.getElementById('formularioRECIBO').reset();
+
+                    
+                    // if ($.fn.DataTable.isDataTable('#Tablacontratosyanexos')) {
+                    //     Tablacontratosyanexos.ajax.reload(null, false); 
+                    // }
+
+            })
+            
+            
+            
+        }, 1)
+        
+    } else {
+            alertMensajeConfirm({
+            title: "¿Desea editar la información de este formulario?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarRECIBONOMINA')
+            await ajaxAwaitFormData({ api: 8,CONTRATO_ID:contrato_id, CURP: curpSeleccionada ,ID_RECIBOS_NOMINA: ID_RECIBOS_NOMINA }, 'contratoSave', 'formularioRECIBO', 'guardarRECIBONOMINA', { callbackAfter: true, callbackBefore: true }, () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+            }, function (data) {
+                    
+                setTimeout(() => {
+
+                    ID_RECIBOS_NOMINA = data.soporte.ID_RECIBOS_NOMINA
+                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                     $('#miModal_RECIBOS_NOMINA').modal('hide')
+                    document.getElementById('formularioRECIBO').reset();
+
+
+                    
+                    // if ($.fn.DataTable.isDataTable('#Tablacontratosyanexos')) {
+                    //     Tablacontratosyanexos.ajax.reload(null, false); 
+                    // }
+
+                }, 300);  
+            })
+        }, 1)
+    }
+
+} else {
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
+    
+});
+
+
+
+const Modalrecibonomina = document.getElementById('miModal_RECIBOS_NOMINA')
+Modalrecibonomina.addEventListener('hidden.bs.modal', event => {
+    
+    ID_RECIBOS_NOMINA = 0
+    document.getElementById('formularioRECIBO').reset();
+   
+    $('#miModal_RECIBOS_NOMINA .modal-title').html('Recibo de nómina');
+
+    document.getElementById('quitar_recibo').style.display = 'none';
+
+    document.getElementById('RECIBO_ERROR').style.display = 'none';
+
+})
+
+
+
+
+function cargarTablaRecibosNomina() {
+    if ($.fn.DataTable.isDataTable('#Tablarecibonomina')) {
+        Tablarecibonomina.clear().destroy();
+    }
+
+    Tablarecibonomina = $("#Tablarecibonomina").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        ajax: {
+            dataType: 'json',
+            data: { contrato: contrato_id }, 
+            method: 'GET',
+            cache: false,
+            url: '/Tablarecibonomina',  
+            beforeSend: function () {
+                $('#loadingIcon6').css('display', 'inline-block');
+            },
+            complete: function () {
+                $('#loadingIcon6').css('display', 'none');
+                Tablarecibonomina.columns.adjust().draw(); 
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#loadingIcon').css('display', 'none');
+                alertErrorAJAX(jqXHR, textStatus, errorThrown);
+            },
+            dataSrc: 'data'
+        },
+        columns: [
+            { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+            { data: 'NOMBRE_RECIBO', className: 'text-center' },
+            { 
+                data: 'FECHA_RECIBO', 
+                className: 'text-center',
+                render: function(data) { return data ? data : 'N/A'; }
+            }, 
+            { data: 'BTN_DOCUMENTO', className: 'text-center' },
+            { data: 'BTN_EDITAR', className: 'text-center' },
+        ],
+        columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'Nombre del documento', className: 'all text-center' },  
+            { targets: 2, title: 'Fecha del recibo', className: 'all text-center' },  
+            { targets: 3, title: 'Documento', className: 'all text-center' },  
+            { targets: 4, title: 'Editar', className: 'all text-center' }, 
+
+        ],
+       
+    });
+}

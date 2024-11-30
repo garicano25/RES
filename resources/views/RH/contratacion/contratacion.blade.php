@@ -48,7 +48,7 @@
     width: 49px;
     height: 49px;
     border-radius: 50%;
-    background-color: #e0e0e0;
+    background-color: #fffdfd;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,7 +59,7 @@
 
 .step-circle i {
     font-size: 24px;
-    color: #999999;
+    color: #c9c4c4;
 }
 
 
@@ -87,6 +87,9 @@
             <li class="nav-item"   style="display: none;">
                 <a class="nav-link" id="datosgenerales-tab" data-toggle="tab" href="#datosgenerales" role="tab" aria-controls="datosgenerales" aria-selected="false" >Expediente del colaborador</a>
             </li>
+            <li class="nav-item"   style="display: none;">
+                <a class="nav-link" id="contratosdoc-tab" data-toggle="tab" href="#contratosdoc" role="tab" aria-controls="contratosdoc" aria-selected="false" >Contratos y anexos</a>
+            </li>
         </ul>
     </div>
     <div class="card-body">
@@ -103,6 +106,10 @@
                     </button>
                 </ol>
 
+                <div class="col-12 text-center">
+                    	
+
+                </div>
                 
                 <table id="Tablacontratacion" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
                     
@@ -138,7 +145,7 @@
                     <div class="col-12 mt-5">
                         <div class="multisteps-form">
                             <div class="multisteps-form__progress">
-                                <div class="multisteps-form__progress-btn" id="step1">
+                                <div class="multisteps-form__progress-btn js-active" id="step1">
                                     <div class="step-circle">
                                         <i class="bi bi-briefcase-fill"></i>
                                     </div>
@@ -156,7 +163,7 @@
                                     </div>
                                     <span>Contratos y anexos</span>
                                 </div>
-                                <div class="multisteps-form__progress-btn" id="step4">
+                                {{-- <div class="multisteps-form__progress-btn" id="step4">
                                     <div class="step-circle">
                                         <i class="bi bi-hospital-fill"></i>
                                     </div>
@@ -173,19 +180,19 @@
                                         <i class="bi bi-person-circle"></i>
                                     </div>
                                     <span>Acciones disciplinarias</span>
-                                </div>
+                                </div> --}}
                                 <div class="multisteps-form__progress-btn" id="step7">
                                     <div class="step-circle">
                                         <i class="bi bi-file-person-fill"></i>
                                     </div>
                                     <span>CV</span>
                                 </div>
-                                <div class="multisteps-form__progress-btn" id="step8">
+                                {{-- <div class="multisteps-form__progress-btn" id="step8">
                                     <div class="step-circle">
                                         <i class="bi bi-pen-fill"></i>
                                     </div>
                                     <span>Recibos</span>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         
@@ -556,13 +563,10 @@
                         <table id="Tabladocumentosoporte" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
                         </table>
                     </div>
-
                 </div>
 
 
                 <!-- Step 3 Contratos y anexos -->
-
-
 
 
                 <div id="step3-content" style="display: none;">
@@ -586,52 +590,169 @@
 
 
 
-                <!-- Step 8 Recibos de nómina  -->
+                
 
-                <div id="step8-content" style="display: none;">
-                    <ol class="breadcrumb mt-5">
-                        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-pen-fill"></i> &nbsp;Recibos</h3>
-                        <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_RECIBOS_NOMINA" style="margin-left: auto;">
-                            Nuevo  &nbsp;<i class="bi bi-plus-circle"></i>
-                        </button>
-                    </ol>
-                    <div class="card-body position-relative">
-                        <i id="loadingIcon1" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
-                        <table id="Tabladocumentosoporte" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
-                        </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div> {{--  FINALIZA EL TAB DE EXPEDIENTE COLABORADOR --}}
+
+
+                <div class="tab-pane fade" id="contratosdoc" role="tabpanel" aria-labelledby="contratosdoc-tab">
+
+                    <div class="col-12 mt-4">
+                        <ol class="breadcrumb m-b-10" style="background-color:#ffff !important; color :#0c3f64;  border: #0c3f64 2px solid;">
+                            <!-- Informacion Basica del contrato -->
+                            <div class="row">
+                                <div class="col-6">
+                                    <p><i class="fa fa-users" aria-hidden="true"></i>Cargo: <span id="contrato_cargo" style="color: #009efb;"></span> </p>
+
+        
+                                </div>
+                            
+                                <div class="col-6">
+                                    <p><i class="fa fa-calendar-times-o" aria-hidden="true"></i>Fecha vigencia: <span id="contrato_fecha_final" style="color: #009efb;"></span></p>
+
+                                </div>
+                                
+                            </div>
+                        </ol>
                     </div>
-                </div>
 
 
 
+                    <div id="anexos_contrato" >
+                        <ol class="breadcrumb mt-5">
+                            <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-text-fill"></i> &nbsp;Anexos</h3>
+                            <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#" style="margin-left: auto;">
+                                Nuevo  &nbsp;<i class="bi bi-plus-circle"></i>
+                            </button>
+                        </ol>
+                        <div class="card-body position-relative">
+                            <i id="loadingIcon2" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                            <table id="Tablanexos" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                            </table>
+                        </div>
+                    </div>
 
 
 
+                    <div id="informacion_medica_contratos" >
+                        <ol class="breadcrumb mt-5">
+                            <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-hospital-fill"></i> &nbsp;Información Médica</h3>
+                            <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#" style="margin-left: auto;">
+                                Nuevo  &nbsp;<i class="bi bi-plus-circle"></i>
+                            </button>
+                        </ol>
+                        <div class="card-body position-relative">
+                            <i id="loadingIcon3" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                            <table id="Tablainformacionmedica" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="incidencias_contratos" >
+                        <ol class="breadcrumb mt-5">
+                            <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-person-check-fill"></i> &nbsp;Incidencias</h3>
+                            <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#" style="margin-left: auto;">
+                                Nuevo  &nbsp;<i class="bi bi-plus-circle"></i>
+                            </button>
+                        </ol>
+                        <div class="card-body position-relative">
+                            <i id="loadingIcon4" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                            <table id="Tablaincidencias" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                            </table>
+                        </div>
+                    </div>
+
+
+                    <div id="acciones_disciplinarias_contratos" >
+                        <ol class="breadcrumb mt-5">
+                            <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-person-circle"></i> &nbsp;Acciones disciplinarias</h3>
+                            <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#" style="margin-left: auto;">
+                                Nuevo  &nbsp;<i class="bi bi-plus-circle"></i>
+                            </button>
+                        </ol>
+                        <div class="card-body position-relative">
+                            <i id="loadingIcon5" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                            <table id="Tablaccionesdisciplinarias" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                            </table>
+                        </div>
+                    </div>
 
 
 
+                    <div id="recibos_nomina" >
+                        <ol class="breadcrumb mt-5">
+                            <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-pen-fill"></i> &nbsp;Recibos de nómina</h3>
+                            <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_RECIBOS_NOMINA" style="margin-left: auto;">
+                                Nuevo  &nbsp;<i class="bi bi-plus-circle"></i>
+                            </button>
+                        </ol>
+                        <div class="card-body position-relative">
+                            <i id="loadingIcon6" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                            <table id="Tablarecibonomina" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                            </table>
+                        </div>
+                    </div>
+            
+                </div> {{--  FINALIZA EL TAB DE CONTRATO --}}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -723,7 +844,7 @@
                             <option value="0" disabled selected>Seleccione una opción</option>
                             <option value="1">Requisición de personal</option>
                             <option value="2">Antecedentes, Imparcialidad y Beneficiarios</option>
-                            <option value="3">Contrato</option>
+                            <option value="3" >Contrato</option>
                             <option value="4">Acuerdo de confidencialidad</option>
                             <option value="5">Compromiso de independencia, integridad e imparcialidad</option>
                             <option value="6">Aviso de privacidad</option>
@@ -795,6 +916,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- ============================================================== -->
 <!-- MODAL RECIBO -->

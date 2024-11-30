@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\contratacion\contratacionModel;
 use App\Models\contratacion\documentosoporteModel;
-
 use App\Models\contratacion\contratosanexosModel;
+use App\Models\contratacion\reciboscontratoModel;
+
 
 
 
@@ -32,9 +33,6 @@ class contratacionController extends Controller
         WHERE ACTIVO = 1
         ");
 
-
-
-
         return view('RH.contratacion.contratacion', compact('areas'));
     }
 
@@ -49,8 +47,8 @@ public function Tablacontratacion()
         foreach ($tabla as $value) {
             
          
-                       $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
-                // $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+        $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+            // $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
         
         }
         
@@ -68,7 +66,9 @@ public function Tablacontratacion()
 }
     
 
-// STEP 1 DATOS GENERALES
+/////////////////////////////////////////// STEP 1  DATOS GENERALES //////////////////////////////////
+
+
 
 
 public function mostrarfotocolaborador($colaborador_id)
@@ -80,7 +80,7 @@ public function mostrarfotocolaborador($colaborador_id)
 
     
 
-// STEP 2 DOCUMENTOS SOPORTE
+/////////////////////////////////////////// STEP 2 DOCUMENTOS DE SOPORTE //////////////////////////////////
 public function Tabladocumentosoporte(Request $request)
 {
     try {
@@ -104,9 +104,6 @@ public function Tabladocumentosoporte(Request $request)
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                 $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentosoporte" data-id="' . $value->ID_DOCUMENTO_SOPORTE . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-
-
-
 
             }
         }
@@ -133,9 +130,21 @@ public function mostrardocumentosoporte($id)
 
 
 
+public function obtenerDocumentosGuardadosPorCURP(Request $request)
+{
+    $curp = $request->input('CURP');
+    $documentos = documentosoporteModel::where('CURP', $curp)
+                  ->pluck('TIPO_DOCUMENTO')
+                  ->toArray();
+
+    return response()->json($documentos);
+}
 
 
-// STEP 3 
+
+/////////////////////////////////////////// STEP 3  CONTRATOS Y ANEXOS //////////////////////////////////
+
+
 
 
 public function Tablacontratosyanexos(Request $request)
@@ -151,21 +160,25 @@ public function Tablacontratosyanexos(Request $request)
         LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = rec.NOMBRE_CARGO");
 
         foreach ($tabla as $value) {
+
             if ($value->ACTIVO == 0) {
 
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR" ><i class="bi bi-eye"></i></button>';
                 $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-
             } else {
-
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                 $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
 
-
+                if ($value->TIPO_DOCUMENTO_CONTRATO == 3) {
+                    $value->BTN_CONTRATO = '<button type="button" class="btn btn-success   btn-custom rounded-pill  informacion"  id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
+                } else {
+                    $value->BTN_CONTRATO = '<button type="button" class="btn btn-secondary btn-custom rounded-pill informacion" disabled><i class="bi bi-ban"></i></button>';
+                }
             }
         }
+
 
         return response()->json([
             'data' => $tabla,
@@ -192,13 +205,54 @@ public function mostrarcontratosyanexos($id)
 // STEP 5 
 // STEP 6  
 // STEP 7 
-// STEP 8  
+
+// RECIBOS DE NOMINA 
+
+
+
+public function Tablarecibonomina(Request $request)
+{
+    try {
+        $contrato = $request->get('contrato');
+
+        $tabla = reciboscontratoModel::where('CONTRATO_ID', $contrato)->get();
+
+
+        // $tabla = documentosoporteModel::get();
+
+
+        foreach ($tabla as $value) {
+            if ($value->ACTIVO == 0) {
+
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR" ><i class="bi bi-eye"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-recibonomina" data-id="' . $value->ID_RECIBOS_NOMINA . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+            } else {
+
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-recibonomina" data-id="' . $value->ID_RECIBOS_NOMINA . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+            }
+        }
+
+        return response()->json([
+            'data' => $tabla,
+            'msj' => 'Información consultada correctamente'
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'msj' => 'Error ' . $e->getMessage(),
+            'data' => 0
+        ]);
+    }
+}
 
 
 
 
-
-
+/////////////////////////////////////////// STORE //////////////////////////////////
 public function store(Request $request)
 {
     try {
@@ -401,11 +455,75 @@ public function store(Request $request)
                     break;
 
 
-
+                         // RECIBOS DE NOMINA  
 
 
                 
-                
+                         case 8:
+                            if ($request->ID_RECIBOS_NOMINA == 0) {
+                                DB::statement('ALTER TABLE recibos_contrato AUTO_INCREMENT=1;');
+                                $soportes = reciboscontratoModel::create($request->except('DOCUMENTO_RECIBO')); 
+                        
+                                if ($request->hasFile('DOCUMENTO_RECIBO')) {
+                                    $documento = $request->file('DOCUMENTO_RECIBO');
+                                    $curp = $request->CURP;
+                                    $idDocumento = $soportes->ID_RECIBOS_NOMINA;
+                                    $contratoId = $soportes->CONTRATO_ID; 
+                        
+                                    $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_RECIBO) . '.' . $documento->getClientOriginalExtension();
+                        
+                                    $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Recibos de nomina/' . $idDocumento;
+                                    $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+                        
+                                    $soportes->DOCUMENTO_RECIBO = $rutaCompleta;
+                                    $soportes->save();
+                                }
+                            } else {
+                                if (isset($request->ELIMINAR)) {
+                                    if ($request->ELIMINAR == 1) {
+                                        $soportes = reciboscontratoModel::where('ID_RECIBOS_NOMINA', $request['ID_RECIBOS_NOMINA'])
+                                            ->update(['ACTIVO' => 0]);
+                                        $response['code'] = 1;
+                                        $response['soporte'] = 'Desactivada';
+                                    } else {
+                                        $soportes = reciboscontratoModel::where('ID_RECIBOS_NOMINA', $request['ID_RECIBOS_NOMINA'])
+                                            ->update(['ACTIVO' => 1]);
+                                        $response['code'] = 1;
+                                        $response['soporte'] = 'Activada';
+                                    }
+                                } else {
+                                    $soportes = reciboscontratoModel::find($request->ID_RECIBOS_NOMINA);
+                                    $soportes->update($request->except('DOCUMENTO_RECIBO'));
+                        
+                                    if ($request->hasFile('DOCUMENTO_RECIBO')) {
+                                        if ($soportes->DOCUMENTO_RECIBO && Storage::exists($soportes->DOCUMENTO_RECIBO)) {
+                                            Storage::delete($soportes->DOCUMENTO_RECIBO); 
+                                        }
+                        
+                                        $documento = $request->file('DOCUMENTO_RECIBO');
+                                        $curp = $request->CURP;
+                                        $idDocumento = $soportes->ID_RECIBOS_NOMINA;
+                                        $contratoId = $soportes->CONTRATO_ID; 
+                        
+                                        $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_RECIBO) . '.' . $documento->getClientOriginalExtension();
+                        
+                                        $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Recibos de nomina/' . $idDocumento;
+                                        $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+                        
+                                        $soportes->DOCUMENTO_RECIBO = $rutaCompleta;
+                                        $soportes->save();
+                                    }
+                        
+                                    $response['code'] = 1;
+                                    $response['soporte'] = 'Actualizada';
+                                }
+                            }
+                        
+                            $response['code'] = 1;
+                            $response['soporte'] = $soportes;
+                            return response()->json($response);
+                            break;
+                        
                     
 
 

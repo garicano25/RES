@@ -342,6 +342,7 @@ Route::get('/usuariocolaborador/{id}', [contratacionController::class, 'mostrarf
 // DOCUMENTOS DE SOPORTE
 Route::get('/Tabladocumentosoporte', [contratacionController::class, 'Tabladocumentosoporte']);
 Route::get('/mostrardocumentosoporte/{id}', [contratacionController::class, 'mostrardocumentosoporte']);
+Route::post('/obtenerguardados', [contratacionController::class, 'obtenerDocumentosGuardadosPorCURP']);
 
 
 // CONTRATOS Y ANEXOS 
@@ -349,3 +350,7 @@ Route::get('/mostrardocumentosoporte/{id}', [contratacionController::class, 'mos
 
 Route::get('/Tablacontratosyanexos', [contratacionController::class, 'Tablacontratosyanexos']);
 Route::get('/mostrarcontratosyanexos/{id}', [contratacionController::class, 'mostrarcontratosyanexos']);
+
+// RECIBOS DE NOMINA
+
+Route::get('/Tablarecibonomina', [contratacionController::class, 'Tablarecibonomina']);

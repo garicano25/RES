@@ -45,6 +45,14 @@
     <link rel="stylesheet" href="assets/css/dpt.css">
     @endif
 
+    @if(request()->is('Contratación'))
+    <!-- form_wizard_steps -->
+    <link href="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_style.css" rel="stylesheet">
+    </link>
+    @endif
+
+
+
 
     <style>
 
@@ -481,7 +489,9 @@
 @endif
 
 @if(request()->is('Contratación'))
-<script src="/assets/js_sitio/contratacion/contratacion.js?v=4.0"></script>
+<script src="/assets/js_sitio/contratacion/contratacion.js?v=5.0"></script>
+<!-- Form wizard -->
+<script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
 @endif
 
 
