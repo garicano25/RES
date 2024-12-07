@@ -23,6 +23,12 @@ var tablacontratosCargada = false;
 var Tablarecibonomina;
 var tablareciboCargada = false; 
 
+var Tablacontratacion1;
+var tablacontracion1Cargada = false; 
+
+
+
+
 
 Tablacontratacion = null
 
@@ -64,6 +70,43 @@ $(document).ready(function() {
 
 
 
+const textoActivo = document.getElementById('texto_activo');
+const textoInactivo = document.getElementById('texto_inactivo');
+const tablaActivo = document.getElementById('tabla_activo');
+const tablaInactivo = document.getElementById('tabla_inactivo');
+
+textoActivo.addEventListener('click', () => {
+    tablaActivo.style.display = 'block';
+    tablaInactivo.style.display = 'none';
+    textoActivo.classList.add('texto-seleccionado');
+    textoActivo.classList.remove('texto-no-seleccionado');
+    textoInactivo.classList.add('texto-no-seleccionado');
+    textoInactivo.classList.remove('texto-seleccionado');
+
+    Tablacontratacion.columns.adjust().draw(); 
+
+});
+
+textoInactivo.addEventListener('click', () => {
+    tablaActivo.style.display = 'none';
+    tablaInactivo.style.display = 'block';
+    textoInactivo.classList.add('texto-seleccionado');
+    textoInactivo.classList.remove('texto-no-seleccionado');
+    textoActivo.classList.add('texto-no-seleccionado');
+    textoActivo.classList.remove('texto-seleccionado');
+
+    if (tablacontracion1Cargada) {
+        Tablacontratacion1.columns.adjust().draw();
+    } else {
+        cargarTablaContratacionInactivo();
+        tablacontracion1Cargada = true;
+    }
+
+
+});
+
+
+
 $(document).ready(function() {
     $("#boton_nuevo_contrato").click(function () {
         
@@ -87,8 +130,8 @@ $(document).ready(function() {
         $( "#step3-content" ).css('display', 'none');
 
     
-        $( "#step7" ).css('display', 'none');
-        $( "#step7-content" ).css('display', 'none');
+        $( "#step4" ).css('display', 'none');
+        $( "#step4-content" ).css('display', 'none');
 
     
 
@@ -151,13 +194,14 @@ var Tablacontratacion = $("#Tablacontratacion").DataTable({
         cache: false,
         url: '/Tablacontratacion',
         beforeSend: function () {
-            mostrarCarga();
+            $('#loadingIcon8').css('display', 'inline-block');
         },
         complete: function () {
-            Tablacontratacion.columns.adjust().draw();
-            ocultarCarga();
+            $('#loadingIcon8').css('display', 'none');
+            Tablacontratacion.columns.adjust().draw(); 
         },
         error: function (jqXHR, textStatus, errorThrown) {
+            $('#loadingIcon8').css('display', 'none');
             alertErrorAJAX(jqXHR, textStatus, errorThrown);
         },
         dataSrc: 'data'
@@ -188,11 +232,18 @@ var Tablacontratacion = $("#Tablacontratacion").DataTable({
     ]
 });
 
+
+
+
+
+
+
 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     var target = $(e.target).attr("href"); 
     if (target === '#contratos') {
         Tablacontratacion.columns.adjust().draw(); 
     }
+    
 });
 
 
@@ -202,7 +253,314 @@ function reloadTablaContratacion() {
 
 
 
+// <!-- ============================================================== -->
+// <!-- COLABORADORES INACTIVOS  -->
+// <!-- ============================================================== -->
 
+
+function cargarTablaContratacionInactivo() {
+    if ($.fn.DataTable.isDataTable('#Tablacontratacion1')) {
+        Tablacontratacion1.clear().destroy();
+    }
+
+    Tablacontratacion1 = $("#Tablacontratacion1").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+       ajax: {
+        dataType: 'json',
+        data: {},
+        method: 'GET',
+        cache: false,
+        url: '/Tablacontratacion1',
+        beforeSend: function () {
+            $('#loadingIcon7').css('display', 'inline-block');
+        },
+        complete: function () {
+            $('#loadingIcon7').css('display', 'none');
+            Tablacontratacion1.columns.adjust().draw(); 
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $('#loadingIcon7').css('display', 'none');
+            alertErrorAJAX(jqXHR, textStatus, errorThrown);
+        },
+        dataSrc: 'data'
+    },
+        columns: [
+            { 
+                data: null,
+                render: function(data, type, row, meta) {
+                    return meta.row + 1; 
+                }
+            },
+            {
+                data: null,  render: function (data, type, row)
+                 {
+                    return row.NOMBRE_COLABORADOR + ' ' + row.PRIMER_APELLIDO + ' ' + row.SEGUNDO_APELLIDO;
+                }
+            }
+            ,
+            { data: 'CURP' },
+            { data: 'BTN_EDITAR' },
+            { data: 'BTN_ACTIVAR' }
+
+        ],
+        columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'Nombre del colaborador', className: 'all text-center nombre-column' },
+            { targets: 2, title: 'CURP', className: 'all text-center' },
+            { targets: 3, title: 'Mostrar', className: 'all text-center' },
+            { targets: 4, title: 'Activar', className: 'all text-center' }
+
+        ]
+    });
+}
+
+
+
+
+
+
+$(document).on('change', '.ACTIVAR', function () {
+    var checkbox = $(this); 
+    var row = checkbox.closest('tr'); 
+    var data = Tablacontratacion1.row(row).data(); 
+    var id = checkbox.data('id'); 
+    var estadoAnterior = checkbox.prop('checked');
+
+    if (!id || !data) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo obtener la información del colaborador',
+            timer: 2000,
+            timerProgressBar: true
+        });
+        return;
+    }
+
+    var nombreColaborador = `${data.NOMBRE_COLABORADOR} ${data.PRIMER_APELLIDO} ${data.SEGUNDO_APELLIDO}`;
+
+    var accion = "activar";
+    var url = '/activarColaborador/' + id;
+
+    Swal.fire({
+        title: `Confirme para ${accion} al colaborador`,
+        text: `Está a punto de activar a ${nombreColaborador}. ¿Desea continuar?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: 'Sí, confirmar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "POST",
+                url: url,
+                dataType: "json",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    if (response.status === "success") {
+                        if ($.fn.DataTable.isDataTable('#Tablacontratacion1')) {
+                            Tablacontratacion1.ajax.reload(null, false);
+                        }
+
+                        if ($.fn.DataTable.isDataTable('#Tablacontratacion')) {
+                            Tablacontratacion.ajax.reload(null, false);
+                        }
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Colaborador activado',
+                            text: `${nombreColaborador} ha sido activado exitosamente`,
+                            timer: 2000,
+                            timerProgressBar: true
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: response.status,
+                            title: 'Atención',
+                            text: response.msj,
+                            timer: 2000,
+                            timerProgressBar: true
+                        });
+                        checkbox.prop('checked', !estadoAnterior);
+                    }
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'No se pudo completar la acción',
+                        timer: 2000,
+                        timerProgressBar: true
+                    });
+                    checkbox.prop('checked', !estadoAnterior);
+                }
+            });
+        } else {
+            checkbox.prop('checked', !estadoAnterior);
+        }
+    });
+});
+
+
+
+
+
+$('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablacontratacion1.row(tr);
+    ID_FORMULARIO_CONTRATACION = row.data().ID_FORMULARIO_CONTRATACION;
+
+    $('#FormularioCONTRATACION').each(function() {
+        this.reset();
+    });
+
+    $('#datosgenerales-tab').closest('li').css("display", 'block');
+    $('#step2, #step3,#step4').css("display", "flex");
+
+    $('#step1-content').css("display", 'block');
+    $('#step2-content, #step3-content, #step4-content').css("display", 'none');
+
+    if (row.data().FOTO_USUARIO) {
+        var archivo = row.data().FOTO_USUARIO;
+        var extension = archivo.substring(archivo.lastIndexOf("."));
+        var imagenUrl = '/usuariocolaborador/' + row.data().ID_FORMULARIO_CONTRATACION + extension;
+
+        if ($('#FOTO_USUARIO').data('dropify')) {
+            $('#FOTO_USUARIO').dropify().data('dropify').destroy();
+            $('#FOTO_USUARIO').dropify().data('dropify').settings.defaultFile = imagenUrl;
+            $('#FOTO_USUARIO').dropify().data('dropify').init();
+        } else {
+            $('#FOTO_USUARIO').attr('data-default-file', imagenUrl);
+            $('#FOTO_USUARIO').dropify({
+                messages: {
+                    'default': 'Arrastre la imagen aquí o haga click',
+                    'replace': 'Arrastre la imagen o haga clic para reemplazar',
+                    'remove': 'Quitar',
+                    'error': 'Ooops, ha ocurrido un error.'
+                },
+                error: {
+                    'fileSize': 'Demasiado grande ({{ value }} max).',
+                    'minWidth': 'Ancho demasiado pequeño (min {{ value }}}px).',
+                    'maxWidth': 'Ancho demasiado grande (max {{ value }}}px).',
+                    'minHeight': 'Alto demasiado pequeño (min {{ value }}}px).',
+                    'maxHeight': 'Alto demasiado grande (max {{ value }}px max).',
+                    'imageFormat': 'Formato no permitido, sólo ({{ value }}).'
+                }
+            });
+        }
+    } else {
+        $('#FOTO_USUARIO').dropify().data('dropify').resetPreview();
+        $('#FOTO_USUARIO').dropify().data('dropify').clearElement();
+    }
+
+    var curp = row.data().CURP;
+    $("#CURP").val(curp);
+    curpSeleccionada = curp;
+
+    $("#NOMBRE_COLABORADOR").val(row.data().NOMBRE_COLABORADOR);
+    $("#PRIMER_APELLIDO").val(row.data().PRIMER_APELLIDO);
+    $("#SEGUNDO_APELLIDO").val(row.data().SEGUNDO_APELLIDO);
+    $("#INICIALES_COLABORADOR").val(row.data().INICIALES_COLABORADOR);
+    $("#DIA_COLABORADOR").val(row.data().DIA_COLABORADOR);
+    $("#MES_COLABORADOR").val(row.data().MES_COLABORADOR);
+    $("#ANIO_COLABORADOR").val(row.data().ANIO_COLABORADOR);
+    $("#LUGAR_NACIMIENTO").val(row.data().LUGAR_NACIMIENTO);
+    $("#TELEFONO_COLABORADOR").val(row.data().TELEFONO_COLABORADOR);
+    $("#CORREO_COLABORADOR").val(row.data().CORREO_COLABORADOR);
+    $("#ESTADO_CIVIL").val(row.data().ESTADO_CIVIL);
+    $("#RFC_COLABORADOR").val(row.data().RFC_COLABORADOR);
+    $("#VIGENCIA_INE").val(row.data().VIGENCIA_INE);
+    $("#NSS_COLABORADOR").val(row.data().NSS_COLABORADOR);
+    $("#TIPO_SANGRE").val(row.data().TIPO_SANGRE);
+    $("#ALERGIAS_COLABORADOR").val(row.data().ALERGIAS_COLABORADOR);
+    $("#CALLE_COLABORADOR").val(row.data().CALLE_COLABORADOR);
+    $("#COLONIA_COLABORADOR").val(row.data().COLONIA_COLABORADOR);
+    $("#CODIGO_POSTAL").val(row.data().CODIGO_POSTAL);
+    $("#CIUDAD_COLABORADOR").val(row.data().CIUDAD_COLABORADOR);
+    $("#ESTADO_COLABORADOR").val(row.data().ESTADO_COLABORADOR);
+    $("#NOMBRE_EMERGENCIA").val(row.data().NOMBRE_EMERGENCIA);
+    $("#PARENTESCO_EMERGENCIA").val(row.data().PARENTESCO_EMERGENCIA);
+    $("#TELEFONO1_EMERGENCIA").val(row.data().TELEFONO1_EMERGENCIA);
+    $("#TELEFONO2_EMERGENCIA").val(row.data().TELEFONO2_EMERGENCIA);
+    $("#NOMBRE_BENEFICIARIO").val(row.data().NOMBRE_BENEFICIARIO);
+    $("#PARENTESCO_BENEFICIARIO").val(row.data().PARENTESCO_BENEFICIARIO);
+    $("#PORCENTAJE_BENEFICIARIO").val(row.data().PORCENTAJE_BENEFICIARIO);
+    $("#TELEFONO1_BENEFICIARIO").val(row.data().TELEFONO1_BENEFICIARIO);
+    $("#TELEFONO2_BENEFICIARIO").val(row.data().TELEFONO2_BENEFICIARIO);
+
+
+
+
+    $("#CIUDAD_LUGAR_NACIMIENTO").val(row.data().CIUDAD_LUGAR_NACIMIENTO);
+    $("#ESTADO_LUGAR_NACIMIENTO").val(row.data().ESTADO_LUGAR_NACIMIENTO);
+    $("#PAIS_LUGAR_NACIMIENTO").val(row.data().PAIS_LUGAR_NACIMIENTO);
+    $("#TIPO_DOCUMENTO_IDENTIFICACION").val(row.data().TIPO_DOCUMENTO_IDENTIFICACION);
+    $("#EMISION_DOCUMENTO").val(row.data().EMISION_DOCUMENTO);
+    $("#VIGENCIA_DOCUMENTO").val(row.data().VIGENCIA_DOCUMENTO);
+    $("#NUMERO_DOCUMENTO").val(row.data().NUMERO_DOCUMENTO);
+    $("#EXPEDIDO_DOCUMENTO").val(row.data().EXPEDIDO_DOCUMENTO);
+    $("#CALLE1_COLABORADOR").val(row.data().CALLE1_COLABORADOR);
+    $("#CALLE2_COLABORADOR").val(row.data().CALLE2_COLABORADOR);
+
+    $("#TIPO_VIALIDAD").val(row.data().TIPO_VIALIDAD);
+    $("#NOMBRE_VIALIDAD").val(row.data().NOMBRE_VIALIDAD);
+    $("#NUMERO_EXTERIOR").val(row.data().NUMERO_EXTERIOR);
+    $("#NUMERO_INTERIOR").val(row.data().NUMERO_INTERIOR);
+    $("#NOMBRE_COLONIA").val(row.data().NOMBRE_COLONIA);
+    $("#NOMBRE_LOCALIDAD").val(row.data().NOMBRE_LOCALIDAD);
+    $("#NOMBRE_MUNICIPIO").val(row.data().NOMBRE_MUNICIPIO);
+    $("#NOMBRE_ENTIDAD").val(row.data().NOMBRE_ENTIDAD);
+    $("#ENTRE_CALLE").val(row.data().ENTRE_CALLE);
+    $("#ENTRE_CALLE_2").val(row.data().ENTRE_CALLE_2);
+
+
+
+
+
+
+    actualizarStepsConCurp(curp);
+
+    tablaDocumentosCargada = false;
+    tablacontratosCargada = false;
+
+
+    $('#datosgenerales-tab').tab('show');
+
+    $(".listadeBeneficiario").empty();
+    obtenerDatosBeneficiarios(row);
+
+    $("#step1").click();
+
+    $(".div_trabajador_nombre").html(row.data().NOMBRE_COLABORADOR + ' ' + row.data().PRIMER_APELLIDO + ' ' + row.data().SEGUNDO_APELLIDO);
+
+    if (row.data().DIA_COLABORADOR && row.data().MES_COLABORADOR && row.data().ANIO_COLABORADOR) {
+        const fechaNacimiento = `${row.data().ANIO_COLABORADOR}-${row.data().MES_COLABORADOR}-${row.data().DIA_COLABORADOR}`;
+        const edad = calcularEdad(fechaNacimiento);
+        $('#EDAD_COLABORADOR').val(edad).prop('readonly', true).show();
+    }
+
+    setTimeout(() => {
+        $('#ANIO_COLABORADOR').val(row.data().ANIO_COLABORADOR);
+    }, 100);
+
+
+
+    $("#step1").click();
+});
 
 
 
@@ -265,9 +623,8 @@ $("#guardarDatosGenerales").click(function (e) {
                 }, function (data) {
                     curpSeleccionada = data.contrato.CURP;
                     ID_FORMULARIO_CONTRATACION = data.contrato.ID_FORMULARIO_CONTRATACION;
-                    $('#step2, #step3, #step4, #step5, #step6, #step7, #step8').css("display", "flex");
+                    $('#step2, #step3, #step4').css("display", "flex");
                     $("#informacionacademica").css('display', 'block');
-                    $("#experienciacolaborador").css('display', 'block');
 
                     alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
                     Tablacontratacion.ajax.reload();
@@ -316,10 +673,10 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     });
 
     $('#datosgenerales-tab').closest('li').css("display", 'block');
-    $('#step2, #step3,#step7').css("display", "flex");
+    $('#step2, #step3,#step4').css("display", "flex");
 
     $('#step1-content').css("display", 'block');
-    $('#step2-content, #step3-content, #step7-content').css("display", 'none');
+    $('#step2-content, #step3-content, #step4-content').css("display", 'none');
 
     if (row.data().FOTO_USUARIO) {
         var archivo = row.data().FOTO_USUARIO;
@@ -529,7 +886,7 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
             <div class="col-lg-2 col-sm-6">
                 <div class="form-group">
-                    <label>Teléfono  1 </label>
+                    <label>Teléfono 1 *</label>
                     <input type="number" class="form-control" name="TELEFONO1_BENEFICIARIO" required>
                 </div>
             </div>
@@ -597,7 +954,7 @@ function obtenerDatosBeneficiarios(data) {
             </div>
             <div class="col-lg-2 col-sm-6">
                 <div class="form-group">
-                    <label>Teléfono  1 </label>
+                    <label>Teléfono 1 *</label>
                     <input type="number" class="form-control" name="TELEFONO1_BENEFICIARIO" value="${telefono1}" required>
                 </div>
             </div>
@@ -1209,7 +1566,6 @@ function cargarTablaContratosyanexos() {
 
         ],
         rowCallback: function(row, data) {
-            // Revisar vigencias y aplicar estilo si están próximas a vencer
             const diasContrato = calcularDiasRestantes(data.VIGENCIA_CONTRATO, true);
             const diasAcuerdo = calcularDiasRestantes(data.VIGENCIA_ACUERDO, true);
             
@@ -1310,6 +1666,10 @@ $('#Tablacontratosyanexos').on('click', 'button.informacion', function () {
     $('#contratosdoc-tab').closest('li').css("display", "block");
     $("#contratosdoc-tab").click();
 
+
+
+    $('#contrato_cargo').text(NOMBRE_CATEGORIA);
+    $('#contrato_fecha_final').text(VIGENCIA_CONTRATO);
 
     cargarTablaRecibosNomina();
      
@@ -1468,8 +1828,6 @@ Modalrecibonomina.addEventListener('hidden.bs.modal', event => {
 })
 
 
-
-
 function cargarTablaRecibosNomina() {
     if ($.fn.DataTable.isDataTable('#Tablarecibonomina')) {
         Tablarecibonomina.clear().destroy();
@@ -1530,3 +1888,52 @@ function cargarTablaRecibosNomina() {
        
     });
 }
+
+
+
+$('#Tablarecibonomina').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablarecibonomina.row(tr);
+
+    ID_RECIBOS_NOMINA = row.data().ID_RECIBOS_NOMINA;
+
+    editarDatoTabla(row.data(), 'formularioRECIBO', 'miModal_RECIBOS_NOMINA', 1);
+
+    $('#miModal_RECIBOS_NOMINA .modal-title').html(row.data().NOMBRE_RECIBO);
+
+
+});
+
+
+
+$('#Tablarecibonomina').on('click', '.ver-archivo-recibonomina', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablarecibonomina.row(tr);
+    var id = $(this).data('id');
+
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+
+    var nombreDocumento = row.data().NOMBRE_RECIBO;
+    var url = '/mostrarecibosnomina/' + id;
+    
+    abrirModal(url, nombreDocumento);
+});
+
+
+
+
+// <!-- ============================================================== -->
+// <!-- STEP 4  -->
+// <!-- ============================================================== -->
+
+
+document.getElementById('step4').addEventListener('click', function() {
+    document.querySelectorAll('[id$="-content"]').forEach(function(content) {
+        content.style.display = 'none';
+    });
+
+    document.getElementById('step4-content').style.display = 'block';
+});

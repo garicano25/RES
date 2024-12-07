@@ -42,7 +42,7 @@ class contratacionController extends Controller
 public function Tablacontratacion()
 {
     try {
-        $tabla = contratacionModel::get();
+        $tabla = contratacionModel::where('ACTIVO', 1)->get();
 
         foreach ($tabla as $value) {
             
@@ -65,6 +65,65 @@ public function Tablacontratacion()
     }
 }
     
+
+
+public function Tablacontratacion1()
+{
+    try {
+        $tabla = contratacionModel::where('ACTIVO', 0)->get();
+
+        foreach ($tabla as $value) {
+            
+         
+        $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+        $value->BTN_ACTIVAR = '<label class="switch"><input type="checkbox" class="ACTIVAR"  data-id="' . $value->ID_FORMULARIO_CONTRATACION . '" ><span class="slider round"></span></label>';
+
+        }
+        
+        // Respuesta
+        return response()->json([
+            'data' => $tabla,
+            'msj' => 'Información consultada correctamente'
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'msj' => 'Error ' . $e->getMessage(),
+            'data' => 0
+        ]);
+    }
+}
+    
+
+
+
+public function activarColaborador(Request $request, $id)
+{
+    try {
+        $colaborador = contratacionModel::findOrFail($id);
+
+        if ($colaborador->ACTIVO == 1) {
+            return response()->json([
+                'msj' => 'El colaborador ya está activo',
+                'status' => 'info'
+            ]);
+        }
+
+        $colaborador->ACTIVO = 1;
+        $colaborador->save();
+
+        return response()->json([
+            'msj' => 'El colaborador ha sido activado exitosamente',
+            'status' => 'success'
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'msj' => 'Error: ' . $e->getMessage(),
+            'status' => 'error'
+        ]);
+    }
+}
+
+
 
 /////////////////////////////////////////// STEP 1  DATOS GENERALES //////////////////////////////////
 
@@ -201,10 +260,9 @@ public function mostrarcontratosyanexos($id)
 
 
 
-// STEP 4 
-// STEP 5 
-// STEP 6  
-// STEP 7 
+
+
+/////////////////////////////////////////// DOCUMENTOS DE CONTRATO //////////////////////////////////
 
 // RECIBOS DE NOMINA 
 
@@ -248,6 +306,22 @@ public function Tablarecibonomina(Request $request)
         ]);
     }
 }
+
+
+
+public function mostrarecibosnomina($id)
+{
+    $archivo = reciboscontratoModel::findOrFail($id)->DOCUMENTO_RECIBO;
+    return Storage::response($archivo);
+}
+
+
+
+
+
+/////////////////////////////////////////// STEP 4  CREACION DE CV´S  //////////////////////////////////
+
+
 
 
 

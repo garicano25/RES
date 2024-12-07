@@ -54,12 +54,10 @@ use App\Http\Controllers\seleccion\catalogopruebasController;
 use App\Http\Controllers\contratacion\contratacionController;
 
 //==============================================  login  ============================================== 
-// RUTA PRINCIPAL 
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
-// Rutas para login
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -260,7 +258,7 @@ Route::get('/Tablaareainteres', [catalogoareainteresController::class, 'Tablaare
 Route::get('/Postulaciones', [vacantesactivasController::class, 'index']);
 Route::get('/Tablapostulaciones', [vacantesactivasController::class, 'Tablapostulaciones']);
 
-// Poder visualizar la informaciónd de los postulantes y guardarlos 
+// Poder visualizar la información de los postulantes y guardarlos 
 Route::get('/informacionpostulantes/{idVacante}', [vacantesactivasController::class, 'informacionpostulantes']);
 Route::get('/obtener-cv/{curp}', [vacantesactivasController::class, 'mostrarCvPorCurp'])->name('mostrarCvPorCurp');
 Route::post('/guardarPostulantes', [vacantesactivasController::class, 'guardarPostulantes']);
@@ -336,6 +334,9 @@ Route::get('/Contratación', [contratacionController::class, 'index']);
 
 Route::post('/contratoSave', [contratacionController::class, 'store']);
 Route::get('/Tablacontratacion', [contratacionController::class, 'Tablacontratacion']);
+Route::get('/Tablacontratacion1', [contratacionController::class, 'Tablacontratacion1']);
+Route::post('/activarColaborador/{id}', [contratacionController::class, 'activarColaborador']);
+
 Route::get('/usuariocolaborador/{id}', [contratacionController::class, 'mostrarfotocolaborador']);
 
 
@@ -354,3 +355,4 @@ Route::get('/mostrarcontratosyanexos/{id}', [contratacionController::class, 'mos
 // RECIBOS DE NOMINA
 
 Route::get('/Tablarecibonomina', [contratacionController::class, 'Tablarecibonomina']);
+Route::get('/mostrarecibosnomina/{id}', [contratacionController::class, 'mostrarecibosnomina']);

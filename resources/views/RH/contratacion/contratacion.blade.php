@@ -64,6 +64,24 @@
 
 
 
+.texto-seleccionado {
+        color: #0d6efd;
+        font-weight: bold;
+    }
+
+    .texto-no-seleccionado {
+        color: gray;
+    }
+
+    .texto-no-seleccionado:hover {
+        text-decoration: underline;
+    }
+
+
+
+
+
+
 </style>
 
 
@@ -102,19 +120,28 @@
                         <i class="bi bi-folder2-open"></i>&nbsp;&nbsp;Contratos
                     </h3>        
                     <button type="button" class="btn btn-light waves-effect waves-light" id="boton_nuevo_contrato" style="margin-left: auto;">
-                        Nuevo  &nbsp;<i class="bi bi-plus-circle"></i>
+                        Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
                     </button>
                 </ol>
-
-                <div class="col-12 text-center">
-                    	
-
+            
+                <div class="d-flex justify-content-center align-items-center mb-4">
+                    <span id="texto_activo" class="texto-seleccionado me-4" style="cursor: pointer;">Activo</span>
+                    <span id="texto_inactivo" class="texto-no-seleccionado" style="cursor: pointer;">Inactivo</span>
                 </div>
-                
-                <table id="Tablacontratacion" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
-                    
-                </table>
+            
+                <div class="card-body position-relative" id="tabla_activo" style="display: block;">
+                    <i id="loadingIcon8" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                    <table id="Tablacontratacion" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                    </table>
+                </div>
+            
+                <div class="card-body position-relative" id="tabla_inactivo" style="display: none;">
+                    <i id="loadingIcon7" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                    <table id="Tablacontratacion1" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                    </table>
+                </div>
             </div>
+            
 
             <!-- Datos Generales Tab -->
             <div class="tab-pane fade" id="datosgenerales" role="tabpanel" aria-labelledby="datosgenerales-tab">
@@ -181,7 +208,7 @@
                                     </div>
                                     <span>Acciones disciplinarias</span>
                                 </div> --}}
-                                <div class="multisteps-form__progress-btn" id="step7">
+                                <div class="multisteps-form__progress-btn" id="step4">
                                     <div class="step-circle">
                                         <i class="bi bi-file-person-fill"></i>
                                     </div>
@@ -584,6 +611,21 @@
                 </div>
 
 
+                <!-- Step 4 CV´S -->
+
+                <div id="step4-content" style="display: none;">
+                    <ol class="breadcrumb mt-5">
+                        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-person-fill"></i> &nbsp;CV</h3>
+                        <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#" style="margin-left: auto;">
+                            Nuevo  &nbsp;<i class="bi bi-plus-circle"></i>
+                        </button>
+                    </ol>
+                    <div class="card-body position-relative">
+                        <i id="loadingIcon9" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                        <table id="Tablacvs" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                        </table>
+                    </div>
+                </div>
 
 
 
@@ -623,27 +665,26 @@
                 <div class="tab-pane fade" id="contratosdoc" role="tabpanel" aria-labelledby="contratosdoc-tab">
 
                     <div class="col-12 mt-4">
-                        <ol class="breadcrumb m-b-10" style="background-color:#ffff !important; color :#0c3f64;  border: #0c3f64 2px solid;">
-                            <!-- Informacion Basica del contrato -->
-                            <div class="row">
-                                <div class="col-6">
-                                    <p><i class="fa fa-users" aria-hidden="true"></i>Cargo: <span id="contrato_cargo" style="color: #009efb;"></span> </p>
-
-        
-                                </div>
-                            
-                                <div class="col-6">
-                                    <p><i class="fa fa-calendar-times-o" aria-hidden="true"></i>Fecha vigencia: <span id="contrato_fecha_final" style="color: #009efb;"></span></p>
-
-                                </div>
-                                
+                        <ol class="breadcrumb m-b-10" style="background-color: #ffffff !important; color: #0c3f64; border: #0c3f64 2px solid; padding: 10px; display: flex; justify-content: space-between; align-items: center;">
+                            <div style="flex: 1; text-align: center;">
+                                <p style="margin: 0;">
+                                    <i class="fa fa-users" aria-hidden="true"></i> 
+                                    Cargo: <span id="contrato_cargo" style="color: #009efb;"></span>
+                                </p>
+                            </div>
+                            <div style="flex: 1; text-align: center;">
+                                <p style="margin: 0;">
+                                    <i class="fa fa-calendar-times-o" aria-hidden="true"></i> 
+                                    Fecha vigencia: <span id="contrato_fecha_final" style="color: #009efb;"></span>
+                                </p>
                             </div>
                         </ol>
                     </div>
+                    
 
 
 
-                    <div id="anexos_contrato" >
+                    {{-- <div id="anexos_contrato" >
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-text-fill"></i> &nbsp;Anexos</h3>
                             <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#" style="margin-left: auto;">
@@ -655,7 +696,7 @@
                             <table id="Tablanexos" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
                             </table>
                         </div>
-                    </div>
+                    </div> --}}
 
 
 
