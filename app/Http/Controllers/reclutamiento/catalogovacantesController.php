@@ -4,7 +4,8 @@ namespace App\Http\Controllers\reclutamiento;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Artisan;
+use Exception;
 use App\Models\reclutamiento\catalogovacantesModel;
 use App\Models\organizacion\catalogocategoriaModel;
 use App\Models\reclutamiento\requerimientoModel;

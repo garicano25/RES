@@ -5,7 +5,8 @@ namespace App\Http\Controllers\organizacion;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\organizacion\catalogomotivovacanteModel;
-
+use Artisan;
+use Exception;
 use DB;
 
 class catalogomotivovacanteControlller extends Controller

@@ -247,48 +247,7 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
                 $('#tbodyFucnionesCargo').append(rowHtml);
             });
 
-                //FUNCIONES DE GESTIONES
-
-            // $('#tbodyFuncionesGestion').empty();
-
-          
-            //  $.each(data.GESTIONES, function(index, gestion) {
-            //     let rowHtml = '';
-            
-            //     if (gestion.TIPO == 'generica') {
-            //         rowHtml = `<tr>
-            //             <td id="desc-gestion-${gestion.ID}" class="description blocked">
-            //                 ${gestion.DESCRIPCION}
-            //             </td>
-            //             <td>
-            //                 <div class="switch-container">
-            //                     <label class="switch">
-            //                         <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_GESTION_DPT[]" value="${gestion.ID}">
-            //                         <span class="slider"></span>
-            //                     </label>
-            //                 </div>
-            //             </td>
-            //         </tr>`;
-            //     } else {
-            //         rowHtml = `<tr>
-            //             <td id="desc-gestion-${gestion.ID}" class="description active">
-            //                 ${gestion.DESCRIPCION}
-            //             </td>
-            //             <td>
-            //                 <div class="switch-container">
-            //                     <label class="switch">
-            //                         <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_GESTION_DPT[]" value="${gestion.ID}" checked>
-            //                         <span class="slider"></span>
-            //                     </label>
-            //                 </div>
-            //             </td>
-            //         </tr>`;
-            //     }
-            
-            //     $('#tbodyFuncionesGestion').append(rowHtml);
-            // });
-        
-        
+                    
 
         //CONSUILTAMOS LOS REPONSABLES DE CADA CATEGORIA
         if (lider == 1 || lider == 2) {

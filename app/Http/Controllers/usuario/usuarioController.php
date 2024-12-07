@@ -4,6 +4,8 @@ namespace App\Http\Controllers\usuario;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Artisan;
+use Exception;
 use Illuminate\Support\Facades\Storage;
 use App\Models\usuario\usuarioModel;
 use Illuminate\Support\Facades\Hash;

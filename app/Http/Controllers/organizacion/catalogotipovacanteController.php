@@ -4,6 +4,8 @@ namespace App\Http\Controllers\organizacion;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Artisan;
+use Exception;
 use App\Models\organizacion\catalogotipovacanteModel;
 
 use DB;

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\seleccion;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Artisan;
+use Exception;
 use App\Models\selección\catalogopruebasconocimientosModel;
 
 

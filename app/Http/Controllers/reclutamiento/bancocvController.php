@@ -4,7 +4,8 @@ namespace App\Http\Controllers\reclutamiento;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Artisan;
+use Exception;
 use Illuminate\Support\Facades\Storage;
 use App\Models\reclutamiento\bancocvModel;
 use App\Models\reclutamiento\catalogovacantesModel;
