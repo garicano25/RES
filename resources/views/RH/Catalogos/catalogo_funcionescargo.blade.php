@@ -50,7 +50,7 @@
                     <div class="mb-3">
                         <label class="col-form-label">Nombre de la categoría *</label>
 
-                        <select class="form-select" id="CATEGORIAS_CARGO" name="CATEGORIAS_CARGO" required >
+                        <select class="form-select" id="CATEGORIAS_CARGO" name="CATEGORIAS_CARGO"  >
                             <option value="0" selected disabled>Seleccione una opción</option>
                             @foreach ($areas as $area)
                             <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>
