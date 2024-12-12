@@ -122,7 +122,7 @@
               </div>
 
               <div class="col-10">
-                <select class="custom-select form-control" id="PUESTOS_INTERACTUAN_DPT" name="PUESTOS_INTERACTUAN_DPT[]" required multiple>
+                <select class="custom-select form-control" id="PUESTOS_INTERACTUAN_DPT" name="PUESTOS_INTERACTUAN_DPT[]"  multiple>
                   <option selected disabled></option>
                   @foreach ($categorias as $cat)
                   <option value="{{ $cat->ID }}-{{$cat->LIDER}}">{{ $cat->NOMBRE }}</option>
