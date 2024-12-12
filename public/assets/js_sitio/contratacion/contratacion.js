@@ -28,8 +28,6 @@ var tablacontracion1Cargada = false;
 
 
 
-
-
 Tablacontratacion = null
 
 
@@ -46,29 +44,18 @@ $('#myTab a').on('click', function (e) {
     $(this).tab('show');
 });
 
-
 $(document).ready(function() {
-
-
-
     
     $("#contratos-tab").click(function () {
         $('#datosgenerales-tab').closest('li').css("display", 'none');
         $('#contratosdoc-tab').closest('li').css("display", 'none');
-
     });
     
-
     $("#datosgenerales-tab").click(function () {
         $('#contratosdoc-tab').closest('li').css("display", 'none');
     });
 
-
-
 });
-
-
-
 
 const textoActivo = document.getElementById('texto_activo');
 const textoInactivo = document.getElementById('texto_inactivo');
@@ -104,8 +91,6 @@ textoInactivo.addEventListener('click', () => {
 
 
 });
-
-
 
 $(document).ready(function() {
     $("#boton_nuevo_contrato").click(function () {
@@ -155,10 +140,15 @@ $(document).ready(function() {
             }
         });
 
+        
+
         drEvent = drEvent.data('dropify');
         drEvent.resetPreview();  
         drEvent.clearElement();  
 
+
+        desbloquearBotones();
+        
         $('#FormularioCONTRATACION').each(function(){
             this.reset();
         });
@@ -171,6 +161,80 @@ $(document).ready(function() {
     });
 });
 
+
+function bloquearBotones() {
+    const botones = [
+        'botonagregarbeneficiario',
+        'guardarDatosGenerales',
+        'botoneliminarbene',
+        'guardarDOCUMENTOSOPORTE',
+        'guardarCONTRATO',
+        'guardarRECIBONOMINA'
+    ];
+
+    botones.forEach(botonId => {
+        const boton = document.getElementById(botonId);
+        if (boton) {
+            boton.setAttribute('disabled', 'true');
+        }
+    });
+}
+
+
+function desbloquearBotones() {
+    const botones = [
+        'botonagregarbeneficiario',
+        'guardarDatosGenerales',
+        'botoneliminarbene',
+        'guardarDOCUMENTOSOPORTE',
+        'guardarCONTRATO',
+        'guardarRECIBONOMINA'
+    ];
+
+    botones.forEach(botonId => {
+        const boton = document.getElementById(botonId);
+        if (boton) {
+            boton.removeAttribute('disabled');
+        }
+    });
+}
+
+
+
+
+function verificarEstadoYActualizarBotones() {
+    if (typeof curpSeleccionada === 'undefined' || !curpSeleccionada) {
+        console.error('CURP no definida.');
+        return;
+    }
+
+    fetch('/verificarestadobloqueo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        },
+        body: JSON.stringify({ curpSeleccionada }) 
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const bloqueodesactivado = data.bloqueodesactivado;
+
+            if (bloqueodesactivado === 0) {
+                bloquearBotones();
+            } else {
+                desbloquearBotones();
+            }
+        })
+        .catch(error => {
+            console.error('Error al verificar el estado:', error);
+        });
+}
 
 var Tablacontratacion = $("#Tablacontratacion").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
@@ -232,12 +296,6 @@ var Tablacontratacion = $("#Tablacontratacion").DataTable({
     ]
 });
 
-
-
-
-
-
-
 $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     var target = $(e.target).attr("href"); 
     if (target === '#contratos') {
@@ -245,7 +303,6 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     }
     
 });
-
 
 function reloadTablaContratacion() {
     Tablacontratacion.ajax.reload(null, false); 
@@ -325,11 +382,6 @@ function cargarTablaContratacionInactivo() {
         ]
     });
 }
-
-
-
-
-
 
 $(document).on('change', '.ACTIVAR', function () {
     var checkbox = $(this); 
@@ -414,10 +466,6 @@ $(document).on('change', '.ACTIVAR', function () {
         }
     });
 });
-
-
-
-
 
 $('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
     var tr = $(this).closest('tr');
@@ -529,6 +577,7 @@ $('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
 
 
 
+    verificarEstadoYActualizarBotones();
 
 
 
@@ -775,6 +824,7 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
 
 
 
+    verificarEstadoYActualizarBotones();
 
     actualizarStepsConCurp(curp);
 
@@ -966,7 +1016,7 @@ function obtenerDatosBeneficiarios(data) {
             </div>
             <div class="col-12 mt-4">
                 <div class="form-group" style="text-align: center;">
-                    <button type="button" class="btn btn-danger botonEliminarBeneficiario">Eliminar beneficiario <i class="bi bi-trash-fill"></i></button>
+                    <button type="button" class="btn btn-danger botonEliminarBeneficiario"  id="botoneliminarbene">Eliminar beneficiario <i class="bi bi-trash-fill"></i></button>
                 </div>
             </div>
         `;
@@ -1143,7 +1193,6 @@ $("#guardarDOCUMENTOSOPORTE").click(function (e) {
     
 });
 
-
 function cargarTablaDocumentosSoporte() {
     if ($.fn.DataTable.isDataTable('#Tabladocumentosoporte')) {
         Tabladocumentosoporte.clear().destroy();
@@ -1245,7 +1294,6 @@ $('#Tabladocumentosoporte').on('click', 'td>button.EDITAR', function () {
     $('#NOMBRE_DOCUMENTO').prop('readonly', true); 
 });
 
-
 function cargarDocumentosGuardados() {
     if (!curpSeleccionada || curpSeleccionada.trim() === '') {
         console.error('CURP no definida');
@@ -1295,8 +1343,6 @@ document.getElementById('step3').addEventListener('click', function() {
   
 });
 
-
-
 document.addEventListener('DOMContentLoaded', function() {
     var archivocontrato = document.getElementById('DOCUMENTO_CONTRATO');
     var quitarcontrato = document.getElementById('quitar_contrato');
@@ -1322,7 +1368,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
 document.addEventListener('DOMContentLoaded', function() {
     var tipoArea = document.getElementById('TIPO_DOCUMENTO_CONTRATO');
     var nombreDocumento = document.getElementById('NOMBRE_DOCUMENTO_CONTRATO');
@@ -1339,7 +1384,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-
 
 document.getElementById("TIPO_DOCUMENTO_CONTRATO").addEventListener("change", function() {
     const contratoDiv = document.getElementById("CONTRATO");
@@ -1369,7 +1413,6 @@ document.getElementById("TIPO_DOCUMENTO_CONTRATO").addEventListener("change", fu
     }
 });
 
-
 const ModalContrato = document.getElementById('miModal_CONTRATO');
 ModalContrato.addEventListener('hidden.bs.modal', event => {
     
@@ -1398,8 +1441,6 @@ ModalContrato.addEventListener('hidden.bs.modal', event => {
 
     document.getElementById('DOCUEMNTO_ERROR_CONTRATO').style.display = 'none';
 });
-
-
 
 $("#guardarCONTRATO").click(function (e) {
     e.preventDefault();
@@ -1609,8 +1650,6 @@ function calcularDiasRestantes(fechaVencimiento, returnNumber = false) {
     return diasRestantes >= 0 ? diasRestantes : null;
 }
 
-
-
 $('#Tablacontratosyanexos').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablacontratosyanexos.row(tr);
@@ -1630,7 +1669,6 @@ $('#Tablacontratosyanexos').on('click', 'td>button.EDITAR', function () {
     }
 });
 
-
 $('#Tablacontratosyanexos').on('click', '.ver-archivo-contratosyanexos', function () {
     var tr = $(this).closest('tr');
     var row = Tablacontratosyanexos.row(tr);
@@ -1646,9 +1684,6 @@ $('#Tablacontratosyanexos').on('click', '.ver-archivo-contratosyanexos', functio
     
     abrirModal(url, nombreDocumento);
 });
-
-
-
 
 $('#Tablacontratosyanexos').on('click', 'button.informacion', function () {
 
@@ -1689,11 +1724,6 @@ $('#Tablacontratosyanexos').on('click', 'button.informacion', function () {
 // <!--RECIBOS DE NOMINA-->
 // <!-- ============================================================== -->
 
-
-
-
-
-
 document.addEventListener('DOMContentLoaded', function() {
     var archivorecibo = document.getElementById('DOCUMENTO_RECIBO');
     var quitarecibo = document.getElementById('quitar_recibo');
@@ -1718,9 +1748,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-
-
-
 
 $("#guardarRECIBONOMINA").click(function (e) {
     e.preventDefault();
@@ -1811,8 +1838,6 @@ $("#guardarRECIBONOMINA").click(function (e) {
     
 });
 
-
-
 const Modalrecibonomina = document.getElementById('miModal_RECIBOS_NOMINA')
 Modalrecibonomina.addEventListener('hidden.bs.modal', event => {
     
@@ -1826,7 +1851,6 @@ Modalrecibonomina.addEventListener('hidden.bs.modal', event => {
     document.getElementById('RECIBO_ERROR').style.display = 'none';
 
 })
-
 
 function cargarTablaRecibosNomina() {
     if ($.fn.DataTable.isDataTable('#Tablarecibonomina')) {
@@ -1889,8 +1913,6 @@ function cargarTablaRecibosNomina() {
     });
 }
 
-
-
 $('#Tablarecibonomina').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablarecibonomina.row(tr);
@@ -1903,8 +1925,6 @@ $('#Tablarecibonomina').on('click', 'td>button.EDITAR', function () {
 
 
 });
-
-
 
 $('#Tablarecibonomina').on('click', '.ver-archivo-recibonomina', function () {
     var tr = $(this).closest('tr');

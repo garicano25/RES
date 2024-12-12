@@ -119,6 +119,7 @@ Route::get('/dptDelete', [dptController::class, 'store']);
 // Route::get('/revisarDPT/{id_formulario}', [dptController::class, 'revisarDPT']);
 Route::get('/makeExcelDPT/{id_formulario}', [makeExcelController::class, 'makeExcelDPT']);
 Route::get('/infoReportan/{ID}/{LIDER}', [dptController::class, 'infoReportan']);
+Route::get('/consultarfuncionescargo/{areaId}', [dptController::class, 'consultarfuncionescargo']);
 
 // REQUERIMIENTO PERSONAL 
 Route::get('/RequisiciónDePersonal', [requerimientoPersonalController::class, 'index']);
@@ -338,12 +339,13 @@ Route::get('/Tablacontratacion1', [contratacionController::class, 'Tablacontrata
 Route::post('/activarColaborador/{id}', [contratacionController::class, 'activarColaborador']);
 
 Route::get('/usuariocolaborador/{id}', [contratacionController::class, 'mostrarfotocolaborador']);
+Route::post('/verificarestadobloqueo', [contratacionController::class, 'verificarestadobloqueo']);
 
 
 // DOCUMENTOS DE SOPORTE
 Route::get('/Tabladocumentosoporte', [contratacionController::class, 'Tabladocumentosoporte']);
 Route::get('/mostrardocumentosoporte/{id}', [contratacionController::class, 'mostrardocumentosoporte']);
-Route::post('/obtenerguardados', [contratacionController::class, 'obtenerDocumentosGuardadosPorCURP']);
+Route::post('/obtenerguardados', [contratacionController::class, 'obtenerguardados']);
 
 
 // CONTRATOS Y ANEXOS 

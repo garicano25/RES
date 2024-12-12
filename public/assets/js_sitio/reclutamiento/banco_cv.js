@@ -25,113 +25,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
-
-
-// $("#guardarFormBancoCV").click(function (e) {
-//     e.preventDefault();
-
-//     formularioValido = validarFormulario($('#formularioBANCO'));
-
-//     if (formularioValido) {
-
-//         if (ID_BANCO_CV == 0) {
-
-//             alertMensajeConfirm({
-//                 title: "¿Desea guardar la información?",
-//                 text: "Al guardarla, se podrá usar",
-//                 icon: "question",
-//             }, async function () {
-
-//                 await loaderbtn('guardarFormBancoCV');
-//                 await ajaxAwaitFormData({ api: 1, ID_BANCO_CV: ID_BANCO_CV }, 'FormCVSave', 'formularioBANCO', 'guardarFormBancoCV', { callbackAfter: true, callbackBefore: true }, () => {
-
-//                     Swal.fire({
-//                         icon: 'info',
-//                         title: 'Espere un momento',
-//                         text: 'Estamos guardando la información',
-//                         showConfirmButton: false
-//                     });
-
-//                     $('.swal2-popup').addClass('ld ld-breath');
-
-//                 }, function (data) {
-
-//                     ID_BANCO_CV = data.bancocv.ID_BANCO_CV;
-
-//                     Swal.fire({
-//                         icon: 'success',
-//                         title: 'Información guardada correctamente',
-//                         confirmButtonText: 'OK',
-//                     }).then(() => {
-//                         window.location.reload();
-//                     });
-
-//                     $('#miModal_BANCOCV').modal('hide');
-//                     document.getElementById('formularioBANCO').reset();
-//                     // Tablabancocv.ajax.reload();
-//                     $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
-//                     $('#INTERES_OPERATIVAS')[0].selectize.clear();
-
-//                     ID_BANCO_CV = 0;
-
-//                     document.getElementById('guardarFormBancoCV').disabled = true;
-//                     document.getElementById('aceptaTerminos').checked = false;
-//                 });
-
-//             }, 1);
-
-//         } else {
-//             alertMensajeConfirm({
-//                 title: "¿Desea editar la información de este formulario?",
-//                 text: "Al guardarla, se podrá usar",
-//                 icon: "question",
-//             }, async function () {
-
-//                 await loaderbtn('guardarFormBancoCV');
-//                 await ajaxAwaitFormData({ api: 1, ID_BANCO_CV: ID_BANCO_CV }, 'FormCVSave', 'formularioBANCO', 'guardarFormBancoCV', { callbackAfter: true, callbackBefore: true }, () => {
-
-//                     Swal.fire({
-//                         icon: 'info',
-//                         title: 'Espere un momento',
-//                         text: 'Estamos guardando la información',
-//                         showConfirmButton: false
-//                     });
-
-//                     $('.swal2-popup').addClass('ld ld-breath');
-
-//                 }, function (data) {
-//                     setTimeout(() => {
-//                         ID_BANCO_CV = data.bancocv.ID_BANCO_CV;
-
-//                         Swal.fire({
-//                             icon: 'success',
-//                             title: 'Información editada correctamente',
-//                             confirmButtonText: 'OK',
-//                         }).then(() => {
-//                             window.location.reload();
-//                         });
-
-//                         $('#miModal_BANCOCV').modal('hide');
-//                         document.getElementById('formularioBANCO').reset();
-//                         $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
-//                         $('#INTERES_OPERATIVAS')[0].selectize.clear();
-
-//                         ID_BANCO_CV = 0;
-
-//                         document.getElementById('guardarFormBancoCV').disabled = true;
-//                         document.getElementById('aceptaTerminos').checked = false;
-//                     }, 300);
-//                 });
-//             }, 1);
-//         }
-
-//     } else {
-//         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
-//     }
-// });
-
-
 $("#guardarFormBancoCV").click(async function (e) {
     e.preventDefault();
 
@@ -171,14 +64,12 @@ $("#guardarFormBancoCV").click(async function (e) {
                         sectionFinalizado.classList.remove('d-none');
                         sectionFinalizado.classList.add('d-flex');
 
-                        // Reiniciar formulario
                         document.getElementById('formularioBANCO').reset();
                         $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
                         $('#INTERES_OPERATIVAS')[0].selectize.clear();
 
                         ID_BANCO_CV = 0;
 
-                        // Desactivar botón y reiniciar términos
                         document.getElementById('guardarFormBancoCV').disabled = true;
                         document.getElementById('aceptaTerminos').checked = false;
                     });
@@ -211,23 +102,19 @@ $("#guardarFormBancoCV").click(async function (e) {
                         title: 'Información editada correctamente',
                         confirmButtonText: 'OK',
                     }).then(() => {
-                        // Ocultar los elementos actuales
                         document.getElementById('formulario_cv').style.display = 'none';
                         document.getElementById('nav_var').style.display = 'none';
 
-                        // Mostrar la sección finalizada
                         const sectionFinalizado = document.getElementById('sectionFinalizado');
                         sectionFinalizado.classList.remove('d-none');
                         sectionFinalizado.classList.add('d-flex');
 
-                        // Reiniciar formulario
                         document.getElementById('formularioBANCO').reset();
                         $('#INTERES_ADMINISTRATIVA')[0].selectize.clear();
                         $('#INTERES_OPERATIVAS')[0].selectize.clear();
 
                         ID_BANCO_CV = 0;
 
-                        // Desactivar botón y reiniciar términos
                         document.getElementById('guardarFormBancoCV').disabled = true;
                         document.getElementById('aceptaTerminos').checked = false;
                     });

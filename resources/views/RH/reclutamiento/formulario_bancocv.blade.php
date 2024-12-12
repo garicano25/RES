@@ -527,7 +527,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
      <!-- Funciones generales -->
      <script src="/assets/js_sitio/funciones.js"></script>
-    <script src="/assets/js_sitio/reclutamiento/banco_cv.js?v=1.0"></script>
+    <script src="/assets/js_sitio/reclutamiento/banco_cv.js?v=2.0"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>

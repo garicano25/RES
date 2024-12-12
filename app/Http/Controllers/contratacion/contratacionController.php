@@ -95,7 +95,22 @@ public function Tablacontratacion1()
 }
     
 
+public function verificarestadobloqueo(Request $request)
+{
+    $curp = $request->input('curpSeleccionada');
 
+    if (!$curp) {
+        return response()->json(['error' => 'CURP no proporcionada'], 400);
+    }
+
+    $registro = DB::table('formulario_contratacion')
+        ->where('CURP', $curp)
+        ->first();
+
+    $bloqueodesactivado = $registro && $registro->ACTIVO == 0 ? 0 : 1;
+
+    return response()->json(['bloqueodesactivado' => $bloqueodesactivado]);
+}
 
 public function activarColaborador(Request $request, $id)
 {
@@ -190,7 +205,7 @@ public function mostrardocumentosoporte($id)
 
 
 
-public function obtenerDocumentosGuardadosPorCURP(Request $request)
+public function obtenerguardados(Request $request)
 {
     $curp = $request->input('CURP');
     $documentos = documentosoporteModel::where('CURP', $curp)
@@ -212,45 +227,51 @@ public function Tablacontratosyanexos(Request $request)
     try {
         $curp = $request->get('curp');
 
-        $tabla = contratosanexosModel::where('CURP', $curp)->get();
+        if (!$curp) {
+            return response()->json([
+                'msj' => 'CURP no proporcionada',
+                'data' => []
+            ], 400);
+        }
 
-
-        $tabla = DB::select("SELECT rec.*, cat.NOMBRE_CATEGORIA
-        FROM contratos_anexos_contratacion rec
-        LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = rec.NOMBRE_CARGO");
+        $tabla = DB::select("
+            SELECT rec.*, cat.NOMBRE_CATEGORIA
+            FROM contratos_anexos_contratacion rec
+            LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = rec.NOMBRE_CARGO
+            WHERE rec.CURP = ?
+        ", [$curp]);
 
         foreach ($tabla as $value) {
-
             if ($value->ACTIVO == 0) {
-
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR" ><i class="bi bi-eye"></i></button>';
-                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
             } else {
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
 
                 if ($value->TIPO_DOCUMENTO_CONTRATO == 3) {
-                    $value->BTN_CONTRATO = '<button type="button" class="btn btn-success   btn-custom rounded-pill  informacion"  id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_CONTRATO = '<button type="button" class="btn btn-success btn-custom rounded-pill informacion" id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
                 } else {
                     $value->BTN_CONTRATO = '<button type="button" class="btn btn-secondary btn-custom rounded-pill informacion" disabled><i class="bi bi-ban"></i></button>';
                 }
             }
         }
 
-
+        // Retornar respuesta JSON
         return response()->json([
             'data' => $tabla,
             'msj' => 'Información consultada correctamente'
         ]);
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
         return response()->json([
-            'msj' => 'Error ' . $e->getMessage(),
-            'data' => 0
+            'msj' => 'Error: ' . $e->getMessage(),
+            'data' => []
         ]);
     }
 }
+
 
 
 public function mostrarcontratosyanexos($id)

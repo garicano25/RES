@@ -115,74 +115,103 @@ class dptController extends Controller
     
 
 
-    public function infoReportan($ID, $LIDER)
-    {
-        try {
+public function infoReportan($ID, $LIDER)
+{
+    try {
 
-            $funciones = DB::select("SELECT ID_CATALOGO_FUNCIONESCARGO ID, DESCRIPCION_FUNCION_CARGO DESCRIPCION, TIPO_FUNCION_CARGO TIPO
-            FROM catalogo_funcionescargos
-            WHERE CATEGORIAS_CARGO = ? OR TIPO_FUNCION_CARGO = 'generica'
-            ORDER BY TIPO_FUNCION_CARGO", [$ID]);
+        $funciones = DB::select("SELECT ID_CATALOGO_FUNCIONESCARGO ID, DESCRIPCION_FUNCION_CARGO DESCRIPCION, TIPO_FUNCION_CARGO TIPO
+        FROM catalogo_funcionescargos
+        WHERE CATEGORIAS_CARGO = ? OR TIPO_FUNCION_CARGO = 'generica'
+        ORDER BY TIPO_FUNCION_CARGO", [$ID]);
 
 
-            if ($LIDER == 1) {
+        if ($LIDER == 1) {
 
-                $info = DB::select("SELECT GROUP_CONCAT(catCategoria.NOMBRE_CATEGORIA SEPARATOR ', ') AS REPORTAN, COUNT(relacion.CATEGORIA_ID) AS TOTAL
-                                    FROM lideres_categorias relacion
-                                    LEFT JOIN catalogo_categorias catLideres ON catLideres.ID_CATALOGO_CATEGORIA = relacion.LIDER_ID
-                                    LEFT JOIN catalogo_categorias catCategoria ON catCategoria.ID_CATALOGO_CATEGORIA = relacion.CATEGORIA_ID
-                                    WHERE relacion.LIDER_ID = ?", [$ID]);
+            $info = DB::select("SELECT GROUP_CONCAT(catCategoria.NOMBRE_CATEGORIA SEPARATOR ', ') AS REPORTAN, COUNT(relacion.CATEGORIA_ID) AS TOTAL
+                                FROM lideres_categorias relacion
+                                LEFT JOIN catalogo_categorias catLideres ON catLideres.ID_CATALOGO_CATEGORIA = relacion.LIDER_ID
+                                LEFT JOIN catalogo_categorias catCategoria ON catCategoria.ID_CATALOGO_CATEGORIA = relacion.CATEGORIA_ID
+                                WHERE relacion.LIDER_ID = ?", [$ID]);
 
+        
+            // Respuesta
+            $response['code'] = 1;
+            $response['REPORTAN'] = $info;
+            $response['REPORTA'] = 'Director';
+            $response['FUNCIONES'] = $funciones;
+
+            return response()->json($response);
+        } else if  ($LIDER == 0){
+
+            $info = DB::select("SELECT IFNULL(catLideres.NOMBRE_CATEGORIA, 'Director') AS REPORTA, 0 AS TOTAL
+                                FROM lideres_categorias relacion
+                                LEFT JOIN catalogo_categorias catLideres ON catLideres.ID_CATALOGO_CATEGORIA = relacion.LIDER_ID
+                                LEFT JOIN catalogo_categorias catCategoria ON catCategoria.ID_CATALOGO_CATEGORIA = relacion.CATEGORIA_ID
+                                WHERE relacion.CATEGORIA_ID = ?", [$ID]);
             
-                // Respuesta
-                $response['code'] = 1;
-                $response['REPORTAN'] = $info;
-                $response['REPORTA'] = 'Director';
-                $response['FUNCIONES'] = $funciones;
-                // $response['GESTIONES'] = $gestiones;
-                return response()->json($response);
-            } else if  ($LIDER == 0){
+            // Respuesta
+            $response['code'] = 1;
+            $response['REPORTAN'] = 'Ninguno';
+            $response['REPORTA'] = $info;
+            $response['FUNCIONES'] = $funciones;
 
-                $info = DB::select("SELECT IFNULL(catLideres.NOMBRE_CATEGORIA, 'Director') AS REPORTA, 0 AS TOTAL
-                                    FROM lideres_categorias relacion
-                                    LEFT JOIN catalogo_categorias catLideres ON catLideres.ID_CATALOGO_CATEGORIA = relacion.LIDER_ID
-                                    LEFT JOIN catalogo_categorias catCategoria ON catCategoria.ID_CATALOGO_CATEGORIA = relacion.CATEGORIA_ID
-                                    WHERE relacion.CATEGORIA_ID = ?", [$ID]);
-              
-                // Respuesta
-                $response['code'] = 1;
-                $response['REPORTAN'] = 'Ninguno';
-                $response['REPORTA'] = $info;
-                $response['FUNCIONES'] = $funciones;
-                // $response['GESTIONES'] = $gestiones;
+            return response()->json($response);
 
-                return response()->json($response);
-
-            } else {
+        } else {
 
 
-                $info = DB::select("SELECT GROUP_CONCAT(NOMBRE_CARGO SEPARATOR ', ') AS REPORTAN FROM encargados_areas");
+            $info = DB::select("SELECT GROUP_CONCAT(NOMBRE_CARGO SEPARATOR ', ') AS REPORTAN FROM encargados_areas");
 
-                // Respuesta
-                $response['code'] = 1;
-                $response['REPORTAN'] = $info;
-                $response['REPORTA'] = 'Ninguno';
-                $response['FUNCIONES'] = $funciones;
-                // $response['GESTIONES'] = $gestiones;
+            // Respuesta
+            $response['code'] = 1;
+            $response['REPORTAN'] = $info;
+            $response['REPORTA'] = 'Ninguno';
+            $response['FUNCIONES'] = $funciones;
 
-                return response()->json($response);
+            return response()->json($response);
 
-            }
-
-        } catch (Exception $e) {
-
-            return response()->json([
-                'msj' => 'Error ' . $e->getMessage(),
-                'data' => 0,
-                'code' => 0
-            ]);
         }
+
+    } catch (Exception $e) {
+
+        return response()->json([
+            'msj' => 'Error ' . $e->getMessage(),
+            'data' => 0,
+            'code' => 0
+        ]);
     }
+}
+
+
+
+public function consultarfuncionescargo($areaId)
+{
+    try {
+        $funciones = DB::select("
+            SELECT 
+                ID_CATALOGO_FUNCIONESCARGO AS ID,
+                DESCRIPCION_FUNCION_CARGO AS DESCRIPCION,
+                TIPO_FUNCION_CARGO AS TIPO
+            FROM 
+                catalogo_funcionescargos
+            WHERE 
+                CATEGORIAS_CARGO = ? 
+                OR TIPO_FUNCION_CARGO = 'generica'
+            ORDER BY 
+                TIPO_FUNCION_CARGO", [$areaId]);
+
+        return response()->json([
+            'code' => 1,
+            'FUNCIONES' => $funciones
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'code' => 0,
+            'msj' => 'Error: ' . $e->getMessage()
+        ]);
+    }
+}
+
     
 // public function store(Request $request)
 // {

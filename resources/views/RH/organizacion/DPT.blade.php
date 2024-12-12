@@ -183,18 +183,19 @@
                 <h4>II. Funciones y responsabilidades clave del cargo</h4>
               </div>
             </div>
-            <div class="row mb-3">
-              <table class="table-sm">
-                <thead>
-                  <tr>
-                    <th class="header">Descripción</th>
-                    <th class="header">Activar/Desactivar</th>
-                  </tr>
-                </thead>
-                <tbody id="tbodyFucnionesCargo"></tbody>
-              </table>
 
-            </div>
+           <div class="row mb-3">
+              <table class="table-sm" style="width: 96%; table-layout: fixed;">
+                  <thead>
+                      <tr>
+                          <th class="header" style="width: 70%;">Descripción</th>
+                          <th class="header" style="width: 30%;">Activar/Desactivar</th>
+                      </tr>
+                  </thead>
+                  <tbody id="tbodyFucnionesCargo"></tbody>
+              </table>
+          </div>
+
 
 
             <!-- III. Funciones y responsabilidades del sistema integrado de gestión (SIG) -->
@@ -205,32 +206,32 @@
             </div>
 
             <div class="row mb-3">
-              <table class="table-sm">
-                <thead>
-                  <tr>
-                    <th class="header">Descripción</th>
-                    <th class="header">Activar/Desactivar</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach ($gestion as $gestiones)
-                  <tr>
-                    <td id="desc-gestion-{{ $gestiones->ID_CATALOGO_FUNCIONESGESTION }}" class="description blocked">
-                      {{ $gestiones->DESCRIPCION_FUNCION_GESTION }}
-                    </td>
-                    <td>
-                      <div class="switch-container">
-                        <label class="switch">
-                          <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_GESTION_DPT[]" value="{{ $gestiones->ID_CATALOGO_FUNCIONESGESTION }}">
-                          <span class="slider"></span>
-                        </label>
-                      </div>
-                    </td>
-                  </tr>
-                  @endforeach
-                </tbody>
+              <table class="table-sm" style="width: 96%; table-layout: fixed;">
+                  <thead>
+                      <tr>
+                          <th class="header" style="width: 70%;">Descripción</th>
+                          <th class="header" style="width: 30%;">Activar/Desactivar</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      @foreach ($gestion as $gestiones)
+                      <tr>
+                          <td id="desc-gestion-{{ $gestiones->ID_CATALOGO_FUNCIONESGESTION }}" class="description blocked">
+                              {{ $gestiones->DESCRIPCION_FUNCION_GESTION }}
+                          </td>
+                          <td>
+                              <div class="switch-container">
+                                  <label class="switch">
+                                      <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_GESTION_DPT[]" value="{{ $gestiones->ID_CATALOGO_FUNCIONESGESTION }}">
+                                      <span class="slider"></span>
+                                  </label>
+                              </div>
+                          </td>
+                      </tr>
+                      @endforeach
+                  </tbody>
               </table>
-            </div>
+          </div>
 
 
 

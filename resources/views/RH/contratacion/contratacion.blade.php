@@ -168,6 +168,65 @@
                     </div>
                 </div>
 
+              {{--   <div class="row">
+                    <div class="col-12 mt-5">
+                        <div class="multisteps-form">
+                            <div class="multisteps-form__progress">
+                                <div class="multisteps-form__progress-btn js-active" id="step1">
+                                    <div class="step-circle">
+                                        <i class="bi bi-briefcase-fill"></i>
+                                    </div>
+                                    <span>Datos generales</span>
+                                </div>
+                                <div class="multisteps-form__progress-btn" id="step2">
+                                    <div class="step-circle">
+                                        <i class="bi bi-file-earmark-text-fill"></i>
+                                    </div>
+                                    <span>Documentos de soporte</span>
+                                </div>
+                                <div class="multisteps-form__progress-btn" id="step3">
+                                    <div class="step-circle">
+                                        <i class="bi bi-file-earmark-text-fill"></i>
+                                    </div>
+                                    <span>Contratos y anexos</span>
+                                </div>
+                                <div class="multisteps-form__progress-btn" id="step4">
+                                    <div class="step-circle">
+                                        <i class="bi bi-hospital-fill"></i>
+                                    </div>
+                                    <span>Información Médica</span>
+                                </div>
+                                <div class="multisteps-form__progress-btn" id="step5">
+                                    <div class="step-circle">
+                                        <i class="bi bi-person-check-fill"></i>
+                                    </div>
+                                    <span>Incidencias</span>
+                                </div>
+                                <div class="multisteps-form__progress-btn" id="step6">
+                                    <div class="step-circle">
+                                        <i class="bi bi-person-circle"></i>
+                                    </div>
+                                    <span>Acciones disciplinarias</span>
+                                </div> 
+                                <div class="multisteps-form__progress-btn" id="step4">
+                                    <div class="step-circle">
+                                        <i class="bi bi-file-person-fill"></i>
+                                    </div>
+                                    <span>CV</span>
+                                </div>
+                                <div class="multisteps-form__progress-btn" id="step8">
+                                    <div class="step-circle">
+                                        <i class="bi bi-pen-fill"></i>
+                                    </div>
+                                    <span>Recibos</span>
+                                </div> 
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>--}}
+
+                
                 <div class="row">
                     <div class="col-12 mt-5">
                         <div class="multisteps-form">
@@ -190,39 +249,17 @@
                                     </div>
                                     <span>Contratos y anexos</span>
                                 </div>
-                                {{-- <div class="multisteps-form__progress-btn" id="step4">
-                                    <div class="step-circle">
-                                        <i class="bi bi-hospital-fill"></i>
-                                    </div>
-                                    <span>Información Médica</span>
-                                </div>
-                                <div class="multisteps-form__progress-btn" id="step5">
-                                    <div class="step-circle">
-                                        <i class="bi bi-person-check-fill"></i>
-                                    </div>
-                                    <span>Incidencias</span>
-                                </div>
-                                <div class="multisteps-form__progress-btn" id="step6">
-                                    <div class="step-circle">
-                                        <i class="bi bi-person-circle"></i>
-                                    </div>
-                                    <span>Acciones disciplinarias</span>
-                                </div> --}}
+                              
                                 <div class="multisteps-form__progress-btn" id="step4">
                                     <div class="step-circle">
                                         <i class="bi bi-file-person-fill"></i>
                                     </div>
                                     <span>CV</span>
                                 </div>
-                                {{-- <div class="multisteps-form__progress-btn" id="step8">
-                                    <div class="step-circle">
-                                        <i class="bi bi-pen-fill"></i>
-                                    </div>
-                                    <span>Recibos</span>
-                                </div> --}}
+                               
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
 
@@ -475,15 +512,15 @@
                                     <input type="text" class="form-control" id="NOMBRE_MUNICIPIO" name="NOMBRE_MUNICIPIO" required>
                                 </div>
                                
-                                <div class="col-3 mb-3">
+                                <div class="col-4 mb-3">
                                     <label>Nombre de la Entidad Federativa *</label>
                                     <input type="text" class="form-control" id="NOMBRE_ENTIDAD" name="NOMBRE_ENTIDAD" required>
                                 </div>
-                                <div class="col-3 mb-3">
+                                <div class="col-4 mb-3">
                                     <label>Entre Calle</label>
                                     <input type="text" class="form-control" id="ENTRE_CALLE" name="ENTRE_CALLE" >
                                 </div>
-                                <div class="col-3 mb-3">
+                                <div class="col-4 mb-3">
                                     <label>Y Calle</label>
                                     <input type="text" class="form-control" id="ENTRE_CALLE_2" name="ENTRE_CALLE_2" >
                                 </div>

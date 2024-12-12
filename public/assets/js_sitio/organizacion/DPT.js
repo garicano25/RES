@@ -236,7 +236,7 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
                         <td>
                             <div class="switch-container">
                                 <label class="switch">
-                                    <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_CARGO_DPT[]" value="${funcion.ID}" checked>
+                                    <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_CARGO_DPT[]" value="${funcion.ID}" >
                                     <span class="slider"></span>
                                 </label>
                             </div>
@@ -320,6 +320,47 @@ $(document).ready(function () {
         editarDatoTabla(data, form, 'miModal_DPT', 1);
         mostrarFunciones(data, form);
     
+
+
+        const areaId = data["DEPARTAMENTOS_AREAS_ID"];
+        if (areaId) {
+            $("#DEPARTAMENTOS_AREAS_ID").val(areaId).trigger('change'); 
+    
+            consultarFuncionesConSeleccion(areaId, data["FUNCIONES_CARGO_DPT"] || []);
+        }
+
+
+
+
+        const funcionesGestionGuardadas = data["FUNCIONES_GESTION_DPT"] || [];
+        let funcionesGestionGuardadasArray = [];
+        
+        if (typeof funcionesGestionGuardadas === 'string') {
+            try {
+                funcionesGestionGuardadasArray = JSON.parse(funcionesGestionGuardadas);
+            } catch (e) {
+                console.error("Error al parsear FUNCIONES_GESTION_DPT:", e);
+            }
+        } else if (Array.isArray(funcionesGestionGuardadas)) {
+            funcionesGestionGuardadasArray = funcionesGestionGuardadas;
+        }
+        
+        $('input[name="FUNCIONES_GESTION_DPT[]"]').each(function () {
+            const funcionId = $(this).val();
+            const isChecked = funcionesGestionGuardadasArray.includes(funcionId);
+        
+            $(this).prop('checked', isChecked);
+        
+            const descripcionElement = $(`#desc-gestion-${funcionId}`);
+        
+            if (isChecked) {
+                descripcionElement.removeClass('blocked');
+            } else {
+                descripcionElement.addClass('blocked');
+            }
+        });
+
+
         // Mostrar solo las competencias básicas que tienen datos
         for (let i = 1; i <= 8; i++) {
             const competenciaField = document.getElementById(`COMPETENCIA${i}`);
@@ -395,6 +436,60 @@ function toggleDescription(tablePrefix, id, checked) {
         }
     }
 }
+
+
+
+
+function consultarFuncionesConSeleccion(areaId, funcionesSeleccionadas = []) {
+    const ruta = `/consultarfuncionescargo/${areaId}`;
+    $.ajax({
+        url: ruta,
+        type: "GET",
+        success: function (response) {
+            if (response.code === 1) {
+                $('#tbodyFucnionesCargo').empty(); 
+
+                $.each(response.FUNCIONES, function (index, funcion) {
+                    const isChecked = funcionesSeleccionadas.includes(String(funcion.ID)) ? "checked" : "";
+                    const blockedClass = isChecked ? '' : 'blocked'; 
+
+                    const rowHtml = `<tr>
+                        <td id="desc-cargo-${funcion.ID}" class="description ${blockedClass}">
+                            ${funcion.DESCRIPCION}
+                        </td>
+                        <td>
+                            <div class="switch-container">
+                                <label class="switch">
+                                    <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_CARGO_DPT[]" value="${funcion.ID}" ${isChecked}>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </td>
+                    </tr>`;
+                    $('#tbodyFucnionesCargo').append(rowHtml);
+                });
+
+                $('input[name="FUNCIONES_CARGO_DPT[]"]').each(function () {
+                    const funcionId = $(this).val();
+                    const isChecked = $(this).is(':checked');
+
+                    const descripcionElement = $(`#desc-cargo-${funcionId}`);
+                    if (isChecked) {
+                        descripcionElement.removeClass('blocked');
+                    } else {
+                        descripcionElement.addClass('blocked');
+                    }
+                });
+            } else {
+                console.error("Error al cargar funciones:", response.msj);
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error en la consulta:", error);
+        }
+    });
+}
+
 
 
 
