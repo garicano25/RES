@@ -228,7 +228,7 @@
             <div class="mb-3">
                 <label>Nacionalidad</label>
                 <select class="form-control" id="NACIONALIDAD" name="NACIONALIDAD" required>
-                    <option value="0" selected disabled></option>
+                    <option selected disabled>Seleccione una opción</option>
                         <option value="1">Mexicana</option>
                         <option value="2">Extranjera</option>
                 </select> 
@@ -452,7 +452,7 @@
                 <div class="card-body">
                     <p class="lead mt-3 mb-3">
                         <i class="fa fa-check-circle" style="color: #88bd23;"></i>
-                        Su información ha sido almacenada exitosamente.
+                        Su información ha sido guardada exitosamente.
                     </p>
                     <a href="https://results-in-performance.com/" class="btn" style="background-color: #28a745; color: #fff; padding: 10px 20px; font-size: 1.2rem; font-weight: bold; border-radius: 5px; text-decoration: none;">
                         Regresar
