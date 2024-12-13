@@ -194,6 +194,8 @@ function TotalPostulantes(idVacante, categoriaVacante) {
                                 <div class="card-body">
                                     <h5 class="card-title">Información Personal</h5>
                                     <p class="card-text"><strong>Nombre:</strong> ${personalInfo.NOMBRE_CV || ''} ${personalInfo.PRIMER_APELLIDO_CV || ''} ${personalInfo.SEGUNDO_APELLIDO_CV || ''}</p>
+                                    <p class="card-text" style="display: none;" ><strong>DATOSCOMPLETOS:</strong> ${personalInfo.DIA_FECHA_CV || ''} ${personalInfo.MES_FECHA_CV || ''} ${personalInfo.ANIO_FECHA_CV || ''}</p>
+
                                     <p class="card-text"><strong>Correo:</strong> ${personalInfo.CORREO_CV || ''}</p>
                                     <p class="card-text"><strong>Teléfonos:</strong> ${(personalInfo.TELEFONO1 || '') + (personalInfo.TELEFONO2 ? ', ' + personalInfo.TELEFONO2 : '')}</p>
                                 </div>
@@ -322,6 +324,9 @@ function guardarInformacionPostulante(idVacante, categoriaVacante, postulante) {
         CORREO_AC: postulante.CORREO_CV,
         TELEFONO1_AC: postulante.TELEFONO1,
         TELEFONO2_AC: postulante.TELEFONO2,
+        DIA_FECHA_AC:postulante.DIA_FECHA_CV,
+        MES_FECHA_AC:postulante.MES_FECHA_CV,
+        ANIO_FECHA_AC:postulante.ANIO_FECHA_CV,
         PORCENTAJE: totalCumplimiento
     };
 
@@ -381,6 +386,8 @@ function guardarInformacionPostulante(idVacante, categoriaVacante, postulante) {
                                                                 <p class="card-text"><strong>Nombre:</strong> ${preseleccionInfo.NOMBRE_AC} ${preseleccionInfo.PRIMER_APELLIDO_AC} ${preseleccionInfo.SEGUNDO_APELLIDO_AC}</p>
                                                                 <p class="card-text"><strong>Correo:</strong> ${preseleccionInfo.CORREO_AC}</p>
                                                                 <p class="card-text"><strong>Teléfonos:</strong> ${preseleccionInfo.TELEFONO1_AC}, ${preseleccionInfo.TELEFONO2_AC}</p>
+                                                                <p class="card-text" style="display: none;" ><strong>DATOSCOMPLETOS:</strong> ${preseleccionInfo.DIA_FECHA_AC || ''} ${preseleccionInfo.MES_FECHA_AC || ''} ${preseleccionInfo.ANIO_FECHA_AC || ''}</p>
+
                                                                 <p class="card-text"><strong>Porcentaje de Cumplimiento:</strong> ${preseleccionInfo.PORCENTAJE}%</p>
                                                             </div>
                                                         </div>
@@ -467,7 +474,9 @@ $(document).ready(function () {
                                 <td>${preseleccionInfo.NOMBRE_AC || ''} ${preseleccionInfo.PRIMER_APELLIDO_AC || ''} ${preseleccionInfo.SEGUNDO_APELLIDO_AC || ''}</td>
                                 <td>${preseleccionInfo.CORREO_AC || ''}</td>
                                 <td>${(preseleccionInfo.TELEFONO1_AC || '') + (preseleccionInfo.TELEFONO2_AC ? ', ' + preseleccionInfo.TELEFONO2_AC : '')}</td>
+                                <p class="card-text" style="display: none;" ><strong>DATOSCOMPLETOS:</strong> ${preseleccionInfo.DIA_FECHA_AC || ''} ${preseleccionInfo.MES_FECHA_AC || ''} ${preseleccionInfo.ANIO_FECHA_AC || ''}</p>
                                 <td>${preseleccionInfo.PORCENTAJE != null ? preseleccionInfo.PORCENTAJE + '%' : ''}</td>
+
                                 <td class="radio-group">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="disponible-${index}" id="disponible-si-${index}" value="si" ${checkedSi} onchange="actualizarDisponibilidad(${index}, '${preseleccionInfo.CURP}', true)">
@@ -479,7 +488,7 @@ $(document).ready(function () {
                                     </div>
                                 </td>
                                 <td>
-                                    <button class="btn btn-success btn-action ${buttonClass}" id="action-button-${index}" ${buttonDisabled} onclick="guardarPreseleccion(${index}, '${preseleccionInfo.CURP}', '${preseleccionInfo.NOMBRE_AC || ''}', '${preseleccionInfo.PRIMER_APELLIDO_AC || ''}', '${preseleccionInfo.SEGUNDO_APELLIDO_AC || ''}', '${preseleccionInfo.CORREO_AC || ''}', '${preseleccionInfo.TELEFONO1_AC || ''}', '${preseleccionInfo.TELEFONO2_AC || ''}', ${preseleccionInfo.PORCENTAJE != null ? preseleccionInfo.PORCENTAJE : ''})">Preseleccionar</button>
+                                    <button class="btn btn-success btn-action ${buttonClass}" id="action-button-${index}" ${buttonDisabled} onclick="guardarPreseleccion(${index}, '${preseleccionInfo.CURP}', '${preseleccionInfo.NOMBRE_AC || ''}', '${preseleccionInfo.PRIMER_APELLIDO_AC || ''}', '${preseleccionInfo.SEGUNDO_APELLIDO_AC || ''}', '${preseleccionInfo.CORREO_AC || ''}', '${preseleccionInfo.TELEFONO1_AC || ''}', '${preseleccionInfo.TELEFONO2_AC || ''}', '${preseleccionInfo.DIA_FECHA_AC || ''}', '${preseleccionInfo.MES_FECHA_AC || ''}', '${preseleccionInfo.ANIO_FECHA_AC || ''}', ${preseleccionInfo.PORCENTAJE != null ? preseleccionInfo.PORCENTAJE : ''})">Preseleccionar</button>
                                 </td>
                             </tr>
                         `;
@@ -553,7 +562,7 @@ $(document).ready(function () {
         });
     };
 
-    window.guardarPreseleccion = function(index, curp, nombre, primerApellido, segundoApellido, correo, telefono1, telefono2, porcentaje) {
+    window.guardarPreseleccion = function(index, curp, nombre, primerApellido, segundoApellido, correo, telefono1, telefono2,dia,mes,anio, porcentaje) {
         const vacanteID = idVacanteGlobal;
         const categoriaVacante = categoriaVacanteGlobal;
 
@@ -589,6 +598,9 @@ $(document).ready(function () {
                     CORREO_SELEC: correo,
                     TELEFONO1_SELECT: telefono1,
                     TELEFONO2_SELECT: telefono2,
+                    DIA_FECHA_SELECT: dia,
+                    MES_FECHA_SELECT: mes,
+                    ANIO_FECHA_SELECT: anio,
                     PORCENTAJE: porcentaje,
                 };
 

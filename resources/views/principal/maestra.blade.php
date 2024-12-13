@@ -461,7 +461,7 @@
 @endif
 
 @if(request()->is('Postulaciones'))
-<script src="/assets/js_sitio/reclutamiento/vacantesactivas.js?v=4.0"></script>
+<script src="/assets/js_sitio/reclutamiento/vacantesactivas.js?v=5.0"></script>
 @endif
 
 @if(request()->is('Motivo-vacante'))
@@ -489,7 +489,7 @@
 @endif
 
 @if(request()->is('Contratación'))
-<script src="/assets/js_sitio/contratacion/contratacion.js?v=5.0"></script>
+<script src="/assets/js_sitio/contratacion/contratacion.js?v=6.0"></script>
 <!-- Form wizard -->
 <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
 @endif

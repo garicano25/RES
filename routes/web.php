@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
+use Illuminate\Support\Facades\Artisan;
 
 //  USUARIOS
 
@@ -266,7 +267,7 @@ Route::post('/guardarPostulantes', [vacantesactivasController::class, 'guardarPo
 
 // Poder visualizar la informacion de los que se van a  preseleccionar y  mandarlos a selección
 Route::post('/guardarPreseleccion', [vacantesactivasController::class, 'guardarPreseleccion']);
-Route::get('/informacionpreseleccion/{idVacante}', [VacantesactivasController::class, 'informacionPreseleccion']);
+Route::get('/informacionpreseleccion/{idVacante}', [VacantesactivasController::class, 'informacionpreseleccion']);
 Route::post('/actualizarDisponibilidad', [VacantesactivasController::class, 'actualizarDisponibilidad']);
 
 
@@ -349,12 +350,38 @@ Route::post('/obtenerguardados', [contratacionController::class, 'obtenerguardad
 
 
 // CONTRATOS Y ANEXOS 
-
-
 Route::get('/Tablacontratosyanexos', [contratacionController::class, 'Tablacontratosyanexos']);
 Route::get('/mostrarcontratosyanexos/{id}', [contratacionController::class, 'mostrarcontratosyanexos']);
 
-// RECIBOS DE NOMINA
 
+// INFORAMCION MEDICA 
+Route::get('/Tablainformacionmedica', [contratacionController::class, 'Tablainformacionmedica']);
+Route::get('/mostrarinformacionmedica/{id}', [contratacionController::class, 'mostrarinformacionmedica']);
+
+// INCIDENCIAS 
+Route::get('/Tablaincidencias', [contratacionController::class, 'Tablaincidencias']);
+Route::get('/mostrarincidencias/{id}', [contratacionController::class, 'mostrarincidencias']);
+
+// INCIDENCIAS 
+Route::get('/Tablaccionesdisciplinarias', [contratacionController::class, 'Tablaccionesdisciplinarias']);
+Route::get('/mostraracciones/{id}', [contratacionController::class, 'mostraracciones']);
+
+
+// RECIBOS DE NOMINA
 Route::get('/Tablarecibonomina', [contratacionController::class, 'Tablarecibonomina']);
 Route::get('/mostrarecibosnomina/{id}', [contratacionController::class, 'mostrarecibosnomina']);
+
+
+
+
+Route::get('/clear-cache', function () {
+    Artisan::call('config:cache');
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('view:clear');
+    return 'Application cache cleared';
+});
+
+
+

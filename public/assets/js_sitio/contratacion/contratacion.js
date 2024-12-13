@@ -11,11 +11,20 @@ ID_CONTRATOS_ANEXOS = 0;
 
 
 ID_INFORMACION_MEDICA = 0;
+ID_INCIDENCIAS = 0 ;
+ID_ACCIONES_DISCIPLINARIAS = 0;
 ID_RECIBOS_NOMINA = 0;
 
 
 
 // TABLAS
+Tablacontratacion = null
+
+
+var Tablacontratacion1;
+var tablacontracion1Cargada = false; 
+
+
 var Tabladocumentosoporte;
 var tablaDocumentosCargada = false; 
 
@@ -26,12 +35,15 @@ var tablacontratosCargada = false;
 var Tablarecibonomina;
 var tablareciboCargada = false; 
 
-var Tablacontratacion1;
-var tablacontracion1Cargada = false; 
+
+
+var Tablainformacionmedica;
+var tablainformacionCargada = false; 
 
 
 
-Tablacontratacion = null
+
+
 
 
 
@@ -173,7 +185,8 @@ function bloquearBotones() {
         'guardarDOCUMENTOSOPORTE',
         'guardarCONTRATO',
         'guardarRECIBONOMINA',
-        'guardaINFORMACIONMEDICA'
+        'guardarINFORMACIONMEDICA',
+        'guardarINCIDENCIAS'
     ];
 
     botones.forEach(botonId => {
@@ -193,7 +206,8 @@ function desbloquearBotones() {
         'guardarDOCUMENTOSOPORTE',
         'guardarCONTRATO',
         'guardarRECIBONOMINA',
-        'guardaINFORMACIONMEDICA'
+        'guardarINFORMACIONMEDICA',
+        'guardarINCIDENCIAS'
     ];
 
     botones.forEach(botonId => {
@@ -315,9 +329,11 @@ function reloadTablaContratacion() {
 
 
 
-// <!-- ============================================================== -->
-// <!-- COLABORADORES INACTIVOS  -->
-// <!-- ============================================================== -->
+
+// <!-- ============================================================================================================================ -->
+// <!--                                                          COLABORADORES INACTIVOS                                             -->
+// <!-- ============================================================================================================================ -->
+
 
 
 function cargarTablaContratacionInactivo() {
@@ -618,9 +634,9 @@ $('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
 
 
 
-// <!-- ============================================================== -->
-// <!-- STEP 1  -->
-// <!-- ============================================================== -->
+// <!-- ============================================================================================================================ -->
+// <!--                                                          STEP 1                                                              -->
+// <!-- ============================================================================================================================ -->
 
 
 document.getElementById('step1').addEventListener('click', function() {
@@ -1041,9 +1057,14 @@ function obtenerDatosBeneficiarios(data) {
 }
 
 
-// <!-- ============================================================== -->
-// <!-- STEP 2  -->
-// <!-- ============================================================== -->
+
+
+
+// <!-- ============================================================================================================================ -->
+// <!--                                                          STEP 2                                                              -->
+// <!-- ============================================================================================================================ -->
+
+
 
 
 document.getElementById('step2').addEventListener('click', function() {
@@ -1327,9 +1348,16 @@ function cargarDocumentosGuardados() {
     });
 }
 
-// <!-- ============================================================== -->
-// <!-- STEP 3  -->
-// <!-- ============================================================== -->
+
+
+
+
+
+
+// <!-- ============================================================================================================================ -->
+// <!--                                                          STEP 3                                                              -->
+// <!-- ============================================================================================================================ -->
+
 
 
 document.getElementById('step3').addEventListener('click', function() {
@@ -1711,16 +1739,20 @@ $('#Tablacontratosyanexos').on('click', 'button.informacion', function () {
     $('#contrato_cargo').text(NOMBRE_CATEGORIA);
     $('#contrato_fecha_final').text(VIGENCIA_CONTRATO);
 
+    cargarTablaInformacionMedica ();
+    cargarTablaIncidencias ();  
+    cargarTablaAccionesDisciplinarias ();
     cargarTablaRecibosNomina();
-     
 
 });
 
  
 
-// <!-- ============================================================== -->
-// <!--                     DOCUMENTOS DE CONTRATOS                    -->
-// <!-- ============================================================== -->
+// <!-- ============================================================================================================================ -->
+// <!--                                                          DOCUMENTOS DE CONTRATOS                                             -->
+// <!-- ============================================================================================================================ -->
+
+
 
 // <!-- ============================================================== -->
 // <!--INFORMACION MEDICA-->
@@ -1751,12 +1783,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
-
-
-
-
-$("#guardaINFORMACIONMEDICA").click(function (e) {
+$("#guardarINFORMACIONMEDICA").click(function (e) {
     e.preventDefault();
 
     formularioValido = validarFormularioV1('formularioINFORMACION');
@@ -1771,8 +1798,8 @@ $("#guardaINFORMACIONMEDICA").click(function (e) {
             icon: "question",
         },async function () { 
 
-            await loaderbtn('guardaINFORMACIONMEDICA')
-            await ajaxAwaitFormData({ api: 5,CONTRATO_ID:contrato_id, CURP: curpSeleccionada , ID_INFORMACION_MEDICA: ID_INFORMACION_MEDICA }, 'contratoSave', 'formularioINFORMACION', 'guardaINFORMACIONMEDICA', { callbackAfter: true, callbackBefore: true }, () => {
+            await loaderbtn('guardarINFORMACIONMEDICA')
+            await ajaxAwaitFormData({ api: 5,CONTRATO_ID:contrato_id, CURP: curpSeleccionada , ID_INFORMACION_MEDICA: ID_INFORMACION_MEDICA }, 'contratoSave', 'formularioINFORMACION', 'guardarINFORMACIONMEDICA', { callbackAfter: true, callbackBefore: true }, () => {
                 Swal.fire({
                     icon: 'info',
                     title: 'Espere un momento',
@@ -1790,9 +1817,9 @@ $("#guardaINFORMACIONMEDICA").click(function (e) {
                     document.getElementById('formularioINFORMACION').reset();
 
                     
-                    // if ($.fn.DataTable.isDataTable('#Tablarecibonomina')) {
-                    //     Tablarecibonomina.ajax.reload(null, false); 
-                    // }
+                    if ($.fn.DataTable.isDataTable('#Tablainformacionmedica')) {
+                        Tablainformacionmedica.ajax.reload(null, false); 
+                    }
 
             })
             
@@ -1807,8 +1834,8 @@ $("#guardaINFORMACIONMEDICA").click(function (e) {
             icon: "question",
         },async function () { 
 
-            await loaderbtn('guardaINFORMACIONMEDICA')
-            await ajaxAwaitFormData({ api: 5,CONTRATO_ID:contrato_id, CURP: curpSeleccionada ,ID_INFORMACION_MEDICA: ID_INFORMACION_MEDICA }, 'contratoSave', 'formularioINFORMACION', 'guardaINFORMACIONMEDICA', { callbackAfter: true, callbackBefore: true }, () => {
+            await loaderbtn('guardarINFORMACIONMEDICA')
+            await ajaxAwaitFormData({ api: 5,CONTRATO_ID:contrato_id, CURP: curpSeleccionada ,ID_INFORMACION_MEDICA: ID_INFORMACION_MEDICA }, 'contratoSave', 'formularioINFORMACION', 'guardarINFORMACIONMEDICA', { callbackAfter: true, callbackBefore: true }, () => {
                 Swal.fire({
                     icon: 'info',
                     title: 'Espere un momento',
@@ -1829,8 +1856,228 @@ $("#guardaINFORMACIONMEDICA").click(function (e) {
 
 
                     
-                    // if ($.fn.DataTable.isDataTable('#Tablarecibonomina')) {
-                    //     Tablarecibonomina.ajax.reload(null, false); 
+                    if ($.fn.DataTable.isDataTable('#Tablainformacionmedica')) {
+                        Tablainformacionmedica.ajax.reload(null, false); 
+                    }
+
+                }, 300);  
+            })
+        }, 1)
+    }
+
+} else {
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
+    
+});
+
+const Modalinformacionmedica = document.getElementById('miModal_INFORMACION_MEDICA')
+Modalinformacionmedica.addEventListener('hidden.bs.modal', event => {
+
+    ID_INFORMACION_MEDICA = 0
+    document.getElementById('formularioINFORMACION').reset();
+   
+    $('#miModal_INFORMACION_MEDICA .modal-title').html('Información medica');
+
+    document.getElementById('quitar_informacion_medica').style.display = 'none';
+
+    document.getElementById('INFORMACIONMEDICA_ERROR').style.display = 'none';
+
+})
+
+function cargarTablaInformacionMedica() {
+    if ($.fn.DataTable.isDataTable('#Tablainformacionmedica')) {
+        Tablainformacionmedica.clear().destroy();
+    }
+
+    Tablainformacionmedica = $("#Tablainformacionmedica").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        ajax: {
+            dataType: 'json',
+            data: { contrato: contrato_id }, 
+            method: 'GET',
+            cache: false,
+            url: '/Tablainformacionmedica',  
+            beforeSend: function () {
+                $('#loadingIcon3').css('display', 'inline-block');
+            },
+            complete: function () {
+                $('#loadingIcon3').css('display', 'none');
+                Tablainformacionmedica.columns.adjust().draw(); 
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#loadingIcon').css('display', 'none');
+                alertErrorAJAX(jqXHR, textStatus, errorThrown);
+            },
+            dataSrc: 'data'
+        },
+        columns: [
+            { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+            { data: 'NOMBRE_DOCUMENTO_INFORMACION', className: 'text-center' },
+            { data: 'BTN_DOCUMENTO', className: 'text-center' },
+            { data: 'BTN_EDITAR', className: 'text-center' },
+        ],
+        columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'Nombre del documento', className: 'all text-center' },  
+            { targets: 2, title: 'Documento', className: 'all text-center' },  
+            { targets: 3, title: 'Editar', className: 'all text-center' }, 
+
+        ],
+       
+    });
+}
+
+$('#Tablainformacionmedica').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablainformacionmedica.row(tr);
+
+    ID_INFORMACION_MEDICA = row.data().ID_INFORMACION_MEDICA;
+
+    editarDatoTabla(row.data(), 'formularioINFORMACION', 'miModal_INFORMACION_MEDICA', 1);
+
+    $('#miModal_INFORMACION_MEDICA .modal-title').html(row.data().NOMBRE_DOCUMENTO_INFORMACION);
+
+
+});
+
+$('#Tablainformacionmedica').on('click', '.ver-archivo-informacionmedica', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablainformacionmedica.row(tr);
+    var id = $(this).data('id');
+
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+
+    var nombreDocumento = row.data().NOMBRE_DOCUMENTO_INFORMACION;
+    var url = '/mostrarinformacionmedica/' + id;
+    
+    abrirModal(url, nombreDocumento);
+});
+
+
+
+
+
+// <!-- ============================================================== -->
+// <!--INCIDENCIAS-->
+// <!-- ============================================================== -->
+
+document.addEventListener('DOMContentLoaded', function() {
+    var archivoincidencias = document.getElementById('DOCUMENTO_INCIDENCIAS');
+    var quitarincidencias = document.getElementById('quitar_incidencias');
+    var errorincidencias = document.getElementById('INCIDENCIAS_ERROR');
+
+    if (archivoincidencias) {
+        archivoincidencias.addEventListener('change', function() {
+            var archivomedica = this.files[0];
+            if (archivomedica && archivomedica.type === 'application/pdf') {
+                if (errorincidencias) errorincidencias.style.display = 'none';
+                if (quitarincidencias) quitarincidencias.style.display = 'block';
+            } else {
+                if (errorincidencias) errorincidencias.style.display = 'block';
+                this.value = '';
+                if (quitarincidencias) quitarincidencias.style.display = 'none';
+            }
+        });
+        quitarincidencias.addEventListener('click', function() {
+            archivoincidencias.value = ''; 
+            quitarincidencias.style.display = 'none'; 
+            if (errorincidencias) errorincidencias.style.display = 'none'; 
+        });
+    }
+});
+
+$("#guardarINCIDENCIAS").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormularioV1('formularioINCIDENCIAS');
+
+    if (formularioValido) {
+
+    if (ID_INCIDENCIAS == 0) {
+        
+        alertMensajeConfirm({
+            title: "¿Desea guardar la información?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarINCIDENCIAS')
+            await ajaxAwaitFormData({ api: 6,CONTRATO_ID:contrato_id, CURP: curpSeleccionada , ID_INCIDENCIAS: ID_INCIDENCIAS }, 'contratoSave', 'formularioINCIDENCIAS', 'guardarINCIDENCIAS', { callbackAfter: true, callbackBefore: true }, () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+                
+            }, function (data) {
+                    
+                ID_INCIDENCIAS = data.soporte.ID_INCIDENCIAS
+                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                     $('#miModal_INCIDENCIAS').modal('hide')
+                    document.getElementById('formularioINCIDENCIAS').reset();
+
+                    
+                    // if ($.fn.DataTable.isDataTable('#Tablainformacionmedica')) {
+                    //     Tablainformacionmedica.ajax.reload(null, false); 
+                    // }
+
+            })
+            
+            
+            
+        }, 1)
+        
+    } else {
+            alertMensajeConfirm({
+            title: "¿Desea editar la información de este formulario?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarINCIDENCIAS')
+            await ajaxAwaitFormData({ api: 6,CONTRATO_ID:contrato_id, CURP: curpSeleccionada ,ID_INCIDENCIAS: ID_INCIDENCIAS }, 'contratoSave', 'formularioINCIDENCIAS', 'guardarINCIDENCIAS', { callbackAfter: true, callbackBefore: true }, () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+            }, function (data) {
+                    
+                setTimeout(() => {
+
+                    ID_INCIDENCIAS = data.soporte.ID_INCIDENCIAS
+                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                     $('#miModal_INCIDENCIAS').modal('hide')
+                    document.getElementById('formularioINCIDENCIAS').reset();
+
+
+                    
+                    // if ($.fn.DataTable.isDataTable('#Tablainformacionmedica')) {
+                    //     Tablainformacionmedica.ajax.reload(null, false); 
                     // }
 
                 }, 300);  
@@ -1845,7 +2092,322 @@ $("#guardaINFORMACIONMEDICA").click(function (e) {
     
 });
 
+const Modalincidendia = document.getElementById('miModal_INCIDENCIAS')
+Modalinformacionmedica.addEventListener('hidden.bs.modal', event => {
 
+    ID_INCIDENCIAS = 0
+
+    document.getElementById('formularioINCIDENCIAS').reset();
+   
+    $('#miModal_INCIDENCIAS .modal-title').html('Incidencias');
+
+    document.getElementById('quitar_incidencias').style.display = 'none';
+
+    document.getElementById('INCIDENCIAS_ERROR').style.display = 'none';
+
+})
+
+function cargarTablaIncidencias() {
+    if ($.fn.DataTable.isDataTable('#Tablaincidencias')) {
+        Tablaincidencias.clear().destroy();
+    }
+
+    Tablaincidencias = $("#Tablaincidencias").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        ajax: {
+            dataType: 'json',
+            data: { contrato: contrato_id }, 
+            method: 'GET',
+            cache: false,
+            url: '/Tablaincidencias',  
+            beforeSend: function () {
+                $('#loadingIcon4').css('display', 'inline-block');
+            },
+            complete: function () {
+                $('#loadingIcon4').css('display', 'none');
+                Tablaincidencias.columns.adjust().draw(); 
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#loadingIcon4').css('display', 'none');
+                alertErrorAJAX(jqXHR, textStatus, errorThrown);
+            },
+            dataSrc: 'data'
+        },
+        columns: [
+            { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+            { data: 'NOMBRE_DOCUMENTO_INCIDENCIAS', className: 'text-center' },
+            { data: 'BTN_DOCUMENTO', className: 'text-center' },
+            { data: 'BTN_EDITAR', className: 'text-center' },
+        ],
+        columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'Nombre del documento', className: 'all text-center' },  
+            { targets: 2, title: 'Documento', className: 'all text-center' },  
+            { targets: 3, title: 'Editar', className: 'all text-center' }, 
+
+        ],
+       
+    });
+}
+
+$('#Tablaincidencias').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablaincidencias.row(tr);
+
+    ID_INCIDENCIAS = row.data().ID_INCIDENCIAS;
+
+    editarDatoTabla(row.data(), 'formularioINCIDENCIAS', 'miModal_INCIDENCIAS', 1);
+
+    $('#miModal_INCIDENCIAS .modal-title').html(row.data().NOMBRE_DOCUMENTO_INCIDENCIAS);
+
+
+});
+
+$('#Tablaincidencias').on('click', '.ver-archivo-incidencias', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablaincidencias.row(tr);
+    var id = $(this).data('id');
+
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+
+    var nombreDocumento = row.data().NOMBRE_DOCUMENTO_INCIDENCIAS;
+    var url = '/mostrarincidencias/' + id;
+    
+    abrirModal(url, nombreDocumento);
+});
+
+
+// <!-- ============================================================== -->
+// <!--ACCIONES DISCIPLINARIAS -->
+// <!-- ============================================================== -->
+
+document.addEventListener('DOMContentLoaded', function() {
+    var archvioaccciones = document.getElementById('DOCUMENTO_ACCIONES_DISCIPLINARIAS');
+    var quitacciones = document.getElementById('quitar_acciones_disciplinarias');
+    var erroracciones = document.getElementById('ACCIONES_DISCIPLINARIAS_ERROR');
+
+    if (archvioaccciones) {
+        archvioaccciones.addEventListener('change', function() {
+            var archivomedica = this.files[0];
+            if (archivomedica && archivomedica.type === 'application/pdf') {
+                if (erroracciones) erroracciones.style.display = 'none';
+                if (quitacciones) quitacciones.style.display = 'block';
+            } else {
+                if (erroracciones) erroracciones.style.display = 'block';
+                this.value = '';
+                if (quitacciones) quitacciones.style.display = 'none';
+            }
+        });
+        quitacciones.addEventListener('click', function() {
+            archvioaccciones.value = ''; 
+            quitacciones.style.display = 'none'; 
+            if (erroracciones) erroracciones.style.display = 'none'; 
+        });
+    }
+});
+
+$("#guardarACCIONES").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormularioV1('formularioACCIONES_DISCIPLINARIAS');
+
+    if (formularioValido) {
+
+    if (ID_ACCIONES_DISCIPLINARIAS == 0) {
+        
+        alertMensajeConfirm({
+            title: "¿Desea guardar la información?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarACCIONES')
+            await ajaxAwaitFormData({ api: 7,CONTRATO_ID:contrato_id, CURP: curpSeleccionada , ID_ACCIONES_DISCIPLINARIAS: ID_ACCIONES_DISCIPLINARIAS }, 'contratoSave', 'formularioACCIONES_DISCIPLINARIAS', 'guardarACCIONES', { callbackAfter: true, callbackBefore: true }, () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+                
+            }, function (data) {
+                    
+                ID_ACCIONES_DISCIPLINARIAS = data.soporte.ID_ACCIONES_DISCIPLINARIAS
+                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                     $('#miModal_ACCIONES_DISCIPLINARIAS').modal('hide')
+                    document.getElementById('formularioACCIONES_DISCIPLINARIAS').reset();
+
+                    
+                    // if ($.fn.DataTable.isDataTable('#Tablainformacionmedica')) {
+                    //     Tablainformacionmedica.ajax.reload(null, false); 
+                    // }
+
+            })
+            
+            
+            
+        }, 1)
+        
+    } else {
+            alertMensajeConfirm({
+            title: "¿Desea editar la información de este formulario?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarACCIONES')
+            await ajaxAwaitFormData({ api: 7,CONTRATO_ID:contrato_id, CURP: curpSeleccionada ,ID_ACCIONES_DISCIPLINARIAS: ID_ACCIONES_DISCIPLINARIAS }, 'contratoSave', 'formularioACCIONES_DISCIPLINARIAS', 'guardarACCIONES', { callbackAfter: true, callbackBefore: true }, () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+            }, function (data) {
+                    
+                setTimeout(() => {
+
+                    ID_ACCIONES_DISCIPLINARIAS = data.soporte.ID_ACCIONES_DISCIPLINARIAS
+                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                     $('#miModal_ACCIONES_DISCIPLINARIAS').modal('hide')
+                    document.getElementById('formularioACCIONES_DISCIPLINARIAS').reset();
+
+
+                    
+                    // if ($.fn.DataTable.isDataTable('#Tablainformacionmedica')) {
+                    //     Tablainformacionmedica.ajax.reload(null, false); 
+                    // }
+
+                }, 300);  
+            })
+        }, 1)
+    }
+
+} else {
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
+    
+});
+
+const Modalacciones = document.getElementById('miModal_ACCIONES_DISCIPLINARIAS')
+Modalacciones.addEventListener('hidden.bs.modal', event => {
+
+    ID_ACCIONES_DISCIPLINARIAS = 0
+
+    document.getElementById('formularioACCIONES_DISCIPLINARIAS').reset();
+   
+    $('#miModal_ACCIONES_DISCIPLINARIAS .modal-title').html('Acciones disciplinarias');
+
+    document.getElementById('quitar_acciones_disciplinarias').style.display = 'none';
+
+    document.getElementById('ACCIONES_DISCIPLINARIAS_ERROR').style.display = 'none';
+
+})
+
+function cargarTablaAccionesDisciplinarias() {
+    if ($.fn.DataTable.isDataTable('#Tablaccionesdisciplinarias')) {
+        Tablaccionesdisciplinarias.clear().destroy();
+    }
+
+    Tablaccionesdisciplinarias = $("#Tablaccionesdisciplinarias").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        ajax: {
+            dataType: 'json',
+            data: { contrato: contrato_id }, 
+            method: 'GET',
+            cache: false,
+            url: '/Tablaccionesdisciplinarias',  
+            beforeSend: function () {
+                $('#loadingIcon5').css('display', 'inline-block');
+            },
+            complete: function () {
+                $('#loadingIcon5').css('display', 'none');
+                Tablaccionesdisciplinarias.columns.adjust().draw(); 
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#loadingIcon5').css('display', 'none');
+                alertErrorAJAX(jqXHR, textStatus, errorThrown);
+            },
+            dataSrc: 'data'
+        },
+        columns: [
+            { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+            { data: 'NOMBRE_DOCUMENTO_ACCIONES', className: 'text-center' },
+            { data: 'BTN_DOCUMENTO', className: 'text-center' },
+            { data: 'BTN_EDITAR', className: 'text-center' },
+        ],
+        columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'Nombre del documento', className: 'all text-center' },  
+            { targets: 2, title: 'Documento', className: 'all text-center' },  
+            { targets: 3, title: 'Editar', className: 'all text-center' }, 
+
+        ],
+       
+    });
+}
+
+$('#Tablaccionesdisciplinarias').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablaccionesdisciplinarias.row(tr);
+
+    ID_ACCIONES_DISCIPLINARIAS = row.data().ID_ACCIONES_DISCIPLINARIAS;
+
+    editarDatoTabla(row.data(), 'formularioACCIONES_DISCIPLINARIAS', 'miModal_ACCIONES_DISCIPLINARIAS', 1);
+
+    $('#miModal_ACCIONES_DISCIPLINARIAS .modal-title').html(row.data().NOMBRE_DOCUMENTO_ACCIONES);
+
+
+});
+
+$('#Tablaccionesdisciplinarias').on('click', '.ver-archivo-acciones', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablaccionesdisciplinarias.row(tr);
+    var id = $(this).data('id');
+
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+
+    var nombreDocumento = row.data().NOMBRE_DOCUMENTO_ACCIONES;
+    var url = '/mostraracciones/' + id;
+    
+    abrirModal(url, nombreDocumento);
+});
 
 
 // <!-- ============================================================== -->
@@ -2073,10 +2635,10 @@ $('#Tablarecibonomina').on('click', '.ver-archivo-recibonomina', function () {
 
 
 
-// <!-- ============================================================== -->
-// <!-- STEP 4  -->
-// <!-- ============================================================== -->
 
+// <!-- ============================================================================================================================ -->
+// <!--                                                          STEP 4                                                              -->
+// <!-- ============================================================================================================================ -->
 
 document.getElementById('step4').addEventListener('click', function() {
     document.querySelectorAll('[id$="-content"]').forEach(function(content) {

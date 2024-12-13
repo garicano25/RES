@@ -82,7 +82,7 @@ public function Tablapostulaciones()
 
 
 // FUNCION  PARA CONSULTAR LAS PERSONAS QUE SE CREARON  PARA PODER PRESELECCIONAR 
-public function informacionPreseleccion($idVacante)
+public function informacionpreseleccion($idVacante)
 {
     try {
         $preseleccionados = DB::table('vacantes_activas')
@@ -96,6 +96,9 @@ public function informacionPreseleccion($idVacante)
                 'CORREO_AC',
                 'TELEFONO1_AC',
                 'TELEFONO2_AC',
+                'DIA_FECHA_AC',
+                'MES_FECHA_AC',
+                'ANIO_FECHA_AC',
                 'PORCENTAJE',
                 'DISPONIBLE'
             )
@@ -126,12 +129,16 @@ public function informacionpostulantes($idVacante)
                 fb.CORREO_CV,
                 fb.TELEFONO1,
                 fb.TELEFONO2,
+                fb.DIA_FECHA_CV,
+                fb.MES_FECHA_CV,
+                fb.ANIO_FECHA_CV,
                 fb.ARCHIVO_CV, 
                 lp.VACANTES_ID
             FROM lista_postulantes lp
             LEFT JOIN formulario_bancocv fb ON lp.CURP = fb.CURP_CV
             WHERE lp.VACANTES_ID = ? AND lp.ACTIVO = 1
-            GROUP BY fb.CURP_CV, lp.VACANTES_ID, fb.NOMBRE_CV, fb.PRIMER_APELLIDO_CV, fb.SEGUNDO_APELLIDO_CV, fb.CORREO_CV, fb.TELEFONO1, fb.TELEFONO2, fb.ARCHIVO_CV
+            GROUP BY fb.CURP_CV, lp.VACANTES_ID, fb.NOMBRE_CV, fb.PRIMER_APELLIDO_CV, fb.SEGUNDO_APELLIDO_CV, fb.CORREO_CV, fb.TELEFONO1, fb.TELEFONO2, fb.DIA_FECHA_CV,
+                fb.MES_FECHA_CV,fb.ANIO_FECHA_CV, fb.ARCHIVO_CV
         ", [$idVacante]);
 
         $requerimientos = DB::select("
@@ -183,8 +190,9 @@ public function guardarPostulantes (Request $request)
     $postulante = $request->all(); 
 
     listapostulacionesModel::where('CURP', $postulante['CURP'])
-        ->where('VACANTES_ID', $postulante['VACANTES_ID'])
-        ->update(['ACTIVO' => 0]);
+    ->where('VACANTES_ID', $postulante['VACANTES_ID'])
+    ->delete();
+
 
     vacantesactivasModel::create([
         'VACANTES_ID' => $postulante['VACANTES_ID'],
@@ -196,15 +204,15 @@ public function guardarPostulantes (Request $request)
         'CORREO_AC' => $postulante['CORREO_AC'],
         'TELEFONO1_AC' => $postulante['TELEFONO1_AC'],
         'TELEFONO2_AC' => $postulante['TELEFONO2_AC'],
+        'DIA_FECHA_AC' => $postulante['DIA_FECHA_AC'],
+        'MES_FECHA_AC' => $postulante['MES_FECHA_AC'],
+        'ANIO_FECHA_AC' => $postulante['ANIO_FECHA_AC'],
         'PORCENTAJE' => $postulante['PORCENTAJE'],
         'ACTIVO' => 1
     ]);
 
     return response()->json(['message' => 'Información guardada con éxito.'], 200);
 }
-
-
-
 
 
 //  FUNCION PARA GUARDAR LAS PERSONAS QUE SE PRESELECCIONARON  Y MANDARLO A SELECCIO  
@@ -215,9 +223,8 @@ public function guardarPreseleccion(Request $request)
 
         vacantesactivasModel::where('CURP', $request->CURP)
         ->where('VACANTES_ID', $request->VACANTES_ID)
-        ->update(['ACTIVO' => 0]);
-
-
+        ->delete();
+            
         SeleccionModel::create([
             'VACANTES_ID' => $request->VACANTES_ID,
             'CATEGORIA_VACANTE' => $request->CATEGORIA_VACANTE,
@@ -228,6 +235,9 @@ public function guardarPreseleccion(Request $request)
             'CORREO_SELEC' => $request->CORREO_SELEC,
             'TELEFONO1_SELECT' => $request->TELEFONO1_SELECT,
             'TELEFONO2_SELECT' => $request->TELEFONO2_SELECT,
+            'DIA_FECHA_SELECT' => $request->DIA_FECHA_SELECT,
+            'MES_FECHA_SELECT' => $request->MES_FECHA_SELECT,
+            'ANIO_FECHA_SELECT' => $request->ANIO_FECHA_SELECT,
             'PORCENTAJE' => $request->PORCENTAJE,
         ]);
 

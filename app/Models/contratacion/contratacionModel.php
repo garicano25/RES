@@ -63,6 +63,7 @@ class contratacionModel extends Model
         'NUMERO_DOCUMENTO',
         'EXPEDIDO_DOCUMENTO',
         'EMISION_DOCUMENTO',
+        'FECHA_INGRESO',
         'ACTIVO',
 
     ];

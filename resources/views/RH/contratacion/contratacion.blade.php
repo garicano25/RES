@@ -366,7 +366,7 @@
                                     <div class="col-3 mb-3">
                                         <label for="estadoCivil">Estado Civil *</label>
                                         <select class="form-control" id="ESTADO_CIVIL" name="ESTADO_CIVIL" required>
-                                            <option value=""></option>
+                                            <option value="0" disabled selected>Seleccione una opción</option>
                                             <option value="1">Soltero (a)</option>
                                             <option value="2">Casado (a)</option>
                                             <option value="3">Divorciado (a)</option>
@@ -435,7 +435,7 @@
                                 <div class="col-2 mb-3">
                                     <label for="estadoCivil">Tipo *</label>
                                     <select class="form-control" id="TIPO_DOCUMENTO_IDENTIFICACION" name="TIPO_DOCUMENTO_IDENTIFICACION" required>
-                                        <option value=""></option>
+                                        <option value="0" disabled selected>Seleccione una opción</option>
                                         <option value="1">Residencia temporal</option>
                                         <option value="2">Residencia Permanente</option>
                                         <option value="3">INE</option>
@@ -542,7 +542,7 @@
                                 <div class="col-4 mb-3">
                                     <label >Tipo de Sangre *</label>
                                     <select class="form-control" id="TIPO_SANGRE" name="TIPO_SANGRE" required>
-                                        <option value="" disabled selected></option>
+                                        <option value="0" disabled selected>Seleccione una opción</option>
                                         <option value="1">A+</option>
                                         <option value="2">A-</option>
                                         <option value="3">B+</option>
@@ -754,7 +754,7 @@
                     <div id="incidencias_contratos" >
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-person-check-fill"></i> &nbsp;Incidencias</h3>
-                            <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#" style="margin-left: auto;">
+                            <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_INCIDENCIAS" style="margin-left: auto;">
                                 Nuevo  &nbsp;<i class="bi bi-plus-circle"></i>
                             </button>
                         </ol>
@@ -769,7 +769,7 @@
                     <div id="acciones_disciplinarias_contratos" >
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-person-circle"></i> &nbsp;Acciones disciplinarias</h3>
-                            <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#" style="margin-left: auto;">
+                            <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_ACCIONES_DISCIPLINARIAS" style="margin-left: auto;">
                                 Nuevo  &nbsp;<i class="bi bi-plus-circle"></i>
                             </button>
                         </ol>
@@ -810,36 +810,9 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- ============================================================== -->
 <!-- MODAL DOCUMENTO DE SOPORTE-->
 <!-- ============================================================== -->
-
 
 <div class="modal fade" id="miModal_DOCUMENTOS_SOPORTE" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -897,8 +870,6 @@
         </div>
     </div>
 </div>
-
-
 
 <!-- ============================================================== -->
 <!-- MODAL CONTRATOS Y ANEXOS-->
@@ -995,11 +966,9 @@
     </div>
 </div>
 
-
 <!-- ============================================================== -->
 <!-- MODAL RECIBO -->
 <!-- ============================================================== -->
-
 
 <div class="modal fade" id="miModal_RECIBOS_NOMINA" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -1047,14 +1016,9 @@
     </div>
 </div>
 
-
-
-
-
 <!-- ============================================================== -->
 <!-- MODAL INFORMACION MEDICA -->
 <!-- ============================================================== -->
-
 
 <div class="modal fade" id="miModal_INFORMACION_MEDICA" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -1085,16 +1049,92 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-success" id="guardaINFORMACIONMEDICA">Guardar</button>
+                    <button type="submit" class="btn btn-success" id="guardarINFORMACIONMEDICA">Guardar</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 
+<!-- ============================================================== -->
+<!-- MODAL INCIDENCIAS -->
+<!-- ============================================================== -->
 
+<div class="modal fade" id="miModal_INCIDENCIAS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post"  enctype="multipart/form-data" id="formularioINCIDENCIAS" style="background-color: #ffffff;">              
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Incidencias</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {!! csrf_field() !!}
 
+                    <div class="mb-3">
+                        <label>Nombre del archivo </label>
+                        <input type="text" class="form-control" id="NOMBRE_DOCUMENTO_INCIDENCIAS" name="NOMBRE_DOCUMENTO_INCIDENCIAS"  required>
+                    </div>
+                
 
+                    <div class="mb-3">
+                        <label>Subir documento</label>
+                        <div class="input-group">
+                        <input type="file" class="form-control" id="DOCUMENTO_INCIDENCIAS" name="DOCUMENTO_INCIDENCIAS" accept=".pdf" style="width: auto; flex: 1;" >
+                        <button type="button" class="btn btn-light btn-sm ms-2" id="quitar_incidencias" style="display:none;">Quitar archivo</button>
+                        </div>
+                    </div>
+                    <div id="INCIDENCIAS_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
+        
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" id="guardarINCIDENCIAS">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================== -->
+<!-- ACCIONES DISCIPLINARIAS  -->
+<!-- ============================================================== -->
+
+<div class="modal fade" id="miModal_ACCIONES_DISCIPLINARIAS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post"  enctype="multipart/form-data" id="formularioACCIONES_DISCIPLINARIAS" style="background-color: #ffffff;">              
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Acciones disciplinarias</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {!! csrf_field() !!}
+
+                    <div class="mb-3">
+                        <label>Nombre del archivo </label>
+                        <input type="text" class="form-control" id="NOMBRE_DOCUMENTO_ACCIONES" name="NOMBRE_DOCUMENTO_ACCIONES"  required>
+                    </div>
+                
+
+                    <div class="mb-3">
+                        <label>Subir documento</label>
+                        <div class="input-group">
+                        <input type="file" class="form-control" id="DOCUMENTO_ACCIONES_DISCIPLINARIAS" name="DOCUMENTO_ACCIONES_DISCIPLINARIAS" accept=".pdf" style="width: auto; flex: 1;" >
+                        <button type="button" class="btn btn-light btn-sm ms-2" id="quitar_acciones_disciplinarias" style="display:none;">Quitar archivo</button>
+                        </div>
+                    </div>
+                    <div id="ACCIONES_DISCIPLINARIAS_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
+        
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" id="guardarACCIONES">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 @endsection

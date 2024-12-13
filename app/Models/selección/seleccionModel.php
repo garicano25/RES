@@ -21,6 +21,9 @@ class seleccionModel extends Model
         'TELEFONO1_SELECT',
         'TELEFONO2_SELECT',
         'PORCENTAJE',
+        'DIA_FECHA_SELECT',
+        'MES_FECHA_SELECT',
+        'ANIO_FECHA_SELECT',
         'ACTIVO'
     ];
 }

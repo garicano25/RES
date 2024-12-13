@@ -13,7 +13,8 @@ use App\Models\contratacion\documentosoporteModel;
 use App\Models\contratacion\contratosanexosModel;
 use App\Models\contratacion\reciboscontratoModel;
 use App\Models\contratacion\informacionmedicaModel;
-
+use App\Models\contratacion\incidenciasModel;
+use App\Models\contratacion\accionesdisciplinariasModel;
 
 
 
@@ -36,7 +37,6 @@ class contratacionController extends Controller
 
         return view('RH.contratacion.contratacion', compact('areas'));
     }
-
 
 
     
@@ -66,8 +66,6 @@ public function Tablacontratacion()
     }
 }
     
-
-
 public function Tablacontratacion1()
 {
     try {
@@ -94,7 +92,6 @@ public function Tablacontratacion1()
     }
 }
     
-
 public function verificarestadobloqueo(Request $request)
 {
     $curp = $request->input('curpSeleccionada');
@@ -143,19 +140,15 @@ public function activarColaborador(Request $request, $id)
 
 /////////////////////////////////////////// STEP 1  DATOS GENERALES //////////////////////////////////
 
-
-
-
 public function mostrarfotocolaborador($colaborador_id)
 {
     $foto = contratacionModel::findOrFail($colaborador_id);
     return Storage::response($foto->FOTO_USUARIO);
 }
-
-
     
 
 /////////////////////////////////////////// STEP 2 DOCUMENTOS DE SOPORTE //////////////////////////////////
+
 public function Tabladocumentosoporte(Request $request)
 {
     try {
@@ -195,15 +188,11 @@ public function Tabladocumentosoporte(Request $request)
     }
 }
 
-
-
 public function mostrardocumentosoporte($id)
 {
     $archivo = documentosoporteModel::findOrFail($id)->DOCUMENTO_SOPORTE;
     return Storage::response($archivo);
 }
-
-
 
 public function obtenerguardados(Request $request)
 {
@@ -216,11 +205,7 @@ public function obtenerguardados(Request $request)
 }
 
 
-
 /////////////////////////////////////////// STEP 3  CONTRATOS Y ANEXOS //////////////////////////////////
-
-
-
 
 public function Tablacontratosyanexos(Request $request)
 {
@@ -272,23 +257,149 @@ public function Tablacontratosyanexos(Request $request)
     }
 }
 
-
-
 public function mostrarcontratosyanexos($id)
 {
     $archivo = contratosanexosModel::findOrFail($id)->DOCUMENTO_CONTRATO;
     return Storage::response($archivo);
 }
 
-
-
-
-
 /////////////////////////////////////////// DOCUMENTOS DE CONTRATO //////////////////////////////////
 
+
+// INFORMACION MEDICA
+
+public function Tablainformacionmedica(Request $request)
+{
+    try {
+        $contrato = $request->get('contrato');
+
+        $tabla = informacionmedicaModel::where('CONTRATO_ID', $contrato)->get();
+
+
+        // $tabla = documentosoporteModel::get();
+
+
+        foreach ($tabla as $value) {
+            if ($value->ACTIVO == 0) {
+
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR" ><i class="bi bi-eye"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-informacionmedica" data-id="' . $value->ID_INFORMACION_MEDICA . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+            } else {
+
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-informacionmedica" data-id="' . $value->ID_INFORMACION_MEDICA . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+            }
+        }
+
+        return response()->json([
+            'data' => $tabla,
+            'msj' => 'Información consultada correctamente'
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'msj' => 'Error ' . $e->getMessage(),
+            'data' => 0
+        ]);
+    }
+}
+
+public function mostrarinformacionmedica($id)
+{
+    $archivo = informacionmedicaModel::findOrFail($id)->DOCUMENTO_INFORMACION_MEDICA;
+    return Storage::response($archivo);
+}
+
+// INCIDENCIAS 
+
+public function Tablaincidencias(Request $request)
+{
+    try {
+        $contrato = $request->get('contrato');
+
+        $tabla = incidenciasModel::where('CONTRATO_ID', $contrato)->get();
+
+        foreach ($tabla as $value) {
+            if ($value->ACTIVO == 0) {
+
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR" ><i class="bi bi-eye"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-incidencias" data-id="' . $value->ID_INCIDENCIAS . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+            } else {
+
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-incidencias" data-id="' . $value->ID_INCIDENCIAS . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+            }
+        }
+
+        return response()->json([
+            'data' => $tabla,
+            'msj' => 'Información consultada correctamente'
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'msj' => 'Error ' . $e->getMessage(),
+            'data' => 0
+        ]);
+    }
+}
+
+public function mostrarincidencias($id)
+{
+    $archivo = incidenciasModel::findOrFail($id)->DOCUMENTO_INCIDENCIAS;
+    return Storage::response($archivo);
+}
+
+// ACCIONES DISCIPLINARIAS 
+
+public function Tablaccionesdisciplinarias(Request $request)
+{
+    try {
+        $contrato = $request->get('contrato');
+
+        $tabla = accionesdisciplinariasModel::where('CONTRATO_ID', $contrato)->get();
+
+        foreach ($tabla as $value) {
+            if ($value->ACTIVO == 0) {
+
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR" ><i class="bi bi-eye"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-acciones" data-id="' . $value->ID_ACCIONES_DISCIPLINARIAS . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+            } else {
+
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-acciones" data-id="' . $value->ID_ACCIONES_DISCIPLINARIAS . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+            }
+        }
+
+        return response()->json([
+            'data' => $tabla,
+            'msj' => 'Información consultada correctamente'
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'msj' => 'Error ' . $e->getMessage(),
+            'data' => 0
+        ]);
+    }
+}
+
+public function mostraracciones($id)
+{
+    $archivo = accionesdisciplinariasModel::findOrFail($id)->DOCUMENTO_ACCIONES_DISCIPLINARIAS;
+    return Storage::response($archivo);
+}
+
 // RECIBOS DE NOMINA 
-
-
 
 public function Tablarecibonomina(Request $request)
 {
@@ -328,8 +439,6 @@ public function Tablarecibonomina(Request $request)
         ]);
     }
 }
-
-
 
 public function mostrarecibosnomina($id)
 {
@@ -554,72 +663,212 @@ public function store(Request $request)
 
 
 
-                         // INFORMACION MEDICA
+                    // INFORMACION MEDICA
 
-                         case 5:
-                            if ($request->ID_INFORMACION_MEDICA == 0) {
-                                DB::statement('ALTER TABLE informacion_medica_contrato AUTO_INCREMENT=1;');
-                                $soportes = informacionmedicaModel::create($request->except('DOCUMENTO_INFORMACION_MEDICA')); 
-                        
-                                if ($request->hasFile('DOCUMENTO_INFORMACION_MEDICA')) {
-                                    $documento = $request->file('DOCUMENTO_INFORMACION_MEDICA');
-                                    $curp = $request->CURP;
-                                    $idDocumento = $soportes->ID_INFORMACION_MEDICA;
-                                    $contratoId = $soportes->CONTRATO_ID; 
-                        
-                                    $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_INFORMACION) . '.' . $documento->getClientOriginalExtension();
-                        
-                                    $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Información Medica/' . $idDocumento;
-                                    $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
-                        
-                                    $soportes->DOCUMENTO_INFORMACION_MEDICA = $rutaCompleta;
-                                    $soportes->save();
+                    case 5:
+                    if ($request->ID_INFORMACION_MEDICA == 0) {
+                        DB::statement('ALTER TABLE informacion_medica_contrato AUTO_INCREMENT=1;');
+                        $soportes = informacionmedicaModel::create($request->except('DOCUMENTO_INFORMACION_MEDICA')); 
+                
+                        if ($request->hasFile('DOCUMENTO_INFORMACION_MEDICA')) {
+                            $documento = $request->file('DOCUMENTO_INFORMACION_MEDICA');
+                            $curp = $request->CURP;
+                            $idDocumento = $soportes->ID_INFORMACION_MEDICA;
+                            $contratoId = $soportes->CONTRATO_ID; 
+                
+                            $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_INFORMACION) . '.' . $documento->getClientOriginalExtension();
+                
+                            $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Información Medica/' . $idDocumento;
+                            $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+                
+                            $soportes->DOCUMENTO_INFORMACION_MEDICA = $rutaCompleta;
+                            $soportes->save();
+                        }
+                    } else {
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $soportes = informacionmedicaModel::where('ID_INFORMACION_MEDICA', $request['ID_INFORMACION_MEDICA'])
+                                    ->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['soporte'] = 'Desactivada';
+                            } else {
+                                $soportes = informacionmedicaModel::where('ID_INFORMACION_MEDICA', $request['ID_INFORMACION_MEDICA'])
+                                    ->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['soporte'] = 'Activada';
+                            }
+                        } else {
+                            $soportes = informacionmedicaModel::find($request->ID_INFORMACION_MEDICA);
+                            $soportes->update($request->except('DOCUMENTO_INFORMACION_MEDICA'));
+                
+                            if ($request->hasFile('DOCUMENTO_INFORMACION_MEDICA')) {
+                                if ($soportes->DOCUMENTO_INFORMACION_MEDICA && Storage::exists($soportes->DOCUMENTO_INFORMACION_MEDICA)) {
+                                    Storage::delete($soportes->DOCUMENTO_INFORMACION_MEDICA); 
+                                }
+                
+                                $documento = $request->file('DOCUMENTO_INFORMACION_MEDICA');
+                                $curp = $request->CURP;
+                                $idDocumento = $soportes->ID_INFORMACION_MEDICA;
+                                $contratoId = $soportes->CONTRATO_ID; 
+                
+                                $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_INFORMACION) . '.' . $documento->getClientOriginalExtension();
+                
+                                $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Información Medica/' . $idDocumento;
+                                $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+                
+                                $soportes->DOCUMENTO_INFORMACION_MEDICA = $rutaCompleta;
+                                $soportes->save();
+                            }
+                
+                            $response['code'] = 1;
+                            $response['soporte'] = 'Actualizada';
+                        }
+                    }
+                
+                    $response['code'] = 1;
+                    $response['soporte'] = $soportes;
+                    return response()->json($response);
+                    break;
+
+
+
+                    // INCIDENCIAS
+
+                    case 6:
+                        if ($request->ID_INCIDENCIAS == 0) {
+                            DB::statement('ALTER TABLE incidencias_contrato AUTO_INCREMENT=1;');
+                            $soportes = incidenciasModel::create($request->except('DOCUMENTO_INCIDENCIAS')); 
+                    
+                            if ($request->hasFile('DOCUMENTO_INCIDENCIAS')) {
+                                $documento = $request->file('DOCUMENTO_INCIDENCIAS');
+                                $curp = $request->CURP;
+                                $idDocumento = $soportes->ID_INCIDENCIAS;
+                                $contratoId = $soportes->CONTRATO_ID; 
+                    
+                                $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_INCIDENCIAS) . '.' . $documento->getClientOriginalExtension();
+                    
+                                $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Incidencias/' . $idDocumento;
+                                $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+                    
+                                $soportes->DOCUMENTO_INCIDENCIAS = $rutaCompleta;
+                                $soportes->save();
+                            }
+                        } else {
+                            if (isset($request->ELIMINAR)) {
+                                if ($request->ELIMINAR == 1) {
+                                    $soportes = incidenciasModel::where('ID_INCIDENCIAS', $request['ID_INCIDENCIAS'])
+                                        ->update(['ACTIVO' => 0]);
+                                    $response['code'] = 1;
+                                    $response['soporte'] = 'Desactivada';
+                                } else {
+                                    $soportes = incidenciasModel::where('ID_INCIDENCIAS', $request['ID_INCIDENCIAS'])
+                                        ->update(['ACTIVO' => 1]);
+                                    $response['code'] = 1;
+                                    $response['soporte'] = 'Activada';
                                 }
                             } else {
-                                if (isset($request->ELIMINAR)) {
-                                    if ($request->ELIMINAR == 1) {
-                                        $soportes = informacionmedicaModel::where('ID_INFORMACION_MEDICA', $request['ID_INFORMACION_MEDICA'])
-                                            ->update(['ACTIVO' => 0]);
-                                        $response['code'] = 1;
-                                        $response['soporte'] = 'Desactivada';
-                                    } else {
-                                        $soportes = informacionmedicaModel::where('ID_INFORMACION_MEDICA', $request['ID_INFORMACION_MEDICA'])
-                                            ->update(['ACTIVO' => 1]);
-                                        $response['code'] = 1;
-                                        $response['soporte'] = 'Activada';
+                                $soportes = incidenciasModel::find($request->ID_INCIDENCIAS);
+                                $soportes->update($request->except('DOCUMENTO_INCIDENCIAS'));
+                    
+                                if ($request->hasFile('DOCUMENTO_INCIDENCIAS')) {
+                                    if ($soportes->DOCUMENTO_INCIDENCIAS && Storage::exists($soportes->DOCUMENTO_INCIDENCIAS)) {
+                                        Storage::delete($soportes->DOCUMENTO_INCIDENCIAS); 
                                     }
-                                } else {
-                                    $soportes = informacionmedicaModel::find($request->ID_INFORMACION_MEDICA);
-                                    $soportes->update($request->except('DOCUMENTO_INFORMACION_MEDICA'));
-                        
-                                    if ($request->hasFile('DOCUMENTO_INFORMACION_MEDICA')) {
-                                        if ($soportes->DOCUMENTO_INFORMACION_MEDICA && Storage::exists($soportes->DOCUMENTO_INFORMACION_MEDICA)) {
-                                            Storage::delete($soportes->DOCUMENTO_INFORMACION_MEDICA); 
-                                        }
-                        
-                                        $documento = $request->file('DOCUMENTO_INFORMACION_MEDICA');
-                                        $curp = $request->CURP;
-                                        $idDocumento = $soportes->ID_INFORMACION_MEDICA;
-                                        $contratoId = $soportes->CONTRATO_ID; 
-                        
-                                        $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_INFORMACION) . '.' . $documento->getClientOriginalExtension();
-                        
-                                        $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Información Medica/' . $idDocumento;
-                                        $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
-                        
-                                        $soportes->DOCUMENTO_INFORMACION_MEDICA = $rutaCompleta;
-                                        $soportes->save();
-                                    }
-                        
-                                    $response['code'] = 1;
-                                    $response['soporte'] = 'Actualizada';
+                    
+                                    $documento = $request->file('DOCUMENTO_INCIDENCIAS');
+                                    $curp = $request->CURP;
+                                    $idDocumento = $soportes->ID_INCIDENCIAS;
+                                    $contratoId = $soportes->CONTRATO_ID; 
+                    
+                                    $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_INCIDENCIAS) . '.' . $documento->getClientOriginalExtension();
+                    
+                                    $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Incidencias/' . $idDocumento;
+                                    $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+                    
+                                    $soportes->DOCUMENTO_INCIDENCIAS = $rutaCompleta;
+                                    $soportes->save();
                                 }
+                    
+                                $response['code'] = 1;
+                                $response['soporte'] = 'Actualizada';
                             }
+                        }
+                    
+                        $response['code'] = 1;
+                        $response['soporte'] = $soportes;
+                        return response()->json($response);
+                        break;
+
                         
-                            $response['code'] = 1;
-                            $response['soporte'] = $soportes;
-                            return response()->json($response);
-                            break;
+
+
+                        // ACCIONES DISCIPLINARIAS
+
+                    case 7:
+                        if ($request->ID_ACCIONES_DISCIPLINARIAS == 0) {
+                            DB::statement('ALTER TABLE acciones_disciplinarias_contrato AUTO_INCREMENT=1;');
+                            $soportes = accionesdisciplinariasModel::create($request->except('DOCUMENTO_ACCIONES_DISCIPLINARIAS')); 
+                    
+                            if ($request->hasFile('DOCUMENTO_ACCIONES_DISCIPLINARIAS')) {
+                                $documento = $request->file('DOCUMENTO_ACCIONES_DISCIPLINARIAS');
+                                $curp = $request->CURP;
+                                $idDocumento = $soportes->ID_ACCIONES_DISCIPLINARIAS;
+                                $contratoId = $soportes->CONTRATO_ID; 
+                    
+                                $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_ACCIONES) . '.' . $documento->getClientOriginalExtension();
+                    
+                                $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Acciones disciplinarias/' . $idDocumento;
+                                $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+                    
+                                $soportes->DOCUMENTO_ACCIONES_DISCIPLINARIAS = $rutaCompleta;
+                                $soportes->save();
+                            }
+                        } else {
+                            if (isset($request->ELIMINAR)) {
+                                if ($request->ELIMINAR == 1) {
+                                    $soportes = accionesdisciplinariasModel::where('ID_ACCIONES_DISCIPLINARIAS', $request['ID_ACCIONES_DISCIPLINARIAS'])
+                                        ->update(['ACTIVO' => 0]);
+                                    $response['code'] = 1;
+                                    $response['soporte'] = 'Desactivada';
+                                } else {
+                                    $soportes = accionesdisciplinariasModel::where('ID_ACCIONES_DISCIPLINARIAS', $request['ID_ACCIONES_DISCIPLINARIAS'])
+                                        ->update(['ACTIVO' => 1]);
+                                    $response['code'] = 1;
+                                    $response['soporte'] = 'Activada';
+                                }
+                            } else {
+                                $soportes = accionesdisciplinariasModel::find($request->ID_ACCIONES_DISCIPLINARIAS);
+                                $soportes->update($request->except('DOCUMENTO_ACCIONES_DISCIPLINARIAS'));
+                    
+                                if ($request->hasFile('DOCUMENTO_ACCIONES_DISCIPLINARIAS')) {
+                                    if ($soportes->DOCUMENTO_ACCIONES_DISCIPLINARIAS && Storage::exists($soportes->DOCUMENTO_ACCIONES_DISCIPLINARIAS)) {
+                                        Storage::delete($soportes->DOCUMENTO_ACCIONES_DISCIPLINARIAS); 
+                                    }
+                    
+                                    $documento = $request->file('DOCUMENTO_ACCIONES_DISCIPLINARIAS');
+                                    $curp = $request->CURP;
+                                    $idDocumento = $soportes->ID_ACCIONES_DISCIPLINARIAS;
+                                    $contratoId = $soportes->CONTRATO_ID; 
+                    
+                                    $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_ACCIONES) . '.' . $documento->getClientOriginalExtension();
+                    
+                                    $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Acciones disciplinarias/' . $idDocumento;
+                                    $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+                    
+                                    $soportes->DOCUMENTO_ACCIONES_DISCIPLINARIAS = $rutaCompleta;
+                                    $soportes->save();
+                                }
+                    
+                                $response['code'] = 1;
+                                $response['soporte'] = 'Actualizada';
+                            }
+                        }
+                    
+                        $response['code'] = 1;
+                        $response['soporte'] = $soportes;
+                        return response()->json($response);
+                        break;
+
 
 
                          // RECIBOS DE NOMINA  

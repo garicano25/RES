@@ -575,7 +575,7 @@
                             </div>
                             <div class="col-1 mt-1">
                                 <div class="form-group text-center">
-                                    <label for="ESPECIALIDAD_SI">Egresado</label>
+                                    <label for="ESPECIALIDAD_SI">Egresado&nbsp;&nbsp;&nbsp;</label>
                                     <input class="form-check-input" type="radio" name="EGRESADO_ESPECIALIDAD_PPT" id="ESPECIALIDAD_SI" value="*E">
 
                                 </div>
