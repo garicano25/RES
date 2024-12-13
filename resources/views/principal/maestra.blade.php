@@ -397,7 +397,7 @@
 @endif
 
 @if(request()->is('DPT'))
-<script src="/assets/js_sitio/organizacion/DPT.js?v=2.0"></script>
+<script src="/assets/js_sitio/organizacion/DPT.js?v=3.0"></script>
 @endif
 
 @if(request()->is('Jerárquico'))

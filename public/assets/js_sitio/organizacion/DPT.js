@@ -177,97 +177,207 @@ $("#guardarFormDPT").click(function (e) {
 
 
 var info = ''
+// $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
+
+//     var valorSeleccionado = $(this).find("option:selected");
+
+//     //Obtenemos valores
+//     var infoLugar = valorSeleccionado.data("lugar");
+//     var infoProposito = valorSeleccionado.data("proposito");
+//     var infoLider = valorSeleccionado.data("lider");
+//     var textoSeleccionado = valorSeleccionado.text();
+
+//     //Asignamos valores 
+//     $('#AREA_TRABAJO_DPT').val(infoLugar).prop('readonly', true)
+//     $('#PROPOSITO_FINALIDAD_DPT').val(infoProposito).prop('readonly', true)
+
+
+//     //Creamos la ruta de consulta 
+//     lider = textoSeleccionado.toUpperCase() == 'DIRECTOR' ? 2 : parseInt(infoLider)
+//     ruta = '/infoReportan/' + parseInt($(this).val()) + '/' + lider
+
+//     //Realizamos la peticion para consultar la informacion
+//     ajaxAwait({}, ruta , 'GET', { callbackAfter: true, callbackBefore: true }, () => {
+
+//         $('#PUESTO_REPORTA_DPT').val('Consultando información...').prop('readonly', true)
+//         $('#PUESTO_LE_REPORTAN_DPT').val('Consultando información...').prop('readonly', true)
+//         $('#PUESTOS_DIRECTOS_DPT').val('Consultando información...').prop('readonly', true)
+
+
+//     }, function (data) {
+//             info = data
+
+
+//             $('#tbodyFucnionesCargo').empty();
+            
+//             //FUNCIONES DE CARG0
+//             $.each(data.FUNCIONES, function(index, funcion) {
+//                 let rowHtml = '';
+            
+//                 if (funcion.TIPO == 'generica') {
+//                     rowHtml = `<tr>
+//                         <td id="desc-cargo-${funcion.ID}" class="description blocked">
+//                             ${funcion.DESCRIPCION}
+//                         </td>
+//                         <td>
+//                             <div class="switch-container">
+//                                 <label class="switch">
+//                                     <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_CARGO_DPT[]" value="${funcion.ID}">
+//                                     <span class="slider"></span>
+//                                 </label>
+//                             </div>
+//                         </td>
+//                     </tr>`;
+//                 } else {
+//                     rowHtml = `<tr>
+//                         <td id="desc-cargo-${funcion.ID}" class="description active">
+//                             ${funcion.DESCRIPCION}
+//                         </td>
+//                         <td>
+//                             <div class="switch-container">
+//                                 <label class="switch">
+//                                     <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_CARGO_DPT[]" value="${funcion.ID}" >
+//                                     <span class="slider"></span>
+//                                 </label>
+//                             </div>
+//                         </td>
+//                     </tr>`;
+//                 }
+            
+//                 $('#tbodyFucnionesCargo').append(rowHtml);
+//             });
+
+                    
+
+//         //CONSUILTAMOS LOS REPONSABLES DE CADA CATEGORIA
+//         if (lider == 1 || lider == 2) {
+//             $('#PUESTO_REPORTA_DPT').val(data.REPORTA).prop('readonly', true)
+//             $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN[0].REPORTAN).prop('readonly', true)
+//             $('#PUESTOS_DIRECTOS_DPT').val(data.REPORTAN[0].TOTAL).prop('readonly', true)
+
+
+//         } else {
+
+//             $('#PUESTO_REPORTA_DPT').val(data.REPORTA[0].REPORTA).prop('readonly', true)
+//             $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN).prop('readonly', true)
+//             $('#PUESTOS_DIRECTOS_DPT').val(0).prop('readonly', true)
+
+//         }  
+
+
+//           // Consultar responsables
+//           if (lider == 1 || lider == 2) {
+//             $('#PUESTO_REPORTA_DPT').val(data.REPORTA).prop('readonly', true);
+//             $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN[0].REPORTAN).prop('readonly', true);
+//             $('#PUESTOS_DIRECTOS_DPT').val(data.REPORTAN[0].TOTAL).prop('readonly', true);
+//         } else {
+//             $('#PUESTO_REPORTA_DPT').val(data.REPORTA[0].REPORTA).prop('readonly', true);
+//             $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN).prop('readonly', true);
+//             $('#PUESTOS_DIRECTOS_DPT').val(0).prop('readonly', true);
+//         }
+
+//         // Ajustar valores específicos de los campos
+//         if (valor === 10) {
+//             $('#PUESTO_REPORTA_DPT').val('Director');
+//             $('#PUESTO_LE_REPORTAN_DPT').val('Ninguno');
+//         } else if (valor === 13) {
+//             $('#PUESTO_REPORTA_DPT').val('Ninguno');
+//             $('#PUESTO_LE_REPORTAN_DPT').val('Ninguno');
+//         }
+
+
+
+
+        
+//     })
+// });
+
+
+
 $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
-
     var valorSeleccionado = $(this).find("option:selected");
+    var valor = parseInt($(this).val());
 
-    //Obtenemos valores
+    // Continuar con la funcionalidad normal
     var infoLugar = valorSeleccionado.data("lugar");
     var infoProposito = valorSeleccionado.data("proposito");
     var infoLider = valorSeleccionado.data("lider");
     var textoSeleccionado = valorSeleccionado.text();
 
-    //Asignamos valores 
-    $('#AREA_TRABAJO_DPT').val(infoLugar).prop('readonly', true)
-    $('#PROPOSITO_FINALIDAD_DPT').val(infoProposito).prop('readonly', true)
+    $('#AREA_TRABAJO_DPT').val(infoLugar).prop('readonly', true);
+    $('#PROPOSITO_FINALIDAD_DPT').val(infoProposito).prop('readonly', true);
 
+    var lider = textoSeleccionado.toUpperCase() == 'DIRECTOR' ? 2 : parseInt(infoLider);
+    var ruta = '/infoReportan/' + valor + '/' + lider;
 
-    //Creamos la ruta de consulta 
-    lider = textoSeleccionado.toUpperCase() == 'DIRECTOR' ? 2 : parseInt(infoLider)
-    ruta = '/infoReportan/' + parseInt($(this).val()) + '/' + lider
-
-    //Realizamos la peticion para consultar la informacion
-    ajaxAwait({}, ruta , 'GET', { callbackAfter: true, callbackBefore: true }, () => {
-
-        $('#PUESTO_REPORTA_DPT').val('Consultando información...').prop('readonly', true)
-        $('#PUESTO_LE_REPORTAN_DPT').val('Consultando información...').prop('readonly', true)
-        $('#PUESTOS_DIRECTOS_DPT').val('Consultando información...').prop('readonly', true)
-
-
+    // Realizamos la consulta
+    ajaxAwait({}, ruta, 'GET', { callbackAfter: true, callbackBefore: true }, () => {
+        $('#PUESTO_REPORTA_DPT').val('Consultando información...').prop('readonly', true);
+        $('#PUESTO_LE_REPORTAN_DPT').val('Consultando información...').prop('readonly', true);
+        $('#PUESTOS_DIRECTOS_DPT').val('Consultando información...').prop('readonly', true);
     }, function (data) {
-            info = data
+        info = data;
 
+        $('#tbodyFucnionesCargo').empty();
 
-            $('#tbodyFucnionesCargo').empty();
-            
-            //FUNCIONES DE CARG0
-            $.each(data.FUNCIONES, function(index, funcion) {
-                let rowHtml = '';
-            
-                if (funcion.TIPO == 'generica') {
-                    rowHtml = `<tr>
-                        <td id="desc-cargo-${funcion.ID}" class="description blocked">
-                            ${funcion.DESCRIPCION}
-                        </td>
-                        <td>
-                            <div class="switch-container">
-                                <label class="switch">
-                                    <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_CARGO_DPT[]" value="${funcion.ID}">
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                        </td>
-                    </tr>`;
-                } else {
-                    rowHtml = `<tr>
-                        <td id="desc-cargo-${funcion.ID}" class="description active">
-                            ${funcion.DESCRIPCION}
-                        </td>
-                        <td>
-                            <div class="switch-container">
-                                <label class="switch">
-                                    <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_CARGO_DPT[]" value="${funcion.ID}" >
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                        </td>
-                    </tr>`;
-                }
-            
-                $('#tbodyFucnionesCargo').append(rowHtml);
-            });
+        // FUNCIONES DE CARGO
+        $.each(data.FUNCIONES, function (index, funcion) {
+            let rowHtml = '';
 
-                    
+            if (funcion.TIPO == 'generica') {
+                rowHtml = `<tr>
+                    <td id="desc-cargo-${funcion.ID}" class="description blocked">
+                        ${funcion.DESCRIPCION}
+                    </td>
+                    <td>
+                        <div class="switch-container">
+                            <label class="switch">
+                                <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_CARGO_DPT[]" value="${funcion.ID}">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </td>
+                </tr>`;
+            } else {
+                rowHtml = `<tr>
+                    <td id="desc-cargo-${funcion.ID}" class="description active">
+                        ${funcion.DESCRIPCION}
+                    </td>
+                    <td>
+                        <div class="switch-container">
+                            <label class="switch">
+                                <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_CARGO_DPT[]" value="${funcion.ID}" >
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </td>
+                </tr>`;
+            }
 
-        //CONSUILTAMOS LOS REPONSABLES DE CADA CATEGORIA
+            $('#tbodyFucnionesCargo').append(rowHtml);
+        });
+
+        // Consultar responsables
         if (lider == 1 || lider == 2) {
-            $('#PUESTO_REPORTA_DPT').val(data.REPORTA).prop('readonly', true)
-            $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN[0].REPORTAN).prop('readonly', true)
-            $('#PUESTOS_DIRECTOS_DPT').val(data.REPORTAN[0].TOTAL).prop('readonly', true)
-
-
+            $('#PUESTO_REPORTA_DPT').val(data.REPORTA).prop('readonly', true);
+            $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN[0].REPORTAN).prop('readonly', true);
+            $('#PUESTOS_DIRECTOS_DPT').val(data.REPORTAN[0].TOTAL).prop('readonly', true);
         } else {
+            $('#PUESTO_REPORTA_DPT').val(data.REPORTA[0].REPORTA).prop('readonly', true);
+            $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN).prop('readonly', true);
+            $('#PUESTOS_DIRECTOS_DPT').val(0).prop('readonly', true);
+        }
 
-            $('#PUESTO_REPORTA_DPT').val(data.REPORTA[0].REPORTA).prop('readonly', true)
-            $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN).prop('readonly', true)
-            $('#PUESTOS_DIRECTOS_DPT').val(0).prop('readonly', true)
-
-        }  
-    })
+        // Ajustar valores específicos de los campos
+        if (valor === 10) {
+            $('#PUESTO_REPORTA_DPT').val('Director');
+            $('#PUESTO_LE_REPORTAN_DPT').val('Ninguno');
+        } else if (valor === 13) {
+            $('#PUESTO_REPORTA_DPT').val('Ninguno');
+            $('#PUESTO_LE_REPORTAN_DPT').val('Ninguno');
+        }
+    });
 });
-
-
-
 
 
 //FUNCION EDITAR   Y QUE SE MUESTREN LOS SELECT

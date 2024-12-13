@@ -2810,7 +2810,7 @@
                                     <input type="text" class="form-control text-center" id="ELABORADO_FIRMA_PPT" name="ELABORADO_FIRMA_PPT" required>
                                     <div>Firma</div>
                                     <br>
-                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="ELABORADO_FECHA_PPT" name="ELABORADO_FECHA_PPT" required>
+                                    <input type="text" class="form-control text-center mydatepicker" placeholder="aaaa-mm-dd" id="ELABORADO_FECHA_PPT" name="ELABORADO_FECHA_PPT" required>
                                     <i class="bi bi-calendar-event"></i>
 
                                     {{-- <input type="date" class="form-control text-center" id="ELABORADO_FECHA_PPT" name="ELABORADO_FECHA_PPT" required> --}}
@@ -2826,7 +2826,7 @@
                                     <div>Firma</div>
                                     <br>
 
-                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="REVISADO_FECHA_PPT" name="REVISADO_FECHA_PPT" >
+                                    <input type="text" class="form-control text-center mydatepicker" placeholder="aaaa-mm-dd" id="REVISADO_FECHA_PPT" name="REVISADO_FECHA_PPT" >
                                     <i class="bi bi-calendar-event"></i>
 
                                     {{-- <input type="date" class="form-control text-center" id="REVISADO_FECHA_PPT" name="REVISADO_FECHA_PPT"> --}}
@@ -2842,7 +2842,7 @@
                                     <div>Firma</div>
                                     <br>
 
-                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="AUTORIZADO_FECHA_PPT" name="AUTORIZADO_FECHA_PPT" >
+                                    <input type="text" class="form-control text-center mydatepicker" placeholder="aaaa-mm-dd" id="AUTORIZADO_FECHA_PPT" name="AUTORIZADO_FECHA_PPT" >
                                     <i class="bi bi-calendar-event"></i>
 
 
