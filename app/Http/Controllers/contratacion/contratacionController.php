@@ -12,7 +12,7 @@ use App\Models\contratacion\contratacionModel;
 use App\Models\contratacion\documentosoporteModel;
 use App\Models\contratacion\contratosanexosModel;
 use App\Models\contratacion\reciboscontratoModel;
-
+use App\Models\contratacion\informacionmedicaModel;
 
 
 
@@ -551,10 +551,78 @@ public function store(Request $request)
                     break;
 
 
+
+
+
+                         // INFORMACION MEDICA
+
+                         case 5:
+                            if ($request->ID_INFORMACION_MEDICA == 0) {
+                                DB::statement('ALTER TABLE informacion_medica_contrato AUTO_INCREMENT=1;');
+                                $soportes = informacionmedicaModel::create($request->except('DOCUMENTO_INFORMACION_MEDICA')); 
+                        
+                                if ($request->hasFile('DOCUMENTO_INFORMACION_MEDICA')) {
+                                    $documento = $request->file('DOCUMENTO_INFORMACION_MEDICA');
+                                    $curp = $request->CURP;
+                                    $idDocumento = $soportes->ID_INFORMACION_MEDICA;
+                                    $contratoId = $soportes->CONTRATO_ID; 
+                        
+                                    $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_INFORMACION) . '.' . $documento->getClientOriginalExtension();
+                        
+                                    $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Información Medica/' . $idDocumento;
+                                    $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+                        
+                                    $soportes->DOCUMENTO_INFORMACION_MEDICA = $rutaCompleta;
+                                    $soportes->save();
+                                }
+                            } else {
+                                if (isset($request->ELIMINAR)) {
+                                    if ($request->ELIMINAR == 1) {
+                                        $soportes = informacionmedicaModel::where('ID_INFORMACION_MEDICA', $request['ID_INFORMACION_MEDICA'])
+                                            ->update(['ACTIVO' => 0]);
+                                        $response['code'] = 1;
+                                        $response['soporte'] = 'Desactivada';
+                                    } else {
+                                        $soportes = informacionmedicaModel::where('ID_INFORMACION_MEDICA', $request['ID_INFORMACION_MEDICA'])
+                                            ->update(['ACTIVO' => 1]);
+                                        $response['code'] = 1;
+                                        $response['soporte'] = 'Activada';
+                                    }
+                                } else {
+                                    $soportes = informacionmedicaModel::find($request->ID_INFORMACION_MEDICA);
+                                    $soportes->update($request->except('DOCUMENTO_INFORMACION_MEDICA'));
+                        
+                                    if ($request->hasFile('DOCUMENTO_INFORMACION_MEDICA')) {
+                                        if ($soportes->DOCUMENTO_INFORMACION_MEDICA && Storage::exists($soportes->DOCUMENTO_INFORMACION_MEDICA)) {
+                                            Storage::delete($soportes->DOCUMENTO_INFORMACION_MEDICA); 
+                                        }
+                        
+                                        $documento = $request->file('DOCUMENTO_INFORMACION_MEDICA');
+                                        $curp = $request->CURP;
+                                        $idDocumento = $soportes->ID_INFORMACION_MEDICA;
+                                        $contratoId = $soportes->CONTRATO_ID; 
+                        
+                                        $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_INFORMACION) . '.' . $documento->getClientOriginalExtension();
+                        
+                                        $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Información Medica/' . $idDocumento;
+                                        $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+                        
+                                        $soportes->DOCUMENTO_INFORMACION_MEDICA = $rutaCompleta;
+                                        $soportes->save();
+                                    }
+                        
+                                    $response['code'] = 1;
+                                    $response['soporte'] = 'Actualizada';
+                                }
+                            }
+                        
+                            $response['code'] = 1;
+                            $response['soporte'] = $soportes;
+                            return response()->json($response);
+                            break;
+
+
                          // RECIBOS DE NOMINA  
-
-
-                
                          case 8:
                             if ($request->ID_RECIBOS_NOMINA == 0) {
                                 DB::statement('ALTER TABLE recibos_contrato AUTO_INCREMENT=1;');

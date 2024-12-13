@@ -8,6 +8,9 @@ var contrato_id = null;
 ID_FORMULARIO_CONTRATACION = 0;
 ID_DOCUMENTO_SOPORTE = 0;
 ID_CONTRATOS_ANEXOS = 0;
+
+
+ID_INFORMACION_MEDICA = 0;
 ID_RECIBOS_NOMINA = 0;
 
 
@@ -169,7 +172,8 @@ function bloquearBotones() {
         'botoneliminarbene',
         'guardarDOCUMENTOSOPORTE',
         'guardarCONTRATO',
-        'guardarRECIBONOMINA'
+        'guardarRECIBONOMINA',
+        'guardaINFORMACIONMEDICA'
     ];
 
     botones.forEach(botonId => {
@@ -188,7 +192,8 @@ function desbloquearBotones() {
         'botoneliminarbene',
         'guardarDOCUMENTOSOPORTE',
         'guardarCONTRATO',
-        'guardarRECIBONOMINA'
+        'guardarRECIBONOMINA',
+        'guardaINFORMACIONMEDICA'
     ];
 
     botones.forEach(botonId => {
@@ -1717,6 +1722,129 @@ $('#Tablacontratosyanexos').on('click', 'button.informacion', function () {
 // <!--                     DOCUMENTOS DE CONTRATOS                    -->
 // <!-- ============================================================== -->
 
+// <!-- ============================================================== -->
+// <!--INFORMACION MEDICA-->
+// <!-- ============================================================== -->
+
+document.addEventListener('DOMContentLoaded', function() {
+    var archivoinformacion = document.getElementById('DOCUMENTO_INFORMACION_MEDICA');
+    var quitarinformacion = document.getElementById('quitar_informacion_medica');
+    var errorinformacion = document.getElementById('INFORMACIONMEDICA_ERROR');
+
+    if (archivoinformacion) {
+        archivoinformacion.addEventListener('change', function() {
+            var archivomedica = this.files[0];
+            if (archivomedica && archivomedica.type === 'application/pdf') {
+                if (errorinformacion) errorinformacion.style.display = 'none';
+                if (quitarinformacion) quitarinformacion.style.display = 'block';
+            } else {
+                if (errorinformacion) errorinformacion.style.display = 'block';
+                this.value = '';
+                if (quitarinformacion) quitarinformacion.style.display = 'none';
+            }
+        });
+        quitarinformacion.addEventListener('click', function() {
+            archivoinformacion.value = ''; 
+            quitarinformacion.style.display = 'none'; 
+            if (errorinformacion) errorinformacion.style.display = 'none'; 
+        });
+    }
+});
+
+
+
+
+
+
+$("#guardaINFORMACIONMEDICA").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormularioV1('formularioINFORMACION');
+
+    if (formularioValido) {
+
+    if (ID_INFORMACION_MEDICA == 0) {
+        
+        alertMensajeConfirm({
+            title: "¿Desea guardar la información?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardaINFORMACIONMEDICA')
+            await ajaxAwaitFormData({ api: 5,CONTRATO_ID:contrato_id, CURP: curpSeleccionada , ID_INFORMACION_MEDICA: ID_INFORMACION_MEDICA }, 'contratoSave', 'formularioINFORMACION', 'guardaINFORMACIONMEDICA', { callbackAfter: true, callbackBefore: true }, () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+                
+            }, function (data) {
+                    
+                ID_INFORMACION_MEDICA = data.soporte.ID_INFORMACION_MEDICA
+                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                     $('#miModal_INFORMACION_MEDICA').modal('hide')
+                    document.getElementById('formularioINFORMACION').reset();
+
+                    
+                    // if ($.fn.DataTable.isDataTable('#Tablarecibonomina')) {
+                    //     Tablarecibonomina.ajax.reload(null, false); 
+                    // }
+
+            })
+            
+            
+            
+        }, 1)
+        
+    } else {
+            alertMensajeConfirm({
+            title: "¿Desea editar la información de este formulario?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardaINFORMACIONMEDICA')
+            await ajaxAwaitFormData({ api: 5,CONTRATO_ID:contrato_id, CURP: curpSeleccionada ,ID_INFORMACION_MEDICA: ID_INFORMACION_MEDICA }, 'contratoSave', 'formularioINFORMACION', 'guardaINFORMACIONMEDICA', { callbackAfter: true, callbackBefore: true }, () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+            }, function (data) {
+                    
+                setTimeout(() => {
+
+                    ID_INFORMACION_MEDICA = data.soporte.ID_INFORMACION_MEDICA
+                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                     $('#miModal_INFORMACION_MEDICA').modal('hide')
+                    document.getElementById('formularioINFORMACION').reset();
+
+
+                    
+                    // if ($.fn.DataTable.isDataTable('#Tablarecibonomina')) {
+                    //     Tablarecibonomina.ajax.reload(null, false); 
+                    // }
+
+                }, 300);  
+            })
+        }, 1)
+    }
+
+} else {
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
+    
+});
+
 
 
 
@@ -1783,9 +1911,9 @@ $("#guardarRECIBONOMINA").click(function (e) {
                     document.getElementById('formularioRECIBO').reset();
 
                     
-                    // if ($.fn.DataTable.isDataTable('#Tablacontratosyanexos')) {
-                    //     Tablacontratosyanexos.ajax.reload(null, false); 
-                    // }
+                    if ($.fn.DataTable.isDataTable('#Tablarecibonomina')) {
+                        Tablarecibonomina.ajax.reload(null, false); 
+                    }
 
             })
             
@@ -1822,9 +1950,9 @@ $("#guardarRECIBONOMINA").click(function (e) {
 
 
                     
-                    // if ($.fn.DataTable.isDataTable('#Tablacontratosyanexos')) {
-                    //     Tablacontratosyanexos.ajax.reload(null, false); 
-                    // }
+                    if ($.fn.DataTable.isDataTable('#Tablarecibonomina')) {
+                        Tablarecibonomina.ajax.reload(null, false); 
+                    }
 
                 }, 300);  
             })

@@ -740,7 +740,7 @@
                     <div id="informacion_medica_contratos" >
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-hospital-fill"></i> &nbsp;Información Médica</h3>
-                            <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#" style="margin-left: auto;">
+                            <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_INFORMACION_MEDICA" style="margin-left: auto;">
                                 Nuevo  &nbsp;<i class="bi bi-plus-circle"></i>
                             </button>
                         </ol>
@@ -1048,6 +1048,49 @@
 </div>
 
 
+
+
+
+<!-- ============================================================== -->
+<!-- MODAL INFORMACION MEDICA -->
+<!-- ============================================================== -->
+
+
+<div class="modal fade" id="miModal_INFORMACION_MEDICA" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post"  enctype="multipart/form-data" id="formularioINFORMACION" style="background-color: #ffffff;">              
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Información Medica</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {!! csrf_field() !!}
+
+                    <div class="mb-3">
+                        <label>Nombre del archivo </label>
+                        <input type="text" class="form-control" id="NOMBRE_DOCUMENTO_INFORMACION" name="NOMBRE_DOCUMENTO_INFORMACION"  required>
+                    </div>
+                
+
+                    <div class="mb-3">
+                        <label>Subir documento</label>
+                        <div class="input-group">
+                        <input type="file" class="form-control" id="DOCUMENTO_INFORMACION_MEDICA" name="DOCUMENTO_INFORMACION_MEDICA" accept=".pdf" style="width: auto; flex: 1;" >
+                        <button type="button" class="btn btn-light btn-sm ms-2" id="quitar_informacion_medica" style="display:none;">Quitar archivo</button>
+                        </div>
+                    </div>
+                    <div id="INFORMACIONMEDICA_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
+        
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" id="guardaINFORMACIONMEDICA">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 
