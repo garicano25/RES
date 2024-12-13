@@ -435,11 +435,15 @@ $(document).ready(function () {
 
         const areaId = data["DEPARTAMENTOS_AREAS_ID"];
         if (areaId) {
-            $("#DEPARTAMENTOS_AREAS_ID").val(areaId).trigger('change'); 
-    
-            consultarFuncionesConSeleccion(areaId, data["FUNCIONES_CARGO_DPT"] || []);
+            consultarFuncionesConSeleccion(areaId, data["FUNCIONES_CARGO_DPT"] || [])
+                .then(() => {
+                    console.log("Funciones cargadas correctamente.");
+                })
+                .catch((error) => {
+                    console.error("Error al cargar funciones:", error);
+                });
         }
-
+    
 
 
 
@@ -552,52 +556,46 @@ function toggleDescription(tablePrefix, id, checked) {
 
 
 function consultarFuncionesConSeleccion(areaId, funcionesSeleccionadas = []) {
-    const ruta = `/consultarfuncionescargo/${areaId}`;
-    $.ajax({
-        url: ruta,
-        type: "GET",
-        success: function (response) {
-            if (response.code === 1) {
-                $('#tbodyFucnionesCargo').empty(); 
+    return new Promise((resolve, reject) => {
+        const ruta = `/consultarfuncionescargo/${areaId}`;
+        $.ajax({
+            url: ruta,
+            type: "GET",
+            success: function (response) {
+                if (response.code === 1) {
+                    $('#tbodyFucnionesCargo').empty();
 
-                $.each(response.FUNCIONES, function (index, funcion) {
-                    const isChecked = funcionesSeleccionadas.includes(String(funcion.ID)) ? "checked" : "";
-                    const blockedClass = isChecked ? '' : 'blocked'; 
+                    $.each(response.FUNCIONES, function (index, funcion) {
+                        const isChecked = funcionesSeleccionadas.includes(String(funcion.ID)) ? "checked" : "";
+                        const blockedClass = isChecked ? '' : 'blocked';
 
-                    const rowHtml = `<tr>
-                        <td id="desc-cargo-${funcion.ID}" class="description ${blockedClass}">
-                            ${funcion.DESCRIPCION}
-                        </td>
-                        <td>
-                            <div class="switch-container">
-                                <label class="switch">
-                                    <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_CARGO_DPT[]" value="${funcion.ID}" ${isChecked}>
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                        </td>
-                    </tr>`;
-                    $('#tbodyFucnionesCargo').append(rowHtml);
-                });
+                        const rowHtml = `<tr>
+                            <td id="desc-cargo-${funcion.ID}" class="description ${blockedClass}">
+                                ${funcion.DESCRIPCION}
+                            </td>
+                            <td>
+                                <div class="switch-container">
+                                    <label class="switch">
+                                        <input type="checkbox" class="toggle-switch-cargo" name="FUNCIONES_CARGO_DPT[]" value="${funcion.ID}" ${isChecked}>
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>`;
+                        $('#tbodyFucnionesCargo').append(rowHtml);
+                    });
 
-                $('input[name="FUNCIONES_CARGO_DPT[]"]').each(function () {
-                    const funcionId = $(this).val();
-                    const isChecked = $(this).is(':checked');
-
-                    const descripcionElement = $(`#desc-cargo-${funcionId}`);
-                    if (isChecked) {
-                        descripcionElement.removeClass('blocked');
-                    } else {
-                        descripcionElement.addClass('blocked');
-                    }
-                });
-            } else {
-                console.error("Error al cargar funciones:", response.msj);
+                    resolve(); // Resolver la promesa
+                } else {
+                    console.error("Error al cargar funciones:", response.msj);
+                    reject(response.msj); // Rechazar la promesa
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error en la consulta:", error);
+                reject(error); // Rechazar la promesa en caso de error
             }
-        },
-        error: function (xhr, status, error) {
-            console.error("Error en la consulta:", error);
-        }
+        });
     });
 }
 
