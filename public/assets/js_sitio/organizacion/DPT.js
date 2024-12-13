@@ -340,7 +340,7 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
                 </tr>`;
             } else {
                 rowHtml = `<tr>
-                    <td id="desc-cargo-${funcion.ID}" class="description active">
+                    <td id="desc-cargo-${funcion.ID}" class="description blocked">
                         ${funcion.DESCRIPCION}
                     </td>
                     <td>
@@ -357,17 +357,6 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
             $('#tbodyFucnionesCargo').append(rowHtml);
         });
 
-        // Consultar responsables
-        if (lider == 1 || lider == 2) {
-            $('#PUESTO_REPORTA_DPT').val(data.REPORTA).prop('readonly', true);
-            $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN[0].REPORTAN).prop('readonly', true);
-            $('#PUESTOS_DIRECTOS_DPT').val(data.REPORTAN[0].TOTAL).prop('readonly', true);
-        } else {
-            $('#PUESTO_REPORTA_DPT').val(data.REPORTA[0].REPORTA).prop('readonly', true);
-            $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN).prop('readonly', true);
-            $('#PUESTOS_DIRECTOS_DPT').val(0).prop('readonly', true);
-        }
-
         // Ajustar valores específicos de los campos
         if (valor === 10) {
             $('#PUESTO_REPORTA_DPT').val('Director');
@@ -375,9 +364,21 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
         } else if (valor === 13) {
             $('#PUESTO_REPORTA_DPT').val('Ninguno');
             $('#PUESTO_LE_REPORTAN_DPT').val('Ninguno');
+        } else {
+            // Consultar responsables solo si no son valores 10 o 13
+            if (lider == 1 || lider == 2) {
+                $('#PUESTO_REPORTA_DPT').val(data.REPORTA).prop('readonly', true);
+                $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN[0].REPORTAN).prop('readonly', true);
+                $('#PUESTOS_DIRECTOS_DPT').val(data.REPORTAN[0].TOTAL).prop('readonly', true);
+            } else if (data.REPORTA && data.REPORTA.length > 0) {
+                $('#PUESTO_REPORTA_DPT').val(data.REPORTA[0].REPORTA).prop('readonly', true);
+                $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN).prop('readonly', true);
+                $('#PUESTOS_DIRECTOS_DPT').val(0).prop('readonly', true);
+            }
         }
     });
 });
+
 
 
 //FUNCION EDITAR   Y QUE SE MUESTREN LOS SELECT
