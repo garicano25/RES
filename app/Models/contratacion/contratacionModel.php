@@ -16,6 +16,7 @@ class contratacionModel extends Model
         'PRIMER_APELLIDO',
         'SEGUNDO_APELLIDO',
         'INICIALES_COLABORADOR',
+        'NUMERO_EMPLEADO',
         'DIA_COLABORADOR',
         'MES_COLABORADOR',
         'ANIO_COLABORADOR',

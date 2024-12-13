@@ -280,17 +280,17 @@
                             <div class="col-9">
                                 <div class="row">
                                     
-                                    <div class="col-6 mb-3">
+                                    <div class="col-4 mb-3">
                                         <label>Nombre(s) del colaborador *</label>
                                         <input type="text" class="form-control" id="NOMBRE_COLABORADOR" name="NOMBRE_COLABORADOR" required>
                                     </div>
                                     
-                                    <div class="col-6 mb-3">
+                                    <div class="col-4 mb-3">
                                         <label>Primer apellido *</label>
                                         <input type="text" class="form-control" id="PRIMER_APELLIDO" name="PRIMER_APELLIDO" required>
                                     </div>
                                     
-                                    <div class="col-5 mb-3">
+                                    <div class="col-4 mb-3">
                                         <label>Segundo apellido *</label>
                                         <input type="text" class="form-control" id="SEGUNDO_APELLIDO" name="SEGUNDO_APELLIDO" required>
                                     </div>
@@ -300,6 +300,12 @@
                                         <input type="text" class="form-control" id="CURP" name="CURP" required>
                                     </div>
                                     
+                                    <div class="col-5 mb-3">
+                                        <label>No. Empleado *</label>
+                                        <input type="number" class="form-control" id="NUMERO_EMPLEADO" name="NUMERO_EMPLEADO" required>
+                                    </div>
+                                    
+
                                     <div class="col-2 mb-3">
                                         <label>Iniciales</label>
                                         <input type="text" class="form-control" id="INICIALES_COLABORADOR" name="INICIALES_COLABORADOR">

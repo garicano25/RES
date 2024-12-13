@@ -186,7 +186,8 @@ function bloquearBotones() {
         'guardarCONTRATO',
         'guardarRECIBONOMINA',
         'guardarINFORMACIONMEDICA',
-        'guardarINCIDENCIAS'
+        'guardarINCIDENCIAS',
+        'guardarACCIONES'
     ];
 
     botones.forEach(botonId => {
@@ -207,7 +208,8 @@ function desbloquearBotones() {
         'guardarCONTRATO',
         'guardarRECIBONOMINA',
         'guardarINFORMACIONMEDICA',
-        'guardarINCIDENCIAS'
+        'guardarINCIDENCIAS',
+        'guardarACCIONES'
     ];
 
     botones.forEach(botonId => {
@@ -544,6 +546,8 @@ $('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
     $("#PRIMER_APELLIDO").val(row.data().PRIMER_APELLIDO);
     $("#SEGUNDO_APELLIDO").val(row.data().SEGUNDO_APELLIDO);
     $("#INICIALES_COLABORADOR").val(row.data().INICIALES_COLABORADOR);
+    $("#NUMERO_EMPLEADO").val(row.data().NUMERO_EMPLEADO);
+
     $("#DIA_COLABORADOR").val(row.data().DIA_COLABORADOR);
     $("#MES_COLABORADOR").val(row.data().MES_COLABORADOR);
     $("#ANIO_COLABORADOR").val(row.data().ANIO_COLABORADOR);
@@ -789,6 +793,8 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     $("#PRIMER_APELLIDO").val(row.data().PRIMER_APELLIDO);
     $("#SEGUNDO_APELLIDO").val(row.data().SEGUNDO_APELLIDO);
     $("#INICIALES_COLABORADOR").val(row.data().INICIALES_COLABORADOR);
+    $("#NUMERO_EMPLEADO").val(row.data().NUMERO_EMPLEADO);
+
     $("#DIA_COLABORADOR").val(row.data().DIA_COLABORADOR);
     $("#MES_COLABORADOR").val(row.data().MES_COLABORADOR);
     $("#ANIO_COLABORADOR").val(row.data().ANIO_COLABORADOR);
