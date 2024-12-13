@@ -549,14 +549,14 @@
                                     <label >Tipo de Sangre *</label>
                                     <select class="form-control" id="TIPO_SANGRE" name="TIPO_SANGRE" required>
                                         <option value="0" disabled selected>Seleccione una opción</option>
-                                        <option value="1">A+</option>
-                                        <option value="2">A-</option>
-                                        <option value="3">B+</option>
-                                        <option value="4">B-</option>
-                                        <option value="5">AB+</option>
-                                        <option value="6">AB-</option>
-                                        <option value="7">O+</option>
-                                        <option value="8">O-</option>
+                                        <option value="A+">A+</option>
+                                        <option value="A-">A-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="AB-">AB-</option>
+                                        <option value="O+">O+</option>
+                                        <option value="O-">O-</option>
                                     </select>
                                 </div>
                                 <div class="col-4 mb-3">
