@@ -362,8 +362,8 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
             $('#PUESTO_REPORTA_DPT').val('Director');
             $('#PUESTO_LE_REPORTAN_DPT').val('Ninguno');
         } else if (valor === 13) {
-            $('#PUESTO_REPORTA_DPT').val('Ninguno');
-            $('#PUESTO_LE_REPORTAN_DPT').val('Ninguno');
+            $('#PUESTO_REPORTA_DPT').val('Junta Directiva');
+            $('#PUESTO_LE_REPORTAN_DPT').val('Todos los colaboradores y líderes de procesos');
         } else {
             // Consultar responsables solo si no son valores 10 o 13
             if (lider == 1 || lider == 2) {
