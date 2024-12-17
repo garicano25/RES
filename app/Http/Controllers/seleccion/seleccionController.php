@@ -21,6 +21,7 @@ use App\Models\selección\pruebaseleccionModel;
 use App\Models\selección\referenciaspruebaseleccionModel;
 
 
+use App\Models\pendientecontratar\pendientecontratarModel;
 
 
 
@@ -86,6 +87,45 @@ public function Tablaseleccion()
 }
 
 
+
+/// MANDAR A PENDINENTE POR CONTRATAR 
+
+
+public function guardarPendiente(Request $request)
+{
+    try {
+        $curp = $request->input('CURP');
+        $nombre = $request->input('NOMBRE_PC');
+        $primerApellido = $request->input('PRIMER_APELLIDO_PC');
+        $segundoApellido = $request->input('SEGUNDO_APELLIDO_PC');
+        $dia = $request->input('DIA_FECHA_PC');
+        $mes = $request->input('MES_FECHA_PC');
+        $anio = $request->input('ANIO_FECHA_PC');
+
+        pendientecontratarModel::create([
+            'CURP' => $curp,
+            'NOMBRE_PC' => $nombre,
+            'PRIMER_APELLIDO_PC' => $primerApellido,
+            'SEGUNDO_APELLIDO_PC' => $segundoApellido,
+            'DIA_FECHA_PC' => $dia,
+            'MES_FECHA_PC' => $mes,
+            'ANIO_FECHA_PC' => $anio,
+        ]);
+
+        seleccionModel::where('CURP', $curp)->update(['ACTIVO' => 0]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Registro guardado y actualizado correctamente.'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Hubo un error al guardar el registro.',
+            'error' => $e->getMessage()
+        ]);
+    }
+}
 
 
 

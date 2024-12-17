@@ -324,7 +324,7 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
         $.each(data.FUNCIONES, function (index, funcion) {
             let rowHtml = '';
 
-            if (funcion.TIPO == 'generica') {
+            if (funcion.TIPO == 'Genérica') {
                 rowHtml = `<tr>
                     <td id="desc-cargo-${funcion.ID}" class="description blocked">
                         ${funcion.DESCRIPCION}

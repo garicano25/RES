@@ -266,10 +266,11 @@
 
                 <!-- Step 1 de Datos Generales -->
                 <div id="step1-content" style="display: block;">
-                    <ol class="breadcrumb mt-5">
+                    <ol class="breadcrumb mt-5 d-flex justify-content-between align-items-center" style="display: flex; justify-content: space-between; align-items: center;">
                         <h3 style="color: #ffffff; margin: 0;">
                             <i class="bi bi-person"></i>&nbsp;&nbsp;Información del colaborador 
                         </h3>
+                        <button class="btn" style="background-color: #236192; color: #ffffff; border: none; padding: 10px 20px; border-radius: 5px; display: none;" id="DESCARGAR_CREDENCIAL">Crear Credencial</button>
                     </ol>
                 
                     <!-- Formulario de Datos Generales -->

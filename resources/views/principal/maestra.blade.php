@@ -194,10 +194,9 @@
                         <i class="bi bi-person-badge-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Contratación</span><span class="d-none d-lg-inline">Contratación</span>
                     </a>
                     <ul class="dropdown-menu">
-                        {{-- <li><a class="dropdown-item" href="{{ url('/#') }}">Pendientes por contratar</a></li> --}}
-                        {{-- <li><a class="dropdown-item" href="#">Pendientes por contratar</a></li>
+                        <li><a class="dropdown-item" href="{{ url('/Pendiente-Contratar') }}">Pendientes por contratar</a></li>
+                        <hr class="dropdown-divider">
 
-                        <hr class="dropdown-divider"> --}}
                         <li><a class="dropdown-item" href="{{url('/Contratación')}}">Lista de colaboradores</a></li>
                     </ul>
                 </li>
@@ -495,6 +494,9 @@
 @endif
 
 
+@if(request()->is('Pendiente-Contratar'))
+<script src="/assets/js_sitio/contratacion/pendientecontratar.js"></script>
+@endif
 
 
 

@@ -505,6 +505,11 @@ $('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
     $('#step1-content').css("display", 'block');
     $('#step2-content, #step3-content, #step4-content').css("display", 'none');
 
+
+    $('#DESCARGAR_CREDENCIAL').css("display", 'block');
+
+
+
     if (row.data().FOTO_USUARIO) {
         var archivo = row.data().FOTO_USUARIO;
         var extension = archivo.substring(archivo.lastIndexOf("."));
@@ -651,6 +656,13 @@ document.getElementById('step1').addEventListener('click', function() {
     document.getElementById('step1-content').style.display = 'block';
 });
 
+
+document.getElementById('DESCARGAR_CREDENCIAL').addEventListener('click', function () {
+    window.location.href = '/descargar-credencial';
+});
+
+
+
 $("#guardarDatosGenerales").click(function (e) {
     e.preventDefault();
 
@@ -752,6 +764,11 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     $('#step1-content').css("display", 'block');
     $('#step2-content, #step3-content, #step4-content').css("display", 'none');
 
+
+    $('#DESCARGAR_CREDENCIAL').css("display", 'block');
+
+
+    
     if (row.data().FOTO_USUARIO) {
         var archivo = row.data().FOTO_USUARIO;
         var extension = archivo.substring(archivo.lastIndexOf("."));

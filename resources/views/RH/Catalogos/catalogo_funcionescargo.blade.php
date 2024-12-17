@@ -38,11 +38,11 @@
                         <label class="col-form-label">Tipo de función *</label>
                         <div class="d-flex">
                             <div class="form-check me-3">
-                                <input class="form-check-input" type="radio" name="TIPO_FUNCION_CARGO" id="especifica" value="especifica" required>
+                                <input class="form-check-input" type="radio" name="TIPO_FUNCION_CARGO" id="especifica" value="Específica" required>
                                 <label class="form-check-label" for="especifica">Específica</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="TIPO_FUNCION_CARGO" id="generica" value="generica" required>
+                                <input class="form-check-input" type="radio" name="TIPO_FUNCION_CARGO" id="generica" value="Genérica" required>
                                 <label class="form-check-label" for="generica">Genérica</label>
                             </div>
                         </div>

@@ -48,11 +48,15 @@ use App\Http\Controllers\reclutamiento\formCVController;
 
 use App\Http\Controllers\seleccion\seleccionController;
 use App\Http\Controllers\seleccion\catalogopruebasController;
+use App\Http\Controllers\TestController;
 
 
 // Controladores de contratacion
 
 use App\Http\Controllers\contratacion\contratacionController;
+use App\Http\Controllers\contratacion\PowerPointController;
+use App\Http\Controllers\contratacion\pendientecontratarController;
+
 
 //==============================================  login  ============================================== 
 Route::get('/', function () {
@@ -88,6 +92,8 @@ Route::get('/inicio', function () {return view('RH.externa.diseño');});
 
 
 //==============================================  RRHH  ============================================== 
+Route::get('/prueba-presentation', [TestController::class, 'prueba']);
+Route::get('/prueba-editar', [TestController::class, 'editarPlantilla']);
 
 //==============================================  ORGANIZACION  ============================================== 
 Route::get('/tablero', function () {return view('tablero.index');});
@@ -280,8 +286,11 @@ Route::get('/Selección', [seleccionController::class, 'index']);
 Route::get('/Tablaseleccion', [seleccionController::class, 'Tablaseleccion']);
 Route::post('/SeleccionSave', [seleccionController::class, 'store']);
 Route::get('/consultarSeleccion/{categoriaVacanteId}', [seleccionController::class, 'consultarSeleccion']);
-// Route::get('/consultarSeleccion/{categoriaVacanteId}/{curp}', [seleccionController::class, 'consultarSeleccion']);
-// Route::get('/obtenerPorcentajes/{curp}', [seleccionController::class, 'obtenerPorcentajesPorCurp']);
+
+
+
+
+Route::post('/guardarPendiente', [seleccionController::class, 'guardarPendiente']);
 
 
 
@@ -329,6 +338,14 @@ Route::get('/Tablapruebaconocimiento', [catalogopruebasController::class, 'Tabla
 //==============================================  CONTRATACION  ============================================== 
 
 
+
+// PENDIENTE AL CONTRATAR
+Route::get('/Pendiente-Contratar', function () {return view('RH.contratacion.pendientecontratar');});
+
+Route::get('/Tablapendientecontratacion', [pendientecontratarController::class, 'Tablapendientecontratacion']);
+
+
+
 // DATOS GENERALES
 // Route::get('/Contratación', function () {return view('RH.contratacion.contratacion');});
 
@@ -341,6 +358,9 @@ Route::post('/activarColaborador/{id}', [contratacionController::class, 'activar
 
 Route::get('/usuariocolaborador/{id}', [contratacionController::class, 'mostrarfotocolaborador']);
 Route::post('/verificarestadobloqueo', [contratacionController::class, 'verificarestadobloqueo']);
+
+// CREAR CREDENCIAL 
+Route::get('/descargar-credencial', [PowerPointController::class, 'descargarCredencial']);
 
 
 // DOCUMENTOS DE SOPORTE

@@ -121,7 +121,7 @@ public function infoReportan($ID, $LIDER)
 
         $funciones = DB::select("SELECT ID_CATALOGO_FUNCIONESCARGO ID, DESCRIPCION_FUNCION_CARGO DESCRIPCION, TIPO_FUNCION_CARGO TIPO
         FROM catalogo_funcionescargos
-        WHERE CATEGORIAS_CARGO = ? OR TIPO_FUNCION_CARGO = 'generica'
+        WHERE CATEGORIAS_CARGO = ? OR TIPO_FUNCION_CARGO = 'Genérica'
         ORDER BY TIPO_FUNCION_CARGO", [$ID]);
 
 
@@ -196,7 +196,7 @@ public function consultarfuncionescargo($areaId)
                 catalogo_funcionescargos
             WHERE 
                 CATEGORIAS_CARGO = ? 
-                OR TIPO_FUNCION_CARGO = 'generica'
+                OR TIPO_FUNCION_CARGO = 'Genérica'
             ORDER BY 
                 TIPO_FUNCION_CARGO", [$areaId]);
 
