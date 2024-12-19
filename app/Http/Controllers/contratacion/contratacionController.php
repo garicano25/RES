@@ -11,10 +11,13 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\contratacion\contratacionModel;
 use App\Models\contratacion\documentosoporteModel;
 use App\Models\contratacion\contratosanexosModel;
+use App\Models\contratacion\documentoscolaboradorcontratoModel;
+
 use App\Models\contratacion\reciboscontratoModel;
 use App\Models\contratacion\informacionmedicaModel;
 use App\Models\contratacion\incidenciasModel;
 use App\Models\contratacion\accionesdisciplinariasModel;
+use App\Models\contratacion\documentosoportecontratoModel;
 
 
 
@@ -231,16 +234,14 @@ public function Tablacontratosyanexos(Request $request)
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
                 $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                $value->BTN_CONTRATO = '<button type="button" class="btn btn-success btn-custom rounded-pill informacion" id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
+
             } else {
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                 $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                $value->BTN_CONTRATO = '<button type="button" class="btn btn-success btn-custom rounded-pill informacion" id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
 
-                if ($value->TIPO_DOCUMENTO_CONTRATO == 3) {
-                    $value->BTN_CONTRATO = '<button type="button" class="btn btn-success btn-custom rounded-pill informacion" id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
-                } else {
-                    $value->BTN_CONTRATO = '<button type="button" class="btn btn-secondary btn-custom rounded-pill informacion" disabled><i class="bi bi-ban"></i></button>';
-                }
             }
         }
 
@@ -264,6 +265,53 @@ public function mostrarcontratosyanexos($id)
 }
 
 /////////////////////////////////////////// DOCUMENTOS DE CONTRATO //////////////////////////////////
+
+// DOCUMENTOS DE SOPORTE DEL COTRATO 
+
+public function Tabladocumentosoportecontrato(Request $request)
+{
+    try {
+        $contrato = $request->get('contrato');
+
+        $tabla = documentosoportecontratoModel::where('CONTRATO_ID', $contrato)->get();
+
+
+        // $tabla = documentosoporteModel::get();
+
+
+        foreach ($tabla as $value) {
+            if ($value->ACTIVO == 0) {
+
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR" ><i class="bi bi-eye"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-soportescontratos" data-id="' . $value->ID_SOPORTE_CONTRATO . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+            } else {
+
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-soportescontratos" data-id="' . $value->ID_SOPORTE_CONTRATO . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+            }
+        }
+
+        return response()->json([
+            'data' => $tabla,
+            'msj' => 'Información consultada correctamente'
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'msj' => 'Error ' . $e->getMessage(),
+            'data' => 0
+        ]);
+    }
+}
+
+public function mostrardocumentosoportecontrato($id)
+{
+    $archivo = documentosoportecontratoModel::findOrFail($id)->DOCUMENTOS_SOPORTECONTRATOS;
+    return Storage::response($archivo);
+}
 
 
 // INFORMACION MEDICA
@@ -450,10 +498,64 @@ public function mostrarecibosnomina($id)
 
 
 
-/////////////////////////////////////////// STEP 4  CREACION DE CV´S  //////////////////////////////////
+/////////////////////////////////////////// STEP 4  DOCUMENTOS DE SOPORTE DE LOS CONTRATOS EN GENERAL //////////////////////////////////
+
+public function Tablasoportecontrato(Request $request)
+{
+    try {
+        $curp = $request->get('curp');
+
+        $tabla = documentoscolaboradorcontratoModel::where('CURP', $curp)->get();
 
 
+        // $tabla = documentosoporteModel::get();
 
+
+        foreach ($tabla as $value) {
+            if ($value->ACTIVO == 0) {
+
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR" ><i class="bi bi-eye"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentocolaboradorsoportecontrato" data-id="' . $value->ID_DOCUMENTO_COLABORADOR_CONTRATO . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+            } else {
+
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentocolaboradorsoportecontrato" data-id="' . $value->ID_DOCUMENTO_COLABORADOR_CONTRATO . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+            }
+        }
+
+        return response()->json([
+            'data' => $tabla,
+            'msj' => 'Información consultada correctamente'
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'msj' => 'Error ' . $e->getMessage(),
+            'data' => 0
+        ]);
+    }
+}
+
+public function mostrardocumentocolaboradorcontratosoporte($id)
+{
+    $archivo = documentoscolaboradorcontratoModel::findOrFail($id)->DOCUMENTO_SOPORTECONTRATO;
+    return Storage::response($archivo);
+}
+
+public function obtenerdocumentosoportescontratos(Request $request)
+{
+    $curp = $request->input('CURP');
+    $documentos = documentoscolaboradorcontratoModel::where('CURP', $curp)
+                  ->pluck('TIPO_DOCUMENTO_SOPORTECONTRATO')
+                  ->toArray();
+
+    return response()->json($documentos);
+}
+
+/////////////////////////////////////////// STEP 5  CREACION DE CV´S  //////////////////////////////////
 
 
 
@@ -565,6 +667,7 @@ public function store(Request $request)
                             $soportes->update($request->except('DOCUMENTO_SOPORTE'));
 
                             if ($request->hasFile('DOCUMENTO_SOPORTE')) {
+                                
                                 if ($soportes->DOCUMENTO_SOPORTE && Storage::exists($soportes->DOCUMENTO_SOPORTE)) {
                                     Storage::delete($soportes->DOCUMENTO_SOPORTE); 
                                 }
@@ -662,6 +765,7 @@ public function store(Request $request)
 
 
 
+/////////////////////////////////////////// DOCUMENTOS DE CONTRATO //////////////////////////////////
 
                     // INFORMACION MEDICA
 
@@ -885,7 +989,7 @@ public function store(Request $request)
                         
                                     $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_RECIBO) . '.' . $documento->getClientOriginalExtension();
                         
-                                    $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Recibos de nomina/' . $idDocumento;
+                                    $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Recibos de nómina/' . $idDocumento;
                                     $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
                         
                                     $soportes->DOCUMENTO_RECIBO = $rutaCompleta;
@@ -920,7 +1024,7 @@ public function store(Request $request)
                         
                                         $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_RECIBO) . '.' . $documento->getClientOriginalExtension();
                         
-                                        $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Recibos de nomina/' . $idDocumento;
+                                        $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Recibos de nómina/' . $idDocumento;
                                         $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
                         
                                         $soportes->DOCUMENTO_RECIBO = $rutaCompleta;
@@ -937,6 +1041,145 @@ public function store(Request $request)
                             return response()->json($response);
                             break;
                         
+
+
+                              // DOCUMENTOS DE SOPORTE DEL CONTRATO
+                         case 9:
+                            if ($request->ID_SOPORTE_CONTRATO == 0) {
+                                DB::statement('ALTER TABLE documentos_soporte_contrato AUTO_INCREMENT=1;');
+                                $soportes = documentosoportecontratoModel::create($request->except('DOCUMENTOS_SOPORTECONTRATOS')); 
+                        
+                                if ($request->hasFile('DOCUMENTOS_SOPORTECONTRATOS')) {
+                                    $documento = $request->file('DOCUMENTOS_SOPORTECONTRATOS');
+                                    $curp = $request->CURP;
+                                    $idDocumento = $soportes->ID_SOPORTE_CONTRATO;
+                                    $contratoId = $soportes->CONTRATO_ID; 
+                        
+                                    $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTOSOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
+                        
+                                    $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Documentos de soporte del contrato/' . $idDocumento;
+                                    $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+                        
+                                    $soportes->DOCUMENTOS_SOPORTECONTRATOS = $rutaCompleta;
+                                    $soportes->save();
+                                }
+                            } else {
+                                if (isset($request->ELIMINAR)) {
+                                    if ($request->ELIMINAR == 1) {
+                                        $soportes = documentosoportecontratoModel::where('ID_SOPORTE_CONTRATO', $request['ID_SOPORTE_CONTRATO'])
+                                            ->update(['ACTIVO' => 0]);
+                                        $response['code'] = 1;
+                                        $response['soporte'] = 'Desactivada';
+                                    } else {
+                                        $soportes = documentosoportecontratoModel::where('ID_SOPORTE_CONTRATO', $request['ID_SOPORTE_CONTRATO'])
+                                            ->update(['ACTIVO' => 1]);
+                                        $response['code'] = 1;
+                                        $response['soporte'] = 'Activada';
+                                    }
+                                } else {
+                                    $soportes = documentosoportecontratoModel::find($request->ID_SOPORTE_CONTRATO);
+                                    $soportes->update($request->except('DOCUMENTOS_SOPORTECONTRATOS'));
+                        
+                                    if ($request->hasFile('DOCUMENTOS_SOPORTECONTRATOS')) {
+                                        if ($soportes->DOCUMENTOS_SOPORTECONTRATOS && Storage::exists($soportes->DOCUMENTOS_SOPORTECONTRATOS)) {
+                                            Storage::delete($soportes->DOCUMENTOS_SOPORTECONTRATOS); 
+                                        }
+                        
+                                        $documento = $request->file('DOCUMENTOS_SOPORTECONTRATOS');
+                                        $curp = $request->CURP;
+                                        $idDocumento = $soportes->ID_SOPORTE_CONTRATO;
+                                        $contratoId = $soportes->CONTRATO_ID; 
+                        
+                                        $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTOSOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
+                        
+                                        $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Documentos de soporte del contrato/' . $idDocumento;
+                                        $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+                        
+                                        $soportes->DOCUMENTOS_SOPORTECONTRATOS = $rutaCompleta;
+                                        $soportes->save();
+                                    }
+                        
+                                    $response['code'] = 1;
+                                    $response['soporte'] = 'Actualizada';
+                                }
+                            }
+                        
+                            $response['code'] = 1;
+                            $response['soporte'] = $soportes;
+                            return response()->json($response);
+                            break;
+                        
+
+
+
+
+
+                              // STEP 4 DOCUMENTOS DE SOPORTE DE LOS CONTRATOS EN GENERAL
+
+                case 4:
+                    if ($request->ID_DOCUMENTO_COLABORADOR_CONTRATO == 0) {
+                        DB::statement('ALTER TABLE documentos_colaborador_contrato AUTO_INCREMENT=1;');
+                        $soportes = documentoscolaboradorcontratoModel::create($request->except('DOCUMENTO_SOPORTECONTRATO')); 
+
+                        if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
+                            $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
+                            $curp = $request->CURP;
+                            $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                            $nombreArchivo =  preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
+
+                            $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
+                            $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                            $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
+                            $soportes->save();
+                        }
+                    } else {
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
+                                    ->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['soporte'] = 'Desactivada';
+                            } else {
+                                $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
+                                    ->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['soporte'] = 'Activada';
+                            }
+                        } else {
+                            $soportes = documentoscolaboradorcontratoModel::find($request->ID_DOCUMENTO_COLABORADOR_CONTRATO);
+                            $soportes->update($request->except('DOCUMENTO_SOPORTECONTRATO'));
+
+                            if ($request->hasFile('DOCUMENTO_SOPORTE')) {
+                                if ($soportes->DOCUMENTO_SOPORTECONTRATO && Storage::exists($soportes->DOCUMENTO_SOPORTECONTRATO)) {
+                                    Storage::delete($soportes->DOCUMENTO_SOPORTECONTRATO); 
+                                }
+
+                                $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
+                                $curp = $request->CURP;
+                                $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                                $nombreArchivo =  preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
+
+                                $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
+                                $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                                $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
+                                $soportes->save();
+                            }
+
+                            $response['code'] = 1;
+                            $response['soporte'] = 'Actualizada';
+                        }
+                    }
+
+                    $response['code'] = 1;
+                    $response['soporte'] = $soportes;
+                    return response()->json($response);
+                    break;
+
+
                     
 
 

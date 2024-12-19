@@ -92,8 +92,7 @@ Route::get('/inicio', function () {return view('RH.externa.diseño');});
 
 
 //==============================================  RRHH  ============================================== 
-Route::get('/prueba-presentation', [TestController::class, 'prueba']);
-Route::get('/prueba-editar', [TestController::class, 'editarPlantilla']);
+
 
 //==============================================  ORGANIZACION  ============================================== 
 Route::get('/tablero', function () {return view('tablero.index');});
@@ -103,6 +102,8 @@ Route::get('/organigrama', [areasController::class, 'index']);
 Route::post('/areasSave', [areasController::class, 'store']);
 Route::get('/areasDelete', [areasController::class, 'store']);
 Route::get('/TablaAreas', [areasController::class, 'TablaAreas']);
+Route::get('/mostrararchivo/{id}', [areasController::class, 'mostrararchivo']);
+
 Route::get('/TablaCargos/{area_id}', [areasController::class, 'TablaCargos']);
 Route::get('/TablaEncargados/{area_id}', [areasController::class, 'TablaEncargados']);
 Route::get('/listaEncagadosAreas/{area_id}', [areasController::class, 'listaEncagadosAreas']);
@@ -347,7 +348,6 @@ Route::get('/Tablapendientecontratacion', [pendientecontratarController::class, 
 
 
 // DATOS GENERALES
-// Route::get('/Contratación', function () {return view('RH.contratacion.contratacion');});
 
 Route::get('/Contratación', [contratacionController::class, 'index']);
 
@@ -361,17 +361,29 @@ Route::post('/verificarestadobloqueo', [contratacionController::class, 'verifica
 
 // CREAR CREDENCIAL 
 Route::get('/descargar-credencial', [PowerPointController::class, 'descargarCredencial']);
-
+Route::get('/prueba-presentation', [TestController::class, 'prueba']);
+Route::get('/prueba-editar', [TestController::class, 'editarPlantilla']);
 
 // DOCUMENTOS DE SOPORTE
 Route::get('/Tabladocumentosoporte', [contratacionController::class, 'Tabladocumentosoporte']);
 Route::get('/mostrardocumentosoporte/{id}', [contratacionController::class, 'mostrardocumentosoporte']);
 Route::post('/obtenerguardados', [contratacionController::class, 'obtenerguardados']);
 
+// DOCUMENTOS DE SOPORTE DE LOS CONTRATOS EN GENERAL
 
-// CONTRATOS Y ANEXOS 
+Route::get('/Tablasoportecontrato', [contratacionController::class, 'Tablasoportecontrato']);
+Route::get('/mostrardocumentocolaboradorcontratosoporte/{id}', [contratacionController::class, 'mostrardocumentocolaboradorcontratosoporte']);
+Route::post('/obtenerdocumentosoportescontratos', [contratacionController::class, 'obtenerdocumentosoportescontratos']);
+
+
+///////////////////////////////////////////////////////////// CONTRATOS Y ANEXOS //////////////////////////////////////////////////////////
+
 Route::get('/Tablacontratosyanexos', [contratacionController::class, 'Tablacontratosyanexos']);
 Route::get('/mostrarcontratosyanexos/{id}', [contratacionController::class, 'mostrarcontratosyanexos']);
+
+// DOCUMENTOS DE SOPORTE DEL CONTRATO  
+Route::get('/Tabladocumentosoportecontrato', [contratacionController::class, 'Tabladocumentosoportecontrato']);
+Route::get('/mostrardocumentosoportecontrato/{id}', [contratacionController::class, 'mostrardocumentosoportecontrato']);
 
 
 // INFORAMCION MEDICA 

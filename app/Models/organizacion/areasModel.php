@@ -15,6 +15,7 @@ class areasModel extends Model
         'DESCRIPCION',
         'TIPO_AREA_ID',
         'USUARIO_ID',
+        'DOCUMENTO_ORGANIGRAMA',
         'ACTIVO'
     ];
 

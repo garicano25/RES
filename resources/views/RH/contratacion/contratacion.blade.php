@@ -241,7 +241,7 @@
                                     <div class="step-circle">
                                         <i class="bi bi-file-earmark-text-fill"></i>
                                     </div>
-                                    <span>Documentos de soporte</span>
+                                    <span>Documentos del colaborador</span>
                                 </div>
                                 <div class="multisteps-form__progress-btn" id="step3">
                                     <div class="step-circle">
@@ -249,8 +249,14 @@
                                     </div>
                                     <span>Contratos y anexos</span>
                                 </div>
-                              
                                 <div class="multisteps-form__progress-btn" id="step4">
+                                    <div class="step-circle">
+                                        <i class="bi bi-file-earmark-text-fill"></i>
+                                    </div>
+                                    <span>Documentos de soporte contrato</span>
+                                </div>
+                              
+                                <div class="multisteps-form__progress-btn" id="step5">
                                     <div class="step-circle">
                                         <i class="bi bi-file-person-fill"></i>
                                     </div>
@@ -655,9 +661,28 @@
                 </div>
 
 
-                <!-- Step 4 CV´S -->
 
-                <div id="step4-content" style="display: none;">
+
+                   <!-- Step 5 DOCUMENTOS DE SOPORTE DE LOS CONTRATOS EN GENERAL -->
+
+                   <div id="step4-content" style="display: none;">
+                    <ol class="breadcrumb mt-5">
+                        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-person-fill"></i> &nbsp;Documentos de soportes del contrato</h3>
+                        <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_SOPORTECONTRATO" style="margin-left: auto;">
+                            Nuevo  &nbsp;<i class="bi bi-plus-circle"></i>
+                        </button>
+                    </ol>
+                    <div class="card-body position-relative">
+                        <i id="loadingIcon9" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                        <table id="Tablasoportecontrato" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                        </table>
+                    </div>
+                </div>
+
+
+                <!-- Step 5 CV´S -->
+
+                <div id="step5-content" style="display: none;">
                     <ol class="breadcrumb mt-5">
                         <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-person-fill"></i> &nbsp;CV</h3>
                         <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#" style="margin-left: auto;">
@@ -665,12 +690,13 @@
                         </button>
                     </ol>
                     <div class="card-body position-relative">
-                        <i id="loadingIcon9" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                        <i id="loadingIcon10" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
                         <table id="Tablacvs" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
                         </table>
                     </div>
                 </div>
 
+             
 
 
 
@@ -712,35 +738,51 @@
                         <ol class="breadcrumb m-b-10" style="background-color: #ffffff !important; color: #0c3f64; border: #0c3f64 2px solid; padding: 10px; display: flex; justify-content: space-between; align-items: center;">
                             <div style="flex: 1; text-align: center;">
                                 <p style="margin: 0;">
-                                    <i class="fa fa-users" aria-hidden="true"></i> 
+                                    <i class="bi bi-person-lines-fill" aria-hidden="true"></i> 
                                     Cargo: <span id="contrato_cargo" style="color: #009efb;"></span>
                                 </p>
                             </div>
                             <div style="flex: 1; text-align: center;">
                                 <p style="margin: 0;">
-                                    <i class="fa fa-calendar-times-o" aria-hidden="true"></i> 
-                                    Fecha vigencia: <span id="contrato_fecha_final" style="color: #009efb;"></span>
+                                    <i class="bi bi-calendar-event" aria-hidden="true"></i> 
+                                    Fecha inicio: <span id="contrato_fechai" style="color: #009efb;"></span>
                                 </p>
                             </div>
+                            <div style="flex: 1; text-align: center;">
+                                <p style="margin: 0;">
+                                    <i class="bi bi-calendar-x" aria-hidden="true"></i> 
+                                    Fecha fin: <span id="contrato_fecha_final" style="color: #009efb;"></span>
+                                </p>
+                            </div>
+                            <div style="flex: 1; text-align: center;">
+                                <p style="margin: 0;">
+                                    <i class="bi bi-currency-dollar" aria-hidden="true"></i> 
+                                    Salario: <span id="contrato_salario" style="color: #009efb;"></span>
+                                </p>
+                            </div>
+                          
+
+                            
                         </ol>
                     </div>
                     
-
-
-
-                    {{-- <div id="anexos_contrato" >
+                    <div id="documentos_soportes_contrato" >
                         <ol class="breadcrumb mt-5">
-                            <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-text-fill"></i> &nbsp;Anexos</h3>
-                            <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#" style="margin-left: auto;">
+                            <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-text-fill"></i> &nbsp;Documentos de soporte</h3>
+                            <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_DOCUMENTOSOPORTECONTRATO" style="margin-left: auto;">
                                 Nuevo  &nbsp;<i class="bi bi-plus-circle"></i>
                             </button>
                         </ol>
                         <div class="card-body position-relative">
-                            <i id="loadingIcon2" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
-                            <table id="Tablanexos" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                            <i id="loadingIcon11" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                            <table id="Tabladocumentosoportecontrato" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
                             </table>
                         </div>
-                    </div> --}}
+                    </div>
+
+
+
+           
 
 
 
@@ -895,34 +937,18 @@
 
 
                     <div class="mb-3">
-                        <label>Tipo de documento *</label>
+                        <label>Documento *</label>
                         <select class="form-select" id="TIPO_DOCUMENTO_CONTRATO" name="TIPO_DOCUMENTO_CONTRATO" required>
-                            <option value="0" disabled selected>Seleccione una opción</option>
-                            <option value="1">Requisición de personal</option>
-                            <option value="2">Antecedentes, Imparcialidad y Beneficiarios</option>
-                            <option value="3" >Contrato</option>
-                            <option value="4">Acuerdo de confidencialidad</option>
-                            <option value="5">Compromiso de independencia, integridad e imparcialidad</option>
-                            <option value="6">Aviso de privacidad</option>
-                            <option value="7">Encuesta socioeconómica y protección de datos</option>
-                            <option value="8">Recepción de la descripción del puesto de trabajo</option>
-                            <option value="9">Autorización de emisión de recibos de nómina</option>
-                            <option value="10">Autorización de firma y rúbrica</option>
-                            <option value="11">Acuse de recibo del Catálogo de Políticas</option>
-                            <option value="12">Solicitud de derechos ARCO</option>
-                            <option value="13">Carta de vínculo con Personal Políticamente Expuesto</option>
-                            <option value="14">Carta presentación declaración anual</option>
-                            <option value="15">Carta de no crédito INFONAVIT/Retención de descuentos</option>
-                            <option value="16">Otros</option>
+                            <option value="3" selected>Contrato</option>
                         </select>
                     </div>
 
                     <div class="mb-3">
-                        <label>Nombre del archivo </label>
-                        <input type="text" class="form-control" id="NOMBRE_DOCUMENTO_CONTRATO" name="NOMBRE_DOCUMENTO_CONTRATO" readonly required>
+                        <label>Tipo de contrato *</label>
+                        <input type="text" class="form-control" id="NOMBRE_DOCUMENTO_CONTRATO" name="NOMBRE_DOCUMENTO_CONTRATO"  required>
                     </div>
 
-                    <div class="row  mb-3"  id="CONTRATO" style="display: none">
+                    <div class="row  mb-3"  id="CONTRATO" style="display: block">
                         <div class="col-12 mb-3">
                             <label>Cargo</label>
                             <select class="form-control" id="NOMBRE_CARGO" name="NOMBRE_CARGO" >
@@ -932,27 +958,32 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="row  mb-3">
+                            <div class="col-4">
+                                <label>Fecha Inicio *</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_CONTRATO" name="FECHAI_CONTRATO" required >
+                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
 
-                        <div class="col-12">
-                            <label>Vigencia *</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="VIGENCIA_CONTRATO" name="VIGENCIA_CONTRATO" >
-                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label>Fecha Fin *</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="VIGENCIA_CONTRATO" name="VIGENCIA_CONTRATO" required>
+                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
 
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <label>Salario *</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control"  id="SALARIO_CONTRATO" name="SALARIO_CONTRATO" required >
+                                </div>
                             </div>
                         </div>
+
                     </div>
-
-                    <div class="row  mb-3"  id="VIGENCIA" style="display: none">
-                        <label>Vigencia *</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="VIGENCIA_ACUERDO" name="VIGENCIA_ACUERDO">
-                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-
-                        </div>
-                    </div>
-
-
 
                     <div class="mb-3">
                         <label>Subir documento</label>
@@ -972,6 +1003,118 @@
         </div>
     </div>
 </div>
+
+<!-- ============================================================== -->
+<!-- MODAL DOCUMENTOS DE SOPORTE CONTRATRO GENERALES-->
+<!-- ============================================================== -->
+
+<div class="modal fade" id="miModal_SOPORTECONTRATO" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post"  enctype="multipart/form-data" id="formularioSOPORTECONTRATO" style="background-color: #ffffff;">              
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Documentos de soporte contrato</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {!! csrf_field() !!}
+
+                    <div class="mb-3">
+                        <label>Tipo de documento *</label>
+                        <select class="form-select" id="TIPO_DOCUMENTO_SOPORTECONTRATO" name="TIPO_DOCUMENTO_SOPORTECONTRATO" required>
+                            <option value="0" disabled selected>Seleccione una opción</option>
+                            <option value="1">Requisición de personal</option>
+                            <option value="2">Antecedentes, Imparcialidad y Beneficiarios</option>
+                            <option value="3">Aviso de privacidad</option>
+                            <option value="4">Encuesta socioeconómica y protección de datos</option>
+                            <option value="5">Recepción de la descripción del puesto de trabajo</option>
+                            <option value="6">Autorización de emisión de recibos de nómina</option>
+                            <option value="7">Autorización de firma y rúbrica</option>
+                            <option value="8">Acuse de recibo del Catálogo de Políticas</option>
+                            <option value="9">Solicitud de derechos ARCO</option>
+                            <option value="10">Carta de vínculo con Personal Políticamente Expuesto</option>
+                            <option value="11">Carta presentación declaración anual</option>
+                            <option value="12">Carta de no crédito INFONAVIT/Retención de descuentos</option>
+                            <option value="13">Otros</option>                    
+                            </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Nombre del documento *</label>
+                        <input type="text" class="form-control" id="NOMBRE_DOCUMENTO_SOPORTECONTRATO" name="NOMBRE_DOCUMENTO_SOPORTECONTRATO"  readonly required>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label>Subir documento</label>
+                        <div class="input-group">
+                        <input type="file" class="form-control" id="DOCUMENTO_SOPORTECONTRATO" name="DOCUMENTO_SOPORTECONTRATO" accept=".pdf" style="width: auto; flex: 1;" >
+                        <button type="button" class="btn btn-light btn-sm ms-2" id="quitar_soportecontrato" style="display:none;">Quitar archivo</button>
+                        </div>
+                    </div>
+                    <div id="DOCUEMNTO_ERROR_SOPORTECONTRATO" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
+        
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" id="guardarSOPORTECONTRATO">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- ============================================================== -->
+<!-- MODAL DOCUMENTOS DE SOPORTE CONTRATRO-->
+<!-- ============================================================== -->
+
+<div class="modal fade" id="miModal_DOCUMENTOSOPORTECONTRATO" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post"  enctype="multipart/form-data" id="formularioDOCUMENTOSOPORTECONTRATO" style="background-color: #ffffff;">              
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Documentos de soporte contrato</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {!! csrf_field() !!}
+
+                    <div class="mb-3">
+                        <label>Tipo de documento *</label>
+                        <select class="form-select" id="TIPO_DOCUMENTOSOPORTECONTRATO" name="TIPO_DOCUMENTOSOPORTECONTRATO" required>
+                            <option value="0" disabled selected>Seleccione una opción</option>
+                            <option value="1">Anexo 1. Acuerdo de confidencialidad</option>
+                            <option value="2">Compromiso de independencia, integridad e imparcialidad</option>
+                            </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Nombre del documento *</label>
+                        <input type="text" class="form-control" id="NOMBRE_DOCUMENTOSOPORTECONTRATO" name="NOMBRE_DOCUMENTOSOPORTECONTRATO"  readonly required>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label>Subir documento</label>
+                        <div class="input-group">
+                        <input type="file" class="form-control" id="DOCUMENTOS_SOPORTECONTRATOS" name="DOCUMENTOS_SOPORTECONTRATOS" accept=".pdf" style="width: auto; flex: 1;" >
+                        <button type="button" class="btn btn-light btn-sm ms-2" id="quitar_documentossoportecontrato" style="display:none;">Quitar archivo</button>
+                        </div>
+                    </div>
+                    <div id="ERROR_DOCUMENTOSOPORTECONTRATO" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
+        
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" id="guardarDOCUMENTOSOPORTECONTRATO">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <!-- ============================================================== -->
 <!-- MODAL RECIBO -->

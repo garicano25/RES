@@ -5,6 +5,7 @@ namespace App\Http\Controllers\organizacion;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Artisan;
+use Illuminate\Support\Facades\Storage;
 use Exception;
 use App\Models\organizacion\areasModel;
 use App\Models\organizacion\departamentosAreasModel;
@@ -194,6 +195,8 @@ class areasController extends Controller
                 $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR "><i class="bi bi-power"></i></button>';
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom EDITAR rounded-pill"><i class="bi bi-pencil-square"></i></button>';
                 $value->BTN_ORGANIGRAMA = '<button type="button" class="btn btn-success btn-custom ORGANIGRAMA rounded-pill"><i class="bi bi-diagram-3-fill"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-pdf" data-id="' . $value->ID_AREA . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+
             }
 
             // respuesta
@@ -208,7 +211,12 @@ class areasController extends Controller
         }
     }
 
-
+    public function mostrararchivo($id)
+    {
+        $archivo = areasModel::findOrFail($id)->DOCUMENTO_ORGANIGRAMA;
+        return Storage::response($archivo);
+    }
+    
 
 
     public function TablaEncargados($area_id)
@@ -315,35 +323,103 @@ class areasController extends Controller
         try {
             switch (intval($request->api)) {
                     //Guardar Area
+                // case 1:
+
+                //     //Guardamos Area
+                //     if ($request->ID_AREA == 0) {
+
+                //         DB::statement('ALTER TABLE areas AUTO_INCREMENT=1;');
+                //         $areas = areasModel::create($request->all());
+                //     } else { //Editamos Area y eliminar area
+
+                //         if (!isset($request->ELIMINAR)) {
+
+
+                //             $areas = areasModel::find($request->ID_AREA);
+                //             $areas->update($request->all());
+                //         } else {
+
+                //             $areas = areasModel::where('ID_AREA', $request['ID_AREA'])->delete();
+
+                //             $response['code']  = 1;
+                //             $response['area']  = 'Eliminada';
+                //             return response()->json($response);
+                //         }
+                //     }
+
+                //     $response['code']  = 1;
+                //     $response['area']  = $areas;
+                //     return response()->json($response);
+
+                //     break;
+
+              
+
                 case 1:
-
-                    //Guardamos Area
+                    // Guardamos Área y documento
                     if ($request->ID_AREA == 0) {
-
+                        // Reiniciamos el AUTO_INCREMENT si es necesario
                         DB::statement('ALTER TABLE areas AUTO_INCREMENT=1;');
-                        $areas = areasModel::create($request->all());
-                    } else { //Editamos Area y eliminar area
-
-                        if (!isset($request->ELIMINAR)) {
-
-
-                            $areas = areasModel::find($request->ID_AREA);
-                            $areas->update($request->all());
+                
+                        // Guardamos los datos del área
+                        $areas = areasModel::create($request->except('DOCUMENTO_ORGANIGRAMA')); 
+                
+                        // Procesamos el documento
+                        if ($request->hasFile('DOCUMENTO_ORGANIGRAMA')) {
+                            $documento = $request->file('DOCUMENTO_ORGANIGRAMA');
+                            $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE) . '.' . $documento->getClientOriginalExtension();
+                            $rutaCarpeta = 'Documentos organigrama/' . $areas->ID_AREA;
+                            $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+                
+                            // Actualizamos el registro con la ruta del documento
+                            $areas->DOCUMENTO_ORGANIGRAMA = $rutaCompleta;
+                            $areas->save();
+                        }
+                    } else {
+                        // Editamos Área o eliminamos Área
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $areas = areasModel::where('ID_AREA', $request['ID_AREA'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['area'] = 'Desactivada';
+                            } else {
+                                $areas = areasModel::where('ID_AREA', $request['ID_AREA'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['area'] = 'Activada';
+                            }
                         } else {
-
-                            $areas = areasModel::where('ID_AREA', $request['ID_AREA'])->delete();
-
-                            $response['code']  = 1;
-                            $response['area']  = 'Eliminada';
-                            return response()->json($response);
+                            $areas = areasModel::find($request->ID_AREA);
+                            $areas->update($request->except('DOCUMENTO_ORGANIGRAMA'));
+                
+                            // Procesamos el documento si se envió uno nuevo
+                            if ($request->hasFile('DOCUMENTO_ORGANIGRAMA')) {
+                                // Eliminamos el archivo anterior si existe
+                                if ($areas->DOCUMENTO_ORGANIGRAMA && Storage::exists($areas->DOCUMENTO_ORGANIGRAMA)) {
+                                    Storage::delete($areas->DOCUMENTO_ORGANIGRAMA); 
+                                }
+                
+                                $documento = $request->file('DOCUMENTO_ORGANIGRAMA');
+                                $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE) . '.' . $documento->getClientOriginalExtension();
+                                $rutaCarpeta = 'Documentos organigrama/' . $areas->ID_AREA;
+                                $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+                
+                                // Actualizamos el registro con la nueva ruta del documento
+                                $areas->DOCUMENTO_ORGANIGRAMA = $rutaCompleta;
+                                $areas->save();
+                            }
+                
+                            $response['code'] = 1;
+                            $response['area'] = 'Actualizada';
                         }
                     }
-
-                    $response['code']  = 1;
-                    $response['area']  = $areas;
+                
+                    $response['code'] = 1;
+                    $response['area'] = $areas;
                     return response()->json($response);
-
                     break;
+                
+                    
+
 
                     //GUARDAR CATEGORIAS
                 case 2:

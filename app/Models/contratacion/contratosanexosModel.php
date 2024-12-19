@@ -15,7 +15,9 @@ class contratosanexosModel extends Model
         'TIPO_DOCUMENTO_CONTRATO',
         'NOMBRE_DOCUMENTO_CONTRATO',
         'NOMBRE_CARGO',
+        'FECHAI_CONTRATO',
         'VIGENCIA_CONTRATO',
+        'SALARIO_CONTRATO',
         'VIGENCIA_ACUERDO',
         'DOCUMENTO_CONTRATO',
         'ACTIVO'

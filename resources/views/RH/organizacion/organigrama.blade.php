@@ -62,6 +62,18 @@
                 <textarea class="form-control" id="DESCRIPCION_AREA" name="DESCRIPCION" rows="2"></textarea>
               </div>
 
+              <div class="mb-3">
+                <label>Subir documento</label>
+                <div class="input-group">
+                    <input type="file" class="form-control" id="DOCUMENTO_ORGANIGRAMA" name="DOCUMENTO_ORGANIGRAMA" accept=".pdf" style="width: auto; flex: 1;" >
+                    <button type="button" class="btn btn-light btn-sm ms-2" id="quitar_documento" style="display:none;">Quitar archivo</button>
+                </div>
+            </div>
+            <div id="ERROR_DOCUMENTO" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
+            
+            
+
+
               <button type="submit" id="guardarArea" class="btn btn-success mt-2 ">Guardar </button>
             </form>
           </div>

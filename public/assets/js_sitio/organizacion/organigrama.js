@@ -165,7 +165,40 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     $('#nav-cargos-tab').prop('disabled', true)
     $('#nav-area-tab').click()
     ID_AREA = 0
+
+
+    
+    document.getElementById('quitar_documento').style.display = 'none';
+
+    document.getElementById('ERROR_DOCUMENTO').style.display = 'none';
 })
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var archivo = document.getElementById('DOCUMENTO_ORGANIGRAMA');
+    var quitar = document.getElementById('quitar_documento');
+    var error = document.getElementById('ERROR_DOCUMENTO');
+
+    if (archivo) {
+        archivo.addEventListener('change', function() {
+            var archivoscontrato = this.files[0]; // Accede al archivo
+            if (archivoscontrato && archivoscontrato.type === 'application/pdf') {
+                if (error) error.style.display = 'none';
+                if (quitar) quitar.style.display = 'block';
+            } else {
+                if (error) error.style.display = 'block';
+                this.value = ''; // Limpia el input si no es un PDF válido
+                if (quitar) quitar.style.display = 'none';
+            }
+        });
+        quitar.addEventListener('click', function() {
+            archivo.value = ''; 
+            quitar.style.display = 'none'; 
+            if (error) error.style.display = 'none'; 
+        });
+    }
+});
+
 
 
 const ModalOrganigrama = document.getElementById('modalOrganigrama')
@@ -286,7 +319,8 @@ TablaAreas = $("#TablaAreas").DataTable({
         { data: 'CATEGORIAS' },
         { data: 'BTN_ORGANIGRAMA' },
         { data: 'BTN_EDITAR' },
-        { data: 'BTN_ELIMINAR' },
+        { data: 'BTN_DOCUMENTO' },
+
 
     ],
     columnDefs: [
@@ -296,10 +330,29 @@ TablaAreas = $("#TablaAreas").DataTable({
         { target: 3, title: 'Categorías', className: 'all' },
         { target: 4, title: 'Organigrama', className: 'all text-center' },
         { target: 5, title: 'Editar', className: 'all text-center' },
-        { target: 6, title: 'Estado', className: 'all text-center' },
+        { target: 6, title: 'Documento', className: 'all text-center' },
 
     ]
 })
+
+
+$('#TablaAreas').on('click', '.ver-archivo-pdf', function () {
+    var tr = $(this).closest('tr');
+    var row = TablaAreas.row(tr);
+    var id = $(this).data('id');
+
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+
+    var nombreDocumentoSoporte = row.data().NOMBRE;
+    var url = '/mostrararchivo/' + id;
+    
+    abrirModal(url, nombreDocumentoSoporte);
+});
+
+
 
 
 $('#TablaAreas tbody').on('click', 'td>button.EDITAR', function () {
@@ -510,14 +563,12 @@ function TablaEncargados(id_area) {
             { data: 'COUNT' },
             { data: 'NOMBRE' },
             { data: 'ES_LIDER' },
-            { data: 'BTN_ACTIVO' }
 
         ],
         columnDefs: [
             { target: 0, title: '#', className: 'all' },
             { target: 1, title: 'Nombre de la categoría', className: 'all' },
             { target: 2, title: 'Es líder', className: 'all text-center' },
-            { target: 3, title: 'Estado', className: 'all text-center' },
 
         ]
     })
