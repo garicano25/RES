@@ -166,6 +166,7 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     $('#nav-area-tab').click()
     ID_AREA = 0
 
+    $('#ModalArea .modal-title').html('Nueva Área');
 
     
     document.getElementById('quitar_documento').style.display = 'none';
@@ -369,6 +370,8 @@ $('#TablaAreas tbody').on('click', 'td>button.EDITAR', function () {
 
     //CARGAMOS LA TABLA DE LOS DEPARTAMENTOS
     TablaEncargados(ID_AREA)
+
+    $('#ModalArea .modal-title').html(row.data().NOMBRE);
 
 })
 

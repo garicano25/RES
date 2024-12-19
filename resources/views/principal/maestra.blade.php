@@ -385,7 +385,7 @@
 
 @if(request()->is('organigrama'))
 <!-- organización -->
-<script src="/assets/js_sitio/organizacion/organigrama.js?v=3.0"></script>
+<script src="/assets/js_sitio/organizacion/organigrama.js?v=4.0"></script>
 <script src="/assets/js/GOJs/go.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
