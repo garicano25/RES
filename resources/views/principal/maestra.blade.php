@@ -212,11 +212,11 @@
                         <i class="bi bi-person-bounding-box" style="margin-right: 5px;"></i> <span class="d-lg-none">Capacitación</span><span class="d-none d-lg-inline">Capacitación</span>
                     </a>
                 </li>
-                <li class="nav-item dropdown" style="margin-left: 8px;">
+                {{-- <li class="nav-item dropdown" style="margin-left: 8px;">
                     <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                         <i class="bi bi-clipboard-data-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Eval.desempeño</span><span class="d-none d-lg-inline">Eval.desempeño</span>
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item dropdown" style="margin-left: 8px;">
                     <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                         <i class="bi bi-person-dash-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Desvinculación</span><span class="d-none d-lg-inline">Desvinculación</span>
