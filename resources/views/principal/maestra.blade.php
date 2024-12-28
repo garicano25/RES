@@ -203,7 +203,7 @@
 
 
                 <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                    <a class="nav-link BOTON"  href="{{ url('/Rec.Empleado') }}"  style="color: #fff; font-weight: bold; text-decoration: none; ">
                         <i class="bi bi-briefcase-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Rec.Empleados</span><span class="d-none d-lg-inline">Rec.Empleados</span>
                     </a>
                 </li>
@@ -218,7 +218,7 @@
                     </a>
                 </li> --}}
                 <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                    <a class="nav-link BOTON" href="{{ url('/Desvinculación') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                         <i class="bi bi-person-dash-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Desvinculación</span><span class="d-none d-lg-inline">Desvinculación</span>
                     </a>
                 </li>
@@ -498,6 +498,11 @@
 <script src="/assets/js_sitio/contratacion/pendientecontratar.js"></script>
 @endif
 
+
+
+@if(request()->is('Desvinculación'))
+<script src="/assets/js_sitio/desvinculacion/desvinculacion.js"></script>
+@endif
 
 
 

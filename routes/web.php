@@ -57,6 +57,12 @@ use App\Http\Controllers\contratacion\contratacionController;
 use App\Http\Controllers\contratacion\PowerPointController;
 use App\Http\Controllers\contratacion\pendientecontratarController;
 
+// Controladores de desvinculacion
+
+use App\Http\Controllers\desvinculacion\desvinculacionController;
+
+
+//==============================================  RECLUTAMIENTO  ============================
 
 //==============================================  login  ============================================== 
 Route::get('/', function () {
@@ -386,6 +392,12 @@ Route::get('/Tabladocumentosoportecontrato', [contratacionController::class, 'Ta
 Route::get('/mostrardocumentosoportecontrato/{id}', [contratacionController::class, 'mostrardocumentosoportecontrato']);
 
 
+
+// RENOVACION DE CONTRATO
+Route::get('/Tablarenovacioncontrato', [contratacionController::class, 'Tablarenovacioncontrato']);
+Route::get('/mostrardocumentorenovacion/{id}', [contratacionController::class, 'mostrardocumentorenovacion']);
+
+
 // INFORAMCION MEDICA 
 Route::get('/Tablainformacionmedica', [contratacionController::class, 'Tablainformacionmedica']);
 Route::get('/mostrarinformacionmedica/{id}', [contratacionController::class, 'mostrarinformacionmedica']);
@@ -403,6 +415,22 @@ Route::get('/mostraracciones/{id}', [contratacionController::class, 'mostraracci
 Route::get('/Tablarecibonomina', [contratacionController::class, 'Tablarecibonomina']);
 Route::get('/mostrarecibosnomina/{id}', [contratacionController::class, 'mostrarecibosnomina']);
 
+///////////////////////////////////////////////////////////// RECURSOS DE LOS EMPLEADOS //////////////////////////////////////////////////////////
+
+ Route::get('/Rec.Empleado', function () {return view('RH.RecEmpleados.RecEmpleados');});
+
+
+///////////////////////////////////////////////////////////// DESVINCULACIÓN //////////////////////////////////////////////////////////
+
+// Route::get('/Desvinculación', function () {return view('RH.desvinculacion.desvinculacion');});
+
+Route::get('/Desvinculación', [desvinculacionController::class, 'index']);
+Route::post('/desvinculacionSave', [desvinculacionController::class, 'store']);
+Route::get('/Tabladesvinculacion', [desvinculacionController::class, 'Tabladesvinculacion']);
+
+Route::get('/mostrardocumentobaja/{id}', [desvinculacionController::class, 'mostrardocumentobaja']);
+Route::get('/mostrardocumenconvenio/{id}', [desvinculacionController::class, 'mostrardocumenconvenio']);
+Route::get('/mostrardocumenadeudo/{id}', [desvinculacionController::class, 'mostrardocumenadeudo']);
 
 
 

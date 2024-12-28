@@ -767,7 +767,7 @@
                     </div>
                     
                     <div id="documentos_soportes_contrato" >
-                        <ol class="breadcrumb mt-5">
+                        <ol class="breadcrumb mt-5" >
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-text-fill"></i> &nbsp;Documentos de soporte</h3>
                             <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_DOCUMENTOSOPORTECONTRATO" style="margin-left: auto;">
                                 Nuevo  &nbsp;<i class="bi bi-plus-circle"></i>
@@ -781,8 +781,28 @@
                     </div>
 
 
+                    <div id="renovacion">
+                        <ol class="breadcrumb mt-5 d-flex justify-content-center" style="gap: 10px; list-style: none; padding: 0; margin: 0; background-color: rgba(0, 124, 186, 0.850) !important;">
+                            <li>
+                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#miModal_CONTRATO">Promoción</button>
+                            </li>
+                            <li>
+                                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#miModal_RENOVACION" id="BOTON_RENOVACION">Renovación</button>
+                            </li>
+                        </ol>
+                    </div>
+                    
+                    <div id="renovacion_contrato" >
+                        <ol class="breadcrumb mt-5 d-flex justify-content-center" >
+                            <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-text-fill"></i> &nbsp;Renovación</h3>
+                        </ol>
+                        <div class="card-body position-relative">
+                            <i id="loadingIcon12" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                            <table id="Tablarenovacioncontrato" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                            </table>
+                        </div>
+                    </div>
 
-           
 
 
 
@@ -1115,7 +1135,72 @@
     </div>
 </div>
 
+<!-- ============================================================== -->
+<!-- MODAL RENOVACION CONTRATO-->
+<!-- ============================================================== -->
 
+<div class="modal fade" id="miModal_RENOVACION" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post"  enctype="multipart/form-data" id="formularioRENOVACION" style="background-color: #ffffff;">              
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Renovación contrato</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {!! csrf_field() !!}
+
+                  
+
+                    <div class="mb-3">
+                        <label>Nombre del documento *</label>
+                        <input type="text" class="form-control" id="NOMBRE_DOCUMENTO_RENOVACION" name="NOMBRE_DOCUMENTO_RENOVACION"  value="Renovación contrato" readonly required>
+                    </div>
+
+                    <div class="row  mb-3">
+                        <div class="col-4">
+                            <label>Fecha Inicio *</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_RENOVACION" name="FECHAI_RENOVACION" required >
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label>Fecha Fin *</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_RENOVACION" name="FECHAF_RENOVACION" required>
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label>Salario *</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control"  id="SALARIO_RENOVACION" name="SALARIO_RENOVACION" required >
+                            </div>
+                        </div>
+                    </div>
+                
+
+                    <div class="mb-3">
+                        <label>Subir documento</label>
+                        <div class="input-group">
+                        <input type="file" class="form-control" id="DOCUMENTOS_RENOVACION" name="DOCUMENTOS_RENOVACION" accept=".pdf" style="width: auto; flex: 1;" >
+                        <button type="button" class="btn btn-light btn-sm ms-2" id="quitar_documentorenovacion" style="display:none;">Quitar archivo</button>
+                        </div>
+                    </div>
+                    <div id="ERROR_DOCUMENTORENOVACION" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
+        
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" id="guardarRENOVACION">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <!-- ============================================================== -->
 <!-- MODAL RECIBO -->
 <!-- ============================================================== -->

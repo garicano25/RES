@@ -15,7 +15,7 @@ ID_INCIDENCIAS = 0 ;
 ID_ACCIONES_DISCIPLINARIAS = 0;
 ID_RECIBOS_NOMINA = 0;
 ID_SOPORTE_CONTRATO = 0;
-
+ID_RENOVACION_CONTATO = 0;
 
 // TABLAS
 Tablacontratacion = null
@@ -31,7 +31,6 @@ var tablaDocumentosCargada = false;
 
 var Tablasoportecontrato;
 var tablasoportecontratoCargada = false; 
-
 
 
 var Tablacontratosyanexos;
@@ -65,6 +64,14 @@ $(document).ready(function() {
     });
     
     $("#datosgenerales-tab").click(function () {
+        
+        if (tablacontratosCargada) {
+            Tablacontratosyanexos.columns.adjust().draw();
+        } else {
+            cargarTablaContratosyanexos();
+            tablacontratosCargada = true;
+        }
+
         $('#contratosdoc-tab').closest('li').css("display", 'none');
     });
 
@@ -1486,10 +1493,14 @@ $("#guardarCONTRATO").click(function (e) {
                      $('#miModal_CONTRATO').modal('hide')
                     document.getElementById('formularioCONTRATO').reset();
 
+
+
                     
                     if ($.fn.DataTable.isDataTable('#Tablacontratosyanexos')) {
                         Tablacontratosyanexos.ajax.reload(null, false); 
                     }
+
+
 
             })
             
@@ -1668,6 +1679,7 @@ $('#Tablacontratosyanexos').on('click', 'button.informacion', function () {
     $('#contrato_salario').text(SALARIO_CONTRATO);
 
     cargarTablaDocumentosSoporteContrato();
+    cargarTablaRenovacionContrato ();
     cargarTablaInformacionMedica ();
     cargarTablaIncidencias ();  
     cargarTablaAccionesDisciplinarias ();
@@ -1759,6 +1771,7 @@ $("#guardarDOCUMENTOSOPORTECONTRATO").click(function (e) {
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                      $('#miModal_DOCUMENTOSOPORTECONTRATO').modal('hide')
                     document.getElementById('formularioDOCUMENTOSOPORTECONTRATO').reset();
+
 
                     
                     if ($.fn.DataTable.isDataTable('#Tabladocumentosoportecontrato')) {
@@ -1912,6 +1925,238 @@ $('#Tabladocumentosoportecontrato').on('click', '.ver-archivo-soportescontratos'
 });
 
 
+
+// <!-- ============================================================== -->
+// <!--  RENOVACION CONTRATO-->
+// <!-- ============================================================== -->
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var archivorenovacion = document.getElementById('DOCUMENTOS_RENOVACION');
+    var quitardocumentorenovacion = document.getElementById('quitar_documentorenovacion');
+    var errorenovacion = document.getElementById('ERROR_DOCUMENTORENOVACION');
+
+    if (archivorenovacion) {
+        archivorenovacion.addEventListener('change', function() {
+            var archivomedica = this.files[0];
+            if (archivomedica && archivomedica.type === 'application/pdf') {
+                if (errorenovacion) errorenovacion.style.display = 'none';
+                if (quitardocumentorenovacion) quitardocumentorenovacion.style.display = 'block';
+            } else {
+                if (errorenovacion) errorenovacion.style.display = 'block';
+                this.value = '';
+                if (quitardocumentorenovacion) quitardocumentorenovacion.style.display = 'none';
+            }
+        });
+        quitardocumentorenovacion.addEventListener('click', function() {
+            archivorenovacion.value = ''; 
+            quitardocumentorenovacion.style.display = 'none'; 
+            if (errorenovacion) errorenovacion.style.display = 'none'; 
+        });
+    }
+});
+
+
+
+$("#guardarRENOVACION").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormularioV1('formularioRENOVACION');
+
+    if (formularioValido) {
+
+    if (ID_RENOVACION_CONTATO == 0) {
+        
+        alertMensajeConfirm({
+            title: "¿Desea guardar la información?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarRENOVACION')
+            await ajaxAwaitFormData({ api: 10,CONTRATO_ID:contrato_id, CURP: curpSeleccionada , ID_RENOVACION_CONTATO: ID_RENOVACION_CONTATO }, 'contratoSave', 'formularioRENOVACION', 'guardarRENOVACION', { callbackAfter: true, callbackBefore: true }, () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+                
+            }, function (data) {
+                    
+                ID_RENOVACION_CONTATO = data.soporte.ID_RENOVACION_CONTATO
+                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                     $('#miModal_RENOVACION').modal('hide')
+                    document.getElementById('formularioRENOVACION').reset();
+
+
+                    
+                    if ($.fn.DataTable.isDataTable('#Tablarenovacioncontrato')) {
+                        Tablarenovacioncontrato.ajax.reload(null, false); 
+                    }
+            })
+            
+        }, 1)
+        
+    } else {
+            alertMensajeConfirm({
+            title: "¿Desea editar la información de este formulario?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarRENOVACION')
+            await ajaxAwaitFormData({ api: 10,CONTRATO_ID:contrato_id, CURP: curpSeleccionada ,ID_RENOVACION_CONTATO: ID_RENOVACION_CONTATO }, 'contratoSave', 'formularioRENOVACION', 'guardarRENOVACION', { callbackAfter: true, callbackBefore: true }, () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+            }, function (data) {
+                    
+                setTimeout(() => {
+
+                    ID_RENOVACION_CONTATO = data.soporte.ID_RENOVACION_CONTATO
+                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                     $('#miModal_RENOVACION').modal('hide')
+                    document.getElementById('formularioRENOVACION').reset();
+
+
+                    
+                    if ($.fn.DataTable.isDataTable('#Tablarenovacioncontrato')) {
+                        Tablarenovacioncontrato.ajax.reload(null, false); 
+                    }
+
+                }, 300);  
+            })
+        }, 1)
+    }
+
+} else {
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
+    
+});
+
+
+
+const Modalrenovacioncontrato = document.getElementById('miModal_RENOVACION')
+Modalrenovacioncontrato.addEventListener('hidden.bs.modal', event => {
+    
+    ID_RENOVACION_CONTATO = 0
+    document.getElementById('formularioRENOVACION').reset();
+   
+    $('#miModal_RENOVACION .modal-title').html('Renovación contrato');
+
+    document.getElementById('quitar_documentorenovacion').style.display = 'none';
+
+    document.getElementById('ERROR_DOCUMENTORENOVACION').style.display = 'none';
+
+})
+
+
+
+function cargarTablaRenovacionContrato() {
+    if ($.fn.DataTable.isDataTable('#Tablarenovacioncontrato')) {
+        Tablarenovacioncontrato.clear().destroy();
+    }
+
+    Tablarenovacioncontrato = $("#Tablarenovacioncontrato").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        ajax: {
+            dataType: 'json',
+            data: { contrato: contrato_id }, 
+            method: 'GET',
+            cache: false,
+            url: '/Tablarenovacioncontrato',  
+            beforeSend: function () {
+                $('#loadingIcon12').css('display', 'inline-block');
+            },
+            complete: function () {
+                $('#loadingIcon12').css('display', 'none');
+                Tablarenovacioncontrato.columns.adjust().draw(); 
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#loadingIcon12').css('display', 'none');
+                alertErrorAJAX(jqXHR, textStatus, errorThrown);
+            },
+            dataSrc: 'data'
+        },
+        columns: [
+            { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+            { data: 'NOMBRE_DOCUMENTO_RENOVACION', className: 'text-center' },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return  row.FECHAI_RENOVACION + '<br>' + row.FECHAF_RENOVACION;
+                }
+            },
+
+            { data: 'BTN_DOCUMENTO', className: 'text-center' },
+            { data: 'BTN_EDITAR', className: 'text-center' },
+        ],
+        columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'Nombre del documento', className: 'all text-center' },  
+            { targets: 2, title: 'Fecha inicio  <br> Fecha fin', className: 'all text-center' },  
+            { targets: 3, title: 'Documento', className: 'all text-center' },  
+            { targets: 4, title: 'Editar', className: 'all text-center' }, 
+
+        ],
+       
+    });
+}
+
+
+
+
+$('#Tablarenovacioncontrato').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablarenovacioncontrato.row(tr);
+
+    ID_RENOVACION_CONTATO = row.data().ID_RENOVACION_CONTATO;
+
+    editarDatoTabla(row.data(), 'formularioRENOVACION', 'miModal_RENOVACION', 1);
+
+    $('#miModal_RENOVACION .modal-title').html(row.data().NOMBRE_DOCUMENTO_RENOVACION);
+
+
+});
+
+$('#Tablarenovacioncontrato').on('click', '.ver-archivo-informacionrenovacion', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablarenovacioncontrato.row(tr);
+    var id = $(this).data('id');
+
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+
+    var nombreDocumento = row.data().NOMBRE_DOCUMENTO_RENOVACION;
+    var url = '/mostrardocumentorenovacion/' + id;
+    
+    abrirModal(url, nombreDocumento);
+});
 
 
 
