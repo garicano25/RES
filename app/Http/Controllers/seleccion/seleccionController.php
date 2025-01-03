@@ -64,15 +64,22 @@ class seleccionController extends Controller
 public function Tablaseleccion()
 {
     try {
-        $tabla = DB::select("
-            SELECT vac.*, cat.NOMBRE_CATEGORIA,
-                DATEDIFF(vac.FECHA_EXPIRACION, CURDATE()) as DIAS_RESTANTES,
-                (CASE WHEN vac.FECHA_EXPIRACION < CURDATE() THEN 1 ELSE 0 END) as EXPIRADO
+        // $tabla = DB::select("
+        //     SELECT vac.*, cat.NOMBRE_CATEGORIA,
+        //         DATEDIFF(vac.FECHA_EXPIRACION, CURDATE()) as DIAS_RESTANTES,
+        //         (CASE WHEN vac.FECHA_EXPIRACION < CURDATE() THEN 1 ELSE 0 END) as EXPIRADO
+        //     FROM catalogo_vacantes vac
+        //     LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
+        //     WHERE vac.ACTIVO = 1
+        //     AND vac.FECHA_EXPIRACION >= CURDATE()");
+                
+                $tabla = DB::select("
+            SELECT vac.*, cat.NOMBRE_CATEGORIA
             FROM catalogo_vacantes vac
             LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
             WHERE vac.ACTIVO = 1
-            AND vac.FECHA_EXPIRACION >= CURDATE()");
-        
+        ");
+
         // Respuesta
         return response()->json([
             'data' => $tabla,
