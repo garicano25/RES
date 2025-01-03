@@ -1971,8 +1971,8 @@ foreach ($externas as $key => $val) {
 
 
 
-            $puesto = areasModel::where('ID_AREA', $val->AREA_RP)->pluck('NOMBRE');
-            $puestoDecodificado = json_decode('"' . $puesto . '"');
+            $puesto = areasModel::where('ID_AREA', $val->AREA_RP)->pluck('NOMBRE')->first();
+            $puestoUtf8 = mb_convert_encoding($puesto, 'UTF-8', 'auto');
 
 
 
@@ -2006,7 +2006,7 @@ foreach ($externas as $key => $val) {
             $sheet->setCellValue('H9', str_replace(['[', ']', '"'], '', $puesto1));
 
 
-            $sheet->setCellValue('X9', str_replace(['[', ']', '"'], '', $puestoDecodificado));
+            $sheet->setCellValue('X9', $puestoUtf8);
 
             // $sheet->setCellValue('X9', str_replace(['[', ']', '"'], '', $puesto)); 
 
