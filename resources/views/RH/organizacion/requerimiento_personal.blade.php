@@ -104,7 +104,7 @@
                       <div class="row mb-3">
                         <div class="col-6">
                             <label>Sustituye a: </label>
-                              <input type="text" class="form-control " id="SUSTITUYE_RP" name="SUSTITUYE_RP" required>
+                              <input type="text" class="form-control " id="SUSTITUYE_RP" name="SUSTITUYE_RP" >
                         </div>
                         <div class="col-6">
                               <label>Categoría a sustituir</label>
