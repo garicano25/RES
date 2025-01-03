@@ -22,6 +22,8 @@ var categoriaId = null;
 
 
 
+
+
 var Tablaseleccion = $("#Tablaseleccion").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
@@ -102,10 +104,14 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
             }
         });
 
+
         categoriaId = row.data().CATEGORIA_VACANTE;
 
+
+        vacantes_id = row.data().VACANTES_ID;
+
         $.ajax({
-            url: '/consultarSeleccion/' + categoriaId,
+            url: '/consultarSeleccion/' + vacantes_id,
             method: 'GET',
             success: function(response) {
                 Swal.close();

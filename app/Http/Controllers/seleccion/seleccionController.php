@@ -74,7 +74,9 @@ public function Tablaseleccion()
         //     AND vac.FECHA_EXPIRACION >= CURDATE()");
                 
                 $tabla = DB::select("
-            SELECT vac.*, cat.NOMBRE_CATEGORIA
+            SELECT vac.*,                 vac.ID_CATALOGO_VACANTE AS VACANTES_ID,
+   
+            cat.NOMBRE_CATEGORIA
             FROM catalogo_vacantes vac
             LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
             WHERE vac.ACTIVO = 1
@@ -558,17 +560,17 @@ public function mostrarprueba($id)
 
 
 
-public function consultarSeleccion($categoriaVacanteId)
+public function consultarSeleccion($vacantesId)
 {
     $consultar = DB::table('formulario_seleccion')
-        ->where('CATEGORIA_VACANTE', $categoriaVacanteId)
+        ->where('VACANTES_ID', $vacantesId)
         ->where('ACTIVO', 1)
         ->get();
 
     if ($consultar->isEmpty()) {
         return response()->json([
             'data' => [],
-            'message' => 'No hay información relacionada para esta categoría.'
+            'message' => 'No hay información relacionada para esta vacante.'
         ]);
     }
 

@@ -293,7 +293,7 @@ Route::get('/Selección', [seleccionController::class, 'index']);
 // Route::get('/Selección', function () {return view('RH.Selección.seleccion');});
 Route::get('/Tablaseleccion', [seleccionController::class, 'Tablaseleccion']);
 Route::post('/SeleccionSave', [seleccionController::class, 'store']);
-Route::get('/consultarSeleccion/{categoriaVacanteId}', [seleccionController::class, 'consultarSeleccion']);
+Route::get('/consultarSeleccion/{vacantesId}', [seleccionController::class, 'consultarSeleccion']);
 
 
 
