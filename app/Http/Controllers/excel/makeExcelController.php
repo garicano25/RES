@@ -1972,6 +1972,7 @@ foreach ($externas as $key => $val) {
 
 
             $puesto = areasModel::where('ID_AREA', $val->AREA_RP)->pluck('NOMBRE');
+            $puestoDecodificado = utf8_decode($puesto); 
 
 
             if (!is_null($val->FECHA_RP)) {
@@ -2004,8 +2005,9 @@ foreach ($externas as $key => $val) {
             $sheet->setCellValue('H9', str_replace(['[', ']', '"'], '', $puesto1));
 
 
+            $sheet->setCellValue('X9', str_replace(['[', ']', '"'], '', $puestoDecodificado)); // Insertar en la celda
 
-            $sheet->setCellValue('X9', str_replace(['[', ']', '"'], '', $puesto)); 
+            // $sheet->setCellValue('X9', str_replace(['[', ']', '"'], '', $puesto)); 
 
 
             if (!is_null($val->NO_VACANTES_RP)) {
