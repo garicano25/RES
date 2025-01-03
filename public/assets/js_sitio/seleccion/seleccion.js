@@ -83,117 +83,6 @@ var Tablaseleccion = $("#Tablaseleccion").DataTable({
 
 
 
-// $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
-//     var tr = $(this).closest('tr');
-//     var row = Tablaseleccion.row(tr);
-
-//     if (row.child.isShown()) {
-//         row.child.hide();
-//         tr.removeClass('shown');
-//     } else {
-//         Swal.fire({
-//             title: 'Consultando información',
-//             text: 'Por favor, espere...',
-//             allowOutsideClick: false,
-//             showConfirmButton: false,
-//             didOpen: () => {
-//                 Swal.showLoading();
-//             }
-//         });
-
-//                 categoriaId = row.data().CATEGORIA_VACANTE;
-
-
-//         $.ajax({
-//             url: '/consultarSeleccion/' + categoriaId, 
-//             method: 'GET',
-//             success: function(response) {
-//                 Swal.close();
-//                 console.log(response);  
-
-//                 if (response.data.length === 0) {
-//                     Swal.fire('Sin información', 'No hay información relacionada para esta categoría.', 'info');
-//                 } else {
-//                     var innerTable = `
-//                         <table class="table text-center">
-//                             <thead class="custom-header">
-//                                 <tr>
-//                                     <th>#</th>
-//                                     <th class="text-center">Nombre Completo</th>
-//                                     <th class="text-center">CURP</th>
-//                                     <th class="text-center">Contacto</th>
-//                                     <th class="text-center">% Inteligencia laboral</th>
-//                                     <th class="text-center">% Buró laboral</th>
-//                                     <th class="text-center">% PPT</th>
-//                                     <th class="text-center">% Referencias laboral</th>
-//                                     <th class="text-center">% Pruebas de conocimientos</th>
-//                                     <th class="text-center">% Entrevista</th>
-//                                     <th class="text-center">% Total</th>
-//                                     <th class="text-center">Mostrar</th>
-//                                     <th class="text-center">Seleccionar</th>
-//                                 </tr>
-//                             </thead>
-//                             <tbody>
-//                     `;
-
-//                     response.data.forEach(function(item, index) {
-//                         var inteligenciaLaboral = item.PORCENTAJE_INTELIGENCIA || '';
-//                         var buroLaboral = item.PORCENTAJE_BURO || '';
-//                         var ppt = item.PORCENTAJE_PPT || '';
-//                         var referenciasLaboral = item.PORCENTAJE_REFERENCIAS || '';
-//                         var pruebaConocimiento = item.PORCENTAJE_PRUEBA || '';
-//                         var entrevista = item.PORCENTAJE_ENTREVISTA || '';
-//                         var total = item.TOTAL || '';
-
-//                         innerTable += `
-//                                     <tr>
-//                                         <td>${index + 1}</td>
-//                                         <td>${item.NOMBRE_SELC || ''} ${item.PRIMER_APELLIDO_SELEC || ''} ${item.SEGUNDO_APELLIDO_SELEC || ''}</td>
-//                                         <td class="text-center">${item.CURP || ''}</td>
-//                                         <td class="text-center">${item.CORREO_SELEC || ''}<br>${(item.TELEFONO1_SELECT || '') + (item.TELEFONO2_SELECT ? ', ' + item.TELEFONO2_SELECT : '')}</td>
-//                                         <td class="text-center">${inteligenciaLaboral}</td>
-//                                         <td class="text-center">${buroLaboral}</td>
-//                                         <td class="text-center">${ppt}</td>
-//                                         <td class="text-center">${referenciasLaboral}</td>
-//                                         <td class="text-center">${pruebaConocimiento}</td>
-//                                         <td class="text-center">${entrevista}</td>
-//                                         <td class="text-center">${total}</td>
-//                                         <p class="card-text" style="display: none;" ><strong>DATOSCOMPLETOS:</strong> ${item.DIA_FECHA_SELECT || ''} ${item.MES_FECHA_SELECT || ''} ${item.ANIO_FECHA_AC || ''}</p>
-
-//                                         <td class="text-center">
-//                                             <button type="button" class="btn btn-primary btn-circle" id="AbrirModalFull" data-bs-toggle="modal" data-bs-target="#FullScreenModal" data-curp="${item.CURP || ''}" data-nombre="${item.NOMBRE_SELC || ''} ${item.PRIMER_APELLIDO_SELEC || ''} ${item.SEGUNDO_APELLIDO_SELEC || ''}">
-//                                                 <i class="bi bi-eye-fill"></i>
-//                                             </button>
-//                                         </td>
-//                                         <td class="text-center">
-//                                             <button type="button" class="btn btn-success" id="MandarContratacion" disabled>
-//                                                 <i class="bi bi-check-square-fill"></i>
-//                                             </button>
-//                                         </td>
-//                                     </tr>
-//                                 `;
-//                     });
-
-//                     innerTable += `
-//                             </tbody>
-//                         </table>
-//                     `;
-
-//                     row.child(innerTable).show();
-//                     tr.addClass('shown');
-//                 }
-//             },
-//             error: function(jqXHR, textStatus, errorThrown) {
-//                 Swal.close(); 
-//                 console.error('Error: ', textStatus, errorThrown);
-//                 alertErrorAJAX(jqXHR, textStatus, errorThrown);
-//             }
-//         });
-//     }
-// });
-
-
-
 
 $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
     var tr = $(this).closest('tr');
@@ -220,7 +109,7 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
             method: 'GET',
             success: function(response) {
                 Swal.close();
-                console.log(response);
+                
 
                 if (response.data.length === 0) {
                     Swal.fire('Sin información', 'No hay información relacionada para esta categoría.', 'info');
@@ -256,7 +145,16 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
                         var entrevista = item.PORCENTAJE_ENTREVISTA || '';
                         var total = item.TOTAL || '';
 
-                        var isComplete = inteligenciaLaboral && buroLaboral && ppt && referenciasLaboral && pruebaConocimiento && entrevista && total;
+                        var isComplete = 
+                        inteligenciaLaboral !== '**' && 
+                        buroLaboral !== '**' && 
+                        ppt !== '**' && 
+                        referenciasLaboral !== '**' && 
+                        pruebaConocimiento !== '**' && 
+                        entrevista !== '**' && 
+                        total !== '**';
+                    
+                        // var isComplete = inteligenciaLaboral && buroLaboral && ppt && referenciasLaboral && pruebaConocimiento && entrevista && total;
 
                         innerTable += `
                                     <tr>
@@ -278,12 +176,25 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
                                             </button>
                                         </td>
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-success MandarContratacion" ${isComplete ? '' : 'disabled'}>
-                                                <i class="bi bi-check-square-fill"></i>
-                                            </button>
+                                          <button type="button" class="btn btn-success MandarContratacion" 
+                                            data-categoria-id="${categoriaId}" 
+                                            data-nombre="${item.NOMBRE_SELC || ''}" 
+                                            data-primer-apellido="${item.PRIMER_APELLIDO_SELEC || ''}" 
+                                            data-segundo-apellido="${item.SEGUNDO_APELLIDO_SELEC || ''}" 
+                                            data-dia-fecha="${item.DIA_FECHA_SELECT || ''}" 
+                                            data-mes-fecha="${item.MES_FECHA_SELECT || ''}" 
+                                            data-anio-fecha="${item.ANIO_FECHA_SELECT || ''}" 
+                                            ${isComplete ? '' : 'disabled'}>
+                                            <i class="bi bi-check-square-fill"></i>
+                                        </button>
                                         </td>
                                     </tr>
                                 `;
+
+
+
+                       
+
                     });
 
                     innerTable += `
@@ -319,22 +230,82 @@ function calcularTotal(inteligencia, buro, ppt, referencias, prueba, entrevista)
 
 
 
+// $(document).on('click', '.MandarContratacion', function() {
+//     var button = $(this); 
+//     var row = button.closest('tr'); 
+
+//     var curp = row.find('td:eq(3)').text().trim(); 
+//     var nombreCompleto = row.find('td:eq(1)').text().trim(); 
+//     var fechas = row.find('td:eq(2)').text().trim(); 
+
+//     var nombre = nombreCompleto.split(' ')[0] || ''; 
+//     var primerApellido = nombreCompleto.split(' ')[1] || ''; 
+//     var segundoApellido = nombreCompleto.split(' ')[2] || ''; 
+
+//     var diaFecha = fechas.split(' ')[0] || ''; 
+//     var mesFecha = fechas.split(' ')[1] || ''; 
+//     var anioFecha = fechas.split(' ')[2] || ''; 
+
+//     var datos = {
+//         CURP: curp,
+//         NOMBRE_PC: nombre,
+//         PRIMER_APELLIDO_PC: primerApellido,
+//         SEGUNDO_APELLIDO_PC: segundoApellido,
+//         DIA_FECHA_PC: diaFecha,
+//         MES_FECHA_PC: mesFecha,
+//         ANIO_FECHA_PC: anioFecha
+//     };
+
+//     Swal.fire({
+//         title: `¿Está seguro de enviar a pendiente de contratar a ${nombre} ${primerApellido} ${segundoApellido}?`,
+//         text: 'Este registro será guardado como pendiente de contratar.',
+//         icon: 'warning',
+//         showCancelButton: true,
+//         confirmButtonText: 'Sí, guardar',
+//         cancelButtonText: 'Cancelar',
+//     }).then((result) => {
+//         if (result.isConfirmed) {
+//             $.ajax({
+//                 url: '/guardarPendiente',
+//                 method: 'POST',
+//                 data: datos,
+//                 headers: {
+//                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), 
+//                 },
+//                 success: function(response) {
+//                     if (response.status === 'success') {
+//                         Swal.fire('Éxito', response.message, 'success');
+//                         Tablaseleccion.ajax.reload(null, false); 
+//                     } else {
+//                         Swal.fire('Error', response.message, 'error');
+//                     }
+//                 },
+//                 error: function(jqXHR, textStatus, errorThrown) {
+//                     console.error('Error: ', textStatus, errorThrown);
+//                     Swal.fire('Error', 'No se pudo guardar el registro.', 'error');
+//                 }
+//             });
+//         }
+//     });
+// });
+
+
+
+
 $(document).on('click', '.MandarContratacion', function() {
-    var button = $(this); 
-    var row = button.closest('tr'); 
+    var button = $(this);
 
-    var curp = row.find('td:eq(3)').text().trim(); 
-    var nombreCompleto = row.find('td:eq(1)').text().trim(); 
-    var fechas = row.find('td:eq(2)').text().trim(); 
+    // Recuperar valores directamente desde los atributos del botón
+    var curp = button.closest('tr').find('td:eq(3)').text().trim(); 
+    var nombre = button.data('nombre'); 
+    var primerApellido = button.data('primer-apellido'); 
+    var segundoApellido = button.data('segundo-apellido'); 
+    var diaFecha = button.data('dia-fecha'); 
+    var mesFecha = button.data('mes-fecha'); 
+    var anioFecha = button.data('anio-fecha'); 
+    var vacanteId = button.data('categoria-id'); 
 
-    var nombre = nombreCompleto.split(' ')[0] || ''; 
-    var primerApellido = nombreCompleto.split(' ')[1] || ''; 
-    var segundoApellido = nombreCompleto.split(' ')[2] || ''; 
-
-    var diaFecha = fechas.split(' ')[0] || ''; 
-    var mesFecha = fechas.split(' ')[1] || ''; 
-    var anioFecha = fechas.split(' ')[2] || ''; 
-
+    // Datos a enviar al backend
     var datos = {
         CURP: curp,
         NOMBRE_PC: nombre,
@@ -342,7 +313,8 @@ $(document).on('click', '.MandarContratacion', function() {
         SEGUNDO_APELLIDO_PC: segundoApellido,
         DIA_FECHA_PC: diaFecha,
         MES_FECHA_PC: mesFecha,
-        ANIO_FECHA_PC: anioFecha
+        ANIO_FECHA_PC: anioFecha,
+        VACANTE_ID: vacanteId
     };
 
     Swal.fire({
@@ -377,8 +349,6 @@ $(document).on('click', '.MandarContratacion', function() {
         }
     });
 });
-
-
 
 
 

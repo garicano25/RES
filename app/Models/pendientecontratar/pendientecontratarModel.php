@@ -17,6 +17,7 @@ class pendientecontratarModel extends Model
         'DIA_FECHA_PC',
         'MES_FECHA_PC',
         'ANIO_FECHA_PC',
+        'VACANTE_ID',
         'ACTIVO'
     ];
 }

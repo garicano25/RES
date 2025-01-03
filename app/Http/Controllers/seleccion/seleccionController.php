@@ -108,7 +108,7 @@ public function guardarPendiente(Request $request)
         $dia = $request->input('DIA_FECHA_PC');
         $mes = $request->input('MES_FECHA_PC');
         $anio = $request->input('ANIO_FECHA_PC');
-
+        $vacanteId = $request->input('VACANTE_ID');
         pendientecontratarModel::create([
             'CURP' => $curp,
             'NOMBRE_PC' => $nombre,
@@ -117,6 +117,7 @@ public function guardarPendiente(Request $request)
             'DIA_FECHA_PC' => $dia,
             'MES_FECHA_PC' => $mes,
             'ANIO_FECHA_PC' => $anio,
+            'VACANTE_ID' => $vacanteId 
         ]);
 
         seleccionModel::where('CURP', $curp)->update(['ACTIVO' => 0]);
@@ -133,6 +134,7 @@ public function guardarPendiente(Request $request)
         ]);
     }
 }
+
 
 
 
