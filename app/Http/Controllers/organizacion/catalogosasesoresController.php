@@ -90,4 +90,5 @@ public function store(Request $request)
             return response()->json('Error al guardar el asesor');
         }
     }
+    
 }

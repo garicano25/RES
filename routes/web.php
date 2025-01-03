@@ -272,6 +272,7 @@ Route::get('/Tablaareainteres', [catalogoareainteresController::class, 'Tablaare
 // visualizar la vacantes y poder ver los que se han postulado y poder mandar a selección
 Route::get('/Postulaciones', [vacantesactivasController::class, 'index']);
 Route::get('/Tablapostulaciones', [vacantesactivasController::class, 'Tablapostulaciones']);
+Route::post('/VacantesactSave', [vacantesactivasController::class, 'store']);
 
 // Poder visualizar la información de los postulantes y guardarlos 
 Route::get('/informacionpostulantes/{idVacante}', [vacantesactivasController::class, 'informacionpostulantes']);

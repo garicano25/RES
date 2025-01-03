@@ -24,20 +24,22 @@ class vacantesactivasController extends Controller
 
 
     public function index()
-{
+    {
+
+        $areas = catalogocategoriaModel::where('ES_LIDER_CATEGORIA', 0)
+            ->orderBy('NOMBRE_CATEGORIA', 'ASC')
+            ->get();
     
-
-    $areas = catalogocategoriaModel::where('ES_LIDER_CATEGORIA', 0)
-    ->orderBy('NOMBRE_CATEGORIA', 'ASC')
-    ->get();
-
-
-    return view('RH.reclutamiento.Vacantes_activas', compact('areas'));
-
-
-
-}
-
+            $vacantes = DB::table('catalogo_vacantes')
+            ->join('catalogo_categorias', 'catalogo_vacantes.CATEGORIA_VACANTE', '=', 'catalogo_categorias.ID_CATALOGO_CATEGORIA')
+            ->select('catalogo_vacantes.ID_CATALOGO_VACANTE', 'catalogo_categorias.NOMBRE_CATEGORIA')
+            ->where('catalogo_vacantes.LA_VACANTES_ES', 'Privada')
+            ->orderBy('catalogo_categorias.NOMBRE_CATEGORIA', 'ASC')
+            ->get(); 
+    
+        return view('RH.reclutamiento.Vacantes_activas', compact('areas', 'vacantes'));
+    }
+    
 
 
 // TABLA PARA VER TODAS LAS POSTULACIONES     
@@ -277,6 +279,51 @@ public function actualizarDisponibilidad(Request $request)
 }
 
 
+
+public function store(Request $request)
+    {
+        try {
+            switch (intval($request->api)) {
+                case 1:
+                    if ($request->ID_LISTA_POSTULANTES == 0) {
+                        DB::statement('ALTER TABLE lista_postulantes AUTO_INCREMENT=1;');
+                        $asesores = listapostulacionesModel::create($request->all());
+                    } else { 
+
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                             
+                                $asesores = listapostulacionesModel::where('ID_LISTA_POSTULANTES', $request['ID_LISTA_POSTULANTES'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['asesor'] = 'Desactivada';
+                            } else {
+                                $asesores = listapostulacionesModel::where('ID_LISTA_POSTULANTES', $request['ID_LISTA_POSTULANTES'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['asesor'] = 'Activada';
+                            }
+                        } else {
+                            $asesores = listapostulacionesModel::find($request->ID_LISTA_POSTULANTES);
+                            $asesores->update($request->all());
+                            $response['code'] = 1;
+                            $response['asesor'] = 'Actualizada';
+                        }
+                        return response()->json($response);
+
+                    
+                    }
+                    $response['code']  = 1;
+                    $response['asesor']  = $asesores;
+                    return response()->json($response);
+                    break;
+                default:
+                    $response['code']  = 1;
+                    $response['msj']  = 'Api no encontrada';
+                    return response()->json($response);
+            }
+        } catch (Exception $e) {
+            return response()->json('Error al guardar el asesor');
+        }
+    }
 
 
 

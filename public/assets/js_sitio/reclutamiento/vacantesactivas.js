@@ -1,4 +1,110 @@
 
+ID_LISTA_POSTULANTES = 0
+
+
+
+const ModalArea = document.getElementById('miModal_VACANTESACT')
+ModalArea.addEventListener('hidden.bs.modal', event => {
+    
+    
+    ID_LISTA_POSTULANTES = 0
+    document.getElementById('formularioVACANTESACT').reset();
+   
+})
+
+
+
+$("#guardarFormVACANTESACT").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormulario($('#formularioVACANTESACT'))
+
+    if (formularioValido) {
+
+    if (ID_LISTA_POSTULANTES == 0) {
+        
+        alertMensajeConfirm({
+            title: "¿Desea guardar la información?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarFormVACANTESACT')
+            await ajaxAwaitFormData({ api: 1, ID_LISTA_POSTULANTES: ID_LISTA_POSTULANTES }, 'VacantesactSave', 'formularioVACANTESACT', 'guardarFormVACANTESACT', { callbackAfter: true, callbackBefore: true }, () => {
+        
+               
+
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
+                    
+
+                ID_LISTA_POSTULANTES = data.asesor.ID_LISTA_POSTULANTES
+                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                     $('#miModal_VACANTESACT').modal('hide')
+                    document.getElementById('formularioVACANTESACT').reset();
+                    Tablapostulaciones.ajax.reload()
+
+           
+                
+                
+            })
+            
+            
+            
+        }, 1)
+        
+    } else {
+            alertMensajeConfirm({
+            title: "¿Desea editar la información de este formulario?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarFormVACANTESACT')
+            await ajaxAwaitFormData({ api: 1, ID_LISTA_POSTULANTES: ID_LISTA_POSTULANTES }, 'VacantesactSave', 'formularioVACANTESACT', 'guardarFormVACANTESACT', { callbackAfter: true, callbackBefore: true }, () => {
+        
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
+                    
+                setTimeout(() => {
+
+                    
+                    ID_LISTA_POSTULANTES = data.asesor.ID_LISTA_POSTULANTES
+                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                     $('#miModal_VACANTESACT').modal('hide')
+                    document.getElementById('formularioVACANTESACT').reset();
+                    Tablapostulaciones.ajax.reload()
+
+
+                }, 300);  
+            })
+        }, 1)
+    }
+
+} else {
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
+    
+});
 
 
 var Tablapostulaciones = $("#Tablapostulaciones").DataTable({
