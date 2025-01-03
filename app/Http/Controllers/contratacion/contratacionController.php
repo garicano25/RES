@@ -12,6 +12,7 @@ use App\Models\contratacion\contratacionModel;
 use App\Models\contratacion\documentosoporteModel;
 use App\Models\contratacion\contratosanexosModel;
 use App\Models\contratacion\documentoscolaboradorcontratoModel;
+use App\Models\contratacion\reingresocontratoModel;
 
 use App\Models\contratacion\reciboscontratoModel;
 use App\Models\contratacion\informacionmedicaModel;
@@ -113,17 +114,53 @@ public function verificarestadobloqueo(Request $request)
     return response()->json(['bloqueodesactivado' => $bloqueodesactivado]);
 }
 
+// public function activarColaborador(Request $request, $id)
+// {
+//     try {
+//         $colaborador = contratacionModel::findOrFail($id);
+
+//         if ($colaborador->ACTIVO == 1) {
+//             return response()->json([
+//                 'msj' => 'El colaborador ya está activo',
+//                 'status' => 'info'
+//             ]);
+//         }
+
+//         $colaborador->ACTIVO = 1;
+//         $colaborador->save();
+
+//         return response()->json([
+//             'msj' => 'El colaborador ha sido activado exitosamente',
+//             'status' => 'success'
+//         ]);
+//     } catch (Exception $e) {
+//         return response()->json([
+//             'msj' => 'Error: ' . $e->getMessage(),
+//             'status' => 'error'
+//         ]);
+//     }
+// }
+
+
+
 public function activarColaborador(Request $request, $id)
 {
     try {
         $colaborador = contratacionModel::findOrFail($id);
 
+        // Validar si ya está activo
         if ($colaborador->ACTIVO == 1) {
             return response()->json([
                 'msj' => 'El colaborador ya está activo',
                 'status' => 'info'
             ]);
         }
+
+        reingresocontratoModel::create([
+            'CURP' => $colaborador->CURP,
+            'FECHA_REINGRESO' => $request->input('fechaReingreso'),
+            'ACTIVO' => 1
+        ]);
 
         $colaborador->ACTIVO = 1;
         $colaborador->save();
@@ -141,7 +178,6 @@ public function activarColaborador(Request $request, $id)
 }
 
 
-
 /////////////////////////////////////////// STEP 1  DATOS GENERALES //////////////////////////////////
 
 public function mostrarfotocolaborador($colaborador_id)
@@ -150,6 +186,57 @@ public function mostrarfotocolaborador($colaborador_id)
     return Storage::response($foto->FOTO_USUARIO);
 }
     
+
+public function obtenerbajasalta(Request $request) {
+    $curp = $request->input('curp');
+
+    // Validar que la CURP esté presente
+    if (!$curp) {
+        return response()->json(['error' => 'CURP no proporcionada.'], 400);
+    }
+
+    // Obtener las altas
+    $altas = DB::table('formulario_contratacion')
+        ->select('FECHA_INGRESO as fecha')
+        ->where('CURP', $curp)
+        ->get();
+
+    // Obtener las bajas
+    $bajas = DB::table('formulario_desvinculacion')
+        ->select('FECHA_BAJA as fecha')
+        ->where('CURP', $curp)
+        ->get();
+
+    // Obtener los reingresos
+    $reingresos = DB::table('reingreso_contratacion')
+        ->select('FECHA_REINGRESO as fecha')
+        ->where('CURP', $curp)
+        ->get();
+
+    // Combinar y etiquetar resultados
+    $resultados = [];
+
+    foreach ($altas as $alta) {
+        $resultados[] = ['tipo' => 'ALTA', 'fecha' => $alta->fecha];
+    }
+
+    foreach ($bajas as $baja) {
+        $resultados[] = ['tipo' => 'BAJA', 'fecha' => $baja->fecha];
+    }
+
+    foreach ($reingresos as $reingreso) {
+        $resultados[] = ['tipo' => 'REINGRESO', 'fecha' => $reingreso->fecha];
+    }
+
+    // Ordenar por fecha
+    usort($resultados, function($a, $b) {
+        return strtotime($a['fecha']) - strtotime($b['fecha']);
+    });
+
+    return response()->json($resultados);
+}
+
+
 
 /////////////////////////////////////////// STEP 2 DOCUMENTOS DE SOPORTE //////////////////////////////////
 

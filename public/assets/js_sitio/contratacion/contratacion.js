@@ -181,6 +181,13 @@ $(document).ready(function() {
         $("#steps_menu_tab1").click();
 
 
+        $("#BAJAS_COLABORADOR").css("display", "none");
+        $("#BAJAS_COLABORADOR").html(`
+            <h1>BAJAS DEL COLABORADOR</h1>
+        `);
+
+
+
     });
 });
 
@@ -414,6 +421,91 @@ function cargarTablaContratacionInactivo() {
     });
 }
 
+// $(document).on('change', '.ACTIVAR', function () {
+//     var checkbox = $(this); 
+//     var row = checkbox.closest('tr'); 
+//     var data = Tablacontratacion1.row(row).data(); 
+//     var id = checkbox.data('id'); 
+//     var estadoAnterior = checkbox.prop('checked');
+
+//     if (!id || !data) {
+//         Swal.fire({
+//             icon: 'error',
+//             title: 'Error',
+//             text: 'No se pudo obtener la información del colaborador',
+//             timer: 2000,
+//             timerProgressBar: true
+//         });
+//         return;
+//     }
+
+//     var nombreColaborador = `${data.NOMBRE_COLABORADOR} ${data.PRIMER_APELLIDO} ${data.SEGUNDO_APELLIDO}`;
+
+//     var accion = "activar";
+//     var url = '/activarColaborador/' + id;
+
+//     Swal.fire({
+//         title: `Confirme para ${accion} al colaborador`,
+//         text: `Está a punto de activar a ${nombreColaborador}. ¿Desea continuar?`,
+//         icon: "warning",
+//         showCancelButton: true,
+//         confirmButtonText: 'Sí, confirmar',
+//         cancelButtonText: 'Cancelar'
+//     }).then((result) => {
+//         if (result.isConfirmed) {
+//             $.ajax({
+//                 type: "POST",
+//                 url: url,
+//                 dataType: "json",
+//                 headers: {
+//                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//                 },
+//                 success: function (response) {
+//                     if (response.status === "success") {
+//                         if ($.fn.DataTable.isDataTable('#Tablacontratacion1')) {
+//                             Tablacontratacion1.ajax.reload(null, false);
+//                         }
+
+//                         if ($.fn.DataTable.isDataTable('#Tablacontratacion')) {
+//                             Tablacontratacion.ajax.reload(null, false);
+//                         }
+
+//                         Swal.fire({
+//                             icon: 'success',
+//                             title: 'Colaborador activado',
+//                             text: `${nombreColaborador} ha sido activado exitosamente`,
+//                             timer: 2000,
+//                             timerProgressBar: true
+//                         });
+//                     } else {
+//                         Swal.fire({
+//                             icon: response.status,
+//                             title: 'Atención',
+//                             text: response.msj,
+//                             timer: 2000,
+//                             timerProgressBar: true
+//                         });
+//                         checkbox.prop('checked', !estadoAnterior);
+//                     }
+//                 },
+//                 error: function () {
+//                     Swal.fire({
+//                         icon: 'error',
+//                         title: 'Error',
+//                         text: 'No se pudo completar la acción',
+//                         timer: 2000,
+//                         timerProgressBar: true
+//                     });
+//                     checkbox.prop('checked', !estadoAnterior);
+//                 }
+//             });
+//         } else {
+//             checkbox.prop('checked', !estadoAnterior);
+//         }
+//     });
+// });
+
+
 $(document).on('change', '.ACTIVAR', function () {
     var checkbox = $(this); 
     var row = checkbox.closest('tr'); 
@@ -433,36 +525,64 @@ $(document).on('change', '.ACTIVAR', function () {
     }
 
     var nombreColaborador = `${data.NOMBRE_COLABORADOR} ${data.PRIMER_APELLIDO} ${data.SEGUNDO_APELLIDO}`;
-
-    var accion = "activar";
-    var url = '/activarColaborador/' + id;
+    var curp = data.CURP;
 
     Swal.fire({
-        title: `Confirme para ${accion} al colaborador`,
-        text: `Está a punto de activar a ${nombreColaborador}. ¿Desea continuar?`,
+        title: `Confirme para activar al colaborador`,
+        html: `
+            <p>Está a punto de activar a ${nombreColaborador}. Por favor, ingrese la fecha de reingreso:</p>
+            <div class="input-group">
+                <input type="text" id="FECHA_REINGRESO" class="form-control mydatepicker" placeholder="aaaa-mm-dd">
+                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+            </div>
+        `,
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: 'Sí, confirmar',
-        cancelButtonText: 'Cancelar'
+        cancelButtonText: 'Cancelar',
+        didOpen: () => {
+            $('.mydatepicker').datepicker({
+                format: 'yyyy-mm-dd', 
+                autoclose: true,     
+                todayHighlight: true,
+                language: 'es' 
+
+            });
+        },
+        preConfirm: () => {
+            const fechaReingreso = document.getElementById('FECHA_REINGRESO').value;
+            if (!fechaReingreso) {
+                Swal.showValidationMessage('Debe ingresar una fecha de reingreso válida');
+                return false;
+            }
+            return fechaReingreso;
+        }
     }).then((result) => {
         if (result.isConfirmed) {
+            const fechaReingreso = result.value;
             $.ajax({
                 type: "POST",
-                url: url,
+                url: '/activarColaborador/' + id,
+                data: {
+                    fechaReingreso: fechaReingreso,
+                    curp: curp
+                },
                 dataType: "json",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function (response) {
                     if (response.status === "success") {
+
+
                         if ($.fn.DataTable.isDataTable('#Tablacontratacion1')) {
                             Tablacontratacion1.ajax.reload(null, false);
-                        }
-
+                            }
+                            
                         if ($.fn.DataTable.isDataTable('#Tablacontratacion')) {
                             Tablacontratacion.ajax.reload(null, false);
                         }
-
+                            
                         Swal.fire({
                             icon: 'success',
                             title: 'Colaborador activado',
@@ -497,6 +617,9 @@ $(document).on('change', '.ACTIVAR', function () {
         }
     });
 });
+
+
+
 
 $('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
     var tr = $(this).closest('tr');
@@ -631,6 +754,9 @@ $('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
     $(".listadeBeneficiario").empty();
     obtenerDatosBeneficiarios(row);
 
+    cargarBajasColaborador();
+
+
     $("#step1").click();
 
     $(".div_trabajador_nombre").html(row.data().NOMBRE_COLABORADOR + ' ' + row.data().PRIMER_APELLIDO + ' ' + row.data().SEGUNDO_APELLIDO);
@@ -730,6 +856,7 @@ $("#guardarDatosGenerales").click(function (e) {
                     ID_FORMULARIO_CONTRATACION = data.contrato.ID_FORMULARIO_CONTRATACION;
                     $('#step2, #step3, #step4,#step5').css("display", "flex");
                    
+                     cargarBajasColaborador();
 
                     alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
                     Tablacontratacion.ajax.reload();
@@ -900,6 +1027,10 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
 
     $(".listadeBeneficiario").empty();
     obtenerDatosBeneficiarios(row);
+
+
+    cargarBajasColaborador();
+
 
     $("#step1").click();
 
@@ -1099,6 +1230,44 @@ function obtenerDatosBeneficiarios(data) {
     validarPorcentajeBeneficiarios();
 }
 
+
+
+function cargarBajasColaborador() {
+    const container = document.getElementById('BAJAS_COLABORADOR');
+    
+    // Limpiar el contenido del contenedor antes de generar una nueva tabla
+    container.innerHTML = `
+        <h1>BAJAS DEL COLABORADOR</h1>
+    `;
+
+    fetch(`/obtenerbajasalta`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ curp: curpSeleccionada }) 
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Crear la tabla
+        let tabla = '<table class="table table-bordered">';
+        tabla += '<thead><tr><th>Tipo</th><th>Fecha</th></tr></thead>';
+        tabla += '<tbody>';
+
+        data.forEach(registro => {
+            tabla += `<tr><td>${registro.tipo}</td><td>${registro.fecha}</td></tr>`;
+        });
+
+        tabla += '</tbody></table>';
+
+        // Agregar la tabla al contenedor
+        container.innerHTML += tabla;
+    })
+    .catch(error => {
+        console.error('Error al obtener las bajas del colaborador:', error);
+    });
+}
 
 
 

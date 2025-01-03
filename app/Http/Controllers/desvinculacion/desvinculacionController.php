@@ -21,7 +21,9 @@ class desvinculacionController extends Controller
     public function index()
     {
 
-        $contratacion = contratacionModel::all();
+
+        $contratacion = contratacionModel::where('ACTIVO', 1)->get();
+
 
         return view('RH.desvinculacion.desvinculacion', compact('contratacion'));
     }

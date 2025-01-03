@@ -351,6 +351,7 @@ Route::get('/Tablapruebaconocimiento', [catalogopruebasController::class, 'Tabla
 Route::get('/Pendiente-Contratar', function () {return view('RH.contratacion.pendientecontratar');});
 
 Route::get('/Tablapendientecontratacion', [pendientecontratarController::class, 'Tablapendientecontratacion']);
+Route::post('/mandarcontratacion', [pendientecontratarController::class, 'mandarcontratacion']);
 
 
 
@@ -359,6 +360,9 @@ Route::get('/Tablapendientecontratacion', [pendientecontratarController::class, 
 Route::get('/Contratación', [contratacionController::class, 'index']);
 
 Route::post('/contratoSave', [contratacionController::class, 'store']);
+
+Route::post('/obtenerbajasalta', [contratacionController::class, 'obtenerbajasalta']);
+
 Route::get('/Tablacontratacion', [contratacionController::class, 'Tablacontratacion']);
 Route::get('/Tablacontratacion1', [contratacionController::class, 'Tablacontratacion1']);
 Route::post('/activarColaborador/{id}', [contratacionController::class, 'activarColaborador']);

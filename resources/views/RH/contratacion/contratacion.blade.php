@@ -619,7 +619,20 @@
                        
                          </div>
                     </form>
-                </div>
+
+
+
+
+                        <div class="card-body" id="BAJAS_COLABORADOR" style="display: block">
+
+                            <h1>BAJAS DEL COLABORADOR </h1>
+
+
+                        </div>
+
+
+
+                </div> {{--  FINALIZA EL TAB DE EXPEDIENTE COLABORADOR --}}
                     
                 
 

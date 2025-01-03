@@ -65,6 +65,7 @@ var Tablapendientecontratacion = $("#Tablapendientecontratacion").DataTable({
                 return row.NOMBRE_PC + ' ' + row.PRIMER_APELLIDO_PC + ' ' + row.SEGUNDO_APELLIDO_PC;
             }
         },
+        { data: 'categoria_nombre' },
         
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_CONTRATACION' }
@@ -72,8 +73,9 @@ var Tablapendientecontratacion = $("#Tablapendientecontratacion").DataTable({
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'Nombre completo', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'Visualizar', className: 'all text-center' },
-        { targets: 3, title: 'Enviar', className: 'all text-center' }
+        { targets: 2, title: 'Nombre de la vacante', className: 'all text-center nombre-column' },
+        { targets: 3, title: 'Visualizar', className: 'all text-center' },
+        { targets: 4, title: 'Enviar a contratación', className: 'all text-center' }
 
     ]
 });
@@ -88,7 +90,7 @@ $(document).ready(function() {
 
         
 
-    $('#miModal_PENDIENTE .modal-title').html(row.data().NOMBRE_PC);
+    $('#miModal_PENDIENTE .modal-title').html(row.data().NOMBRE_PC+ ' ' + row.data().PRIMER_APELLIDO_PC + ' ' +  row.data().SEGUNDO_APELLIDO_PC);
 
         hacerSoloLectura(row.data(), '#miModal_PENDIENTE');
 
@@ -98,5 +100,91 @@ $(document).ready(function() {
 
     $('#miModal_PENDIENTE').on('hidden.bs.modal', function () {
         resetFormulario('#miModal_PENDIENTE');
+    });
+});
+
+
+
+
+$(document).on('click', '.GUARDAR', function () {
+    const curp = $(this).data('curp');
+    const nombre = $(this).data('nombre');
+    const primerApellido = $(this).data('primer-apellido');
+    const segundoApellido = $(this).data('segundo-apellido');
+    const dia = $(this).data('dia');
+    const mes = $(this).data('mes');
+    const anio = $(this).data('anio');
+
+    Swal.fire({
+        title: 'Fecha de ingreso requerida',
+        html: `
+            <div class="row mb-3">
+                <div class="col-12">
+                    <label>Fecha ingreso *</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INGRESO" name="FECHA_INGRESO" required>
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                    </div>
+                </div>
+            </div>
+        `,
+        showCancelButton: true,
+        confirmButtonText: 'Enviar',
+        cancelButtonText: 'Cancelar',
+        didOpen: () => {
+            // Inicializar la librería en el input
+            $('.mydatepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true,
+                language: 'es' 
+
+            });
+        },
+        preConfirm: () => {
+            const fechaIngreso = document.getElementById('FECHA_INGRESO').value;
+            if (!fechaIngreso) {
+                Swal.showValidationMessage('Por favor, ingrese una fecha válida.');
+            }
+            return fechaIngreso;
+        },
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const fechaIngreso = result.value;
+
+            $.ajax({
+                url: '/mandarcontratacion',
+                method: 'POST',
+                data: {
+                    CURP: curp,
+                    NOMBRE_PC: nombre,
+                    PRIMER_APELLIDO_PC: primerApellido,
+                    SEGUNDO_APELLIDO_PC: segundoApellido,
+                    DIA_FECHA_PC: dia,
+                    MES_FECHA_PC: mes,
+                    ANIO_FECHA_PC: anio,
+                    FECHA_INGRESO: fechaIngreso, // Enviar la fecha de ingreso
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                },
+                success: function (response) {
+                    Swal.fire({
+                        title: '¡Éxito!',
+                        text: response.message,
+                        icon: 'success',
+                        confirmButtonText: 'Aceptar',
+                    }).then(() => {
+                        location.reload();
+                    });
+                },
+                error: function (xhr) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: xhr.responseJSON?.message || 'Ocurrió un error inesperado.',
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar',
+                    });
+                },
+            });
+        }
     });
 });
