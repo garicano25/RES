@@ -868,7 +868,7 @@
                                       <div class="row">
                                           <div class="col-8">
                                               <div class="form-group">
-                                                  <label>Técnica básica</label>
+                                                  <label>Medio superior</label>
                                                   <select class="form-control" id="TECNICA_PPT" name="TECNICA_PPT">
                                                       <option value="0" selected disabled>Seleccione una opción</option>
                                                       <option value="Incompleta">Incompleta</option>
