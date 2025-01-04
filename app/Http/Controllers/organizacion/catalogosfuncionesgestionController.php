@@ -47,56 +47,110 @@ class catalogosfuncionesgestionController extends Controller
 
 
 
+// public function store(Request $request)
+// {
+
+//     try {
+//         switch (intval($request->api)) {
+//             case 1:
+
+                
+//                 if ($request->ID_CATALOGO_FUNCIONESGESTION == 0) {
+
+//                     DB::statement('ALTER TABLE catalogo_funcionesgestiones AUTO_INCREMENT=1;');
+//                     $gestiones = catalogofuncionesgestionModel::create($request->all());
+//                 } else { 
+
+//                     if (isset($request->ELIMINAR)) {
+//                         if ($request->ELIMINAR == 1) {
+//                             $gestiones = catalogofuncionesgestionModel::where('ID_CATALOGO_FUNCIONESGESTION', $request['ID_CATALOGO_FUNCIONESGESTION'])->update(['ACTIVO' => 0]);
+//                             $response['code'] = 1;
+//                             $response['gestion'] = 'Desactivada';
+//                         } else {
+//                             $gestiones = catalogofuncionesgestionModel::where('ID_CATALOGO_FUNCIONESGESTION', $request['ID_CATALOGO_FUNCIONESGESTION'])->update(['ACTIVO' => 1]);
+//                             $response['code'] = 1;
+//                             $response['gestion'] = 'Activada';
+//                         }
+//                     } else {
+//                         $gestiones = catalogofuncionesgestionModel::find($request->ID_CATALOGO_FUNCIONESGESTION);
+//                         $gestiones->update($request->all());
+//                         $response['code'] = 1;
+//                         $response['gestion'] = 'Actualizada';
+//                     }
+//                     return response()->json($response);
+//                 }
+
+//                 $response['code']  = 1;
+//                 $response['gestion']  = $gestiones;
+//                 return response()->json($response);
+
+//                 break;
+
+//             default:
+
+//                 $response['code']  = 1;
+//                 $response['msj']  = 'Api no encontrada';
+//                 return response()->json($response);
+//         }
+//     } catch (Exception $e) {
+
+//         return response()->json('Error al guardar las funciones');
+//     }
+// }
+
+
+
 public function store(Request $request)
 {
-
     try {
         switch (intval($request->api)) {
             case 1:
+                // Preparar los datos de los checkboxes
+                $data = $this->prepareCheckboxData($request->all());
 
-                
                 if ($request->ID_CATALOGO_FUNCIONESGESTION == 0) {
-
+                    // Crear nuevo registro
                     DB::statement('ALTER TABLE catalogo_funcionesgestiones AUTO_INCREMENT=1;');
-                    $gestiones = catalogofuncionesgestionModel::create($request->all());
-                } else { 
-
-                    if (isset($request->ELIMINAR)) {
-                        if ($request->ELIMINAR == 1) {
-                            $gestiones = catalogofuncionesgestionModel::where('ID_CATALOGO_FUNCIONESGESTION', $request['ID_CATALOGO_FUNCIONESGESTION'])->update(['ACTIVO' => 0]);
-                            $response['code'] = 1;
-                            $response['gestion'] = 'Desactivada';
-                        } else {
-                            $gestiones = catalogofuncionesgestionModel::where('ID_CATALOGO_FUNCIONESGESTION', $request['ID_CATALOGO_FUNCIONESGESTION'])->update(['ACTIVO' => 1]);
-                            $response['code'] = 1;
-                            $response['gestion'] = 'Activada';
-                        }
-                    } else {
-                        $gestiones = catalogofuncionesgestionModel::find($request->ID_CATALOGO_FUNCIONESGESTION);
-                        $gestiones->update($request->all());
-                        $response['code'] = 1;
-                        $response['gestion'] = 'Actualizada';
+                    $gestiones = catalogofuncionesgestionModel::create($data);
+                } else {
+                    // Editar registro existente
+                    $gestiones = catalogofuncionesgestionModel::find($request->ID_CATALOGO_FUNCIONESGESTION);
+                    if ($gestiones) {
+                        $gestiones->update($data);
                     }
+                    $response['code'] = 1;
+                    $response['gestion'] = 'Actualizada';
                     return response()->json($response);
                 }
+                
 
-                $response['code']  = 1;
-                $response['gestion']  = $gestiones;
+                $response['code'] = 1;
+                $response['gestion'] = $gestiones;
                 return response()->json($response);
 
-                break;
-
             default:
-
-                $response['code']  = 1;
-                $response['msj']  = 'Api no encontrada';
+                $response['code'] = 0;
+                $response['msj'] = 'Api no encontrada';
                 return response()->json($response);
         }
     } catch (Exception $e) {
-
-        return response()->json('Error al guardar las funciones');
+        return response()->json(['code' => 0, 'error' => 'Error al guardar las funciones']);
     }
 }
+
+// Función para manejar checkboxes desmarcados
+private function prepareCheckboxData(array $data)
+{
+    $checkboxes = ['DIRECTOR_GESTION', 'LIDER_GESTION', 'COLABORADOR_GESTION', 'TODO_GESTION'];
+
+    foreach ($checkboxes as $checkbox) {
+        // Asegurar que los checkboxes tengan un valor válido o null
+        $data[$checkbox] = $data[$checkbox] ?? null;
+    }
+
+    return $data;
+}
+
 
 }
 

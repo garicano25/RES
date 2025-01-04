@@ -413,7 +413,7 @@
 @endif
 
 @if(request()->is('Funcionesgestión'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionesgestion.js?v=2.0"></script>
+<script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionesgestion.js?v=3.0"></script>
 @endif
 
 @if(request()->is('RelacionesExternas'))

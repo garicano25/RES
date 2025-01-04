@@ -53,7 +53,7 @@
                                     <input class="form-check-input" type="checkbox" name="TODO_GESTION" id="todo" value="Todo">
                                 </div>
                                 
-                        </div>
+                            </div>
                         
                         <div class="row mb-3">
                             <div class="col-12 mt-3 ">

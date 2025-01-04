@@ -17,95 +17,177 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 
 
 
-$("#guardarFormFuncionesgestion").click(function (e) {
-    e.preventDefault();
+// $("#guardarFormFuncionesgestion").click(function (e) {
+//     e.preventDefault();
 
     
-    formularioValido = validarFormulario($('#formularioFUNCIONESGESTION'))
+//     formularioValido = validarFormulario($('#formularioFUNCIONESGESTION'))
 
-    if (formularioValido) {
+//     if (formularioValido) {
 
-    if (ID_CATALOGO_FUNCIONESGESTION == 0) {
+//     if (ID_CATALOGO_FUNCIONESGESTION == 0) {
         
-        alertMensajeConfirm({
-            title: "¿Desea guardar la información?",
-            text: "Al guardarla, se podra usar",
-            icon: "question",
-        },async function () { 
+//         alertMensajeConfirm({
+//             title: "¿Desea guardar la información?",
+//             text: "Al guardarla, se podra usar",
+//             icon: "question",
+//         },async function () { 
 
-            await loaderbtn('guardarFormFuncionesgestion')
-            await ajaxAwaitFormData({ api: 1, ID_CATALOGO_FUNCIONESGESTION: ID_CATALOGO_FUNCIONESGESTION }, 'GestionSave', 'formularioFUNCIONESGESTION', 'guardarFormFuncionesgestion', { callbackAfter: true, callbackBefore: true }, () => {
+//             await loaderbtn('guardarFormFuncionesgestion')
+//             await ajaxAwaitFormData({ api: 1, ID_CATALOGO_FUNCIONESGESTION: ID_CATALOGO_FUNCIONESGESTION }, 'GestionSave', 'formularioFUNCIONESGESTION', 'guardarFormFuncionesgestion', { callbackAfter: true, callbackBefore: true }, () => {
         
                
 
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                })
+//                 Swal.fire({
+//                     icon: 'info',
+//                     title: 'Espere un momento',
+//                     text: 'Estamos guardando la información',
+//                     showConfirmButton: false
+//                 })
 
-                $('.swal2-popup').addClass('ld ld-breath')
+//                 $('.swal2-popup').addClass('ld ld-breath')
         
                 
-            }, function (data) {
+//             }, function (data) {
                     
 
-                ID_CATALOGO_FUNCIONESGESTION = data.gestion.ID_CATALOGO_FUNCIONESGESTION
-                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
-                     $('#miModal_FUNCIONESGESTION').modal('hide')
-                    document.getElementById('formularioFUNCIONESGESTION').reset();
-                    Tablafuncionesgestion.ajax.reload()
+//                 ID_CATALOGO_FUNCIONESGESTION = data.gestion.ID_CATALOGO_FUNCIONESGESTION
+//                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+//                      $('#miModal_FUNCIONESGESTION').modal('hide')
+//                     document.getElementById('formularioFUNCIONESGESTION').reset();
+//                     Tablafuncionesgestion.ajax.reload()
 
                          
                 
-            })
+//             })
                         
             
-        }, 1)
+//         }, 1)
         
-    } else {
-            alertMensajeConfirm({
-            title: "¿Desea editar la información de este formulario?",
-            text: "Al guardarla, se podra usar",
-            icon: "question",
-        },async function () { 
+//     } else {
+//             alertMensajeConfirm({
+//             title: "¿Desea editar la información de este formulario?",
+//             text: "Al guardarla, se podra usar",
+//             icon: "question",
+//         },async function () { 
 
-            await loaderbtn('guardarFormFuncionesgestion')
-            await ajaxAwaitFormData({ api: 1, ID_CATALOGO_FUNCIONESGESTION: ID_CATALOGO_FUNCIONESGESTION }, 'GestionSave', 'formularioFUNCIONESGESTION', 'guardarFormFuncionesgestion', { callbackAfter: true, callbackBefore: true }, () => {
+//             await loaderbtn('guardarFormFuncionesgestion')
+//             await ajaxAwaitFormData({ api: 1, ID_CATALOGO_FUNCIONESGESTION: ID_CATALOGO_FUNCIONESGESTION }, 'GestionSave', 'formularioFUNCIONESGESTION', 'guardarFormFuncionesgestion', { callbackAfter: true, callbackBefore: true }, () => {
         
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                })
+//                 Swal.fire({
+//                     icon: 'info',
+//                     title: 'Espere un momento',
+//                     text: 'Estamos guardando la información',
+//                     showConfirmButton: false
+//                 })
 
-                $('.swal2-popup').addClass('ld ld-breath')
+//                 $('.swal2-popup').addClass('ld ld-breath')
         
                 
-            }, function (data) {
+//             }, function (data) {
                     
-                setTimeout(() => {
+//                 setTimeout(() => {
 
                     
-                    ID_CATALOGO_FUNCIONESGESTION = data.gestion.ID_CATALOGO_FUNCIONESGESTION
-                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
-                     $('#miModal_FUNCIONESGESTION').modal('hide')
-                    document.getElementById('formularioFUNCIONESGESTION').reset();
-                    Tablafuncionesgestion.ajax.reload()
+//                     ID_CATALOGO_FUNCIONESGESTION = data.gestion.ID_CATALOGO_FUNCIONESGESTION
+//                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+//                      $('#miModal_FUNCIONESGESTION').modal('hide')
+//                     document.getElementById('formularioFUNCIONESGESTION').reset();
+//                     Tablafuncionesgestion.ajax.reload()
 
 
-                }, 300);  
-            })
-        }, 1)
-    }
-} else {
-    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+//                 }, 300);  
+//             })
+//         }, 1)
+//     }
+// } else {
+//     alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
 
-}
+// }
     
+// });
+
+
+
+
+$("#guardarFormFuncionesgestion").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormulario($('#formularioFUNCIONESGESTION'));
+
+    if (formularioValido) {
+        if (ID_CATALOGO_FUNCIONESGESTION == 0) {
+            alertMensajeConfirm({
+                title: "¿Desea guardar la información?",
+                text: "Al guardarla, se podrá usar",
+                icon: "question",
+            }, async function () {
+                await loaderbtn('guardarFormFuncionesgestion');
+                await ajaxAwaitFormData(
+                    { api: 1, ID_CATALOGO_FUNCIONESGESTION: ID_CATALOGO_FUNCIONESGESTION },
+                    'GestionSave',
+                    'formularioFUNCIONESGESTION',
+                    'guardarFormFuncionesgestion',
+                    { callbackAfter: true, callbackBefore: true },
+                    () => {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Espere un momento',
+                            text: 'Estamos guardando la información',
+                            showConfirmButton: false
+                        });
+                        $('.swal2-popup').addClass('ld ld-breath');
+                    },
+                    function (data) {
+                        ID_CATALOGO_FUNCIONESGESTION = data.gestion.ID_CATALOGO_FUNCIONESGESTION;
+                        alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
+                        $('#miModal_FUNCIONESGESTION').modal('hide');
+                        document.getElementById('formularioFUNCIONESGESTION').reset();
+                        Tablafuncionesgestion.ajax.reload();
+                    }
+                );
+            }, 1);
+        } else {
+            alertMensajeConfirm({
+                title: "¿Desea editar la información de este formulario?",
+                text: "Al guardarla, se podrá usar",
+                icon: "question",
+            }, async function () {
+                await loaderbtn('guardarFormFuncionesgestion');
+                await ajaxAwaitFormData(
+                    { api: 1, ID_CATALOGO_FUNCIONESGESTION: ID_CATALOGO_FUNCIONESGESTION },
+                    'GestionSave',
+                    'formularioFUNCIONESGESTION',
+                    'guardarFormFuncionesgestion',
+                    { callbackAfter: true, callbackBefore: true },
+                    () => {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Espere un momento',
+                            text: 'Estamos guardando la información',
+                            showConfirmButton: false
+                        });
+                        $('.swal2-popup').addClass('ld ld-breath');
+                    },
+                    function (data) {
+                        setTimeout(() => {
+                            ID_CATALOGO_FUNCIONESGESTION = data.gestion.ID_CATALOGO_FUNCIONESGESTION;
+                            alertMensaje('success', 'Información editada correctamente', 'Información guardada');
+                            $('#miModal_FUNCIONESGESTION').modal('hide');
+                            document.getElementById('formularioFUNCIONESGESTION').reset();
+                            Tablafuncionesgestion.ajax.reload();
+                        }, 300);
+                    }
+                );
+            }, 1);
+        }
+    } else {
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+    }
 });
+
+
+
 
 var Tablafuncionesgestion = $("#Tablafuncionesgestion").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
@@ -218,14 +300,23 @@ $(document).ready(function() {
 });
 
 
-
 $('#Tablafuncionesgestion tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablafuncionesgestion.row(tr);
     ID_CATALOGO_FUNCIONESGESTION = row.data().ID_CATALOGO_FUNCIONESGESTION;
 
+    // Llamar a la función existente para rellenar datos en el formulario
+    editarDatoTabla(row.data(), 'formularioFUNCIONESGESTION', 'miModal_FUNCIONESGESTION', 1);
 
-    editarDatoTabla(row.data(), 'formularioFUNCIONESGESTION', 'miModal_FUNCIONESGESTION',1);
+    // Ajuste específico para los checkboxes (si no está incluido en editarDatoTabla)
+    var data = row.data();
+    $('#formularioFUNCIONESGESTION').find('input[type="checkbox"]').each(function () {
+        var inputName = $(this).attr('name');
+        if (data[inputName] !== undefined) {
+            $(this).prop('checked', data[inputName] === $(this).val());
+        }
+    });
+
 });
 
 
