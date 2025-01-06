@@ -139,7 +139,10 @@ Route::get('/infoReportan/{ID}/{LIDER}', [dptController::class, 'infoReportan'])
 Route::get('/consultarfuncionescargo/{areaId}', [dptController::class, 'consultarfuncionescargo']);
 
 // REQUERIMIENTO PERSONAL 
-Route::get('/RequisiciónDePersonal', [requerimientoPersonalController::class, 'index']);
+
+Route::get('/RequisiciónDePersonal', [requerimientoPersonalController::class, 'index'])->middleware('role:Superusuario,Administrador');
+
+// Route::get('/RequisiciónDePersonal', [requerimientoPersonalController::class, 'index']);
 Route::post('/RequerimientoSave', [requerimientoPersonalController::class, 'store']);
 Route::get('/RequerimientoDelete', [requerimientoPersonalController::class, 'store']);
 Route::get('/Tablarequerimiento', [requerimientoPersonalController::class, 'Tablarequerimiento']);
