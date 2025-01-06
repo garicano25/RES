@@ -39,16 +39,17 @@ $(document).ready(function() {
 });
 
 
-
 const Modalusuario = document.getElementById('modal_usuario');
 
 Modalusuario.addEventListener('hidden.bs.modal', event => {
     ID_USUARIO = 0;
-    document.getElementById('formularioUSUARIO').reset();   
+    document.getElementById('formularioUSUARIO').reset();
+
+    const checkboxes = document.querySelectorAll('.checkbox_rol');
+    checkboxes.forEach(checkbox => {
+        checkbox.disabled = false;
+    });
 });
-
-  
-
 
 
 
@@ -143,7 +144,6 @@ $("#guardarFormUSUARIO").click(function (e) {
 });
 
 
-
 var Tablausuarios = $("#Tablausuarios").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
@@ -181,12 +181,22 @@ var Tablausuarios = $("#Tablausuarios").DataTable({
         { 
             data: null,
             render: function(data, type, row, meta) {
-                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
+                return meta.row + 1; 
             }
         },
         { data: 'EMPLEADO_NOMBRES' },
         { data: 'EMPLEADO_CORREOS' },
         { data: 'USUARIO_TIPOS' },
+        { 
+            data: 'ROLES_ASIGNADOS',
+            render: function(data, type, row) {
+                if (data && data.length > 0) {
+                    return `<ul>${data.map(role => `<li>${role}</li>`).join('')}</ul>`;
+                }
+                return 'Sin roles asignados';
+            },
+            className: 'text-left' // Alineación izquierda
+        },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' }
     ],
@@ -195,8 +205,9 @@ var Tablausuarios = $("#Tablausuarios").DataTable({
         { targets: 1, title: 'Nombre / Cargo', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Correo / Télefono', className: 'all text-center' },
         { targets: 3, title: 'Tipo usuario', className: 'all text-center' },
-        { targets: 4, title: 'Editar', className: 'all text-center' },
-        { targets: 5, title: 'Activo', className: 'all text-center' }
+        { targets: 4, title: 'Perfil de accesos', className: 'all text-left' }, // Nueva columna
+        { targets: 5, title: 'Editar', className: 'all text-center' },
+        { targets: 6, title: 'Activo', className: 'all text-center' }
     ]
 });
 
@@ -231,12 +242,44 @@ $('#Tablausuarios tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablausuarios.row(tr);
     ID_USUARIO = row.data().ID_USUARIO;
 
+    editarDatoTabla(row.data(), 'formularioUSUARIO', 'modal_usuario', 1);
 
-    editarDatoTabla(row.data(), 'formularioUSUARIO', 'modal_usuario',1 );
+    // Seleccionar roles asignados
+    const rolesAsignados = row.data().ROLES_ASIGNADOS; 
+    const checkboxes = document.querySelectorAll('.checkbox_rol');
 
+    checkboxes.forEach(checkbox => {
+        if (rolesAsignados.includes(checkbox.value)) {
+            checkbox.checked = true;
+        } else {
+            checkbox.checked = false;
+        }
+    });
 
+    // Bloquear otros roles si Superusuario o Administrador está asignado
+    if (rolesAsignados.includes('Superusuario')) {
+        checkboxes.forEach(checkbox => {
+            if (checkbox.value !== 'Superusuario') {
+                checkbox.checked = false;
+                checkbox.disabled = true; // Deshabilitar los demás
+            }
+        });
+    } else if (rolesAsignados.includes('Administrador')) {
+        checkboxes.forEach(checkbox => {
+            if (checkbox.value !== 'Administrador' && checkbox.value !== 'Superusuario') {
+                checkbox.checked = false;
+                checkbox.disabled = true; // Deshabilitar los demás excepto Superusuario
+            }
+        });
+    } else {
+        // Habilitar todos los checkboxes si ningún rol especial está seleccionado
+        checkboxes.forEach(checkbox => {
+            checkbox.disabled = false;
+        });
+    }
+
+    // Configurar la imagen del usuario si existe
     if (row.data().FOTO_USUARIO) {
-
         var archivo = row.data().FOTO_USUARIO;
         var extension = archivo.substring(archivo.lastIndexOf("."));
         var imagenUrl = '/usuariofoto/' + row.data().ID_USUARIO + extension;
@@ -245,8 +288,7 @@ $('#Tablausuarios tbody').on('click', 'td>button.EDITAR', function () {
             $('#FOTO_USUARIO').dropify().data('dropify').destroy();
             $('#FOTO_USUARIO').dropify().data('dropify').settings.defaultFile = imagenUrl;
             $('#FOTO_USUARIO').dropify().data('dropify').init();
-        }
-        else {
+        } else {
             $('#FOTO_USUARIO').attr('data-default-file', imagenUrl);
             $('#FOTO_USUARIO').dropify({
                 messages: {
@@ -269,13 +311,7 @@ $('#Tablausuarios tbody').on('click', 'td>button.EDITAR', function () {
         $('#FOTO_USUARIO').dropify().data('dropify').resetPreview();
         $('#FOTO_USUARIO').dropify().data('dropify').clearElement();
     }
-
-
-
-
-
 });
-
 
 
 
@@ -345,3 +381,33 @@ function limpiarFormularioUsuario() {
     drEvent.resetPreview();
     drEvent.clearElement();
 }
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const checkboxes = document.querySelectorAll('.checkbox_rol');
+    const superusuarioCheckbox = Array.from(checkboxes).find(cb => cb.value === 'Superusuario');
+    const administradorCheckbox = Array.from(checkboxes).find(cb => cb.value === 'Administrador');
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            if (superusuarioCheckbox.checked) {
+                checkboxes.forEach(cb => {
+                    if (cb !== superusuarioCheckbox) {
+                        cb.checked = false;
+                        cb.disabled = true;
+                    }
+                });
+            } else if (administradorCheckbox.checked) {
+                checkboxes.forEach(cb => {
+                    if (cb !== administradorCheckbox && cb !== superusuarioCheckbox) {
+                        cb.checked = false;
+                        cb.disabled = true;
+                    }
+                });
+            } else {
+                checkboxes.forEach(cb => cb.disabled = false);
+            }
+        });
+    });
+});

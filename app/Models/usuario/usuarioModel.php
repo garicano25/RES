@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\usuario\rolesModel;
 
 
 class usuarioModel extends Authenticatable
@@ -41,4 +42,39 @@ class usuarioModel extends Authenticatable
     {
         return $this->PASSWORD;
     }
+
+
+     // Relación con los roles
+     public function roles()
+     {
+         return $this->hasMany(rolesModel::class, 'USUARIO_ID', 'ID_USUARIO');
+     }
+ 
+     // Método para verificar si el usuario tiene un rol específico
+     public function hasRole($role)
+     {
+         return $this->roles()->where('NOMBRE_ROL', $role)->exists();
+     }
+ 
+     // Método para verificar si el usuario tiene alguno de los roles especificados
+     public function hasAnyRole(array $roles)
+     {
+         return $this->roles()->whereIn('NOMBRE_ROL', $roles)->exists();
+     }
+ 
+     // Método para verificar si el usuario tiene todos los roles especificados
+     public function hasAllRoles(array $roles)
+     {
+         $roleCount = $this->roles()->whereIn('NOMBRE_ROL', $roles)->count();
+         return $roleCount === count($roles);
+     }
+
+
+     public function hasRoles(array $roles)
+{
+    return $this->hasAnyRole($roles);
+}
+
+
+
 }

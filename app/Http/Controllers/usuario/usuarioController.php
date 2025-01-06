@@ -9,8 +9,10 @@ use Exception;
 use Illuminate\Support\Facades\Storage;
 use App\Models\usuario\usuarioModel;
 use Illuminate\Support\Facades\Hash;
+use App\Models\usuario\rolesModel;
 
 
+use App\Models\organizacion\catalogocategoriaModel;
 
 use DB;
 
@@ -18,45 +20,55 @@ use DB;
 class usuarioController extends Controller
 {
  
+    public function index()
+    {
+        $roles = CatalogocategoriaModel::where('ACTIVO', 1)->pluck('NOMBRE_CATEGORIA')->toArray();
 
-
-    public function Tablausuarios()
-{
-    try {
-        $tabla = usuarioModel::get();
-
-        foreach ($tabla as $value) {
-       
-
-            $value->EMPLEADO_NOMBRES= $value->EMPLEADO_NOMBRE . ' ' . $value->EMPLEADO_APELLIDOPATERNO . ' ' . $value->EMPLEADO_APELLIDOMATERNO . '<br>' . $value->EMPLEADO_CARGO;
-            $value->EMPLEADO_CORREOS= $value->EMPLEADO_CORREO . '<br>' . $value->EMPLEADO_TELEFONO;
-
-
-            if ($value->USUARIO_TIPO == 1) {
-                $value->USUARIO_TIPOS = 'Empleado';
-            }
-
-            if ($value->ACTIVO == 0) {
-                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_USUARIO . '"><span class="slider round"></span></label>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-            } else {
-                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_USUARIO . '" checked><span class="slider round"></span></label>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-            }
-        }
-
-        return response()->json([
-            'data' => $tabla,
-            'msj' => 'Información consultada correctamente'
-        ]);
-    } catch (Exception $e) {
-        return response()->json([
-            'msj' => 'Error ' . $e->getMessage(),
-            'data' => 0
-        ]);
+        array_unshift($roles, 'Superusuario', 'Administrador');
+    
+        return view('usuario.usuario', compact('roles'));
     }
-}
 
+    
+    public function Tablausuarios()
+    {
+        try {
+            // Cargar usuarios junto con los roles
+            $tabla = usuarioModel::with('roles')->get();
+    
+            foreach ($tabla as $value) {
+                // Agregar atributos personalizados
+                $value->EMPLEADO_NOMBRES = $value->EMPLEADO_NOMBRE . ' ' . $value->EMPLEADO_APELLIDOPATERNO . ' ' . $value->EMPLEADO_APELLIDOMATERNO . '<br>' . $value->EMPLEADO_CARGO;
+                $value->EMPLEADO_CORREOS = $value->EMPLEADO_CORREO . '<br>' . $value->EMPLEADO_TELEFONO;
+    
+                if ($value->USUARIO_TIPO == 1) {
+                    $value->USUARIO_TIPOS = 'Empleado';
+                }
+    
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_USUARIO . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_USUARIO . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                }
+    
+                // Añade los roles asociados al usuario
+                $value->ROLES_ASIGNADOS = $value->roles->pluck('NOMBRE_ROL'); // Devuelve un array con los nombres de los roles
+            }
+    
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
+    
 
 public function mostrarFotoUsuario($usuario_id)
 {
@@ -65,9 +77,13 @@ public function mostrarFotoUsuario($usuario_id)
 }
 
 
+
+
 public function store(Request $request)
 {
     try {
+        DB::beginTransaction(); // Iniciar una transacción para garantizar la integridad de los datos
+
         switch (intval($request->api)) {
             case 1:
                 if ($request->ID_USUARIO == 0) {
@@ -88,16 +104,29 @@ public function store(Request $request)
                         $usuarios->FOTO_USUARIO = $rutaCompleta;
                         $usuarios->save();
                     }
+
+                    // Guardar los roles seleccionados
+                    if ($request->has('NOMBRE_ROL')) {
+                        foreach ($request->NOMBRE_ROL as $rol) {
+                            asignarRolModel::create([
+                                'USUARIO_ID' => $usuarioId,
+                                'NOMBRE_ROL' => $rol,
+                                'ACTIVO' => 1
+                            ]);
+                        }
+                    }
                 } else {
                     if (isset($request->ELIMINAR)) {
                         if ($request->ELIMINAR == 1) {
                             // Desactivar usuario
                             usuarioModel::where('ID_USUARIO', $request['ID_USUARIO'])->update(['ACTIVO' => 0]);
+                            asignarRolModel::where('USUARIO_ID', $request['ID_USUARIO'])->update(['ACTIVO' => 0]);
                             $response['code'] = 1;
                             $response['usuario'] = 'Desactivada';
                         } else {
                             // Activar usuario
                             usuarioModel::where('ID_USUARIO', $request['ID_USUARIO'])->update(['ACTIVO' => 1]);
+                            asignarRolModel::where('USUARIO_ID', $request['ID_USUARIO'])->update(['ACTIVO' => 1]);
                             $response['code'] = 1;
                             $response['usuario'] = 'Activada';
                         }
@@ -128,14 +157,31 @@ public function store(Request $request)
                         $usuarios->update($request->except('FOTO_USUARIO'));
                         $usuarios->save();
 
+                        // Actualizar roles
+                        if ($request->has('NOMBRE_ROL')) {
+                            // Eliminar roles actuales
+                            rolesModel::where('USUARIO_ID', $usuarios->ID_USUARIO)->delete();
+
+                            // Guardar los nuevos roles
+                            foreach ($request->NOMBRE_ROL as $rol) {
+                                rolesModel::create([
+                                    'USUARIO_ID' => $usuarios->ID_USUARIO,
+                                    'NOMBRE_ROL' => $rol,
+                                    'ACTIVO' => 1
+                                ]);
+                            }
+                        }
+
                         $response['code'] = 1;
                         $response['usuario'] = 'Actualizada';
                     }
+                    DB::commit(); // Confirmar la transacción
                     return response()->json($response);
                 }
 
                 $response['code'] = 1;
                 $response['usuario'] = $usuarios;
+                DB::commit(); // Confirmar la transacción
                 return response()->json($response);
 
             default:
@@ -144,9 +190,11 @@ public function store(Request $request)
                 return response()->json($response);
         }
     } catch (Exception $e) {
+        DB::rollBack(); // Revertir la transacción en caso de error
         return response()->json('Error al guardar la jerarquía: ' . $e->getMessage());
     }
 }
+
 
 
 
@@ -176,11 +224,13 @@ public function store(Request $request)
 //                 } else {
 //                     if (isset($request->ELIMINAR)) {
 //                         if ($request->ELIMINAR == 1) {
-//                             $usuarios = usuarioModel::where('ID_USUARIO', $request['ID_USUARIO'])->update(['ACTIVO' => 0]);
+//                             // Desactivar usuario
+//                             usuarioModel::where('ID_USUARIO', $request['ID_USUARIO'])->update(['ACTIVO' => 0]);
 //                             $response['code'] = 1;
 //                             $response['usuario'] = 'Desactivada';
 //                         } else {
-//                             $usuarios = usuarioModel::where('ID_USUARIO', $request['ID_USUARIO'])->update(['ACTIVO' => 1]);
+//                             // Activar usuario
+//                             usuarioModel::where('ID_USUARIO', $request['ID_USUARIO'])->update(['ACTIVO' => 1]);
 //                             $response['code'] = 1;
 //                             $response['usuario'] = 'Activada';
 //                         }
@@ -192,19 +242,25 @@ public function store(Request $request)
 //                         }
 
 //                         if ($request->hasFile('FOTO_USUARIO')) {
+//                             // Eliminar la foto anterior si existe
 //                             if ($usuarios->FOTO_USUARIO && Storage::exists($usuarios->FOTO_USUARIO)) {
 //                                 Storage::delete($usuarios->FOTO_USUARIO);
 //                             }
+
 //                             // Obtener la nueva imagen
 //                             $imagen = $request->file('FOTO_USUARIO');
 //                             $rutaCarpetaUsuario = 'usuarios/' . $usuarios->ID_USUARIO;
 //                             $nombreArchivo = 'foto_usuario.' . $imagen->getClientOriginalExtension();
 //                             $rutaCompleta = $imagen->storeAs($rutaCarpetaUsuario, $nombreArchivo);
-//                             $request->merge(['FOTO_USUARIO' => $rutaCompleta]);
+
+//                             // Actualizar la ruta de la nueva imagen en el modelo
+//                             $usuarios->FOTO_USUARIO = $rutaCompleta;
 //                         }
 
-//                         // Actualizar los datos del usuario
-//                         $usuarios->update($request->all());
+//                         // Actualizar otros datos del usuario
+//                         $usuarios->update($request->except('FOTO_USUARIO'));
+//                         $usuarios->save();
+
 //                         $response['code'] = 1;
 //                         $response['usuario'] = 'Actualizada';
 //                     }

@@ -84,7 +84,10 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 //==============================================  USUARIO  ============================================== 
 
 
-Route::get('/usuario', function () {return view('usuario.usuario');});
+Route::get('/usuario', [usuarioController::class, 'index'])->middleware('role:Superusuario,Administrador');
+
+
+// Route::get('/usuario', [usuarioController::class, 'index']);
 
 Route::post('/usuarioSave', [usuarioController::class, 'store']);
 Route::get('/Tablausuarios', [usuarioController::class, 'Tablausuarios']);
@@ -288,8 +291,9 @@ Route::post('/actualizarDisponibilidad', [VacantesactivasController::class, 'act
 
 
 //==============================================  SELECCION  ============================================== 
+Route::get('/Selección', [seleccionController::class, 'index'])->middleware('role:Superusuario,Administrador');
 
-Route::get('/Selección', [seleccionController::class, 'index']);
+// Route::get('/Selección', [seleccionController::class, 'index']);
 // Route::get('/Selección', function () {return view('RH.Selección.seleccion');});
 Route::get('/Tablaseleccion', [seleccionController::class, 'Tablaseleccion']);
 Route::post('/SeleccionSave', [seleccionController::class, 'store']);

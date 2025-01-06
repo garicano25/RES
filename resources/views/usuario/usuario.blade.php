@@ -193,7 +193,63 @@
                             </div>
                             
                             
-                        </div>
+                         </div> {{-- fin del col 8 --}}
+
+                         <div class="col-4">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label>[roles] *</label>
+                                    <div class="card">
+                                        <div class="card-body" style="height: 572px; overflow-x: hidden; overflow-y: auto;">
+                                            <style type="text/css">
+                                                .tooltip-inner {
+                                                    max-width: 320px;
+                                                    padding: 6px 8px;
+                                                    color: #fff;
+                                                    text-align: justify;
+                                                    background-color: #000;
+                                                    border-radius: 0.25rem;
+                                                    line-height: 16px;
+                                                }
+                        
+                                                .switch-container {
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: flex-start;
+                                                    margin-bottom: -5px;
+                                                }
+                        
+                                                .switch-container .form-check {
+                                                    margin-right: 10px;
+                                                }
+                        
+                                                .demo-switch-title {
+                                                    font-size: 14px;
+                                                    color: #444;
+                                                }
+                                            </style>
+                                                <div class="row" id="rol_lista">
+                                                    @foreach ($roles as $rol)
+                                                    <div class="col-12 switch-container">
+                                                        <div class="form-check form-switch" style="margin-bottom: 10px;">
+                                                            <input class="form-check-input checkbox_rol" type="checkbox" id="role_{{ $loop->index }}" name="NOMBRE_ROL[]" value="{{ $rol }}">
+                                                            <label class="form-check-label demo-switch-title" for="role_{{ $loop->index }}" style="margin-left: 10px;">{{ $rol }}</label>
+                                                        </div>
+                                                    </div>
+                                                    @endforeach
+                                                </div>
+                                                
+                                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> {{-- fin del col 4 --}}
+                        
+                        
+                        
+
+
                     </div>
                 </div>
                 <div class="modal-footer">

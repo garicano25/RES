@@ -166,8 +166,13 @@
                         <li><a class="dropdown-item" href="{{url('/PPT')}}">PPT</a></li>
                         <hr class="dropdown-divider">
                         <li><a class="dropdown-item" href="{{url('/DPT')}}">DPT</a></li>
+
+
+                        @if(auth()->user()->hasRole('Superusuario','Administrador'))
                         <hr class="dropdown-divider">
                         <li><a class="dropdown-item" href="{{url('/RequisiciónDePersonal')}}">Requisición de personal </a></li>
+                        @endif
+
                     </ul>
                 </li>
 
@@ -182,12 +187,16 @@
                     </ul>
                 </li>
 
+                @if(auth()->user()->hasRole('Superusuario'))
+
+
                 <li class="nav-item dropdown" style="margin-left: 8px;">
                     <a class="nav-link BOTON" href="{{ url('/Selección') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                         <i class="bi bi-person-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Selección</span><span class="d-none d-lg-inline">Selección</span>
                     </a>
                 </li>
 
+                    @endif
 
                 <li class="nav-item dropdown" style="margin-left: 8px;">
                     <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -289,15 +298,40 @@
                         </ul>
                     </li>
                 </ul>
+                @if(auth()->user()->hasRole('Superusuario','Administrador'))
                 <li class="nav-item dropdown" style="margin-left: 8px;">
                     <a class="nav-link BOTON" href="{{ url('/usuario') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                         <i class="bi bi-people-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Usuarios</span><span class="d-none d-lg-inline">Usuarios</span>
                     </a>
                 </li>
+                @endif
             </ul>
         </div>
     </div>
 </nav>
+
+
+@if(session('error'))
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+                            Swal.fire({
+                    icon: 'error',
+                    title: 'Acceso Denegado',
+                    text: 'No tienes acceso a esta sección.',
+                    confirmButtonText: 'Entendido',
+                    background: '#f8d7da', // Fondo rojo claro
+                    customClass: {
+                        popup: 'swal-wide' // Clase personalizada para ampliar la alerta
+                    }
+                });
+
+        });
+    </script>
+@endif
+
+
+
+
 
 <!-- Modal de carga -->
 <style>
@@ -484,7 +518,7 @@
 
 
 @if(request()->is('usuario'))
-<script src="/assets/js_sitio/usuario/usuario.js?v=1.0"></script>
+<script src="/assets/js_sitio/usuario/usuario.js?v=2.0"></script>
 @endif
 
 @if(request()->is('Contratación'))
