@@ -44,6 +44,26 @@
     margin-bottom: 15px;
 }
 
+
+#Tablausuarios thead th:nth-child(6) {
+    text-align: center;
+}
+
+#Tablausuarios tbody td:nth-child(6) {
+    text-align: left !important;
+}
+
+#Tablausuarios ul {
+    padding-left: 20px; 
+    margin: 0;
+}
+
+#Tablausuarios ul li {
+    margin: 0;
+    padding: 0;
+}
+
+
 </style>
 
 <div class="contenedor-contenido">

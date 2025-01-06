@@ -168,15 +168,19 @@ var Tablausuarios = $("#Tablausuarios").DataTable({
             mostrarCarga();
         },
         complete: function () {
-            Tablausuarios.columns.adjust().draw();
             ocultarCarga();
+
+            // Esperar a que todas las imágenes carguen y luego ajustar las columnas
+            $('#Tablausuarios tbody img').on('load', function () {
+                Tablausuarios.columns.adjust().draw();
+            });
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alertErrorAJAX(jqXHR, textStatus, errorThrown);
         },
         dataSrc: 'data'
     },
-    order: [[0, 'asc']], 
+    order: [[0, 'asc']],
     columns: [
         { 
             data: null,
@@ -184,32 +188,47 @@ var Tablausuarios = $("#Tablausuarios").DataTable({
                 return meta.row + 1; 
             }
         },
+        { 
+            data: 'FOTO_USUARIO_HTML',
+            orderable: false,
+            searchable: false,
+            className: 'text-center'
+        },
         { data: 'EMPLEADO_NOMBRES' },
         { data: 'EMPLEADO_CORREOS' },
         { data: 'USUARIO_TIPOS' },
-        { 
+        {
             data: 'ROLES_ASIGNADOS',
             render: function(data, type, row) {
                 if (data && data.length > 0) {
                     return `<ul>${data.map(role => `<li>${role}</li>`).join('')}</ul>`;
                 }
                 return 'Sin roles asignados';
-            },
-            className: 'text-left' // Alineación izquierda
+            }
         },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' }
     ],
-    columnDefs: [
-        { targets: 0, title: '#', className: 'all  text-center' },
-        { targets: 1, title: 'Nombre / Cargo', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'Correo / Télefono', className: 'all text-center' },
-        { targets: 3, title: 'Tipo usuario', className: 'all text-center' },
-        { targets: 4, title: 'Perfil de accesos', className: 'all text-left' }, // Nueva columna
-        { targets: 5, title: 'Editar', className: 'all text-center' },
-        { targets: 6, title: 'Activo', className: 'all text-center' }
-    ]
+   columnDefs: [
+    { targets: 0, title: '#', className: 'all text-center' },
+    { targets: 1, title: 'Foto', className: 'all text-center' },
+    { targets: 2, title: 'Nombre / Cargo', className: 'all text-center' },
+    { targets: 3, title: 'Correo / Teléfono', className: 'all text-center' },
+    { targets: 4, title: 'Tipo usuario', className: 'all text-center' },
+    {
+        targets: 5, // Índice de la columna "Perfil de accesos"
+        title: 'Perfil de accesos',
+        className: 'all text-center', // Centrar el título
+        createdCell: function (td, cellData, rowData, row, col) {
+            $(td).css('text-align', 'left'); // Alinear el contenido a la izquierda
+        }
+    },
+    { targets: 6, title: 'Editar', className: 'all text-center' },
+    { targets: 7, title: 'Activo', className: 'all text-center' }
+]
+
 });
+
 
 
 

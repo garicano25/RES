@@ -44,7 +44,9 @@ class usuarioController extends Controller
                 if ($value->USUARIO_TIPO == 1) {
                     $value->USUARIO_TIPOS = 'Empleado';
                 }
-    
+                
+                $value->FOTO_USUARIO_HTML = '<img src="/usuariofoto/' . $value->ID_USUARIO . '" alt="Foto de usuario" class="img-fluid" width="50" height="60">';
+
                 if ($value->ACTIVO == 0) {
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_USUARIO . '"><span class="slider round"></span></label>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
@@ -108,7 +110,7 @@ public function store(Request $request)
                     // Guardar los roles seleccionados
                     if ($request->has('NOMBRE_ROL')) {
                         foreach ($request->NOMBRE_ROL as $rol) {
-                            asignarRolModel::create([
+                            rolesModel::create([
                                 'USUARIO_ID' => $usuarioId,
                                 'NOMBRE_ROL' => $rol,
                                 'ACTIVO' => 1
@@ -120,13 +122,13 @@ public function store(Request $request)
                         if ($request->ELIMINAR == 1) {
                             // Desactivar usuario
                             usuarioModel::where('ID_USUARIO', $request['ID_USUARIO'])->update(['ACTIVO' => 0]);
-                            asignarRolModel::where('USUARIO_ID', $request['ID_USUARIO'])->update(['ACTIVO' => 0]);
+                            rolesModel::where('USUARIO_ID', $request['ID_USUARIO'])->update(['ACTIVO' => 0]);
                             $response['code'] = 1;
                             $response['usuario'] = 'Desactivada';
                         } else {
                             // Activar usuario
                             usuarioModel::where('ID_USUARIO', $request['ID_USUARIO'])->update(['ACTIVO' => 1]);
-                            asignarRolModel::where('USUARIO_ID', $request['ID_USUARIO'])->update(['ACTIVO' => 1]);
+                            rolesModel::where('USUARIO_ID', $request['ID_USUARIO'])->update(['ACTIVO' => 1]);
                             $response['code'] = 1;
                             $response['usuario'] = 'Activada';
                         }
