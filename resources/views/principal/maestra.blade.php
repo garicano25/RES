@@ -33,7 +33,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/css/dropify.min.css">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css">    <!--Archivo css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css"> <!--Archivo css -->
     <link rel="stylesheet" href="assets/css/estilos.css">
 
 
@@ -55,33 +55,30 @@
 
 
     <style>
+        .dropdown-menu {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-.dropdown-menu {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+        .dropdown-item {
+            text-align: center;
+        }
 
-.dropdown-item {
-    text-align: center;
-}
+        .dropdown-item button {
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: center;
+            padding: 8px;
+        }
 
-.dropdown-item button {
-    border: none;
-    background: none;
-    width: 100%;
-    text-align: center;
-    padding: 8px;
-}
+        .dropdown-item button:hover {
+            background-color: #f8f9fa;
+        }
 
-.dropdown-item button:hover {
-    background-color: #f8f9fa;
-}
-
-.dropdown-item span.badge {
-    font-size: 0.85rem;
-}
-
-
-        </style>
+        .dropdown-item span.badge {
+            font-size: 0.85rem;
+        }
+    </style>
 
 
 </head>
@@ -97,8 +94,8 @@
                 <ul class="navbar-nav">
                     {{-- <li class="nav-item" style="margin-right: 25px;">
                         <a class="nav-link" href="{{ url('/Formulario-vacantes') }}">
-                            <i class="bi bi-file-earmark-person-fill text-white" style="font-size: 24px;"></i>
-                        </a>
+                    <i class="bi bi-file-earmark-person-fill text-white" style="font-size: 24px;"></i>
+                    </a>
                     </li>
 
                     <li class="nav-item" style="margin-right: 25px;">
@@ -108,194 +105,194 @@
                     </li> --}}
                     <li class="nav-item dropdown" style="margin-right: 45px;">
                         @auth
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-person-fill text-white" style="font-size: 24px;"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 250px;">
-                                <li class="dropdown-item text-center">
-                                    <strong>{{ Auth::user()->EMPLEADO_NOMBRE }}</strong>
-                                    <br>
-                                    <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
-                                </li>
-                                <li class="dropdown-divider"></li>
-                                {{-- <li>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-fill text-white" style="font-size: 24px;"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 250px;">
+                            <li class="dropdown-item text-center">
+                                <strong>{{ Auth::user()->EMPLEADO_NOMBRE }}</strong>
+                                <br>
+                                <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
+                            </li>
+                            <li class="dropdown-divider"></li>
+                            {{-- <li>
                                     <a class="dropdown-item text-center" href="{{ route('perfil') }}">
-                                        <i class="bi bi-person-lines-fill"></i> Mi perfil
-                                    </a>
-                                </li> --}}
-                                <li>
-                                    <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item text-center" style="color: red;">
-                                            <i class="bi bi-power"></i> Cerrar sesión
-                                        </button>
-                                    </form>
-                                </li>
-                            </ul>
-                        @else
-                            <script>
-                                window.location.href = "{{ route('login') }}"; // Redirige al login si no está autenticado
-                            </script>
-                        @endauth
+                            <i class="bi bi-person-lines-fill"></i> Mi perfil
+                            </a>
+                    </li> --}}
+                    <li>
+                        <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                            @csrf
+                            <button type="submit" class="dropdown-item text-center" style="color: red;">
+                                <i class="bi bi-power"></i> Cerrar sesión
+                            </button>
+                        </form>
                     </li>
+                </ul>
+                @else
+                <script>
+                    window.location.href = "{{ route('login') }}"; // Redirige al login si no está autenticado
+                </script>
+                @endauth
+                </li>
                 </ul>
             </div>
         </div>
     </nav>
 
 
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0, 124, 186, 0.850); -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75);">
-    <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link BOTON" href="{{ url('/tablero') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                        <i class="bi bi-speedometer" style="margin-right: 5px;"></i> <span class="d-lg-none">Tablero</span><span class="d-none d-lg-inline">Tablero</span>
-                    </a>
-                </li>
-                <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-diagram-3-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Organización</span><span class="d-none d-lg-inline">Organización</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ url('/organigrama') }}">Organigrama</a></li>
-                        <hr class="dropdown-divider">
-                        <li><a class="dropdown-item" href="{{url('/PPT')}}">PPT</a></li>
-                        <hr class="dropdown-divider">
-                        <li><a class="dropdown-item" href="{{url('/DPT')}}">DPT</a></li>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0, 124, 186, 0.850); -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75);">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link BOTON" href="{{ url('/tablero') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <i class="bi bi-speedometer" style="margin-right: 5px;"></i> <span class="d-lg-none">Tablero</span><span class="d-none d-lg-inline">Tablero</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-diagram-3-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Organización</span><span class="d-none d-lg-inline">Organización</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url('/organigrama') }}">Organigrama</a></li>
+                            <hr class="dropdown-divider">
+                            <li><a class="dropdown-item" href="{{url('/PPT')}}">PPT</a></li>
+                            <hr class="dropdown-divider">
+                            <li><a class="dropdown-item" href="{{url('/DPT')}}">DPT</a></li>
 
 
-                        @if(auth()->user()->hasRole('Superusuario','Administrador'))
-                        <hr class="dropdown-divider">
-                        <li><a class="dropdown-item" href="{{url('/RequisiciónDePersonal')}}">Requisición de personal </a></li>
-                        @endif
+                            @if(auth()->user()->hasRole('Superusuario','Administrador'))
+                            <hr class="dropdown-divider">
+                            <li><a class="dropdown-item" href="{{url('/RequisiciónDePersonal')}}">Requisición de personal </a></li>
+                            @endif
 
-                    </ul>
-                </li>
+                        </ul>
+                    </li>
 
-                <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Reclutamiento</span><span class="d-none d-lg-inline">Reclutamiento</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ url('/Listavacantes') }}">Banco de CV</a></li>
-                        <hr class="dropdown-divider">
-                        <li><a class="dropdown-item" href="{{url('/Postulaciones')}}">Vacantes activas</a></li>
-                    </ul>
-                </li>
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Reclutamiento</span><span class="d-none d-lg-inline">Reclutamiento</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url('/Listavacantes') }}">Banco de CV</a></li>
+                            <hr class="dropdown-divider">
+                            <li><a class="dropdown-item" href="{{url('/Postulaciones')}}">Vacantes activas</a></li>
+                        </ul>
+                    </li>
 
-                @if(auth()->user()->hasRole('Superusuario'))
+                    @if(auth()->user()->hasRole('Superusuario'))
 
 
-                <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link BOTON" href="{{ url('/Selección') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                        <i class="bi bi-person-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Selección</span><span class="d-none d-lg-inline">Selección</span>
-                    </a>
-                </li>
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link BOTON" href="{{ url('/Selección') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <i class="bi bi-person-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Selección</span><span class="d-none d-lg-inline">Selección</span>
+                        </a>
+                    </li>
 
                     @endif
 
-                <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-badge-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Contratación</span><span class="d-none d-lg-inline">Contratación</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ url('/Pendiente-Contratar') }}">Pendientes por contratar</a></li>
-                        <hr class="dropdown-divider">
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-badge-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Contratación</span><span class="d-none d-lg-inline">Contratación</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url('/Pendiente-Contratar') }}">Pendientes por contratar</a></li>
+                            <hr class="dropdown-divider">
 
-                        <li><a class="dropdown-item" href="{{url('/Contratación')}}">Lista de colaboradores</a></li>
-                    </ul>
-                </li>
+                            <li><a class="dropdown-item" href="{{url('/Contratación')}}">Lista de colaboradores</a></li>
+                        </ul>
+                    </li>
 
 
-                <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link BOTON"  href="{{ url('/Rec.Empleado') }}"  style="color: #fff; font-weight: bold; text-decoration: none; ">
-                        <i class="bi bi-briefcase-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Rec.Empleados</span><span class="d-none d-lg-inline">Rec.Empleados</span>
-                    </a>
-                </li>
-                <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                        <i class="bi bi-person-bounding-box" style="margin-right: 5px;"></i> <span class="d-lg-none">Capacitación</span><span class="d-none d-lg-inline">Capacitación</span>
-                    </a>
-                </li>
-                {{-- <li class="nav-item dropdown" style="margin-left: 8px;">
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link BOTON" href="{{ url('/Rec.Empleado') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <i class="bi bi-briefcase-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Rec.Empleados</span><span class="d-none d-lg-inline">Rec.Empleados</span>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <i class="bi bi-person-bounding-box" style="margin-right: 5px;"></i> <span class="d-lg-none">Capacitación</span><span class="d-none d-lg-inline">Capacitación</span>
+                        </a>
+                    </li>
+                    {{-- <li class="nav-item dropdown" style="margin-left: 8px;">
                     <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                         <i class="bi bi-clipboard-data-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Eval.desempeño</span><span class="d-none d-lg-inline">Eval.desempeño</span>
                     </a>
                 </li> --}}
-                <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link BOTON" href="{{ url('/Desvinculación') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                        <i class="bi bi-person-dash-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Desvinculación</span><span class="d-none d-lg-inline">Desvinculación</span>
-                    </a>
-                </li>
-                <ul class="navbar-nav">
                     <li class="nav-item dropdown" style="margin-left: 8px;">
-                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
-                            <span class="d-lg-none">Catálogo</span>
-                            <span class="d-none d-lg-inline">Catálogo</span>
+                        <a class="nav-link BOTON" href="{{ url('/Desvinculación') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <i class="bi bi-person-dash-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Desvinculación</span><span class="d-none d-lg-inline">Desvinculación</span>
                         </a>
-                        <ul class="dropdown-menu">
-                            {{-- <li><a class="dropdown-item" href="{{ url('/Jerárquico') }}">Catálogo nivel Jerárquico</a>
-                            </li>
-                            <hr class="dropdown-divider"> --}}
-                            <li><a class="dropdown-item" href="{{url('/Catálogo_ppt')}}">Catálogos de PPT</a>
-                            </li>
-                            <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/Catálogo_dpt')}}">Catálogos de DPT</a>
-                            </li>
-                            <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/Catálogo_requisición')}}">Catálogos de Requisición</a>
-                            </li>
-                            <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/Catálogo_generales')}}">Catálogos generales</a>
-                            </li>
-                            {{-- <hr class="dropdown-divider">
+                    </li>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown" style="margin-left: 8px;">
+                            <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                <span class="d-lg-none">Catálogo</span>
+                                <span class="d-none d-lg-inline">Catálogo</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {{-- <li><a class="dropdown-item" href="{{ url('/Jerárquico') }}">Catálogo nivel Jerárquico</a>
+                        </li>
+                        <hr class="dropdown-divider"> --}}
+                        <li><a class="dropdown-item" href="{{url('/Catálogo_ppt')}}">Catálogos de PPT</a>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li><a class="dropdown-item" href="{{url('/Catálogo_dpt')}}">Catálogos de DPT</a>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li><a class="dropdown-item" href="{{url('/Catálogo_requisición')}}">Catálogos de Requisición</a>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li><a class="dropdown-item" href="{{url('/Catálogo_generales')}}">Catálogos generales</a>
+                        </li>
+                        {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/FuncionesCargo')}}">Funciones clave del cargo</a>
-                            </li>
-                            <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/Funcionesgestión')}}">Funciones del sistema <br> integrado de gestión</a>
-                            </li> --}}
-                            {{-- <hr class="dropdown-divider">
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li><a class="dropdown-item" href="{{url('/Funcionesgestión')}}">Funciones del sistema <br> integrado de gestión</a>
+                        </li> --}}
+                        {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Asesores')}}">Catálogo de Asesores</a>
-                            </li> --}}
-                            {{-- <hr class="dropdown-divider">
+                        </li> --}}
+                        {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/RelacionesExternas')}}">Relaciones externas</a>
-                            </li> --}}
-                            {{-- <hr class="dropdown-divider">
+                        </li> --}}
+                        {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Categorías')}}">Catálogo de Categorías </a>
-                            </li> --}}
-                            {{-- <hr class="dropdown-divider">
+                        </li> --}}
+                        {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/CatálogoDeVacantes')}}">Catálogo de Vacantes </a>
-                            </li> --}}
-                            {{-- <hr class="dropdown-divider">
+                        </li> --}}
+                        {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Género')}}">Catálogo de Género </a>
-                            </li> --}}
-                            {{-- <hr class="dropdown-divider">
+                        </li> --}}
+                        {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Puesto-experiencia')}}">Catálogo de Puesto que se requiere como experiencia</a>
-                            </li> --}}
-                            {{-- <hr class="dropdown-divider">
+                        </li> --}}
+                        {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Competencias-básicas')}}">Catálogo de competencias básicas</a>
-                            </li>
-                            <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/Competencias-gerenciales')}}">Catálogo de competencias gerenciales</a>
-                            </li> --}}
-                            {{-- <hr class="dropdown-divider">
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li><a class="dropdown-item" href="{{url('/Competencias-gerenciales')}}">Catálogo de competencias gerenciales</a>
+                        </li> --}}
+                        {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Tipo-vacante')}}">Catálogo de Tipo de vacante</a>
-                            </li> --}}
-                            {{-- <hr class="dropdown-divider">
+                        </li> --}}
+                        {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Motivo-vacante')}}">Catálogo de Motivo vacante</a>
-                            </li>   --}}
-                            {{-- <hr class="dropdown-divider">
+                        </li> --}}
+                        {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Área_interes')}}">Catálogo de áreas de interés</a>
-                            </li>   --}}
-                            {{-- <hr class="dropdown-divider">
+                        </li> --}}
+                        {{-- <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Pruebas-conocimientos')}}">Catálogo de pruebas de conocimientos</a>
-                            </li>                                --}}
-                        </ul>
+                        </li> --}}
+                    </ul>
                     </li>
                 </ul>
                 @if(auth()->user()->hasRole('Superusuario','Administrador'))
@@ -305,242 +302,242 @@
                     </a>
                 </li>
                 @endif
-            </ul>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
 
-@if(session('error'))
+    @if(session('error'))
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-                            Swal.fire({
-                    icon: 'error',
-                    title: 'Acceso Denegado',
-                    text: 'No tienes acceso a esta sección.',
-                    confirmButtonText: 'Entendido',
-                    background: '#f8d7da', // Fondo rojo claro
-                    customClass: {
-                        popup: 'swal-wide' // Clase personalizada para ampliar la alerta
-                    }
-                });
+            Swal.fire({
+                icon: 'error',
+                title: 'Acceso Denegado',
+                text: 'No tienes acceso a este módulo.',
+                confirmButtonText: 'Entendido',
+                background: '#f8d7da', // Fondo rojo claro
+                customClass: {
+                    popup: 'swal-wide' // Clase personalizada para ampliar la alerta
+                }
+            });
 
         });
     </script>
-@endif
+    @endif
 
 
 
 
 
-<!-- Modal de carga -->
-<style>
-    #modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        /* Ajusta la opacidad aquí */
-        z-index: 999;
-        display: none;
-        /* Empieza oculto */
-    }
+    <!-- Modal de carga -->
+    <style>
+        #modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Ajusta la opacidad aquí */
+            z-index: 999;
+            display: none;
+            /* Empieza oculto */
+        }
 
-    #loading-image {
-        position: absolute;
-        top: 40%;
-        left: 28%;
-    }
-</style>
-<div id="modal-overlay">
-    <img src="/assets/images/Colorancho.png" class="ld ld-bounce" alt="Cargando" style="max-width: 100%; max-height: 214px;" id="loading-image">
-</div>
-
-
-<div style="margin-top: 25px;">
-    @yield('contenido')
-</div>
+        #loading-image {
+            position: absolute;
+            top: 40%;
+            left: 28%;
+        }
+    </style>
+    <div id="modal-overlay">
+        <img src="/assets/images/Colorancho.png" class="ld ld-bounce" alt="Cargando" style="max-width: 100%; max-height: 214px;" id="loading-image">
+    </div>
 
 
-
-<!-- Jquery 3.6.4-->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<!--Bootstrap -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
-<!-- Datatables 1.13.1  v.5.2 -->
-<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
-<!-- sweetalert -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<!-- Animación -->
-<script src="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.js"></script>
-<!-- Select opcion selectize -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
-
-
-<!-- datepicker -->
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js"></script>
+    <div style="margin-top: 25px;">
+        @yield('contenido')
+    </div>
 
 
 
-<!-- Dropify -->
+    <!-- Jquery 3.6.4-->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!--Bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+    <!-- Datatables 1.13.1  v.5.2 -->
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <!-- sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Animación -->
+    <script src="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.js"></script>
+    <!-- Select opcion selectize -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
 
-<!-- Funciones generales -->
-<script src="/assets/js_sitio/funciones.js?v=2.0"></script>
+    <!-- datepicker -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js"></script>
 
 
-<script>
-    $(document).ready(function() {
-        // Inicializar campos datepicker con opciones en español
-        $('.mydatepicker').datepicker({
-            format: 'yyyy-mm-dd', // Formato de fecha
-            weekStart: 1, // Día que inicia la semana, 1 = Lunes
-            autoclose: true, // Cierra automáticamente el calendario
-            todayHighlight: true, // Marca el día de hoy en el calendario
-            language: 'es' // Configura el idioma en español
+
+    <!-- Dropify -->
+
+    <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
+
+    <!-- Funciones generales -->
+    <script src="/assets/js_sitio/funciones.js?v=2.0"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            // Inicializar campos datepicker con opciones en español
+            $('.mydatepicker').datepicker({
+                format: 'yyyy-mm-dd', // Formato de fecha
+                weekStart: 1, // Día que inicia la semana, 1 = Lunes
+                autoclose: true, // Cierra automáticamente el calendario
+                todayHighlight: true, // Marca el día de hoy en el calendario
+                language: 'es' // Configura el idioma en español
+            });
+
+            // Mostrar la fecha seleccionada en el input
+            $('.mydatepicker').on('click', function() {
+                $(this).datepicker('setDate', $(this).val()); // Mostrar fecha del input y marcar en el calendario
+            });
         });
-
-        // Mostrar la fecha seleccionada en el input
-        $('.mydatepicker').on('click', function() {
-            $(this).datepicker('setDate', $(this).val()); // Mostrar fecha del input y marcar en el calendario
-        });
-    });
-</script>
+    </script>
 
 
 
 
-@if(request()->is('organigrama'))
-<!-- organización -->
-<script src="/assets/js_sitio/organizacion/organigrama.js?v=4.0"></script>
-<script src="/assets/js/GOJs/go.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    @if(request()->is('organigrama'))
+    <!-- organización -->
+    <script src="/assets/js_sitio/organizacion/organigrama.js?v=4.0"></script>
+    <script src="/assets/js/GOJs/go.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-@endif
+    @endif
 
-@if(request()->is('PPT'))
-<script src="/assets/js_sitio/organizacion/PPT.js?v=2.0"></script>
-@endif
+    @if(request()->is('PPT'))
+    <script src="/assets/js_sitio/organizacion/PPT.js?v=2.0"></script>
+    @endif
 
-@if(request()->is('DPT'))
-<script src="/assets/js_sitio/organizacion/DPT.js?v=6.0"></script>
-@endif
+    @if(request()->is('DPT'))
+    <script src="/assets/js_sitio/organizacion/DPT.js?v=6.0"></script>
+    @endif
 
-@if(request()->is('Jerárquico'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogos.js?v=1.0"></script>
-@endif
+    @if(request()->is('Jerárquico'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogos.js?v=1.0"></script>
+    @endif
 
-@if(request()->is('Asesores'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogoasesores.js?v=1.0"></script>
-@endif
-
-
-@if(request()->is('FuncionesCargo'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionescargo.js?v=1.0"></script>
-@endif
-
-@if(request()->is('Funcionesgestión'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionesgestion.js?v=3.0"></script>
-@endif
-
-@if(request()->is('RelacionesExternas'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogosrelacionesxternas.js?v=1.0"></script>
-@endif
-
-@if(request()->is('RequisiciónDePersonal'))
-<script src="/assets/js_sitio/organizacion/requerimiento.js?v=2.0"></script>
-@endif
-
-@if(request()->is('CatálogoDeVacantes'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogovacantes.js?v=1.0"></script>
-@endif
-
-@if(request()->is('Categorías'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogocategoria.js?v=4.0"></script>
-@endif
-
-@if(request()->is('Género'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogogenero.js?v=1.0"></script>
-@endif
+    @if(request()->is('Asesores'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogoasesores.js?v=1.0"></script>
+    @endif
 
 
-@if(request()->is('Puesto-experiencia'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogoexperiencia.js?v=1.0"></script>
-@endif
+    @if(request()->is('FuncionesCargo'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionescargo.js?v=1.0"></script>
+    @endif
+
+    @if(request()->is('Funcionesgestión'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionesgestion.js?v=3.0"></script>
+    @endif
+
+    @if(request()->is('RelacionesExternas'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogosrelacionesxternas.js?v=1.0"></script>
+    @endif
+
+    @if(request()->is('RequisiciónDePersonal'))
+    <script src="/assets/js_sitio/organizacion/requerimiento.js?v=2.0"></script>
+    @endif
+
+    @if(request()->is('CatálogoDeVacantes'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogovacantes.js?v=1.0"></script>
+    @endif
+
+    @if(request()->is('Categorías'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogocategoria.js?v=4.0"></script>
+    @endif
+
+    @if(request()->is('Género'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogogenero.js?v=1.0"></script>
+    @endif
 
 
-@if(request()->is('Competencias-básicas'))
-<script src="/assets/js_sitio/organizacion/catalogos/catálogocompetenciabasica.js?v=1.0"></script>
-@endif
+    @if(request()->is('Puesto-experiencia'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogoexperiencia.js?v=1.0"></script>
+    @endif
 
 
-@if(request()->is('Tipo-vacante'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogotipovacante.js?v=1.0"></script>
-@endif
-
-@if(request()->is('Competencias-gerenciales'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogoCompetenciasGerenciales.js?v=1.0"></script>
-@endif
-
-@if(request()->is('Listavacantes'))
-<script src="/assets/js_sitio/reclutamiento/Listavacante.js"></script>
-@endif
-
-@if(request()->is('Postulaciones'))
-<script src="/assets/js_sitio/reclutamiento/vacantesactivas.js?v=6.0"></script>
-@endif
-
-@if(request()->is('Motivo-vacante'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogomotivovacante.js?v=1.0"></script>
-@endif
+    @if(request()->is('Competencias-básicas'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catálogocompetenciabasica.js?v=1.0"></script>
+    @endif
 
 
-@if(request()->is('Área_interes'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogoareainteres.js?v=1.0"></script>
-@endif
+    @if(request()->is('Tipo-vacante'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogotipovacante.js?v=1.0"></script>
+    @endif
+
+    @if(request()->is('Competencias-gerenciales'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogoCompetenciasGerenciales.js?v=1.0"></script>
+    @endif
+
+    @if(request()->is('Listavacantes'))
+    <script src="/assets/js_sitio/reclutamiento/Listavacante.js"></script>
+    @endif
+
+    @if(request()->is('Postulaciones'))
+    <script src="/assets/js_sitio/reclutamiento/vacantesactivas.js?v=6.0"></script>
+    @endif
+
+    @if(request()->is('Motivo-vacante'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogomotivovacante.js?v=1.0"></script>
+    @endif
 
 
-@if(request()->is('Selección'))
-<script src="/assets/js_sitio/seleccion/seleccion.js?v=11.0"></script>
-@endif
+    @if(request()->is('Área_interes'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogoareainteres.js?v=1.0"></script>
+    @endif
 
 
-@if(request()->is('Pruebas-conocimientos'))
-<script src="/assets/js_sitio/organizacion/catalogos/catalogopruebas.js?v=1.0"></script>
-@endif
+    @if(request()->is('Selección'))
+    <script src="/assets/js_sitio/seleccion/seleccion.js?v=11.0"></script>
+    @endif
 
 
-@if(request()->is('usuario'))
-<script src="/assets/js_sitio/usuario/usuario.js?v=2.0"></script>
-@endif
-
-@if(request()->is('Contratación'))
-<script src="/assets/js_sitio/contratacion/contratacion.js?v=7.0"></script>
-<!-- Form wizard -->
-<script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
-@endif
+    @if(request()->is('Pruebas-conocimientos'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogopruebas.js?v=1.0"></script>
+    @endif
 
 
-@if(request()->is('Pendiente-Contratar'))
-<script src="/assets/js_sitio/contratacion/pendientecontratar.js?v=1.0"></script>
-@endif
+    @if(request()->is('usuario'))
+    <script src="/assets/js_sitio/usuario/usuario.js?v=3.0"></script>
+    @endif
+
+    @if(request()->is('Contratación'))
+    <script src="/assets/js_sitio/contratacion/contratacion.js?v=7.0"></script>
+    <!-- Form wizard -->
+    <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
+    @endif
 
 
-
-@if(request()->is('Desvinculación'))
-<script src="/assets/js_sitio/desvinculacion/desvinculacion.js"></script>
-@endif
+    @if(request()->is('Pendiente-Contratar'))
+    <script src="/assets/js_sitio/contratacion/pendientecontratar.js?v=1.0"></script>
+    @endif
 
 
 
-  
+    @if(request()->is('Desvinculación'))
+    <script src="/assets/js_sitio/desvinculacion/desvinculacion.js"></script>
+    @endif
+
+
+
+
 </body>
 
 </html>
