@@ -54,43 +54,64 @@ class requerimientoPersonalController extends Controller
     }
 
 
-public function Tablarequerimiento()
-{
-    try {
-        $tabla = DB::select("SELECT rec.*, cat.NOMBRE_CATEGORIA
+    public function Tablarequerimiento()
+    {
+        try {
+            $tabla = DB::select("SELECT rec.*, cat.NOMBRE_CATEGORIA
                             FROM formulario_requerimientos rec
                             LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = rec.PUESTO_RP");
 
-        foreach ($tabla as $value) {
-            if ($value->ACTIVO == 0) {
-                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARO_REQUERIMIENTO . '"><span class="slider round"></span></label>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-                $value->BTN_RP = '<button type="button" class="btn btn-success  RP btn-custom rounded-pill" disabled><i class="bi bi-ban"></i></button>';
-            } else {
-                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARO_REQUERIMIENTO . '" checked><span class="slider round"></span></label>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+            foreach ($tabla as $value) {
+                $isActive = $value->ACTIVO == 1;
 
-                if ($value->ANTES_DE1 == 0) {
-                    $value->BTN_RP = '<button type="button" class="btn btn-success  RP btn-custom rounded-pill"><i class="bi bi-file-earmark-excel-fill"></i></button>';
+                $hasRoles = auth()->user()->hasRoles(['Superusuario','Administrador']);
+
+                if ($isActive) {
+                    $value->BTN_ELIMINAR = '<label class="switch">
+                                    <input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARO_REQUERIMIENTO . '" checked ' . (!$hasRoles ? 'disabled' : '') . '>
+                                    <span class="slider round"></span>
+                                </label>';
                 } else {
-                    $value->BTN_RP = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-requerimiento" data-id="' . $value->ID_FORMULARO_REQUERIMIENTO . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch">
+                                    <input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARO_REQUERIMIENTO . '" ' . (!$hasRoles ? 'disabled' : '') . '>
+                                    <span class="slider round"></span>
+                                </label>';
+                }
+
+                if ($isActive && $hasRoles) {
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                } else {
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                }
+
+                if ($isActive) {
+                    if ($hasRoles) {
+                        if ($value->ANTES_DE1 == 0) {
+                            $value->BTN_RP = '<button type="button" class="btn btn-success RP btn-custom rounded-pill"><i class="bi bi-file-earmark-excel-fill"></i></button>';
+                        } else {
+                            $value->BTN_RP = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-requerimiento" data-id="' . $value->ID_FORMULARO_REQUERIMIENTO . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                        }
+                    } else {
+                        $value->BTN_RP = '<button type="button" class="btn btn-success RP btn-custom rounded-pill" disabled><i class="bi bi-ban"></i></button>';
+                    }
+                } else {
+                    $value->BTN_RP = '<button type="button" class="btn btn-success RP btn-custom rounded-pill" disabled><i class="bi bi-ban"></i></button>';
                 }
             }
-        }
 
-        // Respuesta
-        return response()->json([
-            'data' => $tabla,
-            'msj' => 'Información consultada correctamente'
-        ]);
-    } catch (Exception $e) {
-        return response()->json([
-            'msj' => 'Error ' . $e->getMessage(),
-            'data' => 0
-        ]);
+            // Respuesta
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
     }
-}
-    
+  
 
 public function mostrardocumentorequisicion($id)
 {

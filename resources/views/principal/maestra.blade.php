@@ -165,7 +165,7 @@
                             <li><a class="dropdown-item" href="{{url('/DPT')}}">DPT</a></li>
 
 
-                            @if(auth()->user()->hasRole('Superusuario','Administrador'))
+                            @if(auth()->check() && auth()->user()->hasRole('Superusuario', 'Administrador'))
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/RequisiciónDePersonal')}}">Requisición de personal </a></li>
                             @endif
@@ -184,7 +184,7 @@
                         </ul>
                     </li>
 
-                    @if(auth()->user()->hasRole('Superusuario'))
+                    @if(auth()->check() && auth()->user()->hasRole('Superusuario', 'Administrador'))
 
 
                     <li class="nav-item dropdown" style="margin-left: 8px;">
@@ -295,7 +295,7 @@
                     </ul>
                     </li>
                 </ul>
-                @if(auth()->user()->hasRole('Superusuario','Administrador'))
+                @if(auth()->check() && auth()->user()->hasRole('Superusuario', 'Administrador'))
                 <li class="nav-item dropdown" style="margin-left: 8px;">
                     <a class="nav-link BOTON" href="{{ url('/usuario') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                         <i class="bi bi-people-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Usuarios</span><span class="d-none d-lg-inline">Usuarios</span>

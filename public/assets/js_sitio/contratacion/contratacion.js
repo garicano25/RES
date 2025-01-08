@@ -3460,6 +3460,7 @@ $('#Tablasoportecontrato').on('click', '.ver-archivo-documentocolaboradorsoporte
     abrirModal(url, nombreDocumentoSoporte);
 });
 
+
 $('#Tablasoportecontrato').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablasoportecontrato.row(tr);
@@ -3514,3 +3515,48 @@ document.getElementById('step5').addEventListener('click', function() {
 
     document.getElementById('step5-content').style.display = 'block';
 });
+
+
+
+
+$(document).ready(function() {
+    $('#btnNuevoCV').on('click', function() {
+        limpiarFormularioUsuario(); 
+
+        // Inicializar Dropify
+        $('#FOTO_USUARIO').dropify({
+            messages: {
+                'default': 'Arrastre la imagen aquí o haga clic',
+                'replace': 'Arrastre la imagen aquí o haga clic para reemplazar',
+                'remove':  'Quitar',
+                'error':   'Ooops, ha ocurrido un error.'
+            },
+            error: {
+                'fileSize': 'El archivo es demasiado grande (máx. {{ value }}).',
+                'minWidth': 'El ancho de la imagen es demasiado pequeño (mín. {{ value }}px).',
+                'maxWidth': 'El ancho de la imagen es demasiado grande (máx. {{ value }}px).',
+                'minHeight': 'La altura de la imagen es demasiado pequeña (mín. {{ value }}px).',
+                'maxHeight': 'La altura de la imagen es demasiado grande (máx. {{ value }}px).',
+                'imageFormat': 'Formato no permitido, sólo se aceptan: ({{ value }}).'
+            }
+        });
+
+        // Abrir el modal
+        $('#ModalCV').modal('show');
+    });
+
+    
+});
+
+
+
+function limpiarFormularioUsuario() {
+    $('#formularioACCIONES_DISCIPLINARIAS')[0].reset(); 
+
+    $('#guardarCV').prop('disabled', true); 
+
+    var drEvent = $('#FOTO_USUARIO').dropify().data('dropify');
+    drEvent.resetPreview();
+    drEvent.clearElement();
+}
+
