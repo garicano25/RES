@@ -69,16 +69,17 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+// Rutas públicas (excluidas del middleware global)
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/tablero', function () {
         return view('tablero.index');
     })->name('dashboard');
 });
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 //==============================================  USUARIO  ============================================== 
