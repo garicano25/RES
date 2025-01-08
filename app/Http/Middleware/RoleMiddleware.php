@@ -23,6 +23,7 @@ class RoleMiddleware
             return redirect()->route('login')->with('error', 'Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
         }
 
+        // Verifica si el usuario tiene alguno de los roles permitidos
         $user = Auth::user();
         if ($user->hasAnyRole($roles)) {
             // Si el usuario tiene el rol, permite el acceso

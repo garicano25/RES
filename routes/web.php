@@ -233,6 +233,7 @@ Route::get('/Catálogo_generales', function () {return view('RH.Catalogos.catalo
 
 // FORMULARIO DE BANCO DE CV EXTERNO A LA APLICACIÓN
 Route::get('/Formulario-vacantes', [bancocvController::class, 'index1']); //// RUTA EXTERNA ////
+
 Route::post('/BancoSave', [bancocvController::class, 'store']);
 Route::post('/FormCVSave', [formCVController::class, 'store']);
 Route::post('/actualizarinfocv', [formCVController::class, 'actualizarinfocv'])->name('actualizarinfocv');
