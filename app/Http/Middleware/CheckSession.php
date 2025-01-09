@@ -22,8 +22,8 @@ class CheckSession
             'Vacantes',            // Ruta externa
             'login',               // Ruta de login
             '',                    // Redirección inicial
-            'logout',
-            'inicio',         // Ruta de logout
+            'logout',              // Ruta de logout
+            'inicio',               // Ruta externa
         ];
 
         // Verificar si la solicitud coincide con una ruta excluida

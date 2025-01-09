@@ -3524,7 +3524,7 @@ $(document).ready(function() {
         limpiarFormularioUsuario(); 
 
         // Inicializar Dropify
-        $('#FOTO_USUARIO').dropify({
+        $('#FOTO_CV').dropify({
             messages: {
                 'default': 'Arrastre la imagen aquí o haga clic',
                 'replace': 'Arrastre la imagen aquí o haga clic para reemplazar',
@@ -3560,3 +3560,269 @@ function limpiarFormularioUsuario() {
     drEvent.clearElement();
 }
 
+// AGREGAR FORMACION ACADEMICA
+
+const botonAgregarFormacion = document.getElementById('botonAgregarFormacion');
+const documentosAcademicaContainer = document.getElementById('Informacion-academica');
+
+botonAgregarFormacion.addEventListener('click', function () {
+    const formacionDiv = document.createElement('div');
+    formacionDiv.classList.add('row', 'mb-3', 'formacion-contenedor');
+
+    const formacionId = `formacion-${Date.now()}`;
+
+    formacionDiv.innerHTML = `
+        <div class="col-12 mb-3">
+            <label>Activo</label>
+            <label class="switch">
+                <input type="checkbox" class="activo-switch" name="ACTIVO[]" data-id="${formacionId}">
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <div class="col-6 mb-3">
+            <label>Grado de estudio *</label>
+            <select class="form-select grado-estudio" name="GRADO_ESTUDIO_CV[]" data-id="${formacionId}" required>
+                <option value="0" selected disabled>Seleccione una opción</option>
+                <option value="1">Secundaria</option>
+                <option value="2">Preparatoria</option>
+                <option value="3">Licenciatura</option>
+                <option value="4">Posgrado</option>
+            </select>
+        </div>
+
+        <div class="col-6 mb-3 licenciatura-container" style="display: none;">
+            <label>Nombre de la licenciatura</label>
+            <input type="text" class="form-control licenciatura-nombre" name="NOMBRE_LICENCIATURA_CV[]" data-id="${formacionId}">
+        </div>
+
+        <div class="col-12 mb-3 posgrado-container" style="display: none;">
+            <div class="row">
+                <div class="col-6">
+                    <label>Tipo de posgrado</label>
+                    <select class="form-select tipo-posgrado" name="TIPO_POSGRADO_CV[]" data-id="${formacionId}">
+                        <option value="0" selected disabled>Seleccione una opción</option>
+                        <option value="1">Especialidad</option>
+                        <option value="2">Maestría</option>
+                        <option value="3">Doctorado</option>
+                        <option value="4">Post Doctorado</option>
+                    </select>
+                </div>
+                <div class="col-6 posgrado-nombre-container" style="display: none;">
+                    <label>Nombre del posgrado</label>
+                    <input type="text" class="form-control posgrado-nombre" name="NOMBRE_POSGRADO_CV[]" data-id="${formacionId}">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 mb-3">
+            <div class="row">
+                <div class="col-4 mb-3">
+                    <label>Nombre de la institución</label>
+                    <input type="text" class="form-control nombre-institucion" name="NOMBRE_INSTITUCION_CV[]" data-id="${formacionId}">
+                </div>
+                <div class="col-4 mb-3">
+                    <label>Fecha finalización *</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control mydatepicker fecha-finalizacion" placeholder="aaaa-mm-dd" name="FECHA_FINALIZACION_CV[]" data-id="${formacionId}">
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                    </div>
+                </div>
+                <div class="col-4 mb-3">
+                    <label>Fecha emisión título *</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control mydatepicker fecha-emision" placeholder="aaaa-mm-dd" name="FECHA_EMISION_CV[]" data-id="${formacionId}">
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 mb-3 text-center">
+            <button type="button" class="btn btn-danger eliminar-formacion" title="Eliminar formación">Eliminar</button>
+        </div>
+    `;
+
+    documentosAcademicaContainer.appendChild(formacionDiv);
+
+    $('.mydatepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        todayHighlight: true,
+        language: 'es',
+    });
+
+    ordenarFormacionesPorFecha();
+
+    const gradoEstudioSelect = formacionDiv.querySelector('.grado-estudio');
+    const licenciaturaContainer = formacionDiv.querySelector('.licenciatura-container');
+    const posgradoContainer = formacionDiv.querySelector('.posgrado-container');
+    const posgradoNombreContainer = formacionDiv.querySelector('.posgrado-nombre-container');
+    const tipoPosgradoSelect = formacionDiv.querySelector('.tipo-posgrado');
+    const fechaFinalizacionInput = formacionDiv.querySelector('.fecha-finalizacion');
+
+    gradoEstudioSelect.addEventListener('change', function () {
+        licenciaturaContainer.style.display = 'none';
+        posgradoContainer.style.display = 'none';
+        posgradoNombreContainer.style.display = 'none';
+
+        if (this.value === '3') {
+            licenciaturaContainer.style.display = 'block';
+        } else if (this.value === '4') {
+            posgradoContainer.style.display = 'block';
+        }
+    });
+
+    tipoPosgradoSelect.addEventListener('change', function () {
+        if (this.value !== '0') {
+            posgradoNombreContainer.style.display = 'block';
+        } else {
+            posgradoNombreContainer.style.display = 'none';
+        }
+    });
+
+    fechaFinalizacionInput.addEventListener('input', ordenarFormacionesPorFecha);
+
+    formacionDiv.querySelector('.eliminar-formacion').addEventListener('click', function () {
+        documentosAcademicaContainer.removeChild(formacionDiv);
+        ordenarFormacionesPorFecha();
+    });
+});
+
+function ordenarFormacionesPorFecha() {
+    const formaciones = Array.from(documentosAcademicaContainer.querySelectorAll('.formacion-contenedor'));
+
+    formaciones.sort((a, b) => {
+        const fechaA = a.querySelector('.fecha-finalizacion').value || '0000-00-00';
+        const fechaB = b.querySelector('.fecha-finalizacion').value || '0000-00-00';
+
+        return new Date(fechaB) - new Date(fechaA); 
+    });
+
+    formaciones.forEach(formacion => documentosAcademicaContainer.appendChild(formacion));
+}
+
+
+// AGREGAR DOCUMENTOS ACADEMICOS
+
+const botonAgregarDocumento = document.getElementById('botonAgregarDocumento');
+const inputsContainer = document.getElementById('documentos-academica');
+
+botonAgregarDocumento.addEventListener('click', function () {
+    const nuevoDiv = document.createElement('div');
+    nuevoDiv.classList.add('row', 'mb-3', 'documento-contenedor');
+
+    const selectDiv = document.createElement('div');
+    selectDiv.classList.add('col-5', 'mb-3');
+    selectDiv.innerHTML = `
+        <label for="DOCUMENTO_CV">Tipo de Documento</label>
+        <select class="form-select" name="DOCUMENTO_CV[]" required>
+            <option value="0" selected disabled>Seleccione una opción</option>
+            <option value="1">Certificado</option>
+            <option value="2">Título</option>
+            <option value="3">Otro</option>
+        </select>
+    `;
+
+    const fileDiv = document.createElement('div');
+    fileDiv.classList.add('col-5', 'mb-3');
+    fileDiv.innerHTML = `
+        <label for="DOCUMENTO_FILE">Subir documento (PDF)</label>
+        <div class="input-group">
+            <input type="file" class="form-control" name="DOCUMENTO_FILE[]" accept="application/pdf" required>
+            <button type="button" class="btn btn-warning eliminarArchivo" title="Eliminar archivo">
+                <i class="bi bi-x-circle-fill"></i>
+            </button>
+        </div>
+    `;
+
+    const deleteDiv = document.createElement('div');
+    deleteDiv.classList.add('col-1', 'mb-3');
+    deleteDiv.innerHTML = `
+        <br>
+        <button type="button" class="btn btn-danger botonEliminar" title="Eliminar documento">
+            <i class="bi bi-trash3-fill"></i>
+        </button>
+    `;
+
+    nuevoDiv.appendChild(selectDiv);
+    nuevoDiv.appendChild(fileDiv);
+    nuevoDiv.appendChild(deleteDiv);
+
+    inputsContainer.appendChild(nuevoDiv);
+
+    fileDiv.querySelector('.eliminarArchivo').addEventListener('click', function () {
+        const fileInput = fileDiv.querySelector('input[type="file"]');
+        fileInput.value = ''; 
+    });
+
+    deleteDiv.querySelector('.botonEliminar').addEventListener('click', function () {
+        inputsContainer.removeChild(nuevoDiv);
+    });
+});
+
+/// SI REQUIERE CEDULA
+
+const requiereCedulaName = 'EXPERIENCIA_LABORAL_CV'; 
+const estatusSelectId = 'ESTATUS_CEDULA_CV'; 
+const mostrarCedulaId = 'MOSTRAR_CEDULA'; 
+
+document.addEventListener('DOMContentLoaded', function () {
+    const radiosCedula = document.querySelectorAll(`input[name="${requiereCedulaName}"]`);
+    const estatusSelect = document.getElementById(estatusSelectId);
+    const mostrarCedula = document.getElementById(mostrarCedulaId);
+
+    function resetInputsInDiv(div) {
+        const inputs = div.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            if (input.type === 'checkbox' || input.type === 'radio') {
+                input.checked = false; 
+            } else {
+                input.value = ''; 
+            }
+        });
+    }
+
+    // Añadir eventos a los radios
+    radiosCedula.forEach(radio => {
+        radio.addEventListener('change', function () {
+            const requiereCedula = document.querySelector(`input[name="${requiereCedulaName}"]:checked`)?.value;
+            const estatus = estatusSelect.value;
+
+            if (requiereCedula === 'si' && estatus === '2') {
+                mostrarCedula.style.display = 'block';
+            } else {
+                mostrarCedula.style.display = 'none';
+                resetInputsInDiv(mostrarCedula); 
+            }
+        });
+    });
+
+    // Añadir evento al select
+    if (estatusSelect) {
+        estatusSelect.addEventListener('change', function () {
+            const requiereCedula = document.querySelector(`input[name="${requiereCedulaName}"]:checked`)?.value;
+            const estatus = estatusSelect.value;
+
+            if (requiereCedula === 'si' && estatus === '2') {
+                mostrarCedula.style.display = 'block';
+            } else {
+                mostrarCedula.style.display = 'none';
+                resetInputsInDiv(mostrarCedula); 
+            }
+        });
+    }
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.eliminar-archivo').forEach(button => {
+        button.addEventListener('click', function () {
+            const fileInput = this.previousElementSibling;
+            if (fileInput && fileInput.type === 'file') {
+                fileInput.value = ''; 
+            }
+        });
+    });
+});

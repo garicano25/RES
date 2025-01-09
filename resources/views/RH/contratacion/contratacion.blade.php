@@ -76,6 +76,15 @@
     .texto-no-seleccionado:hover {
         text-decoration: underline;
     }
+
+
+    .text-warning {
+        color: orange !important;
+    }
+
+    .text-success {
+        color: green !important;
+    }
 </style>
 
 
@@ -1383,161 +1392,218 @@
 <!-- ============================================================== -->
 
 
-
 <div class="modal fade" id="ModalCV" tabindex="-1" aria-labelledby="ModalFullLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content">
             <!-- Formulario de Datos Generales -->
-            <form method="post" enctype="multipart/form-data" id="FormularioCV">
+            <form method="post" enctype="multipart/form-data" id="FormularioCV" style="background-color: #ffffff;">
+                <div class="modal-header ">
+                    <h1 class="modal-title fs-5 text-center" id="exampleModalLabel">Ficha datos CV</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 {!! csrf_field() !!}
-                <div class="row">
 
-                    <div class="col-9">
-                        <div class="row">
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Columna Izquierda -->
+                        <div class="col-9">
+                            <div class="row">
+                                <div class="col-4 mb-3">
+                                    <label>Nombre completo *</label>
+                                    <input type="text" class="form-control" id="NOMBRE_CV" name="NOMBRE_CV" required>
+                                </div>
 
-                            <div class="col-4 mb-3">
-                                <label>Nombre(s) del colaborador *</label>
-                                <input type="text" class="form-control" id="NOMBRE_CV" name="NOMBRE_CV" required>
+                                <div class="col-4 mb-3">
+                                    <label>Cargo *</label>
+                                    <input type="text" class="form-control" id="CARGO_CV" name="CARGO_CV" required>
+                                </div>
+
+                                <div class="col-4 mb-3">
+                                    <label>Nacionalidad *</label>
+                                    <input type="text" class="form-control" id="NACIONALIDAD_CV" name="NACIONALIDAD_CV" required>
+                                </div>
+
+                                <h4><b>Perfil profesional</b></h4>
+
+                                <div class="col-12 mb-3">
+                                    <label>Descripción *</label>
+                                    <textarea type="text" class="form-control" id="DESCRIPCION_PERFIL_CV" name="DESCRIPCION_PERFIL_CV" rows="6" required></textarea>
+                                </div>
+
                             </div>
+                        </div>
 
-                            <div class="col-4 mb-3">
-                                <label>Cargo *</label>
-                                <input type="text" class="form-control" id="CARGO_CV" name="CARGO_CV" required>
-                            </div>
+                        <!-- Columna Derecha -->
+                        <div class="col-3">
+                            <div class="form-group">
+                                <label id="FOTO_TITULO">Foto colaborador *</label>
+                                <style>
+                                    .dropify-wrapper {
+                                        height: 270px !important;
+                                        text-align: center;
+                                    }
 
-                            <div class="col-4 mb-3">
-                                <label>Segundo apellido *</label>
-                                <input type="text" class="form-control" id="SEGUNDO_APELLIDO" name="SEGUNDO_APELLIDO" required>
-                            </div>
-
-
-
-                            <div class="col-3 mb-3 text-center">
-                                <label>Fecha de nacimiento</label>
-                                <select class="form-select me-2" id="MES_COLABORADOR" name="MES_COLABORADOR" required>
-                                    <option value="" selected disabled>Mes</option>
-                                    <option value="1">Enero</option>
-                                    <option value="2">Febrero</option>
-                                    <option value="3">Marzo</option>
-                                    <option value="4">Abril</option>
-                                    <option value="5">Mayo</option>
-                                    <option value="6">Junio</option>
-                                    <option value="7">Julio</option>
-                                    <option value="8">Agosto</option>
-                                    <option value="9">Septiembre</option>
-                                    <option value="10">Octubre</option>
-                                    <option value="11">Noviembre</option>
-                                    <option value="12">Diciembre</option>
-                                </select>
-                            </div>
-
-                            <div class="col-3 mb-3">
-                                <label></label>
-                                <select class="form-select me-2" id="ANIO_COLABORADOR" name="ANIO_COLABORADOR" required>
-                                    <option value="" selected disabled>Año</option>
-                                    <script>
-                                        const currentYear = new Date().getFullYear();
-                                        for (let i = currentYear; i >= 1900; i--) {
-                                            document.write('<option value="' + i + '">' + i + '</option>');
-                                        }
-                                    </script>
-                                </select>
-                            </div>
-                            <div class="col-3 mb-3">
-                                <label>Edad</label>
-                                <input type="number" class="form-control" id="EDAD_COLABORADOR" name="EDAD_COLABORADOR" readonly>
-                            </div>
-
-                            <div class="col-3 mb-3">
-                                <label>Teléfono *</label>
-                                <input type="number" class="form-control" id="TELEFONO_COLABORADOR" name="TELEFONO_COLABORADOR" required>
-                            </div>
-                            <div class="col-3 mb-3">
-                                <label for="correo">Correo *</label>
-                                <input type="email" class="form-control" id="CORREO_COLABORADOR" name="CORREO_COLABORADOR" required>
-                            </div>
-                            <div class="col-3 mb-3">
-                                <label for="estadoCivil">Estado Civil *</label>
-                                <select class="form-control" id="ESTADO_CIVIL" name="ESTADO_CIVIL" required>
-                                    <option value="0" disabled selected>Seleccione una opción</option>
-                                    <option value="1">Soltero (a)</option>
-                                    <option value="2">Casado (a)</option>
-                                    <option value="3">Divorciado (a)</option>
-                                    <option value="4">Viudo (a)</option>
-                                    <option value="5">Unión libre</option>
-
-                                </select>
-                            </div>
-                            <div class="col-3 mb-3">
-                                <label>RFC *</label>
-                                <input type="text" class="form-control" id="RFC_COLABORADOR" name="RFC_COLABORADOR" required>
+                                    .dropify-message p {
+                                        font-size: 14px;
+                                        margin: 0;
+                                    }
+                                </style>
+                                <input type="file" accept="image/jpeg,image/x-png" id="FOTO_CV" name="FOTO_CV" class="dropify" data-allowed-file-extensions="jpg png" data-height="300" data-default-file="" />
                             </div>
                         </div>
                     </div>
 
+                    <div class="row">
 
-                    <div class="col-3">
-                        <div class="form-group">
-                            <label id="FOTO_TITULO">Foto colaborador *</label>
-                            <style>
-                                .dropify-wrapper {
-                                    height: 270px !important;
-                                    border-radius: 5px;
-                                    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-                                    text-align: center;
-                                }
+                        <h4><b>Formación académica</b></h4>
 
-                                .dropify-message p {
-                                    font-size: 14px;
-                                    margin: 0;
-                                }
-                            </style>
-                            <input type="file" accept="image/jpeg,image/x-png" id="FOTO_USUARIO" name="FOTO_USUARIO" class="dropify" data-allowed-file-extensions="jpg png" data-height="300" data-default-file="" />
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label>Agregar formación académica</label>
+                                    <button id="botonAgregarFormacion" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                                        <i class="bi bi-plus-circle-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="Informacion-academica" class="mt-3"></div>
                         </div>
-                    </div>
 
 
+                        <!-- Grado de Estudio -->
 
 
+                        <h4><b>Documentos académicos</b></h4>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <div class="col-11 mt-4">
-                        <div class="form-group" style="text-align: right;">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-success " id="guardarDatosGenerales">Guardar</button>
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label>Agregar documento</label>
+                                    <button id="botonAgregarDocumento" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar ">
+                                        <i class="bi bi-plus-circle-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="documentos-academica" class="mt-3"></div>
                         </div>
+
+
+
+                        <div class="mb-3 text-center">
+                            <label class="form-label">¿Requiere cédula profesional? *</label>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" class="form-check-input requiere-cedula" name="EXPERIENCIA_LABORAL_CV" id="experiencia_si" value="si">
+                                    <label for="experiencia_si" class="form-check-label">Sí</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="radio" class="form-check-input requiere-cedula" name="EXPERIENCIA_LABORAL_CV" id="experiencia_no" value="no">
+                                    <label for="experiencia_no" class="form-check-label">No</label>
+                                </div>
+
+                                <div class="form-check form-check-inline ms-3">
+                                    <label class="form-label me-2">Estatus:</label>
+                                    <select class="form-select estatus-select" id="ESTATUS_CEDULA_CV" name="ESTATUS_CEDULA_CV">
+                                        <option value="0" selected disabled>Seleccione un estatus</option>
+                                        <option value="1" class="text-warning">En trámite</option>
+                                        <option value="2" class="text-success">Finalizado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div id="MOSTRAR_CEDULA" style="display: none;">
+                            <div class="row">
+                                <div class="col-4 mb-3">
+                                    <label>Nombre del programa *</label>
+                                    <input type="text" class="form-control" id="NOMBRE_CEDULA_CV" name="NOMBRE_CEDULA_CV">
+                                </div>
+                                <div class="col-4 mb-3">
+                                    <label>N° de cédula *</label>
+                                    <input type="number" class="form-control" id="NUMERO_CEDULA_CV" name="NUMERO_CEDULA_CV">
+                                </div>
+                                <div class="col-4 mb-3">
+                                    <label>Fecha emisión *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="EMISION_CEDULA_CV" name="EMISION_CEDULA_CV">
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
+                                </div>
+
+                                <h6> <b>Documentos </b></h6>
+
+                                <div class="col-6 mb-3">
+                                    <label>Cédula *</label>
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" id="DOCUMENTO_CEDULA_CV" name="DOCUMENTO_CEDULA_CV" accept="application/pdf">
+                                        <button type="button" class="btn btn-danger eliminar-archivo" title="Eliminar archivo">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 mb-3">
+                                    <label>Validación *</label>
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" id="DOCUMENTO_VALCEDULA_CV" name="DOCUMENTO_VALCEDULA_CV" accept="application/pdf">
+                                        <button type="button" class="btn btn-danger eliminar-archivo" title="Eliminar archivo">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+                    </div><!-- FIN DE DIV ROW DE FOR.ACADEM  -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div> <!-- FIN DE DIV DE MODAL BODY  -->
+                <div class="modal-footer">
+                    <div class="col-11 text-end">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-success" id="guardarDatosGenerales">Guardar</button>
                     </div>
-                </div> {{-- FINALIZA DEL ROW GENERAL --}}
+                </div>
             </form>
         </div>
     </div>
 </div>
+
 
 
 
