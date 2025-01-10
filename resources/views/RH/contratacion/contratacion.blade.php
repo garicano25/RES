@@ -1408,26 +1408,29 @@
                         <!-- Columna Izquierda -->
                         <div class="col-9">
                             <div class="row">
-                                <div class="col-4 mb-3">
+                                <div class="col-6 mb-3">
                                     <label>Nombre completo *</label>
                                     <input type="text" class="form-control" id="NOMBRE_CV" name="NOMBRE_CV" required>
                                 </div>
-
-                                <div class="col-4 mb-3">
+                                <div class="col-6 mb-3">
                                     <label>Cargo *</label>
                                     <input type="text" class="form-control" id="CARGO_CV" name="CARGO_CV" required>
                                 </div>
-
-                                <div class="col-4 mb-3">
+                                <div class="col-6 mb-3">
+                                    <label>Profesión *</label>
+                                    <input type="text" class="form-control" id="PROFESION_CV" name="PROFESION_CV" required>
+                                </div>
+                                <div class="col-6 mb-3">
                                     <label>Nacionalidad *</label>
                                     <input type="text" class="form-control" id="NACIONALIDAD_CV" name="NACIONALIDAD_CV" required>
                                 </div>
+
 
                                 <h4><b>Perfil profesional</b></h4>
 
                                 <div class="col-12 mb-3">
                                     <label>Descripción *</label>
-                                    <textarea type="text" class="form-control" id="DESCRIPCION_PERFIL_CV" name="DESCRIPCION_PERFIL_CV" rows="6" required></textarea>
+                                    <textarea type="text" class="form-control" id="DESCRIPCION_PERFIL_CV" name="DESCRIPCION_PERFIL_CV" rows="3" required></textarea>
                                 </div>
 
                             </div>
@@ -1494,11 +1497,11 @@
                             <label class="form-label">¿Requiere cédula profesional? *</label>
                             <div class="d-flex justify-content-center align-items-center">
                                 <div class="form-check form-check-inline">
-                                    <input type="radio" class="form-check-input requiere-cedula" name="EXPERIENCIA_LABORAL_CV" id="experiencia_si" value="si">
+                                    <input type="radio" class="form-check-input requiere-cedula" name="REQUIERE_CEDULA_CV" id="experiencia_si" value="si">
                                     <label for="experiencia_si" class="form-check-label">Sí</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input type="radio" class="form-check-input requiere-cedula" name="EXPERIENCIA_LABORAL_CV" id="experiencia_no" value="no">
+                                    <input type="radio" class="form-check-input requiere-cedula" name="REQUIERE_CEDULA_CV" id="experiencia_no" value="no">
                                     <label for="experiencia_no" class="form-check-label">No</label>
                                 </div>
 
@@ -1566,9 +1569,45 @@
 
 
 
+                    <div class="row">
+
+                        <h4><b>Experiencia laboral</b></h4>
+
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label>Agregar experiencia laboral</label>
+                                    <button id="botonAgregarExperiencia" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                                        <i class="bi bi-plus-circle-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="Experiencia-laboral" class="mt-3"></div>
+                        </div>
+
+
+                    </div> <!-- FIN DE DIV ROW DE  EXP.LAB  -->
 
 
 
+                    <div class="row">
+
+                        <h4><b>Educación continua</b></h4>
+
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label>Agregar educación continua</label>
+                                    <button id="botonAgregarEducacionContinua" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                                        <i class="bi bi-plus-circle-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="Educacion-continua" class="mt-3"></div>
+                        </div>
+
+
+                    </div> <!-- FIN DE DIV ROW DE  EDUCACION CONTINUA -->
 
 
 
@@ -1596,7 +1635,7 @@
                 <div class="modal-footer">
                     <div class="col-11 text-end">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-success" id="guardarDatosGenerales">Guardar</button>
+                        <button type="submit" class="btn btn-success" id="guardarCV">Guardar</button>
                     </div>
                 </div>
             </form>

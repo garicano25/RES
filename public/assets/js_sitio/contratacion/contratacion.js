@@ -9,7 +9,7 @@ ID_FORMULARIO_CONTRATACION = 0;
 ID_DOCUMENTO_SOPORTE = 0;
 ID_CONTRATOS_ANEXOS = 0;
 ID_DOCUMENTO_COLABORADOR_CONTRATO = 0;
-
+ID_CV_CONTRATACION = 0;
 ID_INFORMACION_MEDICA = 0;
 ID_INCIDENCIAS = 0 ;
 ID_ACCIONES_DISCIPLINARIAS = 0;
@@ -3551,13 +3551,24 @@ $(document).ready(function() {
 
 
 function limpiarFormularioUsuario() {
-    $('#formularioACCIONES_DISCIPLINARIAS')[0].reset(); 
+    $('#FormularioCV')[0].reset(); 
 
-    $('#guardarCV').prop('disabled', true); 
 
-    var drEvent = $('#FOTO_USUARIO').dropify().data('dropify');
+    var drEvent = $('#FOTO_CV').dropify().data('dropify');
     drEvent.resetPreview();
     drEvent.clearElement();
+
+
+
+    document.getElementById('Informacion-academica').innerHTML = '';
+    document.getElementById('documentos-academica').innerHTML = '';
+    document.getElementById('Experiencia-laboral').innerHTML = '';
+    document.getElementById('Educacion-continua').innerHTML = '';
+
+    document.getElementById('MOSTRAR_CEDULA').style.display = 'none';
+
+    document.querySelectorAll('input[name="REQUIERE_CEDULA_CV"]').forEach(radio => radio.checked = false);
+    document.getElementById('ESTATUS_CEDULA_CV').value = '0';
 }
 
 // AGREGAR FORMACION ACADEMICA
@@ -3575,10 +3586,11 @@ botonAgregarFormacion.addEventListener('click', function () {
         <div class="col-12 mb-3">
             <label>Activo</label>
             <label class="switch">
-                <input type="checkbox" class="activo-switch" name="ACTIVO[]" data-id="${formacionId}">
+                <input type="checkbox" class="activo-switch" name="ACTIVO_FORMACION[]" data-id="${formacionId}">
                 <span class="slider round"></span>
             </label>
         </div>
+
 
         <div class="col-6 mb-3">
             <label>Grado de estudio *</label>
@@ -3763,7 +3775,7 @@ botonAgregarDocumento.addEventListener('click', function () {
 
 /// SI REQUIERE CEDULA
 
-const requiereCedulaName = 'EXPERIENCIA_LABORAL_CV'; 
+const requiereCedulaName = 'REQUIERE_CEDULA_CV'; 
 const estatusSelectId = 'ESTATUS_CEDULA_CV'; 
 const mostrarCedulaId = 'MOSTRAR_CEDULA'; 
 
@@ -3783,7 +3795,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Añadir eventos a los radios
     radiosCedula.forEach(radio => {
         radio.addEventListener('change', function () {
             const requiereCedula = document.querySelector(`input[name="${requiereCedulaName}"]:checked`)?.value;
@@ -3798,7 +3809,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Añadir evento al select
     if (estatusSelect) {
         estatusSelect.addEventListener('change', function () {
             const requiereCedula = document.querySelector(`input[name="${requiereCedulaName}"]:checked`)?.value;
@@ -3826,3 +3836,511 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+
+// AGREGAR EXPERIENCIA LABORAL 
+
+
+
+
+const botonAgregarExperiencia = document.getElementById('botonAgregarExperiencia');
+const experienciaLaboralContainer = document.getElementById('Experiencia-laboral');
+
+// Delegar eventos para campos de fecha en el contenedor principal
+experienciaLaboralContainer.addEventListener('input', function (event) {
+    const target = event.target;
+
+    // Verificar si el cambio ocurrió en un campo de fecha
+    if (target && (target.name === "FECHA_INICIO[]" || target.name === "FECHA_FIN[]")) {
+        ordenarCronologicamente();
+        actualizarContadorGlobal();
+    }
+});
+
+// Inicializar eventos de datepicker para campos dinámicos
+function inicializarDatepickers() {
+    $('.mydatepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        todayHighlight: true,
+        language: 'es'
+    }).on('changeDate', function () {
+        ordenarCronologicamente();
+        actualizarContadorGlobal();
+    });
+}
+
+// Agregar una nueva experiencia laboral
+botonAgregarExperiencia.addEventListener('click', function () {
+    const experienciaDiv = document.createElement('div');
+    experienciaDiv.classList.add('row', 'mb-3', 'experiencia-contenedor');
+
+    const experienciaId = `experiencia-${Date.now()}`;
+
+    experienciaDiv.innerHTML = `
+
+    <div class="col-12 mb-3">
+        <label>Activo</label>
+        <label class="switch">
+            <input type="checkbox" class="activo-switch" name="ACTIVO_EXPERIENCIA[]" data-id="${experienciaId}">
+            <span class="slider round"></span>
+        </label>
+    </div>
+
+
+        <!-- Primera fila -->
+        <div class="col-12 mb-3">
+            <div class="row">
+                <div class="col-4">
+                    <label>Nombre de la empresa *</label>
+                    <input type="text" class="form-control" name="NOMBRE_EMPRESA[]" data-id="${experienciaId}">
+                </div>
+                <div class="col-4">
+                    <label>Cargo *</label>
+                    <input type="text" class="form-control" name="CARGO[]" data-id="${experienciaId}">
+                </div>
+                <div class="col-2">
+                    <label>Editar Cargo</label>
+                    <div class="form-check mt-2">
+                        <input type="checkbox" class="form-check-input" name="EDITAR_CARGO[]" data-id="${experienciaId}">
+                        <label class="form-check-label">Editar</label>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <label>N° Contrato *</label>
+                    <input type="text" class="form-control" name="NUMERO_CONTRATO[]" data-id="${experienciaId}">
+                </div>
+            </div>
+        </div>
+
+        <!-- Segunda fila -->
+        <div class="col-12 mb-3">
+            <div class="row">
+                <div class="col-3">
+                    <label>Fecha inicio *</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" name="FECHA_INICIO[]" data-id="${experienciaId}">
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <label>Fecha fin *</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control mydatepicker fecha-finalizacion" placeholder="aaaa-mm-dd" name="FECHA_FIN[]" data-id="${experienciaId}">
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <label>¿Incluir actual?</label>
+                    <div class="d-flex align-items-center">
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input incluir-actualmente" name="ACTUALMENTE-${experienciaId}" value="1" data-id="${experienciaId}">
+                            <label class="form-check-label">Sí</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input incluir-actualmente" name="ACTUALMENTE-${experienciaId}" value="0" data-id="${experienciaId}">
+                            <label class="form-check-label">No</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <label>Jornada *</label>
+                    <select class="form-select" name="JORNADA[]" data-id="${experienciaId}">
+                        <option value="0" selected disabled>Seleccione una opción</option>
+                        <option value="1">Tiempo completo</option>
+                        <option value="2">Medio tiempo</option>
+                        <option value="3">Tiempo parcial</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tercera fila -->
+        <div class="col-12 mb-3">
+            <div class="row">
+                <div class="col-6">
+                    <label>Descripción *</label>
+                    <textarea class="form-control" name="DESCRIPCION[]" rows="4" data-id="${experienciaId}"></textarea>
+                </div>
+                <div class="col-6">
+                    <label>Documento *</label>
+                    <div class="input-group">
+                        <input type="file" class="form-control" name="DOCUMENTO[]" accept="application/pdf" data-id="${experienciaId}">
+                        <button type="button" class="btn btn-danger eliminar-documento" data-id="${experienciaId}">
+                            <i class="bi bi-trash3-fill"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón para eliminar el contenedor completo -->
+        <div class="col-12 mb-3 text-center">
+            <button type="button" class="btn btn-danger eliminar-experiencia" title="Eliminar experiencia">
+                Eliminar
+            </button>
+        </div>
+    `;
+
+    experienciaLaboralContainer.appendChild(experienciaDiv);
+
+    // Inicializar datepicker y eventos para los nuevos campos
+    inicializarDatepickers();
+
+    // Ordenar cronológicamente y actualizar contador
+    ordenarCronologicamente();
+    actualizarContadorGlobal();
+
+    // Evento para eliminar el archivo del documento
+    experienciaDiv.querySelector('.eliminar-documento').addEventListener('click', function () {
+        const fileInput = this.previousElementSibling;
+        if (fileInput && fileInput.type === 'file') {
+            fileInput.value = ''; // Limpiar el archivo cargado
+        }
+    });
+
+    // Evento para eliminar el contenedor completo
+    experienciaDiv.querySelector('.eliminar-experiencia').addEventListener('click', function () {
+        experienciaLaboralContainer.removeChild(experienciaDiv);
+        ordenarCronologicamente();
+        actualizarContadorGlobal();
+    });
+});
+
+// Función para ordenar cronológicamente
+function ordenarCronologicamente() {
+    const experienciaContenedores = Array.from(document.querySelectorAll('.experiencia-contenedor'));
+    experienciaContenedores.sort((a, b) => {
+        const fechaFinA = a.querySelector('.fecha-finalizacion').value || '0000-00-00';
+        const fechaFinB = b.querySelector('.fecha-finalizacion').value || '0000-00-00';
+        return new Date(fechaFinB) - new Date(fechaFinA);
+    });
+
+    // Reordenar en el contenedor principal
+    experienciaContenedores.forEach(contenedor => experienciaLaboralContainer.appendChild(contenedor));
+}
+
+// Función para calcular tiempo de experiencia
+function calcularTiempoExperiencia() {
+    const experiencias = [];
+    const experienciaContenedores = document.querySelectorAll('.experiencia-contenedor');
+
+    experienciaContenedores.forEach(contenedor => {
+        const fechaInicio = contenedor.querySelector('input[name="FECHA_INICIO[]"]').value;
+        const fechaFin = contenedor.querySelector('input[name="FECHA_FIN[]"]').value;
+
+        if (fechaInicio && fechaFin) {
+            experiencias.push({
+                inicio: new Date(fechaInicio),
+                fin: new Date(fechaFin)
+            });
+        }
+    });
+
+    experiencias.sort((a, b) => a.inicio - b.inicio);
+
+    let totalDias = 0;
+    let periodoActual = null;
+
+    experiencias.forEach(periodo => {
+        if (!periodoActual) {
+            periodoActual = { ...periodo };
+        } else {
+            if (periodo.inicio <= periodoActual.fin) {
+                periodoActual.fin = new Date(Math.max(periodoActual.fin, periodo.fin));
+            } else {
+                totalDias += Math.floor((periodoActual.fin - periodoActual.inicio) / (1000 * 60 * 60 * 24));
+                periodoActual = { ...periodo };
+            }
+        }
+    });
+
+    if (periodoActual) {
+        totalDias += Math.floor((periodoActual.fin - periodoActual.inicio) / (1000 * 60 * 60 * 24));
+    }
+
+    const anios = Math.floor(totalDias / 365);
+    const meses = Math.floor((totalDias % 365) / 30);
+    const dias = totalDias % 30;
+
+    return { anios, meses, dias };
+}
+
+
+// Función para actualizar contador global
+function actualizarContadorGlobal() {
+    const contadorDiv = document.getElementById('contador-global');
+    const tiempo = calcularTiempoExperiencia();
+
+    if (!contadorDiv) {
+        const nuevoDiv = document.createElement('div');
+        nuevoDiv.id = 'contador-global';
+        nuevoDiv.classList.add('text-center', 'mt-3');
+        nuevoDiv.innerHTML = `
+            <h5><b>Tiempo total de experiencia:</b></h5>
+            <p><span id="tiempo-total-anios">${tiempo.anios}</span> años, 
+            <span id="tiempo-total-meses">${tiempo.meses}</span> meses, 
+            <span id="tiempo-total-dias">${tiempo.dias}</span> días</p>
+        `;
+        experienciaLaboralContainer.appendChild(nuevoDiv);
+    } else {
+        contadorDiv.querySelector('#tiempo-total-anios').textContent = tiempo.anios;
+        contadorDiv.querySelector('#tiempo-total-meses').textContent = tiempo.meses;
+        contadorDiv.querySelector('#tiempo-total-dias').textContent = tiempo.dias;
+    }
+}
+
+// Agregar educación continua 
+
+
+
+const botonAgregarEducacionContinua = document.getElementById('botonAgregarEducacionContinua');
+const educacionContinuaContainer = document.getElementById('Educacion-continua');
+
+botonAgregarEducacionContinua.addEventListener('click', function () {
+    const educacionDiv = document.createElement('div');
+    educacionDiv.classList.add('row', 'mb-3', 'educacion-contenedor');
+
+    const educacionId = `educacion-${Date.now()}`;
+
+    educacionDiv.innerHTML = `
+
+   <div class="col-12 mb-3">
+        <label>Activo</label>
+        <label class="switch">
+            <input type="checkbox" class="activo-switch" name="ACTIVO_CONTINUA[]" data-id="${educacionId}">
+            <span class="slider round"></span>
+        </label>
+    </div>
+
+
+
+        <!-- Primera fila -->
+        <div class="col-12 mb-3">
+            <div class="row">
+                <div class="col-4">
+                    <label>Tipo *</label>
+                    <select class="form-select" name="TIPO_EDUCACION[]" data-id="${educacionId}" required>
+                        <option value="" selected disabled>Seleccione una opción</option>
+                        <option value="Curso">Curso</option>
+                        <option value="Certificación">Certificación</option>
+                    </select>
+                </div>
+                  <div class="col-4">
+                    <label>Nombre *</label>
+                    <input type="text" class="form-control" name="NOMBRE_EDUCACION[]" data-id="${educacionId}" required>
+                </div>
+                <div class="col-4">
+                    <label>Entidad acreditadora *</label>
+                    <input type="text" class="form-control" name="ENTIDAD_EDUCACION[]" data-id="${educacionId}" required>
+                </div>
+            </div>
+        </div>
+
+        <!-- Segunda fila -->
+        <div class="col-12 mb-3">
+            <div class="row">
+                <div class="col-4">
+                    <label>Fecha Inicio *</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" name="FECHA_INICIO_EDUCACION[]" data-id="${educacionId}" required>
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <label>Fecha Fin *</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" name="FECHA_FIN_EDUCACION[]" data-id="${educacionId}" required>
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <label>Ciudad / País *</label>
+                    <input type="text" class="form-control" name="CIUDAD_PAIS_EDUCACION[]" data-id="${educacionId}" required>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tercera fila -->
+        <div class="col-12 mb-3">
+            <div class="row">
+                <div class="col-6">
+                    <label>Estatus *</label>
+                    <select class="form-select" name="ESTATUS_EDUCACION[]" data-id="${educacionId}" required>
+                        <option value="" selected disabled>Seleccione una opción</option>
+                        <option value="Vigente">Vigente</option>
+                        <option value="Vencido">Vencido</option>
+                    </select>
+                </div>
+                <div class="col-6">
+                    <label>Documento *</label>
+                    <div class="input-group">
+                        <input type="file" class="form-control" name="DOCUMENTO_EDUCACION[]" accept="application/pdf" data-id="${educacionId}" required>
+                        <button type="button" class="btn btn-danger eliminar-documento" data-id="${educacionId}">
+                            <i class="bi bi-trash3-fill"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón para eliminar el contenedor completo -->
+        <div class="col-12 mb-3 text-center">
+            <button type="button" class="btn btn-danger eliminar-educacion" title="Eliminar educación">
+                Eliminar
+            </button>
+        </div>
+    `;
+
+    educacionContinuaContainer.appendChild(educacionDiv);
+
+    $('.mydatepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        todayHighlight: true,
+        language: 'es',
+    });
+
+    educacionDiv.querySelector('.eliminar-documento').addEventListener('click', function () {
+        const fileInput = this.previousElementSibling;
+        if (fileInput && fileInput.type === 'file') {
+            fileInput.value = ''; // Limpiar el archivo cargado
+        }
+    });
+
+    educacionDiv.querySelector('.eliminar-educacion').addEventListener('click', function () {
+        educacionContinuaContainer.removeChild(educacionDiv);
+    });
+});
+
+
+
+
+
+
+const ModalCV = document.getElementById('ModalCV');
+ModalCV.addEventListener('hidden.bs.modal', event => {
+    ID_CV_CONTRATACION = 0;
+    document.getElementById('FormularioCV').reset();
+    document.getElementById('Informacion-academica').innerHTML = '';
+    document.getElementById('documentos-academica').innerHTML = '';
+    document.getElementById('Experiencia-laboral').innerHTML = '';
+    document.getElementById('Educacion-continua').innerHTML = '';
+    document.getElementById('tiempo-total-anios').textContent = '0';
+    document.getElementById('tiempo-total-meses').textContent = '0';
+    document.getElementById('tiempo-total-dias').textContent = '0';
+    document.getElementById('MOSTRAR_CEDULA').style.display = 'none';
+    document.querySelectorAll('input[name="REQUIERE_CEDULA_CV"]').forEach(radio => radio.checked = false);
+    document.getElementById('ESTATUS_CEDULA_CV').value = '0';
+
+    $('#ModalCV .modal-title').html('Ficha datos CV');
+});
+
+
+
+
+
+
+
+$("#guardarCV").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormularioV1('FormularioCV');
+
+    if (formularioValido) {
+        // Procesar arreglos y documentos
+        const formacionAcademica = [];
+        $(".formacion-academica-container").each(function () {
+            const item = {
+                GRADO_ESTUDIO: $(this).find("select[name='GRADO_ESTUDIO_CV[]']").val(),
+                NOMBRE_LICENCIATURA: $(this).find("input[name='NOMBRE_LICENCIATURA_CV[]']").val(),
+                TIPO_POSGRADO: $(this).find("select[name='TIPO_POSGRADO_CV[]']").val(),
+                NOMBRE_POSGRADO: $(this).find("input[name='NOMBRE_POSGRADO_CV[]']").val(),
+                NOMBRE_INSTITUCION: $(this).find("input[name='NOMBRE_INSTITUCION_CV[]']").val(),
+                FECHA_FINALIZACION: $(this).find("input[name='FECHA_FINALIZACION_CV[]']").val(),
+                FECHA_EMISION: $(this).find("input[name='FECHA_EMISION_CV[]']").val(),
+                ACTIVO: $(this).find("input[name='ACTIVO_FORMACION[]']").is(":checked") ? 1 : 0,
+            };
+            formacionAcademica.push(item);
+        });
+
+        const experienciaLaboral = [];
+        $(".experiencia-laboral-container").each(function () {
+            const item = {
+                NOMBRE_EMPRESA: $(this).find("input[name='NOMBRE_EMPRESA[]']").val(),
+                CARGO: $(this).find("input[name='CARGO[]']").val(),
+                NUMERO_CONTRATO: $(this).find("input[name='NUMERO_CONTRATO[]']").val(),
+                FECHA_INICIO: $(this).find("input[name='FECHA_INICIO[]']").val(),
+                FECHA_FIN: $(this).find("input[name='FECHA_FIN[]']").val(),
+                ACTIVO: $(this).find("input[name='ACTIVO_EXPERIENCIA[]']").is(":checked") ? 1 : 0,
+            };
+            experienciaLaboral.push(item);
+        });
+
+        const educacionContinua = [];
+        $(".educacion-continua-container").each(function () {
+            const item = {
+                TIPO_EDUCACION: $(this).find("select[name='TIPO_EDUCACION[]']").val(),
+                NOMBRE: $(this).find("input[name='NOMBRE_EDUCACION[]']").val(),
+                ENTIDAD_ACREDITADORA: $(this).find("input[name='ENTIDAD_EDUCACION[]']").val(),
+                FECHA_INICIO: $(this).find("input[name='FECHA_INICIO_EDUCACION[]']").val(),
+                FECHA_FIN: $(this).find("input[name='FECHA_FIN_EDUCACION[]']").val(),
+                ACTIVO: $(this).find("input[name='ACTIVO_CONTINUA[]']").is(":checked") ? 1 : 0,
+            };
+            educacionContinua.push(item);
+        });
+
+        const requestData = {
+            api: 1,
+            CURP: curpSeleccionada,
+            ID_CV_CONTRATACION: ID_CV_CONTRATACION,
+            FORMACION_ACADEMICA_CV: JSON.stringify(formacionAcademica),
+            EXPERIENCIA_LABORAL_CV: JSON.stringify(experienciaLaboral),
+            EDUCACION_CONTINUA_CV: JSON.stringify(educacionContinua),
+        };
+
+        if (ID_CV_CONTRATACION == 0) {
+            alertMensajeConfirm(
+                {
+                    title: "¿Desea guardar la información?",
+                    text: "Al guardarla, se podrá usar",
+                    icon: "question",
+                },
+                async function () {
+                    await loaderbtn("guardarCV");
+                    await ajaxAwaitFormData(requestData, "cvSave", "FormularioCV", "guardarCV", {}, function (data) {
+                        ID_CV_CONTRATACION = data.cv.ID_CV_CONTRATACION;
+                        alertMensaje("success", "Información guardada correctamente", "Esta información está lista para usarse", null, null, 1500);
+                        $("#ModalCV").modal("hide");
+                        document.getElementById("FormularioCV").reset();
+                    });
+                },
+                1
+            );
+        } else {
+            alertMensajeConfirm(
+                {
+                    title: "¿Desea editar la información?",
+                    text: "Al guardarla, se podrá usar",
+                    icon: "question",
+                },
+                async function () {
+                    await loaderbtn("guardarCV");
+                    await ajaxAwaitFormData(requestData, "cvSave", "FormularioCV", "guardarCV", {}, function (data) {
+                        ID_CV_CONTRATACION = data.cv.ID_CV_CONTRATACION;
+                        alertMensaje("success", "Información editada correctamente", "Información guardada");
+                        $("#ModalCV").modal("hide");
+                        document.getElementById("FormularioCV").reset();
+                    });
+                },
+                1
+            );
+        }
+    } else {
+        alertToast("Por favor, complete todos los campos del formulario.", "error", 2000);
+    }
+});
+
+
+
+    

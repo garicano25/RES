@@ -390,7 +390,9 @@ Route::get('/mostrardocumentocolaboradorcontratosoporte/{id}', [contratacionCont
 Route::post('/obtenerdocumentosoportescontratos', [contratacionController::class, 'obtenerdocumentosoportescontratos']);
 
 
+/////////////////////////////////////// STEP 5 CV
 
+Route::post('/cvSave', [CvController::class, 'store']);
 
 
 //============================================== RECURSOS DE LOS EMPLEADOS ============================================== 
