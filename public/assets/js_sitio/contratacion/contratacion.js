@@ -41,6 +41,9 @@ var tablacontratosCargada = false;
 
 
 
+var Tablacvs;
+var tablaCVCargada = false; 
+
 
 
 
@@ -3514,6 +3517,14 @@ document.getElementById('step5').addEventListener('click', function() {
     });
 
     document.getElementById('step5-content').style.display = 'block';
+
+    
+ if (tablaCVCargada) {
+        Tablacvs.columns.adjust().draw();
+    } else {
+        cargarTablaCV();
+        tablaCVCargada = true;
+    }
 });
 
 
@@ -4204,7 +4215,7 @@ botonAgregarEducacionContinua.addEventListener('click', function () {
     educacionDiv.querySelector('.eliminar-documento').addEventListener('click', function () {
         const fileInput = this.previousElementSibling;
         if (fileInput && fileInput.type === 'file') {
-            fileInput.value = ''; // Limpiar el archivo cargado
+            fileInput.value = ''; 
         }
     });
 
@@ -4241,17 +4252,15 @@ ModalCV.addEventListener('hidden.bs.modal', event => {
 
 
 
-
 $("#guardarCV").click(function (e) {
     e.preventDefault();
 
     formularioValido = validarFormularioV1('FormularioCV');
 
     if (formularioValido) {
-        // Procesar arreglos y documentos
-        const formacionAcademica = [];
-        $(".formacion-academica-container").each(function () {
-            const item = {
+        var formaciones = [];
+        $(".formacion-contenedor").each(function() {
+            var formacion = {
                 GRADO_ESTUDIO: $(this).find("select[name='GRADO_ESTUDIO_CV[]']").val(),
                 NOMBRE_LICENCIATURA: $(this).find("input[name='NOMBRE_LICENCIATURA_CV[]']").val(),
                 TIPO_POSGRADO: $(this).find("select[name='TIPO_POSGRADO_CV[]']").val(),
@@ -4259,88 +4268,225 @@ $("#guardarCV").click(function (e) {
                 NOMBRE_INSTITUCION: $(this).find("input[name='NOMBRE_INSTITUCION_CV[]']").val(),
                 FECHA_FINALIZACION: $(this).find("input[name='FECHA_FINALIZACION_CV[]']").val(),
                 FECHA_EMISION: $(this).find("input[name='FECHA_EMISION_CV[]']").val(),
-                ACTIVO: $(this).find("input[name='ACTIVO_FORMACION[]']").is(":checked") ? 1 : 0,
+                ACTIVO: $(this).find("input[name='ACTIVO_FORMACION[]']").is(":checked") ? 1 : 0
             };
-            formacionAcademica.push(item);
+            formaciones.push(formacion);
         });
 
-        const experienciaLaboral = [];
-        $(".experiencia-laboral-container").each(function () {
-            const item = {
+        var documentos = [];
+        $(".documento-contenedor").each(function() {
+            var documento = {
+                DOCUMENTO_TIPO: $(this).find("select[name='DOCUMENTO_CV[]']").val()
+            };
+            documentos.push(documento);
+        });
+
+        var experiencias = [];
+        $(".experiencia-contenedor").each(function() {
+            var experiencia = {
                 NOMBRE_EMPRESA: $(this).find("input[name='NOMBRE_EMPRESA[]']").val(),
                 CARGO: $(this).find("input[name='CARGO[]']").val(),
                 NUMERO_CONTRATO: $(this).find("input[name='NUMERO_CONTRATO[]']").val(),
                 FECHA_INICIO: $(this).find("input[name='FECHA_INICIO[]']").val(),
                 FECHA_FIN: $(this).find("input[name='FECHA_FIN[]']").val(),
-                ACTIVO: $(this).find("input[name='ACTIVO_EXPERIENCIA[]']").is(":checked") ? 1 : 0,
+                ACTIVO: $(this).find("input[name='ACTIVO_EXPERIENCIA[]']").is(":checked") ? 1 : 0
             };
-            experienciaLaboral.push(item);
+            experiencias.push(experiencia);
         });
 
-        const educacionContinua = [];
-        $(".educacion-continua-container").each(function () {
-            const item = {
+        var continuas = [];
+        $(".educacion-contenedor").each(function() {
+            var continua = {
                 TIPO_EDUCACION: $(this).find("select[name='TIPO_EDUCACION[]']").val(),
                 NOMBRE: $(this).find("input[name='NOMBRE_EDUCACION[]']").val(),
                 ENTIDAD_ACREDITADORA: $(this).find("input[name='ENTIDAD_EDUCACION[]']").val(),
                 FECHA_INICIO: $(this).find("input[name='FECHA_INICIO_EDUCACION[]']").val(),
                 FECHA_FIN: $(this).find("input[name='FECHA_FIN_EDUCACION[]']").val(),
-                ACTIVO: $(this).find("input[name='ACTIVO_CONTINUA[]']").is(":checked") ? 1 : 0,
+                ACTIVO: $(this).find("input[name='ACTIVO_CONTINUA[]']").is(":checked") ? 1 : 0
             };
-            educacionContinua.push(item);
+            continuas.push(continua);
         });
 
         const requestData = {
             api: 1,
-            CURP: curpSeleccionada,
+             CURP: curpSeleccionada ,
             ID_CV_CONTRATACION: ID_CV_CONTRATACION,
-            FORMACION_ACADEMICA_CV: JSON.stringify(formacionAcademica),
-            EXPERIENCIA_LABORAL_CV: JSON.stringify(experienciaLaboral),
-            EDUCACION_CONTINUA_CV: JSON.stringify(educacionContinua),
+            FORMACION_ACADEMICA_CV: JSON.stringify(formaciones),
+            DOCUMENTO_ACADEMICOS_CV: JSON.stringify(documentos),
+            EXPERIENCIA_LABORAL_CV: JSON.stringify(experiencias),
+            EDUCACION_CONTINUA_CV: JSON.stringify(continuas)
         };
 
         if (ID_CV_CONTRATACION == 0) {
-            alertMensajeConfirm(
-                {
-                    title: "¿Desea guardar la información?",
-                    text: "Al guardarla, se podrá usar",
-                    icon: "question",
-                },
-                async function () {
-                    await loaderbtn("guardarCV");
-                    await ajaxAwaitFormData(requestData, "cvSave", "FormularioCV", "guardarCV", {}, function (data) {
-                        ID_CV_CONTRATACION = data.cv.ID_CV_CONTRATACION;
-                        alertMensaje("success", "Información guardada correctamente", "Esta información está lista para usarse", null, null, 1500);
-                        $("#ModalCV").modal("hide");
-                        document.getElementById("FormularioCV").reset();
+            alertMensajeConfirm({
+                title: "¿Desea guardar la información?",
+                text: "Al guardarla, se podrá usar",
+                icon: "question",
+            }, async function () {
+                await loaderbtn('guardarCV');
+                await ajaxAwaitFormData(requestData, 'cvSave', 'FormularioCV', 'guardarCV', { callbackAfter: true, callbackBefore: true }, () => {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
                     });
-                },
-                1
-            );
+                    $('.swal2-popup').addClass('ld ld-breath');
+                }, function (data) {
+                    ID_CV_CONTRATACION = data.cv.ID_CV_CONTRATACION;
+                    alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
+                    $('#ModalCV').modal('hide'); 
+                    document.getElementById('FormularioCV').reset();
+
+                    if ($.fn.DataTable.isDataTable('#Tablacvs')) {
+                        Tablacvs.ajax.reload(null, false); 
+                    }
+                    
+                });
+            }, 1);
         } else {
-            alertMensajeConfirm(
-                {
-                    title: "¿Desea editar la información?",
-                    text: "Al guardarla, se podrá usar",
-                    icon: "question",
-                },
-                async function () {
-                    await loaderbtn("guardarCV");
-                    await ajaxAwaitFormData(requestData, "cvSave", "FormularioCV", "guardarCV", {}, function (data) {
-                        ID_CV_CONTRATACION = data.cv.ID_CV_CONTRATACION;
-                        alertMensaje("success", "Información editada correctamente", "Información guardada");
-                        $("#ModalCV").modal("hide");
-                        document.getElementById("FormularioCV").reset();
+            alertMensajeConfirm({
+                title: "¿Desea editar la información de este formulario?",
+                text: "Al guardarla, se podrá usar",
+                icon: "question",
+            }, async function () {
+                await loaderbtn('guardarCV');
+                await ajaxAwaitFormData(requestData, 'cvSave', 'FormularioCV', 'guardarCV', { callbackAfter: true, callbackBefore: true }, () => {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
                     });
-                },
-                1
-            );
+                    $('.swal2-popup').addClass('ld ld-breath');
+                }, function (data) {
+                    setTimeout(() => {
+                        ID_CV_CONTRATACION = data.cv.ID_CV_CONTRATACION;
+                        alertMensaje('success', 'Información editada correctamente', 'Información guardada');
+                        $('#ModalCV').modal('hide'); 
+                        document.getElementById('FormularioCV').reset(); 
+
+
+                        if ($.fn.DataTable.isDataTable('#Tablacvs')) {
+                        Tablacvs.ajax.reload(null, false); 
+                        }
+                        
+
+                    }, 300);
+                });
+            }, 1);
         }
     } else {
-        alertToast("Por favor, complete todos los campos del formulario.", "error", 2000);
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
     }
 });
 
 
 
-    
+
+
+
+function cargarTablaCV() {
+    if ($.fn.DataTable.isDataTable('#Tablacvs')) {
+        Tablacvs.clear().destroy();
+    }
+
+    Tablacvs = $("#Tablacvs").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        ajax: {
+            dataType: 'json',
+            data: { curp: curpSeleccionada }, 
+            method: 'GET',
+            cache: false,
+            url: '/Tablacvs',  
+            beforeSend: function () {
+                $('#loadingIcon10').css('display', 'inline-block');
+            },
+            complete: function () {
+                $('#loadingIcon10').css('display', 'none');
+                Tablacvs.columns.adjust().draw(); 
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#loadingIcon10').css('display', 'none');
+                alertErrorAJAX(jqXHR, textStatus, errorThrown);
+            },
+            dataSrc: 'data'
+        },
+        columns: [
+            { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+            { data: 'NOMBRE_CV', className: 'text-center' },  
+            { data: 'BTN_BIO' },
+            { data: 'BTN_CV' },
+            { data: 'BTN_PERSONAL' },
+            { data: 'BTN_EDITAR' },
+
+        ],
+        columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'Nombre del documento', className: 'all text-center' },  
+            { targets: 2, title: 'Generar CV bio', className: 'all text-center' },  
+            { targets: 3, title: 'Generar CV general', className: 'all text-center' },  
+            { targets: 4, title: 'Generar CV del personal propuesto', className: 'all text-center' },
+            { targets: 5, title: 'Editar', className: 'all text-center' },  
+        ]
+    });
+}
+
+
+
+
+
+$('#Tablacvs').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablacvs.row(tr);
+    ID_CV_CONTRATACION = row.data().ID_CV_CONTRATACION;
+
+    editarDatoTabla(row.data(), 'FormularioCV', 'ModalCV', 1);
+
+ 
+    if (row.data().FOTO_CV) {
+        var archivo = row.data().FOTO_CV;
+        var extension = archivo.substring(archivo.lastIndexOf("."));
+        var imagenUrl = '/mostrarFotoCV/' + row.data().ID_CV_CONTRATACION + extension;
+
+        if ($('#FOTO_CV').data('dropify')) {
+            $('#FOTO_CV').dropify().data('dropify').destroy();
+            $('#FOTO_CV').dropify().data('dropify').settings.defaultFile = imagenUrl;
+            $('#FOTO_CV').dropify().data('dropify').init();
+        } else {
+            $('#FOTO_CV').attr('data-default-file', imagenUrl);
+            $('#FOTO_CV').dropify({
+                messages: {
+                    'default': 'Arrastre la imagen aquí o haga click',
+                    'replace': 'Arrastre la imagen o haga clic para reemplazar',
+                    'remove': 'Quitar',
+                    'error': 'Ooops, ha ocurrido un error.'
+                },
+                error: {
+                    'fileSize': 'Demasiado grande ({{ value }} max).',
+                    'minWidth': 'Ancho demasiado pequeño (min {{ value }}}px).',
+                    'maxWidth': 'Ancho demasiado grande (max {{ value }}}px).',
+                    'minHeight': 'Alto demasiado pequeño (min {{ value }}}px).',
+                    'maxHeight': 'Alto demasiado grande (max {{ value }}px max).',
+                    'imageFormat': 'Formato no permitido, sólo ({{ value }}).'
+                }
+            });
+        }
+    } else {
+        $('#FOTO_CV').dropify().data('dropify').resetPreview();
+        $('#FOTO_CV').dropify().data('dropify').clearElement();
+    }
+});
+

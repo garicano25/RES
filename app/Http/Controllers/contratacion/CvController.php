@@ -21,169 +21,210 @@ class CvController extends Controller
 
 
 
+    public function Tablacvs(Request $request)
+    {
+        try {
+            $curp = $request->get('curp');
 
-      
-// public function store(Request $request)
-// {
-//     try {
-//         switch (intval($request->api)) {
-//             case 1:
-//                 if ($request->ID_CV_CONTRATACION == 0) {
-//                     DB::statement('ALTER TABLE cv_contratacion AUTO_INCREMENT=1;');
-//                     $cvs = cvModel::create($request->all());
-//                 } else { 
-
-//                     if (isset($request->ELIMINAR)) {
-//                         if ($request->ELIMINAR == 1) {
-//                             $cvs = cvModel::where('ID_CV_CONTRATACION', $request['ID_CV_CONTRATACION'])->update(['ACTIVO' => 0]);
-//                             $response['code'] = 1;
-//                             $response['cv'] = 'Desactivada';
-//                         } else {
-//                             $cvs = cvModel::where('ID_CV_CONTRATACION', $request['ID_CV_CONTRATACION'])->update(['ACTIVO' => 1]);
-//                             $response['code'] = 1;
-//                             $response['cv'] = 'Activada';
-//                         }
-//                     } else {
-//                         $cvs = cvModel::find($request->ID_CV_CONTRATACION);
-//                         $cvs->update($request->all());
-//                         $response['code'] = 1;
-//                         $response['cv'] = 'Actualizada';
-//                     }
-//                     return response()->json($response);
-
-//                 }
-//                 $response['code']  = 1;
-//                 $response['cv']  = $cvs;
-//                 return response()->json($response);
-//                 break;
-//             default:
-//                 $response['code']  = 1;
-//                 $response['msj']  = 'Api no encontrada';
-//                 return response()->json($response);
-//         }
-//     } catch (Exception $e) {
-//         return response()->json('Error al guardar el cv');
-//     }
-// }
+            $tabla = cvModel::where('CURP', $curp)->get();
 
 
 
 
-public function store(Request $request)
-{
-    try {
-        DB::beginTransaction();
-        $curp = $request->CURP;
+            foreach ($tabla as $value) {
+                if ($value->ACTIVO == 0) {
 
-        switch (intval($request->api)) {
-            case 1:
-                if ($request->ID_CV_CONTRATACION == 0) {
-                    // Crear un nuevo registro
-                    DB::statement('ALTER TABLE cv_contratacion AUTO_INCREMENT=1;');
-                    $cv = cvModel::create($request->all());
-
-                    // Procesar datos adicionales
-                    $this->guardarDatosAdicionales($cv, $request, $curp);
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR" ><i class="bi bi-eye"></i></button>';
                 } else {
-                    // Actualizar registro existente
-                    $cv = cvModel::find($request->ID_CV_CONTRATACION);
 
-                    if (isset($request->ELIMINAR)) {
-                        $cv->update(['ACTIVO' => $request->ELIMINAR == 1 ? 0 : 1]);
-                        $mensaje = $request->ELIMINAR == 1 ? 'Desactivada' : 'Activada';
-                        DB::commit();
-                        return response()->json(['code' => 1, 'cv' => $mensaje]);
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_BIO = '<button class="btn btn-info btn-custom rounded-pill  CV_BIO"> <i class="bi bi-arrow-down"></i></button>';
+                    $value->BTN_CV = '<button class="btn btn-info btn-custom rounded-pill CV_GENERAL"> <i class="bi bi-arrow-down"></i></button>';
+                    $value->BTN_PERSONAL = '<button class="btn btn-info btn-custom rounded-pill  CV_GENERAL"> <i class="bi bi-arrow-down"></i></button>';
+                }
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
+
+    public function mostrarFotoCV($cv_id)
+    {
+        $foto = cvModel::findOrFail($cv_id);
+        return Storage::response($foto->FOTO_CV);
+    }
+
+
+    // public function store(Request $request)
+    // {
+    //     try {
+    //         switch (intval($request->api)) {
+    //             case 1:
+    //                 if ($request->ID_CV_CONTRATACION == 0) {
+    //                     DB::statement('ALTER TABLE cv_contratacion AUTO_INCREMENT=1;');
+    //                     $cvs = cvModel::create($request->all());
+    //                 } else { 
+
+    //                     if (isset($request->ELIMINAR)) {
+    //                         if ($request->ELIMINAR == 1) {
+    //                             $cvs = cvModel::where('ID_CV_CONTRATACION', $request['ID_CV_CONTRATACION'])->update(['ACTIVO' => 0]);
+    //                             $response['code'] = 1;
+    //                             $response['cv'] = 'Desactivada';
+    //                         } else {
+    //                             $cvs = cvModel::where('ID_CV_CONTRATACION', $request['ID_CV_CONTRATACION'])->update(['ACTIVO' => 1]);
+    //                             $response['code'] = 1;
+    //                             $response['cv'] = 'Activada';
+    //                         }
+    //                     } else {
+    //                         $cvs = cvModel::find($request->ID_CV_CONTRATACION);
+    //                         $cvs->update($request->all());
+    //                         $response['code'] = 1;
+    //                         $response['cv'] = 'Actualizada';
+    //                     }
+    //                     return response()->json($response);
+
+    //                 }
+    //                 $response['code']  = 1;
+    //                 $response['cv']  = $cvs;
+    //                 return response()->json($response);
+    //                 break;
+    //             default:
+    //                 $response['code']  = 1;
+    //                 $response['msj']  = 'Api no encontrada';
+    //                 return response()->json($response);
+    //         }
+    //     } catch (Exception $e) {
+    //         return response()->json('Error al guardar el cv');
+    //     }
+    // }
+
+
+
+
+
+
+
+
+    public function store(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $curp = $request->CURP;
+
+            switch (intval($request->api)) {
+                case 1:
+                    if ($request->ID_CV_CONTRATACION == 0) {
+                        // Restablecer el auto_increment si es necesario
+                        DB::statement('ALTER TABLE cv_contratacion AUTO_INCREMENT=1;');
+                        $data = $request->except(['FOTO_CV', 'DOCUMENTO_CEDULA_CV', 'DOCUMENTO_VALCEDULA_CV', 'formacion','documento','experiencia','continua']);
+                        $cv = cvModel::create($data);
+
+                        // Procesar foto
+                        if ($request->hasFile('FOTO_CV')) {
+                            $imagen = $request->file('FOTO_CV');
+                            $rutaCarpeta = "reclutamiento/$curp/documentos CV/foto_usuario";
+                            $nombreArchivo = 'foto_usuario.' . $imagen->getClientOriginalExtension();
+                            $rutaCompleta = $imagen->storeAs($rutaCarpeta, $nombreArchivo);
+                            $cv->FOTO_CV = $rutaCompleta;
+                            $cv->save();
+                        }
+
+                        // Procesar documento de cédula
+                        if ($request->hasFile('DOCUMENTO_CEDULA_CV')) {
+                            $documentoCedula = $request->file('DOCUMENTO_CEDULA_CV');
+                            $rutaCarpeta = "reclutamiento/$curp/documentos CV/Documentos Cedula/Cedula";
+                            $nombreArchivo = 'cedula_' . uniqid() . '.' . $documentoCedula->getClientOriginalExtension();
+                            $rutaCompleta = $documentoCedula->storeAs($rutaCarpeta, $nombreArchivo);
+                            $cv->DOCUMENTO_CEDULA_CV = $rutaCompleta;
+                            $cv->save();
+                        }
+
+                        // Procesar validación de cédula
+                        if ($request->hasFile('DOCUMENTO_VALCEDULA_CV')) {
+                            $documentoValCedula = $request->file('DOCUMENTO_VALCEDULA_CV');
+                            $rutaCarpeta = "reclutamiento/$curp/documentos CV/Documentos Cedula/Validacion Cedula";
+                            $nombreArchivo = 'validacion_cedula_' . uniqid() . '.' . $documentoValCedula->getClientOriginalExtension();
+                            $rutaCompleta = $documentoValCedula->storeAs($rutaCarpeta, $nombreArchivo);
+                            $cv->DOCUMENTO_VALCEDULA_CV = $rutaCompleta;
+                            $cv->save();
+                        }
+                    } else {
+                        if (isset($request->ELIMINAR)) {
+                            $cv = cvModel::where('ID_CV_CONTRATACION', $request->ID_CV_CONTRATACION)
+                                ->update(['ACTIVO' => $request->ELIMINAR == 1 ? 0 : 1]);
+                            $mensaje = $request->ELIMINAR == 1 ? 'Desactivada' : 'Activada';
+                            DB::commit();
+                            return response()->json(['code' => 1, 'cv' => $mensaje]);
+                        }
+
+                        // Editar un registro existente
+                        $cv = cvModel::find($request->ID_CV_CONTRATACION);
+                        $cv->update($request->except(['FOTO_CV', 'DOCUMENTO_CEDULA_CV', 'DOCUMENTO_VALCEDULA_CV','formacion','documento','experiencia','continua']));
+
+                        // Procesar foto
+                        if ($request->hasFile('FOTO_CV')) {
+                            if ($cv->FOTO_CV && Storage::exists($cv->FOTO_CV)) {
+                                Storage::delete($cv->FOTO_CV);
+                            }
+                            $imagen = $request->file('FOTO_CV');
+                            $rutaCarpeta = "reclutamiento/$curp/documentos CV/foto_usuario";
+                            $nombreArchivo = 'foto_usuario.' . $imagen->getClientOriginalExtension();
+                            $rutaCompleta = $imagen->storeAs($rutaCarpeta, $nombreArchivo);
+                            $cv->FOTO_CV = $rutaCompleta;
+                            $cv->save();
+                        }
+
+                        // Procesar documento de cédula
+                        if ($request->hasFile('DOCUMENTO_CEDULA_CV')) {
+                            if ($cv->DOCUMENTO_CEDULA_CV && Storage::exists($cv->DOCUMENTO_CEDULA_CV)) {
+                                Storage::delete($cv->DOCUMENTO_CEDULA_CV);
+                            }
+                            $documentoCedula = $request->file('DOCUMENTO_CEDULA_CV');
+                            $rutaCarpeta = "reclutamiento/$curp/documentos CV/Documentos Cedula/Cedula";
+                            $nombreArchivo = 'cedula_' . uniqid() . '.' . $documentoCedula->getClientOriginalExtension();
+                            $rutaCompleta = $documentoCedula->storeAs($rutaCarpeta, $nombreArchivo);
+                            $cv->DOCUMENTO_CEDULA_CV = $rutaCompleta;
+                            $cv->save();
+                        }
+
+                        // Procesar validación de cédula
+                        if ($request->hasFile('DOCUMENTO_VALCEDULA_CV')) {
+                            if ($cv->DOCUMENTO_VALCEDULA_CV && Storage::exists($cv->DOCUMENTO_VALCEDULA_CV)) {
+                                Storage::delete($cv->DOCUMENTO_VALCEDULA_CV);
+                            }
+                            $documentoValCedula = $request->file('DOCUMENTO_VALCEDULA_CV');
+                            $rutaCarpeta = "reclutamiento/$curp/documentos CV/Documentos Cedula/Validacion Cedula";
+                            $nombreArchivo = 'validacion_cedula_' . uniqid() . '.' . $documentoValCedula->getClientOriginalExtension();
+                            $rutaCompleta = $documentoValCedula->storeAs($rutaCarpeta, $nombreArchivo);
+                            $cv->DOCUMENTO_VALCEDULA_CV = $rutaCompleta;
+                            $cv->save();
+                        }
                     }
 
-                    $cv->update($request->all());
-                    $this->guardarDatosAdicionales($cv, $request, $curp);
-                }
+                    DB::commit();
+                    return response()->json(['code' => 1, 'cv' => $cv]);
+                    break;
 
-                DB::commit();
-                return response()->json(['code' => 1, 'cv' => $cv]);
-                break;
-
-            default:
-                return response()->json(['code' => 1, 'msj' => 'Api no encontrada']);
+                default:
+                    return response()->json(['code' => 0, 'msj' => 'API no encontrada']);
+            }
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json(['code' => 0, 'msj' => 'Error al guardar el CV', 'error' => $e->getMessage()]);
         }
-    } catch (Exception $e) {
-        DB::rollBack();
-        return response()->json(['code' => 0, 'msj' => 'Error al guardar el CV', 'error' => $e->getMessage()]);
-    }
-}
-
-/**
- * Guardar datos adicionales, incluyendo documentos y arreglos
- */
-private function guardarDatosAdicionales($cv, $request, $curp)
-{
-    // Guardar foto
-    if ($request->hasFile('FOTO_CV')) {
-        $imagen = $request->file('FOTO_CV');
-        $rutaCarpeta = 'reclutamiento/' . $curp . '/documentos CV/foto_usuario';
-        $nombreArchivo = 'foto_usuario.' . $imagen->getClientOriginalExtension();
-        $rutaCompleta = $imagen->storeAs($rutaCarpeta, $nombreArchivo);
-        $cv->FOTO_CV = $rutaCompleta;
-        $cv->save();
     }
 
-    // Guardar documentos específicos
-    if ($request->hasFile('DOCUMENTO_CEDULA_CV')) {
-        $documentoCedula = $request->file('DOCUMENTO_CEDULA_CV');
-        $rutaCarpeta = 'reclutamiento/' . $curp . '/documentos CV/Documentos Cedula/Cedula';
-        $nombreArchivo = 'cedula_' . uniqid() . '.' . $documentoCedula->getClientOriginalExtension();
-        $cv->DOCUMENTO_CEDULA_CV = $documentoCedula->storeAs($rutaCarpeta, $nombreArchivo);
-        $cv->save();
-    }
 
-    if ($request->hasFile('DOCUMENTO_VALCEDULA_CV')) {
-        $documentoValCedula = $request->file('DOCUMENTO_VALCEDULA_CV');
-        $rutaCarpeta = 'reclutamiento/' . $curp . '/documentos CV/Documentos Cedula/Validacion Cedula';
-        $nombreArchivo = 'validacion_cedula_' . uniqid() . '.' . $documentoValCedula->getClientOriginalExtension();
-        $cv->DOCUMENTO_VALCEDULA_CV = $documentoValCedula->storeAs($rutaCarpeta, $nombreArchivo);
-        $cv->save();
-    }
 
-    // Guardar formación académica como JSON
-    if ($request->has('FORMACION_ACADEMICA_CV')) {
-        $formacionAcademica = collect($request->FORMACION_ACADEMICA_CV)->map(function ($item) use ($request) {
-            $item['ACTIVO'] = isset($request->ACTIVO_FORMACION[$item['ID']]) ? 1 : 0;
-            return $item;
-        })->toArray();
-        $cv->FORMACION_ACADEMICA_CV = json_encode($formacionAcademica);
-        $cv->save();
-    }
 
-    // Guardar experiencia laboral como JSON
-    if ($request->has('EXPERIENCIA_LABORAL_CV')) {
-        $experienciaLaboral = collect($request->EXPERIENCIA_LABORAL_CV)->map(function ($item) use ($curp, $request) {
-            if (isset($item['DOCUMENTO']) && $item['DOCUMENTO']->isValid()) {
-                $rutaCarpeta = 'reclutamiento/' . $curp . '/documentos CV/Documentos experiencia laboral';
-                $nombreArchivo = 'experiencia_' . uniqid() . '.' . $item['DOCUMENTO']->getClientOriginalExtension();
-                $item['DOCUMENTO'] = $item['DOCUMENTO']->storeAs($rutaCarpeta, $nombreArchivo);
-            }
-            $item['ACTIVO'] = isset($request->ACTIVO_EXPERIENCIA[$item['ID']]) ? 1 : 0;
-            return $item;
-        })->toArray();
-        $cv->EXPERIENCIA_LABORAL_CV = json_encode($experienciaLaboral);
-        $cv->save();
-    }
-
-    // Guardar educación continua como JSON
-    if ($request->has('EDUCACION_CONTINUA_CV')) {
-        $educacionContinua = collect($request->EDUCACION_CONTINUA_CV)->map(function ($item) use ($curp, $request) {
-            if (isset($item['DOCUMENTO']) && $item['DOCUMENTO']->isValid()) {
-                $rutaCarpeta = 'reclutamiento/' . $curp . '/documentos CV/Documentos educacion continua';
-                $nombreArchivo = 'educacion_' . uniqid() . '.' . $item['DOCUMENTO']->getClientOriginalExtension();
-                $item['DOCUMENTO'] = $item['DOCUMENTO']->storeAs($rutaCarpeta, $nombreArchivo);
-            }
-            $item['ACTIVO'] = isset($request->ACTIVO_CONTINUA[$item['ID']]) ? 1 : 0;
-            return $item;
-        })->toArray();
-        $cv->EDUCACION_CONTINUA_CV = json_encode($educacionContinua);
-        $cv->save();
-    }
-}
 
 
 
