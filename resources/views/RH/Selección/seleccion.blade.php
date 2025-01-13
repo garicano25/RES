@@ -475,7 +475,7 @@
                             <div class="col-4 mx-auto text-center">
                                 <div class="form-group">
                                     <label>Suma total del %</label>
-                                    <input type="number" class="form-control floating-input text-center" id="PORCENTAJE_TOTAL_REFERENCIAS" name="PORCENTAJE_TOTAL_REFERENCIAS" readonly>
+                                    <input type="number" class="form-control floating-input text-center" id="PORCENTAJE_TOTAL_REFERENCIAS" name="PORCENTAJE_TOTAL_REFERENCIAS" value="0" readonly>
                                 </div>
                             </div>
                         </div>
@@ -540,7 +540,7 @@
                             <div class="col-4 mx-auto text-center">
                                 <div class="form-group">
                                     <label>Suma total del %</label>
-                                    <input type="number" class="form-control floating-input text-center" id="porcentajeTotalPrueba" name="PORCENTAJE_TOTAL_PRUEBA" readonly>
+                                    <input type="number" class="form-control floating-input text-center" id="porcentajeTotalPrueba" name="PORCENTAJE_TOTAL_PRUEBA" value="0" readonly>
                                 </div>
                             </div>
                         </div>
@@ -3415,9 +3415,9 @@
 
                                             <div class="row mb-3">
                                                 <div class="col-4 mx-auto  text-center">
-                                                    <div class="form-group">
+                                                    <div class="form-group ">
                                                         <label>Suma total del porcentaje del PPT</label>
-                                                        <input type="number" class="form-control floating-input" id="SUMA_TOTAL" name="SUMA_TOTAL" readonly>
+                                                        <input type="number" class="form-control floating-input text-center" id="SUMA_TOTAL" name="SUMA_TOTAL" readonly>
                                                     </div>
                                                 </div>
                                             </div>

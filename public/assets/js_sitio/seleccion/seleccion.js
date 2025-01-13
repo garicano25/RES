@@ -913,19 +913,22 @@ Tablareferencia = $("#Tablareferencia").DataTable({
     },
     columns: [
         { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
-        { 
-            data: 'REFERENCIAS',
-            render: function (data, type, row) {
-                let referenciasHTML = '';
-                data.forEach(function(referencia) {
-                    referenciasHTML += '<strong>' + referencia.NOMBRE_EMPRESA + '</strong><br>' +
-                                       'Comentario: ' + referencia.COMENTARIO + '<br>' +
-                                       referencia.BTN_DOCUMENTO + '<br>';
-                });
-                return referenciasHTML;
-            },
-            className: 'text-center'
+        {
+        data: 'REFERENCIAS',
+        render: function (data, type, row) {
+            if (!data || data.length === 0) {
+                return 'NA'; // Retorna 'NA' si no hay datos
+            }
+            let referenciasHTML = '';
+            data.forEach(function (referencia) {
+                referenciasHTML += '<strong>' + referencia.NOMBRE_EMPRESA + '</strong><br>' +
+                                'Comentario: ' + referencia.COMENTARIO + '<br>' +
+                                referencia.BTN_DOCUMENTO + '<br>';
+            });
+            return referenciasHTML;
         },
+        className: 'text-center'
+    }    ,
         { 
             data: 'BTN_EDITAR', 
             className: 'text-center'
@@ -933,7 +936,7 @@ Tablareferencia = $("#Tablareferencia").DataTable({
     ],
     columnDefs: [
         { target: 0, title: '#', className: 'all text-center' },
-        { target: 1, title: 'Referencias', className: 'all text-center' },
+        { target: 1, title: 'Nombre de la empresa y documentos', className: 'all text-center' },
         { target: 2, title: 'Editar', className: 'all text-center' }
     ]
 });
@@ -1088,13 +1091,16 @@ Tablapruebaconocimientoseleccion = $("#Tablapruebaconocimientoseleccion").DataTa
     },
     columns: [
         { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
-        { 
+        {
             data: 'REFERENCIAS',
             render: function (data, type, row) {
+                if (!data || data.length === 0) {
+                    return 'NA'; // Retorna 'NA' si no hay datos
+                }
                 let referenciasHTML = '';
-                data.forEach(function(referencia) {
+                data.forEach(function (referencia) {
                     referenciasHTML += '<strong>' + referencia.TIPO_PRUEBA + '</strong><br>' +
-                                       referencia.BTN_DOCUMENTO + '<br>';
+                                    referencia.BTN_DOCUMENTO + '<br>';
                 });
                 return referenciasHTML;
             },
@@ -1107,7 +1113,7 @@ Tablapruebaconocimientoseleccion = $("#Tablapruebaconocimientoseleccion").DataTa
     ],
     columnDefs: [
         { target: 0, title: '#', className: 'all text-center' },
-        { target: 1, title: 'Referencias', className: 'all text-center' },
+        { target: 1, title: 'Nombre de la prueba y documento', className: 'all text-center' },
         { target: 2, title: 'Editar', className: 'all text-center' }
     ]
 });

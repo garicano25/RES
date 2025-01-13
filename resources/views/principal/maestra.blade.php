@@ -165,7 +165,7 @@
                             <li><a class="dropdown-item" href="{{url('/DPT')}}">DPT</a></li>
 
 
-                            @if(auth()->check() && auth()->user()->hasRole('Superusuario', 'Administrador'))
+                            @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/RequisiciónDePersonal')}}">Requisición de personal </a></li>
                             @endif
@@ -184,8 +184,7 @@
                         </ul>
                     </li>
 
-                    @if(auth()->check() && auth()->user()->hasRole('Superusuario', 'Administrador'))
-
+                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
 
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="{{ url('/Selección') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
@@ -295,7 +294,7 @@
                     </ul>
                     </li>
                 </ul>
-                @if(auth()->check() && auth()->user()->hasRole('Superusuario', 'Administrador'))
+                @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
                 <li class="nav-item dropdown" style="margin-left: 8px;">
                     <a class="nav-link BOTON" href="{{ url('/usuario') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                         <i class="bi bi-people-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Usuarios</span><span class="d-none d-lg-inline">Usuarios</span>
@@ -505,7 +504,7 @@
 
 
     @if(request()->is('Selección'))
-    <script src="/assets/js_sitio/seleccion/seleccion.js?v=11.0"></script>
+    <script src="/assets/js_sitio/seleccion/seleccion.js?v=12.0"></script>
     @endif
 
 
@@ -519,7 +518,7 @@
     @endif
 
     @if(request()->is('Contratación'))
-    <script src="/assets/js_sitio/contratacion/contratacion.js?v=7.0"></script>
+    <script src="/assets/js_sitio/contratacion/contratacion.js?v=8.0"></script>
     <!-- Form wizard -->
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif

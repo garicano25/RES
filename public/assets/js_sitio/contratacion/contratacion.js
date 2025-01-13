@@ -145,6 +145,14 @@ $(document).ready(function() {
         $( "#step5" ).css('display', 'none');
         $( "#step5-content" ).css('display', 'none');
 
+ 
+        $( "#step6" ).css('display', 'none');
+        $( "#step6-content" ).css('display', 'none');
+
+ 
+        $( "#step7" ).css('display', 'none');
+        $( "#step7-content" ).css('display', 'none');
+
 
     
         $('#datosgenerales-tab').tab('show'); 
@@ -634,10 +642,10 @@ $('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
     });
 
     $('#datosgenerales-tab').closest('li').css("display", 'block');
-    $('#step2, #step3,#step4,#step5').css("display", "flex");
+    $('#step2, #step3,#step4,#step5,#step6,#step7').css("display", "flex");
 
     $('#step1-content').css("display", 'block');
-    $('#step2-content, #step3-content, #step4-content,#step5-content').css("display", 'none');
+    $('#step2-content, #step3-content, #step4-content,#step5-content,#step6-content,#step7-content').css("display", 'none');
 
 
     $('#DESCARGAR_CREDENCIAL').css("display", 'block');
@@ -750,6 +758,7 @@ $('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
     tablaDocumentosCargada = false;
     tablacontratosCargada = false;
     tablasoportecontratoCargada = false;
+    tablaCVCargada = false;
 
 
     $('#datosgenerales-tab').tab('show');
@@ -857,7 +866,7 @@ $("#guardarDatosGenerales").click(function (e) {
                 }, function (data) {
                     curpSeleccionada = data.contrato.CURP;
                     ID_FORMULARIO_CONTRATACION = data.contrato.ID_FORMULARIO_CONTRATACION;
-                    $('#step2, #step3, #step4,#step5').css("display", "flex");
+                    $('#step2, #step3, #step4,#step5,#step6,#step7').css("display", "flex");
                    
                      cargarBajasColaborador();
 
@@ -908,10 +917,10 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     });
 
     $('#datosgenerales-tab').closest('li').css("display", 'block');
-    $('#step2, #step3,#step4,#step5').css("display", "flex");
+    $('#step2, #step3,#step4,#step5,#step6,#step7').css("display", "flex");
 
     $('#step1-content').css("display", 'block');
-    $('#step2-content, #step3-content, #step4-content,#step5-content').css("display", 'none');
+    $('#step2-content, #step3-content, #step4-content,#step5-content,#step6-content,#step7-content').css("display", 'none');
 
 
     $('#DESCARGAR_CREDENCIAL').css("display", 'block');
@@ -1024,6 +1033,7 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     tablaDocumentosCargada = false;
     tablacontratosCargada = false;
     tablasoportecontratoCargada = false;
+    tablaCVCargada = false;
 
 
     $('#datosgenerales-tab').tab('show');

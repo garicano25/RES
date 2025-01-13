@@ -246,6 +246,12 @@
                                         </div>
                                         <span>Documentos del colaborador</span>
                                     </div>
+                                    <div class="multisteps-form__progress-btn" id="step6">
+                                        <div class="step-circle">
+                                            <i class="bi bi-file-earmark-text-fill"></i>
+                                        </div>
+                                        <span> Requisición de personal</span>
+                                    </div>
                                     <div class="multisteps-form__progress-btn" id="step3">
                                         <div class="step-circle">
                                             <i class="bi bi-file-earmark-text-fill"></i>
@@ -264,6 +270,13 @@
                                             <i class="bi bi-file-person-fill"></i>
                                         </div>
                                         <span>CV</span>
+                                    </div>
+
+                                    <div class="multisteps-form__progress-btn" id="step7">
+                                        <div class="step-circle">
+                                            <i class="bi bi-clock-history"></i>
+                                        </div>
+                                        <span>Historial de cambios</span>
                                     </div>
 
                                 </div>
@@ -628,7 +641,7 @@
 
                         <div class="card-body" id="BAJAS_COLABORADOR" style="display: block">
 
-                            <h1>BAJAS DEL COLABORADOR </h1>
+                            <h5>Historial del colaborador</h5>
 
 
                         </div>
@@ -642,11 +655,11 @@
 
 
 
-                    <!-- Step 2 de Documentos de soporte -->
+                    <!-- Step 2 de Documentos del colaborador -->
 
                     <div id="step2-content" style="display: none;">
                         <ol class="breadcrumb mt-5">
-                            <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-text-fill"></i> &nbsp;Documentos de soporte</h3>
+                            <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-text-fill"></i> &nbsp;Documentos del colaborador</h3>
                             <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_DOCUMENTOS_SOPORTE" style="margin-left: auto;">
                                 Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
                             </button>
@@ -1059,7 +1072,7 @@
                         <label>Tipo de documento *</label>
                         <select class="form-select" id="TIPO_DOCUMENTO_SOPORTECONTRATO" name="TIPO_DOCUMENTO_SOPORTECONTRATO" required>
                             <option value="0" disabled selected>Seleccione una opción</option>
-                            <option value="1">Requisición de personal</option>
+                            <option value="1">Descripción del puesto de trabajo (DPT) firmado por el colaborador</option>
                             <option value="2">Antecedentes, Imparcialidad y Beneficiarios</option>
                             <option value="3">Aviso de privacidad</option>
                             <option value="4">Encuesta socioeconómica y protección de datos</option>
