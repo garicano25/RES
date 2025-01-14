@@ -10,7 +10,7 @@
       Organigrama General <i class="bi bi-eye"></i>
     </button>
 
-    <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_departamento" id="abrirModalBtn" style="margin-left: auto;" data-bs-toggle="modal" data-bs-target="#ModalArea">
+    <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_departamento" id="abrirModalBtn" style="margin-left: auto;">
       Área <i class="bi bi-plus-circle"></i>
     </button>
   </ol>
@@ -62,16 +62,37 @@
                 <textarea class="form-control" id="DESCRIPCION_AREA" name="DESCRIPCION" rows="2"></textarea>
               </div>
 
-              <div class="mb-3">
-                <label>Subir documento</label>
-                <div class="input-group">
-                    <input type="file" class="form-control" id="DOCUMENTO_ORGANIGRAMA" name="DOCUMENTO_ORGANIGRAMA" accept=".pdf" style="width: auto; flex: 1;" >
-                    <button type="button" class="btn btn-light btn-sm ms-2" id="quitar_documento" style="display:none;">Quitar archivo</button>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label>Foto organigrama *</label>
+                    <style>
+                      .dropify-wrapper {
+                        height: 270px !important;
+                        border-radius: 5px;
+                        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+                        text-align: center;
+                      }
+
+                      .dropify-message p {
+                        font-size: 14px;
+                        margin: 0;
+                      }
+                    </style>
+                    <input type="file" accept="image/jpeg,image/x-png" id="FOTO_ORGANIGRAMA" name="FOTO_ORGANIGRAMA" class="dropify" data-allowed-file-extensions="jpg png" data-height="300" data-default-file="" />
+                  </div>
                 </div>
-            </div>
-            <div id="ERROR_DOCUMENTO" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
-            
-            
+
+                <div class="col-6">
+                  <label>Subir documento</label>
+                  <div class="input-group">
+                    <input type="file" class="form-control" id="DOCUMENTO_ORGANIGRAMA" name="DOCUMENTO_ORGANIGRAMA" accept=".pdf" />
+                    <button type="button" class="btn btn-light btn-sm ms-2" id="quitar_documento" style="display:none;">Quitar archivo</button>
+                  </div>
+                  <div id="ERROR_DOCUMENTO" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
+                </div>
+              </div>
+
 
 
               <button type="submit" id="guardarArea" class="btn btn-success mt-2 ">Guardar </button>
@@ -103,7 +124,7 @@
               <div class="row mt-2">
                 <div class="col-9">
                   <label class="mb-2">Líder a cargo</label>
-                  <select class="form-control" id="LIDER" name="LIDER" >
+                  <select class="form-control" id="LIDER" name="LIDER">
                     <option selected disabled>Seleccione una opción</option>
                     @foreach ($lideres as $lider)
                     <option value="{{ $lider->ID_CATALOGO_CATEGORIA }}" ">{{ $lider->NOMBRE_CATEGORIA }}</option>
@@ -150,7 +171,8 @@
                 top: 10px;
                 left: 10px;
                 background-color: #f2f2f2;
-                z-index: 300; /* Asegura que esté en frente */
+                z-index: 300;
+                /* Asegura que esté en frente */
                 border: solid 1px #7986cb;
               }
             </style>

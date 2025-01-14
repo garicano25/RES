@@ -69,6 +69,7 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+
 // Rutas públicas (excluidas del middleware global)
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -116,6 +117,11 @@ Route::get('/TablaCargos/{area_id}', [areasController::class, 'TablaCargos']);
 Route::get('/TablaEncargados/{area_id}', [areasController::class, 'TablaEncargados']);
 Route::get('/listaEncagadosAreas/{area_id}', [areasController::class, 'listaEncagadosAreas']);
 Route::get('/getDataOrganigrama/{area_id}/{esGeneral}', [areasController::class, 'getDataOrganigrama']);
+
+
+Route::get('/mostrarFoto/{id}', [areasController::class, 'mostrarFoto']);
+
+
 
 // PPT
 Route::get('/PPT', [pptController::class, 'index']);

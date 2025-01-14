@@ -461,6 +461,22 @@
                                 </div>
 
 
+                                <div class="row">
+                                    <div class="col-2">
+                                        <div class="form-group" style="text-align: center;">
+                                            <button type="button" class="btn btn-danger botonagregarbeneficiario" id="botonagregardocumentoficial">
+                                                Agregar documento de identificación oficial <i class="bi bi-plus-circle"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="listadedocumentoficial mt-4"></div>
+
+
+
+
+<!-- 
                                 <div class="col-2 mb-3">
                                     <label for="estadoCivil">Tipo *</label>
                                     <select class="form-control" id="TIPO_DOCUMENTO_IDENTIFICACION" name="TIPO_DOCUMENTO_IDENTIFICACION" required>
@@ -469,6 +485,8 @@
                                         <option value="2">Residencia Permanente</option>
                                         <option value="3">INE</option>
                                         <option value="4">Pasaporte</option>
+                                        <option value="5">Licencia de conducir</option>
+
                                     </select>
                                 </div>
                                 <div class="col-2 mb-3">
@@ -492,7 +510,9 @@
                                 <div class="col-3 mb-3">
                                     <label>Expedido en *</label>
                                     <input type="text" class="form-control" id="EXPEDIDO_DOCUMENTO" name="EXPEDIDO_DOCUMENTO" required>
-                                </div>
+                                </div> -->
+
+
 
                                 <div class="col-12 mb-3 text-center mt-4">
                                     <h5><b>Domicilio</b></h5>

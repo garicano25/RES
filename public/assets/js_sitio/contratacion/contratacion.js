@@ -194,7 +194,7 @@ $(document).ready(function() {
 
         $("#BAJAS_COLABORADOR").css("display", "none");
         $("#BAJAS_COLABORADOR").html(`
-            <h1>BAJAS DEL COLABORADOR</h1>
+            <h5>Historial del colaborador</h5>
         `);
 
 
@@ -1250,7 +1250,7 @@ function cargarBajasColaborador() {
     
     // Limpiar el contenido del contenedor antes de generar una nueva tabla
     container.innerHTML = `
-        <h1>BAJAS DEL COLABORADOR</h1>
+        <h5>Historial del colaborador</h5>
     `;
 
     fetch(`/obtenerbajasalta`, {

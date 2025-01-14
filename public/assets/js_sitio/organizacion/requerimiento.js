@@ -194,7 +194,6 @@ var Tablarequerimiento = $("#Tablarequerimiento").DataTable({
             render: function(data) { return data ? data : 'N/A'; }
         },
 
-        { data: 'BTN_RP' }, 
         { data: 'BTN_EDITAR' },
         { data: 'BTN_ELIMINAR' }
     ],
@@ -205,9 +204,8 @@ var Tablarequerimiento = $("#Tablarequerimiento").DataTable({
         { targets: 3, title: 'Tipo de vacante', className: 'all text-center' },
         { targets: 4, title: 'Motivo', className: 'all text-center' },
         { targets: 5, title: 'Fecha de creación', className: 'all text-center' },
-        { targets: 6, title: 'Descargar', className: 'all text-center' },
-        { targets: 7, title: 'Editar', className: 'all text-center' },
-        { targets: 8, title: 'Activo', className: 'all text-center' }
+        { targets: 6, title: 'Editar', className: 'all text-center' },
+        { targets: 7, title: 'Activo', className: 'all text-center' }
     ]
 });
 

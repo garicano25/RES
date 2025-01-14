@@ -292,6 +292,10 @@ class areasController extends Controller
     }
 
 
+  
+
+
+
     public function getDataOrganigrama($area_id, $esGeneral)
     {
         try {
@@ -317,66 +321,49 @@ class areasController extends Controller
         }
     }
 
+
+   
+
+
+
+
     public function store(Request $request)
     {
 
         try {
             switch (intval($request->api)) {
                     //Guardar Area
-                // case 1:
-
-                //     //Guardamos Area
-                //     if ($request->ID_AREA == 0) {
-
-                //         DB::statement('ALTER TABLE areas AUTO_INCREMENT=1;');
-                //         $areas = areasModel::create($request->all());
-                //     } else { //Editamos Area y eliminar area
-
-                //         if (!isset($request->ELIMINAR)) {
 
 
-                //             $areas = areasModel::find($request->ID_AREA);
-                //             $areas->update($request->all());
-                //         } else {
-
-                //             $areas = areasModel::where('ID_AREA', $request['ID_AREA'])->delete();
-
-                //             $response['code']  = 1;
-                //             $response['area']  = 'Eliminada';
-                //             return response()->json($response);
-                //         }
-                //     }
-
-                //     $response['code']  = 1;
-                //     $response['area']  = $areas;
-                //     return response()->json($response);
-
-                //     break;
-
-              
 
                 case 1:
                     // Guardamos Área y documento
-                    if ($request->ID_AREA == 0) {
-                        // Reiniciamos el AUTO_INCREMENT si es necesario
+                    if ($request->ID_AREA == 0
+                    ) {
                         DB::statement('ALTER TABLE areas AUTO_INCREMENT=1;');
-                
-                        // Guardamos los datos del área
-                        $areas = areasModel::create($request->except('DOCUMENTO_ORGANIGRAMA')); 
-                
-                        // Procesamos el documento
+
+                        $areas = areasModel::create($request->except(['DOCUMENTO_ORGANIGRAMA', 'FOTO_ORGANIGRAMA']));
+
                         if ($request->hasFile('DOCUMENTO_ORGANIGRAMA')) {
                             $documento = $request->file('DOCUMENTO_ORGANIGRAMA');
                             $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE) . '.' . $documento->getClientOriginalExtension();
-                            $rutaCarpeta = 'Documentos organigrama/' . $areas->ID_AREA;
+                            $rutaCarpeta = 'Documentos organigrama/' . $areas->ID_AREA . '/Documento de soporte';
                             $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
-                
-                            // Actualizamos el registro con la ruta del documento
+
                             $areas->DOCUMENTO_ORGANIGRAMA = $rutaCompleta;
                             $areas->save();
                         }
+
+                        if ($request->hasFile('FOTO_ORGANIGRAMA')) {
+                            $foto = $request->file('FOTO_ORGANIGRAMA');
+                            $nombreFoto = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE) . '.' . $foto->getClientOriginalExtension();
+                            $rutaCarpeta = 'Documentos organigrama/' . $areas->ID_AREA . '/Foto organigrama';
+                            $rutaCompleta = $foto->storeAs($rutaCarpeta, $nombreFoto);
+
+                            $areas->FOTO_ORGANIGRAMA = $rutaCompleta;
+                            $areas->save();
+                        }
                     } else {
-                        // Editamos Área o eliminamos Área
                         if (isset($request->ELIMINAR)) {
                             if ($request->ELIMINAR == 1) {
                                 $areas = areasModel::where('ID_AREA', $request['ID_AREA'])->update(['ACTIVO' => 0]);
@@ -389,34 +376,46 @@ class areasController extends Controller
                             }
                         } else {
                             $areas = areasModel::find($request->ID_AREA);
-                            $areas->update($request->except('DOCUMENTO_ORGANIGRAMA'));
-                
-                            // Procesamos el documento si se envió uno nuevo
+                            $areas->update($request->except(['DOCUMENTO_ORGANIGRAMA', 'FOTO_ORGANIGRAMA']));
+
                             if ($request->hasFile('DOCUMENTO_ORGANIGRAMA')) {
-                                // Eliminamos el archivo anterior si existe
                                 if ($areas->DOCUMENTO_ORGANIGRAMA && Storage::exists($areas->DOCUMENTO_ORGANIGRAMA)) {
-                                    Storage::delete($areas->DOCUMENTO_ORGANIGRAMA); 
+                                    Storage::delete($areas->DOCUMENTO_ORGANIGRAMA);
                                 }
-                
+
                                 $documento = $request->file('DOCUMENTO_ORGANIGRAMA');
                                 $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE) . '.' . $documento->getClientOriginalExtension();
-                                $rutaCarpeta = 'Documentos organigrama/' . $areas->ID_AREA;
+                                $rutaCarpeta = 'Documentos organigrama/' . $areas->ID_AREA . '/Documento de soporte';
                                 $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
-                
-                                // Actualizamos el registro con la nueva ruta del documento
+
                                 $areas->DOCUMENTO_ORGANIGRAMA = $rutaCompleta;
                                 $areas->save();
                             }
-                
+
+                            if ($request->hasFile('FOTO_ORGANIGRAMA')) {
+                                if ($areas->FOTO_ORGANIGRAMA && Storage::exists($areas->FOTO_ORGANIGRAMA)) {
+                                    Storage::delete($areas->FOTO_ORGANIGRAMA);
+                                }
+
+                                $foto = $request->file('FOTO_ORGANIGRAMA');
+                                $nombreFoto = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE) . '.' . $foto->getClientOriginalExtension();
+                                $rutaCarpeta = 'Documentos organigrama/' . $areas->ID_AREA . '/Foto organigrama';
+                                $rutaCompleta = $foto->storeAs($rutaCarpeta, $nombreFoto);
+
+                                $areas->FOTO_ORGANIGRAMA = $rutaCompleta;
+                                $areas->save();
+                            }
+
                             $response['code'] = 1;
                             $response['area'] = 'Actualizada';
                         }
                     }
-                
+
                     $response['code'] = 1;
                     $response['area'] = $areas;
                     return response()->json($response);
                     break;
+
                 
                     
 
@@ -476,4 +475,16 @@ class areasController extends Controller
             return response()->json('Error al guardar el Area');
         }
     }
+
+
+
+
+    public function mostrarFoto($area_id)
+    {
+        $foto = areasModel::findOrFail($area_id);
+        return Storage::response($foto->FOTO_ORGANIGRAMA);
+    }
+
+
+    
 }

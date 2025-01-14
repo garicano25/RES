@@ -330,6 +330,8 @@ $('#Tablausuarios tbody').on('click', 'td>button.EDITAR', function () {
         $('#FOTO_USUARIO').dropify().data('dropify').resetPreview();
         $('#FOTO_USUARIO').dropify().data('dropify').clearElement();
     }
+
+    
 });
 
 

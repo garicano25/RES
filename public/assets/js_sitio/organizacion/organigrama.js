@@ -362,8 +362,47 @@ $('#TablaAreas tbody').on('click', 'td>button.EDITAR', function () {
     var row = TablaAreas.row(tr);
     ID_AREA = row.data().ID_AREA
 
+
     //Rellenamos los datos del formulario
-    editarDatoTabla(row.data(), 'formArea', 'ModalArea')
+    editarDatoTabla(row.data(), 'formArea', 'ModalArea',1)
+
+
+           
+  if (row.data().FOTO_ORGANIGRAMA) {
+        var archivo = row.data().FOTO_ORGANIGRAMA;
+        var extension = archivo.substring(archivo.lastIndexOf("."));
+        var imagenUrl = '/mostrarFoto/' + row.data().ID_AREA + extension;
+        console.log(imagenUrl); 
+
+        if ($('#FOTO_ORGANIGRAMA').data('dropify')) {
+            $('#FOTO_ORGANIGRAMA').dropify().data('dropify').destroy();
+            $('#FOTO_ORGANIGRAMA').dropify().data('dropify').settings.defaultFile = imagenUrl;
+            $('#FOTO_ORGANIGRAMA').dropify().data('dropify').init();
+        } else {
+            $('#FOTO_ORGANIGRAMA').attr('data-default-file', imagenUrl);
+            $('#FOTO_ORGANIGRAMA').dropify({
+                messages: {
+                    'default': 'Arrastre la imagen aquí o haga click',
+                    'replace': 'Arrastre la imagen o haga clic para reemplazar',
+                    'remove': 'Quitar',
+                    'error': 'Ooops, ha ocurrido un error.'
+                },
+                error: {
+                    'fileSize': 'Demasiado grande ({{ value }} max).',
+                    'minWidth': 'Ancho demasiado pequeño (min {{ value }}}px).',
+                    'maxWidth': 'Ancho demasiado grande (max {{ value }}}px).',
+                    'minHeight': 'Alto demasiado pequeño (min {{ value }}}px).',
+                    'maxHeight': 'Alto demasiado grande (max {{ value }}px max).',
+                    'imageFormat': 'Formato no permitido, sólo ({{ value }}).'
+                }
+            });
+        }
+    } else {
+        $('#FOTO_ORGANIGRAMA').dropify().data('dropify').resetPreview();
+        $('#FOTO_ORGANIGRAMA').dropify().data('dropify').clearElement();
+    }
+
+
 
     $('#nav-encargados-tab').prop('disabled', false)
     $('#nav-cargos-tab').prop('disabled', false)
@@ -372,8 +411,10 @@ $('#TablaAreas tbody').on('click', 'td>button.EDITAR', function () {
     TablaEncargados(ID_AREA)
 
     $('#ModalArea .modal-title').html(row.data().NOMBRE);
+ 
 
 })
+
 
 $('#TablaAreas tbody').on('click', 'td>button.ELIMINAR', function () {
 
@@ -662,3 +703,45 @@ $('#Capturarorganigrama').on('click', function () {
         });
     }, 100); // Tiempo de espera para asegurar renderizado
 });
+
+
+
+
+
+$(document).ready(function() {
+    $('#abrirModalBtn').on('click', function() {
+        limpiarFormularioUsuario(); 
+
+        $('#FOTO_ORGANIGRAMA').dropify({
+            messages: {
+                'default': 'Arrastre la imagen aquí o haga clic',
+                'replace': 'Arrastre la imagen aquí o haga clic para reemplazar',
+                'remove':  'Quitar',
+                'error':   'Ooops, ha ocurrido un error.'
+            },
+            error: {
+                'fileSize': 'El archivo es demasiado grande (máx. {{ value }}).',
+                'minWidth': 'El ancho de la imagen es demasiado pequeño (mín. {{ value }}px).',
+                'maxWidth': 'El ancho de la imagen es demasiado grande (máx. {{ value }}px).',
+                'minHeight': 'La altura de la imagen es demasiado pequeña (mín. {{ value }}px).',
+                'maxHeight': 'La altura de la imagen es demasiado grande (máx. {{ value }}px).',
+                'imageFormat': 'Formato no permitido, sólo se aceptan: ({{ value }}).'
+            }
+        });
+
+        $('#ModalArea').modal('show');
+    });
+
+});
+
+
+
+
+function limpiarFormularioUsuario() {
+    $('#formArea')[0].reset(); 
+    $('#formCategoria')[0].reset(); 
+
+    var drEvent = $('#FOTO_ORGANIGRAMA').dropify().data('dropify');
+    drEvent.resetPreview();
+    drEvent.clearElement();
+}
