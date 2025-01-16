@@ -5,65 +5,69 @@
 
 
 <style type="text/css" media="screen">
-/* Estilos personalizados para Dropify */
-/* Estilos personalizados para Dropify */
-.dropify-wrapper {
-    height: 270px !important; /* Ajuste de altura */
-    border-radius: 5px; /* Borde redondeado */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Sombra */
-    text-align: center; /* Centrar el contenido */
-}
+    /* Estilos personalizados para Dropify */
+    /* Estilos personalizados para Dropify */
+    .dropify-wrapper {
+        height: 270px !important;
+        /* Ajuste de altura */
+        border-radius: 5px;
+        /* Borde redondeado */
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        /* Sombra */
+        text-align: center;
+        /* Centrar el contenido */
+    }
 
-.dropify-message p {
-    font-size: 14px; /* Tamaño de fuente del mensaje */
-    margin: 0; /* Quitar márgenes */
-}
-
-
-/* Otros ajustes de estilo para el modal */
-.modal-header .close {
-    font-size: 1.5rem;
-}
-
-.modal-footer {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.btn-default.waves-effect {
-    background-color: #f1f1f1;
-    border: 1px solid #ddd;
-}
-
-.btn-danger {
-    background-color: #d9534f;
-    border-color: #d43f3a;
-}
-
-.form-control {
-    margin-bottom: 15px;
-}
+    .dropify-message p {
+        font-size: 14px;
+        /* Tamaño de fuente del mensaje */
+        margin: 0;
+        /* Quitar márgenes */
+    }
 
 
-#Tablausuarios thead th:nth-child(6) {
-    text-align: center;
-}
+    /* Otros ajustes de estilo para el modal */
+    .modal-header .close {
+        font-size: 1.5rem;
+    }
 
-#Tablausuarios tbody td:nth-child(6) {
-    text-align: left !important;
-}
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+    }
 
-#Tablausuarios ul {
-    padding-left: 20px; 
-    margin: 0;
-}
+    .btn-default.waves-effect {
+        background-color: #f1f1f1;
+        border: 1px solid #ddd;
+    }
 
-#Tablausuarios ul li {
-    margin: 0;
-    padding: 0;
-}
+    .btn-danger {
+        background-color: #d9534f;
+        border-color: #d43f3a;
+    }
+
+    .form-control {
+        margin-bottom: 15px;
+    }
 
 
+    #Tablausuarios thead th:nth-child(6) {
+        text-align: center;
+    }
+
+    #Tablausuarios tbody td:nth-child(6) {
+        text-align: left !important;
+    }
+
+    #Tablausuarios ul {
+        padding-left: 20px;
+        margin: 0;
+    }
+
+    #Tablausuarios ul li {
+        margin: 0;
+        padding: 0;
+    }
 </style>
 
 <div class="contenedor-contenido">
@@ -131,6 +135,12 @@
                                                 <input type="text" class="form-control" id="EMPLEADO_APELLIDOMATERNO" name="EMPLEADO_APELLIDOMATERNO" required>
                                             </div>
                                         </div>
+                                        <div class="col-12 campo_dato_empleado">
+                                            <div class="form-group">
+                                                <label>Curp *</label>
+                                                <input type="text" class="form-control" id="CURP" name="CURP" required>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -138,17 +148,18 @@
                                         <label id="FOTO_TITULO">Foto usuario *</label>
                                         <style>
                                             .dropify-wrapper {
-                                                height: 270px !important;
+                                                height: 333 !important;
                                                 border-radius: 5px;
-                                                box-shadow: 0 0 5px rgba(0,0,0,0.1);
+                                                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
                                                 text-align: center;
                                             }
+
                                             .dropify-message p {
                                                 font-size: 14px;
                                                 margin: 0;
                                             }
                                         </style>
-                                        <input type="file" accept="image/jpeg,image/x-png" id="FOTO_USUARIO" name="FOTO_USUARIO" class="dropify" data-allowed-file-extensions="jpg png" data-height="300" data-default-file=""  />
+                                        <input type="file" accept="image/jpeg,image/x-png" id="FOTO_USUARIO" name="FOTO_USUARIO" class="dropify" data-allowed-file-extensions="jpg png" data-height="300" data-default-file="" />
                                     </div>
                                 </div>
                             </div>
@@ -211,11 +222,11 @@
                                     <span id="PASSWORD_MENSAJE" style="display: none; color: red; font-weight: bold;"></span>
                                 </div>
                             </div>
-                            
-                            
-                         </div> {{-- fin del col 8 --}}
 
-                         <div class="col-4">
+
+                        </div> {{-- fin del col 8 --}}
+
+                        <div class="col-4">
                             <div class="row">
                                 <div class="col-12">
                                     <label>[roles] *</label>
@@ -231,43 +242,43 @@
                                                     border-radius: 0.25rem;
                                                     line-height: 16px;
                                                 }
-                        
+
                                                 .switch-container {
                                                     display: flex;
                                                     align-items: center;
                                                     justify-content: flex-start;
                                                     margin-bottom: -5px;
                                                 }
-                        
+
                                                 .switch-container .form-check {
                                                     margin-right: 10px;
                                                 }
-                        
+
                                                 .demo-switch-title {
                                                     font-size: 14px;
                                                     color: #444;
                                                 }
                                             </style>
-                                                <div class="row" id="rol_lista">
-                                                    @foreach ($roles as $rol)
-                                                    <div class="col-12 switch-container">
-                                                        <div class="form-check form-switch" style="margin-bottom: 10px;">
-                                                            <input class="form-check-input checkbox_rol" type="checkbox" id="role_{{ $loop->index }}" name="NOMBRE_ROL[]" value="{{ $rol }}">
-                                                            <label class="form-check-label demo-switch-title" for="role_{{ $loop->index }}" style="margin-left: 10px;">{{ $rol }}</label>
-                                                        </div>
+                                            <div class="row" id="rol_lista">
+                                                @foreach ($roles as $rol)
+                                                <div class="col-12 switch-container">
+                                                    <div class="form-check form-switch" style="margin-bottom: 10px;">
+                                                        <input class="form-check-input checkbox_rol" type="checkbox" id="role_{{ $loop->index }}" name="NOMBRE_ROL[]" value="{{ $rol }}">
+                                                        <label class="form-check-label demo-switch-title" for="role_{{ $loop->index }}" style="margin-left: 10px;">{{ $rol }}</label>
                                                     </div>
-                                                    @endforeach
                                                 </div>
-                                                
-                                        
+                                                @endforeach
+                                            </div>
+
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div> {{-- fin del col 4 --}}
-                        
-                        
-                        
+
+
+
 
 
                     </div>

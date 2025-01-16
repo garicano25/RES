@@ -20,6 +20,7 @@ class usuarioModel extends Authenticatable
         'EMPLEADO_NOMBRE',
         'EMPLEADO_APELLIDOPATERNO',
         'EMPLEADO_APELLIDOMATERNO',
+        'CURP',
         'FOTO_USUARIO',
         'EMPLEADO_DIRECCION',
         'EMPLEADO_CARGO',

@@ -188,7 +188,7 @@ $(document).ready(function() {
         });
 
         $(".listadeBeneficiario").empty();
-
+        $(".listadedocumentoficial").empty();
         $("#steps_menu_tab1").click();
 
 
@@ -431,90 +431,6 @@ function cargarTablaContratacionInactivo() {
         ]
     });
 }
-
-// $(document).on('change', '.ACTIVAR', function () {
-//     var checkbox = $(this); 
-//     var row = checkbox.closest('tr'); 
-//     var data = Tablacontratacion1.row(row).data(); 
-//     var id = checkbox.data('id'); 
-//     var estadoAnterior = checkbox.prop('checked');
-
-//     if (!id || !data) {
-//         Swal.fire({
-//             icon: 'error',
-//             title: 'Error',
-//             text: 'No se pudo obtener la información del colaborador',
-//             timer: 2000,
-//             timerProgressBar: true
-//         });
-//         return;
-//     }
-
-//     var nombreColaborador = `${data.NOMBRE_COLABORADOR} ${data.PRIMER_APELLIDO} ${data.SEGUNDO_APELLIDO}`;
-
-//     var accion = "activar";
-//     var url = '/activarColaborador/' + id;
-
-//     Swal.fire({
-//         title: `Confirme para ${accion} al colaborador`,
-//         text: `Está a punto de activar a ${nombreColaborador}. ¿Desea continuar?`,
-//         icon: "warning",
-//         showCancelButton: true,
-//         confirmButtonText: 'Sí, confirmar',
-//         cancelButtonText: 'Cancelar'
-//     }).then((result) => {
-//         if (result.isConfirmed) {
-//             $.ajax({
-//                 type: "POST",
-//                 url: url,
-//                 dataType: "json",
-//                 headers: {
-//                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//                 },
-//                 success: function (response) {
-//                     if (response.status === "success") {
-//                         if ($.fn.DataTable.isDataTable('#Tablacontratacion1')) {
-//                             Tablacontratacion1.ajax.reload(null, false);
-//                         }
-
-//                         if ($.fn.DataTable.isDataTable('#Tablacontratacion')) {
-//                             Tablacontratacion.ajax.reload(null, false);
-//                         }
-
-//                         Swal.fire({
-//                             icon: 'success',
-//                             title: 'Colaborador activado',
-//                             text: `${nombreColaborador} ha sido activado exitosamente`,
-//                             timer: 2000,
-//                             timerProgressBar: true
-//                         });
-//                     } else {
-//                         Swal.fire({
-//                             icon: response.status,
-//                             title: 'Atención',
-//                             text: response.msj,
-//                             timer: 2000,
-//                             timerProgressBar: true
-//                         });
-//                         checkbox.prop('checked', !estadoAnterior);
-//                     }
-//                 },
-//                 error: function () {
-//                     Swal.fire({
-//                         icon: 'error',
-//                         title: 'Error',
-//                         text: 'No se pudo completar la acción',
-//                         timer: 2000,
-//                         timerProgressBar: true
-//                     });
-//                     checkbox.prop('checked', !estadoAnterior);
-//                 }
-//             });
-//         } else {
-//             checkbox.prop('checked', !estadoAnterior);
-//         }
-//     });
-// });
 
 
 $(document).on('change', '.ACTIVAR', function () {
@@ -766,6 +682,7 @@ $('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
     $(".listadeBeneficiario").empty();
     obtenerDatosBeneficiarios(row);
 
+
     cargarBajasColaborador();
 
 
@@ -805,16 +722,13 @@ document.getElementById('step1').addEventListener('click', function() {
 
 
 document.getElementById('DESCARGAR_CREDENCIAL').addEventListener('click', function () {
-    // Crear un enlace temporal
     const link = document.createElement('a');
     link.href = '/descargar-credencial';
     link.download = 'credencial_generada.pptx'; // Nombre del archivo sugerido
 
-    // Simular un clic en el enlace
     document.body.appendChild(link);
     link.click();
 
-    // Eliminar el enlace temporal
     document.body.removeChild(link);
 });
 
@@ -1102,6 +1016,8 @@ function validarPorcentajeBeneficiarios() {
     }
 }
 
+
+// AGREGAR BENEFICIARIO
 document.addEventListener("DOMContentLoaded", function () {
     const botonAgregar = document.getElementById('botonagregarbeneficiario');
     botonAgregar.addEventListener('click', function () {
@@ -1245,10 +1161,91 @@ function obtenerDatosBeneficiarios(data) {
 
 
 
+// AGREGAR DOCUEMENTO DE IDENTIFICACION OFICICAL 
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const botonAgregarDoc = document.getElementById('botonagregardocumentoficial');
+    botonAgregarDoc.addEventListener('click', function () {
+        agregarDocumento();
+    });
+
+    function agregarDocumento() {
+        const divDocumentoOfi = document.createElement('div');
+        divDocumentoOfi.classList.add('row', 'generardocumento', 'm-3');
+        divDocumentoOfi.innerHTML = `
+            <div class="col-lg-12 col-sm-1">
+                <div class="form-group">
+                    <h5><i class="bi bi-person"></i> Agregar documento</h5>                    
+                </div>
+            </div>
+            <div class="col-2 mb-3">
+                <label>Tipo *</label>
+                <select class="form-control"  name="TIPO_DOCUMENTO_IDENTIFICACION" required>
+                    <option value="0" disabled selected>Seleccione una opción</option>
+                    <option value="1">Residencia temporal</option>
+                    <option value="2">Residencia Permanente</option>
+                    <option value="3">INE</option>
+                    <option value="4">Pasaporte</option>
+                    <option value="5">Licencia de conducir</option>
+                </select>
+            </div>
+             <div class="col-2 mb-3">
+                <label>Emisión *</label>
+                <div class="input-group">
+                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd"  name="EMISION_DOCUMENTO" required>
+                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                </div>
+            </div>
+             <div class="col-2 mb-3">
+                <label>Vigencia *</label>
+                <div class="input-group">
+                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="VIGENCIA_DOCUMENTO" name="VIGENCIA_DOCUMENTO" required>
+                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                </div>
+            </div>
+            <div class="col-3 mb-3">
+                <label>Número *</label>
+                <input type="text" class="form-control" id="NUMERO_DOCUMENTO" name="NUMERO_DOCUMENTO" required>
+            </div>
+            <div class="col-3 mb-3">
+                <label>Expedido en *</label>
+                <input type="text" class="form-control" id="EXPEDIDO_DOCUMENTO" name="EXPEDIDO_DOCUMENTO" required>
+            </div> 
+            <br>
+            <div class="col-12 mt-4">
+                <div class="form-group" style="text-align: center;">
+                    <button type="button" class="btn btn-danger botonEliminarDocumento">Eliminar documento <i class="bi bi-trash-fill"></i></button>
+                </div>
+            </div>
+        `;
+        const contenedor = document.querySelector('.listadedocumentoficial');
+        contenedor.appendChild(divDocumentoOfi);
+
+        const botonEliminar = divDocumentoOfi.querySelector('.botonEliminarDocumento');
+        botonEliminar.addEventListener('click', function () {
+            contenedor.removeChild(divDocumentoOfi);
+        });
+    }
+
+    $(document).on('focus', '.mydatepicker', function () {
+        if (!$(this).data('datepicker')) {
+            $(this).datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayHighlight: true,
+                language: 'es',
+            });
+        }
+    });
+});
+
+
+
+
 function cargarBajasColaborador() {
     const container = document.getElementById('BAJAS_COLABORADOR');
     
-    // Limpiar el contenido del contenedor antes de generar una nueva tabla
     container.innerHTML = `
         <h5>Historial del colaborador</h5>
     `;

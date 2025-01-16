@@ -117,11 +117,7 @@ Route::get('/TablaCargos/{area_id}', [areasController::class, 'TablaCargos']);
 Route::get('/TablaEncargados/{area_id}', [areasController::class, 'TablaEncargados']);
 Route::get('/listaEncagadosAreas/{area_id}', [areasController::class, 'listaEncagadosAreas']);
 Route::get('/getDataOrganigrama/{area_id}/{esGeneral}', [areasController::class, 'getDataOrganigrama']);
-
-
 Route::get('/mostrarFoto/{id}', [areasController::class, 'mostrarFoto']);
-
-
 
 // PPT
 Route::get('/PPT', [pptController::class, 'index']);

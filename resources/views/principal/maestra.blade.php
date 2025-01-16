@@ -422,7 +422,7 @@
     @endif
 
     @if(request()->is('PPT'))
-    <script src="/assets/js_sitio/organizacion/PPT.js?v=2.0"></script>
+    <script src="/assets/js_sitio/organizacion/PPT.js?v=3.0"></script>
     @endif
 
     @if(request()->is('DPT'))
@@ -451,7 +451,7 @@
     @endif
 
     @if(request()->is('RequisiciónDePersonal'))
-    <script src="/assets/js_sitio/organizacion/requerimiento.js?v=2.0"></script>
+    <script src="/assets/js_sitio/organizacion/requerimiento.js?v=3.0"></script>
     @endif
 
     @if(request()->is('CatálogoDeVacantes'))

@@ -464,8 +464,8 @@
                                 <div class="row">
                                     <div class="col-2">
                                         <div class="form-group" style="text-align: center;">
-                                            <button type="button" class="btn btn-danger botonagregarbeneficiario" id="botonagregardocumentoficial">
-                                                Agregar documento de identificación oficial <i class="bi bi-plus-circle"></i>
+                                            <button type="button" class="btn btn-danger botonagregardocumentoficial" id="botonagregardocumentoficial">
+                                                Agregar documento <i class="bi bi-plus-circle"></i>
                                             </button>
                                         </div>
                                     </div>
@@ -476,7 +476,7 @@
 
 
 
-<!-- 
+                                <!-- 
                                 <div class="col-2 mb-3">
                                     <label for="estadoCivil">Tipo *</label>
                                     <select class="form-control" id="TIPO_DOCUMENTO_IDENTIFICACION" name="TIPO_DOCUMENTO_IDENTIFICACION" required>
@@ -557,7 +557,7 @@
                                 </div>
 
                                 <div class="col-3 mb-3">
-                                    <label>Nombre del Municipio o Demarcación Territorial *</label>
+                                    <label>Nombre del municipio o demarcación territorial *</label>
                                     <input type="text" class="form-control" id="NOMBRE_MUNICIPIO" name="NOMBRE_MUNICIPIO" required>
                                 </div>
 
