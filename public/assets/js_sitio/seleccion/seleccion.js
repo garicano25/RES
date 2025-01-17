@@ -3612,54 +3612,43 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
 
 
 
-             // Rellenar los campos de los cursos
              let cursos = data.cursos;
 
-             // Variables para rastrear si los acordeones necesitan abrirse
              let openAccordion1 = false;
              let openAccordion2 = false;
              let openAccordion3 = false;
              let openAccordion4 = false;
 
-             // Para rellenar los cursos en los acordeones
              cursos.forEach((curso, index) => {
                  if (index < 10) {
-                     // Primer acordeón (1-10)
                      document.getElementById(`CURSO${index + 1}_PPT`).value = curso.CURSO_PPT || '';
                      document.getElementById(`CURSO${index + 1}_REQUERIDO_PPT`).checked = curso.CURSO_REQUERIDO === 'X' ? true : false;
                      document.getElementById(`CURSO${index + 1}_DESEABLE_PPT`).checked = curso.CURSO_DESEABLE === 'X' ? true : false;
 
-                     // Si algún curso tiene datos, abre el acordeón 1
                      if (curso.CURSO_PPT || curso.CURSO_REQUERIDO || curso.CURSO_DESEABLE) {
                          openAccordion1 = true;
                      }
                  } else if (index >= 10 && index < 20) {
-                     // Segundo acordeón (11-20)
                      document.getElementById(`CURSO${index + 1}_PPT`).value = curso.CURSO_PPT || '';
                      document.getElementById(`CURSO${index + 1}_REQUERIDO_PPT`).checked = curso.CURSO_REQUERIDO === 'X' ? true : false;
                      document.getElementById(`CURSO${index + 1}_DESEABLE_PPT`).checked = curso.CURSO_DESEABLE === 'X' ? true : false;
 
-                     // Si algún curso tiene datos, abre el acordeón 2
                      if (curso.CURSO_PPT || curso.CURSO_REQUERIDO || curso.CURSO_DESEABLE) {
                          openAccordion2 = true;
                      }
                  } else if (index >= 20 && index < 30) {
-                     // Tercer acordeón (21-30)
                      document.getElementById(`CURSO${index + 1}_PPT`).value = curso.CURSO_PPT || '';
                      document.getElementById(`CURSO${index + 1}_REQUERIDO_PPT`).checked = curso.CURSO_REQUERIDO === 'X' ? true : false;
                      document.getElementById(`CURSO${index + 1}_DESEABLE_PPT`).checked = curso.CURSO_DESEABLE === 'X' ? true : false;
 
-                     // Si algún curso tiene datos, abre el acordeón 3
                      if (curso.CURSO_PPT || curso.CURSO_REQUERIDO || curso.CURSO_DESEABLE) {
                          openAccordion3 = true;
                      }
                  } else if (index >= 30 && index < 40) {
-                     // Cuarto acordeón (31-40)
                      document.getElementById(`CURSO${index + 1}_PPT`).value = curso.CURSO_PPT || '';
                      document.getElementById(`CURSO${index + 1}_REQUERIDO_PPT`).checked = curso.CURSO_REQUERIDO === 'X' ? true : false;
                      document.getElementById(`CURSO${index + 1}_DESEABLE_PPT`).checked = curso.CURSO_DESEABLE === 'X' ? true : false;
 
-                     // Si algún curso tiene datos, abre el acordeón 4
                      if (curso.CURSO_PPT || curso.CURSO_REQUERIDO || curso.CURSO_DESEABLE) {
                          openAccordion4 = true;
                      }
@@ -3737,7 +3726,7 @@ $("#guardarFormSeleccionPPT").click(function (e) {
 
 
                         if ($.fn.DataTable.isDataTable('#Tablapptseleccion')) {
-                            Tablapptseleccion.ajax.reload(null, false); // Recargar la tabla sin reiniciar la paginación
+                            Tablapptseleccion.ajax.reload(null, false); 
                         }
 
 
@@ -3780,7 +3769,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
                         alertMensaje('success', 'Información editada correctamente', 'Información guardada');
                         $('#miModal_ppt').modal('hide');
                         document.getElementById('formularioSeleccionPPT').reset();
-                        // Tablapptseleccion.ajax.reload();
 
 
                         if ($.fn.DataTable.isDataTable('#Tablapptseleccion')) {
@@ -3798,12 +3786,606 @@ $("#guardarFormSeleccionPPT").click(function (e) {
     }
 });
 
+// SUMA DE SELECCION
+
+
+
+
+// document.addEventListener("DOMContentLoaded", function () {
+//     // Radios del 5%
+//     const radioButtons = document.querySelectorAll(
+//         "input[name='EDAD_CUMPLE_PPT'], input[name='GENERO_CUMPLE_PPT'], input[name='ESTADO_CIVIL_CUMPLE_PPT'], input[name='NACIONALIDAD_CUMPLE_PPT']"
+//     );
+//     const pesoPorSeccion5 = 5 / 4; // 5% dividido entre 4 secciones
+
+//     // Pares select-radio para el 20%
+//     const selectRadioPairs = [
+//         { select: "SECUNDARIA_PPT", radio: "SECUNDARIA_CUMPLE_PPT" },
+//         { select: "TECNICA_PPT", radio: "TECNICA_CUMPLE_PPT" },
+//         { select: "TECNICO_PPT", radio: "TECNICO_CUMPLE_PPT" },
+//         { select: "UNIVERSITARIO_PPT", radio: "UNIVERSITARIO_CUMPLE_PPT" },
+//         { select: "SITUACION_PPT", radio: "SITUACION_CUMPLE_PPT" },
+//         { select: "CEDULA_PPT", radio: "CEDULA_CUMPLE_PPT" },
+//         { select: "AREA1_PPT", radio: "AREA1_CUMPLE_PPT" },
+//         { select: "AREA2_PPT", radio: "AREA2_CUMPLE_PPT" },
+//         { select: "AREA3_PPT", radio: "AREA3_CUMPLE_PPT" },
+//         { select: "AREA4_PPT", radio: "AREA4_CUMPLE_PPT" },
+//         { radio: "ESPECIALIDAD_CUMPLE_PPT", dependentRadios: ["EGRESADO_ESPECIALIDAD_PPT"] },
+//         { radio: "MAESTRIA_CUMPLE_PPT", dependentRadios: ["EGRESADO_MAESTRIA_PPT"] },
+//         { radio: "DOCTORADO_CUMPLE_PPT", dependentRadios: ["EGRESADO_DOCTORADO_PPT"] },
+//     ];
+
+//     // Configuración para herramientas
+//     const tools = [
+//         { aplica: "WORD_APLICA_PPT", cumple: "WORD_CUMPLE_PPT", peso: 1.5 },
+//         { aplica: "EXCEL_APLICA_PPT", cumple: "EXCEL_CUMPLE_PPT", peso: 1.5 },
+//         { aplica: "POWER_APLICA_PPT", cumple: "POWER_CUMPLE_PPT", peso: 3 },
+//     ];
+
+//     // Configuración para idiomas
+//     const idiomas = [
+//         { aplica: "APLICA_IDIOMA1_PPT", cumple: "IDIOMA1_CUMPLE_PPT", peso: 1.3333 },
+//         { aplica: "APLICA_IDIOMA2_PPT", cumple: "IDIOMA2_CUMPLE_PPT", peso: 1.3333 },
+//         { aplica: "APLICA_IDIOMA3_PPT", cumple: "IDIOMA3_CUMPLE_PPT", peso: 1.3333 },
+//     ];
+
+//     // Configuración para cursos
+//     const cursosContainer = document.querySelectorAll("textarea[name='CURSO_PPT[]']");
+//     const pesoTotalCursos = 25; // 25%
+
+//     // Configuración para experiencia
+//     const experienciaGeneralRadio = document.querySelectorAll("input[name='EXPERIENCIAGENERAL_CUMPLE_PPT']");
+//     const experienciaEspecificaRadio = document.querySelectorAll("input[name='EXPERIENCIA_ESPECIFICA_CUMPLE_PPT']");
+//     const pesoEspecifica = 7; // 7% para experiencia específica
+//     const pesoTotalPuestos = 18; // 18% para experiencia general y puestos
+
+//     const puestosContainer = document.querySelectorAll("select.puesto");
+
+//     const pesoTotal20 = 20; // 20%
+//     const pesoTotal6 = 6; // 6% para herramientas
+//     const pesoTotalIdiomas = 4; // 4% para idiomas
+
+//     const totalInput = document.getElementById("SUMA_TOTAL"); // Reemplaza con el ID correcto
+
+//     function calcularSumaTotal() {
+//         let sumaTotal = 0;
+
+//         // Cálculo para los radios del 5%
+//         radioButtons.forEach((radio) => {
+//             if (radio.checked && radio.value === "si") {
+//                 sumaTotal += pesoPorSeccion5;
+//             }
+//         });
+
+//         // Cálculo para herramientas (6%)
+//         tools.forEach(({ aplica, cumple, peso }) => {
+//             const aplicaElement = document.querySelector(`input[name='${aplica}']:checked`);
+//             const cumpleElement = document.querySelector(`input[name='${cumple}']:checked`);
+
+//             if (aplicaElement && aplicaElement.value === "si") {
+//                 if (cumpleElement && cumpleElement.value === "si") {
+//                     sumaTotal += peso;
+//                 }
+//             }
+//         });
+
+//         // Cálculo para idiomas (4%)
+//         idiomas.forEach(({ aplica, cumple, peso }) => {
+//             const aplicaElement = document.querySelector(`input[name='${aplica}']:checked`);
+//             const cumpleElement = document.querySelector(`input[name='${cumple}']:checked`);
+
+//             if (aplicaElement && aplicaElement.value === "si") {
+//                 if (cumpleElement && cumpleElement.value === "si") {
+//                     sumaTotal += peso;
+//                 }
+//             }
+//         });
+
+//         // Cálculo para cursos (25%)
+//         const cursosValidos = Array.from(cursosContainer).filter((curso) => {
+//             const id = curso.id.match(/\d+/)[0]; // Extrae el número del ID del curso
+//             const radioSi = document.querySelector(`input[name='CURSO_CUMPLE_PPT[${id}]']:checked`);
+//             return curso.value.trim() !== "" && radioSi && radioSi.value === "si";
+//         });
+
+//         const pesoPorCurso = cursosValidos.length > 0 ? pesoTotalCursos / cursosValidos.length : 0;
+
+//         cursosValidos.forEach(() => {
+//             sumaTotal += pesoPorCurso;
+//         });
+
+//         // Cálculo para experiencia específica (7%)
+//         const especificaSi = document.querySelector("input[name='EXPERIENCIA_ESPECIFICA_CUMPLE_PPT']:checked");
+//         if (especificaSi && especificaSi.value === "si") {
+//             sumaTotal += pesoEspecifica;
+//         }
+
+//         // Cálculo para experiencia general y puestos (18%)
+//         const puestosValidos = Array.from(puestosContainer).filter((puesto) => {
+//             const id = puesto.id.match(/\d+/)[0];
+//             const radioSi = document.querySelector(`input[name='PUESTO${id}_CUMPLE_PPT']:checked`);
+//             return puesto.value !== "0" && radioSi && radioSi.value === "si";
+//         });
+
+//         const generalSi = document.querySelector(
+//             "input[name='EXPERIENCIAGENERAL_CUMPLE_PPT']:checked"
+//         );
+//         if (generalSi && generalSi.value === "si") {
+//             puestosValidos.push("experienciaGeneral");
+//         }
+
+//         const pesoPorPuesto = puestosValidos.length > 0 ? pesoTotalPuestos / puestosValidos.length : 0;
+
+//         puestosValidos.forEach(() => {
+//             sumaTotal += pesoPorPuesto;
+//         });
+
+//         // Actualizar el input con la suma total redondeada a entero
+//         totalInput.value = Math.round(sumaTotal);
+//     }
+
+//     // Agregar eventos a los radios del 5%
+//     radioButtons.forEach((radio) => {
+//         radio.addEventListener("change", calcularSumaTotal);
+//     });
+
+//     // Agregar eventos a las herramientas
+//     tools.forEach(({ aplica, cumple }) => {
+//         const aplicaElements = document.getElementsByName(aplica);
+//         const cumpleElements = document.getElementsByName(cumple);
+
+//         aplicaElements.forEach((aplicaElement) => {
+//             aplicaElement.addEventListener("change", calcularSumaTotal);
+//         });
+
+//         cumpleElements.forEach((cumpleElement) => {
+//             cumpleElement.addEventListener("change", calcularSumaTotal);
+//         });
+//     });
+
+//     // Agregar eventos a los idiomas
+//     idiomas.forEach(({ aplica, cumple }) => {
+//         const aplicaElements = document.getElementsByName(aplica);
+//         const cumpleElements = document.getElementsByName(cumple);
+
+//         aplicaElements.forEach((aplicaElement) => {
+//             aplicaElement.addEventListener("change", calcularSumaTotal);
+//         });
+
+//         cumpleElements.forEach((cumpleElement) => {
+//             cumpleElement.addEventListener("change", calcularSumaTotal);
+//         });
+//     });
+
+//     // Agregar eventos a los cursos
+//     cursosContainer.forEach((curso) => {
+//         curso.addEventListener("input", calcularSumaTotal);
+//         const id = curso.id.match(/\d+/)[0];
+//         const radioElements = document.querySelectorAll(`input[name='CURSO_CUMPLE_PPT[${id}]']`);
+//         radioElements.forEach((radio) => {
+//             radio.addEventListener("change", calcularSumaTotal);
+//         });
+//     });
+
+//     // Agregar eventos a los puestos
+//     puestosContainer.forEach((puesto) => {
+//         puesto.addEventListener("change", calcularSumaTotal);
+//         const id = puesto.id.match(/\d+/)[0];
+//         const radioElements = document.querySelectorAll(`input[name='PUESTO${id}_CUMPLE_PPT']`);
+//         radioElements.forEach((radio) => {
+//             radio.addEventListener("change", calcularSumaTotal);
+//         });
+//     });
+
+//     // Agregar eventos a experiencia específica
+//     experienciaEspecificaRadio.forEach((radio) => {
+//         radio.addEventListener("change", calcularSumaTotal);
+//     });
+
+//     // Agregar eventos a experiencia general
+//     experienciaGeneralRadio.forEach((radio) => {
+//         radio.addEventListener("change", calcularSumaTotal);
+//     });
+
+//     // Calcular suma total al cargar la página
+//     calcularSumaTotal();
+// });
 
 
 
 
 
 
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Radios del 5%
+    const radioButtons = document.querySelectorAll(
+        "input[name='EDAD_CUMPLE_PPT'], input[name='GENERO_CUMPLE_PPT'], input[name='ESTADO_CIVIL_CUMPLE_PPT'], input[name='NACIONALIDAD_CUMPLE_PPT']"
+    );
+    const pesoPorSeccion5 = 5 / 4; // 5% dividido entre 4 secciones
+
+    // Pares select-radio para el 20%
+    const selectRadioPairs = [
+        { select: "SECUNDARIA_PPT", radio: "SECUNDARIA_CUMPLE_PPT" },
+        { select: "TECNICA_PPT", radio: "TECNICA_CUMPLE_PPT" },
+        { select: "TECNICO_PPT", radio: "TECNICO_CUMPLE_PPT" },
+        { select: "UNIVERSITARIO_PPT", radio: "UNIVERSITARIO_CUMPLE_PPT" },
+        { select: "SITUACION_PPT", radio: "SITUACION_CUMPLE_PPT" },
+        { select: "CEDULA_PPT", radio: "CEDULA_CUMPLE_PPT" },
+        { select: "AREA1_PPT", radio: "AREA1_CUMPLE_PPT" },
+        { select: "AREA2_PPT", radio: "AREA2_CUMPLE_PPT" },
+        { select: "AREA3_PPT", radio: "AREA3_CUMPLE_PPT" },
+        { select: "AREA4_PPT", radio: "AREA4_CUMPLE_PPT" },
+        { radio: "ESPECIALIDAD_CUMPLE_PPT", dependentRadios: ["EGRESADO_ESPECIALIDAD_PPT"] },
+        { radio: "MAESTRIA_CUMPLE_PPT", dependentRadios: ["EGRESADO_MAESTRIA_PPT"] },
+        { radio: "DOCTORADO_CUMPLE_PPT", dependentRadios: ["EGRESADO_DOCTORADO_PPT"] },
+    ];
+
+    // Configuración para Word, Excel y PowerPoint
+    const tools = [
+        { aplica: "WORD_APLICA_PPT", cumple: "WORD_CUMPLE_PPT", peso: 1.5 },
+        { aplica: "EXCEL_APLICA_PPT", cumple: "EXCEL_CUMPLE_PPT", peso: 1.5 },
+        { aplica: "POWER_APLICA_PPT", cumple: "POWER_CUMPLE_PPT", peso: 3 },
+    ];
+
+    // Configuración para Idiomas
+    const idiomas = [
+        { aplica: "APLICA_IDIOMA1_PPT", cumple: "IDIOMA1_CUMPLE_PPT", peso: 1.3333 },
+        { aplica: "APLICA_IDIOMA2_PPT", cumple: "IDIOMA2_CUMPLE_PPT", peso: 1.3333 },
+        { aplica: "APLICA_IDIOMA3_PPT", cumple: "IDIOMA3_CUMPLE_PPT", peso: 1.3333 },
+    ];
+
+    // Configuración para Cursos
+    const cursosContainer = document.querySelectorAll("textarea[name='CURSO_PPT[]']");
+    const pesoTotalCursos = 25; // 25%
+
+      const competencias = [
+        { name: "INNOVACION", peso: 6 / 8 }, // 6% dividido entre los primeros 8
+        { name: "PASION", peso: 6 / 8 },
+        { name: "SERVICIO_CLIENTE", peso: 6 / 8 },
+        { name: "COMUNICACION_EFICAZ", peso: 6 / 8 },
+        { name: "TRABAJO_EQUIPO", peso: 6 / 8 },
+        { name: "INTEGRIDAD", peso: 6 / 8 },
+        { name: "RESPONSABILIDAD_SOCIAL", peso: 6 / 8 },
+        { name: "ADAPTABILIDAD", peso: 6 / 8 },
+        { name: "LIDERAZGO", peso: 2 }, // Liderazgo 2%
+        { name: "TOMA_DECISIONES", peso: 2 }, // Toma de decisiones 2%
+    ];
+
+
+
+    const requisitosMovilidad = [
+        { name: "DISPONIBILIDAD_VIAJAR_PPT", cumple: "DISPONIBILIDAD_VIAJAR_OPCION_CUMPLE" },
+        { name: "REQUIERE_PASAPORTE_PPT", cumple: "REQUIEREPASAPORTE_OPCION_CUMPLE" },
+        { name: "REQUIERE_VISA_PPT", cumple: "REQUIEREVISA_OPCION_CUMPLE" },
+        { name: "REQUIERE_LICENCIA_PPT", cumple: "REQUIERELICENCIA_OPCION_CUMPLE" },
+        { name: "CAMBIO_RESIDENCIA_PPT", cumple: "CAMBIORESIDENCIA_OPCION_CUMPLE" },
+    ];
+
+
+    const pesoTotalRequisitos = 5; // 5% total para este bloque
+
+    // Configuración para Puestos y Experiencia
+    const experienciaGeneralRadio = document.querySelectorAll("input[name='EXPERIENCIAGENERAL_CUMPLE_PPT']");
+    const experienciaEspecificaRadio = document.querySelectorAll("input[name='EXPERIENCIA_ESPECIFICA_CUMPLE_PPT']");
+    const puestosContainer = document.querySelectorAll("select.puesto");
+    const pesoTotalPuestos = 18; // 18%
+    const pesoEspecifica = 7; // 7% para experiencia específica
+
+    const pesoTotal20 = 20; // 20%
+    const pesoTotal6 = 6; // 6% para herramientas
+    const pesoTotalIdiomas = 4; // 4% para idiomas
+    const totalInput = document.getElementById("SUMA_TOTAL"); // Reemplaza con el ID correcto
+
+    function calcularSumaTotal() {
+        let sumaTotal = 0;
+
+        // Cálculo para los radios del 5%
+        radioButtons.forEach((radio) => {
+            if (radio.checked && radio.value === "si") {
+                sumaTotal += pesoPorSeccion5;
+            }
+        });
+
+        // Cálculo para los selects y radios del 20%
+        let validSections = 0;
+
+        selectRadioPairs.forEach(({ select, radio, dependentRadios }) => {
+            let validSection = false;
+
+            if (select) {
+                const selectElement = document.getElementById(select);
+                if (selectElement && selectElement.value !== "0" && selectElement.value !== "Seleccione una opción") {
+                    validSection = true;
+                }
+            }
+
+            if (dependentRadios) {
+                dependentRadios.forEach((depRadioName) => {
+                    const dependentRadio = document.querySelector(`input[name='${depRadioName}']:checked`);
+                    if (dependentRadio) {
+                        validSection = true;
+                    }
+                });
+            }
+
+            if (validSection) {
+                validSections++;
+                const radioElements = document.getElementsByName(radio);
+                radioElements.forEach((radioElement) => {
+                    if (radioElement.checked && radioElement.value === "si") {
+                        sumaTotal += pesoTotal20 / selectRadioPairs.length;
+                    }
+                });
+            }
+        });
+
+        // Redistribuir pesos si hay secciones inválidas
+        if (validSections < selectRadioPairs.length && validSections > 0) {
+            const adjustedWeight = pesoTotal20 / validSections;
+
+            selectRadioPairs.forEach(({ select, radio, dependentRadios }) => {
+                let validSection = false;
+
+                if (select) {
+                    const selectElement = document.getElementById(select);
+                    if (selectElement && selectElement.value !== "0" && selectElement.value !== "Seleccione una opción") {
+                        validSection = true;
+                    }
+                }
+
+                if (dependentRadios) {
+                    dependentRadios.forEach((depRadioName) => {
+                        const dependentRadio = document.querySelector(`input[name='${depRadioName}']:checked`);
+                        if (dependentRadio) {
+                            validSection = true;
+                        }
+                    });
+                }
+
+                if (validSection) {
+                    const radioElements = document.getElementsByName(radio);
+                    radioElements.forEach((radioElement) => {
+                        if (radioElement.checked && radioElement.value === "si") {
+                            sumaTotal += adjustedWeight - (pesoTotal20 / selectRadioPairs.length);
+                        }
+                    });
+                }
+            });
+        }
+
+        // Cálculo para herramientas (6%)
+        let validTools = 0;
+        tools.forEach(({ aplica, cumple, peso }) => {
+            const aplicaElement = document.querySelector(`input[name='${aplica}']:checked`);
+            const cumpleElement = document.querySelector(`input[name='${cumple}']:checked`);
+
+            if (aplicaElement && aplicaElement.value === "si") {
+                validTools++;
+                if (cumpleElement && cumpleElement.value === "si") {
+                    sumaTotal += peso;
+                }
+            }
+        });
+
+        // Redistribuir pesos de herramientas si alguna no aplica
+        if (validTools < tools.length && validTools > 0) {
+            const adjustedWeight = pesoTotal6 / validTools;
+
+            tools.forEach(({ aplica, cumple, peso }) => {
+                const aplicaElement = document.querySelector(`input[name='${aplica}']:checked`);
+                const cumpleElement = document.querySelector(`input[name='${cumple}']:checked`);
+
+                if (aplicaElement && aplicaElement.value === "si") {
+                    if (cumpleElement && cumpleElement.value === "si") {
+                        sumaTotal += adjustedWeight - peso;
+                    }
+                }
+            });
+        }
+
+        // Cálculo para idiomas (4%)
+        let validIdiomas = 0;
+        idiomas.forEach(({ aplica, cumple, peso }) => {
+            const aplicaElement = document.querySelector(`input[name='${aplica}']:checked`);
+            const cumpleElement = document.querySelector(`input[name='${cumple}']:checked`);
+
+            if (aplicaElement && aplicaElement.value === "si") {
+                validIdiomas++;
+                if (cumpleElement && cumpleElement.value === "si") {
+                    sumaTotal += peso;
+                }
+            }
+        });
+
+        // Redistribuir pesos de idiomas si alguno no aplica
+        if (validIdiomas < idiomas.length && validIdiomas > 0) {
+            const adjustedWeight = pesoTotalIdiomas / validIdiomas;
+
+            idiomas.forEach(({ aplica, cumple, peso }) => {
+                const aplicaElement = document.querySelector(`input[name='${aplica}']:checked`);
+                const cumpleElement = document.querySelector(`input[name='${cumple}']:checked`);
+
+                if (aplicaElement && aplicaElement.value === "si") {
+                    if (cumpleElement && cumpleElement.value === "si") {
+                        sumaTotal += adjustedWeight - peso;
+                    }
+                }
+            });
+        }
+
+        // --- NUEVO CÓDIGO PARA CURSOS ---
+        const cursosValidos = Array.from(cursosContainer).filter((curso) => {
+            const id = curso.id.match(/\d+/)[0];
+            const radioSi = document.querySelector(`input[name='CURSO_CUMPLE_PPT[${id}]']:checked`);
+            return curso.value.trim() !== "" && radioSi && radioSi.value === "si";
+        });
+
+        const pesoPorCurso = cursosValidos.length > 0 ? pesoTotalCursos / cursosValidos.length : 0;
+        cursosValidos.forEach(() => {
+            sumaTotal += pesoPorCurso;
+        });
+
+        // --- NUEVO CÓDIGO PARA PUESTOS Y EXPERIENCIA ---
+        const especificaSi = document.querySelector("input[name='EXPERIENCIA_ESPECIFICA_CUMPLE_PPT']:checked");
+        if (especificaSi && especificaSi.value === "si") {
+            sumaTotal += pesoEspecifica;
+        }
+
+        const generalSi = document.querySelector("input[name='EXPERIENCIAGENERAL_CUMPLE_PPT']:checked");
+        const puestosValidos = Array.from(puestosContainer).filter((puesto) => {
+            const id = puesto.id.match(/\d+/)[0];
+            const radioSi = document.querySelector(`input[name='PUESTO${id}_CUMPLE_PPT']:checked`);
+            return puesto.value !== "0" && radioSi && radioSi.value === "si";
+        });
+
+        if (generalSi && generalSi.value === "si") {
+            puestosValidos.push("experienciaGeneral");
+        }
+
+        const pesoPorPuesto = puestosValidos.length > 0 ? pesoTotalPuestos / puestosValidos.length : 0;
+        puestosValidos.forEach(() => {
+            sumaTotal += pesoPorPuesto;
+        });
+
+
+
+        competencias.forEach(({ name, peso }) => {
+            const requerido = document.getElementById(`${name}_REQUERIDA_PPT`);
+            const deseable = document.getElementById(`${name}_DESEABLE_PPT`);
+            const cumpleSi = document.getElementById(`${name}_CUMPLE_SI`);
+
+            if (
+                (requerido && requerido.checked) ||
+                (deseable && deseable.checked)
+            ) {
+                if (cumpleSi && cumpleSi.checked) {
+                    sumaTotal += peso;
+                }
+            }
+        });
+
+
+
+
+        const requisitosCumplen = requisitosMovilidad.filter(({ name, cumple }) => {
+            const radioSi = document.querySelector(`input[name='${name}']:checked`);
+            const cumpleSi = document.querySelector(`input[name='${cumple}']:checked`);
+
+            return (
+                radioSi && radioSi.value === "si" && cumpleSi && cumpleSi.value === "si"
+            );
+        });
+
+        const requisitosValidos = requisitosCumplen.length;
+        const pesoPorRequisito = requisitosValidos > 0 ? pesoTotalRequisitos / requisitosValidos : 0;
+
+        requisitosCumplen.forEach(() => {
+            sumaTotal += pesoPorRequisito;
+        });
+
+        // Redistribuir si algún requisito no cumple
+        if (requisitosValidos < requisitosMovilidad.length && requisitosValidos > 0) {
+            const pesoRedistribuido = pesoTotalRequisitos / requisitosValidos;
+
+            requisitosCumplen.forEach(() => {
+                sumaTotal += pesoRedistribuido - pesoPorRequisito;
+            });
+        }
+
+
+
+        // Actualizar el input con la suma total redondeada a entero
+        totalInput.value = Math.round(sumaTotal);
+    }
+
+    // --- Eventos ---
+    radioButtons.forEach((radio) => {
+        radio.addEventListener("change", calcularSumaTotal);
+    });
+
+    cursosContainer.forEach((curso) => {
+        curso.addEventListener("input", calcularSumaTotal);
+        const id = curso.id.match(/\d+/)[0];
+        const radioElements = document.querySelectorAll(`input[name='CURSO_CUMPLE_PPT[${id}]']`);
+        radioElements.forEach((radio) => {
+            radio.addEventListener("change", calcularSumaTotal);
+        });
+    });
+
+    experienciaEspecificaRadio.forEach((radio) => {
+        radio.addEventListener("change", calcularSumaTotal);
+    });
+
+    experienciaGeneralRadio.forEach((radio) => {
+        radio.addEventListener("change", calcularSumaTotal);
+    });
+
+    puestosContainer.forEach((puesto) => {
+        puesto.addEventListener("change", calcularSumaTotal);
+        const id = puesto.id.match(/\d+/)[0];
+        const radioElements = document.querySelectorAll(`input[name='PUESTO${id}_CUMPLE_PPT']`);
+        radioElements.forEach((radio) => {
+            radio.addEventListener("change", calcularSumaTotal);
+        });
+    });
+
+    tools.forEach(({ aplica, cumple }) => {
+        const aplicaElements = document.getElementsByName(aplica);
+        const cumpleElements = document.getElementsByName(cumple);
+
+        aplicaElements.forEach((aplicaElement) => {
+            aplicaElement.addEventListener("change", calcularSumaTotal);
+        });
+
+        cumpleElements.forEach((cumpleElement) => {
+            cumpleElement.addEventListener("change", calcularSumaTotal);
+        });
+    });
+
+    idiomas.forEach(({ aplica, cumple }) => {
+        const aplicaElements = document.getElementsByName(aplica);
+        const cumpleElements = document.getElementsByName(cumple);
+
+        aplicaElements.forEach((aplicaElement) => {
+            aplicaElement.addEventListener("change", calcularSumaTotal);
+        });
+
+        cumpleElements.forEach((cumpleElement) => {
+            cumpleElement.addEventListener("change", calcularSumaTotal);
+        });
+    });
+
+
+
+     competencias.forEach(({ name }) => {
+        const requerido = document.getElementById(`${name}_REQUERIDA_PPT`);
+        const deseable = document.getElementById(`${name}_DESEABLE_PPT`);
+        const cumpleSi = document.getElementById(`${name}_CUMPLE_SI`);
+        const cumpleNo = document.getElementById(`${name}_CUMPLE_NO`);
+
+        [requerido, deseable, cumpleSi, cumpleNo].forEach((element) => {
+            if (element) {
+                element.addEventListener("change", calcularSumaTotal);
+            }
+        });
+     });
+    
+    requisitosMovilidad.forEach(({ name, cumple }) => {
+        const radios = document.querySelectorAll(`input[name='${name}'], input[name='${cumple}']`);
+        radios.forEach((radio) => {
+            radio.addEventListener("change", calcularSumaTotal);
+        });
+    });
+    
+    
+    
+    calcularSumaTotal();
+});
 
 
 
