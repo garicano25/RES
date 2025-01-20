@@ -46,6 +46,7 @@ class contratacionModel extends Model
         'TELEFONO1_BENEFICIARIO',
         'TELEFONO2_BENEFICIARIO',
         'BENEFICIARIOS_JSON',
+        'DOCUMENTOS_JSON',
         'TIPO_VIALIDAD',
         'NOMBRE_VIALIDAD',
         'NUMERO_EXTERIOR',

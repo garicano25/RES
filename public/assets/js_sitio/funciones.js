@@ -2874,3 +2874,34 @@ function abrirModal(url, title) {
   });
 }
 
+
+
+
+// Obtén la URL actual
+const currentUrl = window.location.href;
+
+// Selecciona todos los enlaces con la clase BOTON y los dropdown-items
+const botones = document.querySelectorAll('.BOTON');
+const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+// Recorre los botones principales (incluidos los dropdowns)
+botones.forEach(boton => {
+    if (boton.href === currentUrl) {
+        boton.classList.add('active');
+    }
+});
+
+// Recorre los dropdown-items
+dropdownItems.forEach(item => {
+    if (item.href === currentUrl) {
+        item.classList.add('active'); // Activa el dropdown-item
+
+        // Encuentra el dropdown padre relacionado
+        const parentDropdown = item.closest('.nav-item.dropdown');
+        if (parentDropdown) {
+            parentDropdown.classList.add('active'); // Activa el dropdown principal
+        }
+    }
+});
+
+

@@ -64,6 +64,7 @@ use App\Http\Controllers\desvinculacion\desvinculacionController;
 
 
 
+
 //==============================================  login  ============================================== 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -77,10 +78,15 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/tablero', function () {
-        return view('tablero.index');
+    Route::get('/Módulos', function () {
+        return view('principal.modulos');
     })->name('dashboard');
 });
+
+
+//==============================================  Módulos  ============================================== 
+Route::get('/Módulos', function () {return view('principal.modulos');});
+
 
 
 //==============================================  USUARIO  ============================================== 
@@ -415,6 +421,20 @@ Route::get('/mostrardocumenadeudo/{id}', [desvinculacionController::class, 'most
 
 
 
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////VENTAS///////////////////////////////////////////////////////7
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//==============================================  SOLICITUDES  ============================================== 
+
+Route::get('/Solicitudes', function () {return view('ventas.solicitudes');});
 
 
  //============================================== LIMPIAR RUTAS ============================================== 

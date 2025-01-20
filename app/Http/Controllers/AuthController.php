@@ -13,7 +13,7 @@ class AuthController extends Controller
     {
         // Redirigir al tablero si ya está autenticado
         if (Auth::check()) {
-            return redirect('/tablero'); // Redirige a la URL directa del tablero
+            return redirect('/Módulos'); // Redirige a la URL directa del Módulos
         }
         return view('auth.login');
     }
@@ -24,7 +24,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
     
         if (Auth::attempt(['EMPLEADO_CORREO' => $credentials['email'], 'password' => $credentials['password'], 'ACTIVO' => 1])) {
-            return redirect('/tablero'); // Redirige a la URL directa del tablero
+            return redirect('/Módulos'); // Redirige a la URL directa del Módulos
         }
     
         return redirect()->back()->withErrors([

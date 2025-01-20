@@ -5,7 +5,6 @@
 .BOTON:hover{
     background-color: #FF585D;
     border-radius: 2px;
-    transform: scale(1.1); /* Escala del 110% (efecto de zoom) */
 
 }
 
@@ -14,6 +13,24 @@
     display: inline-block;
     transition: transform 0.3s ease; /* Transición suave para el efecto de zoom */
 }
+
+
+.BOTON.active {
+    background-color: #FF585D;
+    border-radius: 2px;
+}
+/* Dropdown principal activo */
+.nav-item.dropdown.active > .nav-link {
+    background-color: #FF585D;
+    border-radius: 2px;
+}
+
+/* Dropdown-item activo */
+.dropdown-item.active {
+    background-color: #FF585D;
+    color: white; /* Cambia el color del texto si es necesario */
+}
+
 
 /* Estilo para la tabla */
 .TableCustom table {

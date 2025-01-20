@@ -22,6 +22,10 @@ use App\Models\contratacion\documentosoportecontratoModel;
 use App\Models\contratacion\renovacioncontratoModel;
 
 
+use App\Models\organizacion\catalogotipovacanteModel;
+use App\Models\organizacion\catalogomotivovacanteModel;
+use App\Models\organizacion\areasModel;
+
 
 
 use DB;
@@ -40,7 +44,28 @@ class contratacionController extends Controller
         WHERE ACTIVO = 1
         ");
 
-        return view('RH.contratacion.contratacion', compact('areas'));
+
+        $tipos = catalogotipovacanteModel::orderBy('NOMBRE_TIPOVACANTE', 'ASC')->get();
+        $motivos = catalogomotivovacanteModel::orderBy('NOMBRE_MOTIVO_VACANTE', 'ASC')->get();
+
+
+        $area1 = areasModel::orderBy('NOMBRE', 'ASC')->get();
+
+        $todascategoria = DB::select("SELECT ID_CATALOGO_CATEGORIA  AS ID_CATALOGO_CATEGORIA, NOMBRE_CATEGORIA AS NOMBRE
+                FROM catalogo_categorias
+                WHERE ACTIVO = 1");
+
+
+        $categoria = DB::select("
+                SELECT c.ID_CATALOGO_CATEGORIA AS ID_DEPARTAMENTO_AREA, 
+                    c.NOMBRE_CATEGORIA AS NOMBRE
+                FROM catalogo_categorias c
+                INNER JOIN formulario_dpt f ON c.ID_CATALOGO_CATEGORIA = f.DEPARTAMENTOS_AREAS_ID
+                WHERE c.ACTIVO = 1
+            ");
+
+
+        return view('RH.contratacion.contratacion', compact('areas','tipos','motivos','area1','todascategoria','categoria'));
     }
 
 
@@ -707,7 +732,7 @@ public function store(Request $request)
                     // Restablecer el auto_increment si es necesario
                     DB::statement('ALTER TABLE formulario_contratacion AUTO_INCREMENT=1;');
                 
-                    $data = $request->except(['FOTO_USUARIO', 'beneficiarios']);
+                    $data = $request->except(['FOTO_USUARIO', 'beneficiarios','documentos']);
                     $contratos = contratacionModel::create($data);
                 
                     if ($request->hasFile('FOTO_USUARIO')) {

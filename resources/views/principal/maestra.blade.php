@@ -85,60 +85,51 @@
 
 <body class="body">
 
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover;">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">
-                <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
-            </a>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav1">
-                <ul class="navbar-nav">
-                    {{-- <li class="nav-item" style="margin-right: 25px;">
-                        <a class="nav-link" href="{{ url('/Formulario-vacantes') }}">
-                    <i class="bi bi-file-earmark-person-fill text-white" style="font-size: 24px;"></i>
-                    </a>
-                    </li>
-
-                    <li class="nav-item" style="margin-right: 25px;">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-chat-left-fill text-white" style="font-size: 24px;"></i>
-                        </a>
-                    </li> --}}
-                    <li class="nav-item dropdown" style="margin-right: 45px;">
-                        @auth
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-fill text-white" style="font-size: 24px;"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 250px;">
-                            <li class="dropdown-item text-center">
-                                <strong>{{ Auth::user()->EMPLEADO_NOMBRE }}</strong>
-                                <br>
-                                <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
-                            </li>
-                            <li class="dropdown-divider"></li>
-                            {{-- <li>
-                                    <a class="dropdown-item text-center" href="{{ route('perfil') }}">
-                            <i class="bi bi-person-lines-fill"></i> Mi perfil
-                            </a>
-                    </li> --}}
-                    <li>
-                        <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                            @csrf
-                            <button type="submit" class="dropdown-item text-center" style="color: red;">
-                                <i class="bi bi-power"></i> Cerrar sesión
-                            </button>
-                        </form>
-                    </li>
-                </ul>
-                @else
-                <script>
-                    window.location.href = "{{ route('login') }}"; // Redirige al login si no está autenticado
-                </script>
-                @endauth
-                </li>
-                </ul>
-            </div>
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover; height: 100px;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
+        </a>
+        <!-- Contenedor para centrar el título -->
+        <div class="d-flex justify-content-center align-items-center w-100" style="position: absolute; top: 0; left: 0; height: 100px;">
+            <h1 class="text-white m-0"  style="color:#ffff;font-weight: bold;">Recursos Humanos</h1>
         </div>
-    </nav>
+        <!-- Menú lateral derecho -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav1">
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown" style="margin-right: 45px;">
+                    @auth
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-fill text-white" style="font-size: 24px;"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 250px;">
+                        <li class="dropdown-item text-center">
+                            <strong>{{ Auth::user()->EMPLEADO_NOMBRE }}</strong>
+                            <br>
+                            <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
+                        </li>
+                        <li class="dropdown-divider"></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                                @csrf
+                                <button type="submit" class="dropdown-item text-center" style="color: red;">
+                                    <i class="bi bi-power"></i> Cerrar sesión
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                    @else
+                    <script>
+                        window.location.href = "{{ route('login') }}"; // Redirige al login si no está autenticado
+                    </script>
+                    @endauth
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+    
+
 
 
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0, 124, 186, 0.850); -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75);">
@@ -148,6 +139,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link BOTON" href="{{ url('/Módulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Módulos</span><span class="d-none d-lg-inline">Módulos</span>
+                        </a>
+                    </li>
+
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="{{ url('/tablero') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-speedometer" style="margin-right: 5px;"></i> <span class="d-lg-none">Tablero</span><span class="d-none d-lg-inline">Tablero</span>
