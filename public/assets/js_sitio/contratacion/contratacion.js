@@ -3209,6 +3209,7 @@ $("#guardarRECIBONOMINA").click(function (e) {
     
 });
 
+
 const Modalrecibonomina = document.getElementById('miModal_RECIBOS_NOMINA')
 Modalrecibonomina.addEventListener('hidden.bs.modal', event => {
     

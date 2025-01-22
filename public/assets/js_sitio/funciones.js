@@ -2446,6 +2446,7 @@ for (var key in data) {
     if (!key.startsWith("BTN") && key !== "created_at" && key !== "updated_at") {
           
       var input = $('#' + form).find(`input[name='${key}'][type='text'], input[name='${key}'][type='number']`);
+      var email = $('#' + form).find(`input[name='${key}'][type='email']`);
       var date = $('#' + form).find(`input[name='${key}'][type='date']`);
       var time = $('#' + form).find(`input[name='${key}'][type='time']`);
       var textarea = $('#' + form).find(`textarea[name='${key}']`).val(data[key]);
@@ -2457,6 +2458,10 @@ for (var key in data) {
         
       } else if (textarea.length) {
         textarea.val(data[key]);
+        
+      }
+      else if (email.length) {
+        email.val(data[key]);
         
       } else if (select.length) {
 

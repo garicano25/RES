@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 //  USUARIOS
 
@@ -30,9 +32,6 @@ use App\Http\Controllers\organizacion\catalogoCompotenciasGerencialesController;
 use App\Http\Controllers\organizacion\catalogomotivovacanteControlller;
 
 
-
-
-
 // Controladores de reclutamiento
 use App\Http\Controllers\reclutamiento\catalogovacantesController;
 use App\Http\Controllers\reclutamiento\PuestoController;
@@ -41,8 +40,6 @@ use App\Http\Controllers\reclutamiento\vacantesactivasController;
 use App\Http\Controllers\organizacion\catalogoareainteresController;
 use App\Http\Controllers\organizacion\catalogogeneroControlller;
 use App\Http\Controllers\reclutamiento\formCVController;
-
-
 
 // Controladores de seleccion
 
@@ -58,9 +55,16 @@ use App\Http\Controllers\contratacion\PowerPointController;
 use App\Http\Controllers\contratacion\pendientecontratarController;
 use App\Http\Controllers\contratacion\CvController;
 
+
 // Controladores de desvinculacion
 
 use App\Http\Controllers\desvinculacion\desvinculacionController;
+
+
+// Controladores de solicitudes
+
+use App\Http\Controllers\solicitudes\solicitudesController;
+
 
 
 
@@ -433,13 +437,19 @@ Route::get('/mostrardocumenadeudo/{id}', [desvinculacionController::class, 'most
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //==============================================  SOLICITUDES  ============================================== 
+Route::get('/Solicitudes', [solicitudesController::class, 'index']);
+Route::post('/solicitudSave', [solicitudesController::class, 'store']);
+Route::get('/Tablasolicitudes', [solicitudesController::class, 'Tablasolicitudes']);
+Route::get('/solicitudDelete', [solicitudesController::class, 'store']);
+Route::post('/actualizarEstatusSolicitud', [solicitudesController::class, 'actualizarEstatusSolicitud']);
 
-Route::get('/Solicitudes', function () {return view('ventas.solicitudes');});
+
+//==============================================  SOLICITUDES  ============================================== 
+
+Route::get('/Ofertas', function () { return view('ventas.ofertas');});
 
 
  //============================================== LIMPIAR RUTAS ============================================== 
-
-
 
 Route::get('/clear-cache', function () {
     Artisan::call('config:cache');
