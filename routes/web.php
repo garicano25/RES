@@ -66,6 +66,9 @@ use App\Http\Controllers\desvinculacion\desvinculacionController;
 use App\Http\Controllers\solicitudes\solicitudesController;
 
 
+// Controladores de ofertas
+
+use App\Http\Controllers\ofertas\ofertasController;
 
 
 
@@ -446,7 +449,11 @@ Route::post('/actualizarEstatusSolicitud', [solicitudesController::class, 'actua
 
 //==============================================  SOLICITUDES  ============================================== 
 
-Route::get('/Ofertas', function () { return view('ventas.ofertas');});
+
+Route::get('/Ofertas', [ofertasController::class, 'index']);
+Route::post('/ofertaSave', [ofertasController::class, 'store']);
+Route::get('/Tablaofertas', [ofertasController::class, 'Tablaofertas']);
+Route::post('/actualizarEstatusOferta', [ofertasController::class, 'actualizarEstatusOferta']);
 
 
  //============================================== LIMPIAR RUTAS ============================================== 

@@ -219,7 +219,7 @@ var Tablasolicitudes = $("#Tablasolicitudes").DataTable({
         { targets: 0, title: '#', className: 'all text-center' },
         { targets: 1, title: 'N° de solicitud', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Tipo de solicitud', className: 'all text-center' },
-        { targets: 3, title: 'Nombre comercial de la empresa', className: 'all text-center' },
+        { targets: 3, title: 'Nombre comercial <br> de la empresa', className: 'all text-center' },
         { targets: 4, title: 'Fecha', className: 'all text-center' },
         { targets: 5, title: 'Estatus de la solicitud', className: 'all text-center' },
         { targets: 6, title: 'Editar', className: 'all text-center' },

@@ -49,7 +49,7 @@
             <div class="col-12">
               <div class="row">
                 <div class="col-md-12 mb-3 text-center">
-                  <h5 class="form-label">Datos de la solicitud </h5>
+                  <h5 class="form-label"><b>Datos de la solicitud </b></h5>
                 </div>
               </div>
             </div>
@@ -57,7 +57,7 @@
 
             <div class="col-12">
               <div class="row">
-                <div class="col-md-3 mb-3">
+                <div class="col-md-4 mb-3">
                   <label class="form-label">Tipo de Solicitud *</label>
                   <select class="form-select" id="TIPO_SOLICITUD" name="TIPO_SOLICITUD" required>
                     <option selected disabled>Seleccione una opción</option>
@@ -66,11 +66,11 @@
                   </select>
                 </div>
 
-                <div class="col-md-3 mb-3">
+                <div class="col-md-4 mb-3">
                   <label class="form-label">Solicitud No.</label>
                   <input type="text" class="form-control" id="NO_SOLICITUD" name="NO_SOLICITUD" readonly>
                 </div>
-                <div class="col-md-3 mb-3">
+                <div class="col-md-4 mb-3">
                   <label class="form-label">Fecha *</label>
                   <div class="input-group">
                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_SOLICITUD" name="FECHA_SOLICITUD" required>
@@ -78,28 +78,48 @@
                   </div>
                 </div>
 
-                <div class="col-md-3 mb-3">
-                  <label class="form-label">Medio de Contacto *</label>
-                  <input type="text" class="form-control" id="MEDIO_CONTACTO_SOLICITUD" name="MEDIO_CONTACTO_SOLICITUD" required>
-                </div>
+               
               </div>
             </div>
 
             <div class="col-12">
               <div class="row">
-                <div class="col-md-3 mb-3">
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Medio de Contacto *</label>
+                  <input type="text" class="form-control" id="MEDIO_CONTACTO_SOLICITUD" name="MEDIO_CONTACTO_SOLICITUD" required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Tipo de Cliente *</label>
+                  <select class="form-select" id="TIPO_CLIENTE_SOLICITUD" name="TIPO_CLIENTE_SOLICITUD" required>
+                    <option selected disabled>Seleccione una opción</option>
+                    <option value="1">Prospecto</option>
+                    <option value="2">Existente</option>
+                  </select>
+                </div>
+
+                <div class="col-md-4 mb-3">
                   <label class="form-label">Razón Social *</label>
                   <input type="text" class="form-control" id="RAZON_SOCIAL_SOLICITUD" name="RAZON_SOCIAL_SOLICITUD" required>
                 </div>
-                <div class="col-md-3 mb-3">
+
+
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="row">
+                
+                <div class="col-md-4 mb-3">
                   <label class="form-label">Nombre Comercial *</label>
                   <input type="text" class="form-control" id="NOMBRE_COMERCIAL_SOLICITUD" name="NOMBRE_COMERCIAL_SOLICITUD" required>
                 </div>
-                <div class="col-md-3 mb-3">
+                <div class="col-md-4 mb-3">
                   <label class="form-label">Giro de la Empresa *</label>
                   <input type="text" class="form-control" id="GIRO_EMPRESA_SOLICITUD" name="GIRO_EMPRESA_SOLICITUD" required>
                 </div>
-                <div class="col-md-3 mb-3">
+                <div class="col-md-4 mb-3">
                   <label class="form-label">Representante Legal *</label>
                   <input type="text" class="form-control" id="REPRESENTANTE_LEGAL_SOLICITUD" name="REPRESENTANTE_LEGAL_SOLICITUD" required>
                 </div>
@@ -119,22 +139,15 @@
 
             <div class="col-12">
               <div class="row">
-                <div class="col-md-4 mb-3">
+                <div class="col-md-6 mb-3">
                   <label class="form-label">Necesidad del Servicio *</label>
-                  <input type="text" class="form-control" id="NECESIDAD_SERVICIO_SOLICITUD" name="NECESIDAD_SERVICIO_SOLICITUD" required>
+                  <textarea  class="form-control" id="NECESIDAD_SERVICIO_SOLICITUD" name="NECESIDAD_SERVICIO_SOLICITUD" rows="4" required></textarea>
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-6 mb-3">
                   <label class="form-label">Servicio Solicitado *</label>
-                  <input type="text" class="form-control" id="SERVICIO_SOLICITADO_SOLICITUD" name="SERVICIO_SOLICITADO_SOLICITUD" required>
+                  <textarea class="form-control" id="SERVICIO_SOLICITADO_SOLICITUD" name="SERVICIO_SOLICITADO_SOLICITUD" rows="4"></textarea>
                 </div>
-                <div class="col-md-4 mb-3">
-                  <label class="form-label">Tipo de Cliente *</label>
-                  <select class="form-select" id="TIPO_CLIENTE_SOLICITUD" name="TIPO_CLIENTE_SOLICITUD" required>
-                    <option selected disabled>Seleccione una opción</option>
-                    <option value="1">Prospecto</option>
-                    <option value="2">Existente</option>
-                  </select>
-                </div>
+               
               </div>
             </div>
 
@@ -150,7 +163,7 @@
             <div class="col-12">
               <div class="row">
                 <div class="col-md-12 mb-3 text-center">
-                  <h5 class="form-label">Datos del contacto </h5>
+                  <h5 class="form-label"><b>Datos del contacto</b> </h5>
                 </div>
               </div>
             </div>
@@ -189,7 +202,7 @@
             <div class="col-12">
               <div class="row">
                 <div class="col-md-12 mb-3 text-center">
-                  <h5 class="form-label">A quien se dirige la oferta</h5>
+                  <h5 class="form-label"><b>A quien se dirige la oferta</b></h5>
                   <br>
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="DIRIGE_OFERTA" id="mismoContacto" value="1" onchange="handleRadioChange()">
@@ -236,7 +249,7 @@
 
 
 
-            <div class="col-12" id="RECHAZO" style="display: none;">
+            <div class="col-12 mt-3" id="RECHAZO" style="display: none;">
               <div class="mb-3">
                 <label class="form-label">Motivo del rechazo</label>
                 <textarea class="form-control" id="MOTIVO_RECHAZO" name="MOTIVO_RECHAZO" rows="4" readonly></textarea>
