@@ -23,7 +23,6 @@ class ofertasController extends Controller
 {
     public function index()
     {
-        // Obtener todas las solicitudes aceptadas
         $solicitudesAceptadas = solicitudesModel::select(
             'ID_FORMULARIO_SOLICITUDES',
             'NO_SOLICITUD',
@@ -32,15 +31,12 @@ class ofertasController extends Controller
         ->where('ESTATUS_SOLICITUD', 'like', '%Aceptada%')
         ->get();
     
-        // Obtener los IDs de solicitudes ya asociadas
         $idsAsociados = ofertasModel::pluck('SOLICITUD_ID')->toArray();
     
-        // Filtrar las solicitudes aceptadas que no estén asociadas
         $solicitudes = $solicitudesAceptadas->filter(function ($solicitud) use ($idsAsociados) {
             return !in_array($solicitud->ID_FORMULARIO_SOLICITUDES, $idsAsociados);
         });
     
-        // Retornar la vista con las solicitudes disponibles
         return view('ventas.ofertas', compact('solicitudes'));
     }
     
@@ -49,20 +45,18 @@ class ofertasController extends Controller
     public function Tablaofertas()
     {
         try {
-            // Realizar la consulta con un join para obtener NO_SOLICITUD
             $tabla = ofertasModel::select(
-                'formulario_ofertas.*', // Seleccionar todos los campos de ofertas
-                'formulario_solicitudes.NO_SOLICITUD' // Agregar NO_SOLICITUD desde formulario_solicitudes
+                'formulario_ofertas.*', 
+                'formulario_solicitudes.NO_SOLICITUD'
             )
             ->leftJoin(
-                'formulario_solicitudes', // Tabla con la que se hace el join
-                'formulario_ofertas.SOLICITUD_ID', // Columna de unión en ofertas
+                'formulario_solicitudes', 
+                'formulario_ofertas.SOLICITUD_ID', 
                 '=', 
-                'formulario_solicitudes.ID_FORMULARIO_SOLICITUDES' // Columna de unión en solicitudes
+                'formulario_solicitudes.ID_FORMULARIO_SOLICITUDES' 
             )
             ->get();
     
-            // Obtener todas las solicitudes aceptadas
             $solicitudesAceptadas = solicitudesModel::select(
                 'ID_FORMULARIO_SOLICITUDES',
                 'NO_SOLICITUD',
@@ -71,20 +65,16 @@ class ofertasController extends Controller
             ->where('ESTATUS_SOLICITUD', 'like', '%Aceptada%')
             ->get();
     
-            // Obtener los IDs de solicitudes ya asociadas
             $idsAsociados = ofertasModel::pluck('SOLICITUD_ID')->toArray();
     
             foreach ($tabla as $value) {
-                // Excluir solicitudes asociadas excepto la actual (si está en edición)
                 $solicitudesDisponibles = $solicitudesAceptadas->filter(function ($solicitud) use ($idsAsociados, $value) {
                     return !in_array($solicitud->ID_FORMULARIO_SOLICITUDES, $idsAsociados) || 
                            $solicitud->ID_FORMULARIO_SOLICITUDES == $value->SOLICITUD_ID;
                 });
     
-                // Convertir las solicitudes disponibles a un arreglo para enviarlo como JSON
-                $value->SOLICITUDES = $solicitudesDisponibles->values(); // Mantén los índices correctos
+                $value->SOLICITUDES = $solicitudesDisponibles->values(); 
     
-                // Botones dependiendo del estado ACTIVO
                 if ($value->ACTIVO == 0) {
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_OFERTAS . '"><span class="slider round"></span></label>';

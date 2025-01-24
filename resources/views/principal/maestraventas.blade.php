@@ -84,200 +84,200 @@
 
 <body class="body">
 
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover; height: 100px;">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">
-            <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
-        </a>
-        <!-- Contenedor para centrar el título -->
-        <div class="d-flex justify-content-center align-items-center w-100" style="position: absolute; top: 0; left: 0; height: 100px;">
-            <h1 class="text-white m-0" style="color:#ffff;font-weight: bold;">Ventas</h1>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover; height: 100px;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
+            </a>
+            <!-- Contenedor para centrar el título -->
+            <div class="d-flex justify-content-center align-items-center w-100" style="position: absolute; top: 0; left: 0; height: 100px;">
+                <h1 class="text-white m-0" style="color:#ffff;font-weight: bold;">Ventas</h1>
+            </div>
+            <!-- Menú lateral derecho -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav1">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown" style="margin-right: 45px;">
+                        @auth
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-fill text-white" style="font-size: 24px;"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 250px;">
+                            <li class="dropdown-item text-center">
+                                <strong>{{ Auth::user()->EMPLEADO_NOMBRE }}</strong>
+                                <br>
+                                <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
+                            </li>
+                            <li class="dropdown-divider"></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item text-center" style="color: red;">
+                                        <i class="bi bi-power"></i> Cerrar sesión
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                        @else
+                        <script>
+                            window.location.href = "{{ route('login') }}"; // Redirige al login si no está autenticado
+                        </script>
+                        @endauth
+                    </li>
+                </ul>
+            </div>
         </div>
-        <!-- Menú lateral derecho -->
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav1">
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown" style="margin-right: 45px;">
-                    @auth
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-fill text-white" style="font-size: 24px;"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 250px;">
-                        <li class="dropdown-item text-center">
-                            <strong>{{ Auth::user()->EMPLEADO_NOMBRE }}</strong>
-                            <br>
-                            <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
-                        </li>
-                        <li class="dropdown-divider"></li>
-                        <li>
-                            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                                @csrf
-                                <button type="submit" class="dropdown-item text-center" style="color: red;">
-                                    <i class="bi bi-power"></i> Cerrar sesión
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
-                    @else
-                    <script>
-                        window.location.href = "{{ route('login') }}"; // Redirige al login si no está autenticado
-                    </script>
-                    @endauth
-                </li>
-            </ul>
+    </nav>
+
+
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0, 124, 186, 0.850); -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75);">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link BOTON" href="{{ url('/Módulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Módulos</span><span class="d-none d-lg-inline">Módulos</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link BOTON" href="{{ url('/Solicitudes') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <i class="bi bi-pencil-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Solicitudes</span><span class="d-none d-lg-inline">Solicitudes</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link BOTON" href="{{ url('/Ofertas') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <i class="bi bi-currency-dollar" style="margin-right: 5px;"></i> <span class="d-lg-none">Ofertas/Cotizaciones</span><span class="d-none d-lg-inline">Ofertas/Cotizaciones</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link BOTON" href="{{ url('/Confirmación') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <i class="bi bi-patch-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Confirmación del servicio </span><span class="d-none d-lg-inline">Confirmación del servicio </span>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <i class="bi bi-aspect-ratio-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">General </span><span class="d-none d-lg-inline">General </span>
+                        </a>
+                    </li>
+
+
+
+                </ul>
+            </div>
         </div>
+    </nav>
+
+
+    @if(session('error'))
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Acceso Denegado',
+                text: 'No tienes acceso a este módulo.',
+                confirmButtonText: 'Entendido',
+                background: '#f8d7da', // Fondo rojo claro
+                customClass: {
+                    popup: 'swal-wide' // Clase personalizada para ampliar la alerta
+                }
+            });
+
+        });
+    </script>
+    @endif
+
+
+
+
+
+    <!-- Modal de carga -->
+    <style>
+        #modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Ajusta la opacidad aquí */
+            z-index: 999;
+            display: none;
+            /* Empieza oculto */
+        }
+
+        #loading-image {
+            position: absolute;
+            top: 40%;
+            left: 28%;
+        }
+    </style>
+    <div id="modal-overlay">
+        <img src="/assets/images/Colorancho.png" class="ld ld-bounce" alt="Cargando" style="max-width: 100%; max-height: 214px;" id="loading-image">
     </div>
-</nav>
 
 
-
-
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0, 124, 186, 0.850); -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75);">
-    <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-
-                <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link BOTON" href="{{ url('/Módulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                        <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Módulos</span><span class="d-none d-lg-inline">Módulos</span>
-                    </a>
-                </li>
-
-                <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link BOTON" href="{{ url('/Solicitudes') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                        <i class="bi bi-pencil-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Solicitudes</span><span class="d-none d-lg-inline">Solicitudes</span>
-                    </a>
-                </li>
-
-                <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link BOTON" href="{{ url('/Ofertas') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                        <i class="bi bi-currency-dollar" style="margin-right: 5px;"></i> <span class="d-lg-none">Ofertas/Cotizaciones</span><span class="d-none d-lg-inline">Ofertas/Cotizaciones</span>
-                    </a>
-                </li>
-
-                <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                        <i class="bi bi-patch-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Confirmación del servicio </span><span class="d-none d-lg-inline">Confirmación del servicio </span>
-                    </a>
-                </li>
-
-
-                <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                        <i class="bi bi-aspect-ratio-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">General </span><span class="d-none d-lg-inline">General </span>
-                    </a>
-                </li>
-
-
-
-            </ul>
-        </div>
+    <div style="margin-top: 25px;">
+        @yield('contenido')
     </div>
-</nav>
-
-
-@if(session('error'))
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        Swal.fire({
-            icon: 'error',
-            title: 'Acceso Denegado',
-            text: 'No tienes acceso a este módulo.',
-            confirmButtonText: 'Entendido',
-            background: '#f8d7da', // Fondo rojo claro
-            customClass: {
-                popup: 'swal-wide' // Clase personalizada para ampliar la alerta
-            }
-        });
-
-    });
-</script>
-@endif
 
 
 
+    <!-- Jquery 3.6.4-->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!--Bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
+    <!-- Datatables 1.13.1  v.5.2 -->
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <!-- sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- Animación -->
+    <script src="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.js"></script>
+    <!-- Select opcion selectize -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
 
 
-<!-- Modal de carga -->
-<style>
-    #modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        /* Ajusta la opacidad aquí */
-        z-index: 999;
-        display: none;
-        /* Empieza oculto */
-    }
+    <!-- datepicker -->
 
-    #loading-image {
-        position: absolute;
-        top: 40%;
-        left: 28%;
-    }
-</style>
-<div id="modal-overlay">
-    <img src="/assets/images/Colorancho.png" class="ld ld-bounce" alt="Cargando" style="max-width: 100%; max-height: 214px;" id="loading-image">
-</div>
-
-
-<div style="margin-top: 25px;">
-    @yield('contenido')
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js"></script>
 
 
 
-<!-- Jquery 3.6.4-->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<!--Bootstrap -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"></script>
-<!-- Datatables 1.13.1  v.5.2 -->
-<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
-<!-- sweetalert -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<!-- Animación -->
-<script src="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.js"></script>
-<!-- Select opcion selectize -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
+    <!-- Dropify -->
+
+    <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
+
+    <!-- Funciones generales -->
+    <script src="/assets/js_sitio/funciones.js?v=4.0"></script>
 
 
-<!-- datepicker -->
+    <script>
+        $(document).ready(function() {
+            // Inicializar campos datepicker con opciones en español
+            $('.mydatepicker').datepicker({
+                format: 'yyyy-mm-dd', // Formato de fecha
+                weekStart: 1, // Día que inicia la semana, 1 = Lunes
+                autoclose: true, // Cierra automáticamente el calendario
+                todayHighlight: true, // Marca el día de hoy en el calendario
+                language: 'es' // Configura el idioma en español
+            });
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js"></script>
-
-
-
-<!-- Dropify -->
-
-<script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
-
-<!-- Funciones generales -->
-<script src="/assets/js_sitio/funciones.js?v=4.0"></script>
-
-
-<script>
-    $(document).ready(function() {
-        // Inicializar campos datepicker con opciones en español
-        $('.mydatepicker').datepicker({
-            format: 'yyyy-mm-dd', // Formato de fecha
-            weekStart: 1, // Día que inicia la semana, 1 = Lunes
-            autoclose: true, // Cierra automáticamente el calendario
-            todayHighlight: true, // Marca el día de hoy en el calendario
-            language: 'es' // Configura el idioma en español
-        });
-
-        // Mostrar la fecha seleccionada en el input
-        $('.mydatepicker').on('click', function() {
-            $(this).datepicker('setDate', $(this).val()); // Mostrar fecha del input y marcar en el calendario
-        });
+            // Mostrar la fecha seleccionada en el input
+            $('.mydatepicker').on('click', function() {
+                $(this).datepicker('setDate', $(this).val()); // Mostrar fecha del input y marcar en el calendario
+            });
         });
     </script>
 
@@ -285,18 +285,21 @@
 
 
 
-@if(request()->is('Solicitudes'))
-<script src="/assets/js_sitio/solicitudes/solicitudes.js"></script>
-@endif
+    @if(request()->is('Solicitudes'))
+    <script src="/assets/js_sitio/solicitudes/solicitudes.js"></script>
+    @endif
 
 
 
-@if(request()->is('Ofertas'))
-<script src="/assets/js_sitio/ofertas/ofertas.js"></script>
-@endif
+    @if(request()->is('Ofertas'))
+    <script src="/assets/js_sitio/ofertas/ofertas.js"></script>
+    @endif
 
 
 
+    @if(request()->is('Confirmación'))
+    <script src="/assets/js_sitio/confirmacion/confirmacion.js"></script>
+    @endif
 
 </body>
 

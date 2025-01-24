@@ -56,20 +56,18 @@ use App\Http\Controllers\contratacion\pendientecontratarController;
 use App\Http\Controllers\contratacion\CvController;
 
 
-// Controladores de desvinculacion
-
+// Controlador de desvinculacion
 use App\Http\Controllers\desvinculacion\desvinculacionController;
 
-
-// Controladores de solicitudes
-
+// Controlador de solicitudes
 use App\Http\Controllers\solicitudes\solicitudesController;
 
-
-// Controladores de ofertas
-
+// Controlador de ofertas
 use App\Http\Controllers\ofertas\ofertasController;
 
+// Controlador de confirmación
+
+use App\Http\Controllers\confirmacion\confirmacionController;
 
 
 //==============================================  login  ============================================== 
@@ -446,14 +444,18 @@ Route::get('/Tablasolicitudes', [solicitudesController::class, 'Tablasolicitudes
 Route::get('/solicitudDelete', [solicitudesController::class, 'store']);
 Route::post('/actualizarEstatusSolicitud', [solicitudesController::class, 'actualizarEstatusSolicitud']);
 
-
-//==============================================  SOLICITUDES  ============================================== 
-
-
+//==============================================  OFERTAS/COTIZACION  ============================================== 
 Route::get('/Ofertas', [ofertasController::class, 'index']);
 Route::post('/ofertaSave', [ofertasController::class, 'store']);
 Route::get('/Tablaofertas', [ofertasController::class, 'Tablaofertas']);
 Route::post('/actualizarEstatusOferta', [ofertasController::class, 'actualizarEstatusOferta']);
+
+//==============================================   CONFIRMACION DEL SERVICIO  ============================================== 
+
+Route::get('/Confirmación', [confirmacionController::class, 'index']);
+
+
+Route::get('/Tablaconfirmacion', [confirmacionController::class, 'Tablaconfirmacion']);
 
 
  //============================================== LIMPIAR RUTAS ============================================== 

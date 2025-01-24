@@ -26,7 +26,7 @@ ModalDesvinculacion.addEventListener('hidden.bs.modal', event => {
 $(document).ready(function () {
     // Inicializar Selectize
     var selectizeInstance = $('#SOLICITUD_ID').selectize({
-        placeholder: 'Seleccione un colaborador',
+        placeholder: 'Seleccione una solicitud',
         allowEmptyOption: true,
         closeAfterSelect: true,
     });
