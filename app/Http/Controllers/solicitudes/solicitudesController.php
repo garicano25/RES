@@ -23,18 +23,7 @@ class solicitudesController extends Controller
 
     public function index()
     {
-        $currentDate = Carbon::now();
-
-        DB::table('formulario_solicitudes')
-        ->whereNull('ESTATUS_SOLICITUD')
-        ->whereDate('FECHA_SOLICITUD', '<', $currentDate->subWeekdays(5))
-            ->update([
-                'ESTATUS_SOLICITUD' => 'Rechazada',
-                'MOTIVO_RECHAZO' => 'Pasaron los 5 días hábiles'
-            ]);
-
-
-        return view('ventas.solicitudes');
+              return view('ventas.solicitudes');
     }
 
 
@@ -79,7 +68,7 @@ class solicitudesController extends Controller
             // Validar los datos recibidos
             $request->validate([
                 'ID_FORMULARIO_SOLICITUDES' => 'required|exists:formulario_solicitudes,ID_FORMULARIO_SOLICITUDES',
-                'ESTATUS_SOLICITUD' => 'required|string|in:Aceptada,Revision,Rechazada',
+                'ESTATUS_SOLICITUD' => 'required|string|in:Aceptada,Revisión,Rechazada',
                 'MOTIVO_RECHAZO' => 'nullable|string|max:255'
             ]);
 

@@ -91,7 +91,7 @@
             </a>
             <!-- Contenedor para centrar el título -->
             <div class="d-flex justify-content-center align-items-center w-100" style="position: absolute; top: 0; left: 0; height: 100px;">
-                <h1 class="text-white m-0" style="color:#ffff;font-weight: bold;">Ventas</h1>
+                <h1 class="text-white m-0" style="color:#ffff;font-weight: bold;">Solicitudes ofertas y contratos</h1>
             </div>
             <!-- Menú lateral derecho -->
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav1">

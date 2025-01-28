@@ -190,7 +190,7 @@ var Tablasolicitudes = $("#Tablasolicitudes").DataTable({
                 // Renderizar el select
                 const colors = {
                     'Aceptada': 'background-color: green; color: white;',
-                    'Revision': 'background-color: orange; color: white;',
+                    'Revisión': 'background-color: orange; color: white;',
                     'Rechazada': 'background-color: red; color: white;'
                 };
 
@@ -203,7 +203,7 @@ var Tablasolicitudes = $("#Tablasolicitudes").DataTable({
                             style="${colors[data] || ''}" ${isDisabled}>
                         <option value="" ${!data ? 'selected' : ''} disabled style="background-color: white; color: black;">Seleccione una opción</option>
                         <option value="Aceptada" ${data === 'Aceptada' ? 'selected' : ''} style="background-color: green; color: white;">Aceptada</option>
-                        <option value="Revision" ${data === 'Revision' ? 'selected' : ''} style="background-color: orange; color: white;">Revision</option>
+                        <option value="Revisión" ${data === 'Revisión' ? 'selected' : ''} style="background-color: orange; color: white;">Revisión</option>
                         <option value="Rechazada" ${data === 'Rechazada' ? 'selected' : ''} style="background-color: red; color: white;">Rechazada</option>
                     </select>
                     <textarea class="form-control MOTIVO_RECHAZO d-none" placeholder="Motivo de rechazo..." data-id="${row.ID_FORMULARIO_SOLICITUDES}" ${isDisabled}>${row.MOTIVO_RECHAZO || ''}</textarea>
