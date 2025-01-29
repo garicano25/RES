@@ -12,6 +12,7 @@ use Carbon\Carbon;
 
 use App\Http\Controllers\usuario\usuarioController;
 use App\Http\Controllers\AuthController;
+
 // Controladores de organizacion
 
 use App\Http\Controllers\organizacion\areasController;
@@ -31,7 +32,6 @@ use App\Http\Controllers\organizacion\catalogotipovacanteController;
 use App\Http\Controllers\organizacion\catalogoCompotenciasGerencialesController;
 use App\Http\Controllers\organizacion\catalogomotivovacanteControlller;
 
-
 // Controladores de reclutamiento
 use App\Http\Controllers\reclutamiento\catalogovacantesController;
 use App\Http\Controllers\reclutamiento\PuestoController;
@@ -47,7 +47,6 @@ use App\Http\Controllers\seleccion\seleccionController;
 use App\Http\Controllers\seleccion\catalogopruebasController;
 use App\Http\Controllers\TestController;
 
-
 // Controladores de contratacion
 
 use App\Http\Controllers\contratacion\contratacionController;
@@ -55,12 +54,14 @@ use App\Http\Controllers\contratacion\PowerPointController;
 use App\Http\Controllers\contratacion\pendientecontratarController;
 use App\Http\Controllers\contratacion\CvController;
 
-
 // Controlador de desvinculacion
 use App\Http\Controllers\desvinculacion\desvinculacionController;
 
 // Controlador de solicitudes
 use App\Http\Controllers\solicitudes\solicitudesController;
+use App\Http\Controllers\solicitudes\catalogomediocontactoController;
+use App\Http\Controllers\solicitudes\catalogogiroempresaController;
+use App\Http\Controllers\solicitudes\catalogonecesidadController;
 
 // Controlador de ofertas
 use App\Http\Controllers\ofertas\ofertasController;
@@ -413,8 +414,6 @@ Route::get('/mostrarFotoCV/{id}', [CvController::class, 'mostrarFotoCV']);
 
  Route::get('/Rec.Empleado', function () {return view('RH.RecEmpleados.RecEmpleados');});
 
-
-
  //============================================== DESVINCULACIÓN ============================================== 
 
 Route::get('/Desvinculación', [desvinculacionController::class, 'index']);
@@ -453,11 +452,35 @@ Route::post('/actualizarEstatusOferta', [ofertasController::class, 'actualizarEs
 //==============================================   CONFIRMACION DEL SERVICIO  ============================================== 
 
 Route::get('/Confirmación', [confirmacionController::class, 'index']);
-
-
 Route::get('/Tablaconfirmacion', [confirmacionController::class, 'Tablaconfirmacion']);
 
 
+//==============================================   CATALOGOS SOLICITUDES ============================================== 
+
+Route::get('/Catálogo_solicitudes', function () {return view('ventas.Catalogos.catalogos_solicitud');});
+
+
+// CATÁLOGO DE MEDIO DE CONTACTO 
+
+Route::get('/Catálogo_medio_contacto', function () {return view('ventas.Catalogos.catalogo_mediocontacto');});
+Route::post('/MedioSave', [catalogomediocontactoController::class, 'store']);
+Route::get('/MedioDelete', [catalogomediocontactoController::class, 'store']);
+Route::get('/Tablamediocontacto', [catalogomediocontactoController::class, 'Tablamediocontacto']);
+
+// CATÁLOGO DE  GIRO DE EMPRESA
+
+Route::get('/Catálogo_giro_empresa', function () {return view('ventas.Catalogos.catalogo_giroempresa');});
+Route::post('/GiroSave', [catalogogiroempresaController::class, 'store']);
+Route::get('/GiroDelete', [catalogogiroempresaController::class, 'store']);
+Route::get('/Tablagiroempresa', [catalogogiroempresaController::class, 'Tablagiroempresa']);
+
+// CATÁLOGO DE  NECESIDAD SERVICIO
+
+
+Route::get('/Catálogo_necesidad_servicio', function () {return view('ventas.Catalogos.catalogo_necesidadservicio');});
+Route::post('/NecesidadSave', [catalogonecesidadController::class, 'store']);
+Route::get('/NecesidadDelete', [catalogonecesidadController::class, 'store']);
+Route::get('/Tablanecesidadservicio', [catalogonecesidadController::class, 'Tablanecesidadservicio']);
  //============================================== LIMPIAR RUTAS ============================================== 
 
 Route::get('/clear-cache', function () {

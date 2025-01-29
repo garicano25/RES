@@ -38,7 +38,10 @@ class solicitudesModel extends Model
         'TELEFONO_OFERTA',
         'CELULAR_OFERTA',
         'CORREO_OFERTA',
-        'MOTIVO_RECHAZO'
+        'MOTIVO_RECHAZO',
+        'RFC_SOLICITUD',
+        'TIPO_SERVICIO_SOLICITUD',
+        'CONTACTOS_JSON'
     ];
 
 }

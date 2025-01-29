@@ -85,8 +85,8 @@
 
 <body class="body">
 
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover; height: 100px;">
-    <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #A4D65E; height: 100px;">
+        <div class="container-fluid">
         <a class="navbar-brand" href="/">
             <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
         </a>
@@ -228,14 +228,14 @@
                         <li class="nav-item dropdown" style="margin-left: 8px;">
                             <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
-                                <span class="d-lg-none">Catálogo</span>
-                                <span class="d-none d-lg-inline">Catálogo</span>
+                                <span class="d-lg-none">Catálogos</span>
+                                <span class="d-none d-lg-inline">Catálogos</span>
                             </a>
                             <ul class="dropdown-menu">
                                 {{-- <li><a class="dropdown-item" href="{{ url('/Jerárquico') }}">Catálogo nivel Jerárquico</a>
                         </li>
                         <hr class="dropdown-divider"> --}}
-                        <li><a class="dropdown-item" href="{{url('/Catálogo_ppt')}}">Catálogos de PPT</a>
+                        <li><a class="dropdown-item" href="{{url('/Catálogo_ppt')}}">Catálogos de solicitudes</a>
                         </li>
                         <hr class="dropdown-divider">
                         <li><a class="dropdown-item" href="{{url('/Catálogo_dpt')}}">Catálogos de DPT</a>

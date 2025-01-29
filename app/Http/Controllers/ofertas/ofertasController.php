@@ -23,6 +23,7 @@ class ofertasController extends Controller
 {
     public function index()
     {
+        // Obtener todas las solicitudes aceptadas
         $solicitudesAceptadas = solicitudesModel::select(
             'ID_FORMULARIO_SOLICITUDES',
             'NO_SOLICITUD',
@@ -39,6 +40,7 @@ class ofertasController extends Controller
     
         return view('ventas.ofertas', compact('solicitudes'));
     }
+    
     
 
 
@@ -155,9 +157,11 @@ class ofertasController extends Controller
                         $ultimoRegistro = ofertasModel::orderBy('ID_FORMULARIO_OFERTAS', 'desc')->first();
                         $numeroIncremental = $ultimoRegistro ? intval(substr($ultimoRegistro->NO_OFERTA, -3)) + 1 : 1;
                         $anioActual = date('Y');
+                        $ultimoDigitoAnio = substr($anioActual, -2);
+
                         
                         // Formatear el NO_OFERTA como RES-COT-(año)-[tres dígitos]
-                        $noOferta = 'RES-COT-' . $anioActual . '-' . str_pad($numeroIncremental, 3, '0', STR_PAD_LEFT);
+                        $noOferta = 'RES-COT-' . $ultimoDigitoAnio . '-' . str_pad($numeroIncremental, 3, '0', STR_PAD_LEFT);
                         $request->merge(['NO_OFERTA' => $noOferta]);
     
                         // Reiniciar el AUTO_INCREMENT si es necesario

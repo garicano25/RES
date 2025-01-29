@@ -7,20 +7,16 @@ ModalDesvinculacion.addEventListener('hidden.bs.modal', event => {
     ID_FORMULARIO_OFERTAS = 0;
 
     document.getElementById('formularioOFERTAS').reset();
-
     $('#miModal_OFERTAS .modal-title').html('Ofertas/Cotizaciones');
 
     $('#RECHAZO').hide(); 
     $('#ACEPTADA').hide();
 
     var selectize = $('#SOLICITUD_ID')[0].selectize;
-    selectize.clear(); 
-    selectize.clearOptions(); 
-    selectize.addOption({
-        value: '',
-        text: 'Seleccione una solicitud'
-    }); 
+
+    selectize.clear();
 });
+
 
 
 $(document).ready(function () {
@@ -33,16 +29,15 @@ $(document).ready(function () {
 
     $("#NUEVA_OFERTA").click(function (e) {
         e.preventDefault();
-
         $("#miModal_OFERTAS").modal("show");
 
         var selectize = selectizeInstance[0].selectize;
+
+        // **Limpia solo la selección, sin borrar opciones**
         selectize.clear(); 
-        selectize.clearOptions(); 
-        selectize.addOption({
-            value: '',
-            text: 'Seleccione una solicitud'
-        }); 
+
+        // **No se usa `clearOptions()` para evitar borrar opciones disponibles**
+        selectize.refreshOptions(false); // Asegurar que las opciones sean visibles
 
         $('#RECHAZO').hide(); 
         $('#ACEPTADA').hide();  
@@ -50,6 +45,8 @@ $(document).ready(function () {
         document.getElementById('formularioOFERTAS').reset();
     });
 });
+
+
 
 
 
@@ -239,8 +236,9 @@ $('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {
 
     var selectize = $('#SOLICITUD_ID')[0].selectize;
     selectize.clear();
-    selectize.clearOptions(); 
+    selectize.clearOptions(); // Aquí sí limpiamos las opciones previas
 
+    // **Agregar solo las opciones de la oferta editada**
     if (row.data().SOLICITUDES && row.data().SOLICITUDES.length > 0) {
         row.data().SOLICITUDES.forEach(solicitud => {
             selectize.addOption({
@@ -258,7 +256,6 @@ $('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {
     $('#miModal_OFERTAS .modal-title').html(row.data().NO_OFERTA);
 
     var estatus = row.data().ESTATUS_OFERTA;
-
     if (estatus === 'Aceptada') {
         $('#ACEPTADA').show();  
         $('#RECHAZO').hide();   
@@ -272,6 +269,7 @@ $('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {
 
     $("#miModal_OFERTAS").modal("show");
 });
+
 
 
 

@@ -15,6 +15,10 @@ use DB;
 
 use App\Models\solicitudes\solicitudesModel;
 
+use App\Models\solicitudes\catalogomediocontactoModel;
+use App\Models\solicitudes\catalonecesidadModel;
+use App\Models\solicitudes\catalogiroempresaModel;
+
 
 
 class solicitudesController extends Controller
@@ -23,7 +27,15 @@ class solicitudesController extends Controller
 
     public function index()
     {
-              return view('ventas.solicitudes');
+
+
+        $medios = catalogomediocontactoModel::where('ACTIVO', 1)->get();
+        $necesidades = catalonecesidadModel::where('ACTIVO', 1)->get();
+        $giros = catalogiroempresaModel::where('ACTIVO', 1)->get();
+
+        return view('ventas.solicitudes', compact('medios', 'necesidades','giros'));
+
+
     }
 
 
@@ -98,6 +110,7 @@ class solicitudesController extends Controller
     {
         try {
             switch (intval($request->api)) {
+
                 case 1:
                     if ($request->ID_FORMULARIO_SOLICITUDES == 0) {
                         // Generar el número dinámico NO_SOLICITUD
@@ -106,14 +119,16 @@ class solicitudesController extends Controller
                         $anioActual = date('Y');
                         $ultimoDigitoAnio = substr($anioActual, -2);
                         $noSolicitud = str_pad($numeroIncremental, 3, '0', STR_PAD_LEFT) . '-' . $ultimoDigitoAnio;
-
+                
                         // Asignar NO_SOLICITUD al request
                         $request->merge(['NO_SOLICITUD' => $noSolicitud]);
-
-                        // Reiniciar el autoincremento y guardar el registro
+                
+                        // Reiniciar el autoincremento si es necesario
                         DB::statement('ALTER TABLE formulario_solicitudes AUTO_INCREMENT=1;');
-                        $solicitudes = solicitudesModel::create($request->all());
-
+                
+                        $data = $request->except([' ','contactos']);
+                        $solicitudes = solicitudesModel::create($data);
+                
                         $response['code'] = 1;
                         $response['solicitud'] = $solicitudes;
                         return response()->json($response);
@@ -132,13 +147,16 @@ class solicitudesController extends Controller
                             }
                         } else {
                             $solicitudes = solicitudesModel::find($request->ID_FORMULARIO_SOLICITUDES);
-                            $solicitudes->update($request->all());
+                            $solicitudes->update($request->except('FOTO_USUARIO'));
+                
                             $response['code'] = 1;
                             $response['solicitud'] = 'Actualizada';
                         }
                         return response()->json($response);
                     }
                     break;
+                
+
                 default:
                     $response['code'] = 1;
                     $response['msj'] = 'Api no encontrada';

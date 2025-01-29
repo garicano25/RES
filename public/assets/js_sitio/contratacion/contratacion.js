@@ -1286,13 +1286,13 @@ function obtenerDocumentosOficiales(data) {
             </div>
             <div class="col-2 mb-3">
                 <label>Tipo *</label>
-                <select class="form-control"  name="TIPO_DOCUMENTO_IDENTIFICACION"  value="${tipo}"  required>
-                    <option value="0" disabled selected>Seleccione una opción</option>
-                    <option value="1">Residencia temporal</option>
-                    <option value="2">Residencia Permanente</option>
-                    <option value="3">INE</option>
-                    <option value="4">Pasaporte</option>
-                    <option value="5">Licencia de conducir</option>
+                <select class="form-control" name="TIPO_DOCUMENTO_IDENTIFICACION" required>
+                    <option value="0" disabled>Seleccione una opción</option>
+                    <option value="1" ${tipo == 1 ? 'selected' : ''}>Residencia temporal</option>
+                    <option value="2" ${tipo == 2 ? 'selected' : ''}>Residencia Permanente</option>
+                    <option value="3" ${tipo == 3 ? 'selected' : ''}>INE</option>
+                    <option value="4" ${tipo == 4 ? 'selected' : ''}>Pasaporte</option>
+                    <option value="5" ${tipo == 5 ? 'selected' : ''}>Licencia de conducir</option>
                 </select>
             </div>
              <div class="col-2 mb-3">

@@ -113,7 +113,7 @@
                                     <input type="text" step="0.01" class="form-control" id="IMPORTE_OFERTA" name="IMPORTE_OFERTA" required>
                                 </div>
                                 <div class="col-4 mt-3">
-                                    <label>Días de validación *</label>
+                                    <label>Días de validez de la OC *</label>
                                     <input type="number" class="form-control" id="DIAS_VALIDACION_OFERTA" name="DIAS_VALIDACION_OFERTA"  required>
                                 </div>
                             </div>

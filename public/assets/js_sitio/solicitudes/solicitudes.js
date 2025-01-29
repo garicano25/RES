@@ -3,6 +3,28 @@ ID_FORMULARIO_SOLICITUDES = 0
 
 
 
+$("#NUEVA_SOLICITUD").click(function (e) {
+    e.preventDefault();
+
+
+       
+    $('#formularioSOLICITUDES').each(function(){
+        this.reset();
+    });
+
+    $(".observacionesdiv").empty();
+    $(".contactodiv").empty();
+
+
+    $("#miModal_SOLICITUDES").modal("show");
+
+
+
+   
+});
+
+
+
 
 const ModalArea = document.getElementById('miModal_SOLICITUDES')
 ModalArea.addEventListener('hidden.bs.modal', event => {
@@ -44,88 +66,198 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 
 
 
-
 $("#guardarSOLICITUD").click(function (e) {
     e.preventDefault();
 
     formularioValido = validarFormularioV1('formularioSOLICITUDES');
 
     if (formularioValido) {
-
-    if (ID_FORMULARIO_SOLICITUDES == 0) {
         
-        alertMensajeConfirm({
-            title: "¿Desea guardar la información?",
-            text: "Al guardarla, se podra usar",
-            icon: "question",
-        },async function () { 
 
-            await loaderbtn('guardarSOLICITUD')
-            await ajaxAwaitFormData({ api: 1,ID_FORMULARIO_SOLICITUDES: ID_FORMULARIO_SOLICITUDES }, 'solicitudSave', 'formularioSOLICITUDES', 'guardarSOLICITUD', { callbackAfter: true, callbackBefore: true }, () => {
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                })
+        var observacion = [];
+        $(".generarobervaciones").each(function() {
+            var observaciones = {
+                'OBSERVACIONES': $(this).find("textarea[name='OBSERVACIONES']").val()
+            };
+            observacion.push(observaciones);
+        });
 
-                $('.swal2-popup').addClass('ld ld-breath')
-                
-            }, function (data) {
-                    
-                ID_FORMULARIO_SOLICITUDES = data.solicitud.ID_FORMULARIO_SOLICITUDES
-                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
-                     $('#miModal_SOLICITUDES').modal('hide')
-                    document.getElementById('formularioSOLICITUDES').reset();
-                    Tablasolicitudes.ajax.reload()
+        var contactos = [];
+            $(".generarcontacto").each(function() {
+                var contacto = {
+                    'CONTACTO_SOLICITUD': $(this).find("input[name='CONTACTO_SOLICITUD']").val(),
+                    'CARGO_SOLICITUD': $(this).find("input[name='CARGO_SOLICITUD").val(),
+                    'TELEFONO_SOLICITUD': $(this).find("input[name='TELEFONO_SOLICITUD']").val(),
+                    'CELULAR_SOLICITUD': $(this).find("input[name='CELULAR_SOLICITUD']").val(),
+                    'CORREO_SOLICITUD': $(this).find("input[name='CORREO_SOLICITUD']").val()
+                };
+                contactos.push(contacto);
+            });
 
 
-            })
-            
-            
-            
-        }, 1)
-        
-    } else {
-            alertMensajeConfirm({
-            title: "¿Desea editar la información de este formulario?",
-            text: "Al guardarla, se podra usar",
-            icon: "question",
-        },async function () { 
-
-            await loaderbtn('guardarSOLICITUD')
-            await ajaxAwaitFormData({ api: 1,ID_FORMULARIO_SOLICITUDES: ID_FORMULARIO_SOLICITUDES }, 'solicitudSave', 'formularioSOLICITUDES', 'guardarSOLICITUD', { callbackAfter: true, callbackBefore: true }, () => {
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                })
-
-                $('.swal2-popup').addClass('ld ld-breath')
-        
-            }, function (data) {
-                    
-                setTimeout(() => {
-
-                    ID_FORMULARIO_SOLICITUDES = data.solicitud.ID_FORMULARIO_SOLICITUDES
-                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
-                     $('#miModal_SOLICITUDES').modal('hide')
-                    document.getElementById('formularioSOLICITUDES').reset();
-                    Tablasolicitudes.ajax.reload()
-
-
-                }, 300);  
-            })
-        }, 1)
-    }
-
-} else {
-    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
-
-}
     
+        const requestData = {
+            api: 1,
+            ID_FORMULARIO_SOLICITUDES: ID_FORMULARIO_SOLICITUDES,
+            OBSERVACIONES_SOLICITUD: JSON.stringify(observacion),
+            CONTACTOS_JSON: JSON.stringify(contactos) 
+
+        };
+
+        if (ID_FORMULARIO_SOLICITUDES == 0) {
+            alertMensajeConfirm({
+                title: "¿Desea guardar la información?",
+                text: "Al guardarla, se podrá usar",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarSOLICITUD');
+                await ajaxAwaitFormData(requestData, 'solicitudSave', 'formularioSOLICITUDES', 'guardarSOLICITUD', { callbackAfter: true, callbackBefore: true }, () => {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+                    
+                }, function (data) {
+                    
+                    ID_FORMULARIO_SOLICITUDES = data.solicitud.ID_FORMULARIO_SOLICITUDES
+                        alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                         $('#miModal_SOLICITUDES').modal('hide')
+                        document.getElementById('formularioSOLICITUDES').reset();
+                        Tablasolicitudes.ajax.reload()
+    
+    
+                })
+                
+            }, 1);
+            
+        } else {
+            alertMensajeConfirm({
+                title: "¿Desea editar la información de este formulario?",
+                text: "Al guardarla, se podrá usar",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarSOLICITUD');
+                await ajaxAwaitFormData(requestData, 'solicitudSave', 'formularioSOLICITUDES', 'guardarSOLICITUD', { callbackAfter: true, callbackBefore: true }, () => {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+
+                }, function (data) {
+                    
+                    setTimeout(() => {
+    
+                        ID_FORMULARIO_SOLICITUDES = data.solicitud.ID_FORMULARIO_SOLICITUDES
+                        alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                         $('#miModal_SOLICITUDES').modal('hide')
+                        document.getElementById('formularioSOLICITUDES').reset();
+                        Tablasolicitudes.ajax.reload()
+    
+    
+                    }, 300);  
+                })
+            }, 1);
+        }
+    } else {
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+    }
 });
+
+
+
+
+
+// $("#guardarSOLICITUD").click(function (e) {
+//     e.preventDefault();
+
+//     formularioValido = validarFormularioV1('formularioSOLICITUDES');
+
+//     if (formularioValido) {
+
+//     if (ID_FORMULARIO_SOLICITUDES == 0) {
+        
+//         alertMensajeConfirm({
+//             title: "¿Desea guardar la información?",
+//             text: "Al guardarla, se podra usar",
+//             icon: "question",
+//         },async function () { 
+
+//             await loaderbtn('guardarSOLICITUD')
+//             await ajaxAwaitFormData({ api: 1,ID_FORMULARIO_SOLICITUDES: ID_FORMULARIO_SOLICITUDES }, 'solicitudSave', 'formularioSOLICITUDES', 'guardarSOLICITUD', { callbackAfter: true, callbackBefore: true }, () => {
+//                 Swal.fire({
+//                     icon: 'info',
+//                     title: 'Espere un momento',
+//                     text: 'Estamos guardando la información',
+//                     showConfirmButton: false
+//                 })
+
+//                 $('.swal2-popup').addClass('ld ld-breath')
+                
+//             }, function (data) {
+                    
+//                 ID_FORMULARIO_SOLICITUDES = data.solicitud.ID_FORMULARIO_SOLICITUDES
+//                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+//                      $('#miModal_SOLICITUDES').modal('hide')
+//                     document.getElementById('formularioSOLICITUDES').reset();
+//                     Tablasolicitudes.ajax.reload()
+
+
+//             })
+            
+            
+            
+//         }, 1)
+        
+//     } else {
+//             alertMensajeConfirm({
+//             title: "¿Desea editar la información de este formulario?",
+//             text: "Al guardarla, se podra usar",
+//             icon: "question",
+//         },async function () { 
+
+//             await loaderbtn('guardarSOLICITUD')
+//             await ajaxAwaitFormData({ api: 1,ID_FORMULARIO_SOLICITUDES: ID_FORMULARIO_SOLICITUDES }, 'solicitudSave', 'formularioSOLICITUDES', 'guardarSOLICITUD', { callbackAfter: true, callbackBefore: true }, () => {
+//                 Swal.fire({
+//                     icon: 'info',
+//                     title: 'Espere un momento',
+//                     text: 'Estamos guardando la información',
+//                     showConfirmButton: false
+//                 })
+
+//                 $('.swal2-popup').addClass('ld ld-breath')
+        
+//             }, function (data) {
+                    
+//                 setTimeout(() => {
+
+//                     ID_FORMULARIO_SOLICITUDES = data.solicitud.ID_FORMULARIO_SOLICITUDES
+//                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+//                      $('#miModal_SOLICITUDES').modal('hide')
+//                     document.getElementById('formularioSOLICITUDES').reset();
+//                     Tablasolicitudes.ajax.reload()
+
+
+//                 }, 300);  
+//             })
+//         }, 1)
+//     }
+
+// } else {
+//     alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+// }
+    
+// });
 
 
 
@@ -342,27 +474,37 @@ $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablasolicitudes.row(tr);
     ID_FORMULARIO_SOLICITUDES = row.data().ID_FORMULARIO_SOLICITUDES;
 
+    
+    $(".observacionesdiv").empty(); 
+    obtenerObservaciones(row); 
+
+    $(".contactodiv").empty();
+    obtenerContactos(row);
+
     editarDatoTabla(row.data(), 'formularioSOLICITUDES', 'miModal_SOLICITUDES', 1);
 
     $('#miModal_SOLICITUDES .modal-title').html(row.data().NOMBRE_COMERCIAL_SOLICITUD);
 
-    if (row.data().DIRIGE_OFERTA === 0) {
-        const fields = [
-            'CONTACTO_OFERTA',
-            'CARGO_OFERTA',
-            'TELEFONO_OFERTA',
-            'CELULAR_OFERTA',
-            'CORREO_OFERTA',
-        ];
+     const fields = [
+    'CONTACTO_OFERTA',
+    'CARGO_OFERTA',
+    'TELEFONO_OFERTA',
+    'CELULAR_OFERTA',
+    'CORREO_OFERTA',
+    ];
+
+        const dirigeOferta = Number(row.data().DIRIGE_OFERTA);
 
         fields.forEach(fieldId => {
             const field = document.getElementById(fieldId);
+
             if (field) {
-                field.disabled = true; 
-                field.required = false; 
+                field.toggleAttribute('disabled', dirigeOferta === 0);
+                field.toggleAttribute('required', dirigeOferta !== 0);
+            } else {
+                console.warn(` El campo ${fieldId} no existe en el DOM.`);
             }
         });
-    }
 
     const rechazoDiv = document.getElementById('RECHAZO');
     const motivoRechazoTextarea = document.getElementById('MOTIVO_RECHAZO');
@@ -386,6 +528,12 @@ $(document).ready(function() {
         var row = Tablasolicitudes.row(tr);
         
         hacerSoloLectura(row.data(), '#miModal_SOLICITUDES');
+
+        $(".observacionesdiv").empty(); 
+        obtenerObservaciones(row); 
+
+    $(".contactodiv").empty();
+    obtenerContactos(row);
 
         ID_FORMULARIO_SOLICITUDES = row.data().ID_FORMULARIO_SOLICITUDES;
         editarDatoTabla(row.data(), 'formularioSOLICITUDES', 'miModal_SOLICITUDES',1);
@@ -474,4 +622,215 @@ function handleRadioChange() {
       field.disabled = true;
     }
   });
+}
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const botonAgregarDoc = document.getElementById('botonAgregarobservaciones');
+    botonAgregarDoc.addEventListener('click', function () {
+        agregarobservaciones();
+    });
+
+    function agregarobservaciones() {
+        const divDocumentoOfi = document.createElement('div');
+        divDocumentoOfi.classList.add('row', 'generarobervaciones', 'mb-3');
+        divDocumentoOfi.innerHTML = `
+        
+            <div class="col-12">
+              <div class="mb-3">
+                <label class="form-label">Observación</label>
+                <textarea class="form-control"  name="OBSERVACIONES" rows="2"></textarea>
+              </div>
+            </div>
+
+            <br>
+            <div class="col-12 mt-4">
+                <div class="form-group" style="text-align: center;">
+                    <button type="button" class="btn btn-danger botonEliminarObservacion">Eliminar observación <i class="bi bi-trash-fill"></i></button>
+                </div>
+            </div>
+        `;
+        const contenedor = document.querySelector('.observacionesdiv');
+        contenedor.appendChild(divDocumentoOfi);
+
+        const botonEliminar = divDocumentoOfi.querySelector('.botonEliminarObservacion');
+        botonEliminar.addEventListener('click', function () {
+            contenedor.removeChild(divDocumentoOfi);
+        });
+    }
+
+
+});
+
+
+
+
+
+function obtenerObservaciones(data) {
+    let row = data.data().OBSERVACIONES_SOLICITUD;
+    var observaciones = JSON.parse(row);
+
+    $.each(observaciones, function (index, contacto) {
+        var observa = contacto.OBSERVACIONES;
+     
+
+        const divDocumentoOfi = document.createElement('div');
+        divDocumentoOfi.classList.add('row', 'generarobervaciones', 'mb-3');
+        divDocumentoOfi.innerHTML = `
+         
+            <div class="col-12">
+              <div class="mb-3">
+                <label class="form-label">Observación</label>
+<textarea class="form-control" name="OBSERVACIONES" rows="2">${observa}</textarea>
+              </div>
+            </div>
+            
+            <br>
+            <div class="col-12 mt-4">
+                <div class="form-group" style="text-align: center;">
+                    <button type="button" class="btn btn-danger botonEliminarObservacion">Eliminar observación <i class="bi bi-trash-fill"></i></button>
+                </div>
+            </div>
+        `;
+        const contenedor = document.querySelector('.observacionesdiv');
+        contenedor.appendChild(divDocumentoOfi);
+
+      
+        const botonEliminar = divDocumentoOfi.querySelector('.botonEliminarObservacion');
+        botonEliminar.addEventListener('click', function () {
+            contenedor.removeChild(divDocumentoOfi);
+        });
+    });
+
+}
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const botonAgregarContacto = document.getElementById('botonAgregarcontacto');
+    
+    botonAgregarContacto.addEventListener('click', function () {
+        agregarContacto();
+    });
+
+    function agregarContacto() {
+        const divContacto = document.createElement('div');
+        divContacto.classList.add('row', 'generarcontacto', 'mb-3');
+        divContacto.innerHTML = `
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nombre *</label>
+                        <input type="text" class="form-control" name="CONTACTO_SOLICITUD" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Cargo *</label>
+                        <input type="text" class="form-control" name="CARGO_SOLICITUD" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Teléfono y Extensión </label>
+                        <input type="text" class="form-control" name="TELEFONO_SOLICITUD">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Celular *</label>
+                        <input type="text" class="form-control" name="CELULAR_SOLICITUD" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Correo electrónico *</label>
+                        <input type="email" class="form-control" name="CORREO_SOLICITUD" required>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <div class="col-12 mt-4">
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-danger botonEliminarContacto">Eliminar contacto <i class="bi bi-trash-fill"></i></button>
+                </div>
+            </div>
+        `;
+
+        const contenedor = document.querySelector('.contactodiv');
+        contenedor.appendChild(divContacto);
+
+        // Evento para eliminar contacto
+        const botonEliminar = divContacto.querySelector('.botonEliminarContacto');
+        botonEliminar.addEventListener('click', function () {
+            contenedor.removeChild(divContacto);
+        });
+    }
+});
+
+
+
+function obtenerContactos(data) {
+    let row = data.data().CONTACTOS_JSON;
+    var contactos = JSON.parse(row);
+
+    $.each(contactos, function (index, contacto) {
+        var nombre = contacto.CONTACTO_SOLICITUD;
+        var cargo = contacto.CARGO_SOLICITUD;
+        var telefono = contacto.TELEFONO_SOLICITUD;
+        var celular = contacto.CELULAR_SOLICITUD;
+        var correo = contacto.CORREO_SOLICITUD;
+
+        const divContacto = document.createElement('div');
+        divContacto.classList.add('row', 'generarcontacto', 'mb-3');
+        divContacto.innerHTML = `
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nombre *</label>
+                        <input type="text" class="form-control" name="CONTACTO_SOLICITUD" value="${nombre}" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Cargo *</label>
+                        <input type="text" class="form-control" name="CARGO_SOLICITUD" value="${cargo}" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Teléfono y Extensión </label>
+                        <input type="text" class="form-control" name="TELEFONO_SOLICITUD" value="${telefono}">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Celular *</label>
+                        <input type="text" class="form-control" name="CELULAR_SOLICITUD" value="${celular}" required>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Correo electrónico *</label>
+                        <input type="email" class="form-control" name="CORREO_SOLICITUD" value="${correo}" required>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <div class="col-12 mt-4">
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-danger botonEliminarContacto">Eliminar contacto <i class="bi bi-trash-fill"></i></button>
+                </div>
+            </div>
+        `;
+
+        const contenedor = document.querySelector('.contactodiv');
+        contenedor.appendChild(divContacto);
+
+        // Evento para eliminar contacto
+        const botonEliminar = divContacto.querySelector('.botonEliminarContacto');
+        botonEliminar.addEventListener('click', function () {
+            contenedor.removeChild(divContacto);
+        });
+    });
 }

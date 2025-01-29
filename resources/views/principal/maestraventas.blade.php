@@ -84,7 +84,7 @@
 
 <body class="body">
 
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover; height: 100px;">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #A4D65E; height: 100px;">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
                 <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
@@ -170,6 +170,31 @@
                         </a>
                     </li>
 
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown" style="margin-left: 8px;">
+                            <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                <span class="d-lg-none">Catálogos</span>
+                                <span class="d-none d-lg-inline">Catálogos</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {{-- <li><a class="dropdown-item" href="{{ url('/Jerárquico') }}">Catálogo nivel Jerárquico</a>
+                        </li>
+                        <hr class="dropdown-divider"> --}}
+                        <li><a class="dropdown-item" href="{{url('/Catálogo_solicitudes')}}">Catálogos de solicitudes</a>
+                        </li>
+                        {{-- <hr class="dropdown-divider">
+                        <li><a class="dropdown-item" href="{{url('/Catálogo_dpt')}}">Catálogos de DPT</a>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li><a class="dropdown-item" href="{{url('/Catálogo_requisición')}}">Catálogos de Requisición</a>
+                        </li>
+                        <hr class="dropdown-divider">
+                        <li><a class="dropdown-item" href="{{url('/Catálogo_generales')}}">Catálogos generales</a>
+                        </li> --}}
+                    </ul>
+                    </li>
+                </ul>
 
 
                 </ul>
@@ -300,6 +325,24 @@
     @if(request()->is('Confirmación'))
     <script src="/assets/js_sitio/confirmacion/confirmacion.js"></script>
     @endif
+
+
+
+    @if(request()->is('Catálogo_medio_contacto'))
+    <script src="/assets/js_sitio/solicitudes/catalogos/catalogomotivo.js"></script>
+    @endif
+
+
+    @if(request()->is('Catálogo_giro_empresa'))
+    <script src="/assets/js_sitio/solicitudes/catalogos/catalogogiroempresa.js"></script>
+    @endif
+
+  @if(request()->is('Catálogo_necesidad_servicio'))
+    <script src="/assets/js_sitio/solicitudes/catalogos/catalogonecesidadservicio.js"></script>
+    @endif
+
+    
+</body>
 
 </body>
 
