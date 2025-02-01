@@ -112,7 +112,7 @@ class ofertasController extends Controller
         try {
             $request->validate([
                 'ID_FORMULARIO_OFERTAS' => 'required|exists:formulario_ofertas,ID_FORMULARIO_OFERTAS',
-                'ESTATUS_OFERTA' => 'required|string|in:Aceptada,Revision,Rechazada',
+                'ESTATUS_OFERTA' => 'required|string|in:Aceptada,Revisión,Rechazada',
                 'MOTIVO_RECHAZO' => 'nullable|string|max:255',
                 'ACEPTADA_OFERTA' => 'nullable|string|max:255',
                 'FECHA_ACEPTACION_OFERTA' => 'nullable|date',

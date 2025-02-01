@@ -60,46 +60,92 @@
 
 
 
-                        <div class="col-12">
+                        <div class="col-12 mt-3">
                             <div class="row">
-                                <div class="col-4">
-                                    <label>No. de orden de compra (OC) / contrato </label>
-                                    <input type="text" class="form-control" id="NO_CONFIRMACION" name="NO_CONFIRMACION">
-                                </div>
-                                <div class="col-4">
-                                    <label>Forma de aceptación </label>
-                                    <input type="text" class="form-control" id="ACEPTACION_CONFIRMACION" name="ACEPTACION_CONFIRMACION">
+
+                                <div class="col-6">
+                                    <label>Forma de aceptación *</label>
+                                    <select class="form-control" id="ACEPTACION_CONFIRMACION" name="ACEPTACION_CONFIRMACION" required>
+                                        <option value="" disabled selected>Seleccione una opción</option>
+                                        <option value="1">Firma</option>
+                                        <option value="2">OC/OS</option>
+                                        <option value="3">Contrato</option>
+                                    </select>
                                 </div>
 
-                                <div class="col-4">
-                                    <label>Fecha de emisión de la OC/Contrato *</label>
+
+                                <div class="col-6">
+                                    <label>Fecha de aceptación *</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_CONFIRMACION" name="FECHA_CONFIRMACION" required>
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                     </div>
                                 </div>
 
+
+
                             </div>
+                        </div>
+
+
+                        <div class="col-12 mt-3">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label>No. OC/OS/Contrato </label>
+                                    <input type="text" class="form-control" id="NO_CONFIRMACION" name="NO_CONFIRMACION">
+                                </div>
+
+                                <div class="col-6">
+                                    <label>Fecha de emisión *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_CONFIRMACION" name="FECHA_CONFIRMACION" required>
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="mb-3 mt-3">
+                                <div class="row">
+                                    <div class="col-6 mb-3">
+                                        <label>Agregar evidencia</label>
+                                        <button id="botonVerificacion" id="botonVerificacion" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                                            <i class="bi bi-plus-circle-fill"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="verifiacionesdiv mt-4"></div>
+                            </div>
+
                         </div>
 
 
 
                         <div class="col-12 mt-3">
                             <div class="row">
-                                <div class="col-4">
+
+                                <div class="col-3">
                                     <label>Verificado por (iniciales personal RES) </label>
                                     <input type="text" class="form-control" id="VERIFICACION_CONFIRMACION" name="VERIFICACION_CONFIRMACION">
                                 </div>
 
-                                <div class="col-4">
-                                    <label>Fecha de verificación de la OC/contrato por RES*</label>
+                                <div class="col-3">
+                                    <label>Fecha de verificación de OC/OS/Contrato*</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VERIFICACION_CONFIRMACION" name="FECHA_VERIFICACION_CONFIRMACION" required>
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                     </div>
                                 </div>
+                                <div class="col-3">
+                                    <label>Prioridad del servicio (Normal - Urgente) </label>
+                                    <input type="text" class="form-control" id="PRIORIDAD_CONFIRMACION" name="PRIORIDAD_CONFIRMACION">
+                                </div>
 
-                                <div class="col-4">
+
+                                <div class="col-3">
                                     <label>Fecha de inicio del servicio*</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INICIO_CONFIRMACION" name="FECHA_INICIO_CONFIRMACION" required>
@@ -110,32 +156,106 @@
                         </div>
 
 
-                        <div class="col-12 mt-3">
-                            <div class="row">
-                                <div class="col-4">
-                                    <label>Prioridad del informe (Normal - Urgente) </label>
-                                    <input type="text" class="form-control" id="PRIORIDAD_CONFIRMACION" name="PRIORIDAD_CONFIRMACION">
-                                </div>
 
-                                <div class="col-4">
-                                    <label>Orden de Trabajo (OT) No. </label>
-                                    <input type="text" class="form-control" id="NO_ORDEN_CONFIRMACION" name="NO_ORDEN_CONFIRMACION">
-                                </div>
+                        <div class="d-flex align-items-center mt-3">
+                            <h5 class="me-2">Validar información</h5>
+                            <button id="btnVerificacion" type="button" class="btn btn-info btn-custom rounded-pill">
+                                <i class="bi bi-check"></i>
+                            </button>
+                        </div>
+                        <input type="hidden" id="inputVerificacionEstado" name="ESTADO_VERIFICACION" value="0">
 
-                                <div class="col-4">
-                                    <label>Fecha de emisión de la OT*</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INICIO_CONFIRMACION" name="FECHA_INICIO_CONFIRMACION" required>
-                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+
+
+
+                        <div id="VERIFICACION_CLIENTE" style="display: none;">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Quién valida *</label>
+                                        <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" readonly>
+                                    </div>
+
+                                    <div class="col-4 mt-2">
+                                        <label>Fecha de Validación *</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VERIFICACION_CONFIRMACION" name="FECHA_VERIFICACION_CONFIRMACION" required>
+                                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Comentario *</label>
+                                        <textarea class="form-control" name="COMENTARIO_VALIDACION" rows="1" required></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Lista de Verificación con Radio Buttons Alineados -->
+                            <div class="col-12 mt-3">
+                                <h5 class="mb-2"><b>Verificación de Información</b></h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="d-flex align-items-center">
+                                            <label class="form-check-label flex-grow-1 text-end">Razón Social</label>
+                                            <div class="ms-3">
+                                                <input type="radio" name="RAZON_SOCIAL_VERIFICACION" value="Sí" required> Sí
+                                                <input type="radio" name="RAZON_SOCIAL_VERIFICACION" value="No"> No
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            <label class="form-check-label flex-grow-1 text-end">RFC</label>
+                                            <div class="ms-3">
+                                                <input type="radio" name="RFC_VERIFICACION" value="Sí" required> Sí
+                                                <input type="radio" name="RFC_VERIFICACION" value="No"> No
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            <label class="form-check-label flex-grow-1 text-end">Precios</label>
+                                            <div class="ms-3">
+                                                <input type="radio" name="PRECIOS_VERIFICACION" value="Sí" required> Sí
+                                                <input type="radio" name="PRECIOS_VERIFICACION" value="No"> No
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            <label class="form-check-label flex-grow-1 text-end">Moneda</label>
+                                            <div class="ms-3">
+                                                <input type="radio" name="MONEDA_VERIFICACION" value="Sí" required> Sí
+                                                <input type="radio" name="MONEDA_VERIFICACION" value="No"> No
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            <label class="form-check-label flex-grow-1 text-end">Servicio</label>
+                                            <div class="ms-3">
+                                                <input type="radio" name="SERVICIO_VERIFICACION" value="Sí" required> Sí
+                                                <input type="radio" name="SERVICIO_VERIFICACION" value="No"> No
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            <label class="form-check-label flex-grow-1 text-end">Días de Crédito</label>
+                                            <div class="ms-3">
+                                                <input type="radio" name="DIAS_CREDITO_VERIFICACION" value="Sí" required> Sí
+                                                <input type="radio" name="DIAS_CREDITO_VERIFICACION" value="No"> No
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex align-items-center">
+                                            <label class="form-check-label flex-grow-1 text-end">Cantidad</label>
+                                            <div class="ms-3">
+                                                <input type="radio" name="CANTIDAD_VERIFICACION" value="Sí" required> Sí
+                                                <input type="radio" name="CANTIDAD_VERIFICACION" value="No"> No
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
 
 
 

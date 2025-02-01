@@ -103,7 +103,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 250px;">
                             <li class="dropdown-item text-center">
-                                <strong>{{ Auth::user()->EMPLEADO_NOMBRE }}</strong>
+                                <strong>{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}</strong>
                                 <br>
                                 <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
                             </li>
@@ -160,6 +160,12 @@
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="{{ url('/Confirmación') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-patch-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Confirmación del servicio </span><span class="d-none d-lg-inline">Confirmación del servicio </span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link BOTON" href="{{ url('/Orden_trabajo') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <i class="bi bi-patch-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Orden de trabajo </span><span class="d-none d-lg-inline">Orden de trabajo </span>
                         </a>
                     </li>
 
@@ -337,11 +343,18 @@
     <script src="/assets/js_sitio/solicitudes/catalogos/catalogogiroempresa.js"></script>
     @endif
 
-  @if(request()->is('Catálogo_necesidad_servicio'))
+    @if(request()->is('Catálogo_necesidad_servicio'))
     <script src="/assets/js_sitio/solicitudes/catalogos/catalogonecesidadservicio.js"></script>
     @endif
 
-    
+
+    @if(request()->is('Orden_trabajo'))
+    <script src="/assets/js_sitio/orden_trabajo/orden_trabajo.js"></script>
+    @endif
+
+
+
+
 </body>
 
 </body>

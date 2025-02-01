@@ -20,7 +20,6 @@ ModalDesvinculacion.addEventListener('hidden.bs.modal', event => {
 
 
 $(document).ready(function () {
-    // Inicializar Selectize
     var selectizeInstance = $('#SOLICITUD_ID').selectize({
         placeholder: 'Seleccione una solicitud',
         allowEmptyOption: true,
@@ -33,11 +32,9 @@ $(document).ready(function () {
 
         var selectize = selectizeInstance[0].selectize;
 
-        // **Limpia solo la selección, sin borrar opciones**
         selectize.clear(); 
 
-        // **No se usa `clearOptions()` para evitar borrar opciones disponibles**
-        selectize.refreshOptions(false); // Asegurar que las opciones sean visibles
+        selectize.refreshOptions(false); 
 
         $('#RECHAZO').hide(); 
         $('#ACEPTADA').hide();  
@@ -189,7 +186,7 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
             render: function(data, type, row) {
                 const colors = {
                     'Aceptada': 'background-color: green; color: white;',
-                    'Revision': 'background-color: orange; color: white;',
+                    'Revisión': 'background-color: orange; color: white;',
                     'Rechazada': 'background-color: red; color: white;'
                 };
 
@@ -201,7 +198,7 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
                             style="${colors[data] || ''}" ${isDisabled}>
                         <option value="" ${!data ? 'selected' : ''} disabled style="background-color: white; color: black;">Seleccione una opción</option>
                         <option value="Aceptada" ${data === 'Aceptada' ? 'selected' : ''} style="background-color: green; color: white;">Aceptada</option>
-                        <option value="Revision" ${data === 'Revision' ? 'selected' : ''} style="background-color: orange; color: white;">Revision</option>
+                        <option value="Revisión" ${data === 'Revisión' ? 'selected' : ''} style="background-color: orange; color: white;">Revisión</option>
                         <option value="Rechazada" ${data === 'Rechazada' ? 'selected' : ''} style="background-color: red; color: white;">Rechazada</option>
                     </select>
                     <textarea class="form-control MOTIVO_RECHAZO d-none" placeholder="Motivo de rechazo..." data-id="${row.ID_FORMULARIO_OFERTAS}" ${isDisabled}>${row.MOTIVO_RECHAZO || ''}</textarea>
@@ -308,7 +305,6 @@ $('#Tablaofertas tbody').on('change', '.ESTATUS_OFERTA', function () {
             confirmButtonText: 'Guardar',
             cancelButtonText: 'Cancelar',
             didOpen: () => {
-                // Inicializar los datepickers solo en SweetAlert2
                 $('#SWAL_FECHA_ACEPTACION_OFERTA').datepicker({
                     format: 'yyyy-mm-dd',
                     autoclose: true,
@@ -354,7 +350,7 @@ $('#Tablaofertas tbody').on('change', '.ESTATUS_OFERTA', function () {
                     success: function (response) {
                         if (response.success) {
                             Swal.fire('Actualizado', 'El estatus y los datos fueron actualizados correctamente.', 'success').then(() => {
-                                Tablaofertas.ajax.reload(); // Recargar la tabla
+                                Tablaofertas.ajax.reload(); 
                             });
                         } else {
                             Swal.fire('Error', response.message, 'error');
@@ -411,3 +407,67 @@ $('#Tablaofertas tbody').on('change', '.ESTATUS_OFERTA', function () {
 
 
 
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const botonAgregarDoc = document.getElementById('botonAgregarobservaciones');
+    botonAgregarDoc.addEventListener('click', function () {
+        agregarobservaciones();
+    });
+
+    function agregarobservaciones() {
+        const divDocumentoOfi = document.createElement('div');
+        divDocumentoOfi.classList.add('row', 'generarobervaciones', 'mb-3');
+        divDocumentoOfi.innerHTML = `
+        
+            <div class="col-12">
+              <div class="mb-3">
+                <label class="form-label">Observación</label>
+                <textarea class="form-control"  name="OBSERVACIONES" rows="2"></textarea>
+              </div>
+            </div>
+
+            <br>
+            <div class="col-12 mt-4">
+                <div class="form-group" style="text-align: center;">
+                    <button type="button" class="btn btn-danger botonEliminarObservacion">Eliminar observación <i class="bi bi-trash-fill"></i></button>
+                </div>
+            </div>
+        `;
+        const contenedor = document.querySelector('.observacionesdiv');
+        contenedor.appendChild(divDocumentoOfi);
+
+        const botonEliminar = divDocumentoOfi.querySelector('.botonEliminarObservacion');
+        botonEliminar.addEventListener('click', function () {
+            contenedor.removeChild(divDocumentoOfi);
+        });
+    }
+
+
+});
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".botonEliminarArchivo").forEach(boton => {
+        boton.addEventListener("click", function () {
+            const inputArchivo = this.previousElementSibling;
+            if (inputArchivo && inputArchivo.type === "file") {
+                inputArchivo.value = ""; 
+            }
+        });
+    });
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".botonEliminarArchivo").forEach(boton => {
+        boton.addEventListener("click", function () {
+            // Encuentra el input file asociado
+            const inputArchivo = this.previousElementSibling;
+            if (inputArchivo && inputArchivo.type === "file") {
+                inputArchivo.value = ""; // Borra el archivo seleccionado
+            }
+        });
+    });
+});

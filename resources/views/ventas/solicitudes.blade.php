@@ -77,7 +77,7 @@
                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                   </div>
                 </div>
-               
+
               </div>
             </div>
 
@@ -91,7 +91,7 @@
                     @foreach ($medios as $medio)
                     <option value="{{ $medio->ID_CATALOGO_MEDIO }}">{{ $medio->NOMBRE_MEDIO }}</option>
                     @endforeach
-                </select>
+                  </select>
                 </div>
 
                 <div class="col-md-3 mb-3">
@@ -120,7 +120,7 @@
 
             <div class="col-12">
               <div class="row">
-                
+
                 <div class="col-md-4 mb-3">
                   <label class="form-label">Nombre Comercial *</label>
                   <input type="text" class="form-control" id="NOMBRE_COMERCIAL_SOLICITUD" name="NOMBRE_COMERCIAL_SOLICITUD" required>
@@ -133,7 +133,7 @@
                     @foreach ($giros as $giro)
                     <option value="{{ $giro->ID_CATALOGO_GIRO_EMPRESA }}">{{ $giro->NOMBRE_GIRO }}</option>
                     @endforeach
-                </select>
+                  </select>
                 </div>
                 <div class="col-md-4 mb-3">
                   <label class="form-label">Representante Legal *</label>
@@ -142,22 +142,25 @@
               </div>
             </div>
 
+
             <div class="row">
               <div class="mb-3">
-                  <div class="row">
-                      <div class="col-6 mb-3">
-                          <label>Agregar dirección</label>
-                          <button id="botonAgregarExperiencia" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
-                              <i class="bi bi-plus-circle-fill"></i>
-                          </button>
-                      </div>
+                <div class="row">
+                  <div class="col-6 mb-3">
+                    <label>Agregar dirección</label>
+                    <button id="botonAgregardomicilio" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                      <i class="bi bi-plus-circle-fill"></i>
+                    </button>
                   </div>
-                  <div id="Experiencia-laboral" class="mt-3"></div>
+                </div>
+                <div class="direcciondiv mt-4"></div>
               </div>
-            </div> 
+            </div>
 
 
-          
+
+
+
 
 
 
@@ -175,36 +178,143 @@
                     @foreach ($necesidades as $necesidad)
                     <option value="{{ $necesidad->ID_CATALOGO_NECESIDAD_SERVICIO }}">{{ $necesidad->DESCRIPCION_NECESIDAD }}</option>
                     @endforeach
-                </select>
+                  </select>
                 </div>
-               
+
                 <div class="col-md-3 mb-3">
                   <label class="form-label">Tipo de servicio *</label>
                   <select class="form-select" id="TIPO_SERVICIO_SOLICITUD" name="TIPO_SERVICIO_SOLICITUD" required>
                     <option selected disabled>Seleccione una opción</option>
-                    <option value="1">Prospecto</option>
+                    <option value="1">Nuevo</option>
                     <option value="2">Existente</option>
                   </select>
                 </div>
-               
+
+              </div>
+            </div>
+
+
+            <div class="col-12">
+              <div class="row">
+                <div class="col-md-12 mb-3 text-center">
+                  <h5 class="form-label"><b>El servicio solicitado es para un tercero</b></h5>
+                  <br>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="SERVICIO_TERCERO" id="servicioPropio" value="0" onchange="handleServicioChange()" required>
+                    <label class="form-check-label" for="servicioPropio">No</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="SERVICIO_TERCERO" id="servicioParaTercero" value="1" onchange="handleServicioChange()">
+                    <label class="form-check-label" for="servicioParaTercero">Sí</label>
+                  </div>
+                </div>
               </div>
             </div>
 
 
 
+            <div id="empresaDatos" style="display: none;">
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">RFC *</label>
+                    <input type="text" class="form-control" name="RFC_EMPRESA" required>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Razón Social *</label>
+                    <input type="text" class="form-control" name="RAZON_SOCIAL" required>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Nombre Comercial *</label>
+                    <input type="text" class="form-control" name="NOMBRE_COMERCIAL" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Giro de la Empresa *</label>
+                    <input type="text" class="form-control" name="GIRO_EMPRESA" required>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Representante Legal *</label>
+                    <input type="text" class="form-control" name="REPRESENTANTE_LEGAL" required>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Tipo de Domicilio *</label>
+                    <input type="text" class="form-control" name="TIPO_DOMICILIO" required>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Código Postal *</label>
+                    <input type="text" class="form-control" name="CODIGO_POSTAL" required>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">País *</label>
+                    <input type="text" class="form-control" name="PAIS" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Estado *</label>
+                    <input type="text" class="form-control" name="ESTADO" required>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Municipio *</label>
+                    <input type="text" class="form-control" name="MUNICIPIO" required>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Ciudad *</label>
+                    <input type="text" class="form-control" name="CIUDAD" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Colonia *</label>
+                    <input type="text" class="form-control" name="COLONIA" required>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Calle *</label>
+                    <input type="text" class="form-control" name="CALLE" required>
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+
+
+
+
+
             <div class="row">
               <div class="mb-3">
-                  <div class="row">
-                      <div class="col-6 mb-3">
-                          <label>Agregar observaciones</label>
-                          <button id="botonAgregarobservaciones" id="botonAgregarobservaciones" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
-                              <i class="bi bi-plus-circle-fill"></i>
-                          </button>
-                      </div>
+                <div class="row">
+                  <div class="col-6 mb-3">
+                    <label>Agregar observaciones</label>
+                    <button id="botonAgregarobservaciones" id="botonAgregarobservaciones" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                      <i class="bi bi-plus-circle-fill"></i>
+                    </button>
                   </div>
-                  <div class="observacionesdiv mt-4"></div>
                 </div>
-            </div> 
+                <div class="observacionesdiv mt-4"></div>
+              </div>
+            </div>
 
 
 
@@ -225,17 +335,17 @@
 
             <div class="row">
               <div class="mb-3">
-                  <div class="row">
-                      <div class="col-6 mb-3">
-                          <label>Agregar contacto</label>
-                          <button id="botonAgregarcontacto" id="botonAgregarcontacto" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
-                              <i class="bi bi-plus-circle-fill"></i>
-                          </button>
-                      </div>
+                <div class="row">
+                  <div class="col-6 mb-3">
+                    <label>Agregar contacto</label>
+                    <button id="botonAgregarcontacto" id="botonAgregarcontacto" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                      <i class="bi bi-plus-circle-fill"></i>
+                    </button>
                   </div>
-                  <div class="contactodiv mt-4"></div>
                 </div>
-            </div> 
+                <div class="contactodiv mt-4"></div>
+              </div>
+            </div>
 
             {{-- <div class="col-12">
               <div class="row">
@@ -315,6 +425,33 @@
                 </div>
               </div>
             </div>
+
+
+            <div class="d-flex align-items-center">
+              <h5 class="me-2">Verificación del Cliente</h5>
+              <button id="btnVerificacion" type="button" class="btn btn-info btn-custom rounded-pill">
+                <i class="bi bi-check"></i>
+              </button>
+            </div>
+            <input type="hidden" id="inputVerificacionEstado" name="ESTADO_VERIFICACION" value="0">
+
+
+
+
+            <div class="row" id="VERIFICACION_CLIENTE" style="display: none;">
+              <div class="mb-3">
+                <div class="row">
+                  <div class="col-6 mb-3">
+                    <label>Agregar verificación</label>
+                    <button id="botonVerificacion" id="botonVerificacion" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                      <i class="bi bi-plus-circle-fill"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="verifiacionesdiv mt-4"></div>
+              </div>
+            </div>
+
 
 
 

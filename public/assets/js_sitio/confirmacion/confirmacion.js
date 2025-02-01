@@ -87,3 +87,82 @@ var Tablaconfirmacion = $("#Tablaconfirmacion").DataTable({
         { targets: 5, title: 'Activo', className: 'all text-center' }
     ]
 });
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const botonVerificacion = document.getElementById('botonVerificacion');
+
+    botonVerificacion.addEventListener('click', function () {
+        agregarVerificacion();
+    });
+
+    function agregarVerificacion() {
+        const divVerificacion = document.createElement('div');
+        divVerificacion.classList.add('row', 'generarverificacion', 'mb-3');
+        divVerificacion.innerHTML = `
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nombre de la evidencia *</label>
+                        <input type="text" class="form-control" name="VERIFICADO_EN" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Subir Evidencia (PDF) *</label>
+                        <div class="d-flex align-items-center">
+                            <input type="file" class="form-control me-2" name="EVIDENCIA_VERIFICACION" accept=".pdf" required>
+                            <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-4">
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-danger botonEliminarVerificacion">Eliminar verificación <i class="bi bi-trash-fill"></i></button>
+                </div>
+            </div>
+        `;
+
+        const contenedor = document.querySelector('.verifiacionesdiv');
+        contenedor.appendChild(divVerificacion);
+
+        const botonEliminar = divVerificacion.querySelector('.botonEliminarVerificacion');
+        botonEliminar.addEventListener('click', function () {
+            contenedor.removeChild(divVerificacion);
+        });
+
+        const botonEliminarArchivo = divVerificacion.querySelector('.botonEliminarArchivo');
+        const inputArchivo = divVerificacion.querySelector('input[name="EVIDENCIA_VERIFICACION"]');
+
+        botonEliminarArchivo.addEventListener('click', function () {
+            inputArchivo.value = ''; 
+        });
+    }
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const btnVerificacion = document.getElementById("btnVerificacion");
+    const verificacionClienteDiv = document.getElementById("VERIFICACION_CLIENTE");
+    const inputVerificacionEstado = document.getElementById("inputVerificacionEstado");
+
+    btnVerificacion.addEventListener("click", function () {
+        let estadoActual = parseInt(inputVerificacionEstado.value, 10);
+        let nuevoEstado = estadoActual === 0 ? 1 : 0;
+
+        inputVerificacionEstado.value = nuevoEstado;
+
+        verificacionClienteDiv.style.display = nuevoEstado === 1 ? "block" : "none";
+
+        if (nuevoEstado === 1) {
+            btnVerificacion.classList.remove("btn-info");
+            btnVerificacion.classList.add("btn-success");
+        } else {
+            btnVerificacion.classList.remove("btn-success");
+            btnVerificacion.classList.add("btn-info");
+        }
+    });
+});

@@ -87,48 +87,48 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #A4D65E; height: 100px;">
         <div class="container-fluid">
-        <a class="navbar-brand" href="/">
-            <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
-        </a>
-        <!-- Contenedor para centrar el título -->
-        <div class="d-flex justify-content-center align-items-center w-100" style="position: absolute; top: 0; left: 0; height: 100px;">
-            <h1 class="text-white m-0"  style="color:#ffff;font-weight: bold;">Recursos Humanos</h1>
+            <a class="navbar-brand" href="/">
+                <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
+            </a>
+            <!-- Contenedor para centrar el título -->
+            <div class="d-flex justify-content-center align-items-center w-100" style="position: absolute; top: 0; left: 0; height: 100px;">
+                <h1 class="text-white m-0" style="color:#ffff;font-weight: bold;">Recursos Humanos</h1>
+            </div>
+            <!-- Menú lateral derecho -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav1">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown" style="margin-right: 45px;">
+                        @auth
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-fill text-white" style="font-size: 24px;"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 250px;">
+                            <li class="dropdown-item text-center">
+                                <strong>{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}</strong>
+                                <br>
+                                <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
+                            </li>
+                            <li class="dropdown-divider"></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item text-center" style="color: red;">
+                                        <i class="bi bi-power"></i> Cerrar sesión
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                        @else
+                        <script>
+                            window.location.href = "{{ route('login') }}"; // Redirige al login si no está autenticado
+                        </script>
+                        @endauth
+                    </li>
+                </ul>
+            </div>
         </div>
-        <!-- Menú lateral derecho -->
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav1">
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown" style="margin-right: 45px;">
-                    @auth
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-fill text-white" style="font-size: 24px;"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 250px;">
-                        <li class="dropdown-item text-center">
-                            <strong>{{ Auth::user()->EMPLEADO_NOMBRE }}</strong>
-                            <br>
-                            <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
-                        </li>
-                        <li class="dropdown-divider"></li>
-                        <li>
-                            <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                                @csrf
-                                <button type="submit" class="dropdown-item text-center" style="color: red;">
-                                    <i class="bi bi-power"></i> Cerrar sesión
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
-                    @else
-                    <script>
-                        window.location.href = "{{ route('login') }}"; // Redirige al login si no está autenticado
-                    </script>
-                    @endauth
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-    
+    </nav>
+
 
 
 

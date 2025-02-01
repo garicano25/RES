@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
+use Illuminate\Http\Request;
+
+
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -455,6 +458,12 @@ Route::get('/Confirmación', [confirmacionController::class, 'index']);
 Route::get('/Tablaconfirmacion', [confirmacionController::class, 'Tablaconfirmacion']);
 
 
+//==============================================  ORDEN DE TRABAJO   ============================================== 
+Route::get('/Orden_trabajo', function () {return view('ventas.orden_trabajo');});
+
+
+
+
 //==============================================   CATALOGOS SOLICITUDES ============================================== 
 
 Route::get('/Catálogo_solicitudes', function () {return view('ventas.Catalogos.catalogos_solicitud');});
@@ -481,7 +490,31 @@ Route::get('/Catálogo_necesidad_servicio', function () {return view('ventas.Cat
 Route::post('/NecesidadSave', [catalogonecesidadController::class, 'store']);
 Route::get('/NecesidadDelete', [catalogonecesidadController::class, 'store']);
 Route::get('/Tablanecesidadservicio', [catalogonecesidadController::class, 'Tablanecesidadservicio']);
- //============================================== LIMPIAR RUTAS ============================================== 
+//============================================== LIMPIAR RUTAS ============================================== 
+
+
+
+
+
+
+
+Route::get('codigo-postal/{cp}', function ($cp) {
+    $token = "ab4ed678-f98a-4eaf-be87-290f6fdb22b2";
+    $url = "https://api.copomex.com/query/info_cp/{$cp}?type=simplified&token={$token}";
+
+    $response = Http::get($url);
+
+    if ($response->successful()) {
+        return response()->json($response->json()); 
+    }
+
+    return response()->json([
+        'error' => true,
+        'mensaje' => 'No se pudo obtener información de Copomex',
+        'status' => $response->status(),
+        'detalle' => $response->body()
+    ], 400);
+});
 
 Route::get('/clear-cache', function () {
     Artisan::call('config:cache');

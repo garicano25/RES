@@ -46,24 +46,24 @@
                     <div class="row">
 
                         <div class="mb-3">
-                            <label >N° de solicitud</label>
+                            <label>N° de solicitud</label>
                             <select class="custom-select form-control" id="SOLICITUD_ID" name="SOLICITUD_ID">
                                 <option selected disabled>Seleccione una solicitud</option>
                                 @foreach($solicitudes as $solicitud)
-                                    <option value="{{ $solicitud->ID_FORMULARIO_SOLICITUDES }}">
-                                        {{ $solicitud->NO_SOLICITUD }} ({{ $solicitud->NOMBRE_COMERCIAL_SOLICITUD }})
-                                    </option>
+                                <option value="{{ $solicitud->ID_FORMULARIO_SOLICITUDES }}">
+                                    {{ $solicitud->NO_SOLICITUD }} ({{ $solicitud->NOMBRE_COMERCIAL_SOLICITUD }})
+                                </option>
                                 @endforeach
                             </select>
                         </div>
-                        
+
 
 
 
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-4">
-                                    <label >O/C No.</label>
+                                    <label>O/C No.</label>
                                     <input type="text" class="form-control" id="NO_OFERTA" name="NO_OFERTA" readonly>
                                 </div>
                                 <div class="col-1">
@@ -71,7 +71,7 @@
                                     <input type="text" class="form-control" id="REVISION_OFERTA" name="REVISION_OFERTA" value="0" readonly>
                                 </div>
                                 <div class="col-4">
-                                    <label >Fecha de la cotización/Revisiones *</label>
+                                    <label>Fecha de la cotización/Revisiones *</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_OFERTA" name="FECHA_OFERTA" required>
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
@@ -97,7 +97,7 @@
                                     </label>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="MONEDA_MONTO" id="MONEDA_MONTOMNX" value="MXN" checked>
-                                        
+
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-sm-6 mt-3">
@@ -114,36 +114,87 @@
                                 </div>
                                 <div class="col-4 mt-3">
                                     <label>Días de validez de la OC *</label>
-                                    <input type="number" class="form-control" id="DIAS_VALIDACION_OFERTA" name="DIAS_VALIDACION_OFERTA"  required>
+                                    <input type="number" class="form-control" id="DIAS_VALIDACION_OFERTA" name="DIAS_VALIDACION_OFERTA" required>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-12 mt-3">
-                            <label>Observaciones</label>
-                            <textarea class="form-control" id="OBSERVACIONES_OFERTA" name="OBSERVACIONES_OFERTA" rows="4"></textarea>
+
+                        <div class="row">
+                            <div class="mb-3">
+                                <div class="row">
+                                    <div class="col-6 mb-3">
+                                        <label>Agregar observaciones</label>
+                                        <button id="botonAgregarobservaciones" id="botonAgregarobservaciones" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                                            <i class="bi bi-plus-circle-fill"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="observacionesdiv mt-4"></div>
+                            </div>
                         </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Cargar Cotización (PDF) *</label>
+                            <div class="d-flex align-items-center">
+                                <input type="file" class="form-control me-2" name="COTIZACION_DOCUMENTO" accept=".pdf" required>
+                                <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-12 mt-3">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Quién acepta *</label>
+                                    <input type="text" class="form-control" name="QUIEN_ACEPTA" required>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Fecha de aceptación *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ACEPTACION" name="FECHA_ACEPTACION" required>
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Subir documento de aceptación (PDF) *</label>
+                                    <div class="d-flex align-items-center">
+                                        <input type="file" class="form-control me-2" name="DOCUMENTO_ACEPTACION" accept=".pdf" required>
+                                        <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
 
 
                         <div class="col-12 mt-3" id="RECHAZO" style="display: none;">
                             <div class="mb-3">
-                              <label class="form-label">Motivo del rechazo</label>
-                              <textarea class="form-control" id="MOTIVO_RECHAZO" name="MOTIVO_RECHAZO" rows="4" readonly></textarea>
+                                <label class="form-label">Motivo del rechazo</label>
+                                <textarea class="form-control" id="MOTIVO_RECHAZO" name="MOTIVO_RECHAZO" rows="4" readonly></textarea>
                             </div>
-                          </div>
+                        </div>
 
 
-                          
+
                         <div class="col-12 mt-3" id="ACEPTADA" style="display: none">
                             <div class="row">
                                 <div class="col-4">
-                                    <label >Aceptada por: </label>
-                                    <input type="text" class="form-control" id="ACEPTADA_OFERTA" name="ACEPTADA_OFERTA" readonly >
+                                    <label>Aceptada por: </label>
+                                    <input type="text" class="form-control" id="ACEPTADA_OFERTA" name="ACEPTADA_OFERTA" readonly>
                                 </div>
 
 
                                 <div class="col-4">
-                                    <label >Fecha de aceptación </label>
+                                    <label>Fecha de aceptación </label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ACEPTACION_OFERTA" name="FECHA_ACEPTACION_OFERTA" readonly>
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
@@ -152,7 +203,7 @@
 
 
                                 <div class="col-4">
-                                    <label >Fecha de firma términos y condiciones </label>
+                                    <label>Fecha de firma términos y condiciones </label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_FIRMA_OFERTA" name="FECHA_FIRMA_OFERTA" readonly>
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
