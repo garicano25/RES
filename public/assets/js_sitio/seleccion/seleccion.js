@@ -86,9 +86,156 @@ var Tablaseleccion = $("#Tablaseleccion").DataTable({
 
 
 
+// $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
+//     var tr = $(this).closest('tr');
+//     var row = Tablaseleccion.row(tr);
+
+//     if (row.child.isShown()) {
+//         row.child.hide();
+//         tr.removeClass('shown');
+//     } else {
+//         Swal.fire({
+//             title: 'Consultando información',
+//             text: 'Por favor, espere...',
+//             allowOutsideClick: false,
+//             showConfirmButton: false,
+//             didOpen: () => {
+//                 Swal.showLoading();
+//             }
+//         });
+
+
+//         categoriaId = row.data().CATEGORIA_VACANTE;
+
+
+//         vacantes_id = row.data().VACANTES_ID;
+
+//         $.ajax({
+//             url: '/consultarSeleccion/' + vacantes_id,
+//             method: 'GET',
+//             success: function(response) {
+//                 Swal.close();
+                
+
+//                 if (response.data.length === 0) {
+//                     Swal.fire('Sin información', 'No hay información relacionada para esta categoría.', 'info');
+//                 } else {
+//                     var innerTable = `
+//                         <table class="table text-center">
+//                             <thead class="custom-header">
+//                                 <tr>
+//                                     <th>#</th>
+//                                     <th class="text-center">Nombre Completo</th>
+//                                     <th class="text-center">CURP</th>
+//                                     <th class="text-center">Contacto</th>
+//                                     <th class="text-center">% Inteligencia laboral</th>
+//                                     <th class="text-center">% Buró laboral</th>
+//                                     <th class="text-center">% PPT</th>
+//                                     <th class="text-center">% Referencias laboral</th>
+//                                     <th class="text-center">% Pruebas de conocimientos</th>
+//                                     <th class="text-center">% Entrevista</th>
+//                                     <th class="text-center">% Total</th>
+//                                     <th class="text-center">Mostrar</th>
+//                                     <th class="text-center">Seleccionar</th>
+//                                 </tr>
+//                             </thead>
+//                             <tbody>
+//                     `;
+
+//                     response.data.forEach(function(item, index) {
+//                         var inteligenciaLaboral = item.PORCENTAJE_INTELIGENCIA || '';
+//                         var buroLaboral = item.PORCENTAJE_BURO || '';
+//                         var ppt = item.PORCENTAJE_PPT || '';
+//                         var referenciasLaboral = item.PORCENTAJE_REFERENCIAS || '';
+//                         var pruebaConocimiento = item.PORCENTAJE_PRUEBA || '';
+//                         var entrevista = item.PORCENTAJE_ENTREVISTA || '';
+//                         var total = item.TOTAL || '';
+
+//                         var isComplete =
+//                         inteligenciaLaboral !== '**' &&
+//                         buroLaboral !== '**' &&
+//                         ppt !== '**' &&
+//                         referenciasLaboral !== '**' &&
+//                         pruebaConocimiento !== '**' &&
+//                         entrevista !== '**' &&
+//                         total !== '**';
+                    
+//                         // var isComplete = inteligenciaLaboral && buroLaboral && ppt && referenciasLaboral && pruebaConocimiento && entrevista && total;
+
+//                         innerTable += `
+//                                     <tr>
+//                                         <td>${index + 1}</td>
+//                                         <td>${item.NOMBRE_SELC || ''} ${item.PRIMER_APELLIDO_SELEC || ''} ${item.SEGUNDO_APELLIDO_SELEC || ''}</td>
+//                                         <td style="display: none;">${item.DIA_FECHA_SELECT || ''} ${item.MES_FECHA_SELECT || ''} ${item.ANIO_FECHA_SELECT || ''}</td>
+//                                         <td class="text-center">${item.CURP || ''}</td>
+//                                         <td class="text-center">${item.CORREO_SELEC || ''}<br>${(item.TELEFONO1_SELECT || '') + (item.TELEFONO2_SELECT ? ', ' + item.TELEFONO2_SELECT : '')}</td>
+//                                         <td class="text-center">${inteligenciaLaboral}</td>
+//                                         <td class="text-center">${buroLaboral}</td>
+//                                         <td class="text-center">${ppt}</td>
+//                                         <td class="text-center">${referenciasLaboral}</td>
+//                                         <td class="text-center">${pruebaConocimiento}</td>
+//                                         <td class="text-center">${entrevista}</td>
+//                                         <td class="text-center">${total}</td>
+//                                         <td class="text-center">
+//                                             <button type="button" class="btn btn-primary btn-circle" id="AbrirModalFull" data-bs-toggle="modal" data-bs-target="#FullScreenModal" data-curp="${item.CURP || ''}" data-nombre="${item.NOMBRE_SELC || ''} ${item.PRIMER_APELLIDO_SELEC || ''} ${item.SEGUNDO_APELLIDO_SELEC || ''}">
+//                                                 <i class="bi bi-eye-fill"></i>
+//                                             </button>
+//                                         </td>
+//                                         <td class="text-center">
+//                                           <button type="button" class="btn btn-success MandarContratacion"
+//                                             data-categoria-id="${categoriaId}"
+//                                             data-nombre="${item.NOMBRE_SELC || ''}"
+//                                             data-primer-apellido="${item.PRIMER_APELLIDO_SELEC || ''}"
+//                                             data-segundo-apellido="${item.SEGUNDO_APELLIDO_SELEC || ''}"
+//                                             data-dia-fecha="${item.DIA_FECHA_SELECT || ''}"
+//                                             data-mes-fecha="${item.MES_FECHA_SELECT || ''}"
+//                                             data-anio-fecha="${item.ANIO_FECHA_SELECT || ''}"
+//                                             ${isComplete ? '' : 'disabled'}>
+//                                             <i class="bi bi-check-square-fill"></i>
+//                                         </button>
+//                                         </td>
+//                                     </tr>
+//                                 `;
+
+
+
+                       
+
+//                     });
+
+//                     innerTable += `
+//                             </tbody>
+//                         </table>
+//                     `;
+
+//                     row.child(innerTable).show();
+//                     tr.addClass('shown');
+//                 }
+//             },
+//             error: function(jqXHR, textStatus, errorThrown) {
+//                 Swal.close();
+//                 console.error('Error: ', textStatus, errorThrown);
+//                 alertErrorAJAX(jqXHR, textStatus, errorThrown);
+//             }
+//         });
+//     }
+// });
+
+
+
+
 $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
     var tr = $(this).closest('tr');
     var row = Tablaseleccion.row(tr);
+
+    $('#Tablaseleccion tbody tr.shown').each(function() {
+        var openTr = $(this);
+        if (!openTr.is(tr)) { 
+            var openRow = Tablaseleccion.row(openTr);
+            openRow.child.hide();
+            openTr.removeClass('shown');
+        }
+    });
 
     if (row.child.isShown()) {
         row.child.hide();
@@ -104,18 +251,14 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
             }
         });
 
-
-        categoriaId = row.data().CATEGORIA_VACANTE;
-
-
-        vacantes_id = row.data().VACANTES_ID;
+        var categoriaId = row.data().CATEGORIA_VACANTE;
+        var vacantes_id = row.data().VACANTES_ID;
 
         $.ajax({
             url: '/consultarSeleccion/' + vacantes_id,
             method: 'GET',
             success: function(response) {
                 Swal.close();
-                
 
                 if (response.data.length === 0) {
                     Swal.fire('Sin información', 'No hay información relacionada para esta categoría.', 'info');
@@ -152,55 +295,47 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
                         var total = item.TOTAL || '';
 
                         var isComplete = 
-                        inteligenciaLaboral !== '**' && 
-                        buroLaboral !== '**' && 
-                        ppt !== '**' && 
-                        referenciasLaboral !== '**' && 
-                        pruebaConocimiento !== '**' && 
-                        entrevista !== '**' && 
-                        total !== '**';
-                    
-                        // var isComplete = inteligenciaLaboral && buroLaboral && ppt && referenciasLaboral && pruebaConocimiento && entrevista && total;
+                            inteligenciaLaboral !== '**' && 
+                            buroLaboral !== '**' && 
+                            ppt !== '**' && 
+                            referenciasLaboral !== '**' && 
+                            pruebaConocimiento !== '**' && 
+                            entrevista !== '**' && 
+                            total !== '**';
 
                         innerTable += `
-                                    <tr>
-                                        <td>${index + 1}</td>
-                                        <td>${item.NOMBRE_SELC || ''} ${item.PRIMER_APELLIDO_SELEC || ''} ${item.SEGUNDO_APELLIDO_SELEC || ''}</td>
-                                        <td style="display: none;">${item.DIA_FECHA_SELECT || ''} ${item.MES_FECHA_SELECT || ''} ${item.ANIO_FECHA_SELECT || ''}</td>
-                                        <td class="text-center">${item.CURP || ''}</td>
-                                        <td class="text-center">${item.CORREO_SELEC || ''}<br>${(item.TELEFONO1_SELECT || '') + (item.TELEFONO2_SELECT ? ', ' + item.TELEFONO2_SELECT : '')}</td>
-                                        <td class="text-center">${inteligenciaLaboral}</td>
-                                        <td class="text-center">${buroLaboral}</td>
-                                        <td class="text-center">${ppt}</td>
-                                        <td class="text-center">${referenciasLaboral}</td>
-                                        <td class="text-center">${pruebaConocimiento}</td>
-                                        <td class="text-center">${entrevista}</td>
-                                        <td class="text-center">${total}</td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-primary btn-circle" id="AbrirModalFull" data-bs-toggle="modal" data-bs-target="#FullScreenModal" data-curp="${item.CURP || ''}" data-nombre="${item.NOMBRE_SELC || ''} ${item.PRIMER_APELLIDO_SELEC || ''} ${item.SEGUNDO_APELLIDO_SELEC || ''}">
-                                                <i class="bi bi-eye-fill"></i>
-                                            </button>
-                                        </td>
-                                        <td class="text-center">
-                                          <button type="button" class="btn btn-success MandarContratacion" 
-                                            data-categoria-id="${categoriaId}" 
-                                            data-nombre="${item.NOMBRE_SELC || ''}" 
-                                            data-primer-apellido="${item.PRIMER_APELLIDO_SELEC || ''}" 
-                                            data-segundo-apellido="${item.SEGUNDO_APELLIDO_SELEC || ''}" 
-                                            data-dia-fecha="${item.DIA_FECHA_SELECT || ''}" 
-                                            data-mes-fecha="${item.MES_FECHA_SELECT || ''}" 
-                                            data-anio-fecha="${item.ANIO_FECHA_SELECT || ''}" 
-                                            ${isComplete ? '' : 'disabled'}>
-                                            <i class="bi bi-check-square-fill"></i>
-                                        </button>
-                                        </td>
-                                    </tr>
-                                `;
-
-
-
-                       
-
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${item.NOMBRE_SELC || ''} ${item.PRIMER_APELLIDO_SELEC || ''} ${item.SEGUNDO_APELLIDO_SELEC || ''}</td>
+                                <td class="text-center">${item.CURP || ''}</td>
+                                <td class="text-center">${item.CORREO_SELEC || ''}<br>${(item.TELEFONO1_SELECT || '') + (item.TELEFONO2_SELECT ? ', ' + item.TELEFONO2_SELECT : '')}</td>
+                                <td class="text-center">${inteligenciaLaboral}</td>
+                                <td class="text-center">${buroLaboral}</td>
+                                <td class="text-center">${ppt}</td>
+                                <td class="text-center">${referenciasLaboral}</td>
+                                <td class="text-center">${pruebaConocimiento}</td>
+                                <td class="text-center">${entrevista}</td>
+                                <td class="text-center">${total}</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-primary btn-circle" id="AbrirModalFull" data-bs-toggle="modal" data-bs-target="#FullScreenModal" data-curp="${item.CURP || ''}" data-nombre="${item.NOMBRE_SELC || ''} ${item.PRIMER_APELLIDO_SELEC || ''} ${item.SEGUNDO_APELLIDO_SELEC || ''}">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </button>
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-success MandarContratacion" 
+                                        data-categoria-id="${categoriaId}" 
+                                        data-nombre="${item.NOMBRE_SELC || ''}" 
+                                        data-primer-apellido="${item.PRIMER_APELLIDO_SELEC || ''}" 
+                                        data-segundo-apellido="${item.SEGUNDO_APELLIDO_SELEC || ''}" 
+                                        data-dia-fecha="${item.DIA_FECHA_SELECT || ''}" 
+                                        data-mes-fecha="${item.MES_FECHA_SELECT || ''}" 
+                                        data-anio-fecha="${item.ANIO_FECHA_SELECT || ''}" 
+                                        ${isComplete ? '' : 'disabled'}>
+                                        <i class="bi bi-check-square-fill"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
                     });
 
                     innerTable += `
@@ -220,6 +355,7 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
         });
     }
 });
+
 
 
 function calcularTotal(inteligencia, buro, ppt, referencias, prueba, entrevista) {
@@ -913,22 +1049,21 @@ Tablareferencia = $("#Tablareferencia").DataTable({
     },
     columns: [
         { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
-        {
-        data: 'REFERENCIAS',
-        render: function (data, type, row) {
-            if (!data || data.length === 0) {
-                return 'NA'; // Retorna 'NA' si no hay datos
+       {
+            data: 'REFERENCIAS',
+            render: function (data, type, row) {
+                if (!data || data.length === 0) {
+                    return 'NA'; // Retorna 'NA' si no hay datos
+                }
+                let referenciasHTML = '';
+                data.forEach(function (referencia) {
+                    referenciasHTML += '<strong>' + (referencia.NOMBRE_EMPRESA || 'NA') + '</strong><br>' +
+                                    'Comentario: ' + (referencia.COMENTARIO || 'NA') + '<br>' +
+                                    (referencia.BTN_DOCUMENTO || 'NA') + '<br>';
+                });
+                return referenciasHTML;
             }
-            let referenciasHTML = '';
-            data.forEach(function (referencia) {
-                referenciasHTML += '<strong>' + referencia.NOMBRE_EMPRESA + '</strong><br>' +
-                                'Comentario: ' + referencia.COMENTARIO + '<br>' +
-                                referencia.BTN_DOCUMENTO + '<br>';
-            });
-            return referenciasHTML;
-        },
-        className: 'text-center'
-    }    ,
+        }   ,
         { 
             data: 'BTN_EDITAR', 
             className: 'text-center'
@@ -979,18 +1114,20 @@ function cargarReferenciasParaEditar(referencias) {
         totalEmpresas++; 
 
         const cumpleValue = referencia.CUMPLE ? referencia.CUMPLE.trim() : '';
+        const comentarioValue = referencia.COMENTARIO ? referencia.COMENTARIO.trim() : ''; 
         console.log("CUMPLE Value:", cumpleValue);
+        console.log("COMENTARIO Value:", comentarioValue);
 
         const divInput = document.createElement('div');
         divInput.classList.add('form-group', 'row', 'input-container', 'mb-3');
         divInput.innerHTML = `
             <div class="col-3 text-center">
                 <label for="nombreEmpresa">Nombre de la empresa</label>
-                <input type="text" name="NOMBRE_EMPRESA[]" class="form-control" value="${referencia.NOMBRE_EMPRESA}">
+                <input type="text" name="NOMBRE_EMPRESA[]" class="form-control" value="${referencia.NOMBRE_EMPRESA || ''}">
             </div>
             <div class="col-3 text-center">
                 <label for="comentario">Comentario</label>
-                <textarea type="text" name="COMENTARIO[]" class="form-control" rows="1">${referencia.COMENTARIO}</textarea>
+                <textarea type="text" name="COMENTARIO[]" class="form-control" rows="1">${comentarioValue}</textarea>
             </div>
             <div class="col-1 text-center">
                 <label for="cumple">¿Cumple?</label><br>
@@ -1027,6 +1164,7 @@ function cargarReferenciasParaEditar(referencias) {
         });
     });
 }
+
 
 
 
@@ -2053,6 +2191,7 @@ function agregarInput() {
             <label for="cumple">¿Cumple?</label><br>
             <input type="radio" class="form-check-input" name="CUMPLE_${contador}" value="Sí" id="cumple_si_${contador}"> 
             <label for="cumple_si_${contador}">Sí</label>
+            <br>
             <input type="radio" class="form-check-input" name="CUMPLE_${contador}" value="No" id="cumple_no_${contador}">
             <label for="cumple_no_${contador}">No</label>
         </div>

@@ -637,10 +637,7 @@ $('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
     $("#PORCENTAJE_BENEFICIARIO").val(row.data().PORCENTAJE_BENEFICIARIO);
     $("#TELEFONO1_BENEFICIARIO").val(row.data().TELEFONO1_BENEFICIARIO);
     $("#TELEFONO2_BENEFICIARIO").val(row.data().TELEFONO2_BENEFICIARIO);
-
-
-
-
+    $("#PAIS_CONTRATACION").val(row.data().PAIS_CONTRATACION);
     $("#CIUDAD_LUGAR_NACIMIENTO").val(row.data().CIUDAD_LUGAR_NACIMIENTO);
     $("#ESTADO_LUGAR_NACIMIENTO").val(row.data().ESTADO_LUGAR_NACIMIENTO);
     $("#PAIS_LUGAR_NACIMIENTO").val(row.data().PAIS_LUGAR_NACIMIENTO);
@@ -665,6 +662,41 @@ $('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
 
 
 
+    if (row.data().CODIGO_POSTAL) {
+        fetch(`/codigo-postal/${row.data().CODIGO_POSTAL}`)
+            .then(response => response.json())
+            .then(data => {
+                if (!data.error) {
+                    let response = data.response;
+
+                    let coloniaSelect = document.getElementById("NOMBRE_COLONIA");
+                    coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
+
+                    let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
+
+                    colonias.forEach(colonia => {
+                        let option = document.createElement("option");
+                        option.value = colonia;
+                        option.textContent = colonia;
+                        coloniaSelect.appendChild(option);
+                    });
+
+                    if (row.data().NOMBRE_COLONIA) {
+                        coloniaSelect.value = row.data().NOMBRE_COLONIA;
+                    }
+
+                    document.getElementById("NOMBRE_MUNICIPIO").value = response.municipio || "No disponible";
+                    document.getElementById("NOMBRE_ENTIDAD").value = response.estado || "No disponible";
+                } else {
+                    alert("Código postal no encontrado");
+                }
+            })
+            .catch(error => {
+                console.error("Error al obtener datos:", error);
+                alert("Hubo un error al consultar la API.");
+            });
+    }
+
     verificarEstadoYActualizarBotones();
 
 
@@ -682,8 +714,8 @@ $('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
     $(".listadeBeneficiario").empty();
     obtenerDatosBeneficiarios(row);
 
-    obtenerDocumentosOficiales(row);
     $(".listadedocumentoficial").empty();
+    obtenerDocumentosOficiales(row);
 
 
     cargarBajasColaborador();
@@ -727,7 +759,7 @@ document.getElementById('step1').addEventListener('click', function() {
 document.getElementById('DESCARGAR_CREDENCIAL').addEventListener('click', function () {
     const link = document.createElement('a');
     link.href = '/descargar-credencial';
-    link.download = 'credencial_generada.pptx'; // Nombre del archivo sugerido
+    link.download = 'credencial_generada.pptx'; 
 
     document.body.appendChild(link);
     link.click();
@@ -916,6 +948,7 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     $("#CALLE_COLABORADOR").val(row.data().CALLE_COLABORADOR);
     $("#COLONIA_COLABORADOR").val(row.data().COLONIA_COLABORADOR);
     $("#CODIGO_POSTAL").val(row.data().CODIGO_POSTAL);
+
     $("#CIUDAD_COLABORADOR").val(row.data().CIUDAD_COLABORADOR);
     $("#ESTADO_COLABORADOR").val(row.data().ESTADO_COLABORADOR);
     $("#NOMBRE_EMERGENCIA").val(row.data().NOMBRE_EMERGENCIA);
@@ -929,6 +962,7 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     $("#TELEFONO2_BENEFICIARIO").val(row.data().TELEFONO2_BENEFICIARIO);
 
 
+    $("#PAIS_CONTRATACION").val(row.data().PAIS_CONTRATACION);
 
 
     $("#CIUDAD_LUGAR_NACIMIENTO").val(row.data().CIUDAD_LUGAR_NACIMIENTO);
@@ -955,7 +989,40 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
 
 
 
+    if (row.data().CODIGO_POSTAL) {
+        fetch(`/codigo-postal/${row.data().CODIGO_POSTAL}`)
+            .then(response => response.json())
+            .then(data => {
+                if (!data.error) {
+                    let response = data.response;
 
+                    let coloniaSelect = document.getElementById("NOMBRE_COLONIA");
+                    coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
+
+                    let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
+
+                    colonias.forEach(colonia => {
+                        let option = document.createElement("option");
+                        option.value = colonia;
+                        option.textContent = colonia;
+                        coloniaSelect.appendChild(option);
+                    });
+
+                    if (row.data().NOMBRE_COLONIA) {
+                        coloniaSelect.value = row.data().NOMBRE_COLONIA;
+                    }
+
+                    document.getElementById("NOMBRE_MUNICIPIO").value = response.municipio || "No disponible";
+                    document.getElementById("NOMBRE_ENTIDAD").value = response.estado || "No disponible";
+                } else {
+                    alert("Código postal no encontrado");
+                }
+            })
+            .catch(error => {
+                console.error("Error al obtener datos:", error);
+                alert("Hubo un error al consultar la API.");
+            });
+        }
 
     verificarEstadoYActualizarBotones();
 

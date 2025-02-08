@@ -166,3 +166,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+function toggleInput(inputId, activar) {
+    const input = document.getElementById(inputId);
+    if (activar) {
+        input.classList.remove("d-none"); 
+    } else {
+        input.classList.add("d-none"); 
+        input.value = ""; 
+    }
+}
+

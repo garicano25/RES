@@ -67,6 +67,7 @@ class contratacionModel extends Model
         'EMISION_DOCUMENTO',
         'FECHA_INGRESO',
         'ACTIVO',
+        'PAIS_CONTRATACION'
 
     ];
 }

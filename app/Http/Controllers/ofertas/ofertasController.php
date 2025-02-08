@@ -38,7 +38,7 @@ class ofertasController extends Controller
             return !in_array($solicitud->ID_FORMULARIO_SOLICITUDES, $idsAsociados);
         });
     
-        return view('ventas.ofertas', compact('solicitudes'));
+        return view('ventas.ofertas.ofertas', compact('solicitudes'));
     }
     
     

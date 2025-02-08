@@ -352,6 +352,14 @@
     <script src="/assets/js_sitio/orden_trabajo/orden_trabajo.js"></script>
     @endif
 
+    @if(request()->is('Catálogo_línea_negocio'))
+    <script src="/assets/js_sitio/solicitudes/catalogos/catalogolinea.js"></script>
+    @endif
+
+
+    @if(request()->is('Catálogo_tipo_servicio'))
+    <script src="/assets/js_sitio/solicitudes/catalogos/catalogotiposervicio.js"></script>
+    @endif
 
 
 

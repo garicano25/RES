@@ -18,6 +18,8 @@ use App\Models\solicitudes\solicitudesModel;
 use App\Models\solicitudes\catalogomediocontactoModel;
 use App\Models\solicitudes\catalonecesidadModel;
 use App\Models\solicitudes\catalogiroempresaModel;
+use App\Models\solicitudes\catalogolineanegociosModel;
+use App\Models\solicitudes\catalogotiposervicioModel;
 
 
 
@@ -33,7 +35,11 @@ class solicitudesController extends Controller
         $necesidades = catalonecesidadModel::where('ACTIVO', 1)->get();
         $giros = catalogiroempresaModel::where('ACTIVO', 1)->get();
 
-        return view('ventas.solicitudes', compact('medios', 'necesidades','giros'));
+        $lineas = catalogolineanegociosModel::where('ACTIVO', 1)->get();
+        $tipos = catalogotiposervicioModel::where('ACTIVO', 1)->get();
+
+
+        return view('ventas.solicitudes.solicitudes', compact('medios', 'necesidades','giros', 'lineas', 'tipos'));
 
 
     }
@@ -113,20 +119,17 @@ class solicitudesController extends Controller
 
                 case 1:
                     if ($request->ID_FORMULARIO_SOLICITUDES == 0) {
-                        // Generar el número dinámico NO_SOLICITUD
                         $ultimoRegistro = solicitudesModel::orderBy('ID_FORMULARIO_SOLICITUDES', 'desc')->first();
                         $numeroIncremental = $ultimoRegistro ? intval(substr($ultimoRegistro->NO_SOLICITUD, 0, 3)) + 1 : 1;
                         $anioActual = date('Y');
                         $ultimoDigitoAnio = substr($anioActual, -2);
                         $noSolicitud = str_pad($numeroIncremental, 3, '0', STR_PAD_LEFT) . '-' . $ultimoDigitoAnio;
                 
-                        // Asignar NO_SOLICITUD al request
                         $request->merge(['NO_SOLICITUD' => $noSolicitud]);
                 
-                        // Reiniciar el autoincremento si es necesario
                         DB::statement('ALTER TABLE formulario_solicitudes AUTO_INCREMENT=1;');
                 
-                        $data = $request->except([' ','contactos']);
+                        $data = $request->except(['observacion','contactos','direcciones']);
                         $solicitudes = solicitudesModel::create($data);
                 
                         $response['code'] = 1;

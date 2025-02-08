@@ -57,7 +57,7 @@
 
             <div class="col-12">
               <div class="row">
-                <div class="col-md-4 mb-3">
+                <div class="col-md-3 mb-3">
                   <label class="form-label">Tipo de Solicitud *</label>
                   <select class="form-select" id="TIPO_SOLICITUD" name="TIPO_SOLICITUD" required>
                     <option selected disabled>Seleccione una opción</option>
@@ -66,17 +66,27 @@
                   </select>
                 </div>
 
-                <div class="col-md-4 mb-3">
+                <div class="col-md-3 mb-3">
                   <label class="form-label">Solicitud No.</label>
                   <input type="text" class="form-control" id="NO_SOLICITUD" name="NO_SOLICITUD" readonly>
                 </div>
-                <div class="col-md-4 mb-3">
-                  <label class="form-label">Fecha *</label>
+                <div class="col-md-3 mb-3">
+                  <label class="form-label">Fecha que solicita el cliente *</label>
                   <div class="input-group">
                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_SOLICITUD" name="FECHA_SOLICITUD" required>
                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                   </div>
                 </div>
+
+                <div class="col-md-3 mb-3">
+                  <label class="form-label">Fecha que se crea la solicitud *</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_CREACION_SOLICITUD" name="FECHA_CREACION_SOLICITUD" required>
+                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                  </div>
+                </div>
+
+
 
               </div>
             </div>
@@ -181,14 +191,28 @@
                   </select>
                 </div>
 
+
+                <div class="col-md-3 mb-3">
+                  <label class="form-label">Línea de negocios *</label>
+                  <select class="form-select" id="LINEA_NEGOCIO_SOLICITUD" name="LINEA_NEGOCIO_SOLICITUD" required>
+                    <option value="0" disabled selected>Seleccione una opción</option>
+                    @foreach ($lineas as $linea)
+                    <option value="{{ $linea->ID_CATALOGO_LINEA_NEGOCIOS }}">{{ $linea->NOMBRE_LINEA }}</option>
+                    @endforeach
+                  </select>
+                </div>
+
+
                 <div class="col-md-3 mb-3">
                   <label class="form-label">Tipo de servicio *</label>
                   <select class="form-select" id="TIPO_SERVICIO_SOLICITUD" name="TIPO_SERVICIO_SOLICITUD" required>
-                    <option selected disabled>Seleccione una opción</option>
-                    <option value="1">Nuevo</option>
-                    <option value="2">Existente</option>
+                    <option value="0" disabled selected>Seleccione una opción</option>
+                    @foreach ($tipos as $tipo)
+                    <option value="{{ $tipo->ID_CATALOGO_TIPO_SERVICIO }}">{{ $tipo->NOMBRE_TIPO_SERVICIO }}</option>
+                    @endforeach
                   </select>
                 </div>
+
 
               </div>
             </div>
@@ -218,15 +242,15 @@
                 <div class="row">
                   <div class="col-md-4 mb-3">
                     <label class="form-label">RFC *</label>
-                    <input type="text" class="form-control" name="RFC_EMPRESA" required>
+                    <input type="text" class="form-control" name="RFC_EMPRESA">
                   </div>
                   <div class="col-md-4 mb-3">
                     <label class="form-label">Razón Social *</label>
-                    <input type="text" class="form-control" name="RAZON_SOCIAL" required>
+                    <input type="text" class="form-control" name="RAZON_SOCIAL">
                   </div>
                   <div class="col-md-4 mb-3">
                     <label class="form-label">Nombre Comercial *</label>
-                    <input type="text" class="form-control" name="NOMBRE_COMERCIAL" required>
+                    <input type="text" class="form-control" name="NOMBRE_COMERCIAL_EMPRESA">
                   </div>
                 </div>
               </div>
@@ -235,11 +259,11 @@
                 <div class="row">
                   <div class="col-md-6 mb-3">
                     <label class="form-label">Giro de la Empresa *</label>
-                    <input type="text" class="form-control" name="GIRO_EMPRESA" required>
+                    <input type="text" class="form-control" name="GIRO_EMPRESA">
                   </div>
                   <div class="col-md-6 mb-3">
-                    <label class="form-label">Representante Legal *</label>
-                    <input type="text" class="form-control" name="REPRESENTANTE_LEGAL" required>
+                    <label class="form-label">Representante Legal</label>
+                    <input type="text" class="form-control" name="REPRESENTANTE_LEGAL_EMPRESA">
                   </div>
                 </div>
               </div>
@@ -249,47 +273,76 @@
 
               <div class="col-12">
                 <div class="row">
-                  <div class="col-md-4 mb-3">
-                    <label class="form-label">Tipo de Domicilio *</label>
-                    <input type="text" class="form-control" name="TIPO_DOMICILIO" required>
+
+                  <div class="col-3 mb-3">
+                    <label>Tipo de Domicilio *</label>
+                    <input type="text" class="form-control" name="TIPO_EMPRESA">
                   </div>
-                  <div class="col-md-4 mb-3">
-                    <label class="form-label">Código Postal *</label>
-                    <input type="text" class="form-control" name="CODIGO_POSTAL" required>
+
+                  <div class="col-3 mb-3">
+                    <label>Código Postal *</label>
+                    <input type="number" class="form-control" name="CODIGO_POSTAL">
                   </div>
-                  <div class="col-md-4 mb-3">
-                    <label class="form-label">País *</label>
-                    <input type="text" class="form-control" name="PAIS" required>
+                  <div class="col-3 mb-3">
+                    <label>Tipo de Vialidad *</label>
+                    <input type="text" class="form-control" name="TIPO_VIALIDAD_EMPRESA">
+                  </div>
+                  <div class="col-3 mb-3">
+                    <label>Nombre de la Vialidad *</label>
+                    <input type="text" class="form-control" name="NOMBRE_VIALIDAD_EMPRESA">
                   </div>
                 </div>
               </div>
 
               <div class="col-12">
                 <div class="row">
-                  <div class="col-md-4 mb-3">
-                    <label class="form-label">Estado *</label>
-                    <input type="text" class="form-control" name="ESTADO" required>
+                  <div class="col-3 mb-3">
+                    <label>Número Exterior</label>
+                    <input type="number" class="form-control" name="NUMERO_EXTERIOR_EMPRESA">
                   </div>
-                  <div class="col-md-4 mb-3">
-                    <label class="form-label">Municipio *</label>
-                    <input type="text" class="form-control" name="MUNICIPIO" required>
+                  <div class="col-3 mb-3">
+                    <label>Número Interior</label>
+                    <input type="text" class="form-control" name="NUMERO_INTERIOR_EMPRESA">
                   </div>
-                  <div class="col-md-4 mb-3">
-                    <label class="form-label">Ciudad *</label>
-                    <input type="text" class="form-control" name="CIUDAD" required>
+                  <div class="col-3 mb-3">
+                    <label>Nombre de la colonia *</label>
+                    <select class="form-control" name="NOMBRE_COLONIA_EMPRESA">
+                      <option value="">Seleccione una opción</option>
+                    </select>
+                  </div>
+                  <div class="col-3 mb-3">
+                    <label>Nombre de la Localidad *</label>
+                    <input type="text" class="form-control" name="NOMBRE_LOCALIDAD_EMPRESA">
                   </div>
                 </div>
               </div>
 
               <div class="col-12">
                 <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">Colonia *</label>
-                    <input type="text" class="form-control" name="COLONIA" required>
+                  <div class="col-4 mb-3">
+                    <label>Nombre del municipio o demarcación territorial *</label>
+                    <input type="text" class="form-control" name="NOMBRE_MUNICIPIO_EMPRESA">
                   </div>
-                  <div class="col-md-6 mb-3">
-                    <label class="form-label">Calle *</label>
-                    <input type="text" class="form-control" name="CALLE" required>
+                  <div class="col-4 mb-3">
+                    <label>Nombre de la Entidad Federativa *</label>
+                    <input type="text" class="form-control" name="NOMBRE_ENTIDAD_EMPRESA">
+                  </div>
+                  <div class="col-4 mb-3">
+                    <label>País *</label>
+                    <input type="text" class="form-control" name="PAIS_EMPRESA">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-6 mb-3">
+                    <label>Entre Calle</label>
+                    <input type="text" class="form-control" name="ENTRE_CALLE_EMPRESA">
+                  </div>
+                  <div class="col-6 mb-3">
+                    <label>Y Calle</label>
+                    <input type="text" class="form-control" name="ENTRE_CALLE2_EMPRESA">
                   </div>
                 </div>
               </div>
@@ -400,28 +453,32 @@
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label class="form-label">Nombre *</label>
-                  <input type="text" class="form-control" id="CONTACTO_OFERTA" name="CONTACTO_OFERTA" required>
+                  <input type="text" class="form-control" id="CONTACTO_OFERTA" name="CONTACTO_OFERTA" >
                 </div>
                 <div class="col-md-6 mb-3">
                   <label class="form-label">Cargo *</label>
-                  <input type="text" class="form-control" id="CARGO_OFERTA" name="CARGO_OFERTA" required>
+                  <input type="text" class="form-control" id="CARGO_OFERTA" name="CARGO_OFERTA" >
                 </div>
               </div>
             </div>
 
             <div class="col-12">
               <div class="row">
-                <div class="col-md-4 mb-3">
-                  <label class="form-label">Teléfono y Extensión </label>
-                  <input type="text" class="form-control" id="TELEFONO_OFERTA" name="TELEFONO_OFERTA">
+                <div class="col-md-3 mb-3">
+                  <label class="form-label">Teléfono </label>
+                  <input type="number" class="form-control" id="TELEFONO_OFERTA" name="TELEFONO_OFERTA">
                 </div>
-                <div class="col-md-4 mb-3">
-                  <label class="form-label">Celular *</label>
-                  <input type="text" class="form-control" id="CELULAR_OFERTA" name="CELULAR_OFERTA" required>
+                <div class="col-md-3 mb-3">
+                  <label class="form-label">Extensión </label>
+                  <input type="text" class="form-control" id="EXTENSION_OFERTA" name="EXTENSION_OFERTA">
                 </div>
-                <div class="col-md-4 mb-3">
-                  <label class="form-label">Correo electronico *</label>
-                  <input type="email" class="form-control" id="CORREO_OFERTA" name="CORREO_OFERTA" required>
+                <div class="col-md-3 mb-3">
+                  <label class="form-label">Celular </label>
+                  <input type="text" class="form-control" id="CELULAR_OFERTA" name="CELULAR_OFERTA" >
+                </div>
+                <div class="col-md-3 mb-3">
+                  <label class="form-label">Correo electronico </label>
+                  <input type="email" class="form-control" id="CORREO_OFERTA" name="CORREO_OFERTA" >
                 </div>
               </div>
             </div>

@@ -14,6 +14,7 @@ $("#NUEVA_SOLICITUD").click(function (e) {
 
     $(".observacionesdiv").empty();
     $(".contactodiv").empty();
+    $(".direcciondiv").empty();
 
 
     $("#miModal_SOLICITUDES").modal("show");
@@ -26,16 +27,13 @@ $("#NUEVA_SOLICITUD").click(function (e) {
 
 
 
-const ModalArea = document.getElementById('miModal_SOLICITUDES')
+const ModalArea = document.getElementById('miModal_SOLICITUDES');
+
 ModalArea.addEventListener('hidden.bs.modal', event => {
-    
-    
-    ID_FORMULARIO_SOLICITUDES = 0
+    ID_FORMULARIO_SOLICITUDES = 0;
     document.getElementById('formularioSOLICITUDES').reset();
-   
+
     $('#miModal_SOLICITUDES .modal-title').html('Solicitudes');
-
-
 
     const fields = [
         'CONTACTO_OFERTA',
@@ -43,25 +41,26 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
         'TELEFONO_OFERTA',
         'CELULAR_OFERTA',
         'CORREO_OFERTA',
+        'EXTENSION_OFERTA'
     ];
 
     fields.forEach(fieldId => {
         const field = document.getElementById(fieldId);
         if (field) {
             field.disabled = false; 
-            field.required = true; 
+            field.required = false; 
             field.value = ''; 
         }
     });
 
-    const radios = document.querySelectorAll('input[name="DIRIGE_OFERTA"]');
+    const radios = document.querySelectorAll('input[name="SERVICIO_TERCERO"]');
     radios.forEach(radio => {
-        radio.checked = false; 
+        radio.checked = false;
     });
 
+    document.getElementById('empresaDatos').style.display = 'none';
+});
 
-
-})
 
 
 
@@ -89,10 +88,33 @@ $("#guardarSOLICITUD").click(function (e) {
                     'CARGO_SOLICITUD': $(this).find("input[name='CARGO_SOLICITUD").val(),
                     'TELEFONO_SOLICITUD': $(this).find("input[name='TELEFONO_SOLICITUD']").val(),
                     'CELULAR_SOLICITUD': $(this).find("input[name='CELULAR_SOLICITUD']").val(),
-                    'CORREO_SOLICITUD': $(this).find("input[name='CORREO_SOLICITUD']").val()
+                    'CORREO_SOLICITUD': $(this).find("input[name='CORREO_SOLICITUD']").val(),
+                    'EXTENSION_SOLICITUD': $(this).find("input[name='EXTENSION_SOLICITUD']").val()
+
+                    
                 };
                 contactos.push(contacto);
             });
+
+        var direcciones = [];
+                $(".generardireccion").each(function() {
+                    var direccion = {
+                        'TIPO_DOMICILIO': $(this).find("input[name='TIPO_DOMICILIO']").val(),
+                        'CODIGO_POSTAL_DOMICILIO': $(this).find("input[name='CODIGO_POSTAL_DOMICILIO']").val(),
+                        'TIPO_VIALIDAD_DOMICILIO': $(this).find("input[name='TIPO_VIALIDAD_DOMICILIO']").val(),
+                        'NOMBRE_VIALIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_VIALIDAD_DOMICILIO']").val(),
+                        'NUMERO_EXTERIOR_DOMICILIO': $(this).find("input[name='NUMERO_EXTERIOR_DOMICILIO']").val(),
+                        'NUMERO_INTERIOR_DOMICILIO': $(this).find("input[name='NUMERO_INTERIOR_DOMICILIO']").val(),
+                        'NOMBRE_COLONIA_DOMICILIO': $(this).find("select[name='NOMBRE_COLONIA_DOMICILIO']").val(),
+                        'NOMBRE_LOCALIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_LOCALIDAD_DOMICILIO']").val(),
+                        'NOMBRE_MUNICIPIO_DOMICILIO': $(this).find("input[name='NOMBRE_MUNICIPIO_DOMICILIO']").val(),
+                        'NOMBRE_ENTIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_ENTIDAD_DOMICILIO']").val(),
+                        'PAIS_CONTRATACION_DOMICILIO': $(this).find("input[name='PAIS_CONTRATACION_DOMICILIO']").val(),
+                        'ENTRE_CALLE_DOMICILIO': $(this).find("input[name='ENTRE_CALLE_DOMICILIO']").val(),
+                        'ENTRE_CALLE_2_DOMICILIO': $(this).find("input[name='ENTRE_CALLE_2_DOMICILIO']").val()
+                    };
+                    direcciones.push(direccion);
+                });
 
 
     
@@ -100,7 +122,9 @@ $("#guardarSOLICITUD").click(function (e) {
             api: 1,
             ID_FORMULARIO_SOLICITUDES: ID_FORMULARIO_SOLICITUDES,
             OBSERVACIONES_SOLICITUD: JSON.stringify(observacion),
-            CONTACTOS_JSON: JSON.stringify(contactos) 
+            CONTACTOS_JSON: JSON.stringify(contactos),
+            DIRECCIONES_JSON: JSON.stringify(direcciones) 
+
 
         };
 
@@ -391,7 +415,6 @@ $('#Tablasolicitudes tbody').on('change', '.ESTATUS_SOLICITUD', function () {
             if (result.isConfirmed) {
                 const motivoRechazo = result.value;
 
-                // Enviar datos al servidor
                 $.ajax({
                     url: '/actualizarEstatusSolicitud',
                     method: 'POST',
@@ -473,48 +496,61 @@ $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablasolicitudes.row(tr);
     ID_FORMULARIO_SOLICITUDES = row.data().ID_FORMULARIO_SOLICITUDES;
 
-    
-    $(".observacionesdiv").empty(); 
-    obtenerObservaciones(row); 
+    $(".observacionesdiv").empty();
+    obtenerObservaciones(row);
 
     $(".contactodiv").empty();
     obtenerContactos(row);
 
-    editarDatoTabla(row.data(), 'formularioSOLICITUDES', 'miModal_SOLICITUDES', 1);
+    $(".direcciondiv").empty();
+    obtenerDirecciones(row);
 
+    editarDatoTabla(row.data(), 'formularioSOLICITUDES', 'miModal_SOLICITUDES', 1);
     $('#miModal_SOLICITUDES .modal-title').html(row.data().NOMBRE_COMERCIAL_SOLICITUD);
 
-     const fields = [
-    'CONTACTO_OFERTA',
-    'CARGO_OFERTA',
-    'TELEFONO_OFERTA',
-    'CELULAR_OFERTA',
-    'CORREO_OFERTA',
+    const fields = [
+        'CONTACTO_OFERTA',
+        'CARGO_OFERTA',
+        'TELEFONO_OFERTA',
+        'CELULAR_OFERTA',
+        'CORREO_OFERTA',
+        'EXTENSION_OFERTA'
     ];
 
-        const dirigeOferta = Number(row.data().DIRIGE_OFERTA);
+    const dirigeOferta = Number(row.data().DIRIGE_OFERTA);
 
-        fields.forEach(fieldId => {
-            const field = document.getElementById(fieldId);
+    fields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            field.disabled = (dirigeOferta === 0); 
+            field.required = (dirigeOferta !== 0);
+        } else {
+            console.warn(`El campo ${fieldId} no existe en el DOM.`);
+        }
+    });
 
-            if (field) {
-                field.toggleAttribute('disabled', dirigeOferta === 0);
-                field.toggleAttribute('required', dirigeOferta !== 0);
-            } else {
-                console.warn(` El campo ${fieldId} no existe en el DOM.`);
-            }
-        });
+    const servicioTercero = Number(row.data().SERVICIO_TERCERO);
+    
+    if (servicioTercero === 1) {
+        document.getElementById('empresaDatos').style.display = 'block';
+        document.getElementById('servicioParaTercero').checked = true;
+    } else {
+        document.getElementById('empresaDatos').style.display = 'none';
+        document.getElementById('servicioPropio').checked = true;
+    }
+
+
 
     const rechazoDiv = document.getElementById('RECHAZO');
     const motivoRechazoTextarea = document.getElementById('MOTIVO_RECHAZO');
-    const motivoRechazo = row.data().MOTIVO_RECHAZO || ''; 
+    const motivoRechazo = row.data().MOTIVO_RECHAZO || '';
 
-    if (motivoRechazo.trim().length > 0) { 
-        rechazoDiv.style.display = 'block'; 
-        motivoRechazoTextarea.value = motivoRechazo; 
+    if (motivoRechazo.trim().length > 0) {
+        rechazoDiv.style.display = 'block';
+        motivoRechazoTextarea.value = motivoRechazo;
     } else {
-        rechazoDiv.style.display = 'none'; 
-        motivoRechazoTextarea.value = ''; 
+        rechazoDiv.style.display = 'none';
+        motivoRechazoTextarea.value = '';
     }
 });
 
@@ -526,46 +562,65 @@ $(document).ready(function() {
         var tr = $(this).closest('tr');
         var row = Tablasolicitudes.row(tr);
         
-        hacerSoloLectura(row.data(), '#miModal_SOLICITUDES');
+    hacerSoloLectura(row.data(), '#miModal_SOLICITUDES');
+    ID_FORMULARIO_SOLICITUDES = row.data().ID_FORMULARIO_SOLICITUDES;
 
-        $(".observacionesdiv").empty(); 
-        obtenerObservaciones(row); 
+    $(".observacionesdiv").empty();
+    obtenerObservaciones(row);
 
     $(".contactodiv").empty();
     obtenerContactos(row);
 
-        ID_FORMULARIO_SOLICITUDES = row.data().ID_FORMULARIO_SOLICITUDES;
-        editarDatoTabla(row.data(), 'formularioSOLICITUDES', 'miModal_SOLICITUDES',1);
-        $('#miModal_SOLICITUDES .modal-title').html(row.data().NOMBRE_COMERCIAL_SOLICITUD);
-        
-    if (row.data().DIRIGE_OFERTA === 0) {
-        const fields = [
-            'CONTACTO_OFERTA',
-            'CARGO_OFERTA',
-            'TELEFONO_OFERTA',
-            'CELULAR_OFERTA',
-            'CORREO_OFERTA',
-        ];
+    $(".direcciondiv").empty();
+    obtenerDirecciones(row);
 
-        fields.forEach(fieldId => {
-            const field = document.getElementById(fieldId);
-            if (field) {
-                field.disabled = true; 
-                field.required = false; 
-            }
-        });
+    editarDatoTabla(row.data(), 'formularioSOLICITUDES', 'miModal_SOLICITUDES', 1);
+    $('#miModal_SOLICITUDES .modal-title').html(row.data().NOMBRE_COMERCIAL_SOLICITUD);
+
+    const fields = [
+        'CONTACTO_OFERTA',
+        'CARGO_OFERTA',
+        'TELEFONO_OFERTA',
+        'CELULAR_OFERTA',
+        'CORREO_OFERTA',
+        'EXTENSION_OFERTA'
+
+    ];
+
+    const dirigeOferta = Number(row.data().DIRIGE_OFERTA);
+
+    fields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            field.disabled = (dirigeOferta === 0); 
+            field.required = (dirigeOferta !== 0);
+        } else {
+            console.warn(`El campo ${fieldId} no existe en el DOM.`);
+        }
+    });
+        
+        
+    const servicioTercero = Number(row.data().SERVICIO_TERCERO);
+    
+    if (servicioTercero === 1) {
+        document.getElementById('empresaDatos').style.display = 'block';
+        document.getElementById('servicioParaTercero').checked = true;
+    } else {
+    document.getElementById('empresaDatos').style.display = 'none';
+    document.getElementById('servicioPropio').checked = true;
     }
+        
 
     const rechazoDiv = document.getElementById('RECHAZO');
     const motivoRechazoTextarea = document.getElementById('MOTIVO_RECHAZO');
-    const motivoRechazo = row.data().MOTIVO_RECHAZO || ''; 
+    const motivoRechazo = row.data().MOTIVO_RECHAZO || '';
 
-    if (motivoRechazo.trim().length > 0) { 
-        rechazoDiv.style.display = 'block'; 
-        motivoRechazoTextarea.value = motivoRechazo; 
+    if (motivoRechazo.trim().length > 0) {
+        rechazoDiv.style.display = 'block';
+        motivoRechazoTextarea.value = motivoRechazo;
     } else {
-        rechazoDiv.style.display = 'none'; 
-        motivoRechazoTextarea.value = ''; 
+        rechazoDiv.style.display = 'none';
+        motivoRechazoTextarea.value = '';
     }
 
     });
@@ -603,6 +658,7 @@ function handleRadioChange() {
     'TELEFONO_OFERTA',
     'CELULAR_OFERTA',
     'CORREO_OFERTA',
+    'EXTENSION_OFERTA'
   ];
 
   fields.forEach((fieldId) => {
@@ -614,10 +670,8 @@ function handleRadioChange() {
       const sourceFieldId = fieldId.replace('_OFERTA', '_SOLICITUD');
       const sourceField = document.getElementById(sourceFieldId);
       field.value = sourceField ? sourceField.value : '';
-      field.required = true;
       field.disabled = false;
     } else {
-      field.required = false;
       field.disabled = true;
     }
   });
@@ -735,15 +789,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
             <div class="col-12">
                 <div class="row">
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label class="form-label">Teléfono y Extensión </label>
                         <input type="text" class="form-control" name="TELEFONO_SOLICITUD">
                     </div>
-                    <div class="col-md-4 mb-3">
+                     <div class="col-md-3 mb-3">
+                        <label class="form-label">Extensión </label>
+                        <input type="text" class="form-control" name="EXTENSION_SOLICITUD">
+                    </div>
+
+                    <div class="col-md-3 mb-3">
                         <label class="form-label">Celular *</label>
                         <input type="text" class="form-control" name="CELULAR_SOLICITUD" required>
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label class="form-label">Correo electrónico *</label>
                         <input type="email" class="form-control" name="CORREO_SOLICITUD" required>
                     </div>
@@ -781,6 +840,8 @@ function obtenerContactos(data) {
         var telefono = contacto.TELEFONO_SOLICITUD;
         var celular = contacto.CELULAR_SOLICITUD;
         var correo = contacto.CORREO_SOLICITUD;
+        var extension = contacto.EXTENSION_SOLICITUD;
+
 
         const divContacto = document.createElement('div');
         divContacto.classList.add('row', 'generarcontacto', 'mb-3');
@@ -800,15 +861,19 @@ function obtenerContactos(data) {
 
             <div class="col-12">
                 <div class="row">
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label class="form-label">Teléfono y Extensión </label>
                         <input type="text" class="form-control" name="TELEFONO_SOLICITUD" value="${telefono}">
                     </div>
-                    <div class="col-md-4 mb-3">
+                      <div class="col-md-3 mb-3">
+                        <label class="form-label">Extensión </label>
+                        <input type="text" class="form-control" name="EXTENSION_SOLICITUD" value="${extension}">
+                    </div>
+                    <div class="col-md-3 mb-3">
                         <label class="form-label">Celular *</label>
                         <input type="text" class="form-control" name="CELULAR_SOLICITUD" value="${celular}" required>
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div class="col-md-3 mb-3">
                         <label class="form-label">Correo electrónico *</label>
                         <input type="email" class="form-control" name="CORREO_SOLICITUD" value="${correo}" required>
                     </div>
@@ -835,7 +900,6 @@ function obtenerContactos(data) {
 }
 
 
-
 document.addEventListener("DOMContentLoaded", function () {
     const botonAgregarDomicilio = document.getElementById('botonAgregardomicilio');
 
@@ -849,52 +913,80 @@ document.addEventListener("DOMContentLoaded", function () {
         divDomicilio.innerHTML = `
             <div class="col-12">
                 <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Tipo de Domicilio *</label>
+
+                    <div class="col-3 mb-3">
+                        <label>Tipo de Domicilio *</label>
                         <input type="text" class="form-control" name="TIPO_DOMICILIO" required>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Código Postal *</label>
-                        <input type="text" class="form-control" name="CODIGO_POSTAL" required>
+
+                    <div class="col-3 mb-3">
+                        <label>Código Postal *</label>
+                        <input type="number" class="form-control" name="CODIGO_POSTAL_DOMICILIO" required>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">País *</label>
-                        <input type="text" class="form-control" name="PAIS" required>
+                    <div class="col-3 mb-3">
+                        <label>Tipo de Vialidad *</label>
+                        <input type="text" class="form-control" name="TIPO_VIALIDAD_DOMICILIO" required>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <label>Nombre de la Vialidad *</label>
+                        <input type="text" class="form-control" name="NOMBRE_VIALIDAD_DOMICILIO" required>
                     </div>
                 </div>
             </div>
 
             <div class="col-12">
                 <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Estado *</label>
-                        <input type="text" class="form-control" name="ESTADO" required>
+                    <div class="col-3 mb-3">
+                        <label>Número Exterior</label>
+                        <input type="number" class="form-control" name="NUMERO_EXTERIOR_DOMICILIO">
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Municipio *</label>
-                        <input type="text" class="form-control" name="MUNICIPIO" required>
+                    <div class="col-3 mb-3">
+                        <label>Número Interior</label>
+                        <input type="text" class="form-control" name="NUMERO_INTERIOR_DOMICILIO">
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">Ciudad *</label>
-                        <input type="text" class="form-control" name="CIUDAD" required>
+                    <div class="col-3 mb-3">
+                        <label>Nombre de la colonia *</label>
+                        <select class="form-control" name="NOMBRE_COLONIA_DOMICILIO" required>
+                            <option value="">Seleccione una opción</option>
+                        </select>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <label>Nombre de la Localidad *</label>
+                        <input type="text" class="form-control" name="NOMBRE_LOCALIDAD_DOMICILIO" required>
                     </div>
                 </div>
             </div>
 
             <div class="col-12">
                 <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Colonia *</label>
-                        <input type="text" class="form-control" name="COLONIA" required>
+                    <div class="col-4 mb-3">
+                        <label>Nombre del municipio o demarcación territorial *</label>
+                        <input type="text" class="form-control" name="NOMBRE_MUNICIPIO_DOMICILIO" required>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Calle *</label>
-                        <input type="text" class="form-control" name="CALLE" required>
+                    <div class="col-4 mb-3">
+                        <label>Nombre de la Entidad Federativa *</label>
+                        <input type="text" class="form-control" name="NOMBRE_ENTIDAD_DOMICILIO" required>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <label>País *</label>
+                        <input type="text" class="form-control" name="PAIS_CONTRATACION_DOMICILIO" required>
                     </div>
                 </div>
             </div>
 
-            <br>
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <label>Entre Calle</label>
+                        <input type="text" class="form-control" name="ENTRE_CALLE_DOMICILIO">
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label>Y Calle</label>
+                        <input type="text" class="form-control" name="ENTRE_CALLE_2_DOMICILIO">
+                    </div>
+                </div>
+            </div>
+
             <div class="col-12 mt-4">
                 <div class="form-group text-center">
                     <button type="button" class="btn btn-danger botonEliminarDomicilio">Eliminar dirección <i class="bi bi-trash-fill"></i></button>
@@ -912,6 +1004,186 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+
+function obtenerDirecciones(data) {
+    let row = data.data().DIRECCIONES_JSON;
+    var direcciones = JSON.parse(row);
+
+    $.each(direcciones, function (index, direccion) {
+        var tipoDomicilio = direccion.TIPO_DOMICILIO;
+        var codigoPostal = direccion.CODIGO_POSTAL_DOMICILIO;
+        var tipoVialidad = direccion.TIPO_VIALIDAD_DOMICILIO;
+        var nombreVialidad = direccion.NOMBRE_VIALIDAD_DOMICILIO;
+        var numeroExterior = direccion.NUMERO_EXTERIOR_DOMICILIO;
+        var numeroInterior = direccion.NUMERO_INTERIOR_DOMICILIO;
+        var nombreColonia = direccion.NOMBRE_COLONIA_DOMICILIO;
+        var nombreLocalidad = direccion.NOMBRE_LOCALIDAD_DOMICILIO;
+        var nombreMunicipio = direccion.NOMBRE_MUNICIPIO_DOMICILIO;
+        var nombreEntidad = direccion.NOMBRE_ENTIDAD_DOMICILIO;
+        var pais = direccion.PAIS_CONTRATACION_DOMICILIO;
+        var entreCalle = direccion.ENTRE_CALLE_DOMICILIO;
+        var entreCalle2 = direccion.ENTRE_CALLE_2_DOMICILIO;
+
+        const divDomicilio = document.createElement('div');
+        divDomicilio.classList.add('row', 'generardireccion', 'mb-3');
+        divDomicilio.innerHTML = `
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-3 mb-3">
+                        <label>Tipo de Domicilio *</label>
+                        <input type="text" class="form-control" name="TIPO_DOMICILIO" value="${tipoDomicilio}" required>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <label>Código Postal *</label>
+                        <input type="number" class="form-control codigo-postal" name="CODIGO_POSTAL_DOMICILIO" value="${codigoPostal}" required>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <label>Tipo de Vialidad *</label>
+                        <input type="text" class="form-control" name="TIPO_VIALIDAD_DOMICILIO" value="${tipoVialidad}" required>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <label>Nombre de la Vialidad *</label>
+                        <input type="text" class="form-control" name="NOMBRE_VIALIDAD_DOMICILIO" value="${nombreVialidad}" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-3 mb-3">
+                        <label>Número Exterior</label>
+                        <input type="number" class="form-control" name="NUMERO_EXTERIOR_DOMICILIO" value="${numeroExterior}">
+                    </div>
+                    <div class="col-3 mb-3">
+                        <label>Número Interior</label>
+                        <input type="text" class="form-control" name="NUMERO_INTERIOR_DOMICILIO" value="${numeroInterior}">
+                    </div>
+                    <div class="col-3 mb-3">
+                        <label>Nombre de la colonia *</label>
+                        <select class="form-control nombre-colonia" name="NOMBRE_COLONIA_DOMICILIO" required>
+                            <option value="">Seleccione una opción</option>
+                        </select>
+                    </div>
+                    <div class="col-3 mb-3">
+                        <label>Nombre de la Localidad *</label>
+                        <input type="text" class="form-control" name="NOMBRE_LOCALIDAD_DOMICILIO" value="${nombreLocalidad}" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-4 mb-3">
+                        <label>Nombre del municipio o demarcación territorial *</label>
+                        <input type="text" class="form-control" name="NOMBRE_MUNICIPIO_DOMICILIO" value="${nombreMunicipio}" required>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <label>Nombre de la Entidad Federativa *</label>
+                        <input type="text" class="form-control" name="NOMBRE_ENTIDAD_DOMICILIO" value="${nombreEntidad}" required>
+                    </div>
+                    <div class="col-4 mb-3">
+                        <label>País *</label>
+                        <input type="text" class="form-control" name="PAIS_CONTRATACION_DOMICILIO" value="${pais}" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <label>Entre Calle</label>
+                        <input type="text" class="form-control" name="ENTRE_CALLE_DOMICILIO" value="${entreCalle}">
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label>Y Calle</label>
+                        <input type="text" class="form-control" name="ENTRE_CALLE_2_DOMICILIO" value="${entreCalle2}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-4">
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-danger botonEliminarDomicilio">Eliminar dirección <i class="bi bi-trash-fill"></i></button>
+                </div>
+            </div>
+        `;
+
+        const contenedor = document.querySelector('.direcciondiv');
+        contenedor.appendChild(divDomicilio);
+
+        fetch(`/codigo-postal/${codigoPostal}`)
+            .then(response => response.json())
+            .then(data => {
+                if (!data.error) {
+                    let response = data.response;
+                    let coloniaSelect = divDomicilio.querySelector(".nombre-colonia");
+                    coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
+
+                    let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
+
+                    colonias.forEach(colonia => {
+                        let option = document.createElement("option");
+                        option.value = colonia;
+                        option.textContent = colonia;
+                        coloniaSelect.appendChild(option);
+                    });
+
+                    coloniaSelect.value = nombreColonia;
+                }
+            })
+            .catch(error => {
+                console.error("Error al obtener datos del código postal:", error);
+            });
+
+        const botonEliminar = divDomicilio.querySelector('.botonEliminarDomicilio');
+        botonEliminar.addEventListener('click', function () {
+            contenedor.removeChild(divDomicilio);
+        });
+    });
+}
+
+document.addEventListener("input", function (event) {
+    if (event.target.matches("input[name='CODIGO_POSTAL_DOMICILIO']")) {
+        let codigoPostalInput = event.target;
+        let codigoPostal = codigoPostalInput.value.trim();
+
+        if (codigoPostal.length === 5) {
+            fetch(`/codigo-postal/${codigoPostal}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.error) {
+                        let response = data.response;
+                        
+                        let contenedor = codigoPostalInput.closest(".generardireccion");
+
+                        let coloniaSelect = contenedor.querySelector("select[name='NOMBRE_COLONIA_DOMICILIO']");
+                        let municipioInput = contenedor.querySelector("input[name='NOMBRE_MUNICIPIO_DOMICILIO']");
+                        let entidadInput = contenedor.querySelector("input[name='NOMBRE_ENTIDAD_DOMICILIO']");
+
+                        coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
+                        let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
+
+                        colonias.forEach(colonia => {
+                            let option = document.createElement("option");
+                            option.value = colonia;
+                            option.textContent = colonia;
+                            coloniaSelect.appendChild(option);
+                        });
+
+                        municipioInput.value = response.municipio || "No disponible";
+                        entidadInput.value = response.estado || "No disponible";
+
+                    } else {
+                        alert("Código postal no encontrado");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error al obtener datos:", error);
+                    alert("Hubo un error al consultar la API.");
+                });
+        }
+    }
+});
 
 
 function handleServicioChange() {

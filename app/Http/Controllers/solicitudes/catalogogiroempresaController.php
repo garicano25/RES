@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 use Carbon\Carbon;
 
-use DB;
+use DB; 
 
 use App\Models\solicitudes\catalogiroempresaModel;
 
@@ -90,7 +90,7 @@ public function store(Request $request)
                     return response()->json($response);
             }
         } catch (Exception $e) {
-            return response()->json('Error al guardar el giro');
+            return response()->json('Error al guardar');
         }
     }
 

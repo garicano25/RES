@@ -37,7 +37,7 @@ class confirmacionController extends Controller
         //     return !in_array($solicitud->ID_FORMULARIO_OFERTAS, $idsAsociados);
         // });
 
-        return view('ventas.confirmacion', compact('solicitudes'));
+        return view('ventas.confirmacion.confirmacion', compact('solicitudes'));
     }
 
 

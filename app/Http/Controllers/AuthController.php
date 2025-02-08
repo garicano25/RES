@@ -11,27 +11,48 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
-        // Redirigir al tablero si ya está autenticado
         if (Auth::check()) {
-            return redirect('/Módulos'); // Redirige a la URL directa del Módulos
+            return redirect('/Módulos'); 
         }
         return view('auth.login');
     }
     
-    // Procesar el login
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
     
         if (Auth::attempt(['EMPLEADO_CORREO' => $credentials['email'], 'password' => $credentials['password'], 'ACTIVO' => 1])) {
-            return redirect('/Módulos'); // Redirige a la URL directa del Módulos
+            return redirect('/Módulos'); 
         }
     
         return redirect()->back()->withErrors([
             'login_error' => 'Estas credenciales no coinciden con nuestros registros.',
         ]);
     }
-    
+
+
+
+    // public function login(Request $request)
+    // {
+    //     $credentials = $request->only('email', 'password');
+
+    //     if (Auth::attempt(['EMPLEADO_CORREO' => $credentials['email'], 'password' => $credentials['password'], 'ACTIVO' => 1])) {
+    //         $user = Auth::user();
+
+    //         if ($user->ADMINISTRADOR == 1) {
+    //             return redirect('/tablero');
+    //         } else {
+    //             return redirect('/Solicitudes');
+    //         }
+    //     }
+
+    //     return redirect()->back()->withErrors([
+    //         'login_error' => 'Estas credenciales no coinciden con nuestros registros.',
+    //     ]);
+    // }
+
+
+
     // Cerrar sesión
     public function logout()
     {

@@ -12,12 +12,10 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 //  USUARIOS
-
 use App\Http\Controllers\usuario\usuarioController;
 use App\Http\Controllers\AuthController;
 
-// Controladores de organizacion
-
+// CONTROLADORES DE ORGANIZACION 
 use App\Http\Controllers\organizacion\areasController;
 use App\Http\Controllers\organizacion\pptController;
 use App\Http\Controllers\organizacion\dptController;
@@ -35,7 +33,8 @@ use App\Http\Controllers\organizacion\catalogotipovacanteController;
 use App\Http\Controllers\organizacion\catalogoCompotenciasGerencialesController;
 use App\Http\Controllers\organizacion\catalogomotivovacanteControlller;
 
-// Controladores de reclutamiento
+
+// CONTROLADORES DE RECLUTAMIENO 
 use App\Http\Controllers\reclutamiento\catalogovacantesController;
 use App\Http\Controllers\reclutamiento\PuestoController;
 use App\Http\Controllers\reclutamiento\bancocvController;
@@ -44,34 +43,41 @@ use App\Http\Controllers\organizacion\catalogoareainteresController;
 use App\Http\Controllers\organizacion\catalogogeneroControlller;
 use App\Http\Controllers\reclutamiento\formCVController;
 
-// Controladores de seleccion
 
+// CONTROLADORES DE SELECCION
 use App\Http\Controllers\seleccion\seleccionController;
 use App\Http\Controllers\seleccion\catalogopruebasController;
 use App\Http\Controllers\TestController;
 
-// Controladores de contratacion
 
+// CONTROLADORES DE CONTRATACION 
 use App\Http\Controllers\contratacion\contratacionController;
 use App\Http\Controllers\contratacion\PowerPointController;
 use App\Http\Controllers\contratacion\pendientecontratarController;
 use App\Http\Controllers\contratacion\CvController;
 
-// Controlador de desvinculacion
+
+// CONTROLADORES DE DESVINCULACION
 use App\Http\Controllers\desvinculacion\desvinculacionController;
 
-// Controlador de solicitudes
+
+// CONTROLADORES DE SOLICITUDES
 use App\Http\Controllers\solicitudes\solicitudesController;
 use App\Http\Controllers\solicitudes\catalogomediocontactoController;
 use App\Http\Controllers\solicitudes\catalogogiroempresaController;
 use App\Http\Controllers\solicitudes\catalogonecesidadController;
+use App\Http\Controllers\solicitudes\catalogolineanegociosController;
+use App\Http\Controllers\solicitudes\catalogotiposervicioController;
 
-// Controlador de ofertas
+
+// CONTROLADORES DE OFERTAS 
 use App\Http\Controllers\ofertas\ofertasController;
 
-// Controlador de confirmación
 
+// CONTROLADORES DE CONFIRMACION 
 use App\Http\Controllers\confirmacion\confirmacionController;
+
+
 
 
 //==============================================  login  ============================================== 
@@ -112,11 +118,9 @@ Route::get('/usuariofoto/{id}', [usuarioController::class, 'mostrarFotoUsuario']
 Route::get('/inicio', function () {return view('RH.externa.diseño');});
 
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////RRHH//////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 
 //==============================================  ORGANIZACION  ============================================== 
@@ -453,13 +457,11 @@ Route::get('/Tablaofertas', [ofertasController::class, 'Tablaofertas']);
 Route::post('/actualizarEstatusOferta', [ofertasController::class, 'actualizarEstatusOferta']);
 
 //==============================================   CONFIRMACION DEL SERVICIO  ============================================== 
-
 Route::get('/Confirmación', [confirmacionController::class, 'index']);
 Route::get('/Tablaconfirmacion', [confirmacionController::class, 'Tablaconfirmacion']);
 
-
 //==============================================  ORDEN DE TRABAJO   ============================================== 
-Route::get('/Orden_trabajo', function () {return view('ventas.orden_trabajo');});
+Route::get('/Orden_trabajo', function () {return view('ventas.orden_trabajo.orden_trabajo');});
 
 
 
@@ -485,11 +487,26 @@ Route::get('/Tablagiroempresa', [catalogogiroempresaController::class, 'Tablagir
 
 // CATÁLOGO DE  NECESIDAD SERVICIO
 
-
 Route::get('/Catálogo_necesidad_servicio', function () {return view('ventas.Catalogos.catalogo_necesidadservicio');});
 Route::post('/NecesidadSave', [catalogonecesidadController::class, 'store']);
 Route::get('/NecesidadDelete', [catalogonecesidadController::class, 'store']);
 Route::get('/Tablanecesidadservicio', [catalogonecesidadController::class, 'Tablanecesidadservicio']);
+
+// CATÁLOGO DE LINEA DE NEGOCIO
+
+Route::get('/Catálogo_línea_negocio', function () {return view('ventas.Catalogos.catalogo_lineanegocio');});
+Route::post('/LineaSave', [catalogolineanegociosController::class, 'store']);
+Route::get('/LineaDelete', [catalogolineanegociosController::class, 'store']);
+Route::get('/Tablalineanegocio', [catalogolineanegociosController::class, 'Tablalineanegocio']);
+
+
+// CATÁLOGO DE TIPO DE SERVICIO
+
+Route::get('/Catálogo_tipo_servicio', function () {return view('ventas.Catalogos.catalogo_tiposervicio');});
+Route::post('/TiposSave', [catalogotiposervicioController::class, 'store']);
+Route::get('/TiposDelete', [catalogotiposervicioController::class, 'store']);
+Route::get('/Tablatiposervicio', [catalogotiposervicioController::class, 'Tablatiposervicio']);
+
 //============================================== LIMPIAR RUTAS ============================================== 
 
 

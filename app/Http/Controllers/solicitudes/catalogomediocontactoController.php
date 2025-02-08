@@ -91,7 +91,7 @@ public function store(Request $request)
                     return response()->json($response);
             }
         } catch (Exception $e) {
-            return response()->json('Error al guardar el medio');
+            return response()->json('Error al guardar');
         }
     }
 

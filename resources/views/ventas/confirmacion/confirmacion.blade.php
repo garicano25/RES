@@ -167,16 +167,17 @@
 
 
 
-
                         <div id="VERIFICACION_CLIENTE" style="display: none;">
                             <div class="col-12">
                                 <div class="row">
+                                    <!-- Quién Valida -->
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label">Quién valida *</label>
                                         <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" readonly>
                                     </div>
 
-                                    <div class="col-4 mt-2">
+                                    <!-- Fecha de Validación -->
+                                    <div class="col-md-4 mt-2">
                                         <label>Fecha de Validación *</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VERIFICACION_CONFIRMACION" name="FECHA_VERIFICACION_CONFIRMACION" required>
@@ -184,7 +185,7 @@
                                         </div>
                                     </div>
 
-
+                                    <!-- Comentario -->
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label">Comentario *</label>
                                         <textarea class="form-control" name="COMENTARIO_VALIDACION" rows="1" required></textarea>
@@ -192,71 +193,88 @@
                                 </div>
                             </div>
 
-                            <!-- Lista de Verificación con Radio Buttons Alineados -->
+                            <!-- Lista de Verificación con Radios e Input alineados -->
                             <div class="col-12 mt-3">
                                 <h5 class="mb-2"><b>Verificación de Información</b></h5>
+
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="d-flex align-items-center">
-                                            <label class="form-check-label flex-grow-1 text-end">Razón Social</label>
-                                            <div class="ms-3">
-                                                <input type="radio" name="RAZON_SOCIAL_VERIFICACION" value="Sí" required> Sí
-                                                <input type="radio" name="RAZON_SOCIAL_VERIFICACION" value="No"> No
+                                    <!-- Opciones de verificación -->
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <!-- Razón Social -->
+                                            <div class="col-12 d-flex align-items-center gap-3 mb-2">
+                                                <label class="form-check-label" style="min-width: 150px;">Razón Social</label>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <input type="radio" name="RAZON_SOCIAL_VERIFICACION" value="Sí" required onclick="toggleInput('razonSocialInput', false)"> Sí
+                                                    <input type="radio" name="RAZON_SOCIAL_VERIFICACION" value="No" onclick="toggleInput('razonSocialInput', true)"> No
+                                                </div>
+                                                <input type="text" id="razonSocialInput" class="form-control d-none" placeholder="Motivo">
                                             </div>
-                                        </div>
 
-                                        <div class="d-flex align-items-center">
-                                            <label class="form-check-label flex-grow-1 text-end">RFC</label>
-                                            <div class="ms-3">
-                                                <input type="radio" name="RFC_VERIFICACION" value="Sí" required> Sí
-                                                <input type="radio" name="RFC_VERIFICACION" value="No"> No
+                                            <!-- RFC -->
+                                            <div class="col-12 d-flex align-items-center gap-3 mb-2">
+                                                <label class="form-check-label" style="min-width: 150px;">RFC</label>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <input type="radio" name="RFC_VERIFICACION" value="Sí" required onclick="toggleInput('rfcInput', false)"> Sí
+                                                    <input type="radio" name="RFC_VERIFICACION" value="No" onclick="toggleInput('rfcInput', true)"> No
+                                                </div>
+                                                <input type="text" id="rfcInput" class="form-control d-none" placeholder="Motivo">
                                             </div>
-                                        </div>
 
-                                        <div class="d-flex align-items-center">
-                                            <label class="form-check-label flex-grow-1 text-end">Precios</label>
-                                            <div class="ms-3">
-                                                <input type="radio" name="PRECIOS_VERIFICACION" value="Sí" required> Sí
-                                                <input type="radio" name="PRECIOS_VERIFICACION" value="No"> No
+                                            <!-- Precios -->
+                                            <div class="col-12 d-flex align-items-center gap-3 mb-2">
+                                                <label class="form-check-label" style="min-width: 150px;">Precios</label>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <input type="radio" name="PRECIOS_VERIFICACION" value="Sí" required onclick="toggleInput('preciosInput', false)"> Sí
+                                                    <input type="radio" name="PRECIOS_VERIFICACION" value="No" onclick="toggleInput('preciosInput', true)"> No
+                                                </div>
+                                                <input type="text" id="preciosInput" class="form-control d-none" placeholder="Motivo">
                                             </div>
-                                        </div>
 
-                                        <div class="d-flex align-items-center">
-                                            <label class="form-check-label flex-grow-1 text-end">Moneda</label>
-                                            <div class="ms-3">
-                                                <input type="radio" name="MONEDA_VERIFICACION" value="Sí" required> Sí
-                                                <input type="radio" name="MONEDA_VERIFICACION" value="No"> No
+                                            <!-- Moneda -->
+                                            <div class="col-12 d-flex align-items-center gap-3 mb-2">
+                                                <label class="form-check-label" style="min-width: 150px;">Moneda</label>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <input type="radio" name="MONEDA_VERIFICACION" value="Sí" required onclick="toggleInput('monedaInput', false)"> Sí
+                                                    <input type="radio" name="MONEDA_VERIFICACION" value="No" onclick="toggleInput('monedaInput', true)"> No
+                                                </div>
+                                                <input type="text" id="monedaInput" class="form-control d-none" placeholder="Motivo">
                                             </div>
-                                        </div>
 
-                                        <div class="d-flex align-items-center">
-                                            <label class="form-check-label flex-grow-1 text-end">Servicio</label>
-                                            <div class="ms-3">
-                                                <input type="radio" name="SERVICIO_VERIFICACION" value="Sí" required> Sí
-                                                <input type="radio" name="SERVICIO_VERIFICACION" value="No"> No
+                                            <!-- Cantidad -->
+                                            <div class="col-12 d-flex align-items-center gap-3 mb-2">
+                                                <label class="form-check-label" style="min-width: 150px;">Cantidad</label>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <input type="radio" name="CANTIDAD_VERIFICACION" value="Sí" required onclick="toggleInput('cantidadInput', false)"> Sí
+                                                    <input type="radio" name="CANTIDAD_VERIFICACION" value="No" onclick="toggleInput('cantidadInput', true)"> No
+                                                </div>
+                                                <input type="text" id="cantidadInput" class="form-control d-none" placeholder="Motivo">
                                             </div>
-                                        </div>
 
-                                        <div class="d-flex align-items-center">
-                                            <label class="form-check-label flex-grow-1 text-end">Días de Crédito</label>
-                                            <div class="ms-3">
-                                                <input type="radio" name="DIAS_CREDITO_VERIFICACION" value="Sí" required> Sí
-                                                <input type="radio" name="DIAS_CREDITO_VERIFICACION" value="No"> No
+                                            <!-- Servicios -->
+                                            <div class="col-12 d-flex align-items-center gap-3 mb-2">
+                                                <label class="form-check-label" style="min-width: 150px;">Servicios</label>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <input type="radio" name="SERVICIO_VERIFICACION" value="Sí" required onclick="toggleInput('servicioInput', false)"> Sí
+                                                    <input type="radio" name="SERVICIO_VERIFICACION" value="No" onclick="toggleInput('servicioInput', true)"> No
+                                                </div>
+                                                <input type="text" id="servicioInput" class="form-control d-none" placeholder="Motivo">
                                             </div>
-                                        </div>
 
-                                        <div class="d-flex align-items-center">
-                                            <label class="form-check-label flex-grow-1 text-end">Cantidad</label>
-                                            <div class="ms-3">
-                                                <input type="radio" name="CANTIDAD_VERIFICACION" value="Sí" required> Sí
-                                                <input type="radio" name="CANTIDAD_VERIFICACION" value="No"> No
+                                            <!-- Días de crédito -->
+                                            <div class="col-12 d-flex align-items-center gap-3 mb-2">
+                                                <label class="form-check-label" style="min-width: 150px;">Días de Crédito</label>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <input type="radio" name="DIAS_CREDITO_VERIFICACION" value="Sí" required onclick="toggleInput('diasCreditoInput', false)"> Sí
+                                                    <input type="radio" name="DIAS_CREDITO_VERIFICACION" value="No" onclick="toggleInput('diasCreditoInput', true)"> No
+                                                </div>
+                                                <input type="text" id="diasCreditoInput" class="form-control d-none" placeholder="Motivo">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
 
 
 

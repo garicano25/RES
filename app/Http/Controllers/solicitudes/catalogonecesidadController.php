@@ -91,7 +91,7 @@ public function store(Request $request)
                     return response()->json($response);
             }
         } catch (Exception $e) {
-            return response()->json('Error al guardar el necesidad');
+            return response()->json('Error al guardar');
         }
     }
 }

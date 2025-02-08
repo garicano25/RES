@@ -540,7 +540,7 @@
 
                                 <div class="col-3 mb-3">
                                     <label>Número Interior </label>
-                                    <input type="number" class="form-control" id="NUMERO_INTERIOR" name="NUMERO_INTERIOR">
+                                    <input type="text" class="form-control" id="NUMERO_INTERIOR" name="NUMERO_INTERIOR">
                                 </div>
 
                                 <div class="col-3 mb-3">
@@ -560,17 +560,22 @@
                                     <input type="text" class="form-control" id="NOMBRE_MUNICIPIO" name="NOMBRE_MUNICIPIO" required>
                                 </div>
 
-                                <div class="col-4 mb-3">
+                                <div class="col-3 mb-3">
                                     <label>Nombre de la Entidad Federativa *</label>
                                     <input type="text" class="form-control" id="NOMBRE_ENTIDAD" name="NOMBRE_ENTIDAD" required>
                                 </div>
+                                <div class="col-3 mb-3">
+                                    <label>País *</label>
+                                    <input type="text" class="form-control" id="PAIS_CONTRATACION" name="PAIS_CONTRATACION" required>
+                                </div>
 
-                                <div class="col-4 mb-3">
+
+                                <div class="col-3 mb-3">
                                     <label>Entre Calle</label>
                                     <input type="text" class="form-control" id="ENTRE_CALLE" name="ENTRE_CALLE">
                                 </div>
 
-                                <div class="col-4 mb-3">
+                                <div class="col-3 mb-3">
                                     <label>Y Calle</label>
                                     <input type="text" class="form-control" id="ENTRE_CALLE_2" name="ENTRE_CALLE_2">
                                 </div>
