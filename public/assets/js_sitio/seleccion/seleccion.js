@@ -251,8 +251,8 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
             }
         });
 
-        var categoriaId = row.data().CATEGORIA_VACANTE;
-        var vacantes_id = row.data().VACANTES_ID;
+           categoriaId = row.data().CATEGORIA_VACANTE;
+        vacantes_id = row.data().VACANTES_ID;
 
         $.ajax({
             url: '/consultarSeleccion/' + vacantes_id,
@@ -1133,6 +1133,8 @@ function cargarReferenciasParaEditar(referencias) {
                 <label for="cumple">¿Cumple?</label><br>
                 <input type="radio" class="form-check-input" name="CUMPLE_${contador}" value="Sí" id="cumple_si_${contador}" ${cumpleValue === 'Sí' ? 'checked' : ''}>
                 <label for="cumple_si_${contador}">Sí</label>
+                            <br>
+
                 <input type="radio" class="form-check-input" name="CUMPLE_${contador}" value="No" id="cumple_no_${contador}" ${cumpleValue === 'No' ? 'checked' : ''}>
                 <label for="cumple_no_${contador}">No</label>
             </div>
@@ -2622,7 +2624,7 @@ $("#guardarFormSeleccionPruebas").click(function (e) {
                     setTimeout(() => {
                         ID_PRUEBAS_SELECCION = data.vacantes.ID_PRUEBAS_SELECCION;
                         alertMensaje('success', 'Información editada correctamente', 'Información guardada');
-                        $('#Modal_referencias').modal('hide');
+                        $('#Modal_pruebas_concimiento').modal('hide');
                         document.getElementById('formularioReferencias').reset();
                      
 

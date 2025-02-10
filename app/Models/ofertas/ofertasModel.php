@@ -26,7 +26,8 @@ class ofertasModel extends Model
         'FECHA_ACEPTACION_OFERTA',
         'FECHA_FIRMA_OFERTA',
         'ESTATUS_OFERTA',
-        'ACTIVO'
+        'ACTIVO',
+        'COTIZACION_DOCUMENTO'
         
     ];
 }

@@ -454,14 +454,19 @@ Route::post('/actualizarEstatusSolicitud', [solicitudesController::class, 'actua
 Route::get('/Ofertas', [ofertasController::class, 'index']);
 Route::post('/ofertaSave', [ofertasController::class, 'store']);
 Route::get('/Tablaofertas', [ofertasController::class, 'Tablaofertas']);
+Route::get('/ofertaDelete', [ofertasController::class, 'store']);
 Route::post('/actualizarEstatusOferta', [ofertasController::class, 'actualizarEstatusOferta']);
+Route::get('/mostrarcotizacion/{id}', [ofertasController::class, 'mostrarcotizacion']);
 
 //==============================================   CONFIRMACION DEL SERVICIO  ============================================== 
 Route::get('/Confirmación', [confirmacionController::class, 'index']);
 Route::get('/Tablaconfirmacion', [confirmacionController::class, 'Tablaconfirmacion']);
 Route::post('/ContratacionSave', [confirmacionController::class, 'store']);
+Route::get('/mostraraceptacion/{id}', [confirmacionController::class, 'mostraraceptacion']);
 
-//==============================================  ORDEN DE TRABAJO   ============================================== 
+Route::get('/confirmacionDelete', [confirmacionController::class, 'store']);
+
+//====================================Route::get('/mostrarcotizacion/{id}', [ofertasController::class, 'mostrarcotizacion']);
 Route::get('/Orden_trabajo', function () {return view('ventas.orden_trabajo.orden_trabajo');});
 
 

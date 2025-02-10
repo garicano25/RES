@@ -83,11 +83,15 @@ class ofertasController extends Controller
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_OFERTAS . '"><span class="slider round"></span></label>';
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+
                 } else {
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" checked><span class="slider round"></span></label>';
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+
                 }
             }
     
@@ -103,10 +107,13 @@ class ofertasController extends Controller
             ]);
         }
     }
-    
-    
-    
 
+
+    public function mostrarcotizacion($id)
+    {
+        $archivo = ofertasModel::findOrFail($id)->COTIZACION_DOCUMENTO;
+        return Storage::response($archivo);
+    }
 
 
     public function actualizarEstatusOferta(Request $request)
@@ -115,25 +122,16 @@ class ofertasController extends Controller
             $request->validate([
                 'ID_FORMULARIO_OFERTAS' => 'required|exists:formulario_ofertas,ID_FORMULARIO_OFERTAS',
                 'ESTATUS_OFERTA' => 'required|string|in:Aceptada,Revisión,Rechazada',
-                'MOTIVO_RECHAZO' => 'nullable|string|max:255',
-                'ACEPTADA_OFERTA' => 'nullable|string|max:255',
-                'FECHA_ACEPTACION_OFERTA' => 'nullable|date',
-                'FECHA_FIRMA_OFERTA' => 'nullable|date'
+                'MOTIVO_RECHAZO' => 'nullable|string|max:255'
             ]);
-    
+
             $oferta = ofertasModel::find($request->ID_FORMULARIO_OFERTAS);
-    
+
+            // Actualizar los datos
             $oferta->ESTATUS_OFERTA = $request->ESTATUS_OFERTA;
             $oferta->MOTIVO_RECHAZO = $request->ESTATUS_OFERTA === 'Rechazada' ? $request->MOTIVO_RECHAZO : null;
-    
-            if ($request->ESTATUS_OFERTA === 'Aceptada') {
-                $oferta->ACEPTADA_OFERTA = $request->ACEPTADA_OFERTA;
-                $oferta->FECHA_ACEPTACION_OFERTA = $request->FECHA_ACEPTACION_OFERTA;
-                $oferta->FECHA_FIRMA_OFERTA = $request->FECHA_FIRMA_OFERTA;
-            }
-    
             $oferta->save();
-    
+
             return response()->json([
                 'success' => true,
                 'message' => 'Estatus actualizado correctamente.'
@@ -145,7 +143,66 @@ class ofertasController extends Controller
             ], 500);
         }
     }
-    
+
+
+
+
+
+
+
+    // public function store(Request $request)
+    // {
+    //     try {
+    //         switch (intval($request->api)) {
+    //             case 1:
+    //                 if ($request->ID_FORMULARIO_OFERTAS == 0) {
+    //                     $ultimoRegistro = ofertasModel::orderBy('ID_FORMULARIO_OFERTAS', 'desc')->first();
+    //                     $numeroIncremental = $ultimoRegistro ? intval(substr($ultimoRegistro->NO_OFERTA, -3)) + 1 : 1;
+    //                     $anioActual = date('Y');
+    //                     $ultimoDigitoAnio = substr($anioActual, -2);
+
+
+    //                     $noOferta = 'RES-COT-' . $ultimoDigitoAnio . '-' . str_pad($numeroIncremental, 3, '0', STR_PAD_LEFT);
+    //                     $request->merge(['NO_OFERTA' => $noOferta]);
+
+    //                     DB::statement('ALTER TABLE formulario_ofertas AUTO_INCREMENT=1;');
+    //                     $ofertas = ofertasModel::create($request->all());
+
+    //                     $response['code'] = 1;
+    //                     $response['oferta'] = $ofertas;
+    //                     return response()->json($response);
+    //                 } else {
+    //                     if (isset($request->ELIMINAR)) {
+    //                         if ($request->ELIMINAR == 1) {
+    //                             ofertasModel::where('ID_FORMULARIO_OFERTAS', $request['ID_FORMULARIO_OFERTAS'])
+    //                                 ->update(['ACTIVO' => 0]);
+    //                             $response['code'] = 1;
+    //                             $response['oferta'] = 'Desactivada';
+    //                         } else {
+    //                             ofertasModel::where('ID_FORMULARIO_OFERTAS', $request['ID_FORMULARIO_OFERTAS'])
+    //                                 ->update(['ACTIVO' => 1]);
+    //                             $response['code'] = 1;
+    //                             $response['oferta'] = 'Activada';
+    //                         }
+    //                     } else {
+    //                         $ofertas = ofertasModel::find($request->ID_FORMULARIO_OFERTAS);
+    //                         $ofertas->update($request->all());
+    //                         $response['code'] = 1;
+    //                         $response['oferta'] = 'Actualizada';
+    //                     }
+    //                     return response()->json($response);
+    //                 }
+    //                 break;
+    //             default:
+    //                 $response['code'] = 1;
+    //                 $response['msj'] = 'Api no encontrada';
+    //                 return response()->json($response);
+    //         }
+    //     } catch (Exception $e) {
+    //         return response()->json(['error' => 'Error al guardar la oferta', 'message' => $e->getMessage()]);
+    //     }
+    // }
+
 
 
 
@@ -159,16 +216,27 @@ class ofertasController extends Controller
                         $numeroIncremental = $ultimoRegistro ? intval(substr($ultimoRegistro->NO_OFERTA, -3)) + 1 : 1;
                         $anioActual = date('Y');
                         $ultimoDigitoAnio = substr($anioActual, -2);
-
-                        
                         $noOferta = 'RES-COT-' . $ultimoDigitoAnio . '-' . str_pad($numeroIncremental, 3, '0', STR_PAD_LEFT);
+
                         $request->merge(['NO_OFERTA' => $noOferta]);
-    
+
                         DB::statement('ALTER TABLE formulario_ofertas AUTO_INCREMENT=1;');
-                        $ofertas = ofertasModel::create($request->all());
-    
+
+                        $oferta = ofertasModel::create($request->except('COTIZACION_DOCUMENTO'));
+
+                        if ($request->hasFile('COTIZACION_DOCUMENTO')) {
+                            $documento = $request->file('COTIZACION_DOCUMENTO');
+                            $idOferta = $oferta->ID_FORMULARIO_OFERTAS; 
+                            $nombreArchivo = $documento->getClientOriginalName(); 
+                            $rutaCarpeta = 'ventas/ofertas/' . $idOferta; 
+                            $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo); 
+
+                            $oferta->COTIZACION_DOCUMENTO = $rutaCompleta;
+                            $oferta->save();
+                        }
+
                         $response['code'] = 1;
-                        $response['oferta'] = $ofertas;
+                        $response['oferta'] = $oferta;
                         return response()->json($response);
                     } else {
                         if (isset($request->ELIMINAR)) {
@@ -184,14 +252,31 @@ class ofertasController extends Controller
                                 $response['oferta'] = 'Activada';
                             }
                         } else {
-                            $ofertas = ofertasModel::find($request->ID_FORMULARIO_OFERTAS);
-                            $ofertas->update($request->all());
+                            $oferta = ofertasModel::find($request->ID_FORMULARIO_OFERTAS);
+                            $oferta->update($request->except('COTIZACION_DOCUMENTO'));
+
+                            if ($request->hasFile('COTIZACION_DOCUMENTO')) {
+                                if ($oferta->COTIZACION_DOCUMENTO && Storage::exists($oferta->COTIZACION_DOCUMENTO)) {
+                                    Storage::delete($oferta->COTIZACION_DOCUMENTO);
+                                }
+
+                                $documento = $request->file('COTIZACION_DOCUMENTO');
+                                $idOferta = $oferta->ID_FORMULARIO_OFERTAS;
+                                $nombreArchivo = $documento->getClientOriginalName();
+                                $rutaCarpeta = 'ventas/ofertas/' . $idOferta;
+                                $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                                $oferta->COTIZACION_DOCUMENTO = $rutaCompleta;
+                                $oferta->save();
+                            }
+
                             $response['code'] = 1;
                             $response['oferta'] = 'Actualizada';
                         }
                         return response()->json($response);
                     }
                     break;
+
                 default:
                     $response['code'] = 1;
                     $response['msj'] = 'Api no encontrada';
@@ -201,7 +286,6 @@ class ofertasController extends Controller
             return response()->json(['error' => 'Error al guardar la oferta', 'message' => $e->getMessage()]);
         }
     }
-    
 
 
 

@@ -2798,6 +2798,29 @@ for (var key in data) {
 }
 
 
+
+function hacerSoloLectura2(data, modalSelector) {
+    var modal = $(modalSelector);
+
+    modal.find(':input, select, textarea').each(function () {
+        var input = $(this);
+        var fieldName = input.attr('name');
+
+        if (input.attr('type') === 'file') {
+            input.prop('disabled', true);
+        } else if (input.is(':radio') || input.is(':checkbox')) {
+            input.prop('checked', data[fieldName] == input.val());
+        } else {
+            input.val(data[fieldName] || '');
+        }
+    });
+
+    modal.find('button').not('.btn-close, .btn-danger').hide();
+    
+    modal.find('.btn-close, .btn-danger').prop('disabled', false);
+}
+
+
 function resetFormulario(modalSelector) {
   var form = $(modalSelector).find('form')[0];
   if (form) {
@@ -2812,6 +2835,7 @@ function resetFormulario(modalSelector) {
 
   $(modalSelector).find('button').show();
 }
+
 
 
 

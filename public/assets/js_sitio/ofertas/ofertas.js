@@ -220,6 +220,7 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
                 `;
             }
         },
+        { data: 'BTN_DOCUMENTO', className: 'text-center' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
@@ -231,11 +232,31 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
         { targets: 3, title: 'N° de Oferta/Cotización', className: 'all text-center nombre-column' },
         { targets: 4, title: 'Fecha (Días Restantes)', className: 'all text-center nombre-column' }, 
         { targets: 5, title: 'Estatus de la oferta', className: 'all text-center nombre-column' },
-        { targets: 6, title: 'Editar', className: 'all text-center' },
-        { targets: 7, title: 'Visualizar', className: 'all text-center' },
-        { targets: 8, title: 'Activo', className: 'all text-center' }
+        { targets: 6, title: 'Cotización', className: 'all text-center nombre-column' },
+        { targets: 7, title: 'Editar', className: 'all text-center' },
+        { targets: 8, title: 'Visualizar', className: 'all text-center' },
+        { targets: 9, title: 'Activo', className: 'all text-center' }
     ]
 });
+
+
+
+$('#Tablaofertas').on('click', '.ver-archivo-cotizacion', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablaofertas.row(tr);
+    var id = $(this).data('id');
+
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+
+    var nombreDocumento = 'Cotización';
+    var url = '/mostrarcotizacion/' + id;
+    
+    abrirModal(url, nombreDocumento);
+});
+
 
 
 
@@ -310,107 +331,104 @@ $('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {
 
 
 
+$(document).ready(function() {
+    $('#Tablaofertas tbody').on('click', 'td>button.VISUALIZAR', function () {
+        var tr = $(this).closest('tr');
+        var row = Tablaofertas.row(tr);
+        
+    hacerSoloLectura2(row.data(), '#miModal_OFERTAS');
+  
+
+
+    ID_FORMULARIO_OFERTAS = row.data().ID_FORMULARIO_OFERTAS;
+
+  
+
+    editarDatoTabla(row.data(), 'formularioOFERTAS', 'miModal_OFERTAS', 1);
+
+     var selectize = $('#SOLICITUD_ID')[0].selectize;
+    selectize.clear();
+    selectize.clearOptions(); 
+
+    if (row.data().SOLICITUDES && row.data().SOLICITUDES.length > 0) {
+        row.data().SOLICITUDES.forEach(solicitud => {
+            selectize.addOption({
+                value: solicitud.ID_FORMULARIO_SOLICITUDES,
+                text: `${solicitud.NO_SOLICITUD} (${solicitud.NOMBRE_COMERCIAL_SOLICITUD})`
+            });
+        });
+    }
+
+    var solicitudSeleccionado = row.data().SOLICITUD_ID;
+    if (solicitudSeleccionado) {
+        selectize.setValue(solicitudSeleccionado); 
+    }
+
+    $('#miModal_OFERTAS .modal-title').html(row.data().NO_OFERTA);
+
+    var estatus = row.data().ESTATUS_OFERTA;
+    if (estatus === 'Aceptada') {
+        $('#ACEPTADA').show();  
+        $('#RECHAZO').hide();   
+    } else if (estatus === 'Rechazada') {
+        $('#RECHAZO').show();   
+        $('#ACEPTADA').hide();  
+    } else {
+        $('#ACEPTADA').hide();  
+        $('#RECHAZO').hide();
+    }
+
+
+    });
+
+    $('#miModal_OFERTAS').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_OFERTAS');
+    });
+});
+
+
+
+
+
+$('#Tablaofertas tbody').on('change', 'td>label>input.ELIMINAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablaofertas.row(tr);
+
+    var estado = $(this).is(':checked') ? 1 : 0;
+
+    data = {
+        api: 1,
+        ELIMINAR: estado == 0 ? 1 : 0, 
+        ID_FORMULARIO_OFERTAS: row.data().ID_FORMULARIO_OFERTAS
+    };
+
+    eliminarDatoTabla(data, [Tablaofertas], 'ofertaDelete');
+});
+
 
 
 $('#Tablaofertas tbody').on('change', '.ESTATUS_OFERTA', function () {
-    const selectedValue = $(this).val();
-    const solicitudId = $(this).data('id');
-    const csrfToken = $('meta[name="csrf-token"]').attr('content');
+    const selectedValue = $(this).val(); 
+    const solicitudId = $(this).data('id'); 
+    const csrfToken = $('meta[name="csrf-token"]').attr('content'); 
 
-    if (selectedValue === 'Aceptada') {
-        Swal.fire({
-            title: 'Datos de Aceptación',
-            html: `
-                <div class="col-12">
-                    <div class="mb-3">
-                        <label>Aceptada por:</label>
-                        <input type="text" class="form-control" id="SWAL_ACEPTADA_OFERTA" placeholder="Nombre del responsable">
-                    </div>
-                    <div class="mb-3">
-                        <label>Fecha de aceptación:</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control mydatepicker" id="SWAL_FECHA_ACEPTACION_OFERTA" placeholder="aaaa-mm-dd">
-                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label>Fecha de firma términos y condiciones:</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control mydatepicker" id="SWAL_FECHA_FIRMA_OFERTA" placeholder="aaaa-mm-dd">
-                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                        </div>
-                    </div>
-                </div>
-            `,
-            showCancelButton: true,
-            confirmButtonText: 'Guardar',
-            cancelButtonText: 'Cancelar',
-            didOpen: () => {
-                $('#SWAL_FECHA_ACEPTACION_OFERTA').datepicker({
-                    format: 'yyyy-mm-dd',
-                    autoclose: true,
-                    todayHighlight: true,
-                    language: 'es'
-                });
-                $('#SWAL_FECHA_FIRMA_OFERTA').datepicker({
-                    format: 'yyyy-mm-dd',
-                    autoclose: true,
-                    todayHighlight: true,
-                    language: 'es'
-                });
-            },
-            preConfirm: () => {
-                const aceptadaPor = $('#SWAL_ACEPTADA_OFERTA').val();
-                const fechaAceptacion = $('#SWAL_FECHA_ACEPTACION_OFERTA').val();
-                const fechaFirma = $('#SWAL_FECHA_FIRMA_OFERTA').val();
-
-                if (!aceptadaPor || !fechaAceptacion || !fechaFirma) {
-                    Swal.showValidationMessage('Todos los campos son obligatorios.');
-                    return false;
-                }
-
-                return { aceptadaPor, fechaAceptacion, fechaFirma };
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const { aceptadaPor, fechaAceptacion, fechaFirma } = result.value;
-
-                $.ajax({
-                    url: '/actualizarEstatusOferta',
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    data: {
-                        ID_FORMULARIO_OFERTAS: solicitudId,
-                        ESTATUS_OFERTA: selectedValue,
-                        ACEPTADA_OFERTA: aceptadaPor,
-                        FECHA_ACEPTACION_OFERTA: fechaAceptacion,
-                        FECHA_FIRMA_OFERTA: fechaFirma
-                    },
-                    success: function (response) {
-                        if (response.success) {
-                            Swal.fire('Actualizado', 'El estatus y los datos fueron actualizados correctamente.', 'success').then(() => {
-                                Tablaofertas.ajax.reload(); 
-                            });
-                        } else {
-                            Swal.fire('Error', response.message, 'error');
-                        }
-                    },
-                    error: function () {
-                        Swal.fire('Error', 'Ocurrió un error al actualizar el estatus.', 'error');
-                    }
-                });
-            }
-        });
-    } else if (selectedValue === 'Rechazada') {
+    if (selectedValue === 'Rechazada') {
         Swal.fire({
             title: 'Motivo del rechazo',
             input: 'textarea',
             inputPlaceholder: 'Escriba el motivo del rechazo...',
+            inputAttributes: {
+                'aria-label': 'Escriba el motivo del rechazo...'
+            },
             showCancelButton: true,
             confirmButtonText: 'Enviar',
             cancelButtonText: 'Cancelar',
+            preConfirm: (motivo) => {
+                if (!motivo) {
+                    Swal.showValidationMessage('El motivo del rechazo es obligatorio');
+                }
+                return motivo;
+            }
         }).then((result) => {
             if (result.isConfirmed) {
                 const motivoRechazo = result.value;
@@ -428,7 +446,51 @@ $('#Tablaofertas tbody').on('change', '.ESTATUS_OFERTA', function () {
                     },
                     success: function (response) {
                         if (response.success) {
-                            Swal.fire('Actualizado', 'El estatus fue actualizado correctamente.', 'success').then(() => {
+                            Swal.fire(
+                                'Actualizado',
+                                'El estatus y el motivo fueron actualizados correctamente.',
+                                'success'
+                            ).then(() => {
+                                Tablaofertas.ajax.reload(); 
+                            });
+                        } else {
+                            Swal.fire('Error', response.message, 'error');
+                        }
+                    },
+                    error: function () {
+                        Swal.fire('Error', 'Ocurrió un error al actualizar el estatus.', 'error');
+                    }
+                });
+            }
+        });
+    } else {
+        Swal.fire({
+            title: 'Confirmar cambio',
+            text: '¿Está seguro de cambiar el estatus?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, cambiar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/actualizarEstatusOferta',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    data: {
+                        ID_FORMULARIO_OFERTAS: solicitudId,
+                        ESTATUS_OFERTA: selectedValue,
+                        MOTIVO_RECHAZO: null 
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            Swal.fire(
+                                'Actualizado',
+                                'El estatus fue actualizado correctamente.',
+                                'success'
+                            ).then(() => {
                                 Tablaofertas.ajax.reload();
                             });
                         } else {
@@ -443,6 +505,8 @@ $('#Tablaofertas tbody').on('change', '.ESTATUS_OFERTA', function () {
         });
     }
 });
+
+
 
 
 

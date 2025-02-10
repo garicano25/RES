@@ -123,13 +123,7 @@ $(document).ready(function () {
 
         $("#miModal_CONFIRMACION").modal("show");
 
-        // var selectize = selectizeInstance[0].selectize;
-        // selectize.clear(); 
-        // selectize.clearOptions(); 
-        // selectize.addOption({
-        //     value: '',
-        //     text: 'Seleccione una oferta'
-        // }); 
+       
 
       
         document.getElementById('formularioCONFIRMACION').reset();
@@ -179,21 +173,38 @@ var Tablaconfirmacion = $("#Tablaconfirmacion").DataTable({
                 return meta.row + 1; 
             }
         },
-        { data: 'OFERTA_ID' },
+        { data: 'NO_OFERTA' },
         { data: 'FECHA_CONFIRMACION' },
+        { data: 'BTN_DOCUMENTO', className: 'text-center' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
-        { data: 'BTN_CORREO' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all text-center' },
-        { targets: 1, title: 'N° de orden', className: 'all text-center nombre-column' },
+        { targets: 1, title: 'N° de cotización', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Fecha de aceptación', className: 'all text-center' },
-        { targets: 3, title: 'Editar', className: 'all text-center' },
-        { targets: 4, title: 'Visualizar', className: 'all text-center' },
-        { targets: 5, title: 'Activo', className: 'all text-center' }
+        { targets: 3, title: 'Documento aceptación', className: 'all text-center' },
+        { targets: 4, title: 'Editar', className: 'all text-center' },
+        { targets: 5, title: 'Visualizar', className: 'all text-center' },
+        { targets: 6, title: 'Activo', className: 'all text-center' }
     ]
+});
+
+$('#Tablaconfirmacion').on('click', '.ver-archivo-aceptacion', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablaconfirmacion.row(tr);
+    var id = $(this).data('id');
+
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+
+    var nombreDocumento = 'Documento de aceptación';
+    var url = '/mostraraceptacion/' + id;
+    
+    abrirModal(url, nombreDocumento);
 });
 
 
@@ -297,4 +308,49 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+});
+
+
+
+
+$('#Tablaconfirmacion tbody').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablaconfirmacion.row(tr);
+    ID_FORMULARIO_CONFRIMACION = row.data().ID_FORMULARIO_CONFRIMACION;
+
+    editarDatoTabla(row.data(), 'formularioCONFIRMACION', 'miModal_CONFIRMACION',1);
+});
+
+
+
+$(document).ready(function() {
+    $('#Tablaconfirmacion tbody').on('click', 'td>button.VISUALIZAR', function () {
+        var tr = $(this).closest('tr');
+        var row = Tablaconfirmacion.row(tr);
+        
+        hacerSoloLectura2(row.data(), '#miModal_CONFIRMACION');
+
+        ID_FORMULARIO_CONFRIMACION = row.data().ID_FORMULARIO_CONFRIMACION;
+        editarDatoTabla(row.data(), 'formularioCONFIRMACION', 'miModal_CONFIRMACION',1);
+    });
+
+    $('#miModal_CONFIRMACION').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_CONFIRMACION');
+    });
+});
+
+
+$('#Tablaconfirmacion tbody').on('change', 'td>label>input.ELIMINAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablaconfirmacion.row(tr);
+
+    var estado = $(this).is(':checked') ? 1 : 0;
+
+    data = {
+        api: 1,
+        ELIMINAR: estado == 0 ? 1 : 0, 
+        ID_FORMULARIO_CONFRIMACION: row.data().ID_FORMULARIO_CONFRIMACION
+    };
+
+    eliminarDatoTabla(data, [Tablaconfirmacion], 'confirmacionDelete');
 });

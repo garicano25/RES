@@ -137,7 +137,7 @@
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Cargar Cotización (PDF) *</label>
                             <div class="d-flex align-items-center">
-                                <input type="file" class="form-control me-2" name="COTIZACION_DOCUMENTO" accept=".pdf" required>
+                                <input type="file" class="form-control me-2" name="COTIZACION_DOCUMENTO" accept=".pdf" >
                                 <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
                                     <i class="bi bi-trash"></i>
                                 </button>
@@ -159,33 +159,7 @@
 
 
 
-                        <div class="col-12 mt-3" id="ACEPTADA" style="display: none">
-                            <div class="row">
-                                <div class="col-4">
-                                    <label>Aceptada por: </label>
-                                    <input type="text" class="form-control" id="ACEPTADA_OFERTA" name="ACEPTADA_OFERTA" readonly>
-                                </div>
-
-
-                                <div class="col-4">
-                                    <label>Fecha de aceptación </label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ACEPTACION_OFERTA" name="FECHA_ACEPTACION_OFERTA" readonly>
-                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-4">
-                                    <label>Fecha de firma términos y condiciones </label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_FIRMA_OFERTA" name="FECHA_FIRMA_OFERTA" readonly>
-                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+                    
 
 
 
