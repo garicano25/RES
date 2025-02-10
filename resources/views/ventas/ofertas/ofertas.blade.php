@@ -146,33 +146,7 @@
 
 
 
-                        <div class="col-12 mt-3">
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label">Quién acepta *</label>
-                                    <input type="text" class="form-control" name="QUIEN_ACEPTA" required>
-                                </div>
-
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label">Fecha de aceptación *</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ACEPTACION" name="FECHA_ACEPTACION" required>
-                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label">Subir documento de aceptación (PDF) *</label>
-                                    <div class="d-flex align-items-center">
-                                        <input type="file" class="form-control me-2" name="DOCUMENTO_ACEPTACION" accept=".pdf" required>
-                                        <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                     
 
 
 

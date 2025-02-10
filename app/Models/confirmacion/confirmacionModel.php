@@ -11,10 +11,17 @@ class confirmacionModel extends Model
     protected $primaryKey = 'ID_FORMULARIO_CONFRIMACION';
     protected $table = 'formulario_confirmacion';
     protected $fillable = [
-        'NO_OFERTA',
-        'NO_CONFIRMACION',
-        'ACEPTACION_CONFIRMACION'
-
+                    'OFERTA_ID',
+                    'ACEPTACION_CONFIRMACION',
+                    'FECHA_CONFIRMACION',
+                    'QUIEN_ACEPTA',
+                    'CARGO_ACEPTACION',
+                    'DOCUMENTO_ACEPTACION',
+                    'PROCEDE_ORDEN',
+                    'NO_CONFIRMACION',
+                    'FECHA_EMISION',
+                    'FECHA_VALIDACION',
+                    'ACTIVO'
     ];
 }
 

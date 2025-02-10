@@ -48,7 +48,7 @@
 
                         <div class="mb-3">
                             <label>N° de oferta</label>
-                            <select class="custom-select form-control" id="SOLICITUD_ID" name="SOLICITUD_ID">
+                            <select class="custom-select form-control" id="OFERTA_ID" name="OFERTA_ID">
                                 <option selected disabled>Seleccione una solicitud</option>
                                 @foreach($solicitudes as $solicitud)
                                 <option value="{{ $solicitud->ID_FORMULARIO_OFERTAS }}">
@@ -82,23 +82,47 @@
                                     </div>
                                 </div>
 
+                                <div class="col-4 mt-3">
+                                    <label class="form-label">Quién acepta *</label>
+                                    <input type="text" class="form-control" name="QUIEN_ACEPTA"  id="QUIEN_ACEPTA" required>
+                                </div>
+                                <div class="col-4 mt-3">
+                                    <label class="form-label">Cargo *</label>
+                                    <input type="text" class="form-control" name="CARGO_ACEPTACION" id="CARGO_ACEPTACION" required>
+                                </div>
 
-
+                                <div class="col-md-4 mt-3">
+                                    <label class="form-label">Subir documento de aceptación (PDF) *</label>
+                                    <div class="d-flex align-items-center">
+                                        <input type="file" class="form-control me-2" name="DOCUMENTO_ACEPTACION"  id="DOCUMENTO_ACEPTACION" accept=".pdf" required>
+                                        <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
 
                         <div class="col-12 mt-3">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-4">
                                     <label>No. OC/OS/Contrato </label>
                                     <input type="text" class="form-control" id="NO_CONFIRMACION" name="NO_CONFIRMACION">
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-4">
                                     <label>Fecha de emisión *</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_CONFIRMACION" name="FECHA_CONFIRMACION" required>
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_EMISION" name="FECHA_EMISION" required>
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-4">
+                                    <label>Fecha de validación *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VALIDACION" name="FECHA_VALIDACION" required>
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                     </div>
                                 </div>
@@ -124,40 +148,8 @@
 
 
 
-                        <div class="col-12 mt-3">
-                            <div class="row">
 
-                                <div class="col-3">
-                                    <label>Verificado por (iniciales personal RES) </label>
-                                    <input type="text" class="form-control" id="VERIFICACION_CONFIRMACION" name="VERIFICACION_CONFIRMACION">
-                                </div>
-
-                                <div class="col-3">
-                                    <label>Fecha de verificación de OC/OS/Contrato*</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VERIFICACION_CONFIRMACION" name="FECHA_VERIFICACION_CONFIRMACION" required>
-                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <label>Prioridad del servicio (Normal - Urgente) </label>
-                                    <input type="text" class="form-control" id="PRIORIDAD_CONFIRMACION" name="PRIORIDAD_CONFIRMACION">
-                                </div>
-
-
-                                <div class="col-3">
-                                    <label>Fecha de inicio del servicio*</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INICIO_CONFIRMACION" name="FECHA_INICIO_CONFIRMACION" required>
-                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="d-flex align-items-center mt-3">
+                    <div class="d-flex align-items-center mt-3">
                             <h5 class="me-2">Validar información</h5>
                             <button id="btnVerificacion" type="button" class="btn btn-info btn-custom rounded-pill">
                                 <i class="bi bi-check"></i>
@@ -170,25 +162,22 @@
                         <div id="VERIFICACION_CLIENTE" style="display: none;">
                             <div class="col-12">
                                 <div class="row">
-                                    <!-- Quién Valida -->
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label">Quién valida *</label>
                                         <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" readonly>
                                     </div>
 
-                                    <!-- Fecha de Validación -->
                                     <div class="col-md-4 mt-2">
                                         <label>Fecha de Validación *</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VERIFICACION_CONFIRMACION" name="FECHA_VERIFICACION_CONFIRMACION" required>
+                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VERIFICACION_CONFIRMACION" name="FECHA_VERIFICACION_CONFIRMACION" >
                                             <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                         </div>
                                     </div>
 
-                                    <!-- Comentario -->
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label">Comentario *</label>
-                                        <textarea class="form-control" name="COMENTARIO_VALIDACION" rows="1" required></textarea>
+                                        <textarea class="form-control" name="COMENTARIO_VALIDACION" id="COMENTARIO_VALIDACION" rows="1" ></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -278,6 +267,22 @@
 
 
 
+                        <div class="col-12">
+                            <div class="row">
+                              <div class="col-md-12 mb-3 text-center">
+                                <h5 class="form-label"><b>Se procede a generar la orden de trabajo </b></h5>
+                                <br>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="PROCEDE_ORDEN" id="procedeno" value="0" >
+                                  <label class="form-check-label" for="procedeno">No</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input class="form-check-input" type="radio" name="PROCEDE_ORDEN" id="procedesi" value="1" >
+                                  <label class="form-check-label" for="procedesi">Sí</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
 
                     </div>
                 </div>

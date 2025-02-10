@@ -49,7 +49,9 @@ class ofertasController extends Controller
         try {
             $tabla = ofertasModel::select(
                 'formulario_ofertas.*', 
-                'formulario_solicitudes.NO_SOLICITUD'
+                'formulario_solicitudes.NO_SOLICITUD',
+                'formulario_solicitudes.NOMBRE_COMERCIAL_SOLICITUD' 
+
             )
             ->leftJoin(
                 'formulario_solicitudes', 
@@ -153,18 +155,15 @@ class ofertasController extends Controller
             switch (intval($request->api)) {
                 case 1:
                     if ($request->ID_FORMULARIO_OFERTAS == 0) {
-                        // Generar el número dinámico NO_OFERTA
                         $ultimoRegistro = ofertasModel::orderBy('ID_FORMULARIO_OFERTAS', 'desc')->first();
                         $numeroIncremental = $ultimoRegistro ? intval(substr($ultimoRegistro->NO_OFERTA, -3)) + 1 : 1;
                         $anioActual = date('Y');
                         $ultimoDigitoAnio = substr($anioActual, -2);
 
                         
-                        // Formatear el NO_OFERTA como RES-COT-(año)-[tres dígitos]
                         $noOferta = 'RES-COT-' . $ultimoDigitoAnio . '-' . str_pad($numeroIncremental, 3, '0', STR_PAD_LEFT);
                         $request->merge(['NO_OFERTA' => $noOferta]);
     
-                        // Reiniciar el AUTO_INCREMENT si es necesario
                         DB::statement('ALTER TABLE formulario_ofertas AUTO_INCREMENT=1;');
                         $ofertas = ofertasModel::create($request->all());
     

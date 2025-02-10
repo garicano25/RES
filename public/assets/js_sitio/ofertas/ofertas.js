@@ -178,9 +178,24 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
                 return meta.row + 1; 
             }
         },
-        { data: 'NO_SOLICITUD' },
+        { data: 'REVISION_OFERTA' },
+
+        {
+            data: null,
+            render: function(data, type, row) {
+                return `${row.NO_SOLICITUD} - ${row.NOMBRE_COMERCIAL_SOLICITUD}`;
+            }
+        },
         { data: 'NO_OFERTA' },
-        { data: 'FECHA_OFERTA' },
+
+        { 
+            data: 'FECHA_OFERTA',
+            render: function(data, type, row) {
+                let diasRestantes = calcularDiasRestantes(row.FECHA_OFERTA, row.DIAS_VALIDACION_OFERTA);
+                return `${row.FECHA_OFERTA} <span style="font-weight:bold;">(${diasRestantes})</span>`;
+            }
+        },
+
         { 
             data: 'ESTATUS_OFERTA',
             render: function(data, type, row) {
@@ -211,15 +226,42 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all text-center' },
-        { targets: 1, title: 'N° de solicitud', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'N° de Oferta/Cotización', className: 'all text-center nombre-column' },
-        { targets: 3, title: 'Fecha', className: 'all text-center' },
-        { targets: 4, title: 'Estatus de la oferta', className: 'all text-center' },
-        { targets: 5, title: 'Editar', className: 'all text-center' },
-        { targets: 6, title: 'Visualizar', className: 'all text-center' },
-        { targets: 7, title: 'Activo', className: 'all text-center' }
+        { targets: 1, title: 'Versión', className: 'all text-center nombre-column' },
+        { targets: 2, title: 'N° de solicitud', className: 'all text-center nombre-column' },
+        { targets: 3, title: 'N° de Oferta/Cotización', className: 'all text-center nombre-column' },
+        { targets: 4, title: 'Fecha (Días Restantes)', className: 'all text-center nombre-column' }, 
+        { targets: 5, title: 'Estatus de la oferta', className: 'all text-center nombre-column' },
+        { targets: 6, title: 'Editar', className: 'all text-center' },
+        { targets: 7, title: 'Visualizar', className: 'all text-center' },
+        { targets: 8, title: 'Activo', className: 'all text-center' }
     ]
 });
+
+
+
+function calcularDiasRestantes(fechaOferta, diasValidacion) {
+    if (!fechaOferta || !diasValidacion) return "N/A";
+
+    let fechaInicio = new Date(fechaOferta);
+    
+    fechaInicio.setDate(fechaInicio.getDate() + parseInt(diasValidacion));
+
+    let hoy = new Date();
+
+    let diferencia = fechaInicio - hoy;
+
+    let diasRestantes = Math.ceil(diferencia / (1000 * 60 * 60 * 24));
+
+    let color = "green"; 
+    if (diasRestantes <= 3 && diasRestantes > 0) {
+        color = "orange"; 
+    } else if (diasRestantes <= 0) {
+        color = "red"; 
+        return `<span style="color: ${color}; font-weight: bold;">Expirado</span>`;
+    }
+
+    return `<span style="color: ${color}; font-weight: bold;">${diasRestantes} días</span>`;
+}
 
 
 
@@ -233,9 +275,8 @@ $('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {
 
     var selectize = $('#SOLICITUD_ID')[0].selectize;
     selectize.clear();
-    selectize.clearOptions(); // Aquí sí limpiamos las opciones previas
+    selectize.clearOptions(); 
 
-    // **Agregar solo las opciones de la oferta editada**
     if (row.data().SOLICITUDES && row.data().SOLICITUDES.length > 0) {
         row.data().SOLICITUDES.forEach(solicitud => {
             selectize.addOption({
@@ -460,14 +501,3 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".botonEliminarArchivo").forEach(boton => {
-        boton.addEventListener("click", function () {
-            // Encuentra el input file asociado
-            const inputArchivo = this.previousElementSibling;
-            if (inputArchivo && inputArchivo.type === "file") {
-                inputArchivo.value = ""; // Borra el archivo seleccionado
-            }
-        });
-    });
-});

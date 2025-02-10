@@ -176,6 +176,11 @@
                         </a>
                     </li>
 
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <i class="" style="margin-right: 5px;"></i> <span class="d-lg-none">Indicadores </span><span class="d-none d-lg-inline">General </span>
+                        </a>
+                    </li>
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown" style="margin-left: 8px;">
                             <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">

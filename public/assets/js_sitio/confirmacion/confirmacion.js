@@ -1,10 +1,118 @@
 
 
 
+//VARIABLES
+ID_FORMULARIO_CONFRIMACION = 0
+
+
+
+
+const Modalconfirmacion = document.getElementById('miModal_CONFIRMACION')
+Modalconfirmacion.addEventListener('hidden.bs.modal', event => {
+    
+    
+    ID_FORMULARIO_CONFRIMACION = 0
+    document.getElementById('formularioCONFIRMACION').reset();
+   
+
+})
+
+
+
+$("#guardarCONFIRMACION").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormulario($('#formularioCONFIRMACION'))
+
+    if (formularioValido) {
+
+    if (ID_FORMULARIO_CONFRIMACION == 0) {
+        
+        alertMensajeConfirm({
+            title: "¿Desea guardar la información?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarCONFIRMACION')
+            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_CONFRIMACION: ID_FORMULARIO_CONFRIMACION }, 'ContratacionSave', 'formularioCONFIRMACION', 'guardarCONFIRMACION', { callbackAfter: true, callbackBefore: true }, () => {
+        
+               
+
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
+                    
+
+                ID_FORMULARIO_CONFRIMACION = data.confirmacion.ID_FORMULARIO_CONFRIMACION
+                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                     $('#miModal_CONFIRMACION').modal('hide')
+                    document.getElementById('formularioCONFIRMACION').reset();
+                    Tablaconfirmacion.ajax.reload()
+
+        
+            })
+            
+            
+            
+        }, 1)
+        
+    } else {
+            alertMensajeConfirm({
+            title: "¿Desea editar la información de este formulario?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarCONFIRMACION')
+            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_CONFRIMACION: ID_FORMULARIO_CONFRIMACION }, 'ContratacionSave', 'formularioCONFIRMACION', 'guardarCONFIRMACION', { callbackAfter: true, callbackBefore: true }, () => {
+        
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
+                    
+                setTimeout(() => {
+
+                    
+                    ID_FORMULARIO_CONFRIMACION = data.confirmacion.ID_FORMULARIO_CONFRIMACION
+                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                     $('#miModal_CONFIRMACION').modal('hide')
+                    document.getElementById('formularioCONFIRMACION').reset();
+                    Tablaconfirmacion.ajax.reload()
+
+
+                }, 300);  
+            })
+        }, 1)
+    }
+
+} else {
+    // Muestra un mensaje de error o realiza alguna otra acción
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
+    
+});
 
 
 $(document).ready(function () {
-    var selectizeInstance = $('#SOLICITUD_ID').selectize({
+    var selectizeInstance = $('#OFERTA_ID').selectize({
         placeholder: 'Seleccione una oferta',
         allowEmptyOption: true,
         closeAfterSelect: true,
@@ -71,8 +179,8 @@ var Tablaconfirmacion = $("#Tablaconfirmacion").DataTable({
                 return meta.row + 1; 
             }
         },
-        { data: 'NO_CONFIRMACION' },
-        { data: 'ACEPTACION_CONFIRMACION' },
+        { data: 'OFERTA_ID' },
+        { data: 'FECHA_CONFIRMACION' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_CORREO' },
@@ -81,7 +189,7 @@ var Tablaconfirmacion = $("#Tablaconfirmacion").DataTable({
     columnDefs: [
         { targets: 0, title: '#', className: 'all text-center' },
         { targets: 1, title: 'N° de orden', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'Fecha emisión', className: 'all text-center' },
+        { targets: 2, title: 'Fecha de aceptación', className: 'all text-center' },
         { targets: 3, title: 'Editar', className: 'all text-center' },
         { targets: 4, title: 'Visualizar', className: 'all text-center' },
         { targets: 5, title: 'Activo', className: 'all text-center' }
@@ -178,3 +286,15 @@ function toggleInput(inputId, activar) {
     }
 }
 
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".botonEliminarArchivo").forEach(boton => {
+        boton.addEventListener("click", function () {
+            const inputArchivo = this.previousElementSibling;
+            if (inputArchivo && inputArchivo.type === "file") {
+                inputArchivo.value = ""; 
+            }
+        });
+    });
+});

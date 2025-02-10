@@ -59,6 +59,10 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     });
 
     document.getElementById('empresaDatos').style.display = 'none';
+    document.getElementById('seleccionContactoContainer').style.display = 'none';
+    document.getElementById('solicitarVerificacionDiv').style.display = 'none';
+
+
 });
 
 
@@ -150,8 +154,7 @@ $("#guardarSOLICITUD").click(function (e) {
                     
                     ID_FORMULARIO_SOLICITUDES = data.solicitud.ID_FORMULARIO_SOLICITUDES
                         alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
-                         $('#miModal_SOLICITUDES').modal('hide')
-                        document.getElementById('formularioSOLICITUDES').reset();
+                        document.getElementById('solicitarVerificacionDiv').style.display = 'block';
                         Tablasolicitudes.ajax.reload()
     
     
@@ -494,13 +497,14 @@ $('#Tablasolicitudes tbody').on('change', '.ESTATUS_SOLICITUD', function () {
 $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablasolicitudes.row(tr);
+
     ID_FORMULARIO_SOLICITUDES = row.data().ID_FORMULARIO_SOLICITUDES;
 
     $(".observacionesdiv").empty();
     obtenerObservaciones(row);
 
     $(".contactodiv").empty();
-    obtenerContactos(row);
+    obtenerContactos(row);  
 
     $(".direcciondiv").empty();
     obtenerDirecciones(row);
@@ -518,19 +522,26 @@ $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
     ];
 
     const dirigeOferta = Number(row.data().DIRIGE_OFERTA);
+    const seleccionContactoContainer = document.getElementById('seleccionContactoContainer');
+    const seleccionContacto = document.getElementById('seleccionContacto');
+
+    if (dirigeOferta === 1) {
+        seleccionContactoContainer.style.display = 'block';
+        actualizarOpcionesContacto(); 
+    } else {
+        seleccionContactoContainer.style.display = 'none';
+        limpiarCamposOferta();
+    }
 
     fields.forEach(fieldId => {
         const field = document.getElementById(fieldId);
         if (field) {
             field.disabled = (dirigeOferta === 0); 
             field.required = (dirigeOferta !== 0);
-        } else {
-            console.warn(`El campo ${fieldId} no existe en el DOM.`);
         }
     });
 
     const servicioTercero = Number(row.data().SERVICIO_TERCERO);
-    
     if (servicioTercero === 1) {
         document.getElementById('empresaDatos').style.display = 'block';
         document.getElementById('servicioParaTercero').checked = true;
@@ -538,8 +549,6 @@ $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
         document.getElementById('empresaDatos').style.display = 'none';
         document.getElementById('servicioPropio').checked = true;
     }
-
-
 
     const rechazoDiv = document.getElementById('RECHAZO');
     const motivoRechazoTextarea = document.getElementById('MOTIVO_RECHAZO');
@@ -563,13 +572,16 @@ $(document).ready(function() {
         var row = Tablasolicitudes.row(tr);
         
     hacerSoloLectura(row.data(), '#miModal_SOLICITUDES');
+  
+
+
     ID_FORMULARIO_SOLICITUDES = row.data().ID_FORMULARIO_SOLICITUDES;
 
     $(".observacionesdiv").empty();
     obtenerObservaciones(row);
 
     $(".contactodiv").empty();
-    obtenerContactos(row);
+    obtenerContactos(row);  
 
     $(".direcciondiv").empty();
     obtenerDirecciones(row);
@@ -584,32 +596,36 @@ $(document).ready(function() {
         'CELULAR_OFERTA',
         'CORREO_OFERTA',
         'EXTENSION_OFERTA'
-
     ];
 
     const dirigeOferta = Number(row.data().DIRIGE_OFERTA);
+    const seleccionContactoContainer = document.getElementById('seleccionContactoContainer');
+    const seleccionContacto = document.getElementById('seleccionContacto');
+
+    if (dirigeOferta === 1) {
+        seleccionContactoContainer.style.display = 'block';
+        actualizarOpcionesContacto(); 
+    } else {
+        seleccionContactoContainer.style.display = 'none';
+        limpiarCamposOferta();
+    }
 
     fields.forEach(fieldId => {
         const field = document.getElementById(fieldId);
         if (field) {
             field.disabled = (dirigeOferta === 0); 
             field.required = (dirigeOferta !== 0);
-        } else {
-            console.warn(`El campo ${fieldId} no existe en el DOM.`);
         }
     });
-        
-        
+
     const servicioTercero = Number(row.data().SERVICIO_TERCERO);
-    
     if (servicioTercero === 1) {
         document.getElementById('empresaDatos').style.display = 'block';
         document.getElementById('servicioParaTercero').checked = true;
     } else {
-    document.getElementById('empresaDatos').style.display = 'none';
-    document.getElementById('servicioPropio').checked = true;
+        document.getElementById('empresaDatos').style.display = 'none';
+        document.getElementById('servicioPropio').checked = true;
     }
-        
 
     const rechazoDiv = document.getElementById('RECHAZO');
     const motivoRechazoTextarea = document.getElementById('MOTIVO_RECHAZO');
@@ -622,6 +638,8 @@ $(document).ready(function() {
         rechazoDiv.style.display = 'none';
         motivoRechazoTextarea.value = '';
     }
+
+
 
     });
 
@@ -650,31 +668,71 @@ $('#Tablasolicitudes tbody').on('change', 'td>label>input.ELIMINAR', function ()
 
 
 function handleRadioChange() {
-  const isMismoContacto = document.getElementById('mismoContacto').checked;
-
-  const fields = [
-    'CONTACTO_OFERTA',
-    'CARGO_OFERTA',
-    'TELEFONO_OFERTA',
-    'CELULAR_OFERTA',
-    'CORREO_OFERTA',
-    'EXTENSION_OFERTA'
-  ];
-
-  fields.forEach((fieldId) => {
-    const field = document.getElementById(fieldId);
-
-    field.value = '';
+    const isMismoContacto = document.getElementById('mismoContacto').checked;
+    const seleccionContactoContainer = document.getElementById('seleccionContactoContainer');
+    const seleccionContacto = document.getElementById('seleccionContacto');
 
     if (isMismoContacto) {
-      const sourceFieldId = fieldId.replace('_OFERTA', '_SOLICITUD');
-      const sourceField = document.getElementById(sourceFieldId);
-      field.value = sourceField ? sourceField.value : '';
-      field.disabled = false;
+        seleccionContactoContainer.style.display = 'block';
+        actualizarOpcionesContacto(); 
     } else {
-      field.disabled = true;
+        seleccionContactoContainer.style.display = 'none';
+        limpiarCamposOferta();
     }
-  });
+}
+
+function limpiarCamposOferta() {
+    const fields = [
+        'CONTACTO_OFERTA', 'CARGO_OFERTA', 'TELEFONO_OFERTA',
+        'EXTENSION_OFERTA', 'CELULAR_OFERTA', 'CORREO_OFERTA'
+    ];
+
+    fields.forEach((fieldId) => {
+        const field = document.getElementById(fieldId);
+        field.value = '';
+        field.disabled = true;
+    });
+}
+
+
+
+function actualizarOpcionesContacto() {
+    const seleccionContacto = document.getElementById('seleccionContacto');
+    seleccionContacto.innerHTML = '<option value="">Seleccione un contacto</option>';
+
+    const contactos = document.querySelectorAll('.generarcontacto');
+    contactos.forEach((contacto, index) => {
+        const nombreInput = contacto.querySelector('input[name="CONTACTO_SOLICITUD"]');
+        const nombre = nombreInput ? nombreInput.value : `Contacto ${index + 1}`;
+
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = nombre;
+        seleccionContacto.appendChild(option);
+    });
+}
+
+
+
+function copiarDatosContacto() {
+    const seleccionContacto = document.getElementById('seleccionContacto');
+    const contactoIndex = seleccionContacto.value;
+
+    if (contactoIndex === '') return limpiarCamposOferta();
+
+    const contacto = document.querySelectorAll('.generarcontacto')[contactoIndex];
+
+    if (contacto) {
+        document.getElementById('CONTACTO_OFERTA').value = contacto.querySelector('input[name="CONTACTO_SOLICITUD"]').value;
+        document.getElementById('CARGO_OFERTA').value = contacto.querySelector('input[name="CARGO_SOLICITUD"]').value;
+        document.getElementById('TELEFONO_OFERTA').value = contacto.querySelector('input[name="TELEFONO_SOLICITUD"]').value;
+        document.getElementById('EXTENSION_OFERTA').value = contacto.querySelector('input[name="EXTENSION_SOLICITUD"]').value;
+        document.getElementById('CELULAR_OFERTA').value = contacto.querySelector('input[name="CELULAR_SOLICITUD"]').value;
+        document.getElementById('CORREO_OFERTA').value = contacto.querySelector('input[name="CORREO_SOLICITUD"]').value;
+
+        document.querySelectorAll('#CONTACTO_OFERTA, #CARGO_OFERTA, #TELEFONO_OFERTA, #EXTENSION_OFERTA, #CELULAR_OFERTA, #CORREO_OFERTA')
+            .forEach(field => field.disabled = false);
+    }
 }
 
 
@@ -786,18 +844,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                 </div>
             </div>
-
+    
             <div class="col-12">
                 <div class="row">
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Teléfono y Extensión </label>
-                        <input type="text" class="form-control" name="TELEFONO_SOLICITUD">
+                        <label class="form-label">Teléfono</label>
+                        <input type="number" class="form-control" name="TELEFONO_SOLICITUD">
                     </div>
-                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Extensión </label>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Extensión</label>
                         <input type="text" class="form-control" name="EXTENSION_SOLICITUD">
                     </div>
-
                     <div class="col-md-3 mb-3">
                         <label class="form-label">Celular *</label>
                         <input type="text" class="form-control" name="CELULAR_SOLICITUD" required>
@@ -808,24 +865,23 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                 </div>
             </div>
-
-            <br>
-            <div class="col-12 mt-4">
-                <div class="form-group text-center">
-                    <button type="button" class="btn btn-danger botonEliminarContacto">Eliminar contacto <i class="bi bi-trash-fill"></i></button>
-                </div>
+    
+            <div class="col-12 mt-4 text-center">
+                <button type="button" class="btn btn-danger botonEliminarContacto">Eliminar contacto <i class="bi bi-trash-fill"></i></button>
             </div>
         `;
-
+    
         const contenedor = document.querySelector('.contactodiv');
         contenedor.appendChild(divContacto);
-
-        // Evento para eliminar contacto
-        const botonEliminar = divContacto.querySelector('.botonEliminarContacto');
-        botonEliminar.addEventListener('click', function () {
+    
+        divContacto.querySelector('.botonEliminarContacto').addEventListener('click', function () {
             contenedor.removeChild(divContacto);
+            actualizarOpcionesContacto(); 
         });
+    
+        actualizarOpcionesContacto(); 
     }
+    
 });
 
 
@@ -834,6 +890,10 @@ function obtenerContactos(data) {
     let row = data.data().CONTACTOS_JSON;
     var contactos = JSON.parse(row);
 
+    $(".contactodiv").empty(); // Limpiar contactos previos
+    const seleccionContacto = document.getElementById("seleccionContacto");
+    seleccionContacto.innerHTML = '<option value="">Seleccione un contacto</option>'; // Reset select
+
     $.each(contactos, function (index, contacto) {
         var nombre = contacto.CONTACTO_SOLICITUD;
         var cargo = contacto.CARGO_SOLICITUD;
@@ -841,7 +901,6 @@ function obtenerContactos(data) {
         var celular = contacto.CELULAR_SOLICITUD;
         var correo = contacto.CORREO_SOLICITUD;
         var extension = contacto.EXTENSION_SOLICITUD;
-
 
         const divContacto = document.createElement('div');
         divContacto.classList.add('row', 'generarcontacto', 'mb-3');
@@ -862,11 +921,11 @@ function obtenerContactos(data) {
             <div class="col-12">
                 <div class="row">
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Teléfono y Extensión </label>
-                        <input type="text" class="form-control" name="TELEFONO_SOLICITUD" value="${telefono}">
+                        <label class="form-label">Teléfono</label>
+                        <input type="number" class="form-control" name="TELEFONO_SOLICITUD" value="${telefono}">
                     </div>
-                      <div class="col-md-3 mb-3">
-                        <label class="form-label">Extensión </label>
+                    <div class="col-md-3 mb-3">
+                        <label class="form-label">Extensión</label>
                         <input type="text" class="form-control" name="EXTENSION_SOLICITUD" value="${extension}">
                     </div>
                     <div class="col-md-3 mb-3">
@@ -880,24 +939,30 @@ function obtenerContactos(data) {
                 </div>
             </div>
 
-            <br>
-            <div class="col-12 mt-4">
-                <div class="form-group text-center">
-                    <button type="button" class="btn btn-danger botonEliminarContacto">Eliminar contacto <i class="bi bi-trash-fill"></i></button>
-                </div>
+            <div class="col-12 mt-4 text-center">
+                <button type="button" class="btn btn-danger botonEliminarContacto">Eliminar contacto <i class="bi bi-trash-fill"></i></button>
             </div>
         `;
 
         const contenedor = document.querySelector('.contactodiv');
         contenedor.appendChild(divContacto);
 
+        // Agregar opción al <select>
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = nombre;
+        seleccionContacto.appendChild(option);
+
         // Evento para eliminar contacto
-        const botonEliminar = divContacto.querySelector('.botonEliminarContacto');
-        botonEliminar.addEventListener('click', function () {
+        divContacto.querySelector('.botonEliminarContacto').addEventListener('click', function () {
             contenedor.removeChild(divContacto);
+            actualizarOpcionesContacto();
         });
     });
+
+    actualizarOpcionesContacto(); // Actualizar opciones después de cargar contactos
 }
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -1280,3 +1345,23 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+
+function solicitarVerificacion() {
+    const boton = document.getElementById("SOLICITAR_VERIFICACION");
+    const inputHidden = document.getElementById("solicitarVerificacionInput");
+
+    inputHidden.value = "1";
+
+    boton.classList.remove("btn-info");
+    boton.classList.add("btn-success");
+
+    Swal.fire({
+        title: "Verificación solicitada",
+        text: "Para solicitar la verificación, presione el botón de guardar para confirmar la verificación.",
+        icon: "info",
+        confirmButtonText: "Entendido",
+        confirmButtonColor: "#3085d6"
+    });
+}

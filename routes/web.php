@@ -459,6 +459,7 @@ Route::post('/actualizarEstatusOferta', [ofertasController::class, 'actualizarEs
 //==============================================   CONFIRMACION DEL SERVICIO  ============================================== 
 Route::get('/Confirmación', [confirmacionController::class, 'index']);
 Route::get('/Tablaconfirmacion', [confirmacionController::class, 'Tablaconfirmacion']);
+Route::post('/ContratacionSave', [confirmacionController::class, 'store']);
 
 //==============================================  ORDEN DE TRABAJO   ============================================== 
 Route::get('/Orden_trabajo', function () {return view('ventas.orden_trabajo.orden_trabajo');});

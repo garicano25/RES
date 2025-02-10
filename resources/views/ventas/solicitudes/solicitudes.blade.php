@@ -431,22 +431,27 @@
             </div> --}}
 
 
-            <div class="col-12">
-              <div class="row">
-                <div class="col-md-12 mb-3 text-center">
-                  <h5 class="form-label"><b>A quien se dirige la oferta</b></h5>
-                  <br>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="DIRIGE_OFERTA" id="mismoContacto" value="1" onchange="handleRadioChange()" required>
-                    <label class="form-check-label" for="mismoContacto">Mismo contacto</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="DIRIGE_OFERTA" id="aQuienCorresponda" value="0" onchange="handleRadioChange()">
-                    <label class="form-check-label" for="aQuienCorresponda">A quien corresponda</label>
-                  </div>
-                </div>
+            <div class="col-md-12 mb-3 text-center">
+              <h5 class="form-label"><b>A quien se dirige la oferta</b></h5>
+              <br>
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="DIRIGE_OFERTA" id="mismoContacto" value="1" onchange="handleRadioChange()" required>
+                  <label class="form-check-label" for="mismoContacto">Mismo contacto</label>
               </div>
-            </div>
+              <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="DIRIGE_OFERTA" id="aQuienCorresponda" value="0" onchange="handleRadioChange()">
+                  <label class="form-check-label" for="aQuienCorresponda">A quien corresponda</label>
+              </div>
+          
+              <!-- Selector de contacto dinámico -->
+              <div id="seleccionContactoContainer" style="display: none; margin-top: 15px;">
+                  <label for="seleccionContacto"><b>Seleccionar contacto:</b></label>
+                  <select id="seleccionContacto" class="form-control" onchange="copiarDatosContacto()">
+                      <option value="">Seleccione un contacto</option>
+                  </select>
+              </div>
+          </div>
+          
 
 
             <div class="col-12">
@@ -484,6 +489,21 @@
             </div>
 
 
+
+            <div id="solicitarVerificacionDiv" class="col-12 text-center" style="display: none;">
+              <div class="col-md-6 mx-auto">
+                  <button type="button" id="SOLICITAR_VERIFICACION" class="btn btn-info w-100" onclick="solicitarVerificacion()">
+                      Solicitar Verificación
+                  </button>
+                  <input type="hidden" id="solicitarVerificacionInput" name="SOLICITAR_VERIFICACION" value="0">
+              </div>
+          </div>
+
+
+            @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
+
+            <div class="row" id="VERIFICACION_CLIENTE">
+
             <div class="d-flex align-items-center">
               <h5 class="me-2">Verificación del Cliente</h5>
               <button id="btnVerificacion" type="button" class="btn btn-info btn-custom rounded-pill">
@@ -495,7 +515,6 @@
 
 
 
-            <div class="row" id="VERIFICACION_CLIENTE" style="display: none;">
               <div class="mb-3">
                 <div class="row">
                   <div class="col-6 mb-3">
@@ -509,6 +528,24 @@
               </div>
             </div>
 
+
+            <div class="col-12">
+              <div class="row">
+                <div class="col-md-12 mb-3 text-center">
+                  <h5 class="form-label"><b>Se procede a cotizar al cliente </b></h5>
+                  <br>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="PROCEDE_COTIZAR" id="procedeno" value="0" >
+                    <label class="form-check-label" for="procedeno">No</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="PROCEDE_COTIZAR" id="procedesi" value="1" >
+                    <label class="form-check-label" for="procedesi">Sí</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            @endif
 
 
 

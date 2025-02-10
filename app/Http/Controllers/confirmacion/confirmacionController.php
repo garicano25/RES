@@ -31,11 +31,7 @@ class confirmacionController extends Controller
             ->where('ESTATUS_OFERTA', 'like', '%Aceptada%')
             ->get();
 
-        // $idsAsociados = ofertasModel::pluck('SOLICITUD_ID')->toArray();
-
-        // $solicitudes = $solicitudesAceptadas->filter(function ($solicitud) use ($idsAsociados) {
-        //     return !in_array($solicitud->ID_FORMULARIO_OFERTAS, $idsAsociados);
-        // });
+     
 
         return view('ventas.confirmacion.confirmacion', compact('solicitudes'));
     }
@@ -70,6 +66,51 @@ class confirmacionController extends Controller
                 'msj' => 'Error ' . $e->getMessage(),
                 'data' => 0
             ]);
+        }
+    }
+
+
+
+    public function store(Request $request)
+    {
+        try {
+            switch (intval($request->api)) {
+                case 1:
+                    if ($request->ID_FORMULARIO_CONFRIMACION == 0) {
+                        DB::statement('ALTER TABLE formulario_confirmacion AUTO_INCREMENT=1;');
+                        $confirmaciones = confirmacionModel::create($request->all());
+                    } else { 
+
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $confirmaciones = confirmacionModel::where('ID_FORMULARIO_CONFRIMACION', $request['ID_FORMULARIO_CONFRIMACION'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['confirmacion'] = 'Desactivada';
+                            } else {
+                                $confirmaciones = confirmacionModel::where('ID_FORMULARIO_CONFRIMACION', $request['ID_FORMULARIO_CONFRIMACION'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['confirmacion'] = 'Activada';
+                            }
+                        } else {
+                            $confirmaciones = confirmacionModel::find($request->ID_FORMULARIO_CONFRIMACION);
+                            $confirmaciones->update($request->all());
+                            $response['code'] = 1;
+                            $response['confirmacion'] = 'Actualizada';
+                        }
+                        return response()->json($response);
+
+                    }
+                    $response['code']  = 1;
+                    $response['confirmacion']  = $confirmaciones;
+                    return response()->json($response);
+                    break;
+                default:
+                    $response['code']  = 1;
+                    $response['msj']  = 'Api no encontrada';
+                    return response()->json($response);
+            }
+        } catch (Exception $e) {
+            return response()->json('Error al guardar');
         }
     }
 
