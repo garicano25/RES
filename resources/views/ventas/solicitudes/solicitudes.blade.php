@@ -490,7 +490,7 @@
 
 
 
-            <div id="solicitarVerificacionDiv" class="col-12 text-center" style="display: none;">
+            <div id="solicitarVerificacionDiv" class="col-12 text-center" style="display: block;">
               <div class="col-md-6 mx-auto">
                   <button type="button" id="SOLICITAR_VERIFICACION" class="btn btn-info w-100" onclick="solicitarVerificacion()">
                       Solicitar Verificación

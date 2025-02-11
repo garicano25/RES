@@ -15,7 +15,7 @@
     </ol>
 
     <div class="card-body">
-        <table id="Tablaconfirmacion" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+        <table id="Tablaordentrabajo" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
 
         </table>
     </div>
@@ -64,17 +64,17 @@
 
                         <div class="col-12 mt-3">
                             <div class="row">
-                           
+
 
                                 <div class="col-6">
                                     <label>Orden de Trabajo (OT) No. </label>
-                                    <input type="text" class="form-control" id="NO_ORDEN_CONFIRMACION" name="NO_ORDEN_CONFIRMACION">
+                                    <input type="text" class="form-control" id="NO_ORDEN_CONFIRMACION" name="NO_ORDEN_CONFIRMACION" readonly>
                                 </div>
 
                                 <div class="col-6">
                                     <label>Fecha de emisión de la OT*</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INICIO_CONFIRMACION" name="FECHA_INICIO_CONFIRMACION" required>
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_EMISION" name="FECHA_EMISION" required>
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                     </div>
                                 </div>
@@ -87,20 +87,20 @@
                             <div class="row">
 
                                 <div class="col-3">
-                                    <label>Verificado por  </label>
-                                    <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" readonly>
+                                    <label>Verificado por </label>
+                                    <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" id="VERIFICADO_POR" name="VERIFICADO_POR" readonly>
                                 </div>
 
                                 <div class="col-3">
                                     <label>Fecha de verificación *</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VERIFICACION_CONFIRMACION" name="FECHA_VERIFICACION_CONFIRMACION" required>
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VERIFICACION" name="FECHA_VERIFICACION" required>
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                     </div>
                                 </div>
                                 <div class="col-3">
                                     <label>Prioridad del servicio *</label>
-                                    <select class="form-control" id="PRIORIDAD_CONFIRMACION" name="PRIORIDAD_CONFIRMACION" required>
+                                    <select class="form-control" id="PRIORIDAD_SERVICIO" name="PRIORIDAD_SERVICIO" required>
                                         <option value="" disabled selected>Seleccione una opción</option>
                                         <option value="1">Normal</option>
                                         <option value="2">Urgente</option>
@@ -111,7 +111,7 @@
                                 <div class="col-3">
                                     <label>Fecha de inicio del servicio*</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INICIO_CONFIRMACION" name="FECHA_INICIO_CONFIRMACION" required>
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INICIO_SERVICIO" name="FECHA_INICIO_SERVICIO" required>
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                     </div>
                                 </div>
@@ -129,7 +129,7 @@
                 <div class="modal-footer mx-5">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-success" id="guardarOT">
-                        <i class="bi bi-floppy-fill" data-bs-toggle="tooltip" data-bs-placement="top" ></i> Guardar
+                        <i class="bi bi-floppy-fill" data-bs-toggle="tooltip" data-bs-placement="top"></i> Guardar
                     </button>
                 </div>
             </form>

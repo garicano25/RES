@@ -82,6 +82,11 @@ use App\Http\Controllers\confirmacion\confirmacionController;
 use App\Http\Controllers\ordentrabajo\otController;
 
 
+// CONTROLADORES DE MR
+
+
+use App\Http\Controllers\requisicionmaterial\mrController;
+
 //==============================================  login  ============================================== 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -471,7 +476,8 @@ Route::get('/confirmacionDelete', [confirmacionController::class, 'store']);
 // Route::get('/Orden_trabajo', function () {return view('ventas.orden_trabajo.orden_trabajo');});
 
 Route::get('/Orden_trabajo', [otController::class, 'index']);
-
+Route::get('/Tablaordentrabajo', [otController::class, 'Tablaordentrabajo']);
+Route::post('/otSave', [otController::class, 'store']);
 
 
 //==============================================   CATALOGOS SOLICITUDES ============================================== 
@@ -515,12 +521,30 @@ Route::post('/TiposSave', [catalogotiposervicioController::class, 'store']);
 Route::get('/TiposDelete', [catalogotiposervicioController::class, 'store']);
 Route::get('/Tablatiposervicio', [catalogotiposervicioController::class, 'Tablatiposervicio']);
 
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////COMPRAS///////////////////////////////////////////////////////7
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+Route::get('/Requisición_Materiales', function () {return view('compras.requisicionesmaterial.requisicion_material');
+});
+
+Route::post('/MrSave', [mrController::class, 'store']);
+Route::get('/Tablamr', [mrController::class, 'Tablamr']);
+
+
+Route::get('/Bitácora', function () {return view('compras.requisicionesmaterial.bitacora');
+});
+
+
 //============================================== LIMPIAR RUTAS ============================================== 
-
-
-
-
-
 
 
 Route::get('codigo-postal/{cp}', function ($cp) {

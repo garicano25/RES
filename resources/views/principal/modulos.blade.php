@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" sizes="20x20" href="/assets/images/favicon.png"> 
+    <link rel="icon" type="image/png" sizes="20x20" href="/assets/images/favicon.png">
     <title>Results in Performance</title>
     <style>
         body {
@@ -59,11 +60,12 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <a href="{{ url('/tablero') }}" class="circle" id="rrhh"><img src="rrhh.png" alt="RRHH"></a>
         <a href="{{ url('/Solicitudes') }}" class="circle" id="ventas"><img src="ventas.png" alt="Ventas"></a>
-        <a href="#" class="circle" id="compras"><img src="compras.png" alt="Compras"></a>
+        <a href="{{ url('/Requisición_Materiales') }}" class="circle" id="compras"><img src="compras.png" alt="Compras"></a>
         <a href="#" class="circle" id="almacen"><img src="almacen.png" alt="Almacén"></a>
         <a href="#" class="circle" id="calidad"><img src="calidad.png" alt="Calidad"></a>
         <a href="#" class="circle" id="admon"><img src="admon.png" alt="Admon"></a>
@@ -84,4 +86,5 @@
         });
     </script>
 </body>
+
 </html>
