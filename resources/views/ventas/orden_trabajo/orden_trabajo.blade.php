@@ -8,7 +8,7 @@
     <ol class="breadcrumb mb-5">
         <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-patch-check-fill"></i>&nbsp;Orden de trabajo </h3>
 
-        <button type="button" class="btn btn-light waves-effect waves-light " id="NUEVA_CONFIRMACION" style="margin-left: auto;">
+        <button type="button" class="btn btn-light waves-effect waves-light " id="NUEVA_OT" style="margin-left: auto;">
             Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
         </button>
 
@@ -32,10 +32,10 @@
 
 
 
-<div class="modal modal-fullscreen fade" id="miModal_CONFIRMACION" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
+<div class="modal modal-fullscreen fade" id="miModal_OT" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <form method="post" enctype="multipart/form-data" id="formularioCONFIRMACION" style="background-color: #ffffff;">
+            <form method="post" enctype="multipart/form-data" id="formularioOT" style="background-color: #ffffff;">
                 <div class="modal-header">
                     <h5 class="modal-title" id="miModalLabel">Orden de trabajo</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -48,6 +48,17 @@
 
 
 
+                        <div class="mb-3">
+                            <label>N° de oferta</label>
+                            <select class="custom-select form-control" id="OFERTA_ID" name="OFERTA_ID">
+                                <option selected disabled>Seleccione una cotización</option>
+                                @foreach($solicitudes as $solicitud)
+                                <option value="{{ $solicitud->ID_FORMULARIO_OFERTAS }}">
+                                    {{ $solicitud->NO_OFERTA }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
 
 
 
@@ -117,8 +128,8 @@
 
                 <div class="modal-footer mx-5">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-success" id="guardarCONFIRMACION">
-                        <i class="bi bi-floppy-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Confirmación del servicio "></i> Guardar
+                    <button type="submit" class="btn btn-success" id="guardarOT">
+                        <i class="bi bi-floppy-fill" data-bs-toggle="tooltip" data-bs-placement="top" ></i> Guardar
                     </button>
                 </div>
             </form>

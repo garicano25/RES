@@ -77,7 +77,9 @@ use App\Http\Controllers\ofertas\ofertasController;
 // CONTROLADORES DE CONFIRMACION 
 use App\Http\Controllers\confirmacion\confirmacionController;
 
+// CONTROLADORES DE ORDEN DE TRABAJO
 
+use App\Http\Controllers\ordentrabajo\otController;
 
 
 //==============================================  login  ============================================== 
@@ -463,12 +465,12 @@ Route::get('/Confirmación', [confirmacionController::class, 'index']);
 Route::get('/Tablaconfirmacion', [confirmacionController::class, 'Tablaconfirmacion']);
 Route::post('/ContratacionSave', [confirmacionController::class, 'store']);
 Route::get('/mostraraceptacion/{id}', [confirmacionController::class, 'mostraraceptacion']);
-
 Route::get('/confirmacionDelete', [confirmacionController::class, 'store']);
 
-//====================================Route::get('/mostrarcotizacion/{id}', [ofertasController::class, 'mostrarcotizacion']);
-Route::get('/Orden_trabajo', function () {return view('ventas.orden_trabajo.orden_trabajo');});
+//==============================================   ORDEN DE TRABAJO  ============================================== 
+// Route::get('/Orden_trabajo', function () {return view('ventas.orden_trabajo.orden_trabajo');});
 
+Route::get('/Orden_trabajo', [otController::class, 'index']);
 
 
 
