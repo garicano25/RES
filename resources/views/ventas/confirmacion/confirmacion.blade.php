@@ -47,7 +47,7 @@
 
 
                         <div class="mb-3">
-                            <label>N° de oferta</label>
+                            <label>N° de Ofertas/Cotizaciones</label>
                             <select class="custom-select form-control" id="OFERTA_ID" name="OFERTA_ID">
                                 <option selected disabled>Seleccione una cotización</option>
                                 @foreach($solicitudes as $solicitud)
@@ -119,13 +119,6 @@
                                     </div>
                                 </div>
 
-                                <div class="col-4">
-                                    <label>Fecha de validación *</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VALIDACION" name="FECHA_VALIDACION" required>
-                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
@@ -170,7 +163,7 @@
                                     <div class="col-md-4 mt-2">
                                         <label>Fecha de Validación *</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VERIFICACION_CONFIRMACION" name="FECHA_VERIFICACION_CONFIRMACION">
+                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VALIDACION" name="FECHA_VALIDACION">
                                             <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                         </div>
                                     </div>
@@ -244,7 +237,7 @@
                                             <div class="col-12 d-flex align-items-center gap-3 mb-2">
                                                 <label class="form-check-label" style="min-width: 150px;">Servicios</label>
                                                 <div class="d-flex align-items-center gap-2">
-                                                    <input class="form-check-input"  type="radio" name="SERVICIO_VERIFICACION" value="Sí" required onclick="toggleInput('servicioInput', false)"> Sí
+                                                    <input class="form-check-input" type="radio" name="SERVICIO_VERIFICACION" value="Sí" required onclick="toggleInput('servicioInput', false)"> Sí
                                                     <input class="form-check-input" type="radio" name="SERVICIO_VERIFICACION" value="No" onclick="toggleInput('servicioInput', true)"> No
                                                 </div>
                                                 <input type="text" id="servicioInput" class="form-control d-none" placeholder="Motivo">
@@ -255,7 +248,7 @@
                                                 <label class="form-check-label" style="min-width: 150px;">Días de Crédito</label>
                                                 <div class="d-flex align-items-center gap-2">
                                                     <input class="form-check-input" type="radio" name="DIAS_CREDITO_VERIFICACION" value="Sí" required onclick="toggleInput('diasCreditoInput', false)"> Sí
-                                                    <input class="form-check-input"  type="radio" name="DIAS_CREDITO_VERIFICACION" value="No" onclick="toggleInput('diasCreditoInput', true)"> No
+                                                    <input class="form-check-input" type="radio" name="DIAS_CREDITO_VERIFICACION" value="No" onclick="toggleInput('diasCreditoInput', true)"> No
                                                 </div>
                                                 <input type="text" id="diasCreditoInput" class="form-control d-none" placeholder="Motivo">
                                             </div>

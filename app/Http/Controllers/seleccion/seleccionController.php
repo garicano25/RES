@@ -417,6 +417,7 @@ public function mostrarburo($id)
 //     }
 // }
 
+
 public function Tablareferencia(Request $request)
 {
     try {

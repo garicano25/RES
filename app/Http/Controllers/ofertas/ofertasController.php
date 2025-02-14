@@ -23,11 +23,11 @@ class ofertasController extends Controller
 {
     public function index()
     {
-        // Obtener todas las solicitudes aceptadas
         $solicitudesAceptadas = solicitudesModel::select(
             'ID_FORMULARIO_SOLICITUDES',
             'NO_SOLICITUD',
-            'NOMBRE_COMERCIAL_SOLICITUD'
+            'NOMBRE_COMERCIAL_SOLICITUD',
+            'FECHA_SOLICITUD'
         )
         ->where('ESTATUS_SOLICITUD', 'like', '%Aceptada%')
         ->get();
@@ -127,7 +127,6 @@ class ofertasController extends Controller
 
             $oferta = ofertasModel::find($request->ID_FORMULARIO_OFERTAS);
 
-            // Actualizar los datos
             $oferta->ESTATUS_OFERTA = $request->ESTATUS_OFERTA;
             $oferta->MOTIVO_RECHAZO = $request->ESTATUS_OFERTA === 'Rechazada' ? $request->MOTIVO_RECHAZO : null;
             $oferta->save();
@@ -222,7 +221,9 @@ class ofertasController extends Controller
 
                         DB::statement('ALTER TABLE formulario_ofertas AUTO_INCREMENT=1;');
 
-                        $oferta = ofertasModel::create($request->except('COTIZACION_DOCUMENTO'));
+                        $data = $request->except(['observacion', '', 'COTIZACION_DOCUMENTO']);
+
+                        $oferta = ofertasModel::create($data);
 
                         if ($request->hasFile('COTIZACION_DOCUMENTO')) {
                             $documento = $request->file('COTIZACION_DOCUMENTO');

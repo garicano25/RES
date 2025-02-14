@@ -178,7 +178,7 @@
 
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="" style="margin-right: 5px;"></i> <span class="d-lg-none">Indicadores </span><span class="d-none d-lg-inline">General </span>
+                            <i class="" style="margin-right: 5px;"></i> <span class="d-lg-none">Indicadores </span><span class="d-none d-lg-inline">Indicadores </span>
                         </a>
                     </li>
                     <ul class="navbar-nav">
@@ -189,10 +189,10 @@
                                 <span class="d-none d-lg-inline">Catálogos</span>
                             </a>
                             <ul class="dropdown-menu">
-                    
-                        <li><a class="dropdown-item" href="{{url('/Catálogo_solicitudes')}}">Catálogos de solicitudes</a>
-                        </li>
-                        {{-- <hr class="dropdown-divider">
+
+                                <li><a class="dropdown-item" href="{{url('/Catálogo_solicitudes')}}">Catálogos de solicitudes</a>
+                                </li>
+                                {{-- <hr class="dropdown-divider">
                         <li><a class="dropdown-item" href="{{url('/Catálogo_dpt')}}">Catálogos de DPT</a>
                         </li>
                         <hr class="dropdown-divider">

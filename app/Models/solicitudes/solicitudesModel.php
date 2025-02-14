@@ -67,7 +67,8 @@ class solicitudesModel extends Model
         'ENTRE_CALLE_EMPRESA',
         'ENTRE_CALLE2_EMPRESA',
         'SOLICITAR_VERIFICACION',
-        'PROCEDE_COTIZAR'
+        'PROCEDE_COTIZAR',
+        'MOTIVO_COTIZACION'
     ];
 
 }

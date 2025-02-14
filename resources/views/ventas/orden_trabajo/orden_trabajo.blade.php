@@ -49,7 +49,7 @@
 
 
                         <div class="mb-3">
-                            <label>N° de oferta</label>
+                            <label>N° de Ofertas/Cotizaciones</label>
                             <select class="custom-select form-control" id="OFERTA_ID" name="OFERTA_ID">
                                 <option selected disabled>Seleccione una cotización</option>
                                 @foreach($solicitudes as $solicitud)

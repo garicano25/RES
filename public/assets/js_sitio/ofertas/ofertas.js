@@ -1,6 +1,6 @@
 ID_FORMULARIO_OFERTAS = 0
 
-
+let ofertaNueva = false;
 
 const ModalDesvinculacion = document.getElementById('miModal_OFERTAS');
 ModalDesvinculacion.addEventListener('hidden.bs.modal', event => {
@@ -15,6 +15,11 @@ ModalDesvinculacion.addEventListener('hidden.bs.modal', event => {
     var selectize = $('#SOLICITUD_ID')[0].selectize;
 
     selectize.clear();
+
+
+    document.getElementById("TIEMPO_OFERTA").value = ""; 
+        ofertaNueva = false;
+
 });
 
 
@@ -34,105 +39,126 @@ $(document).ready(function () {
 
         selectize.clear(); 
 
-        selectize.refreshOptions(false); 
 
         $('#RECHAZO').hide(); 
         $('#ACEPTADA').hide();  
 
         document.getElementById('formularioOFERTAS').reset();
+
+        $(".observacionesdiv").empty();
+
+
+        ofertaNueva = true;
     });
 });
 
 
 
+    $("#guardarOFERTA").click(function (e) {
+        e.preventDefault();
 
+        formularioValido = validarFormularioV1('formularioOFERTAS');
 
+        if (formularioValido) {
+            
 
+            var observacion = [];
+            $(".generarobervaciones").each(function() {
+                var observaciones = {
+                    'OBSERVACIONES': $(this).find("textarea[name='OBSERVACIONES']").val()
+                };
+                observacion.push(observaciones);
+            });
 
-$("#guardarOFERTA").click(function (e) {
-    e.preventDefault();
+          
 
-    formularioValido = validarFormularioV1('formularioOFERTAS');
-
-    if (formularioValido) {
-
-    if (ID_FORMULARIO_OFERTAS == 0) {
         
-        alertMensajeConfirm({
-            title: "¿Desea guardar la información?",
-            text: "Al guardarla, se podra usar",
-            icon: "question",
-        },async function () { 
+            const requestData = {
+                api: 1,
+                ID_FORMULARIO_OFERTAS: ID_FORMULARIO_OFERTAS,
+                OBSERVACIONES_OFERTA: JSON.stringify(observacion)
 
-            await loaderbtn('guardarOFERTA')
-            await ajaxAwaitFormData({ api: 1,ID_FORMULARIO_OFERTAS: ID_FORMULARIO_OFERTAS }, 'ofertaSave', 'formularioOFERTAS', 'guardarOFERTA', { callbackAfter: true, callbackBefore: true }, () => {
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                })
 
-                $('.swal2-popup').addClass('ld ld-breath')
+            };
+
+            if (ID_FORMULARIO_OFERTAS == 0) {
+                alertMensajeConfirm({
+                    title: "¿Desea guardar la información?",
+                    text: "Al guardarla, se podrá usar",
+                    icon: "question",
+                }, async function () {
+
+                    await loaderbtn('guardarOFERTA');
+                    await ajaxAwaitFormData(requestData, 'ofertaSave', 'formularioOFERTAS', 'guardarOFERTA', { callbackAfter: true, callbackBefore: true }, () => {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Espere un momento',
+                            text: 'Estamos guardando la información',
+                            showConfirmButton: false
+                        });
+
+                        $('.swal2-popup').addClass('ld ld-breath');
+                        
+                    }, function (data) {
+                        
+                        ID_FORMULARIO_OFERTAS = data.oferta.ID_FORMULARIO_OFERTAS
+                            alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                            $('#miModal_OFERTAS').modal('hide')
+                            document.getElementById('formularioOFERTAS').reset();
+                        Tablaofertas.ajax.reload()
+                        $('#NO_SOLICITUD')[0].selectize.clear();
+
+        
+        
+                    })
+                    
+                }, 1);
                 
-            }, function (data) {
-                    
-                ID_FORMULARIO_OFERTAS = data.oferta.ID_FORMULARIO_OFERTAS
-                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
-                     $('#miModal_OFERTAS').modal('hide')
-                    document.getElementById('formularioOFERTAS').reset();
-                    Tablaofertas.ajax.reload()
-                    $('#NO_SOLICITUD')[0].selectize.clear();
+            } else {
+                alertMensajeConfirm({
+                    title: "¿Desea editar la información de este formulario?",
+                    text: "Al guardarla, se podrá usar",
+                    icon: "question",
+                }, async function () {
 
+                    await loaderbtn('guardarOFERTA');
+                    await ajaxAwaitFormData(requestData, 'ofertaSave', 'formularioOFERTAS', 'guardarOFERTA', { callbackAfter: true, callbackBefore: true }, () => {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Espere un momento',
+                            text: 'Estamos guardando la información',
+                            showConfirmButton: false
+                        });
 
+                        $('.swal2-popup').addClass('ld ld-breath');
 
-            })
-            
-            
-            
-        }, 1)
+                    }, function (data) {
+                        
+                        setTimeout(() => {
         
-    } else {
-            alertMensajeConfirm({
-            title: "¿Desea editar la información de este formulario?",
-            text: "Al guardarla, se podra usar",
-            icon: "question",
-        },async function () { 
+                            ID_FORMULARIO_OFERTAS = data.oferta.ID_FORMULARIO_OFERTAS
+                            alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                            $('#miModal_OFERTAS').modal('hide')
+                            document.getElementById('formularioOFERTAS').reset();
+                            Tablaofertas.ajax.reload()
+                             $('#NO_SOLICITUD')[0].selectize.clear();
 
-            await loaderbtn('guardarOFERTA')
-            await ajaxAwaitFormData({ api: 1,ID_FORMULARIO_OFERTAS: ID_FORMULARIO_OFERTAS }, 'ofertaSave', 'formularioOFERTAS', 'guardarOFERTA', { callbackAfter: true, callbackBefore: true }, () => {
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                })
-
-                $('.swal2-popup').addClass('ld ld-breath')
         
-            }, function (data) {
-                    
-                setTimeout(() => {
+        
+                        }, 300);  
+                    })
+                }, 1);
+            }
+        } else {
+            alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+        }
+    });
 
-                    ID_FORMULARIO_OFERTAS = data.oferta.ID_FORMULARIO_OFERTAS
-                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
-                     $('#miModal_OFERTAS').modal('hide')
-                    document.getElementById('formularioOFERTAS').reset();
-                    Tablaofertas.ajax.reload()
-                    $('#NO_SOLICITUD')[0].selectize.clear();
 
 
-                }, 300);  
-            })
-        }, 1)
-    }
 
-} else {
-    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
 
-}
-    
-});
+
 
 
 
@@ -292,6 +318,8 @@ $('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {
 
     ID_FORMULARIO_OFERTAS = row.data().ID_FORMULARIO_OFERTAS;
 
+  
+
     editarDatoTabla(row.data(), 'formularioOFERTAS', 'miModal_OFERTAS', 1);
 
     var selectize = $('#SOLICITUD_ID')[0].selectize;
@@ -301,7 +329,7 @@ $('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {
     if (row.data().SOLICITUDES && row.data().SOLICITUDES.length > 0) {
         row.data().SOLICITUDES.forEach(solicitud => {
             selectize.addOption({
-                value: solicitud.ID_FORMULARIO_SOLICITUDES,
+                value: solicitud.ID_FORMULARIO_OFERTAS,
                 text: `${solicitud.NO_SOLICITUD} (${solicitud.NOMBRE_COMERCIAL_SOLICITUD})`
             });
         });
@@ -312,6 +340,10 @@ $('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {
         selectize.setValue(solicitudSeleccionado); 
     }
 
+      $(".observacionesdiv").empty();
+    obtenerObservaciones(row);
+
+    
     $('#miModal_OFERTAS .modal-title').html(row.data().NO_OFERTA);
 
     var estatus = row.data().ESTATUS_OFERTA;
@@ -331,54 +363,134 @@ $('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {
 
 
 
-$(document).ready(function() {
-    $('#Tablaofertas tbody').on('click', 'td>button.VISUALIZAR', function () {
-        var tr = $(this).closest('tr');
-        var row = Tablaofertas.row(tr);
-        
-    hacerSoloLectura2(row.data(), '#miModal_OFERTAS');
-  
 
+
+$('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablaofertas.row(tr);
 
     ID_FORMULARIO_OFERTAS = row.data().ID_FORMULARIO_OFERTAS;
 
-  
-
     editarDatoTabla(row.data(), 'formularioOFERTAS', 'miModal_OFERTAS', 1);
 
-     var selectize = $('#SOLICITUD_ID')[0].selectize;
-    selectize.clear();
-    selectize.clearOptions(); 
+    var selectize = $('#SOLICITUD_ID')[0].selectize;
+    selectize.clear(); // Limpiar la selección actual
 
+    var solicitudSeleccionado = row.data().SOLICITUD_ID;
+
+    // Si hay una solicitud seleccionada, primero la agregamos manualmente
+    if (solicitudSeleccionado) {
+        selectize.addOption({
+            value: solicitudSeleccionado,
+            text: `${row.data().NO_SOLICITUD} (${row.data().NOMBRE_COMERCIAL_SOLICITUD})`
+        });
+        selectize.setValue(solicitudSeleccionado); // Asignar el valor seleccionado
+    }
+
+    // Ahora agregamos las otras opciones de solicitudes disponibles
     if (row.data().SOLICITUDES && row.data().SOLICITUDES.length > 0) {
         row.data().SOLICITUDES.forEach(solicitud => {
-            selectize.addOption({
-                value: solicitud.ID_FORMULARIO_SOLICITUDES,
-                text: `${solicitud.NO_SOLICITUD} (${solicitud.NOMBRE_COMERCIAL_SOLICITUD})`
-            });
+            // Agregar solo si no es la ya seleccionada
+            if (solicitud.ID_FORMULARIO_SOLICITUDES !== solicitudSeleccionado) {
+                selectize.addOption({
+                    value: solicitud.ID_FORMULARIO_SOLICITUDES,
+                    text: `${solicitud.NO_SOLICITUD} (${solicitud.NOMBRE_COMERCIAL_SOLICITUD})`
+                });
+            }
         });
     }
 
-    var solicitudSeleccionado = row.data().SOLICITUD_ID;
-    if (solicitudSeleccionado) {
-        selectize.setValue(solicitudSeleccionado); 
-    }
+    selectize.refreshOptions(false); // Actualizar el select
+
+    // Configurar otros elementos del formulario
+    $(".observacionesdiv").empty();
+    obtenerObservaciones(row);
 
     $('#miModal_OFERTAS .modal-title').html(row.data().NO_OFERTA);
 
     var estatus = row.data().ESTATUS_OFERTA;
     if (estatus === 'Aceptada') {
-        $('#ACEPTADA').show();  
-        $('#RECHAZO').hide();   
+        $('#ACEPTADA').show();
+        $('#RECHAZO').hide();
     } else if (estatus === 'Rechazada') {
-        $('#RECHAZO').show();   
-        $('#ACEPTADA').hide();  
+        $('#RECHAZO').show();
+        $('#ACEPTADA').hide();
     } else {
-        $('#ACEPTADA').hide();  
+        $('#ACEPTADA').hide();
         $('#RECHAZO').hide();
     }
 
+    $("#miModal_OFERTAS").modal("show");
+});
 
+
+
+
+
+
+$(document).ready(function() {
+    $('#Tablaofertas tbody').on('click', 'td>button.VISUALIZAR', function () {
+        var tr = $(this).closest('tr');
+        var row = Tablaofertas.row(tr);
+        
+        hacerSoloLectura2(row.data(), '#miModal_OFERTAS');
+
+      
+
+
+         ID_FORMULARIO_OFERTAS = row.data().ID_FORMULARIO_OFERTAS;
+
+    editarDatoTabla(row.data(), 'formularioOFERTAS', 'miModal_OFERTAS', 1);
+
+    var selectize = $('#SOLICITUD_ID')[0].selectize;
+    selectize.clear(); // Limpiar la selección actual
+
+    var solicitudSeleccionado = row.data().SOLICITUD_ID;
+
+    // Si hay una solicitud seleccionada, primero la agregamos manualmente
+    if (solicitudSeleccionado) {
+        selectize.addOption({
+            value: solicitudSeleccionado,
+            text: `${row.data().NO_SOLICITUD} (${row.data().NOMBRE_COMERCIAL_SOLICITUD})`
+        });
+        selectize.setValue(solicitudSeleccionado); // Asignar el valor seleccionado
+    }
+
+    // Ahora agregamos las otras opciones de solicitudes disponibles
+    if (row.data().SOLICITUDES && row.data().SOLICITUDES.length > 0) {
+        row.data().SOLICITUDES.forEach(solicitud => {
+            // Agregar solo si no es la ya seleccionada
+            if (solicitud.ID_FORMULARIO_SOLICITUDES !== solicitudSeleccionado) {
+                selectize.addOption({
+                    value: solicitud.ID_FORMULARIO_SOLICITUDES,
+                    text: `${solicitud.NO_SOLICITUD} (${solicitud.NOMBRE_COMERCIAL_SOLICITUD})`
+                });
+            }
+        });
+    }
+
+    selectize.refreshOptions(false); // Actualizar el select
+
+    // Configurar otros elementos del formulario
+    $(".observacionesdiv").empty();
+    obtenerObservaciones(row);
+
+    $('#miModal_OFERTAS .modal-title').html(row.data().NO_OFERTA);
+
+    var estatus = row.data().ESTATUS_OFERTA;
+    if (estatus === 'Aceptada') {
+        $('#ACEPTADA').show();
+        $('#RECHAZO').hide();
+    } else if (estatus === 'Rechazada') {
+        $('#RECHAZO').show();
+        $('#ACEPTADA').hide();
+    } else {
+        $('#ACEPTADA').hide();
+        $('#RECHAZO').hide();
+        }
+        
+
+        
     });
 
     $('#miModal_OFERTAS').on('hidden.bs.modal', function () {
@@ -553,6 +665,46 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+function obtenerObservaciones(data) {
+    let row = data.data().OBSERVACIONES_OFERTA;
+    var observaciones = JSON.parse(row);
+
+    $.each(observaciones, function (index, contacto) {
+        var observa = contacto.OBSERVACIONES;
+     
+
+        const divDocumentoOfi = document.createElement('div');
+        divDocumentoOfi.classList.add('row', 'generarobervaciones', 'mb-3');
+        divDocumentoOfi.innerHTML = `
+         
+            <div class="col-12">
+              <div class="mb-3">
+                <label class="form-label">Observación</label>
+                    <textarea class="form-control" name="OBSERVACIONES" rows="2">${observa}</textarea>
+              </div>
+            </div>
+            
+            <br>
+            <div class="col-12 mt-4">
+                <div class="form-group" style="text-align: center;">
+                    <button type="button" class="btn btn-danger botonEliminarObservacion">Eliminar observación <i class="bi bi-trash-fill"></i></button>
+                </div>
+            </div>
+        `;
+        const contenedor = document.querySelector('.observacionesdiv');
+        contenedor.appendChild(divDocumentoOfi);
+
+      
+        const botonEliminar = divDocumentoOfi.querySelector('.botonEliminarObservacion');
+        botonEliminar.addEventListener('click', function () {
+            contenedor.removeChild(divDocumentoOfi);
+        });
+    });
+
+}
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".botonEliminarArchivo").forEach(boton => {
         boton.addEventListener("click", function () {
@@ -565,3 +717,72 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+
+
+function parseFecha(fechaStr) {
+    if (!fechaStr) return null;
+    let fechaLimpia = fechaStr.split(" ")[0]; 
+    let partes = fechaLimpia.split("-");
+    if (partes.length === 3) {
+        return new Date(partes[0], partes[1] - 1, partes[2]); 
+    }
+    return null;
+}
+
+function calcularDias() {
+    if (!ofertaNueva) return; 
+
+    const fechaOfertaInput = document.getElementById("FECHA_OFERTA");
+    const tiempoOfertaInput = document.getElementById("TIEMPO_OFERTA");
+    const solicitudSelect = document.getElementById("SOLICITUD_ID");
+
+    const fechaOferta = fechaOfertaInput.value.trim();
+    const solicitudId = solicitudSelect.value; 
+
+    if (!solicitudId || !fechaOferta) {
+        tiempoOfertaInput.value = "";
+        return;
+    }
+
+    const fechaSolicitud = solicitudesFechas[solicitudId];
+
+    if (!fechaSolicitud) {
+        tiempoOfertaInput.value = "";
+        return;
+    }
+
+    const fechaSolicitudDate = parseFecha(fechaSolicitud);
+    const fechaOfertaDate = parseFecha(fechaOferta);
+
+    if (fechaSolicitudDate && fechaOfertaDate) {
+        const diferenciaTiempo = fechaOfertaDate - fechaSolicitudDate;
+        const diasDiferencia = Math.floor(diferenciaTiempo / (1000 * 60 * 60 * 24));
+        tiempoOfertaInput.value = diasDiferencia >= 0 ? diasDiferencia : 0;
+    } else {
+        tiempoOfertaInput.value = "";
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const fechaOfertaInput = document.getElementById("FECHA_OFERTA");
+    const solicitudSelect = document.getElementById("SOLICITUD_ID");
+
+    fechaOfertaInput.addEventListener("change", function () {
+        if (ofertaNueva) calcularDias();
+    });
+
+    solicitudSelect.addEventListener("change", function () {
+        if (ofertaNueva) calcularDias();
+    });
+});
+
+$(document).ready(function () {
+    $(".mydatepicker")
+        .datepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+        })
+        .on("changeDate", function () {
+            if (ofertaNueva) calcularDias();
+        });
+});

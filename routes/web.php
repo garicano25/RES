@@ -456,6 +456,8 @@ Route::post('/solicitudSave', [solicitudesController::class, 'store']);
 Route::get('/Tablasolicitudes', [solicitudesController::class, 'Tablasolicitudes']);
 Route::get('/solicitudDelete', [solicitudesController::class, 'store']);
 Route::post('/actualizarEstatusSolicitud', [solicitudesController::class, 'actualizarEstatusSolicitud']);
+Route::get('/mostrarverificacioncliente/{id}', [solicitudesController::class, 'mostrarverificacioncliente']);
+Route::post('/actualizarSolicitud', [solicitudesController::class, 'actualizarSolicitud']);
 
 //==============================================  OFERTAS/COTIZACION  ============================================== 
 Route::get('/Ofertas', [ofertasController::class, 'index']);

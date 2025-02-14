@@ -58,8 +58,6 @@
                         </div>
 
 
-
-
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-4">
@@ -137,7 +135,7 @@
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Cargar Cotización (PDF) *</label>
                             <div class="d-flex align-items-center">
-                                <input type="file" class="form-control me-2" name="COTIZACION_DOCUMENTO" accept=".pdf" >
+                                <input type="file" class="form-control me-2" name="COTIZACION_DOCUMENTO" accept=".pdf">
                                 <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
                                     <i class="bi bi-trash"></i>
                                 </button>
@@ -146,7 +144,7 @@
 
 
 
-                     
+
 
 
 
@@ -159,7 +157,7 @@
 
 
 
-                    
+
 
 
 
@@ -180,6 +178,9 @@
 
 
 
+<script>
+    var solicitudesFechas = @json($solicitudes-> pluck('FECHA_SOLICITUD', 'ID_FORMULARIO_SOLICITUDES'));
+</script>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

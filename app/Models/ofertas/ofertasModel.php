@@ -20,14 +20,12 @@ class ofertasModel extends Model
         'MONEDA_MONTO',
         'IMPORTE_OFERTA',
         'DIAS_VALIDACION_OFERTA',
-        'OBSERVACIONES_OFERTA',
         'MOTIVO_RECHAZO',
-        'ACEPTADA_OFERTA',
-        'FECHA_ACEPTACION_OFERTA',
-        'FECHA_FIRMA_OFERTA',
         'ESTATUS_OFERTA',
         'ACTIVO',
-        'COTIZACION_DOCUMENTO'
+        'COTIZACION_DOCUMENTO',
+        'OBSERVACIONES_OFERTA',
+        'ACTIVO'
         
     ];
 }
