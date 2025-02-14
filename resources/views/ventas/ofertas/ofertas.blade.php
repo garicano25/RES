@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="col-1">
                                     <label>Rev</label>
-                                    <input type="text" class="form-control" id="REVISION_OFERTA" name="REVISION_OFERTA" value="0" readonly>
+                                    <input type="text" class="form-control" id="REVISION_OFERTA" name="REVISION_OFERTA" readonly>
                                 </div>
                                 <div class="col-4">
                                     <label>Fecha de la cotización/Revisiones *</label>
@@ -163,6 +163,10 @@
 
                     </div>
                 </div>
+
+                <button type="button" class="btn btn-warning" id="crearREVISION">Crear Revisión</button>
+
+
 
                 <div class="modal-footer mx-5">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>

@@ -208,6 +208,7 @@ function configAjaxAwait(config) {
 
 
 //Ajax Async FormData
+
 async function ajaxAwaitFormData(dataJson = { api: 0, }, apiURL, form = 'OnlyForm'  /* <-- Formulario sin # */,btn = 'OnlyBtn',
   config = {
       alertBefore: false
@@ -2451,6 +2452,7 @@ for (var key in data) {
       var time = $('#' + form).find(`input[name='${key}'][type='time']`);
       var textarea = $('#' + form).find(`textarea[name='${key}']`).val(data[key]);
       var select = $('#' + form).find(`select[name='${key}']`).val(data[key]);
+      var hidden = $('#' + form).find(`input[name='${key}'][type='hidden']`);
 
       
       if (input.length) {
@@ -2474,6 +2476,10 @@ for (var key in data) {
       }else if (time.length) {
 
         time.val(data[key])
+
+      }else if (hidden.length) {
+
+        hidden.val(data[key])
 
       } else {
 

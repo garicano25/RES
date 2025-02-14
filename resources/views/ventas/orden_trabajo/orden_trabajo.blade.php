@@ -50,7 +50,7 @@
 
                         <div class="mb-3">
                             <label>N° de Ofertas/Cotizaciones</label>
-                            <select class="custom-select form-control" id="OFERTA_ID" name="OFERTA_ID">
+                            <select class="custom-select form-control" id="OFERTA_ID" name="OFERTA_ID[]" multiple>
                                 <option selected disabled>Seleccione una cotización</option>
                                 @foreach($solicitudes as $solicitud)
                                 <option value="{{ $solicitud->ID_FORMULARIO_OFERTAS }}">

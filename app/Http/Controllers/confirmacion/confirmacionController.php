@@ -16,6 +16,7 @@ use App\Models\solicitudes\solicitudesModel;
 use App\Models\ofertas\ofertasModel;
 
 use App\Models\confirmacion\confirmacionModel;
+use App\Models\confirmacion\catalogoverificacioninformacionModel;
 
 
 
@@ -31,9 +32,10 @@ class confirmacionController extends Controller
             ->where('ESTATUS_OFERTA', 'like', '%Aceptada%')
             ->get();
 
-     
+        $verificaciones = CatalogoVerificacionInformacionModel::where('ACTIVO', 1)->get();
 
-        return view('ventas.confirmacion.confirmacion', compact('solicitudes'));
+
+        return view('ventas.confirmacion.confirmacion', compact('solicitudes', 'verificaciones'));
     }
 
 
@@ -102,10 +104,16 @@ class confirmacionController extends Controller
 
                         $idconfirmacion = $confirmaciones->ID_FORMULARIO_CONFRIMACION;
 
+                        // Guardar JSON de verificación en la base de datos
+                        if ($request->has('VERIFICACION_INFORMACION')) {
+                            $confirmaciones->VERIFICACION_INFORMACION = $request->input('VERIFICACION_INFORMACION');
+                            $confirmaciones->save();
+                        }
+
                         if ($request->hasFile('DOCUMENTO_ACEPTACION')) {
                             $archivo = $request->file('DOCUMENTO_ACEPTACION');
-                            $nombreArchivo = $archivo->getClientOriginalName(); 
-                            $rutaCarpeta = "ventas/confirmación/$idconfirmacion";
+                            $nombreArchivo = $archivo->getClientOriginalName();
+                            $rutaCarpeta = "ventas/confirmación/Documento de aceptación/$idconfirmacion";
                             $rutaCompleta = $archivo->storeAs($rutaCarpeta, $nombreArchivo);
 
                             $confirmaciones->DOCUMENTO_ACEPTACION = $rutaCompleta;
@@ -126,7 +134,14 @@ class confirmacionController extends Controller
                                 $response['confirmacion'] = 'Activada';
                             }
                         } else {
-                            $confirmaciones->update($request->except('DOCUMENTO_ACEPTACION'));
+                            // Actualizar datos, incluyendo el JSON
+                            $datosActualizados = $request->except('DOCUMENTO_ACEPTACION');
+
+                            if ($request->has('VERIFICACION_INFORMACION')) {
+                                $datosActualizados['VERIFICACION_INFORMACION'] = $request->input('VERIFICACION_INFORMACION');
+                            }
+
+                            $confirmaciones->update($datosActualizados);
 
                             if ($request->hasFile('DOCUMENTO_ACEPTACION')) {
                                 if ($confirmaciones->DOCUMENTO_ACEPTACION && Storage::exists($confirmaciones->DOCUMENTO_ACEPTACION)) {
@@ -135,7 +150,7 @@ class confirmacionController extends Controller
 
                                 $archivo = $request->file('DOCUMENTO_ACEPTACION');
                                 $nombreArchivo = $archivo->getClientOriginalName();
-                                $rutaCarpeta = "ventas/confirmación/" . $confirmaciones->ID_FORMULARIO_CONFRIMACION;
+                                $rutaCarpeta = "ventas/confirmación/Documento de aceptación/" . $confirmaciones->ID_FORMULARIO_CONFRIMACION;
                                 $rutaCompleta = $archivo->storeAs($rutaCarpeta, $nombreArchivo);
 
                                 $confirmaciones->DOCUMENTO_ACEPTACION = $rutaCompleta;

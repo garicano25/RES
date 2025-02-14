@@ -192,18 +192,13 @@
 
                                 <li><a class="dropdown-item" href="{{url('/Catálogo_solicitudes')}}">Catálogos de solicitudes</a>
                                 </li>
-                                {{-- <hr class="dropdown-divider">
-                        <li><a class="dropdown-item" href="{{url('/Catálogo_dpt')}}">Catálogos de DPT</a>
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/Catálogo_confirmación')}}">Catálogos de confirmación</a>
+                                </li>
+
+                            </ul>
                         </li>
-                        <hr class="dropdown-divider">
-                        <li><a class="dropdown-item" href="{{url('/Catálogo_requisición')}}">Catálogos de Requisición</a>
-                        </li>
-                        <hr class="dropdown-divider">
-                        <li><a class="dropdown-item" href="{{url('/Catálogo_generales')}}">Catálogos generales</a>
-                        </li> --}}
                     </ul>
-                    </li>
-                </ul>
 
 
                 </ul>
@@ -365,6 +360,9 @@
     @endif
 
 
+    @if(request()->is('Catálogo_verificación'))
+    <script src="/assets/js_sitio/solicitudes/catalogos/catalogoverificacioninformacion.js"></script>
+    @endif
 
 </body>
 

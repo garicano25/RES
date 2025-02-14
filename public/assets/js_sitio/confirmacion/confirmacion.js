@@ -6,109 +6,139 @@ ID_FORMULARIO_CONFRIMACION = 0
 
 
 
-
-const Modalconfirmacion = document.getElementById('miModal_CONFIRMACION')
+const Modalconfirmacion = document.getElementById('miModal_CONFIRMACION');
 Modalconfirmacion.addEventListener('hidden.bs.modal', event => {
-    
-    
-    ID_FORMULARIO_CONFRIMACION = 0
-    document.getElementById('formularioCONFIRMACION').reset();
-   
+    ID_FORMULARIO_CONFRIMACION = 0;
 
-})
+    document.getElementById('formularioCONFIRMACION').reset();
+
+    document.getElementById('VERIFICACION_CLIENTE').style.display = 'none';
+
+    document.querySelectorAll('input[type=radio]').forEach(radio => {
+        radio.checked = false; 
+    });
+
+ 
+    
+    var selectize = $('#OFERTA_ID')[0].selectize;
+    selectize.clear(); 
+    selectize.setValue("");
+});
+
+
 
 
 
 $("#guardarCONFIRMACION").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioCONFIRMACION'))
+    formularioValido = validarFormulario($('#formularioCONFIRMACION'));
 
     if (formularioValido) {
+        let verificacionInfo = {};
 
-    if (ID_FORMULARIO_CONFRIMACION == 0) {
-        
-        alertMensajeConfirm({
-            title: "¿Desea guardar la información?",
-            text: "Al guardarla, se podra usar",
-            icon: "question",
-        },async function () { 
+        $("input[type=radio]:checked").each(function () {
+            let nombre = $(this).attr("name"); 
+            let valor = $(this).val(); 
 
-            await loaderbtn('guardarCONFIRMACION')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_CONFRIMACION: ID_FORMULARIO_CONFRIMACION }, 'ContratacionSave', 'formularioCONFIRMACION', 'guardarCONFIRMACION', { callbackAfter: true, callbackBefore: true }, () => {
-        
-               
+            let motivo = "";
+            let inputId = "motivo_" + nombre.split("_")[1]; 
+            let inputElement = document.getElementById(inputId);
 
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                })
+            if (valor === "No" && inputElement) { 
+                motivo = inputElement.value.trim(); 
+            }
 
-                $('.swal2-popup').addClass('ld ld-breath')
-        
-                
-            }, function (data) {
-                    
+            verificacionInfo[nombre] = {
+                valor: valor,
+                motivo: motivo
+            };
+        });
 
-                ID_FORMULARIO_CONFRIMACION = data.confirmacion.ID_FORMULARIO_CONFRIMACION
-                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
-                     $('#miModal_CONFIRMACION').modal('hide')
-                    document.getElementById('formularioCONFIRMACION').reset();
-                    Tablaconfirmacion.ajax.reload()
+        let jsonVerificacion = JSON.stringify(verificacionInfo);
 
-        
-            })
-            
-            
-            
-        }, 1)
-        
-    } else {
+        if (ID_FORMULARIO_CONFRIMACION == 0) {
             alertMensajeConfirm({
-            title: "¿Desea editar la información de este formulario?",
-            text: "Al guardarla, se podra usar",
-            icon: "question",
-        },async function () { 
+                title: "¿Desea guardar la información?",
+                text: "Al guardarla, se podrá usar",
+                icon: "question",
+            }, async function () { 
 
-            await loaderbtn('guardarCONFIRMACION')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_CONFRIMACION: ID_FORMULARIO_CONFRIMACION }, 'ContratacionSave', 'formularioCONFIRMACION', 'guardarCONFIRMACION', { callbackAfter: true, callbackBefore: true }, () => {
-        
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                })
+                await loaderbtn('guardarCONFIRMACION');
 
-                $('.swal2-popup').addClass('ld ld-breath')
-        
-                
-            }, function (data) {
-                    
-                setTimeout(() => {
+                await ajaxAwaitFormData(
+                    { 
+                        api: 1, 
+                        ID_FORMULARIO_CONFRIMACION: ID_FORMULARIO_CONFRIMACION,
+                        VERIFICACION_INFORMACION: jsonVerificacion
+                    }, 
+                    'ContratacionSave', 
+                    'formularioCONFIRMACION', 
+                    'guardarCONFIRMACION', 
+                    { callbackAfter: true, callbackBefore: true }, 
+                    () => {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Espere un momento',
+                            text: 'Estamos guardando la información',
+                            showConfirmButton: false
+                        });
+                        $('.swal2-popup').addClass('ld ld-breath');
+                    }, 
+                    function (data) {
+                        ID_FORMULARIO_CONFRIMACION = data.confirmacion.ID_FORMULARIO_CONFRIMACION;
+                        alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
+                        $('#miModal_CONFIRMACION').modal('hide');
+                        document.getElementById('formularioCONFIRMACION').reset();
+                        Tablaconfirmacion.ajax.reload();
+                    }
+                );
+            }, 1);
+        } else {
+            alertMensajeConfirm({
+                title: "¿Desea editar la información de este formulario?",
+                text: "Al guardarla, se podrá usar",
+                icon: "question",
+            }, async function () { 
+                await loaderbtn('guardarCONFIRMACION');
 
-                    
-                    ID_FORMULARIO_CONFRIMACION = data.confirmacion.ID_FORMULARIO_CONFRIMACION
-                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
-                     $('#miModal_CONFIRMACION').modal('hide')
-                    document.getElementById('formularioCONFIRMACION').reset();
-                    Tablaconfirmacion.ajax.reload()
-
-
-                }, 300);  
-            })
-        }, 1)
+                await ajaxAwaitFormData(
+                    { 
+                        api: 1, 
+                        ID_FORMULARIO_CONFRIMACION: ID_FORMULARIO_CONFRIMACION,
+                        VERIFICACION_INFORMACION: jsonVerificacion
+                    }, 
+                    'ContratacionSave', 
+                    'formularioCONFIRMACION', 
+                    'guardarCONFIRMACION', 
+                    { callbackAfter: true, callbackBefore: true }, 
+                    () => {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Espere un momento',
+                            text: 'Estamos guardando la información',
+                            showConfirmButton: false
+                        });
+                        $('.swal2-popup').addClass('ld ld-breath');
+                    }, 
+                    function (data) {
+                        setTimeout(() => {
+                            ID_FORMULARIO_CONFRIMACION = data.confirmacion.ID_FORMULARIO_CONFRIMACION;
+                            alertMensaje('success', 'Información editada correctamente', 'Información guardada');
+                            $('#miModal_CONFIRMACION').modal('hide');
+                            document.getElementById('formularioCONFIRMACION').reset();
+                            Tablaconfirmacion.ajax.reload();
+                        }, 300);  
+                    }
+                );
+            }, 1);
+        }
+    } else {
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
     }
-
-} else {
-    // Muestra un mensaje de error o realiza alguna otra acción
-    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
-
-}
-    
 });
+
+
 
 
 $(document).ready(function () {
@@ -123,10 +153,13 @@ $(document).ready(function () {
 
         $("#miModal_CONFIRMACION").modal("show");
 
-       
-
-      
+        // Resetear el formulario
         document.getElementById('formularioCONFIRMACION').reset();
+
+        // Resetear Selectize
+        var selectize = selectizeInstance[0].selectize;
+        selectize.clear();
+        selectize.setValue(""); 
     });
 });
 
@@ -224,12 +257,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Nombre de la evidencia *</label>
-                        <input type="text" class="form-control" name="VERIFICADO_EN" required>
+                        <input type="text" class="form-control" name="VERIFICADO_EN[]" required>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Subir Evidencia (PDF) *</label>
                         <div class="d-flex align-items-center">
-                            <input type="file" class="form-control me-2" name="EVIDENCIA_VERIFICACION" accept=".pdf" required>
+                            <input type="file" class="form-control me-2" name="EVIDENCIA_VERIFICACION[]" accept=".pdf" required>
                             <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
                                 <i class="bi bi-trash"></i>
                             </button>
@@ -266,7 +299,11 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
     const btnVerificacion = document.getElementById("btnVerificacion");
     const verificacionClienteDiv = document.getElementById("VERIFICACION_CLIENTE");
-    const inputVerificacionEstado = document.getElementById("inputVerificacionEstado");
+    const inputVerificacionEstado = document.getElementById("ESTADO_VERIFICACION");
+    const quienValidaInput = document.getElementById("QUIEN_VALIDA");
+
+    // Obtener el nombre del usuario autenticado desde el atributo data-usuario
+    const usuarioAutenticado = quienValidaInput.getAttribute("data-usuario");
 
     btnVerificacion.addEventListener("click", function () {
         let estadoActual = parseInt(inputVerificacionEstado.value, 10);
@@ -277,23 +314,25 @@ document.addEventListener("DOMContentLoaded", function () {
         verificacionClienteDiv.style.display = nuevoEstado === 1 ? "block" : "none";
 
         if (nuevoEstado === 1) {
-            btnVerificacion.classList.remove("btn-info");
-            btnVerificacion.classList.add("btn-success");
+            quienValidaInput.value = usuarioAutenticado; // Asigna el valor correctamente
         } else {
-            btnVerificacion.classList.remove("btn-success");
-            btnVerificacion.classList.add("btn-info");
+            quienValidaInput.value = "";
         }
     });
 });
 
 
+
+
 function toggleInput(inputId, activar) {
     const input = document.getElementById(inputId);
-    if (activar) {
-        input.classList.remove("d-none"); 
-    } else {
-        input.classList.add("d-none"); 
-        input.value = ""; 
+    if (input) {
+        if (activar) {
+            input.classList.remove("d-none"); 
+        } else {
+            input.classList.add("d-none"); 
+            input.value = ""; 
+        }
     }
 }
 
@@ -318,8 +357,59 @@ $('#Tablaconfirmacion tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablaconfirmacion.row(tr);
     ID_FORMULARIO_CONFRIMACION = row.data().ID_FORMULARIO_CONFRIMACION;
 
-    editarDatoTabla(row.data(), 'formularioCONFIRMACION', 'miModal_CONFIRMACION',1);
+    editarDatoTabla(row.data(), 'formularioCONFIRMACION', 'miModal_CONFIRMACION', 1);
+
+    if (row.data().ESTADO_VERIFICACION == "1") {
+        document.getElementById('VERIFICACION_CLIENTE').style.display = 'block';
+    } else {
+        document.getElementById('VERIFICACION_CLIENTE').style.display = 'none';
+    }
+
+    if (row.data().QUIEN_VALIDA) {
+        $("#QUIEN_VALIDA").val(row.data().QUIEN_VALIDA);
+    }
+
+            $("#ESTADO_VERIFICACION").val(row.data().ESTADO_VERIFICACION);
+
+
+    var selectize = $('#OFERTA_ID')[0].selectize;
+    if (row.data().OFERTA_ID) {
+        selectize.setValue(row.data().OFERTA_ID);
+    } else {
+        selectize.clear(); 
+    }
+
+    let verificacionInfo = row.data().VERIFICACION_INFORMACION;
+    if (verificacionInfo) {
+        try {
+            verificacionInfo = JSON.parse(verificacionInfo); 
+
+            Object.keys(verificacionInfo).forEach(nombre => {
+                let valor = verificacionInfo[nombre].valor;
+                let motivo = verificacionInfo[nombre].motivo;
+
+                let radioSelector = `input[name="${nombre}"][value="${valor}"]`;
+                $(radioSelector).prop("checked", true);
+
+                let inputId = "motivo_" + nombre.split("_")[1]; 
+
+                let inputElement = document.getElementById(inputId);
+                if (inputElement) {
+                    if (valor === "No") {
+                        $("#" + inputId).val(motivo).removeClass("d-none");
+                    } else {
+                        $("#" + inputId).addClass("d-none").val("");
+                    }
+                }
+            });
+
+        } catch (error) {
+            console.error("Error al parsear JSON de VERIFICACION_INFORMACION:", error);
+        }
+    }
 });
+
+
 
 
 
@@ -331,7 +421,55 @@ $(document).ready(function() {
         hacerSoloLectura2(row.data(), '#miModal_CONFIRMACION');
 
         ID_FORMULARIO_CONFRIMACION = row.data().ID_FORMULARIO_CONFRIMACION;
-        editarDatoTabla(row.data(), 'formularioCONFIRMACION', 'miModal_CONFIRMACION',1);
+        editarDatoTabla(row.data(), 'formularioCONFIRMACION', 'miModal_CONFIRMACION', 1);
+        
+ if (row.data().ESTADO_VERIFICACION == "1") {
+        document.getElementById('VERIFICACION_CLIENTE').style.display = 'block';
+    } else {
+        document.getElementById('VERIFICACION_CLIENTE').style.display = 'none';
+    }
+
+    if (row.data().QUIEN_VALIDA) {
+        $("#QUIEN_VALIDA").val(row.data().QUIEN_VALIDA);
+    }
+
+    var selectize = $('#OFERTA_ID')[0].selectize;
+    if (row.data().OFERTA_ID) {
+        selectize.setValue(row.data().OFERTA_ID);
+    } else {
+        selectize.clear(); 
+    }
+
+    let verificacionInfo = row.data().VERIFICACION_INFORMACION;
+    if (verificacionInfo) {
+        try {
+            verificacionInfo = JSON.parse(verificacionInfo); 
+
+            Object.keys(verificacionInfo).forEach(nombre => {
+                let valor = verificacionInfo[nombre].valor;
+                let motivo = verificacionInfo[nombre].motivo;
+
+                let radioSelector = `input[name="${nombre}"][value="${valor}"]`;
+                $(radioSelector).prop("checked", true);
+
+                let inputId = "motivo_" + nombre.split("_")[1]; 
+
+                let inputElement = document.getElementById(inputId);
+                if (inputElement) {
+                    if (valor === "No") {
+                        $("#" + inputId).val(motivo).removeClass("d-none");
+                    } else {
+                        $("#" + inputId).addClass("d-none").val("");
+                    }
+                }
+            });
+
+        } catch (error) {
+            console.error("Error al parsear JSON de VERIFICACION_INFORMACION:", error);
+        }
+    }
+
+
     });
 
     $('#miModal_CONFIRMACION').on('hidden.bs.modal', function () {

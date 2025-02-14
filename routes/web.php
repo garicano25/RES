@@ -76,6 +76,8 @@ use App\Http\Controllers\ofertas\ofertasController;
 
 // CONTROLADORES DE CONFIRMACION 
 use App\Http\Controllers\confirmacion\confirmacionController;
+use App\Http\Controllers\confirmacion\catalagoverificacioninformacionController;
+
 
 // CONTROLADORES DE ORDEN DE TRABAJO
 
@@ -525,6 +527,17 @@ Route::get('/Tablatiposervicio', [catalogotiposervicioController::class, 'Tablat
 
 
 
+//==============================================   CATALOGOS CONFIRMACION ============================================== 
+Route::get('/Catálogo_confirmación', function () {return view('ventas.Catalogos.catalogos_confirmacion');});
+
+
+
+// CATÁLOGO DE VERIFIACION DEL CLIENTE
+
+Route::get('/Catálogo_verificación', function () {return view('ventas.Catalogos.catalago_verificacioncliente');});
+Route::post('/InformacionSave', [catalagoverificacioninformacionController::class, 'store']);
+Route::get('/InformacionDelete', [catalagoverificacioninformacionController::class, 'store']);
+Route::get('/Tablaverificacioncliente', [catalagoverificacioninformacionController::class, 'Tablaverificacioncliente']);
 
 
 

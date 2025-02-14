@@ -12,25 +12,39 @@ Modalorden.addEventListener('hidden.bs.modal', event => {
     
     ID_FORMULARIO_ORDEN = 0
     document.getElementById('formularioOT').reset();
-   
+      var selectize = $('#OFERTA_ID')[0].selectize;
+    selectize.clear(); 
+    selectize.setValue("");
 
 })
 
 
 
+
 $(document).ready(function () {
-    
+    var selectizeInstance = $('#OFERTA_ID').selectize({
+        placeholder: 'Seleccione una oferta',
+        allowEmptyOption: true,
+        closeAfterSelect: true,
+    });
 
     $("#NUEVA_OT").click(function (e) {
         e.preventDefault();
 
         $("#miModal_OT").modal("show");
 
-     
-      
+        // Resetear el formulario
         document.getElementById('formularioOT').reset();
+
+        // Resetear Selectize
+        var selectize = selectizeInstance[0].selectize;
+        selectize.clear();
+        selectize.setValue(""); 
     });
 });
+
+
+
 
 
 
@@ -190,11 +204,30 @@ var Tablaordentrabajo = $("#Tablaordentrabajo").DataTable({
 
 
 
-
 $('#Tablaordentrabajo tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablaordentrabajo.row(tr);
     ID_FORMULARIO_ORDEN = row.data().ID_FORMULARIO_ORDEN;
 
-    editarDatoTabla(row.data(), 'formularioOT', 'miModal_OT',1);
+    editarDatoTabla(row.data(), 'formularioOT', 'miModal_OT', 1);
+
+    var selectize = $('#OFERTA_ID')[0].selectize;
+
+    if (row.data().OFERTA_ID) {
+        try {
+            let ofertaArray = JSON.parse(row.data().OFERTA_ID); 
+            if (Array.isArray(ofertaArray)) {
+                selectize.setValue(ofertaArray); 
+            } else {
+                selectize.clear();
+            }
+        } catch (error) {
+            console.error("Error al parsear OFERTA_ID:", error);
+            selectize.clear();
+        }
+    } else {
+        selectize.clear();
+    }
 });
+
+

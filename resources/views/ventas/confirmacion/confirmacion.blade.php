@@ -148,7 +148,7 @@
                                 <i class="bi bi-check"></i>
                             </button>
                         </div>
-                        <input type="hidden" id="inputVerificacionEstado" name="ESTADO_VERIFICACION" value="0">
+                        <input type="hidden" id="ESTADO_VERIFICACION" name="ESTADO_VERIFICACION" value="0">
 
 
 
@@ -157,8 +157,13 @@
                                 <div class="row">
                                     <div class="col-md-4 mb-3">
                                         <label class="form-label">Quién valida *</label>
-                                        <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" readonly>
+                                        <input type="text" class="form-control"
+                                            id="QUIEN_VALIDA"
+                                            name="QUIEN_VALIDA"
+                                            readonly
+                                            data-usuario="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
                                     </div>
+
 
                                     <div class="col-md-4 mt-2">
                                         <label>Fecha de Validación *</label>
@@ -180,81 +185,29 @@
                                 <h5 class="mb-2"><b>Verificación de Información</b></h5>
 
                                 <div class="row">
-                                    <!-- Opciones de verificación -->
                                     <div class="col-12">
                                         <div class="row">
-                                            <!-- Razón Social -->
+                                            @foreach($verificaciones as $verificacion)
+                                            @php
+                                            // Usar el ID de la base de datos para asegurarnos de que sea único
+                                            $inputId = 'motivo_' . $verificacion->ID_CATALOGO_VERIFICACION_CLIENTE;
+                                            $radioName = 'verificacion_' . $verificacion->ID_CATALOGO_VERIFICACION_CLIENTE;
+                                            @endphp
                                             <div class="col-12 d-flex align-items-center gap-3 mb-2">
-                                                <label class="form-check-label" style="min-width: 150px;">Razón Social</label>
+                                                <label class="form-check-label" style="min-width: 150px;">{{ $verificacion->NOMBRE_VERIFICACION }}</label>
                                                 <div class="d-flex align-items-center gap-2">
-                                                    <input class="form-check-input" type="radio" name="RAZON_SOCIAL_VERIFICACION" value="Sí" required onclick="toggleInput('razonSocialInput', false)"> Sí
-                                                    <input class="form-check-input" type="radio" name="RAZON_SOCIAL_VERIFICACION" value="No" onclick="toggleInput('razonSocialInput', true)"> No
+                                                    <input class="form-check-input" type="radio" name="{{ $radioName }}" value="Na" onclick="toggleInput('{{ $inputId }}', false)"> Na
+                                                    <input class="form-check-input" type="radio" name="{{ $radioName }}" value="Sí" onclick="toggleInput('{{ $inputId }}', false)"> Sí
+                                                    <input class="form-check-input" type="radio" name="{{ $radioName }}" value="No" onclick="toggleInput('{{ $inputId }}', true)"> No
                                                 </div>
-                                                <input type="text" id="razonSocialInput" class="form-control d-none" placeholder="Motivo">
+                                                <input type="text" id="{{ $inputId }}" class="form-control d-none" placeholder="Motivo">
                                             </div>
-
-                                            <!-- RFC -->
-                                            <div class="col-12 d-flex align-items-center gap-3 mb-2">
-                                                <label class="form-check-label" style="min-width: 150px;">RFC</label>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <input class="form-check-input" type="radio" name="RFC_VERIFICACION" value="Sí" required onclick="toggleInput('rfcInput', false)"> Sí
-                                                    <input class="form-check-input" type="radio" name="RFC_VERIFICACION" value="No" onclick="toggleInput('rfcInput', true)"> No
-                                                </div>
-                                                <input type="text" id="rfcInput" class="form-control d-none" placeholder="Motivo">
-                                            </div>
-
-                                            <!-- Precios -->
-                                            <div class="col-12 d-flex align-items-center gap-3 mb-2">
-                                                <label class="form-check-label" style="min-width: 150px;">Precios</label>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <input class="form-check-input" type="radio" name="PRECIOS_VERIFICACION" value="Sí" required onclick="toggleInput('preciosInput', false)"> Sí
-                                                    <input class="form-check-input" type="radio" name="PRECIOS_VERIFICACION" value="No" onclick="toggleInput('preciosInput', true)"> No
-                                                </div>
-                                                <input type="text" id="preciosInput" class="form-control d-none" placeholder="Motivo">
-                                            </div>
-
-                                            <!-- Moneda -->
-                                            <div class="col-12 d-flex align-items-center gap-3 mb-2">
-                                                <label class="form-check-label" style="min-width: 150px;">Moneda</label>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <input class="form-check-input" type="radio" name="MONEDA_VERIFICACION" value="Sí" required onclick="toggleInput('monedaInput', false)"> Sí
-                                                    <input class="form-check-input" type="radio" name="MONEDA_VERIFICACION" value="No" onclick="toggleInput('monedaInput', true)"> No
-                                                </div>
-                                                <input type="text" id="monedaInput" class="form-control d-none" placeholder="Motivo">
-                                            </div>
-
-                                            <!-- Cantidad -->
-                                            <div class="col-12 d-flex align-items-center gap-3 mb-2">
-                                                <label class="form-check-label" style="min-width: 150px;">Cantidad</label>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <input class="form-check-input" type="radio" name="CANTIDAD_VERIFICACION" value="Sí" required onclick="toggleInput('cantidadInput', false)"> Sí
-                                                    <input class="form-check-input" type="radio" name="CANTIDAD_VERIFICACION" value="No" onclick="toggleInput('cantidadInput', true)"> No
-                                                </div>
-                                                <input type="text" id="cantidadInput" class="form-control d-none" placeholder="Motivo">
-                                            </div>
-
-                                            <!-- Servicios -->
-                                            <div class="col-12 d-flex align-items-center gap-3 mb-2">
-                                                <label class="form-check-label" style="min-width: 150px;">Servicios</label>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <input class="form-check-input" type="radio" name="SERVICIO_VERIFICACION" value="Sí" required onclick="toggleInput('servicioInput', false)"> Sí
-                                                    <input class="form-check-input" type="radio" name="SERVICIO_VERIFICACION" value="No" onclick="toggleInput('servicioInput', true)"> No
-                                                </div>
-                                                <input type="text" id="servicioInput" class="form-control d-none" placeholder="Motivo">
-                                            </div>
-
-                                            <!-- Días de crédito -->
-                                            <div class="col-12 d-flex align-items-center gap-3 mb-2">
-                                                <label class="form-check-label" style="min-width: 150px;">Días de Crédito</label>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <input class="form-check-input" type="radio" name="DIAS_CREDITO_VERIFICACION" value="Sí" required onclick="toggleInput('diasCreditoInput', false)"> Sí
-                                                    <input class="form-check-input" type="radio" name="DIAS_CREDITO_VERIFICACION" value="No" onclick="toggleInput('diasCreditoInput', true)"> No
-                                                </div>
-                                                <input type="text" id="diasCreditoInput" class="form-control d-none" placeholder="Motivo">
-                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
 
