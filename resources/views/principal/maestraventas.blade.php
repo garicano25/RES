@@ -315,53 +315,53 @@
 
 
     @if(request()->is('Solicitudes'))
-    <script src="/assets/js_sitio/solicitudes/solicitudes.js"></script>
+    <script src="/assets/js_sitio/solicitudes/solicitudes.js?v=1.0"></script>
     @endif
 
 
 
     @if(request()->is('Ofertas'))
-    <script src="/assets/js_sitio/ofertas/ofertas.js"></script>
+    <script src="/assets/js_sitio/ofertas/ofertas.js?v=1.0"></script>
     @endif
 
 
 
     @if(request()->is('Confirmación'))
-    <script src="/assets/js_sitio/confirmacion/confirmacion.js"></script>
+    <script src="/assets/js_sitio/confirmacion/confirmacion.js?v=1.0"></script>
     @endif
 
 
 
     @if(request()->is('Catálogo_medio_contacto'))
-    <script src="/assets/js_sitio/solicitudes/catalogos/catalogomotivo.js"></script>
+    <script src="/assets/js_sitio/solicitudes/catalogos/catalogomotivo.js?v=1.0"></script>
     @endif
 
 
     @if(request()->is('Catálogo_giro_empresa'))
-    <script src="/assets/js_sitio/solicitudes/catalogos/catalogogiroempresa.js"></script>
+    <script src="/assets/js_sitio/solicitudes/catalogos/catalogogiroempresa.js?v=1.0"></script>
     @endif
 
     @if(request()->is('Catálogo_necesidad_servicio'))
-    <script src="/assets/js_sitio/solicitudes/catalogos/catalogonecesidadservicio.js"></script>
+    <script src="/assets/js_sitio/solicitudes/catalogos/catalogonecesidadservicio.js?v=1.0"></script>
     @endif
 
 
     @if(request()->is('Orden_trabajo'))
-    <script src="/assets/js_sitio/orden_trabajo/orden_trabajo.js"></script>
+    <script src="/assets/js_sitio/orden_trabajo/orden_trabajo.js?v=1.0"></script>
     @endif
 
     @if(request()->is('Catálogo_línea_negocio'))
-    <script src="/assets/js_sitio/solicitudes/catalogos/catalogolinea.js"></script>
+    <script src="/assets/js_sitio/solicitudes/catalogos/catalogolinea.js?v=1.0"></script>
     @endif
 
 
     @if(request()->is('Catálogo_tipo_servicio'))
-    <script src="/assets/js_sitio/solicitudes/catalogos/catalogotiposervicio.js"></script>
+    <script src="/assets/js_sitio/solicitudes/catalogos/catalogotiposervicio.js?v=1.0"></script>
     @endif
 
 
     @if(request()->is('Catálogo_verificación'))
-    <script src="/assets/js_sitio/solicitudes/catalogos/catalogoverificacioninformacion.js"></script>
+    <script src="/assets/js_sitio/solicitudes/catalogos/catalogoverificacioninformacion.js?v=1.0"></script>
     @endif
 
 </body>
