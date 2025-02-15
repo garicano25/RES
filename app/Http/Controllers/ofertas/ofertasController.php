@@ -110,76 +110,83 @@ class ofertasController extends Controller
 
 
 
+    
+
     public function Tablaofertas()
-    {
-        try {
-            // 🔥 Obtener SOLO la última revisión de cada oferta
-            $tabla = ofertasModel::select(
-                'formulario_ofertas.*',
-                'formulario_solicitudes.NO_SOLICITUD',
-                'formulario_solicitudes.NOMBRE_COMERCIAL_SOLICITUD'
-            )
-                ->leftJoin(
-                    'formulario_solicitudes',
-                    'formulario_ofertas.SOLICITUD_ID',
-                    '=',
-                    'formulario_solicitudes.ID_FORMULARIO_SOLICITUDES'
-                )
-                ->whereRaw('formulario_ofertas.REVISION_OFERTA = (SELECT MAX(fo.REVISION_OFERTA) FROM formulario_ofertas fo WHERE fo.NO_OFERTA = formulario_ofertas.NO_OFERTA)')
-                ->get();
+{
+    try {
+        // 🔥 Obtener SOLO la última revisión de cada oferta
+        $tabla = ofertasModel::select(
+            'formulario_ofertas.*', 
+            'formulario_solicitudes.NO_SOLICITUD',
+            'formulario_solicitudes.NOMBRE_COMERCIAL_SOLICITUD'
+        )
+        ->leftJoin(
+            'formulario_solicitudes', 
+            'formulario_ofertas.SOLICITUD_ID', 
+            '=', 
+            'formulario_solicitudes.ID_FORMULARIO_SOLICITUDES'
+        )
+        ->whereRaw('formulario_ofertas.ID_FORMULARIO_OFERTAS IN 
+                   (SELECT MAX(ID_FORMULARIO_OFERTAS) FROM formulario_ofertas GROUP BY NO_OFERTA)')
+        ->get();
 
-            $solicitudesAceptadas = solicitudesModel::select(
-                'ID_FORMULARIO_SOLICITUDES',
-                'NO_SOLICITUD',
-                'NOMBRE_COMERCIAL_SOLICITUD'
-            )
-                ->where('ESTATUS_SOLICITUD', 'like', '%Aceptada%')
-                ->get();
+        // Obtener las solicitudes aceptadas
+        $solicitudesAceptadas = solicitudesModel::select(
+            'ID_FORMULARIO_SOLICITUDES',
+            'NO_SOLICITUD',
+            'NOMBRE_COMERCIAL_SOLICITUD'
+        )
+        ->where('ESTATUS_SOLICITUD', 'like', '%Aceptada%')
+        ->get();
 
-            $idsAsociados = ofertasModel::pluck('SOLICITUD_ID')->toArray();
+        $idsAsociados = ofertasModel::pluck('SOLICITUD_ID')->toArray();
 
-            foreach ($tabla as $value) {
-                $solicitudesDisponibles = $solicitudesAceptadas->filter(function ($solicitud) use ($idsAsociados, $value) {
-                    return !in_array($solicitud->ID_FORMULARIO_SOLICITUDES, $idsAsociados) ||
-                        $solicitud->ID_FORMULARIO_SOLICITUDES == $value->SOLICITUD_ID;
-                });
+        foreach ($tabla as $value) {
+            // Obtener solicitudes disponibles
+            $solicitudesDisponibles = $solicitudesAceptadas->filter(function ($solicitud) use ($idsAsociados, $value) {
+                return !in_array($solicitud->ID_FORMULARIO_SOLICITUDES, $idsAsociados) ||
+                    $solicitud->ID_FORMULARIO_SOLICITUDES == $value->SOLICITUD_ID;
+            });
 
-                $value->SOLICITUDES = $solicitudesDisponibles->values();
+            $value->SOLICITUDES = $solicitudesDisponibles->values();
 
-                // 🔥 Obtener SOLO las revisiones ANTERIORES de esta oferta
-                $revisiones = ofertasModel::where('NO_OFERTA', 'LIKE', "{$value->NO_OFERTA}%-Rev%")
+            // 🔥 Obtener SOLO las revisiones ANTERIORES de esta oferta
+            $revisiones = ofertasModel::where('NO_OFERTA', $value->NO_OFERTA)
                 ->where('REVISION_OFERTA', '<', $value->REVISION_OFERTA) // Solo revisiones anteriores
-                    ->orderBy('REVISION_OFERTA', 'asc')
-                    ->get();
+                ->orderBy('REVISION_OFERTA', 'asc')
+                ->get();
 
-                $value->REVISIONES = $revisiones->isEmpty() ? [] : $revisiones; // Siempre devolver un array válido
+            // 🔥 Asegurar que REVISIONES sea siempre un array válido
+            $value->REVISIONES = $revisiones->isEmpty() ? [] : $revisiones;
 
-                if ($value->ACTIVO == 0) {
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_OFERTAS . '"><span class="slider round"></span></label>';
-                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
-                } else {
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" checked><span class="slider round"></span></label>';
-                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                    $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
-                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
-                }
+            // Configuración de botones según el estado
+            if ($value->ACTIVO == 0) {
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_OFERTAS . '"><span class="slider round"></span></label>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+            } else {
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" checked><span class="slider round"></span></label>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
             }
-
-            return response()->json([
-                'data' => $tabla,
-                'msj' => 'Última revisión consultada correctamente'
-            ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'msj' => 'Error ' . $e->getMessage(),
-                'data' => []
-            ]);
         }
-    }
 
+        // Respuesta JSON
+        return response()->json([
+            'data' => $tabla,
+            'msj' => 'Última revisión consultada correctamente'
+        ]);
+    } catch (Exception $e) {
+        return response()->json([
+            'msj' => 'Error ' . $e->getMessage(),
+            'data' => []
+        ]);
+    }
+}
 
 
 

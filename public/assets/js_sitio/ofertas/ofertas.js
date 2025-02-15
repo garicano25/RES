@@ -373,6 +373,8 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
 });
 
 
+
+
 $("#Tablaofertas tbody").on("click", ".ver-revisiones", function () {
     let btn = $(this);
     let revisiones = btn.data("revisiones");
@@ -423,6 +425,7 @@ $("#Tablaofertas tbody").on("click", ".ver-revisiones", function () {
 
     btn.closest("tr").after(subTable);
 });
+
 
 
 
