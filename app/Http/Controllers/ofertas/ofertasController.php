@@ -112,26 +112,30 @@ class ofertasController extends Controller
 
     
 
+ 
+   
     public function Tablaofertas()
 {
     try {
-        // 🔥 Obtener SOLO la última revisión de cada oferta
         $tabla = ofertasModel::select(
-            'formulario_ofertas.*', 
+            'formulario_ofertas.*',
             'formulario_solicitudes.NO_SOLICITUD',
-            'formulario_solicitudes.NOMBRE_COMERCIAL_SOLICITUD'
+            'formulario_solicitudes.NOMBRE_COMERCIAL_SOLICITUD',
+            'formulario_ofertas.SOLICITUD_ID',
         )
         ->leftJoin(
-            'formulario_solicitudes', 
-            'formulario_ofertas.SOLICITUD_ID', 
-            '=', 
+            'formulario_solicitudes',
+            'formulario_ofertas.SOLICITUD_ID',
+            '=',
             'formulario_solicitudes.ID_FORMULARIO_SOLICITUDES'
         )
-        ->whereRaw('formulario_ofertas.ID_FORMULARIO_OFERTAS IN 
-                   (SELECT MAX(ID_FORMULARIO_OFERTAS) FROM formulario_ofertas GROUP BY NO_OFERTA)')
+        ->whereRaw('formulario_ofertas.ID_FORMULARIO_OFERTAS IN (
+            SELECT MAX(ID_FORMULARIO_OFERTAS) 
+            FROM formulario_ofertas 
+            GROUP BY SUBSTRING_INDEX(NO_OFERTA, "-Rev", 1)
+        )')
         ->get();
 
-        // Obtener las solicitudes aceptadas
         $solicitudesAceptadas = solicitudesModel::select(
             'ID_FORMULARIO_SOLICITUDES',
             'NO_SOLICITUD',
@@ -143,7 +147,6 @@ class ofertasController extends Controller
         $idsAsociados = ofertasModel::pluck('SOLICITUD_ID')->toArray();
 
         foreach ($tabla as $value) {
-            // Obtener solicitudes disponibles
             $solicitudesDisponibles = $solicitudesAceptadas->filter(function ($solicitud) use ($idsAsociados, $value) {
                 return !in_array($solicitud->ID_FORMULARIO_SOLICITUDES, $idsAsociados) ||
                     $solicitud->ID_FORMULARIO_SOLICITUDES == $value->SOLICITUD_ID;
@@ -151,27 +154,41 @@ class ofertasController extends Controller
 
             $value->SOLICITUDES = $solicitudesDisponibles->values();
 
-            // 🔥 Obtener SOLO las revisiones ANTERIORES de esta oferta
-            $revisiones = ofertasModel::where('NO_OFERTA', $value->NO_OFERTA)
-                ->where('REVISION_OFERTA', '<', $value->REVISION_OFERTA) // Solo revisiones anteriores
-                ->orderBy('REVISION_OFERTA', 'asc')
-                ->get();
+            $baseOferta = preg_replace('/-Rev\d+$/', '', $value->NO_OFERTA);
 
-            // 🔥 Asegurar que REVISIONES sea siempre un array válido
+            $revisiones = ofertasModel::select(
+                'formulario_ofertas.*',
+                'formulario_solicitudes.NO_SOLICITUD',
+                'formulario_solicitudes.NOMBRE_COMERCIAL_SOLICITUD'
+            )
+            ->leftJoin(
+                'formulario_solicitudes',
+                'formulario_ofertas.SOLICITUD_ID',
+                '=',
+                'formulario_solicitudes.ID_FORMULARIO_SOLICITUDES'
+            )
+            ->where(function ($query) use ($baseOferta) {
+                $query->where('NO_OFERTA', $baseOferta)
+                      ->orWhere('NO_OFERTA', 'LIKE', $baseOferta . '-Rev%');
+            })
+            ->where('REVISION_OFERTA', '<', $value->REVISION_OFERTA)
+            ->orderBy('REVISION_OFERTA', 'asc')
+            ->get();
+        
+
             $value->REVISIONES = $revisiones->isEmpty() ? [] : $revisiones;
 
-            // Configuración de botones según el estado
             if ($value->ACTIVO == 0) {
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_OFERTAS . '"><span class="slider round"></span></label>';
                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
             } else {
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" checked><span class="slider round"></span></label>';
                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
-                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
             }
         }
 
@@ -187,6 +204,9 @@ class ofertasController extends Controller
         ]);
     }
 }
+
+
+    
 
 
 

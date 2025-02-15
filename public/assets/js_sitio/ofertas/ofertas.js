@@ -265,92 +265,50 @@ $("#guardarOFERTA").click(function (e) {
 //     ]
 // });
 
+
+
+
 var Tablaofertas = $("#Tablaofertas").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
-    lengthMenu: [
-        [10, 25, 50, -1],
-        [10, 25, 50, 'All']
-    ],
+    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'All']],
     info: false,
     paging: true,
     searching: true,
-    filtering: true,
     scrollY: '65vh',
     scrollCollapse: true,
     responsive: true,
     ajax: {
         dataType: 'json',
-        data: {},
         method: 'GET',
-        cache: false,
         url: '/Tablaofertas',
-        beforeSend: function () {
-            mostrarCarga();
-        },
-        complete: function () {
-            Tablaofertas.columns.adjust().draw();
-            ocultarCarga();
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alertErrorAJAX(jqXHR, textStatus, errorThrown);
-        },
+        beforeSend: function () { mostrarCarga(); },
+        complete: function () { Tablaofertas.columns.adjust().draw(); ocultarCarga(); },
+        error: function (jqXHR, textStatus, errorThrown) { alertErrorAJAX(jqXHR, textStatus, errorThrown); },
         dataSrc: 'data'
     },
-    order: [[0, 'asc']], 
+    order: [[1, 'asc']],
     columns: [
-        { 
-            data: null,
-            render: function(data, type, row, meta) {
-                return meta.row + 1; 
-            }
-        },
+        { data: null, render: function(data, type, row, meta) { return meta.row + 1; } },
         { data: 'REVISION_OFERTA' },
-
-        {
-            data: null,
-            render: function(data, type, row) {
-                return `${row.NO_SOLICITUD} - ${row.NOMBRE_COMERCIAL_SOLICITUD}`;
-            }
-        },
-
+        { data: null, render: function(data, type, row) { return `${row.NO_SOLICITUD} - ${row.NOMBRE_COMERCIAL_SOLICITUD}`; } },
         { 
             data: 'NO_OFERTA',
             render: function(data, type, row) {
-                return `<button class="btn btn-link ver-revisiones" data-revisiones='${JSON.stringify(row.REVISIONES)}'>${data}</button>`;
+                return `<button class="btn btn-link ver-revisiones" data-revisiones='${JSON.stringify(row.REVISIONES || [])}'>${data}</button>`;
             }
         },
-
-        { 
-            data: 'FECHA_OFERTA',
-            render: function(data, type, row) {
-                let diasRestantes = calcularDiasRestantes(row.FECHA_OFERTA, row.DIAS_VALIDACION_OFERTA);
-                return `${row.FECHA_OFERTA} <span style="font-weight:bold;">(${diasRestantes})</span>`;
-            }
-        },
-
+        { data: 'FECHA_OFERTA' },
         { 
             data: 'ESTATUS_OFERTA',
             render: function(data, type, row) {
-                const colors = {
-                    'Aceptada': 'background-color: green; color: white;',
-                    'Revisión': 'background-color: orange; color: white;',
-                    'Rechazada': 'background-color: red; color: white;'
-                };
-
+                const colors = { 'Aceptada': 'background-color: green; color: white;', 'Revisión': 'background-color: orange; color: white;', 'Rechazada': 'background-color: red; color: white;' };
                 const isDisabled = (data === 'Aceptada' || data === 'Rechazada') ? 'disabled' : '';
-
-                return `
-                    <select class="form-select ESTATUS_OFERTA" 
-                            data-id="${row.ID_FORMULARIO_OFERTAS}" 
-                            style="${colors[data] || ''}" ${isDisabled}>
-                        <option value="" ${!data ? 'selected' : ''} disabled style="background-color: white; color: black;">Seleccione una opción</option>
-                        <option value="Aceptada" ${data === 'Aceptada' ? 'selected' : ''} style="background-color: green; color: white;">Aceptada</option>
-                        <option value="Revisión" ${data === 'Revisión' ? 'selected' : ''} style="background-color: orange; color: white;">Revisión</option>
-                        <option value="Rechazada" ${data === 'Rechazada' ? 'selected' : ''} style="background-color: red; color: white;">Rechazada</option>
-                    </select>
-                    <textarea class="form-control MOTIVO_RECHAZO d-none" placeholder="Motivo de rechazo..." data-id="${row.ID_FORMULARIO_OFERTAS}" ${isDisabled}>${row.MOTIVO_RECHAZO || ''}</textarea>
-                `;
+                return `<select class="form-select ESTATUS_OFERTA" data-id="${row.ID_FORMULARIO_OFERTAS}" style="${colors[data] || ''}" ${isDisabled}>
+                        <option value="Aceptada" ${data === 'Aceptada' ? 'selected' : ''}>Aceptada</option>
+                        <option value="Revisión" ${data === 'Revisión' ? 'selected' : ''}>Revisión</option>
+                        <option value="Rechazada" ${data === 'Rechazada' ? 'selected' : ''}>Rechazada</option>
+                    </select>`;
             }
         },
         { data: 'BTN_DOCUMENTO', className: 'text-center' },
@@ -359,16 +317,16 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
-        { targets: 0, title: '#', className: 'all text-center' },
-        { targets: 1, title: 'Versión', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'N° de solicitud', className: 'all text-center nombre-column' },
-        { targets: 3, title: 'N° de Oferta/Cotización', className: 'all text-center nombre-column' },
-        { targets: 4, title: 'Fecha (Días Restantes)', className: 'all text-center nombre-column' }, 
-        { targets: 5, title: 'Estatus de la oferta', className: 'all text-center nombre-column' },
-        { targets: 6, title: 'Cotización', className: 'all text-center nombre-column' },
-        { targets: 7, title: 'Editar', className: 'all text-center' },
-        { targets: 8, title: 'Visualizar', className: 'all text-center' },
-        { targets: 9, title: 'Activo', className: 'all text-center' }
+        { targets: 0, title: '#', className: 'text-center' },
+        { targets: 1, title: 'Versión', className: 'text-center' },
+        { targets: 2, title: 'N° de solicitud', className: 'text-center' },
+        { targets: 3, title: 'N° de Oferta/Cotización', className: 'text-center' },
+        { targets: 4, title: 'Fecha', className: 'text-center' },
+        { targets: 5, title: 'Estatus de la oferta', className: 'text-center' },
+        { targets: 6, title: 'Cotización', className: 'text-center' },
+        { targets: 7, title: 'Editar', className: 'text-center' },
+        { targets: 8, title: 'Visualizar', className: 'text-center' },
+        { targets: 9, title: 'Activo', className: 'text-center' }
     ]
 });
 
@@ -379,8 +337,7 @@ $("#Tablaofertas tbody").on("click", ".ver-revisiones", function () {
     let btn = $(this);
     let revisiones = btn.data("revisiones");
 
-    // 🔥 Verificar si hay revisiones anteriores
-    if (!revisiones || revisiones.length === 0) {
+    if (!revisiones.length) {
         alertToast("No hay revisiones anteriores para esta oferta.", "warning", 3000);
         return;
     }
@@ -399,24 +356,28 @@ $("#Tablaofertas tbody").on("click", ".ver-revisiones", function () {
                 <table class="table table-bordered sub-table">
                     <thead>
                         <tr>
-                            <th>#</th>
                             <th>Versión</th>
                             <th>Fecha</th>
                             <th>Estatus</th>
-                            <th>Documento</th>
+                            <th>N° de Oferta/Cotización</th>
+                            <th>Editar</th>
                         </tr>
                     </thead>
                     <tbody>
     `;
 
-    revisiones.forEach((rev, index) => {
+    revisiones.forEach((rev) => {
         subTable += `
             <tr>
-                <td>${index + 1}</td>
                 <td>${rev.REVISION_OFERTA}</td>
                 <td>${rev.FECHA_OFERTA}</td>
                 <td>${rev.ESTATUS_OFERTA}</td>
-                <td>${rev.BTN_DOCUMENTO}</td>
+                <td>${rev.NO_OFERTA}</td>
+                <td>
+                    <button class="btn btn-warning btn-sm editar-revision" data-id="${rev.ID_FORMULARIO_OFERTAS}">
+                        <i class="bi bi-pencil-square"></i> Editar
+                    </button>
+                </td>
             </tr>
         `;
     });
@@ -425,6 +386,80 @@ $("#Tablaofertas tbody").on("click", ".ver-revisiones", function () {
 
     btn.closest("tr").after(subTable);
 });
+
+
+
+
+$(document).on("click", ".editar-revision", function () {
+    var tr = $(this).closest('tr');
+    var idOferta = $(this).data("id");
+
+    if (!idOferta) {
+        alertToast("No se encontró la oferta para editar.", "error", 3000);
+        return;
+    }
+
+    var revisionData = null;
+    let revisiones = tr.closest(".revision-row").prev().find(".ver-revisiones").data("revisiones");
+
+    if (revisiones && revisiones.length > 0) {
+        revisionData = revisiones.find(rev => rev.ID_FORMULARIO_OFERTAS == idOferta);
+    }
+
+    if (!revisionData) {
+        alertToast("No se encontró la información de la revisión.", "error", 3000);
+        return;
+    }
+
+    editarDatoTabla(revisionData, 'formularioOFERTAS', 'miModal_OFERTAS', 1);
+
+    var $select = $('#SOLICITUD_ID');
+
+    if ($select.length > 0 && $select[0].selectize) {
+        var selectize = $select[0].selectize;
+        selectize.clear();
+        selectize.clearOptions();
+
+        console.log("🔍 Opciones antes de agregar:", selectize.options);
+        console.log("🔍 Datos de la revisión:", revisionData);
+
+        // 🔥 Agregar opciones antes de seleccionar
+        if (revisionData.SOLICITUDES && revisionData.SOLICITUDES.length > 0) {
+            revisionData.SOLICITUDES.forEach(solicitud => {
+                selectize.addOption({
+                    value: solicitud.ID_FORMULARIO_SOLICITUDES,
+                    text: `${solicitud.NO_SOLICITUD} - ${solicitud.NOMBRE_COMERCIAL_SOLICITUD}`
+                });
+            });
+
+            setTimeout(() => {
+                if (revisionData.SOLICITUD_ID) {
+                    console.log("📌 Estableciendo valor:", revisionData.SOLICITUD_ID);
+                    selectize.setValue(revisionData.SOLICITUD_ID);
+                }
+            }, 200);
+        } else {
+            // 🔥 Si `SOLICITUD_ID` no está en la lista, agregarlo manualmente
+            if (revisionData.SOLICITUD_ID) {
+                selectize.addOption({
+                    value: revisionData.SOLICITUD_ID,
+                    text: `ID: ${revisionData.SOLICITUD_ID} (No disponible en la lista)`
+                });
+
+                setTimeout(() => {
+                    selectize.setValue(revisionData.SOLICITUD_ID);
+                }, 200);
+            }
+        }
+    } else {
+        console.error("❌ Error: El `select` no tiene `selectize` activado.");
+    }
+
+    $("#miModal_OFERTAS").modal("show");
+});
+
+
+
 
 
 
