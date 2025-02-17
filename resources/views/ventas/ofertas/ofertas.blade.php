@@ -164,9 +164,15 @@
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-warning" id="crearREVISION">Crear Revisión</button>
+                <div class="col-12 text-center">
+                    <div class="col-md-6 mx-auto">
+                        <button type="button" id="crearREVISION" class="btn btn-warning w-100">
+                            Crear Revisión
+                        </button>
+                    </div>
+                </div>
 
-
+                <br>
 
                 <div class="modal-footer mx-5">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
