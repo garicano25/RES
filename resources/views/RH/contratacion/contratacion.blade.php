@@ -1998,7 +1998,7 @@
 
 <script>
     document.getElementById("CODIGO_POSTAL").addEventListener("change", function() {
-        let codigoPostal = this.value.trim(); // Elimina espacios innecesarios
+        let codigoPostal = this.value.trim();
 
         if (codigoPostal.length === 5) {
             fetch(`/codigo-postal/${codigoPostal}`)
@@ -2022,9 +2022,11 @@
                             coloniaSelect.appendChild(option);
                         });
 
-                        // Llenar municipio y estado (si existen)
+                        // Llenar municipio, estado, localidad (ciudad) y país
                         document.getElementById("NOMBRE_MUNICIPIO").value = response.municipio || "No disponible";
                         document.getElementById("NOMBRE_ENTIDAD").value = response.estado || "No disponible";
+                        document.getElementById("NOMBRE_LOCALIDAD").value = response.ciudad || "No disponible"; // Localidad es "ciudad"
+                        document.getElementById("PAIS_CONTRATACION").value = response.pais || "No disponible"; // Agregando País
 
                     } else {
                         alert("Código postal no encontrado");

@@ -564,6 +564,7 @@ Route::get('/Bitácora', function () {return view('compras.requisicionesmaterial
 
 
 
+
 Route::get('codigo-postal/{cp}', function ($cp) {
     $token = env('COPOMEX_API_TOKEN'); // Obtiene el token del archivo .env
     $url = "https://api.copomex.com/query/info_cp/{$cp}?type=simplified&token={$token}";
@@ -571,7 +572,7 @@ Route::get('codigo-postal/{cp}', function ($cp) {
     $response = Http::get($url);
 
     if ($response->successful()) {
-        return response()->json($response->json());
+        dd($response->json()); // Esto imprimirá la respuesta en el navegador para revisión
     }
 
     return response()->json([
@@ -581,6 +582,7 @@ Route::get('codigo-postal/{cp}', function ($cp) {
         'detalle' => $response->body()
     ], 400);
 });
+
 
 Route::get('/clear-cache', function () {
     Artisan::call('config:cache');

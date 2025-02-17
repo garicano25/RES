@@ -550,7 +550,7 @@
             <div class="col-12 mt-3" id="NO_COTIZAR" style="display: none;">
               <div class="mb-3">
                 <label class="form-label">Motivo del porque no se cotiza al cliente</label>
-                <textarea class="form-control" id="MOTIVO_COTIZACION" name="MOTIVO_COTIZACION" rows="4" ></textarea>
+                <textarea class="form-control" id="MOTIVO_COTIZACION" name="MOTIVO_COTIZACION" rows="4"></textarea>
               </div>
             </div>
             @endif
@@ -609,6 +609,8 @@
 
             document.getElementById("NOMBRE_MUNICIPIO_EMPRESA").value = response.municipio || "No disponible";
             document.getElementById("NOMBRE_ENTIDAD_EMPRESA").value = response.estado || "No disponible";
+            document.getElementById("NOMBRE_LOCALIDAD_EMPRESA").value = response.ciudad || "No disponible";
+            document.getElementById("PAIS_EMPRESA").value = response.pais || "No disponible";
 
           } else {
             alert("Código postal no encontrado");
