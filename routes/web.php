@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Log;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Response;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -562,14 +563,15 @@ Route::get('/Bitácora', function () {return view('compras.requisicionesmaterial
 //============================================== LIMPIAR RUTAS ============================================== 
 
 
+
 Route::get('codigo-postal/{cp}', function ($cp) {
-    $token = "a5ba768d-eeac-4c0f-b0be-202ef91df93c";
+    $token = env('COPOMEX_API_TOKEN'); // Obtiene el token del archivo .env
     $url = "https://api.copomex.com/query/info_cp/{$cp}?type=simplified&token={$token}";
 
     $response = Http::get($url);
 
     if ($response->successful()) {
-        return response()->json($response->json()); 
+        return response()->json($response->json());
     }
 
     return response()->json([
