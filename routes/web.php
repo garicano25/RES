@@ -563,7 +563,7 @@ Route::get('/Bitácora', function () {return view('compras.requisicionesmaterial
 
 
 Route::get('codigo-postal/{cp}', function ($cp) {
-    $token = "ab4ed678-f98a-4eaf-be87-290f6fdb22b2";
+    $token = "a5ba768d-eeac-4c0f-b0be-202ef91df93c";
     $url = "https://api.copomex.com/query/info_cp/{$cp}?type=simplified&token={$token}";
 
     $response = Http::get($url);
