@@ -161,7 +161,7 @@
                         </div>
 
                         <div class="widget">
-                            <div id="DIV_CLIMA"></div>
+                            <div class="widget__area" id="DIV_CLIMA"></div>
 
                             <script>
                                 document.addEventListener("DOMContentLoaded", function() {
