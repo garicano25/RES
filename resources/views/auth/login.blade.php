@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,8 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body, html {
+        body,
+        html {
             height: 100%;
             margin: 0;
             background: url('assets/images/fondo.png') no-repeat center center fixed;
@@ -47,7 +49,7 @@
         }
 
         .login-container .btn {
-            background-color: #007bff;
+            background-color: #ff4c4c;
             color: #ffffff;
             border-radius: 10px;
             padding: 15px;
@@ -57,7 +59,7 @@
         }
 
         .login-container .btn:hover {
-            background-color: #0056b3;
+            background-color: #ff4c4c;
         }
 
         .error-message {
@@ -68,17 +70,18 @@
         }
     </style>
 </head>
+
 <body>
     <div class="login-container">
         <h2>Acceso</h2>
-        
+
         <!-- Mensaje de error si hay un error de login -->
         @if($errors->has('login_error'))
-            <div class="error-message">
-                {{ $errors->first('login_error') }}
-            </div>
+        <div class="error-message">
+            {{ $errors->first('login_error') }}
+        </div>
         @endif
-        
+
         <form action="/login" method="POST">
             @csrf
             <div class="form-group">
@@ -95,4 +98,5 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>

@@ -121,7 +121,8 @@ Route::get('/usuario', [usuarioController::class, 'index'])->middleware('role:Su
 Route::post('/usuarioSave', [usuarioController::class, 'store']);
 Route::get('/Tablausuarios', [usuarioController::class, 'Tablausuarios']);
 Route::get('/usuarioDelete', [usuarioController::class, 'store']);
-Route::get('/usuariofoto/{id}', [usuarioController::class, 'mostrarFotoUsuario']);
+// Route::get('/usuariofoto/{id}', [usuarioController::class, 'mostrarFotoUsuario']);
+Route::get('/usuariofoto/{id}', [usuarioController::class, 'mostrarFotoUsuario'])->name('usuariofoto');
 
 
 //==============================================  EXTERNO  ============================================== 
