@@ -100,7 +100,7 @@
                 </div>
 
                 <img class="lineasDeNegocio__iconsm" src="assets/Modulos/img/1-negocio.png" title="SOLUCIONES EN CALIDAD" alt="">
-                <img class="lineasDeNegocio__iconsm" src="assets/Modulos/img/2-negocio.png" title="SOLUCIONES LIDERAZGO Y HAB.HUMANA" alt="">
+                <img class="lineasDeNegocio__iconsm" src="assets/Modulos/img/2-negocio.png" title="SOLUCIONES LIDERAZGO Y HAB. HUMANAS" alt="">
                 <img class="lineasDeNegocio__iconsm" src="assets/Modulos/img/3-negocio.png" title="SOLUCIONES TÉCNICAS" alt="">
                 <img class="lineasDeNegocio__iconsm" src="assets/Modulos/img/4-negocio.png" title="SOLUCIONES MEDIO AMBIENTE" alt="">
                 <img class="lineasDeNegocio__iconsm" src="assets/Modulos/img/5-negocio.png" title="SOLUCIONES EN SST" alt="">
@@ -223,7 +223,7 @@
                                     <p class="temperature">${temperature}°C</p>
                                     <p class="description">${description}</p>
                                     <p>💨 Viento: ${windSpeed} km/h</p>
-                                    <p class="updated-time">⏰ Última actualización: <span id="current-time"></span></p>
+                                    <p class="updated-time">⏰ Actualizado: <span id="current-time"></span></p>
                                 </div>
                             `;
 
@@ -254,38 +254,65 @@
 
                             <style>
                                 .weather-widget {
-                                    background: linear-gradient(to right, #007bff, #00aaff);
+                                    background: linear-gradient(to right, #236192, #007DBA);
                                     color: white;
                                     text-align: center;
-                                    padding: 20px;
+                                    padding: 8px;
+                                    /* Reducimos padding para más espacio */
                                     border-radius: 15px;
                                     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-                                    width: 280px;
+                                    height: 16vh;
+                                    width: 15.4vw;
                                     font-family: Arial, sans-serif;
                                     margin: auto;
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: center;
+                                    align-items: center;
+                                    overflow: hidden;
+                                    /* Evita que el contenido se salga */
                                 }
 
+
+
                                 .temperature {
-                                    font-size: 30px;
+                                    font-size: 1.5vw;
+                                    /* Reduce la temperatura */
                                     font-weight: bold;
+                                    margin: 2px 0;
                                 }
 
                                 .description {
-                                    font-size: 18px;
+                                    font-size: 0.9vw;
+                                    /* Reduce el tamaño de la descripción */
                                     font-weight: bold;
+                                    text-align: center;
+                                    margin: 2px 0;
+                                    white-space: normal;
+                                    /* Permite saltos de línea */
+                                    line-height: 1.1;
+                                    /* Reduce la separación entre líneas */
                                 }
 
                                 .updated-time {
-                                    font-size: 14px;
+                                    font-size: 0.7vw;
+                                    /* Reduce aún más la hora */
                                     opacity: 0.8;
+                                    margin-top: 3px;
+                                }
+
+                                p {
+                                    margin: 2px 0;
+                                    /* Reduce los márgenes para evitar que el contenido crezca demasiado */
+                                    line-height: 1;
+                                    /* Ajusta la separación de líneas */
                                 }
                             </style>
 
 
                             <div class="widget__area" id="DIV_MONEDA">
-                                <canvas id="exchangeRateChart"></canvas>
                             </div>
-                            
+
                         </div>
 
                         <div class="modules">
@@ -353,7 +380,7 @@
                                 </div>
                                 <div class="softwares__card">
                                     <!-- <img class="softwares__image" src="assets/Modulos/img/sehilab.png" alt=""> -->
-                                    <h3 class="content__paragraph">RIGPASS</h3>
+                                    <h3 class="content__paragraph">RigCap</h3>
                                 </div>
                             </div>
 
