@@ -8,6 +8,8 @@
     <title>Results in Performance</title>
     <link href="assets/css/mobile.css" rel="stylesheet" media="all and (max-width: 600px)">
     <link href="assets/css/desktop.css" rel="stylesheet" media="all and (min-width: 600px)">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
@@ -218,14 +220,14 @@
                                                 const description = weatherDescriptions[weatherCode] || "Clima desconocido";
 
                                                 widgetArea.innerHTML = `
-                                <div class="weather-widget">
-                                    <h3>Clima Actual</h3>
-                                    <p class="temperature">${temperature}°C</p>
-                                    <p class="description">${description}</p>
-                                    <p>💨 Viento: ${windSpeed} km/h</p>
-                                    <p class="updated-time">⏰ Actualizado: <span id="current-time"></span></p>
-                                </div>
-                            `;
+                    <div class="weather-widget">
+                        <h3>Clima Actual</h3>
+                        <p class="temperature">${temperature}°C</p>
+                        <p class="description">${description}</p>
+                        <p>💨 Viento: ${windSpeed} km/h</p>
+                        <p class="updated-time">⏰ Actualizado: <span id="current-time"></span></p>
+                    </div>
+                `;
 
                                                 updateClock();
                                                 setInterval(updateClock, 1000);
@@ -253,59 +255,51 @@
                             </script>
 
                             <style>
-                                .weather-widget {
+                                .widget__area {
                                     background: linear-gradient(to right, #236192, #007DBA);
                                     color: white;
                                     text-align: center;
                                     padding: 8px;
-                                    /* Reducimos padding para más espacio */
                                     border-radius: 15px;
                                     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-                                    height: 16vh;
-                                    width: 15.4vw;
                                     font-family: Arial, sans-serif;
-                                    margin: auto;
                                     display: flex;
                                     flex-direction: column;
                                     justify-content: center;
                                     align-items: center;
                                     overflow: hidden;
-                                    /* Evita que el contenido se salga */
                                 }
 
+                                .weather-widget {
+                                    width: 100%;
+                                    height: 100%;
+                                }
 
 
                                 .temperature {
                                     font-size: 1.5vw;
-                                    /* Reduce la temperatura */
                                     font-weight: bold;
                                     margin: 2px 0;
                                 }
 
                                 .description {
                                     font-size: 0.9vw;
-                                    /* Reduce el tamaño de la descripción */
                                     font-weight: bold;
                                     text-align: center;
                                     margin: 2px 0;
                                     white-space: normal;
-                                    /* Permite saltos de línea */
                                     line-height: 1.1;
-                                    /* Reduce la separación entre líneas */
                                 }
 
                                 .updated-time {
                                     font-size: 0.7vw;
-                                    /* Reduce aún más la hora */
                                     opacity: 0.8;
                                     margin-top: 3px;
                                 }
 
                                 p {
                                     margin: 2px 0;
-                                    /* Reduce los márgenes para evitar que el contenido crezca demasiado */
                                     line-height: 1;
-                                    /* Ajusta la separación de líneas */
                                 }
                             </style>
 
