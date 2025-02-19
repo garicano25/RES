@@ -374,7 +374,7 @@
                                 </div>
                                 <div class="softwares__card">
                                     <!-- <img class="softwares__image" src="assets/Modulos/img/sehilab.png" alt=""> -->
-                                    <h3 class="content__paragraph">RigCap</h3>
+                                    <h3 class="content__paragraph">RigCAP</h3>
                                 </div>
                             </div>
 

@@ -577,9 +577,14 @@ Route::post('/ServiciosSave', [directorioController::class, 'store']);
 //  DIRECTORIO INTERNO
 
 Route::get('/Proveedores_potenciales', function () {return view('compras.proveedores.proveedorespotencial');});
-
 Route::get('/Tabladirectorio', [directorioController::class, 'Tabladirectorio']);
 Route::get('/ServicioDelete', [directorioController::class, 'store']);
+
+
+
+//  ALTA 
+
+Route::get('/Alta', function () {return view('compras.proveedores.altaproveedores');});
 
 //============================================== LIMPIAR RUTAS ============================================== 
 
