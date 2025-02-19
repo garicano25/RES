@@ -298,7 +298,14 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
                 return `<button class="btn btn-link ver-revisiones" data-revisiones='${JSON.stringify(row.REVISIONES || [])}'>${data}</button>`;
             }
         },
-        { data: 'FECHA_OFERTA' },
+        {
+            data: 'FECHA_OFERTA',
+            render: function(data, type, row) {
+                let diasRestantes = calcularDiasRestantes(row.FECHA_OFERTA, row.DIAS_VALIDACION_OFERTA);
+                return `${row.FECHA_OFERTA} <span style="font-weight:bold;">(${diasRestantes})</span>`;
+            }
+        },
+          
         { 
             data: 'ESTATUS_OFERTA',
             render: function(data, type, row) {
@@ -330,11 +337,10 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
     ]
 });
 
-
-
-
 $("#Tablaofertas tbody").on("click", ".ver-revisiones", function () {
     let btn = $(this);
+    let tr = btn.closest("tr");
+    let row = Tablaofertas.row(tr);
     let revisiones = btn.data("revisiones");
 
     if (!revisiones.length) {
@@ -342,121 +348,56 @@ $("#Tablaofertas tbody").on("click", ".ver-revisiones", function () {
         return;
     }
 
-    if (btn.hasClass("opened")) {
+    // Si la fila ya está expandida, la contraemos
+    if (row.child.isShown()) {
+        row.child.hide();
+        tr.removeClass("shown");
         btn.removeClass("opened");
-        btn.closest("tr").next(".revision-row").remove();
-        return;
-    }
-
-    btn.addClass("opened");
-
-    let subTable = `
-        <tr class="revision-row">
-            <td colspan="10">
-                <table class="table table-bordered sub-table">
-                    <thead>
-                        <tr>
-                            <th>Versión</th>
-                            <th>Fecha</th>
-                            <th>Estatus</th>
-                            <th>N° de Oferta/Cotización</th>
-                            <th>Editar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-    `;
-
-    revisiones.forEach((rev) => {
-        subTable += `
-            <tr>
-                <td>${rev.REVISION_OFERTA}</td>
-                <td>${rev.FECHA_OFERTA}</td>
-                <td>${rev.ESTATUS_OFERTA}</td>
-                <td>${rev.NO_OFERTA}</td>
-                <td>
-                    <button class="btn btn-warning btn-sm editar-revision" data-id="${rev.ID_FORMULARIO_OFERTAS}">
-                        <i class="bi bi-pencil-square"></i> Editar
-                    </button>
-                </td>
-            </tr>
-        `;
-    });
-
-    subTable += `</tbody></table></td></tr>`;
-
-    btn.closest("tr").after(subTable);
-});
-
-
-
-
-$(document).on("click", ".editar-revision", function () {
-    var tr = $(this).closest('tr');
-    var idOferta = $(this).data("id");
-
-    if (!idOferta) {
-        alertToast("No se encontró la oferta para editar.", "error", 3000);
-        return;
-    }
-
-    var revisionData = null;
-    let revisiones = tr.closest(".revision-row").prev().find(".ver-revisiones").data("revisiones");
-
-    if (revisiones && revisiones.length > 0) {
-        revisionData = revisiones.find(rev => rev.ID_FORMULARIO_OFERTAS == idOferta);
-    }
-
-    if (!revisionData) {
-        alertToast("No se encontró la información de la revisión.", "error", 3000);
-        return;
-    }
-
-    editarDatoTabla(revisionData, 'formularioOFERTAS', 'miModal_OFERTAS', 1);
-
-    var $select = $('#SOLICITUD_ID');
-
-    if ($select.length > 0 && $select[0].selectize) {
-        var selectize = $select[0].selectize;
-        selectize.clear();
-        selectize.clearOptions();
-
-        console.log("🔍 Opciones antes de agregar:", selectize.options);
-        console.log("🔍 Datos de la revisión:", revisionData);
-
-        // 🔥 Agregar opciones antes de seleccionar
-        if (revisionData.SOLICITUDES && revisionData.SOLICITUDES.length > 0) {
-            revisionData.SOLICITUDES.forEach(solicitud => {
-                selectize.addOption({
-                    value: solicitud.ID_FORMULARIO_SOLICITUDES,
-                    text: `${solicitud.NO_SOLICITUD} - ${solicitud.NOMBRE_COMERCIAL_SOLICITUD}`
-                });
-            });
-
-            setTimeout(() => {
-                if (revisionData.SOLICITUD_ID) {
-                    console.log("📌 Estableciendo valor:", revisionData.SOLICITUD_ID);
-                    selectize.setValue(revisionData.SOLICITUD_ID);
-                }
-            }, 200);
-        } else {
-            // 🔥 Si `SOLICITUD_ID` no está en la lista, agregarlo manualmente
-            if (revisionData.SOLICITUD_ID) {
-                selectize.addOption({
-                    value: revisionData.SOLICITUD_ID,
-                    text: `ID: ${revisionData.SOLICITUD_ID} (No disponible en la lista)`
-                });
-
-                setTimeout(() => {
-                    selectize.setValue(revisionData.SOLICITUD_ID);
-                }, 200);
-            }
-        }
     } else {
-        console.error("❌ Error: El `select` no tiene `selectize` activado.");
-    }
+        btn.addClass("opened");
 
-    $("#miModal_OFERTAS").modal("show");
+        // Construcción de la tabla de revisiones dentro de la misma DataTable
+        let revisionesHtml = `<table class="table table-sm table-bordered w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Versión</th>
+                                        <th>N° de Solicitud</th>
+                                        <th>N° de Oferta</th>
+                                        <th>Fecha</th>
+                                        <th>Estatus</th>
+                                        <th>Documento</th>
+                                        <th>Editar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+
+        revisiones.forEach((rev) => {
+            revisionesHtml += `<tr class="bg-light">
+                                    <td>${rev.REVISION_OFERTA}</td>
+                                    <td>${rev.NO_SOLICITUD} - ${rev.NOMBRE_COMERCIAL_SOLICITUD}</td>
+                                    <td>${rev.NO_OFERTA}</td>
+                                    <td>${rev.FECHA_OFERTA}</td>
+                                    <td><span class="badge bg-secondary">${rev.ESTATUS_OFERTA}</span></td>
+                                    <td>${rev.BTN_DOCUMENTO}</td>
+                                    <td>
+                                        <button class="btn btn-warning btn-sm EDITAR" 
+                                            data-id="${rev.ID_FORMULARIO_OFERTAS}"
+                                            data-revision='${JSON.stringify(rev)}'>
+                                            <i class="bi bi-pencil-square"></i> Editar
+                                        </button>
+                                    </td>
+                                </tr>`;
+        });
+
+        revisionesHtml += `</tbody></table>`;
+
+        // Mostrar la tabla de revisiones como una "child row" dentro de la DataTable
+        row.child(revisionesHtml).show();
+        tr.addClass("shown");
+    }
 });
+
+
 
 
 
@@ -490,103 +431,129 @@ function calcularDiasRestantes(fechaOferta, diasValidacion) {
 
     let fechaInicio = new Date(fechaOferta);
     
-    fechaInicio.setDate(fechaInicio.getDate() + parseInt(diasValidacion));
+    let fechaVencimiento = new Date(fechaInicio);
+    fechaVencimiento.setDate(fechaVencimiento.getDate() + parseInt(diasValidacion));
 
     let hoy = new Date();
 
-    let diferencia = fechaInicio - hoy;
-
-    let diasRestantes = Math.ceil(diferencia / (1000 * 60 * 60 * 24));
+    let diasTotales = Math.ceil((fechaVencimiento - fechaInicio) / (1000 * 60 * 60 * 24));
+    let diasTranscurridos = diasTotales - Math.ceil((fechaVencimiento - hoy) / (1000 * 60 * 60 * 24));
+    
+    diasTranscurridos = Math.max(diasTranscurridos, 0);
+    let porcentaje = (diasTranscurridos / diasTotales) * 100;
 
     let color = "green"; 
-    if (diasRestantes <= 3 && diasRestantes > 0) {
+    if (porcentaje >= 60 && porcentaje < 80) {
         color = "orange"; 
-    } else if (diasRestantes <= 0) {
+    } else if (porcentaje >= 80) {
         color = "red"; 
-        return `<span style="color: ${color}; font-weight: bold;">Expirado</span>`;
     }
+
+    // Si ya ha vencido
+    if (hoy >= fechaVencimiento) {
+        return `<span style="color: red; font-weight: bold;">Expirado</span>`;
+    }
+
+    let diasRestantes = Math.ceil((fechaVencimiento - hoy) / (1000 * 60 * 60 * 24));
 
     return `<span style="color: ${color}; font-weight: bold;">${diasRestantes} días</span>`;
 }
 
 
 
+
+
+
+
+
+// $('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {
+//     var tr = $(this).closest('tr');
+//     var row = Tablaofertas.row(tr);
+
+//     ID_FORMULARIO_OFERTAS = row.data().ID_FORMULARIO_OFERTAS;
+
+//     editarDatoTabla(row.data(), 'formularioOFERTAS', 'miModal_OFERTAS', 1);
+
+//     var selectize = $('#SOLICITUD_ID')[0].selectize;
+//     selectize.clear(); 
+
+//     var solicitudSeleccionado = row.data().SOLICITUD_ID;
+
+//     if (solicitudSeleccionado) {
+//         selectize.addOption({
+//             value: solicitudSeleccionado,
+//             text: `${row.data().NO_SOLICITUD} (${row.data().NOMBRE_COMERCIAL_SOLICITUD})`
+//         });
+//         selectize.setValue(solicitudSeleccionado); 
+//     }
+
+//     if (row.data().SOLICITUDES && row.data().SOLICITUDES.length > 0) {
+//         row.data().SOLICITUDES.forEach(solicitud => {
+//             if (solicitud.ID_FORMULARIO_SOLICITUDES !== solicitudSeleccionado) {
+//                 selectize.addOption({
+//                     value: solicitud.ID_FORMULARIO_SOLICITUDES,
+//                     text: `${solicitud.NO_SOLICITUD} (${solicitud.NOMBRE_COMERCIAL_SOLICITUD})`
+//                 });
+//             }
+//         });
+//     }
+
+//     selectize.refreshOptions(false); 
+
+//     $(".observacionesdiv").empty();
+//     obtenerObservaciones(row);
+
+//     $('#miModal_OFERTAS .modal-title').html(row.data().NO_OFERTA);
+
+//     var estatus = row.data().ESTATUS_OFERTA;
+//     if (estatus === 'Aceptada') {
+//         $('#ACEPTADA').show();
+//         $('#RECHAZO').hide();
+//     } else if (estatus === 'Rechazada') {
+//         $('#RECHAZO').show();
+//         $('#ACEPTADA').hide();
+//     } else {
+//         $('#ACEPTADA').hide();
+//         $('#RECHAZO').hide();
+//     }
+
+//     $("#miModal_OFERTAS").modal("show");
+// });
+
+
 $('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablaofertas.row(tr);
 
-    ID_FORMULARIO_OFERTAS = row.data().ID_FORMULARIO_OFERTAS;
-
-  
-
-    editarDatoTabla(row.data(), 'formularioOFERTAS', 'miModal_OFERTAS', 1);
-
-    var selectize = $('#SOLICITUD_ID')[0].selectize;
-    selectize.clear();
-    selectize.clearOptions(); 
-
-    if (row.data().SOLICITUDES && row.data().SOLICITUDES.length > 0) {
-        row.data().SOLICITUDES.forEach(solicitud => {
-            selectize.addOption({
-                value: solicitud.ID_FORMULARIO_OFERTAS,
-                text: `${solicitud.NO_SOLICITUD} (${solicitud.NOMBRE_COMERCIAL_SOLICITUD})`
-            });
-        });
-    }
-
-    var solicitudSeleccionado = row.data().SOLICITUD_ID;
-    if (solicitudSeleccionado) {
-        selectize.setValue(solicitudSeleccionado); 
-    }
-
-      $(".observacionesdiv").empty();
-    obtenerObservaciones(row);
-
-    
-    $('#miModal_OFERTAS .modal-title').html(row.data().NO_OFERTA);
-
-    var estatus = row.data().ESTATUS_OFERTA;
-    if (estatus === 'Aceptada') {
-        $('#ACEPTADA').show();  
-        $('#RECHAZO').hide();   
-    } else if (estatus === 'Rechazada') {
-        $('#RECHAZO').show();   
-        $('#ACEPTADA').hide();  
+    // Verifica si el botón de editar está en la tabla principal o en una revisión
+    var rowData;
+    if (row.data()) {
+        // Es una fila de la tabla principal
+        rowData = row.data();
     } else {
-        $('#ACEPTADA').hide();  
-        $('#RECHAZO').hide();
+        // Es una revisión dentro de `row.child()`, obtenemos los datos de `data-revision`
+        rowData = JSON.parse($(this).attr('data-revision'));
     }
 
-    $("#miModal_OFERTAS").modal("show");
-});
+    ID_FORMULARIO_OFERTAS = rowData.ID_FORMULARIO_OFERTAS;
 
-
-
-
-
-$('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {
-    var tr = $(this).closest('tr');
-    var row = Tablaofertas.row(tr);
-
-    ID_FORMULARIO_OFERTAS = row.data().ID_FORMULARIO_OFERTAS;
-
-    editarDatoTabla(row.data(), 'formularioOFERTAS', 'miModal_OFERTAS', 1);
+    editarDatoTabla(rowData, 'formularioOFERTAS', 'miModal_OFERTAS', 1);
 
     var selectize = $('#SOLICITUD_ID')[0].selectize;
     selectize.clear(); 
 
-    var solicitudSeleccionado = row.data().SOLICITUD_ID;
+    var solicitudSeleccionado = rowData.SOLICITUD_ID;
 
     if (solicitudSeleccionado) {
         selectize.addOption({
             value: solicitudSeleccionado,
-            text: `${row.data().NO_SOLICITUD} (${row.data().NOMBRE_COMERCIAL_SOLICITUD})`
+            text: `${rowData.NO_SOLICITUD} (${rowData.NOMBRE_COMERCIAL_SOLICITUD})`
         });
         selectize.setValue(solicitudSeleccionado); 
     }
 
-    if (row.data().SOLICITUDES && row.data().SOLICITUDES.length > 0) {
-        row.data().SOLICITUDES.forEach(solicitud => {
+    if (rowData.SOLICITUDES && rowData.SOLICITUDES.length > 0) {
+        rowData.SOLICITUDES.forEach(solicitud => {
             if (solicitud.ID_FORMULARIO_SOLICITUDES !== solicitudSeleccionado) {
                 selectize.addOption({
                     value: solicitud.ID_FORMULARIO_SOLICITUDES,
@@ -599,11 +566,11 @@ $('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {
     selectize.refreshOptions(false); 
 
     $(".observacionesdiv").empty();
-    obtenerObservaciones(row);
+    obtenerObservaciones(rowData);
 
-    $('#miModal_OFERTAS .modal-title').html(row.data().NO_OFERTA);
+    $('#miModal_OFERTAS .modal-title').html(rowData.NO_OFERTA);
 
-    var estatus = row.data().ESTATUS_OFERTA;
+    var estatus = rowData.ESTATUS_OFERTA;
     if (estatus === 'Aceptada') {
         $('#ACEPTADA').show();
         $('#RECHAZO').hide();

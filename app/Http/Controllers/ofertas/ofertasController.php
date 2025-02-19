@@ -111,55 +111,15 @@ class ofertasController extends Controller
 
 
     
-
- 
-   
     public function Tablaofertas()
-{
-    try {
-        $tabla = ofertasModel::select(
-            'formulario_ofertas.*',
-            'formulario_solicitudes.NO_SOLICITUD',
-            'formulario_solicitudes.NOMBRE_COMERCIAL_SOLICITUD',
-            'formulario_ofertas.SOLICITUD_ID',
-        )
-        ->leftJoin(
-            'formulario_solicitudes',
-            'formulario_ofertas.SOLICITUD_ID',
-            '=',
-            'formulario_solicitudes.ID_FORMULARIO_SOLICITUDES'
-        )
-        ->whereRaw('formulario_ofertas.ID_FORMULARIO_OFERTAS IN (
-            SELECT MAX(ID_FORMULARIO_OFERTAS) 
-            FROM formulario_ofertas 
-            GROUP BY SUBSTRING_INDEX(NO_OFERTA, "-Rev", 1)
-        )')
-        ->get();
-
-        $solicitudesAceptadas = solicitudesModel::select(
-            'ID_FORMULARIO_SOLICITUDES',
-            'NO_SOLICITUD',
-            'NOMBRE_COMERCIAL_SOLICITUD'
-        )
-        ->where('ESTATUS_SOLICITUD', 'like', '%Aceptada%')
-        ->get();
-
-        $idsAsociados = ofertasModel::pluck('SOLICITUD_ID')->toArray();
-
-        foreach ($tabla as $value) {
-            $solicitudesDisponibles = $solicitudesAceptadas->filter(function ($solicitud) use ($idsAsociados, $value) {
-                return !in_array($solicitud->ID_FORMULARIO_SOLICITUDES, $idsAsociados) ||
-                    $solicitud->ID_FORMULARIO_SOLICITUDES == $value->SOLICITUD_ID;
-            });
-
-            $value->SOLICITUDES = $solicitudesDisponibles->values();
-
-            $baseOferta = preg_replace('/-Rev\d+$/', '', $value->NO_OFERTA);
-
-            $revisiones = ofertasModel::select(
-                'formulario_ofertas.*',
+    {
+        try {
+            // Obtener las ofertas principales con todos los campos
+            $tabla = ofertasModel::select(
+                'formulario_ofertas.*', // Seleccionamos todos los campos
                 'formulario_solicitudes.NO_SOLICITUD',
-                'formulario_solicitudes.NOMBRE_COMERCIAL_SOLICITUD'
+                'formulario_solicitudes.NOMBRE_COMERCIAL_SOLICITUD',
+                'formulario_ofertas.SOLICITUD_ID'
             )
             ->leftJoin(
                 'formulario_solicitudes',
@@ -167,48 +127,92 @@ class ofertasController extends Controller
                 '=',
                 'formulario_solicitudes.ID_FORMULARIO_SOLICITUDES'
             )
-            ->where(function ($query) use ($baseOferta) {
-                $query->where('NO_OFERTA', $baseOferta)
-                      ->orWhere('NO_OFERTA', 'LIKE', $baseOferta . '-Rev%');
-            })
-            ->where('REVISION_OFERTA', '<', $value->REVISION_OFERTA)
-            ->orderBy('REVISION_OFERTA', 'asc')
+            ->whereRaw('formulario_ofertas.ID_FORMULARIO_OFERTAS IN (
+                SELECT MAX(ID_FORMULARIO_OFERTAS) 
+                FROM formulario_ofertas 
+                GROUP BY SUBSTRING_INDEX(NO_OFERTA, "-Rev", 1)
+            )')
             ->get();
-        
-
-            $value->REVISIONES = $revisiones->isEmpty() ? [] : $revisiones;
-
-            if ($value->ACTIVO == 0) {
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_OFERTAS . '"><span class="slider round"></span></label>';
-                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
-            } else {
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" checked><span class="slider round"></span></label>';
-                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
-                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
-            }
-        }
-
-        // Respuesta JSON
-        return response()->json([
-            'data' => $tabla,
-            'msj' => 'Última revisión consultada correctamente'
-        ]);
-    } catch (Exception $e) {
-        return response()->json([
-            'msj' => 'Error ' . $e->getMessage(),
-            'data' => []
-        ]);
-    }
-}
-
-
     
-
-
+            // Obtener las solicitudes aceptadas
+            $solicitudesAceptadas = solicitudesModel::select(
+                'ID_FORMULARIO_SOLICITUDES',
+                'NO_SOLICITUD',
+                'NOMBRE_COMERCIAL_SOLICITUD'
+            )
+            ->where('ESTATUS_SOLICITUD', 'like', '%Aceptada%')
+            ->get();
+    
+            $idsAsociados = ofertasModel::pluck('SOLICITUD_ID')->toArray();
+    
+            foreach ($tabla as $value) {
+                $solicitudesDisponibles = $solicitudesAceptadas->filter(function ($solicitud) use ($idsAsociados, $value) {
+                    return !in_array($solicitud->ID_FORMULARIO_SOLICITUDES, $idsAsociados) ||
+                        $solicitud->ID_FORMULARIO_SOLICITUDES == $value->SOLICITUD_ID;
+                });
+    
+                $value->SOLICITUDES = $solicitudesDisponibles->values();
+    
+                $baseOferta = preg_replace('/-Rev\d+$/', '', $value->NO_OFERTA);
+    
+                // 🔹 Obtener revisiones con todos los campos del modelo formulario_ofertas
+                $revisiones = ofertasModel::select(
+                    'formulario_ofertas.*',  // Ahora incluye todos los campos del modelo
+                    'formulario_solicitudes.NO_SOLICITUD',
+                    'formulario_solicitudes.NOMBRE_COMERCIAL_SOLICITUD'
+                )
+                ->leftJoin(
+                    'formulario_solicitudes',
+                    'formulario_ofertas.SOLICITUD_ID',
+                    '=',
+                    'formulario_solicitudes.ID_FORMULARIO_SOLICITUDES'
+                )
+                ->where(function ($query) use ($baseOferta) {
+                    $query->where('NO_OFERTA', $baseOferta)
+                          ->orWhere('NO_OFERTA', 'LIKE', $baseOferta . '-Rev%');
+                })
+                ->where('REVISION_OFERTA', '<', $value->REVISION_OFERTA)
+                ->orderBy('REVISION_OFERTA', 'asc')
+                ->get();
+    
+                // Asegurar que cada revisión tenga todos los campos y botones
+                foreach ($revisiones as $rev) {
+                    $rev->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $rev->ID_FORMULARIO_OFERTAS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
+                    $rev->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR" data-id="' . $rev->ID_FORMULARIO_OFERTAS . '"><i class="bi bi-pencil-square"></i></button>';
+                    $rev->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $rev->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $rev->ID_FORMULARIO_OFERTAS . '" checked><span class="slider round"></span></label>';
+                }
+    
+                $value->REVISIONES = $revisiones->isEmpty() ? [] : $revisiones;
+    
+                // Definir botones para la oferta principal
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_OFERTAS . '"><span class="slider round"></span></label>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
+                } else {
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR" data-id="' . $value->ID_FORMULARIO_OFERTAS . '"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
+                }
+            }
+    
+            // Respuesta JSON
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Última revisión consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => []
+            ]);
+        }
+    }
+    
 
     public function mostrarcotizacion($id)
     {
@@ -308,7 +312,6 @@ class ofertasController extends Controller
         try {
             switch (intval($request->api)) {
                 case 1:
-                    // ✅ CASO NORMAL: Guardar o editar oferta existente
                     if ($request->ID_FORMULARIO_OFERTAS == 0) {
                         $ultimoRegistro = ofertasModel::orderBy('ID_FORMULARIO_OFERTAS', 'desc')->first();
                         $numeroIncremental = $ultimoRegistro ? intval(substr($ultimoRegistro->NO_OFERTA, -3)) + 1 : 1;
@@ -345,23 +348,18 @@ class ofertasController extends Controller
                     return response()->json($response);
 
                 case 2:
-                    // 🚀 NUEVO CASO PARA CREAR UNA REVISIÓN
                     $ofertaOriginal = ofertasModel::find($request->ID_FORMULARIO_OFERTAS);
 
                     if ($ofertaOriginal) {
-                        // Obtener el número base (sin revisión)
                         $noOfertaBase = explode('-Rev', $ofertaOriginal->NO_OFERTA)[0];
 
-                        // Buscar la última revisión
                         $ultimaRevision = ofertasModel::where('NO_OFERTA', 'LIKE', "$noOfertaBase%")
                         ->orderBy('REVISION_OFERTA', 'desc')
                         ->first();
 
-                        // Generar nuevo número de revisión
                         $revisionNumero = $ultimaRevision ? $ultimaRevision->REVISION_OFERTA + 1 : 1;
                         $noOfertaConRevision = $noOfertaBase . '-Rev' . $revisionNumero;
 
-                        // Crear una nueva oferta como revisión
                         $nuevaOferta = $ofertaOriginal->replicate();
                         $nuevaOferta->NO_OFERTA = $noOfertaConRevision;
                         $nuevaOferta->REVISION_OFERTA = $revisionNumero;

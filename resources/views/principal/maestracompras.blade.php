@@ -141,7 +141,7 @@
 
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="{{ url('/Módulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Módulos</span><span class="d-none d-lg-inline">Módulos</span>
+                            <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Inicio</span>
                         </a>
                     </li>
                     <ul class="navbar-nav">
@@ -152,13 +152,33 @@
                                 <span class="d-none d-lg-inline">Requisición de Materiales</span>
                             </a>
                             <ul class="dropdown-menu">
-
                                 <li><a class="dropdown-item" href="{{url('/Requisición_Materiales')}}">Requisición de Materiales - MR</a>
                                 </li>
+                                <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/Bitácora')}}">Bitácora de consecutivos MR</a>
                                 </li>
                             </ul>
                         </li>
+
+
+
+
+                        <li class="nav-item dropdown" style="margin-left: 8px;">
+                            <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i>
+                                <span class="d-lg-none">Proveedores</span>
+                                <span class="d-none d-lg-inline">Proveedores</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{url('/Proveedores_potenciales')}}">Proveedores potenciales</a>
+                                </li>
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/')}}">Proveedores oficiales</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
                     </ul>
 
 
@@ -280,6 +300,10 @@
     @endif
 
 
+
+    @if(request()->is('Proveedores_potenciales'))
+    <script src="/assets/js_sitio/proveedor/proveedorespotenciales.js"></script>
+    @endif
 
 
 

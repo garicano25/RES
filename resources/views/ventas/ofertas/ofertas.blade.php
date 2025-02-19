@@ -4,6 +4,20 @@
 
 
 
+<style>
+
+.revision-row {
+    background-color: #f0f0f0 !important; /* Fondo gris claro */
+    font-size: 14px; /* Texto más pequeño */
+}
+
+.revision-row td {
+    border-left: 3px solid #999 !important; /* Línea lateral para identificar */
+}
+
+
+</style>
+
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
         <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-currency-dollar"></i>&nbsp;Ofertas/Cotizaciones</h3>

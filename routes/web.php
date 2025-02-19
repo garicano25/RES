@@ -87,8 +87,13 @@ use App\Http\Controllers\ordentrabajo\otController;
 
 // CONTROLADORES DE MR
 
-
 use App\Http\Controllers\requisicionmaterial\mrController;
+
+
+// CONTROLADORES DE PROVEEDORES
+
+use App\Http\Controllers\proveedor\directorioController;
+
 
 //==============================================  login  ============================================== 
 Route::get('/', function () {
@@ -549,31 +554,66 @@ Route::get('/Tablaverificacioncliente', [catalagoverificacioninformacionControll
 ////////////////////////////////////////////////////////////////COMPRAS///////////////////////////////////////////////////////7
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//==============================================  M.R  ============================================== 
 
-Route::get('/Requisición_Materiales', function () {return view('compras.requisicionesmaterial.requisicion_material');
-});
+
+Route::get('/Requisición_Materiales', function () {return view('compras.requisicionesmaterial.requisicion_material');});
 
 Route::post('/MrSave', [mrController::class, 'store']);
 Route::get('/Tablamr', [mrController::class, 'Tablamr']);
 
 
-Route::get('/Bitácora', function () {return view('compras.requisicionesmaterial.bitacora');
-});
+Route::get('/Bitácora', function () {return view('compras.requisicionesmaterial.bitacora');});
 
+
+//==============================================  PROVEEDOR  ============================================== 
+
+
+//  DIRECTORIO EXTERNO
+Route::get('/Directorio', function () {return view('compras.proveedores.directorio');});
+Route::post('/ServiciosSave', [directorioController::class, 'store']);
+
+
+//  DIRECTORIO INTERNO
+
+Route::get('/Proveedores_potenciales', function () {return view('compras.proveedores.proveedorespotencial');});
+
+Route::get('/Tabladirectorio', [directorioController::class, 'Tabladirectorio']);
+Route::get('/ServicioDelete', [directorioController::class, 'store']);
 
 //============================================== LIMPIAR RUTAS ============================================== 
 
 
 
 
+// Route::get('codigo-postal/{cp}', function ($cp) {
+//     $token = env('COPOMEX_API_TOKEN'); // Obtiene el token del archivo .env
+//     $url = "https://api.copomex.com/query/info_cp/{$cp}?type=simplified&token={$token}";
+
+//     $response = Http::get($url);
+
+//     if ($response->successful()) {
+//         dd($response->json()); // Esto imprimirá la respuesta en el navegador para revisión
+//     }
+
+//     return response()->json([
+//         'error' => true,
+//         'mensaje' => 'No se pudo obtener información de Copomex',
+//         'status' => $response->status(),
+//         'detalle' => $response->body()
+//     ], 400);
+// });
+
+
+
 Route::get('codigo-postal/{cp}', function ($cp) {
-    $token = env('COPOMEX_API_TOKEN'); // Obtiene el token del archivo .env
+    $token = "a5ba768d-eeac-4c0f-b0be-202ef91df93c";
     $url = "https://api.copomex.com/query/info_cp/{$cp}?type=simplified&token={$token}";
 
     $response = Http::get($url);
 
     if ($response->successful()) {
-        dd($response->json()); // Esto imprimirá la respuesta en el navegador para revisión
+        return response()->json($response->json()); 
     }
 
     return response()->json([
@@ -583,7 +623,6 @@ Route::get('codigo-postal/{cp}', function ($cp) {
         'detalle' => $response->body()
     ], 400);
 });
-
 
 Route::get('/clear-cache', function () {
     Artisan::call('config:cache');
