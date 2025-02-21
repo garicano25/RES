@@ -391,7 +391,7 @@
                 <div class="row">
                   <div class="col-6 mb-3">
                     <label>Agregar contacto</label>
-                    <button id="botonAgregarcontacto"  type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                    <button id="botonAgregarcontacto" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
                       <i class="bi bi-plus-circle-fill"></i>
                     </button>
                   </div>
@@ -471,7 +471,7 @@
               <div class="row">
                 <div class="col-md-3 mb-3">
                   <label class="form-label">Teléfono </label>
-                  <input type="number" class="form-control" id="TELEFONO_OFERTA" name="TELEFONO_OFERTA">
+                  <input type="text" class="form-control" id="TELEFONO_OFERTA" name="TELEFONO_OFERTA">
                 </div>
                 <div class="col-md-3 mb-3">
                   <label class="form-label">Extensión </label>

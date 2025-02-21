@@ -880,7 +880,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="row">
                     <div class="col-md-3 mb-3">
                         <label class="form-label">Teléfono</label>
-                        <input type="number" class="form-control" name="TELEFONO_SOLICITUD">
+                        <input type="text" class="form-control" name="TELEFONO_SOLICITUD">
                     </div>
                     <div class="col-md-3 mb-3">
                         <label class="form-label">Extensión</label>
@@ -953,7 +953,7 @@ function obtenerContactos(data) {
                 <div class="row">
                     <div class="col-md-3 mb-3">
                         <label class="form-label">Teléfono</label>
-                        <input type="number" class="form-control" name="TELEFONO_SOLICITUD" value="${telefono}">
+                        <input type="text" class="form-control" name="TELEFONO_SOLICITUD" value="${telefono}">
                     </div>
                     <div class="col-md-3 mb-3">
                         <label class="form-label">Extensión</label>
