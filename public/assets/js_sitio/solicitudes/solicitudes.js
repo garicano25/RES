@@ -529,7 +529,6 @@ $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
         const field = document.getElementById(fieldId);
         if (field) {
             field.disabled = (dirigeOferta === 0); 
-            field.required = (dirigeOferta !== 0);
         }
     });
 
