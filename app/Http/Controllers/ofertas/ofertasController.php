@@ -306,44 +306,72 @@ class ofertasController extends Controller
     //         return response()->json(['error' => 'Error al guardar la oferta', 'message' => $e->getMessage()]);
     //     }
     // }
-
     public function store(Request $request)
     {
         try {
             switch (intval($request->api)) {
                 case 1:
                     if ($request->ID_FORMULARIO_OFERTAS == 0) {
-                        $ultimoRegistro = ofertasModel::orderBy('ID_FORMULARIO_OFERTAS', 'desc')->first();
-                        $numeroIncremental = $ultimoRegistro ? intval(substr($ultimoRegistro->NO_OFERTA, -3)) + 1 : 1;
+                        // Obtener el año actual de forma dinámica
                         $anioActual = date('Y');
                         $ultimoDigitoAnio = substr($anioActual, -2);
-                        $noOferta = 'RES-COT-' . $ultimoDigitoAnio . '-' . str_pad($numeroIncremental, 3, '0', STR_PAD_LEFT);
 
-                        $request->merge(['NO_OFERTA' => $noOferta, 'REVISION_OFERTA' => 0]);
+                        // Buscar el último NO_OFERTA del año actual dinámicamente
+                        $ultimoRegistro = ofertasModel::where('NO_OFERTA', 'LIKE', "RES-COT-$ultimoDigitoAnio-%")
+                        ->orderByRaw("CAST(SUBSTRING_INDEX(NO_OFERTA, '-', -1) AS UNSIGNED) DESC")
+                        ->first();
 
-                        $data = $request->except(['observacion', 'COTIZACION_DOCUMENTO']);
-                        $oferta = ofertasModel::create($data);
-                    } else {
-                        $oferta = ofertasModel::find($request->ID_FORMULARIO_OFERTAS);
-                        $oferta->update($request->except('COTIZACION_DOCUMENTO'));
-
-                        if ($request->hasFile('COTIZACION_DOCUMENTO')) {
-                            if ($oferta->COTIZACION_DOCUMENTO && Storage::exists($oferta->COTIZACION_DOCUMENTO)) {
-                                Storage::delete($oferta->COTIZACION_DOCUMENTO);
-                            }
-
-                            $documento = $request->file('COTIZACION_DOCUMENTO');
-                            $idOferta = $oferta->ID_FORMULARIO_OFERTAS;
-                            $nombreArchivo = $documento->getClientOriginalName();
-                            $rutaCarpeta = 'ventas/ofertas/' . $idOferta;
-                            $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
-
-                            $oferta->COTIZACION_DOCUMENTO = $rutaCompleta;
-                            $oferta->save();
+                        // Extraer el último número generado y evitar duplicados
+                        if ($ultimoRegistro) {
+                            preg_match('/RES-COT-\d{2}-(\d{3})/', $ultimoRegistro->NO_OFERTA, $matches);
+                            $numeroIncremental = isset($matches[1]) ? intval($matches[1]) + 1 : 1;
+                        } else {
+                            $numeroIncremental = 1;
                         }
 
+                        // Generar el nuevo NO_OFERTA sin repetir valores
+                        $noOferta = 'RES-COT-' . $ultimoDigitoAnio . '-' . str_pad($numeroIncremental, 3, '0', STR_PAD_LEFT);
+
+                        // Asignar valores al request
+                        $request->merge([
+                            'NO_OFERTA' => $noOferta,
+                            'REVISION_OFERTA' => 0,
+                            'MOTIVO_REVISION_OFERTA' => 'Revisión inicial'
+                        ]);
+
+                        // Guardar oferta en la base de datos
+                        $data = $request->except(['observacion', 'COTIZACION_DOCUMENTO']);
+                        $oferta = ofertasModel::create($data);
+
                         $response['code'] = 1;
-                        $response['oferta'] = 'Actualizada';
+                        $response['oferta'] = 'Creada';
+                    } else {
+                        $oferta = ofertasModel::find($request->ID_FORMULARIO_OFERTAS);
+
+                        if ($oferta) {
+                            $oferta->update($request->except('COTIZACION_DOCUMENTO'));
+
+                            if ($request->hasFile('COTIZACION_DOCUMENTO')) {
+                                if ($oferta->COTIZACION_DOCUMENTO && Storage::exists($oferta->COTIZACION_DOCUMENTO)) {
+                                    Storage::delete($oferta->COTIZACION_DOCUMENTO);
+                                }
+
+                                $documento = $request->file('COTIZACION_DOCUMENTO');
+                                $idOferta = $oferta->ID_FORMULARIO_OFERTAS;
+                                $nombreArchivo = $documento->getClientOriginalName();
+                                $rutaCarpeta = 'ventas/ofertas/' . $idOferta;
+                                $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                                $oferta->COTIZACION_DOCUMENTO = $rutaCompleta;
+                                $oferta->save();
+                            }
+
+                            $response['code'] = 1;
+                            $response['oferta'] = 'Actualizada';
+                        } else {
+                            $response['code'] = 0;
+                            $response['error'] = 'No se encontró la oferta';
+                        }
                     }
                     return response()->json($response);
 
@@ -363,7 +391,7 @@ class ofertasController extends Controller
                         $nuevaOferta = $ofertaOriginal->replicate();
                         $nuevaOferta->NO_OFERTA = $noOfertaConRevision;
                         $nuevaOferta->REVISION_OFERTA = $revisionNumero;
-                        $nuevaOferta->MOTIVO_REVISION_OFERTA = $request->MOTIVO_REVISION_OFERTA;    
+                        $nuevaOferta->MOTIVO_REVISION_OFERTA = $request->MOTIVO_REVISION_OFERTA;
 
                         $nuevaOferta->save();
 

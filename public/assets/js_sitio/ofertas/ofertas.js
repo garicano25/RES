@@ -24,6 +24,20 @@ ModalDesvinculacion.addEventListener('hidden.bs.modal', event => {
 
 
 
+const Modallinea = document.getElementById('modalMotivoRevision') 
+Modallinea.addEventListener('hidden.bs.modal', event => {
+    
+    
+    ID_FORMULARIO_OFERTAS = 0
+    document.getElementById('motivoRevisionInput').value = '';
+   
+
+})
+
+
+
+
+
 $(document).ready(function () {
     var selectizeInstance = $('#SOLICITUD_ID').selectize({
         placeholder: 'Seleccione una solicitud',
