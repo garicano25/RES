@@ -343,6 +343,19 @@ class ofertasController extends Controller
                         $data = $request->except(['observacion', 'COTIZACION_DOCUMENTO']);
                         $oferta = ofertasModel::create($data);
 
+                        // 🔹 Verificar y guardar el archivo de cotización
+                        if ($request->hasFile('COTIZACION_DOCUMENTO')) {
+                            $documento = $request->file('COTIZACION_DOCUMENTO');
+                            $idOferta = $oferta->ID_FORMULARIO_OFERTAS;
+                            $nombreArchivo = time() . '_' . $documento->getClientOriginalName(); // Evita nombres duplicados
+                            $rutaCarpeta = 'ventas/ofertas/' . $idOferta;
+                            $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                            // Actualizar la oferta con la ruta del documento
+                            $oferta->COTIZACION_DOCUMENTO = $rutaCompleta;
+                            $oferta->save();
+                        }
+
                         $response['code'] = 1;
                         $response['oferta'] = 'Creada';
                     } else {
@@ -351,6 +364,7 @@ class ofertasController extends Controller
                         if ($oferta) {
                             $oferta->update($request->except('COTIZACION_DOCUMENTO'));
 
+                            // 🔹 Verificar y actualizar el archivo si existe
                             if ($request->hasFile('COTIZACION_DOCUMENTO')) {
                                 if ($oferta->COTIZACION_DOCUMENTO && Storage::exists($oferta->COTIZACION_DOCUMENTO)) {
                                     Storage::delete($oferta->COTIZACION_DOCUMENTO);
@@ -358,7 +372,7 @@ class ofertasController extends Controller
 
                                 $documento = $request->file('COTIZACION_DOCUMENTO');
                                 $idOferta = $oferta->ID_FORMULARIO_OFERTAS;
-                                $nombreArchivo = $documento->getClientOriginalName();
+                                $nombreArchivo = time() . '_' . $documento->getClientOriginalName();
                                 $rutaCarpeta = 'ventas/ofertas/' . $idOferta;
                                 $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
 
