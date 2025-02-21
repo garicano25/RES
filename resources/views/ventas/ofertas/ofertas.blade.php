@@ -5,17 +5,17 @@
 
 
 <style>
+    .revision-row {
+        background-color: #f0f0f0 !important;
+        /* Fondo gris claro */
+        font-size: 14px;
+        /* Texto más pequeño */
+    }
 
-.revision-row {
-    background-color: #f0f0f0 !important; /* Fondo gris claro */
-    font-size: 14px; /* Texto más pequeño */
-}
-
-.revision-row td {
-    border-left: 3px solid #999 !important; /* Línea lateral para identificar */
-}
-
-
+    .revision-row td {
+        border-left: 3px solid #999 !important;
+        /* Línea lateral para identificar */
+    }
 </style>
 
 <div class="contenedor-contenido">
@@ -199,6 +199,26 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="modalMotivoRevision" tabindex="-1" aria-labelledby="modalMotivoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalMotivoLabel">Motivo de la Revisión</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea id="motivoRevisionInput" class="form-control" rows="4" placeholder="Escriba el motivo de la revisión..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="confirmarMotivoRevision" class="btn btn-primary">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 

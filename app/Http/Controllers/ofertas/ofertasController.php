@@ -363,6 +363,8 @@ class ofertasController extends Controller
                         $nuevaOferta = $ofertaOriginal->replicate();
                         $nuevaOferta->NO_OFERTA = $noOfertaConRevision;
                         $nuevaOferta->REVISION_OFERTA = $revisionNumero;
+                        $nuevaOferta->MOTIVO_REVISION_OFERTA = $request->MOTIVO_REVISION_OFERTA;    
+
                         $nuevaOferta->save();
 
                         $response['code'] = 1;

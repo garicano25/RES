@@ -318,6 +318,7 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
                     </select>`;
             }
         },
+        { data: 'MOTIVO_REVISION_OFERTA' },
         { data: 'BTN_DOCUMENTO', className: 'text-center' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
@@ -330,10 +331,11 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
         { targets: 3, title: 'N° de Oferta/Cotización', className: 'text-center' },
         { targets: 4, title: 'Fecha', className: 'text-center' },
         { targets: 5, title: 'Estatus de la oferta', className: 'text-center' },
-        { targets: 6, title: 'Cotización', className: 'text-center' },
-        { targets: 7, title: 'Editar', className: 'text-center' },
-        { targets: 8, title: 'Visualizar', className: 'text-center' },
-        { targets: 9, title: 'Activo', className: 'text-center' }
+        { targets: 6, title: 'Motivo de la revisión', className: 'text-center' },
+        { targets: 7, title: 'Cotización', className: 'text-center' },
+        { targets: 8, title: 'Editar', className: 'text-center' },
+        { targets: 9, title: 'Visualizar', className: 'text-center' },
+        { targets: 10, title: 'Activo', className: 'text-center' }
     ]
 });
 
@@ -365,6 +367,7 @@ $("#Tablaofertas tbody").on("click", ".ver-revisiones", function () {
                                         <th>N° de Oferta</th>
                                         <th>Fecha</th>
                                         <th>Estatus</th>
+                                         <th>Motivo de la revisión</th>
                                         <th>Documento</th>
                                         <th>Editar</th>
                                     </tr>
@@ -378,12 +381,14 @@ $("#Tablaofertas tbody").on("click", ".ver-revisiones", function () {
                                     <td>${rev.NO_OFERTA}</td>
                                     <td>${rev.FECHA_OFERTA}</td>
                                     <td><span class="badge bg-secondary">${rev.ESTATUS_OFERTA}</span></td>
+                                    <td>${rev.MOTIVO_REVISION_OFERTA}</td>
                                     <td>${rev.BTN_DOCUMENTO}</td>
+
                                     <td>
-                                        <button class="btn btn-warning btn-sm EDITAR" 
+                                        <button class="btn btn-primary btn-sm EDITAR" 
                                             data-id="${rev.ID_FORMULARIO_OFERTAS}"
                                             data-revision='${JSON.stringify(rev)}'>
-                                            <i class="bi bi-pencil-square"></i> Editar
+                                            <i class="bi bi-pencil-square"></i> Visualizar
                                         </button>
                                     </td>
                                 </tr>`;
@@ -391,7 +396,6 @@ $("#Tablaofertas tbody").on("click", ".ver-revisiones", function () {
 
         revisionesHtml += `</tbody></table>`;
 
-        // Mostrar la tabla de revisiones como una "child row" dentro de la DataTable
         row.child(revisionesHtml).show();
         tr.addClass("shown");
     }
@@ -947,72 +951,76 @@ $(document).ready(function () {
 
 
 
-
-
 $("#crearREVISION").click(function (e) {
     e.preventDefault();
 
+    // Validar si el formulario está completo antes de continuar
     formularioValido = validarFormularioV1('formularioOFERTAS');
 
     if (formularioValido) {
-        alertMensajeConfirm({
-            title: "¿Desea crear una nueva revisión?",
-            text: "Se generará un nuevo registro con un número de revisión incrementado.",
-            icon: "question",
-        }, async function () {
-            // 🔥 NO USAR `loaderbtn()` en `crearREVISION`
-            let boton = $("#crearREVISION");
-            let textoOriginal = boton.html();
-            boton.prop('disabled', true).html('Creando revisión...');
-
-            // 🔥 Obtener el CSRF token desde la meta etiqueta
-            let csrfToken = $('meta[name="csrf-token"]').attr('content');
-
-            let requestData = {
-                api: 2, // API para crear revisiones
-                ID_FORMULARIO_OFERTAS: ID_FORMULARIO_OFERTAS,
-                _token: csrfToken // 🔥 Agregar CSRF Token
-            };
-
-            // 🔥 Enviar petición AJAX directamente con CSRF Token
-            $.ajax({
-                url: 'ofertaSave', // Ruta del backend
-                type: 'POST',
-                data: requestData,
-                dataType: 'json',
-                headers: { 'X-CSRF-TOKEN': csrfToken }, // 🔥 Agregar el Token en Headers
-                beforeSend: function () {
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Espere un momento',
-                        text: 'Estamos creando la revisión...',
-                        showConfirmButton: false
-                    });
-
-                    $('.swal2-popup').addClass('ld ld-breath');
-                },
-                success: function (data) {
-                    if (data.code === 1) {
-                        ID_FORMULARIO_OFERTAS = data.oferta.ID_FORMULARIO_OFERTAS;
-                        alertMensaje('success', 'Revisión creada correctamente', 'Se ha generado una nueva versión de la oferta.', null, null, 1500);
-                        $('#miModal_OFERTAS').modal('hide');
-                        Tablaofertas.ajax.reload();
-                    } else {
-                        alertToast('Error al crear la revisión.', 'error', 2000);
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error("❌ ERROR AJAX:", textStatus, errorThrown);
-                    alertToast('Error en la petición AJAX.', 'error', 2000);
-                },
-                complete: function () {
-                    // 🔥 Restaurar el botón
-                    boton.prop('disabled', false).html(textoOriginal);
-                }
-            });
-
-        }, 1);
+        // Mostrar el modal para ingresar el motivo de la revisión
+        $("#modalMotivoRevision").modal("show");
     } else {
-        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+        Swal.fire("Error", "Por favor, complete todos los campos del formulario.", "error");
     }
 });
+
+// Cuando el usuario confirme el motivo en el modal
+$("#confirmarMotivoRevision").click(function () {
+    let motivoRevision = $("#motivoRevisionInput").val().trim();
+
+    if (motivoRevision === "") {
+        Swal.fire("Error", "El motivo de la revisión es obligatorio.", "error");
+        return;
+    }
+
+    let csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+    $.ajax({
+        url: 'ofertaSave', // Ruta del backend
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken
+        },
+        data: {
+            api: 2, // API para crear revisiones
+            ID_FORMULARIO_OFERTAS: ID_FORMULARIO_OFERTAS,
+            MOTIVO_REVISION_OFERTA: motivoRevision, // 🔥 Se envía el motivo
+            _token: csrfToken // 🔥 Agregar CSRF Token
+        },
+        beforeSend: function () {
+            Swal.fire({
+                icon: 'info',
+                title: 'Espere un momento',
+                text: 'Estamos creando la revisión...',
+                showConfirmButton: false,
+                allowOutsideClick: false
+            });
+        },
+        success: function (response) {
+            if (response.code === 1) {
+                ID_FORMULARIO_OFERTAS = response.oferta.ID_FORMULARIO_OFERTAS;
+
+                // Cerrar los modales
+                $("#modalMotivoRevision").modal("hide");
+                $("#miModal_OFERTAS").modal("hide");
+
+                // Mostrar alerta de éxito
+                Swal.fire(
+                    "Revisión Creada",
+                    "Se ha generado una nueva versión de la oferta.",
+                    "success"
+                ).then(() => {
+                    Tablaofertas.ajax.reload(); // Recargar la tabla después de éxito
+                });
+
+            } else {
+                Swal.fire("Error", "Error al crear la revisión.", "error");
+            }
+        },
+        error: function () {
+            Swal.fire("Error", "Ocurrió un error en la petición AJAX.", "error");
+        }
+    });
+});
+

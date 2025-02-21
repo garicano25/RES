@@ -29,7 +29,7 @@ class usuarioModel extends Authenticatable
         'EMPLEADO_CORREO',
         'PASSWORD',
         'PASSWORD_2',
-        'ACTIVO'
+        'ACTIVO',
     ];
 
     // Campos ocultos al serializar el modelo

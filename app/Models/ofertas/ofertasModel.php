@@ -25,7 +25,8 @@ class ofertasModel extends Model
         'ACTIVO',
         'COTIZACION_DOCUMENTO',
         'OBSERVACIONES_OFERTA',
-        'ACTIVO'
+        'ACTIVO',
+        'MOTIVO_REVISION_OFERTA',
         
     ];
 }

@@ -170,16 +170,16 @@
 
 
                 <div class="col-6 mb-3">
-                  <label>Razón social *</label>
+                  <label>Razón social/ Nombre *</label>
                   <input type="text" class="form-control" id="RAZON_SOCIAL" name="RAZON_SOCIAL" required>
               </div>
               <div class="col-6 mb-3">
-                  <label>RFC </label>
+                  <label>RFC *</label>
                   <input type="text" class="form-control" id="RFC_PROVEEDOR" name="RFC_PROVEEDOR" required>
               </div>
               <div class="col-6 mb-3">
-                <label>Nombre comercial * </label>
-                <input type="text" class="form-control" id="NOMBRE_COMERCIAL" name="NOMBRE_COMERCIAL" required>
+                <label>Nombre comercial </label>
+                <input type="text" class="form-control" id="NOMBRE_COMERCIAL" name="NOMBRE_COMERCIAL" >
             </div>
   
             <div class="col-6 mb-3">
@@ -253,7 +253,7 @@
                     <label>Y Calle</label>
                     <input type="text" class="form-control" name="ENTRE_CALLE2_EMPRESA" id="ENTRE_CALLE2_EMPRESA">
                   </div>
-                  
+
                 </div>
             </div>
 

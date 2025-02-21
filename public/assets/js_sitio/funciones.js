@@ -2827,6 +2827,31 @@ function hacerSoloLectura2(data, modalSelector) {
 }
 
 
+
+function hacerSoloLectura3(data, modalSelector) {
+    var modal = $(modalSelector);
+
+    modal.find(':input, select, textarea').each(function () {
+        var input = $(this);
+        var fieldName = input.attr('name');
+
+        if (fieldName && data.hasOwnProperty(fieldName)) { // 🔥 Verifica que fieldName no sea undefined y exista en data
+            if (input.attr('type') === 'file') {
+                input.prop('disabled', true);
+            } else if (input.is(':radio') || input.is(':checkbox')) {
+                input.prop('checked', data[fieldName] == input.val());
+            } else {
+                input.val(data[fieldName] || '');
+            }
+        } else {
+            console.warn(`Campo '${fieldName}' no encontrado en los datos recibidos.`);
+        }
+    });
+
+    modal.find('button').not('.btn-close, .btn-danger').hide();
+    modal.find('.btn-close, .btn-danger').prop('disabled', false);
+}
+
 function resetFormulario(modalSelector) {
   var form = $(modalSelector).find('form')[0];
   if (form) {
