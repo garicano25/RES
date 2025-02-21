@@ -315,7 +315,7 @@
 
 
     @if(request()->is('Solicitudes'))
-    <script src="/assets/js_sitio/solicitudes/solicitudes.js?v=5.3"></script>
+    <script src="/assets/js_sitio/solicitudes/solicitudes.js?v=5.4"></script>
     @endif
 
 

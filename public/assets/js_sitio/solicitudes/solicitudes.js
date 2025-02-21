@@ -314,7 +314,7 @@ var Tablasolicitudes = $("#Tablasolicitudes").DataTable({
                     return `<span class="badge bg-danger" title="El cliente fue rechazado">Cliente rechazado</span>
                             <br><small class="text-muted">Motivo: ${row.MOTIVO_COTIZACION || 'No especificado'}</small>`;
                 }
-                return '<span class="badge bg-secondary">Sin verificar</span>';
+                return '<span class="badge bg-secondary">No sea solicitado una verificación</span>';
             }
         },
         { data: 'BTN_EDITAR' },
