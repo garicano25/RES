@@ -61,7 +61,9 @@ $(document).ready(function () {
 
         $(".observacionesdiv").empty();
 
+    document.getElementById('crearREVISION').style.display = 'none';
 
+        
         ofertaNueva = true;
     });
 });
