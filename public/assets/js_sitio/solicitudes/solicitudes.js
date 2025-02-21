@@ -1041,8 +1041,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         <input type="text" class="form-control" name="NUMERO_INTERIOR_DOMICILIO">
                     </div>
                     <div class="col-3 mb-3">
-                        <label>Nombre de la colonia *</label>
-                        <select class="form-control" name="NOMBRE_COLONIA_DOMICILIO" required>
+                        <label>Nombre de la colonia </label>
+                        <select class="form-control" name="NOMBRE_COLONIA_DOMICILIO" >
                             <option value="">Seleccione una opción</option>
                         </select>
                     </div>
@@ -1155,8 +1155,8 @@ function obtenerDirecciones(data) {
                         <input type="text" class="form-control" name="NUMERO_INTERIOR_DOMICILIO" value="${numeroInterior}">
                     </div>
                     <div class="col-3 mb-3">
-                        <label>Nombre de la colonia *</label>
-                        <select class="form-control nombre-colonia" name="NOMBRE_COLONIA_DOMICILIO" required>
+                        <label>Nombre de la colonia </label>
+                        <select class="form-control nombre-colonia" name="NOMBRE_COLONIA_DOMICILIO" >
                             <option value="">Seleccione una opción</option>
                         </select>
                     </div>
