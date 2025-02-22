@@ -303,7 +303,7 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
         error: function (jqXHR, textStatus, errorThrown) { alertErrorAJAX(jqXHR, textStatus, errorThrown); },
         dataSrc: 'data'
     },
-    order: [[1, 'asc']],
+    order: [[0, 'asc']], 
     columns: [
         { data: null, render: function(data, type, row, meta) { return meta.row + 1; } },
         { data: 'REVISION_OFERTA' },
@@ -366,7 +366,6 @@ $("#Tablaofertas tbody").on("click", ".ver-revisiones", function () {
         return;
     }
 
-    // Si la fila ya está expandida, la contraemos
     if (row.child.isShown()) {
         row.child.hide();
         tr.removeClass("shown");
@@ -374,7 +373,6 @@ $("#Tablaofertas tbody").on("click", ".ver-revisiones", function () {
     } else {
         btn.addClass("opened");
 
-        // Construcción de la tabla de revisiones dentro de la misma DataTable
         let revisionesHtml = `<table class="table table-sm table-bordered w-100">
                                 <thead>
                                     <tr>
@@ -545,15 +543,19 @@ $('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablaofertas.row(tr);
 
-    // Verifica si el botón de editar está en la tabla principal o en una revisión
     var rowData;
     if (row.data()) {
-        // Es una fila de la tabla principal
         rowData = row.data();
+
+        document.getElementById('crearREVISION').style.display = 'block'; 
+        document.getElementById('guardarOFERTA').style.display = 'block'; 
+
     } else {
-        // Es una revisión dentro de `row.child()`, obtenemos los datos de `data-revision`
         rowData = JSON.parse($(this).attr('data-revision'));
-    }
+        document.getElementById('crearREVISION').style.display = 'none';
+         document.getElementById('guardarOFERTA').style.display = 'none';
+    }       
+
 
     ID_FORMULARIO_OFERTAS = rowData.ID_FORMULARIO_OFERTAS;
 
@@ -844,7 +846,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 function obtenerObservaciones(data) {
-    let row = data.data().OBSERVACIONES_OFERTA;
+    let row = data.OBSERVACIONES_OFERTA; 
     var observaciones = JSON.parse(row);
 
     $.each(observaciones, function (index, contacto) {

@@ -312,16 +312,13 @@ class ofertasController extends Controller
             switch (intval($request->api)) {
                 case 1:
                     if ($request->ID_FORMULARIO_OFERTAS == 0) {
-                        // Obtener el año actual de forma dinámica
                         $anioActual = date('Y');
                         $ultimoDigitoAnio = substr($anioActual, -2);
 
-                        // Buscar el último NO_OFERTA del año actual dinámicamente
                         $ultimoRegistro = ofertasModel::where('NO_OFERTA', 'LIKE', "RES-COT-$ultimoDigitoAnio-%")
                         ->orderByRaw("CAST(SUBSTRING_INDEX(NO_OFERTA, '-', -1) AS UNSIGNED) DESC")
                         ->first();
 
-                        // Extraer el último número generado y evitar duplicados
                         if ($ultimoRegistro) {
                             preg_match('/RES-COT-\d{2}-(\d{3})/', $ultimoRegistro->NO_OFERTA, $matches);
                             $numeroIncremental = isset($matches[1]) ? intval($matches[1]) + 1 : 1;
@@ -329,7 +326,6 @@ class ofertasController extends Controller
                             $numeroIncremental = 1;
                         }
 
-                        // Generar el nuevo NO_OFERTA sin repetir valores
                         $noOferta = 'RES-COT-' . $ultimoDigitoAnio . '-' . str_pad($numeroIncremental, 3, '0', STR_PAD_LEFT);
 
                         // Asignar valores al request
@@ -339,19 +335,16 @@ class ofertasController extends Controller
                             'MOTIVO_REVISION_OFERTA' => 'Revisión inicial'
                         ]);
 
-                        // Guardar oferta en la base de datos
                         $data = $request->except(['observacion', 'COTIZACION_DOCUMENTO']);
                         $oferta = ofertasModel::create($data);
 
-                        // 🔹 Verificar y guardar el archivo de cotización
                         if ($request->hasFile('COTIZACION_DOCUMENTO')) {
                             $documento = $request->file('COTIZACION_DOCUMENTO');
                             $idOferta = $oferta->ID_FORMULARIO_OFERTAS;
-                            $nombreArchivo = time() . '_' . $documento->getClientOriginalName(); // Evita nombres duplicados
+                            $nombreArchivo = time() . '_' . $documento->getClientOriginalName(); 
                             $rutaCarpeta = 'ventas/ofertas/' . $idOferta;
                             $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
 
-                            // Actualizar la oferta con la ruta del documento
                             $oferta->COTIZACION_DOCUMENTO = $rutaCompleta;
                             $oferta->save();
                         }
@@ -364,7 +357,6 @@ class ofertasController extends Controller
                         if ($oferta) {
                             $oferta->update($request->except('COTIZACION_DOCUMENTO'));
 
-                            // 🔹 Verificar y actualizar el archivo si existe
                             if ($request->hasFile('COTIZACION_DOCUMENTO')) {
                                 if ($oferta->COTIZACION_DOCUMENTO && Storage::exists($oferta->COTIZACION_DOCUMENTO)) {
                                     Storage::delete($oferta->COTIZACION_DOCUMENTO);
