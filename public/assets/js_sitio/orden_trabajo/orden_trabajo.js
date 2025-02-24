@@ -40,6 +40,12 @@ $(document).ready(function () {
         var selectize = selectizeInstance[0].selectize;
         selectize.clear();
         selectize.setValue(""); 
+
+
+         // Solo para un registro nuevo, asignar el data-usuario
+         const quienValidaInput = document.getElementById("VERIFICADO_POR");
+         const usuarioAutenticado = quienValidaInput.getAttribute("data-usuario");
+         quienValidaInput.value = usuarioAutenticado;
     });
 });
 
@@ -228,6 +234,19 @@ $('#Tablaordentrabajo tbody').on('click', 'td>button.EDITAR', function () {
     } else {
         selectize.clear();
     }
+
+
+    if (row.data().VERIFICADO_POR) {
+        $("#VERIFICADO_POR").val(row.data().VERIFICADO_POR);
+    }
+
 });
 
 
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const quienValidaInput = document.getElementById("VERIFICADO_POR");
+    const usuarioAutenticado = quienValidaInput.getAttribute("data-usuario");
+    quienValidaInput.value = usuarioAutenticado;
+});

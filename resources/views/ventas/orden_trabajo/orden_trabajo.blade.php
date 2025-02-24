@@ -88,7 +88,11 @@
 
                                 <div class="col-3">
                                     <label>Verificado por </label>
-                                    <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" id="VERIFICADO_POR" name="VERIFICADO_POR" readonly>
+                                    <input type="text" class="form-control"
+                                    id="VERIFICADO_POR"
+                                    name="VERIFICADO_POR"
+                                    readonly
+                                    data-usuario="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
                                 </div>
 
                                 <div class="col-3">
@@ -119,6 +123,26 @@
                         </div>
 
 
+                        <div class="col-12 mt-3">
+                            <div class="row">
+
+
+
+                                <div class="col-md-12 mb-3">
+                                    <label class="form-label">Necesidad u objetivo del servicio: *</label>
+                                    <textarea class="form-control" id="NECESIDAD_SERVICIO_CONFIRMACION" name="NECESIDAD_SERVICIO_CONFIRMACION" rows="5" required></textarea>
+                                  </div>
+
+                                  
+                                  <div class="col-md-12 mb-3">
+                                    <label class="form-label">Observaciones: </label>
+                                    <textarea class="form-control" id="OBSERVACIONES_CONFIRMACION" name="OBSERVACIONES_CONFIRMACION" rows="5"></textarea>
+                                  </div>
+
+
+
+                            </div>
+                        </div>
 
 
 

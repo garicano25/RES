@@ -460,7 +460,7 @@ $('#Tablaconfirmacion tbody').on('click', 'td>button.EDITAR', function () {
         $("#QUIEN_VALIDA").val(row.data().QUIEN_VALIDA);
     }
 
-            $("#ESTADO_VERIFICACION").val(row.data().ESTADO_VERIFICACION);
+    $("#ESTADO_VERIFICACION").val(row.data().ESTADO_VERIFICACION);
 
 
     var selectize = $('#OFERTA_ID')[0].selectize;
