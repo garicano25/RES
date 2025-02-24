@@ -25,7 +25,8 @@ class confirmacionModel extends Model
         'QUIEN_VALIDA',
         'COMENTARIO_VALIDACION',
         'VERIFICACION_INFORMACION',
-        'ESTADO_VERIFICACION'
+        'ESTADO_VERIFICACION',
+        ''
     ];
 }
 

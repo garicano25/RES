@@ -482,6 +482,7 @@ Route::get('/Tablaconfirmacion', [confirmacionController::class, 'Tablaconfirmac
 Route::post('/ContratacionSave', [confirmacionController::class, 'store']);
 Route::get('/mostraraceptacion/{id}', [confirmacionController::class, 'mostraraceptacion']);
 Route::get('/confirmacionDelete', [confirmacionController::class, 'store']);
+Route::get('/mostrarevidencias/{id}', [confirmacionController::class, 'mostrarevidencias']);
 
 //==============================================   ORDEN DE TRABAJO  ============================================== 
 // Route::get('/Orden_trabajo', function () {return view('ventas.orden_trabajo.orden_trabajo');});

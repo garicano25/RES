@@ -189,14 +189,13 @@
                                         <div class="row">
                                             @foreach($verificaciones as $verificacion)
                                             @php
-                                            // Usar el ID de la base de datos para asegurarnos de que sea único
                                             $inputId = 'motivo_' . $verificacion->ID_CATALOGO_VERIFICACION_CLIENTE;
                                             $radioName = 'verificacion_' . $verificacion->ID_CATALOGO_VERIFICACION_CLIENTE;
                                             @endphp
                                             <div class="col-12 d-flex align-items-center gap-3 mb-2">
                                                 <label class="form-check-label" style="min-width: 150px;">{{ $verificacion->NOMBRE_VERIFICACION }}</label>
                                                 <div class="d-flex align-items-center gap-2">
-                                                    <input class="form-check-input" type="radio" name="{{ $radioName }}" value="Na" onclick="toggleInput('{{ $inputId }}', false)"> Na
+                                                    <input class="form-check-input" type="radio" name="{{ $radioName }}" value="Na" onclick="toggleInput('{{ $inputId }}', false)"> N/A
                                                     <input class="form-check-input" type="radio" name="{{ $radioName }}" value="Sí" onclick="toggleInput('{{ $inputId }}', false)"> Sí
                                                     <input class="form-check-input" type="radio" name="{{ $radioName }}" value="No" onclick="toggleInput('{{ $inputId }}', true)"> No
                                                 </div>
