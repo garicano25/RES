@@ -1305,6 +1305,8 @@ function cargarPruebasGuardadas(referencias) {
     var pruebasHTML = '';
 
     referencias.forEach(function(requerimiento) {
+        var totalPorcentaje = requerimiento.TOTAL_PORCENTAJE !== undefined ? requerimiento.TOTAL_PORCENTAJE : ''; // Asegurar que haya un valor válido
+
         pruebasHTML += `
             <div class="col-12 mb-3">
                 <div class="row">
@@ -1321,7 +1323,7 @@ function cargarPruebasGuardadas(referencias) {
 
                     <div class="col-3 text-center">
                         <label>Porcentaje ingresado</label>
-                        <input type="number" name="TOTAL_PORCENTAJE[]" value="${requerimiento.TOTAL_PORCENTAJE}" class="form-control" oninput="calcularPorcentajeTotal2()">
+                        <input type="number" name="TOTAL_PORCENTAJE[]" value="${totalPorcentaje}" class="form-control" oninput="calcularPorcentajeTotal2()">
                     </div>
 
                     <div class="col-5 text-center">
@@ -1338,6 +1340,7 @@ function cargarPruebasGuardadas(referencias) {
     $('#obtenerpruebas').html(pruebasHTML);  
     inicializarEventosPruebas();  
 }
+
 
 function cargarNuevaPrueba(id_prueba_seleccion) {
     if (!categoriaId) {
