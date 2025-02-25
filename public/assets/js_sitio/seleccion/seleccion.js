@@ -1271,7 +1271,6 @@ $('#Tablapruebaconocimientoseleccion').on('click', '.ver-archivo-pruebas', funct
 });
 
 
-
 $('#Tablapruebaconocimientoseleccion tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var fila = Tablapruebaconocimientoseleccion.row(tr);
@@ -1281,6 +1280,10 @@ $('#Tablapruebaconocimientoseleccion tbody').on('click', 'td>button.EDITAR', fun
 
     editarDatoTabla(data, form, 'Modal_pruebas_concimiento', 1);
 
+    // **Limpiar pruebas antes de cargar para evitar duplicados**
+    $('#obtenerpruebas').html('');
+
+    // **Cargar pruebas guardadas**
     cargarPruebasGuardadas(data.REFERENCIAS);
 
     if (data.REQUIERE_PRUEBAS === 'si') {
@@ -1291,9 +1294,10 @@ $('#Tablapruebaconocimientoseleccion tbody').on('click', 'td>button.EDITAR', fun
         $('#prueba_no').prop('checked', true);
     }
 
-
+    // **Calcular el porcentaje solo una vez**
     calcularPorcentajeTotal2();
-    // Cargar la nueva prueba sin eliminar las pruebas guardadas
+
+    // **Cargar la nueva prueba sin duplicar las anteriores**
     cargarNuevaPrueba(data.ID_PRUEBAS_SELECCION);
 });
 
@@ -1335,9 +1339,7 @@ function cargarPruebasGuardadas(referencias) {
     inicializarEventosPruebas();  
 }
 
-
-    
-    function cargarNuevaPrueba(id_prueba_seleccion) {
+function cargarNuevaPrueba(id_prueba_seleccion) {
     if (!categoriaId) {
         Swal.fire('Error', 'No se ha seleccionado ninguna categoría.', 'error');
         return;
@@ -1350,10 +1352,17 @@ function cargarPruebasGuardadas(referencias) {
         method: 'GET',
         success: function(response) {
             if (response.data.length > 0) {
+                // **Eliminar duplicados antes de agregar la nueva prueba**
+                $('input[name="TIPO_PRUEBA[]"]').each(function () {
+                    if ($(this).val() === response.data[response.data.length - 1].TIPO_PRUEBA) {
+                        $(this).closest('.col-12').remove();
+                    }
+                });
+
                 var pruebasHTML = '';
 
-                // Buscar la última prueba creada
-                var nuevaPrueba = response.data[response.data.length - 1];  // Tomamos la última prueba del array
+                // **Tomamos solo la última prueba**
+                var nuevaPrueba = response.data[response.data.length - 1];
 
                 if (nuevaPrueba) {
                     pruebasHTML += `
@@ -1385,9 +1394,12 @@ function cargarPruebasGuardadas(referencias) {
                     `;
                 }
 
-                // Añadir la nueva prueba sin eliminar las anteriores
-                $('#obtenerpruebas').append(pruebasHTML);  
-                inicializarEventosPruebas();  // Inicializamos los eventos de los nuevos elementos
+                // **Verificar antes de agregar la nueva prueba**
+                if (!$('input[name="TIPO_PRUEBA[]"][value="' + nuevaPrueba.TIPO_PRUEBA + '"]').length) {
+                    $('#obtenerpruebas').append(pruebasHTML);  
+                }
+
+                inicializarEventosPruebas();  
             } else {
                 $('#obtenerpruebas').html('<p>No hay pruebas asociadas a esta categoría.</p>');
             }
@@ -1397,7 +1409,6 @@ function cargarPruebasGuardadas(referencias) {
         }
     });
 }
-
 
 
 
