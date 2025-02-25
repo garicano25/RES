@@ -501,7 +501,7 @@
 
 
     @if(request()->is('Selección'))
-    <script src="/assets/js_sitio/seleccion/seleccion.js?v=19.1"></script>
+    <script src="/assets/js_sitio/seleccion/seleccion.js?v=19.2"></script>
     @endif
 
 
