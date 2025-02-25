@@ -66,15 +66,15 @@ var Tabladirectorio = $("#Tabladirectorio").DataTable({
             data: 'SERVICIOS_JSON',
             render: function (data, type, row) {
                 if (data) {
-                    let servicios = JSON.parse(data); // Convertir JSON a objeto
-                    let lista = '<ul>'; // Crear lista HTML
+                    let servicios = JSON.parse(data); 
+                    let lista = '<ul>'; 
                     servicios.forEach(servicio => {
                         lista += `<li>${servicio.NOMBRE_SERVICIO}</li>`;
                     });
                     lista += '</ul>';
                     return lista;
                 }
-                return ''; // Retornar vacío si no hay datos
+                return ''; 
             }
         },
         { data: 'BTN_VISUALIZAR' },

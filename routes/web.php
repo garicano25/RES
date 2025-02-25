@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Response;
@@ -366,8 +367,6 @@ Route::get('/Tablapruebaconocimiento', [catalogopruebasController::class, 'Tabla
 
 //==============================================  CONTRATACION  ============================================== 
 
-
-
 // PENDIENTE AL CONTRATAR
 Route::get('/Pendiente-Contratar', function () {return view('RH.contratacion.pendientecontratar');});
 Route::get('/Tablapendientecontratacion', [pendientecontratarController::class, 'Tablapendientecontratacion']);
@@ -460,7 +459,15 @@ Route::get('/mostrardocumenadeudo/{id}', [desvinculacionController::class, 'most
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //==============================================  SOLICITUDES  ============================================== 
-Route::get('/Solicitudes', [solicitudesController::class, 'index']);
+ Route::get('/Solicitudes', [solicitudesController::class, 'index']);
+
+// Route::get('/Solicitudes', function () {
+//     // Encriptar la ruta para redirigir a la versión encriptada
+//     $encryptedRoute = Crypt::encryptString('Solicitudes');
+//     return redirect()->route('route.encrypted', ['encryptedRoute' => $encryptedRoute]);
+// });
+
+
 Route::post('/solicitudSave', [solicitudesController::class, 'store']);
 Route::get('/Tablasolicitudes', [solicitudesController::class, 'Tablasolicitudes']);
 Route::get('/solicitudDelete', [solicitudesController::class, 'store']);
@@ -485,8 +492,6 @@ Route::get('/confirmacionDelete', [confirmacionController::class, 'store']);
 Route::get('/mostrarevidencias/{id}', [confirmacionController::class, 'mostrarevidencias']);
 
 //==============================================   ORDEN DE TRABAJO  ============================================== 
-// Route::get('/Orden_trabajo', function () {return view('ventas.orden_trabajo.orden_trabajo');});
-
 Route::get('/Orden_trabajo', [otController::class, 'index']);
 Route::get('/Tablaordentrabajo', [otController::class, 'Tablaordentrabajo']);
 Route::post('/otSave', [otController::class, 'store']);
@@ -571,7 +576,13 @@ Route::get('/Bitácora', function () {return view('compras.requisicionesmaterial
 
 
 //  DIRECTORIO EXTERNO
-Route::get('/Directorio', function () {return view('compras.proveedores.directorio');});
+
+
+Route::get('/Directorio', function () { //// RUTA EXTERNA ////
+    $encryptedRoute = Crypt::encryptString('Directorio');
+    return redirect()->route('route.encrypted', ['encryptedRoute' => $encryptedRoute]);
+});
+// Route::get('/Directorio', function () {return view('compras.proveedores.directorio');});
 Route::post('/ServiciosSave', [directorioController::class, 'store']);
 
 
@@ -585,11 +596,57 @@ Route::get('/ServicioDelete', [directorioController::class, 'store']);
 
 //  ALTA 
 
-Route::get('/Alta', function () {return view('compras.proveedores.altaproveedores');});
-
-//============================================== LIMPIAR RUTAS ============================================== 
 
 
+// Route::get('/Alta', function () {return view('compras.proveedores.altaproveedores');});
+
+
+
+
+
+
+//============================================== ENCRIPTAR TURAS ============================================== 
+
+
+// Route::get('/{encryptedRoute}', function ($encryptedRoute) {
+//     try {
+//         $decryptedRoute = Crypt::decryptString($encryptedRoute);
+
+//         switch ($decryptedRoute) {
+//             case 'Directorio':
+//                 return view('compras.proveedores.directorio');
+//             case 'Alta':
+//                 return view('compras.proveedores.altaproveedores');
+//             default:
+//                 abort(404);
+//         }
+//     } catch (\Exception $e) {
+//         abort(404);
+//     }
+// })->name('route.encrypted');
+
+
+Route::get('/{encryptedRoute}', function ($encryptedRoute) {
+    try {
+        // Desencriptar la URL
+        $decryptedRoute = Crypt::decryptString($encryptedRoute);
+
+        // Verificar la ruta desencriptada
+        switch ($decryptedRoute) {
+            // case 'Solicitudes':
+            //     // Llamar al controlador y su método 'index'
+            //     return app(SolicitudesController::class)->index();
+            case 'Directorio':
+                return view('compras.proveedores.directorio');
+            default:
+                abort(404);
+        }
+    } catch (\Exception $e) {
+        // En caso de que la encriptación falle, lanzar error 404
+        abort(404);
+    }
+})->name('route.encrypted');
+//============================================== C.P ============================================== 
 
 
 // Route::get('codigo-postal/{cp}', function ($cp) {
@@ -629,6 +686,10 @@ Route::get('codigo-postal/{cp}', function ($cp) {
         'detalle' => $response->body()
     ], 400);
 });
+
+
+//============================================== LIMPIAR RUTAS ============================================== 
+
 
 Route::get('/clear-cache', function () {
     Artisan::call('config:cache');

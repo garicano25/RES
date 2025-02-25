@@ -1274,17 +1274,14 @@ $('#Tablapruebaconocimientoseleccion').on('click', '.ver-archivo-pruebas', funct
 
 $('#Tablapruebaconocimientoseleccion tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablapruebaconocimientoseleccion.row(tr);
-    ID_PRUEBAS_SELECCION = row.data().ID_PRUEBAS_SELECCION;
-    var data = row.data(); 
+    var fila = Tablapruebaconocimientoseleccion.row(tr);
+    ID_PRUEBAS_SELECCION = fila.data().ID_PRUEBAS_SELECCION;
+    var data = fila.data(); 
     var form = "formularioPruebas";
-
 
     editarDatoTabla(data, form, 'Modal_pruebas_concimiento', 1);
 
-    
     cargarPruebasGuardadas(data.REFERENCIAS);
-
 
     if (data.REQUIERE_PRUEBAS === 'si') {
         $('#prueba-categoria').css('display', 'block');
@@ -1293,14 +1290,15 @@ $('#Tablapruebaconocimientoseleccion tbody').on('click', 'td>button.EDITAR', fun
         $('#prueba-categoria').css('display', 'none');
         $('#prueba_no').prop('checked', true);
     }
+
+    // Cargar la nueva prueba sin eliminar las pruebas guardadas
+    cargarNuevaPrueba(data.ID_PRUEBAS_SELECCION);
 });
-
-
 
 function cargarPruebasGuardadas(referencias) {
     var pruebasHTML = '';
 
-    referencias.forEach(function(requerimiento, index) {
+    referencias.forEach(function(requerimiento) {
         pruebasHTML += `
             <div class="col-12 mb-3">
                 <div class="row">
@@ -1309,7 +1307,7 @@ function cargarPruebasGuardadas(referencias) {
                         <input type="text" name="TIPO_PRUEBA[]" value="${requerimiento.TIPO_PRUEBA}" class="form-control" readonly>
                     </div>
                     
-                    <div class="col-3"  style="display: none;">
+                    <div class="col-3" style="display: none;">
                         <label>Porcentaje asignado</label>
                         <input type="hidden" name="PORCENTAJE_PRUEBA[]" value="${requerimiento.PORCENTAJE_PRUEBA}" class="form-control" readonly>
                         <input type="number" value="${requerimiento.PORCENTAJE_PRUEBA}" class="form-control" readonly>
@@ -1335,6 +1333,68 @@ function cargarPruebasGuardadas(referencias) {
     inicializarEventosPruebas();  
 }
 
+
+    
+    function cargarNuevaPrueba(id_prueba_seleccion) {
+    if (!categoriaId) {
+        Swal.fire('Error', 'No se ha seleccionado ninguna categoría.', 'error');
+        return;
+    }
+
+    $("#prueba-categoria").show();
+
+    $.ajax({
+        url: '/obtenerRequerimientos/' + categoriaId,  
+        method: 'GET',
+        success: function(response) {
+            if (response.data.length > 0) {
+                var pruebasHTML = '';
+
+                // Buscar la última prueba creada
+                var nuevaPrueba = response.data[response.data.length - 1];  // Tomamos la última prueba del array
+
+                if (nuevaPrueba) {
+                    pruebasHTML += `
+                        <div class="col-12 mb-3">
+                            <div class="row">
+                                <div class="col-4 text-center">
+                                    <label>Nombre de la prueba</label>
+                                    <input type="text" name="TIPO_PRUEBA[]" value="${nuevaPrueba.TIPO_PRUEBA}" class="form-control" readonly>
+                                </div>
+
+                                <div class="col-3" style="display: none;">
+                                    <label>Porcentaje asignado</label>
+                                    <input type="number" value="${nuevaPrueba.PORCENTAJE}" class="form-control" readonly>
+                                </div>
+
+                                <div class="col-3 text-center">
+                                    <label>Porcentaje ingresado</label>
+                                    <input type="number" name="TOTAL_PORCENTAJE[]" class="form-control" oninput="calcularPorcentajeTotal()">
+                                </div>
+
+                                <div class="col-5 text-center">
+                                    <label>Cargar documento</label>
+                                    <input type="file" name="ARCHIVO_RESULTADO[]" class="form-control archivo-input" accept=".pdf">
+                                    <span class="errorArchivoResultado text-danger" style="display: none;">Solo se permiten archivos PDF</span>
+                                    <button type="button" class="btn quitarArchivo mt-2" style="display: none;">Quitar archivo</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Añadir la nueva prueba sin eliminar las anteriores
+                $('#obtenerpruebas').append(pruebasHTML);  
+                inicializarEventosPruebas();  // Inicializamos los eventos de los nuevos elementos
+            } else {
+                $('#obtenerpruebas').html('<p>No hay pruebas asociadas a esta categoría.</p>');
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            Swal.fire('Error', 'No se pudieron cargar las pruebas de conocimiento.', 'error');
+        }
+    });
+}
 
 
 
@@ -2369,7 +2429,6 @@ $("#guardarFormSeleccionReferencias").click(function (e) {
 
 
 
-
 $("#nueva_prueba_conocimiento").click(function (e) {
     e.preventDefault();
 
@@ -2382,18 +2441,13 @@ $("#nueva_prueba_conocimiento").click(function (e) {
     $('input[name="REQUIERE_PRUEBAS"]').change(function () {
         var seleccion = $(this).val();  
         if (seleccion === 'si') {
-            cargarPruebasDeConocimiento();  
+            cargarPruebasDeConocimiento(true);  
         } else {
-            
             $("#prueba-categoria").hide();
             $('#obtenerpruebas').html(''); 
         }
     });
 });
-
-
-
-
 
 
 
@@ -2414,8 +2468,7 @@ Modalpruebas.addEventListener('hidden.bs.modal', event => {
 
 
 
-
-function cargarPruebasDeConocimiento() {
+function cargarPruebasDeConocimiento(nuevo = false) {
     if (!categoriaId) {
         Swal.fire('Error', 'No se ha seleccionado ninguna categoría.', 'error');
         return;
@@ -2431,37 +2484,46 @@ function cargarPruebasDeConocimiento() {
                 var pruebasHTML = '';
 
                 response.data.forEach(function(requerimiento, index) {
-                    pruebasHTML += `
-                        <div class="col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4 text-center">
-                                    <label>Nombre de la prueba</label>
-                                    <input type="text" name="TIPO_PRUEBA[]" value="${requerimiento.TIPO_PRUEBA}" class="form-control" readonly>
-                                </div>
-                                
-                                <div class="col-3" style="display: none;">
-                                    <label>Porcentaje asignado</label>
-                                    <input type="hidden" name="PORCENTAJE_PRUEBA[]" value="${requerimiento.PORCENTAJE}" class="form-control" readonly>
-                                    <input type="number" value="${requerimiento.PORCENTAJE}" class="form-control" readonly>
-                                </div>
+                    // Si es una prueba nueva, mostrar todas las pruebas y ocultar el porcentaje asignado
+                    if (nuevo) {
+                        pruebasHTML += `
+                            <div class="col-12 mb-3">
+                                <div class="row">
+                                    <div class="col-4 text-center">
+                                        <label>Nombre de la prueba</label>
+                                        <input type="text" name="TIPO_PRUEBA[]" value="${requerimiento.TIPO_PRUEBA}" class="form-control" readonly>
+                                    </div>
 
-                                <div class="col-3 text-center">
-                                    <label>Porcentaje ingresado</label>
-                                    <input type="number" name="TOTAL_PORCENTAJE[]" class="form-control" oninput="calcularPorcentajeTotal()">
-                                </div>
+                                    <div class="col-3" style="display: none;">
+                                        <label>Porcentaje asignado</label>
+                                        <input type="hidden" name="PORCENTAJE_PRUEBA[]" value="${requerimiento.PORCENTAJE}" class="form-control" readonly>
+                                        <input type="number" value="${requerimiento.PORCENTAJE}" class="form-control" readonly>
+                                    </div>
 
-                                <div class="col-5 text-center">
-                                    <label>Cargar documento</label>
-                                    <input type="file" name="ARCHIVO_RESULTADO[]" class="form-control archivo-input" accept=".pdf">
-                                    <span class="errorArchivoResultado text-danger" style="display: none;">Solo se permiten archivos PDF</span>
-                                    <button type="button" class="btn quitarArchivo mt-2" style="display: none;">Quitar archivo</button>
+                                    <div class="col-3 text-center">
+                                        <label>Porcentaje ingresado</label>
+                                        <input type="number" name="TOTAL_PORCENTAJE[]" class="form-control" oninput="calcularPorcentajeTotal()">
+                                    </div>
+
+                                    <div class="col-5 text-center">
+                                        <label>Cargar documento</label>
+                                        <input type="file" name="ARCHIVO_RESULTADO[]" class="form-control archivo-input" accept=".pdf">
+                                        <span class="errorArchivoResultado text-danger" style="display: none;">Solo se permiten archivos PDF</span>
+                                        <button type="button" class="btn quitarArchivo mt-2" style="display: none;">Quitar archivo</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    `;
+                        `;
+                    }
                 });
 
-                $('#obtenerpruebas').html(pruebasHTML);  
+                // Si es un nuevo registro, se reemplazan las pruebas, si es edición, solo agregamos las nuevas
+                if (nuevo) {
+                    $('#obtenerpruebas').html(pruebasHTML);  
+                } else {
+                    $('#obtenerpruebas').append(pruebasHTML);  
+                }
+
                 inicializarEventosPruebas();  
             } else {
                 $('#obtenerpruebas').html('<p>No hay pruebas asociadas a esta categoría.</p>');
@@ -2472,6 +2534,8 @@ function cargarPruebasDeConocimiento() {
         }
     });
 }
+
+
 
 function calcularPorcentajeTotal() {
     var sumaTotal = 0;

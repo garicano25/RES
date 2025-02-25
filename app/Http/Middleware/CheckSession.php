@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+
+use Illuminate\Support\Facades\Crypt;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,27 +18,32 @@ class CheckSession
      */
     public function handle($request, Closure $next)
     {
-        // Rutas excluidas del middleware (sin barra inicial)
         $excludedRoutes = [
             'Formulario-vacantes', // Ruta externa
             'Vacantes',            // Ruta externa
             'login',               // Ruta de login
             '',                    // Redirección inicial
             'logout',              // Ruta de logout
-            'inicio',               // Ruta externa
+            'inicio',              // Ruta externa
+            'Directorio'           // Ruta sin encriptar
         ];
 
-        // Verificar si la solicitud coincide con una ruta excluida
-        if (in_array($request->path(), $excludedRoutes)) {
+        if ($request->is('login') || $request->is('Directorio')) {
             return $next($request);
         }
 
-        // Si el usuario no está autenticado, redirigir al login
+        try {
+            $decryptedRoute = Crypt::decryptString($request->path());
+            if (in_array($decryptedRoute, $excludedRoutes)) {
+                return $next($request);
+            }
+        } catch (\Exception $e) {
+        }
+
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
         }
 
-        // Continuar con la solicitud si el usuario está autenticado
         return $next($request);
     }
 }
