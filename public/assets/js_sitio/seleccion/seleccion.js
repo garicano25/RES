@@ -1294,11 +1294,11 @@ $('#Tablapruebaconocimientoseleccion tbody').on('click', 'td>button.EDITAR', fun
         $('#prueba_no').prop('checked', true);
     }
 
-    // **Calcular el porcentaje solo una vez**
-    calcularPorcentajeTotal2();
+    // // **Calcular el porcentaje solo una vez**
+    // calcularPorcentajeTotal2();
 
     // **Cargar la nueva prueba sin duplicar las anteriores**
-    // cargarNuevaPrueba(data.ID_PRUEBAS_SELECCION);
+    cargarNuevaPrueba(data.ID_PRUEBAS_SELECCION);
 });
 
 function cargarPruebasGuardadas(referencias) {
