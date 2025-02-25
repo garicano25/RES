@@ -1291,6 +1291,8 @@ $('#Tablapruebaconocimientoseleccion tbody').on('click', 'td>button.EDITAR', fun
         $('#prueba_no').prop('checked', true);
     }
 
+
+    calcularPorcentajeTotal2();
     // Cargar la nueva prueba sin eliminar las pruebas guardadas
     cargarNuevaPrueba(data.ID_PRUEBAS_SELECCION);
 });
@@ -1315,7 +1317,7 @@ function cargarPruebasGuardadas(referencias) {
 
                     <div class="col-3 text-center">
                         <label>Porcentaje ingresado</label>
-                        <input type="number" name="TOTAL_PORCENTAJE[]" value="${requerimiento.TOTAL_PORCENTAJE}" class="form-control" oninput="calcularPorcentajeTotal()">
+                        <input type="number" name="TOTAL_PORCENTAJE[]" value="${requerimiento.TOTAL_PORCENTAJE}" class="form-control" oninput="calcularPorcentajeTotal2()">
                     </div>
 
                     <div class="col-5 text-center">
@@ -1369,7 +1371,7 @@ function cargarPruebasGuardadas(referencias) {
 
                                 <div class="col-3 text-center">
                                     <label>Porcentaje ingresado</label>
-                                    <input type="number" name="TOTAL_PORCENTAJE[]" class="form-control" oninput="calcularPorcentajeTotal()">
+                                    <input type="number" name="TOTAL_PORCENTAJE[]" class="form-control" oninput="calcularPorcentajeTotal2()">
                                 </div>
 
                                 <div class="col-5 text-center">
@@ -4391,6 +4393,28 @@ $("#guardarFormSeleccionPPT").click(function (e) {
 
 
 
+function calcularPorcentajeTotal2() {
+    var porcentajeGuardado = parseFloat($('#porcentajeTotalPrueba').val()) || 0;  // Tomar el porcentaje ya guardado
+    var sumaNuevas = 0;  // Suma de porcentajes de las nuevas pruebas
+    var totalNuevas = 0;  // Contador de nuevas pruebas
+    var camposLlenos = false; 
 
+    // **Tomamos en cuenta SOLO las nuevas pruebas**
+    $('input[name="TOTAL_PORCENTAJE[]"]').each(function() {
+        var nuevoPorcentaje = parseFloat($(this).val()) || 0;
 
+        if (!isNaN(nuevoPorcentaje) && nuevoPorcentaje > 0) {  
+            sumaNuevas += nuevoPorcentaje; // Sumar porcentaje de nuevas pruebas
+            totalNuevas++;  // Contamos cuántas nuevas pruebas hay
+        }
+    });
 
+    // **Si hay nuevas pruebas, recalculamos el porcentaje**
+    var porcentajeFinal = porcentajeGuardado; // Mantener el porcentaje original si no hay cambios
+    if (totalNuevas > 0) {
+        porcentajeFinal = sumaNuevas / totalNuevas;  // Se recalcula SOLO si hay nuevas pruebas
+    }
+
+    // **Mostrar resultado**
+    $('#porcentajeTotalPrueba').val(Math.round(porcentajeFinal));  
+}
