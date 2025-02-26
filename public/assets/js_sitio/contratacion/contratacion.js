@@ -989,39 +989,42 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
 
 
 
+   
+
     if (row.data().CODIGO_POSTAL) {
         fetch(`/codigo-postal/${row.data().CODIGO_POSTAL}`)
-             .then(response => response.json())
-                .then(data => {
-                    if (!data.error) {
-                        let response = data.response;
+            .then(response => response.json())
+            .then(data => {
+                if (!data.error) {
+                    let response = data.response;
 
-                        let coloniaSelect = document.getElementById("NOMBRE_COLONIA");
-                        coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
+                    let coloniaSelect = document.getElementById("NOMBRE_COLONIA");
+                    coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
 
-                        let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
+                    let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
 
-                        colonias.forEach(colonia => {
-                            let option = document.createElement("option");
-                            option.value = colonia;
-                            option.textContent = colonia;
-                            coloniaSelect.appendChild(option);
-                        });
+                    colonias.forEach(colonia => {
+                        let option = document.createElement("option");
+                        option.value = colonia;
+                        option.textContent = colonia;
+                        coloniaSelect.appendChild(option);
+                    });
 
-                        document.getElementById("NOMBRE_MUNICIPIO").value = response.municipio || "No disponible";
-                        document.getElementById("NOMBRE_ENTIDAD").value = response.estado || "No disponible";
-                        document.getElementById("NOMBRE_LOCALIDAD").value = response.ciudad || "No disponible"; 
-                        document.getElementById("PAIS_CONTRATACION").value = response.pais || "No disponible"; 
-
-                    } else {
-                        alert("Código postal no encontrado");
+                    if (row.data().NOMBRE_COLONIA) {
+                        coloniaSelect.value = row.data().NOMBRE_COLONIA;
                     }
-                })
-                .catch(error => {
-                    console.error("Error al obtener datos:", error);
-                    alert("Hubo un error al consultar la API.");
-                });
-        }
+
+                    document.getElementById("NOMBRE_MUNICIPIO").value = response.municipio || "No disponible";
+                    document.getElementById("NOMBRE_ENTIDAD").value = response.estado || "No disponible";
+                } else {
+                    alert("Código postal no encontrado");
+                }
+            })
+            .catch(error => {
+                console.error("Error al obtener datos:", error);
+                alert("Hubo un error al consultar la API.");
+            });
+    }
 
     verificarEstadoYActualizarBotones();
 
@@ -1047,6 +1050,9 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     $("#step1").click();
 
     $(".div_trabajador_nombre").html(row.data().NOMBRE_COLABORADOR + ' ' + row.data().PRIMER_APELLIDO + ' ' + row.data().SEGUNDO_APELLIDO);
+
+$(".div_trabajador_numeoro").html(`Número de empleado: ${row.data().NUMERO_EMPLEADO}`);
+
 
     if (row.data().DIA_COLABORADOR && row.data().MES_COLABORADOR && row.data().ANIO_COLABORADOR) {
         const fechaNacimiento = `${row.data().ANIO_COLABORADOR}-${row.data().MES_COLABORADOR}-${row.data().DIA_COLABORADOR}`;

@@ -152,16 +152,17 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body" style="padding: 6px 10px;">
-                                    <table class="table" style="border: 0px #000 solid; margin: 0px;">
+                                    <table class="table" style="border: px #000 solid; margin: 0px;">
                                         <tbody>
                                             <tr>
                                                 <td width="auto" style="text-align: left; border: none; vertical-align: middle;">
                                                     <h7 style="margin: 0px;">
-                                                        <i class="bi bi-person-circle"></i>&nbsp;<span class="text-success div_trabajador_nombre">NOMBRE DEL COLABORADOR</span>
+                                                        <i class="bi bi-person-circle"></i>&nbsp;&nbsp; <span class="text-primary div_trabajador_nombre">NOMBRE DEL COLABORADOR</span>
                                                     </h7>
                                                     <br>
-                                                    <span class="text-success div_trabajador_cargo" style="color: #AAAAAA; font-size: 12px;">Cargo</span> &nbsp;
-                                                    <span class="text-success div_trabajador_numeoro" style="color: #AAAAAA; font-size: 12px;">Número</span>
+                                                    <i class="bi bi-person-lines-fill" aria-hidden="true"></i>&nbsp; &nbsp; <span class="text-primary div_trabajador_cargo" style="color: #AAAAAA; font-size: 12px;">Cargo</span> &nbsp;
+                                                    <br>
+                                                    <i class="bi bi-list-ol" aria-hidden="true"></i> &nbsp; <span class="text-primary div_trabajador_numeoro" style="color: #AAAAAA; font-size: 12px;">Número</span>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -535,7 +536,7 @@
 
                                 <div class="col-3 mb-3">
                                     <label>Número Exterior </label>
-                                    <input type="number" class="form-control" id="NUMERO_EXTERIOR" name="NUMERO_EXTERIOR">
+                                    <input type="text" class="form-control" id="NUMERO_EXTERIOR" name="NUMERO_EXTERIOR">
                                 </div>
 
                                 <div class="col-3 mb-3">

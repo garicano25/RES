@@ -182,11 +182,16 @@
                     </li>
 
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
-
                     <li class="nav-item dropdown" style="margin-left: 8px;">
-                        <a class="nav-link BOTON" href="{{ url('/Selección') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-person-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Selección</span><span class="d-none d-lg-inline">Selección</span>
+                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-badge-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Selección</span><span class="d-none d-lg-inline">Selección</span>
                         </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url('/Selección') }}">Selección</a></li>
+                            <hr class="dropdown-divider">
+
+                            <li><a class="dropdown-item" href="{{url('/Visualizar_selección')}}">Visualizar </a></li>
+                        </ul>
                     </li>
 
                     @endif
@@ -501,9 +506,12 @@
 
 
     @if(request()->is('Selección'))
-    <script src="/assets/js_sitio/seleccion/seleccion.js?v=19.6"></script>
+    <script src="/assets/js_sitio/seleccion/seleccion.js?v=19.7"></script>
     @endif
 
+    @if(request()->is('Visualizar_selección'))
+    <script src="/assets/js_sitio/seleccion/visualizarseleccion.js"></script>
+    @endif
 
     @if(request()->is('Pruebas-conocimientos'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogopruebas.js?v=1.0"></script>
@@ -515,7 +523,7 @@
     @endif
 
     @if(request()->is('Contratación'))
-    <script src="/assets/js_sitio/contratacion/contratacion.js?v=9.2"></script>
+    <script src="/assets/js_sitio/contratacion/contratacion.js?v=9.3"></script>
     <!-- Form wizard -->
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif

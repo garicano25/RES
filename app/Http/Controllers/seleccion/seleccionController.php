@@ -58,7 +58,23 @@ class seleccionController extends Controller
         return view('RH.Selección.seleccion', compact('areas','puesto','pruebas'));
     }
 
+    public function index2()
+    {
+        $areas = DB::select("
+        SELECT DISTINCT cat.ID_CATALOGO_CATEGORIA AS ID, cat.NOMBRE_CATEGORIA AS NOMBRE
+        FROM catalogo_categorias cat
+        INNER JOIN catalogo_vacantes vac ON vac.CATEGORIA_VACANTE = cat.ID_CATALOGO_CATEGORIA
+        WHERE cat.ACTIVO = 1
+    ");
 
+
+
+        $puesto = catalogoexperienciaModel::orderBy('NOMBRE_PUESTO', 'ASC')->get();
+        $pruebas = catalogopruebasconocimientosModel::orderBy('NOMBRE_PRUEBA', 'ASC')->get();
+
+
+        return view('RH.Selección.visualizarseleccion', compact('areas', 'puesto', 'pruebas'));
+    }
 
 
 public function Tablaseleccion()
@@ -95,7 +111,39 @@ public function Tablaseleccion()
     }
 }
 
+    public function Tablaseleccion2Visualizar()
+    {
+        try {
+            // $tabla = DB::select("
+            //     SELECT vac.*, cat.NOMBRE_CATEGORIA,
+            //         DATEDIFF(vac.FECHA_EXPIRACION, CURDATE()) as DIAS_RESTANTES,
+            //         (CASE WHEN vac.FECHA_EXPIRACION < CURDATE() THEN 1 ELSE 0 END) as EXPIRADO
+            //     FROM catalogo_vacantes vac
+            //     LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
+            //     WHERE vac.ACTIVO = 1
+            //     AND vac.FECHA_EXPIRACION >= CURDATE()");
 
+            $tabla = DB::select("
+            SELECT vac.*,                 vac.ID_CATALOGO_VACANTE AS VACANTES_ID,
+   
+            cat.NOMBRE_CATEGORIA
+            FROM catalogo_vacantes vac
+            LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
+            WHERE vac.ACTIVO = 1
+        ");
+
+            // Respuesta
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
 
 /// MANDAR A PENDINENTE POR CONTRATAR 
 
@@ -640,6 +688,84 @@ public function consultarSeleccion($vacantesId)
 }
 
 
+
+public function consultarSeleccion2Visualizar($vacantesId)
+{
+    $consultar = DB::table('formulario_seleccion')
+        ->where('VACANTES_ID', $vacantesId)
+        ->where('ACTIVO', 0)
+        ->get();
+
+    if ($consultar->isEmpty()) {
+        return response()->json([
+                'data' => [],
+                'message' => 'No hay información relacionada para esta vacante.'
+            ]);
+    }
+
+    foreach ($consultar as $persona) {
+        $curp = $persona->CURP;
+
+        $inteligencia = DB::table('seleccion_inteligencia')->where('CURP', $curp)->value('RIESGO_PORCENTAJE');
+        $buroLaboral = DB::table('seleccion_buro_laboral')->where('CURP', $curp)->value('PORCENTAJE_TOTAL');
+        $ppt = DB::table('seleccion_ppt')->where('CURP', $curp)->value('SUMA_TOTAL');
+        $referenciasLaboral = DB::table('seleccion_referencias_laboral')->where('CURP', $curp)->value('PORCENTAJE_TOTAL_REFERENCIAS');
+        $experienciaLaboral = DB::table('seleccion_referencias_laboral')->where('CURP', $curp)->value('EXPERIENCIA_LABORAL');
+        $pruebaConocimiento = DB::table('seleccion_prueba_conocimiento')->where('CURP', $curp)->value('PORCENTAJE_TOTAL_PRUEBA');
+        $entrevista = DB::table('seleccion_entrevista')->where('CURP', $curp)->value('PORCENTAJE_ENTREVISTA');
+
+        if (is_null($inteligencia) || is_null($buroLaboral) || is_null($ppt) || is_null($referenciasLaboral) || is_null($pruebaConocimiento) || is_null($entrevista)) {
+            $persona->PORCENTAJE_INTELIGENCIA = '**';
+            $persona->PORCENTAJE_BURO = '**';
+            $persona->PORCENTAJE_PPT = '**';
+            $persona->PORCENTAJE_REFERENCIAS = '**';
+            $persona->PORCENTAJE_PRUEBA = '**';
+            $persona->PORCENTAJE_ENTREVISTA = '**';
+            $persona->TOTAL = '**';
+        } else {
+            if ($experienciaLaboral == 'SI') {
+                $porcentajes = [
+                    'inteligencia' => 0.20,
+                    'buroLaboral' => 0.15,
+                    'ppt' => 0.15,
+                    'referenciasLaboral' => 0.10,
+                    'pruebaConocimiento' => 0.10,
+                    'entrevista' => 0.30
+                ];
+            } else {
+                $porcentajes = [
+                    'inteligencia' => 0.20,
+                    'buroLaboral' => 0.15,
+                    'ppt' => 0.20,
+                    'referenciasLaboral' => 0.00,
+                    'pruebaConocimiento' => 0.10,
+                    'entrevista' => 0.35
+                ];
+            }
+
+            $total = round(
+                ($inteligencia * $porcentajes['inteligencia']) +
+                ($buroLaboral * $porcentajes['buroLaboral']) +
+                ($ppt * $porcentajes['ppt']) +
+                    ($referenciasLaboral * $porcentajes['referenciasLaboral']) +
+                    ($pruebaConocimiento * $porcentajes['pruebaConocimiento']) +
+                    ($entrevista * $porcentajes['entrevista'])
+            );
+
+            $persona->PORCENTAJE_INTELIGENCIA = $inteligencia;
+            $persona->PORCENTAJE_BURO = $buroLaboral;
+            $persona->PORCENTAJE_PPT = $ppt;
+            $persona->PORCENTAJE_REFERENCIAS = $referenciasLaboral;
+            $persona->PORCENTAJE_PRUEBA = $pruebaConocimiento;
+            $persona->PORCENTAJE_ENTREVISTA = $entrevista;
+            $persona->TOTAL = $total;
+        }
+    }
+
+    return response()->json([
+        'data' => $consultar
+    ]);
+}
 
 
 

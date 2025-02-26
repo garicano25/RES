@@ -322,6 +322,18 @@ Route::post('/actualizarDisponibilidad', [VacantesactivasController::class, 'act
 
 //==============================================  SELECCION  ============================================== 
 
+// VISUALIZAR HISTORIAL DE SELECCION
+
+
+
+Route::get('/Visualizar_selección', [seleccionController::class, 'index2'])->middleware('role:Superusuario,Administrador');
+Route::get('/Tablaseleccion2Visualizar', [seleccionController::class, 'Tablaseleccion2Visualizar']);
+
+Route::get('/consultarSeleccion2Visualizar/{vacantesId}', [seleccionController::class, 'consultarSeleccion2Visualizar']);
+
+
+// SELECCION
+
 Route::get('/Selección', [seleccionController::class, 'index'])->middleware('role:Superusuario,Administrador');
 Route::get('/Tablaseleccion', [seleccionController::class, 'Tablaseleccion']);
 Route::post('/SeleccionSave', [seleccionController::class, 'store']);
