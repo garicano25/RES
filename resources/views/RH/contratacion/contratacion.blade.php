@@ -160,7 +160,7 @@
                                                         <i class="bi bi-person-circle"></i>&nbsp;&nbsp; <span class="text-primary div_trabajador_nombre">NOMBRE DEL COLABORADOR</span>
                                                     </h7>
                                                     <br>
-                                                    <i class="bi bi-person-lines-fill" aria-hidden="true"></i>&nbsp; &nbsp; <span class="text-primary div_trabajador_cargo" style="color: #AAAAAA; font-size: 12px;">Cargo</span> &nbsp;
+                                                    <i class="bi bi-person-lines-fill" aria-hidden="true"></i>&nbsp; <span class="text-primary div_trabajador_cargo" style="color: #AAAAAA; font-size: 12px;">Cargo</span> &nbsp;
                                                     <br>
                                                     <i class="bi bi-list-ol" aria-hidden="true"></i> &nbsp; <span class="text-primary div_trabajador_numeoro" style="color: #AAAAAA; font-size: 12px;">Número</span>
                                                 </td>

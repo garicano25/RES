@@ -118,11 +118,19 @@ textoInactivo.addEventListener('click', () => {
 $(document).ready(function() {
     $("#boton_nuevo_contrato").click(function () {
         
+
+
+
+       
+
+
+
         ID_FORMULARIO_CONTRATACION = 0;
 
 
         $(".div_trabajador_nombre").html('NOMBRE DEL COLABORADOR');
-
+        $(".div_trabajador_numeoro").html('Número de empleado');
+        $(".div_trabajador_cargo").html('Cargo'); 
 
         $('#datosgenerales-tab').closest('li').css("display", 'block');
         
@@ -723,7 +731,12 @@ $('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
 
     $("#step1").click();
 
+   
     $(".div_trabajador_nombre").html(row.data().NOMBRE_COLABORADOR + ' ' + row.data().PRIMER_APELLIDO + ' ' + row.data().SEGUNDO_APELLIDO);
+
+$(".div_trabajador_numeoro").html(`Número de empleado: ${row.data().NUMERO_EMPLEADO ? row.data().NUMERO_EMPLEADO : "No disponible"}`);
+
+     obtenerCargo();
 
     if (row.data().DIA_COLABORADOR && row.data().MES_COLABORADOR && row.data().ANIO_COLABORADOR) {
         const fechaNacimiento = `${row.data().ANIO_COLABORADOR}-${row.data().MES_COLABORADOR}-${row.data().DIA_COLABORADOR}`;
@@ -768,6 +781,27 @@ document.getElementById('DESCARGAR_CREDENCIAL').addEventListener('click', functi
 });
 
 
+function obtenerCargo() {
+    $.ajax({
+        url: '/obtenerUltimoCargo', 
+        method: 'POST',
+        data: {
+            curp: curpSeleccionada,
+            _token: $('meta[name="csrf-token"]').attr('content') 
+        },
+        success: function(response) {
+            if (response.cargo) {
+                $(".div_trabajador_cargo").html(`<span class="text-primary" style="color: #AAAAAA; font-size: 12px;">${response.cargo}</span>`);
+            } else {
+                $(".div_trabajador_cargo").html(`<span class="text-primary" style="color: #AAAAAA; font-size: 12px;">No disponible</span>`);
+            }
+        },
+        error: function() {
+            console.error("Error al obtener el cargo.");
+            $(".div_trabajador_cargo").html(`<span class="text-primary" style="color: #AAAAAA; font-size: 12px;">Error al cargar</span>`);
+        }
+    });
+}
 
 $("#guardarDatosGenerales").click(function (e) {
     e.preventDefault();
@@ -1051,8 +1085,9 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
 
     $(".div_trabajador_nombre").html(row.data().NOMBRE_COLABORADOR + ' ' + row.data().PRIMER_APELLIDO + ' ' + row.data().SEGUNDO_APELLIDO);
 
-$(".div_trabajador_numeoro").html(`Número de empleado: ${row.data().NUMERO_EMPLEADO}`);
+$(".div_trabajador_numeoro").html(`Número de empleado: ${row.data().NUMERO_EMPLEADO ? row.data().NUMERO_EMPLEADO : "No disponible"}`);
 
+     obtenerCargo();
 
     if (row.data().DIA_COLABORADOR && row.data().MES_COLABORADOR && row.data().ANIO_COLABORADOR) {
         const fechaNacimiento = `${row.data().ANIO_COLABORADOR}-${row.data().MES_COLABORADOR}-${row.data().DIA_COLABORADOR}`;

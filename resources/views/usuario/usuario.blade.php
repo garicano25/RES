@@ -104,14 +104,16 @@
                         <div class="col-8">
                             <div class="row">
                                 <div class="col-6">
-                                    <div class="row">
+                                    <div    
+                                     class="row">
                                         {!! csrf_field() !!}
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>Tipo *</label>
                                                 <select class="form-select" id="USUARIO_TIPO" name="USUARIO_TIPO" required>
-                                                    <option value="0" disabled selected>Seleccione una opción</option>
+                                                    <option disabled selected>Seleccione una opción</option>
                                                     <option value="1">Usuario empleado</option>
+                                                    <option value="2">Proveedor</option>
                                                 </select>
                                             </div>
                                         </div>

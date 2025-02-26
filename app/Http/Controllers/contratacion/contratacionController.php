@@ -69,6 +69,31 @@ class contratacionController extends Controller
     }
 
 
+
+    public function obtenerUltimoCargo(Request $request)
+    {
+        try {
+            $curp = $request->input('curp');
+
+            $cargo = DB::table('contratos_anexos_contratacion as cac')
+            ->join('catalogo_categorias as cc', 'cc.ID_CATALOGO_CATEGORIA', '=', 'cac.NOMBRE_CARGO') 
+            ->where('cac.CURP', $curp)
+            ->orderBy('cac.ID_CONTRATOS_ANEXOS', 'desc') 
+            ->select('cc.NOMBRE_CATEGORIA') 
+            ->first();
+
+            $nombreCargo = $cargo ? $cargo->NOMBRE_CATEGORIA : "No disponible";
+
+            return response()->json([
+                'cargo' => $nombreCargo
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => 'Error al obtener el cargo: ' . $e->getMessage()
+            ]);
+        }
+    }
+
     
 public function Tablacontratacion()
 {

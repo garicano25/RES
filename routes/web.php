@@ -394,6 +394,9 @@ Route::post('/activarColaborador/{id}', [contratacionController::class, 'activar
 Route::get('/usuariocolaborador/{id}', [contratacionController::class, 'mostrarfotocolaborador']);
 Route::post('/verificarestadobloqueo', [contratacionController::class, 'verificarestadobloqueo']);
 
+Route::post('/obtenerUltimoCargo', [contratacionController::class, 'obtenerUltimoCargo']);
+
+
 // CREAR CREDENCIAL 
 Route::get('/descargar-credencial', [PowerPointController::class, 'descargarCredencial']);
 Route::get('/prueba-presentation', [TestController::class, 'prueba']);
