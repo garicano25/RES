@@ -1433,6 +1433,7 @@
                                                     <td class="text-center">
                                                         <label for="IDIOMA1_APLICA_PPT_si">Si</label>
                                                         <input class="form-check-input" type="radio" name="APLICA_IDIOMA1_PPT" id="IDIOMA1_APLICA_PPT_si" value="si">
+                                                        <br>
                                                         <label for="IDIOMA1_APLICA_PPT_no">No</label>
                                                         <input class="form-check-input" type="radio" name="APLICA_IDIOMA1_PPT" id="IDIOMA1_APLICA_PPT_no" value="no">
                                                     </td>
@@ -1466,6 +1467,7 @@
                                                     <td class="text-center">
                                                         <label for="IDIOMA2_APLICA_PPT_si">Si</label>
                                                         <input class="form-check-input" type="radio" name="APLICA_IDIOMA2_PPT" id="IDIOMA2_APLICA_PPT_si" value="si">
+                                                        <br>
                                                         <label for="IDIOMA2_APLICA_PPT_no">No</label>
                                                         <input class="form-check-input" type="radio" name="APLICA_IDIOMA2_PPT" id="IDIOMA2_APLICA_PPT_no" value="no">
                                                     </td>
@@ -1499,6 +1501,7 @@
                                                     <td class="text-center">
                                                         <label for="IDIOMA3_APLICA_PPT_si">Si</label>
                                                         <input class="form-check-input" type="radio" name="APLICA_IDIOMA3_PPT" id="IDIOMA3_APLICA_PPT_si" value="si">
+                                                        <br>
                                                         <label for="IDIOMA3_APLICA_PPT_no">No</label>
                                                         <input class="form-check-input" type="radio" name="APLICA_IDIOMA3_PPT" id="IDIOMA3_APLICA_PPT_no" value="no">
                                                     </td>
