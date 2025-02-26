@@ -438,7 +438,7 @@ $(document).on('click', '.MandarContratacion', function() {
     var button = $(this);
 
     // Recuperar valores directamente desde los atributos del botón
-    var curp = button.closest('tr').find('td:eq(3)').text().trim(); 
+    var curp = button.closest('tr').find('td:eq(2)').text().trim(); 
     var nombre = button.data('nombre'); 
     var primerApellido = button.data('primer-apellido'); 
     var segundoApellido = button.data('segundo-apellido'); 

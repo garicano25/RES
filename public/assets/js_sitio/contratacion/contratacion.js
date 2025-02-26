@@ -564,7 +564,7 @@ $('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
     $('#step2-content, #step3-content, #step4-content,#step5-content,#step6-content,#step7-content').css("display", 'none');
 
 
-    $('#DESCARGAR_CREDENCIAL').css("display", 'block');
+    $('#DESCARGAR_CREDENCIAL').css("display", 'none');
 
 
 
