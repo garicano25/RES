@@ -77,73 +77,93 @@ class seleccionController extends Controller
     }
 
 
-public function Tablaseleccion()
-{
-    try {
-        // $tabla = DB::select("
-        //     SELECT vac.*, cat.NOMBRE_CATEGORIA,
-        //         DATEDIFF(vac.FECHA_EXPIRACION, CURDATE()) as DIAS_RESTANTES,
-        //         (CASE WHEN vac.FECHA_EXPIRACION < CURDATE() THEN 1 ELSE 0 END) as EXPIRADO
-        //     FROM catalogo_vacantes vac
-        //     LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
-        //     WHERE vac.ACTIVO = 1
-        //     AND vac.FECHA_EXPIRACION >= CURDATE()");
-                
-                $tabla = DB::select("
-            SELECT vac.*,                 vac.ID_CATALOGO_VACANTE AS VACANTES_ID,
-   
-            cat.NOMBRE_CATEGORIA
-            FROM catalogo_vacantes vac
-            LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
-            WHERE vac.ACTIVO = 1
-        ");
-
-        // Respuesta
-        return response()->json([
-            'data' => $tabla,
-            'msj' => 'Información consultada correctamente'
-        ]);
-    } catch (Exception $e) {
-        return response()->json([
-            'msj' => 'Error ' . $e->getMessage(),
-            'data' => 0
-        ]);
-    }
-}
-
-    public function Tablaseleccion2Visualizar()
+    public function Tablaseleccion()
     {
         try {
-            // $tabla = DB::select("
-            //     SELECT vac.*, cat.NOMBRE_CATEGORIA,
-            //         DATEDIFF(vac.FECHA_EXPIRACION, CURDATE()) as DIAS_RESTANTES,
-            //         (CASE WHEN vac.FECHA_EXPIRACION < CURDATE() THEN 1 ELSE 0 END) as EXPIRADO
-            //     FROM catalogo_vacantes vac
-            //     LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
-            //     WHERE vac.ACTIVO = 1
-            //     AND vac.FECHA_EXPIRACION >= CURDATE()");
-
-            $tabla = DB::select("
-            SELECT vac.*,                 vac.ID_CATALOGO_VACANTE AS VACANTES_ID,
-   
-            cat.NOMBRE_CATEGORIA
+            $vacantes = DB::select("
+            SELECT vac.*, 
+                   vac.ID_CATALOGO_VACANTE AS VACANTES_ID,
+                   cat.NOMBRE_CATEGORIA
             FROM catalogo_vacantes vac
             LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
             WHERE vac.ACTIVO = 1
         ");
 
-            // Respuesta
+            foreach ($vacantes as $vacante) {
+                $postulados = DB::table('formulario_seleccion')
+                ->where('VACANTES_ID', $vacante->VACANTES_ID)
+                    ->where('ACTIVO', 1)
+                    ->select('NOMBRE_SELC', 'PRIMER_APELLIDO_SELEC', 'SEGUNDO_APELLIDO_SELEC')
+                    ->get();
+
+                $listaPostulados = "<ul>";
+                foreach ($postulados as $postulado) {
+                    $nombreCompleto = "{$postulado->NOMBRE_SELC} {$postulado->PRIMER_APELLIDO_SELEC} {$postulado->SEGUNDO_APELLIDO_SELEC}";
+                    $listaPostulados .= "<li>{$nombreCompleto}</li>";
+                }
+                $listaPostulados .= "</ul>";
+
+                $vacante->POSTULADOS = $listaPostulados;
+            }
+
+            // Respuesta JSON para DataTable
             return response()->json([
-                'data' => $tabla,
+                'data' => $vacantes,
                 'msj' => 'Información consultada correctamente'
             ]);
         } catch (Exception $e) {
             return response()->json([
                 'msj' => 'Error ' . $e->getMessage(),
-                'data' => 0
+                'data' => []
             ]);
         }
     }
+
+
+
+
+    public function Tablaseleccion2Visualizar()
+    {
+        try {
+            $vacantes = DB::select("
+            SELECT vac.*, 
+                   vac.ID_CATALOGO_VACANTE AS VACANTES_ID,
+                   cat.NOMBRE_CATEGORIA
+            FROM catalogo_vacantes vac
+            LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
+            WHERE vac.ACTIVO = 1
+        ");
+
+            foreach ($vacantes as $vacante) {
+                $postulados = DB::table('formulario_seleccion')
+                ->where('VACANTES_ID', $vacante->VACANTES_ID)
+                    ->where('ACTIVO', 0)
+                    ->select('NOMBRE_SELC', 'PRIMER_APELLIDO_SELEC', 'SEGUNDO_APELLIDO_SELEC')
+                    ->get();
+
+                $listaPostulados = "<ul>";
+                foreach ($postulados as $postulado) {
+                    $nombreCompleto = "{$postulado->NOMBRE_SELC} {$postulado->PRIMER_APELLIDO_SELEC} {$postulado->SEGUNDO_APELLIDO_SELEC}";
+                    $listaPostulados .= "<li>{$nombreCompleto}</li>";
+                }
+                $listaPostulados .= "</ul>";
+
+                $vacante->POSTULADOS = $listaPostulados;
+            }
+
+            // Respuesta JSON para DataTable
+            return response()->json([
+                    'data' => $vacantes,
+                    'msj' => 'Información consultada correctamente'
+                ]);
+        } catch (Exception $e) {
+            return response()->json([
+                    'msj' => 'Error ' . $e->getMessage(),
+                    'data' => []
+                ]);
+        }
+    }
+
 
 /// MANDAR A PENDINENTE POR CONTRATAR 
 

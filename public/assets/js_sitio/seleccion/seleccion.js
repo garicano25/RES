@@ -65,14 +65,23 @@ var Tablaseleccion = $("#Tablaseleccion").DataTable({
             }
         },
         { data: 'NOMBRE_CATEGORIA' },
+         { 
+            data: 'POSTULADOS', 
+            title: 'Postulados',
+            className: 'all text-center',
+            render: function(data, type, row) {
+                return data ? data : "<span class='text-muted'>Sin postulados</span>";
+            }
+        },
         { data: 'NUMERO_VACANTE' },
         { data: 'FECHA_EXPIRACION' },
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all text-center' },
         { targets: 1, title: 'Nombre de la vacante', className: 'all text-center clickable' },
-        { targets: 2, title: 'N° de vacante', className: 'all text-center' },
-        { targets: 3, title: 'Fecha límite', className: 'all text-center' },
+        { targets: 2, title: 'Postulados', className: 'all text-center' },
+        { targets: 3, title: 'N° de vacante', className: 'all text-center' },
+        { targets: 4, title: 'Fecha límite', className: 'all text-center' },
     ]
 });
 
