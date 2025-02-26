@@ -1294,11 +1294,10 @@ $('#Tablapruebaconocimientoseleccion tbody').on('click', 'td>button.EDITAR', fun
         $('#prueba_no').prop('checked', true);
     }
 
-    // // **Calcular el porcentaje solo una vez**
-    // calcularPorcentajeTotal2();
+    
 
     // **Cargar la nueva prueba sin duplicar las anteriores**
-    // cargarNuevaPrueba(data.ID_PRUEBAS_SELECCION);
+     cargarNuevaPrueba(data.ID_PRUEBAS_SELECCION);
 });
 
 function cargarPruebasGuardadas(referencias) {
@@ -1378,7 +1377,7 @@ function cargarNuevaPrueba(id_prueba_seleccion) {
 
                                 <div class="col-3" style="display: none;">
                                     <label>Porcentaje asignado</label>
-                                    <input type="number" value="${nuevaPrueba.PORCENTAJE}" class="form-control" readonly>
+                                    <input type="number"  name="PORCENTAJE_PRUEBA[]"  value="${nuevaPrueba.PORCENTAJE}" class="form-control" readonly>
                                 </div>
 
                                 <div class="col-3 text-center">
