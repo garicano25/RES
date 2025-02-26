@@ -1354,51 +1354,49 @@ function cargarNuevaPrueba(id_prueba_seleccion) {
         method: 'GET',
         success: function(response) {
             if (response.data.length > 0) {
-                // **Eliminar duplicados antes de agregar la nueva prueba**
-                $('input[name="TIPO_PRUEBA[]"]').each(function () {
-                    if ($(this).val() === response.data[response.data.length - 1].TIPO_PRUEBA) {
-                        $(this).closest('.col-12').remove();
+                var pruebasHTML = '';
+
+                // **Recorrer todas las pruebas nuevas y agregarlas si no existen**
+                response.data.forEach(function(nuevaPrueba) {
+                    // Verificar si la prueba ya existe en la lista
+                    var existePrueba = $('input[name="TIPO_PRUEBA[]"]').filter(function () {
+                        return $(this).val() === nuevaPrueba.TIPO_PRUEBA;
+                    }).length > 0;
+
+                    if (!existePrueba) {
+                        pruebasHTML += `
+                            <div class="col-12 mb-3">
+                                <div class="row">
+                                    <div class="col-4 text-center">
+                                        <label>Nombre de la prueba</label>
+                                        <input type="text" name="TIPO_PRUEBA[]" value="${nuevaPrueba.TIPO_PRUEBA}" class="form-control" readonly>
+                                    </div>
+
+                                    <div class="col-3" style="display: none;">
+                                        <label>Porcentaje asignado</label>
+                                        <input type="number" name="PORCENTAJE_PRUEBA[]" value="${nuevaPrueba.PORCENTAJE}" class="form-control" readonly>
+                                    </div>
+
+                                    <div class="col-3 text-center">
+                                        <label>Porcentaje ingresado</label>
+                                        <input type="number" name="TOTAL_PORCENTAJE[]" class="form-control" oninput="calcularPorcentajeTotal2()">
+                                    </div>
+
+                                    <div class="col-5 text-center">
+                                        <label>Cargar documento</label>
+                                        <input type="file" name="ARCHIVO_RESULTADO[]" class="form-control archivo-input" accept=".pdf">
+                                        <span class="errorArchivoResultado text-danger" style="display: none;">Solo se permiten archivos PDF</span>
+                                        <button type="button" class="btn quitarArchivo mt-2" style="display: none;">Quitar archivo</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
                     }
                 });
 
-                var pruebasHTML = '';
-
-                // **Tomamos solo la última prueba**
-                var nuevaPrueba = response.data[response.data.length - 1];
-
-                if (nuevaPrueba) {
-                    pruebasHTML += `
-                        <div class="col-12 mb-3">
-                            <div class="row">
-                                <div class="col-4 text-center">
-                                    <label>Nombre de la prueba</label>
-                                    <input type="text" name="TIPO_PRUEBA[]" value="${nuevaPrueba.TIPO_PRUEBA}" class="form-control" readonly>
-                                </div>
-
-                                <div class="col-3" style="display: none;">
-                                    <label>Porcentaje asignado</label>
-                                    <input type="number"  name="PORCENTAJE_PRUEBA[]"  value="${nuevaPrueba.PORCENTAJE}" class="form-control" readonly>
-                                </div>
-
-                                <div class="col-3 text-center">
-                                    <label>Porcentaje ingresado</label>
-                                    <input type="number" name="TOTAL_PORCENTAJE[]" class="form-control" oninput="calcularPorcentajeTotal2()">
-                                </div>
-
-                                <div class="col-5 text-center">
-                                    <label>Cargar documento</label>
-                                    <input type="file" name="ARCHIVO_RESULTADO[]" class="form-control archivo-input" accept=".pdf">
-                                    <span class="errorArchivoResultado text-danger" style="display: none;">Solo se permiten archivos PDF</span>
-                                    <button type="button" class="btn quitarArchivo mt-2" style="display: none;">Quitar archivo</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }
-
-                // **Verificar antes de agregar la nueva prueba**
-                if (!$('input[name="TIPO_PRUEBA[]"][value="' + nuevaPrueba.TIPO_PRUEBA + '"]').length) {
-                    $('#obtenerpruebas').append(pruebasHTML);  
+                // **Añadir todas las nuevas pruebas sin eliminar las anteriores**
+                if (pruebasHTML !== '') {
+                    $('#obtenerpruebas').append(pruebasHTML);
                 }
 
                 inicializarEventosPruebas();  
@@ -1411,6 +1409,7 @@ function cargarNuevaPrueba(id_prueba_seleccion) {
         }
     });
 }
+
 
 
 
