@@ -40,7 +40,7 @@
                     {!! csrf_field() !!}
                     <div class="row">
                         <input type="hidden" class="form-control" id="USUARIO_ID" name="USUARIO_ID" value="0">
-                        
+
                     </div>
                     <div class="row">
                         <div class="row mb-3">
@@ -701,7 +701,7 @@
                                         </thead>
                                         <tbody>
 
-                                            <tr style="height: 5px;"></tr> 
+                                            <tr style="height: 5px;"></tr>
 
                                             <tr>
                                                 <td>Word</td>
@@ -734,40 +734,40 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                            <tr style="height: 5px;"></tr> 
+                                            <tr style="height: 5px;"></tr>
 
-                                                <tr>
-                                                    <td>Excel</td>
-                                                    <td class="text-center">
-                                                        <label for="EXCEL_APLICA_PPT_si">Si</label>
-                                                        <input class="form-check-input" type="radio" name="EXCEL_APLICA_PPT" id="EXCEL_APLICA_PPT_si" value="si" >
-                                                        <label for="EXCEL_APLICA_PPT_no">No</label>
-                                                        <input class="form-check-input" type="radio" name="EXCEL_APLICA_PPT" id="EXCEL_APLICA_PPT_no" value="no" >                                                                        
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <input type="checkbox" class="excel" id="EXCEL_BAJO_PPT" name="EXCEL_BAJO_PPT" value="X">
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <input type="checkbox" class="excel" id="EXCEL_MEDIO_PPT" name="EXCEL_MEDIO_PPT" value="X">
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <input type="checkbox" class="excel" id="EXCEL_ALTO_PPT" name="EXCEL_ALTO_PPT" value="X">
-                                                    </td>
-                                                    <td>
-                                                        <div class="radio-container">
-                                                            <label class="form-check-label" for="EXCEL_CUMPLE_SI">Si</label>
-                                                            <input class="form-check-input desabilitado" type="radio" name="EXCEL_CUMPLE_PPT" id="EXCEL_CUMPLE_SI" value="si" disabled>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="radio-container">
-                                                            <label class="form-check-label" for="EXCEL_CUMPLE_NO">No</label>
-                                                            <input class="form-check-input desabilitado" type="radio" name="EXCEL_CUMPLE_PPT" id="EXCEL_CUMPLE_NO" value="no" disabled>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            
-                                                <tr style="height: 5px;"></tr> 
+                                            <tr>
+                                                <td>Excel</td>
+                                                <td class="text-center">
+                                                    <label for="EXCEL_APLICA_PPT_si">Si</label>
+                                                    <input class="form-check-input" type="radio" name="EXCEL_APLICA_PPT" id="EXCEL_APLICA_PPT_si" value="si">
+                                                    <label for="EXCEL_APLICA_PPT_no">No</label>
+                                                    <input class="form-check-input" type="radio" name="EXCEL_APLICA_PPT" id="EXCEL_APLICA_PPT_no" value="no">
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="checkbox" class="excel" id="EXCEL_BAJO_PPT" name="EXCEL_BAJO_PPT" value="X">
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="checkbox" class="excel" id="EXCEL_MEDIO_PPT" name="EXCEL_MEDIO_PPT" value="X">
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="checkbox" class="excel" id="EXCEL_ALTO_PPT" name="EXCEL_ALTO_PPT" value="X">
+                                                </td>
+                                                <td>
+                                                    <div class="radio-container">
+                                                        <label class="form-check-label" for="EXCEL_CUMPLE_SI">Si</label>
+                                                        <input class="form-check-input desabilitado" type="radio" name="EXCEL_CUMPLE_PPT" id="EXCEL_CUMPLE_SI" value="si" disabled>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="radio-container">
+                                                        <label class="form-check-label" for="EXCEL_CUMPLE_NO">No</label>
+                                                        <input class="form-check-input desabilitado" type="radio" name="EXCEL_CUMPLE_PPT" id="EXCEL_CUMPLE_NO" value="no" disabled>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="height: 5px;"></tr>
 
                                             <tr>
                                                 <td>Power Point</td>
@@ -822,26 +822,27 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-            
+
                                                 <td>
                                                     <input type="text" class="form-control" id="NOMBRE_IDIOMA1_PPT" name="NOMBRE_IDIOMA1_PPT">
                                                 </td>
                                                 <td class="text-center">
                                                     <label for="IDIOMA1_APLICA_PPT_si">Si</label>
-                                                    <input class="form-check-input" type="radio" name="APLICA_IDIOMA1_PPT" id="IDIOMA1_APLICA_PPT_si" value="si" >
+                                                    <input class="form-check-input" type="radio" name="APLICA_IDIOMA1_PPT" id="IDIOMA1_APLICA_PPT_si" value="si">
+                                                    <br>
                                                     <label for="IDIOMA1_APLICA_PPT_no">No</label>
                                                     <input class="form-check-input" type="radio" name="APLICA_IDIOMA1_PPT" id="IDIOMA1_APLICA_PPT_no" value="no">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox" class="idioma1"  id="BASICO_IDIOMA1_PPT" name="BASICO_IDIOMA1_PPT" value="X">
+                                                    <input type="checkbox" class="idioma1" id="BASICO_IDIOMA1_PPT" name="BASICO_IDIOMA1_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox"   class="idioma1" id="INTERMEDIO_IDIOMA1_PPT" name="INTERMEDIO_IDIOMA1_PPT" value="X">
+                                                    <input type="checkbox" class="idioma1" id="INTERMEDIO_IDIOMA1_PPT" name="INTERMEDIO_IDIOMA1_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox"   class="idioma1" id="AVANZADO_IDIOMA1_PPT" name="AVANZADO_IDIOMA1_PPT" value="X">
+                                                    <input type="checkbox" class="idioma1" id="AVANZADO_IDIOMA1_PPT" name="AVANZADO_IDIOMA1_PPT" value="X">
                                                 </td>
-                                             
+
                                                 <td>
                                                     <div class="radio-container">
                                                         <label class="form-check-label" for="IDIOMA1_CUMPLE_SI">Sí</label>
@@ -861,20 +862,21 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <label for="IDIOMA2_APLICA_PPT_si">Si</label>
-                                                    <input class="form-check-input" type="radio" name="APLICA_IDIOMA2_PPT" id="IDIOMA2_APLICA_PPT_si" value="si" >
+                                                    <input class="form-check-input" type="radio" name="APLICA_IDIOMA2_PPT" id="IDIOMA2_APLICA_PPT_si" value="si">
+                                                    <br>
                                                     <label for="IDIOMA2_APLICA_PPT_no">No</label>
                                                     <input class="form-check-input" type="radio" name="APLICA_IDIOMA2_PPT" id="IDIOMA2_APLICA_PPT_no" value="no">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox"   class="idioma2" id="BASICO_IDIOMA2_PPT" name="BASICO_IDIOMA2_PPT"  value="X">
+                                                    <input type="checkbox" class="idioma2" id="BASICO_IDIOMA2_PPT" name="BASICO_IDIOMA2_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox"   class="idioma2" id="INTERMEDIO_IDIOMA2_PPT" name="INTERMEDIO_IDIOMA2_PPT"  value="X">
+                                                    <input type="checkbox" class="idioma2" id="INTERMEDIO_IDIOMA2_PPT" name="INTERMEDIO_IDIOMA2_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox"   class="idioma2" id="AVANZADO_IDIOMA2_PPT" name="AVANZADO_IDIOMA2_PPT"  value="X">
+                                                    <input type="checkbox" class="idioma2" id="AVANZADO_IDIOMA2_PPT" name="AVANZADO_IDIOMA2_PPT" value="X">
                                                 </td>
-                                                
+
                                                 <td>
                                                     <div class="radio-container">
                                                         <label class="form-check-label" for="IDIOMA2_CUMPLE_SI">Sí</label>
@@ -894,18 +896,19 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <label for="IDIOMA3_APLICA_PPT_si">Si</label>
-                                                    <input class="form-check-input" type="radio" name="APLICA_IDIOMA3_PPT" id="IDIOMA3_APLICA_PPT_si" value="si" >
+                                                    <input class="form-check-input" type="radio" name="APLICA_IDIOMA3_PPT" id="IDIOMA3_APLICA_PPT_si" value="si">
+                                                    <br>
                                                     <label for="IDIOMA3_APLICA_PPT_no">No</label>
                                                     <input class="form-check-input" type="radio" name="APLICA_IDIOMA3_PPT" id="IDIOMA3_APLICA_PPT_no" value="no">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox"   class="idioma3" id="BASICO_IDIOMA3_PPT" name="BASICO_IDIOMA3_PPT"  value="X">
+                                                    <input type="checkbox" class="idioma3" id="BASICO_IDIOMA3_PPT" name="BASICO_IDIOMA3_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox"   class="idioma3" id="INTERMEDIO_IDIOMA3_PPT" name="INTERMEDIO_IDIOMA3_PPT"  value="X">
+                                                    <input type="checkbox" class="idioma3" id="INTERMEDIO_IDIOMA3_PPT" name="INTERMEDIO_IDIOMA3_PPT" value="X">
                                                 </td>
                                                 <td class="text-center">
-                                                    <input type="checkbox"   class="idioma3" id="AVANZADO_IDIOMA3_PPT" name="AVANZADO_IDIOMA3_PPT"  value="X">
+                                                    <input type="checkbox" class="idioma3" id="AVANZADO_IDIOMA3_PPT" name="AVANZADO_IDIOMA3_PPT" value="X">
                                                 </td>
                                                 <td>
                                                     <div class="radio-container">
@@ -921,11 +924,11 @@
                                                 </td>
                                             </tr>
                                         </tbody>
-                                        </table>
-                                        <button id="addIdiomaBtn" class="btn btn-primary" title="Agregar idioma"><i class="bi bi-plus-circle"></i></button>
-                                        <button id="addIdiomaBtn2" class="btn btn-primary" style="display:none;" title="Agregar idioma"><i class="bi bi-plus-circle"></i></button>
-                                        <button id="removeIdiomaBtn2" class="btn btn-danger" style="display:none;" title="Eliminar idioma"><i class="bi bi-trash"></i></button>
-                                           <button id="removeIdiomaBtn3" class="btn btn-danger" style="display:none;"  title="Eliminar idioma"><i class="bi bi-trash"></i></button>
+                                    </table>
+                                    <button id="addIdiomaBtn" class="btn btn-primary" title="Agregar idioma"><i class="bi bi-plus-circle"></i></button>
+                                    <button id="addIdiomaBtn2" class="btn btn-primary" style="display:none;" title="Agregar idioma"><i class="bi bi-plus-circle"></i></button>
+                                    <button id="removeIdiomaBtn2" class="btn btn-danger" style="display:none;" title="Eliminar idioma"><i class="bi bi-trash"></i></button>
+                                    <button id="removeIdiomaBtn3" class="btn btn-danger" style="display:none;" title="Eliminar idioma"><i class="bi bi-trash"></i></button>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -1994,18 +1997,18 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col-12 d-flex align-items-center">
-                                    <h6 class="mb-0">Marque el nivel mínimo de puesto que se requiere como experiencia  &nbsp;</h6>
+                                    <h6 class="mb-0">Marque el nivel mínimo de puesto que se requiere como experiencia &nbsp;</h6>
                                     <button type="button" id="agregapuesto" title="Agregar otro puesto" class="btn btn-primary ml-3"><i class="bi bi-plus-circle"></i></button>
                                 </div>
                             </div>
 
-                           
-                            
+
+
 
                             <div class="row mb-3" id="puesto1" style="display: none;">
                                 <div class="col-2 mt-1">
                                     <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO1_NOMBRE" name="PUESTO1_NOMBRE"   >
+                                        <select class="form-control puesto" id="PUESTO1_NOMBRE" name="PUESTO1_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
@@ -2032,7 +2035,7 @@
                                 </div>
                                 <div class="col-2 mt-1">
                                     <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO2_NOMBRE" name="PUESTO2_NOMBRE" >
+                                        <select class="form-control puesto" id="PUESTO2_NOMBRE" name="PUESTO2_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
@@ -2067,7 +2070,7 @@
                             <div class="row mb-3" id="puesto2" style="display: none;">
                                 <div class="col-2 mt-1">
                                     <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO3_NOMBRE" name="PUESTO3_NOMBRE" >
+                                        <select class="form-control puesto" id="PUESTO3_NOMBRE" name="PUESTO3_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
@@ -2094,7 +2097,7 @@
                                 </div>
                                 <div class="col-2 mt-1">
                                     <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO4_NOMBRE" name="PUESTO4_NOMBRE" >
+                                        <select class="form-control puesto" id="PUESTO4_NOMBRE" name="PUESTO4_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
@@ -2129,7 +2132,7 @@
                             <div class="row mb-3" id="puesto3" style="display: none;">
                                 <div class="col-2 mt-1">
                                     <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO5_NOMBRE" name="PUESTO5_NOMBRE" >
+                                        <select class="form-control puesto" id="PUESTO5_NOMBRE" name="PUESTO5_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
@@ -2156,7 +2159,7 @@
                                 </div>
                                 <div class="col-2 mt-1">
                                     <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO6_NOMBRE" name="PUESTO6_NOMBRE" >
+                                        <select class="form-control puesto" id="PUESTO6_NOMBRE" name="PUESTO6_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
@@ -2186,12 +2189,12 @@
                                 </div>
                             </div>
 
-                           
+
 
                             <div class="row mb-3" id="puesto4" style="display: none;">
                                 <div class="col-2 mt-1">
                                     <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO7_NOMBRE" name="PUESTO7_NOMBRE" >
+                                        <select class="form-control puesto" id="PUESTO7_NOMBRE" name="PUESTO7_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
@@ -2218,7 +2221,7 @@
                                 </div>
                                 <div class="col-2 mt-1">
                                     <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO8_NOMBRE" name="PUESTO8_NOMBRE" >
+                                        <select class="form-control puesto" id="PUESTO8_NOMBRE" name="PUESTO8_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
@@ -2247,14 +2250,14 @@
                                     <button type="button" class="btn btn-danger eliminar-puesto" data-puesto="puesto4"><i class="bi bi-trash"></i></button>
                                 </div>
                             </div>
-                           
+
 
 
 
                             <div class="row mb-3" id="puesto5" style="display: none;">
                                 <div class="col-2 mt-1">
                                     <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO9_NOMBRE" name="PUESTO9_NOMBRE" >
+                                        <select class="form-control puesto" id="PUESTO9_NOMBRE" name="PUESTO9_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
@@ -2281,7 +2284,7 @@
                                 </div>
                                 <div class="col-2 mt-1">
                                     <div class="form-group">
-                                        <select class="form-control puesto" id="PUESTO10_NOMBRE" name="PUESTO10_NOMBRE" >
+                                        <select class="form-control puesto" id="PUESTO10_NOMBRE" name="PUESTO10_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
@@ -2311,9 +2314,9 @@
                                 </div>
                             </div>
 
-                                                  
 
-                          
+
+
 
 
                             <div class="row mb-3">
@@ -2826,7 +2829,7 @@
                                     <div>Firma</div>
                                     <br>
 
-                                    <input type="text" class="form-control text-center mydatepicker" placeholder="aaaa-mm-dd" id="REVISADO_FECHA_PPT" name="REVISADO_FECHA_PPT" >
+                                    <input type="text" class="form-control text-center mydatepicker" placeholder="aaaa-mm-dd" id="REVISADO_FECHA_PPT" name="REVISADO_FECHA_PPT">
                                     <i class="bi bi-calendar-event"></i>
 
                                     {{-- <input type="date" class="form-control text-center" id="REVISADO_FECHA_PPT" name="REVISADO_FECHA_PPT"> --}}
@@ -2842,7 +2845,7 @@
                                     <div>Firma</div>
                                     <br>
 
-                                    <input type="text" class="form-control text-center mydatepicker" placeholder="aaaa-mm-dd" id="AUTORIZADO_FECHA_PPT" name="AUTORIZADO_FECHA_PPT" >
+                                    <input type="text" class="form-control text-center mydatepicker" placeholder="aaaa-mm-dd" id="AUTORIZADO_FECHA_PPT" name="AUTORIZADO_FECHA_PPT">
                                     <i class="bi bi-calendar-event"></i>
 
 
