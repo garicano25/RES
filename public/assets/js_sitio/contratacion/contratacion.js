@@ -3709,8 +3709,10 @@ function cargarDocumentossoportecontratosgenerales() {
             let select = $('#TIPO_DOCUMENTO_SOPORTECONTRATO');
             select.find('option').prop('disabled', false);
 
-            data.forEach(function (tipoDocumento) {
-                select.find(`option[value="${tipoDocumento}"]`).prop('disabled', true);
+         data.forEach(function (tipoDocumento) {
+                if (tipoDocumento !== "13") {  // No bloquear la opción 3
+                    select.find(`option[value="${tipoDocumento}"]`).prop('disabled', true);
+                }
             });
 
         },
