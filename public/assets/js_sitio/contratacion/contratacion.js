@@ -1760,10 +1760,13 @@ function cargarDocumentosGuardados() {
         },
         success: function (data) {
             let select = $('#TIPO_DOCUMENTO');
+
             select.find('option').prop('disabled', false);
 
             data.forEach(function (tipoDocumento) {
-                select.find(`option[value="${tipoDocumento}"]`).prop('disabled', true);
+                if (tipoDocumento !== "13") {  // No bloquear la opción 3
+                    select.find(`option[value="${tipoDocumento}"]`).prop('disabled', true);
+                }
             });
 
         },
@@ -1772,7 +1775,6 @@ function cargarDocumentosGuardados() {
         }
     });
 }
-
 
 
 
