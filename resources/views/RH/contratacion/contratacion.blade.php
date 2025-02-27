@@ -977,7 +977,6 @@
                             <option value="4">Copia del número de seguridad social (NSS)</option>
                             <option value="5">Copia del acta de nacimiento</option>
                             <option value="6">Copia de la CURP</option>
-                            <option value="7">Copia del Registro Federal de Contribuyentes (RFC)</option>
                             <option value="8">Copia de la cartilla de servicio militar (hombres)</option>
                             <option value="9">Copia del comprobante de domicilio </option>
                             <option value="10">Dos (2) cartas de recomendación</option>
