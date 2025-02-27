@@ -1116,8 +1116,7 @@
                             <option value="0" disabled selected>Seleccione una opción</option>
                             <option value="1">Descripción del puesto de trabajo (DPT) firmado por el colaborador</option>
                             <option value="2">Antecedentes, Imparcialidad y Beneficiarios</option>
-                            <option value="3">Aviso de privacidad</option>
-                            <option value="4">Encuesta socioeconómica y protección de datos</option>
+                            <option value="3">Aviso de privacidad,Encuesta socioeconómica y Protección de datos del colaborador</option>
                             <option value="5">Recepción de la descripción del puesto de trabajo</option>
                             <option value="6">Autorización de emisión de recibos de nómina</option>
                             <option value="7">Autorización de firma y rúbrica</option>
