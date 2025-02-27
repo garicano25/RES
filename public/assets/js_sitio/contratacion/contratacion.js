@@ -2827,9 +2827,9 @@ $("#guardarINCIDENCIAS").click(function (e) {
                     document.getElementById('formularioINCIDENCIAS').reset();
 
                     
-                    // if ($.fn.DataTable.isDataTable('#Tablainformacionmedica')) {
-                    //     Tablainformacionmedica.ajax.reload(null, false); 
-                    // }
+                    if ($.fn.DataTable.isDataTable('#Tablaincidencias')) {
+                        Tablaincidencias.ajax.reload(null, false); 
+                    }
 
             })
             
@@ -2866,9 +2866,9 @@ $("#guardarINCIDENCIAS").click(function (e) {
 
 
                     
-                    // if ($.fn.DataTable.isDataTable('#Tablainformacionmedica')) {
-                    //     Tablainformacionmedica.ajax.reload(null, false); 
-                    // }
+                    if ($.fn.DataTable.isDataTable('#Tablaincidencias')) {
+                        Tablaincidencias.ajax.reload(null, false); 
+                    }
 
                 }, 300);  
             })
@@ -3045,9 +3045,9 @@ $("#guardarACCIONES").click(function (e) {
                     document.getElementById('formularioACCIONES_DISCIPLINARIAS').reset();
 
                     
-                    // if ($.fn.DataTable.isDataTable('#Tablainformacionmedica')) {
-                    //     Tablainformacionmedica.ajax.reload(null, false); 
-                    // }
+                    if ($.fn.DataTable.isDataTable('#Tablaccionesdisciplinarias')) {
+                        Tablaccionesdisciplinarias.ajax.reload(null, false); 
+                    }
 
             })
             
@@ -3084,9 +3084,9 @@ $("#guardarACCIONES").click(function (e) {
 
 
                     
-                    // if ($.fn.DataTable.isDataTable('#Tablainformacionmedica')) {
-                    //     Tablainformacionmedica.ajax.reload(null, false); 
-                    // }
+                    if ($.fn.DataTable.isDataTable('#Tablaccionesdisciplinarias')) {
+                        Tablaccionesdisciplinarias.ajax.reload(null, false); 
+                    }
 
                 }, 300);  
             })
