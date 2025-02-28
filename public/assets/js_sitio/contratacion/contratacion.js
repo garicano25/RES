@@ -2366,7 +2366,7 @@ function cargarTablaDocumentosSoporteContrato() {
 
                     let estadoTexto = "";
                     if (diferenciaDias < 0) {
-                        estadoTexto = `<span style="color: red;">(Vencido)</span>`;
+                        estadoTexto = `<span style="color: red;">(Terminado)</span>`;
                     } else {
                         estadoTexto = `<span style="color: green;">(${diferenciaDias} días restantes)</span>`;
                     }

@@ -448,7 +448,7 @@ public function obtenerguardados(Request $request)
                 }
 
                 // **Mostrar fechas en dos líneas con el estado**
-                $value->FECHA_ESTADO = $fecha_inicio_mostrar . "<br>" . $fecha_fin_mostrar . " " . $estado_dias;
+                $value->FECHA_ESTADO = $fecha_inicio_mostrar . "<br>" . $fecha_fin_mostrar . "<br>". $estado_dias;
 
                 // **Manteniendo los botones tal como los tenías**
                 if ($value->ACTIVO == 0) {
