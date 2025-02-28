@@ -2883,7 +2883,7 @@ $("#guardarINCIDENCIAS").click(function (e) {
 });
 
 const Modalincidendia = document.getElementById('miModal_INCIDENCIAS')
-Modalinformacionmedica.addEventListener('hidden.bs.modal', event => {
+Modalincidendia.addEventListener('hidden.bs.modal', event => {
 
     ID_INCIDENCIAS = 0
 
