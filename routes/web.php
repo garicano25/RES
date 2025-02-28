@@ -126,6 +126,8 @@ Route::get('/Módulos', function () {return view('principal.modulos');});
 Route::get('/usuario', [usuarioController::class, 'index'])->middleware('role:Superusuario,Administrador');
 Route::post('/usuarioSave', [usuarioController::class, 'store']);
 Route::get('/Tablausuarios', [usuarioController::class, 'Tablausuarios']);
+Route::get('/Tablaproveedores', [usuarioController::class, 'Tablaproveedores']);
+
 Route::get('/usuarioDelete', [usuarioController::class, 'store']);
 // Route::get('/usuariofoto/{id}', [usuarioController::class, 'mostrarFotoUsuario']);
 Route::get('/usuariofoto/{id}', [usuarioController::class, 'mostrarFotoUsuario'])->name('usuariofoto');
@@ -384,6 +386,8 @@ Route::get('/Pendiente-Contratar', function () {return view('RH.contratacion.pen
 Route::get('/Tablapendientecontratacion', [pendientecontratarController::class, 'Tablapendientecontratacion']);
 Route::post('/mandarcontratacion', [pendientecontratarController::class, 'mandarcontratacion']);
 
+Route::get('/obtenerInformacionContrato/{contrato_id}', [contratacionController::class, 'obtenerInformacionContrato']);
+
 /////////////////////////////////////// STEP 1 DATOS GENERALES
 Route::get('/Contratación', [contratacionController::class, 'index']);
 Route::post('/contratoSave', [contratacionController::class, 'store']);
@@ -613,7 +617,7 @@ Route::get('/ServicioDelete', [directorioController::class, 'store']);
 
 
 
-// Route::get('/Alta', function () {return view('compras.proveedores.altaproveedores');});
+ Route::get('/Alta', function () {return view('compras.proveedores.altaproveedores');});
 
 
 

@@ -1116,7 +1116,9 @@
                             <option value="0" disabled selected>Seleccione una opción</option>
                             <option value="1">Descripción del puesto de trabajo (DPT) firmado por el colaborador</option>
                             <option value="2">Antecedentes, Imparcialidad y Beneficiarios</option>
-                            <option value="3">Aviso de privacidad,Encuesta socioeconómica y Protección de datos del colaborador</option>
+                            <option value="3">Aviso de privacidad, Encuesta socioeconómica y Protección de datos del colaborador</option>
+                            <option value="3">Aviso de privacidad</option>
+                            <option value="14">Encuesta socioeconómica y Protección de datos del colaborador</option>
                             <option value="5">Recepción de la descripción del puesto de trabajo</option>
                             <option value="6">Autorización de emisión de recibos de nómina</option>
                             <option value="7">Autorización de firma y rúbrica</option>
@@ -1185,6 +1187,27 @@
                         <input type="text" class="form-control" id="NOMBRE_DOCUMENTOSOPORTECONTRATO" name="NOMBRE_DOCUMENTOSOPORTECONTRATO" readonly required>
                     </div>
 
+                    <div class="row  mb-3">
+                        <div class="col-6">
+                            <label>Fecha Inicio *</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_DOCUMENTOSOPORTECONTRATO" name="FECHAI_DOCUMENTOSOPORTECONTRATO" required>
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label>Fecha Fin *</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_DOCUMENTOSOPORTECONTRATO" name="FECHAF_DOCUMENTOSOPORTECONTRATO" required>
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
 
                     <div class="mb-3">
                         <label>Subir documento</label>
@@ -1244,6 +1267,7 @@
 
                             </div>
                         </div>
+
                         <div class="col-4">
                             <label>Salario *</label>
                             <div class="input-group">

@@ -1937,6 +1937,76 @@ $("#guardarCONTRATO").click(function (e) {
     
 });
 
+// function cargarTablaContratosyanexos() {
+//     if ($.fn.DataTable.isDataTable('#Tablacontratosyanexos')) {
+//         Tablacontratosyanexos.clear().destroy();
+//     }
+
+//     Tablacontratosyanexos = $("#Tablacontratosyanexos").DataTable({
+//         language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+//         lengthChange: true,
+//         lengthMenu: [
+//             [10, 25, 50, -1],
+//             [10, 25, 50, 'All']
+//         ],
+//         info: false,
+//         paging: true,
+//         searching: true,
+//         filtering: true,
+//         scrollY: '65vh',
+//         scrollCollapse: true,
+//         responsive: true,
+//         ajax: {
+//             dataType: 'json',
+//             data: { curp: curpSeleccionada },
+//             method: 'GET',
+//             cache: false,
+//             url: '/Tablacontratosyanexos',
+//             beforeSend: function () {
+//                 $('#loadingIcon1').css('display', 'inline-block');
+//             },
+//             complete: function () {
+//                 $('#loadingIcon1').css('display', 'none');
+//                 Tablacontratosyanexos.columns.adjust().draw();
+//             },
+//             error: function (jqXHR, textStatus, errorThrown) {
+//                 $('#loadingIcon1').css('display', 'none');
+//                 alertErrorAJAX(jqXHR, textStatus, errorThrown);
+//             },
+//             dataSrc: 'data'
+//         },
+//         columns: [
+//             { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+//             { data: 'NOMBRE_DOCUMENTO_CONTRATO', className: 'text-center' },
+//             {
+//                 data: 'NOMBRE_CATEGORIA',
+//                 className: 'text-center',
+//                 render: function(data) { return data ? data : 'N/A'; }
+//             },
+//             {
+//                 data: null,
+//                 render: function (data, type, row) {
+//                     return  row.FECHAI_CONTRATO + '<br>' + row.VIGENCIA_CONTRATO;
+//                 }
+//             },
+            
+//             { data: 'BTN_DOCUMENTO', className: 'text-center' },
+//             { data: 'BTN_EDITAR', className: 'text-center' },
+//             { data: 'BTN_CONTRATO', className: 'text-center' }
+//         ],
+//         columnDefs: [
+//             { targets: 0, title: '#', className: 'all text-center' },
+//             { targets: 1, title: 'Tipo de contrato', className: 'all text-center' },
+//             { targets: 2, title: 'Nombre del Cargo', className: 'all text-center' },
+//             { targets: 3, title: 'Fecha inicio  <br> Fecha fin', className: 'all text-center' },
+//             { targets: 4, title: 'Documento', className: 'all text-center' },
+//             { targets: 5, title: 'Editar', className: 'all text-center' },
+//             { targets: 6, title: 'Contrato', className: 'all text-center' },
+
+//         ],
+//     });
+// }
+
 function cargarTablaContratosyanexos() {
     if ($.fn.DataTable.isDataTable('#Tablacontratosyanexos')) {
         Tablacontratosyanexos.clear().destroy();
@@ -1984,12 +2054,9 @@ function cargarTablaContratosyanexos() {
                 render: function(data) { return data ? data : 'N/A'; }
             }, 
             {
-                data: null,
-                render: function (data, type, row) {
-                    return  row.FECHAI_CONTRATO + '<br>' + row.VIGENCIA_CONTRATO;
-                }
+                data: 'FECHA_ESTADO', // Ahora solo mostramos un texto limpio desde PHP
+                className: 'text-center'
             },
-            
             { data: 'BTN_DOCUMENTO', className: 'text-center' },
             { data: 'BTN_EDITAR', className: 'text-center' },
             { data: 'BTN_CONTRATO', className: 'text-center' }
@@ -1998,14 +2065,15 @@ function cargarTablaContratosyanexos() {
             { targets: 0, title: '#', className: 'all text-center' },
             { targets: 1, title: 'Tipo de contrato', className: 'all text-center' },  
             { targets: 2, title: 'Nombre del Cargo', className: 'all text-center' },  
-            { targets: 3, title: 'Fecha inicio  <br> Fecha fin', className: 'all text-center' },  
+            { targets: 3, title: 'Fechas y Estado', className: 'all text-center' },  
             { targets: 4, title: 'Documento', className: 'all text-center' },  
             { targets: 5, title: 'Editar', className: 'all text-center' }, 
-            { targets: 6, title: 'Contrato', className: 'all text-center' },  
-
+            { targets: 6, title: 'Contrato', className: 'all text-center' }
         ],
     });
 }
+
+
 
 
 
@@ -2014,8 +2082,11 @@ $('#Tablacontratosyanexos').on('click', 'td>button.EDITAR', function () {
     var row = Tablacontratosyanexos.row(tr);
 
     ID_CONTRATOS_ANEXOS = row.data().ID_CONTRATOS_ANEXOS;
+     var fechaLimpia = row.data().FECHA_ESTADO.replace(/<[^>]*>/g, '');
 
-    editarDatoTabla(row.data(), 'formularioCONTRATO', 'miModal_CONTRATO', 1);
+    var rowDataLimpio = { ...row.data(), FECHA_ESTADO: fechaLimpia };
+
+    editarDatoTabla(rowDataLimpio, 'formularioCONTRATO', 'miModal_CONTRATO', 1);
     $('#miModal_CONTRATO .modal-title').html(row.data().NOMBRE_DOCUMENTO_CONTRATO);
 
 
@@ -2057,10 +2128,8 @@ $('#Tablacontratosyanexos').on('click', 'button.informacion', function () {
 
 
 
-    $('#contrato_cargo').text(NOMBRE_CATEGORIA);
-    $('#contrato_fechai').text(FECHAI_CONTRATO);
-    $('#contrato_fecha_final').text(VIGENCIA_CONTRATO);
-    $('#contrato_salario').text(SALARIO_CONTRATO);
+     cargarInformacionContrato();
+
 
     cargarTablaDocumentosSoporteContrato();
     cargarTablaRenovacionContrato ();
@@ -2071,7 +2140,27 @@ $('#Tablacontratosyanexos').on('click', 'button.informacion', function () {
 
 });
 
- 
+ function cargarInformacionContrato() {
+    $.ajax({
+        url: `/obtenerInformacionContrato/${contrato_id}`,
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            if (response.data) {
+                $('#contrato_cargo').text(response.data.NOMBRE_CATEGORIA);
+                $('#contrato_fechai').text(response.data.FECHAI_CONTRATO);
+                $('#contrato_fecha_final').text(response.data.VIGENCIA_CONTRATO);
+                $('#contrato_salario').text(response.data.SALARIO_CONTRATO);
+            } else {
+                console.warn("No se encontraron datos del contrato.");
+            }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("Error al obtener datos del contrato:", textStatus, errorThrown);
+        }
+    });
+}
+
 
 // <!-- ============================================================================================================================ -->
 // <!--                                                          DOCUMENTOS DE CONTRATOS                                             -->
@@ -2265,17 +2354,37 @@ function cargarTablaDocumentosSoporteContrato() {
         columns: [
             { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
             { data: 'NOMBRE_DOCUMENTOSOPORTECONTRATO', className: 'text-center' },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    let fechaInicio = row.FECHAI_DOCUMENTOSOPORTECONTRATO;
+                    let fechaFin = row.FECHAF_DOCUMENTOSOPORTECONTRATO;
+                    let hoy = new Date();
+                    let fechaFinDate = new Date(fechaFin);
+
+                    let diferenciaDias = Math.ceil((fechaFinDate - hoy) / (1000 * 60 * 60 * 24));
+
+                    let estadoTexto = "";
+                    if (diferenciaDias < 0) {
+                        estadoTexto = `<span style="color: red;">(Vencido)</span>`;
+                    } else {
+                        estadoTexto = `<span style="color: green;">(${diferenciaDias} días restantes)</span>`;
+                    }
+
+                    return `${fechaInicio} <br> ${fechaFin} ${estadoTexto}`;
+                },
+                className: 'text-center'
+            },
             { data: 'BTN_DOCUMENTO', className: 'text-center' },
             { data: 'BTN_EDITAR', className: 'text-center' },
         ],
         columnDefs: [
             { targets: 0, title: '#', className: 'all text-center' },
             { targets: 1, title: 'Nombre del documento', className: 'all text-center' },  
-            { targets: 2, title: 'Documento', className: 'all text-center' },  
-            { targets: 3, title: 'Editar', className: 'all text-center' }, 
-
+            { targets: 2, title: 'Fecha inicio <br> Fecha fin (Estado)', className: 'all text-center' },
+            { targets: 3, title: 'Documento', className: 'all text-center' },  
+            { targets: 4, title: 'Editar', className: 'all text-center' }, 
         ],
-       
     });
 }
 
@@ -2491,24 +2600,37 @@ function cargarTablaRenovacionContrato() {
             {
                 data: null,
                 render: function (data, type, row) {
-                    return  row.FECHAI_RENOVACION + '<br>' + row.FECHAF_RENOVACION;
-                }
-            },
+                    let fechaInicio = row.FECHAI_RENOVACION;
+                    let fechaFin = row.FECHAF_RENOVACION;
+                    let hoy = new Date();
+                    let fechaFinDate = new Date(fechaFin);
 
+                    let diferenciaDias = Math.ceil((fechaFinDate - hoy) / (1000 * 60 * 60 * 24));
+
+                    let estadoTexto = "";
+                    if (diferenciaDias < 0) {
+                        estadoTexto = `<span style="color: red;">(Terminado)</span>`;
+                    } else {
+                        estadoTexto = `<span style="color: green;">(${diferenciaDias} días restantes)</span>`;
+                    }
+
+                    return `${fechaInicio} <br> ${fechaFin} ${estadoTexto}`;
+                },
+                className: 'text-center'
+            },
             { data: 'BTN_DOCUMENTO', className: 'text-center' },
             { data: 'BTN_EDITAR', className: 'text-center' },
         ],
         columnDefs: [
             { targets: 0, title: '#', className: 'all text-center' },
             { targets: 1, title: 'Nombre del documento', className: 'all text-center' },  
-            { targets: 2, title: 'Fecha inicio  <br> Fecha fin', className: 'all text-center' },  
+            { targets: 2, title: 'Fecha inicio <br> Fecha fin (Estado)', className: 'all text-center' },  
             { targets: 3, title: 'Documento', className: 'all text-center' },  
             { targets: 4, title: 'Editar', className: 'all text-center' }, 
-
         ],
-       
     });
 }
+
 
 
 

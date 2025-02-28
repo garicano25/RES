@@ -346,61 +346,189 @@ public function obtenerguardados(Request $request)
 }
 
 
-/////////////////////////////////////////// STEP 3  CONTRATOS Y ANEXOS //////////////////////////////////
+    /////////////////////////////////////////// STEP 3  CONTRATOS Y ANEXOS //////////////////////////////////
 
-public function Tablacontratosyanexos(Request $request)
-{
-    try {
-        $curp = $request->get('curp');
+    // public function Tablacontratosyanexos(Request $request)
+    // {
+    //     try {
+    //         $curp = $request->get('curp');
 
-        if (!$curp) {
-            return response()->json([
-                'msj' => 'CURP no proporcionada',
-                'data' => []
-            ], 400);
-        }
+    //         if (!$curp) {
+    //             return response()->json([
+    //                 'msj' => 'CURP no proporcionada',
+    //                 'data' => []
+    //             ], 400);
+    //         }
 
-        $tabla = DB::select("
-            SELECT rec.*, cat.NOMBRE_CATEGORIA
+    //         $tabla = DB::select("
+    //             SELECT rec.*, cat.NOMBRE_CATEGORIA
+    //             FROM contratos_anexos_contratacion rec
+    //             LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = rec.NOMBRE_CARGO
+    //             WHERE rec.CURP = ?
+    //         ", [$curp]);
+
+    //         foreach ($tabla as $value) {
+    //             if ($value->ACTIVO == 0) {
+    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+    //                 $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
+    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //                 $value->BTN_CONTRATO = '<button type="button" class="btn btn-success btn-custom rounded-pill informacion" id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
+
+    //             } else {
+    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+    //                 $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
+    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //                 $value->BTN_CONTRATO = '<button type="button" class="btn btn-success btn-custom rounded-pill informacion" id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
+
+    //             }
+    //         }
+
+    //         // Retornar respuesta JSON
+    //         return response()->json([
+    //             'data' => $tabla,
+    //             'msj' => 'Información consultada correctamente'
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'msj' => 'Error: ' . $e->getMessage(),
+    //             'data' => []
+    //         ]);
+    //     }
+    // }
+    public function Tablacontratosyanexos(Request $request)
+    {
+        try {
+            $curp = $request->get('curp');
+
+            if (!$curp) {
+                return response()->json([
+                    'msj' => 'CURP no proporcionada',
+                    'data' => []
+                ], 400);
+            }
+
+            $tabla = DB::select("
+            SELECT 
+                rec.*, 
+                cat.NOMBRE_CATEGORIA,
+                (SELECT MAX(FECHAI_RENOVACION) FROM renovacion_contrato WHERE CONTRATO_ID = rec.ID_CONTRATOS_ANEXOS) AS ULTIMA_FECHA_INICIO,
+                (SELECT MAX(FECHAF_RENOVACION) FROM renovacion_contrato WHERE CONTRATO_ID = rec.ID_CONTRATOS_ANEXOS) AS ULTIMA_FECHA_FIN
             FROM contratos_anexos_contratacion rec
-            LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = rec.NOMBRE_CARGO
+            LEFT JOIN catalogo_categorias cat 
+                ON cat.ID_CATALOGO_CATEGORIA = rec.NOMBRE_CARGO
             WHERE rec.CURP = ?
         ", [$curp]);
 
-        foreach ($tabla as $value) {
-            if ($value->ACTIVO == 0) {
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+            foreach ($tabla as $value) {
+                // Determinar la fecha de inicio y fin
+                $fecha_inicio_mostrar = !empty($value->ULTIMA_FECHA_INICIO) ? $value->ULTIMA_FECHA_INICIO : $value->FECHAI_CONTRATO;
+                $fecha_fin_mostrar = !empty($value->ULTIMA_FECHA_FIN) ? $value->ULTIMA_FECHA_FIN : $value->VIGENCIA_CONTRATO;
+
+                if (!$fecha_inicio_mostrar) {
+                    $fecha_inicio_mostrar = "Sin fecha";
+                }
+                if (!$fecha_fin_mostrar) {
+                    $fecha_fin_mostrar = "Sin fecha";
+                }
+
+                // Calcular los días restantes
+                if ($fecha_fin_mostrar !== "Sin fecha") {
+                    $fecha_fin_dt = new \DateTime($fecha_fin_mostrar);
+                    $hoy = new \DateTime();
+                    $diferencia = $hoy->diff($fecha_fin_dt);
+                    $dias_restantes = ($fecha_fin_dt >= $hoy) ? $diferencia->days : -$diferencia->days;
+
+                    if ($dias_restantes >= 0) {
+                        $estado_dias = "<span style='color: green;'>($dias_restantes días restantes)</span>";
+                    } else {
+                        $estado_dias = "<span style='color: red;'>(Terminado)</span>";
+                    }
+                } else {
+                    $estado_dias = "<span style='color: orange;'>(Fecha desconocida)</span>";
+                }
+
+                // **Mostrar fechas en dos líneas con el estado**
+                $value->FECHA_ESTADO = $fecha_inicio_mostrar . "<br>" . $fecha_fin_mostrar . " " . $estado_dias;
+
+                // **Manteniendo los botones tal como los tenías**
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+                } else {
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                }
                 $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 $value->BTN_CONTRATO = '<button type="button" class="btn btn-success btn-custom rounded-pill informacion" id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
-
-            } else {
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
-                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                $value->BTN_CONTRATO = '<button type="button" class="btn btn-success btn-custom rounded-pill informacion" id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
-
             }
-        }
 
-        // Retornar respuesta JSON
-        return response()->json([
-            'data' => $tabla,
-            'msj' => 'Información consultada correctamente'
-        ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'msj' => 'Error: ' . $e->getMessage(),
-            'data' => []
-        ]);
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'msj' => 'Error: ' . $e->getMessage(),
+                'data' => []
+            ]);
+        }
     }
-}
+
+
+
 
 public function mostrarcontratosyanexos($id)
 {
     $archivo = contratosanexosModel::findOrFail($id)->DOCUMENTO_CONTRATO;
     return Storage::response($archivo);
 }
+
+
+
+    public function obtenerInformacionContrato($contrato_id)
+    {
+        try {
+            // Buscar el contrato base
+            $contrato = DB::selectOne("
+            SELECT 
+                rec.ID_CONTRATOS_ANEXOS,
+                cat.NOMBRE_CATEGORIA,
+                rec.FECHAI_CONTRATO,
+                rec.VIGENCIA_CONTRATO,
+                rec.SALARIO_CONTRATO
+            FROM contratos_anexos_contratacion rec
+            LEFT JOIN catalogo_categorias cat 
+                ON cat.ID_CATALOGO_CATEGORIA = rec.NOMBRE_CARGO
+            WHERE rec.ID_CONTRATOS_ANEXOS = ?
+        ", [$contrato_id]);
+
+            if (!$contrato) {
+                return response()->json(['msj' => 'Contrato no encontrado', 'data' => null], 404);
+            }
+
+            // Buscar la última renovación si existe
+            $renovacion = DB::selectOne("
+            SELECT 
+                FECHAI_RENOVACION AS FECHAI_CONTRATO,
+                FECHAF_RENOVACION AS VIGENCIA_CONTRATO,
+                SALARIO_RENOVACION AS SALARIO_CONTRATO
+            FROM renovacion_contrato
+            WHERE CONTRATO_ID = ?
+            ORDER BY FECHAI_RENOVACION DESC
+            LIMIT 1
+        ", [$contrato_id]);
+
+            // Si hay una renovación, reemplazar los datos del contrato original
+            if ($renovacion) {
+                $contrato->FECHAI_CONTRATO = $renovacion->FECHAI_CONTRATO;
+                $contrato->VIGENCIA_CONTRATO = $renovacion->VIGENCIA_CONTRATO;
+                $contrato->SALARIO_CONTRATO = $renovacion->SALARIO_CONTRATO;
+            }
+
+            return response()->json(['msj' => 'Información obtenida correctamente', 'data' => $contrato]);
+        } catch (\Exception $e) {
+            return response()->json(['msj' => 'Error: ' . $e->getMessage(), 'data' => null], 500);
+        }
+    }
 
 /////////////////////////////////////////// DOCUMENTOS DE CONTRATO //////////////////////////////////
 
