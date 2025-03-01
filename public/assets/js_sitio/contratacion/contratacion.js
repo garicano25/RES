@@ -2366,9 +2366,9 @@ function cargarTablaDocumentosSoporteContrato() {
 
                     let estadoTexto = "";
                     if (diferenciaDias < 0) {
-                        estadoTexto = `<span style="color: red;">(Terminado)</span>`;
+                        estadoTexto = `<span style="color: red;"> <br>(Terminado)</span>`;
                     } else {
-                        estadoTexto = `<span style="color: green;">(${diferenciaDias} días restantes)</span>`;
+                        estadoTexto = `<span style="color: green;"> <br> (${diferenciaDias} días restantes)</span>`;
                     }
 
                     return `${fechaInicio} <br> ${fechaFin} ${estadoTexto}`;
@@ -2609,9 +2609,9 @@ function cargarTablaRenovacionContrato() {
 
                     let estadoTexto = "";
                     if (diferenciaDias < 0) {
-                        estadoTexto = `<span style="color: red;">(Terminado)</span>`;
+                        estadoTexto = `<span style="color: red;"> <br>(Terminado)</span>`;
                     } else {
-                        estadoTexto = `<span style="color: green;">(${diferenciaDias} días restantes)</span>`;
+                        estadoTexto = `<span style="color: green;"> <br>(${diferenciaDias} días restantes)</span>`;
                     }
 
                     return `${fechaInicio} <br> ${fechaFin} ${estadoTexto}`;

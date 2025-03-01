@@ -24,7 +24,7 @@ class usuarioController extends Controller
     {
         $roles = CatalogocategoriaModel::where('ACTIVO', 1)->pluck('NOMBRE_CATEGORIA')->toArray();
 
-        array_unshift($roles, 'Superusuario', 'Administrador');
+        array_unshift($roles, 'Superusuario', 'Administrador', 'Proveedor');
     
         return view('usuario.usuario', compact('roles'));
     }
@@ -34,7 +34,7 @@ class usuarioController extends Controller
     {
         try {
             // Cargar usuarios junto con los roles
-            $tabla = usuarioModel::with('roles')->get();
+            $tabla = usuarioModel::with('roles')->where('USUARIO_TIPO', 1)->get();
     
             foreach ($tabla as $value) {
                 // Agregar atributos personalizados
@@ -43,6 +43,9 @@ class usuarioController extends Controller
     
                 if ($value->USUARIO_TIPO == 1) {
                     $value->USUARIO_TIPOS = 'Empleado';
+                } else {
+                    $value->USUARIO_TIPOS = 'Proveedor';
+
                 }
                 
                 $value->FOTO_USUARIO_HTML = '<img src="/usuariofoto/' . $value->ID_USUARIO . '" alt="Foto de usuario" class="img-fluid" width="50" height="60">';
@@ -70,7 +73,49 @@ class usuarioController extends Controller
             ]);
         }
     }
-    
+
+
+    public function Tablaproveedores()
+    {
+        try {
+            // Cargar usuarios junto con los roles
+            $tabla = usuarioModel::with('roles')->where('USUARIO_TIPO', 2)->get();
+
+            foreach ($tabla as $value) {
+                $value->EMPLEADO_NOMBRES = $value->EMPLEADO_NOMBRE . ' ' . $value->EMPLEADO_APELLIDOPATERNO . ' ' . $value->EMPLEADO_APELLIDOMATERNO . '<br>' . $value->EMPLEADO_CARGO;
+                $value->EMPLEADO_CORREOS = $value->EMPLEADO_CORREO . '<br>' . $value->EMPLEADO_TELEFONO;
+
+                if ($value->USUARIO_TIPO == 1) {
+                    $value->USUARIO_TIPOS = 'Empleado';
+                } else {
+                    $value->USUARIO_TIPOS = 'Proveedor';
+                }
+
+                $value->FOTO_USUARIO_HTML = '<img src="/usuariofoto/' . $value->ID_USUARIO . '" alt="Foto de usuario" class="img-fluid" width="50" height="60">';
+
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_USUARIO . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_USUARIO . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                }
+
+                // Añade los roles asociados al usuario
+                $value->ROLES_ASIGNADOS = $value->roles->pluck('NOMBRE_ROL'); // Devuelve un array con los nombres de los roles
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
 
 public function mostrarFotoUsuario($usuario_id)
 {

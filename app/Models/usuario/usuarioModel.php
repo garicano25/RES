@@ -29,6 +29,7 @@ class usuarioModel extends Authenticatable
         'EMPLEADO_CORREO',
         'PASSWORD',
         'PASSWORD_2',
+        'NOMBRE_COMERCIAL_PROVEEDOR',
         'ACTIVO',
     ];
 

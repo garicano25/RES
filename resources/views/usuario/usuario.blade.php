@@ -68,6 +68,19 @@
         margin: 0;
         padding: 0;
     }
+
+    .texto-seleccionado {
+        color: #0d6efd;
+        font-weight: bold;
+    }
+
+    .texto-no-seleccionado {
+        color: gray;
+    }
+
+    .texto-no-seleccionado:hover {
+        text-decoration: underline;
+    }
 </style>
 
 <div class="contenedor-contenido">
@@ -78,9 +91,22 @@
         </button>
     </ol>
     <div class="card-body">
-        <table id="Tablausuarios" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
-            <!-- Contenido de la tabla -->
-        </table>
+        <div class="d-flex justify-content-center align-items-center mb-4">
+            <span id="texto_activo" class="texto-seleccionado me-4" style="cursor: pointer;">Colaborador</span>
+            <span id="texto_inactivo" class="texto-no-seleccionado" style="cursor: pointer;">Proveedor</span>
+        </div>
+
+        <div class="card-body position-relative" id="tabla_activo" style="display: block;">
+            <i id="loadingIcon8" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+            <table id="Tablausuarios" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+            </table>
+        </div>
+
+        <div class="card-body position-relative" id="tabla_inactivo" style="display: none;">
+            <i id="loadingIcon7" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+            <table id="Tablaproveedores" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+            </table>
+        </div>
     </div>
 </div>
 
@@ -104,8 +130,7 @@
                         <div class="col-8">
                             <div class="row">
                                 <div class="col-6">
-                                    <div    
-                                     class="row">
+                                    <div class="row">
                                         {!! csrf_field() !!}
                                         <div class="col-12">
                                             <div class="form-group">
@@ -118,7 +143,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" id="DIV_INFORMACION" style="display: block;">
                                         <div class="col-12 campo_dato_empleado">
                                             <div class="form-group">
                                                 <label>Nombre (s) *</label>
@@ -145,7 +170,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-6" id="DIV_FOTO" style="display: block;">
                                     <div class="form-group">
                                         <label id="FOTO_TITULO">Foto usuario *</label>
                                         <style>
@@ -166,38 +191,47 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-12 campo_dato_empleado">
+
+                                <div class="col-12 campo_dato_empleado" id="DIV_DIRRECCION" style="display: block;">
                                     <div class="form-group">
                                         <label>Dirección *</label>
                                         <input type="text" class="form-control" id="EMPLEADO_DIRECCION" name="EMPLEADO_DIRECCION" required>
                                     </div>
                                 </div>
-                                <div class="col-6 campo_dato_empleado">
+                                <div class="col-6 campo_dato_empleado" id="DIV_CARGO" style="display: block;">
                                     <div class="form-group">
                                         <label>Cargo *</label>
                                         <input type="text" class="form-control" id="EMPLEADO_CARGO" name="EMPLEADO_CARGO" required>
                                     </div>
                                 </div>
-                                <div class="col-6 campo_dato_empleado">
+                                <div class="col-6 campo_dato_empleado" id="DIV_TELEFONO" style="display: block;">
                                     <div class="form-group">
                                         <label>Teléfono *</label>
                                         <input type="text" class="form-control" id="EMPLEADO_TELEFONO" name="EMPLEADO_TELEFONO" required>
                                     </div>
                                 </div>
-                                <div class="col-6 campo_dato_empleado">
+                                <div class="col-6 campo_dato_empleado" id="DIV_NACIMIENTO" style="display: block;">
                                     <label>Fecha de nacimiento *</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="EMPLEADO_FECHANACIMIENTO" name="EMPLEADO_FECHANACIMIENTO" required>
                                     </div>
                                 </div>
-                                <div class="col-6 campo_dato_empleado">
+                                <div class="col-6 campo_dato_empleado mt-2">
                                     <div class="form-group">
-                                        <label>Correo de acceso *</label>
+                                        <label for="EMPLEADO_CORREO">Correo de acceso *</label>
                                         <input type="text" class="form-control" id="EMPLEADO_CORREO" name="EMPLEADO_CORREO" required>
                                     </div>
                                 </div>
+
+                                <div class="col-6  mt-2" id="DIV_PROVEDOR" style="display: none;">
+                                    <div class="form-group">
+                                        <label>Nombre comercial *</label>
+                                        <input type="text" class="form-control" id="NOMBRE_COMERCIAL_PROVEEDOR" name="NOMBRE_COMERCIAL_PROVEEDOR" required>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="row">
+
+                            <div class="row" id="DIV_CONTRASEÑA">
                                 <div class="col-5">
                                     <div class="form-group">
                                         <label>Contraseña *</label>
@@ -228,7 +262,7 @@
 
                         </div> {{-- fin del col 8 --}}
 
-                        <div class="col-4">
+                        <div class="col-4" id=ROLES_COLABORADOR style="display: block;">
                             <div class="row">
                                 <div class="col-12">
                                     <label>[roles] *</label>

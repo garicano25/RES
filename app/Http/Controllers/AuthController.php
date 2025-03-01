@@ -17,39 +17,39 @@ class AuthController extends Controller
         return view('auth.login');
     }
     
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
-    
-        if (Auth::attempt(['EMPLEADO_CORREO' => $credentials['email'], 'password' => $credentials['password'], 'ACTIVO' => 1])) {
-            return redirect('/Módulos'); 
-        }
-    
-        return redirect()->back()->withErrors([
-            'login_error' => 'Estas credenciales no coinciden con nuestros registros.',
-        ]);
-    }
-
-
-
     // public function login(Request $request)
     // {
     //     $credentials = $request->only('email', 'password');
-
+    
     //     if (Auth::attempt(['EMPLEADO_CORREO' => $credentials['email'], 'password' => $credentials['password'], 'ACTIVO' => 1])) {
-    //         $user = Auth::user();
-
-    //         if ($user->ADMINISTRADOR == 1) {
-    //             return redirect('/tablero');
-    //         } else {
-    //             return redirect('/Solicitudes');
-    //         }
+    //         return redirect('/Módulos'); 
     //     }
-
+    
     //     return redirect()->back()->withErrors([
     //         'login_error' => 'Estas credenciales no coinciden con nuestros registros.',
     //     ]);
     // }
+
+
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt(['EMPLEADO_CORREO' => $credentials['email'], 'password' => $credentials['password'], 'ACTIVO' => 1])) {
+            $user = Auth::user();
+
+            if ($user->USUARIO_TIPO == 1) { // Comparación correcta
+                return redirect('/Módulos'); // Ruta corregida (sin tilde)
+            } else {
+                return redirect('/Alta');
+            }
+        }
+
+        return redirect()->back()->withErrors([
+            'login_error' => 'Estas credenciales no coinciden con nuestros registros.',
+        ]);
+    }
 
 
 

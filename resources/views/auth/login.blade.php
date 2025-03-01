@@ -85,7 +85,7 @@
         <form action="/login" method="POST">
             @csrf
             <div class="form-group">
-                <input type="email" class="form-control" name="email" placeholder="Correo electrónico" required>
+                <input type="text" class="form-control" name="email" placeholder="Correo electrónico" required>
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" name="password" placeholder="Contraseña" required>

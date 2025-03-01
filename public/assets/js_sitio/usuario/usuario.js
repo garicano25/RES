@@ -3,6 +3,51 @@ var ID_USUARIO = 0
 
 Tablausuarios = null
 
+
+
+var Tablaproveedores;
+var TablaproveedoresCargada = false; 
+
+
+const textoActivo = document.getElementById('texto_activo');
+const textoInactivo = document.getElementById('texto_inactivo');
+const tablaActivo = document.getElementById('tabla_activo');
+const tablaInactivo = document.getElementById('tabla_inactivo');
+
+
+textoActivo.addEventListener('click', () => {
+    tablaActivo.style.display = 'block';
+    tablaInactivo.style.display = 'none';
+    textoActivo.classList.add('texto-seleccionado');
+    textoActivo.classList.remove('texto-no-seleccionado');
+    textoInactivo.classList.add('texto-no-seleccionado');
+    textoInactivo.classList.remove('texto-seleccionado');
+
+    Tablausuarios.columns.adjust().draw(); 
+
+});
+
+
+
+textoInactivo.addEventListener('click', () => {
+    tablaActivo.style.display = 'none';
+    tablaInactivo.style.display = 'block';
+    textoInactivo.classList.add('texto-seleccionado');
+    textoInactivo.classList.remove('texto-no-seleccionado');
+    textoActivo.classList.add('texto-no-seleccionado');
+    textoActivo.classList.remove('texto-seleccionado');
+
+    if (TablaproveedoresCargada) {
+        Tablaproveedores.columns.adjust().draw();
+    } else {
+        cargarTablaProveedores();
+        TablaproveedoresCargada = true;
+    }
+
+
+});
+
+
 $(document).ready(function() {
     $('#btnNuevoUsuario').on('click', function() {
         limpiarFormularioUsuario(); 
@@ -49,6 +94,10 @@ Modalusuario.addEventListener('hidden.bs.modal', event => {
     checkboxes.forEach(checkbox => {
         checkbox.disabled = false;
     });
+
+    $("#USUARIO_TIPO").val("1").trigger("change");
+    $("#DIV_INFORMACION input, #DIV_FOTO input, #DIV_DIRRECCION input, #DIV_CARGO input, #DIV_TELEFONO input, #DIV_NACIMIENTO input, #DIV_PROVEDOR input").removeAttr("required");
+
 });
 
 
@@ -91,6 +140,12 @@ $("#guardarFormUSUARIO").click(function (e) {
                     document.getElementById('formularioUSUARIO').reset();
                     Tablausuarios.ajax.reload()
 
+                    
+                    if ($.fn.DataTable.isDataTable('#Tablaproveedores')) {
+                        Tablaproveedores.ajax.reload(null, false);
+                    }
+                        
+
                 }, 300);
                 
                 
@@ -131,6 +186,12 @@ $("#guardarFormUSUARIO").click(function (e) {
                     document.getElementById('formularioUSUARIO').reset();
                     Tablausuarios.ajax.reload()
 
+                
+                    if ($.fn.DataTable.isDataTable('#Tablacontratacion1')) {
+                        Tablacontratacion1.ajax.reload(null, false);
+                        }
+                            
+
 
                 }, 300);  
             })
@@ -142,6 +203,7 @@ $("#guardarFormUSUARIO").click(function (e) {
 }
     
 });
+
 
 
 var Tablausuarios = $("#Tablausuarios").DataTable({
@@ -158,6 +220,7 @@ var Tablausuarios = $("#Tablausuarios").DataTable({
     scrollY: '65vh',
     scrollCollapse: true,
     responsive: true,
+    destroy: true,
     ajax: {
         dataType: 'json',
         data: {},
@@ -165,23 +228,37 @@ var Tablausuarios = $("#Tablausuarios").DataTable({
         cache: false,
         url: '/Tablausuarios',
         beforeSend: function () {
-            mostrarCarga();
+            $('#loadingIcon8').css('display', 'inline-block');
         },
         complete: function () {
-            ocultarCarga();
-
-            // Esperar a que todas las imágenes carguen y luego ajustar las columnas
-            $('#Tablausuarios tbody img').on('load', function () {
-                Tablausuarios.columns.adjust().draw();
-            });
+            $('#loadingIcon8').css('display', 'none');
+            Tablausuarios.columns.adjust().draw(); 
         },
         error: function (jqXHR, textStatus, errorThrown) {
+            $('#loadingIcon8').css('display', 'none');
             alertErrorAJAX(jqXHR, textStatus, errorThrown);
         },
         dataSrc: 'data'
     },
     order: [[0, 'asc']],
     columns: [
+        { 
+            data: null,
+            render: function(data, type, row, meta) {
+                return meta.row + 1; 
+            }
+        },
+        {
+            data: null,  render: function (data, type, row)
+             {
+                return row.NOMBRE_COLABORADOR + ' ' + row.PRIMER_APELLIDO + ' ' + row.SEGUNDO_APELLIDO;
+            }
+        }
+        ,
+        { data: 'CURP' },
+        { data: 'BTN_EDITAR' }
+    ],
+     columns: [
         { 
             data: null,
             render: function(data, type, row, meta) {
@@ -216,18 +293,212 @@ var Tablausuarios = $("#Tablausuarios").DataTable({
     { targets: 3, title: 'Correo / Teléfono', className: 'all text-center' },
     { targets: 4, title: 'Tipo usuario', className: 'all text-center' },
     {
-        targets: 5, // Índice de la columna "Perfil de accesos"
+        targets: 5, 
         title: 'Perfil de accesos',
-        className: 'all text-center', // Centrar el título
+        className: 'all text-center', 
         createdCell: function (td, cellData, rowData, row, col) {
-            $(td).css('text-align', 'left'); // Alinear el contenido a la izquierda
+            $(td).css('text-align', 'left'); 
         }
     },
     { targets: 6, title: 'Editar', className: 'all text-center' },
     { targets: 7, title: 'Activo', className: 'all text-center' }
 ]
-
 });
+
+
+
+
+function cargarTablaProveedores() {
+    if ($.fn.DataTable.isDataTable('#Tablaproveedores')) {
+        Tablaproveedores.clear().destroy();
+    }
+
+    Tablaproveedores = $("#Tablaproveedores").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+       ajax: {
+        dataType: 'json',
+        data: {},
+        method: 'GET',
+        cache: false,
+        url: '/Tablaproveedores',
+        beforeSend: function () {
+            $('#loadingIcon7').css('display', 'inline-block');
+        },
+        complete: function () {
+            $('#loadingIcon7').css('display', 'none');
+            Tablaproveedores.columns.adjust().draw(); 
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $('#loadingIcon7').css('display', 'none');
+            alertErrorAJAX(jqXHR, textStatus, errorThrown);
+        },
+        dataSrc: 'data'
+    },
+        columns: [
+            { 
+                data: null,
+                render: function(data, type, row, meta) {
+                    return meta.row + 1; 
+                }
+            },
+            {
+                data: null,  render: function (data, type, row)
+                 {
+                    return row.NOMBRE_COLABORADOR + ' ' + row.PRIMER_APELLIDO + ' ' + row.SEGUNDO_APELLIDO;
+                }
+            }
+            ,
+            { data: 'CURP' },
+            { data: 'BTN_EDITAR' },
+            { data: 'BTN_ACTIVAR' }
+
+        ],
+       
+            columns: [
+                { 
+                    data: null,
+                    render: function(data, type, row, meta) {
+                        return meta.row + 1; 
+                    }
+                },
+                { 
+                    data: 'FOTO_USUARIO_HTML',
+                    orderable: false,
+                    searchable: false,
+                    className: 'text-center'
+                },
+                { data: 'EMPLEADO_CORREO' },
+                { data: 'NOMBRE_COMERCIAL_PROVEEDOR' },
+                { data: 'USUARIO_TIPOS' },
+                {
+                    data: 'ROLES_ASIGNADOS',
+                    render: function(data, type, row) {
+                        if (data && data.length > 0) {
+                            return `<ul>${data.map(role => `<li>${role}</li>`).join('')}</ul>`;
+                        }
+                        return 'Sin roles asignados';
+                    }
+                },
+                { data: 'BTN_EDITAR' },
+                { data: 'BTN_ELIMINAR' }
+            ],
+        columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'Foto', className: 'all text-center' },
+            { targets: 2, title: 'RFC', className: 'all text-center' },
+            { targets: 3, title: 'Nombre comercial', className: 'all text-center' },
+            { targets: 4, title: 'Tipo usuario', className: 'all text-center' },
+            {
+                targets: 5, 
+                title: 'Perfil de accesos',
+                className: 'all text-center', 
+                createdCell: function (td, cellData, rowData, row, col) {
+                    $(td).css('text-align', 'left'); 
+                }
+            },
+            { targets: 6, title: 'Editar', className: 'all text-center' },
+            { targets: 7, title: 'Activo', className: 'all text-center' }
+        ]
+    });
+}
+
+
+// var Tablausuarios = $("#Tablausuarios").DataTable({
+//     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+//     lengthChange: true,
+//     lengthMenu: [
+//         [10, 25, 50, -1],
+//         [10, 25, 50, 'All']
+//     ],
+//     info: false,
+//     paging: true,
+//     searching: true,
+//     filtering: true,
+//     scrollY: '65vh',
+//     scrollCollapse: true,
+//     responsive: true,
+//     ajax: {
+//         dataType: 'json',
+//         data: {},
+//         method: 'GET',
+//         cache: false,
+//         url: '/Tablausuarios',
+//         beforeSend: function () {
+//             mostrarCarga();
+//         },
+//         complete: function () {
+//             ocultarCarga();
+
+//             // Esperar a que todas las imágenes carguen y luego ajustar las columnas
+//             $('#Tablausuarios tbody img').on('load', function () {
+//                 Tablausuarios.columns.adjust().draw();
+//             });
+//         },
+//         error: function (jqXHR, textStatus, errorThrown) {
+//             alertErrorAJAX(jqXHR, textStatus, errorThrown);
+//         },
+//         dataSrc: 'data'
+//     },
+//     order: [[0, 'asc']],
+//     columns: [
+//         { 
+//             data: null,
+//             render: function(data, type, row, meta) {
+//                 return meta.row + 1; 
+//             }
+//         },
+//         { 
+//             data: 'FOTO_USUARIO_HTML',
+//             orderable: false,
+//             searchable: false,
+//             className: 'text-center'
+//         },
+//         { data: 'EMPLEADO_NOMBRES' },
+//         { data: 'EMPLEADO_CORREOS' },
+//         { data: 'USUARIO_TIPOS' },
+//         {
+//             data: 'ROLES_ASIGNADOS',
+//             render: function(data, type, row) {
+//                 if (data && data.length > 0) {
+//                     return `<ul>${data.map(role => `<li>${role}</li>`).join('')}</ul>`;
+//                 }
+//                 return 'Sin roles asignados';
+//             }
+//         },
+//         { data: 'BTN_EDITAR' },
+//         { data: 'BTN_ELIMINAR' }
+//     ],
+//    columnDefs: [
+//     { targets: 0, title: '#', className: 'all text-center' },
+//     { targets: 1, title: 'Foto', className: 'all text-center' },
+//     { targets: 2, title: 'Nombre / Cargo', className: 'all text-center' },
+//     { targets: 3, title: 'Correo / Teléfono', className: 'all text-center' },
+//     { targets: 4, title: 'Tipo usuario', className: 'all text-center' },
+//     {
+//         targets: 5, // Índice de la columna "Perfil de accesos"
+//         title: 'Perfil de accesos',
+//         className: 'all text-center', // Centrar el título
+//         createdCell: function (td, cellData, rowData, row, col) {
+//             $(td).css('text-align', 'left'); // Alinear el contenido a la izquierda
+//         }
+//     },
+//     { targets: 6, title: 'Editar', className: 'all text-center' },
+//     { targets: 7, title: 'Activo', className: 'all text-center' }
+// ]
+
+// });
 
 
 
@@ -263,10 +534,13 @@ $('#Tablausuarios tbody').on('click', 'td>button.EDITAR', function () {
 
     editarDatoTabla(row.data(), 'formularioUSUARIO', 'modal_usuario', 1);
 
-    // Seleccionar roles asignados
-    const rolesAsignados = row.data().ROLES_ASIGNADOS; 
+    const rolesAsignados = row.data().ROLES_ASIGNADOS;
     const checkboxes = document.querySelectorAll('.checkbox_rol');
 
+    // 📌 Seleccionar el tipo de usuario (1 = Usuario Empleado, 2 = Proveedor)
+    $("#USUARIO_TIPO").val(row.data().USUARIO_TIPO).trigger("change");
+
+    // 📌 Manejo de los checkboxes de roles según los roles asignados
     checkboxes.forEach(checkbox => {
         if (rolesAsignados.includes(checkbox.value)) {
             checkbox.checked = true;
@@ -275,29 +549,34 @@ $('#Tablausuarios tbody').on('click', 'td>button.EDITAR', function () {
         }
     });
 
-    // Bloquear otros roles si Superusuario o Administrador está asignado
     if (rolesAsignados.includes('Superusuario')) {
         checkboxes.forEach(checkbox => {
             if (checkbox.value !== 'Superusuario') {
                 checkbox.checked = false;
-                checkbox.disabled = true; // Deshabilitar los demás
+                checkbox.disabled = true;
             }
         });
     } else if (rolesAsignados.includes('Administrador')) {
         checkboxes.forEach(checkbox => {
             if (checkbox.value !== 'Administrador' && checkbox.value !== 'Superusuario') {
                 checkbox.checked = false;
-                checkbox.disabled = true; // Deshabilitar los demás excepto Superusuario
+                checkbox.disabled = true;
+            }
+        });
+    } else if (rolesAsignados.includes('Proveedor')) {
+        checkboxes.forEach(checkbox => {
+            if (checkbox.value !== 'Proveedor') {
+                checkbox.checked = false;
+                checkbox.disabled = true;
             }
         });
     } else {
-        // Habilitar todos los checkboxes si ningún rol especial está seleccionado
         checkboxes.forEach(checkbox => {
             checkbox.disabled = false;
         });
     }
 
-    // Configurar la imagen del usuario si existe
+    // 📌 Manejo de la foto del usuario en Dropify
     if (row.data().FOTO_USUARIO) {
         var archivo = row.data().FOTO_USUARIO;
         var extension = archivo.substring(archivo.lastIndexOf("."));
@@ -330,9 +609,8 @@ $('#Tablausuarios tbody').on('click', 'td>button.EDITAR', function () {
         $('#FOTO_USUARIO').dropify().data('dropify').resetPreview();
         $('#FOTO_USUARIO').dropify().data('dropify').clearElement();
     }
-
-    
 });
+
 
 
 
@@ -409,6 +687,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkboxes = document.querySelectorAll('.checkbox_rol');
     const superusuarioCheckbox = Array.from(checkboxes).find(cb => cb.value === 'Superusuario');
     const administradorCheckbox = Array.from(checkboxes).find(cb => cb.value === 'Administrador');
+    const proveedorCheckbox = Array.from(checkboxes).find(cb => cb.value === 'Proveedor'); // Checkbox de proveedor
 
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
@@ -431,4 +710,57 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    document.getElementById("USUARIO_TIPO").addEventListener("change", function() {
+        let seleccion = this.value;
+
+        if (seleccion === "2") { 
+            checkboxes.forEach(cb => {
+                if (cb !== proveedorCheckbox) {
+                    cb.checked = false;
+                    cb.disabled = true;
+                }
+            });
+            if (proveedorCheckbox) {
+                proveedorCheckbox.disabled = false;
+                proveedorCheckbox.checked = true; 
+            }
+        } else { 
+            checkboxes.forEach(cb => cb.disabled = false);
+             checkboxes.forEach(cb => cb.checked = false);
+        }
+    });
+});
+
+
+$(document).ready(function() {
+    $("#USUARIO_TIPO").change(function () {
+        let seleccion = $(this).val();
+
+        if (seleccion === "1") { 
+            $("#DIV_INFORMACION, #DIV_FOTO, #DIV_DIRRECCION, #DIV_CARGO, #DIV_TELEFONO, #DIV_NACIMIENTO ,#ROLES_COLABORADOR").show();
+            $("#DIV_PROVEDOR").hide();
+
+            $("#DIV_FOTO").removeClass("col-12").addClass("col-6");
+            $("label[for='EMPLEADO_CORREO']").text("Correo de acceso *");
+
+            $("#DIV_INFORMACION input, #DIV_FOTO input, #DIV_DIRRECCION input, #DIV_CARGO input, #DIV_TELEFONO input, #DIV_NACIMIENTO input").attr("required", true);
+            
+            $("#DIV_PROVEDOR input").removeAttr("required");
+
+        } else if (seleccion === "2") { 
+            $("#DIV_INFORMACION, #DIV_DIRRECCION, #DIV_CARGO, #DIV_TELEFONO, #DIV_NACIMIENTO").hide();
+            $("#DIV_PROVEDOR").show();
+
+            $("label[for='EMPLEADO_CORREO']").text("RFC *");
+
+            $("#DIV_FOTO").removeClass("col-6").addClass("col-12");
+
+            $("#DIV_PROVEDOR input").attr("required", true);
+
+            $("#DIV_INFORMACION input, #DIV_FOTO input, #DIV_DIRRECCION input, #DIV_CARGO input, #DIV_TELEFONO input, #DIV_NACIMIENTO input").removeAttr("required");
+        }
+    });
+
+    $("#USUARIO_TIPO").trigger("change");
 });
