@@ -172,7 +172,7 @@
                                 </div>
                                 <div class="col-6" id="DIV_FOTO" style="display: block;">
                                     <div class="form-group">
-                                        <label id="FOTO_TITULO">Foto usuario *</label>
+                                        <label id="FOTO_TITULO">Foto usuario </label>
                                         <style>
                                             .dropify-wrapper {
                                                 height: 333 !important;

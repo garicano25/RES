@@ -156,6 +156,37 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+ document.getElementById("CONSTANCIA_DOCUMENTO").addEventListener("change", function(event) {
+        let fileInput = event.target;
+        let removeBtn = document.getElementById("removeFileBtn");
+        let errorMsg = document.getElementById("errorMsg");
+        
+        if (fileInput.files.length > 0) {
+            let file = fileInput.files[0];
+            
+            if (file.type !== "application/pdf") {
+                errorMsg.style.display = "block";
+                fileInput.value = "";
+                removeBtn.style.display = "none";
+            } else {
+                errorMsg.style.display = "none";
+                removeBtn.style.display = "inline-block";
+            }
+        } else {
+            errorMsg.style.display = "block";
+            removeBtn.style.display = "none";
+        }
+    });
+
+    document.getElementById("removeFileBtn").addEventListener("click", function() {
+        let fileInput = document.getElementById("CONSTANCIA_DOCUMENTO");
+        let removeBtn = document.getElementById("removeFileBtn");
+        let errorMsg = document.getElementById("errorMsg");
+        
+        fileInput.value = "";
+        removeBtn.style.display = "none";
+        errorMsg.style.display = "none";
+    });
 
 
 
@@ -164,17 +195,290 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+    let consultaRealizada = false;
 
 
+// document.querySelectorAll('#RFC_PROVEEDOR').forEach(element => {
+//     element.addEventListener('change', function () {
+//         var rfc = this.value.trim();
+
+//         if (rfc && !consultaRealizada) {
+//             consultaRealizada = true;
+
+//             fetch('/actualizarinfoproveedor', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                     'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+//                 },
+//                 body: JSON.stringify({ rfc: rfc })
+//             })
+//             .then(response => {
+//                 if (!response.ok) {
+//                     throw new Error('HTTP error, status = ' + response.status);
+//                 }
+//                 return response.json();
+//             })
+//             .then(data => {
+//                 if (data && !data.message) {
+//                     Swal.fire({
+//                         title: 'Usted ya está registrado',
+//                         text: '¿Desea actualizar su información?',
+//                         icon: 'warning',
+//                         showCancelButton: true,
+//                         confirmButtonText: 'Sí, actualizar',
+//                         cancelButtonText: 'No'
+//                     }).then((result) => {
+//                         if (result.isConfirmed) {
+
+//                             document.getElementById('ID_FORMULARIO_DIRECTORIO').value = data.ID_FORMULARIO_DIRECTORIO || '';
+//                             document.getElementById('RAZON_SOCIAL').value = data.RAZON_SOCIAL || '';
+//                             document.getElementById('RFC_PROVEEDOR').value = data.RFC_PROVEEDOR || '';
+//                             document.getElementById('NOMBRE_COMERCIAL').value = data.NOMBRE_COMERCIAL || '';
+//                             document.getElementById('GIRO_PROVEEDOR').value = data.GIRO_PROVEEDOR || '';
+
+//                             let codigoPostalInput = document.getElementById("CODIGO_POSTAL");
+//                             codigoPostalInput.value = data.CODIGO_POSTAL || '';
+
+//                             let coloniaGuardada = data.NOMBRE_COLONIA_EMPRESA || '';
+
+//                             codigoPostalInput.dispatchEvent(new Event('change'));
+
+//                             let coloniaSelect = document.getElementById('NOMBRE_COLONIA_EMPRESA');
+//                             let observer = new MutationObserver(() => {
+//                                 if (coloniaSelect.options.length > 1) {
+//                                     coloniaSelect.value = coloniaGuardada;
+//                                     observer.disconnect();
+//                                 }
+//                             });
+
+//                             observer.observe(coloniaSelect, { childList: true });
+
+//                             document.getElementById('TIPO_VIALIDAD_EMPRESA').value = data.TIPO_VIALIDAD_EMPRESA || '';
+//                             document.getElementById('NOMBRE_VIALIDAD_EMPRESA').value = data.NOMBRE_VIALIDAD_EMPRESA || '';
+//                             document.getElementById('NUMERO_EXTERIOR_EMPRESA').value = data.NUMERO_EXTERIOR_EMPRESA || '';
+//                             document.getElementById('NUMERO_INTERIOR_EMPRESA').value = data.NUMERO_INTERIOR_EMPRESA || '';
+//                             document.getElementById('NOMBRE_LOCALIDAD_EMPRESA').value = data.NOMBRE_LOCALIDAD_EMPRESA || '';
+//                             document.getElementById('NOMBRE_MUNICIPIO_EMPRESA').value = data.NOMBRE_MUNICIPIO_EMPRESA || '';
+//                             document.getElementById('NOMBRE_ENTIDAD_EMPRESA').value = data.NOMBRE_ENTIDAD_EMPRESA || '';
+//                             document.getElementById('PAIS_EMPRESA').value = data.PAIS_EMPRESA || '';
+//                             document.getElementById('ENTRE_CALLE_EMPRESA').value = data.ENTRE_CALLE_EMPRESA || '';
+//                             document.getElementById('ENTRE_CALLE2_EMPRESA').value = data.ENTRE_CALLE2_EMPRESA || '';
+//                             document.getElementById('NOMBRE_DIRECTORIO').value = data.NOMBRE_DIRECTORIO || '';
+//                             document.getElementById('CARGO_DIRECTORIO').value = data.CARGO_DIRECTORIO || '';
+//                             document.getElementById('TELEFONO_DIRECOTORIO').value = data.TELEFONO_DIRECOTORIO || '';
+//                             document.getElementById('EXSTENSION_DIRECTORIO').value = data.EXSTENSION_DIRECTORIO || '';
+//                             document.getElementById('CELULAR_DIRECTORIO').value = data.CELULAR_DIRECTORIO || '';
+//                             document.getElementById('CORREO_DIRECTORIO').value = data.CORREO_DIRECTORIO || '';
+
+//                             const contenedorServicios = document.querySelector('.serviciodiv');
+//                             contenedorServicios.innerHTML = '';
+
+//                             if (Array.isArray(data.SERVICIOS_JSON)) {
+//                                 data.SERVICIOS_JSON.forEach(servicio => {
+//                                     agregarServicio(servicio.NOMBRE_SERVICIO);
+//                                 });
+//                             }
+//                         } else {
+//                             document.getElementById('formularioDIRECTORIO').reset();
+//                             consultaRealizada = false;
+//                         }
+//                     });
+//                 }
+//             })
+//             .catch(error => {
+//                 console.error('Error:', error);
+//                 consultaRealizada = false;
+//             });
+//         }
+//     });
+// });
+
+document.querySelectorAll('#RFC_PROVEEDOR').forEach(element => {
+    element.addEventListener('change', function () {
+        var rfc = this.value.trim();
+
+        if (rfc && !consultaRealizada) {
+            consultaRealizada = true;
+
+            fetch('/actualizarinfoproveedor', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                },
+                body: JSON.stringify({ rfc: rfc })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('HTTP error, status = ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data && !data.message) {
+                    Swal.fire({
+                        title: 'El RFC ya está registrado',
+                        text: '¿Desea actualizar la información?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Sí, actualizar',
+                        cancelButtonText: 'No'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            solicitarCodigo(data.CORREO_DIRECTORIO, data);
+                        } else {
+                            document.getElementById('formularioDIRECTORIO').reset();
+                            consultaRealizada = false;
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                consultaRealizada = false;
+            });
+        }
+    });
+});
+
+// Función para solicitar el código de verificación
+function solicitarCodigo(correo, data) {
+    fetch('/enviar-codigo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+        },
+        body: JSON.stringify({ correo: correo })
+    })
+    .then(response => response.json())
+    .then(() => {
+        Swal.fire({
+            title: 'Código Enviado',
+            text: 'Revisa tu correo y escribe el código recibido.',
+            input: 'text',
+            inputPlaceholder: 'Introduce el código de verificación',
+            showCancelButton: true,
+            confirmButtonText: 'Verificar Código',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed && result.value) {
+                verificarCodigoAntesDeActualizar(correo, result.value, data);
+            } else {
+                Swal.fire('Cancelado', 'No se actualizaron los datos.', 'error');
+            }
+        });
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+// Función para verificar el código antes de permitir la actualización
+function verificarCodigoAntesDeActualizar(correo, codigo, data) {
+    fetch('/verificar-codigo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+        },
+        body: JSON.stringify({ correo: correo, codigo: codigo })
+    })
+    .then(response => response.json())
+    .then(responseData => {
+        if (responseData.message) {
+            Swal.fire({
+                title: 'Código Correcto',
+                text: 'Ahora puedes actualizar tu información.',
+                icon: 'success'
+            });
+
+            
+            // Rellenar los datos después de la verificación
+            document.getElementById('ID_FORMULARIO_DIRECTORIO').value = data.ID_FORMULARIO_DIRECTORIO || '';
+            document.getElementById('RAZON_SOCIAL').value = data.RAZON_SOCIAL || '';
+            document.getElementById('RFC_PROVEEDOR').value = data.RFC_PROVEEDOR || '';
+            document.getElementById('NOMBRE_COMERCIAL').value = data.NOMBRE_COMERCIAL || '';
+            document.getElementById('GIRO_PROVEEDOR').value = data.GIRO_PROVEEDOR || '';
+
+            let codigoPostalInput = document.getElementById("CODIGO_POSTAL");
+            codigoPostalInput.value = data.CODIGO_POSTAL || '';
+
+            let coloniaGuardada = data.NOMBRE_COLONIA_EMPRESA || '';
+            codigoPostalInput.dispatchEvent(new Event('change'));
+
+            let coloniaSelect = document.getElementById('NOMBRE_COLONIA_EMPRESA');
+            let observer = new MutationObserver(() => {
+                if (coloniaSelect.options.length > 1) { 
+                    coloniaSelect.value = coloniaGuardada; 
+                    observer.disconnect(); 
+                }
+            });
+
+            observer.observe(coloniaSelect, { childList: true });
+
+            document.getElementById('TIPO_VIALIDAD_EMPRESA').value = data.TIPO_VIALIDAD_EMPRESA || '';
+            document.getElementById('NOMBRE_VIALIDAD_EMPRESA').value = data.NOMBRE_VIALIDAD_EMPRESA || '';
+            document.getElementById('NUMERO_EXTERIOR_EMPRESA').value = data.NUMERO_EXTERIOR_EMPRESA || '';
+            document.getElementById('NUMERO_INTERIOR_EMPRESA').value = data.NUMERO_INTERIOR_EMPRESA || '';
+            document.getElementById('NOMBRE_LOCALIDAD_EMPRESA').value = data.NOMBRE_LOCALIDAD_EMPRESA || '';
+            document.getElementById('NOMBRE_MUNICIPIO_EMPRESA').value = data.NOMBRE_MUNICIPIO_EMPRESA || '';
+            document.getElementById('NOMBRE_ENTIDAD_EMPRESA').value = data.NOMBRE_ENTIDAD_EMPRESA || '';
+            document.getElementById('PAIS_EMPRESA').value = data.PAIS_EMPRESA || '';
+            document.getElementById('ENTRE_CALLE_EMPRESA').value = data.ENTRE_CALLE_EMPRESA || '';
+            document.getElementById('ENTRE_CALLE2_EMPRESA').value = data.ENTRE_CALLE2_EMPRESA || '';
+            document.getElementById('NOMBRE_DIRECTORIO').value = data.NOMBRE_DIRECTORIO || '';
+            document.getElementById('CARGO_DIRECTORIO').value = data.CARGO_DIRECTORIO || '';
+            document.getElementById('TELEFONO_DIRECOTORIO').value = data.TELEFONO_DIRECOTORIO || '';
+            document.getElementById('EXSTENSION_DIRECTORIO').value = data.EXSTENSION_DIRECTORIO || '';
+            document.getElementById('CELULAR_DIRECTORIO').value = data.CELULAR_DIRECTORIO || '';
+            document.getElementById('CORREO_DIRECTORIO').value = data.CORREO_DIRECTORIO || '';
+
+            // Cargar servicios dinámicos
+            const contenedorServicios = document.querySelector('.serviciodiv');
+            contenedorServicios.innerHTML = '';
+
+            if (Array.isArray(data.SERVICIOS_JSON)) {
+                data.SERVICIOS_JSON.forEach(servicio => {
+                    agregarServicio(servicio.NOMBRE_SERVICIO);
+                });
+            }
+
+        } else {
+            Swal.fire('Error', 'Código incorrecto o expirado.', 'error');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        Swal.fire('Error', 'Hubo un problema verificando el código.', 'error');
+    });
+}
 
 
+function agregarServicio(nombreServicio = '') {
+    const divContacto = document.createElement('div');
+    divContacto.classList.add('row', 'generarservicio', 'mb-3');
+    divContacto.innerHTML = `
+        <div class="col-12">
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label class="form-label">Servicio *</label>
+                    <input type="text" class="form-control" name="NOMBRE_SERVICIO" value="${nombreServicio}" required>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mt-4 text-center">
+            <button type="button" class="btn btn-danger botonEliminarContacto">Eliminar servicio<i class="bi bi-trash-fill"></i></button>
+        </div>
+    `;
 
+    const contenedor = document.querySelector('.serviciodiv');
+    contenedor.appendChild(divContacto);
 
-
-
-
-
-
+    // Agregar evento para eliminar servicio
+    divContacto.querySelector('.botonEliminarContacto').addEventListener('click', function () {
+        contenedor.removeChild(divContacto);
+    });
+}
 
 
 

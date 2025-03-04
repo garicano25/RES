@@ -16,6 +16,7 @@ use Carbon\Carbon;
 //  USUARIOS
 use App\Http\Controllers\usuario\usuarioController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\VerificationController;
 
 // CONTROLADORES DE ORGANIZACION 
 use App\Http\Controllers\organizacion\areasController;
@@ -114,7 +115,11 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
 });
 
+//==============================================  ENVIAR CORREO  ============================================== 
 
+
+Route::post('/enviar-codigo', [VerificationController::class, 'enviarCodigo']);
+Route::post('/verificar-codigo', [VerificationController::class, 'verificarCodigo']);
 //==============================================  Módulos  ============================================== 
 Route::get('/Módulos', function () {return view('principal.modulos');});
 
@@ -603,6 +608,8 @@ Route::get('/Directorio', function () { //// RUTA EXTERNA ////
 });
 // Route::get('/Directorio', function () {return view('compras.proveedores.directorio');});
 Route::post('/ServiciosSave', [directorioController::class, 'store']);
+Route::get('/mostrarconstanciaproveedor/{id}', [directorioController::class, 'mostrarconstanciaproveedor']);
+Route::post('/actualizarinfoproveedor', [directorioController::class, 'actualizarinfoproveedor'])->name('actualizarinfoproveedor');
 
 
 //  DIRECTORIO INTERNO

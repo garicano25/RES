@@ -487,7 +487,6 @@ public function mostrarcontratosyanexos($id)
     public function obtenerInformacionContrato($contrato_id)
     {
         try {
-            // Buscar el contrato base
             $contrato = DB::selectOne("
             SELECT 
                 rec.ID_CONTRATOS_ANEXOS,
@@ -505,7 +504,6 @@ public function mostrarcontratosyanexos($id)
                 return response()->json(['msj' => 'Contrato no encontrado', 'data' => null], 404);
             }
 
-            // Buscar la última renovación si existe
             $renovacion = DB::selectOne("
             SELECT 
                 FECHAI_RENOVACION AS FECHAI_CONTRATO,
@@ -517,7 +515,6 @@ public function mostrarcontratosyanexos($id)
             LIMIT 1
         ", [$contrato_id]);
 
-            // Si hay una renovación, reemplazar los datos del contrato original
             if ($renovacion) {
                 $contrato->FECHAI_CONTRATO = $renovacion->FECHAI_CONTRATO;
                 $contrato->VIGENCIA_CONTRATO = $renovacion->VIGENCIA_CONTRATO;

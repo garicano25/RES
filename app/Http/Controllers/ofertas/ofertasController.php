@@ -134,7 +134,6 @@ class ofertasController extends Controller
             )')
             ->get();
     
-            // Obtener las solicitudes aceptadas
             $solicitudesAceptadas = solicitudesModel::select(
                 'ID_FORMULARIO_SOLICITUDES',
                 'NO_SOLICITUD',
@@ -155,9 +154,8 @@ class ofertasController extends Controller
     
                 $baseOferta = preg_replace('/-Rev\d+$/', '', $value->NO_OFERTA);
     
-                // 🔹 Obtener revisiones con todos los campos del modelo formulario_ofertas
                 $revisiones = ofertasModel::select(
-                    'formulario_ofertas.*',  // Ahora incluye todos los campos del modelo
+                    'formulario_ofertas.*',  
                     'formulario_solicitudes.NO_SOLICITUD',
                     'formulario_solicitudes.NOMBRE_COMERCIAL_SOLICITUD'
                 )
@@ -175,7 +173,6 @@ class ofertasController extends Controller
                 ->orderBy('REVISION_OFERTA', 'asc')
                 ->get();
     
-                // Asegurar que cada revisión tenga todos los campos y botones
                 foreach ($revisiones as $rev) {
                     $rev->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $rev->ID_FORMULARIO_OFERTAS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
                     $rev->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR" data-id="' . $rev->ID_FORMULARIO_OFERTAS . '"><i class="bi bi-pencil-square"></i></button>';
@@ -185,7 +182,6 @@ class ofertasController extends Controller
     
                 $value->REVISIONES = $revisiones->isEmpty() ? [] : $revisiones;
     
-                // Definir botones para la oferta principal
                 if ($value->ACTIVO == 0) {
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_OFERTAS . '"><span class="slider round"></span></label>';

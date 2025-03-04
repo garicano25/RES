@@ -129,8 +129,8 @@
                         <label>Tipo de Persona *</label>
                         <select class="form-control" name="TIPO_PERSONA_ALTA" id="TIPO_PERSONA_ALTA" required>
                             <option value="" selected disabled></option>
-                            <option value="1">Moral</option>
-                            <option value="2">Física</option>
+                            <option value="1">Nacional</option>
+                            <option value="2">Extranjero</option>
                         </select>
                     </div>
                     <div class="col-4 mb-3">
@@ -294,7 +294,7 @@
                         <input type="text" class="form-control" name="NOMBRE_BANCO" id="NOMBRE_BANCO" required>
                     </div>
                     <div class="col-4 mb-3">
-                        <label>No De Cuenta *</label>
+                        <label>No. De Cuenta *</label>
                         <input type="number" class="form-control" name="NUMERO_CUENTA" id="NUMERO_CUENTA" required>
                     </div>
                     <div class="col-4 mb-3">

@@ -33,5 +33,7 @@ class directorioModel extends Model
         'CELULAR_DIRECTORIO',
         'SERVICIOS_JSON',
         'ACTIVO',
+        'CONSTANCIA_DOCUMENTO',
+        'CORREO_DIRECTORIO'
     ];
 }

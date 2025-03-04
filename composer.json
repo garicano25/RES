@@ -14,6 +14,7 @@
         "mpdf/mpdf": "^8.2",
         "phpoffice/phppresentation": "dev-master",
         "phpoffice/phpspreadsheet": "^1.12",
+        "symfony/mailer": "^5.4",
         "tecnickcom/tcpdf": "^6.7"
     },
     "require-dev": {

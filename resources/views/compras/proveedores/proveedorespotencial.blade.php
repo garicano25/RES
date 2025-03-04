@@ -162,12 +162,9 @@
                     <div class="row">
                       <div class="mb-3">
                         <div class="row">
-                          <div class="col-6 mb-3">
-                            <label>Servicio que ofrece</label>
-                            <button id="botonAgregarservicio" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
-                              <i class="bi bi-plus-circle-fill"></i>
-                            </button>
-                          </div>
+                          <div class="col-12 mb-3 text-center">
+                            <h4> <b>Servicios que ofrece</b></h4>
+                            
                         </div>
                         <div class="serviciodiv mt-4"></div>
                       </div>
