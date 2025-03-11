@@ -34,6 +34,13 @@ class directorioModel extends Model
         'SERVICIOS_JSON',
         'ACTIVO',
         'CONSTANCIA_DOCUMENTO',
-        'CORREO_DIRECTORIO'
+        'CORREO_DIRECTORIO',
+        'TIPO_PERSONA',
+        'DOMICILIO_EXTRANJERO',
+        'CODIGO_EXTRANJERO',
+        'CIUDAD_EXTRANJERO',
+        'ESTADO_EXTRANJERO',
+        'PAIS_EXTRANJERO',
+        'DEPARTAMENTO_EXTRANJERO'
     ];
 }

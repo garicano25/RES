@@ -91,6 +91,10 @@ $("#guardarDIRECTORIO").click(async function (e) {
                 }, function (data) {
                     ID_FORMULARIO_DIRECTORIO = data.servicio.ID_FORMULARIO_DIRECTORIO;
 
+                     $('#miModal_POTENCIALES').modal('hide')
+                    document.getElementById('formularioDIRECTORIO').reset();
+                    Tabladirectorio.ajax.reload()
+
                     Swal.fire({
                         icon: 'success',
                         title: 'Información editada correctamente',
@@ -103,8 +107,8 @@ $("#guardarDIRECTORIO").click(async function (e) {
                         sectionFinalizado.classList.remove('d-none');
                         sectionFinalizado.classList.add('d-flex');
 
-                        document.getElementById('formularioDIRECTORIO').reset();
                         ID_FORMULARIO_DIRECTORIO = 0;
+                       
                     });
                 });
             }, 1);
@@ -168,10 +172,10 @@ var Tabladirectorio = $("#Tabladirectorio").DataTable({
                 return meta.row + 1; 
             }
         },
+        { data: 'RFC_PROVEEDOR' },
+        { data: 'GIRO_PROVEEDOR' },
         { data: 'NOMBRE_COMERCIAL' },
         { data: 'RAZON_SOCIAL' },
-        { data: 'GIRO_PROVEEDOR' },
-        { data: 'RFC_PROVEEDOR' },
         {
             data: 'SERVICIOS_JSON',
             render: function (data, type, row) {
@@ -194,14 +198,14 @@ var Tabladirectorio = $("#Tabladirectorio").DataTable({
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
-        { targets: 1, title: 'Nombre comercial', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'Razón social/Nombre', className: 'all text-center nombre-column' },
-        { targets: 3, title: 'Giro', className: 'all text-center nombre-column' },
-        { targets: 4, title: 'RFC', className: 'all text-center nombre-column' },
+        { targets: 1, title: 'RFC', className: 'all text-center nombre-column' },
+        { targets: 2, title: 'Giro', className: 'all text-center nombre-column' },
+        { targets: 3, title: 'Nombre comercial', className: 'all text-center nombre-column' },
+        { targets: 4, title: 'Razón social/Nombre', className: 'all text-center nombre-column' },
         { targets: 5, title: 'Servicios que ofrece', className: 'all text-center nombre-column' },
         { targets: 6, title: 'Editar', className: 'all text-center' },
         { targets: 7, title: 'Visualizar', className: 'all text-center' },
-        { targets: 8, title: 'Constancia', className: 'all text-center  nombre-column' },
+        { targets: 8, title: 'C.S.F', className: 'all text-center  nombre-column' },
         { targets: 9, title: 'Activo', className: 'all text-center' }
     ]
 });
@@ -254,7 +258,62 @@ $('#Tabladirectorio tbody').on('click', 'td>button.EDITAR', function () {
 
     $('#miModal_POTENCIALES .modal-title').html(row.data().NOMBRE_COMERCIAL);
 
-    editarDatoTabla(row.data(), 'formularioDIRECTORIO', 'miModal_POTENCIALES',1);
+
+    
+    const domicilioNacional = document.getElementById("DOMICILIO_NACIONAL");
+    const domicilioExtranjero = document.getElementById("DOMICILIO_ERXTRANJERO");
+
+    if (row.data().TIPO_PERSONA == "1") {
+        domicilioNacional.style.display = "block";
+        domicilioExtranjero.style.display = "none";
+
+        if (row.data().CODIGO_POSTAL) {
+            fetch(`/codigo-postal/${row.data().CODIGO_POSTAL}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.error) {
+                        let response = data.response;
+
+                        let coloniaSelect = document.getElementById("NOMBRE_COLONIA_EMPRESA");
+                        coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
+
+                        let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
+
+                        colonias.forEach(colonia => {
+                            let option = document.createElement("option");
+                            option.value = colonia;
+                            option.textContent = colonia;
+                            coloniaSelect.appendChild(option);
+                        });
+
+                        if (row.data().NOMBRE_COLONIA_EMPRESA) {
+                            coloniaSelect.value = row.data().NOMBRE_COLONIA_EMPRESA;
+                        }
+
+                        document.getElementById("NOMBRE_MUNICIPIO_EMPRESA").value = response.municipio || "No disponible";
+                        document.getElementById("NOMBRE_ENTIDAD_EMPRESA").value = response.estado || "No disponible";
+                    } else {
+                        alert("Código postal no encontrado");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error al obtener datos:", error);
+                    alert("Hubo un error al consultar la API.");
+                });
+        }
+    } else if (row.data().TIPO_PERSONA == "2") {
+        domicilioNacional.style.display = "none";
+        domicilioExtranjero.style.display = "block";
+    }
+
+
+
+
+    editarDatoTabla(row.data(), 'formularioDIRECTORIO', 'miModal_POTENCIALES', 1);
+    
+
+
+    
 });
 
 
@@ -273,6 +332,46 @@ $(document).ready(function() {
         obtenerservicios(row);
 
         $('#miModal_POTENCIALES .modal-title').html(row.data().NOMBRE_COMERCIAL);
+
+
+
+            if (row.data().CODIGO_POSTAL) {
+    fetch(`/codigo-postal/${row.data().CODIGO_POSTAL}`)
+        .then(response => response.json())
+        .then(data => {
+            if (!data.error) {
+                let response = data.response;
+
+                let coloniaSelect = document.getElementById("NOMBRE_COLONIA_EMPRESA");
+                coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
+
+                let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
+
+                colonias.forEach(colonia => {
+                    let option = document.createElement("option");
+                    option.value = colonia;
+                    option.textContent = colonia;
+                    coloniaSelect.appendChild(option);
+                });
+
+                if (row.data().NOMBRE_COLONIA_EMPRESA) {
+                    coloniaSelect.value = row.data().NOMBRE_COLONIA_EMPRESA;
+                }
+
+                document.getElementById("NOMBRE_MUNICIPIO_EMPRESA").value = response.municipio || "No disponible";
+                document.getElementById("NOMBRE_ENTIDAD_EMPRESA").value = response.estado || "No disponible";
+            } else {
+                alert("Código postal no encontrado");
+            }
+        })
+        .catch(error => {
+            console.error("Error al obtener datos:", error);
+            alert("Hubo un error al consultar la API.");
+        });
+    }
+
+        
+        
 
         editarDatoTabla(row.data(), 'formularioDIRECTORIO', 'miModal_POTENCIALES',1);
     });
@@ -313,3 +412,24 @@ function obtenerservicios(data) {
     });
 
 }
+
+
+
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const tipoPersona = document.getElementById("TIPO_PERSONA");
+        const domicilioNacional = document.getElementById("DOMICILIO_NACIONAL");
+        const domicilioExtranjero = document.getElementById("DOMICILIO_ERXTRANJERO");
+
+        tipoPersona.addEventListener("change", function () {
+            if (this.value === "1") {
+                domicilioNacional.style.display = "block";
+                domicilioExtranjero.style.display = "none";
+            } else if (this.value === "2") {
+                domicilioNacional.style.display = "none";
+                domicilioExtranjero.style.display = "block";
+            }
+        });
+    });

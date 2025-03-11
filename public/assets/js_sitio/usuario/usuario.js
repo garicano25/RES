@@ -379,7 +379,7 @@ function cargarTablaProveedores() {
                     searchable: false,
                     className: 'text-center'
                 },
-                { data: 'EMPLEADO_CORREO' },
+                { data: 'RFC_PROVEEDOR' },
                 { data: 'NOMBRE_COMERCIAL_PROVEEDOR' },
                 { data: 'USUARIO_TIPOS' },
                 {
@@ -537,10 +537,8 @@ $('#Tablausuarios tbody').on('click', 'td>button.EDITAR', function () {
     const rolesAsignados = row.data().ROLES_ASIGNADOS;
     const checkboxes = document.querySelectorAll('.checkbox_rol');
 
-    // 📌 Seleccionar el tipo de usuario (1 = Usuario Empleado, 2 = Proveedor)
     $("#USUARIO_TIPO").val(row.data().USUARIO_TIPO).trigger("change");
 
-    // 📌 Manejo de los checkboxes de roles según los roles asignados
     checkboxes.forEach(checkbox => {
         if (rolesAsignados.includes(checkbox.value)) {
             checkbox.checked = true;
@@ -576,7 +574,6 @@ $('#Tablausuarios tbody').on('click', 'td>button.EDITAR', function () {
         });
     }
 
-    // 📌 Manejo de la foto del usuario en Dropify
     if (row.data().FOTO_USUARIO) {
         var archivo = row.data().FOTO_USUARIO;
         var extension = archivo.substring(archivo.lastIndexOf("."));
@@ -610,6 +607,99 @@ $('#Tablausuarios tbody').on('click', 'td>button.EDITAR', function () {
         $('#FOTO_USUARIO').dropify().data('dropify').clearElement();
     }
 });
+
+
+
+
+
+$('#Tablaproveedores').on('click', 'button.EDITAR', function () {
+
+    var tr = $(this).closest('tr');
+    var row = Tablaproveedores.row(tr);
+    ID_USUARIO = row.data().ID_USUARIO;
+
+    editarDatoTabla(row.data(), 'formularioUSUARIO', 'modal_usuario', 1);
+
+    const rolesAsignados = row.data().ROLES_ASIGNADOS;
+    const checkboxes = document.querySelectorAll('.checkbox_rol');
+
+    $("#USUARIO_TIPO").val(row.data().USUARIO_TIPO).trigger("change");
+
+    checkboxes.forEach(checkbox => {
+        if (rolesAsignados.includes(checkbox.value)) {
+            checkbox.checked = true;
+        } else {
+            checkbox.checked = false;
+        }
+    });
+
+    if (rolesAsignados.includes('Superusuario')) {
+        checkboxes.forEach(checkbox => {
+            if (checkbox.value !== 'Superusuario') {
+                checkbox.checked = false;
+                checkbox.disabled = true;
+            }
+        });
+    } else if (rolesAsignados.includes('Administrador')) {
+        checkboxes.forEach(checkbox => {
+            if (checkbox.value !== 'Administrador' && checkbox.value !== 'Superusuario') {
+                checkbox.checked = false;
+                checkbox.disabled = true;
+            }
+        });
+    } else if (rolesAsignados.includes('Proveedor')) {
+        checkboxes.forEach(checkbox => {
+            if (checkbox.value !== 'Proveedor') {
+                checkbox.checked = false;
+                checkbox.disabled = true;
+            }
+        });
+    } else {
+        checkboxes.forEach(checkbox => {
+            checkbox.disabled = false;
+        });
+    }
+
+    if (row.data().FOTO_USUARIO) {
+        var archivo = row.data().FOTO_USUARIO;
+        var extension = archivo.substring(archivo.lastIndexOf("."));
+        var imagenUrl = '/usuariofoto/' + row.data().ID_USUARIO + extension;
+
+        if ($('#FOTO_USUARIO').data('dropify')) {
+            $('#FOTO_USUARIO').dropify().data('dropify').destroy();
+            $('#FOTO_USUARIO').dropify().data('dropify').settings.defaultFile = imagenUrl;
+            $('#FOTO_USUARIO').dropify().data('dropify').init();
+        } else {
+            $('#FOTO_USUARIO').attr('data-default-file', imagenUrl);
+            $('#FOTO_USUARIO').dropify({
+                messages: {
+                    'default': 'Arrastre la imagen aquí o haga click',
+                    'replace': 'Arrastre la imagen o haga clic para reemplazar',
+                    'remove': 'Quitar',
+                    'error': 'Ooops, ha ocurrido un error.'
+                },
+                error: {
+                    'fileSize': 'Demasiado grande ({{ value }} max).',
+                    'minWidth': 'Ancho demasiado pequeño (min {{ value }}}px).',
+                    'maxWidth': 'Ancho demasiado grande (max {{ value }}}px).',
+                    'minHeight': 'Alto demasiado pequeño (min {{ value }}}px).',
+                    'maxHeight': 'Alto demasiado grande (max {{ value }}px max).',
+                    'imageFormat': 'Formato no permitido, sólo ({{ value }}).'
+                }
+            });
+        }
+    } else {
+        $('#FOTO_USUARIO').dropify().data('dropify').resetPreview();
+        $('#FOTO_USUARIO').dropify().data('dropify').clearElement();
+    }
+});
+
+
+
+
+
+
+
 
 
 
@@ -738,27 +828,29 @@ $(document).ready(function() {
         let seleccion = $(this).val();
 
         if (seleccion === "1") { 
-            $("#DIV_INFORMACION, #DIV_FOTO, #DIV_DIRRECCION, #DIV_CARGO, #DIV_TELEFONO, #DIV_NACIMIENTO ,#ROLES_COLABORADOR").show();
-            $("#DIV_PROVEDOR").hide();
+            $("#DIV_INFORMACION, #DIV_FOTO, #DIV_DIRRECCION, #DIV_CARGO, #DIV_TELEFONO, #DIV_NACIMIENTO ,#ROLES_COLABORADOR, #DIV_CORREO").show();
+            $("#DIV_PROVEDOR,  #DIV_RFC").hide();
 
             $("#DIV_FOTO").removeClass("col-12").addClass("col-6");
             $("label[for='EMPLEADO_CORREO']").text("Correo de acceso *");
 
-            $("#DIV_INFORMACION input, #DIV_FOTO input, #DIV_DIRRECCION input, #DIV_CARGO input, #DIV_TELEFONO input, #DIV_NACIMIENTO input").attr("required", true);
+            $("#DIV_INFORMACION input,#DIV_DIRRECCION input, #DIV_CARGO input, #DIV_TELEFONO input, #DIV_NACIMIENTO input").attr("required", true);
             
             $("#DIV_PROVEDOR input").removeAttr("required");
 
         } else if (seleccion === "2") { 
-            $("#DIV_INFORMACION, #DIV_DIRRECCION, #DIV_CARGO, #DIV_TELEFONO, #DIV_NACIMIENTO").hide();
-            $("#DIV_PROVEDOR").show();
+            $("#DIV_INFORMACION, #DIV_DIRRECCION, #DIV_CARGO, #DIV_TELEFONO, #DIV_NACIMIENTO, #DIV_CORREO").hide();
+            $("#DIV_PROVEDOR, #DIV_RFC").show();
 
-            $("label[for='EMPLEADO_CORREO']").text("RFC *");
+            
 
             $("#DIV_FOTO").removeClass("col-6").addClass("col-12");
 
             $("#DIV_PROVEDOR input").attr("required", true);
+            $("#DIV_RFC input").attr("required", true);
 
-            $("#DIV_INFORMACION input, #DIV_FOTO input, #DIV_DIRRECCION input, #DIV_CARGO input, #DIV_TELEFONO input, #DIV_NACIMIENTO input").removeAttr("required");
+
+            $("#DIV_INFORMACION input, #DIV_DIRRECCION input, #DIV_CARGO input, #DIV_TELEFONO input, #DIV_NACIMIENTO input").removeAttr("required");
         }
     });
 

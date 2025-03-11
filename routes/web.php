@@ -99,21 +99,34 @@ use App\Http\Controllers\proveedor\directorioController;
 
 //==============================================  login  ============================================== 
 Route::get('/', function () {
-    return redirect()->route('login');
+    if (Auth::check()) {
+        if (Auth::user()->hasAnyRole(['Superusuario', 'Administrador'])) {
+            return redirect('/Módulos');
+        }
+        return response()->noContent(); 
+    }
+    return response()->noContent(); 
 });
+
 
 
 // Rutas públicas (excluidas del middleware global)
+
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
+
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/Módulos', function () {
-        return view('principal.modulos');
-    })->name('dashboard');
-});
+Route::post('/verify-code', [AuthController::class, 'verifyCode']);
+
+
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/Módulos', function () {
+//         return view('principal.modulos');
+//     })->name('dashboard');
+// });
 
 //==============================================  ENVIAR CORREO  ============================================== 
 
@@ -121,7 +134,7 @@ Route::middleware(['auth'])->group(function () {
 Route::post('/enviar-codigo', [VerificationController::class, 'enviarCodigo']);
 Route::post('/verificar-codigo', [VerificationController::class, 'verificarCodigo']);
 //==============================================  Módulos  ============================================== 
-Route::get('/Módulos', function () {return view('principal.modulos');});
+Route::get('/Módulos', function () {return view('principal.modulos');})->middleware('role:Superusuario,Administrador');
 
 
 
@@ -614,7 +627,7 @@ Route::post('/actualizarinfoproveedor', [directorioController::class, 'actualiza
 
 //  DIRECTORIO INTERNO
 
-Route::get('/Proveedores_potenciales', function () {return view('compras.proveedores.proveedorespotencial');});
+Route::get('/Banco_proveedores', function () {return view('compras.proveedores.proveedorespotencial');});
 Route::get('/Tabladirectorio', [directorioController::class, 'Tabladirectorio']);
 Route::get('/ServicioDelete', [directorioController::class, 'store']);
 

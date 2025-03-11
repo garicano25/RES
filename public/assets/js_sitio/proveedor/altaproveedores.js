@@ -19,109 +19,109 @@
     
 
 
-$("#guardarDIRECTORIO").click(async function (e) {
-    e.preventDefault();
+// $("#guardarDIRECTORIO").click(async function (e) {
+//     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioDIRECTORIO'));
+//     formularioValido = validarFormulario($('#formularioDIRECTORIO'));
 
-    if (formularioValido) {
+//     if (formularioValido) {
 
-        var servicios = [];
-        $(".generarservicio").each(function() {
-            var servicio = {
-                'NOMBRE_SERVICIO': $(this).find("input[name='NOMBRE_SERVICIO']").val()
-            };
-            servicios.push(servicio);
-        });
+//         var servicios = [];
+//         $(".generarservicio").each(function() {
+//             var servicio = {
+//                 'NOMBRE_SERVICIO': $(this).find("input[name='NOMBRE_SERVICIO']").val()
+//             };
+//             servicios.push(servicio);
+//         });
 
-        const requestData = {
-            api: 1,
-            ID_FORMULARIO_DIRECTORIO: ID_FORMULARIO_DIRECTORIO,
-            SERVICIOS_JSON: JSON.stringify(servicios)
-        };
+//         const requestData = {
+//             api: 1,
+//             ID_FORMULARIO_DIRECTORIO: ID_FORMULARIO_DIRECTORIO,
+//             SERVICIOS_JSON: JSON.stringify(servicios)
+//         };
 
-        if (ID_FORMULARIO_DIRECTORIO == 0) {
-            alertMensajeConfirm({
-                title: "¿Desea guardar la información?",
-                text: "Al guardarla, se podrá usar",
-                icon: "question",
-            }, async function () {
-                await loaderbtn('guardarDIRECTORIO');
-                await ajaxAwaitFormData(requestData, 'ServiciosSave', 'formularioDIRECTORIO', 'guardarDIRECTORIO', { callbackAfter: true, callbackBefore: true }, () => {
+//         if (ID_FORMULARIO_DIRECTORIO == 0) {
+//             alertMensajeConfirm({
+//                 title: "¿Desea guardar la información?",
+//                 text: "Al guardarla, se podrá usar",
+//                 icon: "question",
+//             }, async function () {
+//                 await loaderbtn('guardarDIRECTORIO');
+//                 await ajaxAwaitFormData(requestData, 'ServiciosSave', 'formularioDIRECTORIO', 'guardarDIRECTORIO', { callbackAfter: true, callbackBefore: true }, () => {
 
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Espere un momento',
-                        text: 'Estamos guardando la información',
-                        showConfirmButton: false
-                    });
+//                     Swal.fire({
+//                         icon: 'info',
+//                         title: 'Espere un momento',
+//                         text: 'Estamos guardando la información',
+//                         showConfirmButton: false
+//                     });
 
-                    $('.swal2-popup').addClass('ld ld-breath');
+//                     $('.swal2-popup').addClass('ld ld-breath');
 
-                }, function (data) {
-                    ID_FORMULARIO_DIRECTORIO = data.servicio.ID_FORMULARIO_DIRECTORIO;
+//                 }, function (data) {
+//                     ID_FORMULARIO_DIRECTORIO = data.servicio.ID_FORMULARIO_DIRECTORIO;
 
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Información guardada correctamente',
-                        confirmButtonText: 'OK',
-                    }).then(() => {
-                        document.getElementById('formulario_servicio').style.display = 'none';
-                        document.getElementById('nav_var').style.display = 'block';
+//                     Swal.fire({
+//                         icon: 'success',
+//                         title: 'Información guardada correctamente',
+//                         confirmButtonText: 'OK',
+//                     }).then(() => {
+//                         document.getElementById('formulario_servicio').style.display = 'none';
+//                         document.getElementById('nav_var').style.display = 'block';
 
-                        const sectionFinalizado = document.getElementById('sectionFinalizado');
-                        sectionFinalizado.classList.remove('d-none');
-                        sectionFinalizado.classList.add('d-flex');
+//                         const sectionFinalizado = document.getElementById('sectionFinalizado');
+//                         sectionFinalizado.classList.remove('d-none');
+//                         sectionFinalizado.classList.add('d-flex');
 
-                        document.getElementById('formularioDIRECTORIO').reset();
-                        ID_FORMULARIO_DIRECTORIO = 0;
-                    });
-                });
-            }, 1);
+//                         document.getElementById('formularioDIRECTORIO').reset();
+//                         ID_FORMULARIO_DIRECTORIO = 0;
+//                     });
+//                 });
+//             }, 1);
 
-        } else {
-            alertMensajeConfirm({
-                title: "¿Desea editar la información de este formulario?",
-                text: "Al guardarla, se podrá usar",
-                icon: "question",
-            }, async function () {
-                await loaderbtn('guardarDIRECTORIO');
-                await ajaxAwaitFormData(requestData, 'ServiciosSave', 'formularioDIRECTORIO', 'guardarDIRECTORIO', { callbackAfter: true, callbackBefore: true }, () => {
+//         } else {
+//             alertMensajeConfirm({
+//                 title: "¿Desea editar la información de este formulario?",
+//                 text: "Al guardarla, se podrá usar",
+//                 icon: "question",
+//             }, async function () {
+//                 await loaderbtn('guardarDIRECTORIO');
+//                 await ajaxAwaitFormData(requestData, 'ServiciosSave', 'formularioDIRECTORIO', 'guardarDIRECTORIO', { callbackAfter: true, callbackBefore: true }, () => {
 
-                    Swal.fire({
-                        icon: 'info',
-                        title: 'Espere un momento',
-                        text: 'Estamos guardando la información',
-                        showConfirmButton: false
-                    });
+//                     Swal.fire({
+//                         icon: 'info',
+//                         title: 'Espere un momento',
+//                         text: 'Estamos guardando la información',
+//                         showConfirmButton: false
+//                     });
 
-                    $('.swal2-popup').addClass('ld ld-breath');
+//                     $('.swal2-popup').addClass('ld ld-breath');
 
-                }, function (data) {
-                    ID_FORMULARIO_DIRECTORIO = data.servicio.ID_FORMULARIO_DIRECTORIO;
+//                 }, function (data) {
+//                     ID_FORMULARIO_DIRECTORIO = data.servicio.ID_FORMULARIO_DIRECTORIO;
 
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Información editada correctamente',
-                        confirmButtonText: 'OK',
-                    }).then(() => {
-                        document.getElementById('formulario_servicio').style.display = 'none';
-                        document.getElementById('nav_var').style.display = 'none';
+//                     Swal.fire({
+//                         icon: 'success',
+//                         title: 'Información editada correctamente',
+//                         confirmButtonText: 'OK',
+//                     }).then(() => {
+//                         document.getElementById('formulario_servicio').style.display = 'none';
+//                         document.getElementById('nav_var').style.display = 'none';
 
-                        const sectionFinalizado = document.getElementById('sectionFinalizado');
-                        sectionFinalizado.classList.remove('d-none');
-                        sectionFinalizado.classList.add('d-flex');
+//                         const sectionFinalizado = document.getElementById('sectionFinalizado');
+//                         sectionFinalizado.classList.remove('d-none');
+//                         sectionFinalizado.classList.add('d-flex');
 
-                        document.getElementById('formularioDIRECTORIO').reset();
-                        ID_FORMULARIO_DIRECTORIO = 0;
-                    });
-                });
-            }, 1);
-        }
-    } else {
-        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
-    }
-});
+//                         document.getElementById('formularioDIRECTORIO').reset();
+//                         ID_FORMULARIO_DIRECTORIO = 0;
+//                     });
+//                 });
+//             }, 1);
+//         }
+//     } else {
+//         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+//     }
+// });
 
 
 
@@ -254,4 +254,26 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
     });
-});agregarReferencias
+}); 
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const tipoPersona = document.getElementById("TIPO_PERSONA_ALTA");
+    const domicilioNacional = document.getElementById("DOMICILIO_NACIONAL");
+    const domicilioExtranjero = document.getElementById("DOMICILIO_ERXTRANJERO");
+
+    tipoPersona.addEventListener("change", function () {
+        if (this.value === "1") {
+            domicilioNacional.style.display = "block";
+            domicilioExtranjero.style.display = "none";
+        } else if (this.value === "2") {
+            domicilioNacional.style.display = "none";
+            domicilioExtranjero.style.display = "block";
+        }
+    });
+});

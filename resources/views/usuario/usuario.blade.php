@@ -216,14 +216,22 @@
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="EMPLEADO_FECHANACIMIENTO" name="EMPLEADO_FECHANACIMIENTO" required>
                                     </div>
                                 </div>
-                                <div class="col-6 campo_dato_empleado mt-2">
+                                <div class="col-6 campo_dato_empleado mt-2" id="DIV_CORREO" style="display: block;">
                                     <div class="form-group">
                                         <label for="EMPLEADO_CORREO">Correo de acceso *</label>
-                                        <input type="text" class="form-control" id="EMPLEADO_CORREO" name="EMPLEADO_CORREO" required>
+                                        <input type="text" class="form-control" id="EMPLEADO_CORREO" name="EMPLEADO_CORREO">
                                     </div>
                                 </div>
 
+
+                                <div class="col-6  mt-2" id="DIV_RFC" style="display: none;">
+                                    <div class="form-group">
+                                        <label>RFC *</label>
+                                        <input type="text" class="form-control" id="RFC_PROVEEDOR" name="RFC_PROVEEDOR" >
+                                    </div>
+                                </div>
                                 <div class="col-6  mt-2" id="DIV_PROVEDOR" style="display: none;">
+
                                     <div class="form-group">
                                         <label>Nombre comercial *</label>
                                         <input type="text" class="form-control" id="NOMBRE_COMERCIAL_PROVEEDOR" name="NOMBRE_COMERCIAL_PROVEEDOR" required>

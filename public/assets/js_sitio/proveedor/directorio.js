@@ -356,7 +356,7 @@ function solicitarCodigo(correo, data) {
     .then(() => {
         Swal.fire({
             title: 'Código Enviado',
-            text: 'Revisa tu correo y escribe el código recibido.',
+            text: 'Revisa tu correo con el que te diste de alta.',
             input: 'text',
             inputPlaceholder: 'Introduce el código de verificación',
             showCancelButton: true,
@@ -392,30 +392,47 @@ function verificarCodigoAntesDeActualizar(correo, codigo, data) {
                 icon: 'success'
             });
 
-            
-            // Rellenar los datos después de la verificación
+              // Asignar valores a los campos de formulario
             document.getElementById('ID_FORMULARIO_DIRECTORIO').value = data.ID_FORMULARIO_DIRECTORIO || '';
+            document.getElementById('TIPO_PERSONA').value = data.TIPO_PERSONA || '';
             document.getElementById('RAZON_SOCIAL').value = data.RAZON_SOCIAL || '';
             document.getElementById('RFC_PROVEEDOR').value = data.RFC_PROVEEDOR || '';
             document.getElementById('NOMBRE_COMERCIAL').value = data.NOMBRE_COMERCIAL || '';
             document.getElementById('GIRO_PROVEEDOR').value = data.GIRO_PROVEEDOR || '';
+            document.getElementById('TIPO_PERSONA').value = data.TIPO_PERSONA || '';
 
-            let codigoPostalInput = document.getElementById("CODIGO_POSTAL");
-            codigoPostalInput.value = data.CODIGO_POSTAL || '';
+            const tipoPersona = document.getElementById("TIPO_PERSONA");
+            const domicilioNacional = document.getElementById("DOMICILIO_NACIONAL");
+            const domicilioExtranjero = document.getElementById("DOMICILIO_ERXTRANJERO");
 
-            let coloniaGuardada = data.NOMBRE_COLONIA_EMPRESA || '';
-            codigoPostalInput.dispatchEvent(new Event('change'));
+            // Verificar el valor de TIPO_PERSONA y mostrar el div correspondiente
+            if (tipoPersona.value === "1") {
+                domicilioNacional.style.display = "block";
+                domicilioExtranjero.style.display = "none";
 
-            let coloniaSelect = document.getElementById('NOMBRE_COLONIA_EMPRESA');
-            let observer = new MutationObserver(() => {
-                if (coloniaSelect.options.length > 1) { 
-                    coloniaSelect.value = coloniaGuardada; 
-                    observer.disconnect(); 
-                }
-            });
+                // Ejecutar lógica para datos nacionales
+                let codigoPostalInput = document.getElementById("CODIGO_POSTAL");
+                codigoPostalInput.value = data.CODIGO_POSTAL || '';
 
-            observer.observe(coloniaSelect, { childList: true });
+                let coloniaGuardada = data.NOMBRE_COLONIA_EMPRESA || '';
+                codigoPostalInput.dispatchEvent(new Event('change'));
 
+                let coloniaSelect = document.getElementById('NOMBRE_COLONIA_EMPRESA');
+                let observer = new MutationObserver(() => {
+                    if (coloniaSelect.options.length > 1) { 
+                        coloniaSelect.value = coloniaGuardada; 
+                        observer.disconnect(); 
+                    }
+                });
+
+                observer.observe(coloniaSelect, { childList: true });
+
+            } else if (tipoPersona.value === "2") {
+                domicilioNacional.style.display = "none";
+                domicilioExtranjero.style.display = "block";
+            }
+
+            // Continuar llenando otros campos
             document.getElementById('TIPO_VIALIDAD_EMPRESA').value = data.TIPO_VIALIDAD_EMPRESA || '';
             document.getElementById('NOMBRE_VIALIDAD_EMPRESA').value = data.NOMBRE_VIALIDAD_EMPRESA || '';
             document.getElementById('NUMERO_EXTERIOR_EMPRESA').value = data.NUMERO_EXTERIOR_EMPRESA || '';
@@ -432,6 +449,16 @@ function verificarCodigoAntesDeActualizar(correo, codigo, data) {
             document.getElementById('EXSTENSION_DIRECTORIO').value = data.EXSTENSION_DIRECTORIO || '';
             document.getElementById('CELULAR_DIRECTORIO').value = data.CELULAR_DIRECTORIO || '';
             document.getElementById('CORREO_DIRECTORIO').value = data.CORREO_DIRECTORIO || '';
+
+
+
+            document.getElementById('DOMICILIO_EXTRANJERO').value = data.DOMICILIO_EXTRANJERO || '';
+            document.getElementById('CODIGO_EXTRANJERO').value = data.CODIGO_EXTRANJERO || '';
+            document.getElementById('CIUDAD_EXTRANJERO').value = data.CIUDAD_EXTRANJERO || '';
+            document.getElementById('ESTADO_EXTRANJERO').value = data.ESTADO_EXTRANJERO || '';
+            document.getElementById('PAIS_EXTRANJERO').value = data.PAIS_EXTRANJERO || '';
+            document.getElementById('DEPARTAMENTO_EXTRANJERO').value = data.DEPARTAMENTO_EXTRANJERO || '';
+
 
             // Cargar servicios dinámicos
             const contenedorServicios = document.querySelector('.serviciodiv');
@@ -487,3 +514,18 @@ function agregarServicio(nombreServicio = '') {
 
 
 
+    document.addEventListener("DOMContentLoaded", function () {
+        const tipoPersona = document.getElementById("TIPO_PERSONA");
+        const domicilioNacional = document.getElementById("DOMICILIO_NACIONAL");
+        const domicilioExtranjero = document.getElementById("DOMICILIO_ERXTRANJERO");
+
+        tipoPersona.addEventListener("change", function () {
+            if (this.value === "1") {
+                domicilioNacional.style.display = "block";
+                domicilioExtranjero.style.display = "none";
+            } else if (this.value === "2") {
+                domicilioNacional.style.display = "none";
+                domicilioExtranjero.style.display = "block";
+            }
+        });
+    });

@@ -40,15 +40,6 @@
 
 
 
-    @if(request()->is('DPT'))
-    <link rel="stylesheet" href="assets/css/dpt.css">
-    @endif
-
-    @if(request()->is('Contratación'))
-    <!-- form_wizard_steps -->
-    <link href="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_style.css" rel="stylesheet">
-    </link>
-    @endif
 
 
 
@@ -107,7 +98,7 @@
                             <li class="dropdown-item text-center">
                                 <strong>{{ Auth::user()->NOMBRE_COMERCIAL_PROVEEDOR }}</strong>
                                 <br>
-                                <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
+                                <small>{{ Auth::user()->RFC_PROVEEDOR }}</small>
                             </li>
                             <li class="dropdown-divider"></li>
                             <li>

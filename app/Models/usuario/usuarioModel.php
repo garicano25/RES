@@ -10,11 +10,9 @@ class usuarioModel extends Authenticatable
 {
     use Notifiable, HasFactory;
 
-    // Definición de la tabla asociada
     protected $table = 'usuarios';
     protected $primaryKey = 'ID_USUARIO';
 
-    // Campos que pueden ser rellenados
     protected $fillable = [
         'USUARIO_TIPO',
         'EMPLEADO_NOMBRE',
@@ -30,6 +28,7 @@ class usuarioModel extends Authenticatable
         'PASSWORD',
         'PASSWORD_2',
         'NOMBRE_COMERCIAL_PROVEEDOR',
+        'RFC_PROVEEDOR',
         'ACTIVO',
     ];
 

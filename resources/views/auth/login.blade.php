@@ -13,7 +13,6 @@
         html {
             height: 100%;
             margin: 0;
-            background: url('assets/images/fondo.png') no-repeat center center fixed;
             background-size: cover;
             display: flex;
             align-items: center;
@@ -82,10 +81,10 @@
         </div>
         @endif
 
-        <form action="/login" method="POST">
+        <form id="loginForm" action="/login" method="POST">
             @csrf
             <div class="form-group">
-                <input type="text" class="form-control" name="email" placeholder="Correo electrónico" required>
+                <input type="text" class="form-control" name="email" placeholder="Correo electrónico o RFC" required>
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" name="password" placeholder="Contraseña" required>
@@ -94,9 +93,104 @@
             <img src="assets/images/rip_logocolores.png" alt="Logo">
         </form>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("loginForm").addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                let form = this;
+                let formData = new FormData(form);
+
+                fetch('/login', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.status === 'verification_required') {
+                            Swal.fire({
+                                title: 'Código de Verificación',
+                                input: 'text',
+                                inputLabel: 'Se ha enviado un código a tu correo con el que te diste de alta.',
+                                inputPlaceholder: 'Ingresa el código aquí',
+                                showCancelButton: true,
+                                confirmButtonText: 'Verificar',
+                                cancelButtonText: 'Cancelar',
+                                inputValidator: (value) => {
+                                    if (!value) {
+                                        return 'Debes ingresar un código';
+                                    }
+                                }
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    let verifyData = new FormData();
+                                    verifyData.append('correo', data.correo);
+                                    verifyData.append('codigo', result.value);
+                                    verifyData.append('_token', document.querySelector('input[name="_token"]').value);
+
+                                    fetch('/verify-code', {
+                                            method: 'POST',
+                                            body: verifyData
+                                        })
+                                        .then(response => response.json())
+                                        .then(verifyData => {
+                                            if (verifyData.status === 'success') {
+                                                Swal.fire({
+                                                    icon: 'success',
+                                                    title: 'Verificado',
+                                                    text: 'Código correcto, accediendo...',
+                                                }).then(() => window.location.href = data.redirect);
+                                            } else {
+                                                fetch('/logout', {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                                                    }
+                                                }).then(() => {
+                                                    Swal.fire({
+                                                        icon: 'error',
+                                                        title: 'Código incorrecto o expirado',
+                                                        text: 'Vuelve a intentarlo',
+                                                    }).then(() => window.location.href = "/login");
+                                                });
+                                            }
+                                        });
+                                }
+                            });
+                        } else if (data.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Inicio de sesión exitoso',
+                                confirmButtonText: 'Aceptar'
+                            }).then(() => {
+                                window.location.href = data.redirect;
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: data.message,
+                                confirmButtonText: 'Intentar de nuevo'
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            });
+        });
+    </script>
+
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 
 </html>

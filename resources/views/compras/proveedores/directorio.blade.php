@@ -43,6 +43,7 @@
     }
 
     .card {
+      /* max-width: 1899px; */
       max-width: 800px;
       margin: 20px auto;
       border: 2px solid #007DBA;
@@ -51,7 +52,9 @@
     .card-img-top {
       display: block;
       margin: 0 auto;
+      /* width: 26%; */
       width: 50%;
+
       height: auto;
     }
 
@@ -172,13 +175,20 @@
 
           <div class="col-12">
             <div class="row">
+              <div class="col-4 mb-3">
+                <label>Tipo de Persona *</label>
+                <select class="form-control" name="TIPO_PERSONA" id="TIPO_PERSONA" required>
+                  <option value="" selected disabled>Seleccione una opción</option>
+                  <option value="1">Nacional</option>
+                  <option value="2">Extranjera</option>
+                </select>
+              </div>
 
-
-              <div class="col-6 mb-3">
+              <div class="col-4 mb-3">
                 <label>Razón social/Nombre *</label>
                 <input type="text" class="form-control" id="RAZON_SOCIAL" name="RAZON_SOCIAL" required>
               </div>
-              <div class="col-6 mb-3">
+              <div class="col-4 mb-3">
                 <label>RFC *</label>
                 <input type="text" class="form-control" id="RFC_PROVEEDOR" name="RFC_PROVEEDOR" required>
               </div>
@@ -199,20 +209,23 @@
             <h4><b>Domicilio</b></label>
           </div>
 
-          <div class="col-12">
+
+
+          <div class="col-12" id="DOMICILIO_NACIONAL" style="display: block;">
+
             <div class="row">
 
               <div class="col-3 mb-3">
                 <label>Código Postal *</label>
-                <input type="number" class="form-control" name="CODIGO_POSTAL" id="CODIGO_POSTAL" required>
+                <input type="number" class="form-control" name="CODIGO_POSTAL" id="CODIGO_POSTAL">
               </div>
               <div class="col-4 mb-3">
                 <label>Tipo de Vialidad *</label>
-                <input type="text" class="form-control" name="TIPO_VIALIDAD_EMPRESA" id="TIPO_VIALIDAD_EMPRESA" required>
+                <input type="text" class="form-control" name="TIPO_VIALIDAD_EMPRESA" id="TIPO_VIALIDAD_EMPRESA">
               </div>
               <div class="col-5 mb-3">
                 <label>Nombre de la Vialidad *</label>
-                <input type="text" class="form-control" name="NOMBRE_VIALIDAD_EMPRESA" id="NOMBRE_VIALIDAD_EMPRESA" required>
+                <input type="text" class="form-control" name="NOMBRE_VIALIDAD_EMPRESA" id="NOMBRE_VIALIDAD_EMPRESA">
               </div>
 
               <div class="col-3 mb-3">
@@ -225,27 +238,27 @@
               </div>
               <div class="col-6 mb-3">
                 <label>Nombre de la colonia *</label>
-                <select class="form-control" name="NOMBRE_COLONIA_EMPRESA" id="NOMBRE_COLONIA_EMPRESA" required>
+                <select class="form-control" name="NOMBRE_COLONIA_EMPRESA" id="NOMBRE_COLONIA_EMPRESA">
                   <option value="">Seleccione una opción</option>
                 </select>
               </div>
               <div class="col-6 mb-3">
                 <label>Nombre de la Localidad *</label>
-                <input type="text" class="form-control" name="NOMBRE_LOCALIDAD_EMPRESA" id="NOMBRE_LOCALIDAD_EMPRESA" required>
+                <input type="text" class="form-control" name="NOMBRE_LOCALIDAD_EMPRESA" id="NOMBRE_LOCALIDAD_EMPRESA">
               </div>
 
 
               <div class="col-6 mb-3">
                 <label>Nombre del municipio o demarcación territorial *</label>
-                <input type="text" class="form-control" name="NOMBRE_MUNICIPIO_EMPRESA" id="NOMBRE_MUNICIPIO_EMPRESA" required>
+                <input type="text" class="form-control" name="NOMBRE_MUNICIPIO_EMPRESA" id="NOMBRE_MUNICIPIO_EMPRESA">
               </div>
               <div class="col-6 mb-3">
                 <label>Nombre de la Entidad Federativa *</label>
-                <input type="text" class="form-control" name="NOMBRE_ENTIDAD_EMPRESA" id="NOMBRE_ENTIDAD_EMPRESA" required>
+                <input type="text" class="form-control" name="NOMBRE_ENTIDAD_EMPRESA" id="NOMBRE_ENTIDAD_EMPRESA">
               </div>
               <div class="col-6 mb-3">
                 <label>País *</label>
-                <input type="text" class="form-control" name="PAIS_EMPRESA" id="PAIS_EMPRESA" required>
+                <input type="text" class="form-control" name="PAIS_EMPRESA" id="PAIS_EMPRESA">
               </div>
 
 
@@ -257,6 +270,41 @@
               <div class="col-6 mb-3">
                 <label>Y Calle</label>
                 <input type="text" class="form-control" name="ENTRE_CALLE2_EMPRESA" id="ENTRE_CALLE2_EMPRESA">
+              </div>
+
+            </div>
+          </div>
+
+
+
+          <div class="col-12" id="DOMICILIO_ERXTRANJERO" style="display: none;">
+
+            <div class="row">
+
+              <div class="col-12 mb-3">
+                <label>Domicilio *</label>
+                <input type="text" class="form-control" name="DOMICILIO_EXTRANJERO" id="DOMICILIO_EXTRANJERO">
+              </div>
+              <div class="col-6 mb-3">
+                <label>Codigo postal </label>
+                <input type="text" class="form-control" name="CODIGO_EXTRANJERO" id="CODIGO_EXTRANJERO">
+              </div>
+              <div class="col-6 mb-3">
+                <label>Ciudad *</label>
+                <input type="text" class="form-control" name="CIUDAD_EXTRANJERO" id="CIUDAD_EXTRANJERO">
+              </div>
+
+              <div class="col-4 mb-3">
+                <label>Estado</label>
+                <input type="text" class="form-control" name="ESTADO_EXTRANJERO" id="ESTADO_EXTRANJERO">
+              </div>
+              <div class="col-4 mb-3">
+                <label>Departamento *</label>
+                <input type="text" class="form-control" name="DEPARTAMENTO_EXTRANJERO" id="DEPARTAMENTO_EXTRANJERO">
+              </div>
+              <div class="col-4 mb-3">
+                <label>País *</label>
+                <input type="text" class="form-control" name="PAIS_EXTRANJERO" id="PAIS_EXTRANJERO">
               </div>
 
             </div>
@@ -289,7 +337,7 @@
                 <input type="text" class="form-control" name="EXSTENSION_DIRECTORIO" id="EXSTENSION_DIRECTORIO">
               </div>
               <div class="col-4 mb-3">
-                <label>Celular *</label>
+                <label>Celular </label>
                 <input type="text" class="form-control" name="CELULAR_DIRECTORIO" id="CELULAR_DIRECTORIO">
               </div>
 

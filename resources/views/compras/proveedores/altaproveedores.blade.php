@@ -128,7 +128,7 @@
                     <div class="col-4 mb-3">
                         <label>Tipo de Persona *</label>
                         <select class="form-control" name="TIPO_PERSONA_ALTA" id="TIPO_PERSONA_ALTA" required>
-                            <option value="" selected disabled></option>
+                            <option value="" selected disabled>Seleccione una opción</option>
                             <option value="1">Nacional</option>
                             <option value="2">Extranjero</option>
                         </select>
@@ -138,8 +138,8 @@
                         <input type="text" class="form-control" name="RAZON_SOCIAL_ALTA" id="RAZON_SOCIAL_ALTA" required>
                     </div>
                     <div class="col-4 mb-3">
-                        <label>Representante Legal *</label>
-                        <input type="text" class="form-control" name="REPRESENTANTE_LEGAL_ALTA" id="REPRESENTANTE_LEGAL_ALTA" required>
+                        <label>Representante Legal </label>
+                        <input type="text" class="form-control" name="REPRESENTANTE_LEGAL_ALTA" id="REPRESENTANTE_LEGAL_ALTA" >
                     </div>
                     <div class="col-6 mb-3">
                         <label>R.F.C *</label>
@@ -156,58 +156,108 @@
                     </div>
 
 
-                    <div class="col-3 mb-3">
-                        <label>Código Postal *</label>
-                        <input type="number" class="form-control" name="CODIGO_POSTAL" id="CODIGO_POSTAL" required>
-                    </div>
-                    <div class="col-4 mb-3">
-                        <label>Tipo de Vialidad *</label>
-                        <input type="text" class="form-control" name="TIPO_VIALIDAD_EMPRESA" id="TIPO_VIALIDAD_EMPRESA" required>
-                    </div>
-                    <div class="col-5 mb-3">
-                        <label>Nombre de la Vialidad *</label>
-                        <input type="text" class="form-control" name="NOMBRE_VIALIDAD_EMPRESA" id="NOMBRE_VIALIDAD_EMPRESA" required>
+                    <div class="col-12" id="DOMICILIO_NACIONAL" style="display: block;">
+
+                        <div class="row">
+
+                            <div class="col-3 mb-3">
+                                <label>Código Postal *</label>
+                                <input type="number" class="form-control" name="CODIGO_POSTAL" id="CODIGO_POSTAL">
+                            </div>
+                            <div class="col-4 mb-3">
+                                <label>Tipo de Vialidad *</label>
+                                <input type="text" class="form-control" name="TIPO_VIALIDAD_EMPRESA" id="TIPO_VIALIDAD_EMPRESA">
+                            </div>
+                            <div class="col-5 mb-3">
+                                <label>Nombre de la Vialidad *</label>
+                                <input type="text" class="form-control" name="NOMBRE_VIALIDAD_EMPRESA" id="NOMBRE_VIALIDAD_EMPRESA">
+                            </div>
+
+                            <div class="col-3 mb-3">
+                                <label>Número Exterior</label>
+                                <input type="number" class="form-control" name="NUMERO_EXTERIOR_EMPRESA" id="NUMERO_EXTERIOR_EMPRESA">
+                            </div>
+                            <div class="col-3 mb-3">
+                                <label>Número Interior</label>
+                                <input type="text" class="form-control" name="NUMERO_INTERIOR_EMPRESA" id="NUMERO_INTERIOR_EMPRESA">
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label>Nombre de la colonia *</label>
+                                <select class="form-control" name="NOMBRE_COLONIA_EMPRESA" id="NOMBRE_COLONIA_EMPRESA">
+                                    <option value="">Seleccione una opción</option>
+                                </select>
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label>Nombre de la Localidad *</label>
+                                <input type="text" class="form-control" name="NOMBRE_LOCALIDAD_EMPRESA" id="NOMBRE_LOCALIDAD_EMPRESA">
+                            </div>
+
+
+                            <div class="col-6 mb-3">
+                                <label>Nombre del municipio o demarcación territorial *</label>
+                                <input type="text" class="form-control" name="NOMBRE_MUNICIPIO_EMPRESA" id="NOMBRE_MUNICIPIO_EMPRESA">
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label>Nombre de la Entidad Federativa *</label>
+                                <input type="text" class="form-control" name="NOMBRE_ENTIDAD_EMPRESA" id="NOMBRE_ENTIDAD_EMPRESA">
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label>País *</label>
+                                <input type="text" class="form-control" name="PAIS_EMPRESA" id="PAIS_EMPRESA">
+                            </div>
+
+
+
+                            <div class="col-6 mb-3">
+                                <label>Entre Calle</label>
+                                <input type="text" class="form-control" name="ENTRE_CALLE_EMPRESA" id="ENTRE_CALLE_EMPRESA">
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label>Y Calle</label>
+                                <input type="text" class="form-control" name="ENTRE_CALLE2_EMPRESA" id="ENTRE_CALLE2_EMPRESA">
+                            </div>
+
+                        </div>
                     </div>
 
-                    <div class="col-3 mb-3">
-                        <label>Número Exterior</label>
-                        <input type="number" class="form-control" name="NUMERO_EXTERIOR_EMPRESA" id="NUMERO_EXTERIOR_EMPRESA">
-                    </div>
-                    <div class="col-3 mb-3">
-                        <label>Número Interior</label>
-                        <input type="text" class="form-control" name="NUMERO_INTERIOR_EMPRESA" id="NUMERO_INTERIOR_EMPRESA">
-                    </div>
-                    <div class="col-6 mb-3">
-                        <label>Nombre de la colonia *</label>
-                        <select class="form-control" name="NOMBRE_COLONIA_EMPRESA" id="NOMBRE_COLONIA_EMPRESA" required>
-                            <option value="">Seleccione una opción</option>
-                        </select>
-                    </div>
-                    <div class="col-6 mb-3">
-                        <label>Nombre de la Localidad *</label>
-                        <input type="text" class="form-control" name="NOMBRE_LOCALIDAD_EMPRESA" id="NOMBRE_LOCALIDAD_EMPRESA" required>
-                    </div>
-                    <div class="col-6 mb-3">
-                        <label>Nombre del municipio o demarcación territorial *</label>
-                        <input type="text" class="form-control" name="NOMBRE_MUNICIPIO_EMPRESA" id="NOMBRE_MUNICIPIO_EMPRESA" required>
-                    </div>
-                    <div class="col-6 mb-3">
-                        <label>Nombre de la Entidad Federativa *</label>
-                        <input type="text" class="form-control" name="NOMBRE_ENTIDAD_EMPRESA" id="NOMBRE_ENTIDAD_EMPRESA" required>
-                    </div>
-                    <div class="col-6 mb-3">
-                        <label>País *</label>
-                        <input type="text" class="form-control" name="PAIS_EMPRESA" id="PAIS_EMPRESA" required>
+
+
+                    <div class="col-12" id="DOMICILIO_ERXTRANJERO" style="display: none;">
+
+                        <div class="row">
+
+                            <div class="col-12 mb-3">
+                                <label>Domicilio *</label>
+                                <input type="text" class="form-control" name="DOMICILIO_EXTRANJERO" id="DOMICILIO_EXTRANJERO">
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label>Codigo postal </label>
+                                <input type="text" class="form-control" name="CODIGO_EXTRANJERO" id="CODIGO_EXTRANJERO">
+                            </div>
+                            <div class="col-6 mb-3">
+                                <label>Ciudad *</label>
+                                <input type="text" class="form-control" name="CIUDAD_EXTRANJERO" id="CIUDAD_EXTRANJERO">
+                            </div>
+
+                            <div class="col-4 mb-3">
+                                <label>Estado</label>
+                                <input type="text" class="form-control" name="ESTADO_EXTRANJERO" id="ESTADO_EXTRANJERO">
+                            </div>
+                            <div class="col-4 mb-3">
+                                <label>Departamento *</label>
+                                <input type="text" class="form-control" name="DEPARTAMENTO_EXTRANJERO" id="DEPARTAMENTO_EXTRANJERO">
+                            </div>
+                            <div class="col-4 mb-3">
+                                <label>País *</label>
+                                <input type="text" class="form-control" name="PAIS_EXTRANJERO" id="PAIS_EXTRANJERO">
+                            </div>
+
+                        </div>
                     </div>
 
-                    <div class="col-6 mb-3">
-                        <label>Entre Calle</label>
-                        <input type="text" class="form-control" name="ENTRE_CALLE_EMPRESA" id="ENTRE_CALLE_EMPRESA">
-                    </div>
-                    <div class="col-6 mb-3">
-                        <label>Y Calle</label>
-                        <input type="text" class="form-control" name="ENTRE_CALLE2_EMPRESA" id="ENTRE_CALLE2_EMPRESA">
-                    </div>
+
+
+
                     <div class="col-6 mb-3">
                         <label>Nombre del titular *</label>
                         <input type="text" class="form-control" name="NOMBRE_TITULAR_ALTA" id="NOMBRE_TITULAR_ALTA">
@@ -314,22 +364,18 @@
 
 
 
-                    <div class="col-4 mb-3">
+                    <div class="col-6 mb-3">
                         <label>Ciudad *</label>
                         <input type="text" class="form-control" name="CIUDAD_CUENTA" id="CIUDAD_CUENTA" required>
                     </div>
 
-                    <div class="col-4 mb-3">
+                    <div class="col-6 mb-3">
                         <label>País *</label>
                         <input type="text" class="form-control" name="PAIS_CUENTA" id="PAIS_CUENTA" required>
                     </div>
 
 
-                    <div class="col-4 mb-3">
-                        <label>Correo electrónico *</label>
-                        <input type="text" class="form-control" name="CORREO_CUENTA" id="CORREO_CUENTA" required>
-                    </div>
-
+                   
 
                     <div class="mb-3 text-center">
                         <h4><b>Certificaciones y acreditaciones</b></label>
@@ -445,36 +491,6 @@
     </div>
 </div>
 
-
-
-<section id="sectionFinalizado" class="container  mt-5 d-none justify-content-center " style="height: 100vh;">
-    <div class="row justify-content-center">
-        <div class="col-12">
-            <div class="card text-center" style="border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin: 10px;">
-                <div class="card-header" style="background-color: #88bd23; color: #fff; font-weight: bold; border-radius: 12px 12px 0 0;">
-                    <h6 class="card-title m-0" style="font-size: 1.5rem; font-weight: bold; color: #ffffff;">
-                        <i class="fa fa-check-circle" style="color: #ffffff;"></i>
-                        Información guardada correctamente
-                    </h6>
-                </div>
-                <div class="card-body">
-                    <p class="lead mt-3 mb-3">
-                        <i class="fa fa-check-circle" style="color: #88bd23;"></i>
-                        Su información ha sido guardada exitosamente.
-                    </p>
-                    <a href="https://results-in-performance.com/" class="btn" style="background-color: #28a745; color: #fff; padding: 10px 20px; font-size: 1.2rem; font-weight: bold; border-radius: 5px; text-decoration: none;">
-                        Regresar
-                    </a>
-                </div>
-                <div class="card-footer text-muted" style="background-color: #009bcf; color: #fff; font-weight: bold; border-radius: 0 0 12px 12px;">
-                    <h6 class="card-title m-0" style="font-size: 1rem; font-weight: bold; color: #ffffff;">
-                        Results In Performance
-                    </h6>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
 
 

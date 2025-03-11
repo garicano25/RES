@@ -170,7 +170,7 @@
                                 <span class="d-none d-lg-inline">Proveedores</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{url('/Proveedores_potenciales')}}">Proveedores potenciales</a>
+                                <li><a class="dropdown-item" href="{{url('/Banco_proveedores')}}">Banco de proveedores</a>
                                 </li>
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/')}}">Proveedores oficiales</a>
@@ -301,7 +301,7 @@
 
 
 
-    @if(request()->is('Proveedores_potenciales'))
+    @if(request()->is('Banco_proveedores'))
     <script src="/assets/js_sitio/proveedor/proveedorespotenciales.js"></script>
     @endif
 
