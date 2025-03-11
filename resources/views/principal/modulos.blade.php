@@ -220,14 +220,14 @@
                                                 const description = weatherDescriptions[weatherCode] || "Clima desconocido";
 
                                                 widgetArea.innerHTML = `
-                    <div class="weather-widget">
-                        <h3>Clima Actual</h3>
-                        <p class="temperature">${temperature}°C</p>
-                        <p class="description">${description}</p>
-                        <p>💨 Viento: ${windSpeed} km/h</p>
-                        <p class="updated-time">⏰ Actualizado: <span id="current-time"></span></p>
-                    </div>
-                `;
+                                                    <div class="weather-widget">
+                                                        <h3>Clima Actual</h3>
+                                                        <p class="temperature">${temperature}°C</p>
+                                                        <p class="description">${description}</p>
+                                                        <p>💨 Viento: ${windSpeed} km/h</p>
+                                                        <p class="updated-time">⏰ Actualizado: <span id="current-time"></span></p>
+                                                    </div>
+                                                `;
 
                                                 updateClock();
                                                 setInterval(updateClock, 1000);
