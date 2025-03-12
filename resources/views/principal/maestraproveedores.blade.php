@@ -137,9 +137,9 @@
 
 
                     <li class="nav-item dropdown" style="margin-left: 8px;">
-                        <a class="nav-link BOTON" href="{{ url('/Alta') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                        {{-- <a class="nav-link BOTON" href="{{ url('/Alta') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-speedometer" style="margin-right: 5px;"></i> <span class="d-lg-none">Alta y actualización </span><span class="d-none d-lg-inline">Alta y actualización </span>
-                        </a>
+                        </a> --}}
                     </li>
 
 
@@ -199,11 +199,71 @@
     </div>
 
 
-    <div style="margin-top: 25px;">
-        @yield('contenido')
+
+    <!-- Botón de menú hamburguesa -->
+
+
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <!-- Menú lateral en col-2 -->
+            <div class="col-2 d-none d-md-block bg-light vh-100">
+                <div class="p-3">
+                    <h5 class="text-center">Menú</h5>
+                    <nav>
+                        <ul class="menu-list">
+                            <li><a href="{{ url('/Alta') }}"><i class="bi bi-speedometer"></i>  Alta y actualización</a></li>
+                            <li><a href="{{ url('/Proveedores_Contactos') }}"><i class="bi bi-person-lines-fill"></i> Contactos</a></li>
+                            <li><a href="{{ url('/Proveedores_Certificaciones') }}"><i class="bi bi-award-fill"></i> Certificaciones y acreditaciones</a></li>
+                            <li><a href="{{ url('/Proveedores_Referencias') }}"><i class="bi bi-journal-text"></i> Referencias comerciales</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+    
+            <!-- Contenedor del contenido principal en col-10 -->
+            <div class="col-10 position-relative">
+               
+    
+                <!-- Contenido dinámico -->
+                <div class="contenido p-4">
+                    @yield('contenido')
+                </div>
+            </div>
+        </div>
     </div>
-
-
+    
+    
+    <!-- Estilos para mejorar la apariencia del menú -->
+    <style>
+        .menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+    
+        .menu-list li {
+            padding: 12px;
+            border-bottom: 1px solid #ddd; /* Línea divisoria sutil */
+        }
+    
+        .menu-list li a {
+            display: block;
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background 0.3s, color 0.3s;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+    
+        .menu-list li a:hover {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+    
 
     <!-- Jquery 3.6.4-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

@@ -95,6 +95,7 @@ use App\Http\Controllers\requisicionmaterial\mrController;
 // CONTROLADORES DE PROVEEDORES
 
 use App\Http\Controllers\proveedor\directorioController;
+use App\Http\Controllers\proveedor\altaproveedorController;
 
 
 //==============================================  login  ============================================== 
@@ -640,9 +641,13 @@ Route::get('/ServicioDelete', [directorioController::class, 'store']);
  Route::get('/Alta', function () {return view('compras.proveedores.altaproveedores');});
 
 
+ Route::get('/obtener-datos-proveedor', [altaproveedorController::class, 'obtenerDatosProveedor']);
 
+ Route::get('/Proveedores_Certificaciones', function () {return view('compras.proveedores.altacertificacion');});
 
+ Route::get('/Proveedores_Referencias', function () {return view('compras.proveedores.altareferencias');});
 
+ Route::get('/Proveedores_Contactos', function () {return view('compras.proveedores.altacontactos');});
 
 //============================================== ENCRIPTAR TURAS ============================================== 
 

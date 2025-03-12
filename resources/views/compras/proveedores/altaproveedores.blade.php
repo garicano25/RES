@@ -120,12 +120,12 @@
 
 
 
-            <input type="hidden" class="form-control" id="ID_FORMULARIO_DIRECTORIO" name="ID_FORMULARIO_DIRECTORIO" value="0">
+            <input type="hidden" class="form-control" id="ID_FORMULARIO_ALTA" name="ID_FORMULARIO_ALTA" value="0">
 
 
             <div class="col-12">
                 <div class="row">
-                    <div class="col-4 mb-3">
+                    <div class="col-3 mb-3">
                         <label>Tipo de Persona *</label>
                         <select class="form-control" name="TIPO_PERSONA_ALTA" id="TIPO_PERSONA_ALTA" required>
                             <option value="" selected disabled>Seleccione una opción</option>
@@ -133,8 +133,8 @@
                             <option value="2">Extranjero</option>
                         </select>
                     </div>
-                    <div class="col-4 mb-3">
-                        <label>Razón Social *</label>
+                    <div class="col-5 mb-3">
+                        <label>Razón social/Nombre *</label>
                         <input type="text" class="form-control" name="RAZON_SOCIAL_ALTA" id="RAZON_SOCIAL_ALTA" required>
                     </div>
                     <div class="col-4 mb-3">
@@ -143,11 +143,11 @@
                     </div>
                     <div class="col-6 mb-3">
                         <label>R.F.C *</label>
-                        <input type="text" class="form-control" name="RFC_ALTA" id="RFC_ALTA" required>
+                        <input type="text" class="form-control" name="RFC_ALTA" id="RFC_ALTA" required readonly>
                     </div>
                     <div class="col-6 mb-3">
-                        <label>Régimen *</label>
-                        <input type="text" class="form-control" name="REGIMEN_ALTA" id="REGIMEN_ALTA" required>
+                        <label>Régimen </label>
+                        <input type="text" class="form-control" name="REGIMEN_ALTA" id="REGIMEN_ALTA" >
                     </div>
 
 
@@ -279,16 +279,12 @@
 
                     <div class="col-12 mb-3 d-flex align-items-center">
                         <div class="form-check me-3">
-                            <input class="form-check-input" type="checkbox" name="ACTIVIDAD_ECONOMICA" id="VENTA_PRODUCTOS" required>
-                            <label class="form-check-label">Ventas de productos</label>
+                            <input class="form-check-input" type="radio" name="ACTIVIDAD_ECONOMICA" id="VENTA_PRODUCTOS" required>
+                            <label class="form-check-label" for="VENTA_PRODUCTOS">Ventas de productos/bienes</label>
                         </div>
                         <div class="form-check me-3">
-                            <input class="form-check-input" type="checkbox" name="ACTIVIDAD_ECONOMICA" id="VENTA_SERVICIOS">
-                            <label class="form-check-label">Venta de servicios</label>
-                        </div>
-                        <div class="form-check me-3">
-                            <input class="form-check-input" type="checkbox" name="ACTIVIDAD_ECONOMICA" id="OTROS_ACTIVIDAD" onclick="cualactividad()">
-                            <label class="form-check-label">Otros</label>
+                            <input class="form-check-input" type="radio" name="ACTIVIDAD_ECONOMICA" id="VENTA_SERVICIOS">
+                            <label class="form-check-label" for="VENTA_SERVICIOS">Venta de servicios</label>
                         </div>
                     </div>
 
@@ -298,7 +294,7 @@
                     </div>
 
                     <div class="col-12 mb-3">
-                        <label>Actividad comercial</label>
+                        <label>Actividad comercial principal</label>
                         <input type="text" class="form-control" name="ACTVIDAD_COMERCIAL" id="ACTVIDAD_COMERCIAL" required>
                     </div>
 
@@ -308,20 +304,20 @@
 
                     <div class="col-12 mb-3 d-flex align-items-center">
                         <div class="form-check me-3">
-                            <input class="form-check-input" type="checkbox" name="DESCUENTOS_ACTIVIDAD_ECONOMICA" id="POR_PAGO" required>
-                            <label class="form-check-label">Por pronto pago</label>
+                            <input class="form-check-input" type="radio" name="DESCUENTOS_ACTIVIDAD_ECONOMICA" id="POR_PAGO" required>
+                            <label class="form-check-label" for="POR_PAGO">Por pronto pago</label>
                         </div>
                         <div class="form-check me-3">
-                            <input class="form-check-input" type="checkbox" name="DESCUENTOS_ACTIVIDAD_ECONOMICA" id="POR_VOLUMEN">
-                            <label class="form-check-label">Por volumen</label>
+                            <input class="form-check-input" type="radio" name="DESCUENTOS_ACTIVIDAD_ECONOMICA" id="POR_VOLUMEN">
+                            <label class="form-check-label" for="POR_VOLUMEN">Por volumen</label>
                         </div>
                         <div class="form-check me-3">
-                            <input class="form-check-input" type="checkbox" name="DESCUENTOS_ACTIVIDAD_ECONOMICA" id="POR_PROMOCION">
-                            <label class="form-check-label">Promociones</label>
+                            <input class="form-check-input" type="radio" name="DESCUENTOS_ACTIVIDAD_ECONOMICA" id="POR_PROMOCION">
+                            <label class="form-check-label" for="POR_PROMOCION">Promociones</label>
                         </div>
                         <div class="form-check me-3">
-                            <input class="form-check-input" type="checkbox" name="DESCUENTOS_ACTIVIDAD_ECONOMICA" id="OTROS_DESCUENTO" onclick="cualdescuentos()">
-                            <label class="form-check-label">Otros</label>
+                            <input class="form-check-input" type="radio" name="DESCUENTOS_ACTIVIDAD_ECONOMICA" id="OTROS_DESCUENTO" onclick="cualdescuentos()">
+                            <label class="form-check-label" for="OTROS_DESCUENTO">Otros</label>
                         </div>
                     </div>
 
@@ -337,8 +333,22 @@
                     </div>
 
 
+                    
+                    <div class="row">
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label>Agrega cuentas</label>
+                                    <button id="botoncuentas" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                                        <i class="bi bi-plus-circle-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="cuentasdiv mt-4"></div>
+                        </div>
+                    </div>
 
-
+{{-- 
                     <div class="col-4 mb-3">
                         <label>Nombre del Banco *</label>
                         <input type="text" class="form-control" name="NOMBRE_BANCO" id="NOMBRE_BANCO" required>
@@ -350,7 +360,7 @@
                     <div class="col-4 mb-3">
                         <label>Tipo *</label>
                         <select class="form-control" name="TIPO_CUENTA" id="TIPO_CUENTA" required>
-                            <option value="" selected disabled></option>
+                            <option value="" selected disabled>Seleccione una opción</option>
                             <option value="1">Ahorros</option>
                             <option value="2">Empresarial</option>
                             <option value="3">Cheques</option>
@@ -372,66 +382,12 @@
                     <div class="col-6 mb-3">
                         <label>País *</label>
                         <input type="text" class="form-control" name="PAIS_CUENTA" id="PAIS_CUENTA" required>
-                    </div>
+                    </div> --}}
 
 
                    
 
-                    <div class="mb-3 text-center">
-                        <h4><b>Certificaciones y acreditaciones</b></label>
-                    </div>
-
-                    <div class="col-12 mb-3 d-flex align-items-center">
-                        <label class="me-3">¿Dispone de un sistema de aseguramiento de la calidad certificado o alguna acreditación?</label>
-                        <div class="form-check me-3">
-                            <input class="form-check-input" type="radio" name="ASEGURAMIENTO_CALIDAD" id="NO" value="NO">
-                            <label class="form-check-label" for="NO">NO</label>
-                        </div>
-                        <div class="form-check me-3">
-                            <input class="form-check-input" type="radio" name="ASEGURAMIENTO_CALIDAD" id="SI" value="SI">
-                            <label class="form-check-label" for="SI">SI</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="mb-3">
-                            <div class="row">
-                                <div class="col-6 mb-3">
-                                    <label>Agrega certificación</label>
-                                    <button id="botoncertificacion" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
-                                        <i class="bi bi-plus-circle-fill"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="certificaciondiv mt-4"></div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="mb-3 text-center">
-                        <h4><b>Referencia comerciales</b></label>
-                    </div>
-
-
-                    <div class="col-12 mb-3 text-center">
-                        <label class="me-3">Relacione a continuación referencias comerciales de empresas con quienes haya trabajado recientemente</label>
-                    </div>
-
-                    <div class="row">
-                        <div class="mb-3">
-                            <div class="row">
-                                <div class="col-6 mb-3">
-                                    <label>Agrega referencias</label>
-                                    <button id="botonrefernecias" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
-                                        <i class="bi bi-plus-circle-fill"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="referenciasdiv mt-4"></div>
-                        </div>
-                    </div>
-
+                  
 
                     <div class="mb-3 text-center">
                         <h4><b>Información adicional</b></label>

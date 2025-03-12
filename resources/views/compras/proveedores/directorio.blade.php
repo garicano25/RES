@@ -180,7 +180,7 @@
                 <select class="form-control" name="TIPO_PERSONA" id="TIPO_PERSONA" required>
                   <option value="" selected disabled>Seleccione una opción</option>
                   <option value="1">Nacional</option>
-                  <option value="2">Extranjera</option>
+                  <option value="2">Extranjero</option>
                 </select>
               </div>
 
