@@ -2212,6 +2212,29 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const selectTipoDocumento = document.getElementById("TIPO_DOCUMENTOSOPORTECONTRATO");
+    const fechaFinInput = document.getElementById("FECHAF_DOCUMENTOSOPORTECONTRATO");
+
+    selectTipoDocumento.addEventListener("change", function () {
+        if (selectTipoDocumento.value === "2") {
+            fechaFinInput.disabled = true;
+            fechaFinInput.removeAttribute("required");
+            fechaFinInput.value = ""; 
+        } else {
+            fechaFinInput.disabled = false;
+            fechaFinInput.setAttribute("required", "required");
+        }
+    });
+});
+
+
+
 $("#guardarDOCUMENTOSOPORTECONTRATO").click(function (e) {
     e.preventDefault();
 
@@ -2311,7 +2334,13 @@ Modaldocumetosoportecontrato.addEventListener('hidden.bs.modal', event => {
 
     document.getElementById('ERROR_DOCUMENTOSOPORTECONTRATO').style.display = 'none';
 
+
+        document.getElementById('FECHAF_DOCUMENTOSOPORTECONTRATO').disabled = false;
+
 })
+
+
+
 
 function cargarTablaDocumentosSoporteContrato() {
     if ($.fn.DataTable.isDataTable('#Tabladocumentosoportecontrato')) {
@@ -2358,20 +2387,22 @@ function cargarTablaDocumentosSoporteContrato() {
                 data: null,
                 render: function (data, type, row) {
                     let fechaInicio = row.FECHAI_DOCUMENTOSOPORTECONTRATO;
-                    let fechaFin = row.FECHAF_DOCUMENTOSOPORTECONTRATO;
-                    let hoy = new Date();
-                    let fechaFinDate = new Date(fechaFin);
+                    let tipoDocumento = row.TIPO_DOCUMENTOSOPORTECONTRATO; 
 
-                    let diferenciaDias = Math.ceil((fechaFinDate - hoy) / (1000 * 60 * 60 * 24));
-
-                    let estadoTexto = "";
-                    if (diferenciaDias < 0) {
-                        estadoTexto = `<span style="color: red;"> <br>(Terminado)</span>`;
+                    if (tipoDocumento === "2") {  
+                        return `${fechaInicio} <br> <span style="color: green;">(Vigente)</span>`;
                     } else {
-                        estadoTexto = `<span style="color: green;"> <br> (${diferenciaDias} días restantes)</span>`;
-                    }
+                        let fechaFin = row.FECHAF_DOCUMENTOSOPORTECONTRATO;
+                        let hoy = new Date();
+                        let fechaFinDate = new Date(fechaFin);
+                        let diferenciaDias = Math.ceil((fechaFinDate - hoy) / (1000 * 60 * 60 * 24));
 
-                    return `${fechaInicio} <br> ${fechaFin} ${estadoTexto}`;
+                        let estadoTexto = diferenciaDias < 0 
+                            ? `<span style="color: red;"> <br>(Terminado)</span>`
+                            : `<span style="color: green;"> <br> (${diferenciaDias} días restantes)</span>`;
+
+                        return `${fechaInicio} <br> ${fechaFin} ${estadoTexto}`;
+                    }
                 },
                 className: 'text-center'
             },
@@ -2388,6 +2419,7 @@ function cargarTablaDocumentosSoporteContrato() {
     });
 }
 
+
 $('#Tabladocumentosoportecontrato').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tabladocumentosoportecontrato.row(tr);
@@ -2398,8 +2430,13 @@ $('#Tabladocumentosoportecontrato').on('click', 'td>button.EDITAR', function () 
 
     $('#miModal_DOCUMENTOSOPORTECONTRATO .modal-title').html(row.data().NOMBRE_DOCUMENTOSOPORTECONTRATO);
 
-
+    if (row.data().TIPO_DOCUMENTOSOPORTECONTRATO === "2") {
+        $('#FECHAF_DOCUMENTOSOPORTECONTRATO').prop('disabled', true);
+    } else {
+        $('#FECHAF_DOCUMENTOSOPORTECONTRATO').prop('disabled', false);
+    }
 });
+
 
 $('#Tabladocumentosoportecontrato').on('click', '.ver-archivo-soportescontratos', function () {
     var tr = $(this).closest('tr');

@@ -1199,7 +1199,7 @@
                         <div class="col-6">
                             <label>Fecha Fin *</label>
                             <div class="input-group">
-                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_DOCUMENTOSOPORTECONTRATO" name="FECHAF_DOCUMENTOSOPORTECONTRATO" required>
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_DOCUMENTOSOPORTECONTRATO" name="FECHAF_DOCUMENTOSOPORTECONTRATO" >
                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
 
                             </div>
