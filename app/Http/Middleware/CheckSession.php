@@ -28,7 +28,7 @@ class CheckSession
             'Directorio'           // Ruta sin encriptar
         ];
 
-        if ($request->is('login') || $request->is('Directorio')) {
+        if ($request->is('login') || $request->is('Directorio') || $request->is('Vacantes')  || $request->is('Formulario-vacantes')  || $request->is('inicio')  || $request->is('Vacantes') ) {
             return $next($request);
         }
 
