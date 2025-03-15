@@ -11,7 +11,7 @@
 
    
         <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_contactos" style="margin-left: auto;">
-            Nueva  &nbsp;<i class="bi bi-plus-circle"></i>
+            Nuevo  &nbsp;<i class="bi bi-plus-circle"></i>
         </button>
     </ol>
 

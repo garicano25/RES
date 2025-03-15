@@ -395,6 +395,8 @@ public function obtenerguardados(Request $request)
     //         ]);
     //     }
     // }
+
+    
     public function Tablacontratosyanexos(Request $request)
     {
         try {
@@ -420,7 +422,6 @@ public function obtenerguardados(Request $request)
         ", [$curp]);
 
             foreach ($tabla as $value) {
-                // Determinar la fecha de inicio y fin
                 $fecha_inicio_mostrar = !empty($value->ULTIMA_FECHA_INICIO) ? $value->ULTIMA_FECHA_INICIO : $value->FECHAI_CONTRATO;
                 $fecha_fin_mostrar = !empty($value->ULTIMA_FECHA_FIN) ? $value->ULTIMA_FECHA_FIN : $value->VIGENCIA_CONTRATO;
 
@@ -431,7 +432,6 @@ public function obtenerguardados(Request $request)
                     $fecha_fin_mostrar = "Sin fecha";
                 }
 
-                // Calcular los días restantes
                 if ($fecha_fin_mostrar !== "Sin fecha") {
                     $fecha_fin_dt = new \DateTime($fecha_fin_mostrar);
                     $hoy = new \DateTime();
@@ -447,10 +447,8 @@ public function obtenerguardados(Request $request)
                     $estado_dias = "<span style='color: orange;'>(Fecha desconocida)</span>";
                 }
 
-                // **Mostrar fechas en dos líneas con el estado**
                 $value->FECHA_ESTADO = $fecha_inicio_mostrar . "<br>" . $fecha_fin_mostrar . "<br>". $estado_dias;
 
-                // **Manteniendo los botones tal como los tenías**
                 if ($value->ACTIVO == 0) {
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
                 } else {

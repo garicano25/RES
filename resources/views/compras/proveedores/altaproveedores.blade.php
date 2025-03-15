@@ -139,7 +139,7 @@
                     </div>
                     <div class="col-4 mb-3">
                         <label>Representante Legal </label>
-                        <input type="text" class="form-control" name="REPRESENTANTE_LEGAL_ALTA" id="REPRESENTANTE_LEGAL_ALTA" >
+                        <input type="text" class="form-control" name="REPRESENTANTE_LEGAL_ALTA" id="REPRESENTANTE_LEGAL_ALTA">
                     </div>
                     <div class="col-6 mb-3">
                         <label>R.F.C *</label>
@@ -147,7 +147,32 @@
                     </div>
                     <div class="col-6 mb-3">
                         <label>Régimen </label>
-                        <input type="text" class="form-control" name="REGIMEN_ALTA" id="REGIMEN_ALTA" >
+                        <select class="form-control" name="REGIMEN_ALTA" id="REGIMEN_ALTA">
+
+                            <option value="" selected disabled>Seleccione una opción</option>
+                            <option value="1">General de Ley Personas Morales </option>
+                            <option value="2">Personas Morales con Fines no Lucrativos </option>
+                            <option value="3">Sueldos y Salarios e Ingresos Asimilados a Salarios </option>
+                            <option value="4">Arrendamiento </option>
+                            <option value="5">Demás ingresos </option>
+                            <option value="6">Consolidación </option>
+                            <option value="7">Residentes en el Extranjero sin Establecimiento Permanente en México </option>
+                            <option value="8">Ingresos por Dividendos (socios y accionistas) </option>
+                            <option value="9">Personas Físicas con Actividades Empresariales y Profesionales </option>
+                            <option value="10">Ingresos por intereses </option>
+                            <option value="11">Sin obligaciones fiscales </option>
+                            <option value="12">Sociedades Cooperativas de Producción que optan por diferir sus ingresos </option>
+                            <option value="13">Incorporación Fiscal </option>
+                            <option value="14">Actividades Agrícolas, Ganaderas, Silvícolas y Pesqueras </option>
+                            <option value="15">Opcional para Grupos de Sociedades </option>
+                            <option value="16">Coordinados </option>
+                            <option value="17">Hidrocarburos </option>
+                            <option value="18">Régimen de Enajenación o Adquisición de Bienes </option>
+                            <option value="19">De los Regimenes Fiscales Preferentes y de las Empresas Multinacionales</option>
+                            <option value="20">Enajenación de acciones en bolsa de valores </option>
+                            <option value="21">Régimen de los ingresos por obtención de premios </option>
+
+                        </select>
                     </div>
 
 
@@ -258,15 +283,19 @@
 
 
 
-                    <div class="col-6 mb-3">
+                    <div class="col-4 mb-3">
                         <label>Nombre del titular *</label>
                         <input type="text" class="form-control" name="NOMBRE_TITULAR_ALTA" id="NOMBRE_TITULAR_ALTA">
                     </div>
-                    <div class="col-6 mb-3">
+                    <div class="col-4 mb-3">
                         <label>Correo electrónico *</label>
                         <input type="text" class="form-control" name="CORRE_TITULAR_ALTA" id="CORRE_TITULAR_ALTA">
                     </div>
 
+                    <div class="col-4 mb-3">
+                        <label>Días de credito *</label>
+                        <input type="text" class="form-control" name="DIAS_CREDITO_ALTA" id="DIAS_CREDITO_ALTA">
+                    </div>
 
 
 
@@ -333,7 +362,7 @@
                     </div>
 
 
-                    
+
                     <div class="row">
                         <div class="mb-3">
                             <div class="row">
@@ -348,7 +377,7 @@
                         </div>
                     </div>
 
-{{-- 
+                    {{--
                     <div class="col-4 mb-3">
                         <label>Nombre del Banco *</label>
                         <input type="text" class="form-control" name="NOMBRE_BANCO" id="NOMBRE_BANCO" required>
@@ -385,9 +414,9 @@
                     </div> --}}
 
 
-                   
 
-                  
+
+
 
                     <div class="mb-3 text-center">
                         <h4><b>Información adicional</b></label>
@@ -424,7 +453,19 @@
                     </div>
 
 
-
+                    <div class="col-12 mb-3 d-flex align-items-center">
+                        <label class="me-3">¿Alguno de sus empleados clave o miembro de la alta dirección de su organización proporciona o proporcionará beneficios financieros o de cualquier otro tipo a algún empleado de Pemex o la Sociedad, a algún funcionario de gobierno o un miembro de la familia de un funcionario de gobierno (por ejemplo, asistencia educativa o médica, vivienda), es decir, Personas Políticamente Expuestas?</label>
+                    </div>
+                    <div class="col-12 mb-3 d-flex align-items-center">
+                        <div class="form-check me-3">
+                            <input class="form-check-input" type="radio" name="BENEFICIOS_PERSONA" id="SI_BENEFICIOS_PERSONA" value="SI">
+                            <label class="form-check-label" for="SI_BENEFICIOS_PERSONA">Si</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="BENEFICIOS_PERSONA" id="NO_BENEFICIOS_PERSONA" value="NO">
+                            <label class="form-check-label" for="NO_BENEFICIOS_PERSONA">No</label>
+                        </div>
+                    </div>
 
 
 
@@ -458,7 +499,6 @@
 
 
 
-<script src="/assets/js_sitio/proveedor/altaproveedores.js"></script>
 
 
 

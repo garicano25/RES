@@ -138,7 +138,7 @@
 
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         {{-- <a class="nav-link BOTON" href="{{ url('/Alta') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-speedometer" style="margin-right: 5px;"></i> <span class="d-lg-none">Alta y actualización </span><span class="d-none d-lg-inline">Alta y actualización </span>
+                        <i class="bi bi-speedometer" style="margin-right: 5px;"></i> <span class="d-lg-none">Alta y actualización </span><span class="d-none d-lg-inline">Alta y actualización </span>
                         </a> --}}
                     </li>
 
@@ -212,19 +212,21 @@
                     <h5 class="text-center">Menú</h5>
                     <nav>
                         <ul class="menu-list">
-                            <li><a href="{{ url('/Alta') }}"><i class="bi bi-speedometer"></i>  Alta y actualización</a></li>
+                            <li><a href="{{ url('/Alta') }}"><i class="bi bi-speedometer"></i> Alta y actualización</a></li>
                             <li><a href="{{ url('/Proveedores_Contactos') }}"><i class="bi bi-person-lines-fill"></i> Contactos</a></li>
                             <li><a href="{{ url('/Proveedores_Certificaciones') }}"><i class="bi bi-award-fill"></i> Certificaciones y acreditaciones</a></li>
                             <li><a href="{{ url('/Proveedores_Referencias') }}"><i class="bi bi-journal-text"></i> Referencias comerciales</a></li>
+                            <li><a href="{{ url('/#') }}"><i class="bi bi-file-earmark-fill"></i> Facturación</a></li>
+
                         </ul>
                     </nav>
                 </div>
             </div>
-    
+
             <!-- Contenedor del contenido principal en col-10 -->
             <div class="col-10 position-relative">
-               
-    
+
+
                 <!-- Contenido dinámico -->
                 <div class="contenido p-4">
                     @yield('contenido')
@@ -232,8 +234,8 @@
             </div>
         </div>
     </div>
-    
-    
+
+
     <!-- Estilos para mejorar la apariencia del menú -->
     <style>
         .menu-list {
@@ -241,12 +243,13 @@
             padding: 0;
             margin: 0;
         }
-    
+
         .menu-list li {
             padding: 12px;
-            border-bottom: 1px solid #ddd; /* Línea divisoria sutil */
+            border-bottom: 1px solid #ddd;
+            /* Línea divisoria sutil */
         }
-    
+
         .menu-list li a {
             display: block;
             text-decoration: none;
@@ -257,13 +260,13 @@
             padding: 10px 15px;
             border-radius: 5px;
         }
-    
+
         .menu-list li a:hover {
             background-color: #007bff;
             color: white;
         }
     </style>
-    
+
 
     <!-- Jquery 3.6.4-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

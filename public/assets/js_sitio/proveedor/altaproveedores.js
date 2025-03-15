@@ -197,73 +197,56 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
     const botonAgregarContacto = document.getElementById('botoncuentas');
     
-    botonAgregarContacto.addEventListener('click', function () {
-        agregarReferencias();
-    });
+    botonAgregarContacto.removeEventListener('click', agregarReferencias); // Remover cualquier evento previo
+    botonAgregarContacto.addEventListener('click', agregarReferencias);
 
     function agregarReferencias() {
         const divContacto = document.createElement('div');
         divContacto.classList.add('row', 'generareferencias', 'mb-3');
         divContacto.innerHTML = `
-           
-                    <div class="col-4 mb-3">
-                        <label>Nombre del Banco *</label>
-                        <input type="text" class="form-control" name="NOMBRE_BANCO" id="NOMBRE_BANCO" required>
-                    </div>
-                    <div class="col-4 mb-3">
-                        <label>No. De Cuenta *</label>
-                        <input type="number" class="form-control" name="NUMERO_CUENTA" id="NUMERO_CUENTA" required>
-                    </div>
-                    <div class="col-4 mb-3">
-                        <label>Tipo *</label>
-                        <select class="form-control" name="TIPO_CUENTA" id="TIPO_CUENTA" required>
-                            <option value="" selected disabled>Seleccione una opción</option>
-                            <option value="1">Ahorros</option>
-                            <option value="2">Empresarial</option>
-                            <option value="3">Cheques</option>
-                        </select>
-                    </div>
-
-                    <div class="col-12 mb-3">
-                        <label>CLABE interbancaria *</label>
-                        <input type="number" class="form-control" name="CLABE_INTERBANCARIA" id="CLABE_INTERBANCARIA" required>
-                    </div>
-
-
-
-                    <div class="col-6 mb-3">
-                        <label>Ciudad *</label>
-                        <input type="text" class="form-control" name="CIUDAD_CUENTA" id="CIUDAD_CUENTA" required>
-                    </div>
-
-                    <div class="col-6 mb-3">
-                        <label>País *</label>
-                        <input type="text" class="form-control" name="PAIS_CUENTA" id="PAIS_CUENTA" required>
-                    </div>
+            <div class="col-4 mb-3">
+                <label>Nombre del Banco *</label>
+                <input type="text" class="form-control" name="NOMBRE_BANCO" required>
+            </div>
+            <div class="col-4 mb-3">
+                <label>No. De Cuenta *</label>
+                <input type="number" class="form-control" name="NUMERO_CUENTA" required>
+            </div>
+            <div class="col-4 mb-3">
+                <label>Tipo *</label>
+                <select class="form-control" name="TIPO_CUENTA" required>
+                    <option value="" selected disabled>Seleccione una opción</option>
+                    <option value="1">Ahorros</option>
+                    <option value="2">Empresarial</option>
+                    <option value="3">Cheques</option>
+                </select>
+            </div>
+            <div class="col-12 mb-3">
+                <label>CLABE interbancaria *</label>
+                <input type="number" class="form-control" name="CLABE_INTERBANCARIA" required>
+            </div>
+            <div class="col-6 mb-3">
+                <label>Ciudad *</label>
+                <input type="text" class="form-control" name="CIUDAD_CUENTA" required>
+            </div>
+            <div class="col-6 mb-3">
+                <label>País *</label>
+                <input type="text" class="form-control" name="PAIS_CUENTA" required>
+            </div>
             <div class="col-12 mt-4 text-center">
                 <button type="button" class="btn btn-danger botonEliminarContacto">Eliminar cuenta<i class="bi bi-trash-fill"></i></button>
             </div>
         `;
-    
+
         const contenedor = document.querySelector('.cuentasdiv');
         contenedor.appendChild(divContacto);
-    
+
         divContacto.querySelector('.botonEliminarContacto').addEventListener('click', function () {
             contenedor.removeChild(divContacto);
         });
     }
-    
-    $(document).on('focus', '.mydatepicker', function () {
-        if (!$(this).data('datepicker')) {
-            $(this).datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                todayHighlight: true,
-                language: 'es',
-            });
-        }
-    });
-}); 
+});
+
 
 
 
