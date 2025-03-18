@@ -189,7 +189,7 @@
                 <input type="text" class="form-control" id="RAZON_SOCIAL" name="RAZON_SOCIAL" required>
               </div>
               <div class="col-4 mb-3">
-                <label>RFC *</label>
+                <label for="RFC_LABEL">RFC *</label>
                 <input type="text" class="form-control" id="RFC_PROVEEDOR" name="RFC_PROVEEDOR" required>
               </div>
               <div class="col-6 mb-3">
@@ -294,15 +294,12 @@
                 <input type="text" class="form-control" name="CIUDAD_EXTRANJERO" id="CIUDAD_EXTRANJERO">
               </div>
 
-              <div class="col-4 mb-3">
-                <label>Estado</label>
+              <div class="col-6 mb-3">
+                <label>Estado/Departamento/Provincia</label>
                 <input type="text" class="form-control" name="ESTADO_EXTRANJERO" id="ESTADO_EXTRANJERO">
               </div>
-              <div class="col-4 mb-3">
-                <label>Departamento *</label>
-                <input type="text" class="form-control" name="DEPARTAMENTO_EXTRANJERO" id="DEPARTAMENTO_EXTRANJERO">
-              </div>
-              <div class="col-4 mb-3">
+             
+              <div class="col-6 mb-3">
                 <label>País *</label>
                 <input type="text" class="form-control" name="PAIS_EXTRANJERO" id="PAIS_EXTRANJERO">
               </div>
@@ -342,7 +339,7 @@
               </div>
 
               <div class="col-12 mb-3">
-                <label>Correo electronicio *</label>
+                <label>Correo electronico *</label>
                 <input type="text" class="form-control" name="CORREO_DIRECTORIO" id="CORREO_DIRECTORIO" required>
               </div>
             </div>
@@ -362,7 +359,7 @@
             </div>
           </div>
 
-          <label>Constancia de situación fiscal</label>
+          <label for="CONSTANCIA_LABEL">Constancia de situación fiscal</label>
 
           <div class="mt-3 d-flex align-items-center">
             <input type="file" class="form-control" id="CONSTANCIA_DOCUMENTO" name="CONSTANCIA_DOCUMENTO" accept=".pdf" style="width: auto; flex: 1;">

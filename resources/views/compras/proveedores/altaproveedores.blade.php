@@ -138,11 +138,11 @@
                         <input type="text" class="form-control" name="RAZON_SOCIAL_ALTA" id="RAZON_SOCIAL_ALTA" required>
                     </div>
                     <div class="col-4 mb-3">
-                        <label>Representante Legal </label>
-                        <input type="text" class="form-control" name="REPRESENTANTE_LEGAL_ALTA" id="REPRESENTANTE_LEGAL_ALTA">
+                        <label>Representante Legal *</label>
+                        <input type="text" class="form-control" name="REPRESENTANTE_LEGAL_ALTA" id="REPRESENTANTE_LEGAL_ALTA" required>
                     </div>
                     <div class="col-6 mb-3">
-                        <label>R.F.C *</label>
+                        <label for="RFC_LABEL">R.F.C *</label>
                         <input type="text" class="form-control" name="RFC_ALTA" id="RFC_ALTA" required readonly>
                     </div>
                     <div class="col-6 mb-3">
@@ -264,15 +264,12 @@
                                 <input type="text" class="form-control" name="CIUDAD_EXTRANJERO" id="CIUDAD_EXTRANJERO">
                             </div>
 
-                            <div class="col-4 mb-3">
-                                <label>Estado</label>
+                            <div class="col-6 mb-3">
+                                <label>Estado/Departamento/Provincia</label>
                                 <input type="text" class="form-control" name="ESTADO_EXTRANJERO" id="ESTADO_EXTRANJERO">
                             </div>
-                            <div class="col-4 mb-3">
-                                <label>Departamento *</label>
-                                <input type="text" class="form-control" name="DEPARTAMENTO_EXTRANJERO" id="DEPARTAMENTO_EXTRANJERO">
-                            </div>
-                            <div class="col-4 mb-3">
+                           
+                            <div class="col-6 mb-3">
                                 <label>País *</label>
                                 <input type="text" class="form-control" name="PAIS_EXTRANJERO" id="PAIS_EXTRANJERO">
                             </div>
@@ -283,25 +280,25 @@
 
 
 
-                    <div class="col-4 mb-3">
-                        <label>Nombre del titular *</label>
-                        <input type="text" class="form-control" name="NOMBRE_TITULAR_ALTA" id="NOMBRE_TITULAR_ALTA">
-                    </div>
+                   
                     <div class="col-4 mb-3">
                         <label>Correo electrónico *</label>
-                        <input type="text" class="form-control" name="CORRE_TITULAR_ALTA" id="CORRE_TITULAR_ALTA">
+                        <input type="text" class="form-control" name="CORRE_TITULAR_ALTA" id="CORRE_TITULAR_ALTA" required>
                     </div>
 
                     <div class="col-4 mb-3">
-                        <label>Días de credito *</label>
-                        <input type="text" class="form-control" name="DIAS_CREDITO_ALTA" id="DIAS_CREDITO_ALTA">
+                        <label>Teléfono oficina *</label>
+                        <input type="text" class="form-control" name="TELEFONO_OFICINA_ALTA" id="TELEFONO_OFICINA_ALTA" required>
                     </div>
 
-
+                    <div class="col-4 mb-3">
+                        <label>Página web </label>
+                        <input type="text" class="form-control" name="PAGINA_WEB_ALTA" id="PAGINA_WEB_ALTA">
+                    </div>
 
 
                     <div class="mb-3 text-center">
-                        <h4><b>Actividad económica</b></label>
+                        <h4><b>Actividad económica y términos comerciales</b></label>
                     </div>
 
 
@@ -355,6 +352,15 @@
                         <input type="text" class="form-control" name="CUAL_DESCUENTOS_ECONOMICA" id="CUAL_DESCUENTOS_ECONOMICA">
                     </div>
 
+                    <div class="col-12 mb-3">
+                        <label>Días de crédito que otorga *</label>
+                        <input type="number" class="form-control" name="DIAS_CREDITO_ALTA" id="DIAS_CREDITO_ALTA">
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label>Otros términos comerciales de importancia </label>
+                        <textarea type="number" class="form-control" name="TERMINOS_IMPORTANCIAS_ALTA" id="TERMINOS_IMPORTANCIAS_ALTA" rows="5"></textarea>
+                    </div>
 
 
                     <div class="mb-3 text-center">
@@ -419,13 +425,13 @@
 
 
                     <div class="mb-3 text-center">
-                        <h4><b>Información adicional</b></label>
+                        <h4><b>Información adicional para la debida diligencia</b></label>
                     </div>
 
                     <div class="col-12 mb-3">
-                        <label class="form-label">¿Usted o la compañía tiene vínculos familiares hasta en tercer grado de consanguinidad con personal que labora en las compañías Results In Performance? O cualquier tipo de vínculo puede ser personal o laboral que pueda generar un conflicto de interés?</label>
+                        <label class="form-label">¿Usted o la compañía tiene vínculos familiares hasta en tercer grado de consanguinidad con personal que laboran en Results In Performance, sus filiales o cualquier tipo de vínculo puede ser personal o laboral que pueda generar un conflicto de interés?</label>
                         <div class="form-check d-inline-block me-3">
-                            <input class="form-check-input" type="radio" name="VINCULO_FAMILIAR" id="VINCULO_SI" value="SI">
+                            <input class="form-check-input" type="radio" name="VINCULO_FAMILIAR" id="VINCULO_SI" value="SI"  onclick="vinculosres()">
                             <label class="form-check-label" for="VINCULO_SI">Si</label>
                         </div>
                         <div class="form-check d-inline-block">
@@ -433,25 +439,28 @@
                             <label class="form-check-label" for="VINCULO_NO">No</label>
                         </div>
                     </div>
-                    <div class="col-12 mb-3">
-                        <label class="form-label">Si su respuesta anterior es afirmativa, describa cuál:</label>
-                        <input type="text" class="form-control" name="DESCRIPCION_VINCULO">
+                    <div class="col-12 mb-3" id="DIV_VINCULOS" style="display: none">
+                        <label class="form-label">Describa cuál:</label>
+                        <input type="text" class="form-control" name="DESCRIPCION_VINCULO" id="DESCRIPCION_VINCULO">
                     </div>
                     <div class="col-12 mb-3 d-flex align-items-center">
                         <label class="me-3">¿La empresa que representa ofrece servicios directos como proveedor/contratista/subcontratista a PEMEX?</label>
                     </div>
                     <div class="col-12 mb-3 d-flex align-items-center">
                         <div class="form-check me-3">
-                            <input class="form-check-input" type="radio" name="SERVICIOS_PEMEX" id="SI" value="SI">
-                            <label class="form-check-label" for="SI">Si</label>
+                            <input class="form-check-input" type="radio" name="SERVICIOS_PEMEX" id="SI_NUMEROPROVEEDOR" value="SI" onclick="numeroproveedor()">
+                            <label class="form-check-label" for="SI_NUMEROPROVEEDOR">Si</label>
                         </div>
-                        <input type="text" class="form-control me-3" name="NUMERO_PROVEEDOR" placeholder="No. de proveedor">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="SERVICIOS_PEMEX" id="NO" value="NO">
-                            <label class="form-check-label" for="NO">No</label>
+                            <input class="form-check-input" type="radio" name="SERVICIOS_PEMEX" id="NO_NUMEROPROVEEDOR" value="NO">
+                            <label class="form-check-label" for="NO_NUMEROPROVEEDOR">No</label>
                         </div>
                     </div>
 
+                    <div class="col-12 mb-3" id="DIV_NUMEROPROVEEDOR" style="display: none">
+                        <label class="form-label">No. de proveedor:</label>
+                        <input type="text" class="form-control" name="NUMERO_PROVEEDOR" id="NUMERO_PROVEEDOR">
+                    </div>
 
                     <div class="col-12 mb-3 d-flex align-items-center">
                         <label class="me-3">¿Alguno de sus empleados clave o miembro de la alta dirección de su organización proporciona o proporcionará beneficios financieros o de cualquier otro tipo a algún empleado de Pemex o la Sociedad, a algún funcionario de gobierno o un miembro de la familia de un funcionario de gobierno (por ejemplo, asistencia educativa o médica, vivienda), es decir, Personas Políticamente Expuestas?</label>

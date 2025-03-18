@@ -430,6 +430,9 @@ function verificarCodigoAntesDeActualizar(correo, codigo, data) {
             } else if (tipoPersona.value === "2") {
                 domicilioNacional.style.display = "none";
                 domicilioExtranjero.style.display = "block";
+                document.querySelector('label[for="CONSTANCIA_LABEL"]').textContent = "Registro ante hacienda / Tax ID";
+                document.querySelector('label[for="RFC_LABEL"]').textContent = "Tax ID";
+
             }
 
             // Continuar llenando otros campos
@@ -457,7 +460,7 @@ function verificarCodigoAntesDeActualizar(correo, codigo, data) {
             document.getElementById('CIUDAD_EXTRANJERO').value = data.CIUDAD_EXTRANJERO || '';
             document.getElementById('ESTADO_EXTRANJERO').value = data.ESTADO_EXTRANJERO || '';
             document.getElementById('PAIS_EXTRANJERO').value = data.PAIS_EXTRANJERO || '';
-            document.getElementById('DEPARTAMENTO_EXTRANJERO').value = data.DEPARTAMENTO_EXTRANJERO || '';
+
 
 
             // Cargar servicios dinámicos
@@ -513,19 +516,27 @@ function agregarServicio(nombreServicio = '') {
 
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    const tipoPersona = document.getElementById("TIPO_PERSONA");
+    const domicilioNacional = document.getElementById("DOMICILIO_NACIONAL");
+    const domicilioExtranjero = document.getElementById("DOMICILIO_ERXTRANJERO");
+    const labelDomicilio = document.querySelector('label[for="CONSTANCIA_LABEL"]'); // Selecciona el label específico
+    const labelRFC = document.querySelector('label[for="RFC_LABEL"]'); // Selecciona el label específico
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const tipoPersona = document.getElementById("TIPO_PERSONA");
-        const domicilioNacional = document.getElementById("DOMICILIO_NACIONAL");
-        const domicilioExtranjero = document.getElementById("DOMICILIO_ERXTRANJERO");
 
-        tipoPersona.addEventListener("change", function () {
-            if (this.value === "1") {
-                domicilioNacional.style.display = "block";
-                domicilioExtranjero.style.display = "none";
-            } else if (this.value === "2") {
-                domicilioNacional.style.display = "none";
-                domicilioExtranjero.style.display = "block";
-            }
-        });
+    tipoPersona.addEventListener("change", function () {
+        if (this.value === "1") {
+            domicilioNacional.style.display = "block";
+            domicilioExtranjero.style.display = "none";
+            labelDomicilio.textContent = "Constancia de situación fiscal *";
+            labelRFC.textContent = "RFC *";
+
+        } else if (this.value === "2") {
+            domicilioNacional.style.display = "none";
+            domicilioExtranjero.style.display = "block";
+            labelDomicilio.textContent = "Registro ante hacienda / Tax ID *";
+            labelRFC.textContent = "Tax ID *";
+
+        }
     });
+});

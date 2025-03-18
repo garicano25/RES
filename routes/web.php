@@ -616,11 +616,7 @@ Route::get('/Bitácora', function () {return view('compras.requisicionesmaterial
 //  DIRECTORIO EXTERNO
 
 
-Route::get('/Directorio', function () { //// RUTA EXTERNA ////
-    $encryptedRoute = Crypt::encryptString('Directorio');
-    return redirect()->route('route.encrypted', ['encryptedRoute' => $encryptedRoute]);
-});
-// Route::get('/Directorio', function () {return view('compras.proveedores.directorio');});
+Route::get('/Directorio', function () {return view('compras.proveedores.directorio');});
 Route::post('/ServiciosSave', [directorioController::class, 'store']);
 Route::get('/mostrarconstanciaproveedor/{id}', [directorioController::class, 'mostrarconstanciaproveedor']);
 Route::post('/actualizarinfoproveedor', [directorioController::class, 'actualizarinfoproveedor'])->name('actualizarinfoproveedor');
@@ -639,15 +635,16 @@ Route::get('/ServicioDelete', [directorioController::class, 'store']);
 
 
  Route::get('/Alta', function () {return view('compras.proveedores.altaproveedores');});
-
-
  Route::get('/obtener-datos-proveedor', [altaproveedorController::class, 'obtenerDatosProveedor']);
-
  Route::get('/Proveedores_Certificaciones', function () {return view('compras.proveedores.altacertificacion');});
-
  Route::get('/Proveedores_Referencias', function () {return view('compras.proveedores.altareferencias');});
-
  Route::get('/Proveedores_Contactos', function () {return view('compras.proveedores.altacontactos');});
+
+
+
+ //==============================================  EXTERNO  ============================================== 
+Route::get('/Proveedor', function () {return view('compras.externa.diseño');});
+
 
 //============================================== ENCRIPTAR TURAS ============================================== 
 
@@ -670,26 +667,26 @@ Route::get('/ServicioDelete', [directorioController::class, 'store']);
 // })->name('route.encrypted');
 
 
-Route::get('/{encryptedRoute}', function ($encryptedRoute) {
-    try {
-        // Desencriptar la URL
-        $decryptedRoute = Crypt::decryptString($encryptedRoute);
+// Route::get('/{encryptedRoute}', function ($encryptedRoute) {
+//     try {
+//         // Desencriptar la URL
+//         $decryptedRoute = Crypt::decryptString($encryptedRoute);
 
-        // Verificar la ruta desencriptada
-        switch ($decryptedRoute) {
-            // case 'Solicitudes':
-            //     // Llamar al controlador y su método 'index'
-            //     return app(SolicitudesController::class)->index();
-            case 'Directorio':
-                return view('compras.proveedores.directorio');
-            default:
-                abort(404);
-        }
-    } catch (\Exception $e) {
-        // En caso de que la encriptación falle, lanzar error 404
-        abort(404);
-    }
-})->name('route.encrypted');
+//         // Verificar la ruta desencriptada
+//         switch ($decryptedRoute) {
+//             // case 'Solicitudes':
+//             //     // Llamar al controlador y su método 'index'
+//             //     return app(SolicitudesController::class)->index();
+//             case 'Directorio':
+//                 return view('compras.proveedores.directorio');
+//             default:
+//                 abort(404);
+//         }
+//     } catch (\Exception $e) {
+//         // En caso de que la encriptación falle, lanzar error 404
+//         abort(404);
+//     }
+// })->name('route.encrypted');
 //============================================== C.P ============================================== 
 
 

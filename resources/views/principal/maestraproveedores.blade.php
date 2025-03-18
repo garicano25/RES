@@ -212,11 +212,12 @@
                     <h5 class="text-center">Menú</h5>
                     <nav>
                         <ul class="menu-list">
-                            <li><a href="{{ url('/Alta') }}"><i class="bi bi-speedometer"></i> Alta y actualización</a></li>
-                            <li><a href="{{ url('/Proveedores_Contactos') }}"><i class="bi bi-person-lines-fill"></i> Contactos</a></li>
-                            <li><a href="{{ url('/Proveedores_Certificaciones') }}"><i class="bi bi-award-fill"></i> Certificaciones y acreditaciones</a></li>
-                            <li><a href="{{ url('/Proveedores_Referencias') }}"><i class="bi bi-journal-text"></i> Referencias comerciales</a></li>
-                            <li><a href="{{ url('/#') }}"><i class="bi bi-file-earmark-fill"></i> Facturación</a></li>
+                            <li><a href="{{ url('/Alta') }}"><i class="bi bi-speedometer"></i>&nbsp; Alta y actualización</a></li>
+                            <li><a href="{{ url('/Proveedores_Contactos') }}"><i class="bi bi-person-lines-fill"></i>&nbsp; Contactos</a></li>
+                            <li><a href="{{ url('/Proveedores_Certificaciones') }}"><i class="bi bi-award-fill"></i>&nbsp; Certificaciones y acreditaciones</a></li>
+                            <li><a href="{{ url('/Proveedores_Referencias') }}"><i class="bi bi-journal-text"></i>&nbsp; Referencias comerciales</a></li>
+                            <li><a href="{{ url('/#') }}"><i class="bi bi-file-earmark-pdf-fill"></i>&nbsp;Documentos de soporte</a></li>
+                            <li><a href="{{ url('/#') }}"><i class="bi bi-file-earmark-fill"></i>&nbsp; Facturación</a></li>
 
                         </ul>
                     </nav>

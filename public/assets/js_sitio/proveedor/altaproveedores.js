@@ -10,14 +10,74 @@
     
 
 
-
- function cualdescuentos() {
-        var otrosCheckbox = document.getElementById('OTROS_DESCUENTO');
-        var actividadDiv = document.getElementById('CUAL_DESCUENTOS');
-        actividadDiv.style.display = otrosCheckbox.checked ? 'block' : 'none';
-}
+function cualdescuentos() {
+    var otrosCheckbox = document.getElementById('OTROS_DESCUENTO');
+    var actividadDiv = document.getElementById('CUAL_DESCUENTOS');
     
+    // Verifica si "Otros" está seleccionado
+    actividadDiv.style.display = otrosCheckbox.checked ? 'block' : 'none';
+}
 
+document.addEventListener("DOMContentLoaded", function () {
+    var radios = document.getElementsByName('DESCUENTOS_ACTIVIDAD_ECONOMICA');
+    radios.forEach(function (radio) {
+        radio.addEventListener("change", cualdescuentos);
+    });
+});
+
+    
+function vinculosres() {
+    var otrosCheckbox = document.getElementById('VINCULO_SI');
+    var actividadDiv = document.getElementById('DIV_VINCULOS');
+    
+    // Verifica si "Otros" está seleccionado
+    actividadDiv.style.display = otrosCheckbox.checked ? 'block' : 'none';
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    var radios = document.getElementsByName('VINCULO_FAMILIAR');
+    radios.forEach(function (radio) {
+        radio.addEventListener("change", vinculosres);
+    });
+});
+
+   
+function numeroproveedor() {
+    var otrosCheckbox = document.getElementById('SI_NUMEROPROVEEDOR');
+    var actividadDiv = document.getElementById('DIV_NUMEROPROVEEDOR');
+    
+    // Verifica si "Otros" está seleccionado
+    actividadDiv.style.display = otrosCheckbox.checked ? 'block' : 'none';
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    var radios = document.getElementsByName('SERVICIOS_PEMEX');
+    radios.forEach(function (radio) {
+        radio.addEventListener("change", numeroproveedor);
+    });
+});
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    var textarea = document.getElementById("TERMINOS_IMPORTANCIAS_ALTA");
+    var counter = document.createElement("span");
+    counter.id = "charCounter";
+    counter.style.display = "block";
+    counter.style.marginTop = "5px";
+    counter.style.color = "red";
+    
+    textarea.parentNode.appendChild(counter);
+
+    textarea.addEventListener("input", function () {
+        if (this.value.length > 300) {
+            this.value = this.value.substring(0, 300); // Limita a 300 caracteres
+        }
+        counter.textContent = `${this.value.length}/300`; // Muestra caracteres escritos / total
+    });
+
+    counter.textContent = "0/300";
+});
 
 // $("#guardarDIRECTORIO").click(async function (e) {
 //     e.preventDefault();
@@ -125,73 +185,6 @@
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    const botonAgregarContacto = document.getElementById('botoncertificacion');
-    
-    botonAgregarContacto.addEventListener('click', function () {
-        agregarAcreditacion();
-    });
-
-    function agregarAcreditacion() {
-        const divContacto = document.createElement('div');
-        divContacto.classList.add('row', 'generaracreditacion', 'mb-3');
-        divContacto.innerHTML = `
-            <div class="col-6 mb-3">
-                <label class="form-label">Norma/Versión *</label>
-                <input type="text" class="form-control" name="NORMA_VERSION" required>
-            </div>
-            <div class="col-6 mb-3">
-                <label class="form-label">Alcance de la certificación *</label>
-                <input type="text" class="form-control" name="ALCANCE_CERTIFICACION" required>
-            </div>
-            <div class="col-12 mb-3">
-                <label class="form-label">Entidad certificadora *</label>
-                <input type="text" class="form-control" name="ENTIDAD_CERTIFICADORA" required>
-            </div>
-            <div class="col-6 mb-3">
-                <label class="form-label">Desde *</label>
-                <div class="input-group">
-                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" name="EMISION_DOCUMENTO" required>
-                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                </div>
-            </div>
-            <div class="col-6 mb-3">
-                <label class="form-label">Hasta *</label>
-                <div class="input-group">
-                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" name="VENCIMIENTO_DOCUMENTO" required>
-                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                </div>
-            </div>
-            <div class="col-12 mb-3">
-                <label class="form-label">Subir archivo (PDF) *</label>
-                <input type="file" class="form-control" name="DOCUMENTO_CERTIFICACION" accept=".pdf" required>
-            </div>
-            <div class="col-12 mt-4 text-center">
-                <button type="button" class="btn btn-danger botonEliminarContacto">Eliminar certificación<i class="bi bi-trash-fill"></i></button>
-            </div>
-        `;
-    
-        const contenedor = document.querySelector('.certificaciondiv');
-        contenedor.appendChild(divContacto);
-    
-        divContacto.querySelector('.botonEliminarContacto').addEventListener('click', function () {
-            contenedor.removeChild(divContacto);
-        });
-    }
-    
-    $(document).on('focus', '.mydatepicker', function () {
-        if (!$(this).data('datepicker')) {
-            $(this).datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                todayHighlight: true,
-                language: 'es',
-            });
-        }
-    });
-});
-
-
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -253,19 +246,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
 document.addEventListener("DOMContentLoaded", function () {
     const tipoPersona = document.getElementById("TIPO_PERSONA_ALTA");
     const domicilioNacional = document.getElementById("DOMICILIO_NACIONAL");
     const domicilioExtranjero = document.getElementById("DOMICILIO_ERXTRANJERO");
+    const labelRFC = document.querySelector('label[for="RFC_LABEL"]'); // Selecciona el label específico
+
 
     tipoPersona.addEventListener("change", function () {
         if (this.value === "1") {
             domicilioNacional.style.display = "block";
             domicilioExtranjero.style.display = "none";
+            labelRFC.textContent = "R.F.C *";
+
         } else if (this.value === "2") {
             domicilioNacional.style.display = "none";
             domicilioExtranjero.style.display = "block";
+            labelRFC.textContent = "Tax ID *";
+
         }
     });
 });
@@ -287,6 +285,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (data.TIPO_PERSONA_ALTA == "1") {
             // Mostrar div de domicilio nacional
+            document.querySelector('label[for="RFC_LABEL"]').textContent = "R.F.C";
+
             document.getElementById("DOMICILIO_NACIONAL").style.display = "block";
             document.getElementById("DOMICILIO_ERXTRANJERO").style.display = "none";
 
@@ -304,6 +304,8 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("ENTRE_CALLE2_EMPRESA").value = data.ENTRE_CALLE2_EMPRESA;
         } else if (data.TIPO_PERSONA_ALTA == "2") {
             // Mostrar div de domicilio extranjero
+            document.querySelector('label[for="RFC_LABEL"]').textContent = "Tax ID";
+
             document.getElementById("DOMICILIO_NACIONAL").style.display = "none";
             document.getElementById("DOMICILIO_ERXTRANJERO").style.display = "block";
 
