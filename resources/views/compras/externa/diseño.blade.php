@@ -77,7 +77,7 @@
                 <div class="logo">
                     <img src="/assets/images/RIP_Logo_Color (2).png" alt="Logo de la empresa">
                 </div>
-                <div class="title">Registrarse en el banco proveedores</div>
+                <div class="title">Registrarse en el banco de proveedores</div>
                 <div class="description">Ingresa tus datos y regístrate.</div>
             </div>
         </a>
