@@ -213,10 +213,11 @@
                     <nav>
                         <ul class="menu-list">
                             <li><a href="{{ url('/Alta') }}"><i class="bi bi-speedometer"></i>&nbsp; Alta y actualización</a></li>
+                            <li><a href="{{ url('/Proveedores_Cuentas') }}"><i class="bi bi-currency-dollar"></i>Cuentas bancarias</a></li>
                             <li><a href="{{ url('/Proveedores_Contactos') }}"><i class="bi bi-person-lines-fill"></i>&nbsp; Contactos</a></li>
-                            <li><a href="{{ url('/Proveedores_Certificaciones') }}"><i class="bi bi-award-fill"></i>&nbsp; Certificaciones y acreditaciones</a></li>
+                            <li><a href="{{ url('/Proveedores_Certificaciones') }}"><i class="bi bi-award-fill"></i>&nbsp; Certificaciones, acreditaciones y membresías</a></li>
                             <li><a href="{{ url('/Proveedores_Referencias') }}"><i class="bi bi-journal-text"></i>&nbsp; Referencias comerciales</a></li>
-                            <li><a href="{{ url('/#') }}"><i class="bi bi-file-earmark-pdf-fill"></i>&nbsp;Documentos de soporte</a></li>
+                            <li><a href="{{ url('/Proveedores_documentos') }}"><i class="bi bi-file-earmark-pdf-fill"></i>&nbsp;Documentos de soporte</a></li>
                             <li><a href="{{ url('/#') }}"><i class="bi bi-file-earmark-fill"></i>&nbsp; Facturación</a></li>
 
                         </ul>
@@ -329,6 +330,21 @@
 
 
 
+
+    @if(request()->is('Proveedores_Cuentas'))
+    <script src="/assets/js_sitio/proveedor/altacuentas.js"></script>
+    @endif
+
+
+
+    @if(request()->is('Proveedores_Contactos'))
+    <script src="/assets/js_sitio/proveedor/altacontactos.js"></script>
+    @endif
+
+
+    @if(request()->is('Proveedores_Certificaciones'))
+    <script src="/assets/js_sitio/proveedor/altacertifiacion.js"></script>
+    @endif
 
 
 

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\proveedor;
 
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Artisan;
@@ -12,59 +11,21 @@ use Illuminate\Support\Facades\Auth;
 
 use Carbon\Carbon;
 
-use DB; 
+use DB;
 
-use App\Models\proveedor\directorioModel;
-use App\Models\proveedor\altaproveedorModel;
+use App\Models\proveedor\altacuentaModel;
 
-use App\Models\proveedor\altacontactos;
-
-class altaproveedorController extends Controller
+class altacuentaController extends Controller
 {
-    public function obtenerDatosProveedor()
-{
-    $rfcProveedor = Auth::user()->RFC_PROVEEDOR;
-
-    $proveedor = directorioModel::where('RFC_PROVEEDOR', $rfcProveedor)->first();
-
-    if (!$proveedor) {
-        return response()->json(['error' => 'No se encontraron datos'], 404);
-    }
-
-    return response()->json([
-        'TIPO_PERSONA_ALTA' => $proveedor->TIPO_PERSONA,
-        'RAZON_SOCIAL_ALTA' => $proveedor->RAZON_SOCIAL,
-        'RFC_ALTA' => $proveedor->RFC_PROVEEDOR,
-        'ACTVIDAD_COMERCIAL' => $proveedor->GIRO_PROVEEDOR,
-        'CODIGO_POSTAL' => $proveedor->CODIGO_POSTAL,
-        'TIPO_VIALIDAD_EMPRESA' => $proveedor->TIPO_VIALIDAD_EMPRESA,
-        'NOMBRE_VIALIDAD_EMPRESA' => $proveedor->NOMBRE_VIALIDAD_EMPRESA,
-        'NUMERO_EXTERIOR_EMPRESA' => $proveedor->NUMERO_EXTERIOR_EMPRESA,
-        'NUMERO_INTERIOR_EMPRESA' => $proveedor->NUMERO_INTERIOR_EMPRESA,
-        'NOMBRE_COLONIA_EMPRESA' => $proveedor->NOMBRE_COLONIA_EMPRESA,
-        'NOMBRE_LOCALIDAD_EMPRESA' => $proveedor->NOMBRE_LOCALIDAD_EMPRESA,
-        'NOMBRE_MUNICIPIO_EMPRESA' => $proveedor->NOMBRE_MUNICIPIO_EMPRESA,
-        'NOMBRE_ENTIDAD_EMPRESA' => $proveedor->NOMBRE_ENTIDAD_EMPRESA,
-        'PAIS_EMPRESA' => $proveedor->PAIS_EMPRESA,
-        'ENTRE_CALLE_EMPRESA' => $proveedor->ENTRE_CALLE_EMPRESA,
-        'ENTRE_CALLE2_EMPRESA' => $proveedor->ENTRE_CALLE2_EMPRESA,
-        'DOMICILIO_EXTRANJERO' => $proveedor->DOMICILIO_EXTRANJERO,
-        'CODIGO_EXTRANJERO' => $proveedor->CODIGO_EXTRANJERO,
-        'CIUDAD_EXTRANJERO' => $proveedor->CIUDAD_EXTRANJERO,
-        'ESTADO_EXTRANJERO' => $proveedor->ESTADO_EXTRANJERO,
-        'PAIS_EXTRANJERO' => $proveedor->PAIS_EXTRANJERO,
-        'DEPARTAMENTO_EXTRANJERO' => $proveedor->DEPARTAMENTO_EXTRANJERO
-    ]);
-}
 
 
 
-    public function Tablacontactosproveedor()
+    public function Tablacuentasproveedores()
     {
         try {
-            $userRFC = Auth::user()->RFC_PROVEEDOR;
+            $userRFC = Auth::user()->RFC_PROVEEDOR; 
 
-            $tabla = altacontactos::where('RFC_PROVEEDOR', $userRFC)->get();
+            $tabla = altacuentaModel::where('RFC_PROVEEDOR', $userRFC)->get();
 
             foreach ($tabla as $value) {
                 if ($value->ACTIVO == 0) {
@@ -98,40 +59,45 @@ class altaproveedorController extends Controller
         try {
             switch (intval($request->api)) {
                 case 1:
-                    if ($request->ID_FORMULARIO_ALTA == 0) {
-                        DB::statement('ALTER TABLE formulario_altaproveedor AUTO_INCREMENT=1;');
-                        $altas = altaproveedorModel::create($request->all());
-                    } else {
+                    if ($request->ID_FORMULARIO_CUENTAPROVEEDOR == 0) {
+                        DB::statement('ALTER TABLE formulario_altacuentaproveedor AUTO_INCREMENT=1;');
 
+                        $requestData = $request->all();
+                        $requestData['RFC_PROVEEDOR'] = Auth::user()->RFC_PROVEEDOR;
+
+                        $cuentas = altacuentaModel::create($requestData);
+                    } else {
                         if (isset($request->ELIMINAR)) {
                             if ($request->ELIMINAR == 1) {
-                                $altas = altaproveedorModel::where('ID_FORMULARIO_ALTA', $request['ID_FORMULARIO_ALTA'])->update(['ACTIVO' => 0]);
+                                $cuentas = altacuentaModel::where('ID_FORMULARIO_CUENTAPROVEEDOR', $request['ID_FORMULARIO_CUENTAPROVEEDOR'])
+                                    ->update(['ACTIVO' => 0]);
                                 $response['code'] = 1;
-                                $response['alta'] = 'Desactivada';
+                                $response['cuenta'] = 'Desactivada';
                             } else {
-                                $altas = altaproveedorModel::where('ID_FORMULARIO_ALTA', $request['ID_FORMULARIO_ALTA'])->update(['ACTIVO' => 1]);
+                                $cuentas = altacuentaModel::where('ID_FORMULARIO_CUENTAPROVEEDOR', $request['ID_FORMULARIO_CUENTAPROVEEDOR'])
+                                    ->update(['ACTIVO' => 1]);
                                 $response['code'] = 1;
-                                $response['alta'] = 'Activada';
+                                $response['cuenta'] = 'Activada';
                             }
                         } else {
-                            $altas = altaproveedorModel::find($request->ID_FORMULARIO_ALTA);
-                            $altas->update($request->all());
+                            $cuentas = altacuentaModel::find($request->ID_FORMULARIO_CUENTAPROVEEDOR);
+                            $cuentas->update($request->except('RFC_PROVEEDOR')); 
                             $response['code'] = 1;
-                            $response['alta'] = 'Actualizada';
+                            $response['cuenta'] = 'Actualizada';
                         }
                         return response()->json($response);
                     }
                     $response['code']  = 1;
-                    $response['alta']  = $altas;
+                    $response['cuenta']  = $cuentas;
                     return response()->json($response);
                     break;
                 default:
                     $response['code']  = 1;
-                    $response['msj']  = 'Api no encontrada';
+                    $response['msj']  = 'API no encontrada';
                     return response()->json($response);
             }
         } catch (Exception $e) {
-            return response()->json('Error al guardar');
+            return response()->json(['error' => 'Error al guardar'], 500);
         }
     }
 }

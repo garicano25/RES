@@ -286,7 +286,7 @@
                 <input type="text" class="form-control" name="DOMICILIO_EXTRANJERO" id="DOMICILIO_EXTRANJERO">
               </div>
               <div class="col-6 mb-3">
-                <label>Codigo postal </label>
+                <label>Código Postal</label>
                 <input type="text" class="form-control" name="CODIGO_EXTRANJERO" id="CODIGO_EXTRANJERO">
               </div>
               <div class="col-6 mb-3">
@@ -298,7 +298,7 @@
                 <label>Estado/Departamento/Provincia</label>
                 <input type="text" class="form-control" name="ESTADO_EXTRANJERO" id="ESTADO_EXTRANJERO">
               </div>
-             
+
               <div class="col-6 mb-3">
                 <label>País *</label>
                 <input type="text" class="form-control" name="PAIS_EXTRANJERO" id="PAIS_EXTRANJERO">
@@ -339,7 +339,7 @@
               </div>
 
               <div class="col-12 mb-3">
-                <label>Correo electronico *</label>
+                <label>Correo electrónico *</label>
                 <input type="text" class="form-control" name="CORREO_DIRECTORIO" id="CORREO_DIRECTORIO" required>
               </div>
             </div>

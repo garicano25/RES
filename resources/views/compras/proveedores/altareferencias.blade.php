@@ -7,11 +7,11 @@
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
-    <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-journal-text"></i>&nbsp;Referencia comerciales</h3>
+        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-journal-text"></i>&nbsp;Referencia comerciales</h3>
 
-   
+
         <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_referencia" style="margin-left: auto;">
-            Nueva  &nbsp;<i class="bi bi-plus-circle"></i>
+            Nueva &nbsp;<i class="bi bi-plus-circle"></i>
         </button>
     </ol>
 
@@ -41,8 +41,20 @@
                                     <label class="form-label">Nombre de la empresa *</label>
                                     <input type="text" class="form-control" name="NOMBRE_EMPRESA" required>
                                 </div>
-                                <div class="col-12 mb-3">
-                                    <label class="form-label">Nombre/Cargo *</label>
+                                <div class="col-6 mb-3">
+                                    <label class="form-label">Nombre del contacto *</label>
+                                    <input type="text" class="form-control" name="NOMBRE_CARGO" required>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label class="form-label">Cargo *</label>
+                                    <input type="text" class="form-control" name="NOMBRE_CARGO" required>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label class="form-label">Teléfono *</label>
+                                    <input type="text" class="form-control" name="NOMBRE_CARGO" required>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label class="form-label">Correo electrónico *</label>
                                     <input type="text" class="form-control" name="NOMBRE_CARGO" required>
                                 </div>
                                 <div class="col-12 mb-3">
@@ -67,8 +79,8 @@
                         </div>
                     </div>
                 </div>
-                
-             
+
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-success" id="guardarFormcategorias">Guardar</button>

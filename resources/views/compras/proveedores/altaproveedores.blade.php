@@ -115,7 +115,7 @@
 
     {{-- <img src="/assets/images/Colorancho.png" class="card-img-top" alt="Imagen superior"> --}}
     <div class="card-body">
-        <form method="post" enctype="multipart/form-data" id="formularioDIRECTORIO">
+        <form method="post" enctype="multipart/form-data" id="formularioALTA">
             {!! csrf_field() !!}
 
 
@@ -256,7 +256,7 @@
                                 <input type="text" class="form-control" name="DOMICILIO_EXTRANJERO" id="DOMICILIO_EXTRANJERO">
                             </div>
                             <div class="col-6 mb-3">
-                                <label>Codigo postal </label>
+                                <label>Código Postal </label>
                                 <input type="text" class="form-control" name="CODIGO_EXTRANJERO" id="CODIGO_EXTRANJERO">
                             </div>
                             <div class="col-6 mb-3">
@@ -268,7 +268,7 @@
                                 <label>Estado/Departamento/Provincia</label>
                                 <input type="text" class="form-control" name="ESTADO_EXTRANJERO" id="ESTADO_EXTRANJERO">
                             </div>
-                           
+
                             <div class="col-6 mb-3">
                                 <label>País *</label>
                                 <input type="text" class="form-control" name="PAIS_EXTRANJERO" id="PAIS_EXTRANJERO">
@@ -280,18 +280,18 @@
 
 
 
-                   
-                    <div class="col-4 mb-3">
+
+                    <div class="col-6 mb-3">
                         <label>Correo electrónico *</label>
                         <input type="text" class="form-control" name="CORRE_TITULAR_ALTA" id="CORRE_TITULAR_ALTA" required>
                     </div>
 
-                    <div class="col-4 mb-3">
+                    <div class="col-6 mb-3">
                         <label>Teléfono oficina *</label>
                         <input type="text" class="form-control" name="TELEFONO_OFICINA_ALTA" id="TELEFONO_OFICINA_ALTA" required>
                     </div>
 
-                    <div class="col-4 mb-3">
+                    <div class="col-12 mb-3">
                         <label>Página web </label>
                         <input type="text" class="form-control" name="PAGINA_WEB_ALTA" id="PAGINA_WEB_ALTA">
                     </div>
@@ -363,62 +363,6 @@
                     </div>
 
 
-                    <div class="mb-3 text-center">
-                        <h4><b>Información para pago/depósito/transferencia interbancaria</b></label>
-                    </div>
-
-
-
-                    <div class="row">
-                        <div class="mb-3">
-                            <div class="row">
-                                <div class="col-6 mb-3">
-                                    <label>Agrega cuentas</label>
-                                    <button id="botoncuentas" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
-                                        <i class="bi bi-plus-circle-fill"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="cuentasdiv mt-4"></div>
-                        </div>
-                    </div>
-
-                    {{--
-                    <div class="col-4 mb-3">
-                        <label>Nombre del Banco *</label>
-                        <input type="text" class="form-control" name="NOMBRE_BANCO" id="NOMBRE_BANCO" required>
-                    </div>
-                    <div class="col-4 mb-3">
-                        <label>No. De Cuenta *</label>
-                        <input type="number" class="form-control" name="NUMERO_CUENTA" id="NUMERO_CUENTA" required>
-                    </div>
-                    <div class="col-4 mb-3">
-                        <label>Tipo *</label>
-                        <select class="form-control" name="TIPO_CUENTA" id="TIPO_CUENTA" required>
-                            <option value="" selected disabled>Seleccione una opción</option>
-                            <option value="1">Ahorros</option>
-                            <option value="2">Empresarial</option>
-                            <option value="3">Cheques</option>
-                        </select>
-                    </div>
-
-                    <div class="col-12 mb-3">
-                        <label>CLABE interbancaria *</label>
-                        <input type="number" class="form-control" name="CLABE_INTERBANCARIA" id="CLABE_INTERBANCARIA" required>
-                    </div>
-
-
-
-                    <div class="col-6 mb-3">
-                        <label>Ciudad *</label>
-                        <input type="text" class="form-control" name="CIUDAD_CUENTA" id="CIUDAD_CUENTA" required>
-                    </div>
-
-                    <div class="col-6 mb-3">
-                        <label>País *</label>
-                        <input type="text" class="form-control" name="PAIS_CUENTA" id="PAIS_CUENTA" required>
-                    </div> --}}
-
 
 
 
@@ -431,7 +375,7 @@
                     <div class="col-12 mb-3">
                         <label class="form-label">¿Usted o la compañía tiene vínculos familiares hasta en tercer grado de consanguinidad con personal que laboran en Results In Performance, sus filiales o cualquier tipo de vínculo puede ser personal o laboral que pueda generar un conflicto de interés?</label>
                         <div class="form-check d-inline-block me-3">
-                            <input class="form-check-input" type="radio" name="VINCULO_FAMILIAR" id="VINCULO_SI" value="SI"  onclick="vinculosres()">
+                            <input class="form-check-input" type="radio" name="VINCULO_FAMILIAR" id="VINCULO_SI" value="SI" onclick="vinculosres()">
                             <label class="form-check-label" for="VINCULO_SI">Si</label>
                         </div>
                         <div class="form-check d-inline-block">
@@ -486,7 +430,7 @@
 
             <div class="col-12 text-center">
                 <div class="col-md-6 mx-auto">
-                    <button type="submit" id="guardarDIRECTORIO" class="btn btn-success w-100">
+                    <button type="submit" id="guardarALTA" class="btn btn-success w-100">
                         Guardar
                     </button>
                 </div>

@@ -96,6 +96,7 @@ use App\Http\Controllers\requisicionmaterial\mrController;
 
 use App\Http\Controllers\proveedor\directorioController;
 use App\Http\Controllers\proveedor\altaproveedorController;
+use App\Http\Controllers\proveedor\altacuentaController;
 
 
 //==============================================  login  ============================================== 
@@ -633,16 +634,31 @@ Route::get('/ServicioDelete', [directorioController::class, 'store']);
 //  ALTA 
 
 
+Route::get('/Alta', function () {return view('compras.proveedores.altaproveedores');});
+Route::get('/obtener-datos-proveedor', [altaproveedorController::class, 'obtenerDatosProveedor']);
+Route::post('/AltaSave', [altaproveedorController::class, 'store']);
 
- Route::get('/Alta', function () {return view('compras.proveedores.altaproveedores');});
- Route::get('/obtener-datos-proveedor', [altaproveedorController::class, 'obtenerDatosProveedor']);
- Route::get('/Proveedores_Certificaciones', function () {return view('compras.proveedores.altacertificacion');});
+Route::get('/Proveedores_Certificaciones', function () {return view('compras.proveedores.altacertificacion');});
  Route::get('/Proveedores_Referencias', function () {return view('compras.proveedores.altareferencias');});
- Route::get('/Proveedores_Contactos', function () {return view('compras.proveedores.altacontactos');});
+
+//ALTA DE CONTACTOS
+Route::get('/Proveedores_Contactos', function () {return view('compras.proveedores.altacontactos');});
+
+Route::get('/Tablacontactosproveedor', [altaproveedorController::class, 'Tablacontactosproveedor']);
 
 
 
- //==============================================  EXTERNO  ============================================== 
+
+Route::get('/Proveedores_documentos', function () { return view('compras.proveedores.altadocumentosoporte');});
+
+
+//ALTA DE CUENTAS BANCARIAS 
+Route::get('/Proveedores_Cuentas', function () { return view('compras.proveedores.altacuentas');});
+Route::post('/AltacuentaSave', [altacuentaController::class, 'store']);
+Route::get('/Tablacuentasproveedores', [altacuentaController::class, 'Tablacuentasproveedores']);
+
+
+//==============================================  EXTERNO  ============================================== 
 Route::get('/Proveedor', function () {return view('compras.externa.diseño');});
 
 

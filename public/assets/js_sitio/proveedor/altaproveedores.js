@@ -1,3 +1,6 @@
+//VARIABLES
+ID_FORMULARIO_ALTA = 0
+
 
 
 
@@ -79,109 +82,94 @@ document.addEventListener("DOMContentLoaded", function () {
     counter.textContent = "0/300";
 });
 
-// $("#guardarDIRECTORIO").click(async function (e) {
-//     e.preventDefault();
 
-//     formularioValido = validarFormulario($('#formularioDIRECTORIO'));
 
-//     if (formularioValido) {
 
-//         var servicios = [];
-//         $(".generarservicio").each(function() {
-//             var servicio = {
-//                 'NOMBRE_SERVICIO': $(this).find("input[name='NOMBRE_SERVICIO']").val()
-//             };
-//             servicios.push(servicio);
-//         });
 
-//         const requestData = {
-//             api: 1,
-//             ID_FORMULARIO_DIRECTORIO: ID_FORMULARIO_DIRECTORIO,
-//             SERVICIOS_JSON: JSON.stringify(servicios)
-//         };
+$("#guardarALTA").click(function (e) {
+    e.preventDefault();
 
-//         if (ID_FORMULARIO_DIRECTORIO == 0) {
-//             alertMensajeConfirm({
-//                 title: "¿Desea guardar la información?",
-//                 text: "Al guardarla, se podrá usar",
-//                 icon: "question",
-//             }, async function () {
-//                 await loaderbtn('guardarDIRECTORIO');
-//                 await ajaxAwaitFormData(requestData, 'ServiciosSave', 'formularioDIRECTORIO', 'guardarDIRECTORIO', { callbackAfter: true, callbackBefore: true }, () => {
+    formularioValido = validarFormulario($('#formularioALTA'))
 
-//                     Swal.fire({
-//                         icon: 'info',
-//                         title: 'Espere un momento',
-//                         text: 'Estamos guardando la información',
-//                         showConfirmButton: false
-//                     });
+    if (formularioValido) {
 
-//                     $('.swal2-popup').addClass('ld ld-breath');
+    if (ID_FORMULARIO_ALTA == 0) {
+        
+        alertMensajeConfirm({
+            title: "¿Desea guardar la información?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
 
-//                 }, function (data) {
-//                     ID_FORMULARIO_DIRECTORIO = data.servicio.ID_FORMULARIO_DIRECTORIO;
+            await loaderbtn('guardarALTA')
+            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_ALTA: ID_FORMULARIO_ALTA }, 'AltaSave', 'formularioALTA', 'guardarALTA', { callbackAfter: true, callbackBefore: true }, () => {
+        
+               
 
-//                     Swal.fire({
-//                         icon: 'success',
-//                         title: 'Información guardada correctamente',
-//                         confirmButtonText: 'OK',
-//                     }).then(() => {
-//                         document.getElementById('formulario_servicio').style.display = 'none';
-//                         document.getElementById('nav_var').style.display = 'block';
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
 
-//                         const sectionFinalizado = document.getElementById('sectionFinalizado');
-//                         sectionFinalizado.classList.remove('d-none');
-//                         sectionFinalizado.classList.add('d-flex');
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
+                    
 
-//                         document.getElementById('formularioDIRECTORIO').reset();
-//                         ID_FORMULARIO_DIRECTORIO = 0;
-//                     });
-//                 });
-//             }, 1);
+                ID_FORMULARIO_ALTA = data.alta.ID_FORMULARIO_ALTA
+                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                    
+        
+            })
+            
+            
+            
+        }, 1)
+        
+    } else {
+            alertMensajeConfirm({
+            title: "¿Desea editar la información de este formulario?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
 
-//         } else {
-//             alertMensajeConfirm({
-//                 title: "¿Desea editar la información de este formulario?",
-//                 text: "Al guardarla, se podrá usar",
-//                 icon: "question",
-//             }, async function () {
-//                 await loaderbtn('guardarDIRECTORIO');
-//                 await ajaxAwaitFormData(requestData, 'ServiciosSave', 'formularioDIRECTORIO', 'guardarDIRECTORIO', { callbackAfter: true, callbackBefore: true }, () => {
+            await loaderbtn('guardarALTA')
+            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_ALTA: ID_FORMULARIO_ALTA }, 'AltaSave', 'formularioALTA', 'guardarALTA', { callbackAfter: true, callbackBefore: true }, () => {
+        
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
 
-//                     Swal.fire({
-//                         icon: 'info',
-//                         title: 'Espere un momento',
-//                         text: 'Estamos guardando la información',
-//                         showConfirmButton: false
-//                     });
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
+                    
+                setTimeout(() => {
 
-//                     $('.swal2-popup').addClass('ld ld-breath');
+                    
+                    ID_FORMULARIO_ALTA = data.alta.ID_FORMULARIO_ALTA
+                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                    
 
-//                 }, function (data) {
-//                     ID_FORMULARIO_DIRECTORIO = data.servicio.ID_FORMULARIO_DIRECTORIO;
+                }, 300);  
+            })
+        }, 1)
+    }
 
-//                     Swal.fire({
-//                         icon: 'success',
-//                         title: 'Información editada correctamente',
-//                         confirmButtonText: 'OK',
-//                     }).then(() => {
-//                         document.getElementById('formulario_servicio').style.display = 'none';
-//                         document.getElementById('nav_var').style.display = 'none';
+} else {
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
 
-//                         const sectionFinalizado = document.getElementById('sectionFinalizado');
-//                         sectionFinalizado.classList.remove('d-none');
-//                         sectionFinalizado.classList.add('d-flex');
+}
+    
+});
 
-//                         document.getElementById('formularioDIRECTORIO').reset();
-//                         ID_FORMULARIO_DIRECTORIO = 0;
-//                     });
-//                 });
-//             }, 1);
-//         }
-//     } else {
-//         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
-//     }
-// });
 
 
 
