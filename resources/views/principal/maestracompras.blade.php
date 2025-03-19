@@ -302,7 +302,7 @@
 
 
     @if(request()->is('Banco_proveedores'))
-    <script src="/assets/js_sitio/proveedor/proveedorespotenciales.js"></script>
+    <script src="/assets/js_sitio/proveedor/proveedorespotenciales.js?v=1.0"></script>
     @endif
 
 

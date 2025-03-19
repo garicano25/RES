@@ -51,7 +51,7 @@
                 <input type="text" class="form-control" id="RAZON_SOCIAL" name="RAZON_SOCIAL" required>
               </div>
               <div class="col-4 mb-3">
-                <label>RFC *</label>
+                <label for="RFC_LABEL">RFC *</label>
                 <input type="text" class="form-control" id="RFC_PROVEEDOR" name="RFC_PROVEEDOR" required>
               </div>
               <div class="col-6 mb-3">
@@ -133,10 +133,8 @@
             </div>
           </div>
 
+
           <div class="col-12" id="DOMICILIO_ERXTRANJERO" style="display: none;">
-
-
-
 
             <div class="row">
 
@@ -145,7 +143,7 @@
                 <input type="text" class="form-control" name="DOMICILIO_EXTRANJERO" id="DOMICILIO_EXTRANJERO">
               </div>
               <div class="col-6 mb-3">
-                <label>Codigo postal *</label>
+                <label>Código Postal</label>
                 <input type="text" class="form-control" name="CODIGO_EXTRANJERO" id="CODIGO_EXTRANJERO">
               </div>
               <div class="col-6 mb-3">
@@ -153,31 +151,25 @@
                 <input type="text" class="form-control" name="CIUDAD_EXTRANJERO" id="CIUDAD_EXTRANJERO">
               </div>
 
-              <div class="col-4 mb-3">
-                <label>Estado</label>
+              <div class="col-6 mb-3">
+                <label>Estado/Departamento/Provincia</label>
                 <input type="text" class="form-control" name="ESTADO_EXTRANJERO" id="ESTADO_EXTRANJERO">
               </div>
-              <div class="col-4 mb-3">
-                <label>Departamento *</label>
-                <input type="text" class="form-control" name="DEPARTAMENTO_EXTRANJERO" id="DEPARTAMENTO_EXTRANJERO">
-              </div>
-              <div class="col-4 mb-3">
+
+              <div class="col-6 mb-3">
                 <label>País *</label>
                 <input type="text" class="form-control" name="PAIS_EXTRANJERO" id="PAIS_EXTRANJERO">
               </div>
 
-
-
-
-
-
-
             </div>
           </div>
+
+
 
           <div class="mb-3">
             <h4><b>Contacto</b></label>
           </div>
+
 
 
           <div class="col-12">
@@ -193,15 +185,20 @@
               </div>
               <div class="col-4 mb-3">
                 <label>Teléfono *</label>
-                <input type="number" class="form-control" name="TELEFONO_DIRECOTORIO" id="TELEFONO_DIRECOTORIO" required>
+                <input type="text" class="form-control" name="TELEFONO_DIRECOTORIO" id="TELEFONO_DIRECOTORIO" required>
               </div>
               <div class="col-4 mb-3">
                 <label>Extensión </label>
                 <input type="text" class="form-control" name="EXSTENSION_DIRECTORIO" id="EXSTENSION_DIRECTORIO">
               </div>
               <div class="col-4 mb-3">
-                <label>Celular *</label>
-                <input type="number" class="form-control" name="CELULAR_DIRECTORIO" id="CELULAR_DIRECTORIO">
+                <label>Celular </label>
+                <input type="text" class="form-control" name="CELULAR_DIRECTORIO" id="CELULAR_DIRECTORIO">
+              </div>
+
+              <div class="col-12 mb-3">
+                <label>Correo electrónico *</label>
+                <input type="text" class="form-control" name="CORREO_DIRECTORIO" id="CORREO_DIRECTORIO" required>
               </div>
             </div>
           </div>

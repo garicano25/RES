@@ -266,6 +266,7 @@ $('#Tabladirectorio tbody').on('click', 'td>button.EDITAR', function () {
     if (row.data().TIPO_PERSONA == "1") {
         domicilioNacional.style.display = "block";
         domicilioExtranjero.style.display = "none";
+                        document.querySelector('label[for="RFC_LABEL"]').textContent = "RFC";
 
         if (row.data().CODIGO_POSTAL) {
             fetch(`/codigo-postal/${row.data().CODIGO_POSTAL}`)
@@ -304,6 +305,8 @@ $('#Tabladirectorio tbody').on('click', 'td>button.EDITAR', function () {
     } else if (row.data().TIPO_PERSONA == "2") {
         domicilioNacional.style.display = "none";
         domicilioExtranjero.style.display = "block";
+                        document.querySelector('label[for="RFC_LABEL"]').textContent = "Tax ID";
+
     }
 
 
@@ -334,43 +337,54 @@ $(document).ready(function() {
         $('#miModal_POTENCIALES .modal-title').html(row.data().NOMBRE_COMERCIAL);
 
 
+        const domicilioNacional = document.getElementById("DOMICILIO_NACIONAL");
+            const domicilioExtranjero = document.getElementById("DOMICILIO_ERXTRANJERO");
 
-            if (row.data().CODIGO_POSTAL) {
-    fetch(`/codigo-postal/${row.data().CODIGO_POSTAL}`)
-        .then(response => response.json())
-        .then(data => {
-            if (!data.error) {
-                let response = data.response;
+            if (row.data().TIPO_PERSONA == "1") {
+                domicilioNacional.style.display = "block";
+                domicilioExtranjero.style.display = "none";
+                                document.querySelector('label[for="RFC_LABEL"]').textContent = "RFC";
 
-                let coloniaSelect = document.getElementById("NOMBRE_COLONIA_EMPRESA");
-                coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
+                if (row.data().CODIGO_POSTAL) {
+                    fetch(`/codigo-postal/${row.data().CODIGO_POSTAL}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.error) {
+                                let response = data.response;
 
-                let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
+                                let coloniaSelect = document.getElementById("NOMBRE_COLONIA_EMPRESA");
+                                coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
 
-                colonias.forEach(colonia => {
-                    let option = document.createElement("option");
-                    option.value = colonia;
-                    option.textContent = colonia;
-                    coloniaSelect.appendChild(option);
-                });
+                                let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
 
-                if (row.data().NOMBRE_COLONIA_EMPRESA) {
-                    coloniaSelect.value = row.data().NOMBRE_COLONIA_EMPRESA;
+                                colonias.forEach(colonia => {
+                                    let option = document.createElement("option");
+                                    option.value = colonia;
+                                    option.textContent = colonia;
+                                    coloniaSelect.appendChild(option);
+                                });
+
+                                if (row.data().NOMBRE_COLONIA_EMPRESA) {
+                                    coloniaSelect.value = row.data().NOMBRE_COLONIA_EMPRESA;
+                                }
+
+                                document.getElementById("NOMBRE_MUNICIPIO_EMPRESA").value = response.municipio || "No disponible";
+                                document.getElementById("NOMBRE_ENTIDAD_EMPRESA").value = response.estado || "No disponible";
+                            } else {
+                                alert("Código postal no encontrado");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error al obtener datos:", error);
+                            alert("Hubo un error al consultar la API.");
+                        });
                 }
+            } else if (row.data().TIPO_PERSONA == "2") {
+                domicilioNacional.style.display = "none";
+                domicilioExtranjero.style.display = "block";
+                                document.querySelector('label[for="RFC_LABEL"]').textContent = "Tax ID";
 
-                document.getElementById("NOMBRE_MUNICIPIO_EMPRESA").value = response.municipio || "No disponible";
-                document.getElementById("NOMBRE_ENTIDAD_EMPRESA").value = response.estado || "No disponible";
-            } else {
-                alert("Código postal no encontrado");
             }
-        })
-        .catch(error => {
-            console.error("Error al obtener datos:", error);
-            alert("Hubo un error al consultar la API.");
-        });
-    }
-
-        
         
 
         editarDatoTabla(row.data(), 'formularioDIRECTORIO', 'miModal_POTENCIALES',1);
