@@ -85,7 +85,7 @@
         <a  href="{{ url('/login') }}" target="_blank">
             <div class="card">
                 <div class="title">Iniciar sesión como proveedor</div>
-                {{-- <div class="description">Consulta las vacantes abiertas y postúlate.</div> --}}
+                 <div class="description">Iniciar sesión.</div> 
             </div>
         </a>
     </div>
