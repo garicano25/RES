@@ -101,9 +101,9 @@
         <!-- Segunda tarjeta sin logo pero del mismo tamaño -->
         <a href="{{ url('/login') }}" target="_blank">
             <div class="card">
-                <div class="logo">
+                < div class="logo">
                     <img src="/assets/images/RIP_Logo_Color (2).png" alt="Logo de la empresa">
-                </div>
+                </>
                 <div class="title">Iniciar sesión como proveedor</div>
                 <div class="description">Iniciar sesión.</div>
             </div>
