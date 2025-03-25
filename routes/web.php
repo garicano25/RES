@@ -475,9 +475,10 @@ Route::get('/mostrarFotoCV/{id}', [CvController::class, 'mostrarFotoCV']);
 /////////////////////////////////////// STEP 6 REQUISICION DE PERSONAL 
 
 Route::get('/Tablarequisicioncontratacion', [contratacionController::class, 'Tablarequisicioncontratacion']);
-
-
 Route::get('/obtenerDatosCategoria', [contratacionController::class, 'obtenerDatosCategoria']);
+Route::get('/mostrarrequisicon/{id}', [contratacionController::class, 'mostrarrequisicon']);
+
+
 
 //============================================== RECURSOS DE LOS EMPLEADOS ============================================== 
 

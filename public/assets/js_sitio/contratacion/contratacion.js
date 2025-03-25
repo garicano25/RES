@@ -5099,6 +5099,7 @@ function cargarTablarequisicion() {
         },
 
         { data: 'BTN_EDITAR' },
+        
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
@@ -5108,6 +5109,7 @@ function cargarTablarequisicion() {
         { targets: 4, title: 'Motivo', className: 'all text-center' },
         { targets: 5, title: 'Fecha de creación', className: 'all text-center' },
         { targets: 6, title: 'Editar', className: 'all text-center' },
+
     ]
     });
 }
@@ -5165,7 +5167,8 @@ $('#SELECCIONAR_CATEGORIA_RP').on('change', function () {
                     $('#FECHA_CREACION').val(data.FECHA_CREACION);
                     $('#ANTES_DE1').val(data.ANTES_DE1);
 
-                    
+                    $('#DOCUMENTO_REQUISICION').val(data.DOCUMENTO_REQUISICION);
+
                 } else {
                     $('#MOSTRAR_ANTES').hide();
                     $('#MOSTRAR_TODO').show();
@@ -5225,4 +5228,22 @@ $('#SELECCIONAR_CATEGORIA_RP').on('change', function () {
             alert('Error al consultar la información.');
         }
     });
+});
+
+
+
+$('#Tablarequisicioncontratacion').on('click', '.ver-archivo-requerimientocontratacion', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablarequisicioncontratacion.row(tr);
+    var id = $(this).data('id');
+
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+
+    var nombreDocumentoSoporte = row.data().NOMBRE_CATEGORIA;
+    var url = '/mostrarrequisicon/' + id;
+    
+    abrirModal(url, nombreDocumentoSoporte);
 });

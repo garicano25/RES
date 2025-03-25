@@ -906,8 +906,10 @@ public function obtenerdocumentosoportescontratos(Request $request)
             foreach ($tabla as $value) {
                 if ($value->ACTIVO == 0) {
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-requerimientocontratacion" data-id="' . $value->ID_CONTRATACION_REQUERIMIENTO . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
                 } else {
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-requerimientocontratacion" data-id="' . $value->ID_CONTRATACION_REQUERIMIENTO . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
                 }
             }
 
@@ -942,6 +944,14 @@ public function obtenerdocumentosoportescontratos(Request $request)
             'success' => true,
             'data' => $registro
         ]);
+    }
+
+
+
+    public function mostrarrequisicon($id)
+    {
+        $archivo = requisicioncontratacion::findOrFail($id)->DOCUMENTO_REQUISICION;
+        return Storage::response($archivo);
     }
 
 
