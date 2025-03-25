@@ -9,10 +9,14 @@
     <link href="assets/css/mobile.css" rel="stylesheet" media="all and (max-width: 600px)">
     <link href="assets/css/desktop.css" rel="stylesheet" media="all and (min-width: 600px)">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
 
         .lineasDeNegocio__iconsm,
         .content__noticias img,
@@ -86,6 +90,60 @@
             transform: scale(1.1);
             filter: brightness(1.2);
         }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltipText {
+            position: absolute;
+            top: 50%;
+            left: 110%;
+            transform: translateY(-50%);
+            background-color: #333;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 6px;
+            white-space: nowrap;
+            font-size: 13px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+
+        .tooltip:hover .tooltipText {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .tooltipText::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 100%;
+            transform: translateY(-50%);
+            border-width: 6px;
+            border-style: solid;
+            border-color: transparent #333 transparent transparent;
+        }
+
+        .learning {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            padding: 20px;
+            color: #000;
+        }
+
+        .learning__title,
+        .learning__link {
+            color: #000 !important;
+        }
     </style>
 
 
@@ -95,30 +153,56 @@
 
 <body>
     <section>
+
+
+
+
+
         <div class="erp">
             <div class="lineasDeNegocio">
                 <div class="lineasDeNegocio__image">
                     <img src="{{ route('usuariofoto', auth()->user()->ID_USUARIO) }}" alt="">
                 </div>
 
-                <img class="lineasDeNegocio__iconsm" src="assets/Modulos/img/1-negocio.png" title="SOLUCIONES EN CALIDAD" alt="">
-                <img class="lineasDeNegocio__iconsm" src="assets/Modulos/img/2-negocio.png" title="SOLUCIONES LIDERAZGO Y HAB. HUMANAS" alt="">
-                <img class="lineasDeNegocio__iconsm" src="assets/Modulos/img/3-negocio.png" title="SOLUCIONES TÉCNICAS" alt="">
-                <img class="lineasDeNegocio__iconsm" src="assets/Modulos/img/4-negocio.png" title="SOLUCIONES MEDIO AMBIENTE" alt="">
-                <img class="lineasDeNegocio__iconsm" src="assets/Modulos/img/5-negocio.png" title="SOLUCIONES EN SST" alt="">
+                <div class="tooltip">
+                    <img class="lineasDeNegocio__iconsm" src="assets/Modulos/img/1-negocio.png" alt="">
+                    <span class="tooltipText">SOLUCIONES EN CALIDAD</span>
+                </div>
+
+                <div class="tooltip">
+                    <img class="lineasDeNegocio__iconsm" src="assets/Modulos/img/2-negocio.png" alt="">
+                    <span class="tooltipText">SOLUCIONES LIDERAZGO Y HAB. HUMANAS</span>
+                </div>
+
+                <div class="tooltip">
+                    <img class="lineasDeNegocio__iconsm" src="assets/Modulos/img/3-negocio.png" alt="">
+                    <span class="tooltipText">SOLUCIONES TÉCNICAS</span>
+                </div>
+
+                <div class="tooltip">
+                    <img class="lineasDeNegocio__iconsm" src="assets/Modulos/img/4-negocio.png" alt="">
+                    <span class="tooltipText">SOLUCIONES MEDIO AMBIENTE</span>
+                </div>
+
+                <div class="tooltip">
+                    <img class="lineasDeNegocio__iconsm" src="assets/Modulos/img/5-negocio.png" alt="">
+                    <span class="tooltipText">SOLUCIONES EN SST</span>
+                </div>
 
                 <div class="lineasDeNegocio__servicios"></div>
-                <div class="lineasDeNegocio__button">
+
+                <div class="tooltip lineasDeNegocio__button">
                     <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                         @csrf
                         <button type="submit" class="lineasDeNegocio__iconButton">
-                            <img src="assets/Modulos/img/salir.png" alt="" title="Cerrar sesión">
+                            <img src="assets/Modulos/img/salir.png" alt="">
                         </button>
                     </form>
+                    <span class="tooltipText">Cerrar sesión</span>
                 </div>
-
-
             </div>
+
+
             <div class="panel">
 
                 <div class="nav">
@@ -127,19 +211,30 @@
                     </div>
 
                     <div class="nav__buttons">
-                        <a href="https://results-in-performance.com" target="_blank" class="nav__link">
-                            <div>
-                                <button class="nav__button">Sitio web <img src="assets/Modulos/img/flecha.png" alt=""></button>
-                            </div>
-                        </a>
-                        <div>
+                        <div class="tooltip">
+                            <a href="https://results-in-performance.com" target="_blank" class="nav__emailLink">
+                                <button class="nav__circularButton">
+                                    <img src="assets/Modulos/img/sitoweb.png" alt="">
+                                </button>
+                            </a>
+                            <span class="tooltipText">Sitio web</span>
+                        </div>
+
+                        <div class="tooltip">
                             <a href="https://mail.google.com/mail/u/0/#inbox?compose=new" target="_blank" class="nav__emailLink">
                                 <button class="nav__circularButton">
                                     <img src="assets/Modulos/img/email.png" alt="">
                                 </button>
                             </a>
+                            <span class="tooltipText">Correo electrónico</span>
                         </div>
-                        <div><button class="nav__circularButton"><img src="assets/Modulos/img/notificacion.png" alt=""></button></div>
+
+                        <div class="tooltip">
+                            <button class="nav__circularButton">
+                                <img src="assets/Modulos/img/notificacion.png" alt="">
+                            </button>
+                            <span class="tooltipText">Notificaciones</span>
+                        </div>
                     </div>
                 </div>
 
@@ -379,17 +474,16 @@
                             </div>
 
                             <div class="learning">
-
                                 <div class="learning__text">
                                     <h2 class="learning__title">E-learning</h2>
                                     <h2 class="learning__link">Saber más</h2>
                                 </div>
-
                                 <div class="learning__image">
                                     <img src="assets/Modulos/img/laptop.png" alt="">
                                 </div>
-
                             </div>
+
+
                         </div>
                     </div>
 
@@ -401,13 +495,14 @@
             <img class="content__logo" src="assets/Modulos/img/logo.png" alt="">
 
         </div>
-        </div>
-        </div>
+
+
+
 
     </section>
 
 
-    
+
 
     <script>
         document.querySelectorAll('.lineasDeNegocio__iconsm').forEach(img => {
