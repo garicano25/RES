@@ -13,6 +13,7 @@ class requisicioncontratacion extends Model
     protected $primaryKey = 'ID_CONTRATACION_REQUERIMIENTO';
     protected $table = 'contratacion_requisicion';
     protected $fillable = [
+        'SELECCIONAR_CATEGORIA_RP',
         'CURP',
         'FECHA_RP',
         'PRIORIDAD_RP',
