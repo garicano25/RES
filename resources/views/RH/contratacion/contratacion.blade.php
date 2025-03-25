@@ -757,13 +757,13 @@
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-person-fill"></i> &nbsp; Requisición de personal
                             </h3>
-                            <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_REQUERIMIENTO" style="margin-left: auto;">
+                            <button type="button" class="btn btn-light waves-effect waves-light " id="NUEVO_REQUISICION" style="margin-left: auto;">
                                 Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
                             </button>
                         </ol>
                         <div class="card-body position-relative">
                             <i id="loadingIcon13" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
-                            <table id="Tablarequisicioncontrato" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                            <table id="Tablarequisicioncontratacion" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
                             </table>
                         </div>
                     </div>
@@ -1199,7 +1199,7 @@
                         <div class="col-6">
                             <label>Fecha Fin *</label>
                             <div class="input-group">
-                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_DOCUMENTOSOPORTECONTRATO" name="FECHAF_DOCUMENTOSOPORTECONTRATO" >
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_DOCUMENTOSOPORTECONTRATO" name="FECHAF_DOCUMENTOSOPORTECONTRATO">
                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
 
                             </div>
@@ -1741,7 +1741,49 @@
                     {!! csrf_field() !!}
                     <div class="row">
 
+                        <div class="row mb-3">
+
+                            <input type="hidden" class="form-control" id="ANTES_DE1" name="ANTES_DE1" value="0">
+                        </div>
+
+
+                        <div class="row mb-3">
+
+                            <div class="col-12">
+                                <label>Seleccionar Categoría</label>
+                                <select class="form-control" id="SELECCIONAR_CATEGORIA_RP" name="SELECCIONAR_CATEGORIA_RP" required>
+                                    <option selected disabled>Seleccione una opción</option>
+
+                                    <optgroup label="Requisición se realizó antes del 2024-11-01">
+                                        @foreach ($requisicioncategoria as $cat)
+                                        @if ($cat->ANTES_DE1 == 1)
+                                        <option value="{{ $cat->ID_FORMULARO_REQUERIMIENTO }}">
+                                            {{ $cat->NOMBRE_CATEGORIA }} - {{ \Carbon\Carbon::parse($cat->FECHA_MOSTRAR)->format('Y-m-d') }}
+                                        </option>
+
+                                        @endif
+                                        @endforeach
+                                    </optgroup>
+
+                                    <optgroup label="Requisición después del 2024-11-01">
+                                        @foreach ($requisicioncategoria as $cat)
+                                        @if ($cat->ANTES_DE1 == 0)
+                                        <option value="{{ $cat->ID_FORMULARO_REQUERIMIENTO }}">
+                                            {{ $cat->NOMBRE_CATEGORIA }} - {{ \Carbon\Carbon::parse($cat->FECHA_MOSTRAR)->format('Y-m-d') }}
+                                        </option>
+
+                                        @endif
+                                        @endforeach
+                                    </optgroup>
+                                </select>
+
+
+
+                            </div>
+                        </div>
                         <div id="MOSTRAR_TODO" style="display: block">
+
+
                             <div class="row mb-3 mt-4">
                                 <div class="col-4">
                                     <label>Fecha *</label>
@@ -1789,8 +1831,8 @@
                                         <label>Área: </label>
                                         <select class="form-control" id="AREA_RP" name="AREA_RP" required>
                                             <option selected disabled>Seleccione una opción</option>
-                                            @foreach ($area1 as $areasnu)
-                                            <option value="{{ $areasnu->ID_AREA }}">{{ $areasnu->NOMBRE }}</option>
+                                            @foreach ($areas2 as $area)
+                                            <option value="{{ $area->ID_AREA }}">{{ $area->NOMBRE }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -1815,9 +1857,7 @@
                             </div>
 
                             <div class="row mb-3">
-                                <div class="col-1">
-                                    <label></label>
-                                </div>
+
                                 <div class="col-2 text-center">
                                     <div class="form-group">
                                         <label>No. de vacantes</label>
@@ -1841,7 +1881,7 @@
                                 <div class="col-1">
                                     <label></label>
                                 </div>
-                                <div class="col-2 text-center">
+                                <div class="col-4 text-center">
                                     <label>Fecha de inicio *</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INICIO_RP" name="FECHA_INICIO_RP" required>
@@ -2005,11 +2045,50 @@
                             </div>
                         </div>
 
+
+                        <div id="MOSTRAR_ANTES" style="display: none">
+                            <div class="row mb-3 mt-4">
+
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <label class="form-label text-center">Categoría</label>
+                                        <select class="form-control" id="PUESTO_RP_ANTES" name="PUESTO_RP">
+                                            <option value="0" selected disabled>Seleccione una opción</option>
+                                            @foreach ($areas1 as $area2)
+                                            <option value="{{ $area2->ID }}">{{ $area2->NOMBRE }}</option>
+                                            @endforeach
+                                        </select>
+
+
+
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <label class="form-label text-center">Documento*</label>
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" id="DOCUMENTO_REQUISICION" name="DOCUMENTO_REQUISICION" accept=".pdf">
+                                        <button type="button" class="btn btn-light btn-sm ms-2" id="quitarformato" style="display:none;">Quitar archivo</button>
+                                    </div>
+                                    <small id="errorArchivo" class="text-danger" style="display:none;">El archivo debe ser un PDF.</small>
+                                </div>
+
+                                <div class="col-4 text-center">
+                                    <label class="form-label text-center">Fecha de creación *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="aaaa-mm-dd" id="FECHA_CREACION" name="FECHA_CREACION" required>
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
                 <div class="modal-footer mx-5">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-success" id="guardarFormRP"><i class="bi bi-floppy-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Guardar Requisición de personal"></i> Guardar</button>
+                    <button type="submit" class="btn btn-success" id="guardarFormRP"><i class="bi bi-floppy-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Guardar Requisición"></i> Guardar</button>
                 </div>
             </form>
         </div>

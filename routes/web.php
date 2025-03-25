@@ -471,9 +471,17 @@ Route::post('/cvSave', [CvController::class, 'store']);
 Route::get('/Tablacvs', [CvController::class, 'Tablacvs']);
 Route::get('/mostrarFotoCV/{id}', [CvController::class, 'mostrarFotoCV']);
 
+
+/////////////////////////////////////// STEP 6 REQUISICION DE PERSONAL 
+
+Route::get('/Tablarequisicioncontratacion', [contratacionController::class, 'Tablarequisicioncontratacion']);
+
+
+Route::get('/obtenerDatosCategoria', [contratacionController::class, 'obtenerDatosCategoria']);
+
 //============================================== RECURSOS DE LOS EMPLEADOS ============================================== 
 
- Route::get('/Rec.Empleado', function () {return view('RH.RecEmpleados.RecEmpleados');});
+Route::get('/Rec.Empleado', function () {return view('RH.RecEmpleados.RecEmpleados');});
 
  //============================================== DESVINCULACIÓN ============================================== 
 

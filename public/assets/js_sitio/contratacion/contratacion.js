@@ -16,6 +16,8 @@ ID_ACCIONES_DISCIPLINARIAS = 0;
 ID_RECIBOS_NOMINA = 0;
 ID_SOPORTE_CONTRATO = 0;
 ID_RENOVACION_CONTATO = 0;
+ID_CONTRATACION_REQUERIMIENTO = 0;
+
 
 // TABLAS
 Tablacontratacion = null
@@ -38,6 +40,10 @@ var tablacontratosCargada = false;
 
 
 
+
+
+var Tablarequisicioncontratacion;
+var tablarequisiconCargada = false; 
 
 
 
@@ -715,6 +721,7 @@ $('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
     tablacontratosCargada = false;
     tablasoportecontratoCargada = false;
     tablaCVCargada = false;
+    tablarequisiconCargada = false;
 
 
     $('#datosgenerales-tab').tab('show');
@@ -1068,6 +1075,7 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     tablacontratosCargada = false;
     tablasoportecontratoCargada = false;
     tablaCVCargada = false;
+    tablarequisiconCargada = false;
 
 
     $('#datosgenerales-tab').tab('show');
@@ -4871,6 +4879,7 @@ $('#Tablacvs').on('click', 'td>button.EDITAR', function () {
 // <!--                                                          STEP 6                                                              -->
 // <!-- ============================================================================================================================ -->
 
+
 document.getElementById('step6').addEventListener('click', function() {
     document.querySelectorAll('[id$="-content"]').forEach(function(content) {
         content.style.display = 'none';
@@ -4878,11 +4887,342 @@ document.getElementById('step6').addEventListener('click', function() {
 
     document.getElementById('step6-content').style.display = 'block';
 
+    if (tablarequisiconCargada) {
+        Tablarequisicioncontratacion.columns.adjust().draw();
+    } else {
+        cargarTablarequisicion();
+        tablarequisiconCargada = true;
+    }
+  
+});
+
+
+
+
+$("#NUEVO_REQUISICION").click(function (e) {
+    e.preventDefault();
+
+    $("#miModal_REQUERIMIENTO").modal("show");
+
+    $("#MOSTRAR_TODO").show();
+    $("#MOSTRAR_ANTES").hide();
+
+   
+});
+
+
+const ModalArea = document.getElementById('miModal_REQUERIMIENTO');
+
+ModalArea.addEventListener('hidden.bs.modal', event => {
+    ID_CONTRATACION_REQUERIMIENTO = 0;
+
+    document.getElementById('formularioRP').reset();
+
+    document.getElementById('MOSTRAR_TODO').style.display = "block";
+    document.getElementById('MOSTRAR_ANTES').style.display = "none";
+
+  
+});
+
+
+
+
     
-//  if (tablaCVCargada) {
-//         Tablacvs.columns.adjust().draw();
-//     } else {
-//         cargarTablaCV();
-//         tablaCVCargada = true;
-//     }
+    
+    
+$("#guardarFormRP").click(function (e) {
+    e.preventDefault();
+
+
+    formularioValido = validarFormularioV2('formularioRP');
+
+
+    if (formularioValido) {
+
+    if (ID_CONTRATACION_REQUERIMIENTO == 0) {
+        
+        alertMensajeConfirm({
+            title: "¿Desea guardar la información?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarFormRP')
+            await ajaxAwaitFormData({ api: 11,CURP: curpSeleccionada, ID_CONTRATACION_REQUERIMIENTO: ID_CONTRATACION_REQUERIMIENTO }, 'contratoSave', 'formularioRP', 'guardarFormRP', { callbackAfter: true, callbackBefore: true }, () => {
+        
+               
+
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
+                    
+
+                ID_CONTRATACION_REQUERIMIENTO = data.requerimiento.ID_CONTRATACION_REQUERIMIENTO
+                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                     $('#miModal_REQUERIMIENTO').modal('hide')
+                document.getElementById('formularioRP').reset();
+                
+
+
+                if ($.fn.DataTable.isDataTable('#Tablarequisicioncontratacion')) {
+                    Tablarequisicioncontratacion.ajax.reload(null, false); 
+                }
+
+        
+                
+            })
+            
+            
+            
+        }, 1)
+        
+    } else {
+            alertMensajeConfirm({
+            title: "¿Desea editar la información de este formulario?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarFormRP')
+            await ajaxAwaitFormData({ api: 11, CURP: curpSeleccionada, ID_CONTRATACION_REQUERIMIENTO: ID_CONTRATACION_REQUERIMIENTO }, 'contratoSave', 'formularioRP', 'guardarFormRP', { callbackAfter: true, callbackBefore: true }, () => {
+        
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
+                    
+                setTimeout(() => {
+
+                    
+                    ID_CONTRATACION_REQUERIMIENTO = data.requerimiento.ID_CONTRATACION_REQUERIMIENTO
+                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                     $('#miModal_REQUERIMIENTO').modal('hide')
+                    document.getElementById('formularioRP').reset();
+
+                    
+                if ($.fn.DataTable.isDataTable('#Tablarequisicioncontratacion')) {
+                    Tablarequisicioncontratacion.ajax.reload(null, false); 
+                }
+
+                }, 300);  
+            })
+        }, 1)
+    }
+
+} else {
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
+    
+});
+    
+
+
+
+
+function cargarTablarequisicion() {
+    if ($.fn.DataTable.isDataTable('#Tablarequisicioncontratacion')) {
+        Tablarequisicioncontratacion.clear().destroy();
+    }
+
+    Tablarequisicioncontratacion = $("#Tablarequisicioncontratacion").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        ajax: {
+            dataType: 'json',
+            data: { curp: curpSeleccionada }, 
+            method: 'GET',
+            cache: false,
+            url: '/Tablarequisicioncontratacion',  
+            beforeSend: function () {
+                $('#loadingIcon13').css('display', 'inline-block');
+            },
+            complete: function () {
+                $('#loadingIcon13').css('display', 'none');
+                Tablarequisicioncontratacion.columns.adjust().draw(); 
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#loadingIcon13').css('display', 'none');
+                alertErrorAJAX(jqXHR, textStatus, errorThrown);
+            },
+            dataSrc: 'data'
+        },
+        columns: [
+        { 
+            data: null,
+            render: function(data, type, row, meta) {
+                return meta.row + 1; 
+            }
+        },
+        { data: 'NOMBRE_CATEGORIA' },
+        { data: 'PRIORIDAD_RP',
+            className: 'text-center',
+            render: function(data) { return data ? data : 'N/A';}
+         },
+        { data: 'TIPO_VACANTE_RP',
+            className: 'text-center',
+            render: function(data) { return data ? data : 'N/A'; }
+         },
+        { data: 'MOTIVO_VACANTE_RP',
+            className: 'text-center',
+            render: function(data) { return data ? data : 'N/A'; }
+        },
+        { data: 'FECHA_CREACION' ,
+            className: 'text-center',
+            render: function(data) { return data ? data : 'N/A'; }
+        },
+
+        { data: 'BTN_EDITAR' },
+    ],
+    columnDefs: [
+        { targets: 0, title: '#', className: 'all  text-center' },
+        { targets: 1, title: 'Categoría', className: 'all text-center nombre-column' },
+        { targets: 2, title: 'Prioridad', className: 'all text-center nombre-column' },
+        { targets: 3, title: 'Tipo de vacante', className: 'all text-center' },
+        { targets: 4, title: 'Motivo', className: 'all text-center' },
+        { targets: 5, title: 'Fecha de creación', className: 'all text-center' },
+        { targets: 6, title: 'Editar', className: 'all text-center' },
+    ]
+    });
+}
+
+
+
+$('#Tablarequisicioncontratacion').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablarequisicioncontratacion.row(tr);
+
+    ID_CONTRATACION_REQUERIMIENTO = row.data().ID_CONTRATACION_REQUERIMIENTO;
+
+    editarDatoTabla(row.data(), 'formularioRP', 'miModal_REQUERIMIENTO', 1);
+
+
+     if (row.data().ANTES_DE1 == 1) {
+        $('#MOSTRAR_ANTES').show();
+        $('#MOSTRAR_TODO').hide();
+
+        $('#MOSTRAR_TODO').find('[required]').removeAttr('required');
+    } else {
+        $('#MOSTRAR_TODO').show();
+        $('#MOSTRAR_ANTES').hide();
+
+        $('#MOSTRAR_ANTES').find('[required]').removeAttr('required');
+
+    }
+
+
+
+    $("#miModal_REQUERIMIENTO").modal("show");
+ 
+});
+
+
+
+
+$('#SELECCIONAR_CATEGORIA_RP').on('change', function () {
+    const categoria = $(this).val();
+
+    $.ajax({
+        url: '/obtenerDatosCategoria',
+        method: 'GET',
+        data: { categoria },
+        success: function (response) {
+            if (response.success) {
+                const data = response.data;
+
+                // Mostrar u ocultar DIVs
+                if (data.ANTES_DE1 == 1) {
+                    $('#MOSTRAR_ANTES').show();
+                    $('#MOSTRAR_TODO').hide();
+
+                    $('#PUESTO_RP_ANTES').val(data.PUESTO_RP);
+                    $('#FECHA_CREACION').val(data.FECHA_CREACION);
+                    $('#ANTES_DE1').val(data.ANTES_DE1);
+
+                    
+                } else {
+                    $('#MOSTRAR_ANTES').hide();
+                    $('#MOSTRAR_TODO').show();
+
+                    // Llenar todos los campos
+                    $('#FECHA_RP').val(data.FECHA_RP);
+                    $('#PRIORIDAD_RP').val(data.PRIORIDAD_RP);
+                    $('#TIPO_VACANTE_RP').val(data.TIPO_VACANTE_RP);
+                    $('#MOTIVO_VACANTE_RP').val(data.MOTIVO_VACANTE_RP);
+                    $('#SUSTITUYE_RP').val(data.SUSTITUYE_RP);
+                    $('#SUSTITUYE_CATEGORIA_RP').val(data.SUSTITUYE_CATEGORIA_RP);
+                    $('#CENTRO_COSTO_RP').val(data.CENTRO_COSTO_RP);
+                    $('#AREA_RP').val(data.AREA_RP);
+                    $('#NO_VACANTES_RP').val(data.NO_VACANTES_RP);
+                    $('#PUESTO_RP').val(data.PUESTO_RP);
+                    $('#FECHA_INICIO_RP').val(data.FECHA_INICIO_RP);
+                    $('#OBSERVACION1_RP').val(data.OBSERVACION1_RP);
+                    $('#OBSERVACION2_RP').val(data.OBSERVACION2_RP);
+                    $('#OBSERVACION3_RP').val(data.OBSERVACION3_RP);
+                    $('#OBSERVACION4_RP').val(data.OBSERVACION4_RP);
+                    $('#OBSERVACION5_RP').val(data.OBSERVACION5_RP);
+
+
+                    // $('#CORREO_CORPORATIVO_RP').val(data.CORREO_CORPORATIVO_RP);
+                    // $('#TELEFONO_CORPORATIVO_RP').val(data.TELEFONO_CORPORATIVO_RP);
+                    // $('#SOFTWARE_RP').val(data.SOFTWARE_RP);
+                    // $('#VEHICULO_EMPRESA_RP').val(data.VEHICULO_EMPRESA_RP);
+
+
+                    // CORREO
+                    $('input[name="CORREO_CORPORATIVO_RP"][value="' + data.CORREO_CORPORATIVO_RP + '"]').prop('checked', true);
+
+                    // TELEFONO
+                    $('input[name="TELEFONO_CORPORATIVO_RP"][value="' + data.TELEFONO_CORPORATIVO_RP + '"]').prop('checked', true);
+
+                    // SOFTWARE
+                    $('input[name="SOFTWARE_RP"][value="' + data.SOFTWARE_RP + '"]').prop('checked', true);
+
+                    // VEHÍCULO
+                    $('input[name="VEHICULO_EMPRESA_RP"][value="' + data.VEHICULO_EMPRESA_RP + '"]').prop('checked', true);
+
+
+                    $('#SOLICITA_RP').val(data.SOLICITA_RP);
+                    $('#AUTORIZA_RP').val(data.AUTORIZA_RP);
+                    $('#NOMBRE_SOLICITA_RP').val(data.NOMBRE_SOLICITA_RP);
+                    $('#NOMBRE_AUTORIZA_RP').val(data.NOMBRE_AUTORIZA_RP);
+                    $('#CARGO_SOLICITA_RP').val(data.CARGO_SOLICITA_RP);
+                    $('#CARGO_AUTORIZA_RP').val(data.CARGO_AUTORIZA_RP);
+                    $('#FECHA_CREACION').val(data.FECHA_CREACION);
+                    $('#DOCUMENTO_REQUISICION').val(data.DOCUMENTO_REQUISICION);
+                }
+            } else {
+                alert(response.message);
+            }
+        },
+        error: function () {
+            alert('Error al consultar la información.');
+        }
+    });
 });

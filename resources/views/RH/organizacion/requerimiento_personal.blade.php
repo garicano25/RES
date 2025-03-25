@@ -119,9 +119,7 @@
               </div>
 
               <div class="row mb-3">
-                <div class="col-1">
-                  <label></label>
-                </div>
+                
                 <div class="col-2 text-center">
                   <div class="form-group">
                     <label>No. de vacantes</label>
@@ -145,7 +143,7 @@
                 <div class="col-1">
                   <label></label>
                 </div>
-                <div class="col-2 text-center">
+                <div class="col-4 text-center">
                   <label>Fecha de inicio *</label>
                   <div class="input-group">
                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INICIO_RP" name="FECHA_INICIO_RP" required>

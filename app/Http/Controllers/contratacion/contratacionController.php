@@ -20,6 +20,7 @@ use App\Models\contratacion\incidenciasModel;
 use App\Models\contratacion\accionesdisciplinariasModel;
 use App\Models\contratacion\documentosoportecontratoModel;
 use App\Models\contratacion\renovacioncontratoModel;
+use App\Models\contratacion\requisicioncontratacion;
 
 
 use App\Models\organizacion\catalogotipovacanteModel;
@@ -45,11 +46,31 @@ class contratacionController extends Controller
         ");
 
 
+        $areas2 = areasModel::orderBy('NOMBRE', 'ASC')->get();
+
+
+        $requisicioncategoria = DB::select("
+            SELECT 
+                rec.*, 
+                cat.NOMBRE_CATEGORIA,
+                CASE 
+                    WHEN rec.ANTES_DE1 = 1 THEN rec.FECHA_CREACION
+                    ELSE rec.FECHA_RP
+                END AS FECHA_MOSTRAR
+            FROM formulario_requerimientos rec
+            LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = rec.PUESTO_RP
+        ");
+
+
         $tipos = catalogotipovacanteModel::orderBy('NOMBRE_TIPOVACANTE', 'ASC')->get();
         $motivos = catalogomotivovacanteModel::orderBy('NOMBRE_MOTIVO_VACANTE', 'ASC')->get();
 
 
-        $area1 = areasModel::orderBy('NOMBRE', 'ASC')->get();
+        $areas1 = DB::select("
+        SELECT ID_CATALOGO_CATEGORIA  AS ID, NOMBRE_CATEGORIA AS NOMBRE, LUGAR_CATEGORIA AS LUGAR, PROPOSITO_CATEGORIA AS PROPOSITO, ES_LIDER_CATEGORIA AS LIDER
+        FROM catalogo_categorias
+        WHERE ACTIVO = 1
+        ");
 
         $todascategoria = DB::select("SELECT ID_CATALOGO_CATEGORIA  AS ID_CATALOGO_CATEGORIA, NOMBRE_CATEGORIA AS NOMBRE
                 FROM catalogo_categorias
@@ -65,7 +86,7 @@ class contratacionController extends Controller
             ");
 
 
-        return view('RH.contratacion.contratacion', compact('areas','tipos','motivos','area1','todascategoria','categoria'));
+        return view('RH.contratacion.contratacion', compact('areas','tipos','motivos', 'areas1','todascategoria','categoria', 'areas2', 'requisicioncategoria'));
     }
 
 
@@ -862,12 +883,71 @@ public function obtenerdocumentosoportescontratos(Request $request)
     return response()->json($documentos);
 }
 
-/////////////////////////////////////////// STEP 5  CREACION DE CV´S  //////////////////////////////////
+    /////////////////////////////////////////// STEP 5  CREACION DE CV´S  //////////////////////////////////
+
+
+    /////////////////////////////////////////// STEP 6  REQUSICION DE PERSONAL   //////////////////////////////////
+
+
+    public function Tablarequisicioncontratacion(Request $request)
+    {
+        try {
+            $curp = $request->get('curp');
+
+            $tabla = DB::select("
+            SELECT rec.*, cat.NOMBRE_CATEGORIA
+            FROM contratacion_requisicion rec
+            LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = rec.PUESTO_RP
+            WHERE rec.CURP = ?
+        ", [$curp]);
+
+            $tabla = collect($tabla);
+
+            foreach ($tabla as $value) {
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+                } else {
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                }
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
+
+
+    public function obtenerDatosCategoria(Request $request)
+    {
+        $id = $request->get('categoria'); 
+
+        $registro = DB::table('formulario_requerimientos as rec')
+            ->leftJoin('catalogo_categorias as cat', 'cat.ID_CATALOGO_CATEGORIA', '=', 'rec.PUESTO_RP')
+            ->where('rec.ID_FORMULARO_REQUERIMIENTO', $id)
+            ->select('rec.*', 'cat.NOMBRE_CATEGORIA')
+            ->first();
+
+        if (!$registro) {
+            return response()->json(['success' => false, 'message' => 'No se encontraron datos.']);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $registro
+        ]);
+    }
 
 
 
-/////////////////////////////////////////// STORE //////////////////////////////////
-public function store(Request $request)
+    /////////////////////////////////////////// STORE //////////////////////////////////
+    public function store(Request $request)
 {
     try {
         switch (intval($request->api)) {
@@ -1549,7 +1629,68 @@ public function store(Request $request)
                             break;
 
 
+                            // REQUSICION CONTRATACION
 
+
+                            case 11:
+                                if ($request->ID_CONTRATACION_REQUERIMIENTO == 0) {
+                                    DB::statement('ALTER TABLE contratacion_requisicion AUTO_INCREMENT=1;');
+
+                                    $requerimientos = requisicioncontratacion::create($request->all());
+
+                                    if ($request->hasFile('DOCUMENTO_REQUISICION')) {
+                                        $file = $request->file('DOCUMENTO_REQUISICION');
+
+                                        $folderPath = "Requisición de personal/{$requerimientos->ID_CONTRATACION_REQUERIMIENTO}";
+                                        $fileName = $file->getClientOriginalName();
+
+                                        $filePath = $file->storeAs($folderPath, $fileName);
+
+                                        $requerimientos->DOCUMENTO_REQUISICION = $filePath;
+                                        $requerimientos->save();
+                                    }
+                                } else {
+                                    if (isset($request->ELIMINAR)) {
+                                        if ($request->ELIMINAR == 1) {
+                                            $requerimientos = requisicioncontratacion::where('ID_CONTRATACION_REQUERIMIENTO', $request['ID_CONTRATACION_REQUERIMIENTO'])->update(['ACTIVO' => 0]);
+                                            $response['code'] = 1;
+                                            $response['requerimiento'] = 'Desactivada';
+                                        } else {
+                                            $requerimientos = requisicioncontratacion::where('ID_CONTRATACION_REQUERIMIENTO', $request['ID_CONTRATACION_REQUERIMIENTO'])->update(['ACTIVO' => 1]);
+                                            $response['code'] = 1;
+                                            $response['requerimiento'] = 'Activada';
+                                        }
+                                    } else {
+                                        $requerimientos = requisicioncontratacion::find($request->ID_CONTRATACION_REQUERIMIENTO);
+
+                                        $requerimientos->update($request->all());
+
+                                        if ($request->hasFile('DOCUMENTO_REQUISICION')) {
+                                            $file = $request->file('DOCUMENTO_REQUISICION');
+
+                                            if ($requerimientos->DOCUMENTO_REQUISICION && Storage::exists($requerimientos->DOCUMENTO_REQUISICION)) {
+                                                Storage::delete($requerimientos->DOCUMENTO_REQUISICION);
+                                            }
+
+                                            $folderPath = "Requisición de personal/{$requerimientos->ID_CONTRATACION_REQUERIMIENTO}";
+                                            $fileName = $file->getClientOriginalName();
+
+                                            $filePath = $file->storeAs($folderPath, $fileName);
+
+                                            $requerimientos->DOCUMENTO_REQUISICION = $filePath;
+                                            $requerimientos->save();
+                                        }
+                                        $response['code'] = 1;
+                                        $response['requerimiento'] = 'Actualizada';
+                                    }
+                                    return response()->json($response);
+                                }
+
+                                $response['code']  = 1;
+                                $response['requerimiento']  = $requerimientos;
+                                return response()->json($response);
+
+                                break;
 
 
                           
