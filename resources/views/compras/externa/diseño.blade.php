@@ -103,7 +103,7 @@
             <div class="card">
                 <div class="logo">
                     <img src="/assets/images/RIP_Logo_Color (2).png" alt="Logo de la empresa">
-                <div/>
+                </div>
                 <div class="title">Iniciar sesión como proveedor</div>
                 <div class="description">Iniciar sesión.</div>
             </div>
