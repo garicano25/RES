@@ -175,60 +175,6 @@ $("#guardarALTA").click(function (e) {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    const botonAgregarContacto = document.getElementById('botoncuentas');
-    
-    botonAgregarContacto.removeEventListener('click', agregarReferencias); // Remover cualquier evento previo
-    botonAgregarContacto.addEventListener('click', agregarReferencias);
-
-    function agregarReferencias() {
-        const divContacto = document.createElement('div');
-        divContacto.classList.add('row', 'generareferencias', 'mb-3');
-        divContacto.innerHTML = `
-            <div class="col-4 mb-3">
-                <label>Nombre del Banco *</label>
-                <input type="text" class="form-control" name="NOMBRE_BANCO" required>
-            </div>
-            <div class="col-4 mb-3">
-                <label>No. De Cuenta *</label>
-                <input type="number" class="form-control" name="NUMERO_CUENTA" required>
-            </div>
-            <div class="col-4 mb-3">
-                <label>Tipo *</label>
-                <select class="form-control" name="TIPO_CUENTA" required>
-                    <option value="" selected disabled>Seleccione una opción</option>
-                    <option value="1">Ahorros</option>
-                    <option value="2">Empresarial</option>
-                    <option value="3">Cheques</option>
-                </select>
-            </div>
-            <div class="col-12 mb-3">
-                <label>CLABE interbancaria *</label>
-                <input type="number" class="form-control" name="CLABE_INTERBANCARIA" required>
-            </div>
-            <div class="col-6 mb-3">
-                <label>Ciudad *</label>
-                <input type="text" class="form-control" name="CIUDAD_CUENTA" required>
-            </div>
-            <div class="col-6 mb-3">
-                <label>País *</label>
-                <input type="text" class="form-control" name="PAIS_CUENTA" required>
-            </div>
-            <div class="col-12 mt-4 text-center">
-                <button type="button" class="btn btn-danger botonEliminarContacto">Eliminar cuenta<i class="bi bi-trash-fill"></i></button>
-            </div>
-        `;
-
-        const contenedor = document.querySelector('.cuentasdiv');
-        contenedor.appendChild(divContacto);
-
-        divContacto.querySelector('.botonEliminarContacto').addEventListener('click', function () {
-            contenedor.removeChild(divContacto);
-        });
-    }
-});
-
-
 
 
 
@@ -259,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 document.addEventListener("DOMContentLoaded", function() {
-    fetch('/obtener-datos-proveedor')
+    fetch('/obtenerDatosProveedor')
     .then(response => response.json())
     .then(data => {
         if (data.error) {
@@ -267,12 +213,15 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
+
+
+                document.getElementById("ID_FORMULARIO_ALTA").value = data.ID_FORMULARIO_ALTA;
+
         document.getElementById("TIPO_PERSONA_ALTA").value = data.TIPO_PERSONA_ALTA;
         document.getElementById("RAZON_SOCIAL_ALTA").value = data.RAZON_SOCIAL_ALTA;
         document.getElementById("RFC_ALTA").value = data.RFC_ALTA;
 
         if (data.TIPO_PERSONA_ALTA == "1") {
-            // Mostrar div de domicilio nacional
             document.querySelector('label[for="RFC_LABEL"]').textContent = "R.F.C";
 
             document.getElementById("DOMICILIO_NACIONAL").style.display = "block";
@@ -290,8 +239,24 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("PAIS_EMPRESA").value = data.PAIS_EMPRESA;
             document.getElementById("ENTRE_CALLE_EMPRESA").value = data.ENTRE_CALLE_EMPRESA;
             document.getElementById("ENTRE_CALLE2_EMPRESA").value = data.ENTRE_CALLE2_EMPRESA;
+
+            let codigoPostalInput = document.getElementById("CODIGO_POSTAL");
+            codigoPostalInput.value = data.CODIGO_POSTAL || '';
+
+            let coloniaGuardada = data.NOMBRE_COLONIA_EMPRESA || '';
+            codigoPostalInput.dispatchEvent(new Event('change'));
+
+            let coloniaSelect = document.getElementById('NOMBRE_COLONIA_EMPRESA');
+            let observer = new MutationObserver(() => {
+                if (coloniaSelect.options.length > 1) {
+                    coloniaSelect.value = coloniaGuardada;
+                    observer.disconnect();
+                }
+            });
+
+            observer.observe(coloniaSelect, { childList: true });
+
         } else if (data.TIPO_PERSONA_ALTA == "2") {
-            // Mostrar div de domicilio extranjero
             document.querySelector('label[for="RFC_LABEL"]').textContent = "Tax ID";
 
             document.getElementById("DOMICILIO_NACIONAL").style.display = "none";
@@ -304,6 +269,77 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("PAIS_EXTRANJERO").value = data.PAIS_EXTRANJERO;
             document.getElementById("DEPARTAMENTO_EXTRANJERO").value = data.DEPARTAMENTO_EXTRANJERO;
         }
+
+        document.getElementById("REPRESENTANTE_LEGAL_ALTA").value = data.REPRESENTANTE_LEGAL_ALTA || '';
+        document.getElementById("REGIMEN_ALTA").value = data.REGIMEN_ALTA || '';
+        document.getElementById("CORRE_TITULAR_ALTA").value = data.CORRE_TITULAR_ALTA || '';
+        document.getElementById("TELEFONO_OFICINA_ALTA").value = data.TELEFONO_OFICINA_ALTA || '';
+        document.getElementById("PAGINA_WEB_ALTA").value = data.PAGINA_WEB_ALTA || '';
+        document.getElementById("CUAL_ACTVIDAD_ECONOMICA").value = data.CUAL_ACTVIDAD_ECONOMICA || '';
+        document.getElementById("CUAL_DESCUENTOS_ECONOMICA").value = data.CUAL_DESCUENTOS_ECONOMICA || '';
+        document.getElementById("DIAS_CREDITO_ALTA").value = data.DIAS_CREDITO_ALTA || '';
+        document.getElementById("TERMINOS_IMPORTANCIAS_ALTA").value = data.TERMINOS_IMPORTANCIAS_ALTA || '';
+        document.getElementById("DESCRIPCION_VINCULO").value = data.DESCRIPCION_VINCULO || '';
+        document.getElementById("NUMERO_PROVEEDOR").value = data.NUMERO_PROVEEDOR || '';
+
+                document.getElementById("ACTVIDAD_COMERCIAL").value = data.ACTVIDAD_COMERCIAL || '';
+
+   
+
+
+           if (data.ACTIVIDAD_ECONOMICA) {
+            let actividad = document.querySelector(`input[name="ACTIVIDAD_ECONOMICA"][value="${data.ACTIVIDAD_ECONOMICA}"]`);
+            if (actividad) actividad.checked = true;
+        }
+
+        
+                    // DESCUENTOS_ACTIVIDAD_ECONOMICA
+            if (data.DESCUENTOS_ACTIVIDAD_ECONOMICA) {
+                let descuento = document.querySelector(`input[name="DESCUENTOS_ACTIVIDAD_ECONOMICA"][value="${data.DESCUENTOS_ACTIVIDAD_ECONOMICA}"]`);
+                if (descuento) {
+                    descuento.checked = true;
+
+                    // Mostrar el campo adicional si es "4"
+                    if (data.DESCUENTOS_ACTIVIDAD_ECONOMICA == "4") {
+                        document.getElementById("CUAL_DESCUENTOS").style.display = "block";
+                    }
+                }
+            }
+
+            // VINCULO_FAMILIAR
+            if (data.VINCULO_FAMILIAR) {
+                let vinculo = document.querySelector(`input[name="VINCULO_FAMILIAR"][value="${data.VINCULO_FAMILIAR}"]`);
+                if (vinculo) {
+                    vinculo.checked = true;
+
+                    // Mostrar el div si es "SI"
+                    if (data.VINCULO_FAMILIAR.toUpperCase() === "SI") {
+                        document.getElementById("DIV_VINCULOS").style.display = "block";
+                    }
+                }
+            }
+
+            // SERVICIOS_PEMEX
+            if (data.SERVICIOS_PEMEX) {
+                let servicios = document.querySelector(`input[name="SERVICIOS_PEMEX"][value="${data.SERVICIOS_PEMEX}"]`);
+                if (servicios) {
+                    servicios.checked = true;
+
+                    // Mostrar el campo si es "SI"
+                    if (data.SERVICIOS_PEMEX.toUpperCase() === "SI") {
+                        document.getElementById("DIV_NUMEROPROVEEDOR").style.display = "block";
+                    }
+                }
+}
+
+
+        if (data.BENEFICIOS_PERSONA) {
+            let beneficios = document.querySelector(`input[name="BENEFICIOS_PERSONA"][value="${data.BENEFICIOS_PERSONA}"]`);
+            if (beneficios) beneficios.checked = true;
+        }
+
+
     })
+    
     .catch(error => console.error('Error al obtener los datos:', error));
 });

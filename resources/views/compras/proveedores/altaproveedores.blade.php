@@ -148,7 +148,6 @@
                     <div class="col-6 mb-3">
                         <label>Régimen </label>
                         <select class="form-control" name="REGIMEN_ALTA" id="REGIMEN_ALTA">
-
                             <option value="" selected disabled>Seleccione una opción</option>
                             <option value="1">General de Ley Personas Morales </option>
                             <option value="2">Personas Morales con Fines no Lucrativos </option>
@@ -171,6 +170,8 @@
                             <option value="19">De los Regimenes Fiscales Preferentes y de las Empresas Multinacionales</option>
                             <option value="20">Enajenación de acciones en bolsa de valores </option>
                             <option value="21">Régimen de los ingresos por obtención de premios </option>
+                            <option value="22">Otro </option>
+
 
                         </select>
                     </div>
@@ -305,11 +306,11 @@
 
                     <div class="col-12 mb-3 d-flex align-items-center">
                         <div class="form-check me-3">
-                            <input class="form-check-input" type="radio" name="ACTIVIDAD_ECONOMICA" id="VENTA_PRODUCTOS" required>
+                            <input class="form-check-input" type="radio" name="ACTIVIDAD_ECONOMICA" id="VENTA_PRODUCTOS" value="1" required>
                             <label class="form-check-label" for="VENTA_PRODUCTOS">Ventas de productos/bienes</label>
                         </div>
                         <div class="form-check me-3">
-                            <input class="form-check-input" type="radio" name="ACTIVIDAD_ECONOMICA" id="VENTA_SERVICIOS">
+                            <input class="form-check-input" type="radio" name="ACTIVIDAD_ECONOMICA" id="VENTA_SERVICIOS" value="2">
                             <label class="form-check-label" for="VENTA_SERVICIOS">Venta de servicios</label>
                         </div>
                     </div>
@@ -330,19 +331,19 @@
 
                     <div class="col-12 mb-3 d-flex align-items-center">
                         <div class="form-check me-3">
-                            <input class="form-check-input" type="radio" name="DESCUENTOS_ACTIVIDAD_ECONOMICA" id="POR_PAGO" required>
+                            <input class="form-check-input" type="radio" name="DESCUENTOS_ACTIVIDAD_ECONOMICA" id="POR_PAGO" value="1" required>
                             <label class="form-check-label" for="POR_PAGO">Por pronto pago</label>
                         </div>
                         <div class="form-check me-3">
-                            <input class="form-check-input" type="radio" name="DESCUENTOS_ACTIVIDAD_ECONOMICA" id="POR_VOLUMEN">
+                            <input class="form-check-input" type="radio" name="DESCUENTOS_ACTIVIDAD_ECONOMICA" id="POR_VOLUMEN" value="2">
                             <label class="form-check-label" for="POR_VOLUMEN">Por volumen</label>
                         </div>
                         <div class="form-check me-3">
-                            <input class="form-check-input" type="radio" name="DESCUENTOS_ACTIVIDAD_ECONOMICA" id="POR_PROMOCION">
+                            <input class="form-check-input" type="radio" name="DESCUENTOS_ACTIVIDAD_ECONOMICA" id="POR_PROMOCION" value="3">
                             <label class="form-check-label" for="POR_PROMOCION">Promociones</label>
                         </div>
                         <div class="form-check me-3">
-                            <input class="form-check-input" type="radio" name="DESCUENTOS_ACTIVIDAD_ECONOMICA" id="OTROS_DESCUENTO" onclick="cualdescuentos()">
+                            <input class="form-check-input" type="radio" name="DESCUENTOS_ACTIVIDAD_ECONOMICA" id="OTROS_DESCUENTO" onclick="cualdescuentos()" value="4">
                             <label class="form-check-label" for="OTROS_DESCUENTO">Otros</label>
                         </div>
                     </div>

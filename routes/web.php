@@ -644,8 +644,10 @@ Route::get('/ServicioDelete', [directorioController::class, 'store']);
 
 
 Route::get('/Alta', function () {return view('compras.proveedores.altaproveedores');});
-Route::get('/obtener-datos-proveedor', [altaproveedorController::class, 'obtenerDatosProveedor']);
+Route::get('/obtenerDatosProveedor', [altaproveedorController::class, 'obtenerDatosProveedor']);
 Route::post('/AltaSave', [altaproveedorController::class, 'store']);
+
+
 
 Route::get('/Proveedores_Certificaciones', function () {return view('compras.proveedores.altacertificacion');});
  Route::get('/Proveedores_Referencias', function () {return view('compras.proveedores.altareferencias');});

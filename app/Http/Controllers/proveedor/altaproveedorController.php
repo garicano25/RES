@@ -22,40 +22,91 @@ use App\Models\proveedor\altacontactos;
 class altaproveedorController extends Controller
 {
     public function obtenerDatosProveedor()
-{
-    $rfcProveedor = Auth::user()->RFC_PROVEEDOR;
+    {
+        $rfcProveedor = Auth::user()->RFC_PROVEEDOR;
 
-    $proveedor = directorioModel::where('RFC_PROVEEDOR', $rfcProveedor)->first();
+        // Intentar primero con formulario_altaproveedor
+        $formulario = altaproveedorModel::where('RFC_ALTA', $rfcProveedor)->first();
 
-    if (!$proveedor) {
-        return response()->json(['error' => 'No se encontraron datos'], 404);
+        if ($formulario) {
+            return response()->json([
+
+                'ID_FORMULARIO_ALTA' => $formulario->ID_FORMULARIO_ALTA,
+
+                'TIPO_PERSONA_ALTA' => $formulario->TIPO_PERSONA_ALTA,
+                'RAZON_SOCIAL_ALTA' => $formulario->RAZON_SOCIAL_ALTA,
+                'RFC_ALTA' => $formulario->RFC_ALTA,
+                'ACTVIDAD_COMERCIAL' => $formulario->ACTVIDAD_COMERCIAL,
+                'CODIGO_POSTAL' => $formulario->CODIGO_POSTAL,
+                'TIPO_VIALIDAD_EMPRESA' => $formulario->TIPO_VIALIDAD_EMPRESA,
+                'NOMBRE_VIALIDAD_EMPRESA' => $formulario->NOMBRE_VIALIDAD_EMPRESA,
+                'NUMERO_EXTERIOR_EMPRESA' => $formulario->NUMERO_EXTERIOR_EMPRESA,
+                'NUMERO_INTERIOR_EMPRESA' => $formulario->NUMERO_INTERIOR_EMPRESA,
+                'NOMBRE_COLONIA_EMPRESA' => $formulario->NOMBRE_COLONIA_EMPRESA,
+                'NOMBRE_LOCALIDAD_EMPRESA' => $formulario->NOMBRE_LOCALIDAD_EMPRESA,
+                'NOMBRE_MUNICIPIO_EMPRESA' => $formulario->NOMBRE_MUNICIPIO_EMPRESA,
+                'NOMBRE_ENTIDAD_EMPRESA' => $formulario->NOMBRE_ENTIDAD_EMPRESA,
+                'PAIS_EMPRESA' => $formulario->PAIS_EMPRESA,
+                'ENTRE_CALLE_EMPRESA' => $formulario->ENTRE_CALLE_EMPRESA,
+                'ENTRE_CALLE2_EMPRESA' => $formulario->ENTRE_CALLE2_EMPRESA,
+                'DOMICILIO_EXTRANJERO' => $formulario->DOMICILIO_EXTRANJERO,
+                'CODIGO_EXTRANJERO' => $formulario->CODIGO_EXTRANJERO,
+                'CIUDAD_EXTRANJERO' => $formulario->CIUDAD_EXTRANJERO,
+                'ESTADO_EXTRANJERO' => $formulario->ESTADO_EXTRANJERO,
+                'PAIS_EXTRANJERO' => $formulario->PAIS_EXTRANJERO,
+                'DEPARTAMENTO_EXTRANJERO' => $formulario->DEPARTAMENTO_EXTRANJERO,
+                'REPRESENTANTE_LEGAL_ALTA' => $formulario->REPRESENTANTE_LEGAL_ALTA,
+                'REGIMEN_ALTA' => $formulario->REGIMEN_ALTA,
+                'CORRE_TITULAR_ALTA' => $formulario->CORRE_TITULAR_ALTA,
+                'TELEFONO_OFICINA_ALTA' => $formulario->TELEFONO_OFICINA_ALTA,
+                'PAGINA_WEB_ALTA' => $formulario->PAGINA_WEB_ALTA,
+                'ACTIVIDAD_ECONOMICA' => $formulario->ACTIVIDAD_ECONOMICA,
+                'CUAL_ACTVIDAD_ECONOMICA' => $formulario->CUAL_ACTVIDAD_ECONOMICA,
+                'DESCUENTOS_ACTIVIDAD_ECONOMICA' => $formulario->DESCUENTOS_ACTIVIDAD_ECONOMICA,
+                'CUAL_DESCUENTOS_ECONOMICA' => $formulario->CUAL_DESCUENTOS_ECONOMICA,
+                'DIAS_CREDITO_ALTA' => $formulario->DIAS_CREDITO_ALTA,
+                'TERMINOS_IMPORTANCIAS_ALTA' => $formulario->TERMINOS_IMPORTANCIAS_ALTA,
+                'VINCULO_FAMILIAR' => $formulario->VINCULO_FAMILIAR,
+                'DESCRIPCION_VINCULO' => $formulario->DESCRIPCION_VINCULO,
+                'SERVICIOS_PEMEX' => $formulario->SERVICIOS_PEMEX,
+                'NUMERO_PROVEEDOR' => $formulario->NUMERO_PROVEEDOR,
+                'BENEFICIOS_PERSONA' => $formulario->BENEFICIOS_PERSONA
+            ]);
+        }
+
+        // Si no se encontraron datos en formulario_altaproveedor, usar directorioModel
+        $proveedor = directorioModel::where('RFC_PROVEEDOR', $rfcProveedor)->first();
+
+        if (!$proveedor) {
+            return response()->json(['error' => 'No se encontraron datos'], 404);
+        }
+
+        return response()->json([
+            'TIPO_PERSONA_ALTA' => $proveedor->TIPO_PERSONA,
+            'RAZON_SOCIAL_ALTA' => $proveedor->RAZON_SOCIAL,
+            'RFC_ALTA' => $proveedor->RFC_PROVEEDOR,
+            'ACTVIDAD_COMERCIAL' => $proveedor->GIRO_PROVEEDOR,
+            'CODIGO_POSTAL' => $proveedor->CODIGO_POSTAL,
+            'TIPO_VIALIDAD_EMPRESA' => $proveedor->TIPO_VIALIDAD_EMPRESA,
+            'NOMBRE_VIALIDAD_EMPRESA' => $proveedor->NOMBRE_VIALIDAD_EMPRESA,
+            'NUMERO_EXTERIOR_EMPRESA' => $proveedor->NUMERO_EXTERIOR_EMPRESA,
+            'NUMERO_INTERIOR_EMPRESA' => $proveedor->NUMERO_INTERIOR_EMPRESA,
+            'NOMBRE_COLONIA_EMPRESA' => $proveedor->NOMBRE_COLONIA_EMPRESA,
+            'NOMBRE_LOCALIDAD_EMPRESA' => $proveedor->NOMBRE_LOCALIDAD_EMPRESA,
+            'NOMBRE_MUNICIPIO_EMPRESA' => $proveedor->NOMBRE_MUNICIPIO_EMPRESA,
+            'NOMBRE_ENTIDAD_EMPRESA' => $proveedor->NOMBRE_ENTIDAD_EMPRESA,
+            'PAIS_EMPRESA' => $proveedor->PAIS_EMPRESA,
+            'ENTRE_CALLE_EMPRESA' => $proveedor->ENTRE_CALLE_EMPRESA,
+            'ENTRE_CALLE2_EMPRESA' => $proveedor->ENTRE_CALLE2_EMPRESA,
+            'DOMICILIO_EXTRANJERO' => $proveedor->DOMICILIO_EXTRANJERO,
+            'CODIGO_EXTRANJERO' => $proveedor->CODIGO_EXTRANJERO,
+            'CIUDAD_EXTRANJERO' => $proveedor->CIUDAD_EXTRANJERO,
+            'ESTADO_EXTRANJERO' => $proveedor->ESTADO_EXTRANJERO,
+            'PAIS_EXTRANJERO' => $proveedor->PAIS_EXTRANJERO,
+            'DEPARTAMENTO_EXTRANJERO' => $proveedor->DEPARTAMENTO_EXTRANJERO
+        ]);
     }
 
-    return response()->json([
-        'TIPO_PERSONA_ALTA' => $proveedor->TIPO_PERSONA,
-        'RAZON_SOCIAL_ALTA' => $proveedor->RAZON_SOCIAL,
-        'RFC_ALTA' => $proveedor->RFC_PROVEEDOR,
-        'ACTVIDAD_COMERCIAL' => $proveedor->GIRO_PROVEEDOR,
-        'CODIGO_POSTAL' => $proveedor->CODIGO_POSTAL,
-        'TIPO_VIALIDAD_EMPRESA' => $proveedor->TIPO_VIALIDAD_EMPRESA,
-        'NOMBRE_VIALIDAD_EMPRESA' => $proveedor->NOMBRE_VIALIDAD_EMPRESA,
-        'NUMERO_EXTERIOR_EMPRESA' => $proveedor->NUMERO_EXTERIOR_EMPRESA,
-        'NUMERO_INTERIOR_EMPRESA' => $proveedor->NUMERO_INTERIOR_EMPRESA,
-        'NOMBRE_COLONIA_EMPRESA' => $proveedor->NOMBRE_COLONIA_EMPRESA,
-        'NOMBRE_LOCALIDAD_EMPRESA' => $proveedor->NOMBRE_LOCALIDAD_EMPRESA,
-        'NOMBRE_MUNICIPIO_EMPRESA' => $proveedor->NOMBRE_MUNICIPIO_EMPRESA,
-        'NOMBRE_ENTIDAD_EMPRESA' => $proveedor->NOMBRE_ENTIDAD_EMPRESA,
-        'PAIS_EMPRESA' => $proveedor->PAIS_EMPRESA,
-        'ENTRE_CALLE_EMPRESA' => $proveedor->ENTRE_CALLE_EMPRESA,
-        'ENTRE_CALLE2_EMPRESA' => $proveedor->ENTRE_CALLE2_EMPRESA,
-        'DOMICILIO_EXTRANJERO' => $proveedor->DOMICILIO_EXTRANJERO,
-        'CODIGO_EXTRANJERO' => $proveedor->CODIGO_EXTRANJERO,
-        'CIUDAD_EXTRANJERO' => $proveedor->CIUDAD_EXTRANJERO,
-        'ESTADO_EXTRANJERO' => $proveedor->ESTADO_EXTRANJERO,
-        'PAIS_EXTRANJERO' => $proveedor->PAIS_EXTRANJERO,
-        'DEPARTAMENTO_EXTRANJERO' => $proveedor->DEPARTAMENTO_EXTRANJERO
-    ]);
-}
 
 
 
