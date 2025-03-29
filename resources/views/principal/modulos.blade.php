@@ -144,6 +144,123 @@
         .learning__link {
             color: #000 !important;
         }
+
+
+        .content__noticias {
+            display: flex;
+            align-items: center;
+            background-color: #ff5b5b;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
+            gap: 20px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .content__noticias:hover {
+            transform: scale(1.01);
+        }
+
+        .content__noticiasImage {
+            width: 160px;
+            height: 100px;
+            overflow: hidden;
+            border-radius: 10px;
+            flex-shrink: 0;
+            background-color: #fff;
+        }
+
+        .content__noticiasImage img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .content__noticiasText {
+            flex-grow: 1;
+        }
+
+        .content__title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 0 0 5px;
+            color: white;
+        }
+
+        .content__paragraph {
+            font-size: 0.9rem;
+            color: white;
+            margin: 0;
+        }
+
+        /* Modal */
+        .modal-anuncio {
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-contenido {
+            background: white;
+            padding: 20px;
+            max-width: 700px;
+            width: 90%;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-contenido img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .cerrar {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .carrusel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .carrusel-slide {
+            display: none;
+            width: 100%;
+            animation: fade 0.5s ease-in-out;
+        }
+
+        .carrusel-slide.activo {
+            display: block;
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0.5;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Reutiliza los estilos previos para .content__noticias, etc */
     </style>
 
 
@@ -192,12 +309,13 @@
                 <div class="lineasDeNegocio__servicios"></div>
 
                 <div class="tooltip lineasDeNegocio__button">
-                    <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                    <form id="logoutForm" method="POST" action="{{ route('logout') }}" style="display: inline;">
                         @csrf
-                        <button type="submit" class="lineasDeNegocio__iconButton">
+                        <button type="button" id="logoutButton" class="lineasDeNegocio__iconButton">
                             <img src="assets/Modulos/img/salir.png" alt="">
                         </button>
                     </form>
+
                     <span class="tooltipText">Cerrar sesión</span>
                 </div>
             </div>
@@ -241,21 +359,54 @@
                 <div class="content">
 
                     <div class="content__left">
-                        <div class="content__noticias">
-                            <div class="content__noticiasImage"><img src="assets/Modulos/img/pastel.png" alt=""></div>
-                            <div class="content__noticiasText">
-                                <h3 class="content__title">Lorem Ipsum </h3>
-                                <h3 class="content__paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis expedita perferendis beatae, suscipit ipsam mollitia quis nemo. Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis expedita perferendis beatae, suscipit ipsam mollitia quis nemo.</h3>
+                        {{-- CARRUSEL: Anuncios del Día o Año --}}
+                        @if($anunciosDiaAnio->isNotEmpty())
+                        <div class="carrusel" id="carruselDiaAnio">
+                            @foreach ($anunciosDiaAnio as $index => $anuncio)
+                            <div class="carrusel-slide {{ $index === 0 ? 'activo' : '' }}"
+                                onclick="mostrarModal('{{ route('anunciofoto', $anuncio->ID_CATALOGO_ANUNCIOS) }}', '{{ addslashes($anuncio->TITULO_ANUNCIO) }}', `{!! addslashes($anuncio->DESCRIPCION_ANUNCIO) !!}`)">
+                                <div class="content__noticias">
+                                    <div class="content__noticiasImage">
+                                        <img src="{{ route('anunciofoto', $anuncio->ID_CATALOGO_ANUNCIOS) }}" alt="Imagen del anuncio">
+                                    </div>
+                                    <div class="content__noticiasText">
+                                        <h3 class="content__title">{{ $anuncio->TITULO_ANUNCIO }}</h3>
+                                        <p class="content__paragraph">{{ Str::limit($anuncio->DESCRIPCION_ANUNCIO, 80, '...') }}</p>
+                                    </div>
+                                </div>
                             </div>
+                            @endforeach
                         </div>
+                        @else
+                        <p style="color: red; font-weight: bold;">(Sin anuncios del día o año para mostrar)</p>
+                        @endif
 
-                        <div class="content__noticias">
-                            <div class="content__noticiasImage"><img src="assets/Modulos/img/pastel.png" alt=""></div>
-                            <div class="content__noticiasText">
-                                <h3 class="content__title">Lorem Ipsum</h3>
-                                <h3 class="content__paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis expedita perferendis beatae, suscipit ipsam mollitia quis nemo.</h3>
+                        {{-- CARRUSEL: Anuncios del Mes --}}
+                        @if($anunciosMes->isNotEmpty())
+                        <div class="carrusel" id="carruselMes">
+                            @foreach ($anunciosMes as $index => $anuncio)
+                            <div class="carrusel-slide {{ $index === 0 ? 'activo' : '' }}"
+                                onclick="mostrarModal('{{ route('anunciofoto', $anuncio->ID_CATALOGO_ANUNCIOS) }}', '{{ addslashes($anuncio->TITULO_ANUNCIO) }}', `{!! addslashes($anuncio->DESCRIPCION_ANUNCIO) !!}`)">
+                                <div class="content__noticias">
+                                    <div class="content__noticiasImage">
+                                        <img src="{{ route('anunciofoto', $anuncio->ID_CATALOGO_ANUNCIOS) }}" alt="Imagen del anuncio">
+                                    </div>
+                                    <div class="content__noticiasText">
+                                        <h3 class="content__title">{{ $anuncio->TITULO_ANUNCIO }}</h3>
+                                        <p class="content__paragraph">{{ Str::limit($anuncio->DESCRIPCION_ANUNCIO, 80, '...') }}</p>
+                                    </div>
+                                </div>
                             </div>
+                            @endforeach
                         </div>
+                        @else
+                        <p style="color: red; font-weight: bold;">(Sin anuncios del mes para mostrar)</p>
+                        @endif
+
+
+
+
+
 
                         <div class="widget">
                             <div class="widget__area" id="DIV_CLIMA"></div>
@@ -503,20 +654,75 @@
 
 
 
+    <!-- Modal -->
+    <div id="modalAnuncio" style="display: none;" class="modal-anuncio">
+        <div class="modal-contenido" onclick="event.stopPropagation()">
+            <span class="cerrar" onclick="cerrarModal()">×</span>
+            <img id="modalImagen" src="" alt="Imagen del anuncio" />
+            <h2 id="modalTitulo"></h2>
+            <p id="modalDescripcion"></p>
+        </div>
+    </div>
+
 
     <script>
-        document.querySelectorAll('.lineasDeNegocio__iconsm').forEach(img => {
-            const originalSrc = img.src;
+        function mostrarModal(imagen, titulo, descripcion) {
+            const modal = document.getElementById('modalAnuncio');
+            document.getElementById('modalImagen').src = imagen;
+            document.getElementById('modalTitulo').innerText = titulo;
+            document.getElementById('modalDescripcion').innerText = descripcion;
+            modal.style.display = 'flex';
 
-            img.addEventListener('mouseenter', () => {
-                img.src = hoverSrc;
-            });
+            // Cerrar si hace clic fuera del contenido
+            modal.onclick = function() {
+                cerrarModal();
+            }
+        }
 
-            img.addEventListener('mouseleave', () => {
-                img.src = originalSrc;
+        function cerrarModal() {
+            document.getElementById('modalAnuncio').style.display = 'none';
+        }
+
+
+        function iniciarCarrusel(id, intervalo = 5000) {
+            const carrusel = document.getElementById(id);
+            if (!carrusel) return;
+
+            const slides = carrusel.querySelectorAll('.carrusel-slide');
+            let indice = 0;
+
+            setInterval(() => {
+                slides[indice].classList.remove('activo');
+                indice = (indice + 1) % slides.length;
+                slides[indice].classList.add('activo');
+            }, intervalo);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            iniciarCarrusel('carruselDiaAnio', 5000); // carrusel de anuncios del día/año
+            iniciarCarrusel('carruselMes', 5000); // carrusel de anuncios del mes
+        });
+
+        document.getElementById('logoutButton').addEventListener('click', function(e) {
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: '¿Deseas cerrar sesión?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, cerrar sesión',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('logoutForm').submit();
+                }
             });
         });
+        
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 </body>

@@ -109,14 +109,14 @@
                                 <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
                             </li>
                             <li class="dropdown-divider"></li>
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item text-center" style="color: red;">
-                                        <i class="bi bi-power"></i> Cerrar sesión
-                                    </button>
-                                </form>
-                            </li>
+                            <a href="#" id="logoutLink" class="dropdown-item text-center" style="color: red;">
+                                <i class="bi bi-power"></i> Cerrar sesión
+                            </a>
+
+                            <form id="logoutForm" method="POST" action="{{ route('logout') }}" style="display: none;">
+                                @csrf
+                            </form>
+
                         </ul>
                         @else
                         <script>
@@ -416,8 +416,7 @@
 
 
     @if(request()->is('organigrama'))
-    <!-- organización -->
-    <script src="/assets/js_sitio/organizacion/organigrama.js?v=4.0"></script>
+    <script src="/assets/js_sitio/organizacion/organigrama.js?v=4.0"> </script>
     <script src="/assets/js/GOJs/go.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
@@ -486,6 +485,14 @@
     @if(request()->is('Competencias-gerenciales'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoCompetenciasGerenciales.js?v=1.0"></script>
     @endif
+
+
+
+    @if(request()->is('Anuncios'))
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogoanuncion.js"></script>
+    @endif
+
+
 
     @if(request()->is('Listavacantes'))
     <script src="/assets/js_sitio/reclutamiento/Listavacante.js"></script>

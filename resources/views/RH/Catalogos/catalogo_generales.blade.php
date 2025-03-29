@@ -4,17 +4,19 @@
 
 <style>
     .card-body {
-        height: 250px; 
+        height: 250px;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
+
     .card-title {
         text-align: center;
     }
+
     .btn {
-        margin-top: auto; 
+        margin-top: auto;
     }
 </style>
 
@@ -81,8 +83,16 @@
         </div>
 
 
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <h5 class="card-title mb-4">Catálogo anuncios</h5>
+                    <a class="btn btn-primary mt-3" href="{{ url('/Anuncios') }}">Ver Catálogo</a>
+                </div>
+            </div>
+        </div>
 
-      
+
 
 
 

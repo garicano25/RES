@@ -35,6 +35,7 @@ use App\Http\Controllers\organizacion\catalogocompetenciabasicaController;
 use App\Http\Controllers\organizacion\catalogotipovacanteController;
 use App\Http\Controllers\organizacion\catalogoCompotenciasGerencialesController;
 use App\Http\Controllers\organizacion\catalogomotivovacanteControlller;
+use App\Http\Controllers\organizacion\catalogoanuncioController;
 
 
 // CONTROLADORES DE RECLUTAMIENO 
@@ -136,8 +137,9 @@ Route::post('/verify-code', [AuthController::class, 'verifyCode']);
 Route::post('/enviar-codigo', [VerificationController::class, 'enviarCodigo']);
 Route::post('/verificar-codigo', [VerificationController::class, 'verificarCodigo']);
 //==============================================  Módulos  ============================================== 
-Route::get('/Módulos', function () {return view('principal.modulos');})->middleware('role:Superusuario,Administrador');
+// Route::get('/Módulos', function () {return view('principal.modulos');})->middleware('role:Superusuario,Administrador');
 
+Route::get('/Módulos', [catalogoanuncioController::class, 'index'])->middleware('role:Superusuario,Administrador');
 
 
 //==============================================  USUARIO  ============================================== 
@@ -279,6 +281,14 @@ Route::get('/Tablamotivovacante', [catalogomotivovacanteControlller::class, 'Tab
 
 
 
+// CATÁLOGO DE ANUNCIO
+Route::get('/Anuncios', function () { return view('RH.Catalogos.catalogo_anucios');});
+Route::post('/AnuncioSave', [catalogoanuncioController::class, 'store']);
+ Route::get('/Tablanuncios', [catalogoanuncioController::class, 'Tablanuncios']);
+ Route::get('/AnuncioDelete', [catalogoanuncioController::class, 'store']);
+Route::get('/anunciofoto/{id}', [catalogoanuncioController::class, 'mostrarfotoanuncio'])->name('anunciofoto');
+
+// Route::get('anuncio/foto/{anuncio_id}', [catalogoanuncioController::class, 'mostrarfotoanuncio'])->name('mostrar.foto.anuncio');
 
 // CATALOGOS
 Route::get('/Catálogo_ppt', function () {return view('RH.Catalogos.catalogo_ppt');});
