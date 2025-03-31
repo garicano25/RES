@@ -35,39 +35,26 @@
             filter: brightness(1.2);
         }
 
-        .content__noticias,
-        .modules__card,
+
+
         .softwares__card,
-        .softwares__greyCard,
-        .learning {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .softwares__greyCard {
+            height: 25vh;
+            width: 48%;
+            background-color: #ff585d;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5em;
         }
 
-        .content__noticias:hover,
-        .modules__card:hover,
-        .softwares__card:hover,
-        .softwares__greyCard:hover,
-        .learning:hover {
-            transform: translateY(-5px);
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .softwares__card, .softwares__greyCard {
-        height: 25vh;
-        width: 48%;
-        background-color: #ff585d;
-        border-radius: 16px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 0.5em;
-        }
-
-        .softwares__card img, .softwares__greyCard img {
-        height: 9em;
-        width: 9em;
-        padding-top: 0em;
+        .softwares__card img,
+        .softwares__greyCard img {
+            height: 9em;
+            width: 9em;
+            padding-top: 0em;
         }
 
         .lineasDeNegocio__iconButton {
@@ -164,6 +151,25 @@
         }
 
 
+        .content__noticias,
+        .modules__card,
+        .softwares__card,
+        .softwares__greyCard,
+        .learning {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content__noticias:hover,
+        .modules__card:hover,
+        .softwares__card:hover,
+        .softwares__greyCard:hover,
+        .learning:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+
+
         .content__noticias {
             display: flex;
             align-items: center;
@@ -181,19 +187,26 @@
         }
 
         .content__noticiasImage {
-            width: 160px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            /* 👈 hace la imagen circular */
             overflow: hidden;
-            border-radius: 10px;
             flex-shrink: 0;
             background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .content__noticiasImage img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border-radius: 50%;
+            /* 👈 mantiene el círculo en la imagen */
         }
+
 
         .content__noticiasText {
             flex-grow: 1;
@@ -213,37 +226,39 @@
         }
 
         .modal-anuncio {
-    position: fixed;
-    z-index: 9999;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.modal-contenido {
-    background: white;
-    padding: 20px;
-    max-width: 600px;
-    width: 90%;
-    border-radius: 15px;
-    text-align: center;
-    position: relative;
-}
+        .modal-contenido {
+            background: white;
+            padding: 20px;
+            max-width: 600px;
+            width: 90%;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+        }
 
-/* ✅ Tamaño controlado para la imagen del modal */
-.modal-contenido img {
-    max-width: 300px;
-    height: auto;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    object-fit: cover;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
+        /* ✅ Tamaño controlado para la imagen del modal */
+        .modal-contenido img {
+            max-width: 300px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            object-fit: cover;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
         .cerrar {
             position: absolute;
@@ -379,7 +394,7 @@
                 <div class="content">
 
                     <div class="content__left">
-                        
+
                         {{-- CARRUSEL: Anuncios del Día o Año --}}
                         @if($anunciosDiaAnio->isNotEmpty())
                         <div class="carrusel" id="carruselDiaAnio">
@@ -411,7 +426,7 @@
                             </div>
                         </div>
                         @endif
-                        
+
 
                         {{-- CARRUSEL: Anuncios del Mes --}}
                         @if($anunciosMes->isNotEmpty())
@@ -444,7 +459,7 @@
                             </div>
                         </div>
                         @endif
-                        
+
 
 
 
@@ -707,64 +722,13 @@
     </div>
 
 
-    <script>
-        function mostrarModal(imagen, titulo, descripcion) {
-            const modal = document.getElementById('modalAnuncio');
-            document.getElementById('modalImagen').src = imagen;
-            document.getElementById('modalTitulo').innerText = titulo;
-            document.getElementById('modalDescripcion').innerText = descripcion;
-            modal.style.display = 'flex';
-
-            // Cerrar si hace clic fuera del contenido
-            modal.onclick = function() {
-                cerrarModal();
-            }
-        }
-
-        function cerrarModal() {
-            document.getElementById('modalAnuncio').style.display = 'none';
-        }
-
-
-        function iniciarCarrusel(id, intervalo = 5000) {
-            const carrusel = document.getElementById(id);
-            if (!carrusel) return;
-
-            const slides = carrusel.querySelectorAll('.carrusel-slide');
-            let indice = 0;
-
-            setInterval(() => {
-                slides[indice].classList.remove('activo');
-                indice = (indice + 1) % slides.length;
-                slides[indice].classList.add('activo');
-            }, intervalo);
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            iniciarCarrusel('carruselDiaAnio', 5000); // carrusel de anuncios del día/año
-            iniciarCarrusel('carruselMes', 5000); // carrusel de anuncios del mes
-        });
-
-        document.getElementById('logoutButton').addEventListener('click', function(e) {
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: '¿Deseas cerrar sesión?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, cerrar sesión',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('logoutForm').submit();
-                }
-            });
-        });
-        
-    </script>
+ 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+    <script src="/assets/js_sitio/modulos.js"></script>
 
 
 </body>
