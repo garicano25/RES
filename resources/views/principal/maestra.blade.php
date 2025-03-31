@@ -109,14 +109,14 @@
                                 <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
                             </li>
                             <li class="dropdown-divider"></li>
-                            <a href="#" id="logoutLink" class="dropdown-item text-center" style="color: red;">
-                                <i class="bi bi-power"></i> Cerrar sesión
-                            </a>
-
-                            <form id="logoutForm" method="POST" action="{{ route('logout') }}" style="display: none;">
-                                @csrf
-                            </form>
-
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item text-center" style="color: red;">
+                                        <i class="bi bi-power"></i> Cerrar sesión
+                                    </button>
+                                </form>
+                            </li>
                         </ul>
                         @else
                         <script>
