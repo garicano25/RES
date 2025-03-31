@@ -2398,7 +2398,7 @@ function cargarTablaDocumentosSoporteContrato() {
                     let tipoDocumento = row.TIPO_DOCUMENTOSOPORTECONTRATO; 
 
                     if (tipoDocumento === "2") {  
-                        return `$ <span style="color: green;">(Vigente)</span>`;
+                        return ` <span style="color: green;">(Vigente)</span>`;
                     } else {
                         let fechaFin = row.FECHAF_DOCUMENTOSOPORTECONTRATO;
                         let hoy = new Date();
