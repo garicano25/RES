@@ -324,7 +324,7 @@
 
 
     @if(request()->is('Alta'))
-    <script src="/assets/js_sitio/proveedor/altaproveedores.js"></script>
+    <script src="/assets/js_sitio/proveedor/altaproveedores.js?v=1.0"></script>
     @endif
 
 
@@ -332,13 +332,13 @@
 
 
     @if(request()->is('Proveedores_Cuentas'))
-    <script src="/assets/js_sitio/proveedor/altacuentas.js"></script>
+    <script src="/assets/js_sitio/proveedor/altacuentas.js?v=1.0"></script>
     @endif
 
 
 
     @if(request()->is('Proveedores_Contactos'))
-    <script src="/assets/js_sitio/proveedor/altacontactos.js"></script>
+    <script src="/assets/js_sitio/proveedor/altacontactos.js?v=1.0"></script>
     @endif
 
 

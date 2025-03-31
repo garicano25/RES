@@ -392,7 +392,7 @@ h2 {
 }
 
 .softwares__card, .softwares__greyCard {
-  height: 24vh;
+  height: 27vh;
   width: 48%;
   background-color: #ff585d;
   border-radius: 16px;
@@ -404,9 +404,9 @@ h2 {
 }
 
 .softwares__card img, .softwares__greyCard img {
-  height: 10em;
-  width: 10em;
-  padding-top: 1em;
+  height: 9em;
+  width: 9em;
+  padding-top: 0em;
 }
 
 .softwares__greyCard {

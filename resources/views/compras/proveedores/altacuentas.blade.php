@@ -109,12 +109,16 @@
                         </div>
 
                         <div class="col-12 mb-3">
-                            <label class="form-label">Carátula bancaria &nbsp; <i class="bi bi-info-circle-fill" title="Anexar carátula bancaria sin saldo y que aparezcan los datos del beneficiario"></i>
+                            <label class="form-label">
+                                Carátula bancaria &nbsp;
+                                <i class="bi bi-info-circle-fill" title="Anexar carátula bancaria sin saldo y que aparezcan los datos del beneficiario"></i>
                             </label>
-                            <div class="input-group">
-                                <input type="file" class="form-control" name="CARATULA_BANCARIA" id="CARATULA_BANCARIA">
+                            <div class="input-group align-items-center">
+                                <input type="file" class="form-control" name="CARATULA_BANCARIA" id="CARATULA_BANCARIA" accept="application/pdf">
+                                <i id="iconEliminarArchivo" class="bi bi-trash-fill ms-2 text-danger fs-5 d-none" style="cursor: pointer;" title="Eliminar archivo"></i>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
 

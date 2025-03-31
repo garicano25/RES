@@ -52,6 +52,24 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         }
 
+        .softwares__card, .softwares__greyCard {
+        height: 25vh;
+        width: 48%;
+        background-color: #ff585d;
+        border-radius: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5em;
+        }
+
+        .softwares__card img, .softwares__greyCard img {
+        height: 9em;
+        width: 9em;
+        padding-top: 0em;
+        }
+
         .lineasDeNegocio__iconButton {
             transition: transform 0.3s ease, background-color 0.3s ease;
             border: none;
@@ -194,36 +212,38 @@
             margin: 0;
         }
 
-        /* Modal */
         .modal-anuncio {
-            position: fixed;
-            z-index: 9999;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    position: fixed;
+    z-index: 9999;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        .modal-contenido {
-            background: white;
-            padding: 20px;
-            max-width: 700px;
-            width: 90%;
-            border-radius: 15px;
-            text-align: center;
-            position: relative;
-        }
+.modal-contenido {
+    background: white;
+    padding: 20px;
+    max-width: 600px;
+    width: 90%;
+    border-radius: 15px;
+    text-align: center;
+    position: relative;
+}
 
-        .modal-contenido img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            margin-bottom: 15px;
-        }
+/* ✅ Tamaño controlado para la imagen del modal */
+.modal-contenido img {
+    max-width: 300px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    object-fit: cover;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
         .cerrar {
             position: absolute;
@@ -359,6 +379,7 @@
                 <div class="content">
 
                     <div class="content__left">
+                        
                         {{-- CARRUSEL: Anuncios del Día o Año --}}
                         @if($anunciosDiaAnio->isNotEmpty())
                         <div class="carrusel" id="carruselDiaAnio">
@@ -378,8 +399,19 @@
                             @endforeach
                         </div>
                         @else
-                        <p style="color: red; font-weight: bold;">(Sin anuncios del día o año para mostrar)</p>
+                        <div class="carrusel">
+                            <div class="content__noticias">
+                                <div class="content__noticiasImage">
+                                    {{-- <img src="" alt="Sin anuncio" style="opacity: 0.5;"> --}}
+                                </div>
+                                <div class="content__noticiasText">
+                                    <h3 class="content__title">Sin anuncios</h3>
+                                    <p class="content__paragraph">No hay ningún anuncio este momento.</p>
+                                </div>
+                            </div>
+                        </div>
                         @endif
+                        
 
                         {{-- CARRUSEL: Anuncios del Mes --}}
                         @if($anunciosMes->isNotEmpty())
@@ -400,9 +432,19 @@
                             @endforeach
                         </div>
                         @else
-                        <p style="color: red; font-weight: bold;">(Sin anuncios del mes para mostrar)</p>
+                        <div class="carrusel">
+                            <div class="content__noticias">
+                                <div class="content__noticiasImage">
+                                    {{-- <img src="" alt="Sin anuncio" style="opacity: 0.5;"> --}}
+                                </div>
+                                <div class="content__noticiasText">
+                                    <h3 class="content__title">Sin anuncios</h3>
+                                    <p class="content__paragraph">No hay ningún anuncio este momento.</p>
+                                </div>
+                            </div>
+                        </div>
                         @endif
-
+                        
 
 
 

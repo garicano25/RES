@@ -4,14 +4,19 @@ ID_FORMULARIO_CUENTAPROVEEDOR = 0
 
 
 
-  const Modalcuenta = document.getElementById('miModal_cuentas');
+const Modalcuenta = document.getElementById('miModal_cuentas');
+
 Modalcuenta.addEventListener('hidden.bs.modal', event => {
     ID_FORMULARIO_CUENTAPROVEEDOR = 0;
     document.getElementById('formularioCuentas').reset();
 
     $('#DIV_EXTRAJERO').hide();
     $('#CLABE_INTERBANCARIA').show();
+
+    document.getElementById('CARATULA_BANCARIA').value = '';
+    document.getElementById('iconEliminarArchivo').classList.add('d-none');
 });
+
 
 
 $("#guardarCuentas").click(function (e) {
@@ -154,6 +159,7 @@ var Tablacuentasproveedores = $("#Tablacuentasproveedores").DataTable({
         { data: 'NOMBRE_BENEFICIARIO' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
+        { data: 'BTN_DOCUMENTO' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
@@ -162,10 +168,22 @@ var Tablacuentasproveedores = $("#Tablacuentasproveedores").DataTable({
         { targets: 2, title: 'Nombre del beneficiario', className: 'all text-center nombre-column' },
         { targets: 3, title: 'Editar', className: 'all text-center' },
         { targets: 4, title: 'Visualizar', className: 'all text-center' },
-        { targets: 5, title: 'Activo', className: 'all text-center' }
+        { targets: 5, title: 'Carátula bancaria', className: 'all text-center' },
+        { targets: 6, title: 'Activo', className: 'all text-center' }
     ]
 });
 
+
+
+$('#Tablacuentasproveedores').on('click', '.ver-archivo-caratula', function () {
+    var id = $(this).data('id');
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO');
+        return;
+    }
+    var url = '/mostrarcaratula/' + id;
+    abrirModal(url, 'Carátula bancaria');
+});
 
 
 
@@ -182,7 +200,7 @@ $('#Tablacuentasproveedores tbody').on('change', 'td>label>input.ELIMINAR', func
         ID_FORMULARIO_CUENTAPROVEEDOR: row.data().ID_FORMULARIO_CUENTAPROVEEDOR
     };
 
-    eliminarDatoTabla(data, [Tablacuentasproveedores], 'GiroDelete');
+    eliminarDatoTabla(data, [Tablacuentasproveedores], 'CuentasDelete');
 });
 
 
@@ -247,4 +265,24 @@ document.addEventListener("DOMContentLoaded", function () {
             clabeInterbancaria.style.display = "block";
         }
     });
+});
+
+
+
+
+
+const inputArchivo = document.getElementById('CARATULA_BANCARIA');
+const iconEliminar = document.getElementById('iconEliminarArchivo');
+
+inputArchivo.addEventListener('change', function () {
+    if (this.files.length > 0) {
+        iconEliminar.classList.remove('d-none');
+    } else {
+        iconEliminar.classList.add('d-none');
+    }
+});
+
+iconEliminar.addEventListener('click', function () {
+    inputArchivo.value = '';
+    iconEliminar.classList.add('d-none');
 });

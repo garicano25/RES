@@ -630,6 +630,11 @@ Route::get('/Tablamr', [mrController::class, 'Tablamr']);
 Route::get('/Bitácora', function () {return view('compras.requisicionesmaterial.bitacora');});
 
 
+//==============================================   CATALOGOS PROVEEDORES  ============================================== 
+Route::get('/Catálogos_proveedores', function () {return view('compras.Catalogos.catalogo_generales');});
+
+Route::get('/Catálogos_funciones', function () {return view('compras.Catalogos.catalogo_funcionproveedor');});
+
 //==============================================  PROVEEDOR  ============================================== 
 
 
@@ -677,6 +682,8 @@ Route::get('/Proveedores_documentos', function () { return view('compras.proveed
 Route::get('/Proveedores_Cuentas', function () { return view('compras.proveedores.altacuentas');});
 Route::post('/AltacuentaSave', [altacuentaController::class, 'store']);
 Route::get('/Tablacuentasproveedores', [altacuentaController::class, 'Tablacuentasproveedores']);
+Route::get('/CuentasDelete', [altacuentaController::class, 'store']);
+Route::get('/mostrarcaratula/{id}', [altacuentaController::class, 'mostrarcaratula']);
 
 
 //==============================================  EXTERNO  ============================================== 
