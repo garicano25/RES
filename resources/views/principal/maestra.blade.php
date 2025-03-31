@@ -530,7 +530,7 @@
     @endif
 
     @if(request()->is('Contratación'))
-    <script src="/assets/js_sitio/contratacion/contratacion.js?v=10.4"></script>
+    <script src="/assets/js_sitio/contratacion/contratacion.js?v=10.5"></script>
     <!-- Form wizard -->
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
