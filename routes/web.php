@@ -98,6 +98,11 @@ use App\Http\Controllers\requisicionmaterial\mrController;
 use App\Http\Controllers\proveedor\directorioController;
 use App\Http\Controllers\proveedor\altaproveedorController;
 use App\Http\Controllers\proveedor\altacuentaController;
+use App\Http\Controllers\proveedor\altacontactoController;
+
+use App\Http\Controllers\proveedor\catalagofuncionesproveedorController;
+use App\Http\Controllers\proveedor\catalagotituloproveedorController;
+
 
 
 //==============================================  login  ============================================== 
@@ -139,7 +144,7 @@ Route::post('/verificar-codigo', [VerificationController::class, 'verificarCodig
 //==============================================  Módulos  ============================================== 
 // Route::get('/Módulos', function () {return view('principal.modulos');})->middleware('role:Superusuario,Administrador');
 
-Route::get('/Módulos', [catalogoanuncioController::class, 'index'])->middleware('role:Superusuario,Administrador');
+Route::get('/Módulos', [catalogoanuncioController::class, 'index'])->middleware('role:Superusuario,Administrador,Asistente de planeación y logística');
 
 
 //==============================================  USUARIO  ============================================== 
@@ -633,7 +638,22 @@ Route::get('/Bitácora', function () {return view('compras.requisicionesmaterial
 //==============================================   CATALOGOS PROVEEDORES  ============================================== 
 Route::get('/Catálogos_proveedores', function () {return view('compras.Catalogos.catalogo_generales');});
 
-Route::get('/Catálogos_funciones', function () {return view('compras.Catalogos.catalogo_funcionproveedor');});
+
+
+//  CATALOGO FUNCIONEES/AREAS CONTACTOS
+Route::get('/Catálogo_funciones', function () {return view('compras.Catalogos.catalogo_funcionproveedor');});
+Route::post('/FuncionesareasSave', [catalagofuncionesproveedorController::class, 'store']);
+Route::get('/Tablafuncionescontacto', [catalagofuncionesproveedorController::class, 'Tablafuncionescontacto']);
+Route::get('/FuncionesareasDelete', [catalagofuncionesproveedorController::class, 'store']);
+
+
+//  CATALOGO TITULO 
+
+Route::get('/Catálogo_títulos', function () { return view('compras.Catalogos.catalogo_titulosproveedor');});
+Route::post('/TituloSave', [catalagotituloproveedorController::class, 'store']);
+Route::get('/Tablatitulocontacto', [catalagotituloproveedorController::class, 'Tablatitulocontacto']);
+Route::get('/TituloDelete', [catalagotituloproveedorController::class, 'store']);
+
 
 //==============================================  PROVEEDOR  ============================================== 
 
@@ -667,10 +687,12 @@ Route::post('/AltaSave', [altaproveedorController::class, 'store']);
 Route::get('/Proveedores_Certificaciones', function () {return view('compras.proveedores.altacertificacion');});
  Route::get('/Proveedores_Referencias', function () {return view('compras.proveedores.altareferencias');});
 
-//ALTA DE CONTACTOS
-Route::get('/Proveedores_Contactos', function () {return view('compras.proveedores.altacontactos');});
 
-Route::get('/Tablacontactosproveedor', [altaproveedorController::class, 'Tablacontactosproveedor']);
+//ALTA DE CONTACTOS
+// Route::get('/Proveedores_Contactos', function () {return view('compras.proveedores.altacontactos');});
+Route::get('/Proveedores_Contactos', [altacontactoController::class, 'index']);
+Route::get('/Tablacontactosproveedor', [altacontactoController::class, 'Tablacontactosproveedor']);
+Route::post('/AltacontactoSave', [altacontactoController::class, 'store']);
 
 
 
