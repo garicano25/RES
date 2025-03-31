@@ -322,16 +322,29 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
             }
         },
           
-        { 
+        {
             data: 'ESTATUS_OFERTA',
-            render: function(data, type, row) {
-                const colors = { 'Aceptada': 'background-color: green; color: white;', 'Revisión': 'background-color: orange; color: white;', 'Rechazada': 'background-color: red; color: white;' };
-                const isDisabled = (data === 'Aceptada' || data === 'Rechazada') ? 'disabled' : '';
-                return `<select class="form-select ESTATUS_OFERTA" data-id="${row.ID_FORMULARIO_OFERTAS}" style="${colors[data] || ''}" ${isDisabled}>
-                        <option value="Aceptada" ${data === 'Aceptada' ? 'selected' : ''}>Aceptada</option>
-                        <option value="Revisión" ${data === 'Revisión' ? 'selected' : ''}>Revisión</option>
-                        <option value="Rechazada" ${data === 'Rechazada' ? 'selected' : ''}>Rechazada</option>
-                    </select>`;
+            render: function (data, type, row) {
+                const expirado = estaExpirada(row.FECHA_OFERTA, row.DIAS_VALIDACION_OFERTA);
+                let estatus = data;
+
+                // Si está en Revisión y expiró => cambiar a Rechazada
+                if (estatus === 'Revisión' && expirado) {
+                    estatus = 'Rechazada';
+                }
+
+                const colors = {
+                    'Aceptada': 'background-color: green; color: white;',
+                    'Revisión': 'background-color: orange; color: white;',
+                    'Rechazada': 'background-color: red; color: white;'
+                };
+                const isDisabled = (estatus === 'Aceptada' || estatus === 'Rechazada') ? 'disabled' : '';
+
+                return `<select class="form-select ESTATUS_OFERTA" data-id="${row.ID_FORMULARIO_OFERTAS}" style="${colors[estatus] || ''}" ${isDisabled}>
+                    <option value="Aceptada" ${estatus === 'Aceptada' ? 'selected' : ''}>Aceptada</option>
+                    <option value="Revisión" ${estatus === 'Revisión' ? 'selected' : ''}>Revisión</option>
+                    <option value="Rechazada" ${estatus === 'Rechazada' ? 'selected' : ''}>Rechazada</option>
+                </select>`;
             }
         },
         { data: 'MOTIVO_REVISION_OFERTA' },
@@ -418,13 +431,6 @@ $("#Tablaofertas tbody").on("click", ".ver-revisiones", function () {
 
 
 
-
-
-
-
-
-
-
 $('#Tablaofertas').on('click', '.ver-archivo-cotizacion', function () {
     var tr = $(this).closest('tr');
     var row = Tablaofertas.row(tr);
@@ -444,11 +450,47 @@ $('#Tablaofertas').on('click', '.ver-archivo-cotizacion', function () {
 
 
 
+// function calcularDiasRestantes(fechaOferta, diasValidacion) {
+//     if (!fechaOferta || !diasValidacion) return "N/A";
+
+//     let fechaInicio = new Date(fechaOferta);
+    
+//     let fechaVencimiento = new Date(fechaInicio);
+//     fechaVencimiento.setDate(fechaVencimiento.getDate() + parseInt(diasValidacion));
+
+//     let hoy = new Date();
+
+//     let diasTotales = Math.ceil((fechaVencimiento - fechaInicio) / (1000 * 60 * 60 * 24));
+//     let diasTranscurridos = diasTotales - Math.ceil((fechaVencimiento - hoy) / (1000 * 60 * 60 * 24));
+    
+//     diasTranscurridos = Math.max(diasTranscurridos, 0);
+//     let porcentaje = (diasTranscurridos / diasTotales) * 100;
+
+//     let color = "green"; 
+//     if (porcentaje >= 60 && porcentaje < 80) {
+//         color = "orange"; 
+//     } else if (porcentaje >= 80) {
+//         color = "red"; 
+//     }
+
+//     // Si ya ha vencido
+//     if (hoy >= fechaVencimiento) {
+//         return `<span style="color: red; font-weight: bold;">Expirado</span>`;
+//     }
+
+//     let diasRestantes = Math.ceil((fechaVencimiento - hoy) / (1000 * 60 * 60 * 24));
+
+//     return `<span style="color: ${color}; font-weight: bold;">${diasRestantes} días</span>`;
+// }
+
+
+
+
+
 function calcularDiasRestantes(fechaOferta, diasValidacion) {
     if (!fechaOferta || !diasValidacion) return "N/A";
 
     let fechaInicio = new Date(fechaOferta);
-    
     let fechaVencimiento = new Date(fechaInicio);
     fechaVencimiento.setDate(fechaVencimiento.getDate() + parseInt(diasValidacion));
 
@@ -456,31 +498,32 @@ function calcularDiasRestantes(fechaOferta, diasValidacion) {
 
     let diasTotales = Math.ceil((fechaVencimiento - fechaInicio) / (1000 * 60 * 60 * 24));
     let diasTranscurridos = diasTotales - Math.ceil((fechaVencimiento - hoy) / (1000 * 60 * 60 * 24));
-    
+
     diasTranscurridos = Math.max(diasTranscurridos, 0);
     let porcentaje = (diasTranscurridos / diasTotales) * 100;
 
-    let color = "green"; 
+    let color = "green";
     if (porcentaje >= 60 && porcentaje < 80) {
-        color = "orange"; 
+        color = "orange";
     } else if (porcentaje >= 80) {
-        color = "red"; 
+        color = "red";
     }
 
-    // Si ya ha vencido
     if (hoy >= fechaVencimiento) {
         return `<span style="color: red; font-weight: bold;">Expirado</span>`;
     }
 
     let diasRestantes = Math.ceil((fechaVencimiento - hoy) / (1000 * 60 * 60 * 24));
-
     return `<span style="color: ${color}; font-weight: bold;">${diasRestantes} días</span>`;
 }
 
-
-
-
-
+function estaExpirada(fechaOferta, diasValidacion) {
+    if (!fechaOferta || !diasValidacion) return false;
+    let fechaInicio = new Date(fechaOferta);
+    let fechaVencimiento = new Date(fechaInicio);
+    fechaVencimiento.setDate(fechaVencimiento.getDate() + parseInt(diasValidacion));
+    return new Date() >= fechaVencimiento;
+}
 
 
 
