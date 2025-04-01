@@ -40,11 +40,9 @@
 
 
 
-    @if(request()->is('DPT'))
-    <link rel="stylesheet" href="assets/css/dpt.css">
-    @endif
+   
 
-    @if(request()->is('Contratación'))
+    @if(request()->is('Lista_proveedores'))
     <!-- form_wizard_steps -->
     <link href="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_style.css" rel="stylesheet">
     </link>
@@ -173,7 +171,7 @@
                                 <li><a class="dropdown-item" href="{{url('/Banco_proveedores')}}">Banco de proveedores</a>
                                 </li>
                                 <hr class="dropdown-divider">
-                                <li><a class="dropdown-item" href="{{url('/')}}">Proveedores oficiales</a>
+                                <li><a class="dropdown-item" href="{{url('/Lista_proveedores')}}">Lista proveedores </a>
                                 </li>
                             </ul>
                         </li>
@@ -332,6 +330,12 @@
     <script src="/assets/js_sitio/proveedor/catalogos/catalogotitulos.js?v=1.0"></script>
     @endif
 
+
+    @if(request()->is('Lista_proveedores'))
+    <script src="/assets/js_sitio/proveedor/listaproveedor.js"></script>
+    <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
+
+    @endif
 
 
 </body>

@@ -198,13 +198,13 @@
 
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-badge-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Contratación</span><span class="d-none d-lg-inline">Contratación</span>
+                            <i class="bi bi-person-badge-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Contratación</span><span Contrataciónclass="d-none d-lg-inline">Contratación</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url('/Pendiente-Contratar') }}">Pendientes por contratar</a></li>
                             <hr class="dropdown-divider">
 
-                            <li><a class="dropdown-item" href="{{url('/Contratación')}}">Lista de colaboradores</a></li>
+                            <li><a class="dropdown-item" href="{{url('/')}}">Lista de colaboradores</a></li>
                         </ul>
                     </li>
 

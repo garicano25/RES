@@ -565,6 +565,8 @@ $(document).on('change', '.ACTIVAR', function () {
 $('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablacontratacion1.row(tr);
+
+    
     ID_FORMULARIO_CONTRATACION = row.data().ID_FORMULARIO_CONTRATACION;
 
     $('#FormularioCONTRATACION').each(function() {

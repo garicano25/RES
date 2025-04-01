@@ -62,6 +62,7 @@ class altacontactoController extends Controller
             ]);
         }
     }
+    
     // public function store(Request $request)
     // {
     //     try {

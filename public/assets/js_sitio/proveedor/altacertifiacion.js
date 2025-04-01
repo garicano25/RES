@@ -98,7 +98,7 @@ $("#guardarCertificaciones").click(function (e) {
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                      $('#miModal_certificaciones').modal('hide')
                     document.getElementById('formularioCertificaciones').reset();
-                    // Tablacontactosproveedor.ajax.reload()
+                    Tablacertificacionproveedores.ajax.reload()
 
         
             })
@@ -136,7 +136,7 @@ $("#guardarCertificaciones").click(function (e) {
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                      $('#miModal_certificaciones').modal('hide')
                     document.getElementById('formularioCertificaciones').reset();
-                    // Tablacontactosproveedor.ajax.reload()
+                    Tablacertificacionproveedores.ajax.reload()
 
 
                 }, 300);  
@@ -326,4 +326,52 @@ $('#Tablacertificacionproveedores tbody').on('click', 'td>button.EDITAR', functi
   
 });
 
+
+
+
+
+$(document).ready(function() {
+    $('#Tablacertificacionproveedores tbody').on('click', 'td>button.VISUALIZAR', function () {
+        var tr = $(this).closest('tr');
+        var row = Tablacertificacionproveedores.row(tr);
+        
+        hacerSoloLectura2(row.data(), '#miModal_certificaciones');
+
+        ID_FORMULARIO_CERTIFICACIONPROVEEDOR = row.data().ID_FORMULARIO_CERTIFICACIONPROVEEDOR;
+        editarDatoTabla(row.data(), 'formularioCertificaciones', 'miModal_certificaciones', 1);
+        
+        if (row.data().TIPO_DOCUMENTO === "Certificación") {
+            $('#DIV_CERTIFICACION').show();
+             $('#DIV_ACREDITACION').hide();
+            $('#DIV_AUTORIZACION').hide();
+            $('#DIV_MEMBRESIA').hide();
+             
+        } else if (row.data().TIPO_DOCUMENTO === "Acreditación") {
+             $('#DIV_ACREDITACION').show();
+             $('#DIV_CERTIFICACION').hide();
+            $('#DIV_MEMBRESIA').hide();
+             
+            
+         } else {
+             $('#DIV_MEMBRESIA').show();
+            $('#DIV_CERTIFICACION').hide();
+            $('#DIV_ACREDITACION').hide();
+            $('#DIV_AUTORIZACION').hide();
+              
+        }
+    
+    
+        if (row.data().REQUISITO_AUTORIZACION === "Si") {
+            $('#DIV_AUTORIZACION').show();
+        } else {
+            $('#DIV_AUTORIZACION').hide();
+        }
+    
+    });
+
+
+    $('#miModal_certificaciones').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_certificaciones');
+    });
+});
 
