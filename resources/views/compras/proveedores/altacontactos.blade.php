@@ -17,6 +17,7 @@
 
     <div class="card-body">
         <table id="Tablacontactosproveedor" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+            <i id="loadingIcon1" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
 
         </table>
     </div>
@@ -26,7 +27,7 @@
 <div class="modal fade" id="miModal_contactos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form method="post" enctype="multipart/form-data" id="formularioCertificaciones" style="background-color: #ffffff;">
+            <form method="post" enctype="multipart/form-data" id="formularioCONTACTOS" style="background-color: #ffffff;">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo contacto</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -39,33 +40,33 @@
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <label class="form-label">Funciones/áreas *</label>
-                                    <select class="form-control" name="TITULO_CUENTA[]" id="TITULO_CUENTA" multiple>
-                                        <option value="1">Compras</option>
-                                        <option value="2">Facturación</option>
-                                        <option value="3">Representante/apoderado legal</option>
-                                        <option value="4">Calidad</option>
-                                        <option value="5">Operaciones</option>
-                                        <option value="6">Logística</option>
-                                        <option value="7">Comercial ventas</option>
-
+                                    <select class="form-control" name="FUNCIONES_CUENTA[]" id="FUNCIONES_CUENTA" multiple>
+                                        @foreach ($funcionesCuenta as $funcion)
+                                        <option value="{{ $funcion->ID_CATALOGO_FUNCIONESPROVEEDOR }}">
+                                            {{ $funcion->NOMBRE_FUNCIONES }}
+                                        </option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     <label class="form-label">Título *</label>
                                     <select class="form-control" name="TITULO_CUENTA" id="TITULO_CUENTA" required>
                                         <option value="" selected disabled>Seleccione una opción</option>
-                                        <option value="1">Ingeniero</option>
-                                        <option value="2">Licenciado</option>
-                                        <option value="3">Arquitecto</option>
+                                        @foreach ($titulosCuenta as $titulo)
+                                        <option value="{{ $titulo->ABREVIATURA_TITULO }}">
+                                            {{ $titulo->NOMBRE_TITULO }}
+                                        </option>
+                                        @endforeach
                                     </select>
+
                                 </div>
                                 <div class="col-md-9 mb-3">
                                     <label class="form-label">Nombre *</label>
-                                    <input type="text" class="form-control" name="CONTACTO_SOLICITUD" required>
+                                    <input type="text" class="form-control" name="NOMBRE_CONTACTO_CUENTA" id="NOMBRE_CONTACTO_CUENTA" required>
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <label class="form-label">Cargo *</label>
-                                    <input type="text" class="form-control" name="CARGO_SOLICITUD" required>
+                                    <input type="text" class="form-control" name="CARGO_CONTACTO_CUENTA" id="CARGO_CONTACTO_CUENTA" required>
                                 </div>
                             </div>
                         </div>
@@ -74,19 +75,19 @@
                             <div class="row">
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">Teléfono</label>
-                                    <input type="text" class="form-control" name="TELEFONO_SOLICITUD">
+                                    <input type="text" class="form-control" name="TELEFONO_CONTACTO_CUENTA" id="TELEFONO_CONTACTO_CUENTA">
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">Extensión</label>
-                                    <input type="text" class="form-control" name="EXTENSION_SOLICITUD">
+                                    <input type="text" class="form-control" name="EXTENSION_CONTACTO_CUENTA" id="EXTENSION_CONTACTO_CUENTA">
                                 </div>
                                 <div class="col-md-4 mb-3">
                                     <label class="form-label">Celular *</label>
-                                    <input type="text" class="form-control" name="CELULAR_SOLICITUD" required>
+                                    <input type="text" class="form-control" name="CELULAR_CONTACTO_CUENTA" id="CELULAR_CONTACTO_CUENTA" required>
                                 </div>
                                 <div class="col-md-12 mb-3">
                                     <label class="form-label">Correo electrónico *</label>
-                                    <input type="email" class="form-control" name="CORREO_SOLICITUD" required>
+                                    <input type="email" class="form-control" name="CORREO_CONTACTO_CUENTA" id="CORREO_CONTACTO_CUENTA" required>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +97,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-success" id="guardarFormcategorias">Guardar</button>
+                    <button type="submit" class="btn btn-success" id="guardarCONTACTOS">Guardar</button>
                 </div>
             </form>
         </div>

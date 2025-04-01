@@ -15,9 +15,12 @@
         </button>
     </ol>
 
-    <div class="card-body">
-        <table id="Tablacuentasproveedores" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
 
+
+    <div class="card-body">
+        
+        <table id="Tablacuentasproveedores" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+            <i id="loadingIcon1" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
         </table>
     </div>
 </div>
@@ -68,7 +71,7 @@
 
                         <div class="col-12 mb-3" id="CLABE_INTERBANCARIA" style="display: block;">
                             <label class="form-label">CLABE interbancaria *</label>
-                            <input type="text" class="form-control" name="CLABE_INTERBANCARIA" id="CLABE_INTERBANCARIA" pattern="\d{18}" maxlength="18"  placeholder="Ingrese 18 dígitos">
+                            <input type="text" class="form-control" name="CLABE_INTERBANCARIA" id="CLABE_INTERBANCARIA" pattern="\d{18}" maxlength="18" placeholder="Ingrese 18 dígitos">
                         </div>
 
                         <div id="DIV_EXTRAJERO" style="display: none;">
@@ -89,7 +92,7 @@
 
                             <div class="col-12 mb-3">
                                 <label class="form-label">Dirección del banco *</label>
-                                <input type="text" class="form-control" name="DIRECCION_BANCO" id="DIRECCION_BANCO" >
+                                <input type="text" class="form-control" name="DIRECCION_BANCO" id="DIRECCION_BANCO">
                             </div>
 
                         </div>
@@ -118,7 +121,7 @@
                                 <i id="iconEliminarArchivo" class="bi bi-trash-fill ms-2 text-danger fs-5 d-none" style="cursor: pointer;" title="Eliminar archivo"></i>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
 

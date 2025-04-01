@@ -1,15 +1,15 @@
 //VARIABLES
-ID_CATALOGO_FUNCIONESPROVEEDOR = 0
+ID_CATALOGO_TITULOPROVEEDOR = 0
 
 
 
 
-const ModalArea = document.getElementById('miModal_funciones')
+const ModalArea = document.getElementById('miModal_titulos')
 ModalArea.addEventListener('hidden.bs.modal', event => {
     
     
-    ID_CATALOGO_FUNCIONESPROVEEDOR = 0
-    document.getElementById('formularioFunciones').reset();
+    ID_CATALOGO_TITULOPROVEEDOR = 0
+    document.getElementById('formularioTITULO').reset();
    
 
 
@@ -21,14 +21,14 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 
 
 
-$("#guardarFUNCIONES").click(function (e) {
+$("#guardarTITULOS").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioFunciones'))
+    formularioValido = validarFormulario($('#formularioTITULO'))
 
     if (formularioValido) {
 
-    if (ID_CATALOGO_FUNCIONESPROVEEDOR == 0) {
+    if (ID_CATALOGO_TITULOPROVEEDOR == 0) {
         
         alertMensajeConfirm({
             title: "¿Desea guardar la información?",
@@ -36,8 +36,8 @@ $("#guardarFUNCIONES").click(function (e) {
             icon: "question",
         },async function () { 
 
-            await loaderbtn('guardarFUNCIONES')
-            await ajaxAwaitFormData({ api: 1, ID_CATALOGO_FUNCIONESPROVEEDOR: ID_CATALOGO_FUNCIONESPROVEEDOR }, 'FuncionesareasSave', 'formularioFunciones', 'guardarFUNCIONES', { callbackAfter: true, callbackBefore: true }, () => {
+            await loaderbtn('guardarTITULOS')
+            await ajaxAwaitFormData({ api: 1, ID_CATALOGO_TITULOPROVEEDOR: ID_CATALOGO_TITULOPROVEEDOR }, 'TituloSave', 'formularioTITULO', 'guardarTITULOS', { callbackAfter: true, callbackBefore: true }, () => {
         
                
 
@@ -54,11 +54,11 @@ $("#guardarFUNCIONES").click(function (e) {
             }, function (data) {
                     
 
-                    ID_CATALOGO_FUNCIONESPROVEEDOR = data.funcion.ID_CATALOGO_FUNCIONESPROVEEDOR
+                    ID_CATALOGO_TITULOPROVEEDOR = data.titulo.ID_CATALOGO_TITULOPROVEEDOR
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
-                     $('#miModal_funciones').modal('hide')
-                    document.getElementById('formularioFunciones').reset();
-                    Tablafuncionescontacto.ajax.reload()
+                     $('#miModal_titulos').modal('hide')
+                    document.getElementById('formularioTITULO').reset();
+                    Tablatitulocontacto.ajax.reload()
 
            
                 
@@ -76,8 +76,8 @@ $("#guardarFUNCIONES").click(function (e) {
             icon: "question",
         },async function () { 
 
-            await loaderbtn('guardarFUNCIONES')
-            await ajaxAwaitFormData({ api: 1, ID_CATALOGO_FUNCIONESPROVEEDOR: ID_CATALOGO_FUNCIONESPROVEEDOR }, 'FuncionesareasSave', 'formularioFunciones', 'guardarFUNCIONES', { callbackAfter: true, callbackBefore: true }, () => {
+            await loaderbtn('guardarTITULOS')
+            await ajaxAwaitFormData({ api: 1, ID_CATALOGO_TITULOPROVEEDOR: ID_CATALOGO_TITULOPROVEEDOR }, 'TituloSave', 'formularioTITULO', 'guardarTITULOS', { callbackAfter: true, callbackBefore: true }, () => {
         
                 Swal.fire({
                     icon: 'info',
@@ -94,11 +94,11 @@ $("#guardarFUNCIONES").click(function (e) {
                 setTimeout(() => {
 
                     
-                    ID_CATALOGO_FUNCIONESPROVEEDOR = data.funcion.ID_CATALOGO_FUNCIONESPROVEEDOR
+                    ID_CATALOGO_TITULOPROVEEDOR = data.titulo.ID_CATALOGO_TITULOPROVEEDOR
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
-                     $('#miModal_funciones').modal('hide')
-                    document.getElementById('formularioFunciones').reset();
-                    Tablafuncionescontacto.ajax.reload()
+                     $('#miModal_titulos').modal('hide')
+                    document.getElementById('formularioTITULO').reset();
+                    Tablatitulocontacto.ajax.reload()
 
 
                 }, 300);  
@@ -115,7 +115,7 @@ $("#guardarFUNCIONES").click(function (e) {
 
 
 
-var Tablafuncionescontacto = $("#Tablafuncionescontacto").DataTable({
+var Tablatitulocontacto = $("#Tablatitulocontacto").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
     lengthMenu: [
@@ -134,12 +134,12 @@ var Tablafuncionescontacto = $("#Tablafuncionescontacto").DataTable({
         data: {},
         method: 'GET',
         cache: false,
-        url: '/Tablafuncionescontacto',
+        url: '/Tablatitulocontacto',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablafuncionescontacto.columns.adjust().draw();
+            Tablatitulocontacto.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -155,7 +155,7 @@ var Tablafuncionescontacto = $("#Tablafuncionescontacto").DataTable({
                 return meta.row + 1; 
             }
         },
-        { data: 'NOMBRE_FUNCIONES' },
+        { data: 'NOMBRE_TITULO' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
@@ -173,29 +173,29 @@ var Tablafuncionescontacto = $("#Tablafuncionescontacto").DataTable({
 
 
 
-$('#Tablafuncionescontacto tbody').on('change', 'td>label>input.ELIMINAR', function () {
+$('#Tablatitulocontacto tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablafuncionescontacto.row(tr);
+    var row = Tablatitulocontacto.row(tr);
 
     var estado = $(this).is(':checked') ? 1 : 0;
 
     data = {
         api: 1,
         ELIMINAR: estado == 0 ? 1 : 0, 
-        ID_CATALOGO_FUNCIONESPROVEEDOR: row.data().ID_CATALOGO_FUNCIONESPROVEEDOR
+        ID_CATALOGO_TITULOPROVEEDOR: row.data().ID_CATALOGO_TITULOPROVEEDOR
     };
 
-    eliminarDatoTabla(data, [Tablafuncionescontacto], 'FuncionesareasDelete');
+    eliminarDatoTabla(data, [Tablatitulocontacto], 'TituloDelete');
 });
 
 
 
-$('#Tablafuncionescontacto tbody').on('click', 'td>button.EDITAR', function () {
+$('#Tablatitulocontacto tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablafuncionescontacto.row(tr);
-    ID_CATALOGO_FUNCIONESPROVEEDOR = row.data().ID_CATALOGO_FUNCIONESPROVEEDOR;
+    var row = Tablatitulocontacto.row(tr);
+    ID_CATALOGO_TITULOPROVEEDOR = row.data().ID_CATALOGO_TITULOPROVEEDOR;
 
-    editarDatoTabla(row.data(), 'formularioFunciones', 'miModal_funciones',1);
+    editarDatoTabla(row.data(), 'formularioTITULO', 'miModal_titulos',1);
 
 
 });
@@ -203,20 +203,20 @@ $('#Tablafuncionescontacto tbody').on('click', 'td>button.EDITAR', function () {
 
 
 $(document).ready(function() {
-    $('#Tablafuncionescontacto tbody').on('click', 'td>button.VISUALIZAR', function () {
+    $('#Tablatitulocontacto tbody').on('click', 'td>button.VISUALIZAR', function () {
         var tr = $(this).closest('tr');
-        var row = Tablafuncionescontacto.row(tr);
+        var row = Tablatitulocontacto.row(tr);
         
-        hacerSoloLectura(row.data(), '#miModal_funciones');
+        hacerSoloLectura(row.data(), '#miModal_titulos');
 
-        ID_CATALOGO_FUNCIONESPROVEEDOR = row.data().ID_CATALOGO_FUNCIONESPROVEEDOR;
-        editarDatoTabla(row.data(), 'formularioFunciones', 'miModal_funciones', 1);
+        ID_CATALOGO_TITULOPROVEEDOR = row.data().ID_CATALOGO_TITULOPROVEEDOR;
+        editarDatoTabla(row.data(), 'formularioTITULO', 'miModal_titulos', 1);
         
 
     });
 
-    $('#miModal_funciones').on('hidden.bs.modal', function () {
-        resetFormulario('#miModal_funciones');
+    $('#miModal_titulos').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_titulos');
     });
 });
 

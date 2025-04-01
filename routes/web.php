@@ -99,6 +99,8 @@ use App\Http\Controllers\proveedor\directorioController;
 use App\Http\Controllers\proveedor\altaproveedorController;
 use App\Http\Controllers\proveedor\altacuentaController;
 use App\Http\Controllers\proveedor\altacontactoController;
+use App\Http\Controllers\proveedor\altacerticacionController;
+
 
 use App\Http\Controllers\proveedor\catalagofuncionesproveedorController;
 use App\Http\Controllers\proveedor\catalagotituloproveedorController;
@@ -683,9 +685,20 @@ Route::get('/obtenerDatosProveedor', [altaproveedorController::class, 'obtenerDa
 Route::post('/AltaSave', [altaproveedorController::class, 'store']);
 
 
-
+//ALTA DE CERTIFICACIONES
 Route::get('/Proveedores_Certificaciones', function () {return view('compras.proveedores.altacertificacion');});
- Route::get('/Proveedores_Referencias', function () {return view('compras.proveedores.altareferencias');});
+Route::post('/AltacertificacionSave', [altacerticacionController::class, 'store']);
+Route::get('/Tablacertificacionproveedores', [altacerticacionController::class, 'Tablacertificacionproveedores']);
+Route::get('/CertificacionDelete', [altacerticacionController::class, 'store']);
+
+
+Route::get('/mostrarcertificacion/{id}', [altacerticacionController::class, 'mostrarcertificacion']);
+Route::get('/mostraracreditacion/{id}', [altacerticacionController::class, 'mostraracreditacion']);
+Route::get('/mostrarautorizacion/{id}', [altacerticacionController::class, 'mostrarautorizacion']);
+Route::get('/mostrarmembresia/{id}', [altacerticacionController::class, 'mostrarmembresia']);
+
+
+Route::get('/Proveedores_Referencias', function () {return view('compras.proveedores.altareferencias');});
 
 
 //ALTA DE CONTACTOS
@@ -693,6 +706,7 @@ Route::get('/Proveedores_Certificaciones', function () {return view('compras.pro
 Route::get('/Proveedores_Contactos', [altacontactoController::class, 'index']);
 Route::get('/Tablacontactosproveedor', [altacontactoController::class, 'Tablacontactosproveedor']);
 Route::post('/AltacontactoSave', [altacontactoController::class, 'store']);
+Route::get('/ContactoDelete', [altacontactoController::class, 'store']);
 
 
 

@@ -191,11 +191,11 @@
                             <hr class="dropdown-divider"> --}}
                             <li><a class="dropdown-item" href="{{url('/Catálogos_proveedores')}}">Catálogos de proveedores</a>
                             </li>
-                            
+
                         </ul>
                         </li>
                     </ul>
-                    </ul>
+                </ul>
 
 
                 </ul>
@@ -322,6 +322,15 @@
     @endif
 
 
+
+
+    @if(request()->is('Catálogo_funciones'))
+    <script src="/assets/js_sitio/proveedor/catalogos/catalogofunciones.js?v=1.0"></script>
+    @endif
+
+    @if(request()->is('Catálogo_títulos'))
+    <script src="/assets/js_sitio/proveedor/catalogos/catalogotitulos.js?v=1.0"></script>
+    @endif
 
 
 

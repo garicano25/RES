@@ -113,8 +113,6 @@ $("#guardarCuentas").click(function (e) {
 
 
 
-
-
 var Tablacuentasproveedores = $("#Tablacuentasproveedores").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
@@ -129,6 +127,7 @@ var Tablacuentasproveedores = $("#Tablacuentasproveedores").DataTable({
     scrollY: '65vh',
     scrollCollapse: true,
     responsive: true,
+    destroy: true,
     ajax: {
         dataType: 'json',
         data: {},
@@ -136,18 +135,19 @@ var Tablacuentasproveedores = $("#Tablacuentasproveedores").DataTable({
         cache: false,
         url: '/Tablacuentasproveedores',
         beforeSend: function () {
-            mostrarCarga();
+            $('#loadingIcon1').css('display', 'inline-block');
         },
         complete: function () {
-            Tablacuentasproveedores.columns.adjust().draw();
-            ocultarCarga();
+            $('#loadingIcon1').css('display', 'none');
+            Tablacuentasproveedores.columns.adjust().draw(); 
         },
         error: function (jqXHR, textStatus, errorThrown) {
+            $('#loadingIcon1').css('display', 'none');
             alertErrorAJAX(jqXHR, textStatus, errorThrown);
         },
         dataSrc: 'data'
     },
-    order: [[0, 'asc']], 
+    order: [[0, 'asc']],
     columns: [
         { 
             data: null,
@@ -172,6 +172,9 @@ var Tablacuentasproveedores = $("#Tablacuentasproveedores").DataTable({
         { targets: 6, title: 'Activo', className: 'all text-center' }
     ]
 });
+
+
+
 
 
 
@@ -229,7 +232,7 @@ $(document).ready(function() {
         var tr = $(this).closest('tr');
         var row = Tablacuentasproveedores.row(tr);
         
-        hacerSoloLectura(row.data(), '#miModal_cuentas');
+        hacerSoloLectura2(row.data(), '#miModal_cuentas');
 
         ID_FORMULARIO_CUENTAPROVEEDOR = row.data().ID_FORMULARIO_CUENTAPROVEEDOR;
         editarDatoTabla(row.data(), 'formularioCuentas', 'miModal_cuentas', 1);

@@ -16,8 +16,9 @@
     </ol>
 
     <div class="card-body">
-        <table id="Tablacategoria" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
 
+        <table id="Tablacertificacionproveedores" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+            <i id="loadingIcon1" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
         </table>
     </div>
 </div>
@@ -36,7 +37,7 @@
                     <div class="row">
                         <div class="col-12 mb-3">
                             <label class="form-label">Seleccione el tipo *</label>
-                            <select class="form-control" id="TIPO_DOCUMENTO" required>
+                            <select class="form-control" id="TIPO_DOCUMENTO" name="TIPO_DOCUMENTO" required>
                                 <option value="" selected disabled>Seleccione una opción</option>
                                 <option value="Certificación">Certificación</option>
                                 <option value="Acreditación">Acreditación</option>
@@ -49,27 +50,36 @@
                             <div class="row">
                                 <div class="col-6 mb-3">
                                     <label class="form-label">Norma estándar *</label>
-                                    <input type="text" class="form-control" name="NORMA_CERTIFICACION">
+                                    <input type="text" class="form-control" name="NORMA_CERTIFICACION" id="NORMA_CERTIFICACION">
                                 </div>
                                 <div class="col-6 mb-3">
                                     <label class="form-label">Versión *</label>
-                                    <input type="text" class="form-control" name="VERSION_CERTIFICACION">
+                                    <input type="text" class="form-control" name="VERSION_CERTIFICACION" id="VERSION_CERTIFICACION">
                                 </div>
                                 <div class="col-12 mb-3">
                                     <label class="form-label">Organismo certificador *</label>
-                                    <input type="text" class="form-control" name="ENTIDAD_CERTIFICADORA">
+                                    <input type="text" class="form-control" name="ENTIDAD_CERTIFICADORA" id="ENTIDAD_CERTIFICADORA">
                                 </div>
+
                                 <div class="col-6 mb-3">
-                                    <label class="form-label">Desde *</label>
-                                    <input type="date" class="form-control" name="DESDE_CERTIFICACION">
+                                    <label>Certificado desde *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_CERTIFICACION" name="DESDE_CERTIFICACION">
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
                                 </div>
+
                                 <div class="col-6 mb-3">
-                                    <label class="form-label">Hasta *</label>
-                                    <input type="date" class="form-control" name="HASTA_CERTIFICACION">
+                                    <label>Hasta *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="HASTA_CERTIFICACION" name="HASTA_CERTIFICACION">
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
                                 </div>
+
                                 <div class="col-12 mb-3">
                                     <label class="form-label">Subir archivo (PDF) *</label>
-                                    <input type="file" class="form-control" name="DOCUMENTO_CERTIFICACION" accept=".pdf">
+                                    <input type="file" class="form-control" name="DOCUMENTO_CERTIFICACION" id="DOCUMENTO_CERTIFICACION" accept=".pdf">
                                 </div>
                             </div>
                         </div>
@@ -79,23 +89,34 @@
                             <div class="row">
                                 <div class="col-6 mb-3">
                                     <label class="form-label">Norma *</label>
-                                    <input type="text" class="form-control" name="NORMA_ACREDITACION">
+                                    <input type="text" class="form-control" name="NORMA_ACREDITACION" id="NORMA_ACREDITACION">
                                 </div>
                                 <div class="col-6 mb-3">
                                     <label class="form-label">Versión *</label>
-                                    <input type="text" class="form-control" name="VERSION_ACREDITACION">
+                                    <input type="text" class="form-control" name="VERSION_ACREDITACION" id="VERSION_ACREDITACION">
                                 </div>
                                 <div class="col-12 mb-3">
                                     <label class="form-label">Alcance de la certificación *</label>
-                                    <input type="text" class="form-control" name="ALCANCE_ACREDITACION">
+                                    <input type="text" class="form-control" name="ALCANCE_ACREDITACION" id="ALCANCE_ACREDITACION">
                                 </div>
                                 <div class="col-12 mb-3">
                                     <label class="form-label">Organismo acreditador *</label>
-                                    <input type="text" class="form-control" name="ENTIDAD_ACREDITADORA">
+                                    <input type="text" class="form-control" name="ENTIDAD_ACREDITADORA" id="ENTIDAD_ACREDITADORA">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label>Acreditado desde *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_ACREDITACION" name="DESDE_ACREDITACION">
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">Subir archivo (PDF) *</label>
+                                    <input type="file" class="form-control" name="DOCUMENTO_ACREDITACION" id="DOCUMENTO_ACREDITACION" accept=".pdf">
                                 </div>
                                 <div class="col-12 mb-3">
                                     <label class="form-label">¿El estándar requiere aprobación o autorización? *</label>
-                                    <select class="form-control" id="REQUISITO_AUTORIZACION">
+                                    <select class="form-control" id="REQUISITO_AUTORIZACION" name="REQUISITO_AUTORIZACION">
                                         <option value="" selected disabled>Seleccione una opción</option>
                                         <option value="Si">Sí</option>
                                         <option value="No">No</option>
@@ -105,15 +126,29 @@
                                     <div class="row">
                                         <div class="col-12 mb-3">
                                             <label class="form-label">Entidad *</label>
-                                            <input type="text" class="form-control" name="ENTIDAD_AUTORIZADORA">
+                                            <input type="text" class="form-control" name="ENTIDAD_AUTORIZADORA" id="ENTIDAD_AUTORIZADORA">
                                         </div>
+
                                         <div class="col-6 mb-3">
-                                            <label class="form-label">Desde *</label>
-                                            <input type="date" class="form-control" name="DESDE_ACREDITACION">
+                                            <label>Desde *</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_AUTORIZACION" name="DESDE_AUTORIZACION">
+                                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                            </div>
                                         </div>
+
+
                                         <div class="col-6 mb-3">
-                                            <label class="form-label">Hasta *</label>
-                                            <input type="date" class="form-control" name="HASTA_ACREDITACION">
+                                            <label>Desde *</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="HASTA_ACREDITACION" name="HASTA_ACREDITACION">
+                                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 mb-3">
+                                            <label class="form-label">Subir archivo (PDF) *</label>
+                                            <input type="file" class="form-control" name="DOCUMENTO_AUTORIZACION" id="DOCUMENTO_AUTORIZACION" accept=".pdf">
                                         </div>
                                     </div>
                                 </div>
@@ -125,19 +160,27 @@
                             <div class="row">
                                 <div class="col-12 mb-3">
                                     <label class="form-label">Nombre de la entidad *</label>
-                                    <input type="text" class="form-control" name="NOMBRE_ENTIDAD_MEMBRESIA">
+                                    <input type="text" class="form-control" name="NOMBRE_ENTIDAD_MEMBRESIA" id="NOMBRE_ENTIDAD_MEMBRESIA">
                                 </div>
+
                                 <div class="col-6 mb-3">
-                                    <label class="form-label">Membresía desde *</label>
-                                    <input type="date" class="form-control" name="DESDE_MEMBRESIA">
+                                    <label>Miembro desde *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_MEMBRESIA" name="DESDE_MEMBRESIA">
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
                                 </div>
+
                                 <div class="col-6 mb-3">
-                                    <label class="form-label">Vigencia hasta *</label>
-                                    <input type="date" class="form-control" name="HASTA_MEMBRESIA">
+                                    <label>Vigencia hasta *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="HASTA_MEMBRESIA" name="HASTA_MEMBRESIA">
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
                                 </div>
                                 <div class="col-12 mb-3">
                                     <label class="form-label">Subir archivo (PDF) *</label>
-                                    <input type="file" class="form-control" name="DOCUMENTO_MEMBRESIA" accept=".pdf">
+                                    <input type="file" class="form-control" name="DOCUMENTO_MEMBRESIA" id="DOCUMENTO_MEMBRESIA" accept=".pdf">
                                 </div>
                             </div>
                         </div>
@@ -145,25 +188,12 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-success" id="guardarFormCertificaciones">Guardar</button>
+                    <button type="submit" class="btn btn-success" id="guardarCertificaciones">Guardar</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
-<script>
-    document.getElementById('TIPO_DOCUMENTO').addEventListener('change', function() {
-        let tipo = this.value;
-        document.getElementById('DIV_CERTIFICACION').style.display = (tipo === 'Certificación') ? 'block' : 'none';
-        document.getElementById('DIV_ACREDITACION').style.display = (tipo === 'Acreditación') ? 'block' : 'none';
-        document.getElementById('DIV_MEMBRESIA').style.display = (tipo === 'Membresía') ? 'block' : 'none';
-    });
-
-    document.getElementById('REQUISITO_AUTORIZACION').addEventListener('change', function() {
-        document.getElementById('DIV_AUTORIZACION').style.display = (this.value === 'Si') ? 'block' : 'none';
-    });
-</script>
 
 
 
