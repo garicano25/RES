@@ -9,11 +9,13 @@ use Illuminate\Http\Request;
 use App\Models\proveedor\altacontactos;
 use App\Models\proveedor\catalogofuncionesproveedorModel;
 use App\Models\proveedor\catalogotituloproveedorModel;
+use App\Models\proveedor\catalogodocumentoproveedorModel;
 
 use App\Models\proveedor\altacertificacionModel;
 use App\Models\proveedor\altacuentaModel;
 use App\Models\proveedor\altaproveedorModel;
 use App\Models\proveedor\altareferenciasModel;
+use App\Models\proveedor\altadocumentosModel;
 
 
 class listaproveedorController extends Controller
@@ -23,7 +25,9 @@ class listaproveedorController extends Controller
         $funcionesCuenta = catalogofuncionesproveedorModel::all();
         $titulosCuenta = catalogotituloproveedorModel::where('ACTIVO', 1)->get();
 
-        return view('compras.listaproveedor.listaproveedores', compact('funcionesCuenta', 'titulosCuenta'));
+        $documetoscatalogo = catalogodocumentoproveedorModel::all();
+
+        return view('compras.listaproveedor.listaproveedores', compact('funcionesCuenta', 'titulosCuenta', 'documetoscatalogo'));
     }
 
 
@@ -245,7 +249,45 @@ public function Tablareferencias(Request $request)
 }
 
 
-public function store(Request $request)
+
+    // TABLA DOCUMENTOS DE SOPORTE
+
+
+    public function Tabladocumentosoporteproveedores(Request $request)
+    {
+        try {
+            $rfc = $request->get('rfc');
+
+            $tabla = altadocumentosModel::where('RFC_PROVEEDOR', $rfc)->get();
+
+
+            foreach ($tabla as $value) {
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_DOCUMENTOSPROVEEDOR . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-caratula" data-id="' . $value->ID_FORMULARIO_DOCUMENTOSPROVEEDOR . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_DOCUMENTOSPROVEEDOR . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-caratula" data-id="' . $value->ID_FORMULARIO_DOCUMENTOSPROVEEDOR . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                }
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
+
+    public function store(Request $request)
 {
     try {
         switch (intval($request->api)) {

@@ -101,12 +101,15 @@ use App\Http\Controllers\proveedor\altacuentaController;
 use App\Http\Controllers\proveedor\altacontactoController;
 use App\Http\Controllers\proveedor\altacerticacionController;
 use App\Http\Controllers\proveedor\altareferenciasController;
+use App\Http\Controllers\proveedor\altadocumentosController;
 
 use App\Http\Controllers\proveedor\listaproveedorController;
 
 
 use App\Http\Controllers\proveedor\catalagofuncionesproveedorController;
 use App\Http\Controllers\proveedor\catalagotituloproveedorController;
+use App\Http\Controllers\proveedor\catalagodocumentosproveedorController;
+
 
 
 
@@ -651,6 +654,23 @@ Route::get('/ServicioDelete', [directorioController::class, 'store']);
 
 //==============================================    LISTA DE PROVEEDORES  ============================================== 
 
+Route::get('/Lista_proveedores', [listaproveedorController::class, 'index']);
+Route::get('/Tablalistaproveedores', [listaproveedorController::class, 'Tablalistaproveedores']);
+Route::post('/AltaSave1', [listaproveedorController::class, 'store']);
+Route::get('/Tablacuentas', [listaproveedorController::class, 'Tablacuentas']);
+Route::get('/Tablacontactos', [listaproveedorController::class, 'Tablacontactos']);
+Route::get('/Tablacertificaciones', [listaproveedorController::class, 'Tablacertificaciones']);
+Route::get('/Tablareferencias', [listaproveedorController::class, 'Tablareferencias']);
+Route::get('/Tabladocumentosoporteproveedores', [listaproveedorController::class, 'Tabladocumentosoporteproveedores']);
+
+
+
+//==============================================    ORDEN DE COMPRA  ============================================== 
+
+
+Route::get('/Matriz_comparativa', function () {return view('compras.ordencompra.matrizcomparativa');});
+
+Route::get('/Orden_compra', function () { return view('compras.ordencompra.ordencompra');});
 
 //==============================================   CATALOGOS PROVEEDORES  ============================================== 
 Route::get('/Catálogos_proveedores', function () {return view('compras.Catalogos.catalogo_generales');});
@@ -672,14 +692,16 @@ Route::get('/Tablatitulocontacto', [catalagotituloproveedorController::class, 'T
 Route::get('/TituloDelete', [catalagotituloproveedorController::class, 'store']);
 
 
+//  CATALOGO DOCUMENTOS DE SOPORTE DEL PROVEEDOR 
+
+
+Route::get('/Catálogo_documento_soporte', function () {return view('compras.Catalogos.catalogo_documentosoporte');});
+Route::post('/DocumentosSave', [catalagodocumentosproveedorController::class, 'store']);
+Route::get('/Tabladocumentosoportes', [catalagodocumentosproveedorController::class, 'Tabladocumentosoportes']);
+Route::get('/DocumentosDelete', [catalagodocumentosproveedorController::class, 'store']);
+
+
 //==============================================  PROVEEDOR  ============================================== 
-Route::get('/Lista_proveedores', [listaproveedorController::class, 'index']);
-Route::get('/Tablalistaproveedores', [listaproveedorController::class, 'Tablalistaproveedores']);
-Route::post('/AltaSave1', [listaproveedorController::class, 'store']);
-Route::get('/Tablacuentas', [listaproveedorController::class, 'Tablacuentas']);
-Route::get('/Tablacontactos', [listaproveedorController::class, 'Tablacontactos']);
-Route::get('/Tablacertificaciones', [listaproveedorController::class, 'Tablacertificaciones']);
-Route::get('/Tablareferencias', [listaproveedorController::class, 'Tablareferencias']);
 
 
 //  DIRECTORIO EXTERNO
@@ -723,9 +745,16 @@ Route::post('/AltacontactoSave', [altacontactoController::class, 'store']);
 Route::get('/ContactoDelete', [altacontactoController::class, 'store']);
 
 
+//ALTA DOCUMENTOS DE SOPORTE
 
+Route::get('/Proveedores_documentos', [altadocumentosController::class, 'index']);
 
-Route::get('/Proveedores_documentos', function () { return view('compras.proveedores.altadocumentosoporte');});
+// Route::get('/Proveedores_documentos', function () { return view('compras.proveedores.altadocumentosoporte');});
+
+Route::get('/Tabladocumentosproveedores', [altadocumentosController::class, 'Tabladocumentosproveedores']);
+Route::post('/AltaDocumentosSave', [altadocumentosController::class, 'store']);
+Route::get('/DocumentosDelete', [altadocumentosController::class, 'store']);
+
 
 
 //ALTA DE CUENTAS BANCARIAS 

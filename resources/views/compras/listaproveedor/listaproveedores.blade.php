@@ -107,7 +107,7 @@
                 <li class="nav-item" style="display: none;">
                     <a class="nav-link" id="datosgenerales-tab" data-toggle="tab" href="#datosgenerales" role="tab" aria-controls="datosgenerales" aria-selected="false">Expediente del proveedores</a>
                 </li>
-               
+
             </ul>
         </div>
         <div class="card-body">
@@ -119,10 +119,10 @@
                         <h3 style="color: #ffffff; margin: 0;">
                             <i class="bi bi-folder2-open"></i>&nbsp;&nbsp;Proveedores
                         </h3>
-                       
+
                     </ol>
 
-                   
+
 
                     <div class="card-body position-relative" id="tabla_activo" style="display: block;">
                         <i id="loadingIcon1" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
@@ -130,7 +130,7 @@
                         </table>
                     </div>
 
-                   
+
                 </div>
 
 
@@ -147,7 +147,7 @@
                                                     <h7 style="margin: 0px;">
                                                         <i class="bi bi-person-circle"></i>&nbsp;&nbsp; <span class="text-primary div_trabajador_nombre">RFC PROVEEDOR</span>
                                                     </h7>
-                                                   
+
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -157,7 +157,7 @@
                         </div>
                     </div>
 
-                  
+
 
                     <div class="row">
                         <div class="col-12 mt-5">
@@ -201,7 +201,7 @@
                                         <span>Documentos de soporte</span>
                                     </div>
 
-                                   
+
 
                                 </div>
                             </div>
@@ -222,11 +222,11 @@
                         <!-- Formulario de Datos Generales -->
                         <form method="post" enctype="multipart/form-data" id="formularioALTA">
                             {!! csrf_field() !!}
-                
-                
-                
-                
-                
+
+
+
+
+
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-3 mb-3">
@@ -275,21 +275,21 @@
                                             <option value="20">Enajenación de acciones en bolsa de valores </option>
                                             <option value="21">Régimen de los ingresos por obtención de premios </option>
                                             <option value="22">Otro </option>
-                
-                
+
+
                                         </select>
                                     </div>
-                
-                
+
+
                                     <div class="mb-3 text-center">
                                         <h4><b>Datos generales</b></label>
                                     </div>
-                
-                
+
+
                                     <div class="col-12" id="DOMICILIO_NACIONAL" style="display: block;">
-                
+
                                         <div class="row">
-                
+
                                             <div class="col-3 mb-3">
                                                 <label>Código Postal *</label>
                                                 <input type="number" class="form-control" name="CODIGO_POSTAL" id="CODIGO_POSTAL">
@@ -302,7 +302,7 @@
                                                 <label>Nombre de la Vialidad *</label>
                                                 <input type="text" class="form-control" name="NOMBRE_VIALIDAD_EMPRESA" id="NOMBRE_VIALIDAD_EMPRESA">
                                             </div>
-                
+
                                             <div class="col-3 mb-3">
                                                 <label>Número Exterior</label>
                                                 <input type="number" class="form-control" name="NUMERO_EXTERIOR_EMPRESA" id="NUMERO_EXTERIOR_EMPRESA">
@@ -321,8 +321,8 @@
                                                 <label>Nombre de la Localidad *</label>
                                                 <input type="text" class="form-control" name="NOMBRE_LOCALIDAD_EMPRESA" id="NOMBRE_LOCALIDAD_EMPRESA">
                                             </div>
-                
-                
+
+
                                             <div class="col-6 mb-3">
                                                 <label>Nombre del municipio o demarcación territorial *</label>
                                                 <input type="text" class="form-control" name="NOMBRE_MUNICIPIO_EMPRESA" id="NOMBRE_MUNICIPIO_EMPRESA">
@@ -335,9 +335,9 @@
                                                 <label>País *</label>
                                                 <input type="text" class="form-control" name="PAIS_EMPRESA" id="PAIS_EMPRESA">
                                             </div>
-                
-                
-                
+
+
+
                                             <div class="col-6 mb-3">
                                                 <label>Entre Calle</label>
                                                 <input type="text" class="form-control" name="ENTRE_CALLE_EMPRESA" id="ENTRE_CALLE_EMPRESA">
@@ -346,16 +346,16 @@
                                                 <label>Y Calle</label>
                                                 <input type="text" class="form-control" name="ENTRE_CALLE2_EMPRESA" id="ENTRE_CALLE2_EMPRESA">
                                             </div>
-                
+
                                         </div>
                                     </div>
-                
-                
-                
+
+
+
                                     <div class="col-12" id="DOMICILIO_ERXTRANJERO" style="display: none;">
-                
+
                                         <div class="row">
-                
+
                                             <div class="col-12 mb-3">
                                                 <label>Domicilio *</label>
                                                 <input type="text" class="form-control" name="DOMICILIO_EXTRANJERO" id="DOMICILIO_EXTRANJERO">
@@ -368,46 +368,46 @@
                                                 <label>Ciudad *</label>
                                                 <input type="text" class="form-control" name="CIUDAD_EXTRANJERO" id="CIUDAD_EXTRANJERO">
                                             </div>
-                
+
                                             <div class="col-6 mb-3">
                                                 <label>Estado/Departamento/Provincia</label>
                                                 <input type="text" class="form-control" name="ESTADO_EXTRANJERO" id="ESTADO_EXTRANJERO">
                                             </div>
-                
+
                                             <div class="col-6 mb-3">
                                                 <label>País *</label>
                                                 <input type="text" class="form-control" name="PAIS_EXTRANJERO" id="PAIS_EXTRANJERO">
                                             </div>
-                
+
                                         </div>
                                     </div>
-                
-                
-                
-                
-                
+
+
+
+
+
                                     <div class="col-6 mb-3">
                                         <label>Correo electrónico *</label>
                                         <input type="text" class="form-control" name="CORRE_TITULAR_ALTA" id="CORRE_TITULAR_ALTA" required>
                                     </div>
-                
+
                                     <div class="col-6 mb-3">
                                         <label>Teléfono oficina *</label>
                                         <input type="text" class="form-control" name="TELEFONO_OFICINA_ALTA" id="TELEFONO_OFICINA_ALTA" required>
                                     </div>
-                
+
                                     <div class="col-12 mb-3">
                                         <label>Página web </label>
                                         <input type="text" class="form-control" name="PAGINA_WEB_ALTA" id="PAGINA_WEB_ALTA">
                                     </div>
-                
-                
+
+
                                     <div class="mb-3 text-center">
                                         <h4><b>Actividad económica y términos comerciales</b></label>
                                     </div>
-                
-                
-                
+
+
+
                                     <div class="col-12 mb-3 d-flex align-items-center">
                                         <div class="form-check me-3">
                                             <input class="form-check-input" type="radio" name="ACTIVIDAD_ECONOMICA" id="VENTA_PRODUCTOS" value="1" required>
@@ -418,21 +418,21 @@
                                             <label class="form-check-label" for="VENTA_SERVICIOS">Venta de servicios</label>
                                         </div>
                                     </div>
-                
+
                                     <div id="CUAL_ACTIVIAD" class="col-12 mb-3" style="display: none;">
                                         <label>Cuál</label>
                                         <input type="text" class="form-control" name="CUAL_ACTVIDAD_ECONOMICA" id="CUAL_ACTVIDAD_ECONOMICA">
                                     </div>
-                
+
                                     <div class="col-12 mb-3">
                                         <label>Actividad comercial principal</label>
                                         <input type="text" class="form-control" name="ACTVIDAD_COMERCIAL" id="ACTVIDAD_COMERCIAL" required>
                                     </div>
-                
+
                                     <div class="col-12 mb-3">
                                         <label class="me-3">Descuentos que ofrece</label>
                                     </div>
-                
+
                                     <div class="col-12 mb-3 d-flex align-items-center">
                                         <div class="form-check me-3">
                                             <input class="form-check-input" type="radio" name="DESCUENTOS_ACTIVIDAD_ECONOMICA" id="POR_PAGO" value="1" required>
@@ -451,32 +451,32 @@
                                             <label class="form-check-label" for="OTROS_DESCUENTO">Otros</label>
                                         </div>
                                     </div>
-                
+
                                     <div id="CUAL_DESCUENTOS" class="col-12 mb-3" style="display: none;">
                                         <label>Cuál</label>
                                         <input type="text" class="form-control" name="CUAL_DESCUENTOS_ECONOMICA" id="CUAL_DESCUENTOS_ECONOMICA">
                                     </div>
-                
+
                                     <div class="col-12 mb-3">
                                         <label>Días de crédito que otorga *</label>
                                         <input type="number" class="form-control" name="DIAS_CREDITO_ALTA" id="DIAS_CREDITO_ALTA">
                                     </div>
-                
+
                                     <div class="col-12 mb-3">
                                         <label>Otros términos comerciales de importancia </label>
                                         <textarea type="number" class="form-control" name="TERMINOS_IMPORTANCIAS_ALTA" id="TERMINOS_IMPORTANCIAS_ALTA" rows="5"></textarea>
                                     </div>
-                
-                
-                
-                
-                
-                
-                
+
+
+
+
+
+
+
                                     <div class="mb-3 text-center">
                                         <h4><b>Información adicional para la debida diligencia</b></label>
                                     </div>
-                
+
                                     <div class="col-12 mb-3">
                                         <label class="form-label">¿Usted o la compañía tiene vínculos familiares hasta en tercer grado de consanguinidad con personal que laboran en Results In Performance, sus filiales o cualquier tipo de vínculo puede ser personal o laboral que pueda generar un conflicto de interés?</label>
                                         <div class="form-check d-inline-block me-3">
@@ -505,12 +505,12 @@
                                             <label class="form-check-label" for="NO_NUMEROPROVEEDOR">No</label>
                                         </div>
                                     </div>
-                
+
                                     <div class="col-12 mb-3" id="DIV_NUMEROPROVEEDOR" style="display: none">
                                         <label class="form-label">No. de proveedor:</label>
                                         <input type="text" class="form-control" name="NUMERO_PROVEEDOR" id="NUMERO_PROVEEDOR">
                                     </div>
-                
+
                                     <div class="col-12 mb-3 d-flex align-items-center">
                                         <label class="me-3">¿Alguno de sus empleados clave o miembro de la alta dirección de su organización proporciona o proporcionará beneficios financieros o de cualquier otro tipo a algún empleado de Pemex o la Sociedad, a algún funcionario de gobierno o un miembro de la familia de un funcionario de gobierno (por ejemplo, asistencia educativa o médica, vivienda), es decir, Personas Políticamente Expuestas?</label>
                                     </div>
@@ -524,15 +524,15 @@
                                             <label class="form-check-label" for="NO_BENEFICIOS_PERSONA">No</label>
                                         </div>
                                     </div>
-                
-                
-                
+
+
+
                                 </div>
                             </div>
-                
-                
-                
-                
+
+
+
+
                             <div class="col-12 text-center">
                                 <div class="col-md-6 mx-auto">
                                     <button type="submit" id="guardarALTA" class="btn btn-success w-100">
@@ -540,13 +540,13 @@
                                     </button>
                                 </div>
                             </div>
-                
-                
+
+
                         </form>
 
 
 
-                       
+
 
 
                     </div> {{-- FINALIZA EL TAB DE EXPEDIENTE COLABORADOR --}}
@@ -561,7 +561,7 @@
                     <div id="step2-content" style="display: none;">
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-person-lines-fill"></i>&nbsp;Información para pago/depósito/transferencia interbancaria</h3>
-                           
+
                         </ol>
                         <div class="card-body position-relative">
                             <i id="loadingIcon2" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
@@ -577,7 +577,7 @@
                     <div id="step3-content" style="display: none;">
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-person-lines-fill"></i>&nbsp;Contactos</h3>
-                           
+
                         </ol>
                         <div class="card-body position-relative">
                             <i id="loadingIcon3" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
@@ -594,7 +594,7 @@
                     <div id="step4-content" style="display: none;">
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-award-fill"></i>&nbsp;Certificaciones, acreditaciones y membresías</h3>
-                           
+
                         </ol>
                         <div class="card-body position-relative">
                             <i id="loadingIcon4" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
@@ -609,7 +609,7 @@
                     <div id="step5-content" style="display: none;">
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-journal-text"></i>&nbsp;Referencia comerciales</h3>
-                           
+
                         </ol>
                         <div class="card-body position-relative">
                             <i id="loadingIcon5" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
@@ -623,15 +623,11 @@
 
                     <div id="step6-content" style="display: none;">
                         <ol class="breadcrumb mt-5">
-                            <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-person-fill"></i> &nbsp; Requisición de personal
-                            </h3>
-                            <button type="button" class="btn btn-light waves-effect waves-light " id="NUEVO_REQUISICION" style="margin-left: auto;">
-                                Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
-                            </button>
+                            <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-pdf-fill"></i>&nbsp;Documentos de soporte</h3>
                         </ol>
                         <div class="card-body position-relative">
-                            <i id="loadingIcon13" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
-                            <table id="Tablarequisicioncontratacion" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                            <i id="loadingIcon6" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                            <table id="Tabladocumentosoporteproveedores" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
                             </table>
                         </div>
                     </div>
@@ -1122,7 +1118,7 @@
 
                                 <input type="hidden" name="REFERENCIA_VIGENTE" id="referenciaVigenteInput">
 
-                                
+
                                 <div class="col-4 mb-3">
                                     <label class="form-label">Hasta *</label>
                                     <div class="input-group">
@@ -1146,7 +1142,59 @@
 </div>
 
 
+<!-- ============================================================== -->
+<!-- MODAL DOCUMENTOS DE SOPORTE-->
+<!-- ============================================================== -->
 
+
+<div class="modal fade" id="miModal_documentos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post" enctype="multipart/form-data" id="formularioDOCUMENTOS" style="background-color: #ffffff;">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo documento</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {!! csrf_field() !!}
+
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Documento *</label>
+                            <select class="form-control" name="NOMBRE_DOCUMENTO" id="NOMBRE_DOCUMENTO" required>
+                                <option value="" selected disabled>Seleccione una opción</option>
+
+                                @foreach ($documetoscatalogo as $documento)
+                                <option value="{{ $documento->NOMBRE_DOCUMENTO }}">
+                                    {{ $documento->NOMBRE_DOCUMENTO }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+
+
+                        <div class="col-12 mb-3">
+                            <label class="form-label">
+                                Anexar documento &nbsp;
+                            </label>
+                            <div class="input-group align-items-center">
+                                <input type="file" class="form-control" name="DOCUMENTO_SOPORTE" id="DOCUMENTO_SOPORTE" accept="application/pdf">
+                                <i id="iconEliminarArchivo" class="bi bi-trash-fill ms-2 text-danger fs-5 d-none" style="cursor: pointer;" title="Eliminar archivo"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" id="guardarDOCUMENTOS">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script>
     document.getElementById("CODIGO_POSTAL").addEventListener("change", function() {

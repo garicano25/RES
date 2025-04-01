@@ -351,6 +351,11 @@
     <script src="/assets/js_sitio/proveedor/altareferencias.js"></script>
     @endif
 
+
+    @if(request()->is('Proveedores_documentos'))
+    <script src="/assets/js_sitio/proveedor/altadocumentos.js"></script>
+    @endif
+
 </body>
 
 </body>

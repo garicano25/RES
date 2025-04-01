@@ -40,7 +40,7 @@
 
 
 
-   
+
 
     @if(request()->is('Lista_proveedores'))
     <!-- form_wizard_steps -->
@@ -180,19 +180,39 @@
                             <li class="nav-item dropdown" style="margin-left: 8px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
-                                    <span class="d-lg-none">Catálogos</span>
-                                    <span class="d-none d-lg-inline">Catálogos</span>
+                                    <span class="d-lg-none">Orden de compra</span>
+                                    <span class="d-none d-lg-inline">Orden de compra</span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    {{-- <li><a class="dropdown-item" href="{{ url('/Jerárquico') }}">Catálogo nivel Jerárquico</a>
+                                    <li><a class="dropdown-item" href="{{ url('/Matriz_comparativa') }}">Matriz comparativa de cotizaciones</a>
                             </li>
-                            <hr class="dropdown-divider"> --}}
-                            <li><a class="dropdown-item" href="{{url('/Catálogos_proveedores')}}">Catálogos de proveedores</a>
+                            <hr class="dropdown-divider"> 
+                            <li><a class="dropdown-item" href="{{url('/Orden_compra')}}">Orden de compra</a>
                             </li>
 
                         </ul>
                         </li>
                     </ul>
+
+
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown" style="margin-left: 8px;">
+                            <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                <span class="d-lg-none">Catálogos</span>
+                                <span class="d-none d-lg-inline">Catálogos</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {{-- <li><a class="dropdown-item" href="{{ url('/Jerárquico') }}">Catálogo nivel Jerárquico</a>
+                        </li>
+                        <hr class="dropdown-divider"> --}}
+                        <li><a class="dropdown-item" href="{{url('/Catálogos_proveedores')}}">Catálogos de proveedores</a>
+                        </li>
+
+                    </ul>
+                    </li>
+                </ul>
                 </ul>
 
 
@@ -329,6 +349,12 @@
     @if(request()->is('Catálogo_títulos'))
     <script src="/assets/js_sitio/proveedor/catalogos/catalogotitulos.js?v=1.0"></script>
     @endif
+
+    @if(request()->is('Catálogo_documento_soporte'))
+    <script src="/assets/js_sitio/proveedor/catalogos/catalogodocumento.js?v=1.0"></script>
+    @endif
+
+
 
 
     @if(request()->is('Lista_proveedores'))
