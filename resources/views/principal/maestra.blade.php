@@ -204,7 +204,7 @@
                             <li><a class="dropdown-item" href="{{ url('/Pendiente-Contratar') }}">Pendientes por contratar</a></li>
                             <hr class="dropdown-divider">
 
-                            <li><a class="dropdown-item" href="{{url('/')}}">Lista de colaboradores</a></li>
+                            <li><a class="dropdown-item" href="{{url('/Contratación')}}">Lista de colaboradores</a></li>
                         </ul>
                     </li>
 
