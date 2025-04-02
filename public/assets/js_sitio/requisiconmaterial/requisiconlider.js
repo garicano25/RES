@@ -327,17 +327,16 @@ $('#Tablarequisicion tbody').on('click', 'td>button.EDITAR', function () {
 
     cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
 
-    // Obtener el nombre autenticado desde el meta
-    var nombreAutenticado = $('meta[name="usuario-autenticado"]').attr('content');
 
-    // Verificar si viene vacío y llenarlo con el nombre autenticado
+
+    editarDatoTabla(row.data(), 'formularioMR', 'miModal_MR', 1);
+
+    var nombreAutenticado = $('meta[name="usuario-autenticado"]').attr('content');
     if (!row.data().VISTO_BUENO) {
         $('#VISTO_BUENO').val(nombreAutenticado);
     } else {
         $('#VISTO_BUENO').val(row.data().VISTO_BUENO);
     }
-
-    editarDatoTabla(row.data(), 'formularioMR', 'miModal_MR', 1);
 });
 
 
