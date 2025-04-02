@@ -117,7 +117,7 @@
                                             <option value="" selected disabled>Seleccione una opción</option>
                                             <option value="SOLUCIONES EN CALIDAD">SOLUCIONES EN CALIDAD</option>
                                             <option value="SOLUCIONES LIDERAZGO Y HAB. HUMANAS">SOLUCIONES LIDERAZGO Y HAB. HUMANAS</option>
-                                            <option value="SOLUCIONES TÉCNICAS<">SOLUCIONES TÉCNICAS<< /option>
+                                            <option value="SOLUCIONES TÉCNICAS">SOLUCIONES TÉCNICAS</option>
                                             <option value="SOLUCIONES MEDIO AMBIENTE">SOLUCIONES MEDIO AMBIENTE</option>
                                             <option value="SOLUCIONES EN SST">SSOLUCIONES EN SST</option>
                                         </select>
