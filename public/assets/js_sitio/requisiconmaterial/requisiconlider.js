@@ -201,7 +201,7 @@ $("#guardarMR").click(function (e) {
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                      $('#miModal_MR').modal('hide')
                     document.getElementById('formularioMR').reset();
-                    Tablamr.ajax.reload()
+                    Tablarequisicion.ajax.reload()
 
         
             })
@@ -239,7 +239,7 @@ $("#guardarMR").click(function (e) {
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                      $('#miModal_MR').modal('hide')
                     document.getElementById('formularioMR').reset();
-                    Tablamr.ajax.reload()
+                    Tablarequisicion.ajax.reload()
 
 
                 }, 300);  
@@ -255,7 +255,7 @@ $("#guardarMR").click(function (e) {
 });
 
 
-var Tablamr = $("#Tablamr").DataTable({
+var Tablarequisicion = $("#Tablarequisicion").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
     lengthMenu: [
@@ -274,12 +274,12 @@ var Tablamr = $("#Tablamr").DataTable({
         data: {},
         method: 'GET',
         cache: false,
-        url: '/Tablamr',
+        url: '/Tablarequisicion',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablamr.columns.adjust().draw();
+            Tablarequisicion.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -314,14 +314,15 @@ columnDefs: [
     { targets: 6, title: 'Visualizar', className: 'all text-center' },
     { targets: 7, title: 'Activo', className: 'all text-center' }
 ]
+
 });
 
 
 
 
-$('#Tablamr tbody').on('click', 'td>button.EDITAR', function () {
+$('#Tablarequisicion tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablamr.row(tr);
+    var row = Tablarequisicion.row(tr);
     ID_FORMULARIO_MR = row.data().ID_FORMULARIO_MR;
 
 
@@ -332,23 +333,6 @@ $('#Tablamr tbody').on('click', 'td>button.EDITAR', function () {
     editarDatoTabla(row.data(), 'formularioMR', 'miModal_MR', 1);
     
 
-     if (row.data().DAR_BUENO === "1") {
-        $('#VISTO_BUENO_JEFE').show();
-         $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-         $('#BOTON_VISTO_BUENO').hide();
-
-      
-    } else if (row.data().DAR_BUENO === "2") {
-        $('#VISTO_BUENO_JEFE').show();
-         $('#MOTIVO_RECHAZO_JEFE_DIV').show();
-         
-        
-     } else {
-         $('#VISTO_BUENO_JEFE').hide();
-        $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-       
-          
-    }
 });
 
 
@@ -433,7 +417,7 @@ function darVistoBueno() {
                             });
 
                             $('#miModal_MR').modal('hide');
-                            $('#Tablamr').DataTable().ajax.reload(null, false);
+                            $('#Tablarequisicion').DataTable().ajax.reload(null, false);
                         }
                     },
                     error: function () {
@@ -502,7 +486,7 @@ document.getElementById('formRechazo').addEventListener('submit', function (even
 
                             bootstrap.Modal.getInstance(document.getElementById('modalRechazo')).hide();
                             $('#miModal_MR').modal('hide');
-                            $('#Tablamr').DataTable().ajax.reload(null, false);
+                            $('#Tablarequisicion').DataTable().ajax.reload(null, false);
                         }
                     },
                     error: function () {

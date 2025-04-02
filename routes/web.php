@@ -641,6 +641,16 @@ Route::get('/Tablamr', [mrController::class, 'Tablamr']);
 
 Route::get('/obtenerAreaSolicitante', [mrController::class, 'obtenerAreaSolicitante'])->middleware('auth');
 
+
+Route::post('/darVistoBueno', [mrController::class, 'darVistoBueno']);
+Route::post('/rechazar', [mrController::class, 'rechazar']);
+
+
+Route::get('/Requisición_materiales_líderes', function () {return view('compras.requisicionesmaterial.requisicionlider');});
+
+Route::get('/Tablarequisicion', [mrController::class, 'Tablarequisicion']);
+
+
 Route::get('/Bitácora', function () {return view('compras.requisicionesmaterial.bitacora');});
 
 

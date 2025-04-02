@@ -43,6 +43,18 @@ class mrController extends Controller
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 }
+
+                // Estado según DAR_BUENO
+                if ($value->DAR_BUENO == 0) {
+                    $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">En revisión</span>';
+                } elseif ($value->DAR_BUENO == 1) {
+                    $value->ESTADO_REVISION = '<span class="badge bg-success">Aprobada por jefe directo</span>';
+                } elseif ($value->DAR_BUENO == 2) {
+                    $value->ESTADO_REVISION = '<span class="badge bg-danger">Rechazada por jefe directo</span>';
+                } else {
+                    $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
+                }
+            
             }
 
             // Respuesta
@@ -95,16 +107,86 @@ class mrController extends Controller
 
 
 
+    public function darVistoBueno(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer|exists:formulario_requisiconmaterial,ID_FORMULARIO_MR'
+        ]);
+
+        $formulario = mrModel::find($request->id); 
+        $formulario->DAR_BUENO = 1;
+        $formulario->save();
+
+        return response()->json(['success' => true, 'message' => 'Formulario actualizado correctamente.']);
+    }
+
+
+    public function rechazar(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer|exists:formulario_requisiconmaterial,ID_FORMULARIO_MR',
+            'motivo' => 'required|string|max:1000'
+        ]);
+
+        $formulario = mrModel::find($request->id);
+        $formulario->DAR_BUENO = 2;
+        $formulario->MOTIVO_RECHAZO_JEFE = $request->motivo;
+        $formulario->save();
+
+        return response()->json(['success' => true, 'message' => 'Formulario rechazado correctamente.']);
+    }
+
+
+
 
     public function Tablarequisicion()
     {
         try {
-            $tabla = mrModel::get();
+            $usuario = Auth::user();
+            $idUsuario = $usuario->ID_USUARIO;
+
+            $roles = $usuario->roles()->pluck('NOMBRE_ROL')->toArray();
+
+            $esDirector = in_array('Director', $roles);
+
+            $categoriasLideradas = DB::table('lideres_categorias as lc')
+                ->join('catalogo_categorias as cc', 'cc.ID_CATALOGO_CATEGORIA', '=', 'lc.LIDER_ID')
+                ->whereIn('cc.NOMBRE_CATEGORIA', $roles)
+                ->pluck('lc.CATEGORIA_ID')
+                ->toArray();
+
+            $usuariosACargo = DB::table('asignar_rol')
+                ->whereIn('NOMBRE_ROL', function ($query) use ($categoriasLideradas) {
+                    $query->select('NOMBRE_CATEGORIA')
+                        ->from('catalogo_categorias')
+                        ->whereIn('ID_CATALOGO_CATEGORIA', $categoriasLideradas);
+                })
+                ->pluck('USUARIO_ID')
+                ->toArray();
+
+            if ($esDirector) {
+                $usuariosSinLider = DB::table('asignar_rol as ar')
+                    ->leftJoin('catalogo_categorias as cc', 'cc.NOMBRE_CATEGORIA', '=', 'ar.NOMBRE_ROL')
+                    ->leftJoin('lideres_categorias as lc', 'lc.CATEGORIA_ID', '=', 'cc.ID_CATALOGO_CATEGORIA')
+                    ->whereNull('lc.LIDER_ID')
+                    ->pluck('ar.USUARIO_ID')
+                    ->toArray();
+
+                $usuariosACargo = array_merge($usuariosACargo, $usuariosSinLider);
+            }
+
+            $usuariosACargo = array_unique($usuariosACargo);
+
+            if (empty($usuariosACargo)) {
+                return response()->json([
+                    'data' => [],
+                    'msj' => 'No tiene registros a su cargo.'
+                ]);
+            }
+
+            $tabla = mrModel::whereIn('USUARIO_ID', $usuariosACargo)->get();
 
             foreach ($tabla as $value) {
-
-
-
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '"><span class="slider round"></span></label>';
@@ -114,9 +196,18 @@ class mrController extends Controller
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 }
+
+                if ($value->DAR_BUENO == 0) {
+                    $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">Revisar</span>';
+                } elseif ($value->DAR_BUENO == 1) {
+                    $value->ESTADO_REVISION = '<span class="badge bg-success">Aprobada</span>';
+                } elseif ($value->DAR_BUENO == 2) {
+                    $value->ESTADO_REVISION = '<span class="badge bg-danger">Rechazada</span>';
+                } else {
+                    $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
+                }
             }
 
-            // Respuesta
             return response()->json([
                 'data' => $tabla,
                 'msj' => 'Información consultada correctamente'
@@ -128,6 +219,7 @@ class mrController extends Controller
             ]);
         }
     }
+
 
 
 

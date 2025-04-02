@@ -11,13 +11,11 @@
         </h3>
 
 
-        <button type="button" class="btn btn-light waves-effect waves-light " id="NUEVO_MR" style="margin-left: auto;">
-            Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
-        </button>
+
     </ol>
 
     <div class="card-body">
-        <table id="Tablamr" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+        <table id="Tablarequisicion" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
 
         </table>
     </div>
@@ -43,7 +41,7 @@
                             <div class="row">
                                 <div class="col-9">
                                     <label>Solicitante </label>
-                                    <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" id="SOLICITANTE_MR" name="SOLICITANTE_MR" readonly>
+                                    <input type="text" class="form-control" id="SOLICITANTE_MR" name="SOLICITANTE_MR" readonly>
                                 </div>
 
                                 <div class="col-3">
@@ -93,7 +91,7 @@
 
 
 
-                        <div id="VISTO_BUENO_JEFE" style="display: none;">
+                        <div id="VISTO_BUENO_JEFE" style="display: block;">
 
 
 
@@ -134,7 +132,7 @@
                                 <div class="row">
                                     <div class="col-8">
                                         <label for="VISTO_BUENO">Visto bueno</label>
-                                        <input type="text" class="form-control" id="VISTO_BUENO" name="VISTO_BUENO">
+                                        <input type="text" class="form-control" id="VISTO_BUENO" name="VISTO_BUENO" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
                                     </div>
 
                                     <div class="col-4">
@@ -253,6 +251,8 @@
         </div>
     </div>
 </div>
+
+
 
 
 @endsection

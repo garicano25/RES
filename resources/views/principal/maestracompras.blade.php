@@ -151,6 +151,17 @@
                         </li>
 
 
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones']))
+
+                        <li class="nav-item dropdown" style="margin-left: 8px;">
+                            <a class="nav-link BOTON" href="{{ url('/Requisición_materiales_líderes') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Requisiciones de materiales por dar visto bueno</span>
+                            </a>
+                        </li>
+
+
+                        @endif
+
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
 
                         <li class="nav-item dropdown" style="margin-left: 8px;">
@@ -342,7 +353,12 @@
 
 
     @if(request()->is('Requisición_Materiales'))
-    <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=1.0"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=2.0"></script>
+    @endif
+
+
+    @if(request()->is('Requisición_materiales_líderes'))
+    <script src="/assets/js_sitio/requisiconmaterial/requisiconlider.js?v=1.0"></script>
     @endif
 
 

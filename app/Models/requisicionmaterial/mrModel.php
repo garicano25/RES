@@ -29,6 +29,7 @@ class mrModel extends Model
         'QUIEN_APROBACION',
         'FECHA_APRUEBA_MR',
         'ACTIVO',
+        'MOTIVO_RECHAZO_JEFE'
 
     ];
 }
