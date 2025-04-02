@@ -414,17 +414,7 @@
                             @endforeach
                         </div>
                         @else
-                        <div class="carrusel">
-                            <div class="content__noticias">
-                                <div class="content__noticiasImage">
-                                    {{-- <img src="" alt="Sin anuncio" style="opacity: 0.5;"> --}}
-                                </div>
-                                <div class="content__noticiasText">
-                                    <h3 class="content__title">Sin anuncios</h3>
-                                    <p class="content__paragraph">No hay ningún anuncio este momento.</p>
-                                </div>
-                            </div>
-                        </div>
+                        
                         @endif
 
 
@@ -637,7 +627,7 @@
                             </div>
                             <div class="modules__card">
                                 <div class="modules__circle"><img src="assets/Modulos/img/Admon.png" alt=""></div>
-                                <h2 class="modules__text">Admon</h2>
+                                <h2 class="modules__text">Admón</h2>
                             </div>
                             <div class="modules__card">
                                 <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>

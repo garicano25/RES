@@ -7,18 +7,95 @@ use Illuminate\Http\Request;
 use Artisan;
 use Exception;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 use Carbon\Carbon;
 
 use DB;
 
+
 use App\Models\requisicionmaterial\mrModel;
+use App\Models\organizacion\catalogocategoriaModel;
 
 
 class mrController extends Controller
 {
 
+
+
     public function Tablamr()
+    {
+        try {
+            $userid = Auth::user()->ID_USUARIO;
+
+            $tabla = mrModel::where('USUARIO_ID', $userid)->get();
+
+            foreach ($tabla as $value) {
+
+
+
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                }
+            }
+
+            // Respuesta
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
+
+
+
+
+    public function obtenerAreaSolicitante()
+    {
+        $usuario = auth()->user();
+        $rol = $usuario->roles()->first(); 
+
+        if (!$rol) {
+            return response()->json(['area' => null]);
+        }
+
+        $categoria = CatalogocategoriaModel::where('NOMBRE_CATEGORIA', $rol->NOMBRE_ROL)->first();
+
+        if (!$categoria) {
+            return response()->json(['area' => null]);
+        }
+
+        $area = DB::table('areas as a')
+            ->leftJoin('lideres_categorias as lc', 'lc.AREA_ID', '=', 'a.ID_AREA')
+            ->leftJoin('catalogo_categorias as ccl', 'ccl.ID_CATALOGO_CATEGORIA', '=', 'lc.LIDER_ID')
+            ->leftJoin('areas_lideres as al', 'al.AREA_ID', '=', 'a.ID_AREA')
+            ->leftJoin('catalogo_categorias as cl', 'cl.ID_CATALOGO_CATEGORIA', '=', 'al.LIDER_ID')
+            ->where(function ($query) use ($categoria) {
+                $query->where('ccl.ID_CATALOGO_CATEGORIA', $categoria->ID_CATALOGO_CATEGORIA)
+                    ->orWhere('cl.ID_CATALOGO_CATEGORIA', $categoria->ID_CATALOGO_CATEGORIA);
+            })
+            ->select('a.NOMBRE')
+            ->first();
+
+        return response()->json([
+            'area' => $area ? $area->NOMBRE : null
+        ]);
+    }
+
+
+
+    public function Tablarequisicion()
     {
         try {
             $tabla = mrModel::get();
@@ -53,6 +130,73 @@ class mrController extends Controller
 
 
 
+    // public function store(Request $request)
+    // {
+    //     try {
+    //         switch (intval($request->api)) {
+    //             case 1:
+    //                 if ($request->ID_FORMULARIO_MR == 0) {
+    //                     DB::statement('ALTER TABLE formulario_requisiconmaterial AUTO_INCREMENT=1;');
+
+    //                     $year = date('y'); 
+    //                     $lastMR = mrModel::where('NO_MR', 'like', "RES-MR$year-%")
+    //                     ->orderBy('NO_MR', 'desc')
+    //                         ->first();
+
+    //                     $nextNumber = $lastMR ? intval(substr($lastMR->NO_MR, -3)) + 1 : 1;
+    //                     $noMR = sprintf("RES-MR%s-%03d", $year, $nextNumber);
+
+    //                     $mrs = mrModel::create(array_merge($request->all(), [
+    //                         'NO_MR' => $noMR
+    //                     ]));
+
+    //                     return response()->json([
+    //                         'code' => 1,
+    //                         'mr' => $mrs
+    //                     ]);
+    //                 } else {
+    //                     if (isset($request->ELIMINAR)) {
+    //                         $estado = $request->ELIMINAR == 1 ? 0 : 1;
+    //                         mrModel::where('ID_FORMULARIO_MR', $request->ID_FORMULARIO_MR)
+    //                             ->update(['ACTIVO' => $estado]);
+
+    //                         return response()->json([
+    //                             'code' => 1,
+    //                             'mr' => $estado == 0 ? 'Desactivada' : 'Activada'
+    //                         ]);
+    //                     } else {
+    //                         $mrs = mrModel::find($request->ID_FORMULARIO_MR);
+    //                         if ($mrs) {
+    //                             $mrs->update($request->all());
+    //                             return response()->json([
+    //                                 'code' => 1,
+    //                                 'mr' => 'Actualizada'
+    //                             ]);
+    //                         }
+    //                         return response()->json([
+    //                             'code' => 0,
+    //                             'msj' => 'MR no encontrada'
+    //                         ], 404);
+    //                     }
+    //                 }
+    //                 break;
+    //             default:
+    //                 return response()->json([
+    //                     'code' => 1,
+    //                     'msj' => 'Api no encontrada'
+    //                 ]);
+    //         }
+    //     } catch (Exception $e) {
+    //         Log::error("Error al guardar MR: " . $e->getMessage());
+    //         return response()->json([
+    //             'code' => 0,
+    //             'error' => 'Error al guardar la MR'
+    //         ], 500);
+    //     }
+    // }
+
+
+
     public function store(Request $request)
     {
         try {
@@ -61,23 +205,30 @@ class mrController extends Controller
                     if ($request->ID_FORMULARIO_MR == 0) {
                         DB::statement('ALTER TABLE formulario_requisiconmaterial AUTO_INCREMENT=1;');
 
-                        $year = date('y'); 
+                        $year = date('y');
                         $lastMR = mrModel::where('NO_MR', 'like', "RES-MR$year-%")
-                        ->orderBy('NO_MR', 'desc')
+                            ->orderBy('NO_MR', 'desc')
                             ->first();
 
                         $nextNumber = $lastMR ? intval(substr($lastMR->NO_MR, -3)) + 1 : 1;
                         $noMR = sprintf("RES-MR%s-%03d", $year, $nextNumber);
 
-                        $mrs = mrModel::create(array_merge($request->all(), [
-                            'NO_MR' => $noMR
-                        ]));
+                        // Creamos el formulario nuevo con MATERIALES_JSON y USUARIO_ID
+                        $mrs = mrModel::create(array_merge(
+                            $request->all(),
+                            [
+                                'NO_MR' => $noMR,
+                                'USUARIO_ID' => auth()->user()->ID_USUARIO, 
+                                'MATERIALES_JSON' => $request->MATERIALES_JSON
+                            ]
+                        ));
 
                         return response()->json([
                             'code' => 1,
                             'mr' => $mrs
                         ]);
                     } else {
+                        // EDICIÓN
                         if (isset($request->ELIMINAR)) {
                             $estado = $request->ELIMINAR == 1 ? 0 : 1;
                             mrModel::where('ID_FORMULARIO_MR', $request->ID_FORMULARIO_MR)
@@ -90,12 +241,15 @@ class mrController extends Controller
                         } else {
                             $mrs = mrModel::find($request->ID_FORMULARIO_MR);
                             if ($mrs) {
-                                $mrs->update($request->all());
+                                // No se actualiza USUARIO_ID, pero sí MATERIALES_JSON
+                                $mrs->update($request->except(['USUARIO_ID']));
+
                                 return response()->json([
                                     'code' => 1,
                                     'mr' => 'Actualizada'
                                 ]);
                             }
+
                             return response()->json([
                                 'code' => 0,
                                 'msj' => 'MR no encontrada'
@@ -103,6 +257,7 @@ class mrController extends Controller
                         }
                     }
                     break;
+
                 default:
                     return response()->json([
                         'code' => 1,
@@ -117,8 +272,4 @@ class mrController extends Controller
             ], 500);
         }
     }
-
-
-
-
 }

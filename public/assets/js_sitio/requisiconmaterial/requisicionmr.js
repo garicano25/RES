@@ -13,6 +13,19 @@ $("#NUEVO_MR").click(function (e) {
     $("#miModal_MR").modal("show");
 
 
+    $.get('/obtenerAreaSolicitante', function(response) {
+    if (response.area) {
+        $("#AREA_SOLICITANTE_MR").val(response.area);
+    } else {
+        $("#AREA_SOLICITANTE_MR").val("Área no encontrada");
+    }
+});
+
+
+     $('#VISTO_BUENO_JEFE').hide();
+    $('#APROBACION_DIRECCION').hide();
+    
+
 cambiarColor();
    
 });
@@ -57,9 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
 
         contenedorMateriales.appendChild(divMaterial);
-        contadorMateriales++; // Incrementa el contador para el siguiente material
-
-        // Agregar evento para eliminar la fila
+        contadorMateriales++; 
         const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
         botonEliminar.addEventListener('click', function () {
             contenedorMateriales.removeChild(divMaterial);
@@ -87,15 +98,15 @@ function cambiarColor() {
         if (select.value === "Aprobada") {
             container.style.backgroundColor = "green";
             container.style.color = "white";
-            motivoContainer.style.display = "none"; // Oculta el textarea
+            motivoContainer.style.display = "none"; 
         } else if (select.value === "Rechazada") {
             container.style.backgroundColor = "red";
             container.style.color = "white";
-            motivoContainer.style.display = "block"; // Muestra el textarea
+            motivoContainer.style.display = "block"; 
         } else {
             container.style.backgroundColor = "transparent";
             container.style.color = "black";
-            motivoContainer.style.display = "none"; // Asegura que el textarea no se muestre sin selección
+            motivoContainer.style.display = "none"; 
         }
 }
     
@@ -122,14 +133,34 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
 
 
 
+
+
+
 $("#guardarMR").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioMR'))
+    formularioValido = validarFormularioV1('FormularioCONTRATACION');
 
     if (formularioValido) {
 
-    if (ID_FORMULARIO_MR == 0) {
+        
+        var documentos = [];
+        $(".material-item").each(function() {
+            var documento = {
+                'DESCRIPCION': $(this).find("input[name='DESCRIPCION']").val(),
+                'CANTIDAD': $(this).find("input[name='CANTIDAD']").val(),
+                'UNIDAD_MEDIDA': $(this).find("input[name='UNIDAD_MEDIDA']").val(),            };
+            documentos.push(documento);
+        });
+
+        const requestData = {
+            api: 1,
+            ID_FORMULARIO_MR: ID_FORMULARIO_MR,
+            MATERIALES_JSON: JSON.stringify(documentos)
+
+        };
+
+        if (ID_FORMULARIO_MR == 0) {
         
         alertMensajeConfirm({
             title: "¿Desea guardar la información?",
@@ -138,7 +169,8 @@ $("#guardarMR").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarMR')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_MR: ID_FORMULARIO_MR }, 'MrSave', 'formularioMR', 'guardarMR', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData(requestData,'MrSave', 'formularioMR', 'guardarMR', { callbackAfter: true, callbackBefore: true }, () => {
+
         
                
 
@@ -176,7 +208,7 @@ $("#guardarMR").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarMR')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_MR: ID_FORMULARIO_MR }, 'MrSave', 'formularioMR', 'guardarMR', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData(requestData,'MrSave', 'formularioMR', 'guardarMR', { callbackAfter: true, callbackBefore: true }, () => {
         
                 Swal.fire({
                     icon: 'info',

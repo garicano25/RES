@@ -36,161 +36,174 @@
                     {!! csrf_field() !!}
 
 
-                    <div class="col-12 mt-3">
-                        <div class="row">
-                            <div class="col-9">
-                                <label>Solicitante </label>
-                                <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" id="SOLICITANTE_MR" name="SOLICITANTE_MR" readonly>
-                            </div>
+                    <div id="SOLICITUD_MR">
 
-                            <div class="col-3">
-                                <label>Fecha de solicitud *</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_SOLICITUD_MR" name="FECHA_SOLICITUD_MR" required>
-                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+
+                        <div class="col-12 mt-3">
+                            <div class="row">
+                                <div class="col-9">
+                                    <label>Solicitante </label>
+                                    <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" id="SOLICITANTE_MR" name="SOLICITANTE_MR" readonly>
+                                </div>
+
+                                <div class="col-3">
+                                    <label>Fecha de solicitud *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_SOLICITUD_MR" name="FECHA_SOLICITUD_MR" required>
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
 
-                    <div class="col-12 mt-3">
-                        <div class="row">
-                            <div class="col-9">
-                                <label>Área Solicitante </label>
-                                <input type="text" class="form-control" id="AREA_SOLICITANTE_MR" name="AREA_SOLICITANTE_MR" readonly>
-                            </div>
-                            <div class="col-3">
-                                <label>No. de MR *</label>
-                                <input type="text" class="form-control" id="NO_MR" name="NO_MR" readonly>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="mt-3">
-                        <div class="row">
-                            <div class="col-6 mb-3">
-                                <label>Agregar material</label>
-                                <button id="botonmaterial" id="botonmaterial" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
-                                    <i class="bi bi-plus-circle-fill"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="materialesdiv mt-4"></div>
-                    </div>
-
-                    <div class="mt-3">
-                        <label>Justificación *</label>
-                        <textarea class="form-control" id="JUSTIFICACION_MR" name="JUSTIFICACION_MR" rows="3"></textarea>
-                    </div>
-
-
-                    <div id="solicitarVerificacionDiv" class="col-12 text-center mt-3" style="display: block;">
-                        <div class="col-md-6 mx-auto">
-                            <button type="button" id="SOLICITAR_VERIFICACION" class="btn btn-info w-100" onclick="solicitarVerificacion()">
-                                Visto Bueno </button>
-                            <input type="hidden" id="solicitarVerificacionInput" name="SOLICITAR_VERIFICACION" value="0">
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-12 mt-3">
-                        <div class="row">
-                            <div class="col-4">
-                                <label for="PRIORIDAD">Prioridad</label>
-                                <select class="form-control" id="PRIORIDAD_MR" name="PRIORIDAD_MR">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="Alta">Alta 1-15 días</option>
-                                    <option value="Media">Media 16-30 días</option>
-                                    <option value="Baja">Baja 31-60 días</option>
-                                </select>
-                            </div>
-
-                            <div class="col-4">
-                                <label for="OBSERVACIONES">Observaciones</label>
-                                <input type="text" class="form-control" id="OBSERVACIONES_MR" name="OBSERVACIONES_MR">
-                            </div>
-                            <div class="col-4">
-                                <label for="LINEA_NEGOCIOS">Línea de Negocios</label>
-                                <select class="form-control" id="LINEA_NEGOCIOS_MR" name="LINEA_NEGOCIOS_MR">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="Técnicos">Técnicos</option>
-                                    <option value="Calidad">Calidad</option>
-                                    <option value="SST">SST</option>
-                                    <option value="Liderazgo y habilidades humanas">Liderazgo y habilidades humanas</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-
-
-                    <div class="col-12 mt-3">
-                        <div class="row">
-                            <div class="col-8">
-                                <label for="VISTO_BUENO">Visto bueno</label>
-                                <input type="text" class="form-control" id="VISTO_BUENO" name="VISTO_BUENO">
-                            </div>
-
-                            <div class="col-4">
-                                <label>Fecha *</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VISTO_MR" name="FECHA_VISTO_MR">
-                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        <div class="col-12 mt-3">
+                            <div class="row">
+                                <div class="col-9">
+                                    <label>Área Solicitante </label>
+                                    <input type="text" class="form-control" id="AREA_SOLICITANTE_MR" name="AREA_SOLICITANTE_MR" readonly>
+                                </div>
+                                <div class="col-3">
+                                    <label>No. de MR *</label>
+                                    <input type="text" class="form-control" id="NO_MR" name="NO_MR" readonly>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
 
-                    <div class="col-12 mt-3">
-                        <label for="ESTADO_APROBACION">Estado de Aprobación</label>
-                        <div id="estado-container" class="p-2 rounded">
-                            <select class="form-control" id="ESTADO_APROBACION" name="ESTADO_APROBACION" onchange="cambiarColor()">
-                                <option value="" selected disabled>Seleccione una opción</option>
-                                <option value="Aprobada">Aprobada</option>
-                                <option value="Rechazada">Rechazada</option>
-                            </select>
-                        </div>
-                    </div>
 
-
-                    <div class="col-12 mt-3" id="motivo-rechazo-container" style="display: none;">
-                        <label for="MOTIVO_RECHAZO">Motivo de Rechazo</label>
-                        <textarea class="form-control" id="MOTIVO_RECHAZO" name="MOTIVO_RECHAZO" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
-                    </div>
-
-
-                    <div class="col-12 mt-3">
-                        <div class="row">
-
-
-                            <div class="col-8">
-                                <label for="APROBACION">Quien aprueba</label>
-                                <input type="text" class="form-control" id="APROBACION" name="APROBACION">
-                            </div>
-                            <div class="col-4">
-                                <label>Fecha *</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_APRUEBA_MR" name="FECHA_APRUEBA_MR">
-                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        <div class="mt-3">
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label>Agregar material</label>
+                                    <button id="botonmaterial" id="botonmaterial" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                                        <i class="bi bi-plus-circle-fill"></i>
+                                    </button>
                                 </div>
                             </div>
+                            <div class="materialesdiv mt-4"></div>
                         </div>
+
+                        <div class="mt-3">
+                            <label>Justificación *</label>
+                            <textarea class="form-control" id="JUSTIFICACION_MR" name="JUSTIFICACION_MR" rows="3"></textarea>
+                        </div>
+
+
+
+
+
+                        <div id="VISTO_BUENO_JEFE" style="display: none;">
+
+
+
+                            <div class="col-12 mt-3">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="PRIORIDAD">Prioridad</label>
+                                        <select class="form-control" id="PRIORIDAD_MR" name="PRIORIDAD_MR">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            <option value="Alta">Alta 1-15 días</option>
+                                            <option value="Media">Media 16-30 días</option>
+                                            <option value="Baja">Baja 31-60 días</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label for="OBSERVACIONES">Observaciones</label>
+                                        <input type="text" class="form-control" id="OBSERVACIONES_MR" name="OBSERVACIONES_MR">
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="LINEA_NEGOCIOS">Línea de Negocios</label>
+                                        <select class="form-control" id="LINEA_NEGOCIOS_MR" name="LINEA_NEGOCIOS_MR">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            <option value="Técnicos">Técnicos</option>
+                                            <option value="Calidad">Calidad</option>
+                                            <option value="SST">SST</option>
+                                            <option value="Liderazgo y habilidades humanas">Liderazgo y habilidades humanas</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="col-12 mt-3">
+                                <div class="row">
+                                    <div class="col-8">
+                                        <label for="VISTO_BUENO">Visto bueno</label>
+                                        <input type="text" class="form-control" id="VISTO_BUENO" name="VISTO_BUENO">
+                                    </div>
+
+                                    <div class="col-4">
+                                        <label>Fecha *</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VISTO_MR" name="FECHA_VISTO_MR">
+                                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="solicitarVerificacionDiv" class="col-12 text-center mt-3" style="display: block;">
+                                <div class="col-md-6 mx-auto">
+                                    <button type="button" id="SOLICITAR_VERIFICACION" class="btn btn-info w-100" onclick="solicitarVerificacion()">
+                                        Dar visto bueno </button>
+                                    <input type="hidden" id="solicitarVerificacionInput" name="DAR_BUENO" value="0">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div id="APROBACION_DIRECCION" style="display: none;">
+
+
+                            <div class="col-12 mt-3">
+                                <label for="ESTADO_APROBACION">Estado de Aprobación</label>
+                                <div id="estado-container" class="p-2 rounded">
+                                    <select class="form-control" id="ESTADO_APROBACION" name="ESTADO_APROBACION" onchange="cambiarColor()">
+                                        <option value="" selected disabled>Seleccione una opción</option>
+                                        <option value="Aprobada">Aprobada</option>
+                                        <option value="Rechazada">Rechazada</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 mt-3" id="motivo-rechazo-container" style="display: none;">
+                                <label for="MOTIVO_RECHAZO">Motivo de Rechazo</label>
+                                <textarea class="form-control" id="MOTIVO_RECHAZO" name="MOTIVO_RECHAZO" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
+                            </div>
+
+
+                            <div class="col-12 mt-3">
+                                <div class="row">
+
+                                    <div class="col-8">
+                                        <label for="APROBACION">Quien aprueba</label>
+                                        <input type="text" class="form-control" id="QUIEN_APROBACION" name="QUIEN_APROBACION">
+                                    </div>
+                                    <div class="col-4">
+                                        <label>Fecha *</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_APRUEBA_MR" name="FECHA_APRUEBA_MR">
+                                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
                     </div>
 
-                </div>
 
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-success" id="guardarMR">Guardar</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-success" id="guardarMR">Guardar</button>
+                    </div>
             </form>
         </div>
     </div>

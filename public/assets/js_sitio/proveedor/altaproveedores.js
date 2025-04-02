@@ -227,6 +227,9 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("DOMICILIO_NACIONAL").style.display = "block";
             document.getElementById("DOMICILIO_ERXTRANJERO").style.display = "none";
 
+
+            document.getElementById("CORRE_TITULAR_ALTA").value = data.CODIGO_POSTAL;
+
             document.getElementById("CODIGO_POSTAL").value = data.CODIGO_POSTAL;
             document.getElementById("TIPO_VIALIDAD_EMPRESA").value = data.TIPO_VIALIDAD_EMPRESA;
             document.getElementById("NOMBRE_VIALIDAD_EMPRESA").value = data.NOMBRE_VIALIDAD_EMPRESA;

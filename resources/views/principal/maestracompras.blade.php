@@ -143,6 +143,16 @@
                         </a>
                     </li>
                     <ul class="navbar-nav">
+
+                        <li class="nav-item dropdown" style="margin-left: 8px;">
+                            <a class="nav-link BOTON" href="{{ url('/Requisición_Materiales') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Requisición de Materiales - MR</span>
+                            </a>
+                        </li>
+
+
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
+
                         <li class="nav-item dropdown" style="margin-left: 8px;">
                             <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
@@ -150,7 +160,7 @@
                                 <span class="d-none d-lg-inline">Requisición de Materiales</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{url('/Requisición_Materiales')}}">Requisición de Materiales - MR</a>
+                                <li><a class="dropdown-item" href="{{url('/')}}">Requisición de Materiales - MR</a>
                                 </li>
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/Bitácora')}}">Bitácora de consecutivos MR</a>
@@ -185,34 +195,36 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{ url('/Matriz_comparativa') }}">Matriz comparativa de cotizaciones</a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="{{url('/Orden_compra')}}">Orden de compra</a>
+                                    </li>
+
+                                </ul>
                             </li>
-                            <hr class="dropdown-divider"> 
-                            <li><a class="dropdown-item" href="{{url('/Orden_compra')}}">Orden de compra</a>
+                        </ul>
+
+
+
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown" style="margin-left: 8px;">
+                                <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                    <span class="d-lg-none">Catálogos</span>
+                                    <span class="d-none d-lg-inline">Catálogos</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    {{-- <li><a class="dropdown-item" href="{{ url('/Jerárquico') }}">Catálogo nivel Jerárquico</a>
+                            </li>
+                            <hr class="dropdown-divider"> --}}
+                            <li><a class="dropdown-item" href="{{url('/Catálogos_proveedores')}}">Catálogos de proveedores</a>
                             </li>
 
                         </ul>
                         </li>
                     </ul>
 
-
-
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown" style="margin-left: 8px;">
-                            <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
-                                <span class="d-lg-none">Catálogos</span>
-                                <span class="d-none d-lg-inline">Catálogos</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                {{-- <li><a class="dropdown-item" href="{{ url('/Jerárquico') }}">Catálogo nivel Jerárquico</a>
-                        </li>
-                        <hr class="dropdown-divider"> --}}
-                        <li><a class="dropdown-item" href="{{url('/Catálogos_proveedores')}}">Catálogos de proveedores</a>
-                        </li>
-
-                    </ul>
-                    </li>
-                </ul>
+                    @endif
                 </ul>
 
 
@@ -330,7 +342,7 @@
 
 
     @if(request()->is('Requisición_Materiales'))
-    <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=1.0"></script>
     @endif
 
 

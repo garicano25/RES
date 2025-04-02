@@ -639,6 +639,7 @@ Route::get('/Requisición_Materiales', function () {return view('compras.requisi
 Route::post('/MrSave', [mrController::class, 'store']);
 Route::get('/Tablamr', [mrController::class, 'Tablamr']);
 
+Route::get('/obtenerAreaSolicitante', [mrController::class, 'obtenerAreaSolicitante'])->middleware('auth');
 
 Route::get('/Bitácora', function () {return view('compras.requisicionesmaterial.bitacora');});
 
