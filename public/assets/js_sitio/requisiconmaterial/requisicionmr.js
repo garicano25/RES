@@ -1,3 +1,29 @@
+//VARIABLES
+ID_FORMULARIO_MR = 0
+
+
+
+
+const Modalmr = document.getElementById('miModal_MR');
+Modalmr.addEventListener('hidden.bs.modal', event => {
+    ID_FORMULARIO_MR = 0;
+    document.getElementById('formularioMR').reset();
+
+    // Ocultar campos específicos
+    $('#VISTO_BUENO_JEFE').hide();
+    $('#APROBACION_DIRECCION').hide();
+
+    // Limpiar materiales y resetear contador
+    document.querySelector('.materialesdiv').innerHTML = '';
+    contadorMateriales = 1;
+});
+
+
+
+
+
+
+
 $("#NUEVO_MR").click(function (e) {
     e.preventDefault();
 
@@ -22,8 +48,6 @@ $("#NUEVO_MR").click(function (e) {
 });
 
 
-     $('#VISTO_BUENO_JEFE').hide();
-    $('#APROBACION_DIRECCION').hide();
     
 
 cambiarColor();
@@ -32,11 +56,11 @@ cambiarColor();
 
 
 
+let contadorMateriales = 1; // Declaración global para que sea accesible en todo el script
 
 document.addEventListener("DOMContentLoaded", function () {
     const botonMaterial = document.getElementById('botonmaterial');
     const contenedorMateriales = document.querySelector('.materialesdiv');
-    let contadorMateriales = 1; // Inicializa el contador
 
     botonMaterial.addEventListener('click', function () {
         agregarMaterial();
@@ -74,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
         botonEliminar.addEventListener('click', function () {
             contenedorMateriales.removeChild(divMaterial);
-            actualizarNumerosOrden(); // Recalcula los números de orden
+            actualizarNumerosOrden(); 
         });
     }
 
@@ -88,7 +112,6 @@ document.addEventListener("DOMContentLoaded", function () {
         contadorMateriales = nuevoContador;
     }
 });
-
 
 function cambiarColor() {
         var select = document.getElementById("ESTADO_APROBACION");
@@ -114,21 +137,6 @@ function cambiarColor() {
 
 
 
-//VARIABLES
-ID_FORMULARIO_MR = 0
-
-
-
-
-const Modalmr = document.getElementById('miModal_MR')
-Modalmr.addEventListener('hidden.bs.modal', event => {
-    
-    
-    ID_FORMULARIO_MR = 0
-    document.getElementById('formularioMR').reset();
-   
-
-})
 
 
 
@@ -312,5 +320,75 @@ $('#Tablamr tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablamr.row(tr);
     ID_FORMULARIO_MR = row.data().ID_FORMULARIO_MR;
 
+
+        cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
+
+    
+    
     editarDatoTabla(row.data(), 'formularioMR', 'miModal_MR',1);
 });
+
+
+
+function cargarMaterialesDesdeJSON(materialesJson) {
+    const contenedorMateriales = document.querySelector('.materialesdiv');
+    contenedorMateriales.innerHTML = ''; 
+    let contadorMateriales = 1;
+
+    try {
+        const materiales = JSON.parse(materialesJson);
+
+        materiales.forEach(material => {
+            const divMaterial = document.createElement('div');
+            divMaterial.classList.add('row', 'material-item', 'mt-1');
+            divMaterial.innerHTML = `
+                <div class="col-2">
+                    <label class="form-label">N°</label>
+                    <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
+                </div>
+                <div class="col-5">
+                    <label class="form-label">Descripción</label>
+                    <input type="text" class="form-control" name="DESCRIPCION" value="${material.DESCRIPCION}" required>
+                </div>
+                <div class="col-2">
+                    <label class="form-label">Cantidad</label>
+                    <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" required>
+                </div>
+                <div class="col-3">
+                    <label class="form-label">Unidad de Medida</label>
+                    <input type="text" class="form-control" name="UNIDAD_MEDIDA" value="${material.UNIDAD_MEDIDA}" required>
+                </div>
+                <div class="col-12 mt-2 text-end">
+                    <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            `;
+
+            contenedorMateriales.appendChild(divMaterial);
+            contadorMateriales++;
+
+            const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
+            botonEliminar.addEventListener('click', function () {
+                contenedorMateriales.removeChild(divMaterial);
+                actualizarNumerosOrden();
+            });
+        });
+
+        window.contadorMateriales = contadorMateriales;
+
+    } catch (e) {
+        console.error('Error al parsear MATERIALES_JSON:', e);
+    }
+}
+
+
+function actualizarNumerosOrden() {
+    const materiales = document.querySelectorAll('.material-item');
+    let nuevoContador = 1;
+    materiales.forEach(material => {
+        material.querySelector('input[name="NUMERO_ORDEN"]').value = nuevoContador;
+        nuevoContador++;
+    });
+    window.contadorMateriales = nuevoContador;
+}
