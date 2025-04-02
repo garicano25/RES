@@ -65,19 +65,19 @@ class mrController extends Controller
     {
         $usuario = auth()->user();
 
-        // Tomamos el primer rol que tenga asignado el usuario
-        $rol = $usuario->roles()->first();
+        $rol = $usuario->roles()
+            ->whereNotIn('NOMBRE_ROL', ['Superusuario', 'Administrador'])
+            ->first();
+
         if (!$rol) {
             return response()->json(['area' => null]);
         }
 
-        // Buscamos la categoría correspondiente al nombre del rol
         $categoria = CatalogocategoriaModel::where('NOMBRE_CATEGORIA', $rol->NOMBRE_ROL)->first();
         if (!$categoria) {
             return response()->json(['area' => null]);
         }
 
-        // Buscamos el área vinculada a esa categoría (como categoría o líder)
         $area = DB::table('areas as a')
             ->leftJoin('lideres_categorias as lc', 'lc.AREA_ID', '=', 'a.ID_AREA')
             ->leftJoin('areas_lideres as al', 'al.AREA_ID', '=', 'a.ID_AREA')
@@ -92,6 +92,7 @@ class mrController extends Controller
             'area' => $area ? $area->NOMBRE : null
         ]);
     }
+
 
 
 
