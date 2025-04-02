@@ -64,26 +64,26 @@ class mrController extends Controller
     public function obtenerAreaSolicitante()
     {
         $usuario = auth()->user();
-        $rol = $usuario->roles()->first(); 
 
+        // Tomamos el primer rol que tenga asignado el usuario
+        $rol = $usuario->roles()->first();
         if (!$rol) {
             return response()->json(['area' => null]);
         }
 
+        // Buscamos la categoría correspondiente al nombre del rol
         $categoria = CatalogocategoriaModel::where('NOMBRE_CATEGORIA', $rol->NOMBRE_ROL)->first();
-
         if (!$categoria) {
             return response()->json(['area' => null]);
         }
 
+        // Buscamos el área vinculada a esa categoría (como categoría o líder)
         $area = DB::table('areas as a')
             ->leftJoin('lideres_categorias as lc', 'lc.AREA_ID', '=', 'a.ID_AREA')
-            ->leftJoin('catalogo_categorias as ccl', 'ccl.ID_CATALOGO_CATEGORIA', '=', 'lc.LIDER_ID')
             ->leftJoin('areas_lideres as al', 'al.AREA_ID', '=', 'a.ID_AREA')
-            ->leftJoin('catalogo_categorias as cl', 'cl.ID_CATALOGO_CATEGORIA', '=', 'al.LIDER_ID')
             ->where(function ($query) use ($categoria) {
-                $query->where('ccl.ID_CATALOGO_CATEGORIA', $categoria->ID_CATALOGO_CATEGORIA)
-                    ->orWhere('cl.ID_CATALOGO_CATEGORIA', $categoria->ID_CATALOGO_CATEGORIA);
+                $query->where('lc.CATEGORIA_ID', $categoria->ID_CATALOGO_CATEGORIA)
+                    ->orWhere('al.LIDER_ID', $categoria->ID_CATALOGO_CATEGORIA);
             })
             ->select('a.NOMBRE')
             ->first();
