@@ -301,7 +301,6 @@ var Tablamr = $("#Tablamr").DataTable({
     { data: 'ESTADO_REVISION' }, // 👈 NUEVA COLUMNA
     { data: 'BTN_EDITAR' },
     { data: 'BTN_VISUALIZAR' },
-    { data: 'BTN_ELIMINAR' }
 ],
 
 columnDefs: [
@@ -309,10 +308,9 @@ columnDefs: [
     { targets: 1, title: 'Nombre del solicitante', className: 'all text-center' },
     { targets: 2, title: 'N° MR', className: 'all text-center' },
     { targets: 3, title: 'Fecha solicitud', className: 'all text-center' },
-    { targets: 4, title: 'Estado', className: 'all text-center' }, // 👈 TÍTULO PARA ESTADO
+    { targets: 4, title: 'Estado', className: 'all text-center' }, 
     { targets: 5, title: 'Editar', className: 'all text-center' },
     { targets: 6, title: 'Visualizar', className: 'all text-center' },
-    { targets: 7, title: 'Activo', className: 'all text-center' }
 ]
 });
 
