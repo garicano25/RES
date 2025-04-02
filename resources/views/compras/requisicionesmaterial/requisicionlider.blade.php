@@ -133,7 +133,9 @@
                                     <div class="col-8">
                                         <label for="VISTO_BUENO">Visto bueno</label>
 
-                                        <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" id="VISTO_BUENO" name="VISTO_BUENO" readonly>
+                                        <input type="text" class="form-control"  id="VISTO_BUENO" name="VISTO_BUENO" readonly>
+
+                                        <meta name="usuario-autenticado" content="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
 
 
                                     </div>
@@ -159,76 +161,76 @@
 
 
                         <div id="BOTON_VISTO_BUENO"">
-                            <div id="solicitarVerificacionDiv" class="col-12 text-center mt-3" style="display: block;">
-                                <div class="col-md-6 mx-auto d-flex gap-2">
-                                    <button type="button" id="SOLICITAR_VERIFICACION" class="btn btn-info w-100" onclick="darVistoBueno()">
-                                        Dar visto bueno
-                                    </button>
-                                    <button type="button" id="RECHAZAR_VERIFICACION" class="btn btn-danger w-100" onclick="rechazarVistoBueno()">
-                                        Rechazar
-                                    </button>
-                                </div>
-                                <input type="hidden" id="DAR_BUENO" name="DAR_BUENO" value="0">
+                            <div id=" solicitarVerificacionDiv" class="col-12 text-center mt-3" style="display: block;">
+                            <div class="col-md-6 mx-auto d-flex gap-2">
+                                <button type="button" id="SOLICITAR_VERIFICACION" class="btn btn-info w-100" onclick="darVistoBueno()">
+                                    Dar visto bueno
+                                </button>
+                                <button type="button" id="RECHAZAR_VERIFICACION" class="btn btn-danger w-100" onclick="rechazarVistoBueno()">
+                                    Rechazar
+                                </button>
                             </div>
-
-
-
+                            <input type="hidden" id="DAR_BUENO" name="DAR_BUENO" value="0">
                         </div>
 
-
-                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
-
-
-                        <div id="APROBACION_DIRECCION" style="display: none;">
-
-
-                            <div class="col-12 mt-3">
-                                <label for="ESTADO_APROBACION">Estado de Aprobación</label>
-                                <div id="estado-container" class="p-2 rounded">
-                                    <select class="form-control" id="ESTADO_APROBACION" name="ESTADO_APROBACION" onchange="cambiarColor()">
-                                        <option value="" selected disabled>Seleccione una opción</option>
-                                        <option value="Aprobada">Aprobada</option>
-                                        <option value="Rechazada">Rechazada</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-12 mt-3" id="motivo-rechazo-container" style="display: none;">
-                                <label for="MOTIVO_RECHAZO">Motivo de Rechazo</label>
-                                <textarea class="form-control" id="MOTIVO_RECHAZO" name="MOTIVO_RECHAZO" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
-                            </div>
-
-
-                            <div class="col-12 mt-3">
-                                <div class="row">
-
-                                    <div class="col-8">
-                                        <label for="APROBACION">Quien aprueba</label>
-                                        <input type="text" class="form-control" id="QUIEN_APROBACION" name="QUIEN_APROBACION">
-                                    </div>
-                                    <div class="col-4">
-                                        <label>Fecha *</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_APRUEBA_MR" name="FECHA_APRUEBA_MR">
-                                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        @endif
 
 
                     </div>
 
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-success" id="guardarMR">Guardar</button>
+                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
+
+
+                    <div id="APROBACION_DIRECCION" style="display: none;">
+
+
+                        <div class="col-12 mt-3">
+                            <label for="ESTADO_APROBACION">Estado de Aprobación</label>
+                            <div id="estado-container" class="p-2 rounded">
+                                <select class="form-control" id="ESTADO_APROBACION" name="ESTADO_APROBACION" onchange="cambiarColor()">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="Aprobada">Aprobada</option>
+                                    <option value="Rechazada">Rechazada</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 mt-3" id="motivo-rechazo-container" style="display: none;">
+                            <label for="MOTIVO_RECHAZO">Motivo de Rechazo</label>
+                            <textarea class="form-control" id="MOTIVO_RECHAZO" name="MOTIVO_RECHAZO" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
+                        </div>
+
+
+                        <div class="col-12 mt-3">
+                            <div class="row">
+
+                                <div class="col-8">
+                                    <label for="APROBACION">Quien aprueba</label>
+                                    <input type="text" class="form-control" id="QUIEN_APROBACION" name="QUIEN_APROBACION">
+                                </div>
+                                <div class="col-4">
+                                    <label>Fecha *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_APRUEBA_MR" name="FECHA_APRUEBA_MR">
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+
+                    @endif
+
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" id="guardarMR">Guardar</button>
+                </div>
             </form>
         </div>
     </div>

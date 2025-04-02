@@ -325,14 +325,19 @@ $('#Tablarequisicion tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablarequisicion.row(tr);
     ID_FORMULARIO_MR = row.data().ID_FORMULARIO_MR;
 
+    cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
 
-        cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
+    // Obtener el nombre autenticado desde el meta
+    var nombreAutenticado = $('meta[name="usuario-autenticado"]').attr('content');
 
-    
-    
+    // Verificar si viene vacío y llenarlo con el nombre autenticado
+    if (!row.data().VISTO_BUENO) {
+        $('#VISTO_BUENO').val(nombreAutenticado);
+    } else {
+        $('#VISTO_BUENO').val(row.data().VISTO_BUENO);
+    }
+
     editarDatoTabla(row.data(), 'formularioMR', 'miModal_MR', 1);
-    
-
 });
 
 
