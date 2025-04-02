@@ -628,87 +628,103 @@ $('#Tablausuarios tbody').on('click', 'td>button.EDITAR', function () {
 
 
 
-// $('#Tablaproveedores').on('click', 'button.EDITAR', function () {
+$('#Tablaproveedores').on('click', 'button.EDITAR', function () {
 
-//     var tr = $(this).closest('tr');
-//     var row = Tablaproveedores.row(tr);
-//     ID_USUARIO = row.data().ID_USUARIO;
+    var tr = $(this).closest('tr');
+    var row = Tablaproveedores.row(tr);
+    ID_USUARIO = row.data().ID_USUARIO;
 
-//     editarDatoTabla(row.data(), 'formularioUSUARIO', 'modal_usuario', 1);
+    editarDatoTabla(row.data(), 'formularioUSUARIO', 'modal_usuario', 1);
 
-//     const rolesAsignados = row.data().ROLES_ASIGNADOS;
-//     const checkboxes = document.querySelectorAll('.checkbox_rol');
+     const rolesAsignados = row.data().ROLES_ASIGNADOS;
+    const checkboxes = document.querySelectorAll('.checkbox_rol');
+    const superusuarioCheckbox = Array.from(checkboxes).find(cb => cb.value === 'Superusuario');
+    const administradorCheckbox = Array.from(checkboxes).find(cb => cb.value === 'Administrador');
+    const proveedorCheckbox = Array.from(checkboxes).find(cb => cb.value === 'Proveedor');
 
-//     $("#USUARIO_TIPO").val(row.data().USUARIO_TIPO).trigger("change");
+    // Establecer tipo de usuario y disparar lógica de cambio
+    $("#USUARIO_TIPO").val(row.data().USUARIO_TIPO).trigger("change");
 
-//     checkboxes.forEach(checkbox => {
-//         if (rolesAsignados.includes(checkbox.value)) {
-//             checkbox.checked = true;
-//         } else {
-//             checkbox.checked = false;
-//         }
-//     });
+    // Limpiar y aplicar los checks según datos previos
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = rolesAsignados.includes(checkbox.value);
+    });
 
-//     if (rolesAsignados.includes('Superusuario')) {
-//         checkboxes.forEach(checkbox => {
-//             if (checkbox.value !== 'Superusuario') {
-//                 checkbox.checked = false;
-//                 checkbox.disabled = true;
-//             }
-//         });
-//     } else if (rolesAsignados.includes('Administrador')) {
-//         checkboxes.forEach(checkbox => {
-//             if (checkbox.value !== 'Administrador' && checkbox.value !== 'Superusuario') {
-//                 checkbox.checked = false;
-//                 checkbox.disabled = true;
-//             }
-//         });
-//     } else if (rolesAsignados.includes('Proveedor')) {
-//         checkboxes.forEach(checkbox => {
-//             if (checkbox.value !== 'Proveedor') {
-//                 checkbox.checked = false;
-//                 checkbox.disabled = true;
-//             }
-//         });
-//     } else {
-//         checkboxes.forEach(checkbox => {
-//             checkbox.disabled = false;
-//         });
-//     }
+    // Obtener el tipo de usuario actual
+    const tipoUsuario = row.data().USUARIO_TIPO;
 
-//     if (row.data().FOTO_USUARIO) {
-//         var archivo = row.data().FOTO_USUARIO;
-//         var extension = archivo.substring(archivo.lastIndexOf("."));
-//         var imagenUrl = '/usuariofoto/' + row.data().ID_USUARIO + extension;
+    if (tipoUsuario === "2") { // Solo permitir rol Proveedor
+        checkboxes.forEach(cb => {
+            cb.checked = false;
+            cb.disabled = true;
+        });
+        if (proveedorCheckbox) {
+            proveedorCheckbox.disabled = false;
+            proveedorCheckbox.checked = true;
+        }
+    } else if (tipoUsuario === "1") { // No permitir rol Proveedor
+        checkboxes.forEach(cb => {
+            cb.disabled = false;
+        });
+        if (proveedorCheckbox) {
+            proveedorCheckbox.checked = false;
+            proveedorCheckbox.disabled = true;
+        }
+    } else {
+        checkboxes.forEach(cb => {
+            cb.disabled = false;
+        });
+    }
 
-//         if ($('#FOTO_USUARIO').data('dropify')) {
-//             $('#FOTO_USUARIO').dropify().data('dropify').destroy();
-//             $('#FOTO_USUARIO').dropify().data('dropify').settings.defaultFile = imagenUrl;
-//             $('#FOTO_USUARIO').dropify().data('dropify').init();
-//         } else {
-//             $('#FOTO_USUARIO').attr('data-default-file', imagenUrl);
-//             $('#FOTO_USUARIO').dropify({
-//                 messages: {
-//                     'default': 'Arrastre la imagen aquí o haga click',
-//                     'replace': 'Arrastre la imagen o haga clic para reemplazar',
-//                     'remove': 'Quitar',
-//                     'error': 'Ooops, ha ocurrido un error.'
-//                 },
-//                 error: {
-//                     'fileSize': 'Demasiado grande ({{ value }} max).',
-//                     'minWidth': 'Ancho demasiado pequeño (min {{ value }}}px).',
-//                     'maxWidth': 'Ancho demasiado grande (max {{ value }}}px).',
-//                     'minHeight': 'Alto demasiado pequeño (min {{ value }}}px).',
-//                     'maxHeight': 'Alto demasiado grande (max {{ value }}px max).',
-//                     'imageFormat': 'Formato no permitido, sólo ({{ value }}).'
-//                 }
-//             });
-//         }
-//     } else {
-//         $('#FOTO_USUARIO').dropify().data('dropify').resetPreview();
-//         $('#FOTO_USUARIO').dropify().data('dropify').clearElement();
-//     }
-// });
+    // Exclusión entre Superusuario y Administrador
+    if (superusuarioCheckbox.checked) {
+        administradorCheckbox.checked = false;
+        administradorCheckbox.disabled = true;
+    } else {
+        administradorCheckbox.disabled = false;
+    }
+
+    if (administradorCheckbox.checked) {
+        superusuarioCheckbox.checked = false;
+        superusuarioCheckbox.disabled = true;
+    } else {
+        superusuarioCheckbox.disabled = false;
+    }
+
+
+    if (row.data().FOTO_USUARIO) {
+        var archivo = row.data().FOTO_USUARIO;
+        var extension = archivo.substring(archivo.lastIndexOf("."));
+        var imagenUrl = '/usuariofoto/' + row.data().ID_USUARIO + extension;
+
+        if ($('#FOTO_USUARIO').data('dropify')) {
+            $('#FOTO_USUARIO').dropify().data('dropify').destroy();
+            $('#FOTO_USUARIO').dropify().data('dropify').settings.defaultFile = imagenUrl;
+            $('#FOTO_USUARIO').dropify().data('dropify').init();
+        } else {
+            $('#FOTO_USUARIO').attr('data-default-file', imagenUrl);
+            $('#FOTO_USUARIO').dropify({
+                messages: {
+                    'default': 'Arrastre la imagen aquí o haga click',
+                    'replace': 'Arrastre la imagen o haga clic para reemplazar',
+                    'remove': 'Quitar',
+                    'error': 'Ooops, ha ocurrido un error.'
+                },
+                error: {
+                    'fileSize': 'Demasiado grande ({{ value }} max).',
+                    'minWidth': 'Ancho demasiado pequeño (min {{ value }}}px).',
+                    'maxWidth': 'Ancho demasiado grande (max {{ value }}}px).',
+                    'minHeight': 'Alto demasiado pequeño (min {{ value }}}px).',
+                    'maxHeight': 'Alto demasiado grande (max {{ value }}px max).',
+                    'imageFormat': 'Formato no permitido, sólo ({{ value }}).'
+                }
+            });
+        }
+    } else {
+        $('#FOTO_USUARIO').dropify().data('dropify').resetPreview();
+        $('#FOTO_USUARIO').dropify().data('dropify').clearElement();
+    }
+});
 
 
 
