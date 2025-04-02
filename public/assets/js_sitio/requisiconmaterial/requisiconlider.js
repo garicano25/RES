@@ -9,10 +9,7 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     ID_FORMULARIO_MR = 0;
     document.getElementById('formularioMR').reset();
 
-    $('#VISTO_BUENO_JEFE').hide();
-    $('#APROBACION_DIRECCION').hide();
-    $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-    $('#BOTON_VISTO_BUENO').hide();
+   
 
 
     
@@ -337,6 +334,7 @@ $('#Tablarequisicion tbody').on('click', 'td>button.EDITAR', function () {
     } else {
         $('#VISTO_BUENO').val(row.data().VISTO_BUENO);
     }
+
 });
 
 
