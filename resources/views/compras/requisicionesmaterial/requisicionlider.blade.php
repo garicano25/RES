@@ -132,7 +132,10 @@
                                 <div class="row">
                                     <div class="col-8">
                                         <label for="VISTO_BUENO">Visto bueno</label>
-                                        <input type="text" class="form-control" id="VISTO_BUENO" name="VISTO_BUENO" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
+
+                                        <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" id="VISTO_BUENO" name="VISTO_BUENO" readonly>
+
+
                                     </div>
 
                                     <div class="col-4">
@@ -155,7 +158,7 @@
                         </div>
 
 
-                        <div id="BOTON_VISTO_BUENO" style="display: none;">
+                        <div id="BOTON_VISTO_BUENO"">
                             <div id="solicitarVerificacionDiv" class="col-12 text-center mt-3" style="display: block;">
                                 <div class="col-md-6 mx-auto d-flex gap-2">
                                     <button type="button" id="SOLICITAR_VERIFICACION" class="btn btn-info w-100" onclick="darVistoBueno()">
