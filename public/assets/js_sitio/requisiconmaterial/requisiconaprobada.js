@@ -340,10 +340,10 @@ $('#Tablarequsicionaprobada tbody').on('click', 'td>button.EDITAR', function () 
 
 
       var nombreAutenticado = $('meta[name="usuario-autenticado"]').attr('content');
-    if (!row.data().VISTO_BUENO) {
+    if (!row.data().QUIEN_APROBACION) {
         $('#QUIEN_APROBACION').val(nombreAutenticado);
     } else {
-        $('#QUIEN_APROBACION').val(row.data().VISTO_BUENO);
+        $('#QUIEN_APROBACION').val(row.data().QUIEN_APROBACION);
     }
 
 
