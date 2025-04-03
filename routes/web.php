@@ -642,7 +642,7 @@ Route::get('/Tablamr', [mrController::class, 'Tablamr']);
 Route::get('/obtenerAreaSolicitante', [mrController::class, 'obtenerAreaSolicitante'])->middleware('auth');
 
 
-Route::post('/darVistoBueno', [mrController::class, 'darVistoBueno']);
+Route::post('/guardarYDarVistoBueno', [mrController::class, 'guardarYDarVistoBueno']);
 Route::post('/rechazar', [mrController::class, 'rechazar']);
 
 

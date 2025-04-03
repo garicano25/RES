@@ -107,17 +107,27 @@ class mrController extends Controller
 
 
 
-    public function darVistoBueno(Request $request)
+    public function guardarYDarVistoBueno(Request $request)
     {
         $request->validate([
-            'id' => 'required|integer|exists:formulario_requisiconmaterial,ID_FORMULARIO_MR'
+            'id' => 'required|integer|exists:formulario_requisiconmaterial,ID_FORMULARIO_MR',
+            'prioridad' => 'required|string',
+            'observaciones' => 'required|string',
+            'linea_negocios' => 'required|string',
+            'fecha_visto' => 'required|date',
+            'visto_bueno' => 'required|string',
         ]);
 
-        $formulario = mrModel::find($request->id); 
+        $formulario = mrModel::find($request->id);
+        $formulario->PRIORIDAD = $request->prioridad;
+        $formulario->OBSERVACIONES = $request->observaciones;
+        $formulario->LINEA_NEGOCIOS = $request->linea_negocios;
+        $formulario->FECHA_VISTO = $request->fecha_visto;
+        $formulario->VISTO_BUENO = $request->visto_bueno;
         $formulario->DAR_BUENO = 1;
         $formulario->save();
 
-        return response()->json(['success' => true, 'message' => 'Formulario actualizado correctamente.']);
+        return response()->json(['success' => true, 'message' => 'Formulario actualizado con visto bueno.']);
     }
 
 
@@ -125,10 +135,20 @@ class mrController extends Controller
     {
         $request->validate([
             'id' => 'required|integer|exists:formulario_requisiconmaterial,ID_FORMULARIO_MR',
-            'motivo' => 'required|string|max:1000'
+            'motivo' => 'required|string|max:1000',
+            'prioridad' => 'required|string',
+            'observaciones' => 'required|string',
+            'linea_negocios' => 'required|string',
+            'fecha_visto' => 'required|date',
+            'visto_bueno' => 'required|string',
         ]);
 
         $formulario = mrModel::find($request->id);
+        $formulario->PRIORIDAD = $request->prioridad;
+        $formulario->OBSERVACIONES = $request->observaciones;
+        $formulario->LINEA_NEGOCIOS = $request->linea_negocios;
+        $formulario->FECHA_VISTO = $request->fecha_visto;
+        $formulario->VISTO_BUENO = $request->visto_bueno;
         $formulario->DAR_BUENO = 2;
         $formulario->MOTIVO_RECHAZO_JEFE = $request->motivo;
         $formulario->save();

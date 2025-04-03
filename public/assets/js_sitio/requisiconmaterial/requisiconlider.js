@@ -391,24 +391,38 @@ function cargarMaterialesDesdeJSON(materialesJson) {
     }
 }
 
-
 function darVistoBueno() {
     Swal.fire({
         title: '¿Deseas dar el visto bueno a la M.R?',
-        text: "Esta acción enviará la solicitud.",
+        text: "Esta acción enviará la solicitud y guardará los datos.",
         icon: 'question',
         showCancelButton: true,
         confirmButtonText: 'Sí, enviar',
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
+            // ✅ Validar primero
+            if (!validarCamposObligatoriosMR()) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campos incompletos',
+                    text: 'Debe llenar todos los campos antes de continuar.'
+                });
+                return;
+            }
+
             if (typeof ID_FORMULARIO_MR !== 'undefined' && ID_FORMULARIO_MR > 0) {
                 $.ajax({
-                    url: '/darVistoBueno',
+                    url: '/guardarYDarVistoBueno',
                     method: 'POST',
                     data: {
                         id: ID_FORMULARIO_MR,
-                        _token: $('meta[name="csrf-token"]').attr('content') 
+                        prioridad: $('#PRIORIDAD_MR').val(),
+                        observaciones: $('#OBSERVACIONES_MR').val(),
+                        linea_negocios: $('#LINEA_NEGOCIOS_MR').val(),
+                        fecha_visto: $('#FECHA_VISTO_MR').val(),
+                        visto_bueno: $('#VISTO_BUENO').val(),
+                        _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (response) {
                         if (response.success) {
@@ -426,7 +440,7 @@ function darVistoBueno() {
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
-                            text: 'Ocurrió un error al guardar el visto bueno.'
+                            text: 'Ocurrió un error al guardar el formulario.'
                         });
                     }
                 });
@@ -438,6 +452,28 @@ function darVistoBueno() {
 
 
 
+function validarCamposObligatoriosMR() {
+    var camposValidos = true;
+
+    var campos = [
+        '#PRIORIDAD_MR',
+        '#OBSERVACIONES_MR',
+        '#LINEA_NEGOCIOS_MR',
+        '#FECHA_VISTO_MR',
+    ];
+
+    campos.forEach(function(selector) {
+        var valor = $(selector).val();
+        if (!valor || valor.trim() === '') {
+            camposValidos = false;
+        }
+    });
+
+    return camposValidos;
+}
+
+
+
 
 
 function rechazarVistoBueno() {
@@ -445,7 +481,6 @@ function rechazarVistoBueno() {
     const modal = new bootstrap.Modal(document.getElementById('modalRechazo'));
     modal.show();
 }
-
 document.getElementById('formRechazo').addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -456,6 +491,16 @@ document.getElementById('formRechazo').addEventListener('submit', function (even
             icon: 'warning',
             title: 'Campo vacío',
             text: 'Por favor, escriba el motivo del rechazo.'
+        });
+        return;
+    }
+
+    // ✅ Validar todos los campos antes de enviar
+    if (!validarCamposObligatoriosMR()) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Campos incompletos',
+            text: 'Debe llenar todos los campos antes de rechazar.'
         });
         return;
     }
@@ -476,13 +521,18 @@ document.getElementById('formRechazo').addEventListener('submit', function (even
                     data: {
                         id: ID_FORMULARIO_MR,
                         motivo: motivo,
+                        prioridad: $('#PRIORIDAD_MR').val(),
+                        observaciones: $('#OBSERVACIONES_MR').val(),
+                        linea_negocios: $('#LINEA_NEGOCIOS_MR').val(),
+                        fecha_visto: $('#FECHA_VISTO_MR').val(),
+                        visto_bueno: $('#VISTO_BUENO').val(),
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (response) {
                         if (response.success) {
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Rechazar M.R',
+                                title: 'Rechazo registrado',
                                 text: response.message
                             });
 
@@ -503,3 +553,4 @@ document.getElementById('formRechazo').addEventListener('submit', function (even
         }
     });
 });
+
