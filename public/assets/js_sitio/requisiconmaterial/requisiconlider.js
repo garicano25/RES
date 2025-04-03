@@ -475,6 +475,14 @@ function validarCamposObligatoriosMR() {
 
 
 
+document.getElementById('modalRechazo').addEventListener('hidden.bs.modal', function () {
+    document.getElementById('motivoRechazoTextarea').value = '';
+
+
+    document.getElementById('formRechazo').reset();
+});
+
+
 
 function rechazarVistoBueno() {
     document.getElementById('motivoRechazoTextarea').value = '';
