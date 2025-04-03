@@ -157,8 +157,7 @@ class mrController extends Controller
         $request->validate([
             'id' => 'required|integer|exists:formulario_requisiconmaterial,ID_FORMULARIO_MR',
             'prioridad' => 'required|string',
-            'observaciones' => 'required|string',
-            'linea_negocios' => 'required|string',
+            'observaciones' => 'nullable|string',
             'fecha_visto' => 'required|date',
             'visto_bueno' => 'required|string',
             'materiales_json' => 'required|string',
@@ -168,7 +167,6 @@ class mrController extends Controller
         $formulario = mrModel::find($request->id);
         $formulario->PRIORIDAD_MR = $request->prioridad;
         $formulario->OBSERVACIONES_MR = $request->observaciones;
-        $formulario->LINEA_NEGOCIOS_MR = $request->linea_negocios;
         $formulario->FECHA_VISTO_MR = $request->fecha_visto;
         $formulario->VISTO_BUENO = $request->visto_bueno;
         $formulario->MATERIALES_JSON = $request->materiales_json;
@@ -185,8 +183,7 @@ class mrController extends Controller
             'id' => 'required|integer|exists:formulario_requisiconmaterial,ID_FORMULARIO_MR',
             'motivo' => 'required|string|max:1000',
             'prioridad' => 'required|string',
-            'observaciones' => 'required|string',
-            'linea_negocios' => 'required|string',
+            'observaciones' => 'nullable|string',
             'fecha_visto' => 'required|date',
             'visto_bueno' => 'required|string',
             'materiales_json' => 'required|string',
@@ -196,7 +193,6 @@ class mrController extends Controller
         $formulario = mrModel::find($request->id);
         $formulario->PRIORIDAD_MR = $request->prioridad;
         $formulario->OBSERVACIONES_MR = $request->observaciones;
-        $formulario->LINEA_NEGOCIOS_MR = $request->linea_negocios;
         $formulario->FECHA_VISTO_MR = $request->fecha_visto;
         $formulario->VISTO_BUENO = $request->visto_bueno;
         $formulario->DAR_BUENO = 2;
