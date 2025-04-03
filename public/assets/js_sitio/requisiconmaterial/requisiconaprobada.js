@@ -339,6 +339,14 @@ $('#Tablarequsicionaprobada tbody').on('click', 'td>button.EDITAR', function () 
 
 
 
+
+        if (row.data().ESTADO_APROBACION === "Rechazada") {
+        $('#motivo-rechazo-container').show();
+      
+    } else {
+    }
+
+
       var nombreAutenticado = $('meta[name="usuario-autenticado"]').attr('content');
     if (!row.data().QUIEN_APROBACION) {
         $('#QUIEN_APROBACION').val(nombreAutenticado);
