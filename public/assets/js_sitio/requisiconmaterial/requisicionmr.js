@@ -359,7 +359,7 @@ $('#Tablamr tbody').on('click', 'td>button.EDITAR', function () {
             $('#APROBACION_DIRECCION').show();
 
       } else {
-          
+        $('#APROBACION_DIRECCION').show();
         $('#motivo-rechazo-container').show();
       
     }
