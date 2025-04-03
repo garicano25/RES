@@ -336,7 +336,7 @@ $('#Tablarequsicionaprobada tbody').on('click', 'td>button.EDITAR', function () 
     
 
      if (row.data().DAR_BUENO === "2") {
-                $('#MOTIVO_RECHAZO_JEFE_DIV').show();
+        $('#MOTIVO_RECHAZO_JEFE_DIV').show();
       
     } else {
     }

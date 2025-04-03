@@ -148,7 +148,7 @@
 
 
                             <div class="col-12 mt-3" id="MOTIVO_RECHAZO_JEFE_DIV" style="display: none;">
-                                <label for="MOTIVO_RECHAZO_JEFE">Motivo de Rechazo</label>
+                                <label >Motivo de Rechazo</label>
                                 <textarea class="form-control" id="MOTIVO_RECHAZO_JEFE" name="MOTIVO_RECHAZO_JEFE" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
                             </div>
 
