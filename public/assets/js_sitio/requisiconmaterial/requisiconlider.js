@@ -340,6 +340,21 @@ $('#Tablarequisicion tbody').on('click', 'td>button.EDITAR', function () {
         $('#VISTO_BUENO').val(row.data().VISTO_BUENO);
     }
 
+
+       if (row.data().ESTADO_APROBACION === "Aprobada") {
+         $('#motivo-rechazo-container').hide();
+        $('#APROBACION_DIRECCION').show();
+    
+           
+           
+      } else {
+          
+        $('#motivo-rechazo-container').show();
+        $('#APROBACION_DIRECCION').show();
+           
+      
+    }
+
 });
 
 
