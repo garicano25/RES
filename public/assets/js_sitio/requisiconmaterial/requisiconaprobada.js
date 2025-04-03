@@ -9,10 +9,7 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     ID_FORMULARIO_MR = 0;
     document.getElementById('formularioMR').reset();
 
-    $('#VISTO_BUENO_JEFE').hide();
-    $('#APROBACION_DIRECCION').hide();
-    $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-    $('#BOTON_VISTO_BUENO').hide();
+    
 
 
     
@@ -58,7 +55,7 @@ cambiarColor();
 
 
 
-let contadorMateriales = 1; // Declaración global para que sea accesible en todo el script
+let contadorMateriales = 1; 
 
 document.addEventListener("DOMContentLoaded", function () {
     const botonMaterial = document.getElementById('botonmaterial');
@@ -205,7 +202,7 @@ $("#guardarMR").click(function (e) {
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                      $('#miModal_MR').modal('hide')
                     document.getElementById('formularioMR').reset();
-                    Tablamr.ajax.reload()
+                    Tablarequsicionaprobada.ajax.reload()
 
         
             })
@@ -243,7 +240,7 @@ $("#guardarMR").click(function (e) {
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                      $('#miModal_MR').modal('hide')
                     document.getElementById('formularioMR').reset();
-                    Tablamr.ajax.reload()
+                    Tablarequsicionaprobada.ajax.reload()
 
 
                 }, 300);  
@@ -259,7 +256,7 @@ $("#guardarMR").click(function (e) {
 });
 
 
-var Tablamr = $("#Tablamr").DataTable({
+var Tablarequsicionaprobada = $("#Tablarequsicionaprobada").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
     lengthMenu: [
@@ -278,12 +275,12 @@ var Tablamr = $("#Tablamr").DataTable({
         data: {},
         method: 'GET',
         cache: false,
-        url: '/Tablamr',
+        url: '/Tablarequsicionaprobada',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablamr.columns.adjust().draw();
+            Tablarequsicionaprobada.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -321,9 +318,9 @@ columnDefs: [
 
 
 
-$('#Tablamr tbody').on('click', 'td>button.EDITAR', function () {
+$('#Tablarequsicionaprobada tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablamr.row(tr);
+    var row = Tablarequsicionaprobada.row(tr);
     ID_FORMULARIO_MR = row.data().ID_FORMULARIO_MR;
 
 
@@ -334,34 +331,22 @@ $('#Tablamr tbody').on('click', 'td>button.EDITAR', function () {
     editarDatoTabla(row.data(), 'formularioMR', 'miModal_MR', 1);
     
 
-     if (row.data().DAR_BUENO === "1") {
-        $('#VISTO_BUENO_JEFE').show();
-         $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-         $('#BOTON_VISTO_BUENO').hide();
-
+     if (row.data().DAR_BUENO === "2") {
+                $('#MOTIVO_RECHAZO_JEFE_DIV').show();
       
-    } else if (row.data().DAR_BUENO === "2") {
-        $('#VISTO_BUENO_JEFE').show();
-         $('#MOTIVO_RECHAZO_JEFE_DIV').show();
-         
-        
-     } else {
-         $('#VISTO_BUENO_JEFE').hide();
-        $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-       
-          
+    } else {
     }
 
 
 
-      if (row.data().ESTADO_APROBACION === "Aprobada") {
-         $('#motivo-rechazo-container').hide();
-    
-      } else {
-          
-        $('#motivo-rechazo-container').show();
-      
+      var nombreAutenticado = $('meta[name="usuario-autenticado"]').attr('content');
+    if (!row.data().VISTO_BUENO) {
+        $('#QUIEN_APROBACION').val(nombreAutenticado);
+    } else {
+        $('#QUIEN_APROBACION').val(row.data().VISTO_BUENO);
     }
+
+
 });
 
 
@@ -445,7 +430,7 @@ function darVistoBueno() {
                             });
 
                             $('#miModal_MR').modal('hide');
-                            $('#Tablamr').DataTable().ajax.reload(null, false);
+                            $('#Tablarequsicionaprobada').DataTable().ajax.reload(null, false);
                         }
                     },
                     error: function () {
@@ -514,7 +499,7 @@ document.getElementById('formRechazo').addEventListener('submit', function (even
 
                             bootstrap.Modal.getInstance(document.getElementById('modalRechazo')).hide();
                             $('#miModal_MR').modal('hide');
-                            $('#Tablamr').DataTable().ajax.reload(null, false);
+                            $('#Tablarequsicionaprobada').DataTable().ajax.reload(null, false);
                         }
                     },
                     error: function () {

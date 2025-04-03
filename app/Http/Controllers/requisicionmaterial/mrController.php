@@ -48,9 +48,9 @@ class mrController extends Controller
                 if ($value->DAR_BUENO == 0) {
                     $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">En revisión</span>';
                 } elseif ($value->DAR_BUENO == 1) {
-                    $value->ESTADO_REVISION = '<span class="badge bg-success">Aprobada por jefe directo</span>';
+                    $value->ESTADO_REVISION = '<span class="badge bg-success">Aprobada </span>';
                 } elseif ($value->DAR_BUENO == 2) {
-                    $value->ESTADO_REVISION = '<span class="badge bg-danger">Rechazada por jefe directo</span>';
+                    $value->ESTADO_REVISION = '<span class="badge bg-danger">Rechazada por jefe inmediato</span>';
                 } else {
                     $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
                 }
@@ -70,6 +70,51 @@ class mrController extends Controller
         }
     }
 
+
+
+    public function Tablarequsicionaprobada()
+    {
+        try {
+            $tabla = mrModel::get();
+
+            foreach ($tabla as $value) {
+
+
+
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                }
+
+                // Estado según DAR_BUENO
+                if ($value->DAR_BUENO == 0) {
+                    $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">En revisión</span>';
+                } elseif ($value->DAR_BUENO == 1) {
+                    $value->ESTADO_REVISION = '<span class="badge bg-success">Aprobada </span>';
+                } elseif ($value->DAR_BUENO == 2) {
+                    $value->ESTADO_REVISION = '<span class="badge bg-danger">Rechazada por jefe inmediato</span>';
+                } else {
+                    $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
+                }
+            }
+
+            // Respuesta
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
 
 
 

@@ -650,6 +650,9 @@ Route::get('/Requisición_materiales_líderes', function () {return view('compra
 
 Route::get('/Tablarequisicion', [mrController::class, 'Tablarequisicion']);
 
+Route::get('/Tablarequsicionaprobada', [mrController::class, 'Tablarequsicionaprobada']);
+
+Route::get('/Requisición_materiales_aprobación', function () {return view('compras.requisicionesmaterial.requisiconaprobar');});
 
 Route::get('/Bitácora', function () {return view('compras.requisicionesmaterial.bitacora');});
 

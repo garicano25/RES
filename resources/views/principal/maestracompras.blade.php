@@ -154,10 +154,22 @@
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones']))
 
                         <li class="nav-item dropdown" style="margin-left: 8px;">
-                            <a class="nav-link BOTON" href="{{ url('/Requisición_materiales_líderes') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Requisiciones de materiales por dar visto bueno</span>
+                            <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                <span class="d-lg-none">Requisición de Materiales</span>
+                                <span class="d-none d-lg-inline">Requisición de Materiales</span>
                             </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{url('/Requisición_materiales_líderes')}}">Requisiciones de materiales por dar visto bueno</a>
+                                </li>
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/Requisición_materiales_aprobación')}}">Requisiciones de materiales por aprobar</a>
+                                </li>
+                            </ul>
                         </li>
+
+
+
 
 
                         @endif
@@ -353,7 +365,7 @@
 
 
     @if(request()->is('Requisición_Materiales'))
-    <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=3.1"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=3.2"></script>
     @endif
 
 
@@ -361,6 +373,10 @@
     <script src="/assets/js_sitio/requisiconmaterial/requisiconlider.js?v=1.8"></script>
     @endif
 
+
+    @if(request()->is('Requisición_materiales_aprobación'))
+    <script src="/assets/js_sitio/requisiconmaterial/requisiconaprobada.js?v=1.0"></script>
+    @endif
 
 
     @if(request()->is('Banco_proveedores'))
