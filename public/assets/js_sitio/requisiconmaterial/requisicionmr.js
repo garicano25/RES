@@ -353,16 +353,25 @@ $('#Tablamr tbody').on('click', 'td>button.EDITAR', function () {
     }
 
 
-
-      if (row.data().ESTADO_APROBACION === "Aprobada") {
+   if (row.data().ESTADO_APROBACION === "Aprobada") {
          $('#motivo-rechazo-container').hide();
             $('#APROBACION_DIRECCION').show();
 
-      } else {
+      
+    } else if (row.data().ESTADO_APROBACION === "Rechazada") {
         $('#APROBACION_DIRECCION').show();
         $('#motivo-rechazo-container').show();
-      
+         
+        
+     } else {
+       
+          
     }
+
+
+
+
+  
 });
 
 
