@@ -172,50 +172,6 @@
                     </div>
 
 
-                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
-
-
-                    <div id="APROBACION_DIRECCION" style="display: none;">
-
-
-                        <div class="col-12 mt-3">
-                            <label for="ESTADO_APROBACION">Estado de Aprobación</label>
-                            <div id="estado-container" class="p-2 rounded">
-                                <select class="form-control" id="ESTADO_APROBACION" name="ESTADO_APROBACION" onchange="cambiarColor()">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="Aprobada">Aprobada</option>
-                                    <option value="Rechazada">Rechazada</option>
-                                </select>
-                            </div>
-                        </div>
-
-
-                        <div class="col-12 mt-3" id="motivo-rechazo-container" style="display: none;">
-                            <label for="MOTIVO_RECHAZO">Motivo de Rechazo</label>
-                            <textarea class="form-control" id="MOTIVO_RECHAZO" name="MOTIVO_RECHAZO" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
-                        </div>
-
-
-                        <div class="col-12 mt-3">
-                            <div class="row">
-
-                                <div class="col-8">
-                                    <label for="APROBACION">Quien aprueba</label>
-                                    <input type="text" class="form-control" id="QUIEN_APROBACION" name="QUIEN_APROBACION">
-                                </div>
-                                <div class="col-4">
-                                    <label>Fecha *</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_APRUEBA_MR" name="FECHA_APRUEBA_MR">
-                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    @endif
 
 
                 </div>
