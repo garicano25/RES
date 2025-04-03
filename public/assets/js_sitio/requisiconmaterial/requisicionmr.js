@@ -104,7 +104,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    function actualizarNumerosOrden() {
+   
+});
+
+
+ function actualizarNumerosOrden() {
         const materiales = document.querySelectorAll('.material-item');
         let nuevoContador = 1;
         materiales.forEach(material => {
@@ -112,8 +116,8 @@ document.addEventListener("DOMContentLoaded", function () {
             nuevoContador++;
         });
         contadorMateriales = nuevoContador;
-    }
-});
+}
+    
 
 function cambiarColor() {
         var select = document.getElementById("ESTADO_APROBACION");
@@ -354,7 +358,7 @@ $('#Tablamr tbody').on('click', 'td>button.EDITAR', function () {
 function cargarMaterialesDesdeJSON(materialesJson) {
     const contenedorMateriales = document.querySelector('.materialesdiv');
     contenedorMateriales.innerHTML = ''; 
-    let contadorMateriales = 1;
+    contadorMateriales = 1; // ← ¡Aquí está la clave!
 
     try {
         const materiales = JSON.parse(materialesJson);
@@ -396,12 +400,11 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             });
         });
 
-        window.contadorMateriales = contadorMateriales;
-
     } catch (e) {
         console.error('Error al parsear MATERIALES_JSON:', e);
     }
 }
+
 
 
 function darVistoBueno() {
