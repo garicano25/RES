@@ -11,9 +11,7 @@
         </h3>
 
 
-        <button type="button" class="btn btn-light waves-effect waves-light " id="NUEVO_MR" style="margin-left: auto;">
-            Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
-        </button>
+      
     </ol>
 
     <div class="card-body">
