@@ -101,7 +101,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    function actualizarNumerosOrden() {
+  
+});
+
+
+  function actualizarNumerosOrden() {
         const materiales = document.querySelectorAll('.material-item');
         let nuevoContador = 1;
         materiales.forEach(material => {
@@ -109,8 +113,9 @@ document.addEventListener("DOMContentLoaded", function () {
             nuevoContador++;
         });
         contadorMateriales = nuevoContador;
-    }
-});
+}
+    
+
 
 function cambiarColor() {
         var select = document.getElementById("ESTADO_APROBACION");
@@ -342,7 +347,7 @@ $('#Tablarequisicion tbody').on('click', 'td>button.EDITAR', function () {
 function cargarMaterialesDesdeJSON(materialesJson) {
     const contenedorMateriales = document.querySelector('.materialesdiv');
     contenedorMateriales.innerHTML = ''; 
-    let contadorMateriales = 1;
+    contadorMateriales = 1; // ← ¡Aquí está la clave!
 
     try {
         const materiales = JSON.parse(materialesJson);
@@ -367,11 +372,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     <label class="form-label">Unidad de Medida</label>
                     <input type="text" class="form-control" name="UNIDAD_MEDIDA" value="${material.UNIDAD_MEDIDA}" required>
                 </div>
-                <div class="col-12 mt-2 text-end">
-                    <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </div>
+               
             `;
 
             contenedorMateriales.appendChild(divMaterial);
@@ -384,12 +385,11 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             });
         });
 
-        window.contadorMateriales = contadorMateriales;
-
     } catch (e) {
         console.error('Error al parsear MATERIALES_JSON:', e);
     }
 }
+
 
 function darVistoBueno() {
     Swal.fire({

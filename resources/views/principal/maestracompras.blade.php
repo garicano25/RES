@@ -353,12 +353,12 @@
 
 
     @if(request()->is('Requisición_Materiales'))
-    <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=3.0"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=3.1"></script>
     @endif
 
 
     @if(request()->is('Requisición_materiales_líderes'))
-    <script src="/assets/js_sitio/requisiconmaterial/requisiconlider.js?v=1.6"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/requisiconlider.js?v=1.7"></script>
     @endif
 
 
