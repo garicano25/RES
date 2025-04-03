@@ -64,6 +64,7 @@ let contadorMateriales = 1;
 document.addEventListener("DOMContentLoaded", function () {
     const botonMaterial = document.getElementById('botonmaterial');
     const contenedorMateriales = document.querySelector('.materialesdiv');
+    let contadorMateriales = 1;
 
     botonMaterial.addEventListener('click', function () {
         agregarMaterial();
@@ -73,7 +74,13 @@ document.addEventListener("DOMContentLoaded", function () {
         const divMaterial = document.createElement('div');
         divMaterial.classList.add('row', 'material-item', 'mt-1');
         divMaterial.innerHTML = `
-            <div class="col-2">
+          <div class="col-1">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="CHECK_MATERIAL" disabled>
+                    <label class="form-check-label">Verificado</label>
+                </div>
+            </div>
+            <div class="col-1">
                 <label class="form-label">N°</label>
                 <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
             </div>
@@ -81,13 +88,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 <label class="form-label">Descripción</label>
                 <input type="text" class="form-control" name="DESCRIPCION" required>
             </div>
-            <div class="col-2">
+            <div class="col-1">
                 <label class="form-label">Cantidad</label>
                 <input type="number" class="form-control" name="CANTIDAD" required>
             </div>
-            <div class="col-3">
+            <div class="col-2">
                 <label class="form-label">Unidad de Medida</label>
                 <input type="text" class="form-control" name="UNIDAD_MEDIDA" required>
+            </div>
+          
+            <div class="col-2">
+                <label class="form-label">Línea de Negocios</label>
+                <select class="form-select" name="CATEGORIA_MATERIAL" disabled>
+                    <option value="">Seleccionar</option>
+                    <option value="STE">STE</option>
+                    <option value="SST">SST</option>
+                    <option value="SCA">SCA</option>
+                    <option value="SMA">SMA</option>
+                    <option value="SLH">SLH</option>
+                    <option value="ADM">ADM</option>
+                </select>
             </div>
             <div class="col-12 mt-2 text-end">
                 <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
@@ -97,16 +117,16 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
 
         contenedorMateriales.appendChild(divMaterial);
-        contadorMateriales++; 
+        contadorMateriales++;
+
         const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
         botonEliminar.addEventListener('click', function () {
             contenedorMateriales.removeChild(divMaterial);
-            actualizarNumerosOrden(); 
+            actualizarNumerosOrden(); // asegúrate de tener esta función si quieres reenumerar
         });
     }
-
-   
 });
+
 
 
  function actualizarNumerosOrden() {
@@ -159,14 +179,19 @@ $("#guardarMR").click(function (e) {
     if (formularioValido) {
 
         
-        var documentos = [];
+         var documentos = [];
         $(".material-item").each(function() {
             var documento = {
                 'DESCRIPCION': $(this).find("input[name='DESCRIPCION']").val(),
                 'CANTIDAD': $(this).find("input[name='CANTIDAD']").val(),
-                'UNIDAD_MEDIDA': $(this).find("input[name='UNIDAD_MEDIDA']").val(),            };
+                'UNIDAD_MEDIDA': $(this).find("input[name='UNIDAD_MEDIDA']").val(),
+            'CHECK_MATERIAL': $(this).find("input[name='CHECK_MATERIAL']").is(":checked"),
+        'CATEGORIA_MATERIAL': $(this).find("select[name='CATEGORIA_MATERIAL']").val()
+
+            };
             documentos.push(documento);
         });
+
 
         const requestData = {
             api: 1,
@@ -365,8 +390,8 @@ $('#Tablarequsicionaprobada tbody').on('click', 'td>button.EDITAR', function () 
 
 function cargarMaterialesDesdeJSON(materialesJson) {
     const contenedorMateriales = document.querySelector('.materialesdiv');
-    contenedorMateriales.innerHTML = ''; 
-    contadorMateriales = 1; // ← ¡Aquí está la clave!
+    contenedorMateriales.innerHTML = '';
+    contadorMateriales = 1;
 
     try {
         const materiales = JSON.parse(materialesJson);
@@ -375,7 +400,13 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             const divMaterial = document.createElement('div');
             divMaterial.classList.add('row', 'material-item', 'mt-1');
             divMaterial.innerHTML = `
-                <div class="col-2">
+                <div class="col-1">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="CHECK_MATERIAL" ${material.CHECK_MATERIAL ? 'checked' : ''} >
+                        <label class="form-check-label">Verificado</label>
+                    </div>
+                </div>
+                <div class="col-1">
                     <label class="form-label">N°</label>
                     <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
                 </div>
@@ -383,13 +414,25 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     <label class="form-label">Descripción</label>
                     <input type="text" class="form-control" name="DESCRIPCION" value="${material.DESCRIPCION}" required>
                 </div>
-                <div class="col-2">
+                <div class="col-1">
                     <label class="form-label">Cantidad</label>
                     <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" required>
                 </div>
-                <div class="col-3">
+                <div class="col-2">
                     <label class="form-label">Unidad de Medida</label>
                     <input type="text" class="form-control" name="UNIDAD_MEDIDA" value="${material.UNIDAD_MEDIDA}" required>
+                </div>
+                <div class="col-2">
+                    <label class="form-label">Línea de Negocios</label>
+                    <select class="form-select" name="CATEGORIA_MATERIAL" disabled>
+                        <option value="">Seleccionar</option>
+                        <option value="STE" ${material.CATEGORIA_MATERIAL === 'STE' ? 'selected' : ''}>STE</option>
+                        <option value="SST" ${material.CATEGORIA_MATERIAL === 'SST' ? 'selected' : ''}>SST</option>
+                        <option value="SCA" ${material.CATEGORIA_MATERIAL === 'SCA' ? 'selected' : ''}>SCA</option>
+                        <option value="SMA" ${material.CATEGORIA_MATERIAL === 'SMA' ? 'selected' : ''}>SMA</option>
+                        <option value="SLH" ${material.CATEGORIA_MATERIAL === 'SLH' ? 'selected' : ''}>SLH</option>
+                        <option value="ADM" ${material.CATEGORIA_MATERIAL === 'ADM' ? 'selected' : ''}>ADM</option>
+                    </select>
                 </div>
                 <div class="col-12 mt-2 text-end">
                     <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
@@ -412,7 +455,6 @@ function cargarMaterialesDesdeJSON(materialesJson) {
         console.error('Error al parsear MATERIALES_JSON:', e);
     }
 }
-
 
 
 function darVistoBueno() {

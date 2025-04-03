@@ -107,20 +107,9 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-4">
+                                    <div class="col-8">
                                         <label for="OBSERVACIONES">Observaciones</label>
                                         <input type="text" class="form-control" id="OBSERVACIONES_MR" name="OBSERVACIONES_MR">
-                                    </div>
-                                    <div class="col-4">
-                                        <label for="LINEA_NEGOCIOS">Línea de Negocios</label>
-                                        <select class="form-control" id="LINEA_NEGOCIOS_MR" name="LINEA_NEGOCIOS_MR">
-                                            <option value="" selected disabled>Seleccione una opción</option>
-                                            <option value="SOLUCIONES EN CALIDAD">SOLUCIONES EN CALIDAD</option>
-                                            <option value="SOLUCIONES LIDERAZGO Y HAB. HUMANAS">SOLUCIONES LIDERAZGO Y HAB. HUMANAS</option>
-                                            <option value="SOLUCIONES TÉCNICAS">SOLUCIONES TÉCNICAS</option>
-                                            <option value="SOLUCIONES MEDIO AMBIENTE">SOLUCIONES MEDIO AMBIENTE</option>
-                                            <option value="SOLUCIONES EN SST">SSOLUCIONES EN SST</option>
-                                        </select>
                                     </div>
                                 </div>
                             </div>

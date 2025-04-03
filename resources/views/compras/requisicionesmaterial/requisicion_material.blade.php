@@ -86,7 +86,7 @@
 
                         <div class="mt-3">
                             <label>Justificación *</label>
-                            <textarea class="form-control" id="JUSTIFICACION_MR" name="JUSTIFICACION_MR" rows="3"></textarea>
+                            <textarea class="form-control" id="JUSTIFICACION_MR" name="JUSTIFICACION_MR" rows="3" required></textarea>
                         </div>
 
 
