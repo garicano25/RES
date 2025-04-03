@@ -176,7 +176,7 @@
                         </div>
 
 
-                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
+                       
 
 
                         <div id="APROBACION_DIRECCION" style="display: none;">
@@ -219,7 +219,7 @@
 
                         </div>
 
-                        @endif
+                  
 
 
                     </div>
