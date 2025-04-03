@@ -12,7 +12,7 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     
 
 
-        $('#MOTIVO_RECHAZO_JEFE').hide();
+        $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
    
     $('#motivo-rechazo-container').hide();
 

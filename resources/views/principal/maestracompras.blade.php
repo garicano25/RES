@@ -375,7 +375,7 @@
 
 
     @if(request()->is('Requisición_materiales_aprobación'))
-    <script src="/assets/js_sitio/requisiconmaterial/requisiconaprobada.js?v=1.3"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/requisiconaprobada.js?v=1.4"></script>
     @endif
 
 
