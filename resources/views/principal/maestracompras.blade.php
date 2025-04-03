@@ -370,7 +370,7 @@
 
 
     @if(request()->is('Requisición_materiales_líderes'))
-    <script src="/assets/js_sitio/requisiconmaterial/requisiconlider.js?v=1.9"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/requisiconlider.js?v=2.0"></script>
     @endif
 
 

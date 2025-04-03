@@ -393,11 +393,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             contenedorMateriales.appendChild(divMaterial);
             contadorMateriales++;
 
-            const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
-            botonEliminar.addEventListener('click', function () {
-                contenedorMateriales.removeChild(divMaterial);
-                actualizarNumerosOrden();
-            });
+            
         });
 
     } catch (e) {
