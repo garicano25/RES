@@ -119,10 +119,10 @@ class mrController extends Controller
         ]);
 
         $formulario = mrModel::find($request->id);
-        $formulario->PRIORIDAD = $request->prioridad;
-        $formulario->OBSERVACIONES = $request->observaciones;
-        $formulario->LINEA_NEGOCIOS = $request->linea_negocios;
-        $formulario->FECHA_VISTO = $request->fecha_visto;
+        $formulario->PRIORIDAD_MR = $request->prioridad;
+        $formulario->OBSERVACIONES_MR = $request->observaciones;
+        $formulario->LINEA_NEGOCIOS_MR = $request->linea_negocios;
+        $formulario->FECHA_VISTO_MR = $request->fecha_visto;
         $formulario->VISTO_BUENO = $request->visto_bueno;
         $formulario->DAR_BUENO = 1;
         $formulario->save();
@@ -144,10 +144,10 @@ class mrController extends Controller
         ]);
 
         $formulario = mrModel::find($request->id);
-        $formulario->PRIORIDAD = $request->prioridad;
-        $formulario->OBSERVACIONES = $request->observaciones;
-        $formulario->LINEA_NEGOCIOS = $request->linea_negocios;
-        $formulario->FECHA_VISTO = $request->fecha_visto;
+        $formulario->PRIORIDAD_MR = $request->prioridad;
+        $formulario->OBSERVACIONES_MR = $request->observaciones;
+        $formulario->LINEA_NEGOCIOS_MR = $request->linea_negocios;
+        $formulario->FECHA_VISTO_MR = $request->fecha_visto;
         $formulario->VISTO_BUENO = $request->visto_bueno;
         $formulario->DAR_BUENO = 2;
         $formulario->MOTIVO_RECHAZO_JEFE = $request->motivo;
