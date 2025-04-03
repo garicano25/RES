@@ -117,10 +117,11 @@
                                         <label for="LINEA_NEGOCIOS">Línea de Negocios</label>
                                         <select class="form-control" id="LINEA_NEGOCIOS_MR" name="LINEA_NEGOCIOS_MR">
                                             <option value="" selected disabled>Seleccione una opción</option>
-                                            <option value="Técnicos">Técnicos</option>
-                                            <option value="Calidad">Calidad</option>
-                                            <option value="SST">SST</option>
-                                            <option value="Liderazgo y habilidades humanas">Liderazgo y habilidades humanas</option>
+                                            <option value="SOLUCIONES EN CALIDAD">SOLUCIONES EN CALIDAD</option>
+                                            <option value="SOLUCIONES LIDERAZGO Y HAB. HUMANAS">SOLUCIONES LIDERAZGO Y HAB. HUMANAS</option>
+                                            <option value="SOLUCIONES TÉCNICAS">SOLUCIONES TÉCNICAS</option>
+                                            <option value="SOLUCIONES MEDIO AMBIENTE">SOLUCIONES MEDIO AMBIENTE</option>
+                                            <option value="SOLUCIONES EN SST">SSOLUCIONES EN SST</option>
                                         </select>
                                     </div>
                                 </div>
