@@ -91,7 +91,7 @@
                             <div class="col-12 mt-3">
                                 <div class="row">
                                     <div class="col-4">
-                                        <label for="PRIORIDAD">Prioridad</label>
+                                        <label for="PRIORIDAD">Prioridad *</label>
                                         <select class="form-control" id="PRIORIDAD_MR" name="PRIORIDAD_MR">
                                             <option value="" selected disabled>Seleccione una opción</option>
                                             <option value="Alta">Alta 1-15 días</option>

@@ -462,7 +462,6 @@ function darVistoBueno() {
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
-            // ✅ Validar primero
             if (!validarCamposObligatoriosMR()) {
                 Swal.fire({
                     icon: 'warning',
@@ -471,6 +470,20 @@ function darVistoBueno() {
                 });
                 return;
             }
+
+            // 🔽 Recolectar datos de los materiales
+            var documentos = [];
+            $(".material-item").each(function () {
+                var documento = {
+                    'DESCRIPCION': $(this).find("input[name='DESCRIPCION']").val(),
+                    'CANTIDAD': $(this).find("input[name='CANTIDAD']").val(),
+                    'UNIDAD_MEDIDA': $(this).find("input[name='UNIDAD_MEDIDA']").val(),
+                    'CHECK_MATERIAL': $(this).find("input[name='CHECK_MATERIAL']").is(":checked"),
+                    'CATEGORIA_MATERIAL': $(this).find("select[name='CATEGORIA_MATERIAL']").val()
+                };
+                documentos.push(documento);
+            });
+            var materialesJson = JSON.stringify(documentos);
 
             if (typeof ID_FORMULARIO_MR !== 'undefined' && ID_FORMULARIO_MR > 0) {
                 $.ajax({
@@ -483,6 +496,7 @@ function darVistoBueno() {
                         linea_negocios: $('#LINEA_NEGOCIOS_MR').val(),
                         fecha_visto: $('#FECHA_VISTO_MR').val(),
                         visto_bueno: $('#VISTO_BUENO').val(),
+                        materiales_json: materialesJson,
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (response) {
@@ -509,6 +523,7 @@ function darVistoBueno() {
         }
     });
 }
+
 
 
 
@@ -548,7 +563,6 @@ function rechazarVistoBueno() {
     modal.show();
 }
 
-// Envío del formulario de rechazo
 document.getElementById('formRechazo').addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -572,6 +586,20 @@ document.getElementById('formRechazo').addEventListener('submit', function (even
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
+            // 🔽 Recolectar datos de los materiales
+            var documentos = [];
+            $(".material-item").each(function () {
+                var documento = {
+                    'DESCRIPCION': $(this).find("input[name='DESCRIPCION']").val(),
+                    'CANTIDAD': $(this).find("input[name='CANTIDAD']").val(),
+                    'UNIDAD_MEDIDA': $(this).find("input[name='UNIDAD_MEDIDA']").val(),
+                    'CHECK_MATERIAL': $(this).find("input[name='CHECK_MATERIAL']").is(":checked"),
+                    'CATEGORIA_MATERIAL': $(this).find("select[name='CATEGORIA_MATERIAL']").val()
+                };
+                documentos.push(documento);
+            });
+            var materialesJson = JSON.stringify(documentos);
+
             if (typeof ID_FORMULARIO_MR !== 'undefined' && ID_FORMULARIO_MR > 0) {
                 $.ajax({
                     url: '/rechazar',
@@ -584,6 +612,7 @@ document.getElementById('formRechazo').addEventListener('submit', function (even
                         linea_negocios: $('#LINEA_NEGOCIOS_MR').val(),
                         fecha_visto: $('#FECHA_VISTO_MR').val(),
                         visto_bueno: $('#VISTO_BUENO').val(),
+                        materiales_json: materialesJson,
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function (response) {
@@ -611,6 +640,7 @@ document.getElementById('formRechazo').addEventListener('submit', function (even
         }
     });
 });
+
 
 // Limpiar el formulario del modal de rechazo al cerrarse
 document.getElementById('modalRechazo').addEventListener('hidden.bs.modal', function () {
