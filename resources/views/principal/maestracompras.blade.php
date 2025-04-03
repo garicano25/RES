@@ -176,20 +176,16 @@
 
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
 
+
                         <li class="nav-item dropdown" style="margin-left: 8px;">
-                            <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
-                                <span class="d-lg-none">Requisición de Materiales</span>
-                                <span class="d-none d-lg-inline">Requisición de Materiales</span>
+                            <a class="nav-link BOTON" href="{{ url('/Bitácora') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Bitácora de consecutivos MR</span>
                             </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{url('/')}}">Requisición de Materiales - MR</a>
-                                </li>
-                                <hr class="dropdown-divider">
-                                <li><a class="dropdown-item" href="{{url('/Bitácora')}}">Bitácora de consecutivos MR</a>
-                                </li>
-                            </ul>
                         </li>
+
+
+
+        
 
 
 
