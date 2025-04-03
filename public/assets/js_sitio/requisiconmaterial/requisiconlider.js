@@ -57,71 +57,71 @@ cambiarColor();
 
 let contadorMateriales = 1; // Declaración global para que sea accesible en todo el script
 
-document.addEventListener("DOMContentLoaded", function () {
-    const botonMaterial = document.getElementById('botonmaterial');
-    const contenedorMateriales = document.querySelector('.materialesdiv');
-    let contadorMateriales = 1;
+// document.addEventListener("DOMContentLoaded", function () {
+//     const botonMaterial = document.getElementById('botonmaterial');
+//     const contenedorMateriales = document.querySelector('.materialesdiv');
+//     let contadorMateriales = 1;
 
-    botonMaterial.addEventListener('click', function () {
-        agregarMaterial();
-    });
+//     botonMaterial.addEventListener('click', function () {
+//         agregarMaterial();
+//     });
 
-    function agregarMaterial() {
-        const divMaterial = document.createElement('div');
-        divMaterial.classList.add('row', 'material-item', 'mt-1');
-        divMaterial.innerHTML = `
-          <div class="col-1">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="CHECK_MATERIAL" disabled>
-                    <label class="form-check-label">Verificado</label>
-                </div>
-            </div>
-            <div class="col-1">
-                <label class="form-label">N°</label>
-                <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
-            </div>
-            <div class="col-5">
-                <label class="form-label">Descripción</label>
-                <input type="text" class="form-control" name="DESCRIPCION" required>
-            </div>
-            <div class="col-1">
-                <label class="form-label">Cantidad</label>
-                <input type="number" class="form-control" name="CANTIDAD" required>
-            </div>
-            <div class="col-2">
-                <label class="form-label">Unidad de Medida</label>
-                <input type="text" class="form-control" name="UNIDAD_MEDIDA" required>
-            </div>
+//     function agregarMaterial() {
+//         const divMaterial = document.createElement('div');
+//         divMaterial.classList.add('row', 'material-item', 'mt-1');
+//         divMaterial.innerHTML = `
+//           <div class="col-1">
+//                 <div class="form-check">
+//                     <input class="form-check-input" type="checkbox" name="CHECK_MATERIAL" disabled>
+//                     <label class="form-check-label">Verificado</label>
+//                 </div>
+//             </div>
+//             <div class="col-1">
+//                 <label class="form-label">N°</label>
+//                 <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
+//             </div>
+//             <div class="col-5">
+//                 <label class="form-label">Descripción</label>
+//                 <input type="text" class="form-control" name="DESCRIPCION" required>
+//             </div>
+//             <div class="col-1">
+//                 <label class="form-label">Cantidad</label>
+//                 <input type="number" class="form-control" name="CANTIDAD" required>
+//             </div>
+//             <div class="col-2">
+//                 <label class="form-label">Unidad de Medida</label>
+//                 <input type="text" class="form-control" name="UNIDAD_MEDIDA" required>
+//             </div>
           
-            <div class="col-2">
-                <label class="form-label">Línea de Negocios</label>
-                <select class="form-select" name="CATEGORIA_MATERIAL" disabled>
-                    <option value="">Seleccionar</option>
-                    <option value="STE">STE</option>
-                    <option value="SST">SST</option>
-                    <option value="SCA">SCA</option>
-                    <option value="SMA">SMA</option>
-                    <option value="SLH">SLH</option>
-                    <option value="ADM">ADM</option>
-                </select>
-            </div>
-            <div class="col-12 mt-2 text-end">
-                <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                </button>
-            </div>
-        `;
+//             <div class="col-2">
+//                 <label class="form-label">Línea de Negocios</label>
+//                 <select class="form-select" name="CATEGORIA_MATERIAL" disabled>
+//                     <option value="">Seleccionar</option>
+//                     <option value="STE">STE</option>
+//                     <option value="SST">SST</option>
+//                     <option value="SCA">SCA</option>
+//                     <option value="SMA">SMA</option>
+//                     <option value="SLH">SLH</option>
+//                     <option value="ADM">ADM</option>
+//                 </select>
+//             </div>
+//             <div class="col-12 mt-2 text-end">
+//                 <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
+//                     <i class="bi bi-trash"></i>
+//                 </button>
+//             </div>
+//         `;
 
-        contenedorMateriales.appendChild(divMaterial);
-        contadorMateriales++;
+//         contenedorMateriales.appendChild(divMaterial);
+//         contadorMateriales++;
 
-        const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
-        botonEliminar.addEventListener('click', function () {
-            contenedorMateriales.removeChild(divMaterial);
-            actualizarNumerosOrden(); // asegúrate de tener esta función si quieres reenumerar
-        });
-    }
-});
+//         const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
+//         botonEliminar.addEventListener('click', function () {
+//             contenedorMateriales.removeChild(divMaterial);
+//             actualizarNumerosOrden(); // asegúrate de tener esta función si quieres reenumerar
+//         });
+//     }
+// });
 
 
   function actualizarNumerosOrden() {
