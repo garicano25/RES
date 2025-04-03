@@ -12,7 +12,11 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     
 
 
-    
+        $('#MOTIVO_RECHAZO_JEFE').hide();
+   
+    $('#motivo-rechazo-container').hide();
+
+
     document.querySelector('.materialesdiv').innerHTML = '';
     contadorMateriales = 1;
 });
