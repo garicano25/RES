@@ -474,21 +474,23 @@ function validarCamposObligatoriosMR() {
 
 
 
-
-document.getElementById('modalRechazo').addEventListener('hidden.bs.modal', function () {
-    document.getElementById('motivoRechazoTextarea').value = '';
-
-
-    document.getElementById('formRechazo').reset();
-});
-
-
-
+// Mostrar modal solo si los campos obligatorios están completos
 function rechazarVistoBueno() {
+    if (!validarCamposObligatoriosMR()) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Campos incompletos',
+            text: 'Debe llenar todos los campos antes de poder rechazar.'
+        });
+        return;
+    }
+
     document.getElementById('motivoRechazoTextarea').value = '';
     const modal = new bootstrap.Modal(document.getElementById('modalRechazo'));
     modal.show();
 }
+
+// Envío del formulario de rechazo
 document.getElementById('formRechazo').addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -499,16 +501,6 @@ document.getElementById('formRechazo').addEventListener('submit', function (even
             icon: 'warning',
             title: 'Campo vacío',
             text: 'Por favor, escriba el motivo del rechazo.'
-        });
-        return;
-    }
-
-    // ✅ Validar todos los campos antes de enviar
-    if (!validarCamposObligatoriosMR()) {
-        Swal.fire({
-            icon: 'warning',
-            title: 'Campos incompletos',
-            text: 'Debe llenar todos los campos antes de rechazar.'
         });
         return;
     }
@@ -560,5 +552,10 @@ document.getElementById('formRechazo').addEventListener('submit', function (even
             }
         }
     });
+});
+
+// Limpiar el formulario del modal de rechazo al cerrarse
+document.getElementById('modalRechazo').addEventListener('hidden.bs.modal', function () {
+    document.getElementById('formRechazo').reset();
 });
 
