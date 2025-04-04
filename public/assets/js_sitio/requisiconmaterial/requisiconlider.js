@@ -414,7 +414,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             divMaterial.classList.add('material-item', 'mt-2');
 
             let colorClass = '';
-            if (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL === 'SI') {
+           if (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL !== 'NO') {
                 colorClass = 'bg-verde-suave';
             } else if (
                 material.CHECK_VO === 'NO' ||

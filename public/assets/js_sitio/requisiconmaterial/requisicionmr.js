@@ -435,14 +435,14 @@ function cargarMaterialesDesdeJSON(materialesJson) {
 
             // Nueva lógica de color combinando CHECK_VO y CHECK_MATERIAL
             let colorClass = '';
-            if (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL === 'SI') {
-                colorClass = 'bg-verde-suave';
-            } else if (
-                material.CHECK_VO === 'NO' ||
-                (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL === 'NO')
-            ) {
-                colorClass = 'bg-rojo-suave';
-            }
+           if (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL !== 'NO') {
+    colorClass = 'bg-verde-suave';
+} else if (
+    material.CHECK_VO === 'NO' ||
+    (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL === 'NO')
+) {
+    colorClass = 'bg-rojo-suave';
+}
 
             divMaterial.innerHTML = `
                 <div class="row p-3 rounded color-vo ${colorClass}">
