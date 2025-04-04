@@ -227,13 +227,13 @@
                                 <div class="col-6  mt-2" id="DIV_RFC" style="display: none;">
                                     <div class="form-group">
                                         <label>RFC *</label>
-                                        <input type="text" class="form-control" id="RFC_PROVEEDOR" name="RFC_PROVEEDOR" >
+                                        <input type="text" class="form-control" id="RFC_PROVEEDOR" name="RFC_PROVEEDOR">
                                     </div>
                                 </div>
                                 <div class="col-6  mt-2" id="DIV_PROVEDOR" style="display: none;">
 
                                     <div class="form-group">
-                                        <label>Nombre comercial *</label>
+                                        <label>Nombre comercial/razón social *</label>
                                         <input type="text" class="form-control" id="NOMBRE_COMERCIAL_PROVEEDOR" name="NOMBRE_COMERCIAL_PROVEEDOR" required>
                                     </div>
                                 </div>

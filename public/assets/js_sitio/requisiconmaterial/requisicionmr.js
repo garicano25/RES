@@ -78,11 +78,14 @@ document.addEventListener("DOMContentLoaded", function () {
         const divMaterial = document.createElement('div');
         divMaterial.classList.add('row', 'material-item', 'mt-1');
         divMaterial.innerHTML = `
-          <div class="col-1">
-                <label class="form-check-label">Verificado</label>
-                <br>
-                    <input class="form-check-input" type="checkbox" name="CHECK_MATERIAL" disabled>
-            </div>
+        <div class="col-1">
+            <label class="form-label">Aprobado</label>
+            <select class="form-select" name="CHECK_MATERIAL" disabled>
+                <option value=""></option>
+                <option value="SI">Sí</option>
+                <option value="NO">No</option>
+            </select>
+        </div>
             <div class="col-1">
                 <label class="form-label">N°</label>
                 <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
@@ -198,8 +201,9 @@ $("#guardarMR").click(function (e) {
                 'CANTIDAD': $(this).find("input[name='CANTIDAD']").val(),
                 'UNIDAD_MEDIDA': $(this).find("input[name='UNIDAD_MEDIDA']").val(),
                 'CHECK_VO': $(this).find("select[name='CHECK_VO']").val(),
-                'CHECK_MATERIAL': $(this).find("input[name='CHECK_MATERIAL']").is(":checked"),
-                'CATEGORIA_MATERIAL': $(this).find("select[name='CATEGORIA_MATERIAL']").val()
+                'CATEGORIA_MATERIAL': $(this).find("select[name='CATEGORIA_MATERIAL']").val(),
+                'CHECK_MATERIAL': $(this).find("select[name='CHECK_MATERIAL']").val()
+
 
             };
             documentos.push(documento);
@@ -429,18 +433,27 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             const divMaterial = document.createElement('div');
             divMaterial.classList.add('material-item', 'mt-2');
 
+            // Nueva lógica de color combinando CHECK_VO y CHECK_MATERIAL
             let colorClass = '';
-            if (material.CHECK_VO === 'SI') {
+            if (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL === 'SI') {
                 colorClass = 'bg-verde-suave';
-            } else if (material.CHECK_VO === 'NO') {
+            } else if (
+                material.CHECK_VO === 'NO' ||
+                (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL === 'NO')
+            ) {
                 colorClass = 'bg-rojo-suave';
             }
 
             divMaterial.innerHTML = `
                 <div class="row p-3 rounded color-vo ${colorClass}">
+
                     <div class="col-1">
-                        <label class="form-check-label">Verificado</label>
-                        <input class="form-check-input" type="checkbox" name="CHECK_MATERIAL" ${material.CHECK_MATERIAL ? 'checked' : ''} disabled>
+                        <label class="form-label">Aprobado</label>
+                        <select class="form-select" name="CHECK_MATERIAL" disabled >
+                            <option value=""></option>
+                            <option value="SI" ${material.CHECK_MATERIAL === 'SI' ? 'selected' : ''}>Sí</option>
+                            <option value="NO" ${material.CHECK_MATERIAL === 'NO' ? 'selected' : ''}>No</option>
+                        </select>
                     </div>
                     <div class="col-1">
                         <label class="form-label">N°</label>
