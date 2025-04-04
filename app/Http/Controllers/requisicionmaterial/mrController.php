@@ -44,17 +44,23 @@ class mrController extends Controller
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 }
 
-                // Estado según DAR_BUENO
                 if ($value->DAR_BUENO == 0) {
                     $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">En revisión</span>';
                 } elseif ($value->DAR_BUENO == 1) {
-                    $value->ESTADO_REVISION = '<span class="badge bg-success">Aprobada </span>';
+                    $value->ESTADO_REVISION = '<span class="badge bg-success">✔</span>';
                 } elseif ($value->DAR_BUENO == 2) {
-                    $value->ESTADO_REVISION = '<span class="badge bg-danger">Rechazada por jefe inmediato</span>';
+                    $value->ESTADO_REVISION = '<span class="badge bg-danger">✖</span>';
                 } else {
                     $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
                 }
-            
+
+                if ($value->ESTADO_APROBACION == 'Aprobada') {
+                    $value->ESTATUS = '<span class="badge bg-success">Aprobado</span>';
+                } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
+                    $value->ESTATUS = '<span class="badge bg-danger">Rechazado</span>';
+                } else {
+                    $value->ESTATUS = '<span class="badge bg-secondary">Sin estatus</span>';
+                }
             }
 
             // Respuesta
@@ -91,15 +97,22 @@ class mrController extends Controller
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 }
 
-                // Estado según DAR_BUENO
                 if ($value->DAR_BUENO == 0) {
                     $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">En revisión</span>';
                 } elseif ($value->DAR_BUENO == 1) {
-                    $value->ESTADO_REVISION = '<span class="badge bg-success">Aprobada </span>';
+                    $value->ESTADO_REVISION = '<span class="badge bg-success">✔</span>';
                 } elseif ($value->DAR_BUENO == 2) {
-                    $value->ESTADO_REVISION = '<span class="badge bg-danger">Rechazada por jefe inmediato</span>';
+                    $value->ESTADO_REVISION = '<span class="badge bg-danger">✖</span>';
                 } else {
                     $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
+                }
+
+                if ($value->ESTADO_APROBACION == 'Aprobada') {
+                    $value->ESTATUS = '<span class="badge bg-success">Aprobado</span>';
+                } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
+                    $value->ESTATUS = '<span class="badge bg-danger">Rechazado</span>';
+                } else {
+                    $value->ESTATUS = '<span class="badge bg-secondary">Sin estatus</span>';
                 }
             }
 
@@ -268,11 +281,19 @@ class mrController extends Controller
                 if ($value->DAR_BUENO == 0) {
                     $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">Revisar</span>';
                 } elseif ($value->DAR_BUENO == 1) {
-                    $value->ESTADO_REVISION = '<span class="badge bg-success">Aprobada</span>';
+                    $value->ESTADO_REVISION = '<span class="badge bg-success">✔</span>';
                 } elseif ($value->DAR_BUENO == 2) {
-                    $value->ESTADO_REVISION = '<span class="badge bg-danger">Rechazada</span>';
+                    $value->ESTADO_REVISION = '<span class="badge bg-danger">✖</span>';
                 } else {
                     $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
+                }
+
+                if ($value->ESTADO_APROBACION == 'Aprobada') {
+                    $value->ESTATUS = '<span class="badge bg-success">Aprobado</span>';
+                } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
+                    $value->ESTATUS = '<span class="badge bg-danger">Rechazado</span>';
+                } else {
+                    $value->ESTATUS = '<span class="badge bg-secondary">Sin estatus</span>';
                 }
             }
 

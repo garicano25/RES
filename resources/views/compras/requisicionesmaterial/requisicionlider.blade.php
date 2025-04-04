@@ -3,6 +3,23 @@
 @section('contenido')
 
 
+<style>
+    /* Fondo verde claro como Bootstrap alert-success */
+    .bg-verde-suave {
+        background-color: #d1e7dd !important;
+    }
+
+    /* Fondo rojo claro como Bootstrap alert-danger */
+    .bg-rojo-suave {
+        background-color: #f8d7da !important;
+    }
+
+    /* Estilo adicional para el contenedor */
+    .color-vo {
+        transition: background-color 0.3s ease;
+    }
+</style>
+
 
 
 <div class="contenedor-contenido">
@@ -71,7 +88,7 @@
 
 
                         <div class="mt-3">
-        
+
                             <div class="materialesdiv mt-4"></div>
                         </div>
 
@@ -104,7 +121,7 @@
                                         <label for="OBSERVACIONES">Observaciones</label>
                                         <input type="text" class="form-control" id="OBSERVACIONES_MR" name="OBSERVACIONES_MR">
                                     </div>
-                                    
+
                                 </div>
                             </div>
 
@@ -144,7 +161,7 @@
                         </div>
 
 
-                        <div id="BOTON_VISTO_BUENO"">
+                        <div id="BOTON_VISTO_BUENO" style="display: block;">
                             <div id=" solicitarVerificacionDiv" class="col-12 text-center mt-3" style="display: block;">
                             <div class="col-md-6 mx-auto d-flex gap-2">
                                 <button type="button" id="SOLICITAR_VERIFICACION" class="btn btn-info w-100" onclick="darVistoBueno()">
@@ -154,9 +171,9 @@
                                     Rechazar
                                 </button>
                             </div>
-                            <input type="hidden" id="DAR_BUENO" name="DAR_BUENO" value="0">
                         </div>
-
+                        
+                        <input type="hidden" id="DAR_BUENO" name="DAR_BUENO" value="0">
 
 
                     </div>

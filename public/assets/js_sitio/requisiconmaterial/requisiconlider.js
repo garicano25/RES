@@ -314,7 +314,7 @@ var Tablarequisicion = $("#Tablarequisicion").DataTable({
         dataSrc: 'data'
     },
     order: [[0, 'asc']], 
-    columns: [
+   columns: [
     { 
         data: null,
         render: function(data, type, row, meta) {
@@ -324,10 +324,9 @@ var Tablarequisicion = $("#Tablarequisicion").DataTable({
     { data: 'SOLICITANTE_MR' },
     { data: 'NO_MR' },
     { data: 'FECHA_SOLICITUD_MR' },
-    { data: 'ESTADO_REVISION' }, // 👈 NUEVA COLUMNA
+    { data: 'ESTADO_REVISION' }, 
+    { data: 'ESTATUS' },          
     { data: 'BTN_EDITAR' },
-    { data: 'BTN_VISUALIZAR' },
-    { data: 'BTN_ELIMINAR' }
 ],
 
 columnDefs: [
@@ -335,10 +334,9 @@ columnDefs: [
     { targets: 1, title: 'Nombre del solicitante', className: 'all text-center' },
     { targets: 2, title: 'N° MR', className: 'all text-center' },
     { targets: 3, title: 'Fecha solicitud', className: 'all text-center' },
-    { targets: 4, title: 'Estado', className: 'all text-center' }, 
-    { targets: 5, title: 'Editar', className: 'all text-center' },
-    { targets: 6, title: 'Visualizar', className: 'all text-center' },
-    { targets: 7, title: 'Activo', className: 'all text-center' }
+    { targets: 4, title: 'Vo. Bo ', className: 'all text-center' },
+    { targets: 5, title: 'Estatus', className: 'all text-center' }, 
+    { targets: 6, title: 'Editar', className: 'all text-center' },
 ]
 
 });
@@ -379,6 +377,24 @@ $('#Tablarequisicion tbody').on('click', 'td>button.EDITAR', function () {
       
     }
 
+
+    if (row.data().DAR_BUENO === "1") {
+        $('#BOTON_VISTO_BUENO').hide();
+
+ 
+    } else if (row.data().DAR_BUENO === "2") {
+         $('#BOTON_VISTO_BUENO').hide();
+         
+    
+        
+     } else {
+         $('#BOTON_VISTO_BUENO').show();
+       
+          
+    }
+
+
+
 });
 
 
@@ -393,46 +409,62 @@ function cargarMaterialesDesdeJSON(materialesJson) {
 
         materiales.forEach(material => {
             const divMaterial = document.createElement('div');
-            divMaterial.classList.add('row', 'material-item', 'mt-1');
+            divMaterial.classList.add('material-item', 'mt-2');
+
+            let colorClass = '';
+            if (material.CHECK_VO === 'SI') {
+                colorClass = 'bg-verde-suave';
+            } else if (material.CHECK_VO === 'NO') {
+                colorClass = 'bg-rojo-suave';
+            }
+
             divMaterial.innerHTML = `
-                <div class="col-1">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="CHECK_MATERIAL" ${material.CHECK_MATERIAL ? 'checked' : ''} disabled>
+                <div class="row p-3 rounded color-vo ${colorClass}">
+                    <div class="col-1">
                         <label class="form-check-label">Verificado</label>
+                        <input class="form-check-input" type="checkbox" name="CHECK_MATERIAL" ${material.CHECK_MATERIAL ? 'checked' : ''} disabled>
                     </div>
-                </div>
-                <div class="col-1">
-                    <label class="form-label">N°</label>
-                    <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
-                </div>
-                <div class="col-5">
-                    <label class="form-label">Descripción</label>
-                    <input type="text" class="form-control" name="DESCRIPCION" value="${material.DESCRIPCION}" required>
-                </div>
-                <div class="col-1">
-                    <label class="form-label">Cantidad</label>
-                    <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" required>
-                </div>
-                <div class="col-2">
-                    <label class="form-label">Unidad de Medida</label>
-                    <input type="text" class="form-control" name="UNIDAD_MEDIDA" value="${material.UNIDAD_MEDIDA}" required>
-                </div>
-                <div class="col-2">
-                    <label class="form-label">Línea de Negocios</label>
-                    <select class="form-select" name="CATEGORIA_MATERIAL">
-                        <option value="">Seleccionar</option>
-                        <option value="STE" ${material.CATEGORIA_MATERIAL === 'STE' ? 'selected' : ''}>STE</option>
-                        <option value="SST" ${material.CATEGORIA_MATERIAL === 'SST' ? 'selected' : ''}>SST</option>
-                        <option value="SCA" ${material.CATEGORIA_MATERIAL === 'SCA' ? 'selected' : ''}>SCA</option>
-                        <option value="SMA" ${material.CATEGORIA_MATERIAL === 'SMA' ? 'selected' : ''}>SMA</option>
-                        <option value="SLH" ${material.CATEGORIA_MATERIAL === 'SLH' ? 'selected' : ''}>SLH</option>
-                        <option value="ADM" ${material.CATEGORIA_MATERIAL === 'ADM' ? 'selected' : ''}>ADM</option>
-                    </select>
-                </div>
-                <div class="col-12 mt-2 text-end">
-                    <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
-                        <i class="bi bi-trash"></i>
-                    </button>
+                    <div class="col-1">
+                        <label class="form-label">N°</label>
+                        <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label">Descripción</label>
+                        <input type="text" class="form-control" name="DESCRIPCION" value="${material.DESCRIPCION}" required>
+                    </div>
+                    <div class="col-1">
+                        <label class="form-label">Cantidad</label>
+                        <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" required>
+                    </div>
+                    <div class="col-2">
+                        <label class="form-label">Unidad de Medida</label>
+                        <input type="text" class="form-control" name="UNIDAD_MEDIDA" value="${material.UNIDAD_MEDIDA}" required>
+                    </div>
+                    <div class="col-2">
+                        <label class="form-label">Línea de Negocios</label>
+                        <select class="form-select" name="CATEGORIA_MATERIAL" >
+                            <option value="">Seleccionar</option>
+                            <option value="STE" ${material.CATEGORIA_MATERIAL === 'STE' ? 'selected' : ''}>STE</option>
+                            <option value="SST" ${material.CATEGORIA_MATERIAL === 'SST' ? 'selected' : ''}>SST</option>
+                            <option value="SCA" ${material.CATEGORIA_MATERIAL === 'SCA' ? 'selected' : ''}>SCA</option>
+                            <option value="SMA" ${material.CATEGORIA_MATERIAL === 'SMA' ? 'selected' : ''}>SMA</option>
+                            <option value="SLH" ${material.CATEGORIA_MATERIAL === 'SLH' ? 'selected' : ''}>SLH</option>
+                            <option value="ADM" ${material.CATEGORIA_MATERIAL === 'ADM' ? 'selected' : ''}>ADM</option>
+                        </select>
+                    </div>
+                    <div class="col-1">
+                        <label class="form-label">Vo. Bo</label>
+                        <select class="form-select check-vo-select" name="CHECK_VO">
+                            <option value=""></option>
+                            <option value="SI" ${material.CHECK_VO === 'SI' ? 'selected' : ''}>Sí</option>
+                            <option value="NO" ${material.CHECK_VO === 'NO' ? 'selected' : ''}>No</option>
+                        </select>
+                    </div>
+                    <div class="col-12 mt-2 text-end">
+                        <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
                 </div>
             `;
 
@@ -444,12 +476,26 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                 contenedorMateriales.removeChild(divMaterial);
                 actualizarNumerosOrden();
             });
+
+            const selectVoBo = divMaterial.querySelector('.check-vo-select');
+            const contenedorColor = divMaterial.querySelector('.color-vo');
+
+            selectVoBo.addEventListener('change', function () {
+                contenedorColor.classList.remove('bg-verde-suave', 'bg-rojo-suave');
+
+                if (selectVoBo.value === 'SI') {
+                    contenedorColor.classList.add('bg-verde-suave');
+                } else if (selectVoBo.value === 'NO') {
+                    contenedorColor.classList.add('bg-rojo-suave');
+                }
+            });
         });
 
     } catch (e) {
         console.error('Error al parsear MATERIALES_JSON:', e);
     }
 }
+
 
 
 function darVistoBueno() {
@@ -471,19 +517,25 @@ function darVistoBueno() {
                 return;
             }
 
-            // 🔽 Recolectar datos de los materiales
-            var documentos = [];
-            $(".material-item").each(function () {
-                var documento = {
-                    'DESCRIPCION': $(this).find("input[name='DESCRIPCION']").val(),
-                    'CANTIDAD': $(this).find("input[name='CANTIDAD']").val(),
-                    'UNIDAD_MEDIDA': $(this).find("input[name='UNIDAD_MEDIDA']").val(),
-                    'CHECK_MATERIAL': $(this).find("input[name='CHECK_MATERIAL']").is(":checked"),
-                    'CATEGORIA_MATERIAL': $(this).find("select[name='CATEGORIA_MATERIAL']").val()
-                };
-                documentos.push(documento);
-            });
+                   var documentos = [];
+                $(".material-item").each(function() {
+                    var documento = {
+                        'DESCRIPCION': $(this).find("input[name='DESCRIPCION']").val(),
+                        'CANTIDAD': $(this).find("input[name='CANTIDAD']").val(),
+                        'UNIDAD_MEDIDA': $(this).find("input[name='UNIDAD_MEDIDA']").val(),
+                        'CHECK_VO': $(this).find("select[name='CHECK_VO']").val(),
+                        'CHECK_MATERIAL': $(this).find("input[name='CHECK_MATERIAL']").is(":checked"),
+                        'CATEGORIA_MATERIAL': $(this).find("select[name='CATEGORIA_MATERIAL']").val()
+
+                    };
+                    documentos.push(documento);
+        });
+            
             var materialesJson = JSON.stringify(documentos);
+
+
+     
+            
 
             if (typeof ID_FORMULARIO_MR !== 'undefined' && ID_FORMULARIO_MR > 0) {
                 $.ajax({
@@ -585,19 +637,24 @@ document.getElementById('formRechazo').addEventListener('submit', function (even
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
-            // 🔽 Recolectar datos de los materiales
-            var documentos = [];
-            $(".material-item").each(function () {
-                var documento = {
-                    'DESCRIPCION': $(this).find("input[name='DESCRIPCION']").val(),
-                    'CANTIDAD': $(this).find("input[name='CANTIDAD']").val(),
-                    'UNIDAD_MEDIDA': $(this).find("input[name='UNIDAD_MEDIDA']").val(),
-                    'CHECK_MATERIAL': $(this).find("input[name='CHECK_MATERIAL']").is(":checked"),
-                    'CATEGORIA_MATERIAL': $(this).find("select[name='CATEGORIA_MATERIAL']").val()
-                };
-                documentos.push(documento);
-            });
+           
+                var documentos = [];
+                        $(".material-item").each(function() {
+                            var documento = {
+                                'DESCRIPCION': $(this).find("input[name='DESCRIPCION']").val(),
+                                'CANTIDAD': $(this).find("input[name='CANTIDAD']").val(),
+                                'UNIDAD_MEDIDA': $(this).find("input[name='UNIDAD_MEDIDA']").val(),
+                                'CHECK_VO': $(this).find("select[name='CHECK_VO']").val(),
+                                'CHECK_MATERIAL': $(this).find("input[name='CHECK_MATERIAL']").is(":checked"),
+                                'CATEGORIA_MATERIAL': $(this).find("select[name='CATEGORIA_MATERIAL']").val()
+
+                            };
+                            documentos.push(documento);
+                });
+            
             var materialesJson = JSON.stringify(documentos);
+
+
 
             if (typeof ID_FORMULARIO_MR !== 'undefined' && ID_FORMULARIO_MR > 0) {
                 $.ajax({

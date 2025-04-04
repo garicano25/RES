@@ -4,6 +4,24 @@
 
 
 
+<style>
+    /* Fondo verde claro como Bootstrap alert-success */
+    .bg-verde-suave {
+        background-color: #d1e7dd !important;
+    }
+
+    /* Fondo rojo claro como Bootstrap alert-danger */
+    .bg-rojo-suave {
+        background-color: #f8d7da !important;
+    }
+
+    /* Estilo adicional para el contenedor */
+    .color-vo {
+        transition: background-color 0.3s ease;
+    }
+</style>
+
+
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
@@ -11,7 +29,7 @@
         </h3>
 
 
-      
+
     </ol>
 
     <div class="card-body">
@@ -72,12 +90,12 @@
 
                         <div class="mt-3">
                             <div class="row">
-                                <div class="col-6 mb-3">
+                                <!-- <div class="col-6 mb-3">
                                     <label>Agregar material</label>
                                     <button id="botonmaterial" id="botonmaterial" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
                                         <i class="bi bi-plus-circle-fill"></i>
                                     </button>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="materialesdiv mt-4"></div>
                         </div>
@@ -137,7 +155,7 @@
 
 
                             <div class="col-12 mt-3" id="MOTIVO_RECHAZO_JEFE_DIV" style="display: none;">
-                                <label >Motivo de Rechazo</label>
+                                <label>Motivo de Rechazo</label>
                                 <textarea class="form-control" id="MOTIVO_RECHAZO_JEFE" name="MOTIVO_RECHAZO_JEFE" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
                             </div>
 

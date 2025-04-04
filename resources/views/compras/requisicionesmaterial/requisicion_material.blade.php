@@ -3,7 +3,22 @@
 @section('contenido')
 
 
+<style>
+    /* Fondo verde claro como Bootstrap alert-success */
+    .bg-verde-suave {
+        background-color: #d1e7dd !important;
+    }
 
+    /* Fondo rojo claro como Bootstrap alert-danger */
+    .bg-rojo-suave {
+        background-color: #f8d7da !important;
+    }
+
+    /* Estilo adicional para el contenedor */
+    .color-vo {
+        transition: background-color 0.3s ease;
+    }
+</style>
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
@@ -109,21 +124,11 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-4">
+                                    <div class="col-8">
                                         <label for="OBSERVACIONES">Observaciones</label>
                                         <input type="text" class="form-control" id="OBSERVACIONES_MR" name="OBSERVACIONES_MR">
                                     </div>
-                                    <div class="col-4">
-                                        <label for="LINEA_NEGOCIOS">Línea de Negocios</label>
-                                        <select class="form-control" id="LINEA_NEGOCIOS_MR" name="LINEA_NEGOCIOS_MR">
-                                            <option value="" selected disabled>Seleccione una opción</option>
-                                            <option value="SOLUCIONES EN CALIDAD">SOLUCIONES EN CALIDAD</option>
-                                            <option value="SOLUCIONES LIDERAZGO Y HAB. HUMANAS">SOLUCIONES LIDERAZGO Y HAB. HUMANAS</option>
-                                            <option value="SOLUCIONES TÉCNICAS">SOLUCIONES TÉCNICAS</option>
-                                            <option value="SOLUCIONES MEDIO AMBIENTE">SOLUCIONES MEDIO AMBIENTE</option>
-                                            <option value="SOLUCIONES EN SST">SSOLUCIONES EN SST</option>
-                                        </select>
-                                    </div>
+                                    
                                 </div>
                             </div>
 
@@ -131,7 +136,7 @@
 
 
 
-                            <div class="col-12 mt-3">
+                            <div class="col-12 mt-3">DAR_BUENO
                                 <div class="row">
                                     <div class="col-8">
                                         <label for="VISTO_BUENO">Visto bueno</label>
@@ -168,15 +173,15 @@
                                         Rechazar
                                     </button>
                                 </div>
-                                <input type="hidden" id="DAR_BUENO" name="DAR_BUENO" value="0">
                             </div>
-
-
-
+                            
+                            
+                            
                         </div>
+                        
+                        <input type="hidden" id="DAR_BUENO" name="DAR_BUENO" value="0">
 
 
-                       
 
 
                         <div id="APROBACION_DIRECCION" style="display: none;">
@@ -219,7 +224,7 @@
 
                         </div>
 
-                  
+
 
 
                     </div>

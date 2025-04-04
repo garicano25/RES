@@ -61,71 +61,70 @@ cambiarColor();
 
 let contadorMateriales = 1; 
 
-document.addEventListener("DOMContentLoaded", function () {
-    const botonMaterial = document.getElementById('botonmaterial');
-    const contenedorMateriales = document.querySelector('.materialesdiv');
-    let contadorMateriales = 1;
+// document.addEventListener("DOMContentLoaded", function () {
+//     const botonMaterial = document.getElementById('botonmaterial');
+//     const contenedorMateriales = document.querySelector('.materialesdiv');
 
-    botonMaterial.addEventListener('click', function () {
-        agregarMaterial();
-    });
+//     botonMaterial.addEventListener('click', function () {
+//         agregarMaterial();
+//     });
 
-    function agregarMaterial() {
-        const divMaterial = document.createElement('div');
-        divMaterial.classList.add('row', 'material-item', 'mt-1');
-        divMaterial.innerHTML = `
-          <div class="col-1">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="CHECK_MATERIAL" disabled>
-                    <label class="form-check-label">Verificado</label>
-                </div>
-            </div>
-            <div class="col-1">
-                <label class="form-label">N°</label>
-                <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
-            </div>
-            <div class="col-5">
-                <label class="form-label">Descripción</label>
-                <input type="text" class="form-control" name="DESCRIPCION" required>
-            </div>
-            <div class="col-1">
-                <label class="form-label">Cantidad</label>
-                <input type="number" class="form-control" name="CANTIDAD" required>
-            </div>
-            <div class="col-2">
-                <label class="form-label">Unidad de Medida</label>
-                <input type="text" class="form-control" name="UNIDAD_MEDIDA" required>
-            </div>
+//     function agregarMaterial() {
+//         const divMaterial = document.createElement('div');
+//         divMaterial.classList.add('row', 'material-item', 'mt-1');
+//         divMaterial.innerHTML = `
+//           <div class="col-1">
+//                 <div class="form-check">
+//                     <input class="form-check-input" type="checkbox" name="CHECK_MATERIAL" disabled>
+//                     <label class="form-check-label">Verificado</label>
+//                 </div>
+//             </div>
+//             <div class="col-1">
+//                 <label class="form-label">N°</label>
+//                 <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
+//             </div>
+//             <div class="col-5">
+//                 <label class="form-label">Descripción</label>
+//                 <input type="text" class="form-control" name="DESCRIPCION" required>
+//             </div>
+//             <div class="col-1">
+//                 <label class="form-label">Cantidad</label>
+//                 <input type="number" class="form-control" name="CANTIDAD" required>
+//             </div>
+//             <div class="col-2">
+//                 <label class="form-label">Unidad de Medida</label>
+//                 <input type="text" class="form-control" name="UNIDAD_MEDIDA" required>
+//             </div>
           
-            <div class="col-2">
-                <label class="form-label">Línea de Negocios</label>
-                <select class="form-select" name="CATEGORIA_MATERIAL" disabled>
-                    <option value="">Seleccionar</option>
-                    <option value="STE">STE</option>
-                    <option value="SST">SST</option>
-                    <option value="SCA">SCA</option>
-                    <option value="SMA">SMA</option>
-                    <option value="SLH">SLH</option>
-                    <option value="ADM">ADM</option>
-                </select>
-            </div>
-            <div class="col-12 mt-2 text-end">
-                <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                </button>
-            </div>
-        `;
+//             <div class="col-2">
+//                 <label class="form-label">Línea de Negocios</label>
+//                 <select class="form-select" name="CATEGORIA_MATERIAL" disabled>
+//                     <option value="">Seleccionar</option>
+//                     <option value="STE">STE</option>
+//                     <option value="SST">SST</option>
+//                     <option value="SCA">SCA</option>
+//                     <option value="SMA">SMA</option>
+//                     <option value="SLH">SLH</option>
+//                     <option value="ADM">ADM</option>
+//                 </select>
+//             </div>
+//             <div class="col-12 mt-2 text-end">
+//                 <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
+//                     <i class="bi bi-trash"></i>
+//                 </button>
+//             </div>
+//         `;
 
-        contenedorMateriales.appendChild(divMaterial);
-        contadorMateriales++;
+//         contenedorMateriales.appendChild(divMaterial);
+//         contadorMateriales++;
 
-        const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
-        botonEliminar.addEventListener('click', function () {
-            contenedorMateriales.removeChild(divMaterial);
-            actualizarNumerosOrden(); // asegúrate de tener esta función si quieres reenumerar
-        });
-    }
-});
+//         const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
+//         botonEliminar.addEventListener('click', function () {
+//             contenedorMateriales.removeChild(divMaterial);
+//             actualizarNumerosOrden(); // asegúrate de tener esta función si quieres reenumerar
+//         });
+//     }
+// });
 
 
 
@@ -160,6 +159,7 @@ function cambiarColor() {
         }
 }
     
+
 
 
 
@@ -242,7 +242,7 @@ $("#guardarMR").click(function (e) {
         
     } else {
             alertMensajeConfirm({
-            title: "¿Desea editar la información de este formulario?",
+            title: "¿Desea guardar la información de este formulario?",
             text: "Al guardarla, se podra usar",
             icon: "question",
         },async function () { 
@@ -283,6 +283,7 @@ $("#guardarMR").click(function (e) {
 }
     
 });
+
 
 
 var Tablarequsicionaprobada = $("#Tablarequsicionaprobada").DataTable({
@@ -328,9 +329,9 @@ var Tablarequsicionaprobada = $("#Tablarequsicionaprobada").DataTable({
     { data: 'SOLICITANTE_MR' },
     { data: 'NO_MR' },
     { data: 'FECHA_SOLICITUD_MR' },
-    { data: 'ESTADO_REVISION' }, // 👈 NUEVA COLUMNA
+    { data: 'ESTADO_REVISION' }, 
+    { data: 'ESTATUS' },          
     { data: 'BTN_EDITAR' },
-    { data: 'BTN_VISUALIZAR' },
 ],
 
 columnDefs: [
@@ -338,9 +339,9 @@ columnDefs: [
     { targets: 1, title: 'Nombre del solicitante', className: 'all text-center' },
     { targets: 2, title: 'N° MR', className: 'all text-center' },
     { targets: 3, title: 'Fecha solicitud', className: 'all text-center' },
-    { targets: 4, title: 'Estado', className: 'all text-center' }, 
-    { targets: 5, title: 'Editar', className: 'all text-center' },
-    { targets: 6, title: 'Visualizar', className: 'all text-center' },
+    { targets: 4, title: 'Vo. Bo ', className: 'all text-center' },
+    { targets: 5, title: 'Estatus', className: 'all text-center' }, 
+    { targets: 6, title: 'Editar', className: 'all text-center' },
 ]
 });
 
@@ -398,46 +399,62 @@ function cargarMaterialesDesdeJSON(materialesJson) {
 
         materiales.forEach(material => {
             const divMaterial = document.createElement('div');
-            divMaterial.classList.add('row', 'material-item', 'mt-1');
+            divMaterial.classList.add('material-item', 'mt-2');
+
+            let colorClass = '';
+            if (material.CHECK_VO === 'SI') {
+                colorClass = 'bg-verde-suave';
+            } else if (material.CHECK_VO === 'NO') {
+                colorClass = 'bg-rojo-suave';
+            }
+
             divMaterial.innerHTML = `
-                <div class="col-1">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="CHECK_MATERIAL" ${material.CHECK_MATERIAL ? 'checked' : ''} >
+                <div class="row p-3 rounded color-vo ${colorClass}">
+                    <div class="col-1">
                         <label class="form-check-label">Verificado</label>
+                        <input class="form-check-input" type="checkbox" name="CHECK_MATERIAL" ${material.CHECK_MATERIAL ? 'checked' : ''}>
                     </div>
-                </div>
-                <div class="col-1">
-                    <label class="form-label">N°</label>
-                    <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
-                </div>
-                <div class="col-5">
-                    <label class="form-label">Descripción</label>
-                    <input type="text" class="form-control" name="DESCRIPCION" value="${material.DESCRIPCION}" required>
-                </div>
-                <div class="col-1">
-                    <label class="form-label">Cantidad</label>
-                    <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" required>
-                </div>
-                <div class="col-2">
-                    <label class="form-label">Unidad de Medida</label>
-                    <input type="text" class="form-control" name="UNIDAD_MEDIDA" value="${material.UNIDAD_MEDIDA}" required>
-                </div>
-                <div class="col-2">
-                    <label class="form-label">Línea de Negocios</label>
-                    <select class="form-select" name="CATEGORIA_MATERIAL" disabled>
-                        <option value="">Seleccionar</option>
-                        <option value="STE" ${material.CATEGORIA_MATERIAL === 'STE' ? 'selected' : ''}>STE</option>
-                        <option value="SST" ${material.CATEGORIA_MATERIAL === 'SST' ? 'selected' : ''}>SST</option>
-                        <option value="SCA" ${material.CATEGORIA_MATERIAL === 'SCA' ? 'selected' : ''}>SCA</option>
-                        <option value="SMA" ${material.CATEGORIA_MATERIAL === 'SMA' ? 'selected' : ''}>SMA</option>
-                        <option value="SLH" ${material.CATEGORIA_MATERIAL === 'SLH' ? 'selected' : ''}>SLH</option>
-                        <option value="ADM" ${material.CATEGORIA_MATERIAL === 'ADM' ? 'selected' : ''}>ADM</option>
-                    </select>
-                </div>
-                <div class="col-12 mt-2 text-end">
-                    <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
-                        <i class="bi bi-trash"></i>
-                    </button>
+                    <div class="col-1">
+                        <label class="form-label">N°</label>
+                        <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label">Descripción</label>
+                        <input type="text" class="form-control" name="DESCRIPCION" value="${material.DESCRIPCION}" required>
+                    </div>
+                    <div class="col-1">
+                        <label class="form-label">Cantidad</label>
+                        <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" required>
+                    </div>
+                    <div class="col-2">
+                        <label class="form-label">Unidad de Medida</label>
+                        <input type="text" class="form-control" name="UNIDAD_MEDIDA" value="${material.UNIDAD_MEDIDA}" required>
+                    </div>
+                    <div class="col-2">
+                        <label class="form-label">Línea de Negocios</label>
+                        <select class="form-select" name="CATEGORIA_MATERIAL" disabled>
+                            <option value="">Seleccionar</option>
+                            <option value="STE" ${material.CATEGORIA_MATERIAL === 'STE' ? 'selected' : ''}>STE</option>
+                            <option value="SST" ${material.CATEGORIA_MATERIAL === 'SST' ? 'selected' : ''}>SST</option>
+                            <option value="SCA" ${material.CATEGORIA_MATERIAL === 'SCA' ? 'selected' : ''}>SCA</option>
+                            <option value="SMA" ${material.CATEGORIA_MATERIAL === 'SMA' ? 'selected' : ''}>SMA</option>
+                            <option value="SLH" ${material.CATEGORIA_MATERIAL === 'SLH' ? 'selected' : ''}>SLH</option>
+                            <option value="ADM" ${material.CATEGORIA_MATERIAL === 'ADM' ? 'selected' : ''}>ADM</option>
+                        </select>
+                    </div>
+                    <div class="col-1">
+                        <label class="form-label">Vo. Bo</label>
+                        <select class="form-select check-vo-select" name="CHECK_VO" disabled>
+                            <option value=""></option>
+                            <option value="SI" ${material.CHECK_VO === 'SI' ? 'selected' : ''}>Sí</option>
+                            <option value="NO" ${material.CHECK_VO === 'NO' ? 'selected' : ''}>No</option>
+                        </select>
+                    </div>
+                    <div class="col-12 mt-2 text-end">
+                        <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
                 </div>
             `;
 
@@ -449,12 +466,37 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                 contenedorMateriales.removeChild(divMaterial);
                 actualizarNumerosOrden();
             });
+
+            const selectVoBo = divMaterial.querySelector('.check-vo-select');
+            const contenedorColor = divMaterial.querySelector('.color-vo');
+            const checkMaterial = divMaterial.querySelector('input[name="CHECK_MATERIAL"]');
+
+            // Inicial: deshabilita el checkbox si CHECK_VO es "NO"
+            if (selectVoBo.value === 'NO') {
+                checkMaterial.disabled = true;
+            }
+
+            // Evento para cambiar color y estado del checkbox dinámicamente
+            selectVoBo.addEventListener('change', function () {
+                contenedorColor.classList.remove('bg-verde-suave', 'bg-rojo-suave');
+
+                if (selectVoBo.value === 'SI') {
+                    contenedorColor.classList.add('bg-verde-suave');
+                    checkMaterial.disabled = false;
+                } else if (selectVoBo.value === 'NO') {
+                    contenedorColor.classList.add('bg-rojo-suave');
+                    checkMaterial.disabled = true;
+                } else {
+                    checkMaterial.disabled = false;
+                }
+            });
         });
 
     } catch (e) {
         console.error('Error al parsear MATERIALES_JSON:', e);
     }
 }
+
 
 
 function darVistoBueno() {
