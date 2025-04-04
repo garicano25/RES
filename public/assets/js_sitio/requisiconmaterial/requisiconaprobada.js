@@ -434,29 +434,26 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             const divMaterial = document.createElement('div');
             divMaterial.classList.add('material-item', 'mt-2');
 
-            // Nueva lógica de color combinando CHECK_VO y CHECK_MATERIAL
             let colorClass = '';
            if (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL !== 'NO') {
-    colorClass = 'bg-verde-suave';
-} else if (
-    material.CHECK_VO === 'NO' ||
-    (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL === 'NO')
-) {
-    colorClass = 'bg-rojo-suave';
-}
+                colorClass = 'bg-verde-suave';
+            } else if (
+                material.CHECK_VO === 'NO' ||
+                (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL === 'NO')
+            ) {
+                colorClass = 'bg-rojo-suave';
+            }
 
             divMaterial.innerHTML = `
                 <div class="row p-3 rounded color-vo ${colorClass}">
-                    
                     <div class="col-1">
                         <label class="form-label">Aprobado</label>
-                        <select class="form-select" name="CHECK_MATERIAL" >
+                        <select class="form-select" name="CHECK_MATERIAL"  >
                             <option value=""></option>
                             <option value="SI" ${material.CHECK_MATERIAL === 'SI' ? 'selected' : ''}>Sí</option>
                             <option value="NO" ${material.CHECK_MATERIAL === 'NO' ? 'selected' : ''}>No</option>
                         </select>
                     </div>
-
                     <div class="col-1">
                         <label class="form-label">N°</label>
                         <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
@@ -475,7 +472,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     </div>
                     <div class="col-2">
                         <label class="form-label">Línea de Negocios</label>
-                        <select class="form-select" name="CATEGORIA_MATERIAL" disabled>
+                        <select class="form-select" name="CATEGORIA_MATERIAL" >
                             <option value="">Seleccionar</option>
                             <option value="STE" ${material.CATEGORIA_MATERIAL === 'STE' ? 'selected' : ''}>STE</option>
                             <option value="SST" ${material.CATEGORIA_MATERIAL === 'SST' ? 'selected' : ''}>SST</option>
@@ -512,25 +509,14 @@ function cargarMaterialesDesdeJSON(materialesJson) {
 
             const selectVoBo = divMaterial.querySelector('.check-vo-select');
             const contenedorColor = divMaterial.querySelector('.color-vo');
-            const checkMaterial = divMaterial.querySelector('input[name="CHECK_MATERIAL"]');
 
-            // Inicial: deshabilita el checkbox si CHECK_VO es "NO"
-            if (selectVoBo.value === 'NO') {
-                checkMaterial.disabled = true;
-            }
-
-            // Evento para cambiar color y estado del checkbox dinámicamente
             selectVoBo.addEventListener('change', function () {
                 contenedorColor.classList.remove('bg-verde-suave', 'bg-rojo-suave');
 
                 if (selectVoBo.value === 'SI') {
                     contenedorColor.classList.add('bg-verde-suave');
-                    checkMaterial.disabled = false;
                 } else if (selectVoBo.value === 'NO') {
                     contenedorColor.classList.add('bg-rojo-suave');
-                    checkMaterial.disabled = true;
-                } else {
-                    checkMaterial.disabled = false;
                 }
             });
         });

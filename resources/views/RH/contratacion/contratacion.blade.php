@@ -17,19 +17,6 @@
         height: 40px;
     }
 
-    /* .multisteps-form__progress::before {
-    content: '';
-    position: absolute;
-    top: 24%; 
-    left: calc(7%); 
-    width: calc(87%); 
-    height: 7px; 
-    background-color: #e0e0e0;
-    z-index: 0;
-    transform: translateY(-50%); 
-} */
-
-
 
 
     .multisteps-form__progress-btn {
@@ -39,7 +26,7 @@
         flex-direction: column;
         align-items: center;
         font-size: 14px;
-        color: ##f3f3f3;
+        color: #f3f3f3;
         flex: 1;
         text-align: center;
     }
@@ -84,6 +71,25 @@
 
     .text-success {
         color: green !important;
+    }
+
+
+    .estado-verde {
+        background-color: #d4edda !important;
+        color: black;
+        border-radius: 0.25rem;
+    }
+
+    .estado-amarillo {
+        background-color: #fff3cd !important;
+        color: black;
+        border-radius: 0.25rem;
+    }
+
+    .estado-rojo {
+        background-color: #f8d7da !important;
+        color: black;
+        border-radius: 0.25rem;
     }
 </style>
 
