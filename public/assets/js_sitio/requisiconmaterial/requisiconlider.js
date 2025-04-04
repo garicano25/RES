@@ -10,11 +10,13 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     document.getElementById('formularioMR').reset();
 
    
-
+        document.getElementById('DAR_BUENO').value = "0"; 
 
     
     document.querySelector('.materialesdiv').innerHTML = '';
     contadorMateriales = 1;
+
+    
 });
 
 
@@ -55,7 +57,7 @@ cambiarColor();
 
 
 
-let contadorMateriales = 1; // Declaración global para que sea accesible en todo el script
+let contadorMateriales = 1; 
 
 // document.addEventListener("DOMContentLoaded", function () {
 //     const botonMaterial = document.getElementById('botonmaterial');

@@ -177,7 +177,7 @@
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
 
 
-                        <div id="APROBACION_DIRECCION" style="display: block;">
+                        <div id="APROBACION_DIRECCION" style="display: none;">
 
 
                             <div class="col-12 mt-3">

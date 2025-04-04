@@ -112,7 +112,7 @@ class mrController extends Controller
                 } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
                     $value->ESTATUS = '<span class="badge bg-danger">Rechazado</span>';
                 } else {
-                    $value->ESTATUS = '<span class="badge bg-secondary">Sin estatus</span>';
+                    $value->ESTATUS = '<span class="badge bg-secondary">Aprobar</span>';
                 }
             }
 

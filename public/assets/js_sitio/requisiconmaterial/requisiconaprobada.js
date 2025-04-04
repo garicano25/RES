@@ -10,6 +10,7 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     document.getElementById('formularioMR').reset();
 
     
+        document.getElementById('DAR_BUENO').value = "0"; 
 
 
         $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
@@ -19,6 +20,8 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
 
     document.querySelector('.materialesdiv').innerHTML = '';
     contadorMateriales = 1;
+
+    cambiarColor();     
 });
 
 
@@ -383,6 +386,35 @@ $('#Tablarequsicionaprobada tbody').on('click', 'td>button.EDITAR', function () 
     } else {
         $('#QUIEN_APROBACION').val(row.data().QUIEN_APROBACION);
     }
+
+
+
+      if (row.data().DAR_BUENO === "1") {
+          $('#VISTO_BUENO_JEFE').show();
+          
+        $('#APROBACION_DIRECCION').show();
+
+         $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+          $('#BOTON_VISTO_BUENO').hide();
+          
+
+      
+    } else if (row.data().DAR_BUENO === "2") {
+        $('#VISTO_BUENO_JEFE').show();
+          $('#MOTIVO_RECHAZO_JEFE_DIV').show();
+        $('#APROBACION_DIRECCION').show();
+          
+         
+        
+     } else {
+         $('#VISTO_BUENO_JEFE').hide();
+        $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+       
+        $('#APROBACION_DIRECCION').hide();
+          
+          
+    }
+
 
 
 });

@@ -9,6 +9,11 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     ID_FORMULARIO_MR = 0;
     document.getElementById('formularioMR').reset();
 
+
+        document.getElementById('DAR_BUENO').value = "0"; 
+
+    
+    
     $('#VISTO_BUENO_JEFE').hide();
     $('#APROBACION_DIRECCION').hide();
     $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
@@ -59,7 +64,7 @@ cambiarColor();
 
 
 
-let contadorMateriales = 1; // Declaración global para que sea accesible en todo el script
+let contadorMateriales = 1; 
 document.addEventListener("DOMContentLoaded", function () {
     const botonMaterial = document.getElementById('botonmaterial');
     const contenedorMateriales = document.querySelector('.materialesdiv');
@@ -129,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
         botonEliminar.addEventListener('click', function () {
             contenedorMateriales.removeChild(divMaterial);
-            actualizarNumerosOrden(); // asegúrate de tener esta función si quieres reenumerar
+            actualizarNumerosOrden(); 
         });
     }
 });
@@ -391,6 +396,8 @@ $('#Tablamr tbody').on('click', 'td>button.EDITAR', function () {
          $('#motivo-rechazo-container').hide();
             $('#APROBACION_DIRECCION').show();
 
+       
+       
       
     } else if (row.data().ESTADO_APROBACION === "Rechazada") {
         $('#APROBACION_DIRECCION').show();
