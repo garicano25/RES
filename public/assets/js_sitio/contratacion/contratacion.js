@@ -341,19 +341,24 @@ var Tablacontratacion = $("#Tablacontratacion").DataTable({
         },
         {
             data: null,  render: function (data, type, row)
-             {
+                {
                 return row.NOMBRE_COLABORADOR + ' ' + row.PRIMER_APELLIDO + ' ' + row.SEGUNDO_APELLIDO;
             }
         }
         ,
         { data: 'CURP' },
+        { data: 'NUMERO_EMPLEADO' },
+
         { data: 'BTN_EDITAR' }
+
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all text-center' },
         { targets: 1, title: 'Nombre del colaborador', className: 'all text-center nombre-column' },
         { targets: 2, title: 'CURP', className: 'all text-center' },
-        { targets: 3, title: 'Mostrar', className: 'all text-center' }
+        { targets: 3, title: 'No. empleado', className: 'all text-center' },
+        { targets: 4, title: 'Mostrar', className: 'all text-center' },
+
     ]
 });
 
@@ -431,6 +436,8 @@ function cargarTablaContratacionInactivo() {
             }
             ,
             { data: 'CURP' },
+            { data: 'NUMERO_EMPLEADO' },
+
             { data: 'BTN_EDITAR' },
             { data: 'BTN_ACTIVAR' }
 
@@ -439,8 +446,9 @@ function cargarTablaContratacionInactivo() {
             { targets: 0, title: '#', className: 'all text-center' },
             { targets: 1, title: 'Nombre del colaborador', className: 'all text-center nombre-column' },
             { targets: 2, title: 'CURP', className: 'all text-center' },
-            { targets: 3, title: 'Mostrar', className: 'all text-center' },
-            { targets: 4, title: 'Activar', className: 'all text-center' }
+            { targets: 3, title: 'No. empleado', className: 'all text-center' },
+            { targets: 4, title: 'Mostrar', className: 'all text-center' },
+            { targets: 5, title: 'Activar', className: 'all text-center' }
 
         ]
     });
@@ -1381,6 +1389,81 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+// function obtenerDocumentosOficiales(data) {
+//     let row = data.data().DOCUMENTOS_JSON;
+//     var documentos = JSON.parse(row);
+//     let contadorDocumentos = 1;
+
+//     $.each(documentos, function (index, contacto) {
+//         var tipo = contacto.TIPO_DOCUMENTO_IDENTIFICACION;
+//         var emision = contacto.EMISION_DOCUMENTO;
+//         var vigencia = contacto.VIGENCIA_DOCUMENTO;
+//         var numero = contacto.NUMERO_DOCUMENTO;
+//         var expedido = contacto.EXPEDIDO_DOCUMENTO;
+
+//         const divDocumentoOfi = document.createElement('div');
+//         divDocumentoOfi.classList.add('row', 'generardocumento', 'm-3');
+//         divDocumentoOfi.innerHTML = `
+//             <div class="col-lg-12 col-sm-1">
+//                 <div class="form-group d-flex align-items-center">
+//                     <h5><i class="bi bi-person"></i> Documento N° ${contadorDocumentos} &nbsp;</h5>
+//                 </div>
+//             </div>
+//             <div class="col-2 mb-3">
+//                 <label>Tipo *</label>
+//                 <select class="form-control" name="TIPO_DOCUMENTO_IDENTIFICACION" required>
+//                     <option value="0" disabled>Seleccione una opción</option>
+//                     <option value="1" ${tipo == 1 ? 'selected' : ''}>Residencia temporal</option>
+//                     <option value="2" ${tipo == 2 ? 'selected' : ''}>Residencia Permanente</option>
+//                     <option value="3" ${tipo == 3 ? 'selected' : ''}>INE</option>
+//                     <option value="4" ${tipo == 4 ? 'selected' : ''}>Pasaporte</option>
+//                     <option value="5" ${tipo == 5 ? 'selected' : ''}>Licencia de conducir</option>
+//                 </select>
+//             </div>
+//              <div class="col-2 mb-3">
+//                 <label>Emisión *</label>
+//                 <div class="input-group">
+//                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd"  name="EMISION_DOCUMENTO"   value="${emision}" required>
+//                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+//                 </div>
+//             </div>
+//              <div class="col-2 mb-3">
+//                 <label>Vigencia *</label>
+//                 <div class="input-group">
+//                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="VIGENCIA_DOCUMENTO" name="VIGENCIA_DOCUMENTO" value="${vigencia}" required>
+//                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+//                 </div>
+//             </div>
+//             <div class="col-3 mb-3">
+//                 <label>Número *</label>
+//                 <input type="text" class="form-control" id="NUMERO_DOCUMENTO" name="NUMERO_DOCUMENTO" value="${numero}" required>
+//             </div>
+//             <div class="col-3 mb-3">
+//                 <label>Expedido en *</label>
+//                 <input type="text" class="form-control" id="EXPEDIDO_DOCUMENTO" name="EXPEDIDO_DOCUMENTO" value="${expedido}" required>
+//             </div>
+//             <br>
+//             <div class="col-12 mt-4">
+//                 <div class="form-group" style="text-align: center;">
+//                     <button type="button" class="btn btn-danger botonEliminarDocumento">Eliminar documento <i class="bi bi-trash-fill"></i></button>
+//                 </div>
+//             </div>
+//         `;
+//         const contenedor = document.querySelector('.listadedocumentoficial');
+//         contenedor.appendChild(divDocumentoOfi);
+
+//         contadorDocumentos++;
+
+//         const botonEliminar = divDocumentoOfi.querySelector('.botonEliminarDocumento');
+//         botonEliminar.addEventListener('click', function () {
+//             contenedor.removeChild(divDocumentoOfi);
+//         });
+//     });
+
+// }
+
+
+
 function obtenerDocumentosOficiales(data) {
     let row = data.data().DOCUMENTOS_JSON;
     var documentos = JSON.parse(row);
@@ -1393,8 +1476,25 @@ function obtenerDocumentosOficiales(data) {
         var numero = contacto.NUMERO_DOCUMENTO;
         var expedido = contacto.EXPEDIDO_DOCUMENTO;
 
+        const hoy = new Date();
+        const fechaEmision = new Date(emision);
+        const fechaVigencia = new Date(vigencia);
+
+        const diasTotal = Math.ceil((fechaVigencia - fechaEmision) / (1000 * 60 * 60 * 24));
+        const diasRestantes = Math.ceil((fechaVigencia - hoy) / (1000 * 60 * 60 * 24));
+        const porcentajeRestante = (diasRestantes / diasTotal) * 100;
+
+        let colorClase = "estado-verde";
+        if (porcentajeRestante < 30) {
+            colorClase = "estado-rojo";
+        } else if (porcentajeRestante < 40) {
+            colorClase = "estado-amarillo";
+        }
+
         const divDocumentoOfi = document.createElement('div');
-        divDocumentoOfi.classList.add('row', 'generardocumento', 'm-3');
+        divDocumentoOfi.classList.add('row', 'generardocumento', 'm-3', 'p-3', 'rounded', colorClase);
+        divDocumentoOfi.setAttribute('title', `Faltan ${diasRestantes} días para que venza`);
+
         divDocumentoOfi.innerHTML = `
             <div class="col-lg-12 col-sm-1">
                 <div class="form-group d-flex align-items-center">
@@ -1412,37 +1512,40 @@ function obtenerDocumentosOficiales(data) {
                     <option value="5" ${tipo == 5 ? 'selected' : ''}>Licencia de conducir</option>
                 </select>
             </div>
-             <div class="col-2 mb-3">
+            <div class="col-2 mb-3">
                 <label>Emisión *</label>
                 <div class="input-group">
-                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd"  name="EMISION_DOCUMENTO"   value="${emision}" required>
+                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" name="EMISION_DOCUMENTO" value="${emision}" required>
                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                 </div>
             </div>
-             <div class="col-2 mb-3">
+            <div class="col-2 mb-3">
                 <label>Vigencia *</label>
                 <div class="input-group">
-                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="VIGENCIA_DOCUMENTO" name="VIGENCIA_DOCUMENTO" value="${vigencia}" required>
+                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" name="VIGENCIA_DOCUMENTO" value="${vigencia}" required>
                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                 </div>
             </div>
             <div class="col-3 mb-3">
                 <label>Número *</label>
-                <input type="text" class="form-control" id="NUMERO_DOCUMENTO" name="NUMERO_DOCUMENTO" value="${numero}" required>
+                <input type="text" class="form-control" name="NUMERO_DOCUMENTO" value="${numero}" required>
             </div>
             <div class="col-3 mb-3">
                 <label>Expedido en *</label>
-                <input type="text" class="form-control" id="EXPEDIDO_DOCUMENTO" name="EXPEDIDO_DOCUMENTO" value="${expedido}" required>
-            </div> 
-            <br>
+                <input type="text" class="form-control" name="EXPEDIDO_DOCUMENTO" value="${expedido}" required>
+            </div>
             <div class="col-12 mt-4">
-                <div class="form-group" style="text-align: center;">
+                <div class="form-group text-center">
                     <button type="button" class="btn btn-danger botonEliminarDocumento">Eliminar documento <i class="bi bi-trash-fill"></i></button>
                 </div>
             </div>
         `;
+
         const contenedor = document.querySelector('.listadedocumentoficial');
         contenedor.appendChild(divDocumentoOfi);
+
+        // Inicializar tooltip con Bootstrap
+        new bootstrap.Tooltip(divDocumentoOfi);
 
         contadorDocumentos++;
 
@@ -1451,8 +1554,9 @@ function obtenerDocumentosOficiales(data) {
             contenedor.removeChild(divDocumentoOfi);
         });
     });
-
 }
+
+
 
 
 
