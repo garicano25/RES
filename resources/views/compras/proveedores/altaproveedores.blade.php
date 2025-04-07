@@ -125,15 +125,25 @@
 
             <div class="col-12">
                 <div class="row">
-                    <div class="col-3 mb-3">
-                        <label>Tipo de Persona *</label>
+                    <div class="col-4 mb-3">
+                        <label>Tipo de Proveedor *</label>
                         <select class="form-control" name="TIPO_PERSONA_ALTA" id="TIPO_PERSONA_ALTA" required>
                             <option value="" selected disabled>Seleccione una opción</option>
                             <option value="1">Nacional</option>
                             <option value="2">Extranjero</option>
                         </select>
                     </div>
-                    <div class="col-5 mb-3">
+
+
+                    <div class="col-4 mb-3">
+                        <label>Tipo de Persona *</label>
+                        <select class="form-control" name="TIPO_PERSONA_OPCION" id="TIPO_PERSONA_OPCION" required>
+                            <option value="" selected disabled>Seleccione una opción</option>
+                            <option value="1">Moral</option>
+                            <option value="2">Física</option>
+                        </select>
+                    </div>
+                    <div class="col-4 mb-3">
                         <label>Razón social/Nombre *</label>
                         <input type="text" class="form-control" name="RAZON_SOCIAL_ALTA" id="RAZON_SOCIAL_ALTA" required>
                     </div>
@@ -141,11 +151,11 @@
                         <label>Representante Legal *</label>
                         <input type="text" class="form-control" name="REPRESENTANTE_LEGAL_ALTA" id="REPRESENTANTE_LEGAL_ALTA" required>
                     </div>
-                    <div class="col-6 mb-3">
+                    <div class="col-4 mb-3">
                         <label for="RFC_LABEL">R.F.C *</label>
                         <input type="text" class="form-control" name="RFC_ALTA" id="RFC_ALTA" required readonly>
                     </div>
-                    <div class="col-6 mb-3">
+                    <div class="col-4 mb-3">
                         <label>Régimen </label>
                         <select class="form-control" name="REGIMEN_ALTA" id="REGIMEN_ALTA">
                             <option value="" selected disabled>Seleccione una opción</option>

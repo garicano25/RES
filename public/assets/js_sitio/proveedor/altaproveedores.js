@@ -225,8 +225,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
                 document.getElementById("ID_FORMULARIO_ALTA").value = data.ID_FORMULARIO_ALTA;
-
         document.getElementById("TIPO_PERSONA_ALTA").value = data.TIPO_PERSONA_ALTA;
+        document.getElementById("TIPO_PERSONA_OPCION").value = data.TIPO_PERSONA_OPCION;
         document.getElementById("RAZON_SOCIAL_ALTA").value = data.RAZON_SOCIAL_ALTA;
         document.getElementById("RFC_ALTA").value = data.RFC_ALTA;
 

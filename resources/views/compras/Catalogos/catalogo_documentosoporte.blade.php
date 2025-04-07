@@ -32,11 +32,21 @@
                     {!! csrf_field() !!}
 
                     <div class="mb-3">
-                        <label>Tipo de Persona *</label>
+                        <label>Tipo de Proveedor *</label>
                         <select class="form-control" name="TIPO_PERSONA" id="TIPO_PERSONA" required>
                             <option value="" selected disabled>Seleccione una opción</option>
                             <option value="1">Nacional</option>
                             <option value="2">Extranjero</option>
+                        </select>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label>Tipo de Persona *</label>
+                        <select class="form-control" name="TIPO_PERSONA_OPCION" id="TIPO_PERSONA_OPCION" required>
+                            <option value="" selected disabled>Seleccione una opción</option>
+                            <option value="1">Moral</option>
+                            <option value="2">Física</option>
                         </select>
                     </div>
 

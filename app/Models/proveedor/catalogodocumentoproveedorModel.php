@@ -15,6 +15,7 @@ class catalogodocumentoproveedorModel extends Model
     protected $fillable = [
         'NOMBRE_DOCUMENTO',
         'TIPO_PERSONA',
+        'TIPO_PERSONA_OPCION',
         'DESCRIPCION_DOCUMENTO',
         'ACTIVO'
     ];

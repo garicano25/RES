@@ -51,6 +51,7 @@ class altaproveedorModel extends Model
         'SERVICIOS_PEMEX',
         'NUMERO_PROVEEDOR',
         'BENEFICIOS_PERSONA',
-        'NOMBRE_PERSONA'
+        'NOMBRE_PERSONA',
+        'TIPO_PERSONA_OPCION'
     ];
 }

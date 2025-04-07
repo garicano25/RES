@@ -71,7 +71,11 @@ class altaproveedorController extends Controller
                 'SERVICIOS_PEMEX' => $formulario->SERVICIOS_PEMEX,
                 'NUMERO_PROVEEDOR' => $formulario->NUMERO_PROVEEDOR,
                 'BENEFICIOS_PERSONA' => $formulario->BENEFICIOS_PERSONA,
-                'NOMBRE_PERSONA' => $formulario->NOMBRE_PERSONA
+                'NOMBRE_PERSONA' => $formulario->NOMBRE_PERSONA,
+
+                'TIPO_PERSONA_OPCION' => $formulario->TIPO_PERSONA_OPCION
+
+                
 
             ]);
         }
