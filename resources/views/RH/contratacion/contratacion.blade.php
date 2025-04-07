@@ -1158,7 +1158,8 @@
                             <option value="9">Solicitud de derechos ARCO</option>
                             <option value="10">Carta de vínculo con Personal Políticamente Expuesto</option>
                             <option value="11">Carta presentación declaración anual</option>
-                            <option value="12">Carta de no crédito INFONAVIT/Retención de descuentos</option>
+                            <option value="12">Carta de no crédito INFONAVIT</option>
+                            <option value="14">Retención de descuentos</option>
                             <option value="13">Otros</option>
                         </select>
                     </div>
@@ -1437,6 +1438,45 @@
                         <input type="text" class="form-control" id="NOMBRE_DOCUMENTO_INCIDENCIAS" name="NOMBRE_DOCUMENTO_INCIDENCIAS" required>
                     </div>
 
+                    <div class="row  mb-3">
+                        <div class="col-4">
+                            <label>Fecha Inicio *</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_INCIDENCIA" name="FECHAI_INCIDENCIA" required>
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label>Fecha Fin *</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_INCIDENCIA" name="FECHAF_INCIDENCIA" required>
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-4">
+                            <label>Número de horas </label>
+                            <input type="number" class="form-control" id="NUMERO_HORAS_INCIDENCIA" name="NUMERO_HORAS_INCIDENCIA" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="col-form-label">Aplica para ausentismo *</label>
+                        <div class="d-flex">
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="radio" name="APLICA_AUSENTISMO" id="SI_AUSENTISMO" value="SI" required>
+                                <label class="form-check-label" for="SI_AUSENTISMO">Si</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="APLICA_AUSENTISMO" id="NO_AUSENTISMO" value="NO" required>
+                                <label class="form-check-label" for="NO_AUSENTISMO">No</label>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="mb-3">
                         <label>Subir documento</label>
@@ -1477,6 +1517,35 @@
                         <input type="text" class="form-control" id="NOMBRE_DOCUMENTO_ACCIONES" name="NOMBRE_DOCUMENTO_ACCIONES" required>
                     </div>
 
+                    <div class="row  mb-3">
+                        <div class="col-12">
+                            <label>Fecha en que se firma *</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_ACCION" name="FECHAI_ACCION" required>
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Acción disciplinaria *</label>
+                        <textarea type="text" class="form-control" id="ACCION_DISCIPLINARIA" name="ACCION_DISCIPLINARIA" rows="4" required></textarea>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label>Sanción disciplinaria *</label>
+                        <select class="form-select" id="SANCION_DISCIPLINARIA" name="SANCION_DISCIPLINARIA" required>
+                            <option value="0" disabled selected>Seleccione una opción</option>
+                            <option value="1">Amonestación verba</option>
+                            <option value="2">Amonestación por escrito a través de acta administrativa</option>
+                            <option value="3">Suspensión misma que no puede exceder de ocho días y además el colaborador
+                                tiene el derecho a ser oído antes de que se aplique cualquier sanción.</option>
+                            <option value="4">Rescisión (de conformidad al artículo 47 de la Ley Federal del Trabajo vigente).</option>
+
+                        </select>
+                    </div>
 
                     <div class="mb-3">
                         <label>Subir documento</label>

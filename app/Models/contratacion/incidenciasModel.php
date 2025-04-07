@@ -15,6 +15,10 @@ class incidenciasModel extends Model
         'CURP',
         'NOMBRE_DOCUMENTO_INCIDENCIAS',
         'DOCUMENTO_INCIDENCIAS',
+        'FECHAI_INCIDENCIA',
+        'FECHAF_INCIDENCIA',
+        'NUMERO_HORAS_INCIDENCIA',
+        'APLICA_AUSENTISMO',
         'ACTIVO'
     ];
 

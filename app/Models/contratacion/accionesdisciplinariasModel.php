@@ -15,6 +15,9 @@ class accionesdisciplinariasModel extends Model
         'CURP',
         'NOMBRE_DOCUMENTO_ACCIONES',
         'DOCUMENTO_ACCIONES_DISCIPLINARIAS',
+        'FECHAI_ACCION',
+        'ACCION_DISCIPLINARIA',
+        'SANCION_DISCIPLINARIA',
         'ACTIVO'
     ];
 }

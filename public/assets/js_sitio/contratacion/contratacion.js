@@ -2063,6 +2063,38 @@ $('#Tabladocumentosoporte').on('click', 'td>button.EDITAR', function () {
      }
 });
 
+// function cargarDocumentosGuardados() {
+//     if (!curpSeleccionada || curpSeleccionada.trim() === '') {
+//         console.error('CURP no definida');
+//         return;
+//     }
+
+//     $.ajax({
+//         url: '/obtenerguardados',
+//         method: 'POST',
+//         data: {
+//             CURP: curpSeleccionada, 
+//             _token: $('input[name="_token"]').val() 
+//         },
+//         success: function (data) {
+//             let select = $('#TIPO_DOCUMENTO');
+
+//             select.find('option').prop('disabled', false);
+
+//             data.forEach(function (tipoDocumento) {
+//                 if (tipoDocumento !== "13") {  // No bloquear la opción 3
+//                     select.find(`option[value="${tipoDocumento}"]`).prop('disabled', true);
+//                 }
+//             });
+
+//         },
+//         error: function (xhr, status, error) {
+//             console.error('Error al cargar documentos guardados:', error);
+//         }
+//     });
+// }
+
+
 function cargarDocumentosGuardados() {
     if (!curpSeleccionada || curpSeleccionada.trim() === '') {
         console.error('CURP no definida');
@@ -2073,28 +2105,29 @@ function cargarDocumentosGuardados() {
         url: '/obtenerguardados',
         method: 'POST',
         data: {
-            CURP: curpSeleccionada, 
-            _token: $('input[name="_token"]').val() 
+            CURP: curpSeleccionada,
+            _token: $('input[name="_token"]').val()
         },
         success: function (data) {
             let select = $('#TIPO_DOCUMENTO');
 
-            select.find('option').prop('disabled', false);
-
-            data.forEach(function (tipoDocumento) {
-                if (tipoDocumento !== "13") {  // No bloquear la opción 3
-                    select.find(`option[value="${tipoDocumento}"]`).prop('disabled', true);
-                }
+            // Primero, restablecemos todas las opciones
+            select.find('option').each(function () {
+                $(this).prop('disabled', false).css('color', ''); // habilitar y quitar color
             });
 
+            // Luego, deshabilitamos y pintamos de verde las guardadas
+            data.forEach(function (tipoDocumento) {
+                select.find(`option[value="${tipoDocumento}"]`)
+                    .prop('disabled', true)
+                    .css('color', 'green');
+            });
         },
         error: function (xhr, status, error) {
             console.error('Error al cargar documentos guardados:', error);
         }
     });
 }
-
-
 
 
 
