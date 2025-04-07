@@ -453,10 +453,20 @@ if (servicios.length) {
     if (row.data().SERVICIOS_PEMEX?.toUpperCase() === "SI") {
         $("#DIV_NUMEROPROVEEDOR").show();
     }
-}
-
+    }
+    
+    
 let beneficios = $(`input[name="BENEFICIOS_PERSONA"][value="${row.data().BENEFICIOS_PERSONA}"]`);
-if (beneficios.length) beneficios.prop('checked', true);
+if (beneficios.length) {
+    beneficios.prop('checked', true);
+    if (row.data().BENEFICIOS_PERSONA?.toUpperCase() === "SI") {
+        $("#PERSONA_EXPUESTA").show();
+    }
+}
+    
+
+    $("#NOMBRE_PERSONA").val(row.data().NOMBRE_PERSONA);
+
 
 
 
