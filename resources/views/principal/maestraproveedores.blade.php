@@ -218,7 +218,7 @@
                             <li><a href="{{ url('/Proveedores_Certificaciones') }}"><i class="bi bi-award-fill"></i>&nbsp; Certificaciones, acreditaciones y membresías</a></li>
                             <li><a href="{{ url('/Proveedores_Referencias') }}"><i class="bi bi-journal-text"></i>&nbsp; Referencias comerciales</a></li>
                             <li><a href="{{ url('/Proveedores_documentos') }}"><i class="bi bi-file-earmark-pdf-fill"></i>&nbsp;Documentos de soporte</a></li>
-                            <li><a href="{{ url('/#') }}"><i class="bi bi-file-earmark-fill"></i>&nbsp; Facturación</a></li>
+                            <li  id="FACTURA" style="display: none;"><a href="{{ url('/#') }}"><i class="bi bi-file-earmark-fill"></i>&nbsp; Facturación</a></li>
 
                         </ul>
                     </nav>
