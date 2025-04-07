@@ -160,7 +160,6 @@ var Tablacuentasproveedores = $("#Tablacuentasproveedores").DataTable({
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_DOCUMENTO' },
-        { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
@@ -169,7 +168,6 @@ var Tablacuentasproveedores = $("#Tablacuentasproveedores").DataTable({
         { targets: 3, title: 'Editar', className: 'all text-center' },
         { targets: 4, title: 'Visualizar', className: 'all text-center' },
         { targets: 5, title: 'Carátula bancaria', className: 'all text-center' },
-        { targets: 6, title: 'Activo', className: 'all text-center' }
     ]
 });
 

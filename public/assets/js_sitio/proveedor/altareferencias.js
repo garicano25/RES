@@ -153,7 +153,6 @@ var Tablareferenciasproveedor = $("#Tablareferenciasproveedor").DataTable({
         { data: 'CARGO_REFERENCIA' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
-        { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
@@ -162,7 +161,6 @@ var Tablareferenciasproveedor = $("#Tablareferenciasproveedor").DataTable({
         { targets: 3, title: 'Cargo', className: 'all text-center nombre-column' },
         { targets: 4, title: 'Editar', className: 'all text-center' },
         { targets: 5, title: 'Visualizar', className: 'all text-center' },
-        { targets: 6, title: 'Activo', className: 'all text-center' }
     ]
 });
 

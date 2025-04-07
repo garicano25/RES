@@ -160,24 +160,35 @@ var Tabladocumentosproveedores = $("#Tabladocumentosproveedores").DataTable({
             }
         },
         { data: 'NOMBRE_DOCUMENTO' },
-        { data: 'BTN_DOCUMENTO' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
-        { data: 'BTN_ELIMINAR' }
+        { data: 'BTN_DOCUMENTO' },
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'Nombre del documento ', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Editar', className: 'all text-center' },
         { targets: 3, title: 'Visualizar', className: 'all text-center' },
-        { targets: 4, title: 'Documentos', className: 'all text-center' },
-        { targets: 5, title: 'Activo', className: 'all text-center' }
+        { targets: 4, title: 'Documento', className: 'all text-center' },
     ]
 });
 
 
 
 
+
+
+
+
+$('#Tabladocumentosproveedores').on('click', '.ver-archivo-documentosoporte', function () {
+    var id = $(this).data('id');
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO');
+        return;
+    }
+    var url = '/mostrardocumento/' + id;
+    abrirModal(url, 'Documento soporte');
+});
 
 
 

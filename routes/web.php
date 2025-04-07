@@ -768,6 +768,7 @@ Route::get('/Proveedores_documentos', [altadocumentosController::class, 'index']
 Route::get('/Tabladocumentosproveedores', [altadocumentosController::class, 'Tabladocumentosproveedores']);
 Route::post('/AltaDocumentosSave', [altadocumentosController::class, 'store']);
 Route::get('/DocumentosDelete', [altadocumentosController::class, 'store']);
+Route::get('/mostrardocumento/{id}', [altadocumentosController::class, 'mostrardocumento']);
 
 
 

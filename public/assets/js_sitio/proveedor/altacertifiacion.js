@@ -200,7 +200,6 @@ var Tablacertificacionproveedores = $("#Tablacertificacionproveedores").DataTabl
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_DOCUMENTO' },
-        { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
@@ -208,7 +207,6 @@ var Tablacertificacionproveedores = $("#Tablacertificacionproveedores").DataTabl
         { targets: 2, title: 'Editar', className: 'all text-center' },
         { targets: 3, title: 'Visualizar', className: 'all text-center' },
         { targets: 4, title: 'Documentos', className: 'all text-center' },
-        { targets: 5, title: 'Activo', className: 'all text-center' }
     ]
 });
 

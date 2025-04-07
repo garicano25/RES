@@ -218,7 +218,7 @@
                             <li><a href="{{ url('/Proveedores_Certificaciones') }}"><i class="bi bi-award-fill"></i>&nbsp; Certificaciones, acreditaciones y membresías</a></li>
                             <li><a href="{{ url('/Proveedores_Referencias') }}"><i class="bi bi-journal-text"></i>&nbsp; Referencias comerciales</a></li>
                             <li><a href="{{ url('/Proveedores_documentos') }}"><i class="bi bi-file-earmark-pdf-fill"></i>&nbsp;Documentos de soporte</a></li>
-                            <li  id="FACTURA" style="display: none;"><a href="{{ url('/#') }}"><i class="bi bi-file-earmark-fill"></i>&nbsp; Facturación</a></li>
+                            <li id="FACTURA" style="display: none;"><a href="{{ url('/#') }}"><i class="bi bi-file-earmark-fill"></i>&nbsp; Facturación</a></li>
 
                         </ul>
                     </nav>
@@ -324,7 +324,7 @@
 
 
     @if(request()->is('Alta'))
-    <script src="/assets/js_sitio/proveedor/altaproveedores.js?v=1.1"></script>
+    <script src="/assets/js_sitio/proveedor/altaproveedores.js?v=1.2"></script>
     @endif
 
 
@@ -332,28 +332,28 @@
 
 
     @if(request()->is('Proveedores_Cuentas'))
-    <script src="/assets/js_sitio/proveedor/altacuentas.js?v=1.0"></script>
+    <script src="/assets/js_sitio/proveedor/altacuentas.js?v=1.2"></script>
     @endif
 
 
 
     @if(request()->is('Proveedores_Contactos'))
-    <script src="/assets/js_sitio/proveedor/altacontactos.js?v=1.0"></script>
+    <script src="/assets/js_sitio/proveedor/altacontactos.js?v=1.3"></script>
     @endif
 
 
     @if(request()->is('Proveedores_Certificaciones'))
-    <script src="/assets/js_sitio/proveedor/altacertifiacion.js"></script>
+    <script src="/assets/js_sitio/proveedor/altacertifiacion.js?v=1.0"></script>
     @endif
 
 
     @if(request()->is('Proveedores_Referencias'))
-    <script src="/assets/js_sitio/proveedor/altareferencias.js"></script>
+    <script src="/assets/js_sitio/proveedor/altareferencias.js?v=1.0"></script>
     @endif
 
 
     @if(request()->is('Proveedores_documentos'))
-    <script src="/assets/js_sitio/proveedor/altadocumentos.js"></script>
+    <script src="/assets/js_sitio/proveedor/altadocumentos.js?v=1.0"></script>
     @endif
 
 </body>
