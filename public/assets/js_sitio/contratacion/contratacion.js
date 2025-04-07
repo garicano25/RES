@@ -2000,7 +2000,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const divFechasSoporte = document.getElementById('FECHAS_SOPORTEDOCUMENTOS');
 
     // Aquí se listan los valores que deben mostrar el div
-    const valoresPermitidos = ['1', '2', '3', '9', '12', '14'];
+    const valoresPermitidos = ['1', '2', '3','14'];
 
     // Escuchamos cambios en el <select>
     selectTipoDocumento.addEventListener('change', function () {
@@ -2053,7 +2053,7 @@ $('#Tabladocumentosoporte').on('click', 'td>button.EDITAR', function () {
 
 
      // Mostrar el div solo si el TIPO_DOCUMENTO está en el listado
-     const mostrarDivTipos = ['1', '2', '3', '9', '12', '14'];
+     const mostrarDivTipos = ['1', '2', '3', '14'];
      const tipoSeleccionado = String(row.data().TIPO_DOCUMENTO); // asegurar que es string
  
      if (mostrarDivTipos.includes(tipoSeleccionado)) {
@@ -2119,7 +2119,7 @@ function cargarDocumentosGuardados() {
             // Luego, deshabilitamos y pintamos de verde las guardadas
             data.forEach(function (tipoDocumento) {
                 select.find(`option[value="${tipoDocumento}"]`)
-                    .prop('disabled', true)
+                    .prop('disabled', false)
                     .css('color', 'green');
             });
         },

@@ -1005,7 +1005,7 @@
                             <div class="col-6">
                                 <label>Fecha Inicio *</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_DOCUMENTOSOPORTE" name="FECHAI_DOCUMENTOSOPORTE" required>
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_DOCUMENTOSOPORTE" name="FECHAI_DOCUMENTOSOPORTE">
                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
 
                                 </div>

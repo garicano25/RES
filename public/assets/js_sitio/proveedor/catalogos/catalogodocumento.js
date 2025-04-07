@@ -156,6 +156,8 @@ var Tabladocumentosoportes = $("#Tabladocumentosoportes").DataTable({
             }
         },
         { data: 'NOMBRE_DOCUMENTO' },
+        { data: 'TIPO_PERSONA_TEXTO' },
+        { data: 'TIPO_PERSONA_OPCION' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
@@ -163,9 +165,11 @@ var Tabladocumentosoportes = $("#Tabladocumentosoportes").DataTable({
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'Nombre del documento', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'Editar', className: 'all text-center' },
-        { targets: 3, title: 'Visualizar', className: 'all text-center' },
-        { targets: 4, title: 'Activo', className: 'all text-center' }
+        { targets: 2, title: 'Tipo de Proveedor', className: 'all text-center nombre-column' },
+        { targets: 3, title: 'Tipo de Persona', className: 'all text-center nombre-column' },
+        { targets: 4, title: 'Editar', className: 'all text-center' },
+        { targets: 5, title: 'Visualizar', className: 'all text-center' },
+        { targets: 6, title: 'Activo', className: 'all text-center' }
     ]
 });
 

@@ -24,6 +24,15 @@ class catalagodocumentosproveedorController extends Controller
             $tabla = catalogodocumentoproveedorModel::get();
 
             foreach ($tabla as $value) {
+
+                if ($value->TIPO_PERSONA == 1) {
+                    $value->TIPO_PERSONA_TEXTO= 'Nacional';
+                }  else {
+                    $value->TIPO_PERSONA_TEXTO = 'Extranjero';
+                }
+
+
+
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_DOCUMENTOSPROVEEDOR . '"><span class="slider round"></span></label>';
