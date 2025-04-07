@@ -33,6 +33,17 @@ class catalagodocumentosproveedorController extends Controller
 
 
 
+                if ($value->TIPO_PERSONA_OPCION == 1) {
+                    $value->TIPO_PERSONA_OPCION_TEXTO = 'Moral';
+                } elseif ($value->TIPO_PERSONA_OPCION == 2) {
+                    $value->TIPO_PERSONA_OPCION_TEXTO = 'Física';
+                } else {
+                    $value->TIPO_PERSONA_OPCION_TEXTO = 'Moral y física';
+                }
+
+
+
+
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CATALOGO_DOCUMENTOSPROVEEDOR . '"><span class="slider round"></span></label>';

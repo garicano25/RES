@@ -47,6 +47,7 @@
                             <option value="" selected disabled>Seleccione una opción</option>
                             <option value="1">Moral</option>
                             <option value="2">Física</option>
+                            <option value="3">Moral y física</option>
                         </select>
                     </div>
 

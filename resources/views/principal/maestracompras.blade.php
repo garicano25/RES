@@ -391,7 +391,7 @@
     @endif
 
     @if(request()->is('Catálogo_documento_soporte'))
-    <script src="/assets/js_sitio/proveedor/catalogos/catalogodocumento.js?v=1.0"></script>
+    <script src="/assets/js_sitio/proveedor/catalogos/catalogodocumento.js?v=1.1"></script>
     @endif
 
 

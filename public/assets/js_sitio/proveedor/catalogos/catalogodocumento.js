@@ -157,7 +157,7 @@ var Tabladocumentosoportes = $("#Tabladocumentosoportes").DataTable({
         },
         { data: 'NOMBRE_DOCUMENTO' },
         { data: 'TIPO_PERSONA_TEXTO' },
-        { data: 'TIPO_PERSONA_OPCION' },
+        { data: 'TIPO_PERSONA_OPCION_TEXTO' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
