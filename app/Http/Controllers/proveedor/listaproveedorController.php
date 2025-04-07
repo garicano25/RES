@@ -176,10 +176,13 @@ public function Tablacertificaciones(Request $request)
                     break;
                 case 'Acreditación':
                     $botones = [];
-                    if ($btnAcreditacion) $botones[] = $btnAcreditacion;
-                    'br>';
-                    if ($btnAutorizacion) $botones[] = $btnAutorizacion;
-                    $value->BTN_DOCUMENTO = count($botones) ? implode(' ', $botones) : 'N/A';
+                    if ($btnAcreditacion) {
+                        $botones[] = '<div class="text-center"><small>Acreditación</small><br>' . $btnAcreditacion . '</div>';
+                    }
+                    if ($btnAutorizacion) {
+                        $botones[] = '<div class="text-center"><small>Autorización</small><br>' . $btnAutorizacion . '</div>';
+                    }
+                    $value->BTN_DOCUMENTO = count($botones) ? implode('&nbsp;&nbsp;', $botones) : 'N/A';
                     break;
                 case 'Membresía':
                     $value->BTN_DOCUMENTO = $btnMembresia ?: 'N/A';

@@ -33,14 +33,12 @@ class altacerticacionController extends Controller
                 $value->BTN_VISUALIZAR = '';
                 $value->BTN_DOCUMENTO = 'N/A';
 
-                // Botones comunes
                 $btnVisualizar = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 $btnEditar = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                 $btnEditarDisabled = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
                 $btnEliminarChecked = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" checked><span class="slider round"></span></label>';
                 $btnEliminarUnchecked = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '"><span class="slider round"></span></label>';
 
-                // Botones PDF por tipo
                 $btnCertificacion = $value->DOCUMENTO_CERTIFICACION
                     ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-certificación" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver certificación"><i class="bi bi-filetype-pdf"></i></button>'
                     : '';
@@ -64,11 +62,15 @@ class altacerticacionController extends Controller
                         break;
                     case 'Acreditación':
                         $botones = [];
-                        if ($btnAcreditacion) $botones[] = $btnAcreditacion;
-                        'br>';
-                        if ($btnAutorizacion) $botones[] = $btnAutorizacion;
-                        $value->BTN_DOCUMENTO = count($botones) ? implode(' ', $botones) : 'N/A';
+                        if ($btnAcreditacion) {
+                            $botones[] = '<div class="text-center"><small>Acreditación</small><br>' . $btnAcreditacion . '</div>';
+                        }
+                        if ($btnAutorizacion) {
+                            $botones[] = '<div class="text-center"><small>Autorización</small><br>' . $btnAutorizacion . '</div>';
+                        }
+                        $value->BTN_DOCUMENTO = count($botones) ? implode('&nbsp;&nbsp;', $botones) : 'N/A';
                         break;
+
                     case 'Membresía':
                         $value->BTN_DOCUMENTO = $btnMembresia ?: 'N/A';
                         break;
