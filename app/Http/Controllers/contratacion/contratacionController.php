@@ -502,19 +502,98 @@ public function obtenerguardados(Request $request)
     // }
 
     
+    // public function Tablacontratosyanexos(Request $request)
+    // {
+    //     try {
+    //         $curp = $request->get('curp');
+
+    //         if (!$curp) {
+    //             return response()->json([
+    //                 'msj' => 'CURP no proporcionada',
+    //                 'data' => []
+    //             ], 400);
+    //         }
+
+    //         $tabla = DB::select("
+    //         SELECT 
+    //             rec.*, 
+    //             cat.NOMBRE_CATEGORIA,
+    //             (SELECT MAX(FECHAI_RENOVACION) FROM renovacion_contrato WHERE CONTRATO_ID = rec.ID_CONTRATOS_ANEXOS) AS ULTIMA_FECHA_INICIO,
+    //             (SELECT MAX(FECHAF_RENOVACION) FROM renovacion_contrato WHERE CONTRATO_ID = rec.ID_CONTRATOS_ANEXOS) AS ULTIMA_FECHA_FIN
+    //         FROM contratos_anexos_contratacion rec
+    //         LEFT JOIN catalogo_categorias cat 
+    //             ON cat.ID_CATALOGO_CATEGORIA = rec.NOMBRE_CARGO
+    //         WHERE rec.CURP = ?
+    //     ", [$curp]);
+
+    //         foreach ($tabla as $value) {
+    //             $fecha_inicio_mostrar = !empty($value->ULTIMA_FECHA_INICIO) ? $value->ULTIMA_FECHA_INICIO : $value->FECHAI_CONTRATO;
+    //             $fecha_fin_mostrar = !empty($value->ULTIMA_FECHA_FIN) ? $value->ULTIMA_FECHA_FIN : $value->VIGENCIA_CONTRATO;
+
+    //                         if ($fecha_fin_mostrar !== "Sin fecha" && $fecha_inicio_mostrar !== "Sin fecha") {
+    //                 $inicio = new \DateTime($fecha_inicio_mostrar);
+    //                 $fin = new \DateTime($fecha_fin_mostrar);
+    //                 $hoy = new \DateTime();
+
+    //                 $totalDias = $inicio->diff($fin)->days;
+    //                 $diasRestantes = $fin >= $hoy ? $hoy->diff($fin)->days : -$hoy->diff($fin)->days;
+
+    //                 if ($fin < $hoy) {
+    //                     $estado_dias = "<span style='color: red;'>(Terminado)</span>";
+    //                 } else {
+    //                     $porcentajeRestante = ($diasRestantes / $totalDias) * 100;
+
+    //                     if ($porcentajeRestante > 40) {
+    //                         $estado_dias = "<span style='color: green;'>($diasRestantes días restantes)</span>";
+    //                     } elseif ($porcentajeRestante > 20) {
+    //                         $estado_dias = "<span style='color: orange;'>($diasRestantes días restantes)</span>";
+    //                     } else {
+    //                         $estado_dias = "<span style='color: red;'>($diasRestantes días restantes)</span>";
+    //                     }
+    //                 }
+    //             } else {
+    //                 $estado_dias = "<span style='color: gray;'>(Fecha desconocida)</span>";
+    //             }
+
+
+    //             $value->FECHA_ESTADO = $fecha_inicio_mostrar . "<br>" . $fecha_fin_mostrar . "<br>". $estado_dias;
+
+    //             if ($value->ACTIVO == 0) {
+    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+    //             } else {
+    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+    //             }
+    //             $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
+    //             $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //             $value->BTN_CONTRATO = '<button type="button" class="btn btn-success btn-custom rounded-pill informacion" id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
+    //         }
+
+    //         return response()->json([
+    //             'data' => $tabla,
+    //             'msj' => 'Información consultada correctamente'
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'msj' => 'Error: ' . $e->getMessage(),
+    //             'data' => []
+    //         ]);
+    //     }
+    // }
+
+
     public function Tablacontratosyanexos(Request $request)
-    {
-        try {
-            $curp = $request->get('curp');
+{
+    try {
+        $curp = $request->get('curp');
 
-            if (!$curp) {
-                return response()->json([
-                    'msj' => 'CURP no proporcionada',
-                    'data' => []
-                ], 400);
-            }
+        if (!$curp) {
+            return response()->json([
+                'msj' => 'CURP no proporcionada',
+                'data' => []
+            ], 400);
+        }
 
-            $tabla = DB::select("
+        $tabla = DB::select("
             SELECT 
                 rec.*, 
                 cat.NOMBRE_CATEGORIA,
@@ -526,60 +605,59 @@ public function obtenerguardados(Request $request)
             WHERE rec.CURP = ?
         ", [$curp]);
 
-            foreach ($tabla as $value) {
-                $fecha_inicio_mostrar = !empty($value->ULTIMA_FECHA_INICIO) ? $value->ULTIMA_FECHA_INICIO : $value->FECHAI_CONTRATO;
-                $fecha_fin_mostrar = !empty($value->ULTIMA_FECHA_FIN) ? $value->ULTIMA_FECHA_FIN : $value->VIGENCIA_CONTRATO;
+        foreach ($tabla as $value) {
+            $fecha_inicio_mostrar = !empty($value->ULTIMA_FECHA_INICIO) ? $value->ULTIMA_FECHA_INICIO : $value->FECHAI_CONTRATO;
+            $fecha_fin_mostrar = !empty($value->ULTIMA_FECHA_FIN) ? $value->ULTIMA_FECHA_FIN : $value->VIGENCIA_CONTRATO;
 
-                if ($fecha_fin_mostrar !== "Sin fecha" && $fecha_inicio_mostrar !== "Sin fecha") {
-                    $inicio = new \DateTime($fecha_inicio_mostrar);
-                    $fin = new \DateTime($fecha_fin_mostrar);
-                    $hoy = new \DateTime();
-                
-                    $totalDias = $inicio->diff($fin)->days;
-                    $diasRestantes = $fin >= $hoy ? $hoy->diff($fin)->days : -$hoy->diff($fin)->days;
-                
-                    if ($fin < $hoy) {
-                        $estado_dias = "<span style='color: red;'>(Terminado)</span>";
-                    } else {
-                        $porcentajeRestante = ($diasRestantes / $totalDias) * 100;
-                
-                        if ($porcentajeRestante > 40) {
-                            $estado_dias = "<span style='color: green;'>($diasRestantes días restantes)</span>";
-                        } elseif ($porcentajeRestante > 20) {
-                            $estado_dias = "<span style='color: orange;'>($diasRestantes días restantes)</span>";
-                        } else {
-                            $estado_dias = "<span style='color: red;'>($diasRestantes días restantes)</span>";
-                        }
-                    }
+            if (!empty($fecha_inicio_mostrar) && !empty($fecha_fin_mostrar)) {
+                $inicio = new \DateTime($fecha_inicio_mostrar);
+                $fin = new \DateTime($fecha_fin_mostrar);
+                $hoy = new \DateTime();
+
+                $totalDias = $inicio->diff($fin)->days;
+                $diasRestantes = ($fin >= $hoy) ? $hoy->diff($fin)->days : -$hoy->diff($fin)->days;
+
+                // Calcular umbrales en días (según porcentaje)
+                $umbralVerde = $totalDias * 0.60;     // Verde si quedan más del 60%
+                $umbralAmarillo = $totalDias * 0.30;  // Amarillo si quedan entre 30% y 60%
+
+                if ($diasRestantes <= 0) {
+                    $estado_dias = "<span style='color: red;'>(Terminado)</span>";
+                } elseif ($diasRestantes <= $umbralAmarillo) {
+                    $estado_dias = "<span style='color: red;'>($diasRestantes días restantes)</span>";
+                } elseif ($diasRestantes <= $umbralVerde) {
+                    $estado_dias = "<span style='color: orange;'>($diasRestantes días restantes)</span>";
                 } else {
-                    $estado_dias = "<span style='color: gray;'>(Fecha desconocida)</span>";
+                    $estado_dias = "<span style='color: green;'>($diasRestantes días restantes)</span>";
                 }
-                
-
-                $value->FECHA_ESTADO = $fecha_inicio_mostrar . "<br>" . $fecha_fin_mostrar . "<br>". $estado_dias;
-
-                if ($value->ACTIVO == 0) {
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
-                } else {
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                }
-                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
-                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                $value->BTN_CONTRATO = '<button type="button" class="btn btn-success btn-custom rounded-pill informacion" id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
+            } else {
+                $estado_dias = "<span style='color: gray;'>(Fecha desconocida)</span>";
             }
 
-            return response()->json([
-                'data' => $tabla,
-                'msj' => 'Información consultada correctamente'
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'msj' => 'Error: ' . $e->getMessage(),
-                'data' => []
-            ]);
-        }
-    }
+            $value->FECHA_ESTADO = $fecha_inicio_mostrar . "<br>" . $fecha_fin_mostrar . "<br>" . $estado_dias;
 
+            if ($value->ACTIVO == 0) {
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+            } else {
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+            }
+
+            $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
+            $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+            $value->BTN_CONTRATO = '<button type="button" class="btn btn-success btn-custom rounded-pill informacion" id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
+        }
+
+        return response()->json([
+            'data' => $tabla,
+            'msj' => 'Información consultada correctamente'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'msj' => 'Error: ' . $e->getMessage(),
+            'data' => []
+        ]);
+    }
+}
 
 
 
