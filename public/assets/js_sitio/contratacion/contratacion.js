@@ -4112,7 +4112,31 @@ MiModal_SOPORTECONTRATO.addEventListener('hidden.bs.modal', event => {
 
     document.getElementById('DOCUEMNTO_ERROR_SOPORTECONTRATO').style.display = 'none';
 
+
+    document.getElementById('FECHAS_SOPORTEDOCUMENTOSCONTRATO').style.display = 'none';
+
+
 })
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const selectTipoDocumento1 = document.getElementById('TIPO_DOCUMENTO_SOPORTECONTRATO');
+    const divFechasSoporte1 = document.getElementById('FECHAS_SOPORTEDOCUMENTOSCONTRATO');
+
+    // Aquí se listan los valores que deben mostrar el div
+    const valoresPermitidos1 = ['11','14'];
+
+    // Escuchamos cambios en el <select>
+    selectTipoDocumento1.addEventListener('change', function () {
+        const valorSeleccionado1 = this.value;
+
+        if (valoresPermitidos1.includes(valorSeleccionado1)) {
+            divFechasSoporte1.style.display = 'block';
+        } else {
+            divFechasSoporte1.style.display = 'none';
+        }
+    });
+});
 
 
 

@@ -1000,7 +1000,7 @@
 
                     <div id="FECHAS_SOPORTEDOCUMENTOS" style="display: none">
 
-                  
+
                         <div class="row  mb-3">
                             <div class="col-6">
                                 <label>Fecha Inicio *</label>
@@ -1167,6 +1167,35 @@
                     <div class="mb-3">
                         <label>Nombre del documento *</label>
                         <input type="text" class="form-control" id="NOMBRE_DOCUMENTO_SOPORTECONTRATO" name="NOMBRE_DOCUMENTO_SOPORTECONTRATO" readonly required>
+                    </div>
+
+
+
+
+                    <div id="FECHAS_SOPORTEDOCUMENTOSCONTRATO" style="display: none">
+
+
+                        <div class="row  mb-3">
+                            <div class="col-6">
+                                <label>Fecha Inicio *</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_DOCUMENTOSOPORTECONTRATO" name="FECHAI_DOCUMENTOSOPORTECONTRATO">
+                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label>Fecha Fin *</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_DOCUMENTOSOPORTECONTRATO" name="FECHAF_DOCUMENTOSOPORTECONTRATO">
+                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
                     </div>
 
 
