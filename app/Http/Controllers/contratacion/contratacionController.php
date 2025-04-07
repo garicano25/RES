@@ -530,27 +530,31 @@ public function obtenerguardados(Request $request)
                 $fecha_inicio_mostrar = !empty($value->ULTIMA_FECHA_INICIO) ? $value->ULTIMA_FECHA_INICIO : $value->FECHAI_CONTRATO;
                 $fecha_fin_mostrar = !empty($value->ULTIMA_FECHA_FIN) ? $value->ULTIMA_FECHA_FIN : $value->VIGENCIA_CONTRATO;
 
-                if (!$fecha_inicio_mostrar) {
-                    $fecha_inicio_mostrar = "Sin fecha";
-                }
-                if (!$fecha_fin_mostrar) {
-                    $fecha_fin_mostrar = "Sin fecha";
-                }
-
-                if ($fecha_fin_mostrar !== "Sin fecha") {
-                    $fecha_fin_dt = new \DateTime($fecha_fin_mostrar);
+                if ($fecha_fin_mostrar !== "Sin fecha" && $fecha_inicio_mostrar !== "Sin fecha") {
+                    $inicio = new \DateTime($fecha_inicio_mostrar);
+                    $fin = new \DateTime($fecha_fin_mostrar);
                     $hoy = new \DateTime();
-                    $diferencia = $hoy->diff($fecha_fin_dt);
-                    $dias_restantes = ($fecha_fin_dt >= $hoy) ? $diferencia->days : -$diferencia->days;
-
-                    if ($dias_restantes >= 0) {
-                        $estado_dias = "<span style='color: green;'>($dias_restantes días restantes)</span>";
-                    } else {
+                
+                    $totalDias = $inicio->diff($fin)->days;
+                    $diasRestantes = $fin >= $hoy ? $hoy->diff($fin)->days : -$hoy->diff($fin)->days;
+                
+                    if ($fin < $hoy) {
                         $estado_dias = "<span style='color: red;'>(Terminado)</span>";
+                    } else {
+                        $porcentajeRestante = ($diasRestantes / $totalDias) * 100;
+                
+                        if ($porcentajeRestante > 40) {
+                            $estado_dias = "<span style='color: green;'>($diasRestantes días restantes)</span>";
+                        } elseif ($porcentajeRestante > 20) {
+                            $estado_dias = "<span style='color: orange;'>($diasRestantes días restantes)</span>";
+                        } else {
+                            $estado_dias = "<span style='color: red;'>($diasRestantes días restantes)</span>";
+                        }
                     }
                 } else {
-                    $estado_dias = "<span style='color: orange;'>(Fecha desconocida)</span>";
+                    $estado_dias = "<span style='color: gray;'>(Fecha desconocida)</span>";
                 }
+                
 
                 $value->FECHA_ESTADO = $fecha_inicio_mostrar . "<br>" . $fecha_fin_mostrar . "<br>". $estado_dias;
 
