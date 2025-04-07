@@ -116,32 +116,105 @@ class contratacionController extends Controller
     }
 
     
+// public function Tablacontratacion()
+// {
+//     try {
+//         $tabla = contratacionModel::where('ACTIVO', 1)->get();
+
+//         foreach ($tabla as $value) {
+            
+         
+//         $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+//             // $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+        
+//         }
+        
+//         // Respuesta
+//         return response()->json([
+//             'data' => $tabla,
+//             'msj' => 'Información consultada correctamente'
+//         ]);
+//     } catch (Exception $e) {
+//         return response()->json([
+//             'msj' => 'Error ' . $e->getMessage(),
+//             'data' => 0
+//         ]);
+//     }
+// }
+    
 public function Tablacontratacion()
 {
     try {
         $tabla = contratacionModel::where('ACTIVO', 1)->get();
 
         foreach ($tabla as $value) {
-            
-         
-        $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
-            // $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-        
+            // Consulta del contrato más reciente del colaborador
+            $contrato = DB::table('contratos_anexos_contratacion')
+                ->where('CURP', $value->CURP)
+                ->orderByDesc('ID_CONTRATOS_ANEXOS') // suponiendo que el ID más alto es el más nuevo
+                ->first();
+
+            if ($contrato) {
+                // Buscar renovaciones del contrato
+                $renovacion = DB::table('renovacion_contrato')
+                    ->where('CONTRATO_ID', $contrato->ID_CONTRATOS_ANEXOS)
+                    ->orderByDesc('FECHAF_RENOVACION')
+                    ->first();
+
+                // Si hay renovación, usamos esas fechas; si no, usamos las del contrato base
+                $fechaInicio = $renovacion ? $renovacion->FECHAI_RENOVACION : $contrato->FECHAI_CONTRATO;
+                $fechaFin = $renovacion ? $renovacion->FECHAF_RENOVACION : $contrato->VIGENCIA_CONTRATO;
+            } else {
+                $fechaInicio = null;
+                $fechaFin = null;
+            }
+
+            // Calcular estado visual del contrato
+            if ($fechaInicio && $fechaFin) {
+                $inicio = new \DateTime($fechaInicio);
+                $fin = new \DateTime($fechaFin);
+                $hoy = new \DateTime();
+
+                $totalDias = $inicio->diff($fin)->days;
+                $diasRestantes = ($fin >= $hoy) ? $hoy->diff($fin)->days : -$hoy->diff($fin)->days;
+
+                // Umbrales basados en porcentaje de días restantes
+                $umbralVerde = $totalDias * 0.60;
+                $umbralAmarillo = $totalDias * 0.30;
+
+                if ($diasRestantes <= 0) {
+                    $estado_dias = "<span style='color: red;'>(Terminado)</span>";
+                } elseif ($diasRestantes <= $umbralAmarillo) {
+                    $estado_dias = "<span style='color: red;'>($diasRestantes días restantes)</span>";
+                } elseif ($diasRestantes <= $umbralVerde) {
+                    $estado_dias = "<span style='color: orange;'>($diasRestantes días restantes)</span>";
+                } else {
+                    $estado_dias = "<span style='color: green;'>($diasRestantes días restantes)</span>";
+                }
+
+                $value->ESTATUS_CONTRATO = "$fechaInicio<br>$fechaFin<br>$estado_dias";
+            } else {
+                $value->ESTATUS_CONTRATO = "<span style='color: gray;'>(Sin contrato)</span>";
+            }
+
+            // Botones
+            $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
         }
-        
-        // Respuesta
+
         return response()->json([
             'data' => $tabla,
             'msj' => 'Información consultada correctamente'
         ]);
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
         return response()->json([
-            'msj' => 'Error ' . $e->getMessage(),
-            'data' => 0
+            'msj' => 'Error: ' . $e->getMessage(),
+            'data' => []
         ]);
     }
 }
-    
+
+
+
 public function Tablacontratacion1()
 {
     try {

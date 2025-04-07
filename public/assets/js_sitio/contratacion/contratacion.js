@@ -333,32 +333,31 @@ var Tablacontratacion = $("#Tablacontratacion").DataTable({
     },
     order: [[0, 'asc']],
     columns: [
-        { 
+        {
             data: null,
-            render: function(data, type, row, meta) {
-                return meta.row + 1; 
+            render: function (data, type, row, meta) {
+                return meta.row + 1;
             }
         },
         {
-            data: null,  render: function (data, type, row)
-                {
+            data: null,
+            render: function (data, type, row) {
                 return row.NOMBRE_COLABORADOR + ' ' + row.PRIMER_APELLIDO + ' ' + row.SEGUNDO_APELLIDO;
             }
-        }
-        ,
+        },
         { data: 'CURP' },
         { data: 'NUMERO_EMPLEADO' },
-
+        { data: 'ESTATUS_CONTRATO' }, // NUEVA COLUMNA
         { data: 'BTN_EDITAR' }
-
     ],
+    
     columnDefs: [
         { targets: 0, title: '#', className: 'all text-center' },
         { targets: 1, title: 'Nombre del colaborador', className: 'all text-center nombre-column' },
         { targets: 2, title: 'CURP', className: 'all text-center' },
         { targets: 3, title: 'No. empleado', className: 'all text-center' },
-        { targets: 4, title: 'Mostrar', className: 'all text-center' },
-
+        { targets: 4, title: 'Estatus del contrato', className: 'all text-center' }, // NUEVO TÍTULO
+        { targets: 5, title: 'Mostrar', className: 'all text-center' }
     ]
 });
 
@@ -5410,9 +5409,16 @@ function cargarTablarequisicion() {
         },
 
         { data: 'BTN_EDITAR' },
-        { data: 'BTN_DOCUMENTO' }
-
-        
+        {
+            data: 'BTN_DOCUMENTO',
+            render: function(data, type, row) {
+                if (row.ANTES_DE1 === 1) {
+                    return data; // Aquí se muestra el botón (ya está en el campo BTN_DOCUMENTO)
+                } else {
+                    return 'NA'; // Se muestra 'NA' si ANTES_DE1 no es 1
+                }
+            }
+        }        
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
