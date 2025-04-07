@@ -988,6 +988,7 @@
                             <option value="10">Dos (2) cartas de recomendación</option>
                             <option value="11">Contrato o caratula del estado de cuenta </option>
                             <option value="12">Constancia de situación fiscal</option>
+                            <option value="14">Visa</option>
                             <option value="13">Otros</option>
                         </select>
                     </div>
@@ -997,6 +998,31 @@
                         <input type="text" class="form-control" id="NOMBRE_DOCUMENTO" name="NOMBRE_DOCUMENTO" readonly required>
                     </div>
 
+                    <div id="FECHAS_SOPORTEDOCUMENTOS" style="display: none">
+
+                  
+                        <div class="row  mb-3">
+                            <div class="col-6">
+                                <label>Fecha Inicio *</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_DOCUMENTOSOPORTE" name="FECHAI_DOCUMENTOSOPORTE" required>
+                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label>Fecha Fin *</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_DOCUMENTOSOPORTE" name="FECHAF_DOCUMENTOSOPORTE">
+                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
 
                     <div class="mb-3">
                         <label>Subir documento</label>

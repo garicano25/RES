@@ -1466,15 +1466,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function obtenerDocumentosOficiales(data) {
     let row = data.data().DOCUMENTOS_JSON;
-    var documentos = JSON.parse(row);
+    let documentos = JSON.parse(row);
     let contadorDocumentos = 1;
 
     $.each(documentos, function (index, contacto) {
-        var tipo = contacto.TIPO_DOCUMENTO_IDENTIFICACION;
-        var emision = contacto.EMISION_DOCUMENTO;
-        var vigencia = contacto.VIGENCIA_DOCUMENTO;
-        var numero = contacto.NUMERO_DOCUMENTO;
-        var expedido = contacto.EXPEDIDO_DOCUMENTO;
+        let tipo = contacto.TIPO_DOCUMENTO_IDENTIFICACION;
+        let emision = contacto.EMISION_DOCUMENTO;
+        let vigencia = contacto.VIGENCIA_DOCUMENTO;
+        let numero = contacto.NUMERO_DOCUMENTO;
+        let expedido = contacto.EXPEDIDO_DOCUMENTO;
 
         const hoy = new Date();
         const fechaEmision = new Date(emision);
@@ -1482,18 +1482,26 @@ function obtenerDocumentosOficiales(data) {
 
         const diasTotal = Math.ceil((fechaVigencia - fechaEmision) / (1000 * 60 * 60 * 24));
         const diasRestantes = Math.ceil((fechaVigencia - hoy) / (1000 * 60 * 60 * 24));
-        const porcentajeRestante = (diasRestantes / diasTotal) * 100;
 
+        let porcentajeRestante = (diasRestantes / diasTotal) * 100;
         let colorClase = "estado-verde";
-        if (porcentajeRestante < 30) {
+        let mensajeTooltip = "";
+
+        if (diasRestantes <= 0) {
             colorClase = "estado-rojo";
-        } else if (porcentajeRestante < 40) {
-            colorClase = "estado-amarillo";
+            mensajeTooltip = `Venció hace ${Math.abs(diasRestantes)} días`;
+        } else {
+            if (porcentajeRestante <= 20) {
+                colorClase = "estado-rojo";
+            } else if (porcentajeRestante <= 30) {
+                colorClase = "estado-amarillo";
+            }
+            mensajeTooltip = `Faltan ${diasRestantes} días para que venza`;
         }
 
         const divDocumentoOfi = document.createElement('div');
         divDocumentoOfi.classList.add('row', 'generardocumento', 'm-3', 'p-3', 'rounded', colorClase);
-        divDocumentoOfi.setAttribute('title', `Faltan ${diasRestantes} días para que venza`);
+        divDocumentoOfi.setAttribute('title', mensajeTooltip);
 
         divDocumentoOfi.innerHTML = `
             <div class="col-lg-12 col-sm-1">
@@ -1560,12 +1568,49 @@ function obtenerDocumentosOficiales(data) {
 
 
 
+
+// function cargarBajasColaborador() {
+//     const container = document.getElementById('BAJAS_COLABORADOR');
+    
+//     container.innerHTML = `
+//         <h5>Historial del colaborador</h5>
+//     `;
+
+//     fetch(`/obtenerbajasalta`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+//         },
+//         body: JSON.stringify({ curp: curpSeleccionada }) 
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         // Crear la tabla
+//         let tabla = '<table class="table table-bordered">';
+//         tabla += '<thead><tr><th>Tipo</th><th>Fecha</th></tr></thead>';
+//         tabla += '<tbody>';
+
+//         data.forEach(registro => {
+//             tabla += `<tr><td>${registro.tipo}</td><td>${registro.fecha}</td></tr>`;
+//         });
+
+//         tabla += '</tbody></table>';
+
+//         // Agregar la tabla al contenedor
+//         container.innerHTML += tabla;
+//     })
+//     .catch(error => {
+//         console.error('Error al obtener las bajas del colaborador:', error);
+//     });
+// }
+
+
 function cargarBajasColaborador() {
     const container = document.getElementById('BAJAS_COLABORADOR');
     
-    container.innerHTML = `
-        <h5>Historial del colaborador</h5>
-    `;
+    // Limpiar y agregar título
+    container.innerHTML = `<h5>Historial del colaborador</h5>`;
 
     fetch(`/obtenerbajasalta`, {
         method: 'POST',
@@ -1577,18 +1622,34 @@ function cargarBajasColaborador() {
     })
     .then(response => response.json())
     .then(data => {
-        // Crear la tabla
+        // Crear tabla
         let tabla = '<table class="table table-bordered">';
-        tabla += '<thead><tr><th>Tipo</th><th>Fecha</th></tr></thead>';
-        tabla += '<tbody>';
+        tabla += `
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Fecha inicio</th>
+                    <th>Fecha fin / Hoy</th>
+                    <th>Días transcurridos</th>
+                </tr>
+            </thead>
+            <tbody>
+        `;
 
         data.forEach(registro => {
-            tabla += `<tr><td>${registro.tipo}</td><td>${registro.fecha}</td></tr>`;
+            tabla += `
+                <tr>
+                    <td>${registro.tipo}</td>
+                    <td>${registro.fecha}</td>
+                    <td>${registro.fecha_fin}</td>
+                    <td>${registro.dias_transcurridos}</td>
+                </tr>
+            `;
         });
 
         tabla += '</tbody></table>';
 
-        // Agregar la tabla al contenedor
+        // Insertar tabla en el contenedor
         container.innerHTML += tabla;
     })
     .catch(error => {
@@ -1758,6 +1819,59 @@ $("#guardarDOCUMENTOSOPORTE").click(function (e) {
     
 });
 
+// function cargarTablaDocumentosSoporte() {
+//     if ($.fn.DataTable.isDataTable('#Tabladocumentosoporte')) {
+//         Tabladocumentosoporte.clear().destroy();
+//     }
+
+//     Tabladocumentosoporte = $("#Tabladocumentosoporte").DataTable({
+//         language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+//         lengthChange: true,
+//         lengthMenu: [
+//             [10, 25, 50, -1],
+//             [10, 25, 50, 'All']
+//         ],
+//         info: false,
+//         paging: true,
+//         searching: true,
+//         filtering: true,
+//         scrollY: '65vh',
+//         scrollCollapse: true,
+//         responsive: true,
+//         ajax: {
+//             dataType: 'json',
+//             data: { curp: curpSeleccionada }, 
+//             method: 'GET',
+//             cache: false,
+//             url: '/Tabladocumentosoporte',  
+//             beforeSend: function () {
+//                 $('#loadingIcon').css('display', 'inline-block');
+//             },
+//             complete: function () {
+//                 $('#loadingIcon').css('display', 'none');
+//                 Tabladocumentosoporte.columns.adjust().draw(); 
+//             },
+//             error: function (jqXHR, textStatus, errorThrown) {
+//                 $('#loadingIcon').css('display', 'none');
+//                 alertErrorAJAX(jqXHR, textStatus, errorThrown);
+//             },
+//             dataSrc: 'data'
+//         },
+//         columns: [
+//             { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+//             { data: 'NOMBRE_DOCUMENTO', className: 'text-center' },  
+//             { data: 'BTN_DOCUMENTO' }, 
+//             { data: 'BTN_EDITAR' },
+//         ],
+//         columnDefs: [
+//             { targets: 0, title: '#', className: 'all text-center' },
+//             { targets: 1, title: 'Nombre del documento', className: 'all text-center' },  
+//             { targets: 2, title: 'Documento de soporte', className: 'all text-center' },  
+//             { targets: 3, title: 'Editar', className: 'all text-center' },  
+//         ]
+//     });
+// }
+
 function cargarTablaDocumentosSoporte() {
     if ($.fn.DataTable.isDataTable('#Tabladocumentosoporte')) {
         Tabladocumentosoporte.clear().destroy();
@@ -1800,16 +1914,71 @@ function cargarTablaDocumentosSoporte() {
             { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
             { data: 'NOMBRE_DOCUMENTO', className: 'text-center' },  
             { data: 'BTN_DOCUMENTO' }, 
-            { data: 'BTN_EDITAR' },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    const inicioRaw = row.FECHAI_DOCUMENTOSOPORTE;
+                    const finRaw = row.FECHAF_DOCUMENTOSOPORTE;
+            
+                    // Validar que haya fechas válidas
+                    if (!inicioRaw || !finRaw) {
+                        return `
+                            <div class="text-center">
+                                <div><strong></strong> N/A</div>
+                            </div>
+                        `;
+                    }
+            
+                    const inicio = new Date(inicioRaw);
+                    const fin = new Date(finRaw);
+                    const hoy = new Date();
+            
+                    const totalDias = Math.ceil((fin - inicio) / (1000 * 60 * 60 * 24));
+                    const diasRestantes = Math.ceil((fin - hoy) / (1000 * 60 * 60 * 24));
+            
+                    // Definimos los umbrales como porcentaje de días restantes
+                    const umbralVerde = totalDias * 0.60;     // VERDE si quedan más del 60%
+                    const umbralAmarillo = totalDias * 0.30;  // AMARILLO si quedan entre 30 y 60%
+            
+                    let colorTexto = 'green';
+                    let mensaje = `(${diasRestantes} días restantes)`;
+            
+                    if (diasRestantes <= 0) {
+                        colorTexto = 'red';
+                        mensaje = '(Terminado)';
+                    } else if (diasRestantes <= umbralAmarillo) {
+                        colorTexto = 'red';
+                    } else if (diasRestantes <= umbralVerde) {
+                        colorTexto = 'orange';
+                    } else {
+                        colorTexto = 'green';
+                    }
+            
+                    return `
+                        <div class="text-center">
+                            <div><strong></strong> ${inicioRaw}</div>
+                            <div><strong></strong> ${finRaw}</div>
+                            <span style="color: ${colorTexto};">${mensaje}</span>
+                        </div>
+                    `;
+                },
+                className: 'text-center'
+            },
+            
+            
+            
+            { data: 'BTN_EDITAR' }
         ],
         columnDefs: [
             { targets: 0, title: '#', className: 'all text-center' },
             { targets: 1, title: 'Nombre del documento', className: 'all text-center' },  
             { targets: 2, title: 'Documento de soporte', className: 'all text-center' },  
-            { targets: 3, title: 'Editar', className: 'all text-center' },  
+            { targets: 3, title: 'Fecha inicio/fin - Estatus', className: 'all text-center' },  
+            { targets: 4, title: 'Editar', className: 'all text-center' }
         ]
     });
 }
+
 
 $('#Tabladocumentosoporte').on('click', '.ver-archivo-documentosoporte', function () {
     var tr = $(this).closest('tr');
@@ -1827,6 +1996,28 @@ $('#Tabladocumentosoporte').on('click', '.ver-archivo-documentosoporte', functio
     abrirModal(url, nombreDocumentoSoporte);
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const selectTipoDocumento = document.getElementById('TIPO_DOCUMENTO');
+    const divFechasSoporte = document.getElementById('FECHAS_SOPORTEDOCUMENTOS');
+
+    // Aquí se listan los valores que deben mostrar el div
+    const valoresPermitidos = ['1', '2', '3', '9', '12', '14'];
+
+    // Escuchamos cambios en el <select>
+    selectTipoDocumento.addEventListener('change', function () {
+        const valorSeleccionado = this.value;
+
+        if (valoresPermitidos.includes(valorSeleccionado)) {
+            divFechasSoporte.style.display = 'block';
+        } else {
+            divFechasSoporte.style.display = 'none';
+        }
+    });
+});
+
+
+
+
 const Modaldocumentosoporte = document.getElementById('miModal_DOCUMENTOS_SOPORTE')
 Modaldocumentosoporte.addEventListener('hidden.bs.modal', event => {
     
@@ -1843,6 +2034,9 @@ Modaldocumentosoporte.addEventListener('hidden.bs.modal', event => {
 
     document.getElementById('DOCUMENTO_ERROR').style.display = 'none';
 
+    document.getElementById('FECHAS_SOPORTEDOCUMENTOS').style.display = 'none';
+
+
 })
 
 $('#Tabladocumentosoporte').on('click', 'td>button.EDITAR', function () {
@@ -1857,6 +2051,17 @@ $('#Tabladocumentosoporte').on('click', 'td>button.EDITAR', function () {
 
     $('#TIPO_DOCUMENTO').prop('disabled', true); 
     $('#NOMBRE_DOCUMENTO').prop('readonly', true); 
+
+
+     // Mostrar el div solo si el TIPO_DOCUMENTO está en el listado
+     const mostrarDivTipos = ['1', '2', '3', '9', '12', '14'];
+     const tipoSeleccionado = String(row.data().TIPO_DOCUMENTO); // asegurar que es string
+ 
+     if (mostrarDivTipos.includes(tipoSeleccionado)) {
+         document.getElementById('FECHAS_SOPORTEDOCUMENTOS').style.display = 'block';
+     } else {
+         document.getElementById('FECHAS_SOPORTEDOCUMENTOS').style.display = 'none';
+     }
 });
 
 function cargarDocumentosGuardados() {
@@ -5205,6 +5410,8 @@ function cargarTablarequisicion() {
         },
 
         { data: 'BTN_EDITAR' },
+        { data: 'BTN_DOCUMENTO' }
+
         
     ],
     columnDefs: [
@@ -5215,6 +5422,8 @@ function cargarTablarequisicion() {
         { targets: 4, title: 'Motivo', className: 'all text-center' },
         { targets: 5, title: 'Fecha de creación', className: 'all text-center' },
         { targets: 6, title: 'Editar', className: 'all text-center' },
+        { targets: 7, title: 'Documento', className: 'all text-center' },
+
 
     ]
     });
@@ -5338,7 +5547,7 @@ $('#SELECCIONAR_CATEGORIA_RP').on('change', function () {
 
 
 
-$('#Tablarequisicioncontratacion').on('click', '.ver-archivo-requerimientocontratacion', function () {
+$('#Tablarequisicioncontratacion').on('click', '.ver-archivo-requerisicioncontratacion', function () {
     var tr = $(this).closest('tr');
     var row = Tablarequisicioncontratacion.row(tr);
     var id = $(this).data('id');

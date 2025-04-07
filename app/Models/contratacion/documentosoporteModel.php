@@ -15,6 +15,8 @@ class documentosoporteModel extends Model
         'TIPO_DOCUMENTO',
         'NOMBRE_DOCUMENTO',
         'DOCUMENTO_SOPORTE',
+        'FECHAI_DOCUMENTOSOPORTE',
+        'FECHAF_DOCUMENTOSOPORTE',
         'ACTIVO'
     ];
 }

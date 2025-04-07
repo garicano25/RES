@@ -258,55 +258,139 @@ public function mostrarfotocolaborador($colaborador_id)
 }
     
 
+// public function obtenerbajasalta(Request $request) {
+//     $curp = $request->input('curp');
+
+//     // Validar que la CURP esté presente
+//     if (!$curp) {
+//         return response()->json(['error' => 'CURP no proporcionada.'], 400);
+//     }
+
+//     // Obtener las altas
+//     $altas = DB::table('formulario_contratacion')
+//         ->select('FECHA_INGRESO as fecha')
+//         ->where('CURP', $curp)
+//         ->get();
+
+//     // Obtener las bajas
+//     $bajas = DB::table('formulario_desvinculacion')
+//         ->select('FECHA_BAJA as fecha')
+//         ->where('CURP', $curp)
+//         ->get();
+
+//     // Obtener los reingresos
+//     $reingresos = DB::table('reingreso_contratacion')
+//         ->select('FECHA_REINGRESO as fecha')
+//         ->where('CURP', $curp)
+//         ->get();
+
+//     // Combinar y etiquetar resultados
+//     $resultados = [];
+
+//     foreach ($altas as $alta) {
+//         $resultados[] = ['tipo' => 'ALTA', 'fecha' => $alta->fecha];
+//     }
+
+//     foreach ($bajas as $baja) {
+//         $resultados[] = ['tipo' => 'BAJA', 'fecha' => $baja->fecha];
+//     }
+
+//     foreach ($reingresos as $reingreso) {
+//         $resultados[] = ['tipo' => 'REINGRESO', 'fecha' => $reingreso->fecha];
+//     }
+
+//     // Ordenar por fecha
+//     usort($resultados, function($a, $b) {
+//         return strtotime($a['fecha']) - strtotime($b['fecha']);
+//     });
+
+//     return response()->json($resultados);
+// }
+
+
+
 public function obtenerbajasalta(Request $request) {
     $curp = $request->input('curp');
 
-    // Validar que la CURP esté presente
     if (!$curp) {
         return response()->json(['error' => 'CURP no proporcionada.'], 400);
     }
 
-    // Obtener las altas
     $altas = DB::table('formulario_contratacion')
         ->select('FECHA_INGRESO as fecha')
         ->where('CURP', $curp)
         ->get();
 
-    // Obtener las bajas
     $bajas = DB::table('formulario_desvinculacion')
         ->select('FECHA_BAJA as fecha')
         ->where('CURP', $curp)
         ->get();
 
-    // Obtener los reingresos
     $reingresos = DB::table('reingreso_contratacion')
         ->select('FECHA_REINGRESO as fecha')
         ->where('CURP', $curp)
         ->get();
 
-    // Combinar y etiquetar resultados
-    $resultados = [];
+    $eventos = [];
 
-    foreach ($altas as $alta) {
-        $resultados[] = ['tipo' => 'ALTA', 'fecha' => $alta->fecha];
+    foreach ($altas as $a) {
+        $eventos[] = ['tipo' => 'ALTA', 'fecha' => $a->fecha];
     }
 
-    foreach ($bajas as $baja) {
-        $resultados[] = ['tipo' => 'BAJA', 'fecha' => $baja->fecha];
+    foreach ($bajas as $b) {
+        $eventos[] = ['tipo' => 'BAJA', 'fecha' => $b->fecha];
     }
 
-    foreach ($reingresos as $reingreso) {
-        $resultados[] = ['tipo' => 'REINGRESO', 'fecha' => $reingreso->fecha];
+    foreach ($reingresos as $r) {
+        $eventos[] = ['tipo' => 'REINGRESO', 'fecha' => $r->fecha];
     }
 
-    // Ordenar por fecha
-    usort($resultados, function($a, $b) {
+    usort($eventos, function ($a, $b) {
         return strtotime($a['fecha']) - strtotime($b['fecha']);
     });
 
-    return response()->json($resultados);
-}
+    $hoy = date('Y-m-d');
+    $historial = [];
+    $fechaInicio = null;
+    $indiceInicio = null;
 
+    foreach ($eventos as $i => $evento) {
+        if ($evento['tipo'] === 'ALTA' || $evento['tipo'] === 'REINGRESO') {
+            $fechaInicio = $evento['fecha'];
+            $indiceInicio = count($historial);
+            $historial[] = [
+                'tipo' => $evento['tipo'],
+                'fecha' => $evento['fecha'],
+                'fecha_fin' => '-',
+                'dias_transcurridos' => '-'
+            ];
+        } elseif ($evento['tipo'] === 'BAJA' && $fechaInicio !== null) {
+            $fechaFin = $evento['fecha'];
+            $dias = (strtotime($fechaFin) - strtotime($fechaInicio)) / 86400;
+            // Agregar BAJA
+            $historial[] = [
+                'tipo' => 'BAJA',
+                'fecha' => $fechaFin,
+                'fecha_fin' => $fechaFin,
+                'dias_transcurridos' => floor($dias)
+            ];
+            // Actualizar ALTA o REINGRESO anterior con fecha_fin y días
+            $historial[$indiceInicio]['fecha_fin'] = $fechaFin;
+            $historial[$indiceInicio]['dias_transcurridos'] = floor($dias);
+            $fechaInicio = null;
+            $indiceInicio = null;
+        }
+    }
+
+    // Si aún está activo
+    if ($fechaInicio !== null && $indiceInicio !== null) {
+        $dias = (strtotime($hoy) - strtotime($fechaInicio)) / 86400;
+        $historial[$indiceInicio]['fecha_fin'] = $hoy;
+        $historial[$indiceInicio]['dias_transcurridos'] = floor($dias);
+    }
+
+    return response()->json($historial);
+}
 
 
 /////////////////////////////////////////// STEP 2 DOCUMENTOS DE SOPORTE //////////////////////////////////
@@ -906,10 +990,10 @@ public function obtenerdocumentosoportescontratos(Request $request)
             foreach ($tabla as $value) {
                 if ($value->ACTIVO == 0) {
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
-                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-requerimientocontratacion" data-id="' . $value->ID_CONTRATACION_REQUERIMIENTO . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-requerisicioncontratacion" data-id="' . $value->ID_CONTRATACION_REQUERIMIENTO . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
                 } else {
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-requerimientocontratacion" data-id="' . $value->ID_CONTRATACION_REQUERIMIENTO . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-requerisicioncontratacion" data-id="' . $value->ID_CONTRATACION_REQUERIMIENTO . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
                 }
             }
 
@@ -925,6 +1009,8 @@ public function obtenerdocumentosoportescontratos(Request $request)
         }
     }
 
+
+ 
 
     public function obtenerDatosCategoria(Request $request)
     {
