@@ -19,6 +19,9 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
     $('#BOTON_VISTO_BUENO').hide();
 
+    $('#guardarMR').show();
+
+
 
     
     document.querySelector('.materialesdiv').innerHTML = '';
@@ -381,11 +384,13 @@ $('#Tablamr tbody').on('click', 'td>button.EDITAR', function () {
         $('#VISTO_BUENO_JEFE').show();
          $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
          $('#BOTON_VISTO_BUENO').hide();
+         $('#guardarMR').hide();
 
       
     } else if (row.data().DAR_BUENO === "2") {
         $('#VISTO_BUENO_JEFE').show();
          $('#MOTIVO_RECHAZO_JEFE_DIV').show();
+         $('#guardarMR').show();
          
         
      } else {

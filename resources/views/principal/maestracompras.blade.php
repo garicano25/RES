@@ -156,8 +156,8 @@
                         <li class="nav-item dropdown" style="margin-left: 8px;">
                             <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
-                                <span class="d-lg-none">Requisición de Materiales</span>
-                                <span class="d-none d-lg-inline">Requisición de Materiales</span>
+                                <span class="d-lg-none">M.R para Vo.Bo y aprobación</span>
+                                <span class="d-none d-lg-inline">M.R para Vo.Bo y aprobación</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{url('/Requisición_materiales_líderes')}}">Requisiciones de materiales por dar visto bueno</a>
@@ -185,7 +185,7 @@
 
 
 
-        
+
 
 
 
@@ -361,7 +361,7 @@
 
 
     @if(request()->is('Requisición_Materiales'))
-    <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=4.1"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=4.2"></script>
     @endif
 
 
