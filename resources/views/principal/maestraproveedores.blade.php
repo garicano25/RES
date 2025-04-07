@@ -324,7 +324,7 @@
 
 
     @if(request()->is('Alta'))
-    <script src="/assets/js_sitio/proveedor/altaproveedores.js?v=1.0"></script>
+    <script src="/assets/js_sitio/proveedor/altaproveedores.js?v=1.1"></script>
     @endif
 
 

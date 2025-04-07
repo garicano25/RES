@@ -284,7 +284,7 @@
 
                     <div class="col-6 mb-3">
                         <label>Correo electrónico *</label>
-                        <input type="text" class="form-control" name="CORRE_TITULAR_ALTA" id="CORRE_TITULAR_ALTA" required>
+                        <input type="text" class="form-control" name="CORREO_DIRECTORIO" id="CORREO_DIRECTORIO" required readonly>
                     </div>
 
                     <div class="col-6 mb-3">
@@ -412,13 +412,18 @@
                     </div>
                     <div class="col-12 mb-3 d-flex align-items-center">
                         <div class="form-check me-3">
-                            <input class="form-check-input" type="radio" name="BENEFICIOS_PERSONA" id="SI_BENEFICIOS_PERSONA" value="SI">
+                            <input class="form-check-input" type="radio" name="BENEFICIOS_PERSONA" id="SI_BENEFICIOS_PERSONA" value="SI" onclick="politicamentexpuesto()">
                             <label class="form-check-label" for="SI_BENEFICIOS_PERSONA">Si</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="BENEFICIOS_PERSONA" id="NO_BENEFICIOS_PERSONA" value="NO">
                             <label class="form-check-label" for="NO_BENEFICIOS_PERSONA">No</label>
                         </div>
+                    </div>
+
+                    <div class="col-12 mb-3" id="PERSONA_EXPUESTA" style="display: none">
+                        <label class="form-label">Nombre de la persona políticamente expuesta:</label>
+                        <input type="text" class="form-control" name="NOMBRE_PERSONA" id="NOMBRE_PERSONA">
                     </div>
 
 

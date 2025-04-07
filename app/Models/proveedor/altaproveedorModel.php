@@ -36,7 +36,7 @@ class altaproveedorModel extends Model
         'CIUDAD_EXTRANJERO',
         'ESTADO_EXTRANJERO',
         'PAIS_EXTRANJERO',
-        'CORRE_TITULAR_ALTA',
+        'CORREO_DIRECTORIO',
         'TELEFONO_OFICINA_ALTA',
         'PAGINA_WEB_ALTA',
         'ACTIVIDAD_ECONOMICA',
@@ -50,6 +50,7 @@ class altaproveedorModel extends Model
         'DESCRIPCION_VINCULO',
         'SERVICIOS_PEMEX',
         'NUMERO_PROVEEDOR',
-        'BENEFICIOS_PERSONA'
+        'BENEFICIOS_PERSONA',
+        'NOMBRE_PERSONA'
     ];
 }

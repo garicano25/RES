@@ -57,7 +57,7 @@ class altaproveedorController extends Controller
                 'DEPARTAMENTO_EXTRANJERO' => $formulario->DEPARTAMENTO_EXTRANJERO,
                 'REPRESENTANTE_LEGAL_ALTA' => $formulario->REPRESENTANTE_LEGAL_ALTA,
                 'REGIMEN_ALTA' => $formulario->REGIMEN_ALTA,
-                'CORRE_TITULAR_ALTA' => $formulario->CORRE_TITULAR_ALTA,
+                'CORREO_DIRECTORIO' => $formulario->CORREO_DIRECTORIO,
                 'TELEFONO_OFICINA_ALTA' => $formulario->TELEFONO_OFICINA_ALTA,
                 'PAGINA_WEB_ALTA' => $formulario->PAGINA_WEB_ALTA,
                 'ACTIVIDAD_ECONOMICA' => $formulario->ACTIVIDAD_ECONOMICA,
@@ -70,7 +70,9 @@ class altaproveedorController extends Controller
                 'DESCRIPCION_VINCULO' => $formulario->DESCRIPCION_VINCULO,
                 'SERVICIOS_PEMEX' => $formulario->SERVICIOS_PEMEX,
                 'NUMERO_PROVEEDOR' => $formulario->NUMERO_PROVEEDOR,
-                'BENEFICIOS_PERSONA' => $formulario->BENEFICIOS_PERSONA
+                'BENEFICIOS_PERSONA' => $formulario->BENEFICIOS_PERSONA,
+                'NOMBRE_PERSONA' => $formulario->NOMBRE_PERSONA
+
             ]);
         }
 
@@ -103,6 +105,9 @@ class altaproveedorController extends Controller
             'CIUDAD_EXTRANJERO' => $proveedor->CIUDAD_EXTRANJERO,
             'ESTADO_EXTRANJERO' => $proveedor->ESTADO_EXTRANJERO,
             'PAIS_EXTRANJERO' => $proveedor->PAIS_EXTRANJERO,
+
+            'CORREO_DIRECTORIO' => $proveedor->CORREO_DIRECTORIO,
+
             'DEPARTAMENTO_EXTRANJERO' => $proveedor->DEPARTAMENTO_EXTRANJERO
         ]);
     }

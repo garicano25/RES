@@ -61,6 +61,15 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+function politicamentexpuesto() {
+    var otrosCheckbox1 = document.getElementById('SI_BENEFICIOS_PERSONA');
+    var actividadDiv1 = document.getElementById('PERSONA_EXPUESTA');
+    
+    // Verifica si "Otros" está seleccionado
+    actividadDiv1.style.display = otrosCheckbox1.checked ? 'block' : 'none';
+}
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
     var textarea = document.getElementById("TERMINOS_IMPORTANCIAS_ALTA");
@@ -228,7 +237,6 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("DOMICILIO_ERXTRANJERO").style.display = "none";
 
 
-            document.getElementById("CORRE_TITULAR_ALTA").value = data.CODIGO_POSTAL;
 
             document.getElementById("CODIGO_POSTAL").value = data.CODIGO_POSTAL;
             document.getElementById("TIPO_VIALIDAD_EMPRESA").value = data.TIPO_VIALIDAD_EMPRESA;
@@ -275,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         document.getElementById("REPRESENTANTE_LEGAL_ALTA").value = data.REPRESENTANTE_LEGAL_ALTA || '';
         document.getElementById("REGIMEN_ALTA").value = data.REGIMEN_ALTA || '';
-        document.getElementById("CORRE_TITULAR_ALTA").value = data.CORRE_TITULAR_ALTA || '';
+        document.getElementById("CORREO_DIRECTORIO").value = data.CORREO_DIRECTORIO || '';
         document.getElementById("TELEFONO_OFICINA_ALTA").value = data.TELEFONO_OFICINA_ALTA || '';
         document.getElementById("PAGINA_WEB_ALTA").value = data.PAGINA_WEB_ALTA || '';
         document.getElementById("CUAL_ACTVIDAD_ECONOMICA").value = data.CUAL_ACTVIDAD_ECONOMICA || '';
@@ -333,13 +341,28 @@ document.addEventListener("DOMContentLoaded", function() {
                         document.getElementById("DIV_NUMEROPROVEEDOR").style.display = "block";
                     }
                 }
-}
-
-
-        if (data.BENEFICIOS_PERSONA) {
-            let beneficios = document.querySelector(`input[name="BENEFICIOS_PERSONA"][value="${data.BENEFICIOS_PERSONA}"]`);
-            if (beneficios) beneficios.checked = true;
         }
+        
+
+
+         // POLITICAMENTE EXPUESTO
+            if (data.BENEFICIOS_PERSONA) {
+                let beneficios = document.querySelector(`input[name="BENEFICIOS_PERSONA"][value="${data.BENEFICIOS_PERSONA}"]`);
+                if (beneficios) {
+                    beneficios.checked = true;
+
+                    // Mostrar el div si es "SI"
+                    if (data.BENEFICIOS_PERSONA.toUpperCase() === "SI") {
+                        document.getElementById("PERSONA_EXPUESTA").style.display = "block";
+                    }
+                }
+            }
+
+        document.getElementById("NOMBRE_PERSONA").value = data.NOMBRE_PERSONA || '';
+        
+        
+
+
 
 
     })
