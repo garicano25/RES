@@ -30,20 +30,16 @@ class altadocumentosController extends Controller
 
     public function index(Request $request)
     {
-        // Obtener el RFC del proveedor autenticado
         $rfcProveedor = auth()->user()->RFC_PROVEEDOR;
 
-        // Consultar la tabla formulario_altaproveedor para obtener los valores de tipo de persona y tipo de proveedor
         $proveedor = altaproveedorModel::where('RFC_ALTA', $rfcProveedor)->first();
 
-        // Obtener tipo de proveedor (Nacional o Extranjero) y tipo de persona (Moral o Física)
         $tipoProveedor = $proveedor ? $proveedor->TIPO_PERSONA_ALTA : null;
         $tipoPersonaOpcion = $proveedor ? $proveedor->TIPO_PERSONA_OPCION : null;
 
-        // Filtrar documentos del catálogo según el tipo de proveedor (Nacional/Extranjero) y tipo de persona (Moral/Física)
         $documetoscatalogo = catalogodocumentoproveedorModel::where('TIPO_PERSONA', $tipoProveedor)
-            ->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)  // Filtrar por el tipo de persona (Moral/Física)
-            ->where('ACTIVO', 1) // Asegurarse que el documento esté activo
+            ->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)  
+            ->where('ACTIVO', 1) 
             ->get();
 
         // Pasar los datos a la vista
@@ -134,7 +130,7 @@ class altadocumentosController extends Controller
     // }
 
 
-    public function mostrardocumento($id)
+    public function mostrardocumentosoporteproveedor($id)
     {
         $archivo = altadocumentosModel::findOrFail($id)->DOCUMENTO_SOPORTE;
         return Storage::response($archivo);

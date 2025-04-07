@@ -389,13 +389,14 @@ $('#Tablalistaproveedores tbody').on('click', 'td>button.EDITAR', function () {
     rfcSeleccionada = rfc;
 
 
+    $("#TIPO_PERSONA_OPCION").val(row.data().TIPO_PERSONA_OPCION);
 
     $("#TIPO_PERSONA_ALTA").val(row.data().TIPO_PERSONA_ALTA);
     $("#RAZON_SOCIAL_ALTA").val(row.data().RAZON_SOCIAL_ALTA);
     $("#RFC_ALTA").val(row.data().RFC_ALTA);
     $("#REPRESENTANTE_LEGAL_ALTA").val(row.data().REPRESENTANTE_LEGAL_ALTA || '');
     $("#REGIMEN_ALTA").val(row.data().REGIMEN_ALTA || '');
-    $("#CORRE_TITULAR_ALTA").val(row.data().CORRE_TITULAR_ALTA || '');
+    $("#CORREO_DIRECTORIO").val(row.data().CORREO_DIRECTORIO || '');
     $("#TELEFONO_OFICINA_ALTA").val(row.data().TELEFONO_OFICINA_ALTA || '');
     $("#PAGINA_WEB_ALTA").val(row.data().PAGINA_WEB_ALTA || '');
     $("#CUAL_ACTVIDAD_ECONOMICA").val(row.data().CUAL_ACTVIDAD_ECONOMICA || '');
@@ -1918,9 +1919,9 @@ function cargarTablasoportes() {
             }
         },
         { data: 'NOMBRE_DOCUMENTO' },
-        { data: 'BTN_DOCUMENTO' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
+        { data: 'BTN_DOCUMENTO' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
@@ -1933,6 +1934,26 @@ function cargarTablasoportes() {
     ]
     });
 }
+
+
+$('#Tabladocumentosoporteproveedores').on('click', '.ver-archivo-documentosoporte', function () {
+    var tr = $(this).closest('tr');
+    var row = Tabladocumentosoporteproveedores.row(tr);
+    var id = $(this).data('id');
+
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+
+    var nombreDocumentoSoporte = row.data().NOMBRE_DOCUMENTO;
+    var url = '/mostrardocumentosoporteproveedor/' + id;
+    
+    abrirModal(url, nombreDocumentoSoporte);
+});
+
+
+
 
 
 

@@ -178,17 +178,23 @@ var Tabladocumentosproveedores = $("#Tabladocumentosproveedores").DataTable({
 
 
 
-
-
 $('#Tabladocumentosproveedores').on('click', '.ver-archivo-documentosoporte', function () {
+    var tr = $(this).closest('tr');
+    var row = Tabladocumentosproveedores.row(tr);
     var id = $(this).data('id');
+
     if (!id) {
-        alert('ARCHIVO NO ENCONTRADO');
+        alert('ARCHIVO NO ENCONTRADO.');
         return;
     }
-    var url = '/mostrardocumento/' + id;
-    abrirModal(url, 'Documento soporte');
+
+    var nombreDocumentoSoporte = row.data().NOMBRE_DOCUMENTO;
+    var url = '/mostrardocumentosoporteproveedor/' + id;
+    
+    abrirModal(url, nombreDocumentoSoporte);
 });
+
+
 
 
 
