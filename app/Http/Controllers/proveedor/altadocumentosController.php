@@ -23,20 +23,31 @@ use App\Models\proveedor\altaproveedorModel;
 class altadocumentosController extends Controller
 {
 
-    public function index()
+
+
+
+
+
+    public function index(Request $request)
     {
+        // Obtener el RFC del proveedor autenticado
         $rfcProveedor = auth()->user()->RFC_PROVEEDOR;
 
+        // Consultar la tabla formulario_altaproveedor para obtener los valores de tipo de persona y tipo de proveedor
         $proveedor = altaproveedorModel::where('RFC_ALTA', $rfcProveedor)->first();
 
-        $tipoPersona = $proveedor ? $proveedor->TIPO_PERSONA_ALTA : null;
+        // Obtener tipo de proveedor (Nacional o Extranjero) y tipo de persona (Moral o Física)
+        $tipoProveedor = $proveedor ? $proveedor->TIPO_PERSONA_ALTA : null;
+        $tipoPersonaOpcion = $proveedor ? $proveedor->TIPO_PERSONA_OPCION : null;
 
-        $documetoscatalogo = catalogodocumentoproveedorModel::where('TIPO_PERSONA', $tipoPersona)
-            ->where('ACTIVO', 1) 
+        // Filtrar documentos del catálogo según el tipo de proveedor (Nacional/Extranjero) y tipo de persona (Moral/Física)
+        $documetoscatalogo = catalogodocumentoproveedorModel::where('TIPO_PERSONA', $tipoProveedor)
+            ->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)  // Filtrar por el tipo de persona (Moral/Física)
+            ->where('ACTIVO', 1) // Asegurarse que el documento esté activo
             ->get();
 
         // Pasar los datos a la vista
-        return view('compras.proveedores.altadocumentosoporte', compact('documetoscatalogo', 'tipoPersona'));
+        return view('compras.proveedores.altadocumentosoporte', compact('documetoscatalogo', 'tipoProveedor', 'tipoPersonaOpcion'));
     }
 
 
