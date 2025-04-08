@@ -25,11 +25,17 @@ class catalagodocumentosproveedorController extends Controller
 
             foreach ($tabla as $value) {
 
+               
+
                 if ($value->TIPO_PERSONA == 1) {
-                    $value->TIPO_PERSONA_TEXTO= 'Nacional';
-                }  else {
+                    $value->TIPO_PERSONA_TEXTO = 'Nacional';
+                } elseif ($value->TIPO_PERSONA == 2) {
                     $value->TIPO_PERSONA_TEXTO = 'Extranjero';
+                } else {
+                    $value->TIPO_PERSONA_TEXTO = 'Nacional y extranjero';
                 }
+
+
 
 
 

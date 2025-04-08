@@ -37,6 +37,8 @@
                             <option value="" selected disabled>Seleccione una opción</option>
                             <option value="1">Nacional</option>
                             <option value="2">Extranjero</option>
+                            <option value="3">Nacional y extranjero</option>
+
                         </select>
                     </div>
 

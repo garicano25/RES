@@ -28,6 +28,24 @@ class altadocumentosController extends Controller
 
 
 
+    // public function index(Request $request)
+    // {
+    //     $rfcProveedor = auth()->user()->RFC_PROVEEDOR;
+
+    //     $proveedor = altaproveedorModel::where('RFC_ALTA', $rfcProveedor)->first();
+
+    //     $tipoProveedor = $proveedor ? $proveedor->TIPO_PERSONA_ALTA : null;
+    //     $tipoPersonaOpcion = $proveedor ? $proveedor->TIPO_PERSONA_OPCION : null;
+
+    //     $documetoscatalogo = catalogodocumentoproveedorModel::where('TIPO_PERSONA', $tipoProveedor)
+    //         ->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)  
+    //         ->where('ACTIVO', 1) 
+    //         ->get();
+
+    //     return view('compras.proveedores.altadocumentosoporte', compact('documetoscatalogo', 'tipoProveedor', 'tipoPersonaOpcion'));
+    // }
+
+
     public function index(Request $request)
     {
         $rfcProveedor = auth()->user()->RFC_PROVEEDOR;
@@ -37,12 +55,17 @@ class altadocumentosController extends Controller
         $tipoProveedor = $proveedor ? $proveedor->TIPO_PERSONA_ALTA : null;
         $tipoPersonaOpcion = $proveedor ? $proveedor->TIPO_PERSONA_OPCION : null;
 
-        $documetoscatalogo = catalogodocumentoproveedorModel::where('TIPO_PERSONA', $tipoProveedor)
-            ->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)  
-            ->where('ACTIVO', 1) 
+        $documetoscatalogo = catalogodocumentoproveedorModel::where('ACTIVO', 1)
+            ->where(function ($query) use ($tipoProveedor) {
+                $query->where('TIPO_PERSONA', $tipoProveedor)
+                    ->orWhere('TIPO_PERSONA', 3); // aplica a ambos
+            })
+            ->where(function ($query) use ($tipoPersonaOpcion) {
+                $query->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)
+                    ->orWhere('TIPO_PERSONA_OPCION', 3); // aplica a ambos
+            })
             ->get();
 
-        // Pasar los datos a la vista
         return view('compras.proveedores.altadocumentosoporte', compact('documetoscatalogo', 'tipoProveedor', 'tipoPersonaOpcion'));
     }
 
