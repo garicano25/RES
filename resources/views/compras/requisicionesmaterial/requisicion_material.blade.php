@@ -128,7 +128,7 @@
                                         <label for="OBSERVACIONES">Observaciones</label>
                                         <input type="text" class="form-control" id="OBSERVACIONES_MR" name="OBSERVACIONES_MR">
                                     </div>
-                                    
+
                                 </div>
                             </div>
 
@@ -151,7 +151,7 @@
 
 
                             <div class="col-12 mt-3" id="MOTIVO_RECHAZO_JEFE_DIV" style="display: none;">
-                                <label for="MOTIVO_RECHAZO_JEFE">Motivo de Rechazo</label>
+                                <label>Motivo del rechazo del jefe inmediato</label>
                                 <textarea class="form-control" id="MOTIVO_RECHAZO_JEFE" name="MOTIVO_RECHAZO_JEFE" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
                             </div>
 
@@ -170,11 +170,11 @@
                                     </button>
                                 </div>
                             </div>
-                            
-                            
-                            
+
+
+
                         </div>
-                        
+
                         <input type="hidden" id="DAR_BUENO" name="DAR_BUENO" value="0">
 
 
@@ -196,7 +196,7 @@
 
 
                             <div class="col-12 mt-3" id="motivo-rechazo-container" style="display: none;">
-                                <label for="MOTIVO_RECHAZO">Motivo de Rechazo</label>
+                                <label>Motivo del rechazo del que aprobo</label>
                                 <textarea class="form-control" id="MOTIVO_RECHAZO" name="MOTIVO_RECHAZO" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
                             </div>
 

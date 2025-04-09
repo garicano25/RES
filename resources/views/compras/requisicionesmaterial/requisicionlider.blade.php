@@ -153,7 +153,7 @@
 
 
                             <div class="col-12 mt-3" id="MOTIVO_RECHAZO_JEFE_DIV" style="display: none;">
-                                <label for="MOTIVO_RECHAZO_JEFE">Motivo de Rechazo</label>
+                                <label>Motivo del rechazo del jefe inmediato</label>
                                 <textarea class="form-control" id="MOTIVO_RECHAZO_JEFE" name="MOTIVO_RECHAZO_JEFE" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
                             </div>
 
@@ -163,30 +163,30 @@
 
                         <div id="BOTON_VISTO_BUENO" style="display: block;">
                             <div id=" solicitarVerificacionDiv" class="col-12 text-center mt-3" style="display: block;">
-                            <div class="col-md-6 mx-auto d-flex gap-2">
-                                <button type="button" id="SOLICITAR_VERIFICACION" class="btn btn-info w-100" onclick="darVistoBueno()">
-                                    Dar visto bueno
-                                </button>
-                                <button type="button" id="RECHAZAR_VERIFICACION" class="btn btn-danger w-100" onclick="rechazarVistoBueno()">
-                                    Rechazar
-                                </button>
+                                <div class="col-md-6 mx-auto d-flex gap-2">
+                                    <button type="button" id="SOLICITAR_VERIFICACION" class="btn btn-info w-100" onclick="darVistoBueno()">
+                                        Dar visto bueno
+                                    </button>
+                                    <button type="button" id="RECHAZAR_VERIFICACION" class="btn btn-danger w-100" onclick="rechazarVistoBueno()">
+                                        Rechazar
+                                    </button>
+                                </div>
                             </div>
+
+                            <input type="hidden" id="DAR_BUENO" name="DAR_BUENO" value="0">
+
+
                         </div>
-                        
-                        <input type="hidden" id="DAR_BUENO" name="DAR_BUENO" value="0">
+
+
 
 
                     </div>
 
 
-
-
-                </div>
-
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
             </form>
         </div>
     </div>
