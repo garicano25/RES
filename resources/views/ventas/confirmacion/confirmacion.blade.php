@@ -129,7 +129,7 @@
                                 <div class="row">
                                     <div class="col-6 mb-3">
                                         <label>Agregar evidencia</label>
-                                        <button id="botonVerificacion" id="botonVerificacion" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                                        <button id="botonagregarevidencia" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
                                             <i class="bi bi-plus-circle-fill"></i>
                                         </button>
                                     </div>
@@ -144,7 +144,7 @@
 
                         <div class="d-flex align-items-center mt-3">
                             <h5 class="me-2">Validar información</h5>
-                            <button id="btnVerificacion" type="button" class="btn btn-info btn-custom rounded-pill">
+                            <button id="btnVerificacion" type="button" class="btn btn-info btn-custom rounded-pill" disabled style="display: block;" disabled>
                                 <i class="bi bi-check"></i>
                             </button>
                         </div>
@@ -179,35 +179,51 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Lista de Verificación con Radios e Input alineados -->
                             <div class="col-12 mt-3">
-                                <h5 class="mb-2"><b>Verificación de Información</b></h5>
+                                <div class="d-flex align-items-center justify-content-center-mb-2">
+                                    <h5 class="mb-0"><b>Verificación de Información</b></h5> &nbsp;
+                                    <div class="d-flex gap-2">
+                                        <button type="button" class="btn btn-sm btn-outline-success" onclick="seleccionarTodos('Sí')">Marcar todos Sí</button>
+                                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="seleccionarTodos('No')">Marcar todos No</button>
+                                    </div>
+                                </div>
 
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-12 mt-3">
                                         <div class="row">
                                             @foreach($verificaciones as $verificacion)
                                             @php
                                             $inputId = 'motivo_' . $verificacion->ID_CATALOGO_VERIFICACION_CLIENTE;
                                             $radioName = 'verificacion_' . $verificacion->ID_CATALOGO_VERIFICACION_CLIENTE;
                                             @endphp
-                                            <div class="col-12 d-flex align-items-center gap-3 mb-2">
-                                                <label class="form-check-label" style="min-width: 150px;">{{ $verificacion->NOMBRE_VERIFICACION }}</label>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <input class="form-check-input" type="radio" name="{{ $radioName }}" value="Na" onclick="toggleInput('{{ $inputId }}', false)"> N/A
-                                                    <input class="form-check-input" type="radio" name="{{ $radioName }}" value="Sí" onclick="toggleInput('{{ $inputId }}', false)"> Sí
-                                                    <input class="form-check-input" type="radio" name="{{ $radioName }}" value="No" onclick="toggleInput('{{ $inputId }}', true)"> No
+                                            <div class="col-12 d-flex align-items-center mb-1 flex-wrap">
+                                                <div style="min-width: 250px;">
+                                                    <label class="form-label mb-0">{{ $verificacion->NOMBRE_VERIFICACION }}</label>
                                                 </div>
-                                                <input type="text" id="{{ $inputId }}" class="form-control d-none" placeholder="Motivo">
+                                                <div class="d-flex align-items-center gap-3 flex-wrap" style="flex: 1;">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="{{ $radioName }}" value="Na" onclick="toggleInput('{{ $inputId }}', false)">
+                                                        <label class="form-check-label">N/A</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="{{ $radioName }}" value="Sí" onclick="toggleInput('{{ $inputId }}', false)">
+                                                        <label class="form-check-label">Sí</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="{{ $radioName }}" value="No" onclick="toggleInput('{{ $inputId }}', true)">
+                                                        <label class="form-check-label">No</label>
+                                                    </div>
+                                                    <input type="text" id="{{ $inputId }}" class="form-control d-none" style="max-width: 970px;" placeholder="Motivo">
+                                                </div>
                                             </div>
                                             @endforeach
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
+
+
+
                         </div>
 
 
@@ -247,10 +263,6 @@
 
 
 
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/th
 
 
 

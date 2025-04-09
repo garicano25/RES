@@ -14,6 +14,9 @@ Modalconfirmacion.addEventListener('hidden.bs.modal', event => {
 
     document.getElementById('VERIFICACION_CLIENTE').style.display = 'none';
 
+    document.getElementById('btnVerificacion').disabled = true; 
+
+
     document.querySelectorAll('input[type=radio]').forEach(radio => {
         radio.checked = false; 
     });
@@ -87,6 +90,13 @@ $("#guardarCONFIRMACION").click(function (e) {
                     }, 
                     function (data) {
                         ID_FORMULARIO_CONFRIMACION = data.confirmacion.ID_FORMULARIO_CONFRIMACION;
+
+                        var ofertaUsada = $("#OFERTA_ID").val();
+                        if (ofertaUsada) {
+                            var selectize = $('#OFERTA_ID')[0].selectize;
+                            selectize.removeOption(ofertaUsada);
+                        }
+                        
                         alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
                         $('#miModal_CONFIRMACION').modal('hide');
                         document.getElementById('formularioCONFIRMACION').reset();
@@ -141,6 +151,29 @@ $("#guardarCONFIRMACION").click(function (e) {
 
 
 
+// $(document).ready(function () {
+//     var selectizeInstance = $('#OFERTA_ID').selectize({
+//         placeholder: 'Seleccione una oferta',
+//         allowEmptyOption: true,
+//         closeAfterSelect: true,
+//     });
+
+//     $("#NUEVA_CONFIRMACION").click(function (e) {
+//         e.preventDefault();
+
+//         $("#miModal_CONFIRMACION").modal("show");
+
+//         document.getElementById('formularioCONFIRMACION').reset();
+
+//             $(".verifiacionesdiv").empty();
+
+//         var selectize = selectizeInstance[0].selectize;
+//         selectize.clear();
+//         selectize.setValue("");
+//     });
+// });
+
+
 $(document).ready(function () {
     var selectizeInstance = $('#OFERTA_ID').selectize({
         placeholder: 'Seleccione una oferta',
@@ -148,22 +181,34 @@ $(document).ready(function () {
         closeAfterSelect: true,
     });
 
+    var selectize = selectizeInstance[0].selectize;
+
+    var idsOriginales = Object.keys(selectize.options);
+
+ 
+
+
     $("#NUEVA_CONFIRMACION").click(function (e) {
         e.preventDefault();
 
         $("#miModal_CONFIRMACION").modal("show");
-
-        // Resetear el formulario
         document.getElementById('formularioCONFIRMACION').reset();
+        $(".verifiacionesdiv").empty();
 
-            $(".verifiacionesdiv").empty();
 
-        // Resetear Selectize
-        var selectize = selectizeInstance[0].selectize;
+        Object.keys(selectize.options).forEach(function (id) {
+            if (!idsOriginales.includes(id)) {
+                selectize.removeOption(id);
+            }
+        });
+
         selectize.clear();
         selectize.setValue(""); 
+
+
     });
 });
+
 
 
 
@@ -273,11 +318,19 @@ $('#Tablaconfirmacion').on('click', '.ver-archivo-evidencia', function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    const botonVerificacion = document.getElementById('botonVerificacion');
+    const botonagregarevidencia = document.getElementById('botonagregarevidencia');
+    const btnVerificacion = document.getElementById('btnVerificacion');
 
-    botonVerificacion.addEventListener('click', function () {
+    btnVerificacion.disabled = true; // Inicia deshabilitado
+
+    botonagregarevidencia.addEventListener('click', function () {
         agregarevidencia();
     });
+
+    function actualizarEstadoBotonVerificacion() {
+        const evidencias = document.querySelectorAll('.generarverificacion');
+        btnVerificacion.disabled = evidencias.length === 0;
+    }
 
     function agregarevidencia() {
         const divVerificacion = document.createElement('div');
@@ -292,7 +345,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Subir Evidencia (PDF) *</label>
                         <div class="d-flex align-items-center">
-                            <input type="file" class="form-control me-2" name="DOCUMENTO_EVIDENCIA[]" accept=".pdf"  >
+                            <input type="file" class="form-control me-2" name="DOCUMENTO_EVIDENCIA[]" accept=".pdf">
                             <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
                                 <i class="bi bi-trash"></i>
                             </button>
@@ -314,14 +367,17 @@ document.addEventListener("DOMContentLoaded", function () {
         const botonEliminar = divVerificacion.querySelector('.botonEliminarVerificacion');
         botonEliminar.addEventListener('click', function () {
             contenedor.removeChild(divVerificacion);
+            actualizarEstadoBotonVerificacion();
         });
 
         const botonEliminarArchivo = divVerificacion.querySelector('.botonEliminarArchivo');
-        const inputArchivo = divVerificacion.querySelector('input[name="DOCUMENTO_EVIDENCIA"]');
+        const inputArchivo = divVerificacion.querySelector('input[type="file"]');
 
         botonEliminarArchivo.addEventListener('click', function () {
-            inputArchivo.value = ''; 
+            inputArchivo.value = '';
         });
+
+        actualizarEstadoBotonVerificacion(); // Se llama al final para activar el botón si aplica
     }
 });
 
@@ -421,7 +477,15 @@ function toggleInput(inputId, activar) {
     }
 }
 
-
+ function seleccionarTodos(valor) {
+        const radios = document.querySelectorAll(`input[type="radio"][value="${valor}"]`);
+        radios.forEach(radio => {
+            radio.checked = true;
+            const inputName = radio.name;
+            const id = 'motivo_' + inputName.split('_')[1];
+            toggleInput(id, valor === 'No');
+        });
+    }
 
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".botonEliminarArchivo").forEach(boton => {
@@ -463,11 +527,20 @@ $('#Tablaconfirmacion tbody').on('click', 'td>button.EDITAR', function () {
     $("#ESTADO_VERIFICACION").val(row.data().ESTADO_VERIFICACION);
 
 
-    var selectize = $('#OFERTA_ID')[0].selectize;
-    if (row.data().OFERTA_ID) {
-        selectize.setValue(row.data().OFERTA_ID);
+    document.getElementById('btnVerificacion').style.display = 'none';
+
+    
+   var selectize = $('#OFERTA_ID')[0].selectize;
+    var ofertaId = row.data().OFERTA_ID;
+    var noOferta = row.data().NO_OFERTA;
+
+    if (ofertaId) {
+        if (!selectize.options[ofertaId]) {
+            selectize.addOption({ value: ofertaId, text: noOferta });
+        }
+        selectize.setValue(ofertaId);
     } else {
-        selectize.clear(); 
+        selectize.clear();
     }
 
     let verificacionInfo = row.data().VERIFICACION_INFORMACION;
@@ -514,22 +587,31 @@ $(document).ready(function() {
         ID_FORMULARIO_CONFRIMACION = row.data().ID_FORMULARIO_CONFRIMACION;
         editarDatoTabla(row.data(), 'formularioCONFIRMACION', 'miModal_CONFIRMACION', 1);
         
- if (row.data().ESTADO_VERIFICACION == "1") {
+        if (row.data().ESTADO_VERIFICACION == "1") {
         document.getElementById('VERIFICACION_CLIENTE').style.display = 'block';
-    } else {
-        document.getElementById('VERIFICACION_CLIENTE').style.display = 'none';
-    }
+        } else {
+            document.getElementById('VERIFICACION_CLIENTE').style.display = 'none';
+        }
 
-    if (row.data().QUIEN_VALIDA) {
-        $("#QUIEN_VALIDA").val(row.data().QUIEN_VALIDA);
-    }
+        if (row.data().QUIEN_VALIDA) {
+            $("#QUIEN_VALIDA").val(row.data().QUIEN_VALIDA);
+        }
 
-    var selectize = $('#OFERTA_ID')[0].selectize;
-    if (row.data().OFERTA_ID) {
-        selectize.setValue(row.data().OFERTA_ID);
-    } else {
-        selectize.clear(); 
-    }
+    document.getElementById('btnVerificacion').style.display = 'none';
+
+
+        var selectize = $('#OFERTA_ID')[0].selectize;
+        var ofertaId = row.data().OFERTA_ID;
+        var noOferta = row.data().NO_OFERTA;
+
+        if (ofertaId) {
+            if (!selectize.options[ofertaId]) {
+                selectize.addOption({ value: ofertaId, text: noOferta });
+            }
+            selectize.setValue(ofertaId);
+        } else {
+            selectize.clear();
+        }
 
     let verificacionInfo = row.data().VERIFICACION_INFORMACION;
     if (verificacionInfo) {
@@ -583,3 +665,5 @@ $('#Tablaconfirmacion tbody').on('change', 'td>label>input.ELIMINAR', function (
 
     eliminarDatoTabla(data, [Tablaconfirmacion], 'confirmacionDelete');
 });
+
+

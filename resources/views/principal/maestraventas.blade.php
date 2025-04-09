@@ -323,13 +323,13 @@
 
 
     @if(request()->is('Ofertas'))
-    <script src="/assets/js_sitio/ofertas/ofertas.js?v=5.2"></script>
+    <script src="/assets/js_sitio/ofertas/ofertas.js?v=5.3"></script>
     @endif
 
 
 
     @if(request()->is('Confirmación'))
-    <script src="/assets/js_sitio/confirmacion/confirmacion.js?v=2.0"></script>
+    <script src="/assets/js_sitio/confirmacion/confirmacion.js?v=2.1"></script>
     @endif
 
 

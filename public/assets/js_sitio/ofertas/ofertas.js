@@ -323,32 +323,39 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
         },
           
         {
-            data: 'ESTATUS_OFERTA',
-            render: function (data, type, row) {
-                const expirado = estaExpirada(row.FECHA_OFERTA, row.DIAS_VALIDACION_OFERTA);
-                let estatus = data;
+    data: 'ESTATUS_OFERTA',
+    render: function (data, type, row) {
+        const expirado = estaExpirada(row.FECHA_OFERTA, row.DIAS_VALIDACION_OFERTA);
+        let estatus = data;
 
-                // Si está en Revisión y expiró => cambiar a Rechazada
-                if (estatus === 'Revisión' && expirado) {
-                    estatus = 'Rechazada';
-                }
+        if (estatus === 'Revisión' && expirado) {
+            estatus = 'Rechazada';
+        }
 
-                const colors = {
-                    'Aceptada': 'background-color: green; color: white;',
-                    'Revisión': 'background-color: orange; color: white;',
-                    'Rechazada': 'background-color: red; color: white;'
-                };
-                const isDisabled = (estatus === 'Aceptada' || estatus === 'Rechazada') ? 'disabled' : '';
+        const isDisabled = (estatus === 'Aceptada' || estatus === 'Rechazada') ? 'disabled' : '';
 
-                return `<select class="form-select ESTATUS_OFERTA" data-id="${row.ID_FORMULARIO_OFERTAS}" style="${colors[estatus] || ''}" ${isDisabled}>
-                    <option value="Aceptada" ${estatus === 'Aceptada' ? 'selected' : ''}>Aceptada</option>
-                    <option value="Revisión" ${estatus === 'Revisión' ? 'selected' : ''}>Revisión</option>
-                    <option value="Rechazada" ${estatus === 'Rechazada' ? 'selected' : ''}>Rechazada</option>
-                </select>`;
-            }
-        },
+        return `
+        <select class="form-select ESTATUS_OFERTA" data-id="${row.ID_FORMULARIO_OFERTAS}" ${isDisabled}
+            style="${estatus === 'Aceptada' ? 'background-color: green; color: white;' : 
+                    estatus === 'Revisión' ? 'background-color: orange; color: white;' :
+                    estatus === 'Rechazada' ? 'background-color: red; color: white;' : 
+                    'background-color: white; color: black;'}">
+            <option value="" ${!estatus ? 'selected' : ''} disabled style="background-color: white; color: black;">Seleccione una opción</option>
+            <option value="Aceptada" ${estatus === 'Aceptada' ? 'selected' : ''} style="background-color: green; color: white;">Aceptada</option>
+            <option value="Revisión" ${estatus === 'Revisión' ? 'selected' : ''} style="background-color: orange; color: white;">Revisión</option>
+            <option value="Rechazada" ${estatus === 'Rechazada' ? 'selected' : ''} style="background-color: red; color: white;">Rechazada</option>
+        </select>`;
+    }
+},
         { data: 'MOTIVO_REVISION_OFERTA' },
         { data: 'BTN_DOCUMENTO', className: 'text-center' },
+        {
+                data: 'BTN_TERMINOS',
+                className: 'text-center',
+                render: function (data, type, row) {
+                    return row.TERMINOS_DOCUMENTO ? data : 'NA';
+                }
+        },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
@@ -362,9 +369,10 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
         { targets: 5, title: 'Estatus de la oferta', className: 'text-center' },
         { targets: 6, title: 'Motivo de la revisión', className: 'text-center' },
         { targets: 7, title: 'Cotización', className: 'text-center' },
-        { targets: 8, title: 'Editar', className: 'text-center' },
-        { targets: 9, title: 'Visualizar', className: 'text-center' },
-        { targets: 10, title: 'Activo', className: 'text-center' }
+        { targets: 8, title: 'Términos y condiciones', className: 'text-center' },
+        { targets: 9, title: 'Editar', className: 'text-center' },
+        { targets: 10, title: 'Visualizar', className: 'text-center' },
+        { targets: 11, title: 'Activo', className: 'text-center' }
     ]
 });
 
@@ -395,8 +403,8 @@ $("#Tablaofertas tbody").on("click", ".ver-revisiones", function () {
                                         <th>Fecha</th>
                                         <th>Estatus</th>
                                          <th>Motivo de la revisión</th>
-                                        <th>Documento</th>
-                                        <th>Editar</th>
+                                        <th>Cotización</th>
+                                        <th>Visualizar</th>
                                     </tr>
                                 </thead>
                                 <tbody>`;
@@ -447,6 +455,21 @@ $('#Tablaofertas').on('click', '.ver-archivo-cotizacion', function () {
     abrirModal(url, nombreDocumento);
 });
 
+$('#Tablaofertas').on('click', '.ver-archivo-terminos', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablaofertas.row(tr);
+    var id = $(this).data('id');
+
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+
+    var nombreDocumento = 'Términos y condiciones';
+    var url = '/mostrarterminos/' + id;
+    
+    abrirModal(url, nombreDocumento);
+});
 
 
 
@@ -665,25 +688,39 @@ $(document).ready(function() {
       
 
 
-         ID_FORMULARIO_OFERTAS = row.data().ID_FORMULARIO_OFERTAS;
+           var rowData;
+    if (row.data()) {
+        rowData = row.data();
 
-    editarDatoTabla(row.data(), 'formularioOFERTAS', 'miModal_OFERTAS', 1);
+        document.getElementById('crearREVISION').style.display = 'none'; 
+        document.getElementById('guardarOFERTA').style.display = 'none'; 
+
+    } else {
+        rowData = JSON.parse($(this).attr('data-revision'));
+        document.getElementById('crearREVISION').style.display = 'none';
+         document.getElementById('guardarOFERTA').style.display = 'none';
+    }       
+
+
+    ID_FORMULARIO_OFERTAS = rowData.ID_FORMULARIO_OFERTAS;
+
+     editarDatoTabla(rowData, 'formularioOFERTAS', 'miModal_OFERTAS', 1);
 
     var selectize = $('#SOLICITUD_ID')[0].selectize;
-    selectize.clear();
+    selectize.clear(); 
 
-    var solicitudSeleccionado = row.data().SOLICITUD_ID;
+    var solicitudSeleccionado = rowData.SOLICITUD_ID;
 
     if (solicitudSeleccionado) {
         selectize.addOption({
             value: solicitudSeleccionado,
-            text: `${row.data().NO_SOLICITUD} (${row.data().NOMBRE_COMERCIAL_SOLICITUD})`
+            text: `${rowData.NO_SOLICITUD} (${rowData.NOMBRE_COMERCIAL_SOLICITUD})`
         });
         selectize.setValue(solicitudSeleccionado); 
     }
 
-    if (row.data().SOLICITUDES && row.data().SOLICITUDES.length > 0) {
-        row.data().SOLICITUDES.forEach(solicitud => {
+    if (rowData.SOLICITUDES && rowData.SOLICITUDES.length > 0) {
+        rowData.SOLICITUDES.forEach(solicitud => {
             if (solicitud.ID_FORMULARIO_SOLICITUDES !== solicitudSeleccionado) {
                 selectize.addOption({
                     value: solicitud.ID_FORMULARIO_SOLICITUDES,
@@ -696,11 +733,11 @@ $(document).ready(function() {
     selectize.refreshOptions(false); 
 
     $(".observacionesdiv").empty();
-    obtenerObservaciones(row);
+    obtenerObservaciones(rowData);
 
-    $('#miModal_OFERTAS .modal-title').html(row.data().NO_OFERTA);
+    $('#miModal_OFERTAS .modal-title').html(rowData.NO_OFERTA);
 
-    var estatus = row.data().ESTATUS_OFERTA;
+    var estatus = rowData.ESTATUS_OFERTA;
     if (estatus === 'Aceptada') {
         $('#ACEPTADA').show();
         $('#RECHAZO').hide();
@@ -710,8 +747,7 @@ $(document).ready(function() {
     } else {
         $('#ACEPTADA').hide();
         $('#RECHAZO').hide();
-        }
-        
+    }
 
         
     });
@@ -1015,18 +1051,15 @@ $(document).ready(function () {
 $("#crearREVISION").click(function (e) {
     e.preventDefault();
 
-    // Validar si el formulario está completo antes de continuar
     formularioValido = validarFormularioV1('formularioOFERTAS');
 
     if (formularioValido) {
-        // Mostrar el modal para ingresar el motivo de la revisión
         $("#modalMotivoRevision").modal("show");
     } else {
         Swal.fire("Error", "Por favor, complete todos los campos del formulario.", "error");
     }
 });
 
-// Cuando el usuario confirme el motivo en el modal
 $("#confirmarMotivoRevision").click(function () {
     let motivoRevision = $("#motivoRevisionInput").val().trim();
 
@@ -1038,16 +1071,16 @@ $("#confirmarMotivoRevision").click(function () {
     let csrfToken = $('meta[name="csrf-token"]').attr('content');
 
     $.ajax({
-        url: 'ofertaSave', // Ruta del backend
+        url: 'ofertaSave', 
         method: 'POST',
         headers: {
             'X-CSRF-TOKEN': csrfToken
         },
         data: {
-            api: 2, // API para crear revisiones
+            api: 2, 
             ID_FORMULARIO_OFERTAS: ID_FORMULARIO_OFERTAS,
-            MOTIVO_REVISION_OFERTA: motivoRevision, // 🔥 Se envía el motivo
-            _token: csrfToken // 🔥 Agregar CSRF Token
+            MOTIVO_REVISION_OFERTA: motivoRevision,
+            _token: csrfToken 
         },
         beforeSend: function () {
             Swal.fire({
@@ -1062,17 +1095,15 @@ $("#confirmarMotivoRevision").click(function () {
             if (response.code === 1) {
                 ID_FORMULARIO_OFERTAS = response.oferta.ID_FORMULARIO_OFERTAS;
 
-                // Cerrar los modales
                 $("#modalMotivoRevision").modal("hide");
                 $("#miModal_OFERTAS").modal("hide");
 
-                // Mostrar alerta de éxito
                 Swal.fire(
                     "Revisión Creada",
                     "Se ha generado una nueva versión de la oferta.",
                     "success"
                 ).then(() => {
-                    Tablaofertas.ajax.reload(); // Recargar la tabla después de éxito
+                    Tablaofertas.ajax.reload(); 
                 });
 
             } else {

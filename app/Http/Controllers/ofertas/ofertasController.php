@@ -114,9 +114,8 @@ class ofertasController extends Controller
     public function Tablaofertas()
     {
         try {
-            // Obtener las ofertas principales con todos los campos
             $tabla = ofertasModel::select(
-                'formulario_ofertas.*', // Seleccionamos todos los campos
+                'formulario_ofertas.*', 
                 'formulario_solicitudes.NO_SOLICITUD',
                 'formulario_solicitudes.NOMBRE_COMERCIAL_SOLICITUD',
                 'formulario_ofertas.SOLICITUD_ID'
@@ -175,6 +174,7 @@ class ofertasController extends Controller
     
                 foreach ($revisiones as $rev) {
                     $rev->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $rev->ID_FORMULARIO_OFERTAS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
+                    $value->BTN_TERMINOS = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-terminos" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
                     $rev->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR" data-id="' . $rev->ID_FORMULARIO_OFERTAS . '"><i class="bi bi-pencil-square"></i></button>';
                     $rev->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $rev->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $rev->ID_FORMULARIO_OFERTAS . '" checked><span class="slider round"></span></label>';
@@ -187,12 +187,14 @@ class ofertasController extends Controller
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_OFERTAS . '"><span class="slider round"></span></label>';
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
+                    $value->BTN_TERMINOS = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-terminos" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
                 } else {
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR" data-id="' . $value->ID_FORMULARIO_OFERTAS . '"><i class="bi bi-pencil-square"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" checked><span class="slider round"></span></label>';
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
                     $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
+                    $value->BTN_TERMINOS = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-terminos" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
                 }
             }
     
@@ -216,6 +218,12 @@ class ofertasController extends Controller
         return Storage::response($archivo);
     }
 
+
+    public function mostrarterminos($id)
+    {
+        $archivo = ofertasModel::findOrFail($id)->TERMINOS_DOCUMENTO;
+        return Storage::response($archivo);
+    }
 
     public function actualizarEstatusOferta(Request $request)
     {
@@ -312,8 +320,8 @@ class ofertasController extends Controller
                         $ultimoDigitoAnio = substr($anioActual, -2);
 
                         $ultimoRegistro = ofertasModel::where('NO_OFERTA', 'LIKE', "RES-COT-$ultimoDigitoAnio-%")
-                        ->orderByRaw("CAST(SUBSTRING_INDEX(NO_OFERTA, '-', -1) AS UNSIGNED) DESC")
-                        ->first();
+                            ->orderByRaw("CAST(SUBSTRING_INDEX(NO_OFERTA, '-', -1) AS UNSIGNED) DESC")
+                            ->first();
 
                         if ($ultimoRegistro) {
                             preg_match('/RES-COT-\d{2}-(\d{3})/', $ultimoRegistro->NO_OFERTA, $matches);
@@ -324,24 +332,34 @@ class ofertasController extends Controller
 
                         $noOferta = 'RES-COT-' . $ultimoDigitoAnio . '-' . str_pad($numeroIncremental, 3, '0', STR_PAD_LEFT);
 
-                        // Asignar valores al request
                         $request->merge([
                             'NO_OFERTA' => $noOferta,
                             'REVISION_OFERTA' => 0,
                             'MOTIVO_REVISION_OFERTA' => 'Revisión inicial'
                         ]);
 
-                        $data = $request->except(['observacion', 'COTIZACION_DOCUMENTO']);
+                        $data = $request->except(['observacion', 'COTIZACION_DOCUMENTO', 'TERMINOS_DOCUMENTO']);
                         $oferta = ofertasModel::create($data);
 
                         if ($request->hasFile('COTIZACION_DOCUMENTO')) {
                             $documento = $request->file('COTIZACION_DOCUMENTO');
                             $idOferta = $oferta->ID_FORMULARIO_OFERTAS;
-                            $nombreArchivo = time() . '_' . $documento->getClientOriginalName(); 
+                            $nombreArchivo = $documento->getClientOriginalName(); 
                             $rutaCarpeta = 'ventas/ofertas/' . $idOferta;
                             $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
 
                             $oferta->COTIZACION_DOCUMENTO = $rutaCompleta;
+                            $oferta->save();
+                        }
+
+                        if ($request->hasFile('TERMINOS_DOCUMENTO')) {
+                            $documento = $request->file('TERMINOS_DOCUMENTO');
+                            $idOferta = $oferta->ID_FORMULARIO_OFERTAS;
+                            $nombreArchivo = $documento->getClientOriginalName();
+                            $rutaCarpeta = 'ventas/ofertas/' . $idOferta . '/Terminos';
+                            $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                            $oferta->TERMINOS_DOCUMENTO = $rutaCompleta;
                             $oferta->save();
                         }
 
@@ -351,7 +369,7 @@ class ofertasController extends Controller
                         $oferta = ofertasModel::find($request->ID_FORMULARIO_OFERTAS);
 
                         if ($oferta) {
-                            $oferta->update($request->except('COTIZACION_DOCUMENTO'));
+                            $oferta->update($request->except('COTIZACION_DOCUMENTO', 'TERMINOS_DOCUMENTO'));
 
                             if ($request->hasFile('COTIZACION_DOCUMENTO')) {
                                 if ($oferta->COTIZACION_DOCUMENTO && Storage::exists($oferta->COTIZACION_DOCUMENTO)) {
@@ -360,11 +378,26 @@ class ofertasController extends Controller
 
                                 $documento = $request->file('COTIZACION_DOCUMENTO');
                                 $idOferta = $oferta->ID_FORMULARIO_OFERTAS;
-                                $nombreArchivo = time() . '_' . $documento->getClientOriginalName();
+                                $nombreArchivo = $documento->getClientOriginalName(); 
                                 $rutaCarpeta = 'ventas/ofertas/' . $idOferta;
                                 $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
 
                                 $oferta->COTIZACION_DOCUMENTO = $rutaCompleta;
+                                $oferta->save();
+                            }
+
+                            if ($request->hasFile('TERMINOS_DOCUMENTO')) {
+                                if ($oferta->TERMINOS_DOCUMENTO && Storage::exists($oferta->TERMINOS_DOCUMENTO)) {
+                                    Storage::delete($oferta->TERMINOS_DOCUMENTO);
+                                }
+
+                                $documento = $request->file('TERMINOS_DOCUMENTO');
+                                $idOferta = $oferta->ID_FORMULARIO_OFERTAS;
+                                $nombreArchivo = $documento->getClientOriginalName();
+                                $rutaCarpeta = 'ventas/ofertas/' . $idOferta . '/Terminos';
+                                $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                                $oferta->TERMINOS_DOCUMENTO = $rutaCompleta;
                                 $oferta->save();
                             }
 
@@ -375,7 +408,10 @@ class ofertasController extends Controller
                             $response['error'] = 'No se encontró la oferta';
                         }
                     }
+
                     return response()->json($response);
+
+
 
                 case 2:
                     $ofertaOriginal = ofertasModel::find($request->ID_FORMULARIO_OFERTAS);

@@ -24,12 +24,12 @@ class confirmacionController extends Controller
 {
     public function index()
     {
-        $solicitudes = ofertasModel::select(
-            'ID_FORMULARIO_OFERTAS',
-            'NO_OFERTA',
-          
-        )
+        $ofertasAsignadas = confirmacionModel::pluck('OFERTA_ID')->toArray();
+
+        // Obtener las ofertas aceptadas que aún no han sido usadas en una confirmación
+        $solicitudes = ofertasModel::select('ID_FORMULARIO_OFERTAS', 'NO_OFERTA')
             ->where('ESTATUS_OFERTA', 'like', '%Aceptada%')
+            ->whereNotIn('ID_FORMULARIO_OFERTAS', $ofertasAsignadas)
             ->get();
 
         $verificaciones = CatalogoVerificacionInformacionModel::where('ACTIVO', 1)->get();
@@ -57,7 +57,6 @@ class confirmacionController extends Controller
             $rows = [];
     
             foreach ($tabla as $value) {
-                // Obtener las evidencias relacionadas a la confirmación
                 $evidencias = evidenciaconfirmacionModel::where('CONFIRMACION_ID', $value->ID_FORMULARIO_CONFRIMACION)->get();
                 $evidenciasAgrupadas = [];
                 foreach ($evidencias as $evidencia) {
@@ -68,12 +67,10 @@ class confirmacionController extends Controller
                     ];
                 }
     
-                // Establecer los botones según lo definido
                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 $value->BTN_DOCUMENTO  = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-aceptacion" data-id="' . $value->ID_FORMULARIO_CONFRIMACION . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
                 $value->BTN_ELIMINAR   = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CONFRIMACION . '" checked><span class="slider round"></span></label>';
     
-                // Armar el row con todos los campos del modelo de confirmación y los botones
                 $rows[] = [
                     'ID_FORMULARIO_CONFRIMACION' => $value->ID_FORMULARIO_CONFRIMACION,
                     'OFERTA_ID'                  => $value->OFERTA_ID,

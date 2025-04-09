@@ -402,17 +402,15 @@ $('#Tablamr tbody').on('click', 'td>button.EDITAR', function () {
 
 
    if (row.data().ESTADO_APROBACION === "Aprobada") {
-         $('#motivo-rechazo-container').hide();
-            $('#APROBACION_DIRECCION').show();
+         $('#motivo-rechazo-container').hide();   
+         $('#APROBACION_DIRECCION').show();
+         $('#guardarMR').hide();
 
-       
-       
-      
     } else if (row.data().ESTADO_APROBACION === "Rechazada") {
         $('#APROBACION_DIRECCION').show();
         $('#motivo-rechazo-container').show();
-         
-        
+         $('#guardarMR').hide();
+                 
      } else {
        
           

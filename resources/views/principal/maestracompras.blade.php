@@ -151,7 +151,7 @@
                         </li>
 
 
-                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones']))
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones']))
 
                         <li class="nav-item dropdown" style="margin-left: 8px;">
                             <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -361,7 +361,7 @@
 
 
     @if(request()->is('Requisición_Materiales'))
-    <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=4.3"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=4.4"></script>
     @endif
 
 

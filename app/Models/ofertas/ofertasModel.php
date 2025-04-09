@@ -27,6 +27,7 @@ class ofertasModel extends Model
         'OBSERVACIONES_OFERTA',
         'ACTIVO',
         'MOTIVO_REVISION_OFERTA',
+        'TERMINOS_DOCUMENTO'
         
     ];
 }

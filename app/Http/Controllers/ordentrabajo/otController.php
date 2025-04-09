@@ -20,7 +20,7 @@ use App\Models\ordentrabajo\otModel;
 class otController extends Controller
 {
     public function index()
-    {
+    {   
         $solicitudes = ofertasModel::select(
             'ID_FORMULARIO_OFERTAS',
             'NO_OFERTA',

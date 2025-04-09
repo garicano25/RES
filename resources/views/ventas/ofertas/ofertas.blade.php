@@ -98,7 +98,7 @@
 
                         <div class="col-12 mt-3">
                             <label>Servicio cotizado *</label>
-                            <textarea type="text" class="form-control" id="SERVICIO_COTIZADO_OFERTA" name="SERVICIO_COTIZADO_OFERTA" rows="4"></textarea>
+                            <textarea type="text" class="form-control" id="SERVICIO_COTIZADO_OFERTA" name="SERVICIO_COTIZADO_OFERTA" rows="4" required></textarea>
                         </div>
 
                         <div class="col-12 mt-3">
@@ -157,6 +157,16 @@
                         </div>
 
 
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Términos y condiciones (PDF) *</label>
+                            <div class="d-flex align-items-center">
+                                <input type="file" class="form-control me-2" name="TERMINOS_DOCUMENTO" accept=".pdf">
+                                <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
 
 
 
