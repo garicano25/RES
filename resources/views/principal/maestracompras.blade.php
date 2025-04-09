@@ -361,17 +361,17 @@
 
 
     @if(request()->is('Requisición_Materiales'))
-    <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=4.2"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=4.3"></script>
     @endif
 
 
     @if(request()->is('Requisición_materiales_líderes'))
-    <script src="/assets/js_sitio/requisiconmaterial/requisiconlider.js?v=2.7"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/requisiconlider.js?v=2.8"></script>
     @endif
 
 
     @if(request()->is('Requisición_materiales_aprobación'))
-    <script src="/assets/js_sitio/requisiconmaterial/requisiconaprobada.js?v=1.9"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/requisiconaprobada.js?v=2.0"></script>
     @endif
 
 

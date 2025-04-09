@@ -192,7 +192,7 @@ function cambiarColor() {
 $("#guardarMR").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormularioV1('FormularioCONTRATACION');
+    formularioValido = validarFormularioV1('formularioMR');
 
     if (formularioValido) {
 
