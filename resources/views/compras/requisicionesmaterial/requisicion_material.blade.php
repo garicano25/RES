@@ -132,11 +132,7 @@
                                 </div>
                             </div>
 
-
-
-
-
-                            <div class="col-12 mt-3">DAR_BUENO
+                            <div class="col-12 mt-3">
                                 <div class="row">
                                     <div class="col-8">
                                         <label for="VISTO_BUENO">Visto bueno</label>
