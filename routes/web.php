@@ -152,7 +152,7 @@ Route::post('/verificar-codigo', [VerificationController::class, 'verificarCodig
 //==============================================  Módulos  ============================================== 
 // Route::get('/Módulos', function () {return view('principal.modulos');})->middleware('role:Superusuario,Administrador');
 
-Route::get('/Módulos', [catalogoanuncioController::class, 'index'])->middleware('role:Superusuario,Administrador,Asistente de planeación y logística,Desarrollador de software,Intendente,Consultor SST Junior');
+Route::get('/Módulos', [catalogoanuncioController::class, 'index'])->middleware('role:Superusuario,Administrador,Asistente de planeación y logística,Desarrollador de software,Intendente,Consultor-Instructor (Junior/Senior)');
 
 
 //==============================================  USUARIO  ============================================== 
@@ -553,6 +553,8 @@ Route::get('/Tablaofertas', [ofertasController::class, 'Tablaofertas']);
 Route::get('/ofertaDelete', [ofertasController::class, 'store']);
 Route::post('/actualizarEstatusOferta', [ofertasController::class, 'actualizarEstatusOferta']);
 Route::get('/mostrarcotizacion/{id}', [ofertasController::class, 'mostrarcotizacion']);
+Route::get('/mostrarterminos/{id}', [ofertasController::class, 'mostrarterminos']);
+
 
 //==============================================   CONFIRMACION DEL SERVICIO  ============================================== 
 Route::get('/Confirmación', [confirmacionController::class, 'index']);
