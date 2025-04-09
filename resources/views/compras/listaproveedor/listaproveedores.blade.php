@@ -191,7 +191,7 @@
                                         <div class="step-circle">
                                             <i class="bi bi-journal-text"></i>
                                         </div>
-                                        <span>Referencias comerciale</span>
+                                        <span>Referencias comerciales</span>
                                     </div>
 
                                     <div class="multisteps-form__progress-btn" id="step6">
