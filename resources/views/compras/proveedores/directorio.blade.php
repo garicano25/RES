@@ -450,7 +450,12 @@
         let codigoPostal = this.value.trim();
 
         if (codigoPostal.length === 5) {
-          fetch(`/codigo-postal/${codigoPostal}`)
+          fetch(`/codigo-postal/${codigoPostal}`, {
+              method: 'GET',
+              headers: {
+                'Accept': 'application/json'
+              }
+            })
             .then(response => response.json())
             .then(data => {
               if (!data.error) {
@@ -472,7 +477,6 @@
                 document.getElementById("NOMBRE_ENTIDAD_EMPRESA").value = response.estado || "No disponible";
                 document.getElementById("NOMBRE_LOCALIDAD_EMPRESA").value = response.ciudad || "No disponible";
                 document.getElementById("PAIS_EMPRESA").value = response.pais || "No disponible";
-
               } else {
                 alert("Código postal no encontrado");
               }
@@ -484,7 +488,7 @@
         }
       });
     </script>
-<!-- 
+    <!-- 
 
     <script>
       document.getElementById("CODIGO_POSTAL").addEventListener("change", function() {
