@@ -538,7 +538,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         
-    document.getElementById("CODIGO_POSTAL").addEventListener("change", function() {
+document.getElementById("CODIGO_POSTAL").addEventListener("input", function() {
     let codigoPostal = this.value.trim();
 
     if (codigoPostal.length === 5) {
