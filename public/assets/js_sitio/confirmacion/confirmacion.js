@@ -321,7 +321,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const botonagregarevidencia = document.getElementById('botonagregarevidencia');
     const btnVerificacion = document.getElementById('btnVerificacion');
 
-    btnVerificacion.disabled = true; // Inicia deshabilitado
+    btnVerificacion.disabled = true; 
 
     botonagregarevidencia.addEventListener('click', function () {
         agregarevidencia();
@@ -377,7 +377,7 @@ document.addEventListener("DOMContentLoaded", function () {
             inputArchivo.value = '';
         });
 
-        actualizarEstadoBotonVerificacion(); // Se llama al final para activar el botón si aplica
+        actualizarEstadoBotonVerificacion(); 
     }
 });
 

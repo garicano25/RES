@@ -436,7 +436,6 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             const divMaterial = document.createElement('div');
             divMaterial.classList.add('material-item', 'mt-2');
 
-            // Nueva lógica de color combinando CHECK_VO y CHECK_MATERIAL
             let colorClass = '';
            if (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL !== 'NO') {
     colorClass = 'bg-verde-suave';

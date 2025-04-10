@@ -60,6 +60,22 @@
                             </select>
                         </div>
 
+                        <div class="col-12 mt-3">
+                            <div class="row">
+                                <div class="col-md-12 mb-3 text-center">
+                                    <h5 class="form-label"><b>Volver a utilizar esta cotización para varias órdenes de trabajo </b></h5>
+                                    <br>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="UTILIZAR_COTIZACION" id="utilizarcotsi" value="1" required>
+                                        <label class="form-check-label" for="utilizarcotsi">Sí</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="UTILIZAR_COTIZACION" id="utilizarcotno" value="2">
+                                        <label class="form-check-label" for="utilizarcotno">No</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 
                         <div class="col-12 mt-3">
@@ -80,6 +96,86 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-12 mt-3">
+                            <div class="row">
+
+
+                                <div class="col-6  mt-3">
+                                    <label>Razón Social *</label>
+                                    <input type="text" class="form-control" id="RAZON_CONFIRMACION" name="RAZON_CONFIRMACION">
+                                </div>
+
+                                <div class="col-6  mt-3">
+                                    <label>Nombre comercial *</label>
+                                    <input type="text" class="form-control" id="COMERCIAL_CONFIRMACION" name="COMERCIAL_CONFIRMACION">
+                                </div>
+
+
+                                <div class="col-6  mt-3">
+                                    <label>RFC: *</label>
+                                    <input type="text" class="form-control" id="RFC_CONFIRMACION" name="RFC_CONFIRMACION">
+                                </div>
+
+                                <div class="col-6  mt-3">
+                                    <label>Giro de la empresa: *</label>
+                                    <input type="text" class="form-control" id="GIRO_CONFIRMACION" name="GIRO_CONFIRMACION">
+                                </div>
+
+                                <div class="col-12  mt-3">
+                                    <label>Seleccione dirección </label>
+                                    <select class="form-control" id="SELECTOR_DIRECCION" name="SELECTOR_DIRECCION">
+                                        <option value="" disabled selected>Seleccione una opción</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="col-12  mt-3">
+                                    <label>Dirección del servicio *</label>
+                                    <input type="text" class="form-control" id="DIRECCION_CONFIRMACION" name="DIRECCION_CONFIRMACION">
+                                </div>
+
+                                <div class="col-6  mt-3">
+                                    <label>Seleccione quien solicita </label>
+                                    <select class="form-control" id="SELECTOR_SOLICITA" name="SELECTOR_SOLICITA">
+                                        <option value="" disabled selected>Seleccione una opción</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-6  mt-3">
+                                    <label>Persona que solicita *</label>
+                                    <input type="text" class="form-control" id="PERSONA_SOLICITA_CONFIRMACION" name="PERSONA_SOLICITA_CONFIRMACION">
+                                </div>
+
+
+                                <div class="col-6  mt-3">
+                                    <label>Seleccione contacto </label>
+                                    <select class="form-control" id="SELECTOR_CONTACTO" name="SELECTOR_CONTACTO">
+                                        <option value="" disabled selected>Seleccione una opción</option>
+                                    </select>
+                                </div>
+
+
+                                <div class="col-6  mt-3">
+                                    <label>Contacto *</label>
+                                    <input type="text" class="form-control" id="CONTACTO_CONFIRMACION" name="CONTACTO_CONFIRMACION">
+                                </div>
+
+                                <div class="col-4  mt-3">
+                                    <label>Teléfono *</label>
+                                    <input type="text" class="form-control" id="CONTACTO_TELEFONO_CONFIRMACION" name="CONTACTO_TELEFONO_CONFIRMACION">
+                                </div>
+                                <div class="col-4  mt-3">
+                                    <label>Celular *</label>
+                                    <input type="text" class="form-control" id="CONTACTO_CELULAR_CONFIRMACION" name="CONTACTO_CELULAR_CONFIRMACION">
+                                </div>
+
+                                <div class="col-4  mt-3">
+                                    <label>E-mail *</label>
+                                    <input type="text" class="form-control" id="CONTACTO_EMAIL_CONFIRMACION" name="CONTACTO_EMAIL_CONFIRMACION">
+                                </div>
+
+                            </div>
+                        </div>
 
 
 
@@ -89,10 +185,10 @@
                                 <div class="col-3">
                                     <label>Verificado por </label>
                                     <input type="text" class="form-control"
-                                    id="VERIFICADO_POR"
-                                    name="VERIFICADO_POR"
-                                    readonly
-                                    data-usuario="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
+                                        id="VERIFICADO_POR"
+                                        name="VERIFICADO_POR"
+                                        readonly
+                                        data-usuario="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
                                 </div>
 
                                 <div class="col-3">
@@ -126,20 +222,27 @@
                         <div class="col-12 mt-3">
                             <div class="row">
 
-
-
                                 <div class="col-md-12 mb-3">
                                     <label class="form-label">Necesidad u objetivo del servicio: *</label>
                                     <textarea class="form-control" id="NECESIDAD_SERVICIO_CONFIRMACION" name="NECESIDAD_SERVICIO_CONFIRMACION" rows="5" required></textarea>
-                                  </div>
+                                </div>
 
-                                  
-                                  <div class="col-md-12 mb-3">
+                                <div class="mt-3">
+                                    <div class="row">
+                                        <div class="col-6 mb-3">
+                                            <label>Agregar servicio</label>
+                                            <button id="botonmaterial" id="botonmaterial" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                                                <i class="bi bi-plus-circle-fill"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="materialesdiv mt-4"></div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
                                     <label class="form-label">Observaciones: </label>
                                     <textarea class="form-control" id="OBSERVACIONES_CONFIRMACION" name="OBSERVACIONES_CONFIRMACION" rows="5"></textarea>
-                                  </div>
-
-
+                                </div>
 
                             </div>
                         </div>

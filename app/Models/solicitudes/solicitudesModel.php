@@ -48,7 +48,6 @@ class solicitudesModel extends Model
         'DIRECCIONES_JSON',
         'EXTENSION_OFERTA',
         'RFC_EMPRESA',
-        
         'RAZON_SOCIAL',
         'NOMBRE_COMERCIAL_EMPRESA',
         'GIRO_EMPRESA',

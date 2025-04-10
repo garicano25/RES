@@ -315,7 +315,7 @@
 
 
     @if(request()->is('Solicitudes'))
-    <script src="/assets/js_sitio/solicitudes/solicitudes.js?v=5.4"></script>
+    <script src="/assets/js_sitio/solicitudes/solicitudes.js?v=5.6"></script>
     @endif
 
 
@@ -323,13 +323,13 @@
 
 
     @if(request()->is('Ofertas'))
-    <script src="/assets/js_sitio/ofertas/ofertas.js?v=5.3"></script>
+    <script src="/assets/js_sitio/ofertas/ofertas.js?v=5.4"></script>
     @endif
 
 
 
     @if(request()->is('Confirmación'))
-    <script src="/assets/js_sitio/confirmacion/confirmacion.js?v=2.1"></script>
+    <script src="/assets/js_sitio/confirmacion/confirmacion.js?v=2.2"></script>
     @endif
 
 
@@ -349,7 +349,7 @@
 
 
     @if(request()->is('Orden_trabajo'))
-    <script src="/assets/js_sitio/orden_trabajo/orden_trabajo.js?v=1.0"></script>
+    <script src="/assets/js_sitio/orden_trabajo/orden_trabajo.js?v=1.1"></script>
     @endif
 
     @if(request()->is('Catálogo_línea_negocio'))

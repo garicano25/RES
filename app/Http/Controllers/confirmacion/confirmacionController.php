@@ -26,7 +26,6 @@ class confirmacionController extends Controller
     {
         $ofertasAsignadas = confirmacionModel::pluck('OFERTA_ID')->toArray();
 
-        // Obtener las ofertas aceptadas que aún no han sido usadas en una confirmación
         $solicitudes = ofertasModel::select('ID_FORMULARIO_OFERTAS', 'NO_OFERTA')
             ->where('ESTATUS_OFERTA', 'like', '%Aceptada%')
             ->whereNotIn('ID_FORMULARIO_OFERTAS', $ofertasAsignadas)

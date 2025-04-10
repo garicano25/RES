@@ -33,6 +33,7 @@
 
 
 
+
 <div class="modal modal-fullscreen fade" id="miModal_SOLICITUDES" tabindex="-1" aria-labelledby="miModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
@@ -298,7 +299,7 @@
                 <div class="row">
                   <div class="col-3 mb-3">
                     <label>Número Exterior</label>
-                    <input type="number" class="form-control" name="NUMERO_EXTERIOR_EMPRESA" id="NUMERO_EXTERIOR_EMPRESA">
+                    <input type="text" class="form-control" name="NUMERO_EXTERIOR_EMPRESA" id="NUMERO_EXTERIOR_EMPRESA">
                   </div>
                   <div class="col-3 mb-3">
                     <label>Número Interior</label>

@@ -1034,7 +1034,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="row">
                     <div class="col-3 mb-3">
                         <label>Número Exterior</label>
-                        <input type="number" class="form-control" name="NUMERO_EXTERIOR_DOMICILIO">
+                        <input type="text" class="form-control" name="NUMERO_EXTERIOR_DOMICILIO">
                     </div>
                     <div class="col-3 mb-3">
                         <label>Número Interior</label>
@@ -1148,7 +1148,7 @@ function obtenerDirecciones(data) {
                 <div class="row">
                     <div class="col-3 mb-3">
                         <label>Número Exterior</label>
-                        <input type="number" class="form-control" name="NUMERO_EXTERIOR_DOMICILIO" value="${numeroExterior}">
+                        <input type="text" class="form-control" name="NUMERO_EXTERIOR_DOMICILIO" value="${numeroExterior}">
                     </div>
                     <div class="col-3 mb-3">
                         <label>Número Interior</label>
