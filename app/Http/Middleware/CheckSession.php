@@ -34,13 +34,12 @@ class CheckSession
         'enviar-codigo' ,
         'verificar-codigo',      
         'Proveedor' ,
-        'codigo-postal'        
+            'codigo-postal/{cp}',  // Añadir esta línea
 
 
 
 
-
-    ];
+        ];
 
     if (in_array($request->path(), $excludedRoutes)) {
         return $next($request);
