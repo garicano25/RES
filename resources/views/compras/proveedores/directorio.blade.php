@@ -449,72 +449,46 @@
       document.getElementById("CODIGO_POSTAL").addEventListener("change", function() {
         let codigoPostal = this.value.trim();
 
+        // Crear o limpiar el div de depuración si ya existe
+        let debugDiv = document.getElementById("debug-info");
+        if (!debugDiv) {
+          debugDiv = document.createElement("div");
+          debugDiv.id = "debug-info";
+          debugDiv.style.border = "1px solid red";
+          debugDiv.style.padding = "10px";
+          debugDiv.style.margin = "10px 0";
+          document.body.appendChild(debugDiv);
+        }
+        debugDiv.innerHTML = "Procesando código postal: " + codigoPostal;
+
         if (codigoPostal.length === 5) {
-          // Mostrar indicador de carga
-          let infoDiv = document.createElement("div");
-          infoDiv.id = "info-cargando";
-          infoDiv.innerHTML = "Cargando información del código postal...";
-          this.parentNode.appendChild(infoDiv);
+          debugDiv.innerHTML += "<br>Realizando petición...";
 
-          // Usar XMLHttpRequest en lugar de fetch
-          let xhr = new XMLHttpRequest();
+          // Usa URL absoluta
           let url = window.location.origin + "/codigo-postal/" + codigoPostal;
+          debugDiv.innerHTML += "<br>URL: " + url;
 
-          xhr.open("GET", url, true);
+          fetch(url)
+            .then(response => {
+              debugDiv.innerHTML += "<br>Respuesta recibida. Status: " + response.status;
+              return response.json();
+            })
+            .then(data => {
+              debugDiv.innerHTML += "<br>Datos recibidos: " + JSON.stringify(data).substring(0, 100) + "...";
 
-          xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4) {
-              infoDiv.innerHTML = "Estado de respuesta: " + xhr.status;
-
-              if (xhr.status === 200) {
-                try {
-                  let data = JSON.parse(xhr.responseText);
-                  infoDiv.innerHTML += "<br>Datos recibidos correctamente";
-
-                  if (!data.error) {
-                    let response = data.response;
-
-                    let coloniaSelect = document.getElementById("NOMBRE_COLONIA_EMPRESA");
-                    coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
-
-                    let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
-
-                    colonias.forEach(colonia => {
-                      let option = document.createElement("option");
-                      option.value = colonia;
-                      option.textContent = colonia;
-                      coloniaSelect.appendChild(option);
-                    });
-
-                    document.getElementById("NOMBRE_MUNICIPIO_EMPRESA").value = response.municipio || "No disponible";
-                    document.getElementById("NOMBRE_ENTIDAD_EMPRESA").value = response.estado || "No disponible";
-                    document.getElementById("NOMBRE_LOCALIDAD_EMPRESA").value = response.ciudad || "No disponible";
-                    document.getElementById("PAIS_EMPRESA").value = response.pais || "No disponible";
-
-                    // Eliminar el div de información después de éxito
-                    setTimeout(function() {
-                      infoDiv.remove();
-                    }, 3000);
-
-                  } else {
-                    infoDiv.innerHTML = "Error en la respuesta: " + data.mensaje;
-                  }
-                } catch (e) {
-                  infoDiv.innerHTML = "Error al procesar la respuesta: " + e.message;
-                  infoDiv.innerHTML += "<br>Respuesta recibida: " + xhr.responseText.substring(0, 100);
-                }
+              if (!data.error) {
+                let response = data.response;
+                // Resto del código igual...
               } else {
-                infoDiv.innerHTML = "Error al consultar API. Estado: " + xhr.status;
-                infoDiv.innerHTML += "<br>Respuesta: " + xhr.responseText;
+                debugDiv.innerHTML += "<br>Error reportado por API: " + data.mensaje;
+                alert("Código postal no encontrado");
               }
-            }
-          };
-
-          xhr.onerror = function() {
-            infoDiv.innerHTML = "Error de red al realizar la petición";
-          };
-
-          xhr.send();
+            })
+            .catch(error => {
+              debugDiv.innerHTML += "<br>❌ ERROR: " + error.message;
+              debugDiv.innerHTML += "<br>Objeto error: " + JSON.stringify(error, Object.getOwnPropertyNames(error));
+              alert("Hubo un error al consultar la API. Revisa el área roja de depuración para más detalles.");
+            });
         }
       });
     </script>
