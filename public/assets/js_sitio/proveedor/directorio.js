@@ -405,7 +405,6 @@ function verificarCodigoAntesDeActualizar(correo, codigo, data) {
             const domicilioNacional = document.getElementById("DOMICILIO_NACIONAL");
             const domicilioExtranjero = document.getElementById("DOMICILIO_ERXTRANJERO");
 
-            // Verificar el valor de TIPO_PERSONA y mostrar el div correspondiente
             if (tipoPersona.value === "1") {
                 domicilioNacional.style.display = "block";
                 domicilioExtranjero.style.display = "none";
@@ -435,7 +434,6 @@ function verificarCodigoAntesDeActualizar(correo, codigo, data) {
 
             }
 
-            // Continuar llenando otros campos
             document.getElementById('TIPO_VIALIDAD_EMPRESA').value = data.TIPO_VIALIDAD_EMPRESA || '';
             document.getElementById('NOMBRE_VIALIDAD_EMPRESA').value = data.NOMBRE_VIALIDAD_EMPRESA || '';
             document.getElementById('NUMERO_EXTERIOR_EMPRESA').value = data.NUMERO_EXTERIOR_EMPRESA || '';
@@ -463,7 +461,6 @@ function verificarCodigoAntesDeActualizar(correo, codigo, data) {
 
 
 
-            // Cargar servicios dinámicos
             const contenedorServicios = document.querySelector('.serviciodiv');
             contenedorServicios.innerHTML = '';
 
@@ -504,7 +501,6 @@ function agregarServicio(nombreServicio = '') {
     const contenedor = document.querySelector('.serviciodiv');
     contenedor.appendChild(divContacto);
 
-    // Agregar evento para eliminar servicio
     divContacto.querySelector('.botonEliminarContacto').addEventListener('click', function () {
         contenedor.removeChild(divContacto);
     });
@@ -539,44 +535,47 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
     });
-});
 
 
-document.getElementById("CODIGO_POSTAL").addEventListener("change", function() {
-let codigoPostal = this.value.trim();
+        
+    document.getElementById("CODIGO_POSTAL").addEventListener("change", function() {
+    let codigoPostal = this.value.trim();
 
-if (codigoPostal.length === 5) {
-    fetch(`/codigo-postal/${codigoPostal}`)
-    .then(response => response.json())
-    .then(data => {
-        if (!data.error) {
-        let response = data.response;
+    if (codigoPostal.length === 5) {
+        fetch(`/codigo-postal/${codigoPostal}`)
+        .then(response => response.json())
+        .then(data => {
+            if (!data.error) {
+            let response = data.response;
 
-        let coloniaSelect = document.getElementById("NOMBRE_COLONIA_EMPRESA");
-        coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
+            let coloniaSelect = document.getElementById("NOMBRE_COLONIA_EMPRESA");
+            coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
 
-        let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
+            let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
 
-        colonias.forEach(colonia => {
-            let option = document.createElement("option");
-            option.value = colonia;
-            option.textContent = colonia;
-            coloniaSelect.appendChild(option);
+            colonias.forEach(colonia => {
+                let option = document.createElement("option");
+                option.value = colonia;
+                option.textContent = colonia;
+                coloniaSelect.appendChild(option);
+            });
+
+            document.getElementById("NOMBRE_MUNICIPIO_EMPRESA").value = response.municipio || "No disponible";
+            document.getElementById("NOMBRE_ENTIDAD_EMPRESA").value = response.estado || "No disponible";
+            document.getElementById("NOMBRE_LOCALIDAD_EMPRESA").value = response.ciudad || "No disponible";
+            document.getElementById("PAIS_EMPRESA").value = response.pais || "No disponible";
+
+            } else {
+            alert("Código postal no encontrado");
+            }
+        })
+        .catch(error => {
+            console.error("Error al obtener datos:", error);
+            alert("Hubo un error al consultar la API.");
         });
-
-        document.getElementById("NOMBRE_MUNICIPIO_EMPRESA").value = response.municipio || "No disponible";
-        document.getElementById("NOMBRE_ENTIDAD_EMPRESA").value = response.estado || "No disponible";
-        document.getElementById("NOMBRE_LOCALIDAD_EMPRESA").value = response.ciudad || "No disponible";
-        document.getElementById("PAIS_EMPRESA").value = response.pais || "No disponible";
-
-        } else {
-        alert("Código postal no encontrado");
-        }
-    })
-    .catch(error => {
-        console.error("Error al obtener datos:", error);
-        alert("Hubo un error al consultar la API.");
+    }
     });
-}
 });
+
+
    
