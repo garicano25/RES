@@ -6,6 +6,7 @@ namespace App\Http\Middleware;
 use Illuminate\Support\Facades\Crypt;
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class CheckSession
 {
@@ -34,16 +35,16 @@ class CheckSession
         'enviar-codigo' ,
         'verificar-codigo',      
         'Proveedor' ,
-            'codigo-postal/{cp}',  // Añadir esta línea
-
-
+            'codigo-postal/*',  // Ahora sí excluye rutas como /codigo-postal/86000
 
 
         ];
 
-    if (in_array($request->path(), $excludedRoutes)) {
-        return $next($request);
-    }
+        foreach ($excludedRoutes as $excluded) {
+            if (Str::is($excluded, $request->path())) {
+                return $next($request);
+            }
+        }
 
     if (!Auth::check()) {
         return redirect()->route('login')->with('error', 'Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
