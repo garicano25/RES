@@ -542,7 +542,7 @@ document.getElementById("CODIGO_POSTAL").addEventListener("input", function() {
     let codigoPostal = this.value.trim();
 
     if (codigoPostal.length === 5) {
-    fetch('https://results-erp.results-in-performance.com/codigo-postal/' + codigoPostal)
+fetch('/codigo-postal/' + codigoPostal)
         .then(response => response.json())
         .then(data => {
             if (!data.error) {
