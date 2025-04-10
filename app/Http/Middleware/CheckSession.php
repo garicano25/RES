@@ -33,7 +33,8 @@ class CheckSession
         'ServiciosSave',
         'enviar-codigo' ,
         'verificar-codigo',      
-        'Proveedor'          
+        'Proveedor' ,
+        'codigo-postal'        
 
 
 
