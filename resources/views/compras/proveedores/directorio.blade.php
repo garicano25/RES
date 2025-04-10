@@ -445,45 +445,79 @@
 
 
 
-    <!-- <script>
+    <script>
       document.getElementById("CODIGO_POSTAL").addEventListener("change", function() {
         let codigoPostal = this.value.trim();
 
         if (codigoPostal.length === 5) {
-          fetch(`/codigo-postal/${codigoPostal}`)
-            .then(response => response.json())
-            .then(data => {
-              if (!data.error) {
-                let response = data.response;
+          // Mostrar indicador de carga
+          let infoDiv = document.createElement("div");
+          infoDiv.id = "info-cargando";
+          infoDiv.innerHTML = "Cargando información del código postal...";
+          this.parentNode.appendChild(infoDiv);
 
-                let coloniaSelect = document.getElementById("NOMBRE_COLONIA_EMPRESA");
-                coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
+          // Usar XMLHttpRequest en lugar de fetch
+          let xhr = new XMLHttpRequest();
+          let url = window.location.origin + "/codigo-postal/" + codigoPostal;
 
-                let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
+          xhr.open("GET", url, true);
 
-                colonias.forEach(colonia => {
-                  let option = document.createElement("option");
-                  option.value = colonia;
-                  option.textContent = colonia;
-                  coloniaSelect.appendChild(option);
-                });
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+              infoDiv.innerHTML = "Estado de respuesta: " + xhr.status;
 
-                document.getElementById("NOMBRE_MUNICIPIO_EMPRESA").value = response.municipio || "No disponible";
-                document.getElementById("NOMBRE_ENTIDAD_EMPRESA").value = response.estado || "No disponible";
-                document.getElementById("NOMBRE_LOCALIDAD_EMPRESA").value = response.ciudad || "No disponible";
-                document.getElementById("PAIS_EMPRESA").value = response.pais || "No disponible";
+              if (xhr.status === 200) {
+                try {
+                  let data = JSON.parse(xhr.responseText);
+                  infoDiv.innerHTML += "<br>Datos recibidos correctamente";
 
+                  if (!data.error) {
+                    let response = data.response;
+
+                    let coloniaSelect = document.getElementById("NOMBRE_COLONIA_EMPRESA");
+                    coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
+
+                    let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
+
+                    colonias.forEach(colonia => {
+                      let option = document.createElement("option");
+                      option.value = colonia;
+                      option.textContent = colonia;
+                      coloniaSelect.appendChild(option);
+                    });
+
+                    document.getElementById("NOMBRE_MUNICIPIO_EMPRESA").value = response.municipio || "No disponible";
+                    document.getElementById("NOMBRE_ENTIDAD_EMPRESA").value = response.estado || "No disponible";
+                    document.getElementById("NOMBRE_LOCALIDAD_EMPRESA").value = response.ciudad || "No disponible";
+                    document.getElementById("PAIS_EMPRESA").value = response.pais || "No disponible";
+
+                    // Eliminar el div de información después de éxito
+                    setTimeout(function() {
+                      infoDiv.remove();
+                    }, 3000);
+
+                  } else {
+                    infoDiv.innerHTML = "Error en la respuesta: " + data.mensaje;
+                  }
+                } catch (e) {
+                  infoDiv.innerHTML = "Error al procesar la respuesta: " + e.message;
+                  infoDiv.innerHTML += "<br>Respuesta recibida: " + xhr.responseText.substring(0, 100);
+                }
               } else {
-                alert("Código postal no encontrado");
+                infoDiv.innerHTML = "Error al consultar API. Estado: " + xhr.status;
+                infoDiv.innerHTML += "<br>Respuesta: " + xhr.responseText;
               }
-            })
-            .catch(error => {
-              console.error("Error al obtener datos:", error);
-              alert("Hubo un error al consultar la API.");
-            });
+            }
+          };
+
+          xhr.onerror = function() {
+            infoDiv.innerHTML = "Error de red al realizar la petición";
+          };
+
+          xhr.send();
         }
       });
-    </script> -->
+    </script>
 
   </body>
 
