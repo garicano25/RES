@@ -437,7 +437,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
     <!-- Funciones generales -->
     <script src="/assets/js_sitio/funciones.js"></script>
-    <script src="/assets/js_sitio/proveedor/directorio.js?v=1.3"></script>
+    <script src="/assets/js_sitio/proveedor/directorio.js?v=1.4"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
@@ -445,7 +445,45 @@
 
 
 
-   
+    <!-- <script>
+      document.getElementById("CODIGO_POSTAL").addEventListener("change", function() {
+        let codigoPostal = this.value.trim();
+
+        if (codigoPostal.length === 5) {
+          fetch(`/codigo-postal/${codigoPostal}`)
+            .then(response => response.json())
+            .then(data => {
+              if (!data.error) {
+                let response = data.response;
+
+                let coloniaSelect = document.getElementById("NOMBRE_COLONIA_EMPRESA");
+                coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
+
+                let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
+
+                colonias.forEach(colonia => {
+                  let option = document.createElement("option");
+                  option.value = colonia;
+                  option.textContent = colonia;
+                  coloniaSelect.appendChild(option);
+                });
+
+                document.getElementById("NOMBRE_MUNICIPIO_EMPRESA").value = response.municipio || "No disponible";
+                document.getElementById("NOMBRE_ENTIDAD_EMPRESA").value = response.estado || "No disponible";
+                document.getElementById("NOMBRE_LOCALIDAD_EMPRESA").value = response.ciudad || "No disponible";
+                document.getElementById("PAIS_EMPRESA").value = response.pais || "No disponible";
+
+              } else {
+                alert("Código postal no encontrado");
+              }
+            })
+            .catch(error => {
+              console.error("Error al obtener datos:", error);
+              alert("Hubo un error al consultar la API.");
+            });
+        }
+      });
+    </script> -->
 
   </body>
 
