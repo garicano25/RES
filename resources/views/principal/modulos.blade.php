@@ -603,7 +603,9 @@
                         </div>
 
                         @php
-                        $rolesUsuario = $user->roles->pluck('name')->toArray();
+                        $user = auth()->user();
+
+                        $rolesUsuario = $user?->roles->pluck('name')->toArray() ?? [];
                         $tieneSoloUnRol = count($rolesUsuario) === 1;
 
                         $tieneSoloRolIntendente = $tieneSoloUnRol && in_array('Intendente', $rolesUsuario);
@@ -613,6 +615,7 @@
 
                         $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRolAnalistaHSEQ || $tieneSoloRolAsistentePlaneacion;
                         @endphp
+
 
 
 
