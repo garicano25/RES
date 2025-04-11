@@ -604,17 +604,18 @@
 
                         @php
                         $user = auth()->user();
+
                         $tieneSoloRolIntendente = $user->roles->count() === 1 && $user->hasRole('Intendente');
                         $tieneSoloRolSSTJunior = $user->roles->count() === 1 && $user->hasRole('Consultor-Instructor (Junior/Senior)');
-                        $tieneSoloRolAnalistaHSEQ = $user->roles->count() === 1 && $user->hasRole('Analista HSEQ'); // <- Aquí estaba el error
-                        
+                        $tieneSoloRolAnalistaHSEQ = $user->roles->count() === 1 && $user->hasRole('Analista HSEQ');
+                        $tieneSoloRolAsistentePlaneacion = $user->roles->count() === 1 && $user->hasRole('Asistente de planeación y logística');
 
-                            $tieneRolRestringidoUnico=$tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRolAnalistaHSEQ;
+                        $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRolAnalistaHSEQ || $tieneSoloRolAsistentePlaneacion;
+                        @endphp
 
-                            @endphp
 
 
-                            <div class="modules">
+                        <div class="modules">
 
                             {{-- RRHH --}}
                             @if($tieneRolRestringidoUnico)
@@ -720,60 +721,60 @@
                                 <h2 class="modules__text">Calidad</h2>
                             </div>
                             @endif
+                        </div>
+
                     </div>
 
-                </div>
+                    <div class="content__right">
+                        <div class="softwares">
+                            <div class="softwares__top">
+                                <div class="softwares__card">
+                                    <a href="https://sehilab-prueba.results-in-performance.com/" target="_blank">
 
-                <div class="content__right">
-                    <div class="softwares">
-                        <div class="softwares__top">
-                            <div class="softwares__card">
-                                <a href="https://sehilab-prueba.results-in-performance.com/" target="_blank">
+                                        <img class="softwares__image" src="assets/Modulos/img/sehilab.png" alt="">
+                                        <h3 class="content__paragraph">SEHILAB</h3>
+                                    </a>
 
-                                    <img class="softwares__image" src="assets/Modulos/img/sehilab.png" alt="">
-                                    <h3 class="content__paragraph">SEHILAB</h3>
-                                </a>
-
+                                </div>
+                                <div class="softwares__greyCard">
+                                    <!-- <img class="softwares__image" src="assets/Modulos/img/sehilab.png" alt=""> -->
+                                    <h3 class="content__paragraph">BUZÓN</h3>
+                                </div>
                             </div>
-                            <div class="softwares__greyCard">
-                                <!-- <img class="softwares__image" src="assets/Modulos/img/sehilab.png" alt=""> -->
-                                <h3 class="content__paragraph">BUZÓN</h3>
+
+                            <div class="softwares__bottom">
+
+
+                                <div class="softwares__greyCard">
+                                    <!-- <img class="softwares__image" src="assets/Modulos/img/sehilab.png" alt=""> -->
+                                    <h3 class="content__paragraph">TRAIN+</h3>
+                                </div>
+                                <div class="softwares__card">
+                                    <!-- <img class="softwares__image" src="assets/Modulos/img/sehilab.png" alt=""> -->
+                                    <h3 class="content__paragraph">RigCAP</h3>
+                                </div>
                             </div>
+
+                            <div class="learning">
+                                <div class="learning__text">
+                                    <h2 class="learning__title">E-learning</h2>
+                                    <h2 class="learning__link">Saber más</h2>
+                                </div>
+                                <div class="learning__image">
+                                    <img src="assets/Modulos/img/laptop.png" alt="">
+                                </div>
+                            </div>
+
+
                         </div>
-
-                        <div class="softwares__bottom">
-
-
-                            <div class="softwares__greyCard">
-                                <!-- <img class="softwares__image" src="assets/Modulos/img/sehilab.png" alt=""> -->
-                                <h3 class="content__paragraph">TRAIN+</h3>
-                            </div>
-                            <div class="softwares__card">
-                                <!-- <img class="softwares__image" src="assets/Modulos/img/sehilab.png" alt=""> -->
-                                <h3 class="content__paragraph">RigCAP</h3>
-                            </div>
-                        </div>
-
-                        <div class="learning">
-                            <div class="learning__text">
-                                <h2 class="learning__title">E-learning</h2>
-                                <h2 class="learning__link">Saber más</h2>
-                            </div>
-                            <div class="learning__image">
-                                <img src="assets/Modulos/img/laptop.png" alt="">
-                            </div>
-                        </div>
-
-
                     </div>
+
+
+
                 </div>
-
-
 
             </div>
-
-        </div>
-        <img class="content__logo" src="assets/Modulos/img/logo.png" alt="">
+            <img class="content__logo" src="assets/Modulos/img/logo.png" alt="">
 
         </div>
 
