@@ -605,18 +605,13 @@
                         @php
                         $user = auth()->user();
 
-                        $rolesUsuario = $user?->roles->pluck('name')->toArray() ?? [];
-                        $tieneSoloUnRol = count($rolesUsuario) === 1;
+                        $tieneSoloRolIntendente = $user->roles->count() === 1 && $user->hasRole('Intendente');
+                        $tieneSoloRolSSTJunior = $user->roles->count() === 1 && $user->hasRole('Consultor-Instructor (Junior/Senior)');
+                        $tieneSoloRolAnalista = $user->roles->count() === 1 && $user->hasRole('Analista hseq');
+                        $tieneSoloRolAsistentePlaneacion = $user->roles->count() === 1 && $user->hasRole('Asistente de planeación y logística');
 
-                        $tieneSoloRolIntendente = $tieneSoloUnRol && in_array('Intendente', $rolesUsuario);
-                        $tieneSoloRolSSTJunior = $tieneSoloUnRol && in_array('Consultor-Instructor (Junior/Senior)', $rolesUsuario);
-                        $tieneSoloRolAnalistaHSEQ = $tieneSoloUnRol && in_array('Analista HSEQ', $rolesUsuario);
-                        $tieneSoloRolAsistentePlaneacion = $tieneSoloUnRol && in_array('Asistente de planeación y logística', $rolesUsuario);
-
-                        $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRolAnalistaHSEQ || $tieneSoloRolAsistentePlaneacion;
+                        $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRolAnalista || $tieneSoloRolAsistentePlaneacion;
                         @endphp
-
-
 
 
 
