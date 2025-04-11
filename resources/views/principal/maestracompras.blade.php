@@ -375,6 +375,13 @@
     @endif
 
 
+    @if(request()->is('Bitácora'))
+    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js"></script>
+    @endif
+
+
+
+
     @if(request()->is('Banco_proveedores'))
     <script src="/assets/js_sitio/proveedor/proveedorespotenciales.js?v=1.0"></script>
     @endif

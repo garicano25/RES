@@ -303,45 +303,55 @@ $('#Tablaordentrabajo tbody').on('click', 'td>button.EDITAR', function () {
 
     editarDatoTabla(data, 'formularioOT', 'miModal_OT', 1);
 
-                modoEdicion = true;
+        modoEdicion = true;
 
-                datosEditados = {
-                    direccion: data.DIRECCION_SERVICIO,
-                    solicita: data.PERSONA_SOLICITA,
-                    contacto: {
-                        nombre: data.CONTACTO,
-                        telefono: data.TELEFONO_CONTACTO,
-                        celular: data.CELULAR_CONTACTO,
-                        correo: data.EMAIL_CONTACTO
-                    }
-                };
+        datosEditados = {
+            direccion: data.DIRECCION_SERVICIO,
+            solicita: data.PERSONA_SOLICITA,
+            contacto: {
+                nombre: data.CONTACTO,
+                telefono: data.TELEFONO_CONTACTO,
+                celular: data.CELULAR_CONTACTO,
+                correo: data.EMAIL_CONTACTO
+            }
+        };
 
-                var selectize = $('#OFERTA_ID')[0].selectize;
-                selectize.clear();
-                selectize.setValue([]);
+        var selectize = $('#OFERTA_ID')[0].selectize;
+        selectize.clear();
+        selectize.setValue([]);
 
-                if (data.OFERTA_ID) {
-                    try {
-                        let ofertaArray = JSON.parse(data.OFERTA_ID);
-                        let nombres = data.NO_OFERTA.split(',').map(e => e.trim());
+        if (data.OFERTA_ID) {
+            try {
+                let ofertaArray = JSON.parse(data.OFERTA_ID);
+                let nombres = data.NO_OFERTA.split(',').map(e => e.trim());
 
-                        if (Array.isArray(ofertaArray)) {
-                            ofertaArray.forEach((id, index) => {
-                                if (!selectize.options[id]) {
-                                    selectize.addOption({ value: id, text: nombres[index] || id });
-                                }
-                            });
-
-                            selectize.setValue(ofertaArray); 
+                if (Array.isArray(ofertaArray)) {
+                    ofertaArray.forEach((id, index) => {
+                        if (!selectize.options[id]) {
+                            selectize.addOption({ value: id, text: nombres[index] || id });
                         }
-                    } catch (error) {
-                        console.error("Error al parsear OFERTA_ID:", error);
-                    }
-                }
+                    });
 
-                if (data.VERIFICADO_POR) {
-                    $("#VERIFICADO_POR").val(data.VERIFICADO_POR);
+                    selectize.setValue(ofertaArray); 
                 }
+            } catch (error) {
+                console.error("Error al parsear OFERTA_ID:", error);
+            }
+        }
+
+        if (data.VERIFICADO_POR) {
+            $("#VERIFICADO_POR").val(data.VERIFICADO_POR);
+    }
+    
+
+    $(".materialesdiv").empty();
+
+        cargarMaterialesDesdeJSON(row.data().SERVICIOS_JSON);
+
+    
+   
+
+
 });
 
 
@@ -606,19 +616,16 @@ $(document).ready(function () {
         }
     });
 
-    // 🟢 Manejo del cambio en selector de dirección
     $('#SELECTOR_DIRECCION').on('change', function () {
         const direccion = $(this).val();
         $('#DIRECCION_CONFIRMACION').val(direccion);
     });
 
-    // 🟢 Manejo del cambio en selector de quien solicita
     $('#SELECTOR_SOLICITA').on('change', function () {
         const persona = $(this).val();
         $('#PERSONA_SOLICITA_CONFIRMACION').val(persona);
     });
 
-    // 🟢 Manejo del cambio en selector de contacto
     $('#SELECTOR_CONTACTO').on('change', function () {
         const seleccionado = $(this).val();
         const datos = window.contactosMap ? window.contactosMap[seleccionado] : null;
@@ -636,3 +643,55 @@ $(document).ready(function () {
         }
     });
 });
+
+
+
+function cargarMaterialesDesdeJSON(serviciosJson) {
+    const contenedorMateriales = document.querySelector('.materialesdiv');
+    contenedorMateriales.innerHTML = '';
+    contadorMateriales = 1;
+
+    try {
+        const servicios = typeof serviciosJson === 'string' ? JSON.parse(serviciosJson) : serviciosJson;
+
+        servicios.forEach(servicio => {
+            const divMaterial = document.createElement('div');
+            divMaterial.classList.add('row', 'material-item', 'mt-1');
+
+            divMaterial.innerHTML = `
+                <div class="col-1">
+                    <label class="form-label">No.</label>
+                    <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
+                </div>
+                <div class="col-1">
+                    <label class="form-label">Cantidad</label>
+                    <input type="number" class="form-control" name="CANTIDAD" value="${servicio.CANTIDAD}" required>
+                </div>
+                <div class="col-5">
+                    <label class="form-label">Servicio</label>
+                    <textarea class="form-control" name="SERVICIO" required rows="3">${servicio.SERVICIO}</textarea>
+                </div>
+                <div class="col-5">
+                    <label class="form-label">Descripción</label>
+                    <textarea class="form-control" name="DESCRIPCION" required rows="3">${servicio.DESCRIPCION}</textarea>
+                </div>
+                <div class="col-12 mt-2 text-end">
+                    <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            `;
+
+            contenedorMateriales.appendChild(divMaterial);
+            contadorMateriales++;
+
+            const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
+            botonEliminar.addEventListener('click', function () {
+                contenedorMateriales.removeChild(divMaterial);
+                actualizarNumerosOrden();
+            });
+        });
+    } catch (e) {
+        console.error('Error al parsear SERVICIOS_JSON:', e);
+    }
+}

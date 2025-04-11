@@ -66,7 +66,7 @@
                                 <h4>Orden de compra</h4>
                             </td>
                             <td width="20%">
-                               
+
                             </td>
                         </tr>
                     </table>
@@ -132,7 +132,7 @@
                             <td>
                                 <input type="text" class="form-control form-control-sm" id="mobile" value="938 1804173">
                             </td>
-                          
+
                         </tr>
                     </table>
 
@@ -143,7 +143,7 @@
                         </tr>
                         <tr>
                             <td width="33%">
-                                <input type="text" class="form-control form-control-sm" id="providerName" value="Idea Gráficos S.A. de C.V.">
+                                <input type="text" class="form-control form-control-sm" id="providerName">
                             </td>
                             <td width="33%">Ciudad / País</td>
                             <td width="33%">Fecha de entrega</td>
@@ -151,15 +151,15 @@
                         <tr>
                             <td>Contacto</td>
                             <td>
-                                <input type="text" class="form-control form-control-sm" id="providerCity" value="Villahermosa, México">
+                                <input type="text" class="form-control form-control-sm" id="providerCity">
                             </td>
                             <td>
-                                <input type="date" class="form-control form-control-sm" id="deliveryDate" value="2025-03-11">
+                                <input type="date" class="form-control form-control-sm" id="deliveryDate">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <input type="text" class="form-control form-control-sm" id="providerContact" value="Alejandra Juárez Pacheco">
+                                <input type="text" class="form-control form-control-sm" id="providerContact">
                             </td>
                             <td>Teléfono</td>
                             <td>Celular</td>
@@ -167,21 +167,21 @@
                         <tr>
                             <td>Dirección</td>
                             <td>
-                                <input type="text" class="form-control form-control-sm" id="providerPhone" value="(993) 353 5385">
+                                <input type="text" class="form-control form-control-sm" id="providerPhone">
                             </td>
                             <td>
-                                <input type="text" class="form-control form-control-sm" id="providerMobile" value="(993) 339 5307">
+                                <input type="text" class="form-control form-control-sm" id="providerMobile">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <input type="text" class="form-control form-control-sm" id="providerAddress" value="Juan Álvarez No. 505, Col. Centro C.P. 86000, Villahermosa, Tabasco">
+                                <input type="text" class="form-control form-control-sm" id="providerAddress">
                             </td>
                             <td colspan="2">E-mail</td>
                         </tr>
                         <tr>
                             <td colspan="3">
-                                <input type="email" class="form-control form-control-sm" id="providerEmail" value="alejandra@grupoidea.com.mx">
+                                <input type="email" class="form-control form-control-sm" id="providerEmail">
                             </td>
                         </tr>
                     </table>
@@ -234,13 +234,7 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <textarea class="form-control" id="observations" rows="4">De acuerdo con la nueva disposición fiscal del SAT para la facturación versión 4.0 considerar lo siguiente:
-Forma de pago: "PPD" por definir (posteriormente debe emitirse el complemento de pago). "99%" transferencia electrónica de fondos.
-Método de pago: "PUE" pago en parcialidades o diferido.
-Uso de CFDI: G03 gastos en general
-Debe incluir el número de la Orden de compra-PO y el número de Recepción del bien y/o servicio-RE en la factura
-
-Recepción de facturas: Martes y jueves en horario de 9:00 - 15:00 horas</textarea>
+                                <textarea class="form-control" id="observations" rows="4"></textarea>
                             </td>
                         </tr>
                     </table>
@@ -259,10 +253,10 @@ Recepción de facturas: Martes y jueves en horario de 9:00 - 15:00 horas</textar
                         </tr>
                         <tr>
                             <td class="text-center">
-                                <input type="text" class="form-control form-control-sm" id="requestedBy" value="Virginia Licona Andrade">
+                                <input type="text" class="form-control form-control-sm" id="requestedBy">
                             </td>
                             <td class="text-center">
-                                <input type="text" class="form-control form-control-sm" id="approvedBy" value="Ricardo Castell Prata">
+                                <input type="text" class="form-control form-control-sm" id="approvedBy">
                             </td>
                         </tr>
                     </table>
@@ -334,19 +328,6 @@ Recepción de facturas: Martes y jueves en horario de 9:00 - 15:00 horas</textar
         // Datos de productos
         let products = [];
 
-        // Precargar algunos productos de ejemplo
-        const sampleProducts = [{
-                description: 'Bolsas. Morral con jarreta color azul, modelo TXM22261, Valencia con terminado en 1 tinta, solo frente',
-                quantity: 50,
-                price: 42.50
-            }
-        ];
-
-        // Agregar productos de muestra al cargar
-        sampleProducts.forEach(product => {
-            products.push(product);
-        });
-
         // Renderizar productos iniciales
         renderProducts();
         calculateTotals();
@@ -399,21 +380,22 @@ Recepción de facturas: Martes y jueves en horario de 9:00 - 15:00 horas</textar
             products.forEach((product, index) => {
                 const row = document.createElement('tr');
 
-                // Calcular importe
-                const amount = product.quantity * product.price;
+                const quantity = parseInt(product.quantity) || 0;
+                const price = parseFloat(product.price) || 0;
+                const amount = quantity * price;
 
                 row.innerHTML = `
-                        <td>${index + 1}</td>
-                        <td>${product.description}</td>
-                        <td class="text-center">${product.quantity}</td>
-                        <td class="text-end">$ ${product.price.toFixed(2)}</td>
-                        <td class="text-end">$ ${amount.toFixed(2)}</td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-sm btn-danger deleteBtn" data-index="${index}">
-                                Eliminar
-                            </button>
-                        </td>
-                    `;
+                <td>${index + 1}</td>
+                <td>${product.description || ''}</td>
+                <td class="text-center">${quantity}</td>
+                <td class="text-end">$ ${price.toFixed(2)}</td>
+                <td class="text-end">$ ${amount.toFixed(2)}</td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-sm btn-danger deleteBtn" data-index="${index}">
+                        Eliminar
+                    </button>
+                </td>
+            `;
 
                 productList.appendChild(row);
             });
@@ -431,24 +413,21 @@ Recepción de facturas: Martes y jueves en horario de 9:00 - 15:00 horas</textar
 
         // Función para calcular totales
         function calculateTotals() {
-            // Calcular subtotal
             const subtotal = products.reduce((sum, product) => {
-                return sum + (product.quantity * product.price);
+                const quantity = parseInt(product.quantity) || 0;
+                const price = parseFloat(product.price) || 0;
+                return sum + (quantity * price);
             }, 0);
 
-            // Calcular IVA (16%)
             const iva = subtotal * 0.16;
-
-            // Calcular total
             const total = subtotal + iva;
 
-            // Actualizar elementos en el DOM
             subtotalElement.textContent = `$ ${subtotal.toFixed(2)}`;
             ivaElement.textContent = `$ ${iva.toFixed(2)}`;
             totalElement.textContent = `$ ${total.toFixed(2)}`;
         }
 
-        // Mostrar modal de orden de compra al cargar la página (descomentar si se desea)
+        // Mostrar modal de orden de compra al cargar la página (opcional)
         // purchaseOrderModal.show();
     });
 </script>

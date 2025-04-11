@@ -649,16 +649,20 @@ Route::get('/obtenerAreaSolicitante', [mrController::class, 'obtenerAreaSolicita
 Route::post('/guardarYDarVistoBueno', [mrController::class, 'guardarYDarVistoBueno']);
 Route::post('/rechazar', [mrController::class, 'rechazar']);
 
+//==============================================  M.R APRUEBA LIDER  ============================================== 
 
 Route::get('/Requisición_materiales_líderes', function () {return view('compras.requisicionesmaterial.requisicionlider');});
-
 Route::get('/Tablarequisicion', [mrController::class, 'Tablarequisicion']);
 
-Route::get('/Tablarequsicionaprobada', [mrController::class, 'Tablarequsicionaprobada']);
+//==============================================  M.R APRUEBA DIRECCION  ============================================== 
 
+Route::get('/Tablarequsicionaprobada', [mrController::class, 'Tablarequsicionaprobada']);
 Route::get('/Requisición_materiales_aprobación', function () {return view('compras.requisicionesmaterial.requisiconaprobar');});
 
+//==============================================  BITACORA M.R  ============================================== 
+
 Route::get('/Bitácora', function () {return view('compras.requisicionesmaterial.bitacora');});
+Route::get('/Tablabitacora', [mrController::class, 'Tablabitacora']);
 
 
 //==============================================   DIRECTORIO INTERNO  ============================================== 
