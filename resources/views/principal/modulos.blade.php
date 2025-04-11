@@ -613,22 +613,7 @@
                         $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRolAnalista || $tieneSoloRolAsistentePlaneacion;
                         @endphp
 
-                        <!-- @php
-                        use Illuminate\Support\Str;
-
-                        $user = auth()->user();
-                        $rolesUsuario = $user->roles->pluck('name')->map(fn($r) => Str::lower($r))->toArray();
-                        $tieneSoloUnRol = count($rolesUsuario) === 1;
-
-                        $tieneSoloRolIntendente = $tieneSoloUnRol && in_array(Str::lower('Intendente'), $rolesUsuario);
-                        $tieneSoloRolSSTJunior = $tieneSoloUnRol && in_array(Str::lower('Consultor-Instructor (Junior/Senior)'), $rolesUsuario);
-                        $tieneSoloRolAnalista = $tieneSoloUnRol && in_array(Str::lower('Analista HSEQ'), $rolesUsuario);
-                        $tieneSoloRolAsistentePlaneacion = $tieneSoloUnRol && in_array(Str::lower('Asistente de planeación y logística'), $rolesUsuario);
-
-                        $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRolAnalista || $tieneSoloRolAsistentePlaneacion;
-                        @endphp
- -->
-
+         
 
 
                         <div class="modules">
