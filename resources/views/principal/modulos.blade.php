@@ -606,7 +606,10 @@
                         $user = auth()->user();
                         $tieneSoloRolIntendente = $user->roles->count() === 1 && $user->hasRole('Intendente');
                         $tieneSoloRolSSTJunior = $user->roles->count() === 1 && $user->hasRole('Consultor-Instructor (Junior/Senior)');
-                        $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior;
+                        $tieneSoloRoAnalistaHSEQ = $user->roles->count() === 1 && $user->hasRole('Analista HSEQ');
+
+                        $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRoAnalistaHSEQ;
+
                         @endphp
 
                         <div class="modules">
