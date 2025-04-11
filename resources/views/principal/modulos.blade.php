@@ -602,7 +602,7 @@
 
                         </div>
 
-                        <!-- @php
+                        @php
                         $user = auth()->user();
 
                         $tieneSoloRolIntendente = $user->roles->count() === 1 && $user->hasRole('Intendente');
@@ -611,9 +611,9 @@
                         $tieneSoloRolAsistentePlaneacion = $user->roles->count() === 1 && $user->hasRole('Asistente de planeación y logística');
 
                         $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRolAnalista || $tieneSoloRolAsistentePlaneacion;
-                        @endphp -->
+                        @endphp
 
-                        @php
+                        <!-- @php
                         use Illuminate\Support\Str;
 
                         $user = auth()->user();
@@ -627,8 +627,8 @@
 
                         $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRolAnalista || $tieneSoloRolAsistentePlaneacion;
                         @endphp
+ -->
 
-                        
 
 
                         <div class="modules">
