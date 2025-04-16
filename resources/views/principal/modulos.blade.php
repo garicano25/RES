@@ -607,10 +607,9 @@
 
                         $tieneSoloRolIntendente = $user->roles->count() === 1 && $user->hasRole('Intendente');
                         $tieneSoloRolSSTJunior = $user->roles->count() === 1 && $user->hasRole('Consultor-Instructor (Junior/Senior)');
-                        <!-- $tieneSoloRolAnalista = $user->roles->count() === 1 && $user->hasRole('Analista HSEQ'); -->
                         $tieneSoloRolAsistentePlaneacion = $user->roles->count() === 1 && $user->hasRole('Asistente de planeación y logística');
 
-                        <!-- $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRolAnalista || $tieneSoloRolAsistentePlaneacion; -->
+                        $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRolAsistentePlaneacion;
                         @endphp
 
 
