@@ -152,7 +152,7 @@ Route::post('/verificar-codigo', [VerificationController::class, 'verificarCodig
 //==============================================  Módulos  ============================================== 
 // Route::get('/Módulos', function () {return view('principal.modulos');})->middleware('role:Superusuario,Administrador');
 
-Route::get('/Módulos', [catalogoanuncioController::class, 'index'])->middleware('role:Superusuario,Administrador,Analista HSEQ,Asistente de planeación y logística,Desarrollador de software,Intendente,Consultor-Instructor (Junior/Senior),Analista hseq');
+Route::get('/Módulos', [catalogoanuncioController::class, 'index'])->middleware('role:Superusuario,Administrador,Analista HSEQ,Asistente de planeación y logística,Desarrollador de software,Intendente,Consultor-Instructor (Junior/Senior)');
 
 
 //==============================================  USUARIO  ============================================== 
