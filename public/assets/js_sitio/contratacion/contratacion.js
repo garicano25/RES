@@ -4220,6 +4220,16 @@ $('#Tablasoportecontrato').on('click', 'td>button.EDITAR', function () {
     editarDatoTabla(row.data(), 'formularioSOPORTECONTRATO', 'miModal_SOPORTECONTRATO', 1);
 
     $('#miModal_SOPORTECONTRATO .modal-title').html(row.data().NOMBRE_DOCUMENTO_SOPORTECONTRATO);
+
+
+    const mostrarDivdocumentos = ['11','14'];
+    const tipoSeleccionado1 = String(row.data().TIPO_DOCUMENTO_SOPORTECONTRATO); // asegurar que es string
+
+    if (mostrarDivdocumentos.includes(tipoSeleccionado1)) {
+        document.getElementById('FECHAS_SOPORTEDOCUMENTOSCONTRATO').style.display = 'block';
+    } else {
+        document.getElementById('FECHAS_SOPORTEDOCUMENTOSCONTRATO').style.display = 'none';
+    }
  
 });
 
