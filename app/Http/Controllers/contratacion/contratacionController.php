@@ -1438,7 +1438,7 @@ public function obtenerdocumentosoportescontratos(Request $request)
                                     $soportes = documentoscolaboradorcontratoModel::find($request->ID_DOCUMENTO_COLABORADOR_CONTRATO);
                                     $soportes->update($request->except('DOCUMENTO_SOPORTECONTRATO'));
 
-                                    if ($request->hasFile('DOCUMENTO_SOPORTE')) {
+                                    if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
                                         if ($soportes->DOCUMENTO_SOPORTECONTRATO && Storage::exists($soportes->DOCUMENTO_SOPORTECONTRATO)) {
                                             Storage::delete($soportes->DOCUMENTO_SOPORTECONTRATO); 
                                         }
