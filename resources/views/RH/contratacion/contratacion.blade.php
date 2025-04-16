@@ -1144,7 +1144,7 @@
 
                     <div class="mb-3">
                         <label>Tipo de documento *</label>
-                        <select class="form-select" id="TIPO_DOCUMENTO_SOPORTECONTRATO" name="TIPO_DOCUMENTO_SOPORTECONTRATO" required>
+                        <select class="form-select" id="TIPO_DOCUMENTO_SOPORTECONTRATO" name="TIPO_DOCUMENTO_SOPORTECONTRATO" >
                             <option value="0" disabled selected>Seleccione una opción</option>
                             <option value="1">Descripción del puesto de trabajo (DPT) firmado por el colaborador</option>
                             <option value="2">Antecedentes, Imparcialidad y Beneficiarios</option>
