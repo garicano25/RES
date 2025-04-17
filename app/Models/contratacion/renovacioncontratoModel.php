@@ -18,6 +18,7 @@ class renovacioncontratoModel extends Model
         'FECHAF_RENOVACION',
         'SALARIO_RENOVACION',
         'DOCUMENTOS_RENOVACION',
-        'ACTIVO'
+        'ACTIVO',
+        'PROCEDE_ADENDA'
     ];
 }

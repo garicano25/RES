@@ -421,9 +421,10 @@ function obtenerevidencias(evidencias) {
         contenedorVerificaciones.appendChild(divVerificacion);
 
         const botonEliminar = divVerificacion.querySelector('.botonEliminarVerificacion');
-        botonEliminar.addEventListener('click', function () {
-            contenedor.removeChild(divVerificacion);
-        });
+       botonEliminar.addEventListener('click', function () {
+    contenedorVerificaciones.removeChild(divVerificacion);
+});
+
 
 
         const botonEliminarArchivo = divVerificacion.querySelector('.botonEliminarArchivo');

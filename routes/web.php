@@ -465,6 +465,8 @@ Route::get('/mostrardocumentosoportecontrato/{id}', [contratacionController::cla
 // RENOVACION DE CONTRATO
 Route::get('/Tablarenovacioncontrato', [contratacionController::class, 'Tablarenovacioncontrato']);
 Route::get('/mostrardocumentorenovacion/{id}', [contratacionController::class, 'mostrardocumentorenovacion']);
+Route::get('/mostraradenda/{id}', [contratacionController::class, 'mostraradenda']);
+
 
 // INFORAMCION MEDICA 
 Route::get('/Tablainformacionmedica', [contratacionController::class, 'Tablainformacionmedica']);

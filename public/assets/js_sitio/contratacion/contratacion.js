@@ -2052,9 +2052,8 @@ $('#Tabladocumentosoporte').on('click', 'td>button.EDITAR', function () {
     $('#NOMBRE_DOCUMENTO').prop('readonly', true); 
 
 
-     // Mostrar el div solo si el TIPO_DOCUMENTO está en el listado
      const mostrarDivTipos = ['1', '2', '3', '14'];
-     const tipoSeleccionado = String(row.data().TIPO_DOCUMENTO); // asegurar que es string
+     const tipoSeleccionado = String(row.data().TIPO_DOCUMENTO); 
  
      if (mostrarDivTipos.includes(tipoSeleccionado)) {
          document.getElementById('FECHAS_SOPORTEDOCUMENTOS').style.display = 'block';
@@ -2111,12 +2110,10 @@ function cargarDocumentosGuardados() {
         success: function (data) {
             let select = $('#TIPO_DOCUMENTO');
 
-            // Primero, restablecemos todas las opciones
             select.find('option').each(function () {
-                $(this).prop('disabled', false).css('color', ''); // habilitar y quitar color
+                $(this).prop('disabled', false).css('color', ''); 
             });
 
-            // Luego, deshabilitamos y pintamos de verde las guardadas
             data.forEach(function (tipoDocumento) {
                 select.find(`option[value="${tipoDocumento}"]`)
                     .prop('disabled', false)
@@ -2811,6 +2808,8 @@ $('#Tabladocumentosoportecontrato').on('click', '.ver-archivo-soportescontratos'
 // <!--  RENOVACION CONTRATO-->
 // <!-- ============================================================== -->
 
+let fechaRenovacionGlobal = '';
+
 
 document.addEventListener('DOMContentLoaded', function() {
     var archivorenovacion = document.getElementById('DOCUMENTOS_RENOVACION');
@@ -2940,7 +2939,110 @@ Modalrenovacioncontrato.addEventListener('hidden.bs.modal', event => {
 
     document.getElementById('ERROR_DOCUMENTORENOVACION').style.display = 'none';
 
+    document.getElementById('REQUIERE_ADENDA').style.display = 'none';
+
+    document.getElementById('AGREGAR_ADENDA').style.display = 'none';
+
+
+    $(".adendadiv").empty();
+
+
 })
+
+
+document.addEventListener('DOMContentLoaded', function () {
+        const radioSi = document.getElementById('procedesi');
+        const radioNo = document.getElementById('procedeno');
+        const agregarAdendaDiv = document.getElementById('AGREGAR_ADENDA');
+
+        function toggleAdendaDiv() {
+            if (radioSi.checked) {
+                agregarAdendaDiv.style.display = 'block';
+            } else {
+                agregarAdendaDiv.style.display = 'none';
+            }
+        }
+
+        radioSi.addEventListener('change', toggleAdendaDiv);
+        radioNo.addEventListener('change', toggleAdendaDiv);
+    });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const botonagregarevidencia = document.getElementById('botonagregarevidencia');
+    const btnVerificacion = document.getElementById('btnVerificacion');
+
+
+    botonagregarevidencia.addEventListener('click', function () {
+        agregarevidencia();
+    });
+
+   
+function agregarevidencia() {
+    const divVerificacion = document.createElement('div');
+    divVerificacion.classList.add('row', 'generarverificacion', 'mb-3');
+    divVerificacion.innerHTML = `
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <label>Fecha Inicio *</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" name="FECHAI_ADENDA[]">
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <label>Fecha Fin *</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" name="FECHAF_ADENDA[]">
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <label>Comentario *</label>
+                    <textarea class="form-control" name="COMENTARIO_ADENDA[]" rows="3"></textarea>
+                </div>
+                <div class="col-12 mt-2">
+                    <label class="form-label">Subir documento (PDF) *</label>
+                    <div class="d-flex align-items-center">
+                        <input type="file" class="form-control me-2" name="DOCUMENTO_ADENDA[]" accept=".pdf">
+                        <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mt-4">
+            <div class="form-group text-center">
+                <button type="button" class="btn btn-danger botonEliminarVerificacion">Eliminar adenda <i class="bi bi-trash-fill"></i></button>
+            </div>
+        </div>
+    `;
+
+    const contenedor = document.querySelector('.adendadiv');
+    contenedor.appendChild(divVerificacion);
+
+    const fechaFinInput = divVerificacion.querySelector('input[name="FECHAF_ADENDA[]"]');
+    if (fechaRenovacionGlobal) {
+        fechaFinInput.value = fechaRenovacionGlobal;
+    }
+
+    // Listeners para eliminar
+    const botonEliminar = divVerificacion.querySelector('.botonEliminarVerificacion');
+    botonEliminar.addEventListener('click', function () {
+        contenedor.removeChild(divVerificacion);
+    });
+
+    const botonEliminarArchivo = divVerificacion.querySelector('.botonEliminarArchivo');
+    const inputArchivo = divVerificacion.querySelector('input[type="file"]');
+    botonEliminarArchivo.addEventListener('click', function () {
+        inputArchivo.value = '';
+    });
+}
+
+
+});
 
 
 
@@ -2982,33 +3084,106 @@ function cargarTablaRenovacionContrato() {
             },
             dataSrc: 'data'
         },
-        columns: [
-            { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
-            { data: 'NOMBRE_DOCUMENTO_RENOVACION', className: 'text-center' },
-            {
-                data: null,
-                render: function (data, type, row) {
-                    let fechaInicio = row.FECHAI_RENOVACION;
-                    let fechaFin = row.FECHAF_RENOVACION;
-                    let hoy = new Date();
-                    let fechaFinDate = new Date(fechaFin);
+columns: [
+    {
+        data: null,
+        render: function (data, type, row, meta) {
+            return meta.row + 1;
+        },
+        className: 'text-center'
+    },
+    {
+        data: null,
+        render: function (data, type, row) {
+            let html = `
+                <div class="bloque-renovacion p-2 mb-2 border-bottom border-secondary">
+                    <strong>Renovación contrato</strong>
+                </div>
+            `;
 
-                    let diferenciaDias = Math.ceil((fechaFinDate - hoy) / (1000 * 60 * 60 * 24));
+            if (row.ADENDAS && row.ADENDAS.length > 0) {
+                row.ADENDAS.forEach((_, index) => {
+                    html += `
+                        <div class="bloque-adenda p-2 mb-2 border-bottom border-secondary bg-light">
+                            <span class="text-muted">Adenda ${index + 1}</span>
+                        </div>
+                    `;
+                });
+            }
 
-                    let estadoTexto = "";
-                    if (diferenciaDias < 0) {
-                        estadoTexto = `<span style="color: red;"> <br>(Terminado)</span>`;
-                    } else {
-                        estadoTexto = `<span style="color: green;"> <br>(${diferenciaDias} días restantes)</span>`;
-                    }
+            return html;
+        },
+        className: 'text-center'
+    },
+    {
+        data: null,
+        render: function (data, type, row) {
+            const hoy = new Date();
+            const fechaInicio = row.FECHAI_RENOVACION;
+            const fechaFin = row.FECHAF_RENOVACION;
+            const fechaFinDate = new Date(fechaFin);
+            const diferenciaDias = Math.ceil((fechaFinDate - hoy) / (1000 * 60 * 60 * 24));
 
-                    return `${fechaInicio} <br> ${fechaFin} ${estadoTexto}`;
-                },
-                className: 'text-center'
-            },
-            { data: 'BTN_DOCUMENTO', className: 'text-center' },
-            { data: 'BTN_EDITAR', className: 'text-center' },
-        ],
+            const estado = diferenciaDias < 0
+                ? `<span style="color: red;">(Terminado)</span>`
+                : `<span style="color: green;">(${diferenciaDias} días restantes)</span>`;
+
+            let html = `
+                <div class="bloque-renovacion p-2 mb-2 border-bottom border-secondary">
+                    <div><strong>${fechaInicio}</strong></div>
+                    <div><strong>${fechaFin}</strong></div>
+                    <div>${estado}</div>
+                </div>
+            `;
+
+            if (row.ADENDAS && row.ADENDAS.length > 0) {
+                row.ADENDAS.forEach(adenda => {
+                    html += `
+                        <div class="bloque-adenda p-2 mb-2 border-bottom border-secondary bg-light">
+                            <div>${adenda.FECHAI_ADENDA}</div>
+                            <div>${adenda.FECHAF_ADENDA}</div>
+                        </div>
+                    `;
+                });
+            }
+
+            return html;
+        },
+        className: 'text-center'
+    },
+   {
+        data: null,
+        render: function (data, type, row) {
+            let html = `
+                <div class="bloque-renovacion p-2 mb-2 border-bottom border-secondary">
+                    ${row.BTN_DOCUMENTO || ''}
+                </div>
+            `;
+
+            if (row.ADENDAS && row.ADENDAS.length > 0) {
+                row.ADENDAS.forEach(adenda => {
+                    html += `
+                        <div class="bloque-adenda p-2 mb-2 border-bottom border-secondary bg-light">
+                            ${adenda.BTN_DOCUMENTO || ''}
+                        </div>
+                    `;
+                });
+            }
+
+            return html;
+        },
+        className: 'text-center'
+    },
+    {
+        data: 'BTN_EDITAR',
+        className: 'text-center'
+    }
+],
+
+
+
+
+
         columnDefs: [
             { targets: 0, title: '#', className: 'all text-center' },
             { targets: 1, title: 'Nombre del documento', className: 'all text-center' },  
@@ -3034,7 +3209,93 @@ $('#Tablarenovacioncontrato').on('click', 'td>button.EDITAR', function () {
     $('#miModal_RENOVACION .modal-title').html(row.data().NOMBRE_DOCUMENTO_RENOVACION);
 
 
+    document.getElementById('REQUIERE_ADENDA').style.display = 'block';
+
+  fechaRenovacionGlobal = row.data().FECHAF_RENOVACION || ''; 
+
+    if (row.data().PROCEDE_ADENDA == "1") {
+        document.getElementById('AGREGAR_ADENDA').style.display = 'block';
+        document.getElementById('procedesi').checked = true;
+    } else if (row.data().PROCEDE_ADENDA == "2") {
+        document.getElementById('AGREGAR_ADENDA').style.display = 'none';
+        document.getElementById('procedeno').checked = true;
+    } else {
+        document.getElementById('AGREGAR_ADENDA').style.display = 'none';
+        document.getElementById('procedesi').checked = false;
+        document.getElementById('procedeno').checked = false;
+    }
+
+    $(".adendadiv").empty();
+
+if (row.data().ADENDAS && row.data().ADENDAS.length > 0) {
+        obtenerAdendas(row.data().ADENDAS);
+    }
 });
+
+
+function obtenerAdendas(adendas) {
+    const contenedor = document.querySelector('.adendadiv');
+    contenedor.innerHTML = '';
+
+    adendas.forEach(function (item) {
+        const divVerificacion = document.createElement('div');
+        divVerificacion.classList.add('row', 'generarverificacion', 'mb-3');
+
+        divVerificacion.innerHTML = `
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-4 mt-2">
+                        <label>Fecha Inicio *</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control mydatepicker" name="FECHAI_ADENDA[]" value="${item.FECHAI_ADENDA || ''}" placeholder="aaaa-mm-dd">
+                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-4 mt-2">
+                        <label>Fecha Fin *</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control mydatepicker" name="FECHAF_ADENDA[]" value="${item.FECHAF_ADENDA || ''}" placeholder="aaaa-mm-dd" max="${fechaRenovacionGlobal}">
+                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-4 mt-2">
+                        <label>Comentario *</label>
+                        <textarea class="form-control" name="COMENTARIO_ADENDA[]" rows="3">${item.COMENTARIO_ADENDA || ''}</textarea>
+                    </div>
+                    <div class="col-12 mt-2">
+                    <label class="form-label">Subir documento (PDF) *</label>
+                    <div class="d-flex align-items-center">
+                        <input type="file" class="form-control me-2" name="DOCUMENTO_ADENDA[]" accept=".pdf">
+                        <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-4">
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-danger botonEliminarVerificacion">Eliminar adenda <i class="bi bi-trash-fill"></i></button>
+                </div>
+            </div>
+        `;
+
+        contenedor.appendChild(divVerificacion);
+
+        const botonEliminar = divVerificacion.querySelector('.botonEliminarVerificacion');
+        botonEliminar.addEventListener('click', function () {
+            contenedor.removeChild(divVerificacion);
+        });
+
+        const botonEliminarArchivo = divVerificacion.querySelector('.botonEliminarArchivo');
+        const inputArchivo = divVerificacion.querySelector('input[type="file"]');
+        botonEliminarArchivo.addEventListener('click', function () {
+            inputArchivo.value = '';
+        });
+    });
+}
+
 
 $('#Tablarenovacioncontrato').on('click', '.ver-archivo-informacionrenovacion', function () {
     var tr = $(this).closest('tr');
@@ -3054,6 +3315,35 @@ $('#Tablarenovacioncontrato').on('click', '.ver-archivo-informacionrenovacion', 
 
 
 
+// $('#Tablarenovacioncontrato').on('click', '.ver-archivo-informacionadenda', function () {
+//     var tr = $(this).closest('tr');
+//     var row = Tablarenovacioncontrato.row(tr);
+//     var id = $(this).data('id');
+
+//     if (!id) {
+//         alert('ARCHIVO NO ENCONTRADO.');
+//         return;
+//     }
+
+//     var nombreDocumento = row.data().COMENTARIO_ADENDA;
+//     var url = '/mostraradenda/' + id;
+    
+//     abrirModal(url, nombreDocumento);
+// });
+
+
+
+
+
+$('#Tablarenovacioncontrato').on('click', '.ver-archivo-informacionadenda', function () {
+    var id = $(this).data('id');
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO');
+        return;
+    }
+    var url = '/mostraradenda/' + id;
+    abrirModal(url, 'Archivo adenda');
+});
 // <!-- ============================================================== -->
 // <!--INFORMACION MEDICA-->
 // <!-- ============================================================== -->
@@ -3122,9 +3412,6 @@ $("#guardarINFORMACIONMEDICA").click(function (e) {
                     }
 
             })
-            
-            
-            
         }, 1)
         
     } else {
