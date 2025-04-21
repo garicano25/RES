@@ -194,7 +194,7 @@
                         </ul>
                     </li>
 
-                    @endif
+                 
 
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -208,6 +208,7 @@
                         </ul>
                     </li>
 
+                    @endif
 
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="{{ url('/Rec.Empleado') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
@@ -224,6 +225,10 @@
                         <i class="bi bi-clipboard-data-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Eval.desempeño</span><span class="d-none d-lg-inline">Eval.desempeño</span>
                     </a>
                 </li> --}}
+
+                @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
+
+
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="{{ url('/Desvinculación') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-person-dash-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Desvinculación</span><span class="d-none d-lg-inline">Desvinculación</span>
@@ -237,9 +242,7 @@
                                 <span class="d-none d-lg-inline">Catálogos</span>
                             </a>
                             <ul class="dropdown-menu">
-                                {{-- <li><a class="dropdown-item" href="{{ url('/Jerárquico') }}">Catálogo nivel Jerárquico</a>
-                        </li>
-                        <hr class="dropdown-divider"> --}}
+                              
                         <li><a class="dropdown-item" href="{{url('/Catálogo_ppt')}}">Catálogos de PPT</a>
                         </li>
                         <hr class="dropdown-divider">
@@ -251,51 +254,11 @@
                         <hr class="dropdown-divider">
                         <li><a class="dropdown-item" href="{{url('/Catálogo_generales')}}">Catálogos generales</a>
                         </li>
-                        {{-- <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/FuncionesCargo')}}">Funciones clave del cargo</a>
-                        </li>
-                        <hr class="dropdown-divider">
-                        <li><a class="dropdown-item" href="{{url('/Funcionesgestión')}}">Funciones del sistema <br> integrado de gestión</a>
-                        </li> --}}
-                        {{-- <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/Asesores')}}">Catálogo de Asesores</a>
-                        </li> --}}
-                        {{-- <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/RelacionesExternas')}}">Relaciones externas</a>
-                        </li> --}}
-                        {{-- <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/Categorías')}}">Catálogo de Categorías </a>
-                        </li> --}}
-                        {{-- <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/CatálogoDeVacantes')}}">Catálogo de Vacantes </a>
-                        </li> --}}
-                        {{-- <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/Género')}}">Catálogo de Género </a>
-                        </li> --}}
-                        {{-- <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/Puesto-experiencia')}}">Catálogo de Puesto que se requiere como experiencia</a>
-                        </li> --}}
-                        {{-- <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/Competencias-básicas')}}">Catálogo de competencias básicas</a>
-                        </li>
-                        <hr class="dropdown-divider">
-                        <li><a class="dropdown-item" href="{{url('/Competencias-gerenciales')}}">Catálogo de competencias gerenciales</a>
-                        </li> --}}
-                        {{-- <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/Tipo-vacante')}}">Catálogo de Tipo de vacante</a>
-                        </li> --}}
-                        {{-- <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/Motivo-vacante')}}">Catálogo de Motivo vacante</a>
-                        </li> --}}
-                        {{-- <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/Área_interes')}}">Catálogo de áreas de interés</a>
-                        </li> --}}
-                        {{-- <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/Pruebas-conocimientos')}}">Catálogo de pruebas de conocimientos</a>
-                        </li> --}}
+                       
                     </ul>
                     </li>
                 </ul>
+                @endif
                 @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
                 <li class="nav-item dropdown" style="margin-left: 8px;">
                     <a class="nav-link BOTON" href="{{ url('/usuario') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
