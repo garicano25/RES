@@ -350,6 +350,8 @@ var Tablamr = $("#Tablamr").DataTable({
     { data: 'ESTADO_REVISION' }, 
     { data: 'ESTATUS' },          
     { data: 'BTN_EDITAR' },
+    { data: 'BTN_VISUALIZAR' },
+
 ],
 
 columnDefs: [
@@ -360,8 +362,78 @@ columnDefs: [
     { targets: 4, title: 'Vo. Bo ', className: 'all text-center' },
     { targets: 5, title: 'Estatus', className: 'all text-center' }, 
     { targets: 6, title: 'Editar', className: 'all text-center' },
+    { targets: 7, title: 'Visualizar', className: 'all text-center' },
+
 ]
 
+});
+
+
+
+
+$(document).ready(function() {
+    $('#Tablamr tbody').on('click', 'td>button.VISUALIZAR', function () {
+        var tr = $(this).closest('tr');
+        var row = Tablamr.row(tr);
+        
+        hacerSoloLectura(row.data(), '#miModal_MR');
+
+        ID_FORMULARIO_MR = row.data().ID_FORMULARIO_MR;
+        
+
+
+        
+        cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
+
+    
+    
+    editarDatoTabla(row.data(), 'formularioMR', 'miModal_MR', 1);
+    
+
+     if (row.data().DAR_BUENO === "1") {
+        $('#VISTO_BUENO_JEFE').show();
+         $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+         $('#BOTON_VISTO_BUENO').hide();
+         $('#guardarMR').hide();
+
+      
+    } else if (row.data().DAR_BUENO === "2") {
+        $('#VISTO_BUENO_JEFE').show();
+         $('#MOTIVO_RECHAZO_JEFE_DIV').show();
+         $('#guardarMR').show();
+         
+        
+     } else {
+         $('#VISTO_BUENO_JEFE').hide();
+        $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+       
+          
+    }
+
+
+   if (row.data().ESTADO_APROBACION === "Aprobada") {
+         $('#motivo-rechazo-container').hide();   
+         $('#APROBACION_DIRECCION').show();
+         $('#guardarMR').hide();
+
+    } else if (row.data().ESTADO_APROBACION === "Rechazada") {
+        $('#APROBACION_DIRECCION').show();
+        $('#motivo-rechazo-container').show();
+         $('#guardarMR').hide();
+                 
+     } else {
+       
+          
+    }
+
+    
+
+
+    });
+
+    $('#miModal_LINEANEGOCIO').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_LINEANEGOCIO');
+    });
 });
 
 
@@ -415,10 +487,6 @@ $('#Tablamr tbody').on('click', 'td>button.EDITAR', function () {
        
           
     }
-
-
-
-
   
 });
 
