@@ -329,7 +329,7 @@
 
 
     @if(request()->is('Confirmación'))
-    <script src="/assets/js_sitio/confirmacion/confirmacion.js?v=2.2"></script>
+    <script src="/assets/js_sitio/confirmacion/confirmacion.js?v=2.3"></script>
     @endif
 
 
