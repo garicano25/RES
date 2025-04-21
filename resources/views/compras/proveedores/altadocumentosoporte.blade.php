@@ -40,15 +40,25 @@
                             <label class="form-label">Documento *</label>
                             <select class="form-control" name="NOMBRE_DOCUMENTO" id="NOMBRE_DOCUMENTO" required>
                                 <option value="" selected disabled>Seleccione una opción</option>
-
-                                @foreach ($documetoscatalogo as $documento)
-                                <option value="{{ $documento->NOMBRE_DOCUMENTO }}">
-                                    {{ $documento->NOMBRE_DOCUMENTO }}
-                                </option>
-                                @endforeach
+                        
+                                <optgroup label="Documentos obligatorios">
+                                    @foreach ($documetoscatalogo->where('TIPO_DOCUMENTO', 1) as $documento)
+                                        <option value="{{ $documento->NOMBRE_DOCUMENTO }}">
+                                            {{ $documento->NOMBRE_DOCUMENTO }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+                        
+                                <optgroup label="Documentos opcionales">
+                                    @foreach ($documetoscatalogo->where('TIPO_DOCUMENTO', 2) as $documento)
+                                        <option value="{{ $documento->NOMBRE_DOCUMENTO }}">
+                                            {{ $documento->NOMBRE_DOCUMENTO }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
                             </select>
                         </div>
-
+                        
 
 
                         <div class="col-12 mb-3">

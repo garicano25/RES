@@ -65,6 +65,10 @@ use App\Http\Controllers\contratacion\CvController;
 use App\Http\Controllers\desvinculacion\desvinculacionController;
 
 
+// CONTROLADORES DE CLIENTES
+
+use App\Http\Controllers\clientes\clientesController;
+
 // CONTROLADORES DE SOLICITUDES
 use App\Http\Controllers\solicitudes\solicitudesController;
 use App\Http\Controllers\solicitudes\catalogomediocontactoController;
@@ -531,6 +535,27 @@ Route::get('/mostrardocumenadeudo/{id}', [desvinculacionController::class, 'most
 ////////////////////////////////////////////////////////////////VENTAS///////////////////////////////////////////////////////7
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//==============================================   CLIENTES ============================================== 
+
+Route::get('/Clientes', [clientesController::class, 'index']);
+Route::post('/ClienteSave', [clientesController::class, 'store']);
+Route::get('/Tablaclientesventas', [clientesController::class, 'Tablaclientesventas']);
+Route::get('/ClienteDelete', [clientesController::class, 'store']);
+Route::get('/mostrarconstanciacliente/{id}', [clientesController::class, 'mostrarconstanciacliente']);
+
+// VERIFICACION DEL CLIENTE
+Route::get('/Tablaverificacionusuario', [clientesController::class, 'Tablaverificacionusuario']);
+Route::get('/mostrarverificacionclienteventas/{id}', [clientesController::class, 'mostrarverificacionclienteventas']);
+
+// ACTA CONSTITUTIVA  DEL CLIENTE
+Route::get('/Tablactaconstitutivausuario', [clientesController::class, 'Tablactaconstitutivausuario']);
+
+Route::get('/mostraractaclienteventas/{id}', [clientesController::class, 'mostraractaclienteventas']);
+
+
+// Route::get('/Clientes', function () {return view('ventas.clientes.clientes');});
+
+
 //==============================================  SOLICITUDES  ============================================== 
  Route::get('/Solicitudes', [solicitudesController::class, 'index']);
 
@@ -577,6 +602,10 @@ Route::post('/obtenerDatosOferta', [otController::class, 'obtenerDatosOferta']);
 //==============================================   CATALOGOS SOLICITUDES ============================================== 
 
 Route::get('/Catálogo_solicitudes', function () {return view('ventas.Catalogos.catalogos_solicitud');});
+
+// CATÁLOGO TITULOS CLIENTEs
+
+Route::get('/Catálogo_clientes_titulos', function () { return view('ventas.Catalogos.catalogo_titulosclientes');});
 
 
 // CATÁLOGO DE MEDIO DE CONTACTO 

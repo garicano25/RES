@@ -647,7 +647,7 @@
                                 <h2 class="modules__text">Ventas</h2>
                             </div>
                             @else
-                            <a href="{{ url('/Solicitudes') }}" class="modules__link">
+                            <a href="{{ url('/Clientes') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/Ventas.png" alt=""></div>
                                     <h2 class="modules__text">Ventas</h2>

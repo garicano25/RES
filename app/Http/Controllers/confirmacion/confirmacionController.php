@@ -25,18 +25,34 @@ class confirmacionController extends Controller
     public function index()
     {
         $ofertasAsignadas = confirmacionModel::pluck('OFERTA_ID')->toArray();
-
-        $solicitudes = ofertasModel::select('ID_FORMULARIO_OFERTAS', 'NO_OFERTA')
+    
+        $ofertas = ofertasModel::select('ID_FORMULARIO_OFERTAS', 'NO_OFERTA')
             ->where('ESTATUS_OFERTA', 'like', '%Aceptada%')
             ->whereNotIn('ID_FORMULARIO_OFERTAS', $ofertasAsignadas)
             ->get();
-
+    
+        $solicitudes = collect();
+    
+        $grupos = $ofertas->groupBy(function ($item) {
+            return preg_replace('/-Rev\d+$/', '', $item->NO_OFERTA);
+        });
+    
+        $grupos->each(function ($grupo, $claveBase) use (&$solicitudes) {
+            $ultimo = $grupo->sortByDesc(function ($item) {
+                if (preg_match('/-Rev(\d+)$/', $item->NO_OFERTA, $m)) {
+                    return (int) $m[1]; 
+                }
+                return 0; 
+            })->first();
+    
+            $solicitudes->push($ultimo);
+        });
+    
         $verificaciones = CatalogoVerificacionInformacionModel::where('ACTIVO', 1)->get();
-
-
+    
         return view('ventas.confirmacion.confirmacion', compact('solicitudes', 'verificaciones'));
     }
-
+    
 
     public function Tablaconfirmacion(Request $request)
     {

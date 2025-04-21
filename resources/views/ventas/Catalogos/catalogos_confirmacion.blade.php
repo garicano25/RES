@@ -1,5 +1,6 @@
 @extends('principal.maestraventas')
 
+
 @section('contenido')
 
 <style>

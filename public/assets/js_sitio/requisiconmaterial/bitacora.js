@@ -69,10 +69,6 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
         { targets: 10, width: '300px' },
         { targets: 11, width: '200px' },
         { targets: 12, width: '300px' },
-        { targets: 13, width: '200px' },
-        { targets: 14, width: '200px' },
-        { targets: 15, width: '250px' },
-        { targets: 16, width: '250px' }
     ],
     columns: [
         { data: 'BTN_EDITAR' },
@@ -85,10 +81,7 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
         { data: 'FECHA_APRUEBA_MR' },
         { data: 'QUIEN_APROBACION' },
         { data: 'PRIORIDAD_MR' },
-        {
-            data: null,
-            render: () => `<input type="text" class="form-control" style="width: 100%">`
-        },
+
         {
             data: null,
             render: () => `
@@ -105,32 +98,10 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
         },
         {
             data: null,
-            render: () => `
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="requiere_po" value="Sí"> Sí
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="requiere_po" value="No"> No
-                </div>`
-        },
-        {
-            data: null,
             render: () => `<input type="date" class="form-control" style="width: 100%">`
-        },
-        {
-            data: null,
-            render: () => `<input type="text" class="form-control" style="width: 100%">`
-        },
-        {
-            data: null,
-            render: () => `
-                <select class="form-control" style="width: 100%">
-                    <option value="">Seleccione</option>
-                    <option value="Efectivo">Efectivo</option>
-                    <option value="Tarjeta de crédito">Tarjeta de crédito</option>
-                    <option value="Caja chica">Caja chica</option>
-                </select>`
         }
+        
+       
     ]
 });
 

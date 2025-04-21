@@ -72,6 +72,16 @@
             </div>
         </div>
 
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <h5 class="card-title mb-4">Catálogo título del contacto</h5>
+                    <a class="btn btn-primary mt-3" href="{{ url('/Catálogo_clientes_titulos') }}">Ver Catálogo</a>
+                </div>
+            </div>
+        </div>
+
         {{--
 
 <div class="col-md-4 mb-4">

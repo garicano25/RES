@@ -3100,21 +3100,23 @@ columns: [
                     <strong>Renovación contrato</strong>
                 </div>
             `;
-
+    
             if (row.ADENDAS && row.ADENDAS.length > 0) {
-                row.ADENDAS.forEach((_, index) => {
+                row.ADENDAS.forEach((adenda, index) => {
                     html += `
                         <div class="bloque-adenda p-2 mb-2 border-bottom border-secondary bg-light">
                             <span class="text-muted">Adenda ${index + 1}</span>
+                            <div class="text-sm text-dark mt-1">${adenda.COMENTARIO_ADENDA || ''}</div>
                         </div>
                     `;
                 });
             }
-
+    
             return html;
         },
         className: 'text-center'
     },
+    
     {
         data: null,
         render: function (data, type, row) {
@@ -3237,11 +3239,14 @@ function obtenerAdendas(adendas) {
     const contenedor = document.querySelector('.adendadiv');
     contenedor.innerHTML = '';
 
-    adendas.forEach(function (item) {
+    adendas.forEach(function (item, index) {
         const divVerificacion = document.createElement('div');
         divVerificacion.classList.add('row', 'generarverificacion', 'mb-3');
 
         divVerificacion.innerHTML = `
+            <div class="col-12 mb-2">
+                <label>Adenda ${index + 1}</label>
+            </div>
             <div class="col-12">
                 <div class="row">
                     <div class="col-4 mt-2">
@@ -3263,14 +3268,14 @@ function obtenerAdendas(adendas) {
                         <textarea class="form-control" name="COMENTARIO_ADENDA[]" rows="3">${item.COMENTARIO_ADENDA || ''}</textarea>
                     </div>
                     <div class="col-12 mt-2">
-                    <label class="form-label">Subir documento (PDF) *</label>
-                    <div class="d-flex align-items-center">
-                        <input type="file" class="form-control me-2" name="DOCUMENTO_ADENDA[]" accept=".pdf">
-                        <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
-                            <i class="bi bi-trash"></i>
-                        </button>
+                        <label class="form-label">Subir documento (PDF) *</label>
+                        <div class="d-flex align-items-center">
+                            <input type="file" class="form-control me-2" name="DOCUMENTO_ADENDA[]" accept=".pdf">
+                            <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
                     </div>
-                </div>
                 </div>
             </div>
 
@@ -3295,6 +3300,7 @@ function obtenerAdendas(adendas) {
         });
     });
 }
+
 
 
 $('#Tablarenovacioncontrato').on('click', '.ver-archivo-informacionrenovacion', function () {

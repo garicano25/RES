@@ -146,6 +146,13 @@
                     </li>
 
                     <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link BOTON" href="{{ url('/Clientes') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Clientes</span><span class="d-none d-lg-inline">Clientes</span>
+                        </a>
+                    </li>
+
+
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="{{ url('/Solicitudes') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-pencil-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Solicitudes</span><span class="d-none d-lg-inline">Solicitudes</span>
                         </a>
@@ -313,6 +320,10 @@
 
 
 
+        @if(request()->is('Clientes'))
+        <script src="/assets/js_sitio/clientes/clientes.js"></script>
+        @endif
+
 
     @if(request()->is('Solicitudes'))
     <script src="/assets/js_sitio/solicitudes/solicitudes.js?v=5.6"></script>
@@ -364,6 +375,11 @@
 
     @if(request()->is('Catálogo_verificación'))
     <script src="/assets/js_sitio/solicitudes/catalogos/catalogoverificacioninformacion.js?v=1.0"></script>
+    @endif
+
+
+    @if(request()->is('Catálogo_clientes_titulos'))
+    <script src="/assets/js_sitio/solicitudes/catalogos/catalogotitulosclientes.js"></script>
     @endif
 
 </body>

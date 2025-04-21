@@ -4,17 +4,14 @@
 
 
 <style>
-    /* Fondo verde claro como Bootstrap alert-success */
     .bg-verde-suave {
         background-color: #d1e7dd !important;
     }
 
-    /* Fondo rojo claro como Bootstrap alert-danger */
     .bg-rojo-suave {
         background-color: #f8d7da !important;
     }
 
-    /* Estilo adicional para el contenedor */
     .color-vo {
         transition: background-color 0.3s ease;
     }

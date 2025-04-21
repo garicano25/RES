@@ -18,6 +18,7 @@ Modaldocumentos.addEventListener('hidden.bs.modal', event => {
 
     document.getElementById('DOCUMENTO_SOPORTE').value = '';
     document.getElementById('iconEliminarArchivo').classList.add('d-none');
+    $('#miModal_documentos .modal-title').html('Nuevo documento');
  
 });
 
@@ -221,6 +222,7 @@ $('#Tabladocumentosproveedores tbody').on('click', 'td>button.EDITAR', function 
     ID_FORMULARIO_DOCUMENTOSPROVEEDOR = row.data().ID_FORMULARIO_DOCUMENTOSPROVEEDOR;
 
     editarDatoTabla(row.data(), 'formularioDOCUMENTOS', 'miModal_documentos', 1);
+    $('#miModal_documentos .modal-title').html(row.data().NOMBRE_DOCUMENTO);
     
 
 
@@ -240,6 +242,7 @@ $(document).ready(function() {
 
         ID_FORMULARIO_DOCUMENTOSPROVEEDOR = row.data().ID_FORMULARIO_DOCUMENTOSPROVEEDOR;
         editarDatoTabla(row.data(), 'formularioDOCUMENTOS', 'miModal_documentos', 1);
+    $('#miModal_documentos .modal-title').html(row.data().NOMBRE_DOCUMENTO);
         
        
     

@@ -376,7 +376,7 @@
 
 
     @if(request()->is('Bitácora'))
-    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.0"></script>
     @endif
 
 
@@ -398,7 +398,7 @@
     @endif
 
     @if(request()->is('Catálogo_documento_soporte'))
-    <script src="/assets/js_sitio/proveedor/catalogos/catalogodocumento.js?v=1.1"></script>
+    <script src="/assets/js_sitio/proveedor/catalogos/catalogodocumento.js?v=1.3"></script>
     @endif
 
 

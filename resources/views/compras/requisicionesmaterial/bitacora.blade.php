@@ -14,8 +14,20 @@
         overflow: hidden;
         text-overflow: ellipsis;
         text-align: center;
-        /* 👈 centrado global */
         vertical-align: middle;
+    }
+
+
+     .bg-verde-suave {
+        background-color: #d1e7dd !important;
+    }
+
+    .bg-rojo-suave {
+        background-color: #f8d7da !important;
+    }
+
+    .color-vo {
+        transition: background-color 0.3s ease;
     }
 </style>
 
@@ -42,13 +54,11 @@
                         <th class="text-center">Fecha Aprobación</th>
                         <th class="text-center">Aprobación</th>
                         <th class="text-center">Prioridad</th>
-                        <th class="text-center">Concepto</th>
                         <th class="text-center">Estatus</th>
                         <th class="text-center">Comentario</th>
-                        <th class="text-center">Requiere PO</th>
+        
                         <th class="text-center">Fecha de Adquisición</th>
-                        <th class="text-center">Proveedor</th>
-                        <th class="text-center">Forma de Pago</th>
+                      
                     </tr>
                 </thead>
                 <tbody></tbody>

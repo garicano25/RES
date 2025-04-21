@@ -12,6 +12,7 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     document.getElementById('formularioDOCUMENTOS').reset();
    
 
+    $('#miModal_documentos .modal-title').html('Agregar documentos de soporte');
 
 
 })
@@ -200,6 +201,8 @@ $('#Tabladocumentosoportes tbody').on('click', 'td>button.EDITAR', function () {
     ID_CATALOGO_DOCUMENTOSPROVEEDOR = row.data().ID_CATALOGO_DOCUMENTOSPROVEEDOR;
 
     editarDatoTabla(row.data(), 'formularioDOCUMENTOS', 'miModal_documentos',1);
+    $('#miModal_documentos .modal-title').html(row.data().NOMBRE_DOCUMENTO);
+
 
 
 });
@@ -215,6 +218,7 @@ $(document).ready(function() {
 
         ID_CATALOGO_DOCUMENTOSPROVEEDOR = row.data().ID_CATALOGO_DOCUMENTOSPROVEEDOR;
         editarDatoTabla(row.data(), 'formularioDOCUMENTOS', 'miModal_documentos', 1);
+    $('#miModal_documentos .modal-title').html(row.data().NOMBRE_DOCUMENTO);
         
 
     });

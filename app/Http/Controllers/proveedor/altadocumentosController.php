@@ -58,13 +58,15 @@ class altadocumentosController extends Controller
         $documetoscatalogo = catalogodocumentoproveedorModel::where('ACTIVO', 1)
             ->where(function ($query) use ($tipoProveedor) {
                 $query->where('TIPO_PERSONA', $tipoProveedor)
-                    ->orWhere('TIPO_PERSONA', 3); // aplica a ambos
+                    ->orWhere('TIPO_PERSONA', 3); 
             })
             ->where(function ($query) use ($tipoPersonaOpcion) {
                 $query->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)
-                    ->orWhere('TIPO_PERSONA_OPCION', 3); // aplica a ambos
+                    ->orWhere('TIPO_PERSONA_OPCION', 3); 
             })
             ->get();
+
+            
 
         return view('compras.proveedores.altadocumentosoporte', compact('documetoscatalogo', 'tipoProveedor', 'tipoPersonaOpcion'));
     }

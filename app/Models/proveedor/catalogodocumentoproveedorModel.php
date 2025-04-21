@@ -17,6 +17,7 @@ class catalogodocumentoproveedorModel extends Model
         'TIPO_PERSONA',
         'TIPO_PERSONA_OPCION',
         'DESCRIPCION_DOCUMENTO',
-        'ACTIVO'
+        'ACTIVO',
+        'TIPO_DOCUMENTO'
     ];
 }

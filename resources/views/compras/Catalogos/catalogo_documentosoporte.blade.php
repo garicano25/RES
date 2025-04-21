@@ -52,6 +52,22 @@
                             <option value="3">Moral y física</option>
                         </select>
                     </div>
+                    
+                    <div class="mb-3">
+                        <label class="col-form-label">El documento es obligatorio *</label>
+                        <div class="d-flex">
+                            <div class="form-check me-3">
+                                <input class="form-check-input" type="radio" name="TIPO_DOCUMENTO" id="obligatorio" value="1" required>
+                                <label class="form-check-label" for="obligatorio">Sí</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="TIPO_DOCUMENTO" id="opcional" value="2" required>
+                                <label class="form-check-label" for="opcional">No</label>
+                            </div>
+                        </div>
+                    </div>
+
+
 
                     <div class="mb-3">
                         <label>Nombre del documento *</label>
