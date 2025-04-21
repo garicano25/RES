@@ -82,8 +82,12 @@ class mrController extends Controller
     {
         try {
             $tabla = mrModel::where('DAR_BUENO', 1)
-            ->whereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])
-            ->get();
+                ->where(function ($query) {
+                    $query->whereNull('ESTADO_APROBACION')
+                        ->orWhereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
+                })
+                ->get();
+
             foreach ($tabla as $value) {
 
 
