@@ -81,8 +81,9 @@ class mrController extends Controller
     public function Tablarequsicionaprobada()
     {
         try {
-            $tabla = mrModel::get();
-
+            $tabla = mrModel::where('DAR_BUENO', 1)
+            ->whereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])
+            ->get();
             foreach ($tabla as $value) {
 
 
@@ -265,7 +266,9 @@ class mrController extends Controller
                 ]);
             }
 
-            $tabla = mrModel::whereIn('USUARIO_ID', $usuariosACargo)->get();
+            $tabla = mrModel::whereIn('USUARIO_ID', $usuariosACargo)
+            ->where('DAR_BUENO', 0)
+            ->get();
 
             foreach ($tabla as $value) {
                 if ($value->ACTIVO == 0) {
