@@ -176,8 +176,9 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url('/Listavacantes') }}">Banco de CV</a></li>
-                            <hr class="dropdown-divider">
                             @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
+                            
+                            <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Postulaciones')}}">Vacantes activas</a></li>
                             
                              @endif
