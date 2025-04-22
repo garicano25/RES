@@ -493,7 +493,7 @@
 
 
     @if(request()->is('Selección'))
-    <script src="/assets/js_sitio/seleccion/seleccion.js?v=19.8"></script>
+    <script src="/assets/js_sitio/seleccion/seleccion.js?v=19.9"></script>
     @endif
 
     @if(request()->is('Visualizar_selección'))

@@ -939,6 +939,7 @@ $('#Tablapptseleccion tbody').on('click', 'td>button.EDITAR', function () {
     
     $('.desabilitado1','desabilitado','desabilitado2','idioma1','idioma2','idioma3').css('background','#E2EFDA');
 
+    
     editarDatoTabla(data, form, 'miModal_ppt', 1);
     mostrarCursos(data, form);
 
@@ -1244,7 +1245,7 @@ Tablapruebaconocimientoseleccion = $("#Tablapruebaconocimientoseleccion").DataTa
             data: 'REFERENCIAS',
             render: function (data, type, row) {
                 if (!data || data.length === 0) {
-                    return 'NA'; // Retorna 'NA' si no hay datos
+                    return 'NA'; 
                 }
                 let referenciasHTML = '';
                 data.forEach(function (referencia) {
@@ -1289,10 +1290,8 @@ $('#Tablapruebaconocimientoseleccion tbody').on('click', 'td>button.EDITAR', fun
 
     editarDatoTabla(data, form, 'Modal_pruebas_concimiento', 1);
 
-    // **Limpiar pruebas antes de cargar para evitar duplicados**
     $('#obtenerpruebas').html('');
 
-    // **Cargar pruebas guardadas**
     cargarPruebasGuardadas(data.REFERENCIAS);
 
     if (data.REQUIERE_PRUEBAS === 'si') {
@@ -1305,7 +1304,6 @@ $('#Tablapruebaconocimientoseleccion tbody').on('click', 'td>button.EDITAR', fun
 
     
 
-    // **Cargar la nueva prueba sin duplicar las anteriores**
      cargarNuevaPrueba(data.ID_PRUEBAS_SELECCION);
 });
 
@@ -1313,7 +1311,7 @@ function cargarPruebasGuardadas(referencias) {
     var pruebasHTML = '';
 
     referencias.forEach(function(requerimiento) {
-        var totalPorcentaje = requerimiento.TOTAL_PORCENTAJE !== undefined ? requerimiento.TOTAL_PORCENTAJE : ''; // Asegurar que haya un valor válido
+        var totalPorcentaje = requerimiento.TOTAL_PORCENTAJE !== undefined ? requerimiento.TOTAL_PORCENTAJE : ''; 
 
         pruebasHTML += `
             <div class="col-12 mb-3">
@@ -1365,9 +1363,7 @@ function cargarNuevaPrueba(id_prueba_seleccion) {
             if (response.data.length > 0) {
                 var pruebasHTML = '';
 
-                // **Recorrer todas las pruebas nuevas y agregarlas si no existen**
                 response.data.forEach(function(nuevaPrueba) {
-                    // Verificar si la prueba ya existe en la lista
                     var existePrueba = $('input[name="TIPO_PRUEBA[]"]').filter(function () {
                         return $(this).val() === nuevaPrueba.TIPO_PRUEBA;
                     }).length > 0;
@@ -1403,7 +1399,6 @@ function cargarNuevaPrueba(id_prueba_seleccion) {
                     }
                 });
 
-                // **Añadir todas las nuevas pruebas sin eliminar las anteriores**
                 if (pruebasHTML !== '') {
                     $('#obtenerpruebas').append(pruebasHTML);
                 }
@@ -1497,15 +1492,13 @@ $('#Tablaentrevistaseleccion tbody').on('click', 'td>button.EDITAR', function ()
 
 
 
-
-
 });
 
 
 
-// <!-- ============================================================== -->
-// <!--  TODOS LOS MODALES -->
-// <!-- ============================================================== -->
+// <!-- ============================================================================================================================ -->
+//                                                       <!--  TODOS LOS MODALES -->
+// <!-- ============================================================================================================================ -->
 
 
 
@@ -2182,7 +2175,6 @@ $("#guardarFormSeleccionBuro").click(function (e) {
 // <!-- MODAL REFERENCIAS LABORALES -->
 // <!-- ============================================================== -->
 
-// Abrir el modal al hacer clic en el botón
 $("#nuevo_experiencia").click(function (e) {
     e.preventDefault();
     $("#Modal_referencias").modal("show");
@@ -2507,7 +2499,6 @@ function cargarPruebasDeConocimiento(nuevo = false) {
                 var pruebasHTML = '';
 
                 response.data.forEach(function(requerimiento, index) {
-                    // Si es una prueba nueva, mostrar todas las pruebas y ocultar el porcentaje asignado
                     if (nuevo) {
                         pruebasHTML += `
                             <div class="col-12 mb-3">
@@ -2540,7 +2531,6 @@ function cargarPruebasDeConocimiento(nuevo = false) {
                     }
                 });
 
-                // Si es un nuevo registro, se reemplazan las pruebas, si es edición, solo agregamos las nuevas
                 if (nuevo) {
                     $('#obtenerpruebas').html(pruebasHTML);  
                 } else {
@@ -2882,7 +2872,6 @@ $("#nuevo_ppt").click(function (e) {
     $("#NOMBRE_TRABAJADOR_PPT").val(nombreTrabajadorSeleccionado);
 
 
-    // Mostrar el modal
     $('.desabilitado1').css('background','#E2EFDA');
     $("#miModal_ppt").modal("show");
 });
@@ -3883,7 +3872,6 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
                  }
              });
 
-             // Abre los acordeones que tienen datos
              if (openAccordion1) {
                  var accordion1 = new bootstrap.Collapse(document.getElementById('cursoTemasCollapse'), {
                      toggle: true
@@ -3913,12 +3901,118 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
 });
 
 
+// $("#guardarFormSeleccionPPT").click(function (e) {
+//     e.preventDefault();
+
+//     formularioValido = validarFormularioV1('formularioSeleccionPPT');
+
+//     if (formularioValido) {
+
+//         if (ID_PPT_SELECCION == 0) {
+
+//             alertMensajeConfirm({
+//                 title: "¿Desea guardar la información?",
+//                 text: "Al guardarla, se usará para la creación del PPT",
+//                 icon: "question",
+//             }, async function () {
+
+//                 await loaderbtn('guardarFormSeleccionPPT');
+//                 await ajaxAwaitFormData({ 
+//                     api: 1, 
+//                     ID_PPT_SELECCION: ID_PPT_SELECCION, 
+//                     CURP: curpSeleccionada 
+//                 }, 'SeleccionSave', 'formularioSeleccionPPT', 'guardarFormSeleccionPPT', { callbackAfter: true, callbackBefore: true }, () => {
+
+//                     Swal.fire({
+//                         icon: 'info',
+//                         title: 'Espere un momento',
+//                         text: 'Estamos guardando la información',
+//                         showConfirmButton: false
+//                     });
+
+//                     $('.swal2-popup').addClass('ld ld-breath');
+
+//                 }, function (data) {
+
+//                     setTimeout(() => {
+//                         ID_PPT_SELECCION = data.PPT.ID_PPT_SELECCION;
+//                         alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para hacer uso del PPT', null, null, 1500);
+//                         $('#miModal_ppt').modal('hide');
+//                         document.getElementById('formularioSeleccionPPT').reset();
+
+
+//                         if ($.fn.DataTable.isDataTable('#Tablapptseleccion')) {
+//                             Tablapptseleccion.ajax.reload(null, false); 
+//                         }
+
+
+
+
+//                     }, 300);
+
+//                 });
+
+//             }, 1);
+
+//         } else {
+
+//             alertMensajeConfirm({
+//                 title: "¿Desea editar la información de este formulario?",
+//                 text: "Al guardarla, se editará la información del PPT",
+//                 icon: "question",
+//             }, async function () {
+
+//                 await loaderbtn('guardarFormSeleccionPPT');
+//                 await ajaxAwaitFormData({ 
+//                     api: 1, 
+//                     ID_PPT_SELECCION: ID_PPT_SELECCION, 
+//                     CURP: curpSeleccionada 
+//                 }, 'SeleccionSave', 'formularioSeleccionPPT', 'guardarFormSeleccionPPT', { callbackAfter: true, callbackBefore: true }, () => {
+
+//                     Swal.fire({
+//                         icon: 'info',
+//                         title: 'Espere un momento',
+//                         text: 'Estamos guardando la información',
+//                         showConfirmButton: false
+//                     });
+
+//                     $('.swal2-popup').addClass('ld ld-breath');
+
+//                 }, function (data) {
+
+//                     setTimeout(() => {
+//                         ID_PPT_SELECCION = data.PPT.ID_PPT_SELECCION;
+//                         alertMensaje('success', 'Información editada correctamente', 'Información guardada');
+//                         $('#miModal_ppt').modal('hide');
+//                         document.getElementById('formularioSeleccionPPT').reset();
+
+
+//                         if ($.fn.DataTable.isDataTable('#Tablapptseleccion')) {
+//                             Tablapptseleccion.ajax.reload(null, false);
+//                         }
+
+//                     }, 300);
+//                 });
+
+//             }, 1);
+//         }
+
+//     } else {
+//         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+//     }
+// });
+
+
+
 $("#guardarFormSeleccionPPT").click(function (e) {
     e.preventDefault();
 
     formularioValido = validarFormularioV1('formularioSeleccionPPT');
 
     if (formularioValido) {
+
+        const brecha = obtenerBrechaCompetencias(); // ⬅️ Se evalúa antes de guardar
+        console.log("Resumen de brechas de competencias:", brecha);
 
         if (ID_PPT_SELECCION == 0) {
 
@@ -3929,10 +4023,10 @@ $("#guardarFormSeleccionPPT").click(function (e) {
             }, async function () {
 
                 await loaderbtn('guardarFormSeleccionPPT');
-                await ajaxAwaitFormData({ 
-                    api: 1, 
-                    ID_PPT_SELECCION: ID_PPT_SELECCION, 
-                    CURP: curpSeleccionada 
+                await ajaxAwaitFormData({
+                    api: 1,
+                    ID_PPT_SELECCION: ID_PPT_SELECCION,
+                    CURP: curpSeleccionada
                 }, 'SeleccionSave', 'formularioSeleccionPPT', 'guardarFormSeleccionPPT', { callbackAfter: true, callbackBefore: true }, () => {
 
                     Swal.fire({
@@ -3952,16 +4046,14 @@ $("#guardarFormSeleccionPPT").click(function (e) {
                         $('#miModal_ppt').modal('hide');
                         document.getElementById('formularioSeleccionPPT').reset();
 
-
                         if ($.fn.DataTable.isDataTable('#Tablapptseleccion')) {
-                            Tablapptseleccion.ajax.reload(null, false); 
+                            Tablapptseleccion.ajax.reload(null, false);
                         }
 
-
-
+                        // Mostrar la brecha en consola si se requiere también después del guardado
+                        console.log("Brecha de competencias guardadas:", brecha);
 
                     }, 300);
-
                 });
 
             }, 1);
@@ -3975,10 +4067,10 @@ $("#guardarFormSeleccionPPT").click(function (e) {
             }, async function () {
 
                 await loaderbtn('guardarFormSeleccionPPT');
-                await ajaxAwaitFormData({ 
-                    api: 1, 
-                    ID_PPT_SELECCION: ID_PPT_SELECCION, 
-                    CURP: curpSeleccionada 
+                await ajaxAwaitFormData({
+                    api: 1,
+                    ID_PPT_SELECCION: ID_PPT_SELECCION,
+                    CURP: curpSeleccionada
                 }, 'SeleccionSave', 'formularioSeleccionPPT', 'guardarFormSeleccionPPT', { callbackAfter: true, callbackBefore: true }, () => {
 
                     Swal.fire({
@@ -3998,10 +4090,11 @@ $("#guardarFormSeleccionPPT").click(function (e) {
                         $('#miModal_ppt').modal('hide');
                         document.getElementById('formularioSeleccionPPT').reset();
 
-
                         if ($.fn.DataTable.isDataTable('#Tablapptseleccion')) {
                             Tablapptseleccion.ajax.reload(null, false);
                         }
+
+                        console.log("Brecha de competencias editadas:", brecha);
 
                     }, 300);
                 });
@@ -4021,13 +4114,11 @@ $("#guardarFormSeleccionPPT").click(function (e) {
 
 
  document.addEventListener("DOMContentLoaded", function () {
-    // Radios del 5%
     const radioButtons = document.querySelectorAll(
         "input[name='EDAD_CUMPLE_PPT'], input[name='GENERO_CUMPLE_PPT'], input[name='ESTADO_CIVIL_CUMPLE_PPT'], input[name='NACIONALIDAD_CUMPLE_PPT']"
     );
-    const pesoPorSeccion5 = 5 / 4; // 5% dividido entre 4 secciones
+    const pesoPorSeccion5 = 5 / 4; 
 
-    // Pares select-radio para el 20%
     const selectRadioPairs = [
         { select: "SECUNDARIA_PPT", radio: "SECUNDARIA_CUMPLE_PPT" },
         { select: "TECNICA_PPT", radio: "TECNICA_CUMPLE_PPT" },
@@ -4044,26 +4135,23 @@ $("#guardarFormSeleccionPPT").click(function (e) {
         { radio: "DOCTORADO_CUMPLE_PPT", dependentRadios: ["EGRESADO_DOCTORADO_PPT"] },
     ];
 
-    // Configuración para Word, Excel y PowerPoint
     const tools = [
         { aplica: "WORD_APLICA_PPT", cumple: "WORD_CUMPLE_PPT", peso: 1.5 },
         { aplica: "EXCEL_APLICA_PPT", cumple: "EXCEL_CUMPLE_PPT", peso: 1.5 },
         { aplica: "POWER_APLICA_PPT", cumple: "POWER_CUMPLE_PPT", peso: 3 },
     ];
 
-    // Configuración para Idiomas
     const idiomas = [
         { aplica: "APLICA_IDIOMA1_PPT", cumple: "IDIOMA1_CUMPLE_PPT", peso: 1.3333 },
         { aplica: "APLICA_IDIOMA2_PPT", cumple: "IDIOMA2_CUMPLE_PPT", peso: 1.3333 },
         { aplica: "APLICA_IDIOMA3_PPT", cumple: "IDIOMA3_CUMPLE_PPT", peso: 1.3333 },
     ];
 
-    // Configuración para Cursos
     const cursosContainer = document.querySelectorAll("textarea[name='CURSO_PPT[]']");
-    const pesoTotalCursos = 25; // 25%
+    const pesoTotalCursos = 25; 
 
       const competencias = [
-        { name: "INNOVACION", peso: 6 / 8 }, // 6% dividido entre los primeros 8
+        { name: "INNOVACION", peso: 6 / 8 }, 
         { name: "PASION", peso: 6 / 8 },
         { name: "SERVICIO_CLIENTE", peso: 6 / 8 },
         { name: "COMUNICACION_EFICAZ", peso: 6 / 8 },
@@ -4071,8 +4159,8 @@ $("#guardarFormSeleccionPPT").click(function (e) {
         { name: "INTEGRIDAD", peso: 6 / 8 },
         { name: "RESPONSABILIDAD_SOCIAL", peso: 6 / 8 },
         { name: "ADAPTABILIDAD", peso: 6 / 8 },
-        { name: "LIDERAZGO", peso: 2 }, // Liderazgo 2%
-        { name: "TOMA_DECISIONES", peso: 2 }, // Toma de decisiones 2%
+        { name: "LIDERAZGO", peso: 2 }, 
+        { name: "TOMA_DECISIONES", peso: 2 }, 
     ];
 
 
@@ -4086,31 +4174,28 @@ $("#guardarFormSeleccionPPT").click(function (e) {
     ];
 
 
-    const pesoTotalRequisitos = 5; // 5% total para este bloque
+    const pesoTotalRequisitos = 5; 
 
-    // Configuración para Puestos y Experiencia
     const experienciaGeneralRadio = document.querySelectorAll("input[name='EXPERIENCIAGENERAL_CUMPLE_PPT']");
     const experienciaEspecificaRadio = document.querySelectorAll("input[name='EXPERIENCIA_ESPECIFICA_CUMPLE_PPT']");
     const puestosContainer = document.querySelectorAll("select.puesto");
-    const pesoTotalPuestos = 18; // 18%
-    const pesoEspecifica = 7; // 7% para experiencia específica
+    const pesoTotalPuestos = 18; 
+    const pesoEspecifica = 7; 
 
-    const pesoTotal20 = 20; // 20%
-    const pesoTotal6 = 6; // 6% para herramientas
-    const pesoTotalIdiomas = 4; // 4% para idiomas
-    const totalInput = document.getElementById("SUMA_TOTAL"); // Reemplaza con el ID correcto
+    const pesoTotal20 = 20; 
+    const pesoTotal6 = 6; 
+    const pesoTotalIdiomas = 4; 
+    const totalInput = document.getElementById("SUMA_TOTAL"); 
 
     function calcularSumaTotal() {
         let sumaTotal = 0;
 
-        // Cálculo para los radios del 5%
         radioButtons.forEach((radio) => {
             if (radio.checked && radio.value === "si") {
                 sumaTotal += pesoPorSeccion5;
             }
         });
 
-        // Cálculo para los selects y radios del 20%
         let validSections = 0;
 
         selectRadioPairs.forEach(({ select, radio, dependentRadios }) => {
@@ -4143,7 +4228,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
             }
         });
 
-        // Redistribuir pesos si hay secciones inválidas
         if (validSections < selectRadioPairs.length && validSections > 0) {
             const adjustedWeight = pesoTotal20 / validSections;
 
@@ -4177,7 +4261,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
             });
         }
 
-        // Cálculo para herramientas (6%)
         let validTools = 0;
         tools.forEach(({ aplica, cumple, peso }) => {
             const aplicaElement = document.querySelector(`input[name='${aplica}']:checked`);
@@ -4191,7 +4274,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
             }
         });
 
-        // Redistribuir pesos de herramientas si alguna no aplica
         if (validTools < tools.length && validTools > 0) {
             const adjustedWeight = pesoTotal6 / validTools;
 
@@ -4207,7 +4289,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
             });
         }
 
-        // Cálculo para idiomas (4%)
         let validIdiomas = 0;
         idiomas.forEach(({ aplica, cumple, peso }) => {
             const aplicaElement = document.querySelector(`input[name='${aplica}']:checked`);
@@ -4221,7 +4302,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
             }
         });
 
-        // Redistribuir pesos de idiomas si alguno no aplica
         if (validIdiomas < idiomas.length && validIdiomas > 0) {
             const adjustedWeight = pesoTotalIdiomas / validIdiomas;
 
@@ -4237,7 +4317,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
             });
         }
 
-        // --- NUEVO CÓDIGO PARA CURSOS ---
         const cursosValidos = Array.from(cursosContainer).filter((curso) => {
             const id = curso.id.match(/\d+/)[0];
             const radioSi = document.querySelector(`input[name='CURSO_CUMPLE_PPT[${id}]']:checked`);
@@ -4249,7 +4328,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
             sumaTotal += pesoPorCurso;
         });
 
-        // --- NUEVO CÓDIGO PARA PUESTOS Y EXPERIENCIA ---
         const especificaSi = document.querySelector("input[name='EXPERIENCIA_ESPECIFICA_CUMPLE_PPT']:checked");
         if (especificaSi && especificaSi.value === "si") {
             sumaTotal += pesoEspecifica;
@@ -4307,7 +4385,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
             sumaTotal += pesoPorRequisito;
         });
 
-        // Redistribuir si algún requisito no cumple
         if (requisitosValidos < requisitosMovilidad.length && requisitosValidos > 0) {
             const pesoRedistribuido = pesoTotalRequisitos / requisitosValidos;
 
@@ -4318,7 +4395,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
 
 
 
-        // Actualizar el input con la suma total redondeada a entero
         totalInput.value = Math.round(sumaTotal);
     }
 
@@ -4403,7 +4479,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
     
     
     
-    // Calcular suma total al cargar la página
     calcularSumaTotal();
 });
 
@@ -4412,28 +4487,208 @@ $("#guardarFormSeleccionPPT").click(function (e) {
 
 
 
+function obtenerBrechaCompetencias() {
+    const brechas = [];
+
+    // 1. Radios generales
+    const radioButtons = document.querySelectorAll(
+        "input[name='EDAD_CUMPLE_PPT'], input[name='GENERO_CUMPLE_PPT'], input[name='ESTADO_CIVIL_CUMPLE_PPT'], input[name='NACIONALIDAD_CUMPLE_PPT']"
+    );
+    radioButtons.forEach((radio) => {
+        if (radio.value === "si" && !radio.checked) {
+            brechas.push(`No cumple con: ${radio.name}`);
+        }
+    });
+
+    // 2. Select + Radio
+    const selectRadioPairs = [
+        { select: "SECUNDARIA_PPT", radio: "SECUNDARIA_CUMPLE_PPT" },
+        { select: "TECNICA_PPT", radio: "TECNICA_CUMPLE_PPT" },
+        { select: "TECNICO_PPT", radio: "TECNICO_CUMPLE_PPT" },
+        { select: "UNIVERSITARIO_PPT", radio: "UNIVERSITARIO_CUMPLE_PPT" },
+        { select: "SITUACION_PPT", radio: "SITUACION_CUMPLE_PPT" },
+        { select: "CEDULA_PPT", radio: "CEDULA_CUMPLE_PPT" },
+        { select: "AREA1_PPT", radio: "AREA1_CUMPLE_PPT" },
+        { select: "AREA2_PPT", radio: "AREA2_CUMPLE_PPT" },
+        { select: "AREA3_PPT", radio: "AREA3_CUMPLE_PPT" },
+        { select: "AREA4_PPT", radio: "AREA4_CUMPLE_PPT" },
+        { radio: "ESPECIALIDAD_CUMPLE_PPT", dependentRadios: ["EGRESADO_ESPECIALIDAD_PPT"] },
+        { radio: "MAESTRIA_CUMPLE_PPT", dependentRadios: ["EGRESADO_MAESTRIA_PPT"] },
+        { radio: "DOCTORADO_CUMPLE_PPT", dependentRadios: ["EGRESADO_DOCTORADO_PPT"] },
+    ];
+
+    selectRadioPairs.forEach(({ select, radio, dependentRadios }) => {
+        let validSection = false;
+
+        if (select) {
+            const selectElement = document.getElementById(select);
+            if (!selectElement || selectElement.value === "0" || selectElement.value === "Seleccione una opción") {
+                brechas.push(`No seleccionó opción válida en: ${select}`);
+            } else {
+                validSection = true;
+            }
+        }
+
+        if (dependentRadios) {
+            dependentRadios.forEach((depRadioName) => {
+                const depRadio = document.querySelector(`input[name='${depRadioName}']:checked`);
+                if (!depRadio) {
+                    brechas.push(`No eligió en: ${depRadioName}`);
+                } else {
+                    validSection = true;
+                }
+            });
+        }
+
+        if (validSection) {
+            const radios = document.getElementsByName(radio);
+            const checked = Array.from(radios).some(r => r.checked && r.value === "si");
+            if (!checked) {
+                brechas.push(`No cumple con: ${radio}`);
+            }
+        }
+    });
+
+    // 3. Herramientas
+    const tools = [
+        { aplica: "WORD_APLICA_PPT", cumple: "WORD_CUMPLE_PPT" },
+        { aplica: "EXCEL_APLICA_PPT", cumple: "EXCEL_CUMPLE_PPT" },
+        { aplica: "POWER_APLICA_PPT", cumple: "POWER_CUMPLE_PPT" },
+    ];
+
+    tools.forEach(({ aplica, cumple }) => {
+        const aplicaEl = document.querySelector(`input[name='${aplica}']:checked`);
+        const cumpleEl = document.querySelector(`input[name='${cumple}']:checked`);
+        if (aplicaEl && aplicaEl.value === "si") {
+            if (!cumpleEl || cumpleEl.value !== "si") {
+                brechas.push(`No cumple con herramienta: ${cumple}`);
+            }
+        }
+    });
+
+    // 4. Idiomas
+    const idiomas = [
+        { aplica: "APLICA_IDIOMA1_PPT", cumple: "IDIOMA1_CUMPLE_PPT" },
+        { aplica: "APLICA_IDIOMA2_PPT", cumple: "IDIOMA2_CUMPLE_PPT" },
+        { aplica: "APLICA_IDIOMA3_PPT", cumple: "IDIOMA3_CUMPLE_PPT" },
+    ];
+
+    idiomas.forEach(({ aplica, cumple }) => {
+        const aplicaEl = document.querySelector(`input[name='${aplica}']:checked`);
+        const cumpleEl = document.querySelector(`input[name='${cumple}']:checked`);
+        if (aplicaEl && aplicaEl.value === "si") {
+            if (!cumpleEl || cumpleEl.value !== "si") {
+                brechas.push(`No cumple con idioma: ${cumple}`);
+            }
+        }
+    });
+
+    // 5. Cursos con nombres visibles
+    const cursosContainer = document.querySelectorAll("textarea[name='CURSO_PPT[]']");
+    cursosContainer.forEach((curso) => {
+        const idMatch = curso.id.match(/\d+/);
+        if (!idMatch) return;
+
+        const id = idMatch[0];
+        const cursoNombre = curso.value.trim();
+        const requerido = document.getElementById(`CURSO${id}_REQUERIDO_PPT`);
+        const deseable = document.getElementById(`CURSO${id}_DESEABLE_PPT`);
+        const cumpleSi = document.querySelector(`input[name='CURSO_CUMPLE_PPT[${id}]']:checked`);
+
+        if ((requerido?.checked || deseable?.checked) && cursoNombre !== "" && (!cumpleSi || cumpleSi.value !== "si")) {
+            brechas.push(`No cumple curso: "${cursoNombre}"`);
+        }
+    });
+
+    // 6. Experiencia específica y general
+    const expEspecifica = document.querySelector("input[name='EXPERIENCIA_ESPECIFICA_CUMPLE_PPT']:checked");
+    if (!expEspecifica || expEspecifica.value !== "si") {
+        brechas.push("No cumple experiencia específica");
+    }
+
+    const expGeneral = document.querySelector("input[name='EXPERIENCIAGENERAL_CUMPLE_PPT']:checked");
+    if (!expGeneral || expGeneral.value !== "si") {
+        brechas.push("No cumple experiencia general");
+    }
+
+    // 7. Puestos
+    const puestosContainer = document.querySelectorAll("select.puesto");
+    puestosContainer.forEach((puesto) => {
+        const idMatch = puesto.id.match(/\d+/);
+        if (!idMatch) return;
+
+        const id = idMatch[0];
+        const radioSi = document.querySelector(`input[name='PUESTO${id}_CUMPLE_PPT']:checked`);
+        if (puesto.value !== "0" && (!radioSi || radioSi.value !== "si")) {
+            brechas.push(`No cumple con el puesto: PUESTO${id}`);
+        }
+    });
+
+    // 8. Competencias
+    const competencias = [
+        "INNOVACION", "PASION", "SERVICIO_CLIENTE", "COMUNICACION_EFICAZ",
+        "TRABAJO_EQUIPO", "INTEGRIDAD", "RESPONSABILIDAD_SOCIAL", "ADAPTABILIDAD",
+        "LIDERAZGO", "TOMA_DECISIONES"
+    ];
+
+    competencias.forEach((name) => {
+        const requerido = document.getElementById(`${name}_REQUERIDA_PPT`);
+        const deseable = document.getElementById(`${name}_DESEABLE_PPT`);
+        const cumpleSi = document.getElementById(`${name}_CUMPLE_SI`);
+
+        if ((requerido && requerido.checked) || (deseable && deseable.checked)) {
+            if (!cumpleSi || !cumpleSi.checked) {
+                brechas.push(`No cumple competencia: ${name}`);
+            }
+        }
+    });
+
+    // 9. Requisitos de movilidad
+    const requisitosMovilidad = [
+        { name: "DISPONIBILIDAD_VIAJAR_PPT", cumple: "DISPONIBILIDAD_VIAJAR_OPCION_CUMPLE" },
+        { name: "REQUIERE_PASAPORTE_PPT", cumple: "REQUIEREPASAPORTE_OPCION_CUMPLE" },
+        { name: "REQUIERE_VISA_PPT", cumple: "REQUIEREVISA_OPCION_CUMPLE" },
+        { name: "REQUIERE_LICENCIA_PPT", cumple: "REQUIERELICENCIA_OPCION_CUMPLE" },
+        { name: "CAMBIO_RESIDENCIA_PPT", cumple: "CAMBIORESIDENCIA_OPCION_CUMPLE" },
+    ];
+
+    requisitosMovilidad.forEach(({ name, cumple }) => {
+        const radio = document.querySelector(`input[name='${name}']:checked`);
+        const cumpleRadio = document.querySelector(`input[name='${cumple}']:checked`);
+
+        if (radio && radio.value === "si") {
+            if (!cumpleRadio || cumpleRadio.value !== "si") {
+                brechas.push(`No cumple con: ${cumple}`);
+            }
+        }
+    });
+
+    console.log("Brecha de competencias:", brechas);
+    return brechas;
+}
+
+
+
 
 
 function calcularPorcentajeTotal2() {
-    var porcentajeGuardado = parseFloat($('#porcentajeTotalPrueba').val()) || 0;  // Tomar el porcentaje ya guardado
-    var sumaNuevas = 0;  // Suma de porcentajes de las nuevas pruebas
-    var totalNuevas = 0;  // Contador de nuevas pruebas
+    var porcentajeGuardado = parseFloat($('#porcentajeTotalPrueba').val()) || 0;  
+    var sumaNuevas = 0;  
+    var totalNuevas = 0;  
     var camposLlenos = false; 
 
-    // **Tomamos en cuenta SOLO las nuevas pruebas**
     $('input[name="TOTAL_PORCENTAJE[]"]').each(function() {
         var nuevoPorcentaje = parseFloat($(this).val()) || 0;
 
         if (!isNaN(nuevoPorcentaje) && nuevoPorcentaje > 0) {  
-            sumaNuevas += nuevoPorcentaje; // Sumar porcentaje de nuevas pruebas
-            totalNuevas++;  // Contamos cuántas nuevas pruebas hay
+            sumaNuevas += nuevoPorcentaje;
+            totalNuevas++;  
         }
     });
 
-    // **Si hay nuevas pruebas, recalculamos el porcentaje**
-    var porcentajeFinal = porcentajeGuardado; // Mantener el porcentaje original si no hay cambios
+    var porcentajeFinal = porcentajeGuardado; 
     if (totalNuevas > 0) {
-        porcentajeFinal = sumaNuevas / totalNuevas;  // Se recalcula SOLO si hay nuevas pruebas
+        porcentajeFinal = sumaNuevas / totalNuevas;  
     }
 
     // **Mostrar resultado**
