@@ -177,11 +177,11 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url('/Listavacantes') }}">Banco de CV</a></li>
                             @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
-                            
+
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Postulaciones')}}">Vacantes activas</a></li>
-                            
-                             @endif
+
+                            @endif
                         </ul>
                     </li>
 
@@ -198,7 +198,7 @@
                         </ul>
                     </li>
 
-                 
+
 
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -219,18 +219,31 @@
                             <i class="bi bi-briefcase-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Rec.Empleados</span><span class="d-none d-lg-inline">Rec.Empleados</span>
                         </a>
                     </li>
+
+                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
+
                     <li class="nav-item dropdown" style="margin-left: 8px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-person-bounding-box" style="margin-right: 5px;"></i> <span class="d-lg-none">Capacitación</span><span class="d-none d-lg-inline">Capacitación</span>
+                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-bounding-box" style="margin-right: 5px;"></i> <span class="d-lg-none">Capacitación</span><span Contrataciónclass="d-none d-lg-inline">Capacitación</span>
                         </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ url('/') }}">Brecha</a></li>
+                            <hr class="dropdown-divider">
+
+                            <li><a class="dropdown-item" href="{{url('/')}}">Capacitación</a></li>
+                        </ul>
                     </li>
+
+                    @endif
+
+
                     {{-- <li class="nav-item dropdown" style="margin-left: 8px;">
                     <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                         <i class="bi bi-clipboard-data-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Eval.desempeño</span><span class="d-none d-lg-inline">Eval.desempeño</span>
                     </a>
                 </li> --}}
 
-                @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
+                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
 
 
                     <li class="nav-item dropdown" style="margin-left: 8px;">
@@ -246,30 +259,30 @@
                                 <span class="d-none d-lg-inline">Catálogos</span>
                             </a>
                             <ul class="dropdown-menu">
-                              
-                        <li><a class="dropdown-item" href="{{url('/Catálogo_ppt')}}">Catálogos de PPT</a>
+
+                                <li><a class="dropdown-item" href="{{url('/Catálogo_ppt')}}">Catálogos de PPT</a>
+                                </li>
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/Catálogo_dpt')}}">Catálogos de DPT</a>
+                                </li>
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/Catálogo_requisición')}}">Catálogos de Requisición</a>
+                                </li>
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/Catálogo_generales')}}">Catálogos generales</a>
+                                </li>
+
+                            </ul>
                         </li>
-                        <hr class="dropdown-divider">
-                        <li><a class="dropdown-item" href="{{url('/Catálogo_dpt')}}">Catálogos de DPT</a>
-                        </li>
-                        <hr class="dropdown-divider">
-                        <li><a class="dropdown-item" href="{{url('/Catálogo_requisición')}}">Catálogos de Requisición</a>
-                        </li>
-                        <hr class="dropdown-divider">
-                        <li><a class="dropdown-item" href="{{url('/Catálogo_generales')}}">Catálogos generales</a>
-                        </li>
-                       
                     </ul>
+                    @endif
+                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link BOTON" href="{{ url('/usuario') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <i class="bi bi-people-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Usuarios</span><span class="d-none d-lg-inline">Usuarios</span>
+                        </a>
                     </li>
-                </ul>
-                @endif
-                @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
-                <li class="nav-item dropdown" style="margin-left: 8px;">
-                    <a class="nav-link BOTON" href="{{ url('/usuario') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                        <i class="bi bi-people-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Usuarios</span><span class="d-none d-lg-inline">Usuarios</span>
-                    </a>
-                </li>
-                @endif
+                    @endif
                 </ul>
             </div>
         </div>
@@ -497,7 +510,7 @@
     @endif
 
     @if(request()->is('Contratación'))
-    <script src="/assets/js_sitio/contratacion/contratacion.js?v=11.4"></script>
+    <script src="/assets/js_sitio/contratacion/contratacion.js?v=11.5"></script>
     <!-- Form wizard -->
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif

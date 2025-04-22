@@ -2810,6 +2810,7 @@ $('#Tabladocumentosoportecontrato').on('click', '.ver-archivo-soportescontratos'
 
 let fechaRenovacionGlobal = '';
 
+let fechaInicioRenovacionGlobal = '';
 
 document.addEventListener('DOMContentLoaded', function() {
     var archivorenovacion = document.getElementById('DOCUMENTOS_RENOVACION');
@@ -3023,12 +3024,31 @@ function agregarevidencia() {
     const contenedor = document.querySelector('.adendadiv');
     contenedor.appendChild(divVerificacion);
 
+    const fechaInicioInput = divVerificacion.querySelector('input[name="FECHAI_ADENDA[]"]');
+
+    if (fechaInicioRenovacionGlobal) {
+        const [year, month, day] = fechaInicioRenovacionGlobal.split("-");
+        const fechaMinima = new Date(year, month - 1, parseInt(day) + 1); 
+
+        $(fechaInicioInput).datepicker({
+            format: 'yyyy-mm-dd',
+            weekStart: 1,
+            autoclose: true,
+            todayHighlight: true,
+            language: 'es',
+            startDate: fechaMinima
+        }).on('click', function () {
+            $(this).datepicker('setDate', $(this).val());
+        });
+    }
+
+
     const fechaFinInput = divVerificacion.querySelector('input[name="FECHAF_ADENDA[]"]');
     if (fechaRenovacionGlobal) {
         fechaFinInput.value = fechaRenovacionGlobal;
     }
 
-    // Listeners para eliminar
+
     const botonEliminar = divVerificacion.querySelector('.botonEliminarVerificacion');
     botonEliminar.addEventListener('click', function () {
         contenedor.removeChild(divVerificacion);
@@ -3214,6 +3234,7 @@ $('#Tablarenovacioncontrato').on('click', 'td>button.EDITAR', function () {
     document.getElementById('REQUIERE_ADENDA').style.display = 'block';
 
   fechaRenovacionGlobal = row.data().FECHAF_RENOVACION || ''; 
+    fechaInicioRenovacionGlobal = row.data().FECHAI_RENOVACION || '';
 
     if (row.data().PROCEDE_ADENDA == "1") {
         document.getElementById('AGREGAR_ADENDA').style.display = 'block';
