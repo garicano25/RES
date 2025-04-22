@@ -109,6 +109,9 @@ use App\Http\Controllers\proveedor\altadocumentosController;
 
 use App\Http\Controllers\proveedor\listaproveedorController;
 
+use App\Http\Controllers\proveedor\proveedortempController;
+
+
 
 use App\Http\Controllers\proveedor\catalagofuncionesproveedorController;
 use App\Http\Controllers\proveedor\catalagotituloproveedorController;
@@ -695,10 +698,7 @@ Route::get('/Requisición_materiales_aprobación', function () {return view('com
 Route::get('/Bitácora', function () {return view('compras.requisicionesmaterial.bitacora');});
 Route::get('/Tablabitacora', [mrController::class, 'Tablabitacora']);
 
-
 //==============================================   DIRECTORIO INTERNO  ============================================== 
-
-
 
 Route::get('/Banco_proveedores', function () {return view('compras.proveedores.proveedorespotencial');});
 Route::get('/Tabladirectorio', [directorioController::class, 'Tabladirectorio']);
@@ -716,7 +716,12 @@ Route::get('/Tablacertificaciones', [listaproveedorController::class, 'Tablacert
 Route::get('/Tablareferencias', [listaproveedorController::class, 'Tablareferencias']);
 Route::get('/Tabladocumentosoporteproveedores', [listaproveedorController::class, 'Tabladocumentosoporteproveedores']);
 
+//==============================================     PROVEEDORES TEMPORALES  ============================================== 
 
+Route::get('/Proveedores_temporales', function () { return view('compras.listaproveedor.proveedorestemporales');});
+Route::post('/TempSave', [proveedortempController::class, 'store']);
+Route::get('/Tablaproveedortemporal', [proveedortempController::class, 'Tablaproveedortemporal']);
+Route::get('/TempDelete', [proveedortempController::class, 'store']);
 
 //==============================================    ORDEN DE COMPRA  ============================================== 
 

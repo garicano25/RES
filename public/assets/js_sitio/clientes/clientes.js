@@ -7,7 +7,6 @@ var cliente_id = null;
 
 ID_FORMULARIO_CLIENTES = 0
 ID_VERIFICACION_CLIENTE = 0
-
 ID_ACTA_CLIENTE = 0
 
 
@@ -15,18 +14,14 @@ ID_ACTA_CLIENTE = 0
 $("#NUEVO_CLIENTE").click(function (e) {
     e.preventDefault();
 
-    // Limpiar formulario
     $('#formularioCLIENTES')[0].reset();
     $(".contactodiv").empty();
     $(".direcciondiv").empty();
 
-    // Mostrar el modal
     $("#miModal_CLIENTES").modal("show");
 
-    // Activar pestaña de información
     $("#tab1-info").click();
 
-    // Deshabilitar pestañas adicionales
     $("#tab2-verif").prop("disabled", true);
     $("#tab3-acta").prop("disabled", true);
 });
@@ -334,7 +329,6 @@ $('#Tablaclientesventas tbody').on('click', 'td>button.EDITAR', function () {
 
     $("#tab1-info").click();
 
-    // Habilitar pestañas adicionales
     $("#tab2-verif").prop("disabled", false);
     $("#tab3-acta").prop("disabled", false);
 
@@ -369,6 +363,7 @@ $(document).ready(function() {
 
 
         editarDatoTabla(row.data(), 'formularioCLIENTES', 'miModal_CLIENTES',1);
+        $('#miModal_CLIENTES .modal-title').html(row.data().RAZON_SOCIAL_CLIENTE);
 
 
         $("#tab1-info").click();

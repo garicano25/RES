@@ -320,9 +320,9 @@
 
 
 
-        @if(request()->is('Clientes'))
-        <script src="/assets/js_sitio/clientes/clientes.js"></script>
-        @endif
+    @if(request()->is('Clientes'))
+    <script src="/assets/js_sitio/clientes/clientes.js?v=1.0"></script>
+    @endif
 
 
     @if(request()->is('Solicitudes'))

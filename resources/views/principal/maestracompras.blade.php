@@ -202,6 +202,9 @@
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/Lista_proveedores')}}">Lista proveedores </a>
                                 </li>
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/Proveedores_temporales')}}">Proveedores temporales </a>
+                                </li>
                             </ul>
                         </li>
 
@@ -402,15 +405,14 @@
     @endif
 
 
-
-
     @if(request()->is('Lista_proveedores'))
     <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=1.1"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
-
     @endif
 
-
+    @if(request()->is('Proveedores_temporales'))
+    <script src="/assets/js_sitio/proveedor/proveedorestemp.js"></script>
+    @endif
 </body>
 
 </body>
