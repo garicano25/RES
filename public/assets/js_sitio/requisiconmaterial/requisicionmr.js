@@ -431,8 +431,8 @@ $(document).ready(function() {
 
     });
 
-    $('#miModal_LINEANEGOCIO').on('hidden.bs.modal', function () {
-        resetFormulario('#miModal_LINEANEGOCIO');
+    $('#miModal_MR').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_MR');
     });
 });
 
