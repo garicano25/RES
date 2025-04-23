@@ -4111,9 +4111,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
 // SUMA DE SELECCION
 
 
-
-
-
  document.addEventListener("DOMContentLoaded", function () {
     const radioButtons = document.querySelectorAll(
         "input[name='EDAD_CUMPLE_PPT'], input[name='GENERO_CUMPLE_PPT'], input[name='ESTADO_CIVIL_CUMPLE_PPT'], input[name='NACIONALIDAD_CUMPLE_PPT']"
@@ -4485,21 +4482,15 @@ $("#guardarFormSeleccionPPT").click(function (e) {
 
 
 
+
 function obtenerBrechaCompetencias() {
     const brechas = [];
 
-    const sumaTotal = parseFloat(document.getElementById("SUMA_TOTAL").value) || 0;
-    const porcentajeFaltante = Math.max(0, 100 - sumaTotal); // No negativo
+    // Obtener el total ya calculado
+    const totalActualInput = document.getElementById("SUMA_TOTAL");
+    const sumaTotal = parseFloat(totalActualInput?.value || 0);
 
-    const radioButtons = document.querySelectorAll(
-        "input[name='EDAD_CUMPLE_PPT'], input[name='GENERO_CUMPLE_PPT'], input[name='ESTADO_CIVIL_CUMPLE_PPT'], input[name='NACIONALIDAD_CUMPLE_PPT']"
-    );
-    radioButtons.forEach((radio) => {
-        if (radio.value === "si" && !radio.checked) {
-            brechas.push(`No cumple con: ${radio.name}`);
-        }
-    });
-
+    // Validación visual únicamente (no afecta el porcentaje)
     const selectRadioPairs = [
         { select: "SECUNDARIA_PPT", radio: "SECUNDARIA_CUMPLE_PPT" },
         { select: "TECNICA_PPT", radio: "TECNICA_CUMPLE_PPT" },
@@ -4520,14 +4511,16 @@ function obtenerBrechaCompetencias() {
         let valid = false;
 
         if (select) {
-            const el = document.getElementById(select);
-            if (el && el.value !== "0" && el.value !== "Seleccione una opción") valid = true;
+            const selectEl = document.getElementById(select);
+            if (selectEl && selectEl.value !== "0" && selectEl.value !== "Seleccione una opción") {
+                valid = true;
+            }
         }
 
         if (dependentRadios) {
             valid = dependentRadios.some(dep => {
-                const r = document.querySelector(`input[name='${dep}']:checked`);
-                return r && r.value === "si";
+                const radioDep = document.querySelector(`input[name='${dep}']:checked`);
+                return radioDep?.value === "si";
             });
         }
 
@@ -4539,6 +4532,30 @@ function obtenerBrechaCompetencias() {
         }
     });
 
+    // Otros radios/áreas sin validación previa porque no dependen de un select
+    const extras = [
+        { name: "EXPERIENCIA_ESPECIFICA_CUMPLE_PPT", mensaje: "No cumple experiencia específica" },
+        { name: "EXPERIENCIAGENERAL_CUMPLE_PPT", mensaje: "No cumple experiencia general" },
+        { name: "COMUNICACION_EFICAZ_CUMPLE_SI", mensaje: "No cumple competencia: COMUNICACION_EFICAZ", checkExtra: true },
+        { name: "TOMA_DECISIONES_CUMPLE_SI", mensaje: "No cumple competencia: TOMA_DECISIONES", checkExtra: true },
+    ];
+
+    extras.forEach(({ name, mensaje, checkExtra }) => {
+        const el = document.getElementById(name);
+        if (checkExtra) {
+            const requerido = document.getElementById(name.replace("_CUMPLE_SI", "_REQUERIDA_PPT"));
+            const deseable = document.getElementById(name.replace("_CUMPLE_SI", "_DESEABLE_PPT"));
+            if ((requerido?.checked || deseable?.checked) && !el?.checked) {
+                brechas.push(mensaje);
+            }
+        } else {
+            if (!el || el.value !== "si") {
+                brechas.push(mensaje);
+            }
+        }
+    });
+
+    // Cursos
     const cursos = document.querySelectorAll("textarea[name='CURSO_PPT[]']");
     cursos.forEach((curso) => {
         const id = curso.id.match(/\d+/)?.[0];
@@ -4548,52 +4565,39 @@ function obtenerBrechaCompetencias() {
         const deseable = document.getElementById(`CURSO${id}_DESEABLE_PPT`);
         const cumple = document.querySelector(`input[name='CURSO_CUMPLE_PPT[${id}]']:checked`);
 
-        if (requerido?.checked || deseable?.checked) {
-            if (!cumple || cumple.value !== "si") {
-                brechas.push(`No cumple curso: "${curso.value.trim()}"`);
-            }
+        if ((requerido?.checked || deseable?.checked) && (!cumple || cumple.value !== "si")) {
+            brechas.push(`No cumple curso: "${curso.value.trim()}"`);
         }
     });
 
-    const expEsp = document.querySelector("input[name='EXPERIENCIA_ESPECIFICA_CUMPLE_PPT']:checked");
-    if (!expEsp || expEsp.value !== "si") {
-        brechas.push("No cumple experiencia específica");
-    }
-
+    // Puestos
     const puestos = document.querySelectorAll("select.puesto");
     puestos.forEach((p) => {
         const id = p.id.match(/\d+/)?.[0];
         if (!id || p.value === "0") return;
-
         const cumple = document.querySelector(`input[name='PUESTO${id}_CUMPLE_PPT']:checked`);
         if (!cumple || cumple.value !== "si") {
             brechas.push(`No cumple con el puesto: PUESTO${id}`);
         }
     });
 
-    const expGen = document.querySelector("input[name='EXPERIENCIAGENERAL_CUMPLE_PPT']:checked");
-    if (!expGen || expGen.value !== "si") {
-        brechas.push("No cumple experiencia general");
-    }
-
-    const competencias = [
-        "INNOVACION", "PASION", "SERVICIO_CLIENTE", "COMUNICACION_EFICAZ",
-        "TRABAJO_EQUIPO", "INTEGRIDAD", "RESPONSABILIDAD_SOCIAL",
-        "ADAPTABILIDAD", "LIDERAZGO", "TOMA_DECISIONES"
+    // Idiomas y herramientas
+    const otros = [
+        { aplica: "APLICA_IDIOMA1_PPT", cumple: "IDIOMA1_CUMPLE_PPT", tipo: "idioma" },
+        { aplica: "WORD_APLICA_PPT", cumple: "WORD_CUMPLE_PPT", tipo: "herramienta" },
+        { aplica: "EXCEL_APLICA_PPT", cumple: "EXCEL_CUMPLE_PPT", tipo: "herramienta" },
+        { aplica: "POWER_APLICA_PPT", cumple: "POWER_CUMPLE_PPT", tipo: "herramienta" },
     ];
 
-    competencias.forEach((name) => {
-        const requerido = document.getElementById(`${name}_REQUERIDA_PPT`);
-        const deseable = document.getElementById(`${name}_DESEABLE_PPT`);
-        const cumple = document.getElementById(`${name}_CUMPLE_SI`);
-
-        if (requerido?.checked || deseable?.checked) {
-            if (!cumple?.checked) {
-                brechas.push(`No cumple competencia: ${name}`);
-            }
+    otros.forEach(({ aplica, cumple, tipo }) => {
+        const aplicaEl = document.querySelector(`input[name='${aplica}']:checked`);
+        const cumpleEl = document.querySelector(`input[name='${cumple}']:checked`);
+        if (aplicaEl?.value === "si" && (!cumpleEl || cumpleEl.value !== "si")) {
+            brechas.push(`No cumple con ${tipo}: ${cumple}`);
         }
     });
 
+    // Requisitos de movilidad
     const requisitosMovilidad = [
         { name: "DISPONIBILIDAD_VIAJAR_PPT", cumple: "DISPONIBILIDAD_VIAJAR_OPCION_CUMPLE" },
         { name: "REQUIERE_PASAPORTE_PPT", cumple: "REQUIEREPASAPORTE_OPCION_CUMPLE" },
@@ -4609,6 +4613,9 @@ function obtenerBrechaCompetencias() {
             brechas.push(`No cumple con: ${cumple}`);
         }
     });
+
+    // Cálculo simple del porcentaje faltante con base en el input ya calculado
+    const porcentajeFaltante = Math.max(0, 100 - Math.round(sumaTotal));
 
     console.log("Brecha de competencias:", brechas);
     console.log(`Porcentaje faltante: ${porcentajeFaltante}%`);
