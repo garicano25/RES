@@ -4507,30 +4507,38 @@ function obtenerBrechaCompetencias() {
         { radio: "DOCTORADO_CUMPLE_PPT", dependentRadios: ["EGRESADO_DOCTORADO_PPT"] },
     ];
 
-    selectRadioPairs.forEach(({ select, radio, dependentRadios }) => {
-        let valid = false;
+        selectRadioPairs.forEach(({ select, radio, dependentRadios }) => {
+            let valid = false;
 
-        if (select) {
-            const selectEl = document.getElementById(select);
-            if (selectEl && selectEl.value !== "0" && selectEl.value !== "Seleccione una opción") {
-                valid = true;
+            if (select) {
+                const selectEl = document.getElementById(select);
+                if (
+                    selectEl &&
+                    !selectEl.disabled &&
+                    selectEl.value !== "0" &&
+                    selectEl.value !== "Seleccione una opción" &&
+                    selectEl.value.trim() !== ""
+                ) {
+                    valid = true;
+                }
             }
-        }
 
-        if (dependentRadios) {
-            valid = dependentRadios.some(dep => {
-                const radioDep = document.querySelector(`input[name='${dep}']:checked`);
-                return radioDep?.value === "si";
-            });
-        }
+            if (dependentRadios) {
+                valid = dependentRadios.some(dep => {
+                    const r = document.querySelector(`input[name='${dep}']:checked`);
+                    return r && r.value === "si";
+                });
+            }
 
-        if (valid) {
+            if (!valid) return; // <<< SALTARSE SI NO APLICA
+
+            // Evaluar solo si es válido
             const cumple = Array.from(document.getElementsByName(radio)).some(r => r.checked && r.value === "si");
             if (!cumple) {
                 brechas.push(`No cumple con: ${radio}`);
             }
-        }
-    });
+        });
+
 
     // Otros radios/áreas sin validación previa porque no dependen de un select
     const extras = [
