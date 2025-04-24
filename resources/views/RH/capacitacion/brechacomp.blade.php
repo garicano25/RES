@@ -44,15 +44,15 @@
 
                                 <div class="col-4 mb-3">
                                     <label class="form-label">CURP </label>
-                                    <input type="text" class="form-control" id="CURP" name="CURP">
+                                    <input type="text" class="form-control" id="CURP" name="CURP" readonly>
                                 </div>
                                 <div class="col-4 mb-3">
                                     <label class="form-label">Nombre del colaborador</label>
-                                    <input type="text" class="form-control" id="NOMBRE_BRECHA" name="NOMBRE_BRECHA">
+                                    <input type="text" class="form-control" id="NOMBRE_BRECHA" name="NOMBRE_BRECHA" readonly>
                                 </div>
                                 <div class="col-4 mb-3">
                                     <label class="form-label">Porcentaje faltante </label>
-                                    <input type="text" class="form-control" id="PORCENTAJE_FALTANTE" name="PORCENTAJE_FALTANTE">
+                                    <input type="text" class="form-control" id="PORCENTAJE_FALTANTE" name="PORCENTAJE_FALTANTE" readonly>
                                 </div>
 
                             </div>

@@ -185,7 +185,6 @@ $('#Tablabrecha tbody').on('click', 'td>button.EDITAR', function () {
 
     const brechas = JSON.parse(row.data().BRECHA_JSON || '[]');
     const listaBrechas = brechas.map(item => `<li>${item}</li>`).join('');
-    const totalBrechas = brechas.length;
 
     $('#listaBrechas').html(`<ul>${listaBrechas}</ul>`);
 });
