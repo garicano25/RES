@@ -4606,9 +4606,10 @@ function obtenerBrechaCompetencias() {
         const cumple = document.querySelector(`input[name='CURSO_CUMPLE_PPT[${id}]']:checked`);
 
         if ((requerido?.checked || deseable?.checked) && (!cumple || cumple.value !== "si")) {
-            brechas.push(`Falta por cumplir con el cumple curso: "${curso.value.trim()}"`);
+            brechas.push(`Falta por cumplir con el cumple curso: ${curso.value.trim()}`);
         }
     });
+
 
   
 
