@@ -4022,7 +4022,7 @@ $("#guardarFormSeleccionPPT").click(function (e) {
         console.log("Porcentaje faltante:", resultado.porcentajeFaltante + "%");
 
         const brecha = resultado.brechas;
-        const porcentajeFaltante = resultado.porcentajeFaltante;
+        const porcentajeFaltante = resultado.porcentajeFaltante;    
 
         if (ID_PPT_SELECCION == 0) {
 
@@ -4034,12 +4034,12 @@ $("#guardarFormSeleccionPPT").click(function (e) {
 
                 await loaderbtn('guardarFormSeleccionPPT');
                 await ajaxAwaitFormData({
-                    api: 1,
-                    ID_PPT_SELECCION: ID_PPT_SELECCION,
-                    CURP: curpSeleccionada,
-                    NOMBRE_BRECHA: nombreTrabajadorSeleccionado,
-                    PORCENTAJE_FALTANTE: porcentajeFaltante,
-                    BRECHA_JSON: JSON.stringify(brecha)
+                api: 1,
+                ID_PPT_SELECCION: ID_PPT_SELECCION,
+                CURP: curpSeleccionada,
+                NOMBRE_BRECHA: nombreTrabajadorSeleccionado,
+                PORCENTAJE_FALTANTE: porcentajeFaltante,
+                BRECHA_JSON: JSON.stringify(brecha)
                 }, 'SeleccionSave', 'formularioSeleccionPPT', 'guardarFormSeleccionPPT', { callbackAfter: true, callbackBefore: true }, () => {
 
                     Swal.fire({
@@ -4685,8 +4685,12 @@ function obtenerBrechaCompetencias() {
     console.log("Brecha de competencias:", brechas);
     console.log(`Porcentaje faltante: ${porcentajeFaltante}%`);
 
-    return brechas;
+    return {
+        brechas,
+        porcentajeFaltante
+    };
 }
+
 
 
 
