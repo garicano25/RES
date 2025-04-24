@@ -60,6 +60,9 @@ use App\Http\Controllers\contratacion\PowerPointController;
 use App\Http\Controllers\contratacion\pendientecontratarController;
 use App\Http\Controllers\contratacion\CvController;
 
+// CONTROLADORES DE CAPACITACION 
+use App\Http\Controllers\capacitacion\brechaController;
+
 
 // CONTROLADORES DE DESVINCULACION
 use App\Http\Controllers\desvinculacion\desvinculacionController;
@@ -516,7 +519,20 @@ Route::get('/mostrarrequisicon/{id}', [contratacionController::class, 'mostrarre
 
 Route::get('/Rec.Empleado', function () {return view('RH.RecEmpleados.RecEmpleados');});
 
- //============================================== DESVINCULACIÓN ============================================== 
+
+
+//==============================================  CAPACITACION  ============================================== 
+
+
+/// BRECHA DE COMPETENCIA
+
+
+Route::get('/Brecha_competencia', function () {  return view('RH.capacitacion.brechacomp');});
+
+Route::get('/Tablabrecha', [brechaController::class, 'Tablabrecha']);
+
+
+//============================================== DESVINCULACIÓN ============================================== 
 
 Route::get('/Desvinculación', [desvinculacionController::class, 'index']);
 Route::post('/desvinculacionSave', [desvinculacionController::class, 'store']);

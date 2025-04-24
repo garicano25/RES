@@ -14,6 +14,7 @@ class brechacompeModel extends Model
         'CURP',
         'NOMBRE_BRECHA',
         'PORCENTAJE_FALTANTE',
-        'BRECHA_JSON'
+        'BRECHA_JSON',
+        'ACTIVO'
     ];
 }

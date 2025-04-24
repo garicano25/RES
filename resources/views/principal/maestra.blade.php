@@ -227,7 +227,7 @@
                             <i class="bi bi-person-bounding-box" style="margin-right: 5px;"></i> <span class="d-lg-none">Capacitación</span><span Contrataciónclass="d-none d-lg-inline">Capacitación</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url('/') }}">Brecha</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/Brecha_competencia') }}">Brecha de competencia</a></li>
                             <hr class="dropdown-divider">
 
                             <li><a class="dropdown-item" href="{{url('/')}}">Capacitación</a></li>
@@ -527,6 +527,9 @@
     @endif
 
 
+    @if(request()->is('Brecha_competencia'))
+    <script src="/assets/js_sitio/capacitacion/brechacompetencia.js"></script>
+    @endif
 
 
 </body>
