@@ -58,9 +58,7 @@
                             </div>
 
                             <div class="mt-3">
-                                <h5>Brechas detectadas:</h5>
                                 <div id="listaBrechas"></div>
-                                <p id="contadorBrechas" class="fw-bold mt-2"></p>
                             </div>
 
 

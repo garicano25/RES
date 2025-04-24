@@ -188,7 +188,6 @@ $('#Tablabrecha tbody').on('click', 'td>button.EDITAR', function () {
     const totalBrechas = brechas.length;
 
     $('#listaBrechas').html(`<ul>${listaBrechas}</ul>`);
-    $('#contadorBrechas').text(`Total de brechas: ${totalBrechas}`);
 });
 
 
