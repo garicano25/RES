@@ -31,7 +31,7 @@
         <div class="modal-content">
             <form method="post" enctype="multipart/form-data" id="formularioBRECHA" style="background-color: #ffffff;">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="miModalLabel">Solicitudes</h5>
+                    <h5 class="modal-title" id="miModalLabel"></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
