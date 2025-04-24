@@ -181,9 +181,16 @@ $('#Tablabrecha tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablabrecha.row(tr);
     ID_BRECHA_COMPETENCIAS = row.data().ID_BRECHA_COMPETENCIAS;
 
-    editarDatoTabla(row.data(), 'formularioBRECHA', 'miModal_BRECHA',1);
+    editarDatoTabla(row.data(), 'formularioBRECHA', 'miModal_BRECHA', 1);
 
+    const brechas = JSON.parse(row.data().BRECHA_JSON || '[]');
+    const listaBrechas = brechas.map(item => `<li>${item}</li>`).join('');
+    const totalBrechas = brechas.length;
+
+    $('#listaBrechas').html(`<ul>${listaBrechas}</ul>`);
+    $('#contadorBrechas').text(`Total de brechas: ${totalBrechas}`);
 });
+
 
 
 

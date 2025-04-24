@@ -56,17 +56,23 @@
                                 </div>
 
                             </div>
+
+                            <div class="mt-3">
+                                <h5>Brechas detectadas:</h5>
+                                <div id="listaBrechas"></div>
+                                <p id="contadorBrechas" class="fw-bold mt-2"></p>
+                            </div>
+
+
                         </div>
-
                     </div>
-                </div>
 
-                <div class="modal-footer mx-5">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-success" id="guardarBRECHA">
-                        <i class="bi bi-floppy-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Guardar brecha"></i> Guardar
-                    </button>
-                </div>
+                    <div class="modal-footer mx-5">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-success" id="guardarBRECHA">
+                            <i class="bi bi-floppy-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Guardar brecha"></i> Guardar
+                        </button>
+                    </div>
             </form>
         </div>
     </div>
