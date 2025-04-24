@@ -3901,12 +3901,18 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
 });
 
 
+
+
 // $("#guardarFormSeleccionPPT").click(function (e) {
 //     e.preventDefault();
 
 //     formularioValido = validarFormularioV1('formularioSeleccionPPT');
 
 //     if (formularioValido) {
+
+//         const resultado = obtenerBrechaCompetencias();
+//         console.log("Resumen de brechas de competencias:", resultado.brechas);
+//         console.log("Porcentaje faltante:", resultado.porcentajeFaltante + "%");
 
 //         if (ID_PPT_SELECCION == 0) {
 
@@ -3917,10 +3923,10 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
 //             }, async function () {
 
 //                 await loaderbtn('guardarFormSeleccionPPT');
-//                 await ajaxAwaitFormData({ 
-//                     api: 1, 
-//                     ID_PPT_SELECCION: ID_PPT_SELECCION, 
-//                     CURP: curpSeleccionada 
+//                 await ajaxAwaitFormData({
+//                     api: 1,
+//                     ID_PPT_SELECCION: ID_PPT_SELECCION,
+//                     CURP: curpSeleccionada
 //                 }, 'SeleccionSave', 'formularioSeleccionPPT', 'guardarFormSeleccionPPT', { callbackAfter: true, callbackBefore: true }, () => {
 
 //                     Swal.fire({
@@ -3940,16 +3946,14 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
 //                         $('#miModal_ppt').modal('hide');
 //                         document.getElementById('formularioSeleccionPPT').reset();
 
-
 //                         if ($.fn.DataTable.isDataTable('#Tablapptseleccion')) {
-//                             Tablapptseleccion.ajax.reload(null, false); 
+//                             Tablapptseleccion.ajax.reload(null, false);
 //                         }
 
-
-
+//                         // Mostrar la brecha en consola si se requiere también después del guardado
+//                         console.log("Brecha de competencias guardadas:", brecha);
 
 //                     }, 300);
-
 //                 });
 
 //             }, 1);
@@ -3963,10 +3967,10 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
 //             }, async function () {
 
 //                 await loaderbtn('guardarFormSeleccionPPT');
-//                 await ajaxAwaitFormData({ 
-//                     api: 1, 
-//                     ID_PPT_SELECCION: ID_PPT_SELECCION, 
-//                     CURP: curpSeleccionada 
+//                 await ajaxAwaitFormData({
+//                     api: 1,
+//                     ID_PPT_SELECCION: ID_PPT_SELECCION,
+//                     CURP: curpSeleccionada
 //                 }, 'SeleccionSave', 'formularioSeleccionPPT', 'guardarFormSeleccionPPT', { callbackAfter: true, callbackBefore: true }, () => {
 
 //                     Swal.fire({
@@ -3986,10 +3990,11 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
 //                         $('#miModal_ppt').modal('hide');
 //                         document.getElementById('formularioSeleccionPPT').reset();
 
-
 //                         if ($.fn.DataTable.isDataTable('#Tablapptseleccion')) {
 //                             Tablapptseleccion.ajax.reload(null, false);
 //                         }
+
+//                         console.log("Brecha de competencias editadas:", brecha);
 
 //                     }, 300);
 //                 });
@@ -4004,6 +4009,7 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
 
 
 
+
 $("#guardarFormSeleccionPPT").click(function (e) {
     e.preventDefault();
 
@@ -4014,6 +4020,9 @@ $("#guardarFormSeleccionPPT").click(function (e) {
         const resultado = obtenerBrechaCompetencias();
         console.log("Resumen de brechas de competencias:", resultado.brechas);
         console.log("Porcentaje faltante:", resultado.porcentajeFaltante + "%");
+
+        const brecha = resultado.brechas;
+        const porcentajeFaltante = resultado.porcentajeFaltante;
 
         if (ID_PPT_SELECCION == 0) {
 
@@ -4027,7 +4036,10 @@ $("#guardarFormSeleccionPPT").click(function (e) {
                 await ajaxAwaitFormData({
                     api: 1,
                     ID_PPT_SELECCION: ID_PPT_SELECCION,
-                    CURP: curpSeleccionada
+                    CURP: curpSeleccionada,
+                    NOMBRE_BRECHA: nombreTrabajadorSeleccionado,
+                    PORCENTAJE_FALTANTE: porcentajeFaltante,
+                    BRECHA_JSON: JSON.stringify(brecha)
                 }, 'SeleccionSave', 'formularioSeleccionPPT', 'guardarFormSeleccionPPT', { callbackAfter: true, callbackBefore: true }, () => {
 
                     Swal.fire({
@@ -4051,7 +4063,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
                             Tablapptseleccion.ajax.reload(null, false);
                         }
 
-                        // Mostrar la brecha en consola si se requiere también después del guardado
                         console.log("Brecha de competencias guardadas:", brecha);
 
                     }, 300);
@@ -4071,7 +4082,10 @@ $("#guardarFormSeleccionPPT").click(function (e) {
                 await ajaxAwaitFormData({
                     api: 1,
                     ID_PPT_SELECCION: ID_PPT_SELECCION,
-                    CURP: curpSeleccionada
+                    CURP: curpSeleccionada,
+                    NOMBRE_BRECHA: nombreTrabajadorSeleccionado,
+                    PORCENTAJE_FALTANTE: porcentajeFaltante,
+                    BRECHA_JSON: JSON.stringify(brecha)
                 }, 'SeleccionSave', 'formularioSeleccionPPT', 'guardarFormSeleccionPPT', { callbackAfter: true, callbackBefore: true }, () => {
 
                     Swal.fire({
@@ -4107,6 +4121,7 @@ $("#guardarFormSeleccionPPT").click(function (e) {
         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
     }
 });
+
 
 // SUMA DE SELECCION
 
@@ -4481,16 +4496,14 @@ $("#guardarFormSeleccionPPT").click(function (e) {
 });
 
 
-
+// SUMA DE OBTENER BRECHA
 
 function obtenerBrechaCompetencias() {
     const brechas = [];
 
-    // Obtener el total ya calculado
     const totalActualInput = document.getElementById("SUMA_TOTAL");
     const sumaTotal = parseFloat(totalActualInput?.value || 0);
 
-    // Validación visual únicamente (no afecta el porcentaje)
     const selectRadioPairs = [
         { select: "SECUNDARIA_PPT", radio: "SECUNDARIA_CUMPLE_PPT" },
         { select: "TECNICA_PPT", radio: "TECNICA_CUMPLE_PPT" },
@@ -4550,7 +4563,6 @@ function obtenerBrechaCompetencias() {
 
 
 
-    // Otros radios/áreas sin validación previa porque no dependen de un select
     const extras = [
         { name: "EXPERIENCIAGENERAL_CUMPLE_PPT", mensaje: "Falta por cumplir con la experiencia laboral general requerida" },
         { name: "CANTIDAD_EXPERIENCIA_CUMPLE_PPT", mensaje: "Falta por cumplir con la cantidad total de años de experiencia laboral" },
@@ -4584,7 +4596,6 @@ function obtenerBrechaCompetencias() {
         }
     });
 
-    // Cursos
     const cursos = document.querySelectorAll("textarea[name='CURSO_PPT[]']");
     cursos.forEach((curso) => {
         const id = curso.id.match(/\d+/)?.[0];
@@ -4601,7 +4612,6 @@ function obtenerBrechaCompetencias() {
 
   
 
-    // Idiomas y herramientas
     const otros = [
         { aplica: "APLICA_IDIOMA1_PPT", cumple: "IDIOMA1_CUMPLE_PPT", tipo: "idioma" },
         { aplica: "APLICA_IDIOMA2_PPT", cumple: "IDIOMA2_CUMPLE_PPT", tipo: "idioma" },
@@ -4634,7 +4644,6 @@ function obtenerBrechaCompetencias() {
     });
 
 
-    // Requisitos de movilidad
     const requisitosMovilidad = [
         { name: "DISPONIBILIDAD_VIAJAR_PPT", cumple: "DISPONIBILIDAD_VIAJAR_OPCION_CUMPLE" },
         { name: "REQUIERE_PASAPORTE_PPT", cumple: "REQUIEREPASAPORTE_OPCION_CUMPLE" },
@@ -4671,7 +4680,6 @@ function obtenerBrechaCompetencias() {
 });
 
 
-    // Cálculo simple del porcentaje faltante con base en el input ya calculado
     const porcentajeFaltante = Math.max(0, 100 - Math.round(sumaTotal));
 
     console.log("Brecha de competencias:", brechas);

@@ -23,9 +23,7 @@ use App\Models\selección\referenciaspruebaseleccionModel;
 
 use App\Models\pendientecontratar\pendientecontratarModel;
 
-
-
-
+use App\Models\capacitacion\brechacompeModel;
 
 
 
@@ -868,77 +866,151 @@ public function store(Request $request)
     try {
         switch (intval($request->api)) {
 
-        case 1:
+                //     case 1:
 
-    if ($request->ID_PPT_SELECCION == 0) {
+                // if ($request->ID_PPT_SELECCION == 0) {
 
-        DB::statement('ALTER TABLE seleccion_ppt AUTO_INCREMENT=1;');
-        $PPT = seleccionpptModel::create($request->all());
+                //     DB::statement('ALTER TABLE seleccion_ppt AUTO_INCREMENT=1;');
+                //     $PPT = seleccionpptModel::create($request->all());
 
-        // GUARDAR LOS CURSOS
+                //     // GUARDAR LOS CURSOS
 
-        if ($request->CURSO_PPT) {
-            foreach ($request->CURSO_PPT as $key => $value) {
+                //     if ($request->CURSO_PPT) {
+                //         foreach ($request->CURSO_PPT as $key => $value) {
 
-                $num = $key + 1;
+                //             $num = $key + 1;
 
-                if ((!empty($request->CURSO_PPT[$key]))) {
+                //             if ((!empty($request->CURSO_PPT[$key]))) {
 
-                    $guardar_curso = cursospptseleccionModel::create([
-                        'SELECCION_PPT_ID' => $PPT->ID_PPT_SELECCION,
-                        'CURSO_PPT' => $value,
-                        'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
-                        'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
-                        'CURSO_CUMPLE_PPT' =>  isset($request->CURSO_CUMPLE_PPT[$num]) ? $request->CURSO_CUMPLE_PPT[$num] : null,
-                    ]);
-                }
-            }
-        }
+                //                 $guardar_curso = cursospptseleccionModel::create([
+                //                     'SELECCION_PPT_ID' => $PPT->ID_PPT_SELECCION,
+                //                     'CURSO_PPT' => $value,
+                //                     'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
+                //                     'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
+                //                     'CURSO_CUMPLE_PPT' =>  isset($request->CURSO_CUMPLE_PPT[$num]) ? $request->CURSO_CUMPLE_PPT[$num] : null,
+                //                 ]);
+                //             }
+                //         }
+                //     }
 
-        $response['code']  = 1;
-        $response['PPT']  = $PPT;
-        return response()->json($response);
-    } else { //Editamos el ppt y eliminar ppt
-
-
-
-        $eliminar_ppt = seleccionpptModel::where('ID_PPT_SELECCION', $request->ID_PPT_SELECCION)->delete();
-
-        $PPT = seleccionpptModel::create($request->all());
-
-        //ELIMINAMOS LOS CURSOS ANTERIORES
-        $eliminar_cursos = cursospptseleccionModel::where('SELECCION_PPT_ID', $request["ID_PPT_SELECCION"])->delete();
+                //     $response['code']  = 1;
+                //     $response['PPT']  = $PPT;
+                //     return response()->json($response);
+                // } else { //Editamos el ppt y eliminar ppt
 
 
-        // GUARDAR LOS CURSOS
-        if ($request->CURSO_PPT) {
-            foreach ($request->CURSO_PPT as $key => $value) {
 
-                $num = $key + 1;
+                //     $eliminar_ppt = seleccionpptModel::where('ID_PPT_SELECCION', $request->ID_PPT_SELECCION)->delete();
 
-                if ((!empty($request->CURSO_PPT[$key]))) {
+                //     $PPT = seleccionpptModel::create($request->all());
 
-                    $guardar_curso = cursospptseleccionModel::create([
-                        'SELECCION_PPT_ID' => $PPT->ID_PPT_SELECCION,
-                        'CURSO_PPT' => $value,
-                        'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
-                        'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
-                        'CURSO_CUMPLE_PPT' =>  isset($request->CURSO_CUMPLE_PPT[$num]) ? $request->CURSO_CUMPLE_PPT[$num] : null,
-                    ]);
-                }
-            }
-        }
+                //     //ELIMINAMOS LOS CURSOS ANTERIORES
+                //     $eliminar_cursos = cursospptseleccionModel::where('SELECCION_PPT_ID', $request["ID_PPT_SELECCION"])->delete();
 
-        $response['code']  = 1;
-        $response['PPT']  = $PPT;
-        return response()->json($response);
-    }
 
-    break;
+                //     // GUARDAR LOS CURSOS
+                //     if ($request->CURSO_PPT) {
+                //         foreach ($request->CURSO_PPT as $key => $value) {
 
-    
-                
-case 2:
+                //             $num = $key + 1;
+
+                //             if ((!empty($request->CURSO_PPT[$key]))) {
+
+                //                 $guardar_curso = cursospptseleccionModel::create([
+                //                     'SELECCION_PPT_ID' => $PPT->ID_PPT_SELECCION,
+                //                     'CURSO_PPT' => $value,
+                //                     'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
+                //                     'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
+                //                     'CURSO_CUMPLE_PPT' =>  isset($request->CURSO_CUMPLE_PPT[$num]) ? $request->CURSO_CUMPLE_PPT[$num] : null,
+                //                 ]);
+                //             }
+                //         }
+                //     }
+
+                //     $response['code']  = 1;
+                //     $response['PPT']  = $PPT;
+                //     return response()->json($response);
+                // }
+
+                // break;
+
+                case 1:
+
+                    if ($request->ID_PPT_SELECCION == 0) {
+
+                        DB::statement('ALTER TABLE seleccion_ppt AUTO_INCREMENT=1;');
+                        $PPT = seleccionpptModel::create($request->all());
+
+                        // GUARDAR LOS CURSOS
+                        if ($request->CURSO_PPT) {
+                            foreach ($request->CURSO_PPT as $key => $value) {
+                                $num = $key + 1;
+                                if ((!empty($request->CURSO_PPT[$key]))) {
+                                    $guardar_curso = cursospptseleccionModel::create([
+                                        'SELECCION_PPT_ID' => $PPT->ID_PPT_SELECCION,
+                                        'CURSO_PPT' => $value,
+                                        'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
+                                        'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
+                                        'CURSO_CUMPLE_PPT' =>  isset($request->CURSO_CUMPLE_PPT[$num]) ? $request->CURSO_CUMPLE_PPT[$num] : null,
+                                    ]);
+                                }
+                            }
+                        }
+
+                        // GUARDAR BRECHA
+                        brechacompeModel::where('CURP', $request->CURP)->delete();
+                        brechacompeModel::create([
+                            'CURP' => $request->CURP,
+                            'NOMBRE_BRECHA' => $request->NOMBRE_BRECHA,
+                            'PORCENTAJE_FALTANTE' => $request->PORCENTAJE_FALTANTE,
+                            'BRECHA_JSON' => $request->BRECHA_JSON
+                        ]);
+
+                        $response['code']  = 1;
+                        $response['PPT']  = $PPT;
+                        return response()->json($response);
+                    } else {
+
+                        $eliminar_ppt = seleccionpptModel::where('ID_PPT_SELECCION', $request->ID_PPT_SELECCION)->delete();
+                        $PPT = seleccionpptModel::create($request->all());
+
+                        // ELIMINAMOS LOS CURSOS ANTERIORES
+                        $eliminar_cursos = cursospptseleccionModel::where('SELECCION_PPT_ID', $request["ID_PPT_SELECCION"])->delete();
+
+                        // GUARDAR LOS CURSOS
+                        if ($request->CURSO_PPT) {
+                            foreach ($request->CURSO_PPT as $key => $value) {
+                                $num = $key + 1;
+                                if ((!empty($request->CURSO_PPT[$key]))) {
+                                    $guardar_curso = cursospptseleccionModel::create([
+                                        'SELECCION_PPT_ID' => $PPT->ID_PPT_SELECCION,
+                                        'CURSO_PPT' => $value,
+                                        'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
+                                        'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
+                                        'CURSO_CUMPLE_PPT' =>  isset($request->CURSO_CUMPLE_PPT[$num]) ? $request->CURSO_CUMPLE_PPT[$num] : null,
+                                    ]);
+                                }
+                            }
+                        }
+
+                        // GUARDAR BRECHA EDITADA
+                        brechacompeModel::where('CURP', $request->CURP)->delete();
+                        brechacompeModel::create([
+                            'CURP' => $request->CURP,
+                            'NOMBRE_BRECHA' => $request->NOMBRE_BRECHA,
+                            'PORCENTAJE_FALTANTE' => $request->PORCENTAJE_FALTANTE,
+                            'BRECHA_JSON' => $request->BRECHA_JSON
+                        ]);
+
+                        $response['code']  = 1;
+                        $response['PPT']  = $PPT;
+                        return response()->json($response);
+                    }
+
+                    break;
+
+
+                case 2:
 
     if ($request->ID_ENTREVISTA_SELECCION == 0) {
         DB::statement('ALTER TABLE seleccion_entrevista AUTO_INCREMENT=1;');
