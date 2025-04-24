@@ -4564,10 +4564,10 @@ function obtenerBrechaCompetencias() {
 
 
     const extras = [
-        { name: "EXPERIENCIAGENERAL_CUMPLE_PPT", mensaje: "Falta por cumplir con la experiencia laboral general requerida" },
-        { name: "CANTIDAD_EXPERIENCIA_CUMPLE_PPT", mensaje: "Falta por cumplir con la cantidad total de años de experiencia laboral" },
-        { name: "EXPERIENCIA_ESPECIFICA_CUMPLE_PPT", mensaje: "Falta por cumplir con la experiencia laboral específica requerida" },
-        { name: "TIEMPO_EXPERIENCIA_CUMPLE_PPT", mensaje: "Falta por cumplir con el tiempo de experiencia específica requerido para el cargo" },
+        { name: "EXPERIENCIAGENERAL_CUMPLE_PPT", mensaje: "Falta por cumplir con la experiencia laboral general requerida" , checkExtra: true },
+        { name: "CANTIDAD_EXPERIENCIA_CUMPLE_PPT", mensaje: "Falta por cumplir con la cantidad total de años de experiencia laboral" , checkExtra: true },
+        { name: "EXPERIENCIA_ESPECIFICA_CUMPLE_PPT", mensaje: "Falta por cumplir con la experiencia laboral específica requerida" , checkExtra: true },
+        { name: "TIEMPO_EXPERIENCIA_CUMPLE_PPT", mensaje: "Falta por cumplir con el tiempo de experiencia específica requerido para el cargo" , checkExtra: true },
         { name: "INNOVACION_CUMPLE_SI", mensaje: "Falta por cumplir con la habilidad/competencia: Innovación", checkExtra: true },
         { name: "PASION_CUMPLE_SI", mensaje: "Falta por cumplir con la habilidad/competencia: Pasión", checkExtra: true },
         { name: "SERVICIO_CLIENTE_CUMPLE_SI", mensaje: "Falta por cumplir con la habilidad/competencia: Servicio (Orientación al cliente)", checkExtra: true },
