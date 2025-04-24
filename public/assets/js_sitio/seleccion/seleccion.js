@@ -4564,10 +4564,10 @@ function obtenerBrechaCompetencias() {
 
 
     const extras = [
-        { name: "EXPERIENCIAGENERAL_CUMPLE_PPT", mensaje: "Falta por cumplir con la experiencia laboral general requerida" , checkExtra: true },
-        { name: "CANTIDAD_EXPERIENCIA_CUMPLE_PPT", mensaje: "Falta por cumplir con la cantidad total de años de experiencia laboral" , checkExtra: true },
-        { name: "EXPERIENCIA_ESPECIFICA_CUMPLE_PPT", mensaje: "Falta por cumplir con la experiencia laboral específica requerida" , checkExtra: true },
-        { name: "TIEMPO_EXPERIENCIA_CUMPLE_PPT", mensaje: "Falta por cumplir con el tiempo de experiencia específica requerido para el cargo" , checkExtra: true },
+        { name: "EXPERIENCIAGENERAL_CUMPLE_PPT", mensaje: "Falta por cumplir con la experiencia laboral general requerida" },
+        { name: "CANTIDAD_EXPERIENCIA_CUMPLE_PPT", mensaje: "Falta por cumplir con la cantidad total de años de experiencia laboral" },
+        { name: "EXPERIENCIA_ESPECIFICA_CUMPLE_PPT", mensaje: "Falta por cumplir con la experiencia laboral específica requerida" },
+        { name: "TIEMPO_EXPERIENCIA_CUMPLE_PPT", mensaje: "Falta por cumplir con el tiempo de experiencia específica requerido para el cargo" },
         { name: "INNOVACION_CUMPLE_SI", mensaje: "Falta por cumplir con la habilidad/competencia: Innovación", checkExtra: true },
         { name: "PASION_CUMPLE_SI", mensaje: "Falta por cumplir con la habilidad/competencia: Pasión", checkExtra: true },
         { name: "SERVICIO_CLIENTE_CUMPLE_SI", mensaje: "Falta por cumplir con la habilidad/competencia: Servicio (Orientación al cliente)", checkExtra: true },
@@ -4581,20 +4581,26 @@ function obtenerBrechaCompetencias() {
 
     ];
 
-    extras.forEach(({ name, mensaje, checkExtra }) => {
-        const el = document.getElementById(name);
-        if (checkExtra) {
-            const requerido = document.getElementById(name.replace("_CUMPLE_SI", "_REQUERIDA_PPT"));
-            const deseable = document.getElementById(name.replace("_CUMPLE_SI", "_DESEABLE_PPT"));
-            if ((requerido?.checked || deseable?.checked) && !el?.checked) {
-                brechas.push(mensaje);
+        extras.forEach(({ name, mensaje, checkExtra }) => {
+            const el = document.getElementById(name);
+            
+            if (checkExtra) {
+                const requerido = document.getElementById(name.replace("_CUMPLE_SI", "_REQUERIDA_PPT"));
+                const deseable = document.getElementById(name.replace("_CUMPLE_SI", "_DESEABLE_PPT"));
+                if ((requerido?.checked || deseable?.checked) && !el?.checked) {
+                    brechas.push(mensaje);
+                }
+            } else {
+                const radios = document.getElementsByName(name);
+                const marcadoNo = Array.from(radios).some(r => r.checked && r.value === "no");
+                const ningunoMarcado = Array.from(radios).every(r => !r.checked);
+
+                if (marcadoNo || ningunoMarcado) {
+                    brechas.push(mensaje);
+                }
             }
-        } else {
-            if (!el || el.value !== "si") {
-                brechas.push(mensaje);
-            }
-        }
-    });
+        });
+
 
     const cursos = document.querySelectorAll("textarea[name='CURSO_PPT[]']");
     cursos.forEach((curso) => {
