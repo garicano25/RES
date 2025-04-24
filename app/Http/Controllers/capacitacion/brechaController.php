@@ -33,7 +33,9 @@ class brechaController extends Controller
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pil EDITAR" disabled><i class="bi bi-eye"></i></button>';
                 } else {
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pil EDITAR"><i class="bi bi-eye"></i></button>';
+
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 }
             }
