@@ -78,6 +78,62 @@ class mrController extends Controller
 
 
 
+    // public function Tablarequsicionaprobada()
+    // {
+    //     try {
+    //         $tabla = mrModel::where('DAR_BUENO', 1)
+    //             ->where(function ($query) {
+    //                 $query->whereNull('ESTADO_APROBACION')
+    //                     ->orWhereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
+    //             })
+    //             ->get();
+
+    //         foreach ($tabla as $value) {
+
+
+
+    //             if ($value->ACTIVO == 0) {
+    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '"><span class="slider round"></span></label>';
+    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+    //             } else {
+    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '" checked><span class="slider round"></span></label>';
+    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //             }
+
+    //             if ($value->DAR_BUENO == 0) {
+    //                 $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">En revisión</span>';
+    //             } elseif ($value->DAR_BUENO == 1) {
+    //                 $value->ESTADO_REVISION = '<span class="badge bg-success">✔</span>';
+    //             } elseif ($value->DAR_BUENO == 2) {
+    //                 $value->ESTADO_REVISION = '<span class="badge bg-danger">✖</span>';
+    //             } else {
+    //                 $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
+    //             }
+
+    //             if ($value->ESTADO_APROBACION == 'Aprobada') {
+    //                 $value->ESTATUS = '<span class="badge bg-success">Aprobado</span>';
+    //             } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
+    //                 $value->ESTATUS = '<span class="badge bg-danger">Rechazado</span>';
+    //             } else {
+    //                 $value->ESTATUS = '<span class="badge bg-secondary">Aprobar</span>';
+    //             }
+    //         }
+
+    //         // Respuesta
+    //         return response()->json([
+    //             'data' => $tabla,
+    //             'msj' => 'Información consultada correctamente'
+    //         ]);
+    //     } catch (Exception $e) {
+    //         return response()->json([
+    //             'msj' => 'Error ' . $e->getMessage(),
+    //             'data' => 0
+    //         ]);
+    //     }
+    // }
+
     public function Tablarequsicionaprobada()
     {
         try {
@@ -86,12 +142,13 @@ class mrController extends Controller
                     $query->whereNull('ESTADO_APROBACION')
                         ->orWhereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
                 })
+                ->where(function ($query) {
+                    $query->whereNull('JEFEINMEDIATO_ID')
+                        ->orWhere('JEFEINMEDIATO_ID', '!=', Auth::id()); // <<--- Aquí filtramos
+                })
                 ->get();
 
             foreach ($tabla as $value) {
-
-
-
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '"><span class="slider round"></span></label>';
@@ -121,7 +178,6 @@ class mrController extends Controller
                 }
             }
 
-            // Respuesta
             return response()->json([
                 'data' => $tabla,
                 'msj' => 'Información consultada correctamente'
@@ -133,7 +189,6 @@ class mrController extends Controller
             ]);
         }
     }
-
 
 
     public function obtenerAreaSolicitante()
@@ -169,7 +224,6 @@ class mrController extends Controller
     }
 
 
-
     public function guardarYDarVistoBueno(Request $request)
     {
         $request->validate([
@@ -179,7 +233,6 @@ class mrController extends Controller
             'fecha_visto' => 'required|date',
             'visto_bueno' => 'required|string',
             'materiales_json' => 'required|string',
-
         ]);
 
         $formulario = mrModel::find($request->id);
@@ -189,6 +242,7 @@ class mrController extends Controller
         $formulario->VISTO_BUENO = $request->visto_bueno;
         $formulario->MATERIALES_JSON = $request->materiales_json;
         $formulario->DAR_BUENO = 1;
+        $formulario->JEFEINMEDIATO_ID = Auth::id(); 
         $formulario->save();
 
         return response()->json(['success' => true, 'message' => 'Formulario actualizado con visto bueno.']);
