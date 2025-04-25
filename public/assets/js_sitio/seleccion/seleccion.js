@@ -5127,6 +5127,7 @@ document.addEventListener("input", (e) => {
 // }
 
 
+
 function obtenerBrechaCompetencias() {
     const brechas = [];
     const brechasDetalladas = [];
@@ -5249,15 +5250,19 @@ function obtenerBrechaCompetencias() {
         }
     }
 
-    // Para escolaridad
+    // Para escolaridad - Aquí está el cambio principal
+    // Primero, filtramos para considerar sólo secciones donde el select tiene un valor válido
     const seccionesValidas = selectRadioPairs.filter(({ select, dependentRadios }) => {
+        // Si tiene un select, verificamos que tenga un valor válido
         if (select) {
             const selectElement = document.getElementById(select);
+            // Si no existe el select o no tiene valor seleccionado válido, no la consideramos
             if (!selectElement || selectElement.value === "0" || selectElement.value === "Seleccione una opción") {
                 return false;
             }
         }
 
+        // Si tiene radios dependientes, verificamos que al menos uno esté marcado con "si"
         if (dependentRadios) {
             const algunoMarcado = dependentRadios.some(depRadioName => {
                 const radio = document.querySelector(`input[name='${depRadioName}']:checked`);
@@ -5272,19 +5277,15 @@ function obtenerBrechaCompetencias() {
     const pesoPorSeccion = seccionesValidas.length > 0 ? 20 / seccionesValidas.length : 0;
     const pesoPorSeccionRedondeado = parseFloat(pesoPorSeccion.toFixed(2));
     
-    const seccionesCumplidas = [];
-    const seccionesNoCumplidas = [];
-
+    // Ahora dividimos las secciones válidas entre las que cumplen y las que no
     seccionesValidas.forEach(({ select, radio, dependentRadios }) => {
         const radios = document.getElementsByName(radio);
         const cumple = Array.from(radios).some(r => r.checked && r.value === "si");
         
         if (cumple) {
             sumaTotalCalculada += pesoPorSeccion;
-            seccionesCumplidas.push({ select, radio, dependentRadios });
         } else {
-            seccionesNoCumplidas.push({ select, radio, dependentRadios });
-            
+            // Solo agregamos brechas para secciones válidas que no cumplen
             let msg = "";
             switch (radio) {
                 case "SECUNDARIA_CUMPLE_PPT": msg = "Falta por cumplir con la secundaria"; break;
