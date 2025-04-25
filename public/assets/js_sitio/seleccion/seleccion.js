@@ -5250,19 +5250,48 @@ function obtenerBrechaCompetencias() {
         }
     }
 
-    // Para escolaridad - Aquí está el cambio principal
-    // Primero, filtramos para considerar sólo secciones donde el select tiene un valor válido
-    const seccionesValidas = selectRadioPairs.filter(({ select, dependentRadios }) => {
-        // Si tiene un select, verificamos que tenga un valor válido
+    // CAMBIO IMPORTANTE: Esta función verifica si un select tiene un valor válido
+    function tieneValorValido(selectId) {
+        const select = document.getElementById(selectId);
+        if (!select) return false;
+        
+        // Verificar que tenga un valor seleccionado válido
+        if (select.value === "" || 
+            select.value === "0" || 
+            select.value === "Seleccione una opción" || 
+            select.selectedIndex <= 0) {
+            return false;
+        }
+        
+        // Verificar que el texto seleccionado no sea un placeholder
+        const selectedText = select.options[select.selectedIndex].text;
+        if (selectedText === "Seleccione una opción" || 
+            selectedText === "Área" || 
+            selectedText === "" || 
+            selectedText.includes("Seleccione")) {
+            return false;
+        }
+        
+        return true;
+    }
+
+    // CAMBIO IMPORTANTE: Esta función verifica si un radio tiene un valor seleccionado
+    function radioTieneValor(radioName) {
+        const radio = document.querySelector(`input[name='${radioName}']:checked`);
+        return radio !== null;
+    }
+
+    // Para escolaridad - Filtrar correctamente las secciones válidas
+    // Solo consideramos secciones donde el select tiene un valor válido o los radios dependientes están marcados
+    const seccionesValidas = selectRadioPairs.filter(({ select, radio, dependentRadios }) => {
+        // Si tiene un select, verificar que tenga valor válido
         if (select) {
-            const selectElement = document.getElementById(select);
-            // Si no existe el select o no tiene valor seleccionado válido, no la consideramos
-            if (!selectElement || selectElement.value === "0" || selectElement.value === "Seleccione una opción") {
+            if (!tieneValorValido(select)) {
                 return false;
             }
         }
-
-        // Si tiene radios dependientes, verificamos que al menos uno esté marcado con "si"
+        
+        // Si tiene radio dependientes, verificar que al menos uno esté marcado
         if (dependentRadios) {
             const algunoMarcado = dependentRadios.some(depRadioName => {
                 const radio = document.querySelector(`input[name='${depRadioName}']:checked`);
@@ -5270,48 +5299,117 @@ function obtenerBrechaCompetencias() {
             });
             if (!algunoMarcado) return false;
         }
-
+        
+        // Verificar que el radio principal tenga algún valor seleccionado
+        if (radio && !radioTieneValor(radio)) {
+            return false;
+        }
+        
         return true;
     });
 
     const pesoPorSeccion = seccionesValidas.length > 0 ? 20 / seccionesValidas.length : 0;
     const pesoPorSeccionRedondeado = parseFloat(pesoPorSeccion.toFixed(2));
     
-    // Ahora dividimos las secciones válidas entre las que cumplen y las que no
+    // Procesamos solo las secciones válidas
     seccionesValidas.forEach(({ select, radio, dependentRadios }) => {
-        const radios = document.getElementsByName(radio);
-        const cumple = Array.from(radios).some(r => r.checked && r.value === "si");
+        const cumple = document.querySelector(`input[name='${radio}']:checked`)?.value === "si";
         
         if (cumple) {
             sumaTotalCalculada += pesoPorSeccion;
         } else {
-            // Solo agregamos brechas para secciones válidas que no cumplen
+            // Solo agregamos brechas para secciones que no cumplen pero son válidas
             let msg = "";
+            let skipBrecha = false;
+            
             switch (radio) {
-                case "SECUNDARIA_CUMPLE_PPT": msg = "Falta por cumplir con la secundaria"; break;
-                case "TECNICA_CUMPLE_PPT": msg = "Falta por concluir el bachillerato"; break;
-                case "TECNICO_CUMPLE_PPT": msg = "Falta cumplir con Técnico superior"; break;
-                case "UNIVERSITARIO_CUMPLE_PPT": msg = "Falta cumplir con la Carrera universitaria"; break;
-                case "SITUACION_CUMPLE_PPT":
-                    const texto = document.getElementById("SITUACION_PPT")?.options[document.getElementById("SITUACION_PPT")?.selectedIndex]?.text;
-                    msg = `Falta por cumplir con ${texto || "la situación académica"}`;
+                case "SECUNDARIA_CUMPLE_PPT":
+                    // Solo si el select de secundaria tiene valor
+                    if (tieneValorValido("SECUNDARIA_PPT")) {
+                        msg = "Falta por cumplir con la secundaria";
+                    } else {
+                        skipBrecha = true;
+                    }
                     break;
-                case "CEDULA_CUMPLE_PPT": msg = "Falta por cumplir con la Cédula profesional"; break;
+                case "TECNICA_CUMPLE_PPT":
+                    if (tieneValorValido("TECNICA_PPT")) {
+                        msg = "Falta por concluir el bachillerato";
+                    } else {
+                        skipBrecha = true;
+                    }
+                    break;
+                case "TECNICO_CUMPLE_PPT":
+                    if (tieneValorValido("TECNICO_PPT")) {
+                        msg = "Falta cumplir con Técnico superior";
+                    } else {
+                        skipBrecha = true;
+                    }
+                    break;
+                case "UNIVERSITARIO_CUMPLE_PPT":
+                    if (tieneValorValido("UNIVERSITARIO_PPT")) {
+                        msg = "Falta cumplir con la Carrera universitaria";
+                    } else {
+                        skipBrecha = true;
+                    }
+                    break;
+                case "SITUACION_CUMPLE_PPT":
+                    if (tieneValorValido("SITUACION_PPT")) {
+                        const texto = document.getElementById("SITUACION_PPT").options[document.getElementById("SITUACION_PPT").selectedIndex].text;
+                        msg = `Falta por cumplir con ${texto}`;
+                    } else {
+                        skipBrecha = true;
+                    }
+                    break;
+                case "CEDULA_CUMPLE_PPT":
+                    if (tieneValorValido("CEDULA_PPT")) {
+                        msg = "Falta por cumplir con la Cédula profesional";
+                    } else {
+                        skipBrecha = true;
+                    }
+                    break;
                 case "AREA1_CUMPLE_PPT":
                 case "AREA2_CUMPLE_PPT":
                 case "AREA3_CUMPLE_PPT":
                 case "AREA4_CUMPLE_PPT":
-                    const areaText = document.getElementById(select)?.options[document.getElementById(select)?.selectedIndex]?.text || "Área";
-                    msg = `Falta por cumplir con el Área de conocimientos: ${areaText}`;
+                    const areaSelectId = select; // Ej: "AREA1_PPT"
+                    if (tieneValorValido(areaSelectId)) {
+                        const areaText = document.getElementById(areaSelectId).options[document.getElementById(areaSelectId).selectedIndex].text;
+                        msg = `Falta por cumplir con el Área de conocimientos: ${areaText}`;
+                    } else {
+                        skipBrecha = true;
+                    }
                     break;
-                case "ESPECIALIDAD_CUMPLE_PPT": msg = "Falta Estudios de posgrado requeridos: Especialidad"; break;
-                case "MAESTRIA_CUMPLE_PPT": msg = "Falta Estudios de posgrado requeridos: Maestría"; break;
-                case "DOCTORADO_CUMPLE_PPT": msg = "Falta Estudios de posgrado requeridos: Doctorado"; break;
-                default: msg = `No cumple con: ${radio}`;
+                case "ESPECIALIDAD_CUMPLE_PPT":
+                    // Verificamos si alguno de los radios dependientes está marcado como "si"
+                    if (dependentRadios && dependentRadios.some(name => document.querySelector(`input[name='${name}']:checked`)?.value === "si")) {
+                        msg = "Falta Estudios de posgrado requeridos: Especialidad";
+                    } else {
+                        skipBrecha = true;
+                    }
+                    break;
+                case "MAESTRIA_CUMPLE_PPT":
+                    if (dependentRadios && dependentRadios.some(name => document.querySelector(`input[name='${name}']:checked`)?.value === "si")) {
+                        msg = "Falta Estudios de posgrado requeridos: Maestría";
+                    } else {
+                        skipBrecha = true;
+                    }
+                    break;
+                case "DOCTORADO_CUMPLE_PPT":
+                    if (dependentRadios && dependentRadios.some(name => document.querySelector(`input[name='${name}']:checked`)?.value === "si")) {
+                        msg = "Falta Estudios de posgrado requeridos: Doctorado";
+                    } else {
+                        skipBrecha = true;
+                    }
+                    break;
+                default:
+                    skipBrecha = true;
             }
             
-            brechasDetalladas.push({ mensaje: msg, porcentaje: pesoPorSeccionRedondeado });
-            brechas.push(`${msg} (${pesoPorSeccionRedondeado}%)`);
+            // Solo agregamos la brecha si no debe saltarse
+            if (!skipBrecha && msg) {
+                brechasDetalladas.push({ mensaje: msg, porcentaje: pesoPorSeccionRedondeado });
+                brechas.push(`${msg} (${pesoPorSeccionRedondeado}%)`);
+            }
         }
     });
 
@@ -5436,7 +5534,6 @@ function obtenerBrechaCompetencias() {
     // Para cursos
     const cursosContainer = document.querySelectorAll("textarea[name='CURSO_PPT[]']");
     const cursosValidos = Array.from(cursosContainer).filter((curso) => {
-        const id = curso.id.match(/\d+/)[0];
         return curso.value.trim() !== "";
     });
     
@@ -5513,7 +5610,6 @@ function obtenerBrechaCompetencias() {
         porcentajeFaltante
     };
 }
-
 
 // function obtenerBrechaCompetencias() {
 //     const brechas = [];
