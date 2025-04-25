@@ -2,7 +2,30 @@
 
 @section('contenido')
 
+<style>
+    <style>.fila-brecha {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px 0;
+        border-bottom: 1px solid #eee;
+    }
 
+    .mensaje-brecha {
+        flex: 1;
+        padding-right: 10px;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    .porcentaje-brecha {
+        width: 80px;
+        text-align: right;
+        font-weight: bold;
+        font-size: 14px;
+    }
+</style>
+
+</style>
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
@@ -56,9 +79,10 @@
                                 </div>
 
                             </div>
-
                             <div class="mt-3">
+                                <h5>Brechas detectadas:</h5>
                                 <div id="listaBrechas"></div>
+                                <p id="contadorBrechas" class="fw-bold mt-2"></p>
                             </div>
 
 

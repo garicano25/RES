@@ -493,7 +493,7 @@
 
 
     @if(request()->is('Selección'))
-    <script src="/assets/js_sitio/seleccion/seleccion.js?v=21.3"></script>
+    <script src="/assets/js_sitio/seleccion/seleccion.js?v=21.4"></script>
     @endif
 
     @if(request()->is('Visualizar_selección'))
@@ -528,7 +528,7 @@
 
 
     @if(request()->is('Brecha_competencia'))
-    <script src="/assets/js_sitio/capacitacion/brechacompetencia.js?v=1.2"></script>
+    <script src="/assets/js_sitio/capacitacion/brechacompetencia.js?v=1.3"></script>
     @endif
 
 

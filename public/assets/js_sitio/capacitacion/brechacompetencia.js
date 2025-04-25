@@ -184,9 +184,16 @@ $('#Tablabrecha tbody').on('click', 'td>button.EDITAR', function () {
     editarDatoTabla(row.data(), 'formularioBRECHA', 'miModal_BRECHA', 1);
 
     const brechas = JSON.parse(row.data().BRECHA_JSON || '[]');
-    const listaBrechas = brechas.map(item => `<li>${item}</li>`).join('');
 
-    $('#listaBrechas').html(`<ul>${listaBrechas}</ul>`);
+    const listaBrechas = brechas.map(item => `
+        <div class="fila-brecha">
+            <div class="mensaje-brecha">${item.mensaje}</div>
+            <div class="porcentaje-brecha">${item.porcentaje.toFixed(2)}%</div>
+        </div>
+    `).join('');
+
+    $('#listaBrechas').html(listaBrechas);
+    $('#contadorBrechas').text(`Total de brechas: ${brechas.length}`);
 });
 
 
