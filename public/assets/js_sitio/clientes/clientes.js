@@ -79,7 +79,7 @@ $("#guardarCLIENTE").click(function (e) {
                 var contacto = {
                     'TITULO_CONTACTO_SOLICITUD': $(this).find("select[name='TITULO_CONTACTO_SOLICITUD']").val(),
                     'CONTACTO_SOLICITUD': $(this).find("input[name='CONTACTO_SOLICITUD']").val(),
-                    'CARGO_SOLICITUD': $(this).find("input[name='CARGO_SOLICITUD").val(),
+                    'CARGO_SOLICITUD': $(this).find("input[name='CARGO_SOLICITUD']").val(), // <-- ya corregido aquí
                     'TELEFONO_SOLICITUD': $(this).find("input[name='TELEFONO_SOLICITUD']").val(),
                     'CELULAR_SOLICITUD': $(this).find("input[name='CELULAR_SOLICITUD']").val(),
                     'CORREO_SOLICITUD': $(this).find("input[name='CORREO_SOLICITUD']").val(),
