@@ -165,49 +165,30 @@ $("#guardarCLIENTE").click(function (e) {
 
                         if (tipoSeleccionado === "nacional") {
                             var direccion = {
-                                'TIPO_DOMICILIO': "1",
-                                'CODIGO_POSTAL_DOMICILIO': $(this).find("input[name='CODIGO_POSTAL_DOMICILIO']").val()?.trim() || '',
-                                'TIPO_VIALIDAD_DOMICILIO': $(this).find("input[name='TIPO_VIALIDAD_DOMICILIO']").val()?.trim() || '',
-                                'NOMBRE_VIALIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_VIALIDAD_DOMICILIO']").val()?.trim() || '',
-                                'NUMERO_EXTERIOR_DOMICILIO': $(this).find("input[name='NUMERO_EXTERIOR_DOMICILIO']").val()?.trim() || '',
-                                'NUMERO_INTERIOR_DOMICILIO': $(this).find("input[name='NUMERO_INTERIOR_DOMICILIO']").val()?.trim() || '',
-                                'NOMBRE_COLONIA_DOMICILIO': $(this).find("select[name='NOMBRE_COLONIA_DOMICILIO']").val()?.trim() || '',
-                                'NOMBRE_LOCALIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_LOCALIDAD_DOMICILIO']").val()?.trim() || '',
-                                'NOMBRE_MUNICIPIO_DOMICILIO': $(this).find("input[name='NOMBRE_MUNICIPIO_DOMICILIO']").val()?.trim() || '',
-                                'NOMBRE_ENTIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_ENTIDAD_DOMICILIO']").val()?.trim() || '',
-                                'PAIS_CONTRATACION_DOMICILIO': $(this).find("input[name='PAIS_CONTRATACION_DOMICILIO']").val()?.trim() || '',
-                                'ENTRE_CALLE_DOMICILIO': $(this).find("input[name='ENTRE_CALLE_DOMICILIO']").val()?.trim() || '',
-                                'ENTRE_CALLE_2_DOMICILIO': $(this).find("input[name='ENTRE_CALLE_2_DOMICILIO']").val()?.trim() || '',
+                                    'TIPODEDOMICILIOFISCAL': $(this).find("select.tipoDomicilioSelect").val()?.trim() || '', 
 
-                                'DOMICILIO_EXTRANJERO': '',
-                                'CP_EXTRANJERO': '',
-                                'CIUDAD_EXTRANJERO': '',
-                                'ESTADO_EXTRANJERO': '',
-                                'PAIS_EXTRANJERO': ''
-                            };
-                            direcciones.push(direccion);
-                        } else if (tipoSeleccionado === "extranjero") {
-                            var direccion = {
-                                'TIPO_DOMICILIO': "2",
-                                'DOMICILIO_EXTRANJERO': $(this).find("input[name='DOMICILIO_EXTRANJERO']").val()?.trim() || '',
-                                'CP_EXTRANJERO': $(this).find("input[name='CP_EXTRANJERO']").val()?.trim() || '',
-                                'CIUDAD_EXTRANJERO': $(this).find("input[name='CIUDAD_EXTRANJERO']").val()?.trim() || '',
-                                'ESTADO_EXTRANJERO': $(this).find("input[name='ESTADO_EXTRANJERO']").val()?.trim() || '',
-                                'PAIS_EXTRANJERO': $(this).find("input[name='PAIS_EXTRANJERO']").val()?.trim() || '',
+                                    'TIPO_DOMICILIO': $(this).find("input[name='TIPO_DOMICILIO']").val()?.trim() || '', 
+                                    'CODIGO_POSTAL_DOMICILIO': $(this).find("input[name='CODIGO_POSTAL_DOMICILIO']").val()?.trim() || '',
+                                    'TIPO_VIALIDAD_DOMICILIO': $(this).find("input[name='TIPO_VIALIDAD_DOMICILIO']").val()?.trim() || '',
+                                    'NOMBRE_VIALIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_VIALIDAD_DOMICILIO']").val()?.trim() || '',
+                                    'NUMERO_EXTERIOR_DOMICILIO': $(this).find("input[name='NUMERO_EXTERIOR_DOMICILIO']").val()?.trim() || '',
+                                    'NUMERO_INTERIOR_DOMICILIO': $(this).find("input[name='NUMERO_INTERIOR_DOMICILIO']").val()?.trim() || '',
+                                    'NOMBRE_COLONIA_DOMICILIO': $(this).find("select[name='NOMBRE_COLONIA_DOMICILIO']").val()?.trim() || '',
+                                    'NOMBRE_LOCALIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_LOCALIDAD_DOMICILIO']").val()?.trim() || '',
+                                    'NOMBRE_MUNICIPIO_DOMICILIO': $(this).find("input[name='NOMBRE_MUNICIPIO_DOMICILIO']").val()?.trim() || '',
+                                    'NOMBRE_ENTIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_ENTIDAD_DOMICILIO']").val()?.trim() || '',
+                                    'PAIS_CONTRATACION_DOMICILIO': $(this).find("input[name='PAIS_CONTRATACION_DOMICILIO']").val()?.trim() || '',
+                                    'ENTRE_CALLE_DOMICILIO': $(this).find("input[name='ENTRE_CALLE_DOMICILIO']").val()?.trim() || '',
+                                    'ENTRE_CALLE_2_DOMICILIO': $(this).find("input[name='ENTRE_CALLE_2_DOMICILIO']").val()?.trim() || '',
+                                    
+                                    // Extranjero (en blanco si es nacional)
+                                    'DOMICILIO_EXTRANJERO': $(this).find("input[name='DOMICILIO_EXTRANJERO']").val()?.trim() || '',
+                                    'CP_EXTRANJERO': $(this).find("input[name='CP_EXTRANJERO']").val()?.trim() || '',
+                                    'CIUDAD_EXTRANJERO': $(this).find("input[name='CIUDAD_EXTRANJERO']").val()?.trim() || '',
+                                    'ESTADO_EXTRANJERO': $(this).find("input[name='ESTADO_EXTRANJERO']").val()?.trim() || '',
+                                    'PAIS_EXTRANJERO': $(this).find("input[name='PAIS_EXTRANJERO']").val()?.trim() || ''
+                                };
 
-                                'CODIGO_POSTAL_DOMICILIO': '',
-                                'TIPO_VIALIDAD_DOMICILIO': '',
-                                'NOMBRE_VIALIDAD_DOMICILIO': '',
-                                'NUMERO_EXTERIOR_DOMICILIO': '',
-                                'NUMERO_INTERIOR_DOMICILIO': '',
-                                'NOMBRE_COLONIA_DOMICILIO': '',
-                                'NOMBRE_LOCALIDAD_DOMICILIO': '',
-                                'NOMBRE_MUNICIPIO_DOMICILIO': '',
-                                'NOMBRE_ENTIDAD_DOMICILIO': '',
-                                'PAIS_CONTRATACION_DOMICILIO': '',
-                                'ENTRE_CALLE_DOMICILIO': '',
-                                'ENTRE_CALLE_2_DOMICILIO': ''
-                            };
                             direcciones.push(direccion);
                         }
                     });
@@ -244,7 +225,9 @@ $("#guardarCLIENTE").click(function (e) {
                 }, function (data) {
                     
                     ID_FORMULARIO_CLIENTES = data.cliente.ID_FORMULARIO_CLIENTES
-                        alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                    alertMensaje('success', 'Información guardada correctamente', 'Esta información esta lista para usarse', null, null, 1500)
+                     $('#miModal_CLIENTES').modal('hide')
+                        document.getElementById('formularioCLIENTES').reset();
                         Tablaclientesventas.ajax.reload()
     
     
@@ -680,6 +663,152 @@ function obtenerContactos(data) {
     });
 }
 
+// document.addEventListener("DOMContentLoaded", function () {
+//     const botonAgregarDomicilio = document.getElementById('botonAgregardomicilio');
+
+//     botonAgregarDomicilio.addEventListener('click', function () {
+//         agregarDomicilio();
+//     });
+
+//     function agregarDomicilio() {
+//         const divDomicilio = document.createElement('div');
+//         divDomicilio.classList.add('row', 'generardireccion', 'mb-3');
+
+//         divDomicilio.innerHTML = `
+//             <div class="col-12 mb-3">
+//                 <label>Tipo de Domicilio *</label>
+//                 <select class="form-select tipoDomicilioSelect" required>
+//                     <option value="">Seleccione una opción</option>
+//                     <option value="nacional">Nacional</option>
+//                     <option value="extranjero">Extranjero</option>
+//                 </select>
+//             </div>
+
+//             <!-- Contenedor Nacional -->
+//             <div class="col-12 contenedorNacional" style="display:none;">
+//                 <div class="row">
+//                     <div class="col-3 mb-3">
+//                         <label>Tipo de Domicilio *</label>
+//                         <input type="text" class="form-control" name="TIPO_DOMICILIO">
+//                     </div>
+//                     <div class="col-3 mb-3">
+//                         <label>Código Postal *</label>
+//                         <input type="number" class="form-control" name="CODIGO_POSTAL_DOMICILIO">
+//                     </div>
+//                     <div class="col-3 mb-3">
+//                         <label>Tipo de Vialidad *</label>
+//                         <input type="text" class="form-control" name="TIPO_VIALIDAD_DOMICILIO">
+//                     </div>
+//                     <div class="col-3 mb-3">
+//                         <label>Nombre de la Vialidad *</label>
+//                         <input type="text" class="form-control" name="NOMBRE_VIALIDAD_DOMICILIO">
+//                     </div>
+//                     <div class="col-3 mb-3">
+//                         <label>Número Exterior</label>
+//                         <input type="text" class="form-control" name="NUMERO_EXTERIOR_DOMICILIO">
+//                     </div>
+//                     <div class="col-3 mb-3">
+//                         <label>Número Interior</label>
+//                         <input type="text" class="form-control" name="NUMERO_INTERIOR_DOMICILIO">
+//                     </div>
+//                     <div class="col-3 mb-3">
+//                         <label>Nombre de la colonia </label>
+//                         <select class="form-control" name="NOMBRE_COLONIA_DOMICILIO">
+//                             <option value="">Seleccione una opción</option>
+//                         </select>
+//                     </div>
+//                     <div class="col-3 mb-3">
+//                         <label>Nombre de la Localidad *</label>
+//                         <input type="text" class="form-control" name="NOMBRE_LOCALIDAD_DOMICILIO">
+//                     </div>
+//                     <div class="col-4 mb-3">
+//                         <label>Nombre del municipio o demarcación territorial *</label>
+//                         <input type="text" class="form-control" name="NOMBRE_MUNICIPIO_DOMICILIO">
+//                     </div>
+//                     <div class="col-4 mb-3">
+//                         <label>Nombre de la Entidad Federativa *</label>
+//                         <input type="text" class="form-control" name="NOMBRE_ENTIDAD_DOMICILIO">
+//                     </div>
+//                     <div class="col-4 mb-3">
+//                         <label>País *</label>
+//                         <input type="text" class="form-control" name="PAIS_CONTRATACION_DOMICILIO">
+//                     </div>
+//                     <div class="col-6 mb-3">
+//                         <label>Entre Calle</label>
+//                         <input type="text" class="form-control" name="ENTRE_CALLE_DOMICILIO">
+//                     </div>
+//                     <div class="col-6 mb-3">
+//                         <label>Y Calle</label>
+//                         <input type="text" class="form-control" name="ENTRE_CALLE_2_DOMICILIO">
+//                     </div>
+//                 </div>
+//             </div>
+
+//             <!-- Contenedor Extranjero -->
+//             <div class="col-12 contenedorExtranjero" style="display:none;">
+//                 <div class="row">
+//                     <div class="col-12 mb-3">
+//                         <label>Domicilio *</label>
+//                         <input type="text" class="form-control" name="DOMICILIO_EXTRANJERO">
+//                     </div>
+//                     <div class="col-6 mb-3">
+//                         <label>Código Postal *</label>
+//                         <input type="text" class="form-control" name="CP_EXTRANJERO">
+//                     </div>
+//                     <div class="col-6 mb-3">
+//                         <label>Ciudad *</label>
+//                         <input type="text" class="form-control" name="CIUDAD_EXTRANJERO">
+//                     </div>
+//                     <div class="col-6 mb-3">
+//                         <label>Estado/Departamento/Provincia *</label>
+//                         <input type="text" class="form-control" name="ESTADO_EXTRANJERO">
+//                     </div>
+//                     <div class="col-6 mb-3">
+//                         <label>País *</label>
+//                         <input type="text" class="form-control" name="PAIS_EXTRANJERO">
+//                     </div>
+//                 </div>
+//             </div>
+
+//             <div class="col-12 mt-4">
+//                 <div class="form-group text-center">
+//                     <button type="button" class="btn btn-danger botonEliminarDomicilio">Eliminar dirección <i class="bi bi-trash-fill"></i></button>
+//                 </div>
+//             </div>
+//         `;
+
+//         const contenedor = document.querySelector('.direcciondiv');
+//         contenedor.appendChild(divDomicilio);
+
+//         // Evento eliminar
+//         const botonEliminar = divDomicilio.querySelector('.botonEliminarDomicilio');
+//         botonEliminar.addEventListener('click', function () {
+//             contenedor.removeChild(divDomicilio);
+//         });
+
+//         // Evento cambio de tipo de domicilio
+//         const tipoSelect = divDomicilio.querySelector('.tipoDomicilioSelect');
+//         const nacional = divDomicilio.querySelector('.contenedorNacional');
+//         const extranjero = divDomicilio.querySelector('.contenedorExtranjero');
+
+//         tipoSelect.addEventListener('change', function () {
+//             if (this.value === "nacional") {
+//                 nacional.style.display = 'block';
+//                 extranjero.style.display = 'none';
+//             } else if (this.value === "extranjero") {
+//                 nacional.style.display = 'none';
+//                 extranjero.style.display = 'block';
+//             } else {
+//                 nacional.style.display = 'none';
+//                 extranjero.style.display = 'none';
+//             }
+//         });
+//     }
+// });
+
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const botonAgregarDomicilio = document.getElementById('botonAgregardomicilio');
 
@@ -693,7 +822,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         divDomicilio.innerHTML = `
             <div class="col-12 mb-3">
-                <label>Tipo de Domicilio *</label>
+                <label>Tipo de Domicilio Fiscal *</label>
                 <select class="form-select tipoDomicilioSelect" required>
                     <option value="">Seleccione una opción</option>
                     <option value="nacional">Nacional</option>
@@ -701,7 +830,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 </select>
             </div>
 
-            <!-- Contenedor Nacional -->
             <div class="col-12 contenedorNacional" style="display:none;">
                 <div class="row">
                     <div class="col-3 mb-3">
@@ -729,7 +857,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <input type="text" class="form-control" name="NUMERO_INTERIOR_DOMICILIO">
                     </div>
                     <div class="col-3 mb-3">
-                        <label>Nombre de la colonia </label>
+                        <label>Nombre de la colonia</label>
                         <select class="form-control" name="NOMBRE_COLONIA_DOMICILIO">
                             <option value="">Seleccione una opción</option>
                         </select>
@@ -761,7 +889,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
             </div>
 
-            <!-- Contenedor Extranjero -->
             <div class="col-12 contenedorExtranjero" style="display:none;">
                 <div class="row">
                     <div class="col-12 mb-3">
@@ -797,31 +924,203 @@ document.addEventListener("DOMContentLoaded", function () {
         const contenedor = document.querySelector('.direcciondiv');
         contenedor.appendChild(divDomicilio);
 
-        // Evento eliminar
+        // Botón eliminar domicilio
         const botonEliminar = divDomicilio.querySelector('.botonEliminarDomicilio');
         botonEliminar.addEventListener('click', function () {
             contenedor.removeChild(divDomicilio);
         });
 
-        // Evento cambio de tipo de domicilio
+        // Cambiar tipo nacional/extranjero
         const tipoSelect = divDomicilio.querySelector('.tipoDomicilioSelect');
-        const nacional = divDomicilio.querySelector('.contenedorNacional');
-        const extranjero = divDomicilio.querySelector('.contenedorExtranjero');
+        const nacionalDiv = divDomicilio.querySelector('.contenedorNacional');
+        const extranjeroDiv = divDomicilio.querySelector('.contenedorExtranjero');
 
         tipoSelect.addEventListener('change', function () {
             if (this.value === "nacional") {
-                nacional.style.display = 'block';
-                extranjero.style.display = 'none';
+                nacionalDiv.style.display = 'block';
+                extranjeroDiv.style.display = 'none';
             } else if (this.value === "extranjero") {
-                nacional.style.display = 'none';
-                extranjero.style.display = 'block';
+                nacionalDiv.style.display = 'none';
+                extranjeroDiv.style.display = 'block';
             } else {
-                nacional.style.display = 'none';
-                extranjero.style.display = 'none';
+                nacionalDiv.style.display = 'none';
+                extranjeroDiv.style.display = 'none';
             }
         });
     }
 });
+
+// function obtenerDirecciones(data) {
+//     let row = data.data().DIRECCIONES_JSON;
+//     let direcciones = JSON.parse(row);
+
+//     direcciones.forEach(direccion => {
+//         const tipoDomicilio = direccion.TIPO_DOMICILIO; // 1 = Nacional, 2 = Extranjero
+//         const contenedor = document.querySelector('.direcciondiv');
+
+//         const divDomicilio = document.createElement('div');
+//         divDomicilio.classList.add('row', 'generardireccion', 'mb-3');
+
+//         // Generar HTML base con select tipo
+//         let tipoOptions = `
+//             <option value="">Seleccione una opción</option>
+//             <option value="1" ${tipoDomicilio == 1 ? 'selected' : ''}>Nacional</option>
+//             <option value="2" ${tipoDomicilio == 2 ? 'selected' : ''}>Extranjero</option>
+//         `;
+
+//         divDomicilio.innerHTML = `
+//             <div class="col-12 mb-3">
+//                 <label>Tipo de Domicilio *</label>
+//                 <select class="form-select tipoDomicilioSelect" required>
+//                     ${tipoOptions}
+//                 </select>
+//             </div>
+
+//             <!-- Contenedor Nacional -->
+//             <div class="col-12 contenedorNacional" style="display: ${tipoDomicilio == 1 ? 'block' : 'none'};">
+//                 <div class="row">
+//                     <div class="col-3 mb-3">
+//                         <label>Tipo de Domicilio *</label>
+//                         <input type="text" class="form-control" name="TIPO_DOMICILIO" value="${direccion.TIPO_DOMICILIO || ''}">
+//                     </div>
+//                     <div class="col-3 mb-3">
+//                         <label>Código Postal *</label>
+//                         <input type="number" class="form-control codigo-postal" name="CODIGO_POSTAL_DOMICILIO" value="${direccion.CODIGO_POSTAL_DOMICILIO || ''}">
+//                     </div>
+//                     <div class="col-3 mb-3">
+//                         <label>Tipo de Vialidad *</label>
+//                         <input type="text" class="form-control" name="TIPO_VIALIDAD_DOMICILIO" value="${direccion.TIPO_VIALIDAD_DOMICILIO || ''}">
+//                     </div>
+//                     <div class="col-3 mb-3">
+//                         <label>Nombre de la Vialidad *</label>
+//                         <input type="text" class="form-control" name="NOMBRE_VIALIDAD_DOMICILIO" value="${direccion.NOMBRE_VIALIDAD_DOMICILIO || ''}">
+//                     </div>
+//                     <div class="col-3 mb-3">
+//                         <label>Número Exterior</label>
+//                         <input type="text" class="form-control" name="NUMERO_EXTERIOR_DOMICILIO" value="${direccion.NUMERO_EXTERIOR_DOMICILIO || ''}">
+//                     </div>
+//                     <div class="col-3 mb-3">
+//                         <label>Número Interior</label>
+//                         <input type="text" class="form-control" name="NUMERO_INTERIOR_DOMICILIO" value="${direccion.NUMERO_INTERIOR_DOMICILIO || ''}">
+//                     </div>
+//                     <div class="col-3 mb-3">
+//                         <label>Nombre de la colonia </label>
+//                         <select class="form-control nombre-colonia" name="NOMBRE_COLONIA_DOMICILIO">
+//                             <option value="">Seleccione una opción</option>
+//                         </select>
+//                     </div>
+//                     <div class="col-3 mb-3">
+//                         <label>Nombre de la Localidad *</label>
+//                         <input type="text" class="form-control" name="NOMBRE_LOCALIDAD_DOMICILIO" value="${direccion.NOMBRE_LOCALIDAD_DOMICILIO || ''}">
+//                     </div>
+//                     <div class="col-4 mb-3">
+//                         <label>Nombre del municipio o demarcación territorial *</label>
+//                         <input type="text" class="form-control" name="NOMBRE_MUNICIPIO_DOMICILIO" value="${direccion.NOMBRE_MUNICIPIO_DOMICILIO || ''}">
+//                     </div>
+//                     <div class="col-4 mb-3">
+//                         <label>Nombre de la Entidad Federativa *</label>
+//                         <input type="text" class="form-control" name="NOMBRE_ENTIDAD_DOMICILIO" value="${direccion.NOMBRE_ENTIDAD_DOMICILIO || ''}">
+//                     </div>
+//                     <div class="col-4 mb-3">
+//                         <label>País *</label>
+//                         <input type="text" class="form-control" name="PAIS_CONTRATACION_DOMICILIO" value="${direccion.PAIS_CONTRATACION_DOMICILIO || ''}">
+//                     </div>
+//                     <div class="col-6 mb-3">
+//                         <label>Entre Calle</label>
+//                         <input type="text" class="form-control" name="ENTRE_CALLE_DOMICILIO" value="${direccion.ENTRE_CALLE_DOMICILIO || ''}">
+//                     </div>
+//                     <div class="col-6 mb-3">
+//                         <label>Y Calle</label>
+//                         <input type="text" class="form-control" name="ENTRE_CALLE_2_DOMICILIO" value="${direccion.ENTRE_CALLE_2_DOMICILIO || ''}">
+//                     </div>
+//                 </div>
+//             </div>
+
+//             <!-- Contenedor Extranjero -->
+//             <div class="col-12 contenedorExtranjero" style="display: ${tipoDomicilio == 2 ? 'block' : 'none'};">
+//                 <div class="row">
+//                     <div class="col-12 mb-3">
+//                         <label>Domicilio *</label>
+//                         <input type="text" class="form-control" name="DOMICILIO_EXTRANJERO" value="${direccion.DOMICILIO_EXTRANJERO || ''}">
+//                     </div>
+//                     <div class="col-6 mb-3">
+//                         <label>Código Postal *</label>
+//                         <input type="text" class="form-control" name="CP_EXTRANJERO" value="${direccion.CP_EXTRANJERO || ''}">
+//                     </div>
+//                     <div class="col-6 mb-3">
+//                         <label>Ciudad *</label>
+//                         <input type="text" class="form-control" name="CIUDAD_EXTRANJERO" value="${direccion.CIUDAD_EXTRANJERO || ''}">
+//                     </div>
+//                     <div class="col-6 mb-3">
+//                         <label>Estado/Departamento/Provincia *</label>
+//                         <input type="text" class="form-control" name="ESTADO_EXTRANJERO" value="${direccion.ESTADO_EXTRANJERO || ''}">
+//                     </div>
+//                     <div class="col-6 mb-3">
+//                         <label>País *</label>
+//                         <input type="text" class="form-control" name="PAIS_EXTRANJERO" value="${direccion.PAIS_EXTRANJERO || ''}">
+//                     </div>
+//                 </div>
+//             </div>
+
+//             <div class="col-12 mt-4">
+//                 <div class="form-group text-center">
+//                     <button type="button" class="btn btn-danger botonEliminarDomicilio">Eliminar dirección <i class="bi bi-trash-fill"></i></button>
+//                 </div>
+//             </div>
+//         `;
+
+//         contenedor.appendChild(divDomicilio);
+
+//         // Mostrar colonias solo si es nacional
+//         if (tipoDomicilio == 1 && direccion.CODIGO_POSTAL_DOMICILIO) {
+//             fetch(`/codigo-postal/${direccion.CODIGO_POSTAL_DOMICILIO}`)
+//                 .then(response => response.json())
+//                 .then(data => {
+//                     if (!data.error) {
+//                         let response = data.response;
+//                         let coloniaSelect = divDomicilio.querySelector(".nombre-colonia");
+//                         coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
+
+//                         let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
+//                         colonias.forEach(colonia => {
+//                             let option = document.createElement("option");
+//                             option.value = colonia;
+//                             option.textContent = colonia;
+//                             coloniaSelect.appendChild(option);
+//                         });
+
+//                         coloniaSelect.value = direccion.NOMBRE_COLONIA_DOMICILIO || '';
+//                     }
+//                 })
+//                 .catch(error => {
+//                     console.error("Error al obtener datos del código postal:", error);
+//                 });
+//         }
+
+//         // Eliminar botón
+//         divDomicilio.querySelector('.botonEliminarDomicilio').addEventListener('click', function () {
+//             contenedor.removeChild(divDomicilio);
+//         });
+
+//         // Escuchar cambios en tipo de domicilio para mostrar dinámicamente
+//         const selectTipo = divDomicilio.querySelector('.tipoDomicilioSelect');
+//         const nacionalDiv = divDomicilio.querySelector('.contenedorNacional');
+//         const extranjeroDiv = divDomicilio.querySelector('.contenedorExtranjero');
+
+//         selectTipo.addEventListener('change', function () {
+//             if (this.value == '1') {
+//                 nacionalDiv.style.display = 'block';
+//                 extranjeroDiv.style.display = 'none';
+//             } else if (this.value == '2') {
+//                 nacionalDiv.style.display = 'none';
+//                 extranjeroDiv.style.display = 'block';
+//             } else {
+//                 nacionalDiv.style.display = 'none';
+//                 extranjeroDiv.style.display = 'none';
+//             }
+//         });
+//     });
+// }
 
 
 function obtenerDirecciones(data) {
@@ -829,29 +1128,29 @@ function obtenerDirecciones(data) {
     let direcciones = JSON.parse(row);
 
     direcciones.forEach(direccion => {
-        const tipoDomicilio = direccion.TIPO_DOMICILIO; // 1 = Nacional, 2 = Extranjero
+        const tipoFiscal = direccion.TIPODEDOMICILIOFISCAL || ''; // 'nacional' o 'extranjero'
         const contenedor = document.querySelector('.direcciondiv');
 
         const divDomicilio = document.createElement('div');
         divDomicilio.classList.add('row', 'generardireccion', 'mb-3');
 
-        // Generar HTML base con select tipo
+        // Opciones del select
         let tipoOptions = `
             <option value="">Seleccione una opción</option>
-            <option value="1" ${tipoDomicilio == 1 ? 'selected' : ''}>Nacional</option>
-            <option value="2" ${tipoDomicilio == 2 ? 'selected' : ''}>Extranjero</option>
+            <option value="nacional" ${tipoFiscal === 'nacional' ? 'selected' : ''}>Nacional</option>
+            <option value="extranjero" ${tipoFiscal === 'extranjero' ? 'selected' : ''}>Extranjero</option>
         `;
 
         divDomicilio.innerHTML = `
             <div class="col-12 mb-3">
-                <label>Tipo de Domicilio *</label>
+                <label>Tipo de Domicilio Fiscal *</label>
                 <select class="form-select tipoDomicilioSelect" required>
                     ${tipoOptions}
                 </select>
             </div>
 
             <!-- Contenedor Nacional -->
-            <div class="col-12 contenedorNacional" style="display: ${tipoDomicilio == 1 ? 'block' : 'none'};">
+            <div class="col-12 contenedorNacional" style="display: ${tipoFiscal === 'nacional' ? 'block' : 'none'};">
                 <div class="row">
                     <div class="col-3 mb-3">
                         <label>Tipo de Domicilio *</label>
@@ -878,7 +1177,7 @@ function obtenerDirecciones(data) {
                         <input type="text" class="form-control" name="NUMERO_INTERIOR_DOMICILIO" value="${direccion.NUMERO_INTERIOR_DOMICILIO || ''}">
                     </div>
                     <div class="col-3 mb-3">
-                        <label>Nombre de la colonia </label>
+                        <label>Nombre de la colonia</label>
                         <select class="form-control nombre-colonia" name="NOMBRE_COLONIA_DOMICILIO">
                             <option value="">Seleccione una opción</option>
                         </select>
@@ -911,7 +1210,7 @@ function obtenerDirecciones(data) {
             </div>
 
             <!-- Contenedor Extranjero -->
-            <div class="col-12 contenedorExtranjero" style="display: ${tipoDomicilio == 2 ? 'block' : 'none'};">
+            <div class="col-12 contenedorExtranjero" style="display: ${tipoFiscal === 'extranjero' ? 'block' : 'none'};">
                 <div class="row">
                     <div class="col-12 mb-3">
                         <label>Domicilio *</label>
@@ -945,8 +1244,8 @@ function obtenerDirecciones(data) {
 
         contenedor.appendChild(divDomicilio);
 
-        // Mostrar colonias solo si es nacional
-        if (tipoDomicilio == 1 && direccion.CODIGO_POSTAL_DOMICILIO) {
+        // Llenar colonias si es nacional
+        if (tipoFiscal === 'nacional' && direccion.CODIGO_POSTAL_DOMICILIO) {
             fetch(`/codigo-postal/${direccion.CODIGO_POSTAL_DOMICILIO}`)
                 .then(response => response.json())
                 .then(data => {
@@ -971,21 +1270,21 @@ function obtenerDirecciones(data) {
                 });
         }
 
-        // Eliminar botón
+        // Botón eliminar
         divDomicilio.querySelector('.botonEliminarDomicilio').addEventListener('click', function () {
             contenedor.removeChild(divDomicilio);
         });
 
-        // Escuchar cambios en tipo de domicilio para mostrar dinámicamente
+        // Evento para mostrar nacional / extranjero
         const selectTipo = divDomicilio.querySelector('.tipoDomicilioSelect');
         const nacionalDiv = divDomicilio.querySelector('.contenedorNacional');
         const extranjeroDiv = divDomicilio.querySelector('.contenedorExtranjero');
 
         selectTipo.addEventListener('change', function () {
-            if (this.value == '1') {
+            if (this.value === "nacional") {
                 nacionalDiv.style.display = 'block';
                 extranjeroDiv.style.display = 'none';
-            } else if (this.value == '2') {
+            } else if (this.value === "extranjero") {
                 nacionalDiv.style.display = 'none';
                 extranjeroDiv.style.display = 'block';
             } else {
@@ -995,6 +1294,7 @@ function obtenerDirecciones(data) {
         });
     });
 }
+
 
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".botonEliminarArchivo").forEach(boton => {
