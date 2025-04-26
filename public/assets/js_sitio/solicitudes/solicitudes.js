@@ -19,7 +19,6 @@ $("#NUEVA_SOLICITUD").click(function (e) {
 
     $("#miModal_SOLICITUDES").modal("show");
 
-    // document.getElementById('solicitarVerificacionDiv').style.display = 'block';
 
 
 
@@ -61,9 +60,6 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     });
 
     document.getElementById('empresaDatos').style.display = 'none';
-    document.getElementById('seleccionContactoContainer').style.display = 'none';
-    document.getElementById('solicitarVerificacionDiv').style.display = 'none';
-    document.getElementById('NO_COTIZAR').style.display = 'none';
 
 
 });
@@ -156,8 +152,9 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
                     }, function (data) {
                         
                         ID_FORMULARIO_SOLICITUDES = data.solicitud.ID_FORMULARIO_SOLICITUDES
-                            alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
-                            document.getElementById('solicitarVerificacionDiv').style.display = 'block';
+                        alertMensaje('success', 'Información guardada correctamente', 'Esta información esta lista para usarse', null, null, 1500)
+                          $('#miModal_SOLICITUDES').modal('hide')
+                            document.getElementById('formularioSOLICITUDES').reset();
                             Tablasolicitudes.ajax.reload()
         
         
@@ -290,19 +287,6 @@ var Tablasolicitudes = $("#Tablasolicitudes").DataTable({
                 `;
             }
         },
-
-        { 
-            data: 'VERIFICACIONES',
-            render: function (data) {
-                if (!data || data.length === 0) return 'NA';
-                let referenciasHTML = '';
-                data.forEach(function (referencia) {
-                    referenciasHTML += `<strong>${referencia.VERIFICADO_EN || 'NA'}</strong><br>
-                                        ${referencia.BTN_DOCUMENTO || 'NA'}<br>`;
-                });
-                return referenciasHTML;
-            }
-        },
         {
             data: null,
             render: function(data, type, row) {
@@ -344,25 +328,14 @@ var Tablasolicitudes = $("#Tablasolicitudes").DataTable({
         { targets: 3, title: 'Nombre comercial', className: 'all text-center' },
         { targets: 4, title: 'Fecha', className: 'all text-center' },
         { targets: 5, title: 'Estatus', className: 'all text-center' },
-        { targets: 6, title: 'Verificación', className: 'all text-center' },
-        { targets: 7, title: 'Estado de verificación', className: 'all text-center' },
-        { targets: 8, title: 'Editar', className: 'all text-center' },
-        { targets: 9, title: 'Visualizar', className: 'all text-center' },
-        { targets: 10, title: 'Correo', className: 'all text-center' },
-        { targets: 11, title: 'Activo', className: 'all text-center' }
+        { targets: 6, title: 'Estado de verificación', className: 'all text-center' },
+        { targets: 7, title: 'Editar', className: 'all text-center' },
+        { targets: 8, title: 'Visualizar', className: 'all text-center' },
+        { targets: 9, title: 'Correo', className: 'all text-center' },
+        { targets: 10, title: 'Activo', className: 'all text-center' }
     ]
 });
 
-
-$('#Tablasolicitudes').on('click', '.ver-archivo-verificacion', function () {
-    var id = $(this).data('id');
-    if (!id) {
-        alert('ARCHIVO NO ENCONTRADO');
-        return;
-    }
-    var url = '/mostrarverificacioncliente/' + id;
-    abrirModal(url, 'Archivo de referencias');
-});
 
 
 
@@ -480,57 +453,14 @@ $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
     $(".observacionesdiv").empty();
     obtenerObservaciones(row);
 
-    $(".contactodiv").empty();
-    obtenerContactos(row);  
 
-    $(".direcciondiv").empty();
-    obtenerDirecciones(row);
 
-    $(".verifiacionesdiv").empty();
 
-    if (data.VERIFICACIONES && data.VERIFICACIONES.length > 0) {
-        obtenerVerificacionCliente(data.VERIFICACIONES); 
-    }
     
     editarDatoTabla(row.data(), 'formularioSOLICITUDES', 'miModal_SOLICITUDES', 1);
     $('#miModal_SOLICITUDES .modal-title').html(row.data().NOMBRE_COMERCIAL_SOLICITUD);
 
-    if (row.data().SOLICITAR_VERIFICACION == 0) {
-    document.getElementById('solicitarVerificacionDiv').style.display = 'block'; 
-    } else if (row.data().SOLICITAR_VERIFICACION == 1) {
-        document.getElementById('solicitarVerificacionDiv').style.display = 'none';
-    }
-
-    
-    
-    
-    const fields = [
-        'CONTACTO_OFERTA',
-        'CARGO_OFERTA',
-        'TELEFONO_OFERTA',
-        'CELULAR_OFERTA',
-        'CORREO_OFERTA',
-        'EXTENSION_OFERTA'
-    ];
-
-    const dirigeOferta = Number(row.data().DIRIGE_OFERTA);
-    const seleccionContactoContainer = document.getElementById('seleccionContactoContainer');
-    const seleccionContacto = document.getElementById('seleccionContacto');
-
-    if (dirigeOferta === 1) {
-        seleccionContactoContainer.style.display = 'block';
-        actualizarOpcionesContacto(); 
-    } else {
-        seleccionContactoContainer.style.display = 'none';
-        limpiarCamposOferta();
-    }
-
-    fields.forEach(fieldId => {
-        const field = document.getElementById(fieldId);
-        if (field) {
-            field.disabled = (dirigeOferta === 0); 
-        }
-    });
+  
 
     const servicioTercero = Number(row.data().SERVICIO_TERCERO);
     if (servicioTercero === 1) {
@@ -603,51 +533,20 @@ $(document).ready(function() {
     hacerSoloLectura(row.data(), '#miModal_SOLICITUDES');
   
 
-    ID_FORMULARIO_SOLICITUDES = row.data().ID_FORMULARIO_SOLICITUDES;
+        ID_FORMULARIO_SOLICITUDES = row.data().ID_FORMULARIO_SOLICITUDES;
+        
 
     $(".observacionesdiv").empty();
     obtenerObservaciones(row);
 
-    $(".contactodiv").empty();
-    obtenerContactos(row);  
 
-    $(".direcciondiv").empty();
-    obtenerDirecciones(row);
-
-    $(".verifiacionesdiv").empty();
 
         
+    
     editarDatoTabla(row.data(), 'formularioSOLICITUDES', 'miModal_SOLICITUDES', 1);
     $('#miModal_SOLICITUDES .modal-title').html(row.data().NOMBRE_COMERCIAL_SOLICITUD);
 
-    const fields = [
-        'CONTACTO_OFERTA',
-        'CARGO_OFERTA',
-        'TELEFONO_OFERTA',
-        'CELULAR_OFERTA',
-        'CORREO_OFERTA',
-        'EXTENSION_OFERTA'
-    ];
-
-        
-    const dirigeOferta = Number(row.data().DIRIGE_OFERTA);
-    const seleccionContactoContainer = document.getElementById('seleccionContactoContainer');
-    const seleccionContacto = document.getElementById('seleccionContacto');
-
-    if (dirigeOferta === 1) {
-        seleccionContactoContainer.style.display = 'block';
-        actualizarOpcionesContacto(); 
-    } else {
-        seleccionContactoContainer.style.display = 'none';
-        limpiarCamposOferta();
-    }
-
-    fields.forEach(fieldId => {
-        const field = document.getElementById(fieldId);
-        if (field) {
-            field.disabled = (dirigeOferta === 0); 
-        }
-    });
+  
 
     const servicioTercero = Number(row.data().SERVICIO_TERCERO);
     if (servicioTercero === 1) {
@@ -657,6 +556,44 @@ $(document).ready(function() {
         document.getElementById('empresaDatos').style.display = 'none';
         document.getElementById('servicioPropio').checked = true;
     }
+
+
+     if (row.data().CODIGO_POSTAL) {
+        fetch(`/codigo-postal/${row.data().CODIGO_POSTAL}`)
+             .then(response => response.json())
+        .then(data => {
+          if (!data.error) {
+            let response = data.response;
+
+            let coloniaSelect = document.getElementById("NOMBRE_COLONIA_EMPRESA");
+            coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
+
+            let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
+
+            colonias.forEach(colonia => {
+              let option = document.createElement("option");
+              option.value = colonia;
+              option.textContent = colonia;
+              coloniaSelect.appendChild(option);
+            });
+
+            document.getElementById("NOMBRE_MUNICIPIO_EMPRESA").value = response.municipio || "No disponible";
+            document.getElementById("NOMBRE_ENTIDAD_EMPRESA").value = response.estado || "No disponible";
+            document.getElementById("NOMBRE_LOCALIDAD_EMPRESA").value = response.ciudad || "No disponible";
+            document.getElementById("PAIS_EMPRESA").value = response.pais || "No disponible";
+
+          } else {
+            alert("Código postal no encontrado");
+          }
+        })
+        .catch(error => {
+          console.error("Error al obtener datos:", error);
+          alert("Hubo un error al consultar la API.");
+        });
+    }
+    
+
+
 
     const rechazoDiv = document.getElementById('RECHAZO');
     const motivoRechazoTextarea = document.getElementById('MOTIVO_RECHAZO');
@@ -669,7 +606,6 @@ $(document).ready(function() {
         rechazoDiv.style.display = 'none';
         motivoRechazoTextarea.value = '';
     }
-
 
 
     });
@@ -698,19 +634,7 @@ $('#Tablasolicitudes tbody').on('change', 'td>label>input.ELIMINAR', function ()
 });
 
 
-function handleRadioChange() {
-    const isMismoContacto = document.getElementById('mismoContacto').checked;
-    const seleccionContactoContainer = document.getElementById('seleccionContactoContainer');
-    const seleccionContacto = document.getElementById('seleccionContacto');
 
-    if (isMismoContacto) {
-        seleccionContactoContainer.style.display = 'block';
-        actualizarOpcionesContacto(); 
-    } else {
-        seleccionContactoContainer.style.display = 'none';
-        limpiarCamposOferta();
-    }
-}
 
 function limpiarCamposOferta() {
     const fields = [
@@ -745,26 +669,7 @@ function actualizarOpcionesContacto() {
 
 
 
-function copiarDatosContacto() {
-    const seleccionContacto = document.getElementById('seleccionContacto');
-    const contactoIndex = seleccionContacto.value;
 
-    if (contactoIndex === '') return limpiarCamposOferta();
-
-    const contacto = document.querySelectorAll('.generarcontacto')[contactoIndex];
-
-    if (contacto) {
-        document.getElementById('CONTACTO_OFERTA').value = contacto.querySelector('input[name="CONTACTO_SOLICITUD"]').value;
-        document.getElementById('CARGO_OFERTA').value = contacto.querySelector('input[name="CARGO_SOLICITUD"]').value;
-        document.getElementById('TELEFONO_OFERTA').value = contacto.querySelector('input[name="TELEFONO_SOLICITUD"]').value;
-        document.getElementById('EXTENSION_OFERTA').value = contacto.querySelector('input[name="EXTENSION_SOLICITUD"]').value;
-        document.getElementById('CELULAR_OFERTA').value = contacto.querySelector('input[name="CELULAR_SOLICITUD"]').value;
-        document.getElementById('CORREO_OFERTA').value = contacto.querySelector('input[name="CORREO_SOLICITUD"]').value;
-
-        document.querySelectorAll('#CONTACTO_OFERTA, #CARGO_OFERTA, #TELEFONO_OFERTA, #EXTENSION_OFERTA, #CELULAR_OFERTA, #CORREO_OFERTA')
-            .forEach(field => field.disabled = false);
-    }
-}
 
 
 
@@ -852,391 +757,14 @@ function obtenerObservaciones(data) {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    const botonAgregarContacto = document.getElementById('botonAgregarcontacto');
-    
-    botonAgregarContacto.addEventListener('click', function () {
-        agregarContacto();
-    });
-
-    function agregarContacto() {
-        const divContacto = document.createElement('div');
-        divContacto.classList.add('row', 'generarcontacto', 'mb-3');
-        divContacto.innerHTML = `
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Nombre *</label>
-                        <input type="text" class="form-control" name="CONTACTO_SOLICITUD" required>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Cargo *</label>
-                        <input type="text" class="form-control" name="CARGO_SOLICITUD" required>
-                    </div>
-                </div>
-            </div>
-    
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-md-3 mb-3">
-                        <label class="form-label">Teléfono</label>
-                        <input type="text" class="form-control" name="TELEFONO_SOLICITUD">
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label class="form-label">Extensión</label>
-                        <input type="text" class="form-control" name="EXTENSION_SOLICITUD">
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label class="form-label">Celular *</label>
-                        <input type="text" class="form-control" name="CELULAR_SOLICITUD" required>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label class="form-label">Correo electrónico *</label>
-                        <input type="email" class="form-control" name="CORREO_SOLICITUD" required>
-                    </div>
-                </div>
-            </div>
-    
-            <div class="col-12 mt-4 text-center">
-                <button type="button" class="btn btn-danger botonEliminarContacto">Eliminar contacto <i class="bi bi-trash-fill"></i></button>
-            </div>
-        `;
-    
-        const contenedor = document.querySelector('.contactodiv');
-        contenedor.appendChild(divContacto);
-    
-        divContacto.querySelector('.botonEliminarContacto').addEventListener('click', function () {
-            contenedor.removeChild(divContacto);
-            actualizarOpcionesContacto(); 
-        });
-    
-        actualizarOpcionesContacto(); 
-    }
-    
-});
 
 
 
-function obtenerContactos(data) {
-    let row = data.data().CONTACTOS_JSON;
-    var contactos = JSON.parse(row);
-
-    $(".contactodiv").empty(); 
-    const seleccionContacto = document.getElementById("seleccionContacto");
-    seleccionContacto.innerHTML = '<option value="">Seleccione un contacto</option>'; 
-
-    $.each(contactos, function (index, contacto) {
-        var nombre = contacto.CONTACTO_SOLICITUD;
-        var cargo = contacto.CARGO_SOLICITUD;
-        var telefono = contacto.TELEFONO_SOLICITUD;
-        var celular = contacto.CELULAR_SOLICITUD;
-        var correo = contacto.CORREO_SOLICITUD;
-        var extension = contacto.EXTENSION_SOLICITUD;
-
-        const divContacto = document.createElement('div');
-        divContacto.classList.add('row', 'generarcontacto', 'mb-3');
-        divContacto.innerHTML = `
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Nombre *</label>
-                        <input type="text" class="form-control" name="CONTACTO_SOLICITUD" value="${nombre}" required>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Cargo *</label>
-                        <input type="text" class="form-control" name="CARGO_SOLICITUD" value="${cargo}" required>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-md-3 mb-3">
-                        <label class="form-label">Teléfono</label>
-                        <input type="text" class="form-control" name="TELEFONO_SOLICITUD" value="${telefono}">
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label class="form-label">Extensión</label>
-                        <input type="text" class="form-control" name="EXTENSION_SOLICITUD" value="${extension}">
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label class="form-label">Celular *</label>
-                        <input type="text" class="form-control" name="CELULAR_SOLICITUD" value="${celular}" required>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label class="form-label">Correo electrónico *</label>
-                        <input type="email" class="form-control" name="CORREO_SOLICITUD" value="${correo}" required>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 mt-4 text-center">
-                <button type="button" class="btn btn-danger botonEliminarContacto">Eliminar contacto <i class="bi bi-trash-fill"></i></button>
-            </div>
-        `;
-
-        const contenedor = document.querySelector('.contactodiv');
-        contenedor.appendChild(divContacto);
-
-        // Agregar opción al <select>
-        const option = document.createElement('option');
-        option.value = index;
-        option.textContent = nombre;
-        seleccionContacto.appendChild(option);
-
-        // Evento para eliminar contacto
-        divContacto.querySelector('.botonEliminarContacto').addEventListener('click', function () {
-            contenedor.removeChild(divContacto);
-            actualizarOpcionesContacto();
-        });
-    });
-
-    actualizarOpcionesContacto(); 
-}
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    const botonAgregarDomicilio = document.getElementById('botonAgregardomicilio');
-
-    botonAgregarDomicilio.addEventListener('click', function () {
-        agregarDomicilio();
-    });
-
-    function agregarDomicilio() {
-        const divDomicilio = document.createElement('div');
-        divDomicilio.classList.add('row', 'generardireccion', 'mb-3');
-        divDomicilio.innerHTML = `
-            <div class="col-12">
-                <div class="row">
-
-                    <div class="col-3 mb-3">
-                        <label>Tipo de Domicilio *</label>
-                        <input type="text" class="form-control" name="TIPO_DOMICILIO" required>
-                    </div>
-
-                    <div class="col-3 mb-3">
-                        <label>Código Postal *</label>
-                        <input type="number" class="form-control" name="CODIGO_POSTAL_DOMICILIO" required>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <label>Tipo de Vialidad *</label>
-                        <input type="text" class="form-control" name="TIPO_VIALIDAD_DOMICILIO" required>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <label>Nombre de la Vialidad *</label>
-                        <input type="text" class="form-control" name="NOMBRE_VIALIDAD_DOMICILIO" required>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-3 mb-3">
-                        <label>Número Exterior</label>
-                        <input type="text" class="form-control" name="NUMERO_EXTERIOR_DOMICILIO">
-                    </div>
-                    <div class="col-3 mb-3">
-                        <label>Número Interior</label>
-                        <input type="text" class="form-control" name="NUMERO_INTERIOR_DOMICILIO">
-                    </div>
-                    <div class="col-3 mb-3">
-                        <label>Nombre de la colonia </label>
-                        <select class="form-control" name="NOMBRE_COLONIA_DOMICILIO" >
-                            <option value="">Seleccione una opción</option>
-                        </select>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <label>Nombre de la Localidad *</label>
-                        <input type="text" class="form-control" name="NOMBRE_LOCALIDAD_DOMICILIO" required>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-4 mb-3">
-                        <label>Nombre del municipio o demarcación territorial *</label>
-                        <input type="text" class="form-control" name="NOMBRE_MUNICIPIO_DOMICILIO" required>
-                    </div>
-                    <div class="col-4 mb-3">
-                        <label>Nombre de la Entidad Federativa *</label>
-                        <input type="text" class="form-control" name="NOMBRE_ENTIDAD_DOMICILIO" required>
-                    </div>
-                    <div class="col-4 mb-3">
-                        <label>País *</label>
-                        <input type="text" class="form-control" name="PAIS_CONTRATACION_DOMICILIO" required>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-6 mb-3">
-                        <label>Entre Calle</label>
-                        <input type="text" class="form-control" name="ENTRE_CALLE_DOMICILIO">
-                    </div>
-                    <div class="col-6 mb-3">
-                        <label>Y Calle</label>
-                        <input type="text" class="form-control" name="ENTRE_CALLE_2_DOMICILIO">
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 mt-4">
-                <div class="form-group text-center">
-                    <button type="button" class="btn btn-danger botonEliminarDomicilio">Eliminar dirección <i class="bi bi-trash-fill"></i></button>
-                </div>
-            </div>
-        `;
-
-        const contenedor = document.querySelector('.direcciondiv');
-        contenedor.appendChild(divDomicilio);
-
-        const botonEliminar = divDomicilio.querySelector('.botonEliminarDomicilio');
-        botonEliminar.addEventListener('click', function () {
-            contenedor.removeChild(divDomicilio);
-        });
-    }
-});
 
 
-function obtenerDirecciones(data) {
-    let row = data.data().DIRECCIONES_JSON;
-    var direcciones = JSON.parse(row);
-
-    $.each(direcciones, function (index, direccion) {
-        var tipoDomicilio = direccion.TIPO_DOMICILIO;
-        var codigoPostal = direccion.CODIGO_POSTAL_DOMICILIO;
-        var tipoVialidad = direccion.TIPO_VIALIDAD_DOMICILIO;
-        var nombreVialidad = direccion.NOMBRE_VIALIDAD_DOMICILIO;
-        var numeroExterior = direccion.NUMERO_EXTERIOR_DOMICILIO;
-        var numeroInterior = direccion.NUMERO_INTERIOR_DOMICILIO;
-        var nombreColonia = direccion.NOMBRE_COLONIA_DOMICILIO;
-        var nombreLocalidad = direccion.NOMBRE_LOCALIDAD_DOMICILIO;
-        var nombreMunicipio = direccion.NOMBRE_MUNICIPIO_DOMICILIO;
-        var nombreEntidad = direccion.NOMBRE_ENTIDAD_DOMICILIO;
-        var pais = direccion.PAIS_CONTRATACION_DOMICILIO;
-        var entreCalle = direccion.ENTRE_CALLE_DOMICILIO;
-        var entreCalle2 = direccion.ENTRE_CALLE_2_DOMICILIO;
-
-        const divDomicilio = document.createElement('div');
-        divDomicilio.classList.add('row', 'generardireccion', 'mb-3');
-        divDomicilio.innerHTML = `
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-3 mb-3">
-                        <label>Tipo de Domicilio *</label>
-                        <input type="text" class="form-control" name="TIPO_DOMICILIO" value="${tipoDomicilio}" required>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <label>Código Postal *</label>
-                        <input type="number" class="form-control codigo-postal" name="CODIGO_POSTAL_DOMICILIO" value="${codigoPostal}" required>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <label>Tipo de Vialidad *</label>
-                        <input type="text" class="form-control" name="TIPO_VIALIDAD_DOMICILIO" value="${tipoVialidad}" required>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <label>Nombre de la Vialidad *</label>
-                        <input type="text" class="form-control" name="NOMBRE_VIALIDAD_DOMICILIO" value="${nombreVialidad}" required>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-3 mb-3">
-                        <label>Número Exterior</label>
-                        <input type="text" class="form-control" name="NUMERO_EXTERIOR_DOMICILIO" value="${numeroExterior}">
-                    </div>
-                    <div class="col-3 mb-3">
-                        <label>Número Interior</label>
-                        <input type="text" class="form-control" name="NUMERO_INTERIOR_DOMICILIO" value="${numeroInterior}">
-                    </div>
-                    <div class="col-3 mb-3">
-                        <label>Nombre de la colonia </label>
-                        <select class="form-control nombre-colonia" name="NOMBRE_COLONIA_DOMICILIO" >
-                            <option value="">Seleccione una opción</option>
-                        </select>
-                    </div>
-                    <div class="col-3 mb-3">
-                        <label>Nombre de la Localidad *</label>
-                        <input type="text" class="form-control" name="NOMBRE_LOCALIDAD_DOMICILIO" value="${nombreLocalidad}" required>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-4 mb-3">
-                        <label>Nombre del municipio o demarcación territorial *</label>
-                        <input type="text" class="form-control" name="NOMBRE_MUNICIPIO_DOMICILIO" value="${nombreMunicipio}" required>
-                    </div>
-                    <div class="col-4 mb-3">
-                        <label>Nombre de la Entidad Federativa *</label>
-                        <input type="text" class="form-control" name="NOMBRE_ENTIDAD_DOMICILIO" value="${nombreEntidad}" required>
-                    </div>
-                    <div class="col-4 mb-3">
-                        <label>País *</label>
-                        <input type="text" class="form-control" name="PAIS_CONTRATACION_DOMICILIO" value="${pais}" required>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-6 mb-3">
-                        <label>Entre Calle</label>
-                        <input type="text" class="form-control" name="ENTRE_CALLE_DOMICILIO" value="${entreCalle}">
-                    </div>
-                    <div class="col-6 mb-3">
-                        <label>Y Calle</label>
-                        <input type="text" class="form-control" name="ENTRE_CALLE_2_DOMICILIO" value="${entreCalle2}">
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 mt-4">
-                <div class="form-group text-center">
-                    <button type="button" class="btn btn-danger botonEliminarDomicilio">Eliminar dirección <i class="bi bi-trash-fill"></i></button>
-                </div>
-            </div>
-        `;
-
-        const contenedor = document.querySelector('.direcciondiv');
-        contenedor.appendChild(divDomicilio);
-
-        fetch(`/codigo-postal/${codigoPostal}`)
-            .then(response => response.json())
-            .then(data => {
-                if (!data.error) {
-                    let response = data.response;
-                    let coloniaSelect = divDomicilio.querySelector(".nombre-colonia");
-                    coloniaSelect.innerHTML = '<option value="">Seleccione una opción</option>';
-
-                    let colonias = Array.isArray(response.asentamiento) ? response.asentamiento : [response.asentamiento];
-
-                    colonias.forEach(colonia => {
-                        let option = document.createElement("option");
-                        option.value = colonia;
-                        option.textContent = colonia;
-                        coloniaSelect.appendChild(option);
-                    });
-
-                    coloniaSelect.value = nombreColonia;
-                }
-            })
-            .catch(error => {
-                console.error("Error al obtener datos del código postal:", error);
-            });
-
-        const botonEliminar = divDomicilio.querySelector('.botonEliminarDomicilio');
-        botonEliminar.addEventListener('click', function () {
-            contenedor.removeChild(divDomicilio);
-        });
-    });
-}
 
 document.addEventListener("input", function (event) {
     if (event.target.matches("input[name='CODIGO_POSTAL_DOMICILIO']")) {
@@ -1299,108 +827,8 @@ function handleServicioChange() {
 }
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    const botonVerificacion = document.getElementById('botonVerificacion');
-
-    botonVerificacion.addEventListener('click', function () {
-        agregarVerificacion();
-    });
-
-    function agregarVerificacion() {
-        const divVerificacion = document.createElement('div');
-        divVerificacion.classList.add('row', 'generarverificacion', 'mb-3');
-        divVerificacion.innerHTML = `
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Verificado en *</label>
-                        <input type="text" class="form-control" name="VERIFICADO_EN[]" required>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Subir Evidencia (PDF) *</label>
-                        <div class="d-flex align-items-center">
-                            <input type="file" class="form-control me-2" name="EVIDENCIA_VERIFICACION[]" accept=".pdf" required>
-                            <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 mt-4">
-                <div class="form-group text-center">
-                    <button type="button" class="btn btn-danger botonEliminarVerificacion">Eliminar verificación <i class="bi bi-trash-fill"></i></button>
-                </div>
-            </div>
-        `;
-
-        const contenedor = document.querySelector('.verifiacionesdiv');
-        contenedor.appendChild(divVerificacion);
-
-        const botonEliminar = divVerificacion.querySelector('.botonEliminarVerificacion');
-        botonEliminar.addEventListener('click', function () {
-            contenedor.removeChild(divVerificacion);
-        });
-
-        const botonEliminarArchivo = divVerificacion.querySelector('.botonEliminarArchivo');
-        const inputArchivo = divVerificacion.querySelector('input[name="EVIDENCIA_VERIFICACION"]');
-
-        botonEliminarArchivo.addEventListener('click', function () {
-            inputArchivo.value = ''; 
-        });
-    }
-});
 
 
-function obtenerVerificacionCliente(verificaciones) {
-    const contenedorVerificaciones = document.querySelector('.verifiacionesdiv');
-    contenedorVerificaciones.innerHTML = '';
-
-    verificaciones.forEach(function (verificacion, index) {
-        const divVerificacion = document.createElement('div');
-        divVerificacion.classList.add('row', 'generarverificacion', 'mb-3');
-        divVerificacion.innerHTML = `
-            <div class="col-12">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Verificado en *</label>
-                        <input type="text" class="form-control" name="VERIFICADO_EN[]" value="${verificacion.VERIFICADO_EN || ''}" required>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Subir Evidencia (PDF) *</label>
-                        <div class="d-flex align-items-center">
-                            <input type="file" class="form-control me-2 archivo-input" name="EVIDENCIA_VERIFICACION[]" accept=".pdf">
-                            <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 mt-4">
-                <div class="form-group text-center">
-                    <button type="button" class="btn btn-danger botonEliminarVerificacion">Eliminar verificación <i class="bi bi-trash-fill"></i></button>
-                </div>
-            </div>
-        `;
-
-        contenedorVerificaciones.appendChild(divVerificacion);
-
-        const botonEliminar = divVerificacion.querySelector('.botonEliminarVerificacion');
-        botonEliminar.addEventListener('click', function () {
-            contenedorVerificaciones.removeChild(divVerificacion);
-        });
-
-        const botonEliminarArchivo = divVerificacion.querySelector('.botonEliminarArchivo');
-        const inputArchivo = divVerificacion.querySelector('.archivo-input');
-
-        botonEliminarArchivo.addEventListener('click', function () {
-            inputArchivo.value = '';
-        });
-    });
-}
 
 
 
@@ -1474,10 +902,109 @@ $(document).ready(function() {
 $(document).ready(function() {
     $("input[name='PROCEDE_COTIZAR']").change(function() {
         if ($("#procedeno").is(":checked")) {
-            $("#NO_COTIZAR").fadeIn(); 
+            
         } else {
-            $("#NO_COTIZAR").fadeOut(); 
             $("textarea[name='MOTIVO_COTIZACION']").val(''); 
         }
     });
+});
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const rfcInput = document.getElementById('RFC_SOLICITUD');
+
+    rfcInput.addEventListener('blur', function() {
+        const rfc = rfcInput.value.trim();
+
+        if (rfc !== '') {
+            fetch(`/buscarCliente?rfc=${encodeURIComponent(rfc)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('RAZON_SOCIAL_SOLICITUD').value = data.data.RAZON_SOCIAL_CLIENTE || '';
+                        document.getElementById('NOMBRE_COMERCIAL_SOLICITUD').value = data.data.NOMBRE_COMERCIAL_CLIENTE || '';
+                        document.getElementById('REPRESENTANTE_LEGAL_SOLICITUD').value = data.data.REPRESENTANTE_LEGAL_CLIENTE || '';
+
+                        const giroSelect = document.getElementById('GIRO_EMPRESA_SOLICITUD');
+                        if (giroSelect) {
+                            const option = giroSelect.querySelector(`option[value="${data.data.GIRO_EMPRESA_CLIENTE}"]`);
+                            if (option) {
+                                giroSelect.value = data.data.GIRO_EMPRESA_CLIENTE;
+                            } else {
+                                giroSelect.value = '0';
+                            }
+                        }
+
+                        // Llenar selector de direcciones
+                        const selectorDireccion = document.getElementById('SELECTOR_DIRECCION');
+                        selectorDireccion.innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
+                        if (data.data.DIRECCIONES && data.data.DIRECCIONES.length > 0) {
+                            data.data.DIRECCIONES.forEach((direccion) => {
+                                const option = document.createElement('option');
+                                option.value = direccion.direccion;
+                                option.text = `${direccion.tipo}: ${direccion.direccion}`;
+                                selectorDireccion.appendChild(option);
+                            });
+                        }
+
+                        // Llenar selector de contactos
+                        const selectorContacto = document.getElementById('SELECTOR_CONTACTO');
+                        selectorContacto.innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
+                        if (data.data.CONTACTOS && data.data.CONTACTOS.length > 0) {
+                            data.data.CONTACTOS.forEach((contacto, index) => {
+                                const option = document.createElement('option');
+                                option.value = index; // Guardamos el índice
+                                option.text = contacto.CONTACTO_SOLICITUD;
+                                selectorContacto.appendChild(option);
+                            });
+
+                            // Guardar contactos en memoria para acceso rápido
+                            window.contactosGuardados = data.data.CONTACTOS;
+                        }
+
+                    } else {
+                        limpiarCampos();
+                        alert('Cliente no encontrado');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al buscar el cliente:', error);
+                });
+        }
+    });
+
+    const selectorDireccion = document.getElementById('SELECTOR_DIRECCION');
+    selectorDireccion.addEventListener('change', function() {
+        document.getElementById('DIRECCION_SOLICITUDES').value = selectorDireccion.value;
+    });
+
+    const selectorContacto = document.getElementById('SELECTOR_CONTACTO');
+    selectorContacto.addEventListener('change', function() {
+        const selectedIndex = selectorContacto.value;
+        const contacto = window.contactosGuardados[selectedIndex];
+
+        if (contacto) {
+            document.getElementById('TITULO_CONTACTO_SOLICITUD').value = contacto.TITULO_CONTACTO_SOLICITUD || '';
+            document.getElementById('NOMBRE_CONTACTO_SOLICITUD').value = contacto.CONTACTO_SOLICITUD || '';
+            document.getElementById('CARGO_SOLICITUD').value = contacto.CARGO_SOLICITUD || '';
+            document.getElementById('TELEFONO_SOLICITUD').value = contacto.TELEFONO_SOLICITUD || '';
+            document.getElementById('EXTENSION_SOLICITUD').value = contacto.EXTENSION_SOLICITUD || '';
+            document.getElementById('CELULAR_SOLICITUD').value = contacto.CELULAR_SOLICITUD || '';
+            document.getElementById('CORREO_SOLICITUD').value = contacto.CORREO_SOLICITUD || '';
+        }
+    });
+
+    function limpiarCampos() {
+        document.getElementById('RAZON_SOCIAL_SOLICITUD').value = '';
+        document.getElementById('NOMBRE_COMERCIAL_SOLICITUD').value = '';
+        document.getElementById('REPRESENTANTE_LEGAL_SOLICITUD').value = '';
+        document.getElementById('GIRO_EMPRESA_SOLICITUD').value = '0';
+        document.getElementById('SELECTOR_DIRECCION').innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
+        document.getElementById('DIRECCION_SOLICITUDES').value = '';
+        document.getElementById('SELECTOR_CONTACTO').innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
+        window.contactosGuardados = [];
+    }
 });

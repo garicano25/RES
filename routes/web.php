@@ -592,6 +592,10 @@ Route::post('/actualizarEstatusSolicitud', [solicitudesController::class, 'actua
 Route::get('/mostrarverificacioncliente/{id}', [solicitudesController::class, 'mostrarverificacioncliente']);
 Route::post('/actualizarSolicitud', [solicitudesController::class, 'actualizarSolicitud']);
 
+
+Route::get('/buscarCliente', [solicitudesController::class, 'buscarCliente']);
+
+
 //==============================================  OFERTAS/COTIZACION  ============================================== 
 Route::get('/Ofertas', [ofertasController::class, 'index']);
 Route::post('/ofertaSave', [ofertasController::class, 'store']);

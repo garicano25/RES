@@ -67,7 +67,13 @@ class solicitudesModel extends Model
         'ENTRE_CALLE2_EMPRESA',
         'SOLICITAR_VERIFICACION',
         'PROCEDE_COTIZAR',
-        'MOTIVO_COTIZACION'
+        'MOTIVO_COTIZACION',
+        'DIRECCION_SOLICITUDES',
+        'TITULO_CONTACTO_SOLICITUD',
+        'NOMBRE_CONTACTO_SOLICITUD',
+        'EXTENSION_SOLICITUD',
+        'TITULO_OFERTA',
+
     ];
 
 }

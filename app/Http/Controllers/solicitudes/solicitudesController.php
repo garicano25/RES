@@ -23,6 +23,8 @@ use App\Models\solicitudes\catalogiroempresaModel;
 use App\Models\solicitudes\catalogolineanegociosModel;
 use App\Models\solicitudes\catalogotiposervicioModel;
 
+use App\Models\proveedor\catalogotituloproveedorModel;
+use App\Models\cliente\clienteModel;
 
 
 class solicitudesController extends Controller
@@ -56,13 +58,83 @@ class solicitudesController extends Controller
         $lineas = catalogolineanegociosModel::where('ACTIVO', 1)->get();
         $tipos = catalogotiposervicioModel::where('ACTIVO', 1)->get();
 
+        $titulosCuenta = catalogotituloproveedorModel::where('ACTIVO', 1)->get();
 
-        return view('ventas.solicitudes.solicitudes', compact('medios', 'necesidades','giros', 'lineas', 'tipos'));
+        return view('ventas.solicitudes.solicitudes', compact('medios', 'necesidades','giros', 'lineas', 'tipos', 'titulosCuenta'));
 
 
     }
 
 
+
+    public function buscarCliente(Request $request)
+    {
+        $rfc = $request->query('rfc');
+
+        $cliente = clienteModel::where('RFC_CLIENTE', $rfc)->first();
+
+        if ($cliente) {
+            // Direcciones
+            $direcciones = [];
+            if (!empty($cliente->DIRECCIONES_JSON)) {
+                $direccionesArray = json_decode($cliente->DIRECCIONES_JSON, true);
+                foreach ($direccionesArray as $dir) {
+                    if ($dir['TIPO_DOMICILIO'] == '1') {
+                        $direccionFormateada =
+                            ($dir['NOMBRE_VIALIDAD_DOMICILIO'] ?? '') . ' No. ' . ($dir['NUMERO_EXTERIOR_DOMICILIO'] ?? '') .
+                            (empty($dir['NOMBRE_COLONIA_DOMICILIO']) ? '' : ', Colonia ' . $dir['NOMBRE_COLONIA_DOMICILIO']) .
+                            ', C.P. ' . ($dir['CODIGO_POSTAL_DOMICILIO'] ?? '') .
+                            ', ' . ($dir['NOMBRE_LOCALIDAD_DOMICILIO'] ?? '') .
+                            ', ' . ($dir['NOMBRE_ENTIDAD_DOMICILIO'] ?? '') .
+                            ', ' . ($dir['PAIS_CONTRATACION_DOMICILIO'] ?? '');
+
+                        $direcciones[] = [
+                            'tipo' => 'Nacional',
+                            'direccion' => $direccionFormateada,
+                        ];
+                    } elseif ($dir['TIPO_DOMICILIO'] == '2') {
+                        $direccionFormateada =
+                            ($dir['DOMICILIO_EXTRANJERO'] ?? '') .
+                            (empty($dir['CIUDAD_EXTRANJERO']) ? '' : ', ' . $dir['CIUDAD_EXTRANJERO']) .
+                            (empty($dir['ESTADO_EXTRANJERO']) ? '' : ', ' . $dir['ESTADO_EXTRANJERO']) .
+                            (empty($dir['PAIS_EXTRANJERO']) ? '' : ', ' . $dir['PAIS_EXTRANJERO']) .
+                            (empty($dir['CP_EXTRANJERO']) ? '' : ', C.P. ' . $dir['CP_EXTRANJERO']);
+
+                        $direcciones[] = [
+                            'tipo' => 'Extranjero',
+                            'direccion' => $direccionFormateada,
+                        ];
+                    }
+                }
+            }
+
+            // Contactos
+            $contactos = [];
+            if (!empty($cliente->CONTACTOS_JSON)) {
+                $contactosArray = json_decode($cliente->CONTACTOS_JSON, true);
+                foreach ($contactosArray as $contacto) {
+                    $contactos[] = $contacto;
+                }
+            }
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'RAZON_SOCIAL_CLIENTE' => $cliente->RAZON_SOCIAL_CLIENTE,
+                    'NOMBRE_COMERCIAL_CLIENTE' => $cliente->NOMBRE_COMERCIAL_CLIENTE,
+                    'GIRO_EMPRESA_CLIENTE' => $cliente->GIRO_EMPRESA_CLIENTE,
+                    'REPRESENTANTE_LEGAL_CLIENTE' => $cliente->REPRESENTANTE_LEGAL_CLIENTE,
+                    'DIRECCIONES' => $direcciones,
+                    'CONTACTOS' => $contactos,
+                ],
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cliente no encontrado',
+            ]);
+        }
+    }
 
 
     public function Tablasolicitudes()

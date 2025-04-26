@@ -154,7 +154,7 @@
             </div>
 
 
-            <div class="row">
+            <!-- <div class="row">
               <div class="mb-3">
                 <div class="row">
                   <div class="col-6 mb-3">
@@ -166,8 +166,21 @@
                 </div>
                 <div class="direcciondiv mt-4"></div>
               </div>
+            </div> -->
+
+
+            <div class="col-12  mt-3">
+              <label>Seleccione dirección </label>
+              <select class="form-control" id="SELECTOR_DIRECCION" name="SELECTOR_DIRECCION">
+                <option value="" disabled selected>Seleccione una opción</option>
+              </select>
             </div>
 
+
+            <div class="col-12  mt-3">
+              <label>Dirección del servicio *</label>
+              <input type="text" class="form-control" id="DIRECCION_SOLICITUDES" name="DIRECCION_SOLICITUDES">
+            </div>
 
 
 
@@ -177,12 +190,12 @@
 
             <div class="col-12">
               <div class="row">
-                <div class="col-md-12 mb-3">
+                <div class="col-md-12 mt-3">
                   <label class="form-label">Servicio Solicitado *</label>
                   <textarea class="form-control" id="SERVICIO_SOLICITADO_SOLICITUD" name="SERVICIO_SOLICITADO_SOLICITUD" rows="2"></textarea>
                 </div>
 
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6 mt-3">
                   <label class="form-label">Necesidad del Servicio *</label>
                   <select class="form-control puesto" id="NECESIDAD_SERVICIO_SOLICITUD" name="NECESIDAD_SERVICIO_SOLICITUD" required>
                     <option value="0" disabled selected>Seleccione una opción</option>
@@ -193,7 +206,7 @@
                 </div>
 
 
-                <div class="col-md-3 mb-3">
+                <div class="col-md-3 mt-3">
                   <label class="form-label">Línea de negocios *</label>
                   <select class="form-select" id="LINEA_NEGOCIO_SOLICITUD" name="LINEA_NEGOCIO_SOLICITUD" required>
                     <option value="0" disabled selected>Seleccione una opción</option>
@@ -204,7 +217,7 @@
                 </div>
 
 
-                <div class="col-md-3 mb-3">
+                <div class="col-md-3 mt-3">
                   <label class="form-label">Tipo de servicio *</label>
                   <select class="form-select" id="TIPO_SERVICIO_SOLICITUD" name="TIPO_SERVICIO_SOLICITUD" required>
                     <option value="0" disabled selected>Seleccione una opción</option>
@@ -221,7 +234,7 @@
 
             <div class="col-12">
               <div class="row">
-                <div class="col-md-12 mb-3 text-center">
+                <div class="col-md-12 mt-3 text-center">
                   <h5 class="form-label"><b>El servicio solicitado es para un tercero</b></h5>
                   <br>
                   <div class="form-check form-check-inline">
@@ -387,7 +400,7 @@
               </div>
             </div>
 
-            <div class="row">
+            <!-- <div class="row">
               <div class="mb-3">
                 <div class="row">
                   <div class="col-6 mb-3">
@@ -399,40 +412,69 @@
                 </div>
                 <div class="contactodiv mt-4"></div>
               </div>
+            </div> -->
+
+            <div class="col-12  mt-3">
+              <label>Seleccione contacto </label>
+              <select class="form-control" id="SELECTOR_CONTACTO" name="SELECTOR_CONTACTO">
+                <option value="" disabled selected>Seleccione una opción</option>
+              </select>
             </div>
 
-            {{-- <div class="col-12">
+
+
+            <div class="col-12">
               <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label class="form-label">Nombre *</label>
-                  <input type="text" class="form-control" id="CONTACTO_SOLICITUD" name="CONTACTO_SOLICITUD" required>
+                <div class="col-md-2 mt-3">
+                  <label class="form-label">Título</label>
+                  <select class="form-select" name="TITULO_CONTACTO_SOLICITUD" id="TITULO_CONTACTO_SOLICITUD">
+                    <option value="0" disabled selected>Seleccione una opción</option>
+                    @foreach ($titulosCuenta as $linea)
+                    <option value="{{ $linea->ABREVIATURA_TITULO }}">{{ $linea->NOMBRE_TITULO }}</option>
+                    @endforeach
+                  </select>
+
+
+
+
+
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-4 mt-3">
+                  <label class="form-label">Nombre *</label>
+                  <input type="text" class="form-control" name="NOMBRE_CONTACTO_SOLICITUD" id="NOMBRE_CONTACTO_SOLICITUD">
+                </div>
+                <div class="col-md-6 mt-3">
                   <label class="form-label">Cargo *</label>
-                  <input type="text" class="form-control" id="CARGO_SOLICITUD" name="CARGO_SOLICITUD" required>
+                  <input type="text" class="form-control" name="CARGO_SOLICITUD" id="CARGO_SOLICITUD">
                 </div>
               </div>
             </div>
 
             <div class="col-12">
               <div class="row">
-                <div class="col-md-4 mb-3">
-                  <label class="form-label">Teléfono y Extensión </label>
-                  <input type="text" class="form-control" id="TELEFONO_SOLICITUD" name="TELEFONO_SOLICITUD">
+                <div class="col-md-3 mt-3">
+                  <label class="form-label">Teléfono</label>
+                  <input type="text" class="form-control" name="TELEFONO_SOLICITUD" id="TELEFONO_SOLICITUD">
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-3 mt-3">
+                  <label class="form-label">Extensión</label>
+                  <input type="text" class="form-control" name="EXTENSION_SOLICITUD" id="EXTENSION_SOLICITUD">
+                </div>
+                <div class="col-md-3 mt-3">
                   <label class="form-label">Celular *</label>
-                  <input type="text" class="form-control" id="CELULAR_SOLICITUD" name="CELULAR_SOLICITUD" required>
+                  <input type="text" class="form-control" name="CELULAR_SOLICITUD" id="CELULAR_SOLICITUD">
                 </div>
-                <div class="col-md-4 mb-3">
-                  <label class="form-label">Correo electronico *</label>
-                  <input type="email" class="form-control" id="CORREO_SOLICITUD" name="CORREO_SOLICITUD" required>
+                <div class="col-md-3 mt-3">
+                  <label class="form-label">Correo electrónico *</label>
+                  <input type="email" class="form-control" name="CORREO_SOLICITUD" id="CORREO_SOLICITUD">
                 </div>
               </div>
-            </div> --}}
+            </div>
 
 
-            <div class="col-md-12 mb-3 text-center">
+
+
+            <div class="col-md-12 mt-4 text-center">
               <h5 class="form-label"><b>A quien se dirige la oferta</b></h5>
               <br>
               <div class="form-check form-check-inline">
@@ -445,23 +487,31 @@
               </div>
 
               <!-- Selector de contacto dinámico -->
-              <div id="seleccionContactoContainer" style="display: none; margin-top: 15px;">
-                <label for="seleccionContacto"><b>Seleccionar contacto:</b></label>
-                <select id="seleccionContacto" class="form-control" onchange="copiarDatosContacto()">
-                  <option value="">Seleccione un contacto</option>
-                </select>
-              </div>
             </div>
+
 
 
 
             <div class="col-12">
               <div class="row">
-                <div class="col-md-6 mb-3">
+
+
+                <div class="col-md-2 mt-3">
+                  <label class="form-label">Título</label>
+                  <select class="form-select" name="TITULO_OFERTA" id="TITULO_OFERTA">
+                    <option value="0" disabled selected>Seleccione una opción</option>
+                    @foreach ($titulosCuenta as $linea)
+                    <option value="{{ $linea->ABREVIATURA_TITULO }}">{{ $linea->NOMBRE_TITULO }}</option>
+                    @endforeach
+                  </select>
+                </div>
+
+
+                <div class="col-md-5 mt-3">
                   <label class="form-label">Nombre *</label>
                   <input type="text" class="form-control" id="CONTACTO_OFERTA" name="CONTACTO_OFERTA">
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-5 mt-3">
                   <label class="form-label">Cargo *</label>
                   <input type="text" class="form-control" id="CARGO_OFERTA" name="CARGO_OFERTA">
                 </div>
@@ -470,19 +520,19 @@
 
             <div class="col-12">
               <div class="row">
-                <div class="col-md-3 mb-3">
+                <div class="col-md-3 mt-3">
                   <label class="form-label">Teléfono </label>
                   <input type="text" class="form-control" id="TELEFONO_OFERTA" name="TELEFONO_OFERTA">
                 </div>
-                <div class="col-md-3 mb-3">
+                <div class="col-md-3 mt-3">
                   <label class="form-label">Extensión </label>
                   <input type="text" class="form-control" id="EXTENSION_OFERTA" name="EXTENSION_OFERTA">
                 </div>
-                <div class="col-md-3 mb-3">
+                <div class="col-md-3 mt-3">
                   <label class="form-label">Celular </label>
                   <input type="text" class="form-control" id="CELULAR_OFERTA" name="CELULAR_OFERTA">
                 </div>
-                <div class="col-md-3 mb-3">
+                <div class="col-md-3 mt-3">
                   <label class="form-label">Correo electronico </label>
                   <input type="email" class="form-control" id="CORREO_OFERTA" name="CORREO_OFERTA">
                 </div>
@@ -491,48 +541,9 @@
 
 
 
-            <div id="solicitarVerificacionDiv" class="col-12 text-center" style="display: none;">
-              <div class="col-md-6 mx-auto">
-                <button type="button" id="SOLICITAR_VERIFICACION" class="btn btn-info w-100">
-                  Solicitar Verificación
-                </button>
-                <input type="hidden" id="SOLICITAR_VERIFICACION" name="SOLICITAR_VERIFICACION" value="0">
-              </div>
-            </div>
-
-
-            @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
-
-            <div class="row" id="VERIFICACION_CLIENTE">
-
-              <div class="d-flex align-items-center">
-                <h5 class="me-2">Verificación del Cliente</h5>
-                <button id="btnVerificacion" type="button" class="btn btn-info btn-custom rounded-pill">
-                  <i class="bi bi-check"></i>
-                </button>
-              </div>
-              <input type="hidden" id="inputVerificacionEstado" name="ESTADO_VERIFICACION" value="0">
-
-
-
-
-              <div class="mb-3">
-                <div class="row">
-                  <div class="col-6 mb-3">
-                    <label>Agregar verificación</label>
-                    <button id="botonVerificacion" id="botonVerificacion" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
-                      <i class="bi bi-plus-circle-fill"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="verifiacionesdiv mt-4"></div>
-              </div>
-            </div>
-
-
             <div class="col-12">
               <div class="row">
-                <div class="col-md-12 mb-3 text-center">
+                <div class="col-md-12 mt-5 text-center">
                   <h5 class="form-label"><b>Se procede a cotizar al cliente </b></h5>
                   <br>
                   <div class="form-check form-check-inline">
@@ -547,14 +558,6 @@
               </div>
             </div>
 
-
-            <div class="col-12 mt-3" id="NO_COTIZAR" style="display: none;">
-              <div class="mb-3">
-                <label class="form-label">Motivo del porque no se cotiza al cliente</label>
-                <textarea class="form-control" id="MOTIVO_COTIZACION" name="MOTIVO_COTIZACION" rows="4"></textarea>
-              </div>
-            </div>
-            @endif
 
 
 
