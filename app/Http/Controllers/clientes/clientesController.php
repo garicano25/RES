@@ -202,30 +202,105 @@ public function mostraractaclienteventas($id)
         try {
             switch (intval($request->api)) {
                 case 1:
+                    // if ($request->ID_FORMULARIO_CLIENTES == 0) {
+                    //     DB::statement('ALTER TABLE formulario_clientes AUTO_INCREMENT=1;');
+
+                    //     // Excluir arrays puros y agregar los JSON
+                    //     $data = $request->except(['contactos', 'direcciones', 'CONSTANCIA_DOCUMENTO']);
+                    //     $data['CONTACTOS_JSON'] = is_string($request->CONTACTOS_JSON) ? $request->CONTACTOS_JSON : json_encode([]);
+                    //     $data['DIRECCIONES_JSON'] = is_string($request->DIRECCIONES_JSON) ? $request->DIRECCIONES_JSON : json_encode([]);
+
+
+
+
+                    //     $cliente = clienteModel::create($data);
+
+                    //     // Guardar documento si viene
+                    //     if ($request->hasFile('CONSTANCIA_DOCUMENTO')) {
+                    //         $documento = $request->file('CONSTANCIA_DOCUMENTO');
+                    //         $idCliente = $cliente->ID_FORMULARIO_CLIENTES;
+
+                    //         $nombreArchivo = 'constancia.' . $documento->getClientOriginalExtension();
+                    //         $rutaCarpeta = 'cliente/' . $idCliente . '/Constancia';
+                    //         $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                    //         $cliente->CONSTANCIA_DOCUMENTO = $rutaCompleta;
+                    //         $cliente->save();
+                    //     }
+
+                    //     $response['code'] = 1;
+                    //     $response['cliente'] = $cliente;
+                    //     return response()->json($response);
+                    // } else {
+                    //     if (isset($request->ELIMINAR)) {
+                    //         if ($request->ELIMINAR == 1) {
+                    //             clienteModel::where('ID_FORMULARIO_CLIENTES', $request->ID_FORMULARIO_CLIENTES)
+                    //                 ->update(['ACTIVO' => 0]);
+                    //             $response['code'] = 1;
+                    //             $response['cliente'] = 'Desactivada';
+                    //         } else {
+                    //             clienteModel::where('ID_FORMULARIO_CLIENTES', $request->ID_FORMULARIO_CLIENTES)
+                    //                 ->update(['ACTIVO' => 1]);
+                    //             $response['code'] = 1;
+                    //             $response['cliente'] = 'Activada';
+                    //         }
+                    //     } else {
+                    //         $cliente = clienteModel::find($request->ID_FORMULARIO_CLIENTES);
+
+                    //         $data = $request->except(['contactos', 'direcciones', 'CONSTANCIA_DOCUMENTO']);
+                    //         $data['CONTACTOS_JSON'] = json_encode($request->contactos);
+                    //         $data['DIRECCIONES_JSON'] = json_encode($request->direcciones);
+
+                    //         $cliente->update($data);
+
+                    //         if ($request->hasFile('CONSTANCIA_DOCUMENTO')) {
+                    //             if ($cliente->CONSTANCIA_DOCUMENTO && Storage::exists($cliente->CONSTANCIA_DOCUMENTO)) {
+                    //                 Storage::delete($cliente->CONSTANCIA_DOCUMENTO);
+                    //             }
+
+                    //             $documento = $request->file('CONSTANCIA_DOCUMENTO');
+                    //             $idCliente = $cliente->ID_FORMULARIO_CLIENTES;
+
+                    //             $nombreArchivo = 'constancia.' . $documento->getClientOriginalExtension();
+                    //             $rutaCarpeta = 'cliente/' . $idCliente . '/Constancia';
+                    //             $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                    //             $cliente->CONSTANCIA_DOCUMENTO = $rutaCompleta;
+                    //             $cliente->save();
+                    //         }
+
+                    //         $response['code'] = 1;
+                    //         $response['cliente'] = 'Actualizada';
+                    //     }
+
+                    //     return response()->json($response);
+                    // }
+                    // break;
+
+
                     if ($request->ID_FORMULARIO_CLIENTES == 0) {
                         DB::statement('ALTER TABLE formulario_clientes AUTO_INCREMENT=1;');
-                
-                        // Excluir arrays puros y agregar los JSON
-                        $data = $request->except(['contactos', 'direcciones', 'CONSTANCIA_DOCUMENTO']);
-                        $data['CONTACTOS_JSON'] = is_string($request->CONTACTOS_JSON) ? $request->CONTACTOS_JSON : json_encode([]);
-                        $data['DIRECCIONES_JSON'] = is_string($request->DIRECCIONES_JSON) ? $request->DIRECCIONES_JSON : json_encode([]);
 
-                
+                        // Excluir arrays puros y agregar los JSON correctamente
+                        $data = $request->except(['contactos', 'direcciones', 'CONSTANCIA_DOCUMENTO']);
+                        $data['CONTACTOS_JSON'] = is_string($request->CONTACTOS_JSON) ? $request->CONTACTOS_JSON : json_encode($request->CONTACTOS_JSON ?? []);
+                        $data['DIRECCIONES_JSON'] = is_string($request->DIRECCIONES_JSON) ? $request->DIRECCIONES_JSON : json_encode($request->DIRECCIONES_JSON ?? []);
+
                         $cliente = clienteModel::create($data);
-                
+
                         // Guardar documento si viene
                         if ($request->hasFile('CONSTANCIA_DOCUMENTO')) {
                             $documento = $request->file('CONSTANCIA_DOCUMENTO');
                             $idCliente = $cliente->ID_FORMULARIO_CLIENTES;
-                
+
                             $nombreArchivo = 'constancia.' . $documento->getClientOriginalExtension();
                             $rutaCarpeta = 'cliente/' . $idCliente . '/Constancia';
                             $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
-                
+
                             $cliente->CONSTANCIA_DOCUMENTO = $rutaCompleta;
                             $cliente->save();
                         }
-                
+
                         $response['code'] = 1;
                         $response['cliente'] = $cliente;
                         return response()->json($response);
@@ -244,39 +319,40 @@ public function mostraractaclienteventas($id)
                             }
                         } else {
                             $cliente = clienteModel::find($request->ID_FORMULARIO_CLIENTES);
-                
+
                             $data = $request->except(['contactos', 'direcciones', 'CONSTANCIA_DOCUMENTO']);
-                            $data['CONTACTOS_JSON'] = json_encode($request->contactos);
-                            $data['DIRECCIONES_JSON'] = json_encode($request->direcciones);
-                
+                            $data['CONTACTOS_JSON'] = is_string($request->CONTACTOS_JSON) ? $request->CONTACTOS_JSON : json_encode($request->CONTACTOS_JSON ?? []);
+                            $data['DIRECCIONES_JSON'] = is_string($request->DIRECCIONES_JSON) ? $request->DIRECCIONES_JSON : json_encode($request->DIRECCIONES_JSON ?? []);
+
                             $cliente->update($data);
-                
+
                             if ($request->hasFile('CONSTANCIA_DOCUMENTO')) {
                                 if ($cliente->CONSTANCIA_DOCUMENTO && Storage::exists($cliente->CONSTANCIA_DOCUMENTO)) {
                                     Storage::delete($cliente->CONSTANCIA_DOCUMENTO);
                                 }
-                
+
                                 $documento = $request->file('CONSTANCIA_DOCUMENTO');
                                 $idCliente = $cliente->ID_FORMULARIO_CLIENTES;
-                
+
                                 $nombreArchivo = 'constancia.' . $documento->getClientOriginalExtension();
                                 $rutaCarpeta = 'cliente/' . $idCliente . '/Constancia';
                                 $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
-                
+
                                 $cliente->CONSTANCIA_DOCUMENTO = $rutaCompleta;
                                 $cliente->save();
                             }
-                
+
                             $response['code'] = 1;
                             $response['cliente'] = 'Actualizada';
                         }
-                
+
                         return response()->json($response);
                     }
-                    break;
-                
 
-                    case 2:
+                    break;
+
+
+                case 2:
                         if ($request->ID_VERIFICACION_CLIENTE == 0) {
                             DB::statement('ALTER TABLE verificacion_cliente AUTO_INCREMENT=1;');
                             $cliente = verificacionclienteModel::create($request->all());
