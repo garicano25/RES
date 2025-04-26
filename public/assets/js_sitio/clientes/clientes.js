@@ -453,7 +453,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const divContacto = document.createElement('div');
         divContacto.classList.add('row', 'generarcontacto', 'mb-3');
 
-        // Construir opciones del select usando titulosCuenta
         let options = '<option value="" disabled selected>Seleccione un título</option>';
         titulosCuenta.forEach(item => {
             options += `<option value="${item.ABREVIATURA_TITULO}">${item.ABREVIATURA_TITULO}</option>`;
@@ -470,11 +469,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                     <div class="col-md-4 mb-3">
                         <label class="form-label">Nombre *</label>
-                        <input type="text" class="form-control" name="CONTACTO_SOLICITUD" required>
+                        <input type="text" class="form-control" name="CONTACTO_SOLICITUD" >
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Cargo *</label>
-                        <input type="text" class="form-control" name="CARGO_SOLICITUD" required>
+                        <input type="text" class="form-control" name="CARGO_SOLICITUD" >
                     </div>
                 </div>
             </div>
@@ -491,11 +490,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                     <div class="col-md-3 mb-3">
                         <label class="form-label">Celular *</label>
-                        <input type="text" class="form-control" name="CELULAR_SOLICITUD" required>
+                        <input type="text" class="form-control" name="CELULAR_SOLICITUD" >
                     </div>
                     <div class="col-md-3 mb-3">
                         <label class="form-label">Correo electrónico *</label>
-                        <input type="email" class="form-control" name="CORREO_SOLICITUD" required>
+                        <input type="email" class="form-control" name="CORREO_SOLICITUD" >
                     </div>
                 </div>
             </div>
@@ -571,11 +570,11 @@ function obtenerContactos(data) {
                     </div>
                     <div class="col-md-4 mb-3">
                         <label class="form-label">Nombre *</label>
-                        <input type="text" class="form-control" name="CONTACTO_SOLICITUD" value="${CONTACTO_SOLICITUD}" required>
+                        <input type="text" class="form-control" name="CONTACTO_SOLICITUD" value="${CONTACTO_SOLICITUD}" >
                     </div>
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Cargo *</label>
-                        <input type="text" class="form-control" name="CARGO_SOLICITUD" value="${CARGO_SOLICITUD}" required>
+                        <input type="text" class="form-control" name="CARGO_SOLICITUD" value="${CARGO_SOLICITUD}" >
                     </div>
                 </div>
             </div>
@@ -592,11 +591,11 @@ function obtenerContactos(data) {
                     </div>
                     <div class="col-md-3 mb-3">
                         <label class="form-label">Celular *</label>
-                        <input type="text" class="form-control" name="CELULAR_SOLICITUD" value="${CELULAR_SOLICITUD}" required>
+                        <input type="text" class="form-control" name="CELULAR_SOLICITUD" value="${CELULAR_SOLICITUD}" >
                     </div>
                     <div class="col-md-3 mb-3">
                         <label class="form-label">Correo electrónico *</label>
-                        <input type="email" class="form-control" name="CORREO_SOLICITUD" value="${CORREO_SOLICITUD}" required>
+                        <input type="email" class="form-control" name="CORREO_SOLICITUD" value="${CORREO_SOLICITUD}" >
                     </div>
                 </div>
             </div>
