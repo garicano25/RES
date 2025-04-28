@@ -442,7 +442,7 @@ Route::post('/mandarcontratacion', [pendientecontratarController::class, 'mandar
 Route::get('/obtenerInformacionContrato/{contrato_id}', [contratacionController::class, 'obtenerInformacionContrato']);
 
 /////////////////////////////////////// STEP 1 DATOS GENERALES
-Route::get('/Contratación', [contratacionController::class, 'index']);
+Route::get('/Contratación', [contratacionController::class, 'index'])->middleware('role:Superusuario,Administrador');
 Route::post('/contratoSave', [contratacionController::class, 'store']);
 Route::post('/obtenerbajasalta', [contratacionController::class, 'obtenerbajasalta']);
 Route::get('/Tablacontratacion', [contratacionController::class, 'Tablacontratacion']);
