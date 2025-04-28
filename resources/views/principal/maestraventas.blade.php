@@ -321,7 +321,7 @@
 
 
     @if(request()->is('Clientes'))
-    <script src="/assets/js_sitio/clientes/clientes.js?v=1.5"></script>
+    <script src="/assets/js_sitio/clientes/clientes.js?v=1.6"></script>
     @endif
 
 

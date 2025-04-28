@@ -159,41 +159,105 @@ $("#guardarCLIENTE").click(function (e) {
                         contactos.push(contacto);
                     });
 
-                    var direcciones = [];
-                    $(".generardireccion").each(function () {
-                        const tipoSeleccionado = $(this).find("select.tipoDomicilioSelect").val()?.trim();
+                    // var direcciones = [];
+                    // $(".generardireccion").each(function () {
+                    //     const tipoSeleccionado = $(this).find("select.tipoDomicilioSelect").val()?.trim();
 
-                        if (tipoSeleccionado === "nacional") {
-                            var direccion = {
-                                    'TIPODEDOMICILIOFISCAL': $(this).find("select.tipoDomicilioSelect").val()?.trim() || '', 
+                    //     if (tipoSeleccionado === "nacional") {
+                    //         var direccion = {
+                    //                 'TIPODEDOMICILIOFISCAL': $(this).find("select.tipoDomicilioSelect").val()?.trim() || '', 
 
-                                    'TIPO_DOMICILIO': $(this).find("input[name='TIPO_DOMICILIO']").val()?.trim() || '', 
-                                    'CODIGO_POSTAL_DOMICILIO': $(this).find("input[name='CODIGO_POSTAL_DOMICILIO']").val()?.trim() || '',
-                                    'TIPO_VIALIDAD_DOMICILIO': $(this).find("input[name='TIPO_VIALIDAD_DOMICILIO']").val()?.trim() || '',
-                                    'NOMBRE_VIALIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_VIALIDAD_DOMICILIO']").val()?.trim() || '',
-                                    'NUMERO_EXTERIOR_DOMICILIO': $(this).find("input[name='NUMERO_EXTERIOR_DOMICILIO']").val()?.trim() || '',
-                                    'NUMERO_INTERIOR_DOMICILIO': $(this).find("input[name='NUMERO_INTERIOR_DOMICILIO']").val()?.trim() || '',
-                                    'NOMBRE_COLONIA_DOMICILIO': $(this).find("select[name='NOMBRE_COLONIA_DOMICILIO']").val()?.trim() || '',
-                                    'NOMBRE_LOCALIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_LOCALIDAD_DOMICILIO']").val()?.trim() || '',
-                                    'NOMBRE_MUNICIPIO_DOMICILIO': $(this).find("input[name='NOMBRE_MUNICIPIO_DOMICILIO']").val()?.trim() || '',
-                                    'NOMBRE_ENTIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_ENTIDAD_DOMICILIO']").val()?.trim() || '',
-                                    'PAIS_CONTRATACION_DOMICILIO': $(this).find("input[name='PAIS_CONTRATACION_DOMICILIO']").val()?.trim() || '',
-                                    'ENTRE_CALLE_DOMICILIO': $(this).find("input[name='ENTRE_CALLE_DOMICILIO']").val()?.trim() || '',
-                                    'ENTRE_CALLE_2_DOMICILIO': $(this).find("input[name='ENTRE_CALLE_2_DOMICILIO']").val()?.trim() || '',
+                    //                 'TIPO_DOMICILIO': $(this).find("input[name='TIPO_DOMICILIO']").val()?.trim() || '', 
+                    //                 'CODIGO_POSTAL_DOMICILIO': $(this).find("input[name='CODIGO_POSTAL_DOMICILIO']").val()?.trim() || '',
+                    //                 'TIPO_VIALIDAD_DOMICILIO': $(this).find("input[name='TIPO_VIALIDAD_DOMICILIO']").val()?.trim() || '',
+                    //                 'NOMBRE_VIALIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_VIALIDAD_DOMICILIO']").val()?.trim() || '',
+                    //                 'NUMERO_EXTERIOR_DOMICILIO': $(this).find("input[name='NUMERO_EXTERIOR_DOMICILIO']").val()?.trim() || '',
+                    //                 'NUMERO_INTERIOR_DOMICILIO': $(this).find("input[name='NUMERO_INTERIOR_DOMICILIO']").val()?.trim() || '',
+                    //                 'NOMBRE_COLONIA_DOMICILIO': $(this).find("select[name='NOMBRE_COLONIA_DOMICILIO']").val()?.trim() || '',
+                    //                 'NOMBRE_LOCALIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_LOCALIDAD_DOMICILIO']").val()?.trim() || '',
+                    //                 'NOMBRE_MUNICIPIO_DOMICILIO': $(this).find("input[name='NOMBRE_MUNICIPIO_DOMICILIO']").val()?.trim() || '',
+                    //                 'NOMBRE_ENTIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_ENTIDAD_DOMICILIO']").val()?.trim() || '',
+                    //                 'PAIS_CONTRATACION_DOMICILIO': $(this).find("input[name='PAIS_CONTRATACION_DOMICILIO']").val()?.trim() || '',
+                    //                 'ENTRE_CALLE_DOMICILIO': $(this).find("input[name='ENTRE_CALLE_DOMICILIO']").val()?.trim() || '',
+                    //                 'ENTRE_CALLE_2_DOMICILIO': $(this).find("input[name='ENTRE_CALLE_2_DOMICILIO']").val()?.trim() || '',
                                     
-                                    // Extranjero (en blanco si es nacional)
-                                    'DOMICILIO_EXTRANJERO': $(this).find("input[name='DOMICILIO_EXTRANJERO']").val()?.trim() || '',
-                                    'CP_EXTRANJERO': $(this).find("input[name='CP_EXTRANJERO']").val()?.trim() || '',
-                                    'CIUDAD_EXTRANJERO': $(this).find("input[name='CIUDAD_EXTRANJERO']").val()?.trim() || '',
-                                    'ESTADO_EXTRANJERO': $(this).find("input[name='ESTADO_EXTRANJERO']").val()?.trim() || '',
-                                    'PAIS_EXTRANJERO': $(this).find("input[name='PAIS_EXTRANJERO']").val()?.trim() || ''
-                                };
+                    //                 // Extranjero (en blanco si es nacional)
+                    //                 'DOMICILIO_EXTRANJERO': $(this).find("input[name='DOMICILIO_EXTRANJERO']").val()?.trim() || '',
+                    //                 'CP_EXTRANJERO': $(this).find("input[name='CP_EXTRANJERO']").val()?.trim() || '',
+                    //                 'CIUDAD_EXTRANJERO': $(this).find("input[name='CIUDAD_EXTRANJERO']").val()?.trim() || '',
+                    //                 'ESTADO_EXTRANJERO': $(this).find("input[name='ESTADO_EXTRANJERO']").val()?.trim() || '',
+                    //                 'PAIS_EXTRANJERO': $(this).find("input[name='PAIS_EXTRANJERO']").val()?.trim() || ''
+                    //             };
 
-                            direcciones.push(direccion);
-                        }
-                    });
+                    //         direcciones.push(direccion);
+                    //     }
+                    // });
 
 
+                    var direcciones = [];
+
+            $(".generardireccion").each(function () {
+                const tipoSeleccionado = $(this).find("select.tipoDomicilioSelect").val()?.trim();
+
+                if (tipoSeleccionado === "nacional") {
+                    var direccion = {
+                        'TIPODEDOMICILIOFISCAL': 'nacional',
+
+                        // Nacional llenos
+                        'TIPO_DOMICILIO': $(this).find("input[name='TIPO_DOMICILIO']").val()?.trim() || '', 
+                        'CODIGO_POSTAL_DOMICILIO': $(this).find("input[name='CODIGO_POSTAL_DOMICILIO']").val()?.trim() || '',
+                        'TIPO_VIALIDAD_DOMICILIO': $(this).find("input[name='TIPO_VIALIDAD_DOMICILIO']").val()?.trim() || '',
+                        'NOMBRE_VIALIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_VIALIDAD_DOMICILIO']").val()?.trim() || '',
+                        'NUMERO_EXTERIOR_DOMICILIO': $(this).find("input[name='NUMERO_EXTERIOR_DOMICILIO']").val()?.trim() || '',
+                        'NUMERO_INTERIOR_DOMICILIO': $(this).find("input[name='NUMERO_INTERIOR_DOMICILIO']").val()?.trim() || '',
+                        'NOMBRE_COLONIA_DOMICILIO': $(this).find("select[name='NOMBRE_COLONIA_DOMICILIO']").val()?.trim() || '',
+                        'NOMBRE_LOCALIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_LOCALIDAD_DOMICILIO']").val()?.trim() || '',
+                        'NOMBRE_MUNICIPIO_DOMICILIO': $(this).find("input[name='NOMBRE_MUNICIPIO_DOMICILIO']").val()?.trim() || '',
+                        'NOMBRE_ENTIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_ENTIDAD_DOMICILIO']").val()?.trim() || '',
+                        'PAIS_CONTRATACION_DOMICILIO': $(this).find("input[name='PAIS_CONTRATACION_DOMICILIO']").val()?.trim() || '',
+                        'ENTRE_CALLE_DOMICILIO': $(this).find("input[name='ENTRE_CALLE_DOMICILIO']").val()?.trim() || '',
+                        'ENTRE_CALLE_2_DOMICILIO': $(this).find("input[name='ENTRE_CALLE_2_DOMICILIO']").val()?.trim() || '',
+
+                        // Extranjero vacíos
+                        'DOMICILIO_EXTRANJERO': '',
+                        'CP_EXTRANJERO': '',
+                        'CIUDAD_EXTRANJERO': '',
+                        'ESTADO_EXTRANJERO': '',
+                        'PAIS_EXTRANJERO': ''
+                    };
+                    direcciones.push(direccion);
+
+                } else if (tipoSeleccionado === "extranjero") {
+                    var direccion = {
+                        'TIPODEDOMICILIOFISCAL': 'extranjero',
+
+                        // Nacional vacíos
+                        'TIPO_DOMICILIO': '',
+                        'CODIGO_POSTAL_DOMICILIO': '',
+                        'TIPO_VIALIDAD_DOMICILIO': '',
+                        'NOMBRE_VIALIDAD_DOMICILIO': '',
+                        'NUMERO_EXTERIOR_DOMICILIO': '',
+                        'NUMERO_INTERIOR_DOMICILIO': '',
+                        'NOMBRE_COLONIA_DOMICILIO': '',
+                        'NOMBRE_LOCALIDAD_DOMICILIO': '',
+                        'NOMBRE_MUNICIPIO_DOMICILIO': '',
+                        'NOMBRE_ENTIDAD_DOMICILIO': '',
+                        'PAIS_CONTRATACION_DOMICILIO': '',
+                        'ENTRE_CALLE_DOMICILIO': '',
+                        'ENTRE_CALLE_2_DOMICILIO': '',
+
+                        // Extranjero llenos
+                        'DOMICILIO_EXTRANJERO': $(this).find("input[name='DOMICILIO_EXTRANJERO']").val()?.trim() || '',
+                        'CP_EXTRANJERO': $(this).find("input[name='CP_EXTRANJERO']").val()?.trim() || '',
+                        'CIUDAD_EXTRANJERO': $(this).find("input[name='CIUDAD_EXTRANJERO']").val()?.trim() || '',
+                        'ESTADO_EXTRANJERO': $(this).find("input[name='ESTADO_EXTRANJERO']").val()?.trim() || '',
+                        'PAIS_EXTRANJERO': $(this).find("input[name='PAIS_EXTRANJERO']").val()?.trim() || ''
+                    };
+                    direcciones.push(direccion);
+                }
+            });
+
+        
 
     
             const requestData = {
