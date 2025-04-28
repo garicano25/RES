@@ -811,6 +811,24 @@
 
 
 
+    @if(session('error'))
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Acceso Denegado',
+                text: 'No tienes acceso a este módulo.',
+                confirmButtonText: 'Entendido',
+                background: '#f8d7da', // Fondo rojo claro
+                customClass: {
+                    popup: 'swal-wide' // Clase personalizada para ampliar la alerta
+                }
+            });
+
+        });
+    </script>
+    @endif
+    
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
