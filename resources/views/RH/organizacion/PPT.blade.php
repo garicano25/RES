@@ -79,11 +79,17 @@
                         <!-- I. Características generales -->
                         <div class="row mb-3">
                             <div class="col-12 text-center">
-                                <h4>I. Características generales</h4>
+                                <div style="display: inline-flex; align-items: center; gap: 10px;">
+                                    <h4 style="margin: 0;">I. Características generales</h4>
+                                    <input type="text" value="5" style="width: 40px; height: 40px; text-align: center;">
+                                    <span style="font-size: 18px;">%</span>
+                                </div>
                             </div>
                         </div>
+
+
                         <div class="row mb-3">
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="form-group">
                                     <label>Edad (mínima / máxima) *</label>
                                     <select class="form-control" id="EDAD_PPT" name="EDAD_PPT" required>
@@ -96,20 +102,29 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-2">
+
+                            <div class="col-3">
                                 <br>
-                                <div class="radio-container">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="EDAD_CUMPLE_PPT" id="EDAD_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="EDAD_CUMPLE_SI">Si</label>
+                                <div class="d-flex align-items-center">
+                                    <div class="radio-container" style="background-color: #e6f2d9; padding: 5px 10px; border-radius: 5px; display: flex; align-items: center; gap: 10px;">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="EDAD_CUMPLE_PPT" id="EDAD_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="EDAD_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="EDAD_CUMPLE_PPT" id="EDAD_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="EDAD_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="EDAD_CUMPLE_PPT" id="EDAD_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="EDAD_CUMPLE_NO">No</label>
+                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
+                                        <input type="number" class="form-control" id="PORCENTAJE_EDAD" name="PORCENTAJE_EDAD" style="width: 50px; text-align: center;">
+                                        <span>%</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4">
+
+
+                            <div class="col-3">
                                 <div class="form-group">
                                     <label>Género *</label>
                                     <select class="form-control" id="GENERO_PPT" name="GENERO_PPT" required>
@@ -120,22 +135,31 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-2">
+
+                            <div class="col-3">
                                 <br>
-                                <div class="radio-container">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="GENERO_CUMPLE_PPT" id="GENERO_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="GENERO_CUMPLE_SI">Si</label>
+                                <div class="d-flex align-items-center">
+                                    <br>
+                                    <div class="radio-container" style="background-color: #e6f2d9; padding: 5px 10px; border-radius: 5px; display: flex; align-items: center; gap: 10px;">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="GENERO_CUMPLE_PPT" id="GENERO_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="GENERO_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="GENERO_CUMPLE_PPT" id="GENERO_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="GENERO_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="GENERO_CUMPLE_PPT" id="GENERO_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="GENERO_CUMPLE_NO">No</label>
+                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
+                                        <input type="number" class="form-control" id="PORCENTAJE_GENERO" name="PORCENTAJE_GENERO" style="width: 50px; text-align: center;">
+                                        <span>%</span>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                         <div class="row mb-3">
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="form-group">
                                     <label>Estado civil *</label>
                                     <select class="form-control" id="ESTADO_CIVIL_PPT" name="ESTADO_CIVIL_PPT" required>
@@ -147,20 +171,27 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-2">
+
+                            <div class="col-3">
                                 <br>
-                                <div class="radio-container">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="ESTADO_CIVIL_CUMPLE_PPT" id="ESTADO_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="ESTADO_CUMPLE_SI">Si</label>
+                                <div class="d-flex align-items-center">
+                                    <div class="radio-container" style="background-color: #e6f2d9; padding: 5px 10px; border-radius: 5px; display: flex; align-items: center; gap: 10px;">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="ESTADO_CIVIL_CUMPLE_PPT" id="ESTADO_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="ESTADO_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="ESTADO_CIVIL_CUMPLE_PPT" id="ESTADO_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="ESTADO_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="ESTADO_CIVIL_CUMPLE_PPT" id="ESTADO_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="ESTADO_CUMPLE_NO">No</label>
+                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
+                                        <input type="number" class="form-control" id="PORCENTAJE_ESTADOCIVIL" name="PORCENTAJE_ESTADOCIVIL" style="width: 50px; text-align: center;">
+                                        <span>%</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="form-group">
                                     <label>Nacionalidad *</label>
                                     <select class="form-control" id="NACIONALIDAD_PPT" name="NACIONALIDAD_PPT" required>
@@ -171,22 +202,30 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-2">
+
+                            <div class="col-3">
                                 <br>
-                                <div class="radio-container">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="NACIONALIDAD_CUMPLE_PPT" id="NACIONALIDAD_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="NACIONALIDAD_CUMPLE_SI">Si</label>
+                                <div class="d-flex align-items-center">
+                                    <div class="radio-container" style="background-color: #e6f2d9; padding: 5px 10px; border-radius: 5px; display: flex; align-items: center; gap: 10px;">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="NACIONALIDAD_CUMPLE_PPT" id="NACIONALIDAD_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="NACIONALIDAD_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="NACIONALIDAD_CUMPLE_PPT" id="NACIONALIDAD_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="NACIONALIDAD_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="NACIONALIDAD_CUMPLE_PPT" id="NACIONALIDAD_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="NACIONALIDAD_CUMPLE_NO">No</label>
+                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
+                                        <input type="number" class="form-control" id="PORCENTAJE_NACIONALIDAD" name="PORCENTAJE_NACIONALIDAD" style="width: 50px; text-align: center;">
+                                        <span>%</span>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                         <div class="row mb-3">
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="form-group">
                                     <label>Persona con discapacidad *</label>
                                     <select class="form-control" id="DISCAPACIDAD_PPT" name="DISCAPACIDAD_PPT" required>
@@ -194,24 +233,32 @@
                                         <option value="Indistinto">Indistinto</option>
                                         <option value="Ninguna">Ninguna</option>
                                         <option value="Motriz">Motriz</option>
-                                        <option value="Visual">Visual </option>
+                                        <option value="Visual">Visual</option>
                                         <option value="Auditiva">Auditiva</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-2">
+
+                            <div class="col-3">
                                 <br>
-                                <div class="radio-container">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="DISCAPACIDAD_CUMPLE_PPT" id="DISCAPACIDAD_CUMPLE_SI" value="si" disabled>
-                                        <label class="form-check-label" for="DISCAPACIDAD_CUMPLE_SI">Si</label>
+                                <div class="d-flex align-items-center">
+                                    <div class="radio-container" style="background-color: #e6f2d9; padding: 5px 10px; border-radius: 5px; display: flex; align-items: center; gap: 10px;">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="DISCAPACIDAD_CUMPLE_PPT" id="DISCAPACIDAD_CUMPLE_SI" value="si" disabled>
+                                            <label class="form-check-label" for="DISCAPACIDAD_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="DISCAPACIDAD_CUMPLE_PPT" id="DISCAPACIDAD_CUMPLE_NO" value="no" disabled>
+                                            <label class="form-check-label" for="DISCAPACIDAD_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="DISCAPACIDAD_CUMPLE_PPT" id="DISCAPACIDAD_CUMPLE_NO" value="no" disabled>
-                                        <label class="form-check-label" for="DISCAPACIDAD_CUMPLE_NO">No</label>
+                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
+                                        <input type="number" class="form-control" id="PORCENTAJE_DISCAPACIDAD" name="PORCENTAJE_DISCAPACIDAD" style="width: 50px; text-align: center;">
+                                        <span>%</span>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-6">
                                 <div class="form-group">
                                     <label>¿Cuál?</label>
@@ -221,14 +268,21 @@
                         </div>
 
                         <!-- II. Formación académica -->
+
                         <div class="row mb-3">
                             <div class="col-12 text-center">
-                                <h4>II. Formación académica</h4>
+                                <div style="display: inline-flex; align-items: center; gap: 10px;">
+                                    <h4>II. Formación académica</h4>
+                                    <input type="text" value="20" style="width: 40px; height: 40px; text-align: center;">
+                                    <span style="font-size: 18px;">%</span>
+                                </div>
                             </div>
                         </div>
+
+
                         <div class="row mb-3">
                             {{-- Area de escuela --}}
-                            <div class="col-4">
+                            <div class="col-5">
                                 <div class="row">
                                     <!-- SECUNDARIA -->
                                     <div class="col-12">
@@ -245,17 +299,24 @@
                                             </div>
                                             <div class="col-4">
                                                 <br>
-                                                <div class="radio-container">
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado" type="radio" name="SECUNDARIA_CUMPLE_PPT" id="SECUNDARIA_CUMPLE_SI" value="si" disabled>
-                                                        <label class="form-check-label" for="SECUNDARIA_CUMPLE_SI">Si</label>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="radio-container" style="background-color: #e6f2d9; padding: 5px 10px; border-radius: 5px; display: flex; align-items: center; gap: 10px;">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado" type="radio" name="SECUNDARIA_CUMPLE_PPT" id="SECUNDARIA_CUMPLE_SI" value="si" disabled>
+                                                            <label class="form-check-label" for="SECUNDARIA_CUMPLE_SI">Si</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input desabilitado" type="radio" name="SECUNDARIA_CUMPLE_PPT" id="SECUNDARIA_CUMPLE_NO" value="no" disabled>
+                                                            <label class="form-check-label" for="SECUNDARIA_CUMPLE_NO">No</label>
+                                                        </div>
                                                     </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input desabilitado" type="radio" name="SECUNDARIA_CUMPLE_PPT" id="SECUNDARIA_CUMPLE_NO" value="no" disabled>
-                                                        <label class="form-check-label" for="SECUNDARIA_CUMPLE_NO">No</label>
+                                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
+                                                        <input type="number" class="form-control" id="PORCENTAJE_SECUNDARIA" name="PORCENTAJE_SECUNDARIA" style="width: 50px; text-align: center;">
+                                                        <span>%</span>
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
                                     <!-- TECNICA BASICA -->
@@ -345,7 +406,7 @@
                                 </div>
                             </div>
                             {{-- Situación académica   --}}
-                            <div class="col-4">
+                            <div class="col-2">
                                 <div class="row">
                                     <!-- SECUNDARIA -->
                                     <div class="col-12 mb-5">
@@ -407,7 +468,7 @@
                                 </div>
                             </div>
                             {{-- Áreas de conocimientos --}}
-                            <div class="col-4">
+                            <div class="col-5">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="row">
