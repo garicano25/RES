@@ -79,20 +79,25 @@ class solicitudesController extends Controller
             if (!empty($cliente->DIRECCIONES_JSON)) {
                 $direccionesArray = json_decode($cliente->DIRECCIONES_JSON, true);
                 foreach ($direccionesArray as $dir) {
-                    if ($dir['TIPO_DOMICILIO'] == '1') {
+                    if (($dir['TIPODEDOMICILIOFISCAL'] ?? '') === 'nacional') {
+                        // Dirección nacional
                         $direccionFormateada =
-                            ($dir['NOMBRE_VIALIDAD_DOMICILIO'] ?? '') . ' No. ' . ($dir['NUMERO_EXTERIOR_DOMICILIO'] ?? '') .
+                            ($dir['NOMBRE_VIALIDAD_DOMICILIO'] ?? '') . ' ' .
+                            (empty($dir['NUMERO_EXTERIOR_DOMICILIO']) ? '' : 'No. ' . $dir['NUMERO_EXTERIOR_DOMICILIO']) .
+                            (empty($dir['NUMERO_INTERIOR_DOMICILIO']) ? '' : ' Int. ' . $dir['NUMERO_INTERIOR_DOMICILIO']) .
                             (empty($dir['NOMBRE_COLONIA_DOMICILIO']) ? '' : ', Colonia ' . $dir['NOMBRE_COLONIA_DOMICILIO']) .
-                            ', C.P. ' . ($dir['CODIGO_POSTAL_DOMICILIO'] ?? '') .
-                            ', ' . ($dir['NOMBRE_LOCALIDAD_DOMICILIO'] ?? '') .
-                            ', ' . ($dir['NOMBRE_ENTIDAD_DOMICILIO'] ?? '') .
-                            ', ' . ($dir['PAIS_CONTRATACION_DOMICILIO'] ?? '');
+                            (empty($dir['NOMBRE_LOCALIDAD_DOMICILIO']) ? '' : ', ' . $dir['NOMBRE_LOCALIDAD_DOMICILIO']) .
+                            (empty($dir['CODIGO_POSTAL_DOMICILIO']) ? '' : ', C.P. ' . $dir['CODIGO_POSTAL_DOMICILIO']) .
+                            (empty($dir['NOMBRE_MUNICIPIO_DOMICILIO']) ? '' : ', ' . $dir['NOMBRE_MUNICIPIO_DOMICILIO']) .
+                            (empty($dir['NOMBRE_ENTIDAD_DOMICILIO']) ? '' : ', ' . $dir['NOMBRE_ENTIDAD_DOMICILIO']) .
+                            (empty($dir['PAIS_CONTRATACION_DOMICILIO']) ? '' : ', ' . $dir['PAIS_CONTRATACION_DOMICILIO']);
 
                         $direcciones[] = [
                             'tipo' => 'Nacional',
                             'direccion' => $direccionFormateada,
                         ];
-                    } elseif ($dir['TIPO_DOMICILIO'] == '2') {
+                    } elseif (($dir['TIPODEDOMICILIOFISCAL'] ?? '') === 'extranjero') {
+                        // Dirección extranjera
                         $direccionFormateada =
                             ($dir['DOMICILIO_EXTRANJERO'] ?? '') .
                             (empty($dir['CIUDAD_EXTRANJERO']) ? '' : ', ' . $dir['CIUDAD_EXTRANJERO']) .
@@ -135,6 +140,7 @@ class solicitudesController extends Controller
             ]);
         }
     }
+
 
 
     public function Tablasolicitudes()
