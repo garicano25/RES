@@ -189,8 +189,10 @@ public function store(Request $request)
                                     'CURSO_PPT' => $value,
                                     'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
                                     'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
-                                    // 'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num]
-                                ]);
+                                    'PORCENTAJE_CURSO' => isset($request->PORCENTAJE_CURSO[$num]) ? $request->PORCENTAJE_CURSO[$num] : null,
+
+                                        // 'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num]
+                                    ]);
                             }
                         }
                     }
@@ -223,8 +225,10 @@ public function store(Request $request)
                                     'CURSO_PPT' => $value,
                                     'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
                                     'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
-                                    // 'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num]
-                                ]);
+                                    'PORCENTAJE_CURSO' => isset($request->PORCENTAJE_CURSO[$num]) ? $request->PORCENTAJE_CURSO[$num] : null,
+
+                                        // 'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num]
+                                    ]);
                             }
                         }
                     }

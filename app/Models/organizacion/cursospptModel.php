@@ -15,6 +15,8 @@ class cursospptModel extends Model
         'CURSO_PPT',
         'CURSO_REQUERIDO',
         'CURSO_DESEABLE',
-        'CURSO_CUMPLE_PPT'
+        'CURSO_CUMPLE_PPT',
+        'PORCENTAJE_CURSO'
+
     ];
 }

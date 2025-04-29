@@ -403,7 +403,7 @@
     @endif
 
     @if(request()->is('PPT'))
-    <script src="/assets/js_sitio/organizacion/PPT.js?v=3.0"></script>
+    <script src="/assets/js_sitio/organizacion/PPT.js?v=3.1"></script>
     @endif
 
     @if(request()->is('DPT'))
@@ -493,7 +493,7 @@
 
 
     @if(request()->is('Selección'))
-    <script src="/assets/js_sitio/seleccion/seleccion.js?v=21.6"></script>
+    <script src="/assets/js_sitio/seleccion/seleccion.js?v=21.7"></script>
     @endif
 
     @if(request()->is('Visualizar_selección'))

@@ -1031,6 +1031,9 @@ function mostrarCursos(data, form) {
         // Textarea del curso
         $('#' + form).find(`#CURSO${num}_PPT`).val(curso.CURSO_PPT);
 
+          $('#' + form).find(`input[id='PORCENTAJE_CURSO${count}']`).val(obj.PORCENTAJE_CURSO);
+
+        
         // Radios de Cumple (si/no)
         const cumple = (curso.CURSO_CUMPLE_PPT || '').toLowerCase();
         if (cumple === 'si' || cumple === 'no') {
@@ -3876,6 +3879,152 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
 
 
 
+                // I. Características generales
+                    if (document.getElementById('SUMA_CARACTERISTICAS')) {
+                        document.getElementById('SUMA_CARACTERISTICAS').value = formulario.SUMA_CARACTERISTICAS || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_EDAD')) {
+                        document.getElementById('PORCENTAJE_EDAD').value = formulario.PORCENTAJE_EDAD || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_GENERO')) {
+                        document.getElementById('PORCENTAJE_GENERO').value = formulario.PORCENTAJE_GENERO || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_ESTADOCIVIL')) {
+                        document.getElementById('PORCENTAJE_ESTADOCIVIL').value = formulario.PORCENTAJE_ESTADOCIVIL || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_NACIONALIDAD')) {
+                        document.getElementById('PORCENTAJE_NACIONALIDAD').value = formulario.PORCENTAJE_NACIONALIDAD || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_DISCAPACIDAD')) {
+                        document.getElementById('PORCENTAJE_DISCAPACIDAD').value = formulario.PORCENTAJE_DISCAPACIDAD || '';
+                    }
+
+                    // II. Formación académica
+                    if (document.getElementById('SUMA_FORMACION')) {
+                        document.getElementById('SUMA_FORMACION').value = formulario.SUMA_FORMACION || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_SECUNDARIA')) {
+                        document.getElementById('PORCENTAJE_SECUNDARIA').value = formulario.PORCENTAJE_SECUNDARIA || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_MEDIASUPERIOR')) {
+                        document.getElementById('PORCENTAJE_MEDIASUPERIOR').value = formulario.PORCENTAJE_MEDIASUPERIOR || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_TECNICOSUPERIOR')) {
+                        document.getElementById('PORCENTAJE_TECNICOSUPERIOR').value = formulario.PORCENTAJE_TECNICOSUPERIOR || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_UNIVERSITARIO')) {
+                        document.getElementById('PORCENTAJE_UNIVERSITARIO').value = formulario.PORCENTAJE_UNIVERSITARIO || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_SITUACIONACADEMICA')) {
+                        document.getElementById('PORCENTAJE_SITUACIONACADEMICA').value = formulario.PORCENTAJE_SITUACIONACADEMICA || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_CEDULA')) {
+                        document.getElementById('PORCENTAJE_CEDULA').value = formulario.PORCENTAJE_CEDULA || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_AREA1')) {
+                        document.getElementById('PORCENTAJE_AREA1').value = formulario.PORCENTAJE_AREA1 || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_AREA2')) {
+                        document.getElementById('PORCENTAJE_AREA2').value = formulario.PORCENTAJE_AREA2 || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_AREA3')) {
+                        document.getElementById('PORCENTAJE_AREA3').value = formulario.PORCENTAJE_AREA3 || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_AREA4')) {
+                        document.getElementById('PORCENTAJE_AREA4').value = formulario.PORCENTAJE_AREA4 || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_ESPECIALIDAD')) {
+                        document.getElementById('PORCENTAJE_ESPECIALIDAD').value = formulario.PORCENTAJE_ESPECIALIDAD || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_MAESTRIA')) {
+                        document.getElementById('PORCENTAJE_MAESTRIA').value = formulario.PORCENTAJE_MAESTRIA || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_DOCTORADO')) {
+                        document.getElementById('PORCENTAJE_DOCTORADO').value = formulario.PORCENTAJE_DOCTORADO || '';
+                    }
+
+                    // III. Conocimientos adicionales
+                    if (document.getElementById('SUMA_CONOCIMIENTO')) {
+                        document.getElementById('SUMA_CONOCIMIENTO').value = formulario.SUMA_CONOCIMIENTO || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_WORD')) {
+                        document.getElementById('PORCENTAJE_WORD').value = formulario.PORCENTAJE_WORD || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_EXCEL')) {
+                        document.getElementById('PORCENTAJE_EXCEL').value = formulario.PORCENTAJE_EXCEL || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_POWERPOINT')) {
+                        document.getElementById('PORCENTAJE_POWERPOINT').value = formulario.PORCENTAJE_POWERPOINT || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_IDIOMA1')) {
+                        document.getElementById('PORCENTAJE_IDIOMA1').value = formulario.PORCENTAJE_IDIOMA1 || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_IDIOMA2')) {
+                        document.getElementById('PORCENTAJE_IDIOMA2').value = formulario.PORCENTAJE_IDIOMA2 || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_IDIOMA3')) {
+                        document.getElementById('PORCENTAJE_IDIOMA3').value = formulario.PORCENTAJE_IDIOMA3 || '';
+                    }
+
+                    // IV. Cursos
+                    if (document.getElementById('SUMA_CURSOS')) {
+                        document.getElementById('SUMA_CURSOS').value = formulario.SUMA_CURSOS || '';
+                    }
+
+                    // V. Experiencia
+                    if (document.getElementById('SUMA_EXPERIENCIA')) {
+                        document.getElementById('SUMA_EXPERIENCIA').value = formulario.SUMA_EXPERIENCIA || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_EXPERIENCIAGENERAL')) {
+                        document.getElementById('PORCENTAJE_EXPERIENCIAGENERAL').value = formulario.PORCENTAJE_EXPERIENCIAGENERAL || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_CANTIDADTOTAL')) {
+                        document.getElementById('PORCENTAJE_CANTIDADTOTAL').value = formulario.PORCENTAJE_CANTIDADTOTAL || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_EXPERIENCIAESPECIFICA')) {
+                        document.getElementById('PORCENTAJE_EXPERIENCIAESPECIFICA').value = formulario.PORCENTAJE_EXPERIENCIAESPECIFICA || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_INDIQUEXPERIENCIA')) {
+                        document.getElementById('PORCENTAJE_INDIQUEXPERIENCIA').value = formulario.PORCENTAJE_INDIQUEXPERIENCIA || '';
+                    }
+
+                    // VI. Habilidades y competencias funcionales
+                    if (document.getElementById('SUMA_HABILIDADES')) {
+                        document.getElementById('SUMA_HABILIDADES').value = formulario.SUMA_HABILIDADES || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_INNOVACION')) {
+                        document.getElementById('PORCENTAJE_INNOVACION').value = formulario.PORCENTAJE_INNOVACION || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_PASION')) {
+                        document.getElementById('PORCENTAJE_PASION').value = formulario.PORCENTAJE_PASION || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_SERVICIO_CLIENTE')) {
+                        document.getElementById('PORCENTAJE_SERVICIO_CLIENTE').value = formulario.PORCENTAJE_SERVICIO_CLIENTE || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_COMUNICACION_EFICAZ')) {
+                        document.getElementById('PORCENTAJE_COMUNICACION_EFICAZ').value = formulario.PORCENTAJE_COMUNICACION_EFICAZ || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_TRABAJO_EQUIPO')) {
+                        document.getElementById('PORCENTAJE_TRABAJO_EQUIPO').value = formulario.PORCENTAJE_TRABAJO_EQUIPO || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_INTEGRIDAD')) {
+                        document.getElementById('PORCENTAJE_INTEGRIDAD').value = formulario.PORCENTAJE_INTEGRIDAD || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_RESPONSABILIDAD_SOCIAL')) {
+                        document.getElementById('PORCENTAJE_RESPONSABILIDAD_SOCIAL').value = formulario.PORCENTAJE_RESPONSABILIDAD_SOCIAL || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_ADAPTABILIDAD')) {
+                        document.getElementById('PORCENTAJE_ADAPTABILIDAD').value = formulario.PORCENTAJE_ADAPTABILIDAD || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_LIDERAZGO')) {
+                        document.getElementById('PORCENTAJE_LIDERAZGO').value = formulario.PORCENTAJE_LIDERAZGO || '';
+                    }
+                    if (document.getElementById('PORCENTAJE_TOMA_DECISIONES')) {
+                        document.getElementById('PORCENTAJE_TOMA_DECISIONES').value = formulario.PORCENTAJE_TOMA_DECISIONES || '';
+                    }
+
+
+
              let cursos = data.cursos;
 
              let openAccordion1 = false;
@@ -3888,6 +4037,7 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
                      document.getElementById(`CURSO${index + 1}_PPT`).value = curso.CURSO_PPT || '';
                      document.getElementById(`CURSO${index + 1}_REQUERIDO_PPT`).checked = curso.CURSO_REQUERIDO === 'X' ? true : false;
                      document.getElementById(`CURSO${index + 1}_DESEABLE_PPT`).checked = curso.CURSO_DESEABLE === 'X' ? true : false;
+                    document.getElementById(`PORCENTAJE_CURSO${index + 1}`).value = curso.PORCENTAJE_CURSO || '';
 
                      if (curso.CURSO_PPT || curso.CURSO_REQUERIDO || curso.CURSO_DESEABLE) {
                          openAccordion1 = true;
@@ -3896,6 +4046,8 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
                      document.getElementById(`CURSO${index + 1}_PPT`).value = curso.CURSO_PPT || '';
                      document.getElementById(`CURSO${index + 1}_REQUERIDO_PPT`).checked = curso.CURSO_REQUERIDO === 'X' ? true : false;
                      document.getElementById(`CURSO${index + 1}_DESEABLE_PPT`).checked = curso.CURSO_DESEABLE === 'X' ? true : false;
+                    document.getElementById(`PORCENTAJE_CURSO${index + 1}`).value = curso.PORCENTAJE_CURSO || '';
+
 
                      if (curso.CURSO_PPT || curso.CURSO_REQUERIDO || curso.CURSO_DESEABLE) {
                          openAccordion2 = true;
@@ -3904,6 +4056,8 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
                      document.getElementById(`CURSO${index + 1}_PPT`).value = curso.CURSO_PPT || '';
                      document.getElementById(`CURSO${index + 1}_REQUERIDO_PPT`).checked = curso.CURSO_REQUERIDO === 'X' ? true : false;
                      document.getElementById(`CURSO${index + 1}_DESEABLE_PPT`).checked = curso.CURSO_DESEABLE === 'X' ? true : false;
+                    document.getElementById(`PORCENTAJE_CURSO${index + 1}`).value = curso.PORCENTAJE_CURSO || '';
+
 
                      if (curso.CURSO_PPT || curso.CURSO_REQUERIDO || curso.CURSO_DESEABLE) {
                          openAccordion3 = true;
@@ -3912,6 +4066,7 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
                      document.getElementById(`CURSO${index + 1}_PPT`).value = curso.CURSO_PPT || '';
                      document.getElementById(`CURSO${index + 1}_REQUERIDO_PPT`).checked = curso.CURSO_REQUERIDO === 'X' ? true : false;
                      document.getElementById(`CURSO${index + 1}_DESEABLE_PPT`).checked = curso.CURSO_DESEABLE === 'X' ? true : false;
+                    document.getElementById(`PORCENTAJE_CURSO${index + 1}`).value = curso.PORCENTAJE_CURSO || '';
 
                      if (curso.CURSO_PPT || curso.CURSO_REQUERIDO || curso.CURSO_DESEABLE) {
                          openAccordion4 = true;

@@ -471,6 +471,8 @@ function mostrarCursos(data,form){
 
         $('#' + form).find(`textarea[id='CURSO${count}_PPT']`).val(obj.CURSO_PPT)
     
+          $('#' + form).find(`input[id='PORCENTAJE_CURSO${count}']`).val(obj.PORCENTAJE_CURSO);
+
         //   $('#' + form).find(`input[id='CURSO${count}_CUMPLE_${cumple}'][value='${obj.CURSO_CUMPLE_PPT}'][type='radio']`).prop('checked', true)
 
 
@@ -482,7 +484,10 @@ function mostrarCursos(data,form){
           
           $('#' + form).find(`input[id='CURSO${count}_DESEABLE_PPT'][type='checkbox']`).prop('checked', true)
 
-        }
+          }
+          
+        $('#' + form).find(`input[id='CURSO${count}_PPT']`).val(obj.CURSO_PPT)
+
 
         count++
       });
@@ -568,7 +573,7 @@ document.getElementById('addIdiomaBtn').addEventListener('click', function(event
     this.style.display = 'none';
     document.getElementById('addIdiomaBtn2').style.display = 'inline-block';
     document.getElementById('removeIdiomaBtn2').style.display = 'inline-block';
-    document.getElementById('removeIdiomaBtn3').style.display = 'none'; // Asegura que el botón "Quitar idioma 3" esté oculto al agregar idioma 2
+    document.getElementById('removeIdiomaBtn3').style.display = 'none'; 
 });
 
 document.getElementById('addIdiomaBtn2').addEventListener('click', function(event) {
@@ -576,7 +581,7 @@ document.getElementById('addIdiomaBtn2').addEventListener('click', function(even
     document.getElementById('IDIOMA3').style.display = 'table-row';
     this.style.display = 'none';
     document.getElementById('removeIdiomaBtn3').style.display = 'inline-block';
-    document.getElementById('removeIdiomaBtn2').style.display = 'none'; // Oculta el botón "Quitar idioma 2" al agregar idioma 3
+    document.getElementById('removeIdiomaBtn2').style.display = 'none';
 });
 
 document.getElementById('removeIdiomaBtn2').addEventListener('click', function(event) {
@@ -585,7 +590,7 @@ document.getElementById('removeIdiomaBtn2').addEventListener('click', function(e
     document.getElementById('addIdiomaBtn').style.display = 'inline-block';
     document.getElementById('addIdiomaBtn2').style.display = 'none';
     this.style.display = 'none';
-    document.getElementById('removeIdiomaBtn3').style.display = 'none'; // Oculta el botón "Quitar idioma 3" al quitar idioma 2
+    document.getElementById('removeIdiomaBtn3').style.display = 'none'; 
 });
 
 document.getElementById('removeIdiomaBtn3').addEventListener('click', function(event) {
@@ -593,7 +598,7 @@ document.getElementById('removeIdiomaBtn3').addEventListener('click', function(e
     document.getElementById('IDIOMA3').style.display = 'none';
     document.getElementById('addIdiomaBtn2').style.display = 'inline-block';
     this.style.display = 'none';
-    document.getElementById('removeIdiomaBtn2').style.display = 'inline-block'; // Muestra el botón "Quitar idioma 2" al quitar idioma 3
+    document.getElementById('removeIdiomaBtn2').style.display = 'inline-block'; 
 });
 
 
@@ -729,3 +734,249 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+
+
+/// SUMA EN EL PPT
+
+/// I. Características generales
+
+function calcularSumaCaracteristicas() {
+    const ids = [
+        'PORCENTAJE_EDAD',
+        'PORCENTAJE_GENERO',
+        'PORCENTAJE_ESTADOCIVIL',
+        'PORCENTAJE_NACIONALIDAD',
+        'PORCENTAJE_DISCAPACIDAD'
+    ];
+
+    let suma = 0;
+
+    ids.forEach(id => {
+        const input = document.getElementById(id);
+        if (input && input.value) {
+            const valor = parseFloat(input.value) || 0;
+            suma += valor;
+        }
+    });
+
+    const sumaInput = document.getElementById('SUMA_CARACTERISTICAS');
+    if (sumaInput) {
+        sumaInput.value = Number.isInteger(suma) ? suma : suma.toString();
+    }
+
+    if (suma > 5) {
+        alertToast("La suma de los porcentajes no puede exceder el 5%.", "error");
+    } else if (suma === 5) {
+        alertToast("La suma de los porcentajes coincide correctamente.", "success");
+    }
+}
+
+document.querySelectorAll('#PORCENTAJE_EDAD, #PORCENTAJE_GENERO, #PORCENTAJE_ESTADOCIVIL, #PORCENTAJE_NACIONALIDAD, #PORCENTAJE_DISCAPACIDAD')
+    .forEach(input => {
+        input.addEventListener('input', calcularSumaCaracteristicas);
+    });
+
+
+
+
+/// II. Formación académica
+
+   function calcularSumaFormacion() {
+    const ids = [
+        'PORCENTAJE_SECUNDARIA',
+        'PORCENTAJE_MEDIASUPERIOR',
+        'PORCENTAJE_TECNICOSUPERIOR',
+        'PORCENTAJE_UNIVERSITARIO',
+        'PORCENTAJE_SITUACIONACADEMICA',
+        'PORCENTAJE_CEDULA',
+        'PORCENTAJE_AREA1',
+        'PORCENTAJE_AREA2',
+        'PORCENTAJE_AREA3',
+        'PORCENTAJE_AREA4',
+        'PORCENTAJE_ESPECIALIDAD',
+        'PORCENTAJE_MAESTRIA',
+        'PORCENTAJE_DOCTORADO'
+    ];
+
+    let suma = 0;
+
+    ids.forEach(id => {
+        const input = document.getElementById(id);
+        if (input && input.value) {
+            const valor = parseFloat(input.value) || 0;
+            suma += valor;
+        }
+    });
+
+    const sumaInput = document.getElementById('SUMA_FORMACION');
+    if (sumaInput) {
+        sumaInput.value = Number.isInteger(suma) ? suma : suma.toString();
+    }
+
+    if (suma > 20) {
+        alertToast("La suma de los porcentajes de formación no puede exceder el 20%.", "error");
+    } else if (suma === 20) {
+        alertToast("La suma de los porcentajes de formación coincide correctamente.", "success");
+    }
+}
+
+document.querySelectorAll('#PORCENTAJE_SECUNDARIA, #PORCENTAJE_MEDIASUPERIOR, #PORCENTAJE_TECNICOSUPERIOR, #PORCENTAJE_UNIVERSITARIO, #PORCENTAJE_SITUACIONACADEMICA, #PORCENTAJE_CEDULA, #PORCENTAJE_AREA1, #PORCENTAJE_AREA2, #PORCENTAJE_AREA3, #PORCENTAJE_AREA4, #PORCENTAJE_ESPECIALIDAD, #PORCENTAJE_MAESTRIA, #PORCENTAJE_DOCTORADO')
+    .forEach(input => {
+        input.addEventListener('input', calcularSumaFormacion);
+    });
+
+
+// III. Conocimientos adicionales
+function calcularSumaConocimiento() {
+    const ids = [
+        'PORCENTAJE_WORD',
+        'PORCENTAJE_EXCEL',
+        'PORCENTAJE_POWERPOINT',
+        'PORCENTAJE_IDIOMA1',
+        'PORCENTAJE_IDIOMA2',
+        'PORCENTAJE_IDIOMA3'
+    ];
+
+    let suma = 0;
+
+    ids.forEach(id => {
+        const input = document.getElementById(id);
+        if (input && input.value) {
+            const valor = parseFloat(input.value) || 0;
+            suma += valor;
+        }
+    });
+
+    const sumaInput = document.getElementById('SUMA_CONOCIMIENTO');
+    if (sumaInput) {
+        sumaInput.value = Number.isInteger(suma) ? suma : suma.toString();
+    }
+
+    if (suma > 10) {
+        alertToast("La suma de los porcentajes de conocimientos no puede exceder el 10%.", "error");
+    } else if (suma === 10) {
+        alertToast("La suma de los porcentajes de conocimientos coincide correctamente.", "success");
+    }
+}
+
+document.querySelectorAll('#PORCENTAJE_WORD, #PORCENTAJE_EXCEL, #PORCENTAJE_POWERPOINT, #PORCENTAJE_IDIOMA1, #PORCENTAJE_IDIOMA2, #PORCENTAJE_IDIOMA3')
+    .forEach(input => {
+        input.addEventListener('input', calcularSumaConocimiento);
+    });
+
+
+/// IV CURSOS
+
+function calcularSumaCursos() {
+    let suma = 0;
+
+    for (let i = 1; i <= 40; i++) {
+        const input = document.getElementById(`PORCENTAJE_CURSO${i}`);
+        if (input && input.value) {
+            const valor = parseFloat(input.value) || 0;
+            suma += valor;
+        }
+    }
+
+    const sumaInput = document.getElementById('SUMA_CURSOS');
+    if (sumaInput) {
+        sumaInput.value = Number.isInteger(suma) ? suma : suma.toString();
+    }
+
+    // Validaciones
+    if (suma > 25) {
+        alertToast("La suma de los porcentajes de cursos no puede exceder el 25%.", "error");
+    } else if (suma === 25) {
+        alertToast("La suma de los porcentajes de cursos coincide correctamente.", "success");
+    }
+}
+
+for (let i = 1; i <= 40; i++) {
+    const input = document.getElementById(`PORCENTAJE_CURSO${i}`);
+    if (input) {
+        input.addEventListener('input', calcularSumaCursos);
+    }
+}
+
+
+/// V. Experiencia
+
+function calcularSumaExperiencia() {
+    const ids = [
+        'PORCENTAJE_EXPERIENCIAGENERAL',
+        'PORCENTAJE_CANTIDADTOTAL',
+        'PORCENTAJE_EXPERIENCIAESPECIFICA',
+        'PORCENTAJE_INDIQUEXPERIENCIA'
+    ];
+
+    let suma = 0;
+
+    ids.forEach(id => {
+        const input = document.getElementById(id);
+        if (input && input.value) {
+            const valor = parseFloat(input.value) || 0;
+            suma += valor;
+        }
+    });
+
+    const sumaInput = document.getElementById('SUMA_EXPERIENCIA');
+    if (sumaInput) {
+        sumaInput.value = Number.isInteger(suma) ? suma : suma.toString();
+    }
+
+    if (suma > 25) {
+        alertToast("La suma de los porcentajes de experiencia no puede exceder el 25%.", "error");
+    } else if (suma === 25) {
+        alertToast("La suma de los porcentajes de experiencia coincide correctamente.", "success");
+    }
+}
+
+document.querySelectorAll('#PORCENTAJE_EXPERIENCIAGENERAL, #PORCENTAJE_CANTIDADTOTAL, #PORCENTAJE_EXPERIENCIAESPECIFICA, #PORCENTAJE_INDIQUEXPERIENCIA')
+    .forEach(input => {
+        input.addEventListener('input', calcularSumaExperiencia);
+    });
+
+
+/// VI. Habilidades y competencias funcionales
+
+
+function calcularSumaHabilidades() {
+    const ids = [
+        'PORCENTAJE_INNOVACION',
+        'PORCENTAJE_PASION',
+        'PORCENTAJE_SERVICIO_CLIENTE',
+        'PORCENTAJE_COMUNICACION_EFICAZ',
+        'PORCENTAJE_TRABAJO_EQUIPO',
+        'PORCENTAJE_INTEGRIDAD',
+        'PORCENTAJE_RESPONSABILIDAD_SOCIAL',
+        'PORCENTAJE_ADAPTABILIDAD',
+        'PORCENTAJE_LIDERAZGO',
+        'PORCENTAJE_TOMA_DECISIONES'
+    ];
+
+    let suma = 0;
+
+    ids.forEach(id => {
+        const input = document.getElementById(id);
+        if (input && input.value) {
+            const valor = parseFloat(input.value) || 0;
+            suma += valor;
+        }
+    });
+
+    const sumaInput = document.getElementById('SUMA_HABILIDADES');
+    if (sumaInput) {
+        sumaInput.value = Number.isInteger(suma) ? suma : suma.toString();
+    }
+
+    if (suma > 15) {
+        alertToast("La suma de los porcentajes de habilidades no puede exceder el 15%.", "error");
+    } else if (suma === 15) {
+        alertToast("La suma de los porcentajes de habilidades coincide correctamente.", "success");
+    }
+}
+
+document.querySelectorAll('#PORCENTAJE_INNOVACION, #PORCENTAJE_PASION, #PORCENTAJE_SERVICIO_CLIENTE, #PORCENTAJE_COMUNICACION_EFICAZ, #PORCENTAJE_TRABAJO_EQUIPO, #PORCENTAJE_INTEGRIDAD, #PORCENTAJE_RESPONSABILIDAD_SOCIAL, #PORCENTAJE_ADAPTABILIDAD, #PORCENTAJE_LIDERAZGO, #PORCENTAJE_TOMA_DECISIONES')
+    .forEach(input => {
+        input.addEventListener('input', calcularSumaHabilidades);
+    });
