@@ -662,11 +662,18 @@
                         <!-- I. Características generales -->
                         <div class="row mb-3">
                             <div class="col-12 text-center">
-                                <h4>I. Características generales</h4>
+                                <div style="display: inline-flex; align-items: center; gap: 10px;">
+                                    <h4 style="margin: 0;">I. Características generales</h4>
+                                    <input type="text" value="5" style="width: 40px; height: 40px; text-align: center;" readonly>
+                                    <span style="font-size: 18px;">%</span>
+                                    <input type="text" style="width: 40px; height: 40px; text-align: center;" id="SUMA_CARACTERISTICAS" name="SUMA_CARACTERISTICAS" readonly>
+                                    <span style="font-size: 18px;">%</span>
+                                </div>
                             </div>
                         </div>
+
                         <div class="row mb-3">
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="form-group">
                                     <label>Edad (mínima / máxima) *</label>
                                     <select class="form-control" id="EDAD_PPT" name="EDAD_PPT" required>
@@ -679,20 +686,28 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-2">
+                           
+                            <div class="col-3">
                                 <br>
-                                <div class="radio-container">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="EDAD_CUMPLE_PPT" id="EDAD_CUMPLE_SI" value="si">
-                                        <label class="form-check-label" for="EDAD_CUMPLE_SI">Si</label>
+                                <div class="d-flex align-items-center">
+                                    <div class="radio-container" style="background-color: #e6f2d9; padding: 5px 10px; border-radius: 5px; display: flex; align-items: center; gap: 10px;">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="EDAD_CUMPLE_PPT" id="EDAD_CUMPLE_SI" value="si" >
+                                            <label class="form-check-label" for="EDAD_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="EDAD_CUMPLE_PPT" id="EDAD_CUMPLE_NO" value="no" >
+                                            <label class="form-check-label" for="EDAD_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="EDAD_CUMPLE_PPT" id="EDAD_CUMPLE_NO" value="no">
-                                        <label class="form-check-label" for="EDAD_CUMPLE_NO">No</label>
+                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
+                                        <input type="text" class="form-control" id="PORCENTAJE_EDAD" name="PORCENTAJE_EDAD" style="width: 50px; text-align: center;">
+                                        <span>%</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4">
+
+                            <div class="col-3">
                                 <div class="form-group">
                                     <label>Género *</label>
                                     <select class="form-control" id="GENERO_PPT" name="GENERO_PPT" required>
@@ -703,22 +718,29 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-2">
+                            <div class="col-3">
                                 <br>
-                                <div class="radio-container">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="GENERO_CUMPLE_PPT" id="GENERO_CUMPLE_SI" value="si">
-                                        <label class="form-check-label" for="GENERO_CUMPLE_SI">Si</label>
+                                <div class="d-flex align-items-center">
+                                    <br>
+                                    <div class="radio-container" style="background-color: #e6f2d9; padding: 5px 10px; border-radius: 5px; display: flex; align-items: center; gap: 10px;">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="GENERO_CUMPLE_PPT" id="GENERO_CUMPLE_SI" value="si" >
+                                            <label class="form-check-label" for="GENERO_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="GENERO_CUMPLE_PPT" id="GENERO_CUMPLE_NO" value="no" >
+                                            <label class="form-check-label" for="GENERO_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="GENERO_CUMPLE_PPT" id="GENERO_CUMPLE_NO" value="no">
-                                        <label class="form-check-label" for="GENERO_CUMPLE_NO">No</label>
+                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
+                                        <input type="text" class="form-control" id="PORCENTAJE_GENERO" name="PORCENTAJE_GENERO" style="width: 50px; text-align: center;">
+                                        <span>%</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="form-group">
                                     <label>Estado civil *</label>
                                     <select class="form-control" id="ESTADO_CIVIL_PPT" name="ESTADO_CIVIL_PPT" required>
@@ -730,20 +752,27 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-2">
+
+                            <div class="col-3">
                                 <br>
-                                <div class="radio-container">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="ESTADO_CIVIL_CUMPLE_PPT" id="ESTADO_CUMPLE_SI" value="si">
-                                        <label class="form-check-label" for="ESTADO_CUMPLE_SI">Si</label>
+                                <div class="d-flex align-items-center">
+                                    <div class="radio-container" style="background-color: #e6f2d9; padding: 5px 10px; border-radius: 5px; display: flex; align-items: center; gap: 10px;">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="ESTADO_CIVIL_CUMPLE_PPT" id="ESTADO_CUMPLE_SI" value="si" >
+                                            <label class="form-check-label" for="ESTADO_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="ESTADO_CIVIL_CUMPLE_PPT" id="ESTADO_CUMPLE_NO" value="no" >
+                                            <label class="form-check-label" for="ESTADO_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="ESTADO_CIVIL_CUMPLE_PPT" id="ESTADO_CUMPLE_NO" value="no">
-                                        <label class="form-check-label" for="ESTADO_CUMPLE_NO">No</label>
+                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
+                                        <input type="text" class="form-control" id="PORCENTAJE_ESTADOCIVIL" name="PORCENTAJE_ESTADOCIVIL" style="width: 50px; text-align: center;">
+                                        <span>%</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="form-group">
                                     <label>Nacionalidad *</label>
                                     <select class="form-control" id="NACIONALIDAD_PPT" name="NACIONALIDAD_PPT" required>
@@ -754,22 +783,28 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-2">
+                            <div class="col-3">
                                 <br>
-                                <div class="radio-container">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="NACIONALIDAD_CUMPLE_PPT" id="NACIONALIDAD_CUMPLE_SI" value="si">
-                                        <label class="form-check-label" for="NACIONALIDAD_CUMPLE_SI">Si</label>
+                                <div class="d-flex align-items-center">
+                                    <div class="radio-container" style="background-color: #e6f2d9; padding: 5px 10px; border-radius: 5px; display: flex; align-items: center; gap: 10px;">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="NACIONALIDAD_CUMPLE_PPT" id="NACIONALIDAD_CUMPLE_SI" value="si" >
+                                            <label class="form-check-label" for="NACIONALIDAD_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="NACIONALIDAD_CUMPLE_PPT" id="NACIONALIDAD_CUMPLE_NO" value="no" >
+                                            <label class="form-check-label" for="NACIONALIDAD_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="NACIONALIDAD_CUMPLE_PPT" id="NACIONALIDAD_CUMPLE_NO" value="no">
-                                        <label class="form-check-label" for="NACIONALIDAD_CUMPLE_NO">No</label>
+                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
+                                        <input type="text" class="form-control" id="PORCENTAJE_NACIONALIDAD" name="PORCENTAJE_NACIONALIDAD" style="width: 50px; text-align: center;">
+                                        <span>%</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-4">
+                            <div class="col-3">
                                 <div class="form-group">
                                     <label>Persona con discapacidad *</label>
                                     <select class="form-control" id="DISCAPACIDAD_PPT" name="DISCAPACIDAD_PPT" required>
@@ -777,21 +812,27 @@
                                         <option value="Indistinto">Indistinto</option>
                                         <option value="Ninguna">Ninguna</option>
                                         <option value="Motriz">Motriz</option>
-                                        <option value="Visual">Visual </option>
+                                        <option value="Visual">Visual</option>
                                         <option value="Auditiva">Auditiva</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-2">
+                            <div class="col-3">
                                 <br>
-                                <div class="radio-container">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="DISCAPACIDAD_CUMPLE_PPT" id="DISCAPACIDAD_CUMPLE_SI" value="si">
-                                        <label class="form-check-label" for="DISCAPACIDAD_CUMPLE_SI">Si</label>
+                                <div class="d-flex align-items-center">
+                                    <div class="radio-container" style="background-color: #e6f2d9; padding: 5px 10px; border-radius: 5px; display: flex; align-items: center; gap: 10px;">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="DISCAPACIDAD_CUMPLE_PPT" id="DISCAPACIDAD_CUMPLE_SI" value="si" >
+                                            <label class="form-check-label" for="DISCAPACIDAD_CUMPLE_SI">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input desabilitado" type="radio" name="DISCAPACIDAD_CUMPLE_PPT" id="DISCAPACIDAD_CUMPLE_NO" value="no" >
+                                            <label class="form-check-label" for="DISCAPACIDAD_CUMPLE_NO">No</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input desabilitado" type="radio" name="DISCAPACIDAD_CUMPLE_PPT" id="DISCAPACIDAD_CUMPLE_NO" value="no">
-                                        <label class="form-check-label" for="DISCAPACIDAD_CUMPLE_NO">No</label>
+                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
+                                        <input type="text" class="form-control" id="PORCENTAJE_DISCAPACIDAD" name="PORCENTAJE_DISCAPACIDAD" style="width: 50px; text-align: center;">
+                                        <span>%</span>
                                     </div>
                                 </div>
                             </div>
@@ -803,19 +844,25 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
-                            <div class="col-12 text-center">
-                                <hr>
-                            </div>
+                     
 
 
 
-                            <!-- II. Formación académica -->
-                            <div class="row mb-3">
-                                <div class="col-12 text-center">
-                                    <h4>II. Formación académica</h4>
-                                </div>
-                            </div>
+                          <!-- II. Formación académica -->
+                          <hr>
+
+                          <div class="row mb-3">
+                              <div class="col-12 text-center">
+                                  <div style="display: inline-flex; align-items: center; gap: 10px;">
+                                      <h4>II. Formación académica</h4>
+                                      <input type="text" value="20" style="width: 40px; height: 40px; text-align: center;" readonly>
+                                      <span style="font-size: 18px;">%</span>
+                                      <input type="text" style="width: 40px; height: 40px; text-align: center;" id="SUMA_FORMACION" name="SUMA_FORMACION" readonly>
+                                      <span style="font-size: 18px;">%</span>
+                                  </div>
+                              </div>
+                          </div>
+  
                             <div class="row mb-3">
                                 {{-- Area de escuela --}}
                                 <div class="col-4">
@@ -826,7 +873,9 @@
                                                 <div class="col-8">
                                                     <div class="form-group">
                                                         <label>Secundaria</label>
-                                                        <select class="form-control" id="SECUNDARIA_PPT" name="SECUNDARIA_PPT">
+                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_SECUNDARIA" name="PORCENTAJE_SECUNDARIA">
+                                                            <span style="font-size: 18px;">%</span>
+                                                        <select class="form-control mt-1" id="SECUNDARIA_PPT" name="SECUNDARIA_PPT">
                                                             <option value="0" selected disabled>Seleccione una opción</option>
                                                             <option value="Incompleta">Incompleta</option>
                                                             <option value="Completa">Completa</option>
@@ -834,7 +883,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-4">
-                                                    <br>
+                                                    <br><br>
                                                     <div class="radio-container">
                                                         <div class="form-check form-check-inline">
                                                             <input class="form-check-input desabilitado" type="radio" name="SECUNDARIA_CUMPLE_PPT" id="SECUNDARIA_CUMPLE_SI" value="si">
@@ -852,9 +901,11 @@
                                         <div class="col-12">
                                             <div class="row">
                                                 <div class="col-8">
-                                                    <div class="form-group">
+                                                    <div class="form-group mt-1">
                                                         <label>Medio superior</label>
-                                                        <select class="form-control" id="TECNICA_PPT" name="TECNICA_PPT">
+                                                        <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_MEDIASUPERIOR" name="PORCENTAJE_MEDIASUPERIOR">
+                                                        <span style="font-size: 18px;">%</span>
+                                                        <select class="form-control mt-1" id="TECNICA_PPT" name="TECNICA_PPT">
                                                             <option value="0" selected disabled>Seleccione una opción</option>
                                                             <option value="Incompleta">Incompleta</option>
                                                             <option value="Completa">Completa</option>
@@ -880,9 +931,11 @@
                                         <div class="col-12">
                                             <div class="row">
                                                 <div class="col-8">
-                                                    <div class="form-group">
+                                                    <div class="form-group mt-1">
                                                         <label>Técnico superior</label>
-                                                        <select class="form-control" id="TECNICO_PPT" name="TECNICO_PPT">
+                                                        <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_TECNICOSUPERIOR" name="PORCENTAJE_TECNICOSUPERIOR">
+                                                        <span style="font-size: 18px;">%</span>
+                                                        <select class="form-control mt-1" id="TECNICO_PPT" name="TECNICO_PPT">
                                                             <option value="0" selected disabled>Seleccione una opción</option>
                                                             <option value="Incompleta">Incompleta</option>
                                                             <option value="Completa">Completa</option>
@@ -908,9 +961,11 @@
                                         <div class="col-12">
                                             <div class="row">
                                                 <div class="col-8">
-                                                    <div class="form-group">
+                                                    <div class="form-group mt-1">
                                                         <label>Universitario (Lic.)</label>
-                                                        <select class="form-control" id="UNIVERSITARIO_PPT" name="UNIVERSITARIO_PPT">
+                                                    <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_UNIVERSITARIO" name="PORCENTAJE_UNIVERSITARIO">
+                                                    <span style="font-size: 18px;">%</span>
+                                                        <select class="form-control mt-1" id="UNIVERSITARIO_PPT" name="UNIVERSITARIO_PPT">
                                                             <option selected disabled>Seleccione una opción</option>
                                                             <option value="Incompleta">Incompleta</option>
                                                             <option value="Completa">Completa</option>
@@ -941,9 +996,11 @@
                                         <div class="col-12 mb-5">
                                             <div class="row">
                                                 <div class="col-8">
-                                                    <div class="form-group">
+                                                    <div class="form-group mt-1">
                                                         <label>Situación académica *</label>
-                                                        <select class="form-control" id="SITUACION_PPT" name="SITUACION_PPT" required>
+                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_SITUACIONACADEMICA" name="PORCENTAJE_SITUACIONACADEMICA">
+                                                            <span style="font-size: 18px;">%</span>
+                                                        <select class="form-control mt-1" id="SITUACION_PPT" name="SITUACION_PPT" required>
                                                             <option value="0" selected disabled>Seleccione una opción</option>
                                                             <option value="Egresado">Egresado</option>
                                                             <option value="Bachiller">Bachiller</option>
@@ -970,9 +1027,11 @@
                                         <div class="col-12 mt-5">
                                             <div class="row">
                                                 <div class="col-8">
-                                                    <div class="form-group">
+                                                    <div class="form-group mt-1">
                                                         <label>Cédula profesional *</label>
-                                                        <select class="form-control" id="CEDULA_PPT" name="CEDULA_PPT" required>
+                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CEDULA" name="PORCENTAJE_CEDULA">
+                                                            <span style="font-size: 18px;">%</span>
+                                                        <select class="form-control mt-1" id="CEDULA_PPT" name="CEDULA_PPT" required>
                                                             <option selected disabled>Seleccione una opción</option>
                                                             <option value="Aplica">Aplica</option>
                                                             <option value="No aplica">No aplica</option>
@@ -1002,9 +1061,11 @@
                                         <div class="col-12">
                                             <div class="row">
                                                 <div class="col-8 ">
-                                                    <div class="form-group">
-                                                        <label>Áreas de conocimientos</label>
-                                                        <select class="form-control" id="AREA1_PPT" name="AREA1_PPT">
+                                                    <div class="form-group mt-1">
+                                                        <label>Área de conocimiento 1</label>
+                                                        <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_AREA1" name="PORCENTAJE_AREA1">
+                                                        <span style="font-size: 18px;">%</span>
+                                                        <select class="form-control mt-1" id="AREA1_PPT" name="AREA1_PPT">
                                                             <option selected disabled>Seleccione una opción</option>
                                                             <option value="N/A">N/A</option>
                                                             <option value="Agronomía">Agronomía</option>
@@ -1037,9 +1098,11 @@
                                         <div class="col-12">
                                             <div class="row">
                                                 <div class="col-8">
-                                                    <div class="form-group">
-                                                        <label></label>
-                                                        <select class="form-control" id="AREA2_PPT" name="AREA2_PPT">
+                                                    <div class="form-group mt-1">
+                                                        <label>Área de conocimiento 2</label>
+                                                        <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_AREA2" name="PORCENTAJE_AREA2">
+                                                        <span style="font-size: 18px;">%</span>
+                                                        <select class="form-control mt-1" id="AREA2_PPT" name="AREA2_PPT">
                                                             <option selected disabled>Seleccione una opción</option>
                                                             <option value="N/A">N/A</option>
                                                             <option value="Agronomía">Agronomía</option>
@@ -1054,7 +1117,7 @@
                                                 </div>
                                                 <div class="col-4">
                                                     <br>
-                                                    <div class="radio-container">
+                                                    <div class="radio-container mt-1">
                                                         <div class="form-check form-check-inline">
                                                             <input class="form-check-input desabilitado desabilitado" type="radio" name="AREA2_CUMPLE_PPT" id="AREA2_CUMPLE_SI" value="si">
                                                             <label class="form-check-label" for="AREA2_CUMPLE_SI">Si</label>
@@ -1071,9 +1134,11 @@
                                         <div class="col-12">
                                             <div class="row">
                                                 <div class="col-8">
-                                                    <div class="form-group">
-                                                        <label></label>
-                                                        <select class="form-control" id="AREA3_PPT" name="AREA3_PPT">
+                                                    <div class="form-group mt-1">
+                                                        <label>Área de conocimiento 3</label>
+                                                        <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_AREA3" name="PORCENTAJE_AREA3">
+                                                        <span style="font-size: 18px;">%</span>
+                                                        <select class="form-control mt-1" id="AREA3_PPT" name="AREA3_PPT">
                                                             <option selected disabled>Seleccione una opción</option>
                                                             <option value="N/A">N/A</option>
                                                             <option value="Agronomía">Agronomía</option>
@@ -1105,9 +1170,11 @@
                                         <div class="col-12">
                                             <div class="row">
                                                 <div class="col-8">
-                                                    <div class="form-group">
-                                                        <label></label>
-                                                        <select class="form-control" id="AREA4_PPT" name="AREA4_PPT">
+                                                    <div class="form-group mt-1">
+                                                        <label>Área de conocimiento 4</label>
+                                                        <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_AREA4" name="PORCENTAJE_AREA4">
+                                                        <span style="font-size: 18px;">%</span>
+                                                        <select class="form-control mt-1" id="AREA4_PPT" name="AREA4_PPT">
                                                             <option selected disabled>Seleccione una opción</option>
                                                             <option value="N/A">N/A</option>
                                                             <option value="Agronomía">Agronomía</option>
@@ -1162,6 +1229,8 @@
                             <div class="row mb-1">
                                 <div class="col-1 mt-1">
                                     <label>Especialidad</label>
+                                    <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_ESPECIALIDAD" name="PORCENTAJE_ESPECIALIDAD">
+                                    <span style="font-size: 18px;">%</span>
                                 </div>
                                 <div class="col-1 mt-1">
                                     <div class="form-group text-center">
@@ -1197,6 +1266,9 @@
                             <div class="row mb-3">
                                 <div class="col-1 mt-2">
                                     <label>Maestría</label>
+                                        <br>
+                                        <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_MAESTRIA" name="PORCENTAJE_MAESTRIA">
+                                        <span style="font-size: 18px;">%</span>
                                 </div>
                                 <div class="col-1 mt-2">
                                     <div class="form-group text-center">
@@ -1227,6 +1299,9 @@
                             <div class="row mb-1">
                                 <div class="col-1 mt-4">
                                     <label>Doctorado</label>
+                                    <br>
+                                    <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_DOCTORADO" name="PORCENTAJE_DOCTORADO">
+                                    <span style="font-size: 18px;">%</span>
                                 </div>
                                 <div class="col-1 mt-4">
                                     <div class="form-group text-center">
@@ -1261,15 +1336,19 @@
                                 </div>
                             </div>
 
-                            <!-- III. Conocimientos adicionales -->
-                            <br>
-                            <br<br>
-                                <hr>
-                                <div class="row mb-3">
-                                    <div class="col-12 text-center">
-                                        <h4>III. Conocimientos adicionales</h4>
+             <!-- III. Conocimientos adicionales -->
+                                <br>
+                                <br<br>
+                                    <hr>
+                                    <div class="row mb-3">
+                                        <div class="col-12 text-center">
+                                            <h4>III. Conocimientos adicionales</h4>
+                                            <input type="text" value="10" style="width: 40px; height: 40px; text-align: center;" readonly>
+                                            <span style="font-size: 18px;">%</span>
+                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="SUMA_CONOCIMIENTO" name="SUMA_CONOCIMIENTO" readonly>
+                                            <span style="font-size: 18px;">%</span>
+                                        </div>
                                     </div>
-                                </div>
 
                                 <div class="row mb-3">
                                     <div class="col-6">
@@ -1293,7 +1372,9 @@
                                                 <tr style="height: 5px;"></tr>
 
                                                 <tr>
-                                                    <td>Word</td>
+                                                    <td>Word <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_WORD" name="PORCENTAJE_WORD">
+                                                        <span style="font-size: 18px;">%</span>
+                                                    </td>
                                                     <td class="text-center">
                                                         <label for="WORD_APLICA_PPT_si">Si</label>
                                                         <input class="form-check-input" type="radio" name="WORD_APLICA_PPT" id="WORD_APLICA_PPT_si" value="si">
@@ -1326,7 +1407,9 @@
                                                 <tr style="height: 5px;"></tr>
 
                                                 <tr>
-                                                    <td>Excel</td>
+                                                    <td>Excel <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_EXCEL" name="PORCENTAJE_EXCEL">
+                                                        <span style="font-size: 18px;">%</span>
+                                                    </td>
                                                     <td class="text-center">
                                                         <label for="EXCEL_APLICA_PPT_si">Si</label>
                                                         <input class="form-check-input" type="radio" name="EXCEL_APLICA_PPT" id="EXCEL_APLICA_PPT_si" value="si">
@@ -1359,7 +1442,9 @@
                                                 <tr style="height: 5px;"></tr>
 
                                                 <tr>
-                                                    <td>Power Point</td>
+                                                    <td>Power Point <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_POWERPOINT" name="PORCENTAJE_POWERPOINT">
+                                                        <span style="font-size: 18px;">%</span>
+                                                    </td>
                                                     <td class="text-center">
                                                         <label for="POWER_APLICA_PPT_si">Si</label>
                                                         <input class="form-check-input" type="radio" name="POWER_APLICA_PPT" id="POWER_APLICA_PPT_si" value="si">
@@ -1407,6 +1492,8 @@
                                                     <th class="text-center">Avanzado</th>
                                                     <th class="text-center">Si</th>
                                                     <th class="text-center">No</th>
+                                                    <th class="text-center">%</th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1444,6 +1531,9 @@
                                                             <input class="form-check-input desabilitado" type="radio" name="IDIOMA1_CUMPLE_PPT" id="IDIOMA1_CUMPLE_NO" value="no">
                                                         </div>
                                                     </td>
+                                                    <td>
+                                                        <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_IDIOMA1" name="PORCENTAJE_IDIOMA1">
+                                                    </td>
                                                 </tr>
                                                 <tr id="IDIOMA2" style="display: table-row;">
                                                     <td>
@@ -1478,6 +1568,9 @@
                                                             <input class="form-check-input desabilitado" type="radio" name="IDIOMA2_CUMPLE_PPT" id="IDIOMA2_CUMPLE_NO" value="no">
                                                         </div>
                                                     </td>
+                                                    <td>
+                                                        <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_IDIOMA2" name="PORCENTAJE_IDIOMA2">
+                                                    </td>
                                                 </tr>
                                                 <tr id="IDIOMA3" style="display: table-row;">
                                                     <td>
@@ -1511,6 +1604,9 @@
                                                             <input class="form-check-input desabilitado" type="radio" name="IDIOMA3_CUMPLE_PPT" id="IDIOMA3_CUMPLE_NO" value="no">
                                                         </div>
                                                     </td>
+                                                    <td>
+                                                        <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_IDIOMA3" name="PORCENTAJE_IDIOMA3">
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -1518,6 +1614,22 @@
                                       <button id="addIdiomaBtn2" class="btn btn-primary" style="display:none;" title="Agregar idioma"><i class="bi bi-plus-circle"></i></button>
                                       <button id="removeIdiomaBtn2" class="btn btn-danger" style="display:none;" title="Eliminar idioma"><i class="bi bi-trash"></i></button>
                                          <button id="removeIdiomaBtn3" class="btn btn-danger" style="display:none;"  title="Eliminar idioma"><i class="bi bi-trash"></i></button> --}}
+                                    </div>
+                                </div>
+
+                                 <!-- IIII. Cursos -->
+                                <hr>
+                                <div class="row mb-3">
+                                    <div class="col-12 text-center">
+                                        <div style="display: inline-flex; align-items: center; gap: 10px;">
+                                            <h4>IV. Cursos</h4>
+                                            <input type="text" value="25" style="width: 40px; height: 40px; text-align: center;" readonly>
+                                            <span style="font-size: 18px;">%</span>
+                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="SUMA_CURSOS" name="SUMA_CURSOS" readonly>
+                                            <span style="font-size: 18px;">%</span>
+                                        </div>
+    
+    
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -1540,6 +1652,8 @@
                                                                         <th class="text-center">*D</th>
                                                                         <th class="text-center">Si</th>
                                                                         <th class="text-center">No</th>
+                                                                        <th class="text-center">%</th>
+                                                                  
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -1563,6 +1677,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[1]" id="CURSO1_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO1" name="PORCENTAJE_CURSO[1]">
+                                                                        </td>
                                                                     </tr>
 
                                                                     <tr>
@@ -1585,6 +1702,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[2]" id="CURSO2_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO2" name="PORCENTAJE_CURSO[2]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -1605,6 +1725,9 @@
                                                                             <div class="radio-container">
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[3]" id="CURSO3_CUMPLE_NO" value="no">
                                                                             </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO3" name="PORCENTAJE_CURSO[3]">
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -1627,6 +1750,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[4]" id="CURSO4_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO4" name="PORCENTAJE_CURSO[4]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -1647,6 +1773,9 @@
                                                                             <div class="radio-container">
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[5]" id="CURSO5_CUMPLE_NO" value="no">
                                                                             </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO5" name="PORCENTAJE_CURSO[5]">
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -1669,6 +1798,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[6]" id="CURSO6_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO6" name="PORCENTAJE_CURSO[6]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -1689,6 +1821,9 @@
                                                                             <div class="radio-container">
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[7]" id="CURSO7_CUMPLE_NO" value="no">
                                                                             </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO7" name="PORCENTAJE_CURSO[7]">
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -1711,6 +1846,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[8]" id="CURSO8_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO8" name="PORCENTAJE_CURSO[8]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -1732,6 +1870,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[9]" id="CURSO9_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO9" name="PORCENTAJE_CURSO[9]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -1752,6 +1893,9 @@
                                                                             <div class="radio-container">
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[10]" id="CURSO10_CUMPLE_NO" value="no">
                                                                             </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO10" name="PORCENTAJE_CURSO[10]">
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
@@ -1784,6 +1928,8 @@
                                                                         <th class="text-center">*D</th>
                                                                         <th class="text-center">Si</th>
                                                                         <th class="text-center">No</th>
+                                                                    <th class="text-center">%</th>
+
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -1807,6 +1953,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[11]" id="CURSO11_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO11" name="PORCENTAJE_CURSO[11]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -1827,6 +1976,9 @@
                                                                             <div class="radio-container">
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[12]" id="CURSO12_CUMPLE_NO" value="no">
                                                                             </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO12" name="PORCENTAJE_CURSO[12]">
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -1849,6 +2001,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[13]" id="CURSO13_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO13" name="PORCENTAJE_CURSO[13]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -1869,6 +2024,9 @@
                                                                             <div class="radio-container">
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[14]" id="CURSO14_CUMPLE_NO" value="no">
                                                                             </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO14" name="PORCENTAJE_CURSO[14]">
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -1891,6 +2049,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[15]" id="CURSO15_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO15" name="PORCENTAJE_CURSO[15]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -1911,6 +2072,9 @@
                                                                             <div class="radio-container">
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[16]" id="CURSO16_CUMPLE_NO" value="no">
                                                                             </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO16" name="PORCENTAJE_CURSO[16]">
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -1933,6 +2097,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[17]" id="CURSO17_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO17" name="PORCENTAJE_CURSO[17]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -1953,6 +2120,9 @@
                                                                             <div class="radio-container">
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[18]" id="CURSO18_CUMPLE_NO" value="no">
                                                                             </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO18" name="PORCENTAJE_CURSO[18]">
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -1975,6 +2145,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[19]" id="CURSO19_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO19" name="PORCENTAJE_CURSO[19]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -1995,6 +2168,9 @@
                                                                             <div class="radio-container">
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[20]" id="CURSO20_CUMPLE_NO" value="no">
                                                                             </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO20" name="PORCENTAJE_CURSO[20]">
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
@@ -2030,6 +2206,7 @@
                                                                         <th class="text-center">*D</th>
                                                                         <th class="text-center">Si</th>
                                                                         <th class="text-center">No</th>
+                                                                        <th class="text-center">%</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -2053,6 +2230,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[21]" id="CURSO21_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO21" name="PORCENTAJE_CURSO[21]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -2073,6 +2253,9 @@
                                                                             <div class="radio-container">
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[22]" id="CURSO22_CUMPLE_NO" value="no">
                                                                             </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO22" name="PORCENTAJE_CURSO[22]">
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -2095,6 +2278,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[23]" id="CURSO23_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO23" name="PORCENTAJE_CURSO[23]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -2115,6 +2301,9 @@
                                                                             <div class="radio-container">
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[24]" id="CURSO24_CUMPLE_NO" value="no">
                                                                             </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO24" name="PORCENTAJE_CURSO[24]">
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -2137,6 +2326,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[25]" id="CURSO25_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO25" name="PORCENTAJE_CURSO[25]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -2157,6 +2349,9 @@
                                                                             <div class="radio-container">
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[26]" id="CURSO26_CUMPLE_NO" value="no">
                                                                             </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO26" name="PORCENTAJE_CURSO[26]">
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -2179,6 +2374,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[27]" id="CURSO27_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO27" name="PORCENTAJE_CURSO[27]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -2199,6 +2397,9 @@
                                                                             <div class="radio-container">
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[28]" id="CURSO28_CUMPLE_NO" value="no">
                                                                             </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO28" name="PORCENTAJE_CURSO[28]">
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -2221,6 +2422,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[29]" id="CURSO29_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO29" name="PORCENTAJE_CURSO[29]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -2241,6 +2445,9 @@
                                                                             <div class="radio-container">
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[30]" id="CURSO30_CUMPLE_NO" value="no">
                                                                             </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO30" name="PORCENTAJE_CURSO[30]">
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
@@ -2273,6 +2480,7 @@
                                                                         <th class="text-center">*D</th>
                                                                         <th class="text-center">Si</th>
                                                                         <th class="text-center">No</th>
+                                                                        <th class="text-center">%</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -2296,6 +2504,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[31]" id="CURSO31_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO31" name="PORCENTAJE_CURSO[31]">
+                                                                        </td>
                                                                     </tr>
 
                                                                     <tr>
@@ -2318,6 +2529,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[32]" id="CURSO32_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO32" name="PORCENTAJE_CURSO[32]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -2338,6 +2552,9 @@
                                                                             <div class="radio-container">
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[33]" id="CURSO33_CUMPLE_NO" value="no">
                                                                             </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO33" name="PORCENTAJE_CURSO[33]">
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -2360,6 +2577,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[34]" id="CURSO34_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO34" name="PORCENTAJE_CURSO[34]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -2380,6 +2600,9 @@
                                                                             <div class="radio-container">
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[35]" id="CURSO35_CUMPLE_NO" value="no">
                                                                             </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO35" name="PORCENTAJE_CURSO[35]">
                                                                         </td>
                                                                     </tr>
 
@@ -2403,6 +2626,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[36]" id="CURSO36_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO36" name="PORCENTAJE_CURSO[36]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -2423,6 +2649,9 @@
                                                                             <div class="radio-container">
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[37]" id="CURSO37_CUMPLE_NO" value="no">
                                                                             </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO37" name="PORCENTAJE_CURSO[37]">
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -2445,6 +2674,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[38]" id="CURSO38_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO38" name="PORCENTAJE_CURSO[38]">
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>
@@ -2465,6 +2697,9 @@
                                                                             <div class="radio-container">
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[39]" id="CURSO39_CUMPLE_NO" value="no">
                                                                             </div>
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO39" name="PORCENTAJE_CURSO[39]">
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
@@ -2487,6 +2722,9 @@
                                                                                 <input class="form-check-input desabilitado" type="radio" name="CURSO_CUMPLE_PPT[40]" id="CURSO40_CUMPLE_NO" value="no">
                                                                             </div>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CURSO40" name="PORCENTAJE_CURSO[40]">
+                                                                        </td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -2507,16 +2745,29 @@
                                     </div>
 
 
-                                    <!-- IV. Experiencia -->
+                                    <!-- V. Experiencia -->
+
+
+                                    <hr>
                                     <div class="row mb-3">
                                         <div class="col-12 text-center">
-                                            <h4>IV. Experiencia</h4>
+                                            <div style="display: inline-flex; align-items: center; gap: 10px;">
+                                                <h4>V. Experiencia</h4>
+                                                <input type="text" value="25" style="width: 40px; height: 40px; text-align: center;" readonly>
+                                                <span style="font-size: 18px;">%</span>
+                                                <input type="text" style="width: 40px; height: 40px; text-align: center;" id="SUMA_EXPERIENCIA" name="SUMA_EXPERIENCIA" readonly>
+                                                <span style="font-size: 18px;">%</span>
+                                            </div>
+
+
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <div class="col-5">
                                             <label>Experiencia laboral general requerida</label>
+                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_EXPERIENCIAGENERAL" name="PORCENTAJE_EXPERIENCIAGENERAL">
+                                            <span style="font-size: 18px;">%</span>
                                         </div>
                                         <div class="col-5">
                                             <div class="form-group">
@@ -2544,6 +2795,8 @@
                                     <div class="row mb-3">
                                         <div class="col-5">
                                             <label>Indique la cantidad total de años de experiencia laboral</label>
+                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CANTIDADTOTAL" name="PORCENTAJE_CANTIDADTOTAL">
+                                            <span style="font-size: 18px;">%</span>
                                         </div>
                                         <div class="col-5">
                                             <div class="form-group">
@@ -2566,6 +2819,8 @@
                                     <div class="row mb-3">
                                         <div class="col-5">
                                             <label>Experiencia laboral específica requerida</label>
+                                    <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_EXPERIENCIAESPECIFICA" name="PORCENTAJE_EXPERIENCIAESPECIFICA">
+                                    <span style="font-size: 18px;">%</span>
                                         </div>
                                         <div class="col-5">
                                             <div class="form-group">
@@ -2925,8 +3180,10 @@
 
 
                                     <div class="row mb-3">
-                                        <div class="col-12 ">
-                                            <h6>Indique el tiempo de experiencia específica requerida para el cargo</h6>
+                                        <div class="col-12" style="display: flex; align-items: center; gap: 10px;">
+                                            <h6 style="margin: 0;">Indique el tiempo de experiencia específica requerida para el cargo</h6>
+                                            <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_INDIQUEXPERIENCIA" name="PORCENTAJE_INDIQUEXPERIENCIA">
+                                            <span style="font-size: 18px;">%</span>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -2949,17 +3206,21 @@
                                         </div>
                                     </div>
 
+                                    <hr>
                                     <div class="row mb-3">
                                         <div class="col-12 text-center">
-                                            <hr>
-                                        </div>
-
-                                        <!-- V. Habilidades y competencias funcionales -->
-                                        <div class="row mb-3">
-                                            <div class="col-12 text-center">
-                                                <h4>V. Habilidades y competencias funcionales</h4>
+                                            <div style="display: inline-flex; align-items: center; gap: 10px;">
+                                                <h4>VI. Habilidades y competencias funcionales</h4>
+                                                <input type="text" value="15" style="width: 40px; height: 40px; text-align: center;" readonly>
+                                                <span style="font-size: 18px;">%</span>
+                                                <input type="text" style="width: 40px; height: 40px; text-align: center;" id="SUMA_HABILIDADES" name="SUMA_HABILIDADES" readonly>
+                                                <span style="font-size: 18px;">%</span>
                                             </div>
+        
+        
                                         </div>
+                                    </div>
+
                                         <div class="row mb-3">
                                             <div class="col-12">
                                                 <table class="table table-bordered">
@@ -2971,6 +3232,8 @@
                                                             <th class="text-center">No requerido</th>
                                                             <th class="text-center">Si</th>
                                                             <th class="text-center">No</th>
+                                                            <th class="text-center">%</th>
+
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -2995,6 +3258,9 @@
                                                                     <input class="form-check-input desabilitado" type="radio" name="INNOVACION_CUMPLE_PPT" id="INNOVACION_CUMPLE_NO" value="no">
                                                                 </div>
                                                             </td>
+                                                            <td class="text-center">
+                                                                <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_INNOVACION" name="PORCENTAJE_INNOVACION">
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Pasión</td>
@@ -3017,6 +3283,9 @@
                                                                 <div class="radio-container">
                                                                     <input class="form-check-input desabilitado" type="radio" name="PASION_CUMPLE_PPT" id="PASION_CUMPLE_NO" value="no">
                                                                 </div>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_PASION" name="PORCENTAJE_PASION">
                                                             </td>
                                                         </tr>
 
@@ -3042,6 +3311,9 @@
                                                                     <input class="form-check-input desabilitado" type="radio" name="SERVICIO_CLIENTE_CUMPLE_PPT" id="SERVICIO_CLIENTE_CUMPLE_NO" value="no">
                                                                 </div>
                                                             </td>
+                                                            <td class="text-center">
+                                                                <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_SERVICIO_CLIENTE" name="PORCENTAJE_SERVICIO_CLIENTE">
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Comunicación eficaz</td>
@@ -3063,6 +3335,9 @@
                                                                 <div class="radio-container">
                                                                     <input class="form-check-input desabilitado" type="radio" name="COMUNICACION_EFICAZ_CUMPLE_PPT" id="COMUNICACION_EFICAZ_CUMPLE_NO" value="no">
                                                                 </div>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_COMUNICACION_EFICAZ" name="PORCENTAJE_COMUNICACION_EFICAZ">
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -3086,6 +3361,9 @@
                                                                     <input class="form-check-input desabilitado" type="radio" name="TRABAJO_EQUIPO_CUMPLE_PPT" id="TRABAJO_EQUIPO_CUMPLE_NO" value="no">
                                                                 </div>
                                                             </td>
+                                                            <td class="text-center">
+                                                                <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_TRABAJO_EQUIPO" name="PORCENTAJE_TRABAJO_EQUIPO">
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Integridad</td>
@@ -3107,6 +3385,9 @@
                                                                 <div class="radio-container">
                                                                     <input class="form-check-input desabilitado" type="radio" name="INTEGRIDAD_CUMPLE_PPT" id="INTEGRIDAD_CUMPLE_NO" value="no">
                                                                 </div>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_INTEGRIDAD" name="PORCENTAJE_INTEGRIDAD">
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -3130,6 +3411,9 @@
                                                                     <input class="form-check-input desabilitado" type="radio" name="RESPONSABILIDAD_SOCIAL_CUMPLE_PPT" id="RESPONSABILIDAD_SOCIAL_CUMPLE_NO" value="no">
                                                                 </div>
                                                             </td>
+                                                            <td class="text-center">
+                                                                <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_RESPONSABILIDAD_SOCIAL" name="PORCENTAJE_RESPONSABILIDAD_SOCIAL">
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Adaptabilidad a los cambios del entorno</td>
@@ -3151,6 +3435,9 @@
                                                                 <div class="radio-container">
                                                                     <input class="form-check-input desabilitado" type="radio" name="ADAPTABILIDAD_CUMPLE_PPT" id="ADAPTABILIDAD_CUMPLE_NO" value="no">
                                                                 </div>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_ADAPTABILIDAD" name="PORCENTAJE_ADAPTABILIDAD">
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -3174,6 +3461,9 @@
                                                                     <input class="form-check-input desabilitado" type="radio" name="LIDERAZGO_CUMPLE_PPT" id="LIDERAZGO_CUMPLE_NO" value="no">
                                                                 </div>
                                                             </td>
+                                                            <td class="text-center">
+                                                                <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_LIDERAZGO" name="PORCENTAJE_LIDERAZGO">
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Toma de decisiones</td>
@@ -3196,6 +3486,10 @@
                                                                     <input class="form-check-input desabilitado" type="radio" name="TOMA_DECISIONES_CUMPLE_PPT" id="TOMA_DECISIONES_CUMPLE_NO" value="no">
                                                                 </div>
                                                             </td>
+
+                                                            <td class="text-center">
+                                                                <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_TOMA_DECISIONES" name="PORCENTAJE_TOMA_DECISIONES">
+                                                            </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -3210,7 +3504,7 @@
                                             <!-- VI. Otros -->
                                             <div class="row mb-3">
                                                 <div class="col-12 text-center">
-                                                    <h4>VI. Otros</h4>
+                                                    <h4>VII. Otros</h4>
                                                 </div>
                                             </div>
 
