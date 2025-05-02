@@ -1227,7 +1227,7 @@ class makeExcelController extends Controller{
 
 
 
-            $jerarquia = catalogojerarquiaModel::whereIn('ID_CATALOGO_JERARQUIA', $val->NIVEL_JERARQUICO_DPT)->pluck('NOMBRE_JERARQUIA')->toArray();
+            $jerarquia = catalogojerarquiaModel::whereIn('ID_CATALOGO_JERARQUIA', $val->NIVEL_JERARQUICO_DPT)->pluck('NOMBRE_JERARQUIA');
 
             // Empezar por la celda B29
             $startRow1 = 26;
@@ -1281,8 +1281,9 @@ class makeExcelController extends Controller{
             //     $sheet->setCellValue('H15', $val->NIVEL_JERARQUICO_DPT);        
             // }
 
-            $sheet->setCellValue('H15', str_replace(['[', ']', '"'], '', $jerarquia));
+         
 
+            $sheet->setCellValue('H15', $jerarquia);
 
 
             if (!is_null($val->PUESTO_REPORTA_DPT)) {
