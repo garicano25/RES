@@ -1227,7 +1227,9 @@ class makeExcelController extends Controller{
 
 
 
-            $jerarquia = catalogojerarquiaModel::where('ID_CATALOGO_JERARQUIA', $val->NIVEL_JERARQUICO_DPT)->pluck('NOMBRE_JERARQUIA');
+            $jerarquia = catalogojerarquiaModel::where('ID_CATALOGO_JERARQUIA', $val->NIVEL_JERARQUICO_DPT)
+                ->pluck('NOMBRE_JERARQUIA')
+                ->first();
 
             // Empezar por la celda B29
             $startRow1 = 26;
