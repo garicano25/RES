@@ -15,7 +15,12 @@ class informacionmedicaModel extends Model
         'CURP',
         'NOMBRE_DOCUMENTO_INFORMACION',
         'DOCUMENTO_INFORMACION_MEDICA',
-        'ACTIVO'
+        'ACTIVO',
+
+        'OBSERVACIONES_SOLICITUD',
+        'FECHA_EXAMEN_MEDICA',
+        'PROVEEDOR_INFORMACION',
+        'DICTAMEN_INFORMACION'
     ];
 
 }

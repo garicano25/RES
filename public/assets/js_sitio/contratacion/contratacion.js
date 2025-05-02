@@ -3375,6 +3375,27 @@ $('#Tablarenovacioncontrato').on('click', '.ver-archivo-informacionadenda', func
 // <!--INFORMACION MEDICA-->
 // <!-- ============================================================== -->
 
+
+
+$("#NUEVA_INFORMACIONMEDICA").click(function (e) {
+    e.preventDefault();
+
+
+       
+    $('#formularioINFORMACION').each(function(){
+        this.reset();
+    });
+
+    $(".observacionesdiv").empty();
+
+    $("#miModal_INFORMACION_MEDICA").modal("show");
+
+
+});
+
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
     var archivoinformacion = document.getElementById('DOCUMENTO_INFORMACION_MEDICA');
     var quitarinformacion = document.getElementById('quitar_informacion_medica');
@@ -3407,7 +3428,31 @@ $("#guardarINFORMACIONMEDICA").click(function (e) {
 
     if (formularioValido) {
 
-    if (ID_INFORMACION_MEDICA == 0) {
+
+
+        var observacion = [];
+        $(".generarobervaciones").each(function() {
+            var observaciones = {
+                'OBSERVACIONES': $(this).find("textarea[name='OBSERVACIONES']").val()
+            };
+            observacion.push(observaciones);
+        });
+
+
+
+        const requestData = {
+            api: 5,
+            ID_INFORMACION_MEDICA: ID_INFORMACION_MEDICA,
+            CONTRATO_ID: contrato_id,
+            CURP: curpSeleccionada ,
+            OBSERVACIONES_SOLICITUD: JSON.stringify(observacion)
+
+
+        };
+
+
+
+        if (ID_INFORMACION_MEDICA == 0) {
         
         alertMensajeConfirm({
             title: "¿Desea guardar la información?",
@@ -3416,7 +3461,7 @@ $("#guardarINFORMACIONMEDICA").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarINFORMACIONMEDICA')
-            await ajaxAwaitFormData({ api: 5,CONTRATO_ID:contrato_id, CURP: curpSeleccionada , ID_INFORMACION_MEDICA: ID_INFORMACION_MEDICA }, 'contratoSave', 'formularioINFORMACION', 'guardarINFORMACIONMEDICA', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData(requestData , 'contratoSave', 'formularioINFORMACION', 'guardarINFORMACIONMEDICA', { callbackAfter: true, callbackBefore: true }, () => {
                 Swal.fire({
                     icon: 'info',
                     title: 'Espere un momento',
@@ -3449,7 +3494,7 @@ $("#guardarINFORMACIONMEDICA").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarINFORMACIONMEDICA')
-            await ajaxAwaitFormData({ api: 5,CONTRATO_ID:contrato_id, CURP: curpSeleccionada ,ID_INFORMACION_MEDICA: ID_INFORMACION_MEDICA }, 'contratoSave', 'formularioINFORMACION', 'guardarINFORMACIONMEDICA', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData( requestData, 'contratoSave', 'formularioINFORMACION', 'guardarINFORMACIONMEDICA', { callbackAfter: true, callbackBefore: true }, () => {
                 Swal.fire({
                     icon: 'info',
                     title: 'Espere un momento',
@@ -3558,8 +3603,13 @@ function cargarTablaInformacionMedica() {
 $('#Tablainformacionmedica').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablainformacionmedica.row(tr);
+    var data = row.data(); 
+
 
     ID_INFORMACION_MEDICA = row.data().ID_INFORMACION_MEDICA;
+
+      $(".observacionesdiv").empty();
+    obtenerObservaciones(row);
 
     editarDatoTabla(row.data(), 'formularioINFORMACION', 'miModal_INFORMACION_MEDICA', 1);
 
@@ -3586,6 +3636,83 @@ $('#Tablainformacionmedica').on('click', '.ver-archivo-informacionmedica', funct
 
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    const botonAgregarDoc = document.getElementById('botonAgregarobservaciones');
+    botonAgregarDoc.addEventListener('click', function () {
+        agregarobservaciones();
+    });
+
+    function agregarobservaciones() {
+        const divDocumentoOfi = document.createElement('div');
+        divDocumentoOfi.classList.add('row', 'generarobervaciones', 'mb-3');
+        divDocumentoOfi.innerHTML = `
+        
+            <div class="col-12">
+              <div class="mb-3">
+                <label class="form-label">Observación</label>
+                <textarea class="form-control"  name="OBSERVACIONES" rows="2"></textarea>
+              </div>
+            </div>
+
+            <br>
+            <div class="col-12 mt-4">
+                <div class="form-group" style="text-align: center;">
+                    <button type="button" class="btn btn-danger botonEliminarObservacion">Eliminar observación <i class="bi bi-trash-fill"></i></button>
+                </div>
+            </div>
+        `;
+        const contenedor = document.querySelector('.observacionesdiv');
+        contenedor.appendChild(divDocumentoOfi);
+
+        const botonEliminar = divDocumentoOfi.querySelector('.botonEliminarObservacion');
+        botonEliminar.addEventListener('click', function () {
+            contenedor.removeChild(divDocumentoOfi);
+        });
+    }
+
+
+});
+
+
+
+
+function obtenerObservaciones(data) {
+    let row = data.data().OBSERVACIONES_SOLICITUD;
+    var observaciones = JSON.parse(row);
+
+    $.each(observaciones, function (index, contacto) {
+        var observa = contacto.OBSERVACIONES;
+     
+
+        const divDocumentoOfi = document.createElement('div');
+        divDocumentoOfi.classList.add('row', 'generarobervaciones', 'mb-3');
+        divDocumentoOfi.innerHTML = `
+         
+            <div class="col-12">
+              <div class="mb-3">
+                <label class="form-label">Observación</label>
+                    <textarea class="form-control" name="OBSERVACIONES" rows="2">${observa}</textarea>
+              </div>
+            </div>
+            
+            <br>
+            <div class="col-12 mt-4">
+                <div class="form-group" style="text-align: center;">
+                    <button type="button" class="btn btn-danger botonEliminarObservacion">Eliminar observación <i class="bi bi-trash-fill"></i></button>
+                </div>
+            </div>
+        `;
+        const contenedor = document.querySelector('.observacionesdiv');
+        contenedor.appendChild(divDocumentoOfi);
+
+      
+        const botonEliminar = divDocumentoOfi.querySelector('.botonEliminarObservacion');
+        botonEliminar.addEventListener('click', function () {
+            contenedor.removeChild(divDocumentoOfi);
+        });
+    });
+
+}
 
 
 // <!-- ============================================================== -->
@@ -4437,10 +4564,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const selectTipoDocumento1 = document.getElementById('TIPO_DOCUMENTO_SOPORTECONTRATO');
     const divFechasSoporte1 = document.getElementById('FECHAS_SOPORTEDOCUMENTOSCONTRATO');
 
-    // Aquí se listan los valores que deben mostrar el div
     const valoresPermitidos1 = ['11','14'];
 
-    // Escuchamos cambios en el <select>
     selectTipoDocumento1.addEventListener('change', function () {
         const valorSeleccionado1 = this.value;
 
@@ -4568,7 +4693,7 @@ function cargarDocumentossoportecontratosgenerales() {
             select.find('option').prop('disabled', false);
 
          data.forEach(function (tipoDocumento) {
-                if (tipoDocumento !== "13") {  // No bloquear la opción 3
+                if (tipoDocumento !== "13") {  
                     select.find(`option[value="${tipoDocumento}"]`).prop('disabled', true);
                 }
             });
@@ -4607,7 +4732,6 @@ $(document).ready(function() {
     $('#btnNuevoCV').on('click', function() {
         limpiarFormularioUsuario(); 
 
-        // Inicializar Dropify
         $('#FOTO_CV').dropify({
             messages: {
                 'default': 'Arrastre la imagen aquí o haga clic',
@@ -4625,7 +4749,6 @@ $(document).ready(function() {
             }
         });
 
-        // Abrir el modal
         $('#ModalCV').modal('show');
     });
 
@@ -4641,7 +4764,6 @@ function limpiarFormularioUsuario() {
     var drEvent = $('#FOTO_CV').dropify().data('dropify');
     drEvent.resetPreview();
     drEvent.clearElement();
-
 
 
     document.getElementById('Informacion-academica').innerHTML = '';
@@ -5794,9 +5916,9 @@ function cargarTablarequisicion() {
             data: 'BTN_DOCUMENTO',
             render: function(data, type, row) {
                 if (row.ANTES_DE1 === 1) {
-                    return data; // Aquí se muestra el botón (ya está en el campo BTN_DOCUMENTO)
+                    return data; 
                 } else {
-                    return 'NA'; // Se muestra 'NA' si ANTES_DE1 no es 1
+                    return 'NA'; 
                 }
             }
         }        

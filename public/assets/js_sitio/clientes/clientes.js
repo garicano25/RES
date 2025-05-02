@@ -203,7 +203,6 @@ $("#guardarCLIENTE").click(function (e) {
                     var direccion = {
                         'TIPODEDOMICILIOFISCAL': 'nacional',
 
-                        // Nacional llenos
                         'TIPO_DOMICILIO': $(this).find("input[name='TIPO_DOMICILIO']").val()?.trim() || '', 
                         'CODIGO_POSTAL_DOMICILIO': $(this).find("input[name='CODIGO_POSTAL_DOMICILIO']").val()?.trim() || '',
                         'TIPO_VIALIDAD_DOMICILIO': $(this).find("input[name='TIPO_VIALIDAD_DOMICILIO']").val()?.trim() || '',
@@ -218,7 +217,6 @@ $("#guardarCLIENTE").click(function (e) {
                         'ENTRE_CALLE_DOMICILIO': $(this).find("input[name='ENTRE_CALLE_DOMICILIO']").val()?.trim() || '',
                         'ENTRE_CALLE_2_DOMICILIO': $(this).find("input[name='ENTRE_CALLE_2_DOMICILIO']").val()?.trim() || '',
 
-                        // Extranjero vacíos
                         'DOMICILIO_EXTRANJERO': '',
                         'CP_EXTRANJERO': '',
                         'CIUDAD_EXTRANJERO': '',
@@ -231,7 +229,6 @@ $("#guardarCLIENTE").click(function (e) {
                     var direccion = {
                         'TIPODEDOMICILIOFISCAL': 'extranjero',
 
-                        // Nacional vacíos
                         'TIPO_DOMICILIO': '',
                         'CODIGO_POSTAL_DOMICILIO': '',
                         'TIPO_VIALIDAD_DOMICILIO': '',
@@ -246,7 +243,6 @@ $("#guardarCLIENTE").click(function (e) {
                         'ENTRE_CALLE_DOMICILIO': '',
                         'ENTRE_CALLE_2_DOMICILIO': '',
 
-                        // Extranjero llenos
                         'DOMICILIO_EXTRANJERO': $(this).find("input[name='DOMICILIO_EXTRANJERO']").val()?.trim() || '',
                         'CP_EXTRANJERO': $(this).find("input[name='CP_EXTRANJERO']").val()?.trim() || '',
                         'CIUDAD_EXTRANJERO': $(this).find("input[name='CIUDAD_EXTRANJERO']").val()?.trim() || '',
@@ -582,11 +578,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         </select>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label class="form-label">Nombre *</label>
+                        <label class="form-label">Nombre </label>
                         <input type="text" class="form-control" name="CONTACTO_SOLICITUD" >
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label class="form-label">Cargo *</label>
+                        <label class="form-label">Cargo </label>
                         <input type="text" class="form-control" name="CARGO_SOLICITUD" >
                     </div>
                 </div>
@@ -603,11 +599,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         <input type="text" class="form-control" name="EXTENSION_SOLICITUD">
                     </div>
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Celular *</label>
+                        <label class="form-label">Celular </label>
                         <input type="text" class="form-control" name="CELULAR_SOLICITUD" >
                     </div>
                     <div class="col-md-3 mb-3">
-                        <label class="form-label">Correo electrónico *</label>
+                        <label class="form-label">Correo electrónico </label>
                         <input type="email" class="form-control" name="CORREO_SOLICITUD" >
                     </div>
                 </div>
@@ -630,7 +626,6 @@ document.addEventListener("DOMContentLoaded", function () {
 function obtenerContactos(data) {
     let row = data.data().CONTACTOS_JSON;
 
-    // Validar que exista y sea válida la cadena JSON
     if (!row || row === "null" || row === null) {
         console.warn("No hay contactos para mostrar.");
         $(".contactodiv").empty();
@@ -901,15 +896,15 @@ document.addEventListener("DOMContentLoaded", function () {
                         <input type="text" class="form-control" name="TIPO_DOMICILIO">
                     </div>
                     <div class="col-3 mb-3">
-                        <label>Código Postal *</label>
+                        <label>Código Postal </label>
                         <input type="number" class="form-control" name="CODIGO_POSTAL_DOMICILIO">
                     </div>
                     <div class="col-3 mb-3">
-                        <label>Tipo de Vialidad *</label>
+                        <label>Tipo de Vialidad </label>
                         <input type="text" class="form-control" name="TIPO_VIALIDAD_DOMICILIO">
                     </div>
                     <div class="col-3 mb-3">
-                        <label>Nombre de la Vialidad *</label>
+                        <label>Nombre de la Vialidad </label>
                         <input type="text" class="form-control" name="NOMBRE_VIALIDAD_DOMICILIO">
                     </div>
                     <div class="col-3 mb-3">
@@ -927,19 +922,19 @@ document.addEventListener("DOMContentLoaded", function () {
                         </select>
                     </div>
                     <div class="col-3 mb-3">
-                        <label>Nombre de la Localidad *</label>
+                        <label>Nombre de la Localidad </label>
                         <input type="text" class="form-control" name="NOMBRE_LOCALIDAD_DOMICILIO">
                     </div>
                     <div class="col-4 mb-3">
-                        <label>Nombre del municipio o demarcación territorial *</label>
+                        <label>Nombre del municipio o demarcación territorial </label>
                         <input type="text" class="form-control" name="NOMBRE_MUNICIPIO_DOMICILIO">
                     </div>
                     <div class="col-4 mb-3">
-                        <label>Nombre de la Entidad Federativa *</label>
+                        <label>Nombre de la Entidad Federativa </label>
                         <input type="text" class="form-control" name="NOMBRE_ENTIDAD_DOMICILIO">
                     </div>
                     <div class="col-4 mb-3">
-                        <label>País *</label>
+                        <label>País </label>
                         <input type="text" class="form-control" name="PAIS_CONTRATACION_DOMICILIO">
                     </div>
                     <div class="col-6 mb-3">
@@ -956,15 +951,15 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="col-12 contenedorExtranjero" style="display:none;">
                 <div class="row">
                     <div class="col-12 mb-3">
-                        <label>Domicilio *</label>
+                        <label>Domicilio </label>
                         <input type="text" class="form-control" name="DOMICILIO_EXTRANJERO">
                     </div>
                     <div class="col-6 mb-3">
-                        <label>Código Postal *</label>
+                        <label>Código Postal </label>
                         <input type="text" class="form-control" name="CP_EXTRANJERO">
                     </div>
                     <div class="col-6 mb-3">
-                        <label>Ciudad *</label>
+                        <label>Ciudad </label>
                         <input type="text" class="form-control" name="CIUDAD_EXTRANJERO">
                     </div>
                     <div class="col-6 mb-3">
@@ -972,7 +967,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <input type="text" class="form-control" name="ESTADO_EXTRANJERO">
                     </div>
                     <div class="col-6 mb-3">
-                        <label>País *</label>
+                        <label>País </label>
                         <input type="text" class="form-control" name="PAIS_EXTRANJERO">
                     </div>
                 </div>
@@ -1217,19 +1212,19 @@ function obtenerDirecciones(data) {
             <div class="col-12 contenedorNacional" style="display: ${tipoFiscal === 'nacional' ? 'block' : 'none'};">
                 <div class="row">
                     <div class="col-3 mb-3">
-                        <label>Tipo de Domicilio *</label>
+                        <label>Tipo de Domicilio </label>
                         <input type="text" class="form-control" name="TIPO_DOMICILIO" value="${direccion.TIPO_DOMICILIO || ''}">
                     </div>
                     <div class="col-3 mb-3">
-                        <label>Código Postal *</label>
+                        <label>Código Postal </label>
                         <input type="number" class="form-control codigo-postal" name="CODIGO_POSTAL_DOMICILIO" value="${direccion.CODIGO_POSTAL_DOMICILIO || ''}">
                     </div>
                     <div class="col-3 mb-3">
-                        <label>Tipo de Vialidad *</label>
+                        <label>Tipo de Vialidad </label>
                         <input type="text" class="form-control" name="TIPO_VIALIDAD_DOMICILIO" value="${direccion.TIPO_VIALIDAD_DOMICILIO || ''}">
                     </div>
                     <div class="col-3 mb-3">
-                        <label>Nombre de la Vialidad *</label>
+                        <label>Nombre de la Vialidad </label>
                         <input type="text" class="form-control" name="NOMBRE_VIALIDAD_DOMICILIO" value="${direccion.NOMBRE_VIALIDAD_DOMICILIO || ''}">
                     </div>
                     <div class="col-3 mb-3">
@@ -1259,7 +1254,7 @@ function obtenerDirecciones(data) {
                         <input type="text" class="form-control" name="NOMBRE_ENTIDAD_DOMICILIO" value="${direccion.NOMBRE_ENTIDAD_DOMICILIO || ''}">
                     </div>
                     <div class="col-4 mb-3">
-                        <label>País *</label>
+                        <label>País </label>
                         <input type="text" class="form-control" name="PAIS_CONTRATACION_DOMICILIO" value="${direccion.PAIS_CONTRATACION_DOMICILIO || ''}">
                     </div>
                     <div class="col-6 mb-3">
@@ -1277,15 +1272,15 @@ function obtenerDirecciones(data) {
             <div class="col-12 contenedorExtranjero" style="display: ${tipoFiscal === 'extranjero' ? 'block' : 'none'};">
                 <div class="row">
                     <div class="col-12 mb-3">
-                        <label>Domicilio *</label>
+                        <label>Domicilio </label>
                         <input type="text" class="form-control" name="DOMICILIO_EXTRANJERO" value="${direccion.DOMICILIO_EXTRANJERO || ''}">
                     </div>
                     <div class="col-6 mb-3">
-                        <label>Código Postal *</label>
+                        <label>Código Postal </label>
                         <input type="text" class="form-control" name="CP_EXTRANJERO" value="${direccion.CP_EXTRANJERO || ''}">
                     </div>
                     <div class="col-6 mb-3">
-                        <label>Ciudad *</label>
+                        <label>Ciudad </label>
                         <input type="text" class="form-control" name="CIUDAD_EXTRANJERO" value="${direccion.CIUDAD_EXTRANJERO || ''}">
                     </div>
                     <div class="col-6 mb-3">
@@ -1293,7 +1288,7 @@ function obtenerDirecciones(data) {
                         <input type="text" class="form-control" name="ESTADO_EXTRANJERO" value="${direccion.ESTADO_EXTRANJERO || ''}">
                     </div>
                     <div class="col-6 mb-3">
-                        <label>País *</label>
+                        <label>País </label>
                         <input type="text" class="form-control" name="PAIS_EXTRANJERO" value="${direccion.PAIS_EXTRANJERO || ''}">
                     </div>
                 </div>
@@ -1308,7 +1303,6 @@ function obtenerDirecciones(data) {
 
         contenedor.appendChild(divDomicilio);
 
-        // Llenar colonias si es nacional
         if (tipoFiscal === 'nacional' && direccion.CODIGO_POSTAL_DOMICILIO) {
             fetch(`/codigo-postal/${direccion.CODIGO_POSTAL_DOMICILIO}`)
                 .then(response => response.json())
@@ -1334,12 +1328,10 @@ function obtenerDirecciones(data) {
                 });
         }
 
-        // Botón eliminar
         divDomicilio.querySelector('.botonEliminarDomicilio').addEventListener('click', function () {
             contenedor.removeChild(divDomicilio);
         });
 
-        // Evento para mostrar nacional / extranjero
         const selectTipo = divDomicilio.querySelector('.tipoDomicilioSelect');
         const nacionalDiv = divDomicilio.querySelector('.contenedorNacional');
         const extranjeroDiv = divDomicilio.querySelector('.contenedorExtranjero');

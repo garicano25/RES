@@ -1549,7 +1549,7 @@ public function obtenerdocumentosoportescontratos(Request $request)
                     case 5:
                     if ($request->ID_INFORMACION_MEDICA == 0) {
                         DB::statement('ALTER TABLE informacion_medica_contrato AUTO_INCREMENT=1;');
-                        $soportes = informacionmedicaModel::create($request->except('DOCUMENTO_INFORMACION_MEDICA')); 
+                        $soportes = informacionmedicaModel::create($request->except('DOCUMENTO_INFORMACION_MEDICA', 'observacion')); 
                 
                         if ($request->hasFile('DOCUMENTO_INFORMACION_MEDICA')) {
                             $documento = $request->file('DOCUMENTO_INFORMACION_MEDICA');

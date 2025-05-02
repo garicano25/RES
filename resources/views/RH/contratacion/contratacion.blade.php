@@ -890,12 +890,11 @@
                     </div>
 
 
-
-
+                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
                     <div id="informacion_medica_contratos">
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-hospital-fill"></i> &nbsp;Información Médica</h3>
-                            <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_INFORMACION_MEDICA" style="margin-left: auto;">
+                            <button type="button" class="btn btn-light waves-effect waves-light " id="NUEVA_INFORMACIONMEDICA" style="margin-left: auto;">
                                 Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
                             </button>
                         </ol>
@@ -905,6 +904,8 @@
                             </table>
                         </div>
                     </div>
+                    @endif
+
 
                     <div id="incidencias_contratos">
                         <ol class="breadcrumb mt-5">
@@ -1475,9 +1476,43 @@
                     {!! csrf_field() !!}
 
                     <div class="mb-3">
-                        <label>Nombre del archivo </label>
+                        <label>Tipo de examen *</label>
                         <input type="text" class="form-control" id="NOMBRE_DOCUMENTO_INFORMACION" name="NOMBRE_DOCUMENTO_INFORMACION" required>
                     </div>
+                    <div class="mb-3">
+                        <label>Fecha del examen *</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_EXAMEN_MEDICA" name="FECHA_EXAMEN_MEDICA" required>
+                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Proveedor *</label>
+                        <input type="text" class="form-control" id="PROVEEDOR_INFORMACION" name="PROVEEDOR_INFORMACION" required>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label>Dictamen </label>
+                        <input type="text" class="form-control" id="DICTAMEN_INFORMACION" name="DICTAMEN_INFORMACION">
+                    </div>
+
+                    <div class="row">
+                        <div class="mb-3">
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label>Agregar observaciones</label>
+                                    <button id="botonAgregarobservaciones" id="botonAgregarobservaciones" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                                        <i class="bi bi-plus-circle-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="observacionesdiv mt-4"></div>
+                        </div>
+                    </div>
+
+
 
 
                     <div class="mb-3">
