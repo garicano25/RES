@@ -36,6 +36,7 @@ use App\Models\organizacion\catalogocategoriaModel;
 use App\Models\organizacion\catalogoCompotenciasGerencialesModel;
 use App\Models\organizacion\catalogocompetenciabasicaModel;
 
+use App\Models\organizacion\catalogojerarquiaModel;
 
 
 
@@ -1224,6 +1225,10 @@ class makeExcelController extends Controller{
           // Obtener las descripciones de las funciones
             $puestos2 = catalogofuncionescargoModel::whereIn('ID_CATALOGO_FUNCIONESCARGO', $val->FUNCIONES_CARGO_DPT)->pluck('DESCRIPCION_FUNCION_CARGO')->toArray();
 
+
+
+            $jerarquia = catalogojerarquiaModel::whereIn('ID_CATALOGO_JERARQUIA', $val->NIVEL_JERARQUICO_DPT)->pluck('NOMBRE_JERARQUIA')->toArray();
+
             // Empezar por la celda B29
             $startRow1 = 26;
             $column = 'B';
@@ -1272,11 +1277,14 @@ class makeExcelController extends Controller{
 
             // I.Estrucutra oranizacional
 
-            if (!is_null($val->NIVEL_JERARQUICO_DPT)) {
-                $sheet->setCellValue('H15', $val->NIVEL_JERARQUICO_DPT);        
-            }
+            // if (!is_null($val->NIVEL_JERARQUICO_DPT)) {
+            //     $sheet->setCellValue('H15', $val->NIVEL_JERARQUICO_DPT);        
+            // }
 
-            
+            $sheet->setCellValue('H15', str_replace(['[', ']', '"'], '', $jerarquia));
+
+
+
             if (!is_null($val->PUESTO_REPORTA_DPT)) {
                 $sheet->setCellValue('Q15', $val->PUESTO_REPORTA_DPT);        
             }
