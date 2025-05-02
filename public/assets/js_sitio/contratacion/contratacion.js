@@ -4284,6 +4284,53 @@ Modalrecibonomina.addEventListener('hidden.bs.modal', event => {
 
 })
 
+
+
+
+    function contarDomingos(fechaInicio, fechaFin) {
+        let inicio = new Date(fechaInicio);
+        let fin = new Date(fechaFin);
+        let domingos = 0;
+
+        while (inicio <= fin) {
+            if (inicio.getDay() === 0) { 
+                domingos++;
+            }
+            inicio.setDate(inicio.getDate() + 1);
+        }
+
+        return domingos;
+    }
+
+    function calcularTotalDiasYHoras() {
+        const diasLaborados = parseInt(document.getElementById("DIAS_LABORADOS_RECIBO").value) || 0;
+        const fechaInicio = document.getElementById("FECHA_RECIBO").value;
+        const fechaFin = document.getElementById("FECHAF_RECIBO").value;
+        const diasFestivos = parseInt(document.getElementById("DIAS_FESTIVOS_RECIBO").value) || 0;
+
+        if (!fechaInicio || !fechaFin) {
+            return; 
+        }
+
+        const domingos = contarDomingos(fechaInicio, fechaFin);
+        const totalDias = diasLaborados - domingos - diasFestivos;
+        const totalDiasFinal = totalDias >= 0 ? totalDias : 0;
+
+        document.getElementById("TOTAL_DIAS_RECIBO").value = totalDiasFinal;
+
+        const horasHombre = totalDiasFinal * 8;
+        document.getElementById("HHT_RECIBO").value = horasHombre;
+    }
+
+    document.getElementById("DIAS_LABORADOS_RECIBO").addEventListener("input", calcularTotalDiasYHoras);
+    document.getElementById("FECHA_RECIBO").addEventListener("change", calcularTotalDiasYHoras);
+    document.getElementById("FECHAF_RECIBO").addEventListener("change", calcularTotalDiasYHoras);
+    document.getElementById("DIAS_FESTIVOS_RECIBO").addEventListener("input", calcularTotalDiasYHoras);
+
+
+    
+    
+    
 function cargarTablaRecibosNomina() {
     if ($.fn.DataTable.isDataTable('#Tablarecibonomina')) {
         Tablarecibonomina.clear().destroy();

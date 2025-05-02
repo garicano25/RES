@@ -95,7 +95,6 @@
     .bloque-renovacion,
     .bloque-adenda {
         min-height: 93px;
-        /* display: flex; */
         flex-direction: column;
         justify-content: center;
     }
@@ -186,63 +185,6 @@
                         </div>
                     </div>
 
-                    {{-- <div class="row">
-                    <div class="col-12 mt-5">
-                        <div class="multisteps-form">
-                            <div class="multisteps-form__progress">
-                                <div class="multisteps-form__progress-btn js-active" id="step1">
-                                    <div class="step-circle">
-                                        <i class="bi bi-briefcase-fill"></i>
-                                    </div>
-                                    <span>Datos generales</span>
-                                </div>
-                                <div class="multisteps-form__progress-btn" id="step2">
-                                    <div class="step-circle">
-                                        <i class="bi bi-file-earmark-text-fill"></i>
-                                    </div>
-                                    <span>Documentos de soporte</span>
-                                </div>
-                                <div class="multisteps-form__progress-btn" id="step3">
-                                    <div class="step-circle">
-                                        <i class="bi bi-file-earmark-text-fill"></i>
-                                    </div>
-                                    <span>Contratos y anexos</span>
-                                </div>
-                                <div class="multisteps-form__progress-btn" id="step4">
-                                    <div class="step-circle">
-                                        <i class="bi bi-hospital-fill"></i>
-                                    </div>
-                                    <span>Información Médica</span>
-                                </div>
-                                <div class="multisteps-form__progress-btn" id="step5">
-                                    <div class="step-circle">
-                                        <i class="bi bi-person-check-fill"></i>
-                                    </div>
-                                    <span>Incidencias</span>
-                                </div>
-                                <div class="multisteps-form__progress-btn" id="step6">
-                                    <div class="step-circle">
-                                        <i class="bi bi-person-circle"></i>
-                                    </div>
-                                    <span>Acciones disciplinarias</span>
-                                </div> 
-                                <div class="multisteps-form__progress-btn" id="step4">
-                                    <div class="step-circle">
-                                        <i class="bi bi-file-person-fill"></i>
-                                    </div>
-                                    <span>CV</span>
-                                </div>
-                                <div class="multisteps-form__progress-btn" id="step8">
-                                    <div class="step-circle">
-                                        <i class="bi bi-pen-fill"></i>
-                                    </div>
-                                    <span>Recibos</span>
-                                </div> 
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>--}}
 
 
                     <div class="row">
@@ -1431,12 +1373,41 @@
                     </div>
 
 
+                    <div class="row  mb-3">
 
-                    <div class="mb-3">
-                        <label>Fecha recibo *</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_RECIBO" name="FECHA_RECIBO" required>
-                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        <div class="col-4">
+                            <label>Días laborados </label>
+                            <input type="text" class="form-control" id="DIAS_LABORADOS_RECIBO" name="DIAS_LABORADOS_RECIBO">
+                        </div>
+
+                        <div class="col-4">
+                            <label>Fecha inicio *</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_RECIBO" name="FECHA_RECIBO" required>
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label>Fecha fin *</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_RECIBO" name="FECHAF_RECIBO" required>
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="col-4 mt-3">
+                            <label>Días festivos</label>
+                            <input type="text" class="form-control" id="DIAS_FESTIVOS_RECIBO" name="DIAS_FESTIVOS_RECIBO">
+                        </div>
+
+                        <div class="col-4 mt-3">
+                            <label>Total de días</label>
+                            <input type="text" class="form-control" id="TOTAL_DIAS_RECIBO" name="TOTAL_DIAS_RECIBO" required>
+                        </div>
+
+                        <div class="col-4 mt-3">
+                            <label>HHT</label>
+                            <input type="text" class="form-control" id="HHT_RECIBO" name="HHT_RECIBO" required>
                         </div>
                     </div>
 

@@ -17,7 +17,12 @@ class reciboscontratoModel extends Model
         'NOMBRE_RECIBO',
         'FECHA_RECIBO',
         'DOCUMENTO_RECIBO',
-        'ACTIVO'
+        'ACTIVO',
+        'DIAS_LABORADOS_RECIBO',
+        'FECHAF_RECIBO',
+        'DIAS_FESTIVOS_RECIBO',
+        'TOTAL_DIAS_RECIBO',
+        'HHT_RECIBO'
     ];
 
 
