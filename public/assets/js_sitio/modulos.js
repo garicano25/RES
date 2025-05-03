@@ -1,15 +1,18 @@
 
-        function mostrarModal(imagen, titulo, descripcion) {
-            const modal = document.getElementById('modalAnuncio');
-            document.getElementById('modalImagen').src = imagen;
-            document.getElementById('modalTitulo').innerText = titulo;
-            document.getElementById('modalDescripcion').innerText = descripcion;
-            modal.style.display = 'flex';
+      function mostrarModalDesdeData(element) {
+            const imagen = element.getAttribute('data-imagen');
+            const titulo = element.getAttribute('data-titulo');
+            const descripcion = element.getAttribute('data-descripcion');
 
-            // Cerrar si hace clic fuera del contenido
-            modal.onclick = function() {
-                cerrarModal();
-            }
+            document.getElementById('modalImagen').src = imagen;
+            document.getElementById('modalTitulo').textContent = titulo;
+            document.getElementById('modalDescripcion').textContent = descripcion;
+
+            document.getElementById('modalAnuncio').style.display = 'flex';
+        }
+
+        function cerrarModal() {
+            document.getElementById('modalAnuncio').style.display = 'none';
         }
 
         function cerrarModal() {

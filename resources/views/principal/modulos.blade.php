@@ -394,13 +394,15 @@
                 <div class="content">
 
                     <div class="content__left">
-
                         {{-- CARRUSEL: Anuncios del Día o Año --}}
                         @if($anunciosDiaAnio->isNotEmpty())
                         <div class="carrusel" id="carruselDiaAnio">
                             @foreach ($anunciosDiaAnio as $index => $anuncio)
                             <div class="carrusel-slide {{ $index === 0 ? 'activo' : '' }}"
-                                onclick="mostrarModal('{{ route('anunciofoto', $anuncio->ID_CATALOGO_ANUNCIOS) }}', '{{ addslashes($anuncio->TITULO_ANUNCIO) }}', `{!! addslashes($anuncio->DESCRIPCION_ANUNCIO) !!}`)">
+                                data-imagen="{{ route('anunciofoto', $anuncio->ID_CATALOGO_ANUNCIOS) }}"
+                                data-titulo="{{{ $anuncio->TITULO_ANUNCIO }}}"
+                                data-descripcion="{{{ $anuncio->DESCRIPCION_ANUNCIO }}}"
+                                onclick="mostrarModalDesdeData(this)">
                                 <div class="content__noticias">
                                     <div class="content__noticiasImage">
                                         <img src="{{ route('anunciofoto', $anuncio->ID_CATALOGO_ANUNCIOS) }}" alt="Imagen del anuncio">
@@ -413,17 +415,17 @@
                             </div>
                             @endforeach
                         </div>
-                        @else
-
                         @endif
-
 
                         {{-- CARRUSEL: Anuncios del Mes --}}
                         @if($anunciosMes->isNotEmpty())
                         <div class="carrusel" id="carruselMes">
                             @foreach ($anunciosMes as $index => $anuncio)
                             <div class="carrusel-slide {{ $index === 0 ? 'activo' : '' }}"
-                                onclick="mostrarModal('{{ route('anunciofoto', $anuncio->ID_CATALOGO_ANUNCIOS) }}', '{{ addslashes($anuncio->TITULO_ANUNCIO) }}', `{!! addslashes($anuncio->DESCRIPCION_ANUNCIO) !!}`)">
+                                data-imagen="{{ route('anunciofoto', $anuncio->ID_CATALOGO_ANUNCIOS) }}"
+                                data-titulo="{{{ $anuncio->TITULO_ANUNCIO }}}"
+                                data-descripcion="{{{ $anuncio->DESCRIPCION_ANUNCIO }}}"
+                                onclick="mostrarModalDesdeData(this)">
                                 <div class="content__noticias">
                                     <div class="content__noticiasImage">
                                         <img src="{{ route('anunciofoto', $anuncio->ID_CATALOGO_ANUNCIOS) }}" alt="Imagen del anuncio">
@@ -436,11 +438,7 @@
                             </div>
                             @endforeach
                         </div>
-                        @else
-                     
                         @endif
-
-
 
 
 
@@ -818,13 +816,13 @@
         });
     </script>
     @endif
-    
+
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 
-    <script src="/assets/js_sitio/modulos.js"></script>
+    <script src="/assets/js_sitio/modulos.js?v=1.0"></script>
 
 
 </body>
