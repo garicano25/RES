@@ -96,6 +96,7 @@
                                     <label>Edad (mínima / máxima) *</label>
                                     <select class="form-control" id="EDAD_PPT" name="EDAD_PPT" required>
                                         <option value="0" selected disabled>Seleccione una opción</option>
+                                        <option value=""></option>
                                         <option value="Indistinto">Indistinto</option>
                                         <option value="18-25">18-25</option>
                                         <option value="26-35">26-35</option>
@@ -131,6 +132,7 @@
                                     <label>Género *</label>
                                     <select class="form-control" id="GENERO_PPT" name="GENERO_PPT" required>
                                         <option value="0" selected disabled>Seleccione una opción</option>
+                                        <option value=""></option>
                                         <option value="Indistinto">Indistinto</option>
                                         <option value="Masculino">Masculino</option>
                                         <option value="Femenino">Femenino</option>
@@ -166,6 +168,7 @@
                                     <label>Estado civil *</label>
                                     <select class="form-control" id="ESTADO_CIVIL_PPT" name="ESTADO_CIVIL_PPT" required>
                                         <option value="0" selected disabled>Seleccione una opción</option>
+                                        <option value=""></option>
                                         <option value="Indistinto">Indistinto</option>
                                         <option value="Soltero(a)">Soltero (a)</option>
                                         <option value="Casado(a)">Casado (a)</option>
@@ -198,6 +201,7 @@
                                     <label>Nacionalidad *</label>
                                     <select class="form-control" id="NACIONALIDAD_PPT" name="NACIONALIDAD_PPT" required>
                                         <option value="0" selected disabled>Seleccione una opción</option>
+                                        <option value=""></option>
                                         <option value="Indistinto">Indistinto</option>
                                         <option value="Mexicana">Mexicana</option>
                                         <option value="Extranjero">Extranjero</option>
@@ -232,6 +236,7 @@
                                     <label>Persona con discapacidad *</label>
                                     <select class="form-control" id="DISCAPACIDAD_PPT" name="DISCAPACIDAD_PPT" required>
                                         <option value="0" selected disabled>Seleccione una opción</option>
+                                        <option value=""></option>
                                         <option value="Indistinto">Indistinto</option>
                                         <option value="Ninguna">Ninguna</option>
                                         <option value="Motriz">Motriz</option>
@@ -299,6 +304,7 @@
                                                     <span style="font-size: 18px;">%</span>
                                                     <select class="form-control mt-1" id="SECUNDARIA_PPT" name="SECUNDARIA_PPT">
                                                         <option value="0" selected disabled>Seleccione una opción</option>
+                                                        <option value=""></option>
                                                         <option value="Incompleta">Incompleta</option>
                                                         <option value="Completa">Completa</option>
                                                     </select>
@@ -332,6 +338,7 @@
                                                     <span style="font-size: 18px;">%</span>
                                                     <select class="form-control mt-1" id="TECNICA_PPT" name="TECNICA_PPT">
                                                         <option value="0" selected disabled>Seleccione una opción</option>
+                                                        <option value=""></option>
                                                         <option value="Incompleta">Incompleta</option>
                                                         <option value="Completa">Completa</option>
                                                     </select>
@@ -362,6 +369,7 @@
                                                     <span style="font-size: 18px;">%</span>
                                                     <select class="form-control mt-1" id="TECNICO_PPT" name="TECNICO_PPT">
                                                         <option value="0" selected disabled>Seleccione una opción</option>
+                                                        <option value=""></option>
                                                         <option value="Incompleta">Incompleta</option>
                                                         <option value="Completa">Completa</option>
                                                     </select>
@@ -392,6 +400,7 @@
                                                     <span style="font-size: 18px;">%</span>
                                                     <select class="form-control mt-1" id="UNIVERSITARIO_PPT" name="UNIVERSITARIO_PPT">
                                                         <option selected disabled>Seleccione una opción</option>
+                                                        <option value=""></option>
                                                         <option value="Incompleta">Incompleta</option>
                                                         <option value="Completa">Completa</option>
                                                     </select>
@@ -427,6 +436,7 @@
                                                     <span style="font-size: 18px;">%</span>
                                                     <select class="form-control mt-1" id="SITUACION_PPT" name="SITUACION_PPT" required>
                                                         <option value="0" selected disabled>Seleccione una opción</option>
+                                                        <option value=""></option>
                                                         <option value="Egresado">Egresado</option>
                                                         <option value="Bachiller">Bachiller</option>
                                                         <option value="Titulado">Titulado</option>
@@ -458,6 +468,7 @@
                                                     <span style="font-size: 18px;">%</span>
                                                     <select class="form-control mt-1" id="CEDULA_PPT" name="CEDULA_PPT" required>
                                                         <option selected disabled>Seleccione una opción</option>
+                                                        <option value=""></option>
                                                         <option value="Aplica">Aplica</option>
                                                         <option value="No aplica">No aplica</option>
                                                     </select>
@@ -492,6 +503,7 @@
                                                     <span style="font-size: 18px;">%</span>
                                                     <select class="form-control mt-1" id="AREA1_PPT" name="AREA1_PPT">
                                                         <option selected disabled>Seleccione una opción</option>
+                                                        <option value=""></option>
                                                         <option value="N/A">N/A</option>
                                                         <option value="Agronomía">Agronomía</option>
                                                         <option value="C. Educación">C. Educación</option>
@@ -529,6 +541,7 @@
                                                     <span style="font-size: 18px;">%</span>
                                                     <select class="form-control mt-1" id="AREA2_PPT" name="AREA2_PPT">
                                                         <option selected disabled>Seleccione una opción</option>
+                                                        <option value=""></option>
                                                         <option value="N/A">N/A</option>
                                                         <option value="Agronomía">Agronomía</option>
                                                         <option value="C. Educación">C. Educación</option>
@@ -565,6 +578,7 @@
                                                     <span style="font-size: 18px;">%</span>
                                                     <select class="form-control mt-1" id="AREA3_PPT" name="AREA3_PPT">
                                                         <option selected disabled>Seleccione una opción</option>
+                                                        <option value=""></option>
                                                         <option value="N/A">N/A</option>
                                                         <option value="Agronomía">Agronomía</option>
                                                         <option value="C. Educación">C. Educación</option>
@@ -601,6 +615,7 @@
                                                     <span style="font-size: 18px;">%</span>
                                                     <select class="form-control mt-1" id="AREA4_PPT" name="AREA4_PPT">
                                                         <option selected disabled>Seleccione una opción</option>
+                                                        <option value=""></option>
                                                         <option value="N/A">N/A</option>
                                                         <option value="Agronomía">Agronomía</option>
                                                         <option value="C. Educación">C. Educación</option>
@@ -2197,6 +2212,7 @@
                                     <div class="form-group">
                                         <select class="form-control" id="EXPERIENCIA_LABORAL_GENERAL_PPT" name="EXPERIENCIA_LABORAL_GENERAL_PPT" required>
                                             <option value="0" selected disabled>Seleccione una opción</option>
+                                            <option value=""></option>
                                             <option value="No necesaria">No necesaria</option>
                                             <option value="Deseable">Deseable</option>
                                             <option value="Necesaria">Necesaria</option>
@@ -2250,6 +2266,8 @@
                                     <div class="form-group">
                                         <select class="form-control" id="EXPERIENCIA_ESPECIFICA_PPT" name="EXPERIENCIA_ESPECIFICA_PPT" required>
                                             <option value="0" selected disabled>Seleccione una opción</option>
+                                            <option value=""></option>
+
                                             <option value="No necesaria">No necesaria</option>
                                             <option value="Deseable">Deseable</option>
                                             <option value="Necesaria">Necesaria</option>
@@ -2284,6 +2302,8 @@
                                     <div class="form-group">
                                         <select class="form-control puesto" id="PUESTO1_NOMBRE" name="PUESTO1_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
+                                            <option value=""></option>
+
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
                                             @endforeach
@@ -2311,6 +2331,7 @@
                                     <div class="form-group">
                                         <select class="form-control puesto" id="PUESTO2_NOMBRE" name="PUESTO2_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
+                                            <option value=""></option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
                                             @endforeach
@@ -2346,6 +2367,7 @@
                                     <div class="form-group">
                                         <select class="form-control puesto" id="PUESTO3_NOMBRE" name="PUESTO3_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
+                                            <option value=""></option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
                                             @endforeach
@@ -2373,6 +2395,7 @@
                                     <div class="form-group">
                                         <select class="form-control puesto" id="PUESTO4_NOMBRE" name="PUESTO4_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
+                                            <option value=""></option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
                                             @endforeach
@@ -2408,6 +2431,7 @@
                                     <div class="form-group">
                                         <select class="form-control puesto" id="PUESTO5_NOMBRE" name="PUESTO5_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
+                                            <option value=""></option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
                                             @endforeach
@@ -2435,6 +2459,7 @@
                                     <div class="form-group">
                                         <select class="form-control puesto" id="PUESTO6_NOMBRE" name="PUESTO6_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
+                                            <option value=""></option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
                                             @endforeach
@@ -2470,6 +2495,7 @@
                                     <div class="form-group">
                                         <select class="form-control puesto" id="PUESTO7_NOMBRE" name="PUESTO7_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
+                                            <option value=""></option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
                                             @endforeach
@@ -2497,6 +2523,7 @@
                                     <div class="form-group">
                                         <select class="form-control puesto" id="PUESTO8_NOMBRE" name="PUESTO8_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
+                                            <option value=""></option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
                                             @endforeach
@@ -2533,6 +2560,7 @@
                                     <div class="form-group">
                                         <select class="form-control puesto" id="PUESTO9_NOMBRE" name="PUESTO9_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
+                                            <option value=""></option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
                                             @endforeach
@@ -2560,6 +2588,7 @@
                                     <div class="form-group">
                                         <select class="form-control puesto" id="PUESTO10_NOMBRE" name="PUESTO10_NOMBRE">
                                             <option value="0" disabled selected>Seleccione una opción</option>
+                                            <option value=""></option>
                                             @foreach ($puesto as $puestos)
                                             <option value="{{ $puestos->ID_CATALOGO_EXPERIENCIA }}">{{ $puestos->NOMBRE_PUESTO }}</option>
                                             @endforeach
@@ -2999,6 +3028,7 @@
                                                 <td>
                                                     <select class="form-control" id="DISPONIBILIDAD_VIAJAR_OPCION_PPT" name="DISPONIBILIDAD_VIAJAR_OPCION_PPT">
                                                         <option selected disabled>Seleccione una opción</option>
+                                                        <option value=""></option>
                                                         <option value="No">No</option>
                                                         <option value="Nacional">Nacional</option>
                                                         <option value="Internacional">Internacional</option>
@@ -3020,6 +3050,7 @@
                                                 <td>
                                                     <select class="form-control" id="REQUIEREPASAPORTE_OPCION_PPT" name="REQUIEREPASAPORTE_OPCION_PPT">
                                                         <option selected disabled>Seleccione una opción</option>
+                                                        <option value=""></option>
                                                         <option value="No aplica">No aplica</option>
                                                         <option value="Deseable">Deseable</option>
                                                         <option value="Requerido">Requerido</option>
@@ -3040,6 +3071,7 @@
                                                 <td>
                                                     <select class="form-control" id="REQUIERE_VISA_OPCION_PPT" name="REQUIERE_VISA_OPCION_PPT">
                                                         <option selected disabled>Seleccione una opción</option>
+                                                        <option value=""></option>
                                                         <option value="No aplica">No aplica</option>
                                                         <option value="Deseable">Deseable</option>
                                                         <option value="Requerido">Requerido</option>
@@ -3060,6 +3092,7 @@
                                                 <td>
                                                     <select class="form-control" id="REQUIERELICENCIA_OPCION_PPT" name="REQUIERELICENCIA_OPCION_PPT">
                                                         <option selected disabled>Seleccione una opción</option>
+                                                        <option value=""></option>
                                                         <option value="No aplica">No aplica</option>
                                                         <option value="Automovilista">Automovilista</option>
                                                         <option value="Chofer">Chofer</option>
@@ -3082,6 +3115,7 @@
                                                 <td>
                                                     <select class="form-control" id="CAMBIORESIDENCIA_OPCION_PPT" name="CAMBIORESIDENCIA_OPCION_PPT">
                                                         <option selected disabled>Seleccione una opción</option>
+                                                        <option value=""></option>
                                                         <option value="No aplica">No aplica</option>
                                                         <option value="Nacional">Nacional</option>
                                                         <option value="Internacional">Internacional</option>
