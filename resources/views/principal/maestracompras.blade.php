@@ -186,8 +186,9 @@
 
 
 
+                        @endif
 
-
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de planeación y logística']))
 
 
                         <li class="nav-item dropdown" style="margin-left: 8px;">
@@ -199,14 +200,30 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{url('/Banco_proveedores')}}">Banco de proveedores</a>
                                 </li>
+                                
+                                @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
+
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/Lista_proveedores')}}">Lista proveedores </a>
                                 </li>
+
+                                @endif
+
+                                @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de planeación y logística']))
+
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/Proveedores_temporales')}}">Proveedores temporales </a>
                                 </li>
+                                @endif
+
                             </ul>
                         </li>
+                        @endif
+
+
+
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
+
 
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: 8px;">
@@ -247,6 +264,8 @@
                     </ul>
 
                     @endif
+
+
                 </ul>
 
 
