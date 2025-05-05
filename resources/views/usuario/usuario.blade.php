@@ -239,11 +239,24 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-6 mb-3">
+                                            <label>Generar contraseña</label>
+                                            <button id="btnGENERARCONTRASEÑA" type="button" class="btn btn-primary ml-2 rounded-pill" title="Agregar">
+                                                <i class="bi bi-plus-circle-fill"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="row" id="DIV_CONTRASEÑA">
                                 <div class="col-5">
                                     <div class="form-group">
                                         <label>Contraseña *</label>
-                                        <input type="password" class="form-control" id="PASSWORD" name="PASSWORD" required>
+                                        <input type="password" class="form-control" id="PASSWORD" name="PASSWORD" onkeyup="verificapassword();" required>
                                     </div>
                                 </div>
                                 <div class="col-1 d-flex align-items-center">
@@ -254,7 +267,7 @@
                                 <div class="col-5">
                                     <div class="form-group">
                                         <label>Confirmar Contraseña *</label>
-                                        <input type="password" class="form-control" id="PASSWORD_2" name="PASSWORD_2" required>
+                                        <input type="password" class="form-control" id="PASSWORD_2" name="PASSWORD_2" onkeyup="verificapassword();" required>
                                     </div>
                                 </div>
                                 <div class="col-1 d-flex align-items-center">

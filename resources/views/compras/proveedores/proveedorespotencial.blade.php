@@ -206,17 +206,18 @@
           <div class="row">
             <div class="mb-3">
               <div class="row">
-                <div class="col-12 mb-3 text-center">
-                  <h4> <b>Servicios que ofrece</b></h4>
-
+                <div class="col-6 mb-3">
+                  <label>Añada servicios</label>
+                  <button id="botonAgregarservicio" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                    <i class="bi bi-plus-circle-fill"></i>
+                  </button>
                 </div>
-                <div class="serviciodiv mt-4"></div>
               </div>
+              <div class="serviciodiv mt-4"></div>
             </div>
-
-
-
           </div>
+
+
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
             <button type="submit" class="btn btn-success" id="guardarDIRECTORIO">Guardar</button>

@@ -3,6 +3,7 @@ var ID_USUARIO = 0
 
 Tablausuarios = null
 
+var password_error = 0;
 
 
 var Tablaproveedores;
@@ -52,7 +53,6 @@ $(document).ready(function() {
     $('#btnNuevoUsuario').on('click', function() {
         limpiarFormularioUsuario(); 
 
-        // Inicializar Dropify
         $('#FOTO_USUARIO').dropify({
             messages: {
                 'default': 'Arrastre la imagen aquí o haga clic',
@@ -70,14 +70,10 @@ $(document).ready(function() {
             }
         });
 
-        // Abrir el modal
         $('#modal_usuario').modal('show');
     });
 
-    // Evento para validar contraseñas en tiempo real
-    $('#PASSWORD, #PASSWORD_2').on('input', validarContrasenas);
 
-    // Evento para mostrar/ocultar contraseñas
     $('.toggle-password').on('click', function() {
         togglePasswordVisibility($(this));
     });
@@ -115,7 +111,7 @@ $("#guardarFormUSUARIO").click(function (e) {
             title: "¿Desea guardar la información?",
             text: "Al guardarla, se podra usar",
             icon: "question",
-        },async function () { 
+        },async function () {
 
             await loaderbtn('guardarFormUSUARIO')
             await ajaxAwaitFormData({ api: 1, ID_USUARIO: ID_USUARIO }, 'usuarioSave', 'formularioUSUARIO', 'guardarFormUSUARIO', { callbackAfter: true, callbackBefore: true }, () => {
@@ -160,7 +156,7 @@ $("#guardarFormUSUARIO").click(function (e) {
             title: "¿Desea editar la información de este formulario?",
             text: "Al guardarla, se editara la información",
             icon: "question",
-        },async function () { 
+        },async function () {
 
             await loaderbtn('guardarFormUSUARIO')
             await ajaxAwaitFormData({ api: 1, ID_USUARIO: ID_USUARIO }, 'usuarioSave', 'formularioUSUARIO', 'guardarFormUSUARIO', { callbackAfter: true, callbackBefore: true }, () => {
@@ -193,7 +189,7 @@ $("#guardarFormUSUARIO").click(function (e) {
                             
 
 
-                }, 300);  
+                }, 300);
             })
         }, 1)
     }
@@ -203,6 +199,9 @@ $("#guardarFormUSUARIO").click(function (e) {
 }
     
 });
+
+
+
 
 
 
@@ -392,7 +391,7 @@ function cargarTablaProveedores() {
                     }
                 },
                 { data: 'BTN_EDITAR' },
-                { data: 'BTN_ELIMINAR' }
+                { data: 'BTN_ELIMINAR' },
             ],
         columnDefs: [
             { targets: 0, title: '#', className: 'all text-center' },
@@ -540,18 +539,15 @@ $('#Tablausuarios tbody').on('click', 'td>button.EDITAR', function () {
     const administradorCheckbox = Array.from(checkboxes).find(cb => cb.value === 'Administrador');
     const proveedorCheckbox = Array.from(checkboxes).find(cb => cb.value === 'Proveedor');
 
-    // Establecer tipo de usuario y disparar lógica de cambio
     $("#USUARIO_TIPO").val(row.data().USUARIO_TIPO).trigger("change");
 
-    // Limpiar y aplicar los checks según datos previos
     checkboxes.forEach(checkbox => {
         checkbox.checked = rolesAsignados.includes(checkbox.value);
     });
 
-    // Obtener el tipo de usuario actual
     const tipoUsuario = row.data().USUARIO_TIPO;
 
-    if (tipoUsuario === "2") { // Solo permitir rol Proveedor
+    if (tipoUsuario === "2") { 
         checkboxes.forEach(cb => {
             cb.checked = false;
             cb.disabled = true;
@@ -560,7 +556,7 @@ $('#Tablausuarios tbody').on('click', 'td>button.EDITAR', function () {
             proveedorCheckbox.disabled = false;
             proveedorCheckbox.checked = true;
         }
-    } else if (tipoUsuario === "1") { // No permitir rol Proveedor
+    } else if (tipoUsuario === "1") { 
         checkboxes.forEach(cb => {
             cb.disabled = false;
         });
@@ -574,7 +570,6 @@ $('#Tablausuarios tbody').on('click', 'td>button.EDITAR', function () {
         });
     }
 
-    // Exclusión entre Superusuario y Administrador
     if (superusuarioCheckbox.checked) {
         administradorCheckbox.checked = false;
         administradorCheckbox.disabled = true;
@@ -589,7 +584,6 @@ $('#Tablausuarios tbody').on('click', 'td>button.EDITAR', function () {
         superusuarioCheckbox.disabled = false;
     }
 
-    // Manejo de la imagen del usuario
     if (row.data().FOTO_USUARIO) {
         var archivo = row.data().FOTO_USUARIO;
         var extension = archivo.substring(archivo.lastIndexOf("."));
@@ -634,7 +628,18 @@ $('#Tablaproveedores').on('click', 'button.EDITAR', function () {
     var row = Tablaproveedores.row(tr);
     ID_USUARIO = row.data().ID_USUARIO;
 
-    editarDatoTabla(row.data(), 'formularioUSUARIO', 'modal_usuario', 1);
+
+    const datosUsuario = { ...row.data() };
+
+    delete datosUsuario.PASSWORD;
+    
+
+    editarDatoTabla(datosUsuario, 'formularioUSUARIO', 'modal_usuario', 1);
+
+  
+     $("#PASSWORD").val(datosUsuario.PASSWORD_2);
+    $("#PASSWORD_2").val(datosUsuario.PASSWORD_2);
+
 
      const rolesAsignados = row.data().ROLES_ASIGNADOS;
     const checkboxes = document.querySelectorAll('.checkbox_rol');
@@ -642,18 +647,15 @@ $('#Tablaproveedores').on('click', 'button.EDITAR', function () {
     const administradorCheckbox = Array.from(checkboxes).find(cb => cb.value === 'Administrador');
     const proveedorCheckbox = Array.from(checkboxes).find(cb => cb.value === 'Proveedor');
 
-    // Establecer tipo de usuario y disparar lógica de cambio
     $("#USUARIO_TIPO").val(row.data().USUARIO_TIPO).trigger("change");
 
-    // Limpiar y aplicar los checks según datos previos
     checkboxes.forEach(checkbox => {
         checkbox.checked = rolesAsignados.includes(checkbox.value);
     });
 
-    // Obtener el tipo de usuario actual
     const tipoUsuario = row.data().USUARIO_TIPO;
 
-    if (tipoUsuario === "2") { // Solo permitir rol Proveedor
+    if (tipoUsuario === "2") { 
         checkboxes.forEach(cb => {
             cb.checked = false;
             cb.disabled = true;
@@ -662,7 +664,7 @@ $('#Tablaproveedores').on('click', 'button.EDITAR', function () {
             proveedorCheckbox.disabled = false;
             proveedorCheckbox.checked = true;
         }
-    } else if (tipoUsuario === "1") { // No permitir rol Proveedor
+    } else if (tipoUsuario === "1") { 
         checkboxes.forEach(cb => {
             cb.disabled = false;
         });
@@ -676,7 +678,6 @@ $('#Tablaproveedores').on('click', 'button.EDITAR', function () {
         });
     }
 
-    // Exclusión entre Superusuario y Administrador
     if (superusuarioCheckbox.checked) {
         administradorCheckbox.checked = false;
         administradorCheckbox.disabled = true;
@@ -690,6 +691,7 @@ $('#Tablaproveedores').on('click', 'button.EDITAR', function () {
     } else {
         superusuarioCheckbox.disabled = false;
     }
+
 
 
     if (row.data().FOTO_USUARIO) {
@@ -724,56 +726,40 @@ $('#Tablaproveedores').on('click', 'button.EDITAR', function () {
         $('#FOTO_USUARIO').dropify().data('dropify').resetPreview();
         $('#FOTO_USUARIO').dropify().data('dropify').clearElement();
     }
+
+
+      setTimeout(() => {
+    $("#PASSWORD").val(row.data().PASSWORD_2);
+    $("#PASSWORD_2").val(row.data().PASSWORD_2);
+    }, 100); // pequeño retraso para asegurar que el form ya fue llenado
+    
+
 });
 
 
 
 
+function verificapassword() {
+    const pass1 = $('#PASSWORD').val();
+    const pass2 = $('#PASSWORD_2').val();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function validarContrasenas() {
-    var password = $('#PASSWORD').val();
-    var password2 = $('#PASSWORD_2').val();
-    var mensaje = $('#PASSWORD_MENSAJE');
-    var botonGuardar = $('#guardarFormUSUARIO'); 
-
-    mensaje.text('');
-    mensaje.hide();
-    botonGuardar.prop('disabled', true);
-
-    if (password.length === 0 && password2.length === 0) {
-        return;
-    }
-
-    if (password.length > 0 || password2.length > 0) {
-        mensaje.show();
-    }
-
-    if (password.length < 6) {
-        mensaje.text('* La contraseña debe tener mínimo 6 caracteres *').css('color', 'red');
-        return;
-    }
-
-    if (password !== password2) {
-        mensaje.text('* Las contraseñas no son iguales *').css('color', 'red');
+    if (pass1.length > 5) {
+        if (pass1 === pass2) {
+            password_error = 0;
+            $('#PASSWORD_MENSAJE')
+                .html('<h5 class="text-success">* Contraseñas iguales *</h5>')
+                .show();
+        } else {
+            password_error = 1;
+            $('#PASSWORD_MENSAJE')
+                .html('<h5 class="text-danger">* Las contraseñas no son iguales *</h5>')
+                .show();
+        }
     } else {
-        mensaje.text('Las contraseñas coinciden.').css('color', 'green');
-        botonGuardar.prop('disabled', false); 
+        password_error = 1;
+        $('#PASSWORD_MENSAJE')
+            .html('<h5 class="text-danger">* La contraseña debe tener mínimo 6 caracteres *</h5>')
+            .show();
     }
 }
 
@@ -796,7 +782,6 @@ function limpiarFormularioUsuario() {
     $('#PASSWORD').val('');
     $('#PASSWORD_2').val('');
     $('#PASSWORD_MENSAJE').text('').hide();
-    $('#guardarFormUSUARIO').prop('disabled', true); 
 
     var drEvent = $('#FOTO_USUARIO').dropify().data('dropify');
     drEvent.resetPreview();
@@ -808,7 +793,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkboxes = document.querySelectorAll('.checkbox_rol');
     const superusuarioCheckbox = Array.from(checkboxes).find(cb => cb.value === 'Superusuario');
     const administradorCheckbox = Array.from(checkboxes).find(cb => cb.value === 'Administrador');
-    const proveedorCheckbox = Array.from(checkboxes).find(cb => cb.value === 'Proveedor'); // Checkbox de proveedor
+    const proveedorCheckbox = Array.from(checkboxes).find(cb => cb.value === 'Proveedor'); 
 
     document.getElementById("USUARIO_TIPO").addEventListener("change", function() {
         let seleccion = this.value;
@@ -822,7 +807,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 proveedorCheckbox.disabled = false;
                 proveedorCheckbox.checked = true; 
             }
-        } else if (seleccion === "1") { // Tipo 1: No puede ser proveedor
+        } else if (seleccion === "1") { 
             checkboxes.forEach(cb => {
                 cb.disabled = false;
                 cb.checked = false;
@@ -841,7 +826,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener('change', () => {
-            // Si selecciona Superusuario, desactiva Administrador
             if (checkbox === superusuarioCheckbox && checkbox.checked) {
                 if (administradorCheckbox) {
                     administradorCheckbox.checked = false;
@@ -849,14 +833,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Si desmarca Superusuario, vuelve a habilitar Administrador
             if (checkbox === superusuarioCheckbox && !checkbox.checked) {
                 if (administradorCheckbox) {
                     administradorCheckbox.disabled = false;
                 }
             }
 
-            // Si selecciona Administrador, desactiva Superusuario
             if (checkbox === administradorCheckbox && checkbox.checked) {
                 if (superusuarioCheckbox) {
                     superusuarioCheckbox.checked = false;
@@ -864,7 +846,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Si desmarca Administrador, vuelve a habilitar Superusuario
             if (checkbox === administradorCheckbox && !checkbox.checked) {
                 if (superusuarioCheckbox) {
                     superusuarioCheckbox.disabled = false;
@@ -910,3 +891,19 @@ $(document).ready(function() {
 
     $("#USUARIO_TIPO").trigger("change");
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const btnGenerar = document.getElementById("btnGENERARCONTRASEÑA");
+
+    btnGenerar.addEventListener("click", function () {
+        const password = Math.floor(100000 + Math.random() * 900000).toString();
+
+        document.getElementById("PASSWORD").value = password;
+        document.getElementById("PASSWORD_2").value = password;
+
+        
+    });
+
+});
+    

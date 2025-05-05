@@ -2448,6 +2448,7 @@ for (var key in data) {
           
       var input = $('#' + form).find(`input[name='${key}'][type='text'], input[name='${key}'][type='number']`);
       var email = $('#' + form).find(`input[name='${key}'][type='email']`);
+      var password = $('#' + form).find(`input[name='${key}'][type='password']`);
       var date = $('#' + form).find(`input[name='${key}'][type='date']`);
       var time = $('#' + form).find(`input[name='${key}'][type='time']`);
       var textarea = $('#' + form).find(`textarea[name='${key}']`).val(data[key]);
@@ -2465,7 +2466,12 @@ for (var key in data) {
       else if (email.length) {
         email.val(data[key]);
         
-      } else if (select.length) {
+      }
+        else if (password.length) {
+        password.val(data[key]);
+    }
+
+      else if (select.length) {
 
         select.val(data[key])
 
@@ -2481,7 +2487,9 @@ for (var key in data) {
 
         hidden.val(data[key])
 
-      } else {
+      
+      }
+      else {
 
         $('#' + form).find(`input[name='${key}'][value='${data[key]}'][type='radio']`).prop('checked', true)
                 

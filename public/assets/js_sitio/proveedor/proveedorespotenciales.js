@@ -447,3 +447,43 @@ function obtenerservicios(data) {
             }
         });
     });
+
+
+    
+document.addEventListener("DOMContentLoaded", function () {
+    const botonAgregarContacto = document.getElementById('botonAgregarservicio');
+    
+    botonAgregarContacto.addEventListener('click', function () {
+        agregarContacto();
+    });
+
+    function agregarContacto() {
+        const divContacto = document.createElement('div');
+        divContacto.classList.add('row', 'generarservicio', 'mb-3');
+        divContacto.innerHTML = `
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label class="form-label">Servicio *</label>
+                        <input type="text" class="form-control" name="NOMBRE_SERVICIO" required>
+                    </div>
+                </div>
+            </div>
+    
+          
+    
+            <div class="col-12 mt-4 text-center">
+                <button type="button" class="btn btn-danger botonEliminarContacto">Eliminar servicio<i class="bi bi-trash-fill"></i></button>
+            </div>
+        `;
+    
+        const contenedor = document.querySelector('.serviciodiv');
+        contenedor.appendChild(divContacto);
+    
+        divContacto.querySelector('.botonEliminarContacto').addEventListener('click', function () {
+            contenedor.removeChild(divContacto);
+        });
+    
+    }
+    
+});

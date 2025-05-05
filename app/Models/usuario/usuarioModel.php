@@ -34,8 +34,8 @@ class usuarioModel extends Authenticatable
 
     // Campos ocultos al serializar el modelo
     protected $hidden = [
-        'PASSWORD',
-        'PASSWORD_2',
+        // 'PASSWORD',
+        // 'PASSWORD_2',
         'remember_token',
     ];
 
