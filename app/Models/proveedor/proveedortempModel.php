@@ -16,5 +16,6 @@ class proveedortempModel extends Model
         'RAZON_PROVEEDORTEMP',
         'GIRO_PROVEEDORTEMP',
         'ACTIVO',
+        'DIRECCIONES_JSON'
     ];
 }

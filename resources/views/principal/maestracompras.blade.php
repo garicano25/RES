@@ -200,7 +200,7 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{url('/Banco_proveedores')}}">Banco de proveedores</a>
                                 </li>
-                                
+
                                 @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
 
                                 <hr class="dropdown-divider">
@@ -430,7 +430,7 @@
     @endif
 
     @if(request()->is('Proveedores_temporales'))
-    <script src="/assets/js_sitio/proveedor/proveedorestemp.js"></script>
+    <script src="/assets/js_sitio/proveedor/proveedorestemp.js?v=1.0"></script>
     @endif
 </body>
 

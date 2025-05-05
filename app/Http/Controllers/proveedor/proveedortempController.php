@@ -78,6 +78,53 @@ class proveedortempController extends Controller
                     $response['temporal']  = $temporales;
                     return response()->json($response);
                     break;
+
+
+                    case 2 :
+
+                    if ($request->ID_FORMULARIO_PROVEEDORTEMP == 0) {
+                        DB::statement('ALTER TABLE formulario_proveedortemp AUTO_INCREMENT=1;');
+
+                        // Excluir arrays puros y agregar los JSON correctamente
+                        $data = $request->except(['direcciones']);
+                        $data['DIRECCIONES_JSON'] = is_string($request->DIRECCIONES_JSON) ? $request->DIRECCIONES_JSON : json_encode($request->DIRECCIONES_JSON ?? []);
+
+                        $temporales = proveedortempModel::create($data);
+
+                      
+                        $response['code'] = 1;
+                        $response['temporal'] = $temporales;
+                        return response()->json($response);
+                    } else {
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                proveedortempModel::where('ID_FORMULARIO_PROVEEDORTEMP', $request->ID_FORMULARIO_PROVEEDORTEMP)
+                                    ->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['temporal'] = 'Desactivada';
+                            } else {
+                                proveedortempModel::where('ID_FORMULARIO_PROVEEDORTEMP', $request->ID_FORMULARIO_PROVEEDORTEMP)
+                                    ->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['temporal'] = 'Activada';
+                            }
+                        } else {
+                            $temporales = proveedortempModel::find($request->ID_FORMULARIO_PROVEEDORTEMP);
+
+                            $data = $request->except(['direcciones']);
+                            $data['DIRECCIONES_JSON'] = is_string($request->DIRECCIONES_JSON) ? $request->DIRECCIONES_JSON : json_encode($request->DIRECCIONES_JSON ?? []);
+
+                            $temporales->update($data);
+
+                        
+                            $response['code'] = 1;
+                            $response['temporal'] = 'Actualizada';
+                        }
+
+                        return response()->json($response);
+                    }
+
+
                 default:
                     $response['code']  = 1;
                     $response['msj']  = 'Api no encontrada';
