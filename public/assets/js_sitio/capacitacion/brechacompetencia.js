@@ -183,18 +183,39 @@ $('#Tablabrecha tbody').on('click', 'td>button.EDITAR', function () {
 
     editarDatoTabla(row.data(), 'formularioBRECHA', 'miModal_BRECHA', 1);
 
-    const brechas = JSON.parse(row.data().BRECHA_JSON || '[]');
+    const brechasJson = JSON.parse(row.data().BRECHA_JSON || '{}');
 
-    const listaBrechas = brechas.map(item => `
-        <div class="fila-brecha">
-            <div class="mensaje-brecha">${item.mensaje}</div>
-            <div class="porcentaje-brecha">${item.porcentaje.toFixed(2)}%</div>
-        </div>
-    `).join('');
+    let totalBrechas = 0;
+    let listaBrechasHtml = '';
 
-    $('#listaBrechas').html(listaBrechas);
-    $('#contadorBrechas').text(`Total de brechas: ${brechas.length}`);
+    const secciones = {
+        formacion: "Formación",
+        habilidades: "Habilidades",
+        conocimientos: "Conocimientos",
+        experiencia: "Experiencia",
+        cursos: "Cursos"
+    };
+
+    Object.entries(secciones).forEach(([clave, titulo]) => {
+        const brechas = brechasJson[clave] || [];
+
+        if (brechas.length > 0) {
+            totalBrechas += brechas.length;
+
+         
+            listaBrechasHtml += brechas.map(item => `
+                <div class="fila-brecha">
+                    <div class="mensaje-brecha">${item.mensaje}</div>
+                    <div class="porcentaje-brecha">${parseFloat(item.porcentaje).toFixed(1)}%</div>
+                </div>
+            `).join('');
+        }
+    });
+
+    $('#listaBrechas').html(listaBrechasHtml || '<em>No hay brechas registradas</em>');
+    $('#contadorBrechas').text(`Total de brechas: ${totalBrechas}`);
 });
+
 
 
 
