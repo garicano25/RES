@@ -1031,7 +1031,7 @@ function mostrarCursos(data, form) {
         // Textarea del curso
         $('#' + form).find(`#CURSO${num}_PPT`).val(curso.CURSO_PPT);
 
-          $('#' + form).find(`input[id='PORCENTAJE_CURSO${count}']`).val(obj.PORCENTAJE_CURSO);
+          $('#' + form).find(`input[id='PORCENTAJE_CURSO${count}']`).val(curso.PORCENTAJE_CURSO);
 
         
         // Radios de Cumple (si/no)
