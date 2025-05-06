@@ -2,29 +2,121 @@
 
 @section('contenido')
 
+
+<!-- Estilos CSS a añadir al proyecto -->
 <style>
-    <style>.fila-brecha {
+    .brechas-container {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+    }
+
+    .brecha-item {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        background-color: white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        border: 1px solid #e9ecef;
+    }
+
+    .brecha-header {
         display: flex;
         justify-content: space-between;
-        padding: 4px 0;
-        border-bottom: 1px solid #eee;
+        align-items: center;
+        padding: 12px 15px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
     }
 
-    .mensaje-brecha {
-        flex: 1;
-        padding-right: 10px;
-        text-align: left;
+    .brecha-header .mensaje-brecha {
         font-size: 14px;
+        font-weight: 500;
+        color: #495057;
+        flex-grow: 1;
     }
 
-    .porcentaje-brecha {
-        width: 80px;
-        text-align: right;
-        font-weight: bold;
+    .brecha-header .porcentaje-brecha {
+        font-weight: 600;
+        padding: 4px 10px;
+        min-width: 60px;
+        text-align: center;
+        border-radius: 20px;
+        color: white;
+        font-size: 13px;
+        margin-left: 10px;
+    }
+
+    .brecha-content {
+        padding: 12px 15px;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .btn-plan {
+        background-color: transparent;
+        border: 1px dashed #adb5bd;
+        color: #6c757d;
+        font-size: 13px;
+        padding: 5px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .btn-plan:hover {
+        background-color: #f1f3f5;
+        border-color: #6c757d;
+    }
+
+    .porcentaje-bajo {
+        background-color: #28a745;
+    }
+
+    .porcentaje-medio {
+        background-color: #fd7e14;
+    }
+
+    .porcentaje-alto {
+        background-color: #dc3545;
+    }
+
+    .brechas-cabecera {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .brechas-cabecera h5 {
+        margin-bottom: 0;
+        font-weight: 600;
+        color: #343a40;
+    }
+
+    .contador-brechas {
+        background-color: #3b7ddd;
+        color: white;
+        padding: 5px 12px;
+        border-radius: 20px;
         font-size: 14px;
+        font-weight: 500;
     }
-</style>
 
+    .sin-brechas {
+        text-align: center;
+        padding: 25px;
+        color: #6c757d;
+        font-style: italic;
+        background-color: white;
+        border-radius: 6px;
+    }
 </style>
 
 <div class="contenedor-contenido">
@@ -79,19 +171,20 @@
                                 </div>
 
                             </div>
-                            <div class="mt-3">
-                                <h5>Brechas detectadas:</h5>
+                            <div class="mt-3 brechas-container">
+                                <div class="brechas-cabecera">
+                                    <h5>Brechas detectadas</h5>
+                                    <span id="contadorBrechas" class="contador-brechas"></span>
+                                </div>
                                 <div id="listaBrechas"></div>
-                                <p id="contadorBrechas" class="fw-bold mt-2"></p>
                             </div>
-
 
                         </div>
                     </div>
 
                     <div class="modal-footer mx-5">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                     
+
                     </div>
             </form>
         </div>

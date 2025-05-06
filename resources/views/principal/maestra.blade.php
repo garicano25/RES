@@ -528,7 +528,7 @@
 
 
     @if(request()->is('Brecha_competencia'))
-    <script src="/assets/js_sitio/capacitacion/brechacompetencia.js?v=1.4"></script>
+    <script src="/assets/js_sitio/capacitacion/brechacompetencia.js?v=1.5"></script>
     @endif
 
 

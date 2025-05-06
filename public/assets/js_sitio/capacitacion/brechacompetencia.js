@@ -176,6 +176,46 @@ var Tablabrecha = $("#Tablabrecha").DataTable({
 
 
 
+// $('#Tablabrecha tbody').on('click', 'td>button.EDITAR', function () {
+//     var tr = $(this).closest('tr');
+//     var row = Tablabrecha.row(tr);
+//     ID_BRECHA_COMPETENCIAS = row.data().ID_BRECHA_COMPETENCIAS;
+
+//     editarDatoTabla(row.data(), 'formularioBRECHA', 'miModal_BRECHA', 1);
+
+//     const brechasJson = JSON.parse(row.data().BRECHA_JSON || '{}');
+
+//     let totalBrechas = 0;
+//     let listaBrechasHtml = '';
+
+//     const secciones = {
+//         formacion: "Formación",
+//         habilidades: "Habilidades",
+//         conocimientos: "Conocimientos",
+//         experiencia: "Experiencia",
+//         cursos: "Cursos"
+//     };
+
+//     Object.entries(secciones).forEach(([clave, titulo]) => {
+//         const brechas = brechasJson[clave] || [];
+
+//         if (brechas.length > 0) {
+//             totalBrechas += brechas.length;
+
+         
+//             listaBrechasHtml += brechas.map(item => `
+//                 <div class="fila-brecha">
+//                     <div class="mensaje-brecha">${item.mensaje}</div>
+//                     <div class="porcentaje-brecha">${parseFloat(item.porcentaje).toFixed(1)}%</div>
+//                 </div>
+//             `).join('');
+//         }
+//     });
+
+//     $('#listaBrechas').html(listaBrechasHtml || '<em>No hay brechas registradas</em>');
+//     $('#contadorBrechas').text(`Total de brechas: ${totalBrechas}`);
+// });
+
 $('#Tablabrecha tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablabrecha.row(tr);
@@ -187,7 +227,9 @@ $('#Tablabrecha tbody').on('click', 'td>button.EDITAR', function () {
 
     let totalBrechas = 0;
     let listaBrechasHtml = '';
+    let todasLasBrechas = [];
 
+    // Recopilar todas las brechas en un solo array
     const secciones = {
         formacion: "Formación",
         habilidades: "Habilidades",
@@ -196,28 +238,52 @@ $('#Tablabrecha tbody').on('click', 'td>button.EDITAR', function () {
         cursos: "Cursos"
     };
 
+    // Simplemente recopilamos todas las brechas sin clasificar
     Object.entries(secciones).forEach(([clave, titulo]) => {
         const brechas = brechasJson[clave] || [];
-
-        if (brechas.length > 0) {
-            totalBrechas += brechas.length;
-
-         
-            listaBrechasHtml += brechas.map(item => `
-                <div class="fila-brecha">
-                    <div class="mensaje-brecha">${item.mensaje}</div>
-                    <div class="porcentaje-brecha">${parseFloat(item.porcentaje).toFixed(1)}%</div>
-                </div>
-            `).join('');
-        }
+        
+        brechas.forEach(item => {
+            if (item && item.mensaje && item.porcentaje) {
+                todasLasBrechas.push(item);
+                totalBrechas++;
+            }
+        });
     });
 
-    $('#listaBrechas').html(listaBrechasHtml || '<em>No hay brechas registradas</em>');
-    $('#contadorBrechas').text(`Total de brechas: ${totalBrechas}`);
+    // Si no hay brechas, mostrar mensaje
+    if (totalBrechas === 0) {
+        listaBrechasHtml = '<div class="sin-brechas">No hay brechas registradas</div>';
+    } else {
+        // Generar HTML para todas las brechas en un solo listado
+        todasLasBrechas.forEach((item, index) => {
+            const porcentaje = parseFloat(item.porcentaje).toFixed(1);
+            let claseColor = 'porcentaje-bajo';
+            
+            if (porcentaje > 3.0) {
+                claseColor = 'porcentaje-alto';
+            } else if (porcentaje > 1.5) {
+                claseColor = 'porcentaje-medio';
+            }
+            
+            listaBrechasHtml += `
+                <div class="brecha-item" id="brecha-${index}">
+                    <div class="brecha-header">
+                        <div class="mensaje-brecha"> ${item.mensaje}</div>
+                        <div class="porcentaje-brecha ${claseColor}">${porcentaje}%</div>
+                    </div>
+                    <div class="brecha-content">
+                        <button type="button" class="btn-plan" data-brecha-id="${index}" onclick="/* Función futura para añadir plan */">
+                            <i class="fas fa-plus-circle me-1"></i> Plan de cumplimiento (próximamente)
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    $('#listaBrechas').html(listaBrechasHtml);
+    $('#contadorBrechas').text(`${totalBrechas}`);
 });
-
-
-
 
 
 
