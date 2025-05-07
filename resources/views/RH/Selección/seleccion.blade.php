@@ -335,7 +335,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">1 - Cédula profesional *</label>
+                        <label class="form-label">1 - Validación de formación académica (Cédula profesional) *</label>
                         <div class="d-flex align-items-center">
 
 
