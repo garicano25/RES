@@ -4307,7 +4307,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
                             Tablapptseleccion.ajax.reload(null, false);
                         }
 
-                        console.log("Brecha de competencias guardadas:", brecha);
                     }, 300);
                 });
             }, 1);
@@ -4340,7 +4339,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
                             Tablapptseleccion.ajax.reload(null, false);
                         }
 
-                        console.log("Brecha de competencias editadas:", brecha);
                     }, 300);
                 });
             }, 1);
