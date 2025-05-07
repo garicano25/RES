@@ -664,10 +664,6 @@
                             <div class="col-12 text-center">
                                 <div style="display: inline-flex; align-items: center; gap: 10px;">
                                     <h4 style="margin: 0;">I. Características generales</h4>
-                                    <input type="text" value="5" style="width: 40px; height: 40px; text-align: center;" readonly>
-                                    <span style="font-size: 18px;">%</span>
-                                    <input type="text" style="width: 40px; height: 40px; text-align: center;" id="SUMA_CARACTERISTICAS_SELECCION" name="SUMA_CARACTERISTICAS_SELECCION" readonly>
-                                    <span style="font-size: 18px;">%</span>
                                 </div>
                             </div>
                         </div>
@@ -701,10 +697,7 @@
                                             <label class="form-check-label" for="EDAD_CUMPLE_NO">No</label>
                                         </div>
                                     </div>
-                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
-                                        <input type="text" class="form-control" id="PORCENTAJE_EDAD" name="PORCENTAJE_EDAD" style="width: 50px; text-align: center;">
-                                        <span>%</span>
-                                    </div>
+
                                 </div>
                             </div>
 
@@ -733,10 +726,6 @@
                                             <input class="form-check-input desabilitado" type="radio" name="GENERO_CUMPLE_PPT" id="GENERO_CUMPLE_NO" value="no">
                                             <label class="form-check-label" for="GENERO_CUMPLE_NO">No</label>
                                         </div>
-                                    </div>
-                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
-                                        <input type="text" class="form-control" id="PORCENTAJE_GENERO" name="PORCENTAJE_GENERO" style="width: 50px; text-align: center;">
-                                        <span>%</span>
                                     </div>
                                 </div>
                             </div>
@@ -769,10 +758,6 @@
                                             <label class="form-check-label" for="ESTADO_CUMPLE_NO">No</label>
                                         </div>
                                     </div>
-                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
-                                        <input type="text" class="form-control" id="PORCENTAJE_ESTADOCIVIL" name="PORCENTAJE_ESTADOCIVIL" style="width: 50px; text-align: center;">
-                                        <span>%</span>
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-3">
@@ -800,10 +785,7 @@
                                             <label class="form-check-label" for="NACIONALIDAD_CUMPLE_NO">No</label>
                                         </div>
                                     </div>
-                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
-                                        <input type="text" class="form-control" id="PORCENTAJE_NACIONALIDAD" name="PORCENTAJE_NACIONALIDAD" style="width: 50px; text-align: center;">
-                                        <span>%</span>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -835,10 +817,7 @@
                                             <label class="form-check-label" for="DISCAPACIDAD_CUMPLE_NO">No</label>
                                         </div>
                                     </div>
-                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
-                                        <input type="text" class="form-control" id="PORCENTAJE_DISCAPACIDAD" name="PORCENTAJE_DISCAPACIDAD" style="width: 50px; text-align: center;">
-                                        <span>%</span>
-                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-6">
@@ -1502,9 +1481,9 @@
                                             <tr>
                                                 <th class="text-center">Idioma</th>
                                                 <th class="text-center">Aplica</th>
-                                                <th class="text-center">Básico</th>
-                                                <th class="text-center">Intermedio</th>
-                                                <th class="text-center">Avanzado</th>
+                                                <th class="text-center">Aplica <br> A1,A2</th>
+                                                <th class="text-center">Básico <br> B1,B2</th>
+                                                <th class="text-center">Intermedio <br> C1,C2</th>
                                                 <th class="text-center">Si</th>
                                                 <th class="text-center">No</th>
                                                 <th class="text-center">%</th>
@@ -2781,8 +2760,6 @@
                                 <div class="row mb-3">
                                     <div class="col-5">
                                         <label>Experiencia laboral general requerida</label>
-                                        <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_EXPERIENCIAGENERAL" name="PORCENTAJE_EXPERIENCIAGENERAL">
-                                        <span style="font-size: 18px;">%</span>
                                     </div>
                                     <div class="col-5">
                                         <div class="form-group">
@@ -2835,8 +2812,6 @@
                                 <div class="row mb-3">
                                     <div class="col-5">
                                         <label>Experiencia laboral específica requerida</label>
-                                        <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_EXPERIENCIAESPECIFICA" name="PORCENTAJE_EXPERIENCIAESPECIFICA">
-                                        <span style="font-size: 18px;">%</span>
                                     </div>
                                     <div class="col-5">
                                         <div class="form-group">
@@ -3238,7 +3213,7 @@
                                     <div class="col-12 text-center">
                                         <div style="display: inline-flex; align-items: center; gap: 10px;">
                                             <h4>VI. Habilidades y competencias funcionales</h4>
-                                            <input type="text" value="15" style="width: 40px; height: 40px; text-align: center;" readonly>
+                                            <input type="text" value="20" style="width: 40px; height: 40px; text-align: center;" readonly>
                                             <span style="font-size: 18px;">%</span>
                                             <input type="text" style="width: 40px; height: 40px; text-align: center;" id="SUMA_HABILIDADES_SELECCION" name="SUMA_HABILIDADES_SELECCION" readonly>
                                             <span style="font-size: 18px;">%</span>

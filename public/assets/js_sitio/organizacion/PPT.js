@@ -738,44 +738,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /// SUMA EN EL PPT
 
-/// I. Características generales
-
-function calcularSumaCaracteristicas() {
-    const ids = [
-        'PORCENTAJE_EDAD',
-        'PORCENTAJE_GENERO',
-        'PORCENTAJE_ESTADOCIVIL',
-        'PORCENTAJE_NACIONALIDAD',
-        'PORCENTAJE_DISCAPACIDAD'
-    ];
-
-    let suma = 0;
-
-    ids.forEach(id => {
-        const input = document.getElementById(id);
-        if (input && input.value) {
-            const valor = parseFloat(input.value) || 0;
-            suma += valor;
-        }
-    });
-
-    const sumaInput = document.getElementById('SUMA_CARACTERISTICAS');
-    if (sumaInput) {
-        sumaInput.value = Number.isInteger(suma) ? suma : suma.toString();
-    }
-
-    if (suma > 5) {
-        alertToast("La suma de los porcentajes no puede exceder el 5%.", "error");
-    } else if (suma === 5) {
-        alertToast("La suma de los porcentajes coincide correctamente.", "success");
-    }
-}
-
-document.querySelectorAll('#PORCENTAJE_EDAD, #PORCENTAJE_GENERO, #PORCENTAJE_ESTADOCIVIL, #PORCENTAJE_NACIONALIDAD, #PORCENTAJE_DISCAPACIDAD')
-    .forEach(input => {
-        input.addEventListener('input', calcularSumaCaracteristicas);
-    });
-
 
 
 
@@ -903,9 +865,8 @@ for (let i = 1; i <= 40; i++) {
 
 function calcularSumaExperiencia() {
     const ids = [
-        'PORCENTAJE_EXPERIENCIAGENERAL',
+        
         'PORCENTAJE_CANTIDADTOTAL',
-        'PORCENTAJE_EXPERIENCIAESPECIFICA',
         'PORCENTAJE_INDIQUEXPERIENCIA'
     ];
 
@@ -931,7 +892,7 @@ function calcularSumaExperiencia() {
     }
 }
 
-document.querySelectorAll('#PORCENTAJE_EXPERIENCIAGENERAL, #PORCENTAJE_CANTIDADTOTAL, #PORCENTAJE_EXPERIENCIAESPECIFICA, #PORCENTAJE_INDIQUEXPERIENCIA')
+document.querySelectorAll('#PORCENTAJE_CANTIDADTOTAL, #PORCENTAJE_INDIQUEXPERIENCIA')
     .forEach(input => {
         input.addEventListener('input', calcularSumaExperiencia);
     });
@@ -969,9 +930,9 @@ function calcularSumaHabilidades() {
         sumaInput.value = Number.isInteger(suma) ? suma : suma.toString();
     }
 
-    if (suma > 15) {
-        alertToast("La suma de los porcentajes de habilidades no puede exceder el 15%.", "error");
-    } else if (suma === 15) {
+    if (suma > 20) {
+        alertToast("La suma de los porcentajes de habilidades no puede exceder el 20%.", "error");
+    } else if (suma === 20) {
         alertToast("La suma de los porcentajes de habilidades coincide correctamente.", "success");
     }
 }

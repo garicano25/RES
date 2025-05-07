@@ -81,10 +81,6 @@
                             <div class="col-12 text-center">
                                 <div style="display: inline-flex; align-items: center; gap: 10px;">
                                     <h4 style="margin: 0;">I. Características generales</h4>
-                                    <input type="text" value="5" style="width: 40px; height: 40px; text-align: center;" readonly>
-                                    <span style="font-size: 18px;">%</span>
-                                    <input type="text" style="width: 40px; height: 40px; text-align: center;" id="SUMA_CARACTERISTICAS" name="SUMA_CARACTERISTICAS" readonly>
-                                    <span style="font-size: 18px;">%</span>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +90,7 @@
                             <div class="col-3">
                                 <div class="form-group">
                                     <label>Edad (mínima / máxima) *</label>
-                                    <select class="form-control" id="EDAD_PPT" name="EDAD_PPT" >
+                                    <select class="form-control" id="EDAD_PPT" name="EDAD_PPT">
                                         <option value="0" selected disabled>Seleccione una opción</option>
                                         <option value=""></option>
                                         <option value="Indistinto">Indistinto</option>
@@ -119,10 +115,7 @@
                                             <label class="form-check-label" for="EDAD_CUMPLE_NO">No</label>
                                         </div>
                                     </div>
-                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
-                                        <input type="text" class="form-control" id="PORCENTAJE_EDAD" name="PORCENTAJE_EDAD" style="width: 50px; text-align: center;">
-                                        <span>%</span>
-                                    </div>
+
                                 </div>
                             </div>
 
@@ -130,7 +123,7 @@
                             <div class="col-3">
                                 <div class="form-group">
                                     <label>Género *</label>
-                                    <select class="form-control" id="GENERO_PPT" name="GENERO_PPT" >
+                                    <select class="form-control" id="GENERO_PPT" name="GENERO_PPT">
                                         <option value="0" selected disabled>Seleccione una opción</option>
                                         <option value=""></option>
                                         <option value="Indistinto">Indistinto</option>
@@ -154,10 +147,7 @@
                                             <label class="form-check-label" for="GENERO_CUMPLE_NO">No</label>
                                         </div>
                                     </div>
-                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
-                                        <input type="text" class="form-control" id="PORCENTAJE_GENERO" name="PORCENTAJE_GENERO" style="width: 50px; text-align: center;">
-                                        <span>%</span>
-                                    </div>
+
                                 </div>
                             </div>
 
@@ -166,7 +156,7 @@
                             <div class="col-3">
                                 <div class="form-group">
                                     <label>Estado civil *</label>
-                                    <select class="form-control" id="ESTADO_CIVIL_PPT" name="ESTADO_CIVIL_PPT" >
+                                    <select class="form-control" id="ESTADO_CIVIL_PPT" name="ESTADO_CIVIL_PPT">
                                         <option value="0" selected disabled>Seleccione una opción</option>
                                         <option value=""></option>
                                         <option value="Indistinto">Indistinto</option>
@@ -190,16 +180,13 @@
                                             <label class="form-check-label" for="ESTADO_CUMPLE_NO">No</label>
                                         </div>
                                     </div>
-                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
-                                        <input type="text" class="form-control" id="PORCENTAJE_ESTADOCIVIL" name="PORCENTAJE_ESTADOCIVIL" style="width: 50px; text-align: center;">
-                                        <span>%</span>
-                                    </div>
+
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="form-group">
                                     <label>Nacionalidad *</label>
-                                    <select class="form-control" id="NACIONALIDAD_PPT" name="NACIONALIDAD_PPT" >
+                                    <select class="form-control" id="NACIONALIDAD_PPT" name="NACIONALIDAD_PPT">
                                         <option value="0" selected disabled>Seleccione una opción</option>
                                         <option value=""></option>
                                         <option value="Indistinto">Indistinto</option>
@@ -222,10 +209,7 @@
                                             <label class="form-check-label" for="NACIONALIDAD_CUMPLE_NO">No</label>
                                         </div>
                                     </div>
-                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
-                                        <input type="text" class="form-control" id="PORCENTAJE_NACIONALIDAD" name="PORCENTAJE_NACIONALIDAD" style="width: 50px; text-align: center;">
-                                        <span>%</span>
-                                    </div>
+
                                 </div>
                             </div>
 
@@ -234,7 +218,7 @@
                             <div class="col-3">
                                 <div class="form-group">
                                     <label>Persona con discapacidad *</label>
-                                    <select class="form-control" id="DISCAPACIDAD_PPT" name="DISCAPACIDAD_PPT" >
+                                    <select class="form-control" id="DISCAPACIDAD_PPT" name="DISCAPACIDAD_PPT">
                                         <option value="0" selected disabled>Seleccione una opción</option>
                                         <option value=""></option>
                                         <option value="Indistinto">Indistinto</option>
@@ -259,10 +243,7 @@
                                             <label class="form-check-label" for="DISCAPACIDAD_CUMPLE_NO">No</label>
                                         </div>
                                     </div>
-                                    <div style="display: flex; align-items: center; margin-left: 10px; gap: 5px;">
-                                        <input type="text" class="form-control" id="PORCENTAJE_DISCAPACIDAD" name="PORCENTAJE_DISCAPACIDAD" style="width: 50px; text-align: center;">
-                                        <span>%</span>
-                                    </div>
+
                                 </div>
                             </div>
 
@@ -434,7 +415,7 @@
                                                     <label>Situación académica *</label>
                                                     <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_SITUACIONACADEMICA" name="PORCENTAJE_SITUACIONACADEMICA">
                                                     <span style="font-size: 18px;">%</span>
-                                                    <select class="form-control mt-1" id="SITUACION_PPT" name="SITUACION_PPT" >
+                                                    <select class="form-control mt-1" id="SITUACION_PPT" name="SITUACION_PPT">
                                                         <option value="0" selected disabled>Seleccione una opción</option>
                                                         <option value=""></option>
                                                         <option value="Egresado">Egresado</option>
@@ -466,7 +447,7 @@
                                                     <label>Cédula profesional *</label>
                                                     <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_CEDULA" name="PORCENTAJE_CEDULA">
                                                     <span style="font-size: 18px;">%</span>
-                                                    <select class="form-control mt-1" id="CEDULA_PPT" name="CEDULA_PPT" >
+                                                    <select class="form-control mt-1" id="CEDULA_PPT" name="CEDULA_PPT">
                                                         <option selected disabled>Seleccione una opción</option>
                                                         <option value=""></option>
                                                         <option value="Aplica">Aplica</option>
@@ -649,7 +630,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label>Área de conocimiento específica requerida *</label>
-                                    <textarea class="form-control" id="AREA_REQUERIDA_PPT" name="AREA_REQUERIDA_PPT" rows="3" ></textarea>
+                                    <textarea class="form-control" id="AREA_REQUERIDA_PPT" name="AREA_REQUERIDA_PPT" rows="3"></textarea>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -700,7 +681,7 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label>Área de conocimiento requerida *</label>
-                                    <input type="text" class="form-control" id="AREAREQUERIDA_CONOCIMIENTO_PPT" name="AREAREQUERIDA_CONOCIMIENTO_PPT" >
+                                    <input type="text" class="form-control" id="AREAREQUERIDA_CONOCIMIENTO_PPT" name="AREAREQUERIDA_CONOCIMIENTO_PPT">
                                 </div>
                             </div>
                         </div>
@@ -929,9 +910,9 @@
                                             </tr>
                                             <tr>
                                                 <th class="text-center">Idioma</th>
-                                                <th class="text-center">Aplica</th>
-                                                <th class="text-center">Básico</th>
-                                                <th class="text-center">Intermedio</th>
+                                                <th class="text-center">Aplica <br> A1,A2</th>
+                                                <th class="text-center">Básico <br> B1,B2</th>
+                                                <th class="text-center">Intermedio <br> C1,C2</th>
                                                 <th class="text-center">Avanzado</th>
                                                 <th class="text-center">Si</th>
                                                 <th class="text-center">No</th>
@@ -2205,12 +2186,10 @@
                             <div class="row mb-3">
                                 <div class="col-5">
                                     <label>Experiencia laboral general requerida</label>
-                                    <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_EXPERIENCIAGENERAL" name="PORCENTAJE_EXPERIENCIAGENERAL">
-                                    <span style="font-size: 18px;">%</span>
                                 </div>
                                 <div class="col-5">
                                     <div class="form-group">
-                                        <select class="form-control" id="EXPERIENCIA_LABORAL_GENERAL_PPT" name="EXPERIENCIA_LABORAL_GENERAL_PPT" >
+                                        <select class="form-control" id="EXPERIENCIA_LABORAL_GENERAL_PPT" name="EXPERIENCIA_LABORAL_GENERAL_PPT">
                                             <option value="0" selected disabled>Seleccione una opción</option>
                                             <option value=""></option>
                                             <option value="No necesaria">No necesaria</option>
@@ -2259,12 +2238,10 @@
                             <div class="row mb-3">
                                 <div class="col-5">
                                     <label>Experiencia laboral específica requerida</label>
-                                    <input type="text" style="width: 40px; height: 40px; text-align: center;" id="PORCENTAJE_EXPERIENCIAESPECIFICA" name="PORCENTAJE_EXPERIENCIAESPECIFICA">
-                                    <span style="font-size: 18px;">%</span>
                                 </div>
                                 <div class="col-5">
                                     <div class="form-group">
-                                        <select class="form-control" id="EXPERIENCIA_ESPECIFICA_PPT" name="EXPERIENCIA_ESPECIFICA_PPT" >
+                                        <select class="form-control" id="EXPERIENCIA_ESPECIFICA_PPT" name="EXPERIENCIA_ESPECIFICA_PPT">
                                             <option value="0" selected disabled>Seleccione una opción</option>
                                             <option value=""></option>
 
@@ -2633,7 +2610,7 @@
                             <div class="row mb-3">
                                 <div class="col-8">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" id="TIEMPO_EXPERIENCIA_PPT" name="TIEMPO_EXPERIENCIA_PPT" >
+                                        <input type="text" class="form-control" id="TIEMPO_EXPERIENCIA_PPT" name="TIEMPO_EXPERIENCIA_PPT">
                                     </div>
                                 </div>
                                 <div class="col-2">
@@ -2656,7 +2633,7 @@
                                 <div class="col-12 text-center">
                                     <div style="display: inline-flex; align-items: center; gap: 10px;">
                                         <h4>VI. Habilidades y competencias funcionales</h4>
-                                        <input type="text" value="15" style="width: 40px; height: 40px; text-align: center;" readonly>
+                                        <input type="text" value="20" style="width: 40px; height: 40px; text-align: center;" readonly>
                                         <span style="font-size: 18px;">%</span>
                                         <input type="text" style="width: 40px; height: 40px; text-align: center;" id="SUMA_HABILIDADES" name="SUMA_HABILIDADES" readonly>
                                         <span style="font-size: 18px;">%</span>
@@ -3161,13 +3138,13 @@
                             <div class="row mb-3">
                                 <div class="col-4 text-center">
                                     <h6>Elaborado por</h6>
-                                    <input type="text" class="form-control text-center" id="ELABORADO_NOMBRE_PPT" name="ELABORADO_NOMBRE_PPT" >
+                                    <input type="text" class="form-control text-center" id="ELABORADO_NOMBRE_PPT" name="ELABORADO_NOMBRE_PPT">
                                     <div>Nombre</div>
                                     <br>
-                                    <input type="text" class="form-control text-center" id="ELABORADO_FIRMA_PPT" name="ELABORADO_FIRMA_PPT" >
+                                    <input type="text" class="form-control text-center" id="ELABORADO_FIRMA_PPT" name="ELABORADO_FIRMA_PPT">
                                     <div>Firma</div>
                                     <br>
-                                    <input type="text" class="form-control text-center mydatepicker" placeholder="aaaa-mm-dd" id="ELABORADO_FECHA_PPT" name="ELABORADO_FECHA_PPT" >
+                                    <input type="text" class="form-control text-center mydatepicker" placeholder="aaaa-mm-dd" id="ELABORADO_FECHA_PPT" name="ELABORADO_FECHA_PPT">
                                     <i class="bi bi-calendar-event"></i>
 
                                     {{-- <input type="date" class="form-control text-center" id="ELABORADO_FECHA_PPT" name="ELABORADO_FECHA_PPT" > --}}

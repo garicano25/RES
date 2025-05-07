@@ -4721,14 +4721,7 @@ $("#guardarFormSeleccionPPT").click(function (e) {
 // SUMA DE SELECCION
 
 document.addEventListener("DOMContentLoaded", function () {
-    const caracteristicas = [
-        { radioName: 'EDAD_CUMPLE_PPT', inputId: 'PORCENTAJE_EDAD' },
-        { radioName: 'GENERO_CUMPLE_PPT', inputId: 'PORCENTAJE_GENERO' },
-        { radioName: 'ESTADO_CIVIL_CUMPLE_PPT', inputId: 'PORCENTAJE_ESTADOCIVIL' },
-        { radioName: 'NACIONALIDAD_CUMPLE_PPT', inputId: 'PORCENTAJE_NACIONALIDAD' },
-        { radioName: 'DISCAPACIDAD_CUMPLE_PPT', inputId: 'PORCENTAJE_DISCAPACIDAD' },
-    ];
-
+  
     const formacion = [
         { radioName: 'SECUNDARIA_CUMPLE_PPT', inputId: 'PORCENTAJE_SECUNDARIA' },
         { radioName: 'TECNICA_CUMPLE_PPT', inputId: 'PORCENTAJE_MEDIASUPERIOR' },
@@ -4755,9 +4748,7 @@ document.addEventListener("DOMContentLoaded", function () {
     ];
 
     const experiencia = [
-        { radioName: 'EXPERIENCIAGENERAL_CUMPLE_PPT', inputId: 'PORCENTAJE_EXPERIENCIAGENERAL' },
         { radioName: 'CANTIDAD_EXPERIENCIA_CUMPLE_PPT', inputId: 'PORCENTAJE_CANTIDADTOTAL' },
-        { radioName: 'EXPERIENCIA_ESPECIFICA_CUMPLE_PPT', inputId: 'PORCENTAJE_EXPERIENCIAESPECIFICA' },
         { radioName: 'TIEMPO_EXPERIENCIA_CUMPLE_PPT', inputId: 'PORCENTAJE_INDIQUEXPERIENCIA' },
     ];
 
@@ -4805,14 +4796,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function calcularSumas() {
-        const sumaCaracteristicas = sumarCampos(caracteristicas);
         const sumaFormacion = sumarCampos(formacion);
         const sumaConocimientos = sumarCampos(conocimientos);
         const sumaExperiencia = sumarCampos(experiencia);
         const sumaHabilidades = sumarCampos(habilidades);
         const sumaCursos = sumarCursos();
 
-        const sumaTotal = sumaCaracteristicas + sumaFormacion + sumaConocimientos + sumaExperiencia + sumaHabilidades + sumaCursos;
+        const sumaTotal =  sumaFormacion + sumaConocimientos + sumaExperiencia + sumaHabilidades + sumaCursos;
 
         const mostrar = (v) => Number.isInteger(v) ? v : v.toFixed(1);
 
@@ -4821,7 +4811,6 @@ document.addEventListener("DOMContentLoaded", function () {
             if (el) el.value = mostrar(valor);
         };
 
-        setVal('SUMA_CARACTERISTICAS_SELECCION', sumaCaracteristicas);
         setVal('SUMA_FORMACION_SELECCION', sumaFormacion);
         setVal('SUMA_CONOCIMIENTO_SELECCION', sumaConocimientos);
         setVal('SUMA_EXPERIENCIA_SELECCION', sumaExperiencia);
@@ -5488,20 +5477,11 @@ function obtenerBrechasConocimientos() {
 
 function obtenerBrechasExperiencia() {
     const experiencia = [
-        {
-            radioName: 'EXPERIENCIAGENERAL_CUMPLE_PPT',
-            inputId: 'PORCENTAJE_EXPERIENCIAGENERAL',
-            mensaje: 'Falta por cumplir con la experiencia laboral general requerida'
-        },
+       
         {
             radioName: 'CANTIDAD_EXPERIENCIA_CUMPLE_PPT',
             inputId: 'PORCENTAJE_CANTIDADTOTAL',
             mensaje: 'Falta por cumplir con la cantidad total de años de experiencia laboral'
-        },
-        {
-            radioName: 'EXPERIENCIA_ESPECIFICA_CUMPLE_PPT',
-            inputId: 'PORCENTAJE_EXPERIENCIAESPECIFICA',
-            mensaje: 'Falta por cumplir con la experiencia laboral específica requerida'
         },
         {
             radioName: 'TIEMPO_EXPERIENCIA_CUMPLE_PPT',

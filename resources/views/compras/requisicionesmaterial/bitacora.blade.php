@@ -18,7 +18,7 @@
     }
 
 
-     .bg-verde-suave {
+    .bg-verde-suave {
         background-color: #d1e7dd !important;
     }
 
@@ -34,6 +34,9 @@
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
         <h3 style="color: #ffffff; margin: 0;">&nbsp; Bitácora de consecutivos MR</h3>
+
+
+
     </ol>
 
 
@@ -45,6 +48,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th class="text-center">Visualizar</th>
+                        <th class="text-center">Hoja</th>
                         <th class="text-center">Requisición No.</th>
                         <th class="text-center">Fecha de Solicitud</th>
                         <th class="text-center">Solicitante</th>
@@ -56,9 +60,9 @@
                         <th class="text-center">Prioridad</th>
                         <th class="text-center">Estatus</th>
                         <th class="text-center">Comentario</th>
-        
+
                         <th class="text-center">Fecha de Adquisición</th>
-                      
+
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -74,6 +78,191 @@
 
 
 
+
+<!-- <div class="modal fade" id="modalMateriales" tabindex="-1" aria-labelledby="tituloMateriales" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" style="background-color: #ffffff;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloMateriales">Materiales Aprobados</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <ul id="listaMateriales" class="list-group"></ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+
+<!-- Modal para visualizar materiales con hoja de trabajo -->
+<div class="modal fade" id="modalMateriales" tabindex="-1" aria-labelledby="tituloMateriales" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="tituloMateriales">Hoja de Trabajo - Materiales Aprobados</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Contenedor de tarjetas de productos -->
+                <div id="contenedorProductos"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-success" id="btnGuardarTodo">Guardar Todo</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Template para cada producto -->
+<template id="templateProducto">
+    <div class="card mb-4 producto-card">
+        <div class="card-header bg-light">
+            <h5 class="producto-titulo mb-0"></h5>
+        </div>
+        <div class="card-body">
+            <!-- Sección de cotizaciones -->
+            <h6 class="fw-bold">Cotizaciones</h6>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th>Cotización</th>
+                            <th>Documento</th>
+                            <th>Proveedor</th>
+                            <th>Importe</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="fila-cotizacion" data-cotizacion="Q1">
+                            <td>Q1</td>
+                            <td>
+                                <div class="input-group">
+                                    <input type="file" class="form-control doc-cotizacion" accept=".pdf,.doc,.docx,.xls,.xlsx">
+                                    <span class="input-group-text"><i class="fas fa-upload"></i></span>
+                                </div>
+                            </td>
+                            <td>
+                                <select class="form-select proveedor-cotizacion">
+                                    <option value="">Seleccionar proveedor</option>
+                                    <option value="Proveedor 1">Proveedor 1</option>
+                                    <option value="Proveedor 2">Proveedor 2</option>
+                                    <option value="Proveedor 3">Proveedor 3</option>
+                                    <option value="Otro">Otro proveedor</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control importe-cotizacion" step="0.01" min="0">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="fila-cotizacion" data-cotizacion="Q2">
+                            <td>Q2</td>
+                            <td>
+                                <div class="input-group">
+                                    <input type="file" class="form-control doc-cotizacion" accept=".pdf,.doc,.docx,.xls,.xlsx">
+                                    <span class="input-group-text"><i class="fas fa-upload"></i></span>
+                                </div>
+                            </td>
+                            <td>
+                                <select class="form-select proveedor-cotizacion">
+                                    <option value="">Seleccionar proveedor</option>
+                                    <option value="Proveedor 1">Proveedor 1</option>
+                                    <option value="Proveedor 2">Proveedor 2</option>
+                                    <option value="Proveedor 3">Proveedor 3</option>
+                                    <option value="Otro">Otro proveedor</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control importe-cotizacion" step="0.01" min="0">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="fila-cotizacion" data-cotizacion="Q3">
+                            <td>Q3</td>
+                            <td>
+                                <div class="input-group">
+                                    <input type="file" class="form-control doc-cotizacion" accept=".pdf,.doc,.docx,.xls,.xlsx">
+                                    <span class="input-group-text"><i class="fas fa-upload"></i></span>
+                                </div>
+                            </td>
+                            <td>
+                                <select class="form-select proveedor-cotizacion">
+                                    <option value="">Seleccionar proveedor</option>
+                                    <option value="Proveedor 1">Proveedor 1</option>
+                                    <option value="Proveedor 2">Proveedor 2</option>
+                                    <option value="Proveedor 3">Proveedor 3</option>
+                                    <option value="Otro">Otro proveedor</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control importe-cotizacion" step="0.01" min="0">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Sección de selección final -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Proveedor seleccionado:</label>
+                        <select class="form-select proveedor-seleccionado">
+                            <option value="">Seleccionar proveedor final</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">¿Requiere PO?</label>
+                        <div class="form-check">
+                            <input class="form-check-input requiere-po" type="radio" name="requierePO" value="si">
+                            <label class="form-check-label">Sí</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input requiere-po" type="radio" name="requierePO" value="no" checked>
+                            <label class="form-check-label">No</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 campo-monto-final d-none">
+                        <label class="form-label fw-bold">Monto final:</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control monto-final" step="0.01" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Forma de pago:</label>
+                        <select class="form-select forma-pago">
+                            <option value="">Seleccionar forma de pago</option>
+                           
+                        </select>
+                    </div>
+
+                    <div class="alert alert-warning matriz-comparativa d-none">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Aviso:</strong> Se requiere realizar una Matriz comparativa de cotizaciones
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
 
 
 
@@ -97,7 +286,7 @@
                             <div class="row">
                                 <div class="col-9">
                                     <label>Solicitante </label>
-                                    <input type="text" class="form-control id=" SOLICITANTE_MR" name="SOLICITANTE_MR" readonly>
+                                    <input type="text" class="form-control" id="SOLICITANTE_MR" name="SOLICITANTE_MR" readonly>
                                 </div>
 
                                 <div class="col-3">
@@ -269,6 +458,14 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
 
 
 
