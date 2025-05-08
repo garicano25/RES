@@ -1167,58 +1167,127 @@ case 3:
 
         break;
 
-        case 5:
+                // case 5:
 
-            if ($request->ID_BURO_SELECCION == 0) {
-                DB::statement('ALTER TABLE seleccion_buro_laboral AUTO_INCREMENT=1;');
-                $autorizaciones = buroseleccionModel::create($request->all());
-            } else {
-                if (!isset($request->ELIMINAR)) {
-                    $autorizaciones = buroseleccionModel::find($request->ID_BURO_SELECCION);
-                    
-                    if ($request->hasFile('ARCHIVO_RESULTADO') && $autorizaciones->ID_BURO_SELECCION) {
-                        Storage::delete($autorizaciones->ARCHIVO_RESULTADO);
+                //     if ($request->ID_BURO_SELECCION == 0) {
+                //         DB::statement('ALTER TABLE seleccion_buro_laboral AUTO_INCREMENT=1;');
+                //         $autorizaciones = buroseleccionModel::create($request->all());
+                //     } else {
+                //         if (!isset($request->ELIMINAR)) {
+                //             $autorizaciones = buroseleccionModel::find($request->ID_BURO_SELECCION);
+
+                //             if ($request->hasFile('ARCHIVO_RESULTADO') && $autorizaciones->ID_BURO_SELECCION) {
+                //                 Storage::delete($autorizaciones->ARCHIVO_RESULTADO);
+                //             }
+
+                //             $autorizaciones->update($request->all());
+                //         } else {
+                //             $autorizaciones = buroseleccionModel::where('ID_BURO_SELECCION', $request['ID_BURO_SELECCION'])->update(['ACTIVO' => 0]);
+                //             $response['code'] = 1;
+                //             $response['autorizacion'] = 'Desactivada';
+                //             return response()->json($response);
+                //         }
+                //     }
+
+                //     if ($request->hasFile('ARCHIVO_RESULTADO')) {
+                //         $curpFolder = 'reclutamiento/' . $request->CURP;
+                //         $autorizacionFolder = $curpFolder . '/Buro Laboral/';
+
+                //         if (!Storage::exists($curpFolder)) {
+                //             Storage::makeDirectory($curpFolder);
+                //         }
+
+                //         if (!Storage::exists($autorizacionFolder)) {
+                //             Storage::makeDirectory($autorizacionFolder);
+                //         }
+
+                //         $autorizacionFile = $request->file('ARCHIVO_RESULTADO');
+                //         $autorizacionFileName = 'BURO_LABORAL_' . $request->CURP . '.' . $autorizacionFile->getClientOriginalExtension();
+                //         $autorizacionFile->storeAs($autorizacionFolder, $autorizacionFileName);
+
+                //         $autorizaciones->ARCHIVO_RESULTADO = $autorizacionFolder . $autorizacionFileName;
+                //         $autorizaciones->save();
+                //     }
+
+                //     $response['code'] = 1;
+                //     $response['autorizacion'] = $autorizaciones;
+                //     return response()->json($response);
+
+                //     break;
+
+
+
+                case 5:
+                    if ($request->ID_BURO_SELECCION == 0) {
+                        DB::statement('ALTER TABLE seleccion_buro_laboral AUTO_INCREMENT=1;');
+
+                        $data = $request->except(['observacion']);
+                        $autorizaciones = buroseleccionModel::create($data);
+
+                        $buroId = $autorizaciones->ID_BURO_SELECCION;
+                        $response['code'] = 1;
+                        $response['autorizacion'] = $autorizaciones;
+                    } else {
+                        if (!isset($request->ELIMINAR)) {
+                            $autorizaciones = buroseleccionModel::find($request->ID_BURO_SELECCION);
+
+                            if (!$autorizaciones) {
+                                throw new Exception("Registro no encontrado");
+                            }
+
+                            if ($request->hasFile('ARCHIVO_RESULTADO') && $autorizaciones->ID_BURO_SELECCION) {
+                                Storage::delete($autorizaciones->ARCHIVO_RESULTADO);
+                            }
+
+                            $autorizaciones->update($request->except(['observacion']));
+                            $buroId = $autorizaciones->ID_BURO_SELECCION;
+
+                            $response['code'] = 1;
+                            $response['autorizacion'] = 'Actualizada';
+                        } else {
+                            buroseleccionModel::where('ID_BURO_SELECCION', $request['ID_BURO_SELECCION'])
+                                ->update(['ACTIVO' => 0]);
+
+                            $response['code'] = 1;
+                            $response['autorizacion'] = 'Desactivada';
+                            return response()->json($response);
+                        }
                     }
-        
-                    $autorizaciones->update($request->all());
-                } else {
-                    $autorizaciones = buroseleccionModel::where('ID_BURO_SELECCION', $request['ID_BURO_SELECCION'])->update(['ACTIVO' => 0]);
-                    $response['code'] = 1;
-                    $response['autorizacion'] = 'Desactivada';
-                    return response()->json($response);
-                }
-            }
-        
-            if ($request->hasFile('ARCHIVO_RESULTADO')) {
-                $curpFolder = 'reclutamiento/' . $request->CURP;
-                $autorizacionFolder = $curpFolder . '/Buro Laboral/';
-                
-                if (!Storage::exists($curpFolder)) {
-                    Storage::makeDirectory($curpFolder);
-                }
-                
-                if (!Storage::exists($autorizacionFolder)) {
-                    Storage::makeDirectory($autorizacionFolder);
-                }
-        
-                $autorizacionFile = $request->file('ARCHIVO_RESULTADO');
-                $autorizacionFileName = 'BURO_LABORAL_' . $request->CURP . '.' . $autorizacionFile->getClientOriginalExtension();
-                $autorizacionFile->storeAs($autorizacionFolder, $autorizacionFileName);
-        
-                $autorizaciones->ARCHIVO_RESULTADO = $autorizacionFolder . $autorizacionFileName;
-                $autorizaciones->save();
-            }
-        
-            $response['code'] = 1;
-            $response['autorizacion'] = $autorizaciones;
-            return response()->json($response);
-        
-            break;
-    
 
-                    
-        
-            case 6:
+                    // Guardar archivo si lo hay
+                    if ($request->hasFile('ARCHIVO_RESULTADO')) {
+                        $curpFolder = 'reclutamiento/' . $request->CURP;
+                        $autorizacionFolder = $curpFolder . '/Buro Laboral/';
+
+                        if (!Storage::exists($curpFolder)) {
+                            Storage::makeDirectory($curpFolder);
+                        }
+
+                        if (!Storage::exists($autorizacionFolder)) {
+                            Storage::makeDirectory($autorizacionFolder);
+                        }
+
+                        $autorizacionFile = $request->file('ARCHIVO_RESULTADO');
+                        $autorizacionFileName = 'BURO_LABORAL_' . $request->CURP . '.' . $autorizacionFile->getClientOriginalExtension();
+                        $autorizacionFile->storeAs($autorizacionFolder, $autorizacionFileName);
+
+                        $autorizaciones->ARCHIVO_RESULTADO = $autorizacionFolder . $autorizacionFileName;
+                        $autorizaciones->save();
+                    }
+
+                    // Guardar observación si viene
+                    if ($request->filled('observacion')) {
+                        buroseleccionModel::where('ID_BURO_SELECCION', $buroId)
+                            ->update(['OBSERVACIONES_BURO' => $request->observacion]);
+                    }
+
+                    return response()->json($response);
+                    break;
+
+
+
+
+                case 6:
                 DB::beginTransaction();
             
                 if ($request->ID_REFERENCIAS_SELECCION == 0) {

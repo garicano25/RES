@@ -328,7 +328,7 @@
                     <div class="mb-3">
                         <label class="form-label text-center">Cargar resultado *</label>
                         <div class="input-group">
-                            <input type="file" class="form-control" id="ARCHIVO_RESULTADO" name="ARCHIVO_RESULTADO" accept=".pdf" required>
+                            <input type="file" class="form-control" id="ARCHIVO_RESULTADO" name="ARCHIVO_RESULTADO" accept=".pdf" >
                             <button type="button" class="btn btn-light btn-sm ms-2" id="quitarResultado" style="display:none;">Quitar archivo</button>
                         </div>
                         <small id="errorArchivoResultado" class="text-danger" style="display:none;">El archivo debe ser un PDF.</small>
@@ -402,10 +402,21 @@
                                 <input type="number" class="form-control ms-3 text-center" id="NUMERO_JUDICIALES" name="NUMERO_JUDICIALES" placeholder="N°" readonly style="max-width: 100px;">
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label>Observaciones </label>
-                            <textarea class="form-control" id="OBSERVACIONES_BURO" name="OBSERVACIONES_BURO" rows="2"></textarea>
+                        <div class="row">
+                            <div class="mb-3">
+                                <div class="row">
+                                    <div class="col-6 mb-3">
+                                        <label>Agregar observaciones</label>
+                                        <button id="botonAgregarobservaciones" id="botonAgregarobservaciones" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                                            <i class="bi bi-plus-circle-fill"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="observacionesdiv mt-4"></div>
+                            </div>
                         </div>
+
+
                     </div>
 
                     <div class="row mb-3">

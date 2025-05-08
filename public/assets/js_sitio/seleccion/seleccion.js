@@ -850,6 +850,12 @@ $('#Tablaburo tbody').on('click', 'td>button.EDITAR', function () {
     document.getElementById('EXPERIENCIA_BURO').value = data.EXPERIENCIA_BURO || '';
     document.getElementById('EXPERIENCIA_CV').value = data.EXPERIENCIA_CV || '';
 
+
+    
+    $(".observacionesdiv").empty();
+    obtenerObservaciones(row);
+
+
     if (data.CEDULA_PROFESIONAL) {
         document.querySelector(`input[name="CEDULA_PROFESIONAL"][value="${data.CEDULA_PROFESIONAL}"]`).checked = true;
         manejarCambioCedula(document.querySelector(`input[name="CEDULA_PROFESIONAL"][value="${data.CEDULA_PROFESIONAL}"]`));
@@ -871,6 +877,44 @@ $('#Tablaburo tbody').on('click', 'td>button.EDITAR', function () {
 });
 
 
+
+function obtenerObservaciones(data) {
+    let row = data.data().OBSERVACIONES_BURO;
+    var observaciones = JSON.parse(row);
+
+    $.each(observaciones, function (index, contacto) {
+        var observa = contacto.OBSERVACIONES;
+     
+
+        const divDocumentoOfi = document.createElement('div');
+        divDocumentoOfi.classList.add('row', 'generarobervaciones', 'mb-3');
+        divDocumentoOfi.innerHTML = `
+         
+            <div class="col-12">
+              <div class="mb-3">
+                <label class="form-label">Observación</label>
+                    <textarea class="form-control" name="OBSERVACIONES" rows="2">${observa}</textarea>
+              </div>
+            </div>
+            
+            <br>
+            <div class="col-12 mt-4">
+                <div class="form-group" style="text-align: center;">
+                    <button type="button" class="btn btn-danger botonEliminarObservacion">Eliminar observación <i class="bi bi-trash-fill"></i></button>
+                </div>
+            </div>
+        `;
+        const contenedor = document.querySelector('.observacionesdiv');
+        contenedor.appendChild(divDocumentoOfi);
+
+      
+        const botonEliminar = divDocumentoOfi.querySelector('.botonEliminarObservacion');
+        botonEliminar.addEventListener('click', function () {
+            contenedor.removeChild(divDocumentoOfi);
+        });
+    });
+
+}
 
 
 
@@ -1994,7 +2038,14 @@ ModalBuro.addEventListener('hidden.bs.modal', function () {
         document.getElementById('PORCENTAJE_TOTAL').value = 0;
     }
 
+    
+    ID_BURO_SELECCION = 0;
+
+
     reiniciarModalAlCerrar();
+
+    $(".observacionesdiv").empty();
+
 });
 
 
@@ -2128,6 +2179,27 @@ $("#guardarFormSeleccionBuro").click(function (e) {
 
     if (formularioValido) {
 
+           var observacion = [];
+            $(".generarobervaciones").each(function() {
+                var observaciones = {
+                    'OBSERVACIONES': $(this).find("textarea[name='OBSERVACIONES']").val()
+                };
+                observacion.push(observaciones);
+            });
+
+        
+           
+            const requestData = {
+                api: 5,
+                ID_BURO_SELECCION: ID_BURO_SELECCION,
+                OBSERVACIONES_BURO: JSON.stringify(observacion),
+                CURP: curpSeleccionada 
+                
+
+
+            };
+
+
         if (ID_BURO_SELECCION == 0) {
 
             alertMensajeConfirm({
@@ -2137,11 +2209,7 @@ $("#guardarFormSeleccionBuro").click(function (e) {
             }, async function () {
 
                 await loaderbtn('guardarFormSeleccionBuro');
-                await ajaxAwaitFormData({ 
-                    api: 5, 
-                    ID_BURO_SELECCION: ID_BURO_SELECCION, 
-                    CURP: curpSeleccionada 
-                }, 'SeleccionSave', 'formularioBURO', 'guardarFormSeleccionBuro', { callbackAfter: true, callbackBefore: true }, () => {
+                await ajaxAwaitFormData(requestData, 'SeleccionSave', 'formularioBURO', 'guardarFormSeleccionBuro', { callbackAfter: true, callbackBefore: true }, () => {
 
                     Swal.fire({
                         icon: 'info',
@@ -2180,11 +2248,7 @@ $("#guardarFormSeleccionBuro").click(function (e) {
             }, async function () {
 
                 await loaderbtn('guardarFormSeleccionEntrevista');
-                await ajaxAwaitFormData({ 
-                    api: 5, 
-                    ID_BURO_SELECCION: ID_BURO_SELECCION, 
-                    CURP: curpSeleccionada 
-                }, 'SeleccionSave', 'formularioBURO', 'guardarFormSeleccionBuro', { callbackAfter: true, callbackBefore: true }, () => {
+                await ajaxAwaitFormData(requestData, 'SeleccionSave', 'formularioBURO', 'guardarFormSeleccionBuro', { callbackAfter: true, callbackBefore: true }, () => {
 
                     Swal.fire({
                         icon: 'info',
@@ -2219,7 +2283,42 @@ $("#guardarFormSeleccionBuro").click(function (e) {
     }
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const botonAgregarDoc = document.getElementById('botonAgregarobservaciones');
+    botonAgregarDoc.addEventListener('click', function () {
+        agregarobservaciones();
+    });
 
+    function agregarobservaciones() {
+        const divDocumentoOfi = document.createElement('div');
+        divDocumentoOfi.classList.add('row', 'generarobervaciones', 'mb-3');
+        divDocumentoOfi.innerHTML = `
+        
+            <div class="col-12">
+              <div class="mb-3">
+                <label class="form-label">Observación</label>
+                <textarea class="form-control"  name="OBSERVACIONES" rows="2"></textarea>
+              </div>
+            </div>
+
+            <br>
+            <div class="col-12 mt-4">
+                <div class="form-group" style="text-align: center;">
+                    <button type="button" class="btn btn-danger botonEliminarObservacion">Eliminar observación <i class="bi bi-trash-fill"></i></button>
+                </div>
+            </div>
+        `;
+        const contenedor = document.querySelector('.observacionesdiv');
+        contenedor.appendChild(divDocumentoOfi);
+
+        const botonEliminar = divDocumentoOfi.querySelector('.botonEliminarObservacion');
+        botonEliminar.addEventListener('click', function () {
+            contenedor.removeChild(divDocumentoOfi);
+        });
+    }
+
+
+});
 
 // <!-- ============================================================== -->
 // <!-- MODAL REFERENCIAS LABORALES -->
