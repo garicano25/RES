@@ -17,10 +17,23 @@ use DB;
 use App\Models\requisicionmaterial\mrModel;
 use App\Models\organizacion\catalogocategoriaModel;
 
+use App\Models\proveedor\altaproveedorModel;
+use App\Models\proveedor\proveedortempModel;
+
 
 class mrController extends Controller
 {
 
+
+
+
+    public function index()
+    {
+        $proveedoresOficiales = altaproveedorModel::select('RAZON_SOCIAL_ALTA', 'RFC_ALTA')->get();
+        $proveedoresTemporales = proveedortempModel::select('RAZON_PROVEEDORTEMP', 'RFC_PROVEEDORTEMP')->get();
+
+        return view('compras.requisicionesmaterial.bitacora', compact('proveedoresOficiales', 'proveedoresTemporales'));
+    }
 
 
     public function Tablamr()
@@ -393,6 +406,11 @@ class mrController extends Controller
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 }
 
+                $value->BTN_NO_MR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+
+                // $value->BTN_NO_MR = '<button class="btn btn-link NO_MR_BTN" data-id="' . $value->ID_FORMULARIO_MR . '" style="font-weight: bold;">' . $value->NO_MR . '</button>';
+                
             }
 
             // Respuesta

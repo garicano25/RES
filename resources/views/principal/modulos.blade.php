@@ -415,6 +415,8 @@
                             </div>
                             @endforeach
                         </div>
+                        @else
+                        
                         @endif
 
                         {{-- CARRUSEL: Anuncios del Mes --}}
@@ -438,6 +440,8 @@
                             </div>
                             @endforeach
                         </div>
+                        @else
+
                         @endif
 
 

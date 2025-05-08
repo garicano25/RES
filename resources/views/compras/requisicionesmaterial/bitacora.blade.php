@@ -98,7 +98,10 @@
 
 
 
-<!-- Modal para visualizar materiales con hoja de trabajo -->
+
+
+
+
 <div class="modal fade" id="modalMateriales" tabindex="-1" aria-labelledby="tituloMateriales" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -121,10 +124,57 @@
 <!-- Template para cada producto -->
 <template id="templateProducto">
     <div class="card mb-4 producto-card">
-        <div class="card-header bg-light">
-            <h5 class="producto-titulo mb-0"></h5>
+        <div class="card-header bg-primary text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="producto-titulo mb-0 fw-bold"></h5>
+                <div class="d-flex align-items-center">
+                    <div class="border-start ps-3 ms-3">
+                        <div class="d-flex align-items-center">
+                            <span class="fw-medium me-2">Cantidad:</span>
+                            <span class="producto-cantidad fw-bold"></span>
+                        </div>
+                        <div class="d-flex align-items-center mt-1">
+                            <span class="fw-medium me-2">Unidad:</span>
+                            <span class="producto-unidad"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card-body">
+            <!-- Sección inicial de PO -->
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card border-primary">
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">¿Requiere PO?</label>
+                                <div class="form-check">
+                                    <input class="form-check-input requiere-po" type="radio" name="requierePO" value="si">
+                                    <label class="form-check-label">Sí</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input requiere-po" type="radio" name="requierePO" value="no" >
+                                    <label class="form-check-label">No</label>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 campo-forma-adquisicion d-none">
+                                <label class="form-label fw-bold">Forma de adquisición:</label>
+                                <select class="form-select forma-adquisicion">
+                                    <option value="">Seleccionar forma de adquisición</option>
+                                    <option value="Compra directa">Compra directa</option>
+                                    <option value="Fondo fijo">Fondo fijo</option>
+                                    <option value="Reembolso">Reembolso</option>
+                                    <option value="Caja chica">Caja chica</option>
+                                    <option value="Anticipo">Anticipo</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Sección de cotizaciones -->
             <h6 class="fw-bold">Cotizaciones</h6>
             <div class="table-responsive">
@@ -149,10 +199,23 @@
                             <td>
                                 <select class="form-select proveedor-cotizacion">
                                     <option value="">Seleccionar proveedor</option>
-                                    <option value="Proveedor 1">Proveedor 1</option>
-                                    <option value="Proveedor 2">Proveedor 2</option>
-                                    <option value="Proveedor 3">Proveedor 3</option>
-                                    <option value="Otro">Otro proveedor</option>
+
+                                    <optgroup label="Proveedor oficial">
+                                        @foreach ($proveedoresOficiales as $proveedor)
+                                        <option value="{{ $proveedor->RFC_ALTA }}">
+                                            {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
+                                        </option>
+                                        @endforeach
+                                    </optgroup>
+
+                                    <optgroup label="Proveedores temporales">
+                                        @foreach ($proveedoresTemporales as $proveedor)
+                                        <option value="{{ $proveedor->RFC_PROVEEDORTEMP }}">
+                                            {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->RFC_PROVEEDORTEMP }})
+                                        </option>
+                                        @endforeach
+                                    </optgroup>
+
                                 </select>
                             </td>
                             <td>
@@ -173,10 +236,23 @@
                             <td>
                                 <select class="form-select proveedor-cotizacion">
                                     <option value="">Seleccionar proveedor</option>
-                                    <option value="Proveedor 1">Proveedor 1</option>
-                                    <option value="Proveedor 2">Proveedor 2</option>
-                                    <option value="Proveedor 3">Proveedor 3</option>
-                                    <option value="Otro">Otro proveedor</option>
+
+                                    <optgroup label="Proveedor oficial">
+                                        @foreach ($proveedoresOficiales as $proveedor)
+                                        <option value="{{ $proveedor->RFC_ALTA }}">
+                                            {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
+                                        </option>
+                                        @endforeach
+                                    </optgroup>
+
+                                    <optgroup label="Proveedores temporales">
+                                        @foreach ($proveedoresTemporales as $proveedor)
+                                        <option value="{{ $proveedor->RFC_PROVEEDORTEMP }}">
+                                            {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->RFC_PROVEEDORTEMP }})
+                                        </option>
+                                        @endforeach
+                                    </optgroup>
+
                                 </select>
                             </td>
                             <td>
@@ -197,11 +273,25 @@
                             <td>
                                 <select class="form-select proveedor-cotizacion">
                                     <option value="">Seleccionar proveedor</option>
-                                    <option value="Proveedor 1">Proveedor 1</option>
-                                    <option value="Proveedor 2">Proveedor 2</option>
-                                    <option value="Proveedor 3">Proveedor 3</option>
-                                    <option value="Otro">Otro proveedor</option>
+
+                                    <optgroup label="Proveedor oficial">
+                                        @foreach ($proveedoresOficiales as $proveedor)
+                                        <option value="{{ $proveedor->RFC_ALTA }}">
+                                            {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
+                                        </option>
+                                        @endforeach
+                                    </optgroup>
+
+                                    <optgroup label="Proveedores temporales">
+                                        @foreach ($proveedoresTemporales as $proveedor)
+                                        <option value="{{ $proveedor->RFC_PROVEEDORTEMP }}">
+                                            {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->RFC_PROVEEDORTEMP }})
+                                        </option>
+                                        @endforeach
+                                    </optgroup>
+
                                 </select>
+
                             </td>
                             <td>
                                 <div class="input-group">
@@ -216,53 +306,79 @@
 
             <!-- Sección de selección final -->
             <div class="row mt-4">
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Proveedor seleccionado:</label>
-                        <select class="form-select proveedor-seleccionado">
-                            <option value="">Seleccionar proveedor final</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">¿Requiere PO?</label>
-                        <div class="form-check">
-                            <input class="form-check-input requiere-po" type="radio" name="requierePO" value="si">
-                            <label class="form-check-label">Sí</label>
+                <div class="col-md-12">
+                    <div class="card border-success">
+                        <div class="card-header bg-light">
+                            <h6 class="mb-0 fw-bold">Proveedor seleccionado y detalles de pago</h6>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input requiere-po" type="radio" name="requierePO" value="no" checked>
-                            <label class="form-check-label">No</label>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Proveedor seleccionado:</label>
+                                      
+                                        <select class="form-select proveedor-seleccionado">
+                                            <option value="">Seleccionar proveedor</option>
+
+                                            <optgroup label="Proveedor oficial">
+                                                @foreach ($proveedoresOficiales as $proveedor)
+                                                <option value="{{ $proveedor->RFC_ALTA }}">
+                                                    {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
+                                                </option>
+                                                @endforeach
+                                            </optgroup>
+
+                                            <optgroup label="Proveedores temporales">
+                                                @foreach ($proveedoresTemporales as $proveedor)
+                                                <option value="{{ $proveedor->RFC_PROVEEDORTEMP }}">
+                                                    {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->RFC_PROVEEDORTEMP }})
+                                                </option>
+                                                @endforeach
+                                            </optgroup>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Monto final:</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">$</span>
+                                            <input type="number" class="form-control monto-final" step="0.01" min="0">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Forma de pago:</label>
+                                        <select class="form-select forma-pago">
+                                            <option value="">Seleccionar forma de pago</option>
+                                            <option value="Transferencia">Transferencia bancaria</option>
+                                            <option value="Efectivo">Efectivo</option>
+                                            <option value="Tarjeta">Tarjeta de crédito/débito</option>
+                                            <option value="Anticipo">Anticipo + Complemento</option>
+                                            <option value="Credito">Crédito 30 días</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-warning matriz-comparativa d-none">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <strong>Aviso:</strong> Se requiere realizar una Matriz comparativa de cotizaciones
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="mb-3 campo-monto-final d-none">
-                        <label class="form-label fw-bold">Monto final:</label>
-                        <div class="input-group">
-                            <span class="input-group-text">$</span>
-                            <input type="number" class="form-control monto-final" step="0.01" min="0">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">Forma de pago:</label>
-                        <select class="form-select forma-pago">
-                            <option value="">Seleccionar forma de pago</option>
-                           
-                        </select>
-                    </div>
-
-                    <div class="alert alert-warning matriz-comparativa d-none">
-                        <i class="fas fa-exclamation-triangle me-2"></i>
-                        <strong>Aviso:</strong> Se requiere realizar una Matriz comparativa de cotizaciones
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
+
+
+
 
 
 

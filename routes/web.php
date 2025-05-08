@@ -715,7 +715,10 @@ Route::get('/Requisición_materiales_aprobación', function () {return view('com
 
 //==============================================  BITACORA M.R  ============================================== 
 
-Route::get('/Bitácora', function () {return view('compras.requisicionesmaterial.bitacora');});
+// Route::get('/Bitácora', function () {return view('compras.requisicionesmaterial.bitacora');});
+
+Route::get('/Bitácora', [mrController::class, 'index']);
+
 Route::get('/Tablabitacora', [mrController::class, 'Tablabitacora']);
 
 //==============================================   DIRECTORIO INTERNO  ============================================== 

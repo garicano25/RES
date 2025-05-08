@@ -57,7 +57,7 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
     columnDefs: [
             { targets: '_all', className: 'text-center' }, // 👈 centra todo
         { targets: 0, width: '150px' },
-        { targets: 1, width: '200px' },
+        { targets: 1, width: '150px' },
         { targets: 2, width: '200px' },
         { targets: 3, width: '250px' },
         { targets: 4, width: '250px' },
@@ -69,9 +69,12 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
         { targets: 10, width: '300px' },
         { targets: 11, width: '200px' },
         { targets: 12, width: '300px' },
+        { targets: 13, width: '300px' },
+
     ],
     columns: [
         { data: 'BTN_EDITAR' },
+        { data: 'BTN_NO_MR' },
         { data: 'NO_MR' },
         { data: 'FECHA_SOLICITUD_MR' },
         { data: 'SOLICITANTE_MR' },
@@ -99,7 +102,9 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
         {
             data: null,
             render: () => `<input type="date" class="form-control" style="width: 100%">`
-        }
+        },
+          { data: 'MATERIALES_JSON', visible: false }, 
+    { data: 'ESTADO_APROBACION', visible: false } 
         
        
     ]
@@ -272,3 +277,247 @@ function cargarMaterialesDesdeJSON(materialesJson) {
         console.error('Error al parsear MATERIALES_JSON:', e);
     }
 }
+
+
+
+// $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', function () {
+
+
+
+
+
+
+//     const row = Tablabitacora.row($(this).closest('tr')).data();
+//     console.log("Fila seleccionada:", row); // 👈 Diagnóstico
+
+//     if (row.ESTADO_APROBACION === null) {
+//         alertToast('La MR aún no ha sido aprobada', 'warning');
+//         return;
+//     }
+//     if (row.ESTADO_APROBACION === 'Rechazada') {
+//         alertToast('La MR fue rechazada', 'error');
+//         return;
+//     }
+
+//     try {
+//         let materiales = [];
+
+//         // Detecta si ya es un arreglo o hay que parsear
+//         if (Array.isArray(row.MATERIALES_JSON)) {
+//             materiales = row.MATERIALES_JSON;
+//         } else if (typeof row.MATERIALES_JSON === 'string') {
+//             materiales = JSON.parse(row.MATERIALES_JSON);
+//         }
+
+//         console.log("Materiales parseados:", materiales); // 👈 Confirma estructura
+
+//         const listaFiltrada = materiales.filter(
+//             m => m.CHECK_VO === 'SI' && m.CHECK_MATERIAL === 'SI'
+//         );
+
+//         let html = '';
+//         if (listaFiltrada.length === 0) {
+//             html = `<li class="list-group-item">No hay materiales aprobados disponibles.</li>`;
+//         } else {
+//             listaFiltrada.forEach(mat => {
+//                 html += `<li class="list-group-item">${mat.DESCRIPCION}</li>`;
+//             });
+//         }
+
+//         $('#listaMateriales').html(html);
+
+//         const modal = new bootstrap.Modal(document.getElementById('modalMateriales'));
+//         modal.show();
+//     } catch (err) {
+//         console.error('Error al procesar MATERIALES_JSON', err);
+//         alertToast('Error al procesar los materiales', 'error');
+//     }
+// });
+
+
+
+// Función para cargar la lista de materiales al modal
+
+
+
+
+$('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', function () {
+  const row = Tablabitacora.row($(this).closest('tr')).data();
+  console.log("Fila seleccionada:", row);
+  
+  // Verificación inicial de aprobación
+  if (row.ESTADO_APROBACION === null) {
+    alertToast('La MR aún no ha sido aprobada', 'warning');
+    return;
+  }
+  
+  if (row.ESTADO_APROBACION === 'Rechazada') {
+    alertToast('La MR fue rechazada', 'error');
+    return;
+  }
+  
+  try {
+    let materiales = [];
+    
+    // Detecta si ya es un arreglo o hay que parsear
+    if (Array.isArray(row.MATERIALES_JSON)) {
+      materiales = row.MATERIALES_JSON;
+    } else if (typeof row.MATERIALES_JSON === 'string') {
+      materiales = JSON.parse(row.MATERIALES_JSON);
+    }
+    
+    console.log("Materiales parseados:", materiales);
+    
+    // Filtrar solo materiales aprobados
+    const listaFiltrada = materiales.filter(m => m.CHECK_VO === 'SI' && m.CHECK_MATERIAL === 'SI');
+    
+    // Limpiar el contenedor
+    $('#contenedorProductos').empty();
+    
+    if (listaFiltrada.length === 0) {
+      $('#contenedorProductos').html('<div class="alert alert-info">No hay materiales aprobados disponibles.</div>');
+    } else {
+      // Crear tarjeta para cada material
+      listaFiltrada.forEach(material => {
+        const template = document.querySelector('#templateProducto');
+        const clon = document.importNode(template.content, true);
+        
+        // Establecer título del producto
+        clon.querySelector('.producto-titulo').textContent = material.DESCRIPCION;
+        
+        // Establecer cantidad y unidad de medida
+        clon.querySelector('.producto-cantidad').textContent = material.CANTIDAD;
+        clon.querySelector('.producto-unidad').textContent = material.UNIDAD_MEDIDA;
+        
+        // Guardar ID o referencia del material para uso posterior
+        const card = clon.querySelector('.producto-card');
+        card.dataset.materialId = material.ID || '';
+        
+        // Añadir al contenedor
+        $('#contenedorProductos').append(clon);
+      });
+      
+      // Inicializar eventos después de cargar los productos
+      inicializarEventos();
+    }
+    
+    const modal = new bootstrap.Modal(document.getElementById('modalMateriales'));
+    modal.show();
+    
+  } catch (err) {
+    console.error('Error al procesar MATERIALES_JSON', err);
+    alertToast('Error al procesar los materiales', 'error');
+  }
+});
+
+// Función para inicializar eventos en las tarjetas de productos
+function inicializarEventos() {
+  // Evento para verificar importes mayores a 10,001
+  $('.importe-cotizacion').on('change', function() {
+    const valor = parseFloat($(this).val()) || 0;
+    const card = $(this).closest('.producto-card');
+    
+    if (valor > 10001) {
+      card.find('.matriz-comparativa').removeClass('d-none');
+      alertToast('Se requiere Matriz comparativa de cotizaciones', 'warning');
+    } else {
+      card.find('.matriz-comparativa').addClass('d-none');
+    }
+    
+    // Actualizar lista de proveedores en el selector final
+    actualizarProveedoresDisponibles(card);
+  });
+  
+  // Evento para mostrar/ocultar campos según requiere PO
+  $('.requiere-po').on('change', function() {
+    const card = $(this).closest('.producto-card');
+    if ($(this).val() === 'si') {
+      card.find('.campo-monto-final').removeClass('d-none');
+      card.find('.campo-forma-pago').removeClass('d-none');
+      card.find('.campo-forma-adquisicion').addClass('d-none');
+    } else {
+      card.find('.campo-monto-final').addClass('d-none');
+      card.find('.campo-forma-pago').addClass('d-none');
+      card.find('.campo-forma-adquisicion').removeClass('d-none');
+    }
+  });
+  
+  // Evento para actualizar lista de proveedores cuando se selecciona uno
+  $('.proveedor-cotizacion').on('change', function() {
+    const card = $(this).closest('.producto-card');
+    actualizarProveedoresDisponibles(card);
+  });
+  
+  // Botón para guardar todo
+  $('#btnGuardarTodo').on('click', function() {
+    const productos = [];
+    
+    $('.producto-card').each(function() {
+      const card = $(this);
+      const materialId = card.data('materialId');
+      
+      // Recopilar datos de cotizaciones
+      const cotizaciones = [];
+      card.find('.fila-cotizacion').each(function() {
+        const cotizacion = {
+          tipo: $(this).data('cotizacion'),
+          proveedor: $(this).find('.proveedor-cotizacion').val(),
+          importe: parseFloat($(this).find('.importe-cotizacion').val()) || 0,
+          documentoNombre: $(this).find('.doc-cotizacion').val() ? 
+                          $(this).find('.doc-cotizacion')[0].files[0].name : ''
+        };
+        cotizaciones.push(cotizacion);
+      });
+      
+      // Recopilar datos de selección final
+      const producto = {
+        materialId: materialId,
+        cotizaciones: cotizaciones,
+        requierePO: card.find('.requiere-po:checked').val() === 'si',
+        proveedorSeleccionado: card.find('.proveedor-seleccionado').val(),
+        montoFinal: parseFloat(card.find('.monto-final').val()) || 0,
+        formaPago: card.find('.forma-pago').val(),
+        formaAdquisicion: card.find('.requiere-po:checked').val() === 'no' ?
+                         card.find('.forma-adquisicion').val() : null
+      };
+      
+      productos.push(producto);
+    });
+    
+    console.log('Datos guardados:', productos);
+    alertToast('Información guardada correctamente', 'success');
+    
+    // Aquí deberías enviar los datos al servidor
+    // guardarDatosHojaTrabajo(productos);
+  });
+}
+
+// Función para actualizar la lista de proveedores disponibles
+function actualizarProveedoresDisponibles(card) {
+  const selectFinal = card.find('.proveedor-seleccionado');
+  const proveedoresActuales = selectFinal.val();
+  
+  // Limpiar opciones excepto la primera
+  selectFinal.find('option:not(:first)').remove();
+  
+  // Obtener proveedores de las cotizaciones
+  const proveedores = new Set();
+  card.find('.proveedor-cotizacion').each(function() {
+    const proveedor = $(this).val();
+    if (proveedor) {
+      proveedores.add(proveedor);
+    }
+  });
+  
+  // Añadir opciones
+  proveedores.forEach(proveedor => {
+    selectFinal.append(`<option value="${proveedor}">${proveedor}</option>`);
+  });
+  
+  // Intentar restaurar la selección previa
+  if (proveedoresActuales && proveedores.has(proveedoresActuales)) {
+    selectFinal.val(proveedoresActuales);
+  }
+}
+
+
