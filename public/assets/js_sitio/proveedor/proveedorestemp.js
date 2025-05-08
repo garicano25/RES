@@ -10,7 +10,7 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     
     ID_FORMULARIO_PROVEEDORTEMP = 0
     document.getElementById('formularioPROVEEDORTEMP').reset();
-    $('#miModal_proveedortemporal .modal-title').html('Agregar proveedo');
+    $('#miModal_proveedortemporal .modal-title').html('Agregar proveedor');
    
 
     $(".direcciondiv").empty();
