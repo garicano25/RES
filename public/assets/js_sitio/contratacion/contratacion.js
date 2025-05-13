@@ -212,6 +212,9 @@ $(document).ready(function() {
         `);
 
 
+    $('#DESCARGAR_CREDENCIAL').css("display", 'none');
+
+
 
     });
 });
@@ -587,7 +590,6 @@ $('#Tablacontratacion1').on('click', 'button.EDITAR', function () {
     $('#step2-content, #step3-content, #step4-content,#step5-content,#step6-content,#step7-content').css("display", 'none');
 
 
-    $('#DESCARGAR_CREDENCIAL').css("display", 'none');
 
 
 
@@ -785,15 +787,50 @@ document.getElementById('step1').addEventListener('click', function() {
 });
 
 
-document.getElementById('DESCARGAR_CREDENCIAL').addEventListener('click', function () {
-    const link = document.createElement('a');
-    link.href = '/descargar-credencial';
-    link.download = 'credencial_generada.pptx'; 
-
-    document.body.appendChild(link);
-    link.click();
-
-    document.body.removeChild(link);
+document.getElementById('DESCARGAR_CREDENCIAL').addEventListener('click', function() {
+    // Usar la variable global curpSeleccionada
+    if (typeof curpSeleccionada === 'undefined' || !curpSeleccionada) {
+        alert('Por favor seleccione un empleado primero');
+        return;
+    }
+    
+    // Opción 1: Descarga directa con parámetros en la URL
+    window.location.href = '/descargar-credencial?curp=' + encodeURIComponent(curpSeleccionada);
+    
+    /* 
+    // Opción 2: Alternativa con Fetch API para más control
+    fetch('/descargar-credencial', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+            curp: curpSeleccionada
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(data => {
+                throw new Error(data.error || 'Error al descargar la credencial');
+            });
+        }
+        return response.blob();
+    })
+    .then(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'credencial_' + curpSeleccionada + '.pptx';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+    })
+    .catch(error => {
+        alert('Error: ' + error.message);
+    });
+    */
 });
 
 
@@ -936,7 +973,7 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     $('#step2-content, #step3-content, #step4-content,#step5-content,#step6-content,#step7-content').css("display", 'none');
 
 
-    $('#DESCARGAR_CREDENCIAL').css("display", 'none');
+    $('#DESCARGAR_CREDENCIAL').css("display", 'block');
 
 
     
