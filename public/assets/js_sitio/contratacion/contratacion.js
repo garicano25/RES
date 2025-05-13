@@ -2072,8 +2072,40 @@ Modaldocumentosoporte.addEventListener('hidden.bs.modal', event => {
 
     document.getElementById('FECHAS_SOPORTEDOCUMENTOS').style.display = 'none';
 
+    document.getElementById('REQUIERE_FECHA').style.display = 'none';
+
+
 
 })
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const tipoDocumento = document.getElementById("TIPO_DOCUMENTO");
+    const requiereFecha = document.getElementById("REQUIERE_FECHA");
+    const fechasSoporte = document.getElementById("FECHAS_SOPORTEDOCUMENTOS");
+
+    tipoDocumento.addEventListener("change", function () {
+        if (this.value === "13") {
+            requiereFecha.style.display = "block";
+        } else {
+            requiereFecha.style.display = "none";
+            fechasSoporte.style.display = "none"; // ocultar también en caso de cambiar tipo
+            document.querySelectorAll('input[name="PROCEDE_FECHA_DOC"]').forEach(r => r.checked = false);
+        }
+    });
+
+    document.querySelectorAll('input[name="PROCEDE_FECHA_DOC"]').forEach(radio => {
+        radio.addEventListener("change", function () {
+            if (this.value === "1") {
+                fechasSoporte.style.display = "block";
+            } else {
+                fechasSoporte.style.display = "none";
+            }
+        });
+    });
+
+});
+
 
 $('#Tabladocumentosoporte').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
@@ -2096,8 +2128,39 @@ $('#Tabladocumentosoporte').on('click', 'td>button.EDITAR', function () {
          document.getElementById('FECHAS_SOPORTEDOCUMENTOS').style.display = 'block';
      } else {
          document.getElementById('FECHAS_SOPORTEDOCUMENTOS').style.display = 'none';
-     }
+    }
+    
+
+    manejarTipoDocumento13(row.data());
+
+
 });
+
+
+function manejarTipoDocumento13(data) {
+    const tipo = String(data.TIPO_DOCUMENTO);
+    const procede = String(data.PROCEDE_FECHA_DOC);
+
+    if (tipo === "13") {
+        $('#REQUIERE_FECHA').show();
+
+        if (procede === "1") {
+            $('#procedesfechadocsi').prop('checked', true);
+            $('#FECHAS_SOPORTEDOCUMENTOS').show();
+        } else if (procede === "2") {
+            $('#procedesfechadocno').prop('checked', true);
+            $('#FECHAS_SOPORTEDOCUMENTOS').hide();
+        } else {
+            $('input[name="PROCEDE_FECHA_DOC"]').prop('checked', false);
+            $('#FECHAS_SOPORTEDOCUMENTOS').hide();
+        }
+
+    } else {
+        $('#REQUIERE_FECHA').hide();
+        $('input[name="PROCEDE_FECHA_DOC"]').prop('checked', false);
+    }
+}
+
 
 // function cargarDocumentosGuardados() {
 //     if (!curpSeleccionada || curpSeleccionada.trim() === '') {
