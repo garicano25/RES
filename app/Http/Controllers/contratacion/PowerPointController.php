@@ -84,23 +84,12 @@ class PowerPointController extends Controller
                     $content = str_replace($marcador, $valor, $content);
                 }
 
-                // Buscar el marcador de la foto
-                if (strpos($content, '${FOTO_COLABORADOR}') !== false) {
-                    // Obtener el número de diapositiva del nombre del archivo
-                    preg_match('/slide(\d+)\.xml$/', $slideFile, $matches);
-                    $slideNumber = $matches[1];
-
-                    // Guardar el contenido modificado sin el marcador
-                    $content = str_replace('${FOTO_COLABORADOR}', '', $content);
-                    file_put_contents($slideFile, $content);
-
-                    // Buscar y reemplazar la imagen en la forma específica
-                    $this->reemplazarImagenEnForma($tempDir, $curp, $slideNumber);
-                } else {
-                    // Guardamos el contenido modificado
-                    file_put_contents($slideFile, $content);
-                }
+                // Guardamos el contenido modificado
+                file_put_contents($slideFile, $content);
             }
+
+            // Procesar la imagen del colaborador en una función separada
+            $this->reemplazarFotoColaborador($tempDir, $curp);
 
             // Crear el nuevo archivo .pptx
             $outputFile = storage_path('app/credencial_' . $curp . '_' . uniqid() . '.pptx');
@@ -125,9 +114,12 @@ class PowerPointController extends Controller
     }
 
     /**
-     * Función para reemplazar la imagen dentro de una forma específica en PowerPoint
+     * Función para reemplazar la foto del colaborador manteniendo la forma circular
      */
-    private function reemplazarImagenEnForma($tempDir, $curp, $slideNumber)
+    /**
+     * Función para reemplazar la foto del colaborador manteniendo la forma circular
+     */
+    private function reemplazarFotoColaborador($tempDir, $curp)
     {
         try {
             // Ruta de la imagen del colaborador en el storage
@@ -142,195 +134,234 @@ class PowerPointController extends Controller
             // Obtener el contenido de la imagen
             $imagenContenido = Storage::get($rutaImagen);
 
-            // Ruta para guardar la imagen temporalmente
-            $tempImagePath = $tempDir . '/imagen_temp.png';
-            file_put_contents($tempImagePath, $imagenContenido);
+            // Buscar en todas las diapositivas el texto ${FOTO_COLABORADOR}
+            $slideFiles = glob($tempDir . '/ppt/slides/slide*.xml');
+            $marcador = '${FOTO_COLABORADOR}';
+            $encontrado = false;
 
-            // Obtener las dimensiones de la imagen
-            list($width, $height) = getimagesize($tempImagePath);
+            // Primero, buscar en cada diapositiva y mostrar el contenido para depuración
+            foreach ($slideFiles as $slideFile) {
+                $slideContent = file_get_contents($slideFile);
+                preg_match('/slide(\d+)\.xml/', $slideFile, $matches);
+                $slideNumber = $matches[1];
 
-            // Preparar la nueva imagen (forma circular) que reemplazará la existente
-            // Vamos a reemplazar la imagen dentro de un blip (el contenedor de imágenes en OOXML)
+                if (strpos($slideContent, $marcador) !== false) {
+                    \Log::info("¡Marcador encontrado en slide{$slideNumber}.xml!");
+                    $encontrado = true;
 
-            // Archivo de relaciones de la diapositiva
-            $relsFile = $tempDir . '/ppt/slides/_rels/slide' . $slideNumber . '.xml.rels';
-            $slideRels = file_get_contents($relsFile);
+                    // Guardar el contenido XML para inspección (solo en entorno de desarrollo)
+                    Storage::put("debug/slide{$slideNumber}.xml", $slideContent);
 
-            // Archivo de la diapositiva
-            $slideFile = $tempDir . '/ppt/slides/slide' . $slideNumber . '.xml';
-            $slideContent = file_get_contents($slideFile);
-
-            // Determinar si la forma tiene un relleno de imagen existente o si necesitamos crear uno nuevo
-
-            // 1. Primero, buscar la forma que contiene el marcador (ahora vacío porque lo reemplazamos arriba)
-            // Buscar elementos <p:sp> (formas) que tengan alguna característica que los identifique
-            // como nuestra forma de destino (ej: una forma circular o que contenía el marcador)
-
-            // La imagen puede estar en una forma que antes contenía el marcador ${FOTO_COLABORADOR}
-            // O puede estar en un elemento <p:pic> que ya contenga una imagen
-
-            // Identificar la forma que queremos modificar
-            $foundShape = false;
-
-            // Buscar primero en las formas <p:sp> que podrían contener nuestra forma circular
-            if (preg_match('/<p:sp[^>]*>.*?<a:t>.*?<\/a:t>.*?<\/p:sp>/s', $slideContent, $shapeMatch)) {
-                $foundShape = true;
-
-                // Generar un nuevo ID de relación
-                $newRelId = 'rId' . (substr_count($slideRels, 'Id="rId') + 1);
-
-                // Copiar la imagen al directorio de medios
-                // Crear un nombre único para la imagen
-                $newMediaFileName = 'image' . (count(glob($tempDir . '/ppt/media/image*.png')) + 1) . '.png';
-                $newMediaPath = $tempDir . '/ppt/media/' . $newMediaFileName;
-
-                // Crear la carpeta de medios si no existe
-                if (!is_dir($tempDir . '/ppt/media')) {
-                    mkdir($tempDir . '/ppt/media', 0755, true);
-                }
-
-                // Copiar la imagen a la carpeta de medios
-                copy($tempImagePath, $newMediaPath);
-
-                // Añadir la nueva relación al archivo de relaciones
-                $newRelationship = '<Relationship Id="' . $newRelId . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/' . $newMediaFileName . '"/>';
-                $slideRels = str_replace('</Relationships>', $newRelationship . '</Relationships>', $slideRels);
-                file_put_contents($relsFile, $slideRels);
-
-                // Modificar la forma para que use la imagen como relleno
-                // Buscar la sección de propiedades de la forma
-                if (preg_match('/<p:spPr>(.*?)<\/p:spPr>/s', $shapeMatch[0], $propMatch)) {
-                    $newProps = $propMatch[1];
-
-                    // Verificar si ya tiene un relleno y reemplazarlo o agregar uno nuevo
-                    if (strpos($newProps, '<a:solidFill>') !== false) {
-                        // Reemplazar el relleno sólido con un relleno de imagen
-                        $newProps = preg_replace(
-                            '/<a:solidFill>.*?<\/a:solidFill>/s',
-                            '<a:blipFill><a:blip r:embed="' . $newRelId . '"/><a:stretch><a:fillRect/></a:stretch></a:blipFill>',
-                            $newProps
-                        );
-                    } else {
-                        // Agregar un nuevo relleno de imagen
-                        $newProps .= '<a:blipFill><a:blip r:embed="' . $newRelId . '"/><a:stretch><a:fillRect/></a:stretch></a:blipFill>';
+                    // Directorio de medios
+                    $mediaDir = $tempDir . '/ppt/media';
+                    if (!file_exists($mediaDir)) {
+                        mkdir($mediaDir, 0755, true);
                     }
 
-                    // Reemplazar las propiedades originales con las nuevas
-                    $newShapeContent = str_replace($propMatch[0], '<p:spPr>' . $newProps . '</p:spPr>', $shapeMatch[0]);
-                    $slideContent = str_replace($shapeMatch[0], $newShapeContent, $slideContent);
+                    // Guardar la foto con un nombre predecible
+                    $nuevaImagenNombre = 'foto_empleado_' . $slideNumber . '.png';
+                    $nuevaImagenRuta = $mediaDir . '/' . $nuevaImagenNombre;
+                    file_put_contents($nuevaImagenRuta, $imagenContenido);
+
+                    // Ruta del archivo de relaciones
+                    $relsFile = $tempDir . '/ppt/slides/_rels/slide' . $slideNumber . '.xml.rels';
+                    if (!file_exists(dirname($relsFile))) {
+                        mkdir(dirname($relsFile), 0755, true);
+                    }
+
+                    // Crear o actualizar el archivo de relaciones
+                    $nuevoRelId = 'rId' . (900 + $slideNumber); // Usar un ID alto para evitar conflictos
+                    if (file_exists($relsFile)) {
+                        $relsContent = file_get_contents($relsFile);
+
+                        // Verificar si ya existe la relación
+                        if (strpos($relsContent, $nuevaImagenNombre) === false) {
+                            // Añadir nueva relación
+                            $relsContent = str_replace(
+                                '</Relationships>',
+                                '  <Relationship Id="' . $nuevoRelId . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/' . $nuevaImagenNombre . '"/>
+</Relationships>',
+                                $relsContent
+                            );
+                        } else {
+                            // Extraer el ID existente si ya hay una relación con esta imagen
+                            preg_match('/Id="(rId[^"]+)" [^>]*Target="[^"]*' . preg_quote($nuevaImagenNombre, '/') . '"/', $relsContent, $idMatch);
+                            if (!empty($idMatch)) {
+                                $nuevoRelId = $idMatch[1];
+                            }
+                        }
+                    } else {
+                        // Crear nuevo archivo de relaciones
+                        $relsContent = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+  <Relationship Id="' . $nuevoRelId . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/' . $nuevaImagenNombre . '"/>
+</Relationships>';
+                    }
+
+                    // Guardar el archivo de relaciones
+                    file_put_contents($relsFile, $relsContent);
+
+                    // Método alternativo: buscar cualquier elemento que contenga el marcador
+                    if (preg_match_all('/<a:t[^>]*>([^<]*' . preg_quote($marcador, '/') . '[^<]*)<\/a:t>/s', $slideContent, $matches, PREG_OFFSET_CAPTURE)) {
+                        \Log::info("Encontrados " . count($matches[0]) . " textos con el marcador");
+
+                        foreach ($matches[0] as $index => $match) {
+                            $textoCompleto = $match[0];
+                            $posicion = $match[1];
+
+                            // Buscar el elemento p:sp (forma) que contiene este texto
+                            $posicionAnterior = $posicion;
+                            $posicionInicio = strrpos(substr($slideContent, 0, $posicionAnterior), '<p:sp');
+                            if ($posicionInicio !== false) {
+                                $posicionFin = strpos($slideContent, '</p:sp>', $posicionAnterior);
+                                if ($posicionFin !== false) {
+                                    $shapeXml = substr($slideContent, $posicionInicio, $posicionFin - $posicionInicio + 6);
+
+                                    // Extraer la sección spPr (propiedades de forma)
+                                    preg_match('/<p:spPr[^>]*>.*?<\/p:spPr>/s', $shapeXml, $spPrMatch);
+                                    $spPrXml = $spPrMatch[0] ?? '';
+
+                                    // Extraer solo la parte de posición y tamaño
+                                    preg_match('/<a:xfrm>.*?<\/a:xfrm>/s', $spPrXml, $xfrmMatch);
+                                    $xfrmXml = $xfrmMatch[0] ?? '<a:xfrm><a:off x="3048000" y="1524000"/><a:ext cx="3048000" cy="3048000"/></a:xfrm>';
+
+                                    // Modificar el contenido de la forma para usar la imagen como relleno
+                                    $modifiedSpPr = '<p:spPr>
+    ' . $xfrmXml . '
+    <a:prstGeom prst="ellipse">
+        <a:avLst/>
+    </a:prstGeom>
+    <a:blipFill rotWithShape="1">
+        <a:blip r:embed="' . $nuevoRelId . '">
+            <a:lum/>
+        </a:blip>
+        <a:srcRect/>
+        <a:stretch>
+            <a:fillRect/>
+        </a:stretch>
+    </a:blipFill>
+</p:spPr>';
+
+                                    // Reemplazar la sección spPr en la forma original
+                                    $modifiedShapeXml = preg_replace('/<p:spPr[^>]*>.*?<\/p:spPr>/s', $modifiedSpPr, $shapeXml);
+
+                                    // Reemplazar el texto marcador con texto vacío
+                                    $modifiedShapeXml = str_replace($textoCompleto, '<a:t></a:t>', $modifiedShapeXml);
+
+                                    // Asegurar que tenemos el namespace de relaciones
+                                    if (strpos($slideContent, 'xmlns:r=') === false) {
+                                        $slideContent = preg_replace('/<p:sld([^>]*)>/', '<p:sld$1 xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">', $slideContent);
+                                    }
+
+                                    // Finalmente reemplazar la forma original con nuestra forma modificada
+                                    $slideContent = substr_replace($slideContent, $modifiedShapeXml, $posicionInicio, $posicionFin - $posicionInicio + 6);
+                                    file_put_contents($slideFile, $slideContent);
+
+                                    \Log::info("Se ha reemplazado la forma con la imagen del colaborador");
+                                    return true;
+                                }
+                            }
+                        }
+                    } else {
+                        \Log::warning("El marcador se encontró en el contenido pero no se pudo extraer con regex");
+                    }
+
+                    // Método directo: buscar y reemplazar el texto XML completo
+                    $xmlAnterior = file_get_contents($slideFile);
+
+                    // Asegurar que tenemos el namespace de relaciones
+                    if (strpos($xmlAnterior, 'xmlns:r=') === false) {
+                        $xmlAnterior = preg_replace('/<p:sld([^>]*)>/', '<p:sld$1 xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">', $xmlAnterior);
+                    }
+
+                    // Reemplazar la referencia completa
+                    $xmlModificado = $xmlAnterior; // Copia para modificar
+
+                    // Identificar la forma circular que contiene el marcador y modificarla
+                    if (preg_match('/<p:sp[^>]*>.*?' . preg_quote($marcador, '/') . '.*?<\/p:sp>/s', $xmlAnterior, $formaMatch)) {
+                        $formaOriginal = $formaMatch[0];
+
+                        // Extraer posición y tamaño
+                        preg_match('/<a:xfrm>.*?<\/a:xfrm>/s', $formaOriginal, $xfrmMatch);
+                        $xfrmXml = $xfrmMatch[0] ?? '<a:xfrm><a:off x="3048000" y="1524000"/><a:ext cx="3048000" cy="3048000"/></a:xfrm>';
+
+                        // Crear una nueva forma con la imagen
+                        $nuevaForma = '<p:sp>
+  <p:nvSpPr>
+    <p:cNvPr id="' . rand(1000, 9999) . '" name="Foto Colaborador">
+      <a:extLst/>
+    </p:cNvPr>
+    <p:cNvSpPr/>
+    <p:nvPr/>
+  </p:nvSpPr>
+  <p:spPr>
+    ' . $xfrmXml . '
+    <a:prstGeom prst="ellipse">
+      <a:avLst/>
+    </a:prstGeom>
+    <a:blipFill rotWithShape="1">
+      <a:blip r:embed="' . $nuevoRelId . '">
+        <a:lum/>
+      </a:blip>
+      <a:srcRect/>
+      <a:stretch>
+        <a:fillRect/>
+      </a:stretch>
+    </a:blipFill>
+  </p:spPr>
+  <p:txBody>
+    <a:bodyPr rtlCol="0" anchor="ctr"/>
+    <a:lstStyle/>
+    <a:p>
+      <a:pPr algn="ctr"/>
+      <a:r>
+        <a:rPr lang="es-ES" altLang="en-US" smtClean="0"/>
+        <a:t></a:t>
+      </a:r>
+      <a:endParaRPr lang="es-ES" altLang="en-US"/>
+    </a:p>
+  </p:txBody>
+</p:sp>';
+
+                        // Reemplazar la forma original con la nueva
+                        $xmlModificado = str_replace($formaOriginal, $nuevaForma, $xmlAnterior);
+                        file_put_contents($slideFile, $xmlModificado);
+
+                        \Log::info("Se ha reemplazado la forma con método directo");
+                        return true;
+                    }
                 }
             }
 
-            // Si no encontramos una forma adecuada, busquemos imágenes existentes para reemplazar
-            if (!$foundShape) {
-                // Buscar todas las imágenes en la diapositiva
-                if (preg_match_all('/<p:pic[^>]*>.*?<a:blip r:embed="(rId\d+)".*?<\/p:pic>/s', $slideContent, $picMatches, PREG_SET_ORDER)) {
-                    foreach ($picMatches as $picMatch) {
-                        $rId = $picMatch[1];
+            if (!$encontrado) {
+                \Log::warning("No se encontró ninguna diapositiva con el marcador ${FOTO_COLABORADOR}");
 
-                        // Buscar este rId en el archivo .rels
-                        if (preg_match('/<Relationship Id="' . $rId . '" [^>]*Target="..\/media\/([^"]+)"/', $slideRels, $targetMatch)) {
-                            $imageFile = $tempDir . '/ppt/media/' . $targetMatch[1];
+                // Verificar si hay algún otro texto similar que pueda estar causando confusión
+                foreach ($slideFiles as $slideFile) {
+                    $slideContent = file_get_contents($slideFile);
+                    if (stripos($slideContent, 'FOTO') !== false || stripos($slideContent, 'COLABORADOR') !== false) {
+                        preg_match('/slide(\d+)\.xml/', $slideFile, $matches);
+                        $slideNumber = $matches[1];
+                        \Log::info("Se encontró texto relacionado en slide{$slideNumber}.xml");
 
-                            // Reemplazar la imagen existente
-                            file_put_contents($imageFile, $imagenContenido);
-                            $foundShape = true;
-                            break;
+                        // Extraer textos que contengan FOTO o COLABORADOR para depuración
+                        preg_match_all('/<a:t[^>]*>([^<]*(?:FOTO|COLABORADOR)[^<]*)<\/a:t>/si', $slideContent, $matches);
+                        if (!empty($matches[1])) {
+                            foreach ($matches[1] as $match) {
+                                \Log::info("Texto encontrado: " . $match);
+                            }
                         }
                     }
                 }
+
+                return false;
             }
-
-            // Si aún no encontramos dónde colocar la imagen, agregar una nueva imagen a la diapositiva
-            if (!$foundShape) {
-                // Este es un caso de fallback si no encontramos ninguna forma o imagen para reemplazar
-                // Tendríamos que insertar una nueva imagen en la diapositiva
-
-                // Generar un nuevo ID de relación
-                $newRelId = 'rId' . (substr_count($slideRels, 'Id="rId') + 1);
-
-                // Copiar la imagen al directorio de medios
-                $newMediaFileName = 'image' . (count(glob($tempDir . '/ppt/media/image*.png')) + 1) . '.png';
-                $newMediaPath = $tempDir . '/ppt/media/' . $newMediaFileName;
-
-                // Crear la carpeta de medios si no existe
-                if (!is_dir($tempDir . '/ppt/media')) {
-                    mkdir($tempDir . '/ppt/media', 0755, true);
-                }
-
-                // Copiar la imagen a la carpeta de medios
-                copy($tempImagePath, $newMediaPath);
-
-                // Añadir la nueva relación al archivo de relaciones
-                $newRelationship = '<Relationship Id="' . $newRelId . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/' . $newMediaFileName . '"/>';
-                $slideRels = str_replace('</Relationships>', $newRelationship . '</Relationships>', $slideRels);
-                file_put_contents($relsFile, $slideRels);
-
-                // Crear una nueva imagen en la diapositiva
-                $newPicXml = $this->createNewPictureXml($newRelId, $width, $height);
-
-                // Insertar la nueva imagen en la diapositiva antes del cierre de p:spTree
-                $slideContent = preg_replace('/<\/p:spTree>/', $newPicXml . '</p:spTree>', $slideContent);
-            }
-
-            // Guardar los cambios en el archivo de la diapositiva
-            file_put_contents($slideFile, $slideContent);
-
-            // Eliminar la imagen temporal
-            if (file_exists($tempImagePath)) {
-                unlink($tempImagePath);
-            }
-
-            return true;
         } catch (\Exception $e) {
-            \Log::error("Error al reemplazar la imagen en la forma: " . $e->getMessage());
+            \Log::error("Error al reemplazar la foto del colaborador: " . $e->getMessage() . "\n" . $e->getTraceAsString());
             return false;
         }
     }
-
-    /**
-     * Crea el XML para una nueva imagen en la diapositiva
-     */
-    private function createNewPictureXml($relId, $width, $height)
-    {
-        // Convertir dimensiones de píxeles a EMU (English Metric Units)
-        // 1 pulgada = 914400 EMU, y 1 pulgada = 96 píxeles (en pantalla)
-        $emuWidth = round($width * 9525);  // 9525 = 914400/96
-        $emuHeight = round($height * 9525);
-
-        // Centrar la imagen en la diapositiva
-        // Asumiendo tamaño estándar de diapositiva (10 pulgadas x 7.5 pulgadas)
-        $slideWidth = 9144000;  // 10 pulgadas en EMU
-        $slideHeight = 6858000; // 7.5 pulgadas en EMU
-
-        $xPos = ($slideWidth - $emuWidth) / 2;
-        $yPos = ($slideHeight - $emuHeight) / 2;
-
-        // XML para la imagen
-        return '<p:pic>
-            <p:nvPicPr>
-                <p:cNvPr id="' . (1000 + rand(1, 9000)) . '" name="Foto Colaborador"/>
-                <p:cNvPicPr/>
-                <p:nvPr/>
-            </p:nvPicPr>
-            <p:blipFill>
-                <a:blip r:embed="' . $relId . '"/>
-                <a:stretch>
-                    <a:fillRect/>
-                </a:stretch>
-            </p:blipFill>
-            <p:spPr>
-                <a:xfrm>
-                    <a:off x="' . $xPos . '" y="' . $yPos . '"/>
-                    <a:ext cx="' . $emuWidth . '" cy="' . $emuHeight . '"/>
-                </a:xfrm>
-                <a:prstGeom prst="ellipse">
-                    <a:avLst/>
-                </a:prstGeom>
-            </p:spPr>
-        </p:pic>';
-    }
-
+    
     /**
      * Función auxiliar para añadir un directorio completo a un archivo ZIP
      */
