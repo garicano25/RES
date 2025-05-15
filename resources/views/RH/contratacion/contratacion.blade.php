@@ -385,7 +385,15 @@
                                                 margin: 0;
                                             }
                                         </style>
-                                        <input type="file" accept="image/jpeg,image/x-png" id="FOTO_USUARIO" name="FOTO_USUARIO" class="dropify" data-allowed-file-extensions="png" data-height="300" data-default-file="" />
+                                        <input type="file"
+                                            accept="image/png"
+                                            id="FOTO_USUARIO"
+                                            name="FOTO_USUARIO"
+                                            class="dropify"
+                                            data-allowed-file-extensions="png"
+                                            data-height="300"
+                                            data-default-file="">
+
                                     </div>
                                 </div>
 
