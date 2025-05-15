@@ -122,57 +122,184 @@ class PowerPointController extends Controller
     private function reemplazarFotoColaborador($tempDir, $curp)
     {
         try {
+            // Añadir logs detallados para depuración en producción
+            \Log::info("Iniciando reemplazo de foto para CURP: {$curp}");
+            \Log::info("Directorio temporal: {$tempDir}");
+
             // Ruta de la imagen del colaborador en el storage
             $rutaImagen = "reclutamiento/{$curp}/IMAGEN COLABORADOR/foto_usuario.png";
+            \Log::info("Buscando imagen en: {$rutaImagen}");
 
-            // Verificar si la imagen existe
+            // Verificar si la imagen existe usando ruta absoluta para depuración
+            $rutaAbsoluta = Storage::path($rutaImagen);
+            \Log::info("Ruta absoluta de la imagen: {$rutaAbsoluta}");
+
             if (!Storage::exists($rutaImagen)) {
                 \Log::warning("No se encontró la imagen del colaborador: {$rutaImagen}");
+
+                // Verificar si existe el directorio
+                $directorioBase = "reclutamiento/{$curp}/IMAGEN COLABORADOR";
+                if (Storage::exists($directorioBase)) {
+                    $archivos = Storage::files($directorioBase);
+                    \Log::info("Archivos encontrados en el directorio: " . json_encode($archivos));
+                } else {
+                    \Log::warning("El directorio {$directorioBase} no existe");
+                }
+
+                // Intentar con una imagen de respaldo
+                $rutaImagen = "reclutamiento/{$curp}/IMAGEN COLABORADOR/foto.png";
+                if (!Storage::exists($rutaImagen)) {
+                    $rutaImagen = "reclutamiento/{$curp}/IMAGEN COLABORADOR/foto.jpg";
+                    if (!Storage::exists($rutaImagen)) {
+                        $rutaImagen = "reclutamiento/{$curp}/foto_usuario.png";
+                        if (!Storage::exists($rutaImagen)) {
+                            // Usar una imagen genérica como último recurso
+                            $rutaImagen = "assets/img/placeholder_user.png";
+                            if (!Storage::exists($rutaImagen)) {
+                                \Log::error("No se pudo encontrar ninguna imagen válida para el usuario");
+                                return false;
+                            }
+                        }
+                    }
+                }
+                \Log::info("Se utilizará la imagen alternativa: {$rutaImagen}");
+            }
+
+            // Obtener el contenido de la imagen con manejo de errores
+            try {
+                $imagenContenido = Storage::get($rutaImagen);
+                \Log::info("Imagen cargada correctamente, tamaño: " . strlen($imagenContenido) . " bytes");
+            } catch (\Exception $e) {
+                \Log::error("Error al cargar la imagen: " . $e->getMessage());
                 return false;
             }
 
-            // Obtener el contenido de la imagen
-            $imagenContenido = Storage::get($rutaImagen);
+            // Verificar directorios y permisos
+            \Log::info("Verificando directorios y permisos en el directorio temporal");
+            if (!is_writable($tempDir)) {
+                \Log::error("El directorio temporal no tiene permisos de escritura: {$tempDir}");
+                // Intentar corregir los permisos
+                chmod($tempDir, 0755);
+                if (!is_writable($tempDir)) {
+                    \Log::error("No se pudieron corregir los permisos del directorio temporal");
+                    return false;
+                }
+            }
 
-            // Buscar en todas las diapositivas el texto ${FOTO_COLABORADOR}
+            // Buscar en todas las diapositivas
             $slideFiles = glob($tempDir . '/ppt/slides/slide*.xml');
-            $marcador = '${FOTO_COLABORADOR}';
-            $encontrado = false;
+            \Log::info("Archivos de diapositivas encontrados: " . count($slideFiles));
 
-            // Primero, buscar en cada diapositiva y mostrar el contenido para depuración
             foreach ($slideFiles as $slideFile) {
-                $slideContent = file_get_contents($slideFile);
-                preg_match('/slide(\d+)\.xml/', $slideFile, $matches);
-                $slideNumber = $matches[1];
+                \Log::info("Procesando archivo: {$slideFile}");
 
+                if (!file_exists($slideFile)) {
+                    \Log::warning("El archivo de diapositiva no existe: {$slideFile}");
+                    continue;
+                }
+
+                if (!is_readable($slideFile)) {
+                    \Log::warning("El archivo de diapositiva no se puede leer: {$slideFile}");
+                    continue;
+                }
+
+                // Obtener el contenido con manejo de errores
+                try {
+                    $slideContent = file_get_contents($slideFile);
+                    $slideSize = strlen($slideContent);
+                    \Log::info("Contenido de diapositiva cargado, tamaño: {$slideSize} bytes");
+                } catch (\Exception $e) {
+                    \Log::error("Error al leer el archivo de diapositiva {$slideFile}: " . $e->getMessage());
+                    continue;
+                }
+
+                // Verificar si contiene el marcador usando múltiples métodos
+                $marcador = '${FOTO_COLABORADOR}';
+                $encontrado = false;
+
+                // Método 1: Búsqueda directa
                 if (strpos($slideContent, $marcador) !== false) {
-                    \Log::info("¡Marcador encontrado en slide{$slideNumber}.xml!");
+                    \Log::info("Marcador encontrado con búsqueda directa");
                     $encontrado = true;
+                }
+                // Método 2: Búsqueda con HTML entities
+                else if (strpos($slideContent, htmlentities($marcador)) !== false) {
+                    \Log::info("Marcador encontrado con HTML entities");
+                    $marcador = htmlentities($marcador);
+                    $encontrado = true;
+                }
+                // Método 3: Búsqueda insensible a mayúsculas/minúsculas
+                else if (stripos($slideContent, $marcador) !== false) {
+                    \Log::info("Marcador encontrado con búsqueda insensible a mayúsculas/minúsculas");
+                    // Buscar el texto real para reemplazar
+                    preg_match('/\${FOTO_COLABORADOR}/i', $slideContent, $matches);
+                    if (!empty($matches[0])) {
+                        $marcador = $matches[0];
+                        $encontrado = true;
+                    }
+                }
 
-                    // Guardar el contenido XML para inspección (solo en entorno de desarrollo)
-                    Storage::put("debug/slide{$slideNumber}.xml", $slideContent);
+                if ($encontrado) {
+                    // Extraer número de diapositiva para nombres únicos
+                    preg_match('/slide(\d+)\.xml/', $slideFile, $matches);
+                    $slideNumber = $matches[1];
+                    \Log::info("Procesando diapositiva número: {$slideNumber}");
 
-                    // Directorio de medios
+                    // Crear directorio de medios si no existe
                     $mediaDir = $tempDir . '/ppt/media';
                     if (!file_exists($mediaDir)) {
-                        mkdir($mediaDir, 0755, true);
+                        \Log::info("Creando directorio de medios: {$mediaDir}");
+                        if (!mkdir($mediaDir, 0755, true)) {
+                            \Log::error("No se pudo crear el directorio de medios");
+                            return false;
+                        }
                     }
 
-                    // Guardar la foto con un nombre predecible
+                    // Guardar la imagen en el directorio de medios
                     $nuevaImagenNombre = 'foto_empleado_' . $slideNumber . '.png';
                     $nuevaImagenRuta = $mediaDir . '/' . $nuevaImagenNombre;
-                    file_put_contents($nuevaImagenRuta, $imagenContenido);
+                    \Log::info("Guardando imagen en: {$nuevaImagenRuta}");
 
-                    // Ruta del archivo de relaciones
-                    $relsFile = $tempDir . '/ppt/slides/_rels/slide' . $slideNumber . '.xml.rels';
-                    if (!file_exists(dirname($relsFile))) {
-                        mkdir(dirname($relsFile), 0755, true);
+                    try {
+                        if (file_put_contents($nuevaImagenRuta, $imagenContenido) === false) {
+                            \Log::error("Error al guardar la imagen en el directorio de medios");
+                            return false;
+                        }
+                    } catch (\Exception $e) {
+                        \Log::error("Excepción al guardar la imagen: " . $e->getMessage());
+                        return false;
                     }
 
-                    // Crear o actualizar el archivo de relaciones
-                    $nuevoRelId = 'rId' . (900 + $slideNumber); // Usar un ID alto para evitar conflictos
+                    // Crear directorio de relaciones si no existe
+                    $relsDir = $tempDir . '/ppt/slides/_rels';
+                    if (!file_exists($relsDir)) {
+                        \Log::info("Creando directorio de relaciones: {$relsDir}");
+                        if (!mkdir($relsDir, 0755, true)) {
+                            \Log::error("No se pudo crear el directorio de relaciones");
+                            return false;
+                        }
+                    }
+
+                    // Ruta del archivo de relaciones
+                    $relsFile = $relsDir . '/slide' . $slideNumber . '.xml.rels';
+                    \Log::info("Archivo de relaciones: {$relsFile}");
+
+                    // Generar un ID único para la relación
+                    $nuevoRelId = 'rId' . (900 + $slideNumber);
+
+                    // Crear/actualizar archivo de relaciones
+                    $relsContent = '';
                     if (file_exists($relsFile)) {
-                        $relsContent = file_get_contents($relsFile);
+                        \Log::info("Archivo de relaciones existe, actualizando");
+                        try {
+                            $relsContent = file_get_contents($relsFile);
+                        } catch (\Exception $e) {
+                            \Log::error("Error al leer archivo de relaciones: " . $e->getMessage());
+                            // Crear nuevo en caso de error
+                            $relsContent = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+    </Relationships>';
+                        }
 
                         // Verificar si ya existe la relación
                         if (strpos($relsContent, $nuevaImagenNombre) === false) {
@@ -180,188 +307,245 @@ class PowerPointController extends Controller
                             $relsContent = str_replace(
                                 '</Relationships>',
                                 '  <Relationship Id="' . $nuevoRelId . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/' . $nuevaImagenNombre . '"/>
-</Relationships>',
+    </Relationships>',
                                 $relsContent
                             );
                         } else {
-                            // Extraer el ID existente si ya hay una relación con esta imagen
+                            // Extraer el ID existente
                             preg_match('/Id="(rId[^"]+)" [^>]*Target="[^"]*' . preg_quote($nuevaImagenNombre, '/') . '"/', $relsContent, $idMatch);
                             if (!empty($idMatch)) {
                                 $nuevoRelId = $idMatch[1];
+                                \Log::info("Relación existente encontrada con ID: {$nuevoRelId}");
                             }
                         }
                     } else {
+                        \Log::info("Creando nuevo archivo de relaciones");
                         // Crear nuevo archivo de relaciones
                         $relsContent = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-  <Relationship Id="' . $nuevoRelId . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/' . $nuevaImagenNombre . '"/>
-</Relationships>';
+    <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+      <Relationship Id="' . $nuevoRelId . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/' . $nuevaImagenNombre . '"/>
+    </Relationships>';
                     }
 
                     // Guardar el archivo de relaciones
-                    file_put_contents($relsFile, $relsContent);
-
-                    // Método alternativo: buscar cualquier elemento que contenga el marcador
-                    if (preg_match_all('/<a:t[^>]*>([^<]*' . preg_quote($marcador, '/') . '[^<]*)<\/a:t>/s', $slideContent, $matches, PREG_OFFSET_CAPTURE)) {
-                        \Log::info("Encontrados " . count($matches[0]) . " textos con el marcador");
-
-                        foreach ($matches[0] as $index => $match) {
-                            $textoCompleto = $match[0];
-                            $posicion = $match[1];
-
-                            // Buscar el elemento p:sp (forma) que contiene este texto
-                            $posicionAnterior = $posicion;
-                            $posicionInicio = strrpos(substr($slideContent, 0, $posicionAnterior), '<p:sp');
-                            if ($posicionInicio !== false) {
-                                $posicionFin = strpos($slideContent, '</p:sp>', $posicionAnterior);
-                                if ($posicionFin !== false) {
-                                    $shapeXml = substr($slideContent, $posicionInicio, $posicionFin - $posicionInicio + 6);
-
-                                    // Extraer la sección spPr (propiedades de forma)
-                                    preg_match('/<p:spPr[^>]*>.*?<\/p:spPr>/s', $shapeXml, $spPrMatch);
-                                    $spPrXml = $spPrMatch[0] ?? '';
-
-                                    // Extraer solo la parte de posición y tamaño
-                                    preg_match('/<a:xfrm>.*?<\/a:xfrm>/s', $spPrXml, $xfrmMatch);
-                                    $xfrmXml = $xfrmMatch[0] ?? '<a:xfrm><a:off x="3048000" y="1524000"/><a:ext cx="3048000" cy="3048000"/></a:xfrm>';
-
-                                    // Modificar el contenido de la forma para usar la imagen como relleno
-                                    $modifiedSpPr = '<p:spPr>
-    ' . $xfrmXml . '
-    <a:prstGeom prst="ellipse">
-        <a:avLst/>
-    </a:prstGeom>
-    <a:blipFill rotWithShape="1">
-        <a:blip r:embed="' . $nuevoRelId . '">
-            <a:lum/>
-        </a:blip>
-        <a:srcRect/>
-        <a:stretch>
-            <a:fillRect/>
-        </a:stretch>
-    </a:blipFill>
-</p:spPr>';
-
-                                    // Reemplazar la sección spPr en la forma original
-                                    $modifiedShapeXml = preg_replace('/<p:spPr[^>]*>.*?<\/p:spPr>/s', $modifiedSpPr, $shapeXml);
-
-                                    // Reemplazar el texto marcador con texto vacío
-                                    $modifiedShapeXml = str_replace($textoCompleto, '<a:t></a:t>', $modifiedShapeXml);
-
-                                    // Asegurar que tenemos el namespace de relaciones
-                                    if (strpos($slideContent, 'xmlns:r=') === false) {
-                                        $slideContent = preg_replace('/<p:sld([^>]*)>/', '<p:sld$1 xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">', $slideContent);
-                                    }
-
-                                    // Finalmente reemplazar la forma original con nuestra forma modificada
-                                    $slideContent = substr_replace($slideContent, $modifiedShapeXml, $posicionInicio, $posicionFin - $posicionInicio + 6);
-                                    file_put_contents($slideFile, $slideContent);
-
-                                    \Log::info("Se ha reemplazado la forma con la imagen del colaborador");
-                                    return true;
-                                }
-                            }
+                    try {
+                        \Log::info("Guardando archivo de relaciones...");
+                        if (file_put_contents($relsFile, $relsContent) === false) {
+                            \Log::error("Error al guardar el archivo de relaciones");
+                            return false;
                         }
-                    } else {
-                        \Log::warning("El marcador se encontró en el contenido pero no se pudo extraer con regex");
+                    } catch (\Exception $e) {
+                        \Log::error("Excepción al guardar archivo de relaciones: " . $e->getMessage());
+                        return false;
                     }
 
-                    // Método directo: buscar y reemplazar el texto XML completo
-                    $xmlAnterior = file_get_contents($slideFile);
+                    // Ahora modificamos la diapositiva para reemplazar la forma con la imagen
+                    \Log::info("Modificando la diapositiva para añadir la imagen");
 
-                    // Asegurar que tenemos el namespace de relaciones
-                    if (strpos($xmlAnterior, 'xmlns:r=') === false) {
-                        $xmlAnterior = preg_replace('/<p:sld([^>]*)>/', '<p:sld$1 xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">', $xmlAnterior);
+                    // Asegurarse de que el namespace de relaciones esté presente
+                    if (strpos($slideContent, 'xmlns:r=') === false) {
+                        $slideContent = preg_replace('/<p:sld([^>]*)>/', '<p:sld$1 xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">', $slideContent);
                     }
 
-                    // Reemplazar la referencia completa
-                    $xmlModificado = $xmlAnterior; // Copia para modificar
+                    // Enfoque simple: reemplazar todo el elemento p:sp que contiene el marcador
+                    $pattern = '/<p:sp[^>]*>.*?' . preg_quote($marcador, '/') . '.*?<\/p:sp>/s';
 
-                    // Identificar la forma circular que contiene el marcador y modificarla
-                    if (preg_match('/<p:sp[^>]*>.*?' . preg_quote($marcador, '/') . '.*?<\/p:sp>/s', $xmlAnterior, $formaMatch)) {
-                        $formaOriginal = $formaMatch[0];
+                    if (preg_match($pattern, $slideContent, $matches)) {
+                        $formaOriginal = $matches[0];
+                        \Log::info("Forma original encontrada, longitud: " . strlen($formaOriginal));
 
-                        // Extraer posición y tamaño
+                        // Extraer la posición y tamaño
                         preg_match('/<a:xfrm>.*?<\/a:xfrm>/s', $formaOriginal, $xfrmMatch);
                         $xfrmXml = $xfrmMatch[0] ?? '<a:xfrm><a:off x="3048000" y="1524000"/><a:ext cx="3048000" cy="3048000"/></a:xfrm>';
 
                         // Crear una nueva forma con la imagen
                         $nuevaForma = '<p:sp>
-  <p:nvSpPr>
-    <p:cNvPr id="' . rand(1000, 9999) . '" name="Foto Colaborador">
-      <a:extLst/>
-    </p:cNvPr>
-    <p:cNvSpPr/>
-    <p:nvPr/>
-  </p:nvSpPr>
-  <p:spPr>
-    ' . $xfrmXml . '
-    <a:prstGeom prst="ellipse">
-      <a:avLst/>
-    </a:prstGeom>
-    <a:blipFill rotWithShape="1">
-      <a:blip r:embed="' . $nuevoRelId . '">
-        <a:lum/>
-      </a:blip>
-      <a:srcRect/>
-      <a:stretch>
-        <a:fillRect/>
-      </a:stretch>
-    </a:blipFill>
-  </p:spPr>
-  <p:txBody>
-    <a:bodyPr rtlCol="0" anchor="ctr"/>
-    <a:lstStyle/>
-    <a:p>
-      <a:pPr algn="ctr"/>
-      <a:r>
-        <a:rPr lang="es-ES" altLang="en-US" smtClean="0"/>
-        <a:t></a:t>
-      </a:r>
-      <a:endParaRPr lang="es-ES" altLang="en-US"/>
-    </a:p>
-  </p:txBody>
-</p:sp>';
+      <p:nvSpPr>
+        <p:cNvPr id="' . rand(1000, 9999) . '" name="Foto Colaborador">
+          <a:extLst/>
+        </p:cNvPr>
+        <p:cNvSpPr/>
+        <p:nvPr/>
+      </p:nvSpPr>
+      <p:spPr>
+        ' . $xfrmXml . '
+        <a:prstGeom prst="ellipse">
+          <a:avLst/>
+        </a:prstGeom>
+        <a:blipFill rotWithShape="1">
+          <a:blip r:embed="' . $nuevoRelId . '">
+            <a:lum/>
+          </a:blip>
+          <a:srcRect/>
+          <a:stretch>
+            <a:fillRect/>
+          </a:stretch>
+        </a:blipFill>
+      </p:spPr>
+      <p:txBody>
+        <a:bodyPr rtlCol="0" anchor="ctr"/>
+        <a:lstStyle/>
+        <a:p>
+          <a:pPr algn="ctr"/>
+          <a:r>
+            <a:rPr lang="es-ES" altLang="en-US" smtClean="0"/>
+            <a:t></a:t>
+          </a:r>
+          <a:endParaRPr lang="es-ES" altLang="en-US"/>
+        </a:p>
+      </p:txBody>
+    </p:sp>';
 
                         // Reemplazar la forma original con la nueva
-                        $xmlModificado = str_replace($formaOriginal, $nuevaForma, $xmlAnterior);
-                        file_put_contents($slideFile, $xmlModificado);
+                        $slideContentModificado = str_replace($formaOriginal, $nuevaForma, $slideContent);
 
-                        \Log::info("Se ha reemplazado la forma con método directo");
-                        return true;
-                    }
-                }
-            }
+                        // Verificar que se hizo el reemplazo
+                        if ($slideContentModificado === $slideContent) {
+                            \Log::warning("El reemplazo de la forma no tuvo efecto. Probando otro método...");
 
-            if (!$encontrado) {
-                \Log::warning("No se encontró ninguna diapositiva con el marcador ${FOTO_COLABORADOR}");
+                            // Intento alternativo usando DOM XML para mayor precisión
+                            $slideContentModificado = $this->reemplazarFormaAlternativo($slideContent, $marcador, $nuevoRelId, $xfrmXml);
+                        }
 
-                // Verificar si hay algún otro texto similar que pueda estar causando confusión
-                foreach ($slideFiles as $slideFile) {
-                    $slideContent = file_get_contents($slideFile);
-                    if (stripos($slideContent, 'FOTO') !== false || stripos($slideContent, 'COLABORADOR') !== false) {
-                        preg_match('/slide(\d+)\.xml/', $slideFile, $matches);
-                        $slideNumber = $matches[1];
-                        \Log::info("Se encontró texto relacionado en slide{$slideNumber}.xml");
-
-                        // Extraer textos que contengan FOTO o COLABORADOR para depuración
-                        preg_match_all('/<a:t[^>]*>([^<]*(?:FOTO|COLABORADOR)[^<]*)<\/a:t>/si', $slideContent, $matches);
-                        if (!empty($matches[1])) {
-                            foreach ($matches[1] as $match) {
-                                \Log::info("Texto encontrado: " . $match);
+                        // Guardar el archivo modificado
+                        try {
+                            \Log::info("Guardando diapositiva modificada...");
+                            if (file_put_contents($slideFile, $slideContentModificado) === false) {
+                                \Log::error("Error al guardar la diapositiva modificada");
+                                return false;
                             }
+                        } catch (\Exception $e) {
+                            \Log::error("Excepción al guardar diapositiva modificada: " . $e->getMessage());
+                            return false;
+                        }
+
+                        \Log::info("Proceso de reemplazo de foto completado con éxito");
+                        return true;
+                    } else {
+                        \Log::warning("El marcador está presente pero no se pudo encontrar el elemento p:sp contenedor. Intentando método alternativo.");
+
+                        // En este punto sabemos que el marcador existe pero el patrón no coincide
+                        // Intentemos un método más directo 
+                        $slideContentModificado = str_replace($marcador, '', $slideContent);
+
+                        // Insertar la imagen directamente después de un elemento conocido
+                        $puntoInsersion = strpos($slideContent, '</p:spTree>');
+                        if ($puntoInsersion !== false) {
+                            \Log::info("Insertando la imagen como un nuevo elemento");
+
+                            $nuevaForma = '<p:sp>
+      <p:nvSpPr>
+        <p:cNvPr id="' . rand(1000, 9999) . '" name="Foto Colaborador">
+          <a:extLst/>
+        </p:cNvPr>
+        <p:cNvSpPr/>
+        <p:nvPr/>
+      </p:nvSpPr>
+      <p:spPr>
+        <a:xfrm>
+          <a:off x="3048000" y="1524000"/>
+          <a:ext cx="3048000" cy="3048000"/>
+        </a:xfrm>
+        <a:prstGeom prst="ellipse">
+          <a:avLst/>
+        </a:prstGeom>
+        <a:blipFill rotWithShape="1">
+          <a:blip r:embed="' . $nuevoRelId . '">
+            <a:lum/>
+          </a:blip>
+          <a:srcRect/>
+          <a:stretch>
+            <a:fillRect/>
+          </a:stretch>
+        </a:blipFill>
+      </p:spPr>
+      <p:txBody>
+        <a:bodyPr rtlCol="0" anchor="ctr"/>
+        <a:lstStyle/>
+        <a:p>
+          <a:pPr algn="ctr"/>
+          <a:endParaRPr lang="es-ES" altLang="en-US"/>
+        </a:p>
+      </p:txBody>
+    </p:sp>';
+
+                            $slideContentModificado = substr_replace($slideContent, $nuevaForma, $puntoInsersion, 0);
+
+                            // Guardar el archivo modificado
+                            try {
+                                \Log::info("Guardando diapositiva con imagen insertada...");
+                                if (file_put_contents($slideFile, $slideContentModificado) === false) {
+                                    \Log::error("Error al guardar la diapositiva con imagen insertada");
+                                    return false;
+                                }
+                            } catch (\Exception $e) {
+                                \Log::error("Excepción al guardar diapositiva con imagen insertada: " . $e->getMessage());
+                                return false;
+                            }
+
+                            \Log::info("Proceso de inserción de imagen completado");
+                            return true;
                         }
                     }
                 }
-
-                return false;
             }
+
+            \Log::warning("No se encontró ninguna diapositiva con el marcador");
+            return false;
         } catch (\Exception $e) {
-            \Log::error("Error al reemplazar la foto del colaborador: " . $e->getMessage() . "\n" . $e->getTraceAsString());
+            \Log::error("Error general al reemplazar la foto del colaborador: " . $e->getMessage() . "\n" . $e->getTraceAsString());
             return false;
         }
     }
-    
+
+    /**
+     * Método alternativo para reemplazar la forma en caso de problemas con el método principal
+     */
+    private function reemplazarFormaAlternativo($slideContent, $marcador, $nuevoRelId, $xfrmXml)
+    {
+        \Log::info("Ejecutando método alternativo de reemplazo");
+
+        // Primero reemplazar el texto del marcador
+        $slideContent = str_replace($marcador, '', $slideContent);
+
+        // Buscar la posición aproximada del marcador y añadir el blip cerca
+        $posTexto = strpos($slideContent, '<a:t></a:t>');
+        if ($posTexto !== false) {
+            // Buscar hacia atrás el elemento p:spPr más cercano
+            $posSpPr = strrpos(substr($slideContent, 0, $posTexto), '<p:spPr');
+            if ($posSpPr !== false) {
+                // Buscar el cierre del elemento spPr
+                $posCierreSpPr = strpos($slideContent, '</p:spPr>', $posSpPr);
+                if ($posCierreSpPr !== false) {
+                    $spPrContent = substr($slideContent, $posSpPr, $posCierreSpPr - $posSpPr + 8);
+
+                    // Crear un nuevo spPr con la imagen
+                    $nuevoSpPr = '<p:spPr>
+        ' . $xfrmXml . '
+        <a:prstGeom prst="ellipse">
+          <a:avLst/>
+        </a:prstGeom>
+        <a:blipFill rotWithShape="1">
+          <a:blip r:embed="' . $nuevoRelId . '">
+            <a:lum/>
+          </a:blip>
+          <a:srcRect/>
+          <a:stretch>
+            <a:fillRect/>
+          </a:stretch>
+        </a:blipFill>
+      </p:spPr>';
+
+                    // Reemplazar el spPr original con nuestro nuevo spPr
+                    $slideContent = substr_replace($slideContent, $nuevoSpPr, $posSpPr, $posCierreSpPr - $posSpPr + 8);
+                    \Log::info("spPr reemplazado con método alternativo");
+                }
+            }
+        }
+
+        return $slideContent;
+    }
+
     /**
      * Función auxiliar para añadir un directorio completo a un archivo ZIP
      */
