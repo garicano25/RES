@@ -4,12 +4,16 @@
 
 
 
-// ID DE LOS FORMULARIOS 
-
-//VARIABLES
+// ID DE LOS FORMULARIOS
 
 
-ID_FORMULARIO_ALTA = 0;
+
+// ID_FORMULARIO_ALTA = 0;
+
+window.ID_FORMULARIO_ALTA = 0;
+
+
+
 ID_FORMULARIO_CUENTAPROVEEDOR = 0
 ID_FORMULARIO_CONTACTOPROVEEDOR = 0
 ID_FORMULARIO_CERTIFICACIONPROVEEDOR = 0
@@ -174,174 +178,79 @@ document.getElementById('step1').addEventListener('click', function() {
 $("#guardarALTA").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioALTA'))
+
+    
+
+    formularioValido = validarFormularioV1('formularioALTA');
 
     if (formularioValido) {
+       
 
-    if (ID_FORMULARIO_ALTA == 0) {
-        
-        alertMensajeConfirm({
-            title: "¿Desea guardar la información?",
-            text: "Al guardarla, se podra usar",
-            icon: "question",
-        },async function () { 
-
-            await loaderbtn('guardarALTA')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_ALTA: ID_FORMULARIO_ALTA }, 'AltaSave1', 'formularioALTA', 'guardarALTA', { callbackAfter: true, callbackBefore: true }, () => {
-        
-               
-
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                })
-
-                $('.swal2-popup').addClass('ld ld-breath')
-        
-                
-            }, function (data) {
-                    
-
-                    ID_FORMULARIO_ALTA = data.funcion.ID_FORMULARIO_ALTA
-                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
-                    Tablalistaproveedores.ajax.reload()
-
-           
-                
-                
-            })
-            
-            
-            
-        }, 1)
-        
-    } else {
+        if (ID_FORMULARIO_ALTA == 0) {
             alertMensajeConfirm({
-            title: "¿Desea editar la información de este formulario?",
-            text: "Al guardarla, se podra usar",
-            icon: "question",
-        },async function () { 
+                title: "¿Desea guardar la información?",
+                text: "Al guardarla, se podrá usar",
+                icon: "question",
+            }, async function () {
 
-            await loaderbtn('guardarALTA')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_ALTA: ID_FORMULARIO_ALTA }, 'AltaSave1', 'formularioALTA', 'guardarALTA', { callbackAfter: true, callbackBefore: true }, () => {
-        
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                })
+                await loaderbtn('guardarALTA');
+                await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_ALTA: ID_FORMULARIO_ALTA }, 'AltaSave1', 'formularioALTA', 'guardarALTA', { callbackAfter: true, callbackBefore: true }, () => {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
 
-                $('.swal2-popup').addClass('ld ld-breath')
-        
-                
-            }, function (data) {
+                    $('.swal2-popup').addClass('ld ld-breath');
                     
-                setTimeout(() => {
+                }, function (data) {
+                    rfcSeleccionada = data.funcion.RFC_ALTA;
+                    ID_FORMULARIO_ALTA = data.funcion.ID_FORMULARIO_ALTA;
+        
+                    alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
+                    Tablalistaproveedores.ajax.reload();
+                });
+            }, 1);
+            
+        } else {
+            alertMensajeConfirm({
+                title: "¿Desea editar la información de este formulario?",
+                text: "Al guardarla, se podrá usar",
+                icon: "question",
+            }, async function () {
 
-                    
-                    ID_FORMULARIO_ALTA = data.funcion.ID_FORMULARIO_ALTA
-                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
-                    Tablalistaproveedores.ajax.reload()
+                await loaderbtn('guardarALTA');
+                await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_ALTA: ID_FORMULARIO_ALTA }, 'AltaSave1', 'formularioALTA', 'guardarALTA', { callbackAfter: true, callbackBefore: true }, () => {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+
+                }, function (data) {
+                    setTimeout(() => {
+                        ID_FORMULARIO_ALTA = data.funcion.ID_FORMULARIO_ALTA;
 
 
-                }, 300);  
-            })
-        }, 1)
+
+                        alertMensaje('success', 'Información editada correctamente', 'Información guardada');
+                        Tablalistaproveedores.ajax.reload();
+                    }, 300);
+                });
+            }, 1);
+        }
+    } else {
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
     }
-
-} else {
-    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
-
-}
-    
 });
 
-$("#guardarALTA").click(function (e) {
-    e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioALTA'))
 
-    if (formularioValido) {
 
-    if (ID_FORMULARIO_ALTA == 0) {
-        
-        alertMensajeConfirm({
-            title: "¿Desea guardar la información?",
-            text: "Al guardarla, se podra usar",
-            icon: "question",
-        },async function () { 
-
-            await loaderbtn('guardarALTA')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_ALTA: ID_FORMULARIO_ALTA }, 'AltaSave', 'formularioALTA', 'guardarALTA', { callbackAfter: true, callbackBefore: true }, () => {
-        
-               
-
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                })
-
-                $('.swal2-popup').addClass('ld ld-breath')
-        
-                
-            }, function (data) {
-                    
-
-                ID_FORMULARIO_ALTA = data.alta.ID_FORMULARIO_ALTA
-                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
-                    
-        
-            })
-            
-            
-            
-        }, 1)
-        
-    } else {
-            alertMensajeConfirm({
-            title: "¿Desea editar la información de este formulario?",
-            text: "Al guardarla, se podra usar",
-            icon: "question",
-        },async function () { 
-
-            await loaderbtn('guardarALTA')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_ALTA: ID_FORMULARIO_ALTA }, 'AltaSave', 'formularioALTA', 'guardarALTA', { callbackAfter: true, callbackBefore: true }, () => {
-        
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                })
-
-                $('.swal2-popup').addClass('ld ld-breath')
-        
-                
-            }, function (data) {
-                    
-                setTimeout(() => {
-
-                    
-                    ID_FORMULARIO_ALTA = data.alta.ID_FORMULARIO_ALTA
-                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
-                    
-
-                }, 300);  
-            })
-        }, 1)
-    }
-
-} else {
-    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
-
-}
-    
-});
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -370,6 +279,9 @@ document.addEventListener("DOMContentLoaded", function () {
 $('#Tablalistaproveedores tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablalistaproveedores.row(tr);
+
+
+    
     ID_FORMULARIO_ALTA = row.data().ID_FORMULARIO_ALTA;
 
     $('#formularioALTA').each(function() {
@@ -388,7 +300,10 @@ $('#Tablalistaproveedores tbody').on('click', 'td>button.EDITAR', function () {
     $("#RFC_ALTA").val(rfc);
     rfcSeleccionada = rfc;
 
+    $("#ID_FORMULARIO_ALTA").val(row.data().ID_FORMULARIO_ALTA);
 
+
+    
     $("#TIPO_PERSONA_OPCION").val(row.data().TIPO_PERSONA_OPCION);
 
     $("#TIPO_PERSONA_ALTA").val(row.data().TIPO_PERSONA_ALTA);

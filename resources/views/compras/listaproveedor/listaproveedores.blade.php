@@ -225,6 +225,7 @@
 
 
 
+                            <input type="hidden" name="ID_FORMULARIO_ALTA" id="ID_FORMULARIO_ALTA" value="0">
 
 
                             <div class="col-12">

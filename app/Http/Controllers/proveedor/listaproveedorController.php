@@ -18,6 +18,9 @@ use App\Models\proveedor\altareferenciasModel;
 use App\Models\proveedor\altadocumentosModel;
 
 
+use DB;
+
+
 class listaproveedorController extends Controller
 {
     public function index()
@@ -290,47 +293,56 @@ public function Tablareferencias(Request $request)
         }
     }
 
-    public function store(Request $request)
-{
-    try {
-        switch (intval($request->api)) {
-            case 1:
-                if ($request->ID_FORMULARIO_ALTA == 0) {
-                    DB::statement('ALTER TABLE formulario_altaproveedor AUTO_INCREMENT=1;');
-                    $funciones = altaproveedorModel::create($request->all());
-                } else {
-                    if (isset($request->ELIMINAR)) {
-                        if ($request->ELIMINAR == 1) {
-                            $funciones = altaproveedorModel::where('ID_FORMULARIO_ALTA', $request['ID_FORMULARIO_ALTA'])->update(['ACTIVO' => 0]);
-                            $response['code'] = 1;
-                            $response['funcion'] = 'Desactivada';
-                        } else {
-                            $funciones = altaproveedorModel::where('ID_FORMULARIO_ALTA', $request['ID_FORMULARIO_ALTA'])->update(['ACTIVO' => 1]);
-                            $response['code'] = 1;
-                            $response['funcion'] = 'Activada';
-                        }
-                    } else {
-                        $funciones = altaproveedorModel::find($request->ID_FORMULARIO_ALTA);
-                        $funciones->update($request->all());
-                        $response['code'] = 1;
-                        $response['funcion'] = 'Actualizada';
-                    }
-                    return response()->json($response);
-                }
-                $response['code']  = 1;
-                $response['funcion']  = $funciones;
-                return response()->json($response);
-                break;
-            default:
-                $response['code']  = 1;
-                $response['msj']  = 'Api no encontrada';
-                return response()->json($response);
-        }
-    } catch (Exception $e) {
-        return response()->json('Error al guardar');
-    }
-}
 
+
+
+
+
+
+
+
+    public function store(Request $request)
+    {
+        try {
+            switch (intval($request->api)) {
+                case 1:
+                    if ($request->ID_FORMULARIO_ALTA == 0) {
+                        DB::statement('ALTER TABLE formulario_altaproveedor AUTO_INCREMENT=1;');
+                        $funciones = altaproveedorModel::create($request->all());
+                    } else {
+
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+
+                                $funciones = altaproveedorModel::where('ID_FORMULARIO_ALTA', $request['ID_FORMULARIO_ALTA'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['funcion'] = 'Desactivada';
+                            } else {
+                                $funciones = altaproveedorModel::where('ID_FORMULARIO_ALTA', $request['ID_FORMULARIO_ALTA'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['funcion'] = 'Activada';
+                            }
+                        } else {
+                            $funciones = altaproveedorModel::find($request->ID_FORMULARIO_ALTA);
+                            $funciones->update($request->all());
+                            $response['code'] = 1;
+                            $response['funcion'] = 'Actualizada';
+                        }
+                        return response()->json($response);
+                    }
+                    $response['code']  = 1;
+                    $response['funcion']  = $funciones;
+                    return response()->json($response);
+                    break;
+                default:
+                    $response['code']  = 1;
+                    $response['msj']  = 'Api no encontrada';
+                    return response()->json($response);
+            }
+        } catch (Exception $e) {
+            return response()->json('Error al guardar ');
+        }
+    }
 
 
 }
