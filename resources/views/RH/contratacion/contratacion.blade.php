@@ -371,7 +371,7 @@
 
                                 <div class="col-3">
                                     <div class="form-group">
-                                        <label id="FOTO_TITULO">Foto colaborador *</label>
+                                        <label id="FOTO_TITULO">Foto colaborador  (.png)*</label>
                                         <style>
                                             .dropify-wrapper {
                                                 height: 270px !important;
