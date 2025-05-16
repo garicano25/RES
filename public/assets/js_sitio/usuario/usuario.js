@@ -531,7 +531,23 @@ $('#Tablausuarios tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablausuarios.row(tr);
     ID_USUARIO = row.data().ID_USUARIO;
 
+
+    
+    const datosUsuario = { ...row.data() };
+
+    delete datosUsuario.PASSWORD;
+    
+
+
+
     editarDatoTabla(row.data(), 'formularioUSUARIO', 'modal_usuario', 1);
+
+
+
+    
+     $("#PASSWORD").val(datosUsuario.PASSWORD_2);
+    $("#PASSWORD_2").val(datosUsuario.PASSWORD_2);
+
 
     const rolesAsignados = row.data().ROLES_ASIGNADOS;
     const checkboxes = document.querySelectorAll('.checkbox_rol');
@@ -616,6 +632,15 @@ $('#Tablausuarios tbody').on('click', 'td>button.EDITAR', function () {
         $('#FOTO_USUARIO').dropify().data('dropify').resetPreview();
         $('#FOTO_USUARIO').dropify().data('dropify').clearElement();
     }
+
+
+    
+
+      setTimeout(() => {
+    $("#PASSWORD").val(row.data().PASSWORD_2);
+    $("#PASSWORD_2").val(row.data().PASSWORD_2);
+    }, 100); // pequeño retraso para asegurar que el form ya fue llenado
+    
 });
 
 
