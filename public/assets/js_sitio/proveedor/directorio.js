@@ -429,7 +429,7 @@ function verificarCodigoAntesDeActualizar(correo, codigo, data) {
             } else if (tipoPersona.value === "2") {
                 domicilioNacional.style.display = "none";
                 domicilioExtranjero.style.display = "block";
-                document.querySelector('label[for="CONSTANCIA_LABEL"]').textContent = "Registro ante Hacienda / Tax ID";
+                document.querySelector('label[for="CONSTANCIA_LABEL"]').textContent = "Registro ante Hacienda / Tax ID *";
                 document.querySelector('label[for="RFC_LABEL"]').textContent = "Tax ID";
 
             }

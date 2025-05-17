@@ -359,10 +359,10 @@
             </div>
           </div>
 
-          <label for="CONSTANCIA_LABEL">Constancia de situación fiscal</label>
+          <label for="CONSTANCIA_LABEL">Constancia de situación fiscal *</label>
 
           <div class="mt-3 d-flex align-items-center">
-            <input type="file" class="form-control" id="CONSTANCIA_DOCUMENTO" name="CONSTANCIA_DOCUMENTO" accept=".pdf" style="width: auto; flex: 1;">
+            <input type="file" class="form-control" id="CONSTANCIA_DOCUMENTO" name="CONSTANCIA_DOCUMENTO" accept=".pdf" style="width: auto; flex: 1;" required>
             <button id="removeFileBtn" class="btn btn-danger ms-2" style="display: none;">Eliminar</button>
           </div>
           <div id="errorMsg" class="text-danger ms-2" style="display: none;">Solo se permiten archivos PDF.</div>
@@ -437,7 +437,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
     <!-- Funciones generales -->
     <script src="/assets/js_sitio/funciones.js?v=5.0"></script>
-    <script src="/assets/js_sitio/proveedor/directorio.js?v=1.6"></script>
+    <script src="/assets/js_sitio/proveedor/directorio.js?v=1.7"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
