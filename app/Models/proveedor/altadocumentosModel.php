@@ -14,6 +14,7 @@ class altadocumentosModel extends Model
     protected $primaryKey = 'ID_FORMULARIO_DOCUMENTOSPROVEEDOR';
     protected $fillable = [
         'RFC_PROVEEDOR',
+        'TIPO_DOCUMENTO',
         'NOMBRE_DOCUMENTO',
         'DOCUMENTO_SOPORTE',
         'ACTIVO'

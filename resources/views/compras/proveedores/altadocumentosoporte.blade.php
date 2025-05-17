@@ -38,27 +38,33 @@
                     <div class="row">
                         <div class="col-md-12 mb-3">
                             <label class="form-label">Documento *</label>
-                            <select class="form-control" name="NOMBRE_DOCUMENTO" id="NOMBRE_DOCUMENTO" required>
+                            <select class="form-control" name="TIPO_DOCUMENTO" id="TIPO_DOCUMENTO" required>
                                 <option value="" selected disabled>Seleccione una opción</option>
-                        
+
                                 <optgroup label="Documentos obligatorios">
                                     @foreach ($documetoscatalogo->where('TIPO_DOCUMENTO', 1) as $documento)
-                                        <option value="{{ $documento->NOMBRE_DOCUMENTO }}">
-                                            {{ $documento->NOMBRE_DOCUMENTO }}
-                                        </option>
+                                    <option value="{{ $documento->ID_CATALOGO_DOCUMENTOSPROVEEDOR }}">
+                                        {{ $documento->NOMBRE_DOCUMENTO }}
+                                    </option>
                                     @endforeach
                                 </optgroup>
-                        
+
                                 <optgroup label="Documentos opcionales">
                                     @foreach ($documetoscatalogo->where('TIPO_DOCUMENTO', 2) as $documento)
-                                        <option value="{{ $documento->NOMBRE_DOCUMENTO }}">
-                                            {{ $documento->NOMBRE_DOCUMENTO }}
-                                        </option>
+                                    <option value="{{ $documento->ID_CATALOGO_DOCUMENTOSPROVEEDOR }}">
+                                        {{ $documento->NOMBRE_DOCUMENTO }}
+                                    </option>
                                     @endforeach
                                 </optgroup>
                             </select>
                         </div>
-                        
+
+
+                        <div class="mb-3">
+                            <label>Nombre del archivo </label>
+                            <input type="text" class="form-control" id="NOMBRE_DOCUMENTO" name="NOMBRE_DOCUMENTO" readonly required>
+                        </div>
+
 
 
                         <div class="col-12 mb-3">

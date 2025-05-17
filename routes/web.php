@@ -837,6 +837,7 @@ Route::post('/AltaDocumentosSave', [altadocumentosController::class, 'store']);
 Route::get('/DocumentosDelete', [altadocumentosController::class, 'store']);
 Route::get('/mostrardocumentosoporteproveedor/{id}', [altadocumentosController::class, 'mostrardocumentosoporteproveedor']);
 
+Route::get('/documentosRegistrados', [altadocumentosController::class, 'documentosRegistrados']);
 
 
 //ALTA DE CUENTAS BANCARIAS 

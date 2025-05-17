@@ -1,6 +1,11 @@
 
 
 
+document.addEventListener("DOMContentLoaded", function () {
+    deshabilitarOpcionesTipoDocumento();
+});
+
+
 
 ID_FORMULARIO_DOCUMENTOSPROVEEDOR = 0
 
@@ -14,6 +19,8 @@ Modaldocumentos.addEventListener('hidden.bs.modal', event => {
 
     document.getElementById('formularioDOCUMENTOS').reset();
 
+    $('#TIPO_DOCUMENTO').prop('disabled', false); 
+    $('#NOMBRE_DOCUMENTO').prop('disabled', false); 
   
 
     document.getElementById('DOCUMENTO_SOPORTE').value = '';
@@ -23,6 +30,39 @@ Modaldocumentos.addEventListener('hidden.bs.modal', event => {
 });
 
 
+
+
+
+function deshabilitarOpcionesTipoDocumento() {
+    const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    fetch('/documentosRegistrados', {
+        method: 'GET',
+        headers: {
+            'X-CSRF-TOKEN': token,
+            'Accept': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(idsRegistrados => {
+        const select = document.getElementById('TIPO_DOCUMENTO');
+        if (!select) return;
+
+        for (let i = 0; i < select.options.length; i++) {
+            const option = select.options[i];
+            const valor = option.value;
+
+            if (idsRegistrados.includes(valor)) {
+                option.disabled = true;
+                option.style.color = 'green';
+                option.style.fontWeight = 'bold';
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error al obtener documentos registrados:', error);
+    });
+}
 
 
 $("#guardarDOCUMENTOS").click(function (e) {
@@ -64,7 +104,7 @@ $("#guardarDOCUMENTOS").click(function (e) {
                     document.getElementById('formularioDOCUMENTOS').reset();
                     Tabladocumentosproveedores.ajax.reload()
 
-        
+                    deshabilitarOpcionesTipoDocumento();
             })
             
             
@@ -102,6 +142,7 @@ $("#guardarDOCUMENTOS").click(function (e) {
                     document.getElementById('formularioDOCUMENTOS').reset();
                     Tabladocumentosproveedores.ajax.reload()
 
+                    deshabilitarOpcionesTipoDocumento();
 
                 }, 300);  
             })
@@ -109,7 +150,6 @@ $("#guardarDOCUMENTOS").click(function (e) {
     }
 
 } else {
-    // Muestra un mensaje de error o realiza alguna otra acción
     alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
 
 }
@@ -222,6 +262,13 @@ $('#Tabladocumentosproveedores tbody').on('click', 'td>button.EDITAR', function 
     ID_FORMULARIO_DOCUMENTOSPROVEEDOR = row.data().ID_FORMULARIO_DOCUMENTOSPROVEEDOR;
 
     editarDatoTabla(row.data(), 'formularioDOCUMENTOS', 'miModal_documentos', 1);
+
+
+    $('#TIPO_DOCUMENTO').prop('disabled',true ); 
+    $('#NOMBRE_DOCUMENTO').prop('disabled', true); 
+
+
+
     $('#miModal_documentos .modal-title').html(row.data().NOMBRE_DOCUMENTO);
     
 
@@ -275,4 +322,20 @@ inputArchivo.addEventListener('change', function () {
 iconEliminar.addEventListener('click', function () {
     inputArchivo.value = '';
     iconEliminar.classList.add('d-none');
+});
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const selectTipoDocumento = document.getElementById("TIPO_DOCUMENTO");
+    const inputNombreDocumento = document.getElementById("NOMBRE_DOCUMENTO");
+
+    selectTipoDocumento.addEventListener("change", function () {
+        const selectedOption = this.options[this.selectedIndex];
+        if (selectedOption && selectedOption.value) {
+            inputNombreDocumento.value = selectedOption.text.trim();
+        } else {
+            inputNombreDocumento.value = "";
+        }
+    });
 });

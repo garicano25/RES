@@ -1187,7 +1187,10 @@
                             </select>
                         </div>
 
-
+                        <div class="mb-3">
+                            <label>Nombre del archivo </label>
+                            <input type="text" class="form-control" id="NOMBRE_DOCUMENTO" name="NOMBRE_DOCUMENTO" readonly required>
+                        </div>
 
                         <div class="col-12 mb-3">
                             <label class="form-label">

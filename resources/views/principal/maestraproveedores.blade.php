@@ -353,7 +353,7 @@
 
 
     @if(request()->is('Proveedores_documentos'))
-    <script src="/assets/js_sitio/proveedor/altadocumentos.js?v=1.3"></script>
+    <script src="/assets/js_sitio/proveedor/altadocumentos.js?v=1.4"></script>
     @endif
 
 </body>

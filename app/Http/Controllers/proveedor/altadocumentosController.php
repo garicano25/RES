@@ -73,6 +73,21 @@ class altadocumentosController extends Controller
 
 
 
+
+
+
+    public function documentosRegistrados()
+    {
+        $rfc = Auth::user()->RFC_PROVEEDOR;
+
+        $documentos = DB::table('formulario_altadocumentoproveedores')
+            ->where('RFC_PROVEEDOR', $rfc)
+            ->where('ACTIVO', 1)
+            ->pluck('TIPO_DOCUMENTO'); 
+
+        return response()->json($documentos); 
+    }
+
     public function Tabladocumentosproveedores()
     {
         try {

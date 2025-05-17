@@ -1907,6 +1907,12 @@ $('#Tabladocumentosoporteproveedores').on('click', 'td>button.EDITAR', function 
     editarDatoTabla(row.data(), 'formularioDOCUMENTOS', 'miModal_documentos', 1);
     
 
+    
+    $('#TIPO_DOCUMENTO').prop('disabled',true ); 
+    $('#NOMBRE_DOCUMENTO').prop('disabled', true); 
+
+
+    $('#miModal_documentos .modal-title').html(row.data().NOMBRE_DOCUMENTO);
 
   
 });
