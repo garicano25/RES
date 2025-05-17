@@ -226,6 +226,7 @@ var Tablaproveedortemporal = $("#Tablaproveedortemporal").DataTable({
         },
         { data: 'RFC_PROVEEDORTEMP' },
         { data: 'RAZON_PROVEEDORTEMP' },
+        { data: 'NOMBRE_PROVEEDORTEMP' },        
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
@@ -234,9 +235,10 @@ var Tablaproveedortemporal = $("#Tablaproveedortemporal").DataTable({
         { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'R.F.C', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Razón social', className: 'all text-center nombre-column' },
-        { targets: 3, title: 'Editar', className: 'all text-center' },
-        { targets: 4, title: 'Visualizar', className: 'all text-center' },
-        { targets: 5, title: 'Activo', className: 'all text-center' }
+        { targets: 3, title: 'Nombre comercial', className: 'all text-center nombre-column' },
+        { targets: 4, title: 'Editar', className: 'all text-center' },
+        { targets: 5, title: 'Visualizar', className: 'all text-center' },
+        { targets: 6, title: 'Activo', className: 'all text-center' }
     ]
 });
 
