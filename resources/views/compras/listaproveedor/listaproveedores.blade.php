@@ -1176,7 +1176,7 @@
                     <div class="row">
                         <div class="col-md-12 mb-3">
                             <label class="form-label">Documento *</label>
-                            <select class="form-control" name="NOMBRE_DOCUMENTO" id="NOMBRE_DOCUMENTO" required>
+                            <select class="form-control" name="NOMBRE_DOCUMENTO" id="NOMBRE_DOCUMENTO" >
                                 <option value="" selected disabled>Seleccione una opción</option>
 
                                 @foreach ($documetoscatalogo as $documento)

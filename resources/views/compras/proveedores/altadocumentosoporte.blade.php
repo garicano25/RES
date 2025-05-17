@@ -38,7 +38,7 @@
                     <div class="row">
                         <div class="col-md-12 mb-3">
                             <label class="form-label">Documento *</label>
-                            <select class="form-control" name="TIPO_DOCUMENTO" id="TIPO_DOCUMENTO" required>
+                            <select class="form-control" name="TIPO_DOCUMENTO" id="TIPO_DOCUMENTO" >
                                 <option value="" selected disabled>Seleccione una opción</option>
 
                                 <optgroup label="Documentos obligatorios">
@@ -72,7 +72,7 @@
                                 Anexar documento &nbsp;
                             </label>
                             <div class="input-group align-items-center">
-                                <input type="file" class="form-control" name="DOCUMENTO_SOPORTE" id="DOCUMENTO_SOPORTE" accept="application/pdf">
+                                <input type="file" class="form-control" name="DOCUMENTO_SOPORTE" id="DOCUMENTO_SOPORTE" accept="application/pdf" required>
                                 <i id="iconEliminarArchivo" class="bi bi-trash-fill ms-2 text-danger fs-5 d-none" style="cursor: pointer;" title="Eliminar archivo"></i>
                             </div>
                         </div>

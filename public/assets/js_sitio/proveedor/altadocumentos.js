@@ -20,7 +20,7 @@ Modaldocumentos.addEventListener('hidden.bs.modal', event => {
     document.getElementById('formularioDOCUMENTOS').reset();
 
     $('#TIPO_DOCUMENTO').prop('disabled', false); 
-    $('#NOMBRE_DOCUMENTO').prop('disabled', false); 
+    $('#DOCUMENTO_SOPORTE').prop('required', true); 
   
 
     document.getElementById('DOCUMENTO_SOPORTE').value = '';
@@ -265,7 +265,9 @@ $('#Tabladocumentosproveedores tbody').on('click', 'td>button.EDITAR', function 
 
 
     $('#TIPO_DOCUMENTO').prop('disabled',true ); 
-    $('#NOMBRE_DOCUMENTO').prop('disabled', true); 
+
+
+$('#DOCUMENTO_SOPORTE').removeAttr('required');
 
 
 
