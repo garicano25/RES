@@ -140,6 +140,10 @@
       width: 20px;
       height: 20px;
     }
+
+    .texto-mayusculas {
+      text-transform: uppercase;
+    }
   </style>
 
 
@@ -190,7 +194,7 @@
               </div>
               <div class="col-4 mb-3">
                 <label for="RFC_LABEL">RFC *</label>
-                <input type="text" class="form-control" id="RFC_PROVEEDOR" name="RFC_PROVEEDOR" required>
+                <input type="text" class="form-control texto-mayusculas" id="RFC_PROVEEDOR" name="RFC_PROVEEDOR" required>
               </div>
               <div class="col-6 mb-3">
                 <label>Nombre comercial </label>
