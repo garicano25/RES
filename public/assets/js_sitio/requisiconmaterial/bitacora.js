@@ -340,184 +340,511 @@ function cargarMaterialesDesdeJSON(materialesJson) {
 
 
 
+function inicializarDatepickers() {
+  $('.mydatepicker').datepicker({
+    format: 'yyyy-mm-dd', // Formato de fecha
+                weekStart: 1, // Día que inicia la semana, 1 = Lunes
+                autoclose: true, // Cierra automáticamente el calendario
+                todayHighlight: true, // Marca el día de hoy en el calendario
+                language: 'es' // Configura el idioma en español
+  });
+}
 
-$('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', function () {
-  const row = Tablabitacora.row($(this).closest('tr')).data();
-  console.log("Fila seleccionada:", row);
+
+// $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', function () {
+//   const row = Tablabitacora.row($(this).closest('tr')).data();
+
+//   if (row.ESTADO_APROBACION === null) {
+//       alertToast('La MR aún no ha sido aprobada', 'warning');
+//       return;
+//   }
+
+//   if (row.ESTADO_APROBACION === 'Rechazada') {
+//       alertToast('La MR fue rechazada', 'error');
+//       return;
+//   }
+
+//   try {
+//       let materiales = [];
+//       if (Array.isArray(row.MATERIALES_JSON)) {
+//           materiales = row.MATERIALES_JSON;
+//       } else if (typeof row.MATERIALES_JSON === 'string') {
+//           materiales = JSON.parse(row.MATERIALES_JSON);
+//       }
+
+//       const listaFiltrada = materiales.filter(m => m.CHECK_VO === 'SI' && m.CHECK_MATERIAL === 'SI');
+
+//       $('#contenedorProductos').empty();
+//       $('#preguntaProveedorUnico').removeClass('d-none');
+//       $('#contenedorProductos').hide();
+
+//       // Eliminar eventos anteriores para evitar múltiples asignaciones
+//       $('#respuestaProveedorUnicoSi').off('click');
+//       $('#respuestaProveedorUnicoNo').off('click');
+
+//       const modal = new bootstrap.Modal(document.getElementById('modalMateriales'));
+//       modal.show();
+
+//       $('#noMRModal').text(row.NO_MR || 'No disponible');
+// $('#inputNoMR').val(row.NO_MR || '');
+    
+//       if (listaFiltrada.length === 0) {
+//           $('#contenedorProductos')
+//               .html('<div class="alert alert-info">No hay materiales aprobados disponibles.</div>')
+//               .show();
+//           $('#preguntaProveedorUnico').addClass('d-none');
+//           return;
+//       }
+
+//       // ✅ Opción SÍ: Un solo proveedor
+//       $('#respuestaProveedorUnicoSi').on('click', function () {
+//           $('#preguntaProveedorUnico').addClass('d-none');
+//           $('#contenedorProductos').show();
+
+//           const template = document.querySelector('#templateProducto');
+//           const clon = document.importNode(template.content, true);
+
+//           clon.querySelector('.producto-titulo').textContent = 'Materiales';
+
+//           // Ocultar bloque de cantidad/unidad
+//           const detalleCantidadUnidad = clon.querySelector('.detalle-cantidad-unidad');
+//           if (detalleCantidadUnidad) {
+//             detalleCantidadUnidad.style.setProperty('display', 'none', 'important');
+//           }
+//           // Insertar lista de materiales combinados
+//           const descripcionDiv = clon.querySelector('.descripcion-materiales');
+//           const listaHtml = listaFiltrada.map(m =>
+//               `<li>${m.DESCRIPCION} (${m.CANTIDAD} ${m.UNIDAD_MEDIDA})</li>`
+//           ).join('');
+//           descripcionDiv.innerHTML = `<ul class="mb-0">${listaHtml}</ul>`;
+
+//         $('#contenedorProductos').append(clon);
+//         inicializarDatepickers(); // 👈 activa los datepickers
+        
+//       });
+
+//       // ✅ Opción NO: Una tarjeta por material
+//       $('#respuestaProveedorUnicoNo').on('click', function () {
+//           $('#preguntaProveedorUnico').addClass('d-none');
+//           $('#contenedorProductos').show();
+
+//           listaFiltrada.forEach(material => {
+//               const template = document.querySelector('#templateProducto');
+//               const clon = document.importNode(template.content, true);
+
+//               clon.querySelector('.producto-titulo').textContent = material.DESCRIPCION;
+//               clon.querySelector('.producto-cantidad').textContent = material.CANTIDAD;
+//               clon.querySelector('.producto-unidad').textContent = material.UNIDAD_MEDIDA;
+
+//               // Eliminar descripción combinada en modo individual
+//               const descripcionDiv = clon.querySelector('.descripcion-materiales');
+//               if (descripcionDiv) {
+//                   descripcionDiv.remove();
+//               }
+
+//             $('#contenedorProductos').append(clon);
+//             inicializarDatepickers(); // 👈 activa los datepickers
+//           });
+//       });
+
+//   } catch (err) {
+//       console.error('Error al procesar MATERIALES_JSON', err);
+//       alertToast('Error al procesar los materiales', 'error');
+//   }
+
+
+
   
-  // Verificación inicial de aprobación
+  
+
+// });
+
+
+$('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () {
+  const row = Tablabitacora.row($(this).closest('tr')).data();
+  const no_mr = row.NO_MR;
+
+  if (!no_mr) {
+    alertToast('No se encontró el número de MR.', 'error');
+    return;
+  }
+
   if (row.ESTADO_APROBACION === null) {
     alertToast('La MR aún no ha sido aprobada', 'warning');
     return;
   }
-  
+
   if (row.ESTADO_APROBACION === 'Rechazada') {
     alertToast('La MR fue rechazada', 'error');
     return;
   }
-  
+
+  $('#contenedorProductos').empty();
+  $('#preguntaProveedorUnico').addClass('d-none');
+  $('#contenedorProductos').hide();
+  $('#respuestaProveedorUnicoSi').off('click');
+  $('#respuestaProveedorUnicoNo').off('click');
+
+  $('#noMRModal').text(no_mr || 'No disponible');
+  $('#inputNoMR').val(no_mr || '');
+
+  const modal = new bootstrap.Modal(document.getElementById('modalMateriales'));
+  modal.show();
+
   try {
+    const res = await fetch(`/api/hoja-trabajo/${no_mr}`);
+    const result = await res.json();
+
+    if (result.success && result.data.length > 0) {
+      $('#contenedorProductos').show();
+      $('#preguntaProveedorUnico').addClass('d-none');
+
+      result.data.forEach((item, index) => {
+        const template = document.querySelector('#templateProducto');
+        const clon = document.importNode(template.content, true);
+
+        clon.querySelector('.producto-titulo').textContent = item.DESCRIPCION || '-';
+        clon.querySelector('.producto-cantidad').textContent = item.CANTIDAD || '-';
+        clon.querySelector('.producto-unidad').textContent = item.UNIDAD_MEDIDA || '-';
+
+        clon.querySelector('.descripcion-input').value = item.DESCRIPCION || '';
+        clon.querySelector('.cantidad-input').value = item.CANTIDAD || '';
+        clon.querySelector('.unidad-input').value = item.UNIDAD_MEDIDA || '';
+
+
+        const filas = clon.querySelectorAll('.fila-cotizacion');
+
+filas.forEach((fila) => {
+  const cot = fila.getAttribute('data-cotizacion'); // "Q1", "Q2" o "Q3"
+
+  if (cot === 'Q1') {
+    fila.querySelector('.proveedor-cotizacion').value = item.PROVEEDOR_Q1 || '';
+    fila.querySelector('.importe-cotizacion').value = item.SUBTOTAL_Q1 || '';
+    fila.querySelector('.iva-cotizacion').value = item.IVA_Q1 || '';
+    fila.querySelector('.total-cotizacion').value = item.IMPORTE_Q1 || '';
+    fila.querySelector('.textarea').value = item.OBSERVACIONES_Q1 || '';
+    fila.querySelector('.fecha-cotizacion').value = item.FECHA_COTIZACION_Q1 || '';
+  }
+
+  if (cot === 'Q2') {
+    fila.querySelector('.proveedor-cotizacion').value = item.PROVEEDOR_Q2 || '';
+    fila.querySelector('.importe-cotizacion').value = item.SUBTOTAL_Q2 || '';
+    fila.querySelector('.iva-cotizacion').value = item.IVA_Q2 || '';
+    fila.querySelector('.total-cotizacion').value = item.IMPORTE_Q2 || '';
+    fila.querySelector('.textarea').value = item.OBSERVACIONES_Q2 || '';
+    fila.querySelector('.fecha-cotizacion').value = item.FECHA_COTIZACION_Q2 || '';
+  }
+
+  if (cot === 'Q3') {
+    fila.querySelector('.proveedor-cotizacion').value = item.PROVEEDOR_Q3 || '';
+    fila.querySelector('.importe-cotizacion').value = item.SUBTOTAL_Q3 || '';
+    fila.querySelector('.iva-cotizacion').value = item.IVA_Q3 || '';
+    fila.querySelector('.total-cotizacion').value = item.IMPORTE_Q3 || '';
+    fila.querySelector('.textarea').value = item.OBSERVACIONES_Q3 || '';
+    fila.querySelector('.fecha-cotizacion').value = item.FECHA_COTIZACION_Q3 || '';
+  }
+});
+      const ID_HOJA = clon.querySelector('.ID_HOJA');
+      if (ID_HOJA) ID_HOJA.value = item.id || '';
+              
+
+      const proveedorSugerido = clon.querySelector('.proveedor-sugerido');
+        if (proveedorSugerido) proveedorSugerido.value = item.PROVEEDOR_SUGERIDO || '';
+        
+
+        const  solicitarverificacion = clon.querySelector('.solicitar-verificacion');
+        if ( solicitarverificacion) solicitarverificacion.value = item.SOLICITAR_VERIFICACION || '';
+
+        const formaAdquisicion = clon.querySelector('.forma-adquisicion');
+        if (formaAdquisicion) formaAdquisicion.value = item.FORMA_ADQUISICION || '';
+
+        const proveedorSeleccionado = clon.querySelector('.proveedor-seleccionado');
+        if (proveedorSeleccionado) proveedorSeleccionado.value = item.PROVEEDOR_SELECCIONADO || '';
+
+        const montoFinal = clon.querySelector('.monto-final');
+        if (montoFinal) montoFinal.value = item.MONTO_FINAL || '';
+
+        const formaPago = clon.querySelector('.forma-pago');
+        if (formaPago) formaPago.value = item.FORMA_PAGO || '';
+
+
+        const  requierepo = clon.querySelector('.requiere-po');
+        if (requierepo) requierepo.value = item.REQUIERE_PO || '';
+        
+        
+        // const radioSi = clon.querySelector('input.requiere-po[value="si"]');
+        // const radioNo = clon.querySelector('input.requiere-po[value="no"]');
+        // if (item.REQUIERE_PO === 'si' && radioSi) radioSi.checked = true;
+        // if (item.REQUIERE_PO === 'no' && radioNo) radioNo.checked = true;
+
+
+        actualizarProveedoresSugeridos(clon, item.PROVEEDOR_SUGERIDO || '');
+
+
+
+        $('#contenedorProductos').append(clon);
+      });
+
+      inicializarDatepickers();
+      return;
+    }
+
+    // Si no hay hoja_trabajo: usar MATERIALES_JSON
     let materiales = [];
-    
-    // Detecta si ya es un arreglo o hay que parsear
     if (Array.isArray(row.MATERIALES_JSON)) {
       materiales = row.MATERIALES_JSON;
     } else if (typeof row.MATERIALES_JSON === 'string') {
       materiales = JSON.parse(row.MATERIALES_JSON);
     }
-    
-    console.log("Materiales parseados:", materiales);
-    
-    // Filtrar solo materiales aprobados
+
     const listaFiltrada = materiales.filter(m => m.CHECK_VO === 'SI' && m.CHECK_MATERIAL === 'SI');
-    
-    // Limpiar el contenedor
-    $('#contenedorProductos').empty();
-    
+
     if (listaFiltrada.length === 0) {
-      $('#contenedorProductos').html('<div class="alert alert-info">No hay materiales aprobados disponibles.</div>');
-    } else {
-      // Crear tarjeta para cada material
+      $('#contenedorProductos')
+        .html('<div class="alert alert-info">No hay materiales aprobados disponibles.</div>')
+        .show();
+      $('#preguntaProveedorUnico').addClass('d-none');
+      return;
+    }
+
+    // Mostrar pregunta
+    $('#preguntaProveedorUnico').removeClass('d-none');
+    $('#contenedorProductos').hide();
+
+    $('#respuestaProveedorUnicoSi').on('click', function () {
+      $('#preguntaProveedorUnico').addClass('d-none');
+      $('#contenedorProductos').show();
+
+      const template = document.querySelector('#templateProducto');
+      const clon = document.importNode(template.content, true);
+
+      clon.querySelector('.producto-titulo').textContent = 'Materiales';
+
+      const detalleCantidadUnidad = clon.querySelector('.detalle-cantidad-unidad');
+      if (detalleCantidadUnidad) {
+        detalleCantidadUnidad.style.setProperty('display', 'none', 'important');
+      }
+
+      const descripcionDiv = clon.querySelector('.descripcion-materiales');
+      const listaHtml = listaFiltrada.map(m =>
+        `<li>${m.DESCRIPCION} (${m.CANTIDAD} ${m.UNIDAD_MEDIDA})</li>`
+      ).join('');
+      descripcionDiv.innerHTML = `<ul class="mb-0">${listaHtml}</ul>`;
+
+      clon.querySelector('.descripcion-input').value = listaFiltrada.map(m => m.DESCRIPCION).join(', ');
+      clon.querySelector('.cantidad-input').value = listaFiltrada.map(m => m.CANTIDAD).join(', ');
+      clon.querySelector('.unidad-input').value = listaFiltrada.map(m => m.UNIDAD_MEDIDA).join(', ');
+
+      $('#contenedorProductos').append(clon);
+      inicializarDatepickers();
+    });
+
+    $('#respuestaProveedorUnicoNo').on('click', function () {
+      $('#preguntaProveedorUnico').addClass('d-none');
+      $('#contenedorProductos').show();
+
       listaFiltrada.forEach(material => {
         const template = document.querySelector('#templateProducto');
         const clon = document.importNode(template.content, true);
-        
-        // Establecer título del producto
+
         clon.querySelector('.producto-titulo').textContent = material.DESCRIPCION;
-        
-        // Establecer cantidad y unidad de medida
         clon.querySelector('.producto-cantidad').textContent = material.CANTIDAD;
         clon.querySelector('.producto-unidad').textContent = material.UNIDAD_MEDIDA;
-        
-        // Guardar ID o referencia del material para uso posterior
-        const card = clon.querySelector('.producto-card');
-        card.dataset.materialId = material.ID || '';
-        
-        // Añadir al contenedor
+
+        const descripcionDiv = clon.querySelector('.descripcion-materiales');
+        if (descripcionDiv) {
+          descripcionDiv.remove();
+        }
+
+        clon.querySelector('.descripcion-input').value = material.DESCRIPCION;
+        clon.querySelector('.cantidad-input').value = material.CANTIDAD;
+        clon.querySelector('.unidad-input').value = material.UNIDAD_MEDIDA;
+
         $('#contenedorProductos').append(clon);
+        inicializarDatepickers();
       });
-      
-      // Inicializar eventos después de cargar los productos
-      inicializarEventos();
-    }
-    
-    const modal = new bootstrap.Modal(document.getElementById('modalMateriales'));
-    modal.show();
-    
+    });
+
   } catch (err) {
-    console.error('Error al procesar MATERIALES_JSON', err);
-    alertToast('Error al procesar los materiales', 'error');
+    console.error('Error al cargar hoja de trabajo:', err);
+    alertToast('Error al cargar la hoja de trabajo', 'error');
   }
 });
 
-// Función para inicializar eventos en las tarjetas de productos
-function inicializarEventos() {
-  // Evento para verificar importes mayores a 10,001
-  $('.importe-cotizacion').on('change', function() {
-    const valor = parseFloat($(this).val()) || 0;
-    const card = $(this).closest('.producto-card');
-    
-    if (valor > 10001) {
-      card.find('.matriz-comparativa').removeClass('d-none');
-      alertToast('Se requiere Matriz comparativa de cotizaciones', 'warning');
-    } else {
-      card.find('.matriz-comparativa').addClass('d-none');
-    }
-    
-    // Actualizar lista de proveedores en el selector final
-    actualizarProveedoresDisponibles(card);
-  });
-  
-  // Evento para mostrar/ocultar campos según requiere PO
-  $('.requiere-po').on('change', function() {
-    const card = $(this).closest('.producto-card');
-    if ($(this).val() === 'si') {
-      card.find('.campo-monto-final').removeClass('d-none');
-      card.find('.campo-forma-pago').removeClass('d-none');
-      card.find('.campo-forma-adquisicion').addClass('d-none');
-    } else {
-      card.find('.campo-monto-final').addClass('d-none');
-      card.find('.campo-forma-pago').addClass('d-none');
-      card.find('.campo-forma-adquisicion').removeClass('d-none');
-    }
-  });
-  
-  // Evento para actualizar lista de proveedores cuando se selecciona uno
-  $('.proveedor-cotizacion').on('change', function() {
-    const card = $(this).closest('.producto-card');
-    actualizarProveedoresDisponibles(card);
-  });
-  
-  // Botón para guardar todo
-  $('#btnGuardarTodo').on('click', function() {
-    const productos = [];
-    
-    $('.producto-card').each(function() {
-      const card = $(this);
-      const materialId = card.data('materialId');
-      
-      // Recopilar datos de cotizaciones
-      const cotizaciones = [];
-      card.find('.fila-cotizacion').each(function() {
-        const cotizacion = {
-          tipo: $(this).data('cotizacion'),
-          proveedor: $(this).find('.proveedor-cotizacion').val(),
-          importe: parseFloat($(this).find('.importe-cotizacion').val()) || 0,
-          documentoNombre: $(this).find('.doc-cotizacion').val() ? 
-                          $(this).find('.doc-cotizacion')[0].files[0].name : ''
-        };
-        cotizaciones.push(cotizacion);
-      });
-      
-      // Recopilar datos de selección final
-      const producto = {
-        materialId: materialId,
-        cotizaciones: cotizaciones,
-        requierePO: card.find('.requiere-po:checked').val() === 'si',
-        proveedorSeleccionado: card.find('.proveedor-seleccionado').val(),
-        montoFinal: parseFloat(card.find('.monto-final').val()) || 0,
-        formaPago: card.find('.forma-pago').val(),
-        formaAdquisicion: card.find('.requiere-po:checked').val() === 'no' ?
-                         card.find('.forma-adquisicion').val() : null
-      };
-      
-      productos.push(producto);
-    });
-    
-    console.log('Datos guardados:', productos);
-    alertToast('Información guardada correctamente', 'success');
-    
-    // Aquí deberías enviar los datos al servidor
-    // guardarDatosHojaTrabajo(productos);
-  });
-}
 
-// Función para actualizar la lista de proveedores disponibles
-function actualizarProveedoresDisponibles(card) {
-  const selectFinal = card.find('.proveedor-seleccionado');
-  const proveedoresActuales = selectFinal.val();
-  
-  // Limpiar opciones excepto la primera
-  selectFinal.find('option:not(:first)').remove();
-  
-  // Obtener proveedores de las cotizaciones
-  const proveedores = new Set();
-  card.find('.proveedor-cotizacion').each(function() {
-    const proveedor = $(this).val();
-    if (proveedor) {
-      proveedores.add(proveedor);
+
+// $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', function () {
+//   const row = Tablabitacora.row($(this).closest('tr')).data();
+
+//   if (row.ESTADO_APROBACION === null) {
+//     alertToast('La MR aún no ha sido aprobada', 'warning');
+//     return;
+//   }
+
+//   if (row.ESTADO_APROBACION === 'Rechazada') {
+//     alertToast('La MR fue rechazada', 'error');
+//     return;
+//   }
+
+//   try {
+//     let materiales = [];
+//     if (Array.isArray(row.MATERIALES_JSON)) {
+//       materiales = row.MATERIALES_JSON;
+//     } else if (typeof row.MATERIALES_JSON === 'string') {
+//       materiales = JSON.parse(row.MATERIALES_JSON);
+//     }
+
+//     const listaFiltrada = materiales.filter(m => m.CHECK_VO === 'SI' && m.CHECK_MATERIAL === 'SI');
+
+//     $('#contenedorProductos').empty();
+//     $('#preguntaProveedorUnico').removeClass('d-none');
+//     $('#contenedorProductos').hide();
+
+//     $('#respuestaProveedorUnicoSi').off('click');
+//     $('#respuestaProveedorUnicoNo').off('click');
+
+//     const modal = new bootstrap.Modal(document.getElementById('modalMateriales'));
+//     modal.show();
+
+//     $('#noMRModal').text(row.NO_MR || 'No disponible');
+//     $('#inputNoMR').val(row.NO_MR || '');
+
+//     if (listaFiltrada.length === 0) {
+//       $('#contenedorProductos')
+//         .html('<div class="alert alert-info">No hay materiales aprobados disponibles.</div>')
+//         .show();
+//       $('#preguntaProveedorUnico').addClass('d-none');
+//       return;
+//     }
+
+//     // ✅ Proveedor Único (una sola tarjeta para todos)
+//     $('#respuestaProveedorUnicoSi').on('click', function () {
+//       $('#preguntaProveedorUnico').addClass('d-none');
+//       $('#contenedorProductos').show();
+
+//       const template = document.querySelector('#templateProducto');
+//       const clon = document.importNode(template.content, true);
+
+//       clon.querySelector('.producto-titulo').textContent = 'Materiales';
+
+//       const detalleCantidadUnidad = clon.querySelector('.detalle-cantidad-unidad');
+//       if (detalleCantidadUnidad) {
+//         detalleCantidadUnidad.style.setProperty('display', 'none', 'important');
+//       }
+
+//       const descripcionDiv = clon.querySelector('.descripcion-materiales');
+//       const listaHtml = listaFiltrada.map(m =>
+//         `<li>${m.DESCRIPCION} (${m.CANTIDAD} ${m.UNIDAD_MEDIDA})</li>`
+//       ).join('');
+//       descripcionDiv.innerHTML = `<ul class="mb-0">${listaHtml}</ul>`;
+
+//       // Asignar campos ocultos
+//       clon.querySelector('.descripcion-input').value = listaFiltrada.map(m => m.DESCRIPCION).join(', ');
+//       clon.querySelector('.cantidad-input').value = listaFiltrada.map(m => m.CANTIDAD).join(', ');
+//       clon.querySelector('.unidad-input').value = listaFiltrada.map(m => m.UNIDAD_MEDIDA).join(', ');
+
+//       $('#contenedorProductos').append(clon);
+//       inicializarDatepickers();
+//     });
+
+//     // ✅ Proveedor por Producto (una tarjeta por cada material)
+//     $('#respuestaProveedorUnicoNo').on('click', function () {
+//       $('#preguntaProveedorUnico').addClass('d-none');
+//       $('#contenedorProductos').show();
+
+//       listaFiltrada.forEach(material => {
+//         const template = document.querySelector('#templateProducto');
+//         const clon = document.importNode(template.content, true);
+
+//         clon.querySelector('.producto-titulo').textContent = material.DESCRIPCION;
+//         clon.querySelector('.producto-cantidad').textContent = material.CANTIDAD;
+//         clon.querySelector('.producto-unidad').textContent = material.UNIDAD_MEDIDA;
+
+//         // Eliminar descripción combinada
+//         const descripcionDiv = clon.querySelector('.descripcion-materiales');
+//         if (descripcionDiv) {
+//           descripcionDiv.remove();
+//         }
+
+//         // Asignar campos ocultos
+//         clon.querySelector('.descripcion-input').value = material.DESCRIPCION;
+//         clon.querySelector('.cantidad-input').value = material.CANTIDAD;
+//         clon.querySelector('.unidad-input').value = material.UNIDAD_MEDIDA;
+
+//         $('#contenedorProductos').append(clon);
+//         inicializarDatepickers();
+//       });
+//     });
+
+//   } catch (err) {
+//     console.error('Error al procesar MATERIALES_JSON', err);
+//     alertToast('Error al procesar los materiales', 'error');
+//   }
+// });
+
+
+function actualizarProveedoresSugeridos(grupo, valorSeleccionado = null) {
+  const selects = grupo.querySelectorAll('.proveedor-cotizacion');
+  const proveedorSugeridoSelect = grupo.querySelector('.proveedor-sugerido');
+  if (!proveedorSugeridoSelect) return;
+
+  const proveedoresUnicos = new Map();
+
+  selects.forEach(select => {
+    const selectedOption = select.options[select.selectedIndex];
+    const value = selectedOption?.value;
+    const text = selectedOption?.text;
+
+    if (value && !proveedoresUnicos.has(value)) {
+      proveedoresUnicos.set(value, text);
     }
   });
-  
-  // Añadir opciones
-  proveedores.forEach(proveedor => {
-    selectFinal.append(`<option value="${proveedor}">${proveedor}</option>`);
+
+  proveedorSugeridoSelect.innerHTML = '<option value="">Seleccionar proveedor sugerido</option>';
+  proveedoresUnicos.forEach((text, value) => {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = text;
+    proveedorSugeridoSelect.appendChild(option);
   });
-  
-  // Intentar restaurar la selección previa
-  if (proveedoresActuales && proveedores.has(proveedoresActuales)) {
-    selectFinal.val(proveedoresActuales);
+
+  // 👇 Selecciona el que venía guardado
+  if (valorSeleccionado) {
+    proveedorSugeridoSelect.value = valorSeleccionado;
   }
 }
 
 
+
+
+$(document).on('change', '.proveedor-cotizacion', function () {
+  const grupo = this.closest('.grupo-producto');
+  if (grupo) {
+    actualizarProveedoresSugeridos(grupo);
+  }
+});
+
+
+
+$('#btnGuardarTodo').on('click', function () {
+  const form = document.getElementById('formularioBITACORA');
+  const formData = new FormData(form);
+
+  fetch('/guardarHOJAS', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alertToast('Hoja de trabajo guardada con éxito', 'success');
+      $('#modalMateriales').modal('hide');
+    } else {
+      alertToast('Ocurrió un error al guardar', 'error');
+    }
+  })
+  .catch(error => {
+    console.error('Error al guardar:', error);
+    alertToast('Error en la conexión con el servidor', 'error');
+  });
+});

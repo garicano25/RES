@@ -18,6 +18,23 @@
     }
 
 
+
+    #tablaCotizaciones {
+        table-layout: fixed !important;
+        width: 100% !important;
+    }
+
+    #tablaCotizaciones th,
+    #tablaCotizaciones td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+
+
     .bg-verde-suave {
         background-color: #d1e7dd !important;
     }
@@ -105,276 +122,411 @@
 <div class="modal fade" id="modalMateriales" tabindex="-1" aria-labelledby="tituloMateriales" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title" id="tituloMateriales">Hoja de Trabajo - Materiales Aprobados</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Contenedor de tarjetas de productos -->
-                <div id="contenedorProductos"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-success" id="btnGuardarTodo">Guardar Todo</button>
-            </div>
+            <form method="post" enctype="multipart/form-data" id="formularioBITACORA" style="background-color: #ffffff;">
+
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="tituloMateriales">Hoja de Trabajo - Materiales Aprobados</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    {!! csrf_field() !!}
+                    <div class="mb-2">
+                        <strong>No. MR:</strong> <span id="noMRModal" class="text-primary fw-bold"></span>
+                    </div>
+
+                    <input type="hidden" id="inputNoMR" name="NO_MR">
+
+
+
+                    <!-- Pregunta inicial -->
+                    <div id="preguntaProveedorUnico" class="mb-4 text-center">
+                        <h5 class="fw-bold">¿Todos los materiales se comprarán con el mismo proveedor?</h5>
+                        <button type="button" class="btn btn-success me-2" id="respuestaProveedorUnicoSi">Sí</button>
+                        <button type="button" class="btn btn-secondary" id="respuestaProveedorUnicoNo">No</button>
+
+                    </div>
+
+
+
+                    <!-- Contenedor de tarjetas de productos -->
+                    <div id="contenedorProductos"></div>
+
+
+                    <template id="templateProducto">
+                        <div class="card mb-4 producto-card">
+                            <div class="card-header bg-primary text-white">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="producto-titulo mb-0 fw-bold"></h5>
+                                    <div class="d-flex align-items-center detalle-cantidad-unidad"> <!-- esta clase es clave -->
+                                        <div class="border-start ps-3 ms-3">
+                                            <div class="d-flex align-items-center">
+                                                <span class="fw-medium me-2">Cantidad:</span>
+                                                <span class="producto-cantidad fw-bold"></span>
+                                            </div>
+                                            <div class="d-flex align-items-center mt-1">
+                                                <span class="fw-medium me-2">Unidad:</span>
+                                                <span class="producto-unidad"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="DESCRIPCION[]" class="descripcion-input">
+                            <input type="hidden" name="CANTIDAD[]" class="cantidad-input">
+                            <input type="hidden" name="UNIDAD_MEDIDA[]" class="unidad-input">
+
+
+                            <input type="hidden" class="form-control ID_HOJA" name="id[]">
+
+
+                            <div class="card-body">
+                                <!-- Descripción combinada para materiales múltiples -->
+                                <div class="descripcion-materiales mb-3 text-muted small"></div>
+
+                                <!-- Sección de cotizaciones -->
+                                <h6 class="fw-bold">Cotizaciones</h6>
+                                <div class="grupo-producto">
+
+                                    <div class="table-responsive" style="overflow-x: auto;">
+                                        <table class="table table-bordered text-center" id="tablaCotizaciones">
+                                            <thead class="table-secondary">
+                                                <tr>
+                                                    <th class="text-center" width="200">Cotización</th>
+                                                    <th class="text-center" width="300">Proveedor</th>
+                                                    <th class="text-center" width="200">Subtotal</th>
+                                                    <th class="text-center" width="200">IVA</th>
+                                                    <th class="text-center" width="200">Importe</th>
+                                                    <th class="text-center" width="200">Observaciones</th>
+                                                    <th class="text-center" width="300">Fecha cotización</th>
+                                                    <th class="text-center" width="500">Documento</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Q1 -->
+                                                <tr class="fila-cotizacion" data-cotizacion="Q1">
+                                                    <td class="text-center">Q1</td>
+                                                    <td class="text-center">
+                                                        <select class="form-select proveedor-cotizacion text-center" name="PROVEEDOR_Q1[]">
+                                                            <option value="">Seleccionar proveedor</option>
+                                                            <optgroup label="Proveedor oficial">
+                                                                @foreach ($proveedoresOficiales as $proveedor)
+                                                                <option value="{{ $proveedor->RFC_ALTA }}">
+                                                                    {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
+                                                                </option>
+                                                                @endforeach
+                                                            </optgroup>
+                                                            <optgroup label="Proveedores temporales">
+                                                                @foreach ($proveedoresTemporales as $proveedor)
+                                                                <option value="{{ $proveedor->RFC_PROVEEDORTEMP }}">
+                                                                    {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->RFC_PROVEEDORTEMP }})
+                                                                </option>
+                                                                @endforeach
+                                                            </optgroup>
+                                                        </select>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input type="number" class="form-control importe-cotizacion" name="SUBTOTAL_Q1[]">
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input type="number" class="form-control iva-cotizacion" name="IVA_Q1[]">
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input type="number" class="form-control total-cotizacion" name="IMPORTE_Q1[]">
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <textarea rows="2" class="form-control textarea" placeholder="Observaciones..." name="OBSERVACIONES_Q1[]"></textarea>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="text" class="form-control mydatepicker fecha-cotizacion" placeholder="aaaa-mm-dd" name="FECHA_COTIZACION_Q1[]">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="input-group">
+                                                            <input type="file" class="form-control doc-cotizacion" accept=".pdf" name="DOCUMENTO_Q1[]">
+                                                            <span class="input-group-text"><i class="fas fa-upload"></i></span>
+                                                        </div>
+                                                    </td>
+
+
+                                                </tr>
+
+                                                <!-- Q2 -->
+                                                <tr class="fila-cotizacion" data-cotizacion="Q2">
+                                                    <td class="text-center">Q2</td>
+                                                    <td class="text-center">
+                                                        <select class="form-select proveedor-cotizacion text-center" name="PROVEEDOR_Q2[]">
+                                                            <option value="">Seleccionar proveedor</option>
+                                                            <optgroup label="Proveedor oficial">
+                                                                @foreach ($proveedoresOficiales as $proveedor)
+                                                                <option value="{{ $proveedor->RFC_ALTA }}">
+                                                                    {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
+                                                                </option>
+                                                                @endforeach
+                                                            </optgroup>
+                                                            <optgroup label="Proveedores temporales">
+                                                                @foreach ($proveedoresTemporales as $proveedor)
+                                                                <option value="{{ $proveedor->RFC_PROVEEDORTEMP }}">
+                                                                    {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->RFC_PROVEEDORTEMP }})
+                                                                </option>
+                                                                @endforeach
+                                                            </optgroup>
+                                                        </select>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input type="number" class="form-control importe-cotizacion" name="SUBTOTAL_Q2[]">
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input type="number" class="form-control iva-cotizacion" name="IVA_Q2[]">
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input type="number" class="form-control total-cotizacion" name="IMPORTE_Q2[]">
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <textarea rows="2" class="form-control textarea" placeholder="Observaciones..." name="OBSERVACIONES_Q2[]"></textarea>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="text" class="form-control mydatepicker fecha-cotizacion" placeholder="aaaa-mm-dd" name="FECHA_COTIZACION_Q2[]">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="input-group">
+                                                            <input type="file" class="form-control doc-cotizacion" name="DOCUMENTO_Q2[]" accept=".pdf">
+                                                            <span class="input-group-text"><i class="fas fa-upload"></i></span>
+                                                        </div>
+                                                    </td>
+
+
+                                                </tr>
+
+                                                <!-- Q3 -->
+                                                <tr class="fila-cotizacion" data-cotizacion="Q3">
+                                                    <td class="text-center">Q3</td>
+                                                    <td class="text-center">
+                                                        <select class="form-select proveedor-cotizacion text-center" name="PROVEEDOR_Q3[]">
+                                                            <option value="">Seleccionar proveedor</option>
+                                                            <optgroup label="Proveedor oficial">
+                                                                @foreach ($proveedoresOficiales as $proveedor)
+                                                                <option value="{{ $proveedor->RFC_ALTA }}">
+                                                                    {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
+                                                                </option>
+                                                                @endforeach
+                                                            </optgroup>
+                                                            <optgroup label="Proveedores temporales">
+                                                                @foreach ($proveedoresTemporales as $proveedor)
+                                                                <option value="{{ $proveedor->RFC_PROVEEDORTEMP }}">
+                                                                    {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->RFC_PROVEEDORTEMP }})
+                                                                </option>
+                                                                @endforeach
+                                                            </optgroup>
+                                                        </select>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input type="number" class="form-control importe-cotizacion" name="SUBTOTAL_Q3[]">
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input type="number" class="form-control iva-cotizacion" name="IVA_Q3[]">
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input type="number" class="form-control total-cotizacion" name="IMPORTE_Q3[]">
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <textarea rows="2" class="form-control textarea" placeholder="Observaciones..." name="OBSERVACIONES_Q3[]"></textarea>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <input type="text" class="form-control mydatepicker fecha-cotizacion" placeholder="aaaa-mm-dd" name="FECHA_COTIZACION_Q3[]">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="input-group">
+                                                            <input type="file" class="form-control doc-cotizacion" accept=".pdf" name="DOCUMENTO_Q3[]">
+                                                            <span class="input-group-text"><i class="fas fa-upload"></i></span>
+                                                        </div>
+                                                    </td>
+
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <!-- NUEVO: Sección de proveedor sugerido -->
+                                    <div class="row mt-4">
+                                        <div class="col-md-12">
+                                            <div class="card border-info">
+                                                <div class="card-header bg-light">
+                                                    <h6 class="mb-0 fw-bold">Proveedor Sugerido</h6>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <!-- Proveedor sugerido -->
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label fw-bold">Seleccione el proveedor sugerido:</label>
+                                                            <select class="form-select proveedor-sugerido" name="PROVEEDOR_SUGERIDO[]">
+                                                                <option value="">Seleccionar proveedor sugerido</option>
+                                                                <!-- Se llena dinámicamente -->
+                                                            </select>
+                                                        </div>
+
+                                                        <!-- Solicitar verificación -->
+                                                        <div class="col-md-6 mb-3">
+                                                            <label class="form-label fw-bold">¿Solicitar verificación?</label>
+                                                            <select class="form-select solicitar-verificacion" name="SOLICITAR_VERIFICACION[]">
+                                                                <option value="">Seleccione una opción</option>
+                                                                <option value="Sí">Sí</option>
+                                                                <option value="No">No</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Sección inicial de PO -->
+                                <div class="row mt-4">
+                                    <div class="col-md-12">
+                                        <div class="card border-primary">
+                                            <div class="card-body">
+                                                <div class="mb-3">
+                                                    <label class="form-label fw-bold">¿Requiere PO?</label>
+                                                    <select class="form-select requiere-po" name="REQUIERE_PO[]">
+                                                        <option value="">Seleccione una opción</option>
+                                                        <option value="Sí">Sí</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="mb-3 campo-forma-adquisicion d-block">
+                                                    <label class="form-label fw-bold">Forma de adquisición:</label>
+                                                    <select class="form-select forma-adquisicion" name="FORMA_ADQUISICION[]">
+                                                        <option value="">Seleccionar forma de adquisición</option>
+                                                        <option value="Compra directa">Compra directa</option>
+                                                        <option value="Fondo fijo">Fondo fijo</option>
+                                                        <option value="Reembolso">Reembolso</option>
+                                                        <option value="Caja chica">Caja chica</option>
+                                                        <option value="Anticipo">Anticipo</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!-- Sección de selección final -->
+                                <div class="row mt-4">
+                                    <div class="col-md-12">
+                                        <div class="card border-success">
+                                            <div class="card-header bg-light">
+                                                <h6 class="mb-0 fw-bold">Proveedor seleccionado y detalles de pago</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="mb-3">
+                                                            <label class="form-label fw-bold">Proveedor seleccionado:</label>
+
+                                                            <select class="form-select proveedor-seleccionado" name="PROVEEDOR_SELECCIONADO[]">
+                                                                <option value="">Seleccionar proveedor</option>
+
+                                                                <optgroup label="Proveedor oficial">
+                                                                    @foreach ($proveedoresOficiales as $proveedor)
+                                                                    <option value="{{ $proveedor->RFC_ALTA }}">
+                                                                        {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
+                                                                    </option>
+                                                                    @endforeach
+                                                                </optgroup>
+
+                                                                <optgroup label="Proveedores temporales">
+                                                                    @foreach ($proveedoresTemporales as $proveedor)
+                                                                    <option value="{{ $proveedor->RFC_PROVEEDORTEMP }}">
+                                                                        {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->RFC_PROVEEDORTEMP }})
+                                                                    </option>
+                                                                    @endforeach
+                                                                </optgroup>
+
+                                                            </select>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="mb-3">
+                                                            <label class="form-label fw-bold">Monto final:</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-text">$</span>
+                                                                <input type="number" class="form-control monto-final" name="MONTO_FINAL[]">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="mb-3">
+                                                            <label class="form-label fw-bold">Forma de pago:</label>
+                                                            <select class="form-select forma-pago" name="FORMA_PAGO[]">
+                                                                <option value="">Seleccionar forma de pago</option>
+                                                                <option value="Transferencia">Transferencia bancaria</option>
+                                                                <option value="Efectivo">Efectivo</option>
+                                                                <option value="Tarjeta">Tarjeta de crédito/débito</option>
+                                                                <option value="Anticipo">Anticipo + Complemento</option>
+                                                                <option value="Credito">Crédito 30 días</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="alert alert-warning matriz-comparativa d-none">
+                                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                                    <strong>Aviso:</strong> Se requiere realizar una Matriz comparativa de cotizaciones
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success" id="btnGuardarTodo">Guardar Todo</button>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
 
 <!-- Template para cada producto -->
-<template id="templateProducto">
-    <div class="card mb-4 producto-card">
-        <div class="card-header bg-primary text-white">
-            <div class="d-flex justify-content-between align-items-center">
-                <h5 class="producto-titulo mb-0 fw-bold"></h5>
-                <div class="d-flex align-items-center">
-                    <div class="border-start ps-3 ms-3">
-                        <div class="d-flex align-items-center">
-                            <span class="fw-medium me-2">Cantidad:</span>
-                            <span class="producto-cantidad fw-bold"></span>
-                        </div>
-                        <div class="d-flex align-items-center mt-1">
-                            <span class="fw-medium me-2">Unidad:</span>
-                            <span class="producto-unidad"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
-            <!-- Sección inicial de PO -->
-            <div class="row mb-4">
-                <div class="col-md-12">
-                    <div class="card border-primary">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">¿Requiere PO?</label>
-                                <div class="form-check">
-                                    <input class="form-check-input requiere-po" type="radio" name="requierePO" value="si">
-                                    <label class="form-check-label">Sí</label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input requiere-po" type="radio" name="requierePO" value="no" >
-                                    <label class="form-check-label">No</label>
-                                </div>
-                            </div>
-
-                            <div class="mb-3 campo-forma-adquisicion d-none">
-                                <label class="form-label fw-bold">Forma de adquisición:</label>
-                                <select class="form-select forma-adquisicion">
-                                    <option value="">Seleccionar forma de adquisición</option>
-                                    <option value="Compra directa">Compra directa</option>
-                                    <option value="Fondo fijo">Fondo fijo</option>
-                                    <option value="Reembolso">Reembolso</option>
-                                    <option value="Caja chica">Caja chica</option>
-                                    <option value="Anticipo">Anticipo</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sección de cotizaciones -->
-            <h6 class="fw-bold">Cotizaciones</h6>
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead class="table-secondary">
-                        <tr>
-                            <th>Cotización</th>
-                            <th>Documento</th>
-                            <th>Proveedor</th>
-                            <th>Importe</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="fila-cotizacion" data-cotizacion="Q1">
-                            <td>Q1</td>
-                            <td>
-                                <div class="input-group">
-                                    <input type="file" class="form-control doc-cotizacion" accept=".pdf,.doc,.docx,.xls,.xlsx">
-                                    <span class="input-group-text"><i class="fas fa-upload"></i></span>
-                                </div>
-                            </td>
-                            <td>
-                                <select class="form-select proveedor-cotizacion">
-                                    <option value="">Seleccionar proveedor</option>
-
-                                    <optgroup label="Proveedor oficial">
-                                        @foreach ($proveedoresOficiales as $proveedor)
-                                        <option value="{{ $proveedor->RFC_ALTA }}">
-                                            {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
-                                        </option>
-                                        @endforeach
-                                    </optgroup>
-
-                                    <optgroup label="Proveedores temporales">
-                                        @foreach ($proveedoresTemporales as $proveedor)
-                                        <option value="{{ $proveedor->RFC_PROVEEDORTEMP }}">
-                                            {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->RFC_PROVEEDORTEMP }})
-                                        </option>
-                                        @endforeach
-                                    </optgroup>
-
-                                </select>
-                            </td>
-                            <td>
-                                <div class="input-group">
-                                    <span class="input-group-text">$</span>
-                                    <input type="number" class="form-control importe-cotizacion" step="0.01" min="0">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="fila-cotizacion" data-cotizacion="Q2">
-                            <td>Q2</td>
-                            <td>
-                                <div class="input-group">
-                                    <input type="file" class="form-control doc-cotizacion" accept=".pdf,.doc,.docx,.xls,.xlsx">
-                                    <span class="input-group-text"><i class="fas fa-upload"></i></span>
-                                </div>
-                            </td>
-                            <td>
-                                <select class="form-select proveedor-cotizacion">
-                                    <option value="">Seleccionar proveedor</option>
-
-                                    <optgroup label="Proveedor oficial">
-                                        @foreach ($proveedoresOficiales as $proveedor)
-                                        <option value="{{ $proveedor->RFC_ALTA }}">
-                                            {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
-                                        </option>
-                                        @endforeach
-                                    </optgroup>
-
-                                    <optgroup label="Proveedores temporales">
-                                        @foreach ($proveedoresTemporales as $proveedor)
-                                        <option value="{{ $proveedor->RFC_PROVEEDORTEMP }}">
-                                            {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->RFC_PROVEEDORTEMP }})
-                                        </option>
-                                        @endforeach
-                                    </optgroup>
-
-                                </select>
-                            </td>
-                            <td>
-                                <div class="input-group">
-                                    <span class="input-group-text">$</span>
-                                    <input type="number" class="form-control importe-cotizacion" step="0.01" min="0">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="fila-cotizacion" data-cotizacion="Q3">
-                            <td>Q3</td>
-                            <td>
-                                <div class="input-group">
-                                    <input type="file" class="form-control doc-cotizacion" accept=".pdf,.doc,.docx,.xls,.xlsx">
-                                    <span class="input-group-text"><i class="fas fa-upload"></i></span>
-                                </div>
-                            </td>
-                            <td>
-                                <select class="form-select proveedor-cotizacion">
-                                    <option value="">Seleccionar proveedor</option>
-
-                                    <optgroup label="Proveedor oficial">
-                                        @foreach ($proveedoresOficiales as $proveedor)
-                                        <option value="{{ $proveedor->RFC_ALTA }}">
-                                            {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
-                                        </option>
-                                        @endforeach
-                                    </optgroup>
-
-                                    <optgroup label="Proveedores temporales">
-                                        @foreach ($proveedoresTemporales as $proveedor)
-                                        <option value="{{ $proveedor->RFC_PROVEEDORTEMP }}">
-                                            {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->RFC_PROVEEDORTEMP }})
-                                        </option>
-                                        @endforeach
-                                    </optgroup>
-
-                                </select>
-
-                            </td>
-                            <td>
-                                <div class="input-group">
-                                    <span class="input-group-text">$</span>
-                                    <input type="number" class="form-control importe-cotizacion" step="0.01" min="0">
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Sección de selección final -->
-            <div class="row mt-4">
-                <div class="col-md-12">
-                    <div class="card border-success">
-                        <div class="card-header bg-light">
-                            <h6 class="mb-0 fw-bold">Proveedor seleccionado y detalles de pago</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold">Proveedor seleccionado:</label>
-                                      
-                                        <select class="form-select proveedor-seleccionado">
-                                            <option value="">Seleccionar proveedor</option>
-
-                                            <optgroup label="Proveedor oficial">
-                                                @foreach ($proveedoresOficiales as $proveedor)
-                                                <option value="{{ $proveedor->RFC_ALTA }}">
-                                                    {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
-                                                </option>
-                                                @endforeach
-                                            </optgroup>
-
-                                            <optgroup label="Proveedores temporales">
-                                                @foreach ($proveedoresTemporales as $proveedor)
-                                                <option value="{{ $proveedor->RFC_PROVEEDORTEMP }}">
-                                                    {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->RFC_PROVEEDORTEMP }})
-                                                </option>
-                                                @endforeach
-                                            </optgroup>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold">Monto final:</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text">$</span>
-                                            <input type="number" class="form-control monto-final" step="0.01" min="0">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label class="form-label fw-bold">Forma de pago:</label>
-                                        <select class="form-select forma-pago">
-                                            <option value="">Seleccionar forma de pago</option>
-                                            <option value="Transferencia">Transferencia bancaria</option>
-                                            <option value="Efectivo">Efectivo</option>
-                                            <option value="Tarjeta">Tarjeta de crédito/débito</option>
-                                            <option value="Anticipo">Anticipo + Complemento</option>
-                                            <option value="Credito">Crédito 30 días</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="alert alert-warning matriz-comparativa d-none">
-                                <i class="fas fa-exclamation-triangle me-2"></i>
-                                <strong>Aviso:</strong> Se requiere realizar una Matriz comparativa de cotizaciones
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
 
 
 

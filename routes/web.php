@@ -721,6 +721,11 @@ Route::get('/Bitácora', [mrController::class, 'index']);
 
 Route::get('/Tablabitacora', [mrController::class, 'Tablabitacora']);
 
+
+Route::post('/guardarHOJAS', [mrController::class, 'guardarHOJAS']);
+
+Route::get('/api/hoja-trabajo/{no_mr}', [mrController::class, 'obtenerPorMR']);
+
 //==============================================   DIRECTORIO INTERNO  ============================================== 
 
 Route::get('/Banco_proveedores', function () {return view('compras.proveedores.proveedorespotencial');});
