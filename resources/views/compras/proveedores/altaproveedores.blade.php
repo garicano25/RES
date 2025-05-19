@@ -294,7 +294,7 @@
 
                     <div class="col-6 mb-3">
                         <label>Correo electrónico *</label>
-                        <input type="text" class="form-control" name="CORREO_DIRECTORIO" id="CORREO_DIRECTORIO" required readonly>
+                        <input type="text" class="form-control" name="CORREO_DIRECTORIO" id="CORREO_DIRECTORIO" required >
                     </div>
 
                     <div class="col-6 mb-3">
