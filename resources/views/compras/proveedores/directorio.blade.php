@@ -230,7 +230,7 @@
 
               <div class="col-3 mb-3">
                 <label>Número Exterior</label>
-                <input type="number" class="form-control" name="NUMERO_EXTERIOR_EMPRESA" id="NUMERO_EXTERIOR_EMPRESA">
+                <input type="text" class="form-control" name="NUMERO_EXTERIOR_EMPRESA" id="NUMERO_EXTERIOR_EMPRESA">
               </div>
               <div class="col-3 mb-3">
                 <label>Número Interior</label>
