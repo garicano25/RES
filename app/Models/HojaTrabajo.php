@@ -50,5 +50,9 @@ class HojaTrabajo extends Model
         'MONTO_FINAL',
         'FORMA_PAGO',
         'REQUIERE_PO',
+        'FECHA_VERIFICACION',
+        'ESTADO_APROBACION',
+        'MOTIVO_RECHAZO',
+        'FECHA_APROBACION'
     ];
 }

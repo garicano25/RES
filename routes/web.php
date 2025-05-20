@@ -726,6 +726,13 @@ Route::post('/guardarHOJAS', [mrController::class, 'guardarHOJAS']);
 
 Route::get('/api/hoja-trabajo/{no_mr}', [mrController::class, 'obtenerPorMR']);
 
+
+Route::get('/mostrarcotizacionq1/{id}', [mrController::class, 'mostrarcotizacionq1']);
+Route::get('/mostrarcotizacionq2/{id}', [mrController::class, 'mostrarcotizacionq2']);
+Route::get('/mostrarcotizacionq3/{id}', [mrController::class, 'mostrarcotizacionq3']);
+
+
+
 //==============================================   DIRECTORIO INTERNO  ============================================== 
 
 Route::get('/Banco_proveedores', function () {return view('compras.proveedores.proveedorespotencial');});

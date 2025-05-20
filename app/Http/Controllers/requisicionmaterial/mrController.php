@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Artisan;
 use Exception;
 use Illuminate\Support\Facades\Storage;
+
 use Illuminate\Support\Facades\Auth;
 
 use Carbon\Carbon;
@@ -441,40 +442,38 @@ class mrController extends Controller
         $descripciones = $request->input('DESCRIPCION');
         $cantidades = $request->input('CANTIDAD');
         $unidades = $request->input('UNIDAD_MEDIDA');
-
         $proveedor_q1 = $request->input('PROVEEDOR_Q1');
         $subtotal_q1 = $request->input('SUBTOTAL_Q1');
         $iva_q1 = $request->input('IVA_Q1');
         $importe_q1 = $request->input('IMPORTE_Q1');
         $observaciones_q1 = $request->input('OBSERVACIONES_Q1');
         $fecha_q1 = $request->input('FECHA_COTIZACION_Q1');
-
         $proveedor_q2 = $request->input('PROVEEDOR_Q2');
         $subtotal_q2 = $request->input('SUBTOTAL_Q2');
         $iva_q2 = $request->input('IVA_Q2');
         $importe_q2 = $request->input('IMPORTE_Q2');
         $observaciones_q2 = $request->input('OBSERVACIONES_Q2');
         $fecha_q2 = $request->input('FECHA_COTIZACION_Q2');
-
         $proveedor_q3 = $request->input('PROVEEDOR_Q3');
         $subtotal_q3 = $request->input('SUBTOTAL_Q3');
         $iva_q3 = $request->input('IVA_Q3');
         $importe_q3 = $request->input('IMPORTE_Q3');
         $observaciones_q3 = $request->input('OBSERVACIONES_Q3');
         $fecha_q3 = $request->input('FECHA_COTIZACION_Q3');
-
         $proveedor_sugerido = $request->input('PROVEEDOR_SUGERIDO');
-
         $solicitarverificacion = $request->input('SOLICITAR_VERIFICACION');
-
-        
-
-
+        $fechaverificacion = $request->input('FECHA_VERIFICACION');
+        $estadoaprobacion = $request->input('ESTADO_APROBACION');
+        $motivorechazo = $request->input('MOTIVO_RECHAZO');
+        $fechaaprobacion = $request->input('FECHA_APROBACION');
         $forma_adquisicion = $request->input('FORMA_ADQUISICION');
         $proveedor_seleccionado = $request->input('PROVEEDOR_SELECCIONADO');
         $monto_final = $request->input('MONTO_FINAL');
         $forma_pago = $request->input('FORMA_PAGO');
         $requiere_po = $request->input('REQUIERE_PO');
+
+
+
 
         $total = count($descripciones);
 
@@ -511,21 +510,221 @@ class mrController extends Controller
                 'SOLICITAR_VERIFICACION' => $solicitarverificacion[$i] ?? null,
                 'FORMA_ADQUISICION' => $forma_adquisicion[$i] ?? null,
                 'PROVEEDOR_SELECCIONADO' => $proveedor_seleccionado[$i] ?? null,
+
+                'FECHA_VERIFICACION' => $fechaverificacion[$i] ?? null,
+
+
+
+
+                'ESTADO_APROBACION' => $estadoaprobacion[$i] ?? null,
+                'MOTIVO_RECHAZO' => $motivorechazo[$i] ?? null,
+
+                'FECHA_APROBACION' => $fechaaprobacion[$i] ?? null,
+
+
                 'MONTO_FINAL' => $monto_final[$i] ?? null,
                 'FORMA_PAGO' => $forma_pago[$i] ?? null,
                 'REQUIERE_PO' => $requiere_po[$i] ?? null,
+
+
+
             ];
 
             if (!empty($ids[$i])) {
-                // Si tiene ID, actualiza
-                HojaTrabajo::where('id', $ids[$i])->update($data);
+                $hoja = HojaTrabajo::find($ids[$i]);
+                if ($hoja) {
+                    $hoja->update($data);
+                }
             } else {
-                // Si no tiene ID, crea
-                HojaTrabajo::create($data);
+                $hoja = HojaTrabajo::create($data);
+            }
+
+            if (isset($hoja)) {
+                $id = $hoja->id;
+
+                // Guardar archivo Q1
+                if ($request->hasFile("DOCUMENTO_Q1.$i")) {
+                    $file = $request->file("DOCUMENTO_Q1")[$i];
+                    $fileName = $file->getClientOriginalName();
+                    $folder = "compras/{$no_mr}/{$id}/Q1";
+                    $path = $file->storeAs($folder, $fileName);
+                    $hoja->DOCUMENTO_Q1 = $path;
+                }
+
+                // Guardar archivo Q2
+                if ($request->hasFile("DOCUMENTO_Q2.$i")) {
+                    $file = $request->file("DOCUMENTO_Q2")[$i];
+                    $fileName = $file->getClientOriginalName();
+                    $folder = "compras/{$no_mr}/{$id}/Q2";
+                    $path = $file->storeAs($folder, $fileName);
+                    $hoja->DOCUMENTO_Q2 = $path;
+                }
+
+                // Guardar archivo Q3
+                if ($request->hasFile("DOCUMENTO_Q3.$i")) {
+                    $file = $request->file("DOCUMENTO_Q3")[$i];
+                    $fileName = $file->getClientOriginalName();
+                    $folder = "compras/{$no_mr}/{$id}/Q3";
+                    $path = $file->storeAs($folder, $fileName);
+                    $hoja->DOCUMENTO_Q3 = $path;
+                }
+
+                $hoja->save();
             }
         }
 
         return response()->json(['success' => true]);
+    }
+
+
+
+    // public function guardarHOJAS(Request $request)
+    // {
+    //     $ids = $request->input('id');
+    //     $no_mr = $request->input('NO_MR');
+    //     $descripciones = $request->input('DESCRIPCION');
+    //     $cantidades = $request->input('CANTIDAD');
+    //     $unidades = $request->input('UNIDAD_MEDIDA');
+    //     $proveedor_q1 = $request->input('PROVEEDOR_Q1');
+    //     $subtotal_q1 = $request->input('SUBTOTAL_Q1');
+    //     $iva_q1 = $request->input('IVA_Q1');
+    //     $importe_q1 = $request->input('IMPORTE_Q1');
+    //     $observaciones_q1 = $request->input('OBSERVACIONES_Q1');
+    //     $fecha_q1 = $request->input('FECHA_COTIZACION_Q1');
+    //     $proveedor_q2 = $request->input('PROVEEDOR_Q2');
+    //     $subtotal_q2 = $request->input('SUBTOTAL_Q2');
+    //     $iva_q2 = $request->input('IVA_Q2');
+    //     $importe_q2 = $request->input('IMPORTE_Q2');
+    //     $observaciones_q2 = $request->input('OBSERVACIONES_Q2');
+    //     $fecha_q2 = $request->input('FECHA_COTIZACION_Q2');
+    //     $proveedor_q3 = $request->input('PROVEEDOR_Q3');
+    //     $subtotal_q3 = $request->input('SUBTOTAL_Q3');
+    //     $iva_q3 = $request->input('IVA_Q3');
+    //     $importe_q3 = $request->input('IMPORTE_Q3');
+    //     $observaciones_q3 = $request->input('OBSERVACIONES_Q3');
+    //     $fecha_q3 = $request->input('FECHA_COTIZACION_Q3');
+    //     $proveedor_sugerido = $request->input('PROVEEDOR_SUGERIDO');
+    //     $solicitarverificacion = $request->input('SOLICITAR_VERIFICACION');
+    //     $fechaverificacion = $request->input('FECHA_VERIFICACION');
+    //     $estadoaprobacion = $request->input('ESTADO_APROBACION');
+    //     $motivorechazo = $request->input('MOTIVO_RECHAZO');
+    //     $fechaaprobacion = $request->input('FECHA_APROBACION');
+    //     $forma_adquisicion = $request->input('FORMA_ADQUISICION');
+    //     $proveedor_seleccionado = $request->input('PROVEEDOR_SELECCIONADO');
+    //     $monto_final = $request->input('MONTO_FINAL');
+    //     $forma_pago = $request->input('FORMA_PAGO');
+    //     $requiere_po = $request->input('REQUIERE_PO');
+
+    //     $total = count($descripciones);
+
+    //     for ($i = 0; $i < $total; $i++) {
+    //         $data = [
+    //             'NO_MR' => $no_mr,
+    //             'DESCRIPCION' => $descripciones[$i] ?? '',
+    //             'CANTIDAD' => $cantidades[$i] ?? '',
+    //             'UNIDAD_MEDIDA' => $unidades[$i] ?? '',
+    //             'PROVEEDOR_Q1' => $proveedor_q1[$i] ?? null,
+    //             'SUBTOTAL_Q1' => $subtotal_q1[$i] ?? null,
+    //             'IVA_Q1' => $iva_q1[$i] ?? null,
+    //             'IMPORTE_Q1' => $importe_q1[$i] ?? null,
+    //             'OBSERVACIONES_Q1' => $observaciones_q1[$i] ?? null,
+    //             'FECHA_COTIZACION_Q1' => $fecha_q1[$i] ?? null,
+    //             'PROVEEDOR_Q2' => $proveedor_q2[$i] ?? null,
+    //             'SUBTOTAL_Q2' => $subtotal_q2[$i] ?? null,
+    //             'IVA_Q2' => $iva_q2[$i] ?? null,
+    //             'IMPORTE_Q2' => $importe_q2[$i] ?? null,
+    //             'OBSERVACIONES_Q2' => $observaciones_q2[$i] ?? null,
+    //             'FECHA_COTIZACION_Q2' => $fecha_q2[$i] ?? null,
+    //             'PROVEEDOR_Q3' => $proveedor_q3[$i] ?? null,
+    //             'SUBTOTAL_Q3' => $subtotal_q3[$i] ?? null,
+    //             'IVA_Q3' => $iva_q3[$i] ?? null,
+    //             'IMPORTE_Q3' => $importe_q3[$i] ?? null,
+    //             'OBSERVACIONES_Q3' => $observaciones_q3[$i] ?? null,
+    //             'FECHA_COTIZACION_Q3' => $fecha_q3[$i] ?? null,
+    //             'PROVEEDOR_SUGERIDO' => $proveedor_sugerido[$i] ?? null,
+    //             'SOLICITAR_VERIFICACION' => $solicitarverificacion[$i] ?? null,
+    //             'FECHA_VERIFICACION' => $fechaverificacion[$i] ?? null,
+    //             'ESTADO_APROBACION' => $estadoaprobacion[$i] ?? null,
+    //             'MOTIVO_RECHAZO' => $motivorechazo[$i] ?? null,
+    //             'FECHA_APROBACION' => $fechaaprobacion[$i] ?? null,
+    //             'FORMA_ADQUISICION' => $forma_adquisicion[$i] ?? null,
+    //             'PROVEEDOR_SELECCIONADO' => $proveedor_seleccionado[$i] ?? null,
+    //             'MONTO_FINAL' => $monto_final[$i] ?? null,
+    //             'FORMA_PAGO' => $forma_pago[$i] ?? null,
+    //             'REQUIERE_PO' => $requiere_po[$i] ?? null,
+    //         ];
+
+    //         if (!empty($ids[$i])) {
+    //             $hoja = HojaTrabajo::find($ids[$i]);
+    //             if ($hoja) {
+    //                 $hoja->update($data);
+    //             }
+    //         } else {
+    //             $hoja = HojaTrabajo::create($data);
+    //         }
+
+    //         if (isset($hoja)) {
+    //             $id = $hoja->id;
+
+    //             // Guardar archivo Q1
+    //             if ($request->hasFile("DOCUMENTO_Q1.$i")) {
+    //                 $file = $request->file("DOCUMENTO_Q1")[$i];
+    //                 $fileName = $file->getClientOriginalName();
+    //                 $folder = "compras/{$no_mr}/{$id}/Q1";
+    //                 $path = $file->storeAs($folder, $fileName);
+    //                 $hoja->DOCUMENTO_Q1 = $path;
+    //             }
+
+    //             // Guardar archivo Q2
+    //             if ($request->hasFile("DOCUMENTO_Q2.$i")) {
+    //                 $file = $request->file("DOCUMENTO_Q2")[$i];
+    //                 $fileName = $file->getClientOriginalName();
+    //                 $folder = "compras/{$no_mr}/{$id}/Q2";
+    //                 $path = $file->storeAs($folder, $fileName);
+    //                 $hoja->DOCUMENTO_Q2 = $path;
+    //             }
+
+    //             // Guardar archivo Q3
+    //             if ($request->hasFile("DOCUMENTO_Q3.$i")) {
+    //                 $file = $request->file("DOCUMENTO_Q3")[$i];
+    //                 $fileName = $file->getClientOriginalName();
+    //                 $folder = "compras/{$no_mr}/{$id}/Q3";
+    //                 $path = $file->storeAs($folder, $fileName);
+    //                 $hoja->DOCUMENTO_Q3 = $path;
+    //             }
+
+    //             $hoja->save();
+    //         }
+    //     }
+
+    //     return response()->json(['success' => true]);
+    // }
+
+
+
+
+
+    public function mostrarcotizacionq1($id)
+    {
+        $archivo = HojaTrabajo::findOrFail($id)->DOCUMENTO_Q1;
+        return Storage::response($archivo);
+    }
+
+
+
+    public function mostrarcotizacionq2($id)
+    {
+        $archivo = HojaTrabajo::findOrFail($id)->DOCUMENTO_Q2;
+        return Storage::response($archivo);
+    }
+
+
+
+
+    public function mostrarcotizacionq3($id)
+    {
+        $archivo = HojaTrabajo::findOrFail($id)->DOCUMENTO_Q3;
+        return Storage::response($archivo);
     }
 
 

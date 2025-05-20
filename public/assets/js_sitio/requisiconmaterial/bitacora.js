@@ -460,6 +460,25 @@ function inicializarDatepickers() {
 // });
 
 
+
+
+
+const ModalArea = document.getElementById('modalMateriales')
+ModalArea.addEventListener('hidden.bs.modal', event => {
+    
+    
+    document.getElementById('formularioBITACORA').reset();
+   
+
+
+})
+
+
+
+
+
+
+
 $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () {
   const row = Tablabitacora.row($(this).closest('tr')).data();
   const no_mr = row.NO_MR;
@@ -514,46 +533,92 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
 
         const filas = clon.querySelectorAll('.fila-cotizacion');
 
-filas.forEach((fila) => {
-  const cot = fila.getAttribute('data-cotizacion'); // "Q1", "Q2" o "Q3"
+        filas.forEach((fila) => {
+          const cot = fila.getAttribute('data-cotizacion'); // "Q1", "Q2" o "Q3"
 
-  if (cot === 'Q1') {
-    fila.querySelector('.proveedor-cotizacion').value = item.PROVEEDOR_Q1 || '';
-    fila.querySelector('.importe-cotizacion').value = item.SUBTOTAL_Q1 || '';
-    fila.querySelector('.iva-cotizacion').value = item.IVA_Q1 || '';
-    fila.querySelector('.total-cotizacion').value = item.IMPORTE_Q1 || '';
-    fila.querySelector('.textarea').value = item.OBSERVACIONES_Q1 || '';
-    fila.querySelector('.fecha-cotizacion').value = item.FECHA_COTIZACION_Q1 || '';
-  }
+          if (cot === 'Q1') {
+            fila.querySelector('.proveedor-cotizacion').value = item.PROVEEDOR_Q1 || '';
+            fila.querySelector('.importe-cotizacion').value = item.SUBTOTAL_Q1 || '';
+            fila.querySelector('.iva-cotizacion').value = item.IVA_Q1 || '';
+            fila.querySelector('.total-cotizacion').value = item.IMPORTE_Q1 || '';
+            fila.querySelector('.textarea').value = item.OBSERVACIONES_Q1 || '';
+            fila.querySelector('.fecha-cotizacion').value = item.FECHA_COTIZACION_Q1 || '';
 
-  if (cot === 'Q2') {
-    fila.querySelector('.proveedor-cotizacion').value = item.PROVEEDOR_Q2 || '';
-    fila.querySelector('.importe-cotizacion').value = item.SUBTOTAL_Q2 || '';
-    fila.querySelector('.iva-cotizacion').value = item.IVA_Q2 || '';
-    fila.querySelector('.total-cotizacion').value = item.IMPORTE_Q2 || '';
-    fila.querySelector('.textarea').value = item.OBSERVACIONES_Q2 || '';
-    fila.querySelector('.fecha-cotizacion').value = item.FECHA_COTIZACION_Q2 || '';
-  }
+            const inputFile = fila.querySelector('.doc-cotizacionq1');
+            const contenedor = inputFile?.closest('.input-group');
+            if (contenedor && item.DOCUMENTO_Q1) {
+              const link = document.createElement('a');
+              link.href = `/mostrarcotizacionq1/${item.id}`;
+              link.target = "_blank";
+              link.textContent = "Ver documento actual";
+              link.classList.add('btn', 'btn-outline-primary', 'btn-sm', 'ms-2');
+              contenedor.appendChild(link);
+            }
 
-  if (cot === 'Q3') {
-    fila.querySelector('.proveedor-cotizacion').value = item.PROVEEDOR_Q3 || '';
-    fila.querySelector('.importe-cotizacion').value = item.SUBTOTAL_Q3 || '';
-    fila.querySelector('.iva-cotizacion').value = item.IVA_Q3 || '';
-    fila.querySelector('.total-cotizacion').value = item.IMPORTE_Q3 || '';
-    fila.querySelector('.textarea').value = item.OBSERVACIONES_Q3 || '';
-    fila.querySelector('.fecha-cotizacion').value = item.FECHA_COTIZACION_Q3 || '';
-  }
-});
-      const ID_HOJA = clon.querySelector('.ID_HOJA');
-      if (ID_HOJA) ID_HOJA.value = item.id || '';
+          }
+
+          if (cot === 'Q2') {
+            fila.querySelector('.proveedor-cotizacion').value = item.PROVEEDOR_Q2 || '';
+            fila.querySelector('.importe-cotizacion').value = item.SUBTOTAL_Q2 || '';
+            fila.querySelector('.iva-cotizacion').value = item.IVA_Q2 || '';
+            fila.querySelector('.total-cotizacion').value = item.IMPORTE_Q2 || '';
+            fila.querySelector('.textarea').value = item.OBSERVACIONES_Q2 || '';
+            fila.querySelector('.fecha-cotizacion').value = item.FECHA_COTIZACION_Q2 || '';
+
+
+            const inputFile = fila.querySelector('.doc-cotizacionq2');
+            const contenedor = inputFile?.closest('.input-group');
+            if (contenedor && item.DOCUMENTO_Q2) {
+              const link = document.createElement('a');
+              link.href = `/mostrarcotizacionq2/${item.id}`;
+              link.target = "_blank";
+              link.textContent = "Ver documento actual";
+              link.classList.add('btn', 'btn-outline-primary', 'btn-sm', 'ms-2');
+              contenedor.appendChild(link);
+            }
+
+
+          }
+
+          if (cot === 'Q3') {
+            fila.querySelector('.proveedor-cotizacion').value = item.PROVEEDOR_Q3 || '';
+            fila.querySelector('.importe-cotizacion').value = item.SUBTOTAL_Q3 || '';
+            fila.querySelector('.iva-cotizacion').value = item.IVA_Q3 || '';
+            fila.querySelector('.total-cotizacion').value = item.IMPORTE_Q3 || '';
+            fila.querySelector('.textarea').value = item.OBSERVACIONES_Q3 || '';
+            fila.querySelector('.fecha-cotizacion').value = item.FECHA_COTIZACION_Q3 || '';
+            const inputFile = fila.querySelector('.doc-cotizacionq3');
+            const contenedor = inputFile?.closest('.input-group');
+            if (contenedor && item.DOCUMENTO_Q3) {
+              const link = document.createElement('a');
+              link.href = `/mostrarcotizacionq3/${item.id}`;
+              link.target = "_blank";
+              link.textContent = "Ver documento actual";
+              link.classList.add('btn', 'btn-outline-primary', 'btn-sm', 'ms-2');
+              contenedor.appendChild(link);
+            }
+          }
+          
+        });
+
+          const ID_HOJA = clon.querySelector('.ID_HOJA');
+         if (ID_HOJA) ID_HOJA.value = item.id || '';
               
 
       const proveedorSugerido = clon.querySelector('.proveedor-sugerido');
         if (proveedorSugerido) proveedorSugerido.value = item.PROVEEDOR_SUGERIDO || '';
         
 
-        const  solicitarverificacion = clon.querySelector('.solicitar-verificacion');
-        if ( solicitarverificacion) solicitarverificacion.value = item.SOLICITAR_VERIFICACION || '';
+        const solicitarverificacion = clon.querySelector('.solicitar-verificacion');
+        if (solicitarverificacion) {
+          solicitarverificacion.value = item.SOLICITAR_VERIFICACION || '';
+        
+          const aprobacionDireccion = clon.querySelector('.aprobacion-direccion-hoja');
+          if (aprobacionDireccion) {
+            aprobacionDireccion.style.display = (solicitarverificacion.value === 'Sí') ? 'block' : 'none';
+          }
+        }
+        
 
         const formaAdquisicion = clon.querySelector('.forma-adquisicion');
         if (formaAdquisicion) formaAdquisicion.value = item.FORMA_ADQUISICION || '';
@@ -570,12 +635,30 @@ filas.forEach((fila) => {
 
         const  requierepo = clon.querySelector('.requiere-po');
         if (requierepo) requierepo.value = item.REQUIERE_PO || '';
+
+
+        const  fechaverificacion = clon.querySelector('.fecha-verificacion');
+        if (fechaverificacion) fechaverificacion.value = item.FECHA_VERIFICACION || '';
         
         
-        // const radioSi = clon.querySelector('input.requiere-po[value="si"]');
-        // const radioNo = clon.querySelector('input.requiere-po[value="no"]');
-        // if (item.REQUIERE_PO === 'si' && radioSi) radioSi.checked = true;
-        // if (item.REQUIERE_PO === 'no' && radioNo) radioNo.checked = true;
+        
+        const  fechaaprobacion = clon.querySelector('.fecha-aprobacion');
+        if (fechaaprobacion) fechaaprobacion.value = item.FECHA_APROBACION || '';
+        
+        
+
+        const estadoaprobacion = clon.querySelector('.estado-aprobacion');
+        if (estadoaprobacion) {
+          estadoaprobacion.value = item.ESTADO_APROBACION || '';
+          cambiarColor(estadoaprobacion); 
+        }
+        
+
+        
+
+        const  motivorechazo = clon.querySelector('.motivo-rechazo');
+        if (motivorechazo) motivorechazo.value = item.MOTIVO_RECHAZO || '';
+        
 
 
         actualizarProveedoresSugeridos(clon, item.PROVEEDOR_SUGERIDO || '');
@@ -586,6 +669,9 @@ filas.forEach((fila) => {
       });
 
       inicializarDatepickers();
+      asignarFechaVerificacion();
+      bloquearFechaDesdeInicio();
+
       return;
     }
 
@@ -637,6 +723,11 @@ filas.forEach((fila) => {
 
       $('#contenedorProductos').append(clon);
       inicializarDatepickers();
+      asignarFechaVerificacion();
+      bloquearFechaDesdeInicio();
+
+
+
     });
 
     $('#respuestaProveedorUnicoNo').on('click', function () {
@@ -662,6 +753,8 @@ filas.forEach((fila) => {
 
         $('#contenedorProductos').append(clon);
         inicializarDatepickers();
+        asignarFechaVerificacion();
+        bloquearFechaDesdeInicio();
       });
     });
 
@@ -848,3 +941,80 @@ $('#btnGuardarTodo').on('click', function () {
     alertToast('Error en la conexión con el servidor', 'error');
   });
 });
+
+
+
+
+
+
+function asignarFechaVerificacion() {
+  document.querySelectorAll('.solicitar-verificacion').forEach((select) => {
+    select.addEventListener('change', function () {
+      const container = this.closest('.col-md-4').parentElement;
+      const fechaInput = container.querySelector('.fecha-verificacion');
+      const inputGroup = fechaInput.closest('.input-group');
+
+      if (!fechaInput || !inputGroup) return;
+
+      if (this.value === 'Sí') {
+        const hoy = new Date().toISOString().split('T')[0];
+        $(fechaInput).datepicker('setDate', hoy);
+
+        // Agrega capa que bloquea interacción
+        inputGroup.classList.add('bloquear-interaccion');
+      } else {
+        // Limpia y permite interacción
+        $(fechaInput).datepicker('clearDates');
+        inputGroup.classList.remove('bloquear-interaccion');
+      }
+    });
+  });
+}
+
+
+
+function bloquearFechaDesdeInicio() {
+  document.querySelectorAll('.fecha-verificacion').forEach((input) => {
+    input.classList.add('input-bloqueado');
+  });
+}
+
+
+
+$(document).on('change', '.estado-aprobacion', function () {
+  cambiarColor(this);
+});
+
+
+
+function cambiarColor(select) {
+  const bloque = select.closest('.bloque-aprobacion');
+  if (!bloque) return;
+
+  const container = bloque.querySelector('.estado-container');
+  const motivoContainer = bloque.querySelector('.motivo-rechazo-hoja');
+  const textarea = bloque.querySelector('.motivo-rechazo');
+
+  if (select.value === "Aprobada") {
+    if (container) {
+      container.style.backgroundColor = "green";
+      container.style.color = "white";
+    }
+    if (motivoContainer) motivoContainer.style.display = "none";
+    if (textarea) textarea.removeAttribute('required');
+  } else if (select.value === "Rechazada") {
+    if (container) {
+      container.style.backgroundColor = "red";
+      container.style.color = "white";
+    }
+    if (motivoContainer) motivoContainer.style.display = "block";
+    if (textarea) textarea.setAttribute('required', 'required');
+  } else {
+    if (container) {
+      container.style.backgroundColor = "transparent";
+      container.style.color = "black";
+    }
+    if (motivoContainer) motivoContainer.style.display = "none";
+    if (textarea) textarea.removeAttribute('required');
+  }
+}
