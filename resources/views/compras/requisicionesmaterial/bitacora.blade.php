@@ -235,7 +235,7 @@
                                                 <tr class="fila-cotizacion" data-cotizacion="Q1">
                                                     <td class="text-center">Q1</td>
                                                     <td class="text-center">
-                                                        <select class="form-select proveedor-cotizacion text-center" name="PROVEEDOR_Q1[]">
+                                                        <select class="form-select proveedor-cotizacionq1 text-center" name="PROVEEDOR_Q1[]">
                                                             <option value="">Seleccionar proveedor</option>
                                                             <optgroup label="Proveedor oficial">
                                                                 @foreach ($proveedoresOficiales as $proveedor)
@@ -291,7 +291,7 @@
                                                 <tr class="fila-cotizacion" data-cotizacion="Q2">
                                                     <td class="text-center">Q2</td>
                                                     <td class="text-center">
-                                                        <select class="form-select proveedor-cotizacion text-center" name="PROVEEDOR_Q2[]">
+                                                        <select class="form-select proveedor-cotizacionq2 text-center" name="PROVEEDOR_Q2[]">
                                                             <option value="">Seleccionar proveedor</option>
                                                             <optgroup label="Proveedor oficial">
                                                                 @foreach ($proveedoresOficiales as $proveedor)
@@ -347,7 +347,7 @@
                                                 <tr class="fila-cotizacion" data-cotizacion="Q3">
                                                     <td class="text-center">Q3</td>
                                                     <td class="text-center">
-                                                        <select class="form-select proveedor-cotizacion text-center" name="PROVEEDOR_Q3[]">
+                                                        <select class="form-select proveedor-cotizacionq3 text-center" name="PROVEEDOR_Q3[]">
                                                             <option value="">Seleccionar proveedor</option>
                                                             <optgroup label="Proveedor oficial">
                                                                 @foreach ($proveedoresOficiales as $proveedor)
@@ -445,6 +445,10 @@
                                     </div>
 
                                 </div>
+
+
+                                @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
+
 
                                 <div class="aprobacion-direccion-hoja mt-5" style="display: none;">
 
@@ -555,6 +559,8 @@
                                                                     <option value="Tarjeta">Tarjeta de crédito/débito</option>
                                                                     <option value="Anticipo">Anticipo + Complemento</option>
                                                                     <option value="Credito">Crédito 30 días</option>
+                                                                    <option value="Caja chica">Caja chica</option>
+
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -571,6 +577,7 @@
 
                                 </div>
 
+                                @endif
 
                             </div>
                         </div>

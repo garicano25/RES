@@ -470,7 +470,6 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     document.getElementById('formularioBITACORA').reset();
    
 
-
 })
 
 
@@ -537,7 +536,7 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
           const cot = fila.getAttribute('data-cotizacion'); // "Q1", "Q2" o "Q3"
 
           if (cot === 'Q1') {
-            fila.querySelector('.proveedor-cotizacion').value = item.PROVEEDOR_Q1 || '';
+            fila.querySelector('.proveedor-cotizacionq1').value = item.PROVEEDOR_Q1 || '';
             fila.querySelector('.importe-cotizacion').value = item.SUBTOTAL_Q1 || '';
             fila.querySelector('.iva-cotizacion').value = item.IVA_Q1 || '';
             fila.querySelector('.total-cotizacion').value = item.IMPORTE_Q1 || '';
@@ -558,7 +557,7 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
           }
 
           if (cot === 'Q2') {
-            fila.querySelector('.proveedor-cotizacion').value = item.PROVEEDOR_Q2 || '';
+            fila.querySelector('.proveedor-cotizacionq2').value = item.PROVEEDOR_Q2 || '';
             fila.querySelector('.importe-cotizacion').value = item.SUBTOTAL_Q2 || '';
             fila.querySelector('.iva-cotizacion').value = item.IVA_Q2 || '';
             fila.querySelector('.total-cotizacion').value = item.IMPORTE_Q2 || '';
@@ -581,7 +580,7 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
           }
 
           if (cot === 'Q3') {
-            fila.querySelector('.proveedor-cotizacion').value = item.PROVEEDOR_Q3 || '';
+            fila.querySelector('.proveedor-cotizacionq3').value = item.PROVEEDOR_Q3 || '';
             fila.querySelector('.importe-cotizacion').value = item.SUBTOTAL_Q3 || '';
             fila.querySelector('.iva-cotizacion').value = item.IVA_Q3 || '';
             fila.querySelector('.total-cotizacion').value = item.IMPORTE_Q3 || '';
@@ -597,8 +596,10 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
               link.classList.add('btn', 'btn-outline-primary', 'btn-sm', 'ms-2');
               contenedor.appendChild(link);
             }
+
+
           }
-          
+
         });
 
           const ID_HOJA = clon.querySelector('.ID_HOJA');
@@ -666,6 +667,9 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
 
 
         $('#contenedorProductos').append(clon);
+
+        inicializarSelectizeEnClon(clon);
+
       });
 
       inicializarDatepickers();
@@ -722,6 +726,9 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
       clon.querySelector('.unidad-input').value = listaFiltrada.map(m => m.UNIDAD_MEDIDA).join(', ');
 
       $('#contenedorProductos').append(clon);
+      inicializarSelectizeEnClon(clon);
+      actualizarProveedoresSugeridos(clon);
+
       inicializarDatepickers();
       asignarFechaVerificacion();
       bloquearFechaDesdeInicio();
@@ -752,10 +759,17 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
         clon.querySelector('.unidad-input').value = material.UNIDAD_MEDIDA;
 
         $('#contenedorProductos').append(clon);
+        inicializarSelectizeEnClon(clon);
+        actualizarProveedoresSugeridos(clon);
+
         inicializarDatepickers();
         asignarFechaVerificacion();
         bloquearFechaDesdeInicio();
+
+
       });
+
+
     });
 
   } catch (err) {
@@ -877,7 +891,9 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
 
 
 function actualizarProveedoresSugeridos(grupo, valorSeleccionado = null) {
-  const selects = grupo.querySelectorAll('.proveedor-cotizacion');
+  if (!grupo) return; // 🚫 evita error si grupo es null o undefined
+
+  const selects = grupo.querySelectorAll('.proveedor-cotizacionq1, .proveedor-cotizacionq2, .proveedor-cotizacionq3');
   const proveedorSugeridoSelect = grupo.querySelector('.proveedor-sugerido');
   if (!proveedorSugeridoSelect) return;
 
@@ -901,21 +917,59 @@ function actualizarProveedoresSugeridos(grupo, valorSeleccionado = null) {
     proveedorSugeridoSelect.appendChild(option);
   });
 
-  // 👇 Selecciona el que venía guardado
+  // Si viene valor guardado (modo edición)
   if (valorSeleccionado) {
     proveedorSugeridoSelect.value = valorSeleccionado;
+  } else {
+    // Si los 3 proveedores son iguales, seleccionarlo automáticamente
+    const valores = Array.from(selects).map(sel => sel.value).filter(v => v);
+    if (valores.length === 3 && new Set(valores).size === 1) {
+      proveedorSugeridoSelect.value = valores[0];
+    }
   }
+}
+
+function inicializarSelectizeEnClon(clon) {
+  if (!clon) return;
+
+  const clases = [
+    '.proveedor-cotizacionq1',
+    '.proveedor-cotizacionq2',
+    '.proveedor-cotizacionq3'
+  ];
+
+  clases.forEach((clase) => {
+    const select = clon.querySelector(clase);
+
+    if (select) {
+      // Si ya está inicializado, destrúyelo antes
+      if ($(select)[0].selectize) {
+        $(select)[0].selectize.destroy();
+      }
+
+      const selectize = $(select).selectize({
+        allowEmptyOption: true,
+        dropdownParent: 'body',
+        sortField: 'text'
+      })[0].selectize;
+
+      // Asignar valor si ya tiene uno
+      const valorActual = select.value;
+      if (valorActual) selectize.setValue(valorActual);
+    }
+  });
 }
 
 
 
 
-$(document).on('change', '.proveedor-cotizacion', function () {
+$(document).on('change', '.proveedor-cotizacionq1, .proveedor-cotizacionq2, .proveedor-cotizacionq3', function () {
   const grupo = this.closest('.grupo-producto');
   if (grupo) {
     actualizarProveedoresSugeridos(grupo);
   }
 });
+
 
 
 
