@@ -521,9 +521,42 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
         const template = document.querySelector('#templateProducto');
         const clon = document.importNode(template.content, true);
 
-        clon.querySelector('.producto-titulo').textContent = item.DESCRIPCION || '-';
-        clon.querySelector('.producto-cantidad').textContent = item.CANTIDAD || '-';
-        clon.querySelector('.producto-unidad').textContent = item.UNIDAD_MEDIDA || '-';
+  
+
+          // === MOSTRAR ENCABEZADO O LISTA SEGÚN Nº DE PRODUCTOS ===
+    const descripcion = item.DESCRIPCION || '';
+    const cantidad = item.CANTIDAD || '';
+    const unidad = item.UNIDAD_MEDIDA || '';
+
+    const descripciones = descripcion.split('*#');
+    const cantidades = cantidad.split('*#');
+    const unidades = unidad.split('*#');
+
+    const titulo = clon.querySelector('.producto-titulo');
+    const cantSpan = clon.querySelector('.producto-cantidad');
+    const unidadSpan = clon.querySelector('.producto-unidad');
+    const descripcionDiv = clon.querySelector('.descripcion-materiales');
+    const detalleCantidadUnidad = clon.querySelector('.detalle-cantidad-unidad');
+
+    if (descripciones.length === 1) {
+      if (titulo) titulo.textContent = descripciones[0] || '-';
+      if (cantSpan) cantSpan.textContent = cantidades[0] || '-';
+      if (unidadSpan) unidadSpan.textContent = unidades[0] || '-';
+      if (descripcionDiv) descripcionDiv.innerHTML = '';
+    } else {
+      const listaHtml = descripciones.map((desc, i) => {
+        const cant = cantidades[i] || '-';
+        const uni = unidades[i] || '-';
+        return `<li>${desc} (${cant} ${uni})</li>`;
+      }).join('');
+      if (descripcionDiv) descripcionDiv.innerHTML = `<ul class="mb-0">${listaHtml}</ul>`;
+
+      if (titulo) titulo.textContent = '';
+      if (cantSpan) cantSpan.textContent = '';
+      if (unidadSpan) unidadSpan.textContent = '';
+      if (detalleCantidadUnidad) detalleCantidadUnidad.remove(); // 🔥 Oculta todo el bloque
+    }
+        
 
         clon.querySelector('.descripcion-input').value = item.DESCRIPCION || '';
         clon.querySelector('.cantidad-input').value = item.CANTIDAD || '';
@@ -674,7 +707,7 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
 
       inicializarDatepickers();
       asignarFechaVerificacion();
-      bloquearFechaDesdeInicio();
+      // bloquearFechaDesdeInicio();
 
       return;
     }
@@ -721,9 +754,9 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
       ).join('');
       descripcionDiv.innerHTML = `<ul class="mb-0">${listaHtml}</ul>`;
 
-      clon.querySelector('.descripcion-input').value = listaFiltrada.map(m => m.DESCRIPCION).join(', ');
-      clon.querySelector('.cantidad-input').value = listaFiltrada.map(m => m.CANTIDAD).join(', ');
-      clon.querySelector('.unidad-input').value = listaFiltrada.map(m => m.UNIDAD_MEDIDA).join(', ');
+      clon.querySelector('.descripcion-input').value = listaFiltrada.map(m => m.DESCRIPCION).join('*#');
+      clon.querySelector('.cantidad-input').value = listaFiltrada.map(m => m.CANTIDAD).join('*#');
+      clon.querySelector('.unidad-input').value = listaFiltrada.map(m => m.UNIDAD_MEDIDA).join('*#');
 
       $('#contenedorProductos').append(clon);
       inicializarSelectizeEnClon(clon);
@@ -731,7 +764,7 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
 
       inicializarDatepickers();
       asignarFechaVerificacion();
-      bloquearFechaDesdeInicio();
+      // bloquearFechaDesdeInicio();
 
 
 
@@ -764,7 +797,7 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
 
         inicializarDatepickers();
         asignarFechaVerificacion();
-        bloquearFechaDesdeInicio();
+        // bloquearFechaDesdeInicio();
 
 
       });
@@ -1027,11 +1060,11 @@ function asignarFechaVerificacion() {
 
 
 
-function bloquearFechaDesdeInicio() {
-  document.querySelectorAll('.fecha-verificacion').forEach((input) => {
-    input.classList.add('input-bloqueado');
-  });
-}
+// function bloquearFechaDesdeInicio() {
+//   document.querySelectorAll('.fecha-verificacion').forEach((input) => {
+//     input.classList.add('input-bloqueado');
+//   });
+// }
 
 
 
