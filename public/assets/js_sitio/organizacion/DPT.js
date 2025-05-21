@@ -589,15 +589,15 @@ function consultarFuncionesConSeleccion(areaId, funcionesSeleccionadas = []) {
                         $('#tbodyFucnionesCargo').append(rowHtml);
                     });
 
-                    resolve(); // Resolver la promesa
+                    resolve();
                 } else {
                     console.error("Error al cargar funciones:", response.msj);
-                    reject(response.msj); // Rechazar la promesa
+                    reject(response.msj); 
                 }
             },
             error: function (xhr, status, error) {
                 console.error("Error en la consulta:", error);
-                reject(error); // Rechazar la promesa en caso de error
+                reject(error); 
             }
         });
     });
@@ -619,21 +619,6 @@ $(document).on('change', '.toggle-switch-cargo', function() {
 });
 
 
-
-
-
-// $('#TablaDPT tbody').on('click', 'td>button.ELIMINAR', function () {
-//     var tr = $(this).closest('tr');
-//     var row = TablaDPT.row(tr);
-
-//     data = {
-//         api: 1,
-//         ELIMINAR: 1, 
-//         ID_FORMULARIO_DPT: row.data().ID_FORMULARIO_DPT
-//     }
-    
-//     eliminarDatoTabla(data, [TablaDPT], 'dptDelete');
-// })
 
 
 
@@ -936,12 +921,10 @@ function mostrarFunciones(data,form){
           var cursos = data.INTERNAS
           var count = 1    
   
-            // Supongamos que 'data' es el array que contiene los objetos de datos
           cursos.forEach(function (obj) {
   
   
             
-            // Acceder a las propiedades de cada objeto    INTERNAS_CONQUIEN1_DPT  INTERNAS_PARAQUE1_DPT   INTERNAS_FRECUENCIA1_DPT
             $('#' + form).find(`select[id='INTERNAS_CONQUIEN${count}_DPT']`).val(obj.INTERNAS_CONQUIEN_DPT)
             $('#' + form).find(`textarea[id='INTERNAS_PARAQUE${count}_DPT']`).val(obj.INTERNAS_PARAQUE_DPT)
             $('#' + form).find(`select[id='INTERNAS_FRECUENCIA${count}_DPT']`).val(obj.INTERNAS_FRECUENCIA_DPT)
@@ -958,10 +941,8 @@ function mostrarFunciones(data,form){
           var cursos1 = data.EXTERNAS
           var count = 1    
   
-            // Supongamos que 'data' es el array que contiene los objetos de datos
           cursos1.forEach(function (obj) {
   
-            // Acceder a las propiedades de cada objeto    INTERNAS_CONQUIEN1_DPT  INTERNAS_PARAQUE1_DPT   INTERNAS_FRECUENCIA1_DPT
             $('#' + form).find(`select[id='EXTERNAS_CONQUIEN${count}_DPT']`).val(obj.EXTERNAS_CONQUIEN_DPT)
             $('#' + form).find(`textarea[id='EXTERNAS_PARAQUE${count}_DPT']`).val(obj.EXTERNAS_PARAQUE_DPT)
             $('#' + form).find(`select[id='EXTERNAS_FRECUENCIA${count}_DPT']`).val(obj.EXTERNAS_FRECUENCIA_DPT)
@@ -975,7 +956,6 @@ function mostrarFunciones(data,form){
 
 
 $(document).ready(function() {
-    // Capturar el cambio en el select de nivel jerárquico
     $('#NIVEL_JERARQUICO_DPT').on('change', function() {
         var descripcion = $(this).find('option:selected').data('descripcion');
         $('#DESCRIPCION_NIVEL_JERARQUICO').text(descripcion);
@@ -1021,7 +1001,6 @@ $(document).ready(function() {
     });
 
 
-    // Manejar el cambio en los selects para mostrar la descripción
     $('select[id^="NOMBRE_COMPETENCIA"]').on('change', function() {
         var selectedOption = $(this).find('option:selected');
         var descripcion = selectedOption.data('descripcion');
