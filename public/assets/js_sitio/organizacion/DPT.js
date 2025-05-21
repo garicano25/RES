@@ -78,7 +78,7 @@ TablaDPT = $("#TablaDPT").DataTable({
         { 
             data: null,
             render: function(data, type, row, meta) {
-                return meta.row + 1; // Contador que inicia en 1 y se incrementa por cada fila
+                return meta.row + 1; 
             }
         },
         { data: 'NOMBRE_CATEGORIA' }, 
@@ -168,7 +168,6 @@ $("#guardarFormDPT").click(function (e) {
             }, 1);
         }
          } else {
-        // Muestra un mensaje de error o realiza alguna otra acción
         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
 
     }
@@ -298,7 +297,6 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
     var valorSeleccionado = $(this).find("option:selected");
     var valor = parseInt($(this).val());
 
-    // Continuar con la funcionalidad normal
     var infoLugar = valorSeleccionado.data("lugar");
     var infoProposito = valorSeleccionado.data("proposito");
     var infoLider = valorSeleccionado.data("lider");
@@ -310,7 +308,6 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
     var lider = textoSeleccionado.toUpperCase() == 'DIRECTOR' ? 2 : parseInt(infoLider);
     var ruta = '/infoReportan/' + valor + '/' + lider;
 
-    // Realizamos la consulta
     ajaxAwait({}, ruta, 'GET', { callbackAfter: true, callbackBefore: true }, () => {
         $('#PUESTO_REPORTA_DPT').val('Consultando información...').prop('readonly', true);
         $('#PUESTO_LE_REPORTAN_DPT').val('Consultando información...').prop('readonly', true);
@@ -320,7 +317,6 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
 
         $('#tbodyFucnionesCargo').empty();
 
-        // FUNCIONES DE CARGO
         $.each(data.FUNCIONES, function (index, funcion) {
             let rowHtml = '';
 
@@ -357,7 +353,6 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
             $('#tbodyFucnionesCargo').append(rowHtml);
         });
 
-        // Ajustar valores específicos de los campos
         if (valor === 10) {
             $('#PUESTO_REPORTA_DPT').val('Director');
             $('#PUESTO_LE_REPORTAN_DPT').val('Ninguno');
@@ -369,7 +364,6 @@ $("#DEPARTAMENTOS_AREAS_ID").on("change", function () {
             $('#PUESTOS_DIRECTOS_DPT').val('5');
 
         } else {
-            // Consultar responsables solo si no son valores 10 o 13
             if (lider == 1 || lider == 2) {
                 $('#PUESTO_REPORTA_DPT').val(data.REPORTA).prop('readonly', true);
                 $('#PUESTO_LE_REPORTAN_DPT').val(data.REPORTAN[0].REPORTAN).prop('readonly', true);
@@ -480,7 +474,6 @@ $(document).ready(function () {
         });
 
 
-        // Mostrar solo las competencias básicas que tienen datos
         for (let i = 1; i <= 8; i++) {
             const competenciaField = document.getElementById(`COMPETENCIA${i}`);
             const nombreField = document.getElementById(`NOMBRE_COMPETENCIA${i}`);
@@ -506,7 +499,6 @@ $(document).ready(function () {
             }
         }
     
-        // Mostrar solo las competencias gerenciales que tienen datos
         for (let i = 1; i <= 4; i++) {
             const gerencialField = document.getElementById(`GERENCIALES${i}`);
             const nombreGerencialField = document.getElementById(`NOMBRE_COMPETENCIA${10 + i}`);
