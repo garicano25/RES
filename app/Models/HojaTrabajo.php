@@ -53,6 +53,8 @@ class HojaTrabajo extends Model
         'FECHA_VERIFICACION',
         'ESTADO_APROBACION',
         'MOTIVO_RECHAZO',
-        'FECHA_APROBACION'
+        'FECHA_APROBACION',
+        'REQUIERE_COMENTARIO',
+        'COMENTARIO_APROBACION'
     ];
 }

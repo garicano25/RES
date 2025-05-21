@@ -66,14 +66,11 @@
     }
 
 
-    .input-bloqueado {
+    /* .input-bloqueado {
         pointer-events: none;
-        /* bloquea clics */
         background-color: #e9ecef;
-        /* opcional: gris como los disabled */
         cursor: not-allowed;
-        /* opcional: muestra que está bloqueado */
-    }
+    } */
 </style>
 
 <div class="contenedor-contenido">
@@ -256,26 +253,26 @@
                                                     <td class="text-center">
                                                         <div class="input-group">
                                                             <span class="input-group-text">$</span>
-                                                            <input type="number" class="form-control importe-cotizacion" name="SUBTOTAL_Q1[]">
+                                                            <input type="number" class="form-control importe-cotizacionq1" name="SUBTOTAL_Q1[]">
                                                         </div>
                                                     </td>
                                                     <td class="text-center">
                                                         <div class="input-group">
                                                             <span class="input-group-text">$</span>
-                                                            <input type="number" class="form-control iva-cotizacion" name="IVA_Q1[]">
+                                                            <input type="number" class="form-control iva-cotizacionq1" name="IVA_Q1[]">
                                                         </div>
                                                     </td>
                                                     <td class="text-center">
                                                         <div class="input-group">
                                                             <span class="input-group-text">$</span>
-                                                            <input type="number" class="form-control total-cotizacion" name="IMPORTE_Q1[]">
+                                                            <input type="number" class="form-control total-cotizacionq1" name="IMPORTE_Q1[]" readonly>
                                                         </div>
                                                     </td>
                                                     <td class="text-center">
-                                                        <textarea rows="2" class="form-control textarea" placeholder="Observaciones..." name="OBSERVACIONES_Q1[]"></textarea>
+                                                        <textarea rows="2" class="form-control textareaq1" placeholder="Observaciones..." name="OBSERVACIONES_Q1[]"></textarea>
                                                     </td>
                                                     <td class="text-center">
-                                                        <input type="text" class="form-control mydatepicker fecha-cotizacion" placeholder="aaaa-mm-dd" name="FECHA_COTIZACION_Q1[]">
+                                                        <input type="text" class="form-control mydatepicker fecha-cotizacionq1" placeholder="aaaa-mm-dd" name="FECHA_COTIZACION_Q1[]">
                                                     </td>
                                                     <td class="text-center">
                                                         <div class="input-group">
@@ -312,26 +309,26 @@
                                                     <td class="text-center">
                                                         <div class="input-group">
                                                             <span class="input-group-text">$</span>
-                                                            <input type="number" class="form-control importe-cotizacion" name="SUBTOTAL_Q2[]">
+                                                            <input type="number" class="form-control importe-cotizacionq2" name="SUBTOTAL_Q2[]">
                                                         </div>
                                                     </td>
                                                     <td class="text-center">
                                                         <div class="input-group">
                                                             <span class="input-group-text">$</span>
-                                                            <input type="number" class="form-control iva-cotizacion" name="IVA_Q2[]">
+                                                            <input type="number" class="form-control iva-cotizacionq2" name="IVA_Q2[]">
                                                         </div>
                                                     </td>
                                                     <td class="text-center">
                                                         <div class="input-group">
                                                             <span class="input-group-text">$</span>
-                                                            <input type="number" class="form-control total-cotizacion" name="IMPORTE_Q2[]">
+                                                            <input type="number" class="form-control total-cotizacionq2" name="IMPORTE_Q2[]" readonly>
                                                         </div>
                                                     </td>
                                                     <td class="text-center">
-                                                        <textarea rows="2" class="form-control textarea" placeholder="Observaciones..." name="OBSERVACIONES_Q2[]"></textarea>
+                                                        <textarea rows="2" class="form-control textareaq2" placeholder="Observaciones..." name="OBSERVACIONES_Q2[]"></textarea>
                                                     </td>
                                                     <td class="text-center">
-                                                        <input type="text" class="form-control mydatepicker fecha-cotizacion" placeholder="aaaa-mm-dd" name="FECHA_COTIZACION_Q2[]">
+                                                        <input type="text" class="form-control mydatepicker fecha-cotizacionq2" placeholder="aaaa-mm-dd" name="FECHA_COTIZACION_Q2[]">
                                                     </td>
                                                     <td class="text-center">
                                                         <div class="input-group">
@@ -368,26 +365,26 @@
                                                     <td class="text-center">
                                                         <div class="input-group">
                                                             <span class="input-group-text">$</span>
-                                                            <input type="number" class="form-control importe-cotizacion" name="SUBTOTAL_Q3[]">
+                                                            <input type="number" class="form-control importe-cotizacionq3" name="SUBTOTAL_Q3[]">
                                                         </div>
                                                     </td>
                                                     <td class="text-center">
                                                         <div class="input-group">
                                                             <span class="input-group-text">$</span>
-                                                            <input type="number" class="form-control iva-cotizacion" name="IVA_Q3[]">
+                                                            <input type="number" class="form-control iva-cotizacionq3" name="IVA_Q3[]">
                                                         </div>
                                                     </td>
                                                     <td class="text-center">
                                                         <div class="input-group">
                                                             <span class="input-group-text">$</span>
-                                                            <input type="number" class="form-control total-cotizacion" name="IMPORTE_Q3[]">
+                                                            <input type="number" class="form-control total-cotizacionq3" name="IMPORTE_Q3[]" readonly>
                                                         </div>
                                                     </td>
                                                     <td class="text-center">
-                                                        <textarea rows="2" class="form-control textarea" placeholder="Observaciones..." name="OBSERVACIONES_Q3[]"></textarea>
+                                                        <textarea rows="2" class="form-control textareaq3" placeholder="Observaciones..." name="OBSERVACIONES_Q3[]"></textarea>
                                                     </td>
                                                     <td class="text-center">
-                                                        <input type="text" class="form-control mydatepicker fecha-cotizacion" placeholder="aaaa-mm-dd" name="FECHA_COTIZACION_Q3[]">
+                                                        <input type="text" class="form-control mydatepicker fecha-cotizacionq3" placeholder="aaaa-mm-dd" name="FECHA_COTIZACION_Q3[]">
                                                     </td>
                                                     <td class="text-center">
                                                         <div class="input-group">
@@ -422,7 +419,7 @@
 
                                                         <!-- Solicitar verificación -->
                                                         <div class="col-md-4 mb-3">
-                                                            <label class="form-label fw-bold">¿Solicitar verificación?</label>
+                                                            <label class="form-label fw-bold">¿Solicitar aprobación?</label>
                                                             <select class="form-select solicitar-verificacion" name="SOLICITAR_VERIFICACION[]" readonly>
                                                                 <option value="">Seleccione una opción</option>
                                                                 <option value="Sí">Sí</option>
@@ -456,7 +453,7 @@
                                     <div class="bloque-aprobacion">
                                         <div class="row">
                                             <!-- Estado de Aprobación -->
-                                            <div class="col-md-6 mb-3">
+                                            <div class="col-md-4 mb-3">
                                                 <label class="form-label fw-bold">Estado de Aprobación</label>
                                                 <select class="form-control estado-aprobacion" name="ESTADO_APROBACION[]">
                                                     <option value="" selected disabled>Seleccione una opción</option>
@@ -466,12 +463,28 @@
                                             </div>
 
                                             <!-- Fecha de Aprobación -->
-                                            <div class="col-md-6 mb-3">
+                                            <div class="col-md-4 mb-3">
                                                 <label class="form-label fw-bold">Fecha de aprobación *</label>
                                                 <div class="input-group">
                                                     <input type="text" class="form-control mydatepicker fecha-aprobacion" placeholder="aaaa-mm-dd" name="FECHA_APROBACION[]">
                                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                                 </div>
+                                            </div>
+
+                                            <!-- Requiere comentario -->
+                                            <div class="col-md-4 mb-3">
+                                                <label class="form-label fw-bold">Requiere algún comentario</label>
+                                                <select class="form-control requiere-comentario" name="REQUIERE_COMENTARIO[]">
+                                                    <option value="" selected disabled>Seleccione una opción</option>
+                                                    <option value="Sí">Sí</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                            </div>
+
+                                            <!-- Comentario visible si selecciona "Sí" -->
+                                            <div class="col-md-12 comentario-aprobacion-hoja mt-3" style="display: none;">
+                                                <label class="form-label fw-bold">Comentario</label>
+                                                <textarea class="form-control comentario-aprobacion" name="COMENTARIO_APROBACION[]"></textarea>
                                             </div>
                                         </div>
 
@@ -481,6 +494,7 @@
                                             <textarea class="form-control motivo-rechazo" name="MOTIVO_RECHAZO[]" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
                                         </div>
                                     </div>
+
 
 
                                     <!-- Sección inicial de PO -->
@@ -516,26 +530,9 @@
                                                         <div class="col-md-4">
                                                             <div class="mb-3">
                                                                 <label class="form-label fw-bold">Proveedor seleccionado:</label>
-
                                                                 <select class="form-select proveedor-seleccionado" name="PROVEEDOR_SELECCIONADO[]">
-                                                                    <option value="">Seleccionar proveedor</option>
-
-                                                                    <optgroup label="Proveedor oficial">
-                                                                        @foreach ($proveedoresOficiales as $proveedor)
-                                                                        <option value="{{ $proveedor->RFC_ALTA }}">
-                                                                            {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
-                                                                        </option>
-                                                                        @endforeach
-                                                                    </optgroup>
-
-                                                                    <optgroup label="Proveedores temporales">
-                                                                        @foreach ($proveedoresTemporales as $proveedor)
-                                                                        <option value="{{ $proveedor->RFC_PROVEEDORTEMP }}">
-                                                                            {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->RFC_PROVEEDORTEMP }})
-                                                                        </option>
-                                                                        @endforeach
-                                                                    </optgroup>
-
+                                                                    <option value="">Seleccionar proveedor sugerido</option>
+                                                                    <!-- Se llena dinámicamente -->
                                                                 </select>
 
                                                             </div>
@@ -557,8 +554,6 @@
                                                                     <option value="Transferencia">Transferencia bancaria</option>
                                                                     <option value="Efectivo">Efectivo</option>
                                                                     <option value="Tarjeta">Tarjeta de crédito/débito</option>
-                                                                    <option value="Anticipo">Anticipo + Complemento</option>
-                                                                    <option value="Credito">Crédito 30 días</option>
                                                                     <option value="Caja chica">Caja chica</option>
 
                                                                 </select>

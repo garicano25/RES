@@ -554,7 +554,7 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
       if (titulo) titulo.textContent = '';
       if (cantSpan) cantSpan.textContent = '';
       if (unidadSpan) unidadSpan.textContent = '';
-      if (detalleCantidadUnidad) detalleCantidadUnidad.remove(); // 🔥 Oculta todo el bloque
+      if (detalleCantidadUnidad) detalleCantidadUnidad.remove(); 
     }
         
 
@@ -570,11 +570,11 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
 
           if (cot === 'Q1') {
             fila.querySelector('.proveedor-cotizacionq1').value = item.PROVEEDOR_Q1 || '';
-            fila.querySelector('.importe-cotizacion').value = item.SUBTOTAL_Q1 || '';
-            fila.querySelector('.iva-cotizacion').value = item.IVA_Q1 || '';
-            fila.querySelector('.total-cotizacion').value = item.IMPORTE_Q1 || '';
-            fila.querySelector('.textarea').value = item.OBSERVACIONES_Q1 || '';
-            fila.querySelector('.fecha-cotizacion').value = item.FECHA_COTIZACION_Q1 || '';
+            fila.querySelector('.importe-cotizacionq1').value = item.SUBTOTAL_Q1 || '';
+            fila.querySelector('.iva-cotizacionq1').value = item.IVA_Q1 || '';
+            fila.querySelector('.total-cotizacionq1').value = item.IMPORTE_Q1 || '';
+            fila.querySelector('.textareaq1').value = item.OBSERVACIONES_Q1 || '';
+            fila.querySelector('.fecha-cotizacionq1').value = item.FECHA_COTIZACION_Q1 || '';
 
             const inputFile = fila.querySelector('.doc-cotizacionq1');
             const contenedor = inputFile?.closest('.input-group');
@@ -591,11 +591,11 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
 
           if (cot === 'Q2') {
             fila.querySelector('.proveedor-cotizacionq2').value = item.PROVEEDOR_Q2 || '';
-            fila.querySelector('.importe-cotizacion').value = item.SUBTOTAL_Q2 || '';
-            fila.querySelector('.iva-cotizacion').value = item.IVA_Q2 || '';
-            fila.querySelector('.total-cotizacion').value = item.IMPORTE_Q2 || '';
-            fila.querySelector('.textarea').value = item.OBSERVACIONES_Q2 || '';
-            fila.querySelector('.fecha-cotizacion').value = item.FECHA_COTIZACION_Q2 || '';
+            fila.querySelector('.importe-cotizacionq2').value = item.SUBTOTAL_Q2 || '';
+            fila.querySelector('.iva-cotizacionq2').value = item.IVA_Q2 || '';
+            fila.querySelector('.total-cotizacionq2').value = item.IMPORTE_Q2 || '';
+            fila.querySelector('.textareaq2').value = item.OBSERVACIONES_Q2 || '';
+            fila.querySelector('.fecha-cotizacionq2').value = item.FECHA_COTIZACION_Q2 || '';
 
 
             const inputFile = fila.querySelector('.doc-cotizacionq2');
@@ -614,11 +614,11 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
 
           if (cot === 'Q3') {
             fila.querySelector('.proveedor-cotizacionq3').value = item.PROVEEDOR_Q3 || '';
-            fila.querySelector('.importe-cotizacion').value = item.SUBTOTAL_Q3 || '';
-            fila.querySelector('.iva-cotizacion').value = item.IVA_Q3 || '';
-            fila.querySelector('.total-cotizacion').value = item.IMPORTE_Q3 || '';
-            fila.querySelector('.textarea').value = item.OBSERVACIONES_Q3 || '';
-            fila.querySelector('.fecha-cotizacion').value = item.FECHA_COTIZACION_Q3 || '';
+            fila.querySelector('.importe-cotizacionq3').value = item.SUBTOTAL_Q3 || '';
+            fila.querySelector('.iva-cotizacionq3').value = item.IVA_Q3 || '';
+            fila.querySelector('.total-cotizacionq3').value = item.IMPORTE_Q3 || '';
+            fila.querySelector('.textareaq3').value = item.OBSERVACIONES_Q3 || '';
+            fila.querySelector('.fecha-cotizacionq3').value = item.FECHA_COTIZACION_Q3 || '';
             const inputFile = fila.querySelector('.doc-cotizacionq3');
             const contenedor = inputFile?.closest('.input-group');
             if (contenedor && item.DOCUMENTO_Q3) {
@@ -688,6 +688,15 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
         }
         
 
+        const requierecomentarios = clon.querySelector('.requiere-comentario');
+        if (requierecomentarios) {
+          requierecomentarios.value = item.REQUIERE_COMENTARIO || '';
+          requierecomentario(requierecomentarios); 
+        }
+        
+
+        const  comentarioaprobacion = clon.querySelector('.comentario-aprobacion');
+        if (comentarioaprobacion) comentarioaprobacion.value = item.COMENTARIO_APROBACION || '';
         
 
         const  motivorechazo = clon.querySelector('.motivo-rechazo');
@@ -697,20 +706,35 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
 
         actualizarProveedoresSugeridos(clon, item.PROVEEDOR_SUGERIDO || '');
 
+        actualizarProveedoresseleccionado(clon, item.PROVEEDOR_SELECCIONADO || '');
 
 
+    
         $('#contenedorProductos').append(clon);
 
+
+        
         inicializarSelectizeEnClon(clon);
+      
 
       });
 
       inicializarDatepickers();
-      asignarFechaVerificacion();
-      // bloquearFechaDesdeInicio();
+    
+      inicializarSumaImportes();
 
       return;
     }
+
+
+  
+    // VOLVER A PONERLES ANTES DEL RETURN CUANDO YA LAS FECHAS VAYAN EN ORDEN
+    
+      // asignarFechaVerificacion();
+      // bloquearFechaDesdeInicio();
+    
+
+
 
     // Si no hay hoja_trabajo: usar MATERIALES_JSON
     let materiales = [];
@@ -761,10 +785,13 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
       $('#contenedorProductos').append(clon);
       inicializarSelectizeEnClon(clon);
       actualizarProveedoresSugeridos(clon);
+      actualizarProveedoresseleccionado(clon);
+      
 
       inicializarDatepickers();
-      asignarFechaVerificacion();
+      // asignarFechaVerificacion();
       // bloquearFechaDesdeInicio();
+      inicializarSumaImportes();
 
 
 
@@ -794,11 +821,13 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
         $('#contenedorProductos').append(clon);
         inicializarSelectizeEnClon(clon);
         actualizarProveedoresSugeridos(clon);
+        actualizarProveedoresseleccionado(clon);
+
 
         inicializarDatepickers();
-        asignarFechaVerificacion();
+        // asignarFechaVerificacion();
         // bloquearFechaDesdeInicio();
-
+        inicializarSumaImportes();
 
       });
 
@@ -813,118 +842,10 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
 
 
 
-// $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', function () {
-//   const row = Tablabitacora.row($(this).closest('tr')).data();
-
-//   if (row.ESTADO_APROBACION === null) {
-//     alertToast('La MR aún no ha sido aprobada', 'warning');
-//     return;
-//   }
-
-//   if (row.ESTADO_APROBACION === 'Rechazada') {
-//     alertToast('La MR fue rechazada', 'error');
-//     return;
-//   }
-
-//   try {
-//     let materiales = [];
-//     if (Array.isArray(row.MATERIALES_JSON)) {
-//       materiales = row.MATERIALES_JSON;
-//     } else if (typeof row.MATERIALES_JSON === 'string') {
-//       materiales = JSON.parse(row.MATERIALES_JSON);
-//     }
-
-//     const listaFiltrada = materiales.filter(m => m.CHECK_VO === 'SI' && m.CHECK_MATERIAL === 'SI');
-
-//     $('#contenedorProductos').empty();
-//     $('#preguntaProveedorUnico').removeClass('d-none');
-//     $('#contenedorProductos').hide();
-
-//     $('#respuestaProveedorUnicoSi').off('click');
-//     $('#respuestaProveedorUnicoNo').off('click');
-
-//     const modal = new bootstrap.Modal(document.getElementById('modalMateriales'));
-//     modal.show();
-
-//     $('#noMRModal').text(row.NO_MR || 'No disponible');
-//     $('#inputNoMR').val(row.NO_MR || '');
-
-//     if (listaFiltrada.length === 0) {
-//       $('#contenedorProductos')
-//         .html('<div class="alert alert-info">No hay materiales aprobados disponibles.</div>')
-//         .show();
-//       $('#preguntaProveedorUnico').addClass('d-none');
-//       return;
-//     }
-
-//     // ✅ Proveedor Único (una sola tarjeta para todos)
-//     $('#respuestaProveedorUnicoSi').on('click', function () {
-//       $('#preguntaProveedorUnico').addClass('d-none');
-//       $('#contenedorProductos').show();
-
-//       const template = document.querySelector('#templateProducto');
-//       const clon = document.importNode(template.content, true);
-
-//       clon.querySelector('.producto-titulo').textContent = 'Materiales';
-
-//       const detalleCantidadUnidad = clon.querySelector('.detalle-cantidad-unidad');
-//       if (detalleCantidadUnidad) {
-//         detalleCantidadUnidad.style.setProperty('display', 'none', 'important');
-//       }
-
-//       const descripcionDiv = clon.querySelector('.descripcion-materiales');
-//       const listaHtml = listaFiltrada.map(m =>
-//         `<li>${m.DESCRIPCION} (${m.CANTIDAD} ${m.UNIDAD_MEDIDA})</li>`
-//       ).join('');
-//       descripcionDiv.innerHTML = `<ul class="mb-0">${listaHtml}</ul>`;
-
-//       // Asignar campos ocultos
-//       clon.querySelector('.descripcion-input').value = listaFiltrada.map(m => m.DESCRIPCION).join(', ');
-//       clon.querySelector('.cantidad-input').value = listaFiltrada.map(m => m.CANTIDAD).join(', ');
-//       clon.querySelector('.unidad-input').value = listaFiltrada.map(m => m.UNIDAD_MEDIDA).join(', ');
-
-//       $('#contenedorProductos').append(clon);
-//       inicializarDatepickers();
-//     });
-
-//     // ✅ Proveedor por Producto (una tarjeta por cada material)
-//     $('#respuestaProveedorUnicoNo').on('click', function () {
-//       $('#preguntaProveedorUnico').addClass('d-none');
-//       $('#contenedorProductos').show();
-
-//       listaFiltrada.forEach(material => {
-//         const template = document.querySelector('#templateProducto');
-//         const clon = document.importNode(template.content, true);
-
-//         clon.querySelector('.producto-titulo').textContent = material.DESCRIPCION;
-//         clon.querySelector('.producto-cantidad').textContent = material.CANTIDAD;
-//         clon.querySelector('.producto-unidad').textContent = material.UNIDAD_MEDIDA;
-
-//         // Eliminar descripción combinada
-//         const descripcionDiv = clon.querySelector('.descripcion-materiales');
-//         if (descripcionDiv) {
-//           descripcionDiv.remove();
-//         }
-
-//         // Asignar campos ocultos
-//         clon.querySelector('.descripcion-input').value = material.DESCRIPCION;
-//         clon.querySelector('.cantidad-input').value = material.CANTIDAD;
-//         clon.querySelector('.unidad-input').value = material.UNIDAD_MEDIDA;
-
-//         $('#contenedorProductos').append(clon);
-//         inicializarDatepickers();
-//       });
-//     });
-
-//   } catch (err) {
-//     console.error('Error al procesar MATERIALES_JSON', err);
-//     alertToast('Error al procesar los materiales', 'error');
-//   }
-// });
 
 
 function actualizarProveedoresSugeridos(grupo, valorSeleccionado = null) {
-  if (!grupo) return; // 🚫 evita error si grupo es null o undefined
+  if (!grupo) return; 
 
   const selects = grupo.querySelectorAll('.proveedor-cotizacionq1, .proveedor-cotizacionq2, .proveedor-cotizacionq3');
   const proveedorSugeridoSelect = grupo.querySelector('.proveedor-sugerido');
@@ -950,17 +871,62 @@ function actualizarProveedoresSugeridos(grupo, valorSeleccionado = null) {
     proveedorSugeridoSelect.appendChild(option);
   });
 
-  // Si viene valor guardado (modo edición)
   if (valorSeleccionado) {
     proveedorSugeridoSelect.value = valorSeleccionado;
   } else {
-    // Si los 3 proveedores son iguales, seleccionarlo automáticamente
     const valores = Array.from(selects).map(sel => sel.value).filter(v => v);
     if (valores.length === 3 && new Set(valores).size === 1) {
       proveedorSugeridoSelect.value = valores[0];
     }
   }
 }
+
+
+function actualizarProveedoresseleccionado(grupo, valorSeleccionado = null) {
+  if (!grupo) return; 
+
+  const selects = grupo.querySelectorAll('.proveedor-cotizacionq1, .proveedor-cotizacionq2, .proveedor-cotizacionq3');
+  const proveedorSugeridoSelect = grupo.querySelector('.proveedor-seleccionado');
+  if (!proveedorSugeridoSelect) return;
+
+  const proveedoresUnicos = new Map();
+
+  selects.forEach(select => {
+    const selectedOption = select.options[select.selectedIndex];
+    const value = selectedOption?.value;
+    const text = selectedOption?.text;
+
+    if (value && !proveedoresUnicos.has(value)) {
+      proveedoresUnicos.set(value, text);
+    }
+  });
+
+  proveedorSugeridoSelect.innerHTML = '<option value="">Proveedor seleccionado</option>';
+  proveedoresUnicos.forEach((text, value) => {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = text;
+    proveedorSugeridoSelect.appendChild(option);
+  });
+
+  if (valorSeleccionado) {
+    proveedorSugeridoSelect.value = valorSeleccionado;
+  } else {
+    const valores = Array.from(selects).map(sel => sel.value).filter(v => v);
+    if (valores.length === 3 && new Set(valores).size === 1) {
+      proveedorSugeridoSelect.value = valores[0];
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
 
 function inicializarSelectizeEnClon(clon) {
   if (!clon) return;
@@ -975,7 +941,6 @@ function inicializarSelectizeEnClon(clon) {
     const select = clon.querySelector(clase);
 
     if (select) {
-      // Si ya está inicializado, destrúyelo antes
       if ($(select)[0].selectize) {
         $(select)[0].selectize.destroy();
       }
@@ -986,7 +951,6 @@ function inicializarSelectizeEnClon(clon) {
         sortField: 'text'
       })[0].selectize;
 
-      // Asignar valor si ya tiene uno
       const valorActual = select.value;
       if (valorActual) selectize.setValue(valorActual);
     }
@@ -1032,31 +996,31 @@ $('#btnGuardarTodo').on('click', function () {
 
 
 
+/// QUITAR COMENTARIO CUANDO YA ESTEN LAS FECHAS CORRECTAS
 
+// function asignarFechaVerificacion() {
+//   document.querySelectorAll('.solicitar-verificacion').forEach((select) => {
+//     select.addEventListener('change', function () {
+//       const container = this.closest('.col-md-4').parentElement;
+//       const fechaInput = container.querySelector('.fecha-verificacion');
+//       const inputGroup = fechaInput.closest('.input-group');
 
-function asignarFechaVerificacion() {
-  document.querySelectorAll('.solicitar-verificacion').forEach((select) => {
-    select.addEventListener('change', function () {
-      const container = this.closest('.col-md-4').parentElement;
-      const fechaInput = container.querySelector('.fecha-verificacion');
-      const inputGroup = fechaInput.closest('.input-group');
+//       if (!fechaInput || !inputGroup) return;
 
-      if (!fechaInput || !inputGroup) return;
+//       if (this.value === 'Sí') {
+//         const hoy = new Date().toISOString().split('T')[0];
+//         $(fechaInput).datepicker('setDate', hoy);
 
-      if (this.value === 'Sí') {
-        const hoy = new Date().toISOString().split('T')[0];
-        $(fechaInput).datepicker('setDate', hoy);
-
-        // Agrega capa que bloquea interacción
-        inputGroup.classList.add('bloquear-interaccion');
-      } else {
-        // Limpia y permite interacción
-        $(fechaInput).datepicker('clearDates');
-        inputGroup.classList.remove('bloquear-interaccion');
-      }
-    });
-  });
-}
+//         // Agrega capa que bloquea interacción
+//         inputGroup.classList.add('bloquear-interaccion');
+//       } else {
+//         // Limpia y permite interacción
+//         $(fechaInput).datepicker('clearDates');
+//         inputGroup.classList.remove('bloquear-interaccion');
+//       }
+//     });
+//   });
+// }
 
 
 
@@ -1072,6 +1036,10 @@ $(document).on('change', '.estado-aprobacion', function () {
   cambiarColor(this);
 });
 
+
+$(document).on('change', '.requiere-comentario', function () {
+  requierecomentario(this);
+});
 
 
 function cambiarColor(select) {
@@ -1104,4 +1072,63 @@ function cambiarColor(select) {
     if (motivoContainer) motivoContainer.style.display = "none";
     if (textarea) textarea.removeAttribute('required');
   }
+}
+
+
+
+function requierecomentario(select) {
+  const bloque = select.closest('.bloque-aprobacion');
+  if (!bloque) return;
+
+  const motivoContainer = bloque.querySelector('.comentario-aprobacion-hoja');
+  const textarea = bloque.querySelector('.comentario-aprobacion');
+
+  if (select.value === "Sí") {
+    if (motivoContainer) motivoContainer.style.display = "block";
+    if (textarea) textarea.setAttribute('required', 'required');
+  } else {
+    if (motivoContainer) motivoContainer.style.display = "none";
+    if (textarea) textarea.removeAttribute('required');
+  }
+}
+
+
+
+
+
+
+
+function inicializarSumaImportes() {
+  document.addEventListener('input', function (e) {
+    const tipos = ['q1', 'q2', 'q3'];
+
+    tipos.forEach(tipo => {
+      if (
+        e.target.classList.contains(`importe-cotizacion${tipo}`) ||
+        e.target.classList.contains(`iva-cotizacion${tipo}`)
+      ) {
+        const grupo = e.target.closest('.grupo-producto');
+        if (!grupo) return;
+
+        const subtotalInput = grupo.querySelector(`.importe-cotizacion${tipo}`);
+        const ivaInput = grupo.querySelector(`.iva-cotizacion${tipo}`);
+        const totalInput = grupo.querySelector(`.total-cotizacion${tipo}`);
+
+        if (!subtotalInput || !ivaInput || !totalInput) return;
+
+        const subtotalStr = subtotalInput.value.trim();
+        const ivaStr = ivaInput.value.trim();
+
+        const subtotal = parseFloat(subtotalStr) || 0;
+        const iva = parseFloat(ivaStr) || 0;
+        const suma = subtotal + iva;
+
+        const decimalesSubtotal = (subtotalStr.split('.')[1] || '').length;
+        const decimalesIva = (ivaStr.split('.')[1] || '').length;
+        const maxDecimales = Math.max(decimalesSubtotal, decimalesIva);
+
+        totalInput.value = suma.toFixed(maxDecimales);
+      }
+    });
+  });
 }

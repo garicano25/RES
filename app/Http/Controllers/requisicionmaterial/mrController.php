@@ -473,6 +473,13 @@ class mrController extends Controller
         $requiere_po = $request->input('REQUIERE_PO');
 
 
+        $requierecomentario = $request->input('REQUIERE_COMENTARIO');
+        $comentarioaprobacion = $request->input('COMENTARIO_APROBACION');
+
+
+
+        
+
 
 
         $total = count($descripciones);
@@ -513,6 +520,9 @@ class mrController extends Controller
 
                 'FECHA_VERIFICACION' => $fechaverificacion[$i] ?? null,
 
+
+                'REQUIERE_COMENTARIO' => $requierecomentario[$i] ?? null,
+                'COMENTARIO_APROBACION' => $comentarioaprobacion[$i] ?? null,
 
 
 
