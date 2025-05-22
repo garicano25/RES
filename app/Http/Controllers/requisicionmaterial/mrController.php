@@ -38,7 +38,7 @@ class mrController extends Controller
     public function index()
     {
         $proveedoresOficiales = altaproveedorModel::select('RAZON_SOCIAL_ALTA', 'RFC_ALTA')->get();
-        $proveedoresTemporales = proveedortempModel::select('RAZON_PROVEEDORTEMP', 'RFC_PROVEEDORTEMP')->get();
+        $proveedoresTemporales = proveedortempModel::select('RAZON_PROVEEDORTEMP', 'RFC_PROVEEDORTEMP','NOMBRE_PROVEEDORTEMP')->get();
 
         return view('compras.requisicionesmaterial.bitacora', compact('proveedoresOficiales', 'proveedoresTemporales'));
     }

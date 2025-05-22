@@ -243,8 +243,8 @@
                                                             </optgroup>
                                                             <optgroup label="Proveedores temporales">
                                                                 @foreach ($proveedoresTemporales as $proveedor)
-                                                                <option value="{{ $proveedor->RFC_PROVEEDORTEMP }}">
-                                                                    {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->RFC_PROVEEDORTEMP }})
+                                                                <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
+                                                                    {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
                                                                 </option>
                                                                 @endforeach
                                                             </optgroup>
@@ -299,8 +299,8 @@
                                                             </optgroup>
                                                             <optgroup label="Proveedores temporales">
                                                                 @foreach ($proveedoresTemporales as $proveedor)
-                                                                <option value="{{ $proveedor->RFC_PROVEEDORTEMP }}">
-                                                                    {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->RFC_PROVEEDORTEMP }})
+                                                                <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
+                                                                    {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
                                                                 </option>
                                                                 @endforeach
                                                             </optgroup>
@@ -355,8 +355,8 @@
                                                             </optgroup>
                                                             <optgroup label="Proveedores temporales">
                                                                 @foreach ($proveedoresTemporales as $proveedor)
-                                                                <option value="{{ $proveedor->RFC_PROVEEDORTEMP }}">
-                                                                    {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->RFC_PROVEEDORTEMP }})
+                                                                <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
+                                                                    {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
                                                                 </option>
                                                                 @endforeach
                                                             </optgroup>

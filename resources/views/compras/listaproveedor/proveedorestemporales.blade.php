@@ -41,7 +41,7 @@
 
 
                             <div class="col-6 mt-3">
-                                <label>R.F.C *</label>
+                                <label>R.F.C </label>
                                 <input type="text" class="form-control" id="RFC_PROVEEDORTEMP" name="RFC_PROVEEDORTEMP">
                             </div>
                             <div class="col-6 mt-3">
