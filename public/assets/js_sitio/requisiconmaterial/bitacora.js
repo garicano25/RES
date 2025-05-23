@@ -152,7 +152,6 @@ $('#Tablabitacora tbody').on('click', 'td>button.EDITAR', function () {
       
     }
 
-
     if (row.data().DAR_BUENO === "1") {
         $('#BOTON_VISTO_BUENO').hide();
 
@@ -169,9 +168,23 @@ $('#Tablabitacora tbody').on('click', 'td>button.EDITAR', function () {
     }
 
 
-
 });
 
+
+// En algún lugar global (al cargar tu script)
+$(document).ready(function () {
+  $('#GENERARPDF').on('click', function (e) {
+      e.preventDefault();
+
+      if (!ID_FORMULARIO_MR) {
+          alert("No se ha seleccionado una MR válida.");
+          return;
+      }
+
+      const url = `/mr/${ID_FORMULARIO_MR}/generar-pdf`;
+      window.open(url, '_blank');
+  });
+});
 
 
 function cargarMaterialesDesdeJSON(materialesJson) {

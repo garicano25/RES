@@ -121,6 +121,9 @@ use App\Http\Controllers\proveedor\catalagotituloproveedorController;
 use App\Http\Controllers\proveedor\catalagodocumentosproveedorController;
 
 
+// GENERAR PDF
+
+use App\Http\Controllers\pdf\pdfController;
 
 
 //==============================================  login  ============================================== 
@@ -160,7 +163,6 @@ Route::post('/verify-code', [AuthController::class, 'verifyCode']);
 Route::post('/enviar-codigo', [VerificationController::class, 'enviarCodigo']);
 Route::post('/verificar-codigo', [VerificationController::class, 'verificarCodigo']);
 //==============================================  Módulos  ============================================== 
-// Route::get('/Módulos', function () {return view('principal.modulos');})->middleware('role:Superusuario,Administrador');
 
 Route::get('/Módulos', [catalogoanuncioController::class, 'index'])->middleware('role:Superusuario,Administrador,Analista HSEQ,Asistente de planeación y logística,Desarrollador de software,Intendente,Consultor-Instructor (Junior/Senior)');
 
@@ -174,7 +176,6 @@ Route::get('/Tablausuarios', [usuarioController::class, 'Tablausuarios']);
 Route::get('/Tablaproveedores', [usuarioController::class, 'Tablaproveedores']);
 
 Route::get('/usuarioDelete', [usuarioController::class, 'store']);
-// Route::get('/usuariofoto/{id}', [usuarioController::class, 'mostrarFotoUsuario']);
 Route::get('/usuariofoto/{id}', [usuarioController::class, 'mostrarFotoUsuario'])->name('usuariofoto');
 
 
@@ -216,8 +217,7 @@ Route::get('/DPT', [dptController::class, 'index']);
 Route::post('/dptSave', [dptController::class, 'store']);
 Route::get('/TablaDPT', [dptController::class, 'TablaDPT']);
 Route::get('/dptDelete', [dptController::class, 'store']);
-// Route::get('/autorizarDPT/{id_formulario}', [dptController::class, 'autorizarDPT']);
-// Route::get('/revisarDPT/{id_formulario}', [dptController::class, 'revisarDPT']);
+
 Route::get('/makeExcelDPT/{id_formulario}', [makeExcelController::class, 'makeExcelDPT']);
 Route::get('/infoReportan/{ID}/{LIDER}', [dptController::class, 'infoReportan']);
 Route::get('/consultarfuncionescargo/{areaId}', [dptController::class, 'consultarfuncionescargo']);
@@ -311,8 +311,6 @@ Route::post('/AnuncioSave', [catalogoanuncioController::class, 'store']);
  Route::get('/AnuncioDelete', [catalogoanuncioController::class, 'store']);
 Route::get('/anunciofoto/{id}', [catalogoanuncioController::class, 'mostrarfotoanuncio'])->name('anunciofoto');
 
-// Route::get('anuncio/foto/{anuncio_id}', [catalogoanuncioController::class, 'mostrarfotoanuncio'])->name('mostrar.foto.anuncio');
-
 // CATALOGOS
 Route::get('/Catálogo_ppt', function () {return view('RH.Catalogos.catalogo_ppt');});
 Route::get('/Catálogo_dpt', function () {return view('RH.Catalogos.catalogo_dpt');});
@@ -380,10 +378,8 @@ Route::post('/actualizarDisponibilidad', [VacantesactivasController::class, 'act
 // VISUALIZAR HISTORIAL DE SELECCION
 
 
-
 Route::get('/Visualizar_selección', [seleccionController::class, 'index2'])->middleware('role:Superusuario,Administrador');
 Route::get('/Tablaseleccion2Visualizar', [seleccionController::class, 'Tablaseleccion2Visualizar']);
-
 Route::get('/consultarSeleccion2Visualizar/{vacantesId}', [seleccionController::class, 'consultarSeleccion2Visualizar']);
 
 
@@ -715,7 +711,6 @@ Route::get('/Requisición_materiales_aprobación', function () {return view('com
 
 //==============================================  BITACORA M.R  ============================================== 
 
-// Route::get('/Bitácora', function () {return view('compras.requisicionesmaterial.bitacora');});
 
 Route::get('/Bitácora', [mrController::class, 'index']);
 
@@ -732,6 +727,7 @@ Route::get('/mostrarcotizacionq2/{id}', [mrController::class, 'mostrarcotizacion
 Route::get('/mostrarcotizacionq3/{id}', [mrController::class, 'mostrarcotizacionq3']);
 
 
+Route::get('/mr/{id}/generar-pdf', [pdfController::class, 'descargarPDF'])->name('mr.generar.pdf');
 
 //==============================================   DIRECTORIO INTERNO  ============================================== 
 

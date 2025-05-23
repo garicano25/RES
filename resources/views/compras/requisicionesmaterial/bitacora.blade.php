@@ -778,15 +778,23 @@
 
                         </div>
 
-
-
+                        <div class="col-12 mt-3">
+                            <div class="row justify-content-center">
+                                <div class="col-6 text-center">
+                                    <button type="submit" class="btn btn-success w-100" id="GENERARPDF">Generar MR</button>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
 
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                </div>
             </form>
         </div>
     </div>
