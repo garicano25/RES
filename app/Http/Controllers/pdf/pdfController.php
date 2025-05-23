@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use Barryvdh\DomPDF\Facade\Pdf;
+
 use Carbon\Carbon;
 use DB;
 
@@ -31,8 +32,11 @@ class pdfController extends Controller
         ];
 
         $pdf = Pdf::loadView('pdf.requisicion_materiales_pdf', $data)
-            ->setPaper('letter', 'portrait'); // o 'A4' si usas tamaño internacional
+            ->setPaper('letter', 'portrait');
+             // o 'A4' si usas tamaño internacional
 
         return $pdf->download("MR_{$requisicion->NO_MR}.pdf");
     }
+
+   
 }

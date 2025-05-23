@@ -54,10 +54,33 @@
         .footer-space {
             height: 7cm;
         }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        .page-number {
+            font-size: 10px;
+            text-align: right;
+            margin-top: 10px;
+        }
     </style>
 </head>
 
 <body>
+
+    @php
+    $itemsPerPage = 25; // Ajusta según cuántos materiales caben por página
+    $totalPages = ceil(count($materiales) / $itemsPerPage);
+    $chunks = array_chunk($materiales->toArray(), $itemsPerPage);
+    @endphp
+
+    @foreach($chunks as $pageIndex => $materialesChunk)
+    @if($pageIndex > 0)
+    <div class="page-break"></div>
+    @endif
+
+
     <table>
         <tr>
             <td rowspan="3" style="width: 25%; text-align: center;">
@@ -74,11 +97,16 @@
         </tr>
         <tr>
             <td class="label">Fecha de solicitud:</td>
-            <td>{{ $fecha }}</td>
+            <td>
+                <span style="display: inline-block; width: 70%;">{{ $fecha }}</span>
+                <span style="display: inline-block; border-left: 1px solid black; height: 25px; margin: 0 6px;"></span>
+                <span style="display: inline-block;">Página {{ $pageIndex + 1 }} de {{ $totalPages }}</span>
+
+            </td>
         </tr>
     </table>
 
-    <table class="tabla-materiales">
+    <table class=" tabla-materiales">
         <thead>
             <tr>
                 <th style="width: 5%;">No.</th>
@@ -88,9 +116,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($materiales as $index => $mat)
+            @foreach ($materialesChunk as $index => $mat)
             <tr>
-                <td>{{ $index + 1 }}</td>
+                <td>{{ ($pageIndex * $itemsPerPage) + $index + 1 }}</td>
                 <td>{{ $mat['DESCRIPCION'] }}</td>
                 <td>{{ $mat['CANTIDAD'] }}</td>
                 <td>{{ $mat['UNIDAD_MEDIDA'] }}</td>
@@ -99,7 +127,7 @@
         </tbody>
     </table>
 
-    <div style="height: 7cm;"></div>
+    @endforeach
 
 </body>
 

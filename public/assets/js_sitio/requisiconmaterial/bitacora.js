@@ -171,7 +171,6 @@ $('#Tablabitacora tbody').on('click', 'td>button.EDITAR', function () {
 });
 
 
-// En algún lugar global (al cargar tu script)
 $(document).ready(function () {
   $('#GENERARPDF').on('click', function (e) {
       e.preventDefault();

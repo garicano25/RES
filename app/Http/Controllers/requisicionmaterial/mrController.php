@@ -393,17 +393,15 @@ class mrController extends Controller
 
 
 
-/////////////////////////////////////////////////////////// BITACORA REQUISICION //////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////// BITACORA REQUISICION //////////////////////////////////////////////////////////////
 
     public function Tablabitacora()
     {
         try {
-            $tabla = mrModel::get();
+            // Solo obtener registros con ESTADO_APROBACION = 'Aprobada'
+            $tabla = mrModel::where('ESTADO_APROBACION', 'Aprobada')->get();
 
             foreach ($tabla as $value) {
-
-
-
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '"><span class="slider round"></span></label>';
@@ -415,12 +413,8 @@ class mrController extends Controller
                 }
 
                 $value->BTN_NO_MR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-
-
-                
             }
 
-            // Respuesta
             return response()->json([
                 'data' => $tabla,
                 'msj' => 'Información consultada correctamente'
@@ -432,6 +426,7 @@ class mrController extends Controller
             ]);
         }
     }
+
 
 
 
