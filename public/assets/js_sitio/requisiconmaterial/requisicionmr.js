@@ -506,13 +506,13 @@ function cargarMaterialesDesdeJSON(materialesJson) {
 
             let colorClass = '';
            if (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL !== 'NO') {
-    colorClass = 'bg-verde-suave';
-} else if (
-    material.CHECK_VO === 'NO' ||
-    (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL === 'NO')
-) {
-    colorClass = 'bg-rojo-suave';
-}
+                colorClass = 'bg-verde-suave';
+            } else if (
+                material.CHECK_VO === 'NO' ||
+                (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL === 'NO')
+            ) {
+                colorClass = 'bg-rojo-suave';
+            }
 
             divMaterial.innerHTML = `
                 <div class="row p-3 rounded color-vo ${colorClass}">

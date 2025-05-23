@@ -448,7 +448,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                 <div class="row p-3 rounded color-vo ${colorClass}">
                     <div class="col-1">
                         <label class="form-label">Aprobado</label>
-                        <select class="form-select" name="CHECK_MATERIAL"  >
+                        <select class="form-select" name="CHECK_MATERIAL" required >
                             <option value=""></option>
                             <option value="SI" ${material.CHECK_MATERIAL === 'SI' ? 'selected' : ''}>Sí</option>
                             <option value="NO" ${material.CHECK_MATERIAL === 'NO' ? 'selected' : ''}>No</option>
@@ -460,15 +460,15 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     </div>
                     <div class="col-4">
                         <label class="form-label">Descripción</label>
-                        <input type="text" class="form-control" name="DESCRIPCION" value="${material.DESCRIPCION}" required>
+                        <input type="text" class="form-control" name="DESCRIPCION" value="${material.DESCRIPCION}" >
                     </div>
                     <div class="col-1">
                         <label class="form-label">Cantidad</label>
-                        <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" required>
+                        <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" >
                     </div>
                     <div class="col-2">
                         <label class="form-label">Unidad de Medida</label>
-                        <input type="text" class="form-control" name="UNIDAD_MEDIDA" value="${material.UNIDAD_MEDIDA}" required>
+                        <input type="text" class="form-control" name="UNIDAD_MEDIDA" value="${material.UNIDAD_MEDIDA}" >
                     </div>
                     <div class="col-2">
                         <label class="form-label">Línea de Negocios</label>

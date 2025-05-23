@@ -106,7 +106,7 @@
                                 <div class="row">
                                     <div class="col-4">
                                         <label for="PRIORIDAD">Prioridad *</label>
-                                        <select class="form-control" id="PRIORIDAD_MR" name="PRIORIDAD_MR">
+                                        <select class="form-control" id="PRIORIDAD_MR" name="PRIORIDAD_MR" required>
                                             <option value="" selected disabled>Seleccione una opción</option>
                                             <option value="Alta">Alta 1-15 días</option>
                                             <option value="Media">Media 16-30 días</option>
@@ -141,7 +141,7 @@
                                     <div class="col-4">
                                         <label>Fecha *</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VISTO_MR" name="FECHA_VISTO_MR">
+                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VISTO_MR" name="FECHA_VISTO_MR" required>
                                             <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                         </div>
                                     </div>

@@ -439,11 +439,11 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     </div>
                     <div class="col-4">
                         <label class="form-label">Descripción</label>
-                        <input type="text" class="form-control" name="DESCRIPCION" value="${material.DESCRIPCION}" required>
+                        <input type="text" class="form-control" name="DESCRIPCION" value="${material.DESCRIPCION}" >
                     </div>
                     <div class="col-1">
                         <label class="form-label">Cantidad</label>
-                        <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" required>
+                        <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" >
                     </div>
                     <div class="col-2">
                         <label class="form-label">Unidad de Medida</label>
@@ -451,7 +451,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     </div>
                     <div class="col-2">
                         <label class="form-label">Línea de Negocios</label>
-                        <select class="form-select" name="CATEGORIA_MATERIAL" >
+                        <select class="form-select" name="CATEGORIA_MATERIAL"  required>
                             <option value="">Seleccionar</option>
                             <option value="STE" ${material.CATEGORIA_MATERIAL === 'STE' ? 'selected' : ''}>STE</option>
                             <option value="SST" ${material.CATEGORIA_MATERIAL === 'SST' ? 'selected' : ''}>SST</option>
@@ -463,7 +463,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     </div>
                     <div class="col-1">
                         <label class="form-label">Vo. Bo</label>
-                        <select class="form-select check-vo-select" name="CHECK_VO">
+                        <select class="form-select check-vo-select" name="CHECK_VO" required>
                             <option value=""></option>
                             <option value="SI" ${material.CHECK_VO === 'SI' ? 'selected' : ''}>Sí</option>
                             <option value="NO" ${material.CHECK_VO === 'NO' ? 'selected' : ''}>No</option>
@@ -507,6 +507,86 @@ function cargarMaterialesDesdeJSON(materialesJson) {
 
 
 
+// function darVistoBueno() {
+//     Swal.fire({
+//         title: '¿Deseas dar el visto bueno a la M.R?',
+//         text: "Esta acción enviará la solicitud y guardará los datos.",
+//         icon: 'question',
+//         showCancelButton: true,
+//         confirmButtonText: 'Sí, enviar',
+//         cancelButtonText: 'Cancelar'
+//     }).then((result) => {
+//         if (result.isConfirmed) {
+//             if (!validarCamposObligatoriosMR()) {
+//                 Swal.fire({
+//                     icon: 'warning',
+//                     title: 'Campos incompletos',
+//                     text: 'Debe llenar todos los campos antes de continuar.'
+//                 });
+//                 return;
+//             }
+
+//                    var documentos = [];
+//                 $(".material-item").each(function() {
+//                     var documento = {
+//                       'DESCRIPCION': $(this).find("input[name='DESCRIPCION']").val(),
+//                 'CANTIDAD': $(this).find("input[name='CANTIDAD']").val(),
+//                 'UNIDAD_MEDIDA': $(this).find("input[name='UNIDAD_MEDIDA']").val(),
+//                 'CHECK_VO': $(this).find("select[name='CHECK_VO']").val(),
+//                 'CATEGORIA_MATERIAL': $(this).find("select[name='CATEGORIA_MATERIAL']").val(),
+//                 'CHECK_MATERIAL': $(this).find("select[name='CHECK_MATERIAL']").val()
+
+//                     };
+//                     documentos.push(documento);
+//         });
+            
+//             var materialesJson = JSON.stringify(documentos);
+
+
+     
+            
+
+//             if (typeof ID_FORMULARIO_MR !== 'undefined' && ID_FORMULARIO_MR > 0) {
+//                 $.ajax({
+//                     url: '/guardarYDarVistoBueno',
+//                     method: 'POST',
+//                     data: {
+//                         id: ID_FORMULARIO_MR,
+//                         prioridad: $('#PRIORIDAD_MR').val(),
+//                         observaciones: $('#OBSERVACIONES_MR').val(),
+//                         fecha_visto: $('#FECHA_VISTO_MR').val(),
+//                         visto_bueno: $('#VISTO_BUENO').val(),
+//                         materiales_json: materialesJson,
+//                         _token: $('meta[name="csrf-token"]').attr('content')
+//                     },
+//                     success: function (response) {
+//                         if (response.success) {
+//                             Swal.fire({
+//                                 icon: 'success',
+//                                 title: 'Visto bueno registrado',
+//                                 text: response.message
+//                             });
+
+//                             $('#miModal_MR').modal('hide');
+//                             $('#Tablarequisicion').DataTable().ajax.reload(null, false);
+//                         }
+//                     },
+//                     error: function () {
+//                         Swal.fire({
+//                             icon: 'error',
+//                             title: 'Error',
+//                             text: 'Ocurrió un error al guardar el formulario.'
+//                         });
+//                     }
+//                 });
+//             }
+//         }
+//     });
+// }
+
+
+
+
 function darVistoBueno() {
     Swal.fire({
         title: '¿Deseas dar el visto bueno a la M.R?',
@@ -517,34 +597,44 @@ function darVistoBueno() {
         cancelButtonText: 'Cancelar'
     }).then((result) => {
         if (result.isConfirmed) {
-            if (!validarCamposObligatoriosMR()) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Campos incompletos',
-                    text: 'Debe llenar todos los campos antes de continuar.'
-                });
+            // Validación general del formulario
+            const formularioValido = validarFormularioV1('formularioMR');
+            if (!formularioValido) {
+                alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
                 return;
             }
 
-                   var documentos = [];
-                $(".material-item").each(function() {
-                    var documento = {
-                      'DESCRIPCION': $(this).find("input[name='DESCRIPCION']").val(),
-                'CANTIDAD': $(this).find("input[name='CANTIDAD']").val(),
-                'UNIDAD_MEDIDA': $(this).find("input[name='UNIDAD_MEDIDA']").val(),
-                'CHECK_VO': $(this).find("select[name='CHECK_VO']").val(),
-                'CATEGORIA_MATERIAL': $(this).find("select[name='CATEGORIA_MATERIAL']").val(),
-                'CHECK_MATERIAL': $(this).find("select[name='CHECK_MATERIAL']").val()
+            var documentos = [];
+            var camposCompletos = true;
 
-                    };
-                    documentos.push(documento);
-        });
-            
+            $(".material-item").each(function () {
+                var documento = {
+                    'DESCRIPCION': $(this).find("input[name='DESCRIPCION']").val(),
+                    'CANTIDAD': $(this).find("input[name='CANTIDAD']").val(),
+                    'UNIDAD_MEDIDA': $(this).find("input[name='UNIDAD_MEDIDA']").val(),
+                    'CHECK_VO': $(this).find("select[name='CHECK_VO']").val(),
+                    'CATEGORIA_MATERIAL': $(this).find("select[name='CATEGORIA_MATERIAL']").val(),
+                    'CHECK_MATERIAL': $(this).find("select[name='CHECK_MATERIAL']").val()
+                };
+
+                // Verifica si algún campo está vacío
+                if (
+                 
+                    !documento.CHECK_VO ||
+                    !documento.CATEGORIA_MATERIAL 
+                ) {
+                    camposCompletos = false;
+                }
+
+                documentos.push(documento);
+            });
+
+            if (!camposCompletos) {
+                alertToast('Por favor, complete todos los campos de materiales.', 'error', 2000);
+                return;
+            }
+
             var materialesJson = JSON.stringify(documentos);
-
-
-     
-            
 
             if (typeof ID_FORMULARIO_MR !== 'undefined' && ID_FORMULARIO_MR > 0) {
                 $.ajax({
@@ -583,6 +673,8 @@ function darVistoBueno() {
         }
     });
 }
+
+
 
 
 

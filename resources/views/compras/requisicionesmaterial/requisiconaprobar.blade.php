@@ -180,7 +180,7 @@
                             <div class="col-12 mt-3">
                                 <label for="ESTADO_APROBACION">Estado de Aprobación</label>
                                 <div id="estado-container" class="p-2 rounded">
-                                    <select class="form-control" id="ESTADO_APROBACION" name="ESTADO_APROBACION" onchange="cambiarColor()">
+                                    <select class="form-control" id="ESTADO_APROBACION" name="ESTADO_APROBACION" onchange="cambiarColor()" required>
                                         <option value="" selected disabled>Seleccione una opción</option>
                                         <option value="Aprobada">Aprobada</option>
                                         <option value="Rechazada">Rechazada</option>
@@ -207,7 +207,7 @@
                                     <div class="col-4">
                                         <label>Fecha *</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_APRUEBA_MR" name="FECHA_APRUEBA_MR">
+                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_APRUEBA_MR" name="FECHA_APRUEBA_MR" required>
                                             <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                         </div>
                                     </div>
