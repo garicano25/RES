@@ -401,6 +401,111 @@ $('#Tablarequisicion tbody').on('click', 'td>button.EDITAR', function () {
 
 
 
+// function cargarMaterialesDesdeJSON(materialesJson) {
+//     const contenedorMateriales = document.querySelector('.materialesdiv');
+//     contenedorMateriales.innerHTML = '';
+//     contadorMateriales = 1;
+
+//     try {
+//         const materiales = JSON.parse(materialesJson);
+
+//         materiales.forEach(material => {
+//             const divMaterial = document.createElement('div');
+//             divMaterial.classList.add('material-item', 'mt-2');
+
+//             let colorClass = '';
+//            if (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL !== 'NO') {
+//                 colorClass = 'bg-verde-suave';
+//             } else if (
+//                 material.CHECK_VO === 'NO' ||
+//                 (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL === 'NO')
+//             ) {
+//                 colorClass = 'bg-rojo-suave';
+//             }
+
+//             divMaterial.innerHTML = `
+//                 <div class="row p-3 rounded color-vo ${colorClass}">
+//                     <div class="col-1">
+//                         <label class="form-label">Aprobado</label>
+//                         <select class="form-select" name="CHECK_MATERIAL" disabled >
+//                             <option value=""></option>
+//                             <option value="SI" ${material.CHECK_MATERIAL === 'SI' ? 'selected' : ''}>Sí</option>
+//                             <option value="NO" ${material.CHECK_MATERIAL === 'NO' ? 'selected' : ''}>No</option>
+//                         </select>
+//                     </div>
+//                     <div class="col-1">
+//                         <label class="form-label">N°</label>
+//                         <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
+//                     </div>
+//                     <div class="col-4">
+//                         <label class="form-label">Descripción</label>
+//                         <input type="text" class="form-control" name="DESCRIPCION" value="${material.DESCRIPCION}" >
+//                     </div>
+//                     <div class="col-1">
+//                         <label class="form-label">Cantidad</label>
+//                         <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" >
+//                     </div>
+//                     <div class="col-2">
+//                         <label class="form-label">Unidad de Medida</label>
+//                         <input type="text" class="form-control" name="UNIDAD_MEDIDA" value="${material.UNIDAD_MEDIDA}" required>
+//                     </div>
+//                     <div class="col-2">
+//                         <label class="form-label">Línea de Negocios</label>
+//                         <select class="form-select" name="CATEGORIA_MATERIAL"  required>
+//                             <option value="">Seleccionar</option>
+//                             <option value="STE" ${material.CATEGORIA_MATERIAL === 'STE' ? 'selected' : ''}>STE</option>
+//                             <option value="SST" ${material.CATEGORIA_MATERIAL === 'SST' ? 'selected' : ''}>SST</option>
+//                             <option value="SCA" ${material.CATEGORIA_MATERIAL === 'SCA' ? 'selected' : ''}>SCA</option>
+//                             <option value="SMA" ${material.CATEGORIA_MATERIAL === 'SMA' ? 'selected' : ''}>SMA</option>
+//                             <option value="SLH" ${material.CATEGORIA_MATERIAL === 'SLH' ? 'selected' : ''}>SLH</option>
+//                             <option value="ADM" ${material.CATEGORIA_MATERIAL === 'ADM' ? 'selected' : ''}>ADM</option>
+//                         </select>
+//                     </div>
+//                     <div class="col-1">
+//                         <label class="form-label">Vo. Bo</label>
+//                         <select class="form-select check-vo-select" name="CHECK_VO" required>
+//                             <option value=""></option>
+//                             <option value="SI" ${material.CHECK_VO === 'SI' ? 'selected' : ''}>Sí</option>
+//                             <option value="NO" ${material.CHECK_VO === 'NO' ? 'selected' : ''}>No</option>
+//                         </select>
+//                     </div>
+//                     <div class="col-12 mt-2 text-end">
+//                         <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
+//                             <i class="bi bi-trash"></i>
+//                         </button>
+//                     </div>
+//                 </div>
+//             `;
+
+//             contenedorMateriales.appendChild(divMaterial);
+//             contadorMateriales++;
+
+//             const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
+//             botonEliminar.addEventListener('click', function () {
+//                 contenedorMateriales.removeChild(divMaterial);
+//                 actualizarNumerosOrden();
+//             });
+
+//             const selectVoBo = divMaterial.querySelector('.check-vo-select');
+//             const contenedorColor = divMaterial.querySelector('.color-vo');
+
+//             selectVoBo.addEventListener('change', function () {
+//                 contenedorColor.classList.remove('bg-verde-suave', 'bg-rojo-suave');
+
+//                 if (selectVoBo.value === 'SI') {
+//                     contenedorColor.classList.add('bg-verde-suave');
+//                 } else if (selectVoBo.value === 'NO') {
+//                     contenedorColor.classList.add('bg-rojo-suave');
+//                 }
+//             });
+//         });
+
+//     } catch (e) {
+//         console.error('Error al parsear MATERIALES_JSON:', e);
+//     }
+// }
+
+
 function cargarMaterialesDesdeJSON(materialesJson) {
     const contenedorMateriales = document.querySelector('.materialesdiv');
     contenedorMateriales.innerHTML = '';
@@ -409,12 +514,68 @@ function cargarMaterialesDesdeJSON(materialesJson) {
     try {
         const materiales = JSON.parse(materialesJson);
 
+        const filtrosDiv = document.createElement('div');
+        filtrosDiv.classList.add('row', 'mb-3', 'justify-content-center');
+
+        filtrosDiv.innerHTML = `
+            <div class="col-3  text-center">
+                <label class="form-label fw-bold">Seleccionar línea de negocio</label>
+                <select class="form-select" id="filtroLineaNegocios">
+                    <option value=""></option>
+                    <option value="STE">STE</option>
+                    <option value="SST">SST</option>
+                    <option value="SCA">SCA</option>
+                    <option value="SMA">SMA</option>
+                    <option value="SLH">SLH</option>
+                    <option value="ADM">ADM</option>
+                </select>
+            </div>
+            <div class="col-3  text-center">
+                <label class="form-label fw-bold">Vo. Bo</label>
+                <select class="form-select" id="filtroVoBo">
+                    <option value=""></option>
+                    <option value="SI">Sí</option>
+                    <option value="NO">No</option>
+                </select>
+            </div>
+        `;
+        contenedorMateriales.appendChild(filtrosDiv);
+
+        const filtroLinea = filtrosDiv.querySelector('#filtroLineaNegocios');
+        const filtroVoBo = filtrosDiv.querySelector('#filtroVoBo');
+
+        filtroLinea.addEventListener('change', function () {
+            const valorSeleccionado = this.value;
+            const selectsCategoria = contenedorMateriales.querySelectorAll('select[name="CATEGORIA_MATERIAL"]');
+            selectsCategoria.forEach(select => {
+                select.value = valorSeleccionado;
+            });
+        });
+
+        filtroVoBo.addEventListener('change', function () {
+            const valorSeleccionado = this.value;
+            const selectsVoBo = contenedorMateriales.querySelectorAll('select[name="CHECK_VO"]');
+            selectsVoBo.forEach(select => {
+                select.value = valorSeleccionado;
+
+                const contenedorColor = select.closest('.color-vo');
+                if (contenedorColor) {
+                    contenedorColor.classList.remove('bg-verde-suave', 'bg-rojo-suave');
+                    if (valorSeleccionado === 'SI') {
+                        contenedorColor.classList.add('bg-verde-suave');
+                    } else if (valorSeleccionado === 'NO') {
+                        contenedorColor.classList.add('bg-rojo-suave');
+                    }
+                }
+            });
+        });
+
         materiales.forEach(material => {
             const divMaterial = document.createElement('div');
             divMaterial.classList.add('material-item', 'mt-2');
 
             let colorClass = '';
-           if (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL !== 'NO') {
+            if (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL !== 'NO') {
                 colorClass = 'bg-verde-suave';
             } else if (
                 material.CHECK_VO === 'NO' ||
@@ -427,7 +588,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                 <div class="row p-3 rounded color-vo ${colorClass}">
                     <div class="col-1">
                         <label class="form-label">Aprobado</label>
-                        <select class="form-select" name="CHECK_MATERIAL" disabled >
+                        <select class="form-select" name="CHECK_MATERIAL" disabled>
                             <option value=""></option>
                             <option value="SI" ${material.CHECK_MATERIAL === 'SI' ? 'selected' : ''}>Sí</option>
                             <option value="NO" ${material.CHECK_MATERIAL === 'NO' ? 'selected' : ''}>No</option>
@@ -439,11 +600,11 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     </div>
                     <div class="col-4">
                         <label class="form-label">Descripción</label>
-                        <input type="text" class="form-control" name="DESCRIPCION" value="${material.DESCRIPCION}" >
+                        <input type="text" class="form-control" name="DESCRIPCION" value="${material.DESCRIPCION}">
                     </div>
                     <div class="col-1">
                         <label class="form-label">Cantidad</label>
-                        <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" >
+                        <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}">
                     </div>
                     <div class="col-2">
                         <label class="form-label">Unidad de Medida</label>
@@ -451,7 +612,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     </div>
                     <div class="col-2">
                         <label class="form-label">Línea de Negocios</label>
-                        <select class="form-select" name="CATEGORIA_MATERIAL"  required>
+                        <select class="form-select" name="CATEGORIA_MATERIAL" required>
                             <option value="">Seleccionar</option>
                             <option value="STE" ${material.CATEGORIA_MATERIAL === 'STE' ? 'selected' : ''}>STE</option>
                             <option value="SST" ${material.CATEGORIA_MATERIAL === 'SST' ? 'selected' : ''}>SST</option>
@@ -504,87 +665,6 @@ function cargarMaterialesDesdeJSON(materialesJson) {
         console.error('Error al parsear MATERIALES_JSON:', e);
     }
 }
-
-
-
-// function darVistoBueno() {
-//     Swal.fire({
-//         title: '¿Deseas dar el visto bueno a la M.R?',
-//         text: "Esta acción enviará la solicitud y guardará los datos.",
-//         icon: 'question',
-//         showCancelButton: true,
-//         confirmButtonText: 'Sí, enviar',
-//         cancelButtonText: 'Cancelar'
-//     }).then((result) => {
-//         if (result.isConfirmed) {
-//             if (!validarCamposObligatoriosMR()) {
-//                 Swal.fire({
-//                     icon: 'warning',
-//                     title: 'Campos incompletos',
-//                     text: 'Debe llenar todos los campos antes de continuar.'
-//                 });
-//                 return;
-//             }
-
-//                    var documentos = [];
-//                 $(".material-item").each(function() {
-//                     var documento = {
-//                       'DESCRIPCION': $(this).find("input[name='DESCRIPCION']").val(),
-//                 'CANTIDAD': $(this).find("input[name='CANTIDAD']").val(),
-//                 'UNIDAD_MEDIDA': $(this).find("input[name='UNIDAD_MEDIDA']").val(),
-//                 'CHECK_VO': $(this).find("select[name='CHECK_VO']").val(),
-//                 'CATEGORIA_MATERIAL': $(this).find("select[name='CATEGORIA_MATERIAL']").val(),
-//                 'CHECK_MATERIAL': $(this).find("select[name='CHECK_MATERIAL']").val()
-
-//                     };
-//                     documentos.push(documento);
-//         });
-            
-//             var materialesJson = JSON.stringify(documentos);
-
-
-     
-            
-
-//             if (typeof ID_FORMULARIO_MR !== 'undefined' && ID_FORMULARIO_MR > 0) {
-//                 $.ajax({
-//                     url: '/guardarYDarVistoBueno',
-//                     method: 'POST',
-//                     data: {
-//                         id: ID_FORMULARIO_MR,
-//                         prioridad: $('#PRIORIDAD_MR').val(),
-//                         observaciones: $('#OBSERVACIONES_MR').val(),
-//                         fecha_visto: $('#FECHA_VISTO_MR').val(),
-//                         visto_bueno: $('#VISTO_BUENO').val(),
-//                         materiales_json: materialesJson,
-//                         _token: $('meta[name="csrf-token"]').attr('content')
-//                     },
-//                     success: function (response) {
-//                         if (response.success) {
-//                             Swal.fire({
-//                                 icon: 'success',
-//                                 title: 'Visto bueno registrado',
-//                                 text: response.message
-//                             });
-
-//                             $('#miModal_MR').modal('hide');
-//                             $('#Tablarequisicion').DataTable().ajax.reload(null, false);
-//                         }
-//                     },
-//                     error: function () {
-//                         Swal.fire({
-//                             icon: 'error',
-//                             title: 'Error',
-//                             text: 'Ocurrió un error al guardar el formulario.'
-//                         });
-//                     }
-//                 });
-//             }
-//         }
-//     });
-// }
-
-
 
 
 function darVistoBueno() {

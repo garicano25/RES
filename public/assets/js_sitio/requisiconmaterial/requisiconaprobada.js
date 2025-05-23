@@ -422,6 +422,114 @@ $('#Tablarequsicionaprobada tbody').on('click', 'td>button.EDITAR', function () 
 
 
 
+// function cargarMaterialesDesdeJSON(materialesJson) {
+//     const contenedorMateriales = document.querySelector('.materialesdiv');
+//     contenedorMateriales.innerHTML = '';
+//     contadorMateriales = 1;
+
+//     try {
+//         const materiales = JSON.parse(materialesJson);
+
+//         materiales.forEach(material => {
+//             const divMaterial = document.createElement('div');
+//             divMaterial.classList.add('material-item', 'mt-2');
+
+//             let colorClass = '';
+//            if (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL !== 'NO') {
+//                 colorClass = 'bg-verde-suave';
+//             } else if (
+//                 material.CHECK_VO === 'NO' ||
+//                 (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL === 'NO')
+//             ) {
+//                 colorClass = 'bg-rojo-suave';
+//             }
+
+//             divMaterial.innerHTML = `
+//                 <div class="row p-3 rounded color-vo ${colorClass}">
+//                     <div class="col-1">
+//                         <label class="form-label">Aprobado</label>
+//                         <select class="form-select" name="CHECK_MATERIAL" required >
+//                             <option value=""></option>
+//                             <option value="SI" ${material.CHECK_MATERIAL === 'SI' ? 'selected' : ''}>Sí</option>
+//                             <option value="NO" ${material.CHECK_MATERIAL === 'NO' ? 'selected' : ''}>No</option>
+//                         </select>
+//                     </div>
+//                     <div class="col-1">
+//                         <label class="form-label">N°</label>
+//                         <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
+//                     </div>
+//                     <div class="col-4">
+//                         <label class="form-label">Descripción</label>
+//                         <input type="text" class="form-control" name="DESCRIPCION" value="${material.DESCRIPCION}" >
+//                     </div>
+//                     <div class="col-1">
+//                         <label class="form-label">Cantidad</label>
+//                         <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" >
+//                     </div>
+//                     <div class="col-2">
+//                         <label class="form-label">Unidad de Medida</label>
+//                         <input type="text" class="form-control" name="UNIDAD_MEDIDA" value="${material.UNIDAD_MEDIDA}" >
+//                     </div>
+//                     <div class="col-2">
+//                         <label class="form-label">Línea de Negocios</label>
+//                         <select class="form-select" name="CATEGORIA_MATERIAL" >
+//                             <option value="">Seleccionar</option>
+//                             <option value="STE" ${material.CATEGORIA_MATERIAL === 'STE' ? 'selected' : ''}>STE</option>
+//                             <option value="SST" ${material.CATEGORIA_MATERIAL === 'SST' ? 'selected' : ''}>SST</option>
+//                             <option value="SCA" ${material.CATEGORIA_MATERIAL === 'SCA' ? 'selected' : ''}>SCA</option>
+//                             <option value="SMA" ${material.CATEGORIA_MATERIAL === 'SMA' ? 'selected' : ''}>SMA</option>
+//                             <option value="SLH" ${material.CATEGORIA_MATERIAL === 'SLH' ? 'selected' : ''}>SLH</option>
+//                             <option value="ADM" ${material.CATEGORIA_MATERIAL === 'ADM' ? 'selected' : ''}>ADM</option>
+//                         </select>
+//                     </div>
+//                     <div class="col-1">
+//                         <label class="form-label">Vo. Bo</label>
+//                         <select class="form-select check-vo-select" name="CHECK_VO" disabled>
+//                             <option value=""></option>
+//                             <option value="SI" ${material.CHECK_VO === 'SI' ? 'selected' : ''}>Sí</option>
+//                             <option value="NO" ${material.CHECK_VO === 'NO' ? 'selected' : ''}>No</option>
+//                         </select>
+//                     </div>
+//                     <div class="col-12 mt-2 text-end">
+//                         <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
+//                             <i class="bi bi-trash"></i>
+//                         </button>
+//                     </div>
+//                 </div>
+//             `;
+
+//             contenedorMateriales.appendChild(divMaterial);
+//             contadorMateriales++;
+
+//             const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
+//             botonEliminar.addEventListener('click', function () {
+//                 contenedorMateriales.removeChild(divMaterial);
+//                 actualizarNumerosOrden();
+//             });
+
+//             const selectVoBo = divMaterial.querySelector('.check-vo-select');
+//             const contenedorColor = divMaterial.querySelector('.color-vo');
+
+//             selectVoBo.addEventListener('change', function () {
+//                 contenedorColor.classList.remove('bg-verde-suave', 'bg-rojo-suave');
+
+//                 if (selectVoBo.value === 'SI') {
+//                     contenedorColor.classList.add('bg-verde-suave');
+//                 } else if (selectVoBo.value === 'NO') {
+//                     contenedorColor.classList.add('bg-rojo-suave');
+//                 }
+//             });
+//         });
+
+//     } catch (e) {
+//         console.error('Error al parsear MATERIALES_JSON:', e);
+//     }
+// }
+
+
+
+
+
 function cargarMaterialesDesdeJSON(materialesJson) {
     const contenedorMateriales = document.querySelector('.materialesdiv');
     contenedorMateriales.innerHTML = '';
@@ -430,12 +538,37 @@ function cargarMaterialesDesdeJSON(materialesJson) {
     try {
         const materiales = JSON.parse(materialesJson);
 
+        const filtroCheckMaterialDiv = document.createElement('div');
+        filtroCheckMaterialDiv.classList.add('row', 'mb-3', 'justify-content-center');
+
+        filtroCheckMaterialDiv.innerHTML = `
+            <div class="col-2">
+                <label class="form-label fw-bold">Aplicar Aprobado a todos</label>
+                <select class="form-select" id="filtroCheckMaterial">
+                    <option value=""></option>
+                    <option value="SI">Sí</option>
+                    <option value="NO">No</option>
+                </select>
+            </div>
+        `;
+
+        contenedorMateriales.appendChild(filtroCheckMaterialDiv);
+
+        const filtroCheckMaterial = filtroCheckMaterialDiv.querySelector('#filtroCheckMaterial');
+        filtroCheckMaterial.addEventListener('change', function () {
+            const valorSeleccionado = this.value;
+            const selectsAprobado = contenedorMateriales.querySelectorAll('select[name="CHECK_MATERIAL"]');
+            selectsAprobado.forEach(select => {
+                select.value = valorSeleccionado;
+            });
+        });
+
         materiales.forEach(material => {
             const divMaterial = document.createElement('div');
             divMaterial.classList.add('material-item', 'mt-2');
 
             let colorClass = '';
-           if (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL !== 'NO') {
+            if (material.CHECK_VO === 'SI' && material.CHECK_MATERIAL !== 'NO') {
                 colorClass = 'bg-verde-suave';
             } else if (
                 material.CHECK_VO === 'NO' ||
@@ -448,7 +581,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                 <div class="row p-3 rounded color-vo ${colorClass}">
                     <div class="col-1">
                         <label class="form-label">Aprobado</label>
-                        <select class="form-select" name="CHECK_MATERIAL" required >
+                        <select class="form-select" name="CHECK_MATERIAL" required>
                             <option value=""></option>
                             <option value="SI" ${material.CHECK_MATERIAL === 'SI' ? 'selected' : ''}>Sí</option>
                             <option value="NO" ${material.CHECK_MATERIAL === 'NO' ? 'selected' : ''}>No</option>
@@ -460,19 +593,19 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     </div>
                     <div class="col-4">
                         <label class="form-label">Descripción</label>
-                        <input type="text" class="form-control" name="DESCRIPCION" value="${material.DESCRIPCION}" >
+                        <input type="text" class="form-control" name="DESCRIPCION" value="${material.DESCRIPCION}">
                     </div>
                     <div class="col-1">
                         <label class="form-label">Cantidad</label>
-                        <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" >
+                        <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}">
                     </div>
                     <div class="col-2">
                         <label class="form-label">Unidad de Medida</label>
-                        <input type="text" class="form-control" name="UNIDAD_MEDIDA" value="${material.UNIDAD_MEDIDA}" >
+                        <input type="text" class="form-control" name="UNIDAD_MEDIDA" value="${material.UNIDAD_MEDIDA}">
                     </div>
                     <div class="col-2">
                         <label class="form-label">Línea de Negocios</label>
-                        <select class="form-select" name="CATEGORIA_MATERIAL" >
+                        <select class="form-select" name="CATEGORIA_MATERIAL">
                             <option value="">Seleccionar</option>
                             <option value="STE" ${material.CATEGORIA_MATERIAL === 'STE' ? 'selected' : ''}>STE</option>
                             <option value="SST" ${material.CATEGORIA_MATERIAL === 'SST' ? 'selected' : ''}>SST</option>
@@ -525,6 +658,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
         console.error('Error al parsear MATERIALES_JSON:', e);
     }
 }
+
 
 
 
