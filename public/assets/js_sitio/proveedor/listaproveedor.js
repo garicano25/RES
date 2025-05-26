@@ -129,9 +129,9 @@ var Tablalistaproveedores = $("#Tablalistaproveedores").DataTable({
         },
         { data: 'RFC_ALTA' },
         { data: 'RAZON_SOCIAL_ALTA' },
-        { data: 'BTN_EDITAR' },
         { data: 'ESTATUS_DATOS' }, 
-        { data: 'BTN_CORREO' }
+        { data: 'BTN_CORREO' },
+        { data: 'BTN_EDITAR' },
 
 
     ],
@@ -139,9 +139,9 @@ var Tablalistaproveedores = $("#Tablalistaproveedores").DataTable({
         { targets: 0, title: '#', className: 'all text-center' },
         { targets: 1, title: 'RFC/Tax ID ', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Razón social/Nombre  ', className: 'all text-center nombre-column' },
-        { targets: 3, title: 'Mostrar', className: 'all text-center' },
-        { targets: 4, title: 'Información faltante', className: 'all text-center' },
-        { targets: 5, title: 'Correo', className: 'all text-center' }
+        { targets: 3, title: 'Información faltante', className: 'all text-center' },
+        { targets: 4, title: 'Correo', className: 'all text-center' },
+        { targets: 5, title: 'Mostrar', className: 'all text-center' },
 
     ]
 });
