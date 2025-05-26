@@ -130,7 +130,7 @@ var Tablalistaproveedores = $("#Tablalistaproveedores").DataTable({
         { data: 'RFC_ALTA' },
         { data: 'RAZON_SOCIAL_ALTA' },
         { data: 'BTN_EDITAR' },
-        { data: 'ESTATUS_DATOS' }, // <--- aquí se muestra lo que falta
+        { data: 'ESTATUS_DATOS' }, 
         { data: 'BTN_CORREO' }
 
 
@@ -140,7 +140,7 @@ var Tablalistaproveedores = $("#Tablalistaproveedores").DataTable({
         { targets: 1, title: 'RFC/Tax ID ', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Razón social/Nombre  ', className: 'all text-center nombre-column' },
         { targets: 3, title: 'Mostrar', className: 'all text-center' },
-        { targets: 4, title: 'Estatus de datos', className: 'all text-center' },
+        { targets: 4, title: 'Información faltante', className: 'all text-center' },
         { targets: 5, title: 'Correo', className: 'all text-center' }
 
     ]
@@ -169,7 +169,7 @@ $(document).on("click", ".CORREO", function (e) {
     const $btn = $(this);
     const id = $btn.data("id");
 
-    $btn.prop("disabled", true); // Desactivar mientras se envía
+    $btn.prop("disabled", true); 
 
     Swal.fire({
         title: 'Enviando correo...',
