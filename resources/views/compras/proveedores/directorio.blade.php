@@ -193,7 +193,7 @@
                 <input type="text" class="form-control" id="RAZON_SOCIAL" name="RAZON_SOCIAL" required>
               </div>
               <div class="col-4 mb-3">
-                <label for="RFC_LABEL">RFC *</label>
+                <label for="RFC_LABEL">R.F.C *</label>
                 <input type="text" class="form-control texto-mayusculas" id="RFC_PROVEEDOR" name="RFC_PROVEEDOR" required>
               </div>
               <div class="col-6 mb-3">
