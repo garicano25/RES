@@ -10,7 +10,7 @@
         <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-award-fill"></i>&nbsp;Certificaciones, acreditaciones y membresías</h3>
 
 
-        <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_certificaciones" style="margin-left: auto;">
+        <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVA_CERTIFICACION" data-bs-toggle="modal" data-bs-target="#miModal_certificaciones" style="margin-left: auto;">
             Nueva &nbsp;<i class="bi bi-plus-circle"></i>
         </button>
     </ol>

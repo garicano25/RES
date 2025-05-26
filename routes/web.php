@@ -747,6 +747,9 @@ Route::get('/Tablacertificaciones', [listaproveedorController::class, 'Tablacert
 Route::get('/Tablareferencias', [listaproveedorController::class, 'Tablareferencias']);
 Route::get('/Tabladocumentosoporteproveedores', [listaproveedorController::class, 'Tabladocumentosoporteproveedores']);
 
+
+Route::post('/enviarCorreoFaltantes/{id}', [listaproveedorController::class, 'enviarCorreoFaltantes']);
+
 //==============================================     PROVEEDORES TEMPORALES  ============================================== 
 
 Route::get('/Proveedores_temporales', function () { return view('compras.listaproveedor.proveedorestemporales');});
@@ -812,6 +815,8 @@ Route::post('/enviarCorreoProveedor', [directorioController::class, 'enviarCorre
 Route::get('/Alta', function () {return view('compras.proveedores.altaproveedores');});
 Route::get('/obtenerDatosProveedor', [altaproveedorController::class, 'obtenerDatosProveedor']);
 Route::post('/AltaSave', [altaproveedorController::class, 'store']);
+Route::post('/solicitarValidacion', [altaproveedorController::class, 'solicitarValidacion']);
+Route::get('/verificarBloqueoPorVerificacion', [altaproveedorController::class, 'verificarBloqueoPorVerificacion']);
 
 
 //ALTA DE CERTIFICACIONES

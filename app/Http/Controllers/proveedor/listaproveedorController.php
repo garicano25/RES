@@ -4,6 +4,7 @@ namespace App\Http\Controllers\proveedor;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 
 use App\Models\proveedor\altacontactos;
@@ -34,36 +35,198 @@ class listaproveedorController extends Controller
     }
 
 
+    //     public function Tablalistaproveedores()
+    // {
+    //     try {
+    //         $tabla = altaproveedorModel::get();
+
+    //         foreach ($tabla as $value) {
+
+
+    //         $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+    //                 // $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //         $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO" data-id="' . $value->ID_FORMULARIO_ALTA . '"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
+
+
+
+
+
+    //         }
+
+    //         // Respuesta
+    //         return response()->json([
+    //             'data' => $tabla,
+    //             'msj' => 'Información consultada correctamente'
+    //         ]);
+    //     } catch (Exception $e) {
+    //         return response()->json([
+    //             'msj' => 'Error ' . $e->getMessage(),
+    //             'data' => 0
+    //         ]);
+    //     }
+    // }
+
+
+
     public function Tablalistaproveedores()
-{
-    try {
-        $tabla = altaproveedorModel::get();
+    {
+        try {
+            $tabla = altaproveedorModel::get();
 
-        foreach ($tabla as $value) {
-            
-         
-        $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
-            // $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-        
+            foreach ($tabla as $value) {
+                $mensajes = [];
+
+                $rfc = $value->RFC_ALTA;
+                $tipoPersona = $value->TIPO_PERSONA_ALTA;
+                $tipoPersonaOpcion = $value->TIPO_PERSONA_OPCION;
+
+                // Verificar contactos
+                if (!DB::table('formulario_altacontactoproveedor')->where('RFC_PROVEEDOR', $rfc)->exists()) {
+                    $mensajes[] = 'Falta agregar contactos.';
+                }
+
+                // Verificar cuentas bancarias
+                if (!DB::table('formulario_altacuentaproveedor')->where('RFC_PROVEEDOR', $rfc)->exists()) {
+                    $mensajes[] = 'Falta agregar cuentas bancarias.';
+                }
+
+                // Verificar referencias comerciales
+                if (!DB::table('formulario_altareferenciasproveedor')->where('RFC_PROVEEDOR', $rfc)->exists()) {
+                    $mensajes[] = 'Faltan agregar referencias comerciales.';
+                }
+
+                // Verificar documentos
+                $documentosObligatorios = DB::table('catalogo_documentosproveedor')
+                    ->where('ACTIVO', 1)
+                    ->where('TIPO_DOCUMENTO', 1)
+                    ->where(function ($q) use ($tipoPersona) {
+                        $q->where('TIPO_PERSONA', $tipoPersona)->orWhere('TIPO_PERSONA', 3);
+                    })
+                    ->where(function ($q) use ($tipoPersonaOpcion) {
+                        $q->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)->orWhere('TIPO_PERSONA_OPCION', 3);
+                    })
+                    ->get();
+
+                $documentosSubidos = DB::table('formulario_altadocumentoproveedores')
+                    ->where('RFC_PROVEEDOR', $rfc)
+                    ->pluck('TIPO_DOCUMENTO')
+                    ->toArray();
+
+                foreach ($documentosObligatorios as $doc) {
+                    if (!in_array($doc->ID_CATALOGO_DOCUMENTOSPROVEEDOR, $documentosSubidos)) {
+                        $mensajes[] = 'Falta el documento: ' . $doc->NOMBRE_DOCUMENTO;
+                    }
+                }
+
+                // Estatus
+                $value->ESTATUS_DATOS = empty($mensajes)
+                    ? '<span class="badge bg-success">Completo</span>'
+                    : implode('<br>', array_map(fn($msg) => "<span class='text-danger'>$msg</span>", $mensajes));
+
+                // Botones
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+
+                // 👇 Solo mostrar si hay faltantes
+                $value->BTN_CORREO = empty($mensajes)
+                    ? ''
+                    : '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO" data-id="' . $value->ID_FORMULARIO_ALTA . '"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
         }
-        
-        // Respuesta
-        return response()->json([
-            'data' => $tabla,
-            'msj' => 'Información consultada correctamente'
-        ]);
-    } catch (Exception $e) {
-        return response()->json([
-            'msj' => 'Error ' . $e->getMessage(),
-            'data' => 0
-        ]);
     }
-}
-
-// TABLA DE CUENTAS
 
 
-public function Tablacuentas(Request $request)
+
+
+    public function enviarCorreoFaltantes($idFormularioAlta)
+    {
+        $proveedor = altaproveedorModel::findOrFail($idFormularioAlta);
+        $rfc = $proveedor->RFC_ALTA;
+
+        $correo = DB::table('formulario_directorio')
+            ->where('RFC_PROVEEDOR', $rfc)
+            ->value('CORREO_DIRECTORIO');
+
+        if (!$correo) {
+            return response()->json(['status' => 'error', 'message' => 'No se encontró un correo asociado al proveedor.']);
+        }
+
+        $faltantes = [];
+
+        if (!DB::table('formulario_altacontactoproveedor')->where('RFC_PROVEEDOR', $rfc)->exists()) {
+            $faltantes[] = 'Falta agregar contactos.';
+        }
+
+        if (!DB::table('formulario_altacuentaproveedor')->where('RFC_PROVEEDOR', $rfc)->exists()) {
+            $faltantes[] = 'Falta agregar cuentas bancarias.';
+        }
+
+        if (!DB::table('formulario_altareferenciasproveedor')->where('RFC_PROVEEDOR', $rfc)->exists()) {
+            $faltantes[] = 'Faltan agregar referencias comerciales.';
+        }
+
+        $tipoPersona = $proveedor->TIPO_PERSONA_ALTA;
+        $tipoPersonaOpcion = $proveedor->TIPO_PERSONA_OPCION;
+
+        $documentosObligatorios = DB::table('catalogo_documentosproveedor')
+            ->where('ACTIVO', 1)
+            ->where('TIPO_DOCUMENTO', 1)
+            ->where(function ($q) use ($tipoPersona) {
+                $q->where('TIPO_PERSONA', $tipoPersona)->orWhere('TIPO_PERSONA', 3);
+            })
+            ->where(function ($q) use ($tipoPersonaOpcion) {
+                $q->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)->orWhere('TIPO_PERSONA_OPCION', 3);
+            })
+            ->get();
+
+        $documentosSubidos = DB::table('formulario_altadocumentoproveedores')
+            ->where('RFC_PROVEEDOR', $rfc)
+            ->pluck('TIPO_DOCUMENTO')
+            ->toArray();
+
+        foreach ($documentosObligatorios as $doc) {
+            if (!in_array($doc->ID_CATALOGO_DOCUMENTOSPROVEEDOR, $documentosSubidos)) {
+                $faltantes[] = 'Falta el documento: ' . $doc->NOMBRE_DOCUMENTO;
+            }
+        }
+
+        if (empty($faltantes)) {
+            return response()->json(['status' => 'ok', 'message' => 'Proveedor completo. No se envió correo.']);
+        }
+
+        $hora = now()->format('H');
+        $saludo = $hora < 12 ? 'Buenos días' : 'Buenas tardes';
+
+        Mail::send('emails.faltantes_proveedor', [
+            'saludo' => $saludo,
+            'razonSocial' => $proveedor->RAZON_SOCIAL_ALTA,
+            'faltantes' => $faltantes
+        ], function ($message) use ($correo) {
+            $message->to($correo)
+                ->subject('ERP Results - Faltan datos en su registro');
+        });
+
+        return response()->json(['status' => 'success', 'message' => 'Correo enviado correctamente.']);
+    }
+
+
+
+
+
+
+    // TABLA DE CUENTAS
+
+
+    public function Tablacuentas(Request $request)
 {
     try {
         $rfc = $request->get('rfc');

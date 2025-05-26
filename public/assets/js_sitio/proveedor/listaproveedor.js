@@ -129,13 +129,20 @@ var Tablalistaproveedores = $("#Tablalistaproveedores").DataTable({
         },
         { data: 'RFC_ALTA' },
         { data: 'RAZON_SOCIAL_ALTA' },
-        { data: 'BTN_EDITAR' }
+        { data: 'BTN_EDITAR' },
+        { data: 'ESTATUS_DATOS' }, // <--- aquí se muestra lo que falta
+        { data: 'BTN_CORREO' }
+
+
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all text-center' },
         { targets: 1, title: 'RFC/Tax ID ', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Razón social/Nombre  ', className: 'all text-center nombre-column' },
-        { targets: 3, title: 'Mostrar', className: 'all text-center' }
+        { targets: 3, title: 'Mostrar', className: 'all text-center' },
+        { targets: 4, title: 'Estatus de datos', className: 'all text-center' },
+        { targets: 5, title: 'Correo', className: 'all text-center' }
+
     ]
 });
 
@@ -152,6 +159,71 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 function reloadTablalistaproveedores() {
     Tablalistaproveedores.ajax.reload(null, false); 
 }
+
+
+
+
+$(document).on("click", ".CORREO", function (e) {
+    e.preventDefault();
+
+    const $btn = $(this);
+    const id = $btn.data("id");
+
+    $btn.prop("disabled", true); // Desactivar mientras se envía
+
+    Swal.fire({
+        title: 'Enviando correo...',
+        text: 'Por favor, espere un momento.',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    $.ajax({
+        url: `/enviarCorreoFaltantes/${id}`,
+        type: "POST",
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr("content")
+        },
+        success: function (response) {
+            Swal.close();
+
+            if (response.status === "success") {
+                Swal.fire({
+                    title: "Correo enviado",
+                    text: response.message,
+                    icon: "success"
+                });
+            } else {
+                Swal.fire({
+                    title: "Atención",
+                    text: response.message,
+                    icon: "warning"
+                });
+            }
+        },
+        error: function (xhr) {
+            Swal.close();
+
+            let mensaje = "Ocurrió un error inesperado al enviar el correo.";
+            if (xhr.responseJSON && xhr.responseJSON.message) {
+                mensaje = xhr.responseJSON.message;
+            }
+
+            Swal.fire({
+                title: "Error",
+                text: mensaje,
+                icon: "error"
+            });
+        },
+        complete: function () {
+            $btn.prop("disabled", false); // Reactivar botón al terminar
+        }
+    });
+});
+
 
 
 

@@ -10,7 +10,7 @@
         <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-pdf-fill"></i>&nbsp;Documentos de soporte</h3>
 
 
-        <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_documentos" style="margin-left: auto;">
+        <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVO_DOCUMENTO" data-bs-toggle="modal" data-bs-target="#miModal_documentos" style="margin-left: auto;">
             Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
         </button>
     </ol>
@@ -38,7 +38,7 @@
                     <div class="row">
                         <div class="col-md-12 mb-3">
                             <label class="form-label">Documento *</label>
-                            <select class="form-control" name="TIPO_DOCUMENTO" id="TIPO_DOCUMENTO" >
+                            <select class="form-control" name="TIPO_DOCUMENTO" id="TIPO_DOCUMENTO">
                                 <option value="" selected disabled>Seleccione una opción</option>
 
                                 <optgroup label="Documentos obligatorios">

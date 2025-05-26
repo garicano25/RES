@@ -212,18 +212,59 @@
                     <h5 class="text-center">Menú</h5>
                     <nav>
                         <ul class="menu-list">
-                            <li><a href="{{ url('/Alta') }}"><i class="bi bi-speedometer"></i>&nbsp; Alta y actualización</a></li>
-                            <li><a href="{{ url('/Proveedores_Cuentas') }}"><i class="bi bi-currency-dollar"></i>Cuentas bancarias</a></li>
-                            <li><a href="{{ url('/Proveedores_Contactos') }}"><i class="bi bi-person-lines-fill"></i>&nbsp; Contactos</a></li>
-                            <li><a href="{{ url('/Proveedores_Certificaciones') }}"><i class="bi bi-award-fill"></i>&nbsp; Certificaciones, acreditaciones y membresías</a></li>
-                            <li><a href="{{ url('/Proveedores_Referencias') }}"><i class="bi bi-journal-text"></i>&nbsp; Referencias comerciales</a></li>
-                            <li><a href="{{ url('/Proveedores_documentos') }}"><i class="bi bi-file-earmark-pdf-fill"></i>&nbsp;Documentos de soporte</a></li>
-                            <li id="FACTURA" style="display: none;"><a href="{{ url('/#') }}"><i class="bi bi-file-earmark-fill"></i>&nbsp; Facturación</a></li>
-
+                            <li>
+                                <a href="{{ url('/Alta') }}" class="d-flex flex-column align-items-center text-center">
+                                    <i class="bi bi-speedometer"></i>
+                                    <span>Alta y actualización</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/Proveedores_Cuentas') }}" class="d-flex flex-column align-items-center text-center">
+                                    <i class="bi bi-currency-dollar"></i>
+                                    <span>Cuentas bancarias</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/Proveedores_Contactos') }}" class="d-flex flex-column align-items-center text-center">
+                                    <i class="bi bi-person-lines-fill"></i>
+                                    <span>Contactos</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/Proveedores_Certificaciones') }}" class="d-flex flex-column align-items-center text-center">
+                                    <i class="bi bi-award-fill"></i>
+                                    <span>Certificaciones, acreditaciones y membresías</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/Proveedores_Referencias') }}" class="d-flex flex-column align-items-center text-center">
+                                    <i class="bi bi-journal-text"></i>
+                                    <span>Referencias comerciales</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/Proveedores_documentos') }}" class="d-flex flex-column align-items-center text-center">
+                                    <i class="bi bi-file-earmark-pdf-fill"></i>
+                                    <span>Documentos de soporte</span>
+                                </a>
+                            </li>
+                            <li id="FACTURA" style="display: none;">
+                                <a href="{{ url('/#') }}" class="d-flex flex-column align-items-center text-center">
+                                    <i class="bi bi-file-earmark-fill"></i>
+                                    <span>Facturación</span>
+                                </a>
+                            </li>
                         </ul>
                     </nav>
+
+
+                    <button type="submit" id="SOLICITAR_VERIFICACION" class="btn btn-primary btn-sm w-100">
+                        Solicitar validación de la información
+                    </button>
                 </div>
             </div>
+
+
 
             <!-- Contenedor del contenido principal en col-10 -->
             <div class="col-10 position-relative">
@@ -299,6 +340,10 @@
 
     <!-- Funciones generales -->
     <script src="/assets/js_sitio/funciones.js?v=5.0"></script>
+
+
+    <script src="/assets/js_sitio/proveedor/funciongeneralesproveedores.js"></script>
+
 
 
     <script>

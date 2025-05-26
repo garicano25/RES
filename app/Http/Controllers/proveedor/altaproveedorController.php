@@ -17,8 +17,6 @@ use DB;
 use App\Models\proveedor\directorioModel;
 use App\Models\proveedor\altaproveedorModel;
 
-use App\Models\proveedor\altacontactos;
-
 class altaproveedorController extends Controller
 {
     public function obtenerDatosProveedor()
@@ -119,7 +117,98 @@ class altaproveedorController extends Controller
 
 
 
- 
+
+
+    public function solicitarValidacion()
+    {
+        $rfc = Auth::user()->RFC_PROVEEDOR;
+
+        $mensajes = [];
+
+        $tieneContactos = DB::table('formulario_altacontactoproveedor')
+            ->where('RFC_PROVEEDOR', $rfc)
+            ->exists();
+
+        if (!$tieneContactos) {
+            $mensajes[] = 'Falta agregar contactos.';
+        }
+
+        $tieneCuentas = DB::table('formulario_altacuentaproveedor')
+            ->where('RFC_PROVEEDOR', $rfc)
+            ->exists();
+
+        if (!$tieneCuentas) {
+            $mensajes[] = 'Falta agregar cuentas bancarias.';
+        }
+
+        $tieneReferencias = DB::table('formulario_altareferenciasproveedor')
+            ->where('RFC_PROVEEDOR', $rfc)
+            ->exists();
+
+        if (!$tieneReferencias) {
+            $mensajes[] = 'Faltan agregar referencias comerciales.';
+        }
+
+        $proveedor = DB::table('formulario_altaproveedor')->where('RFC_ALTA', $rfc)->first();
+
+        $tipoPersona = $proveedor->TIPO_PERSONA_ALTA ?? null;
+        $tipoPersonaOpcion = $proveedor->TIPO_PERSONA_OPCION ?? null;
+
+        $documentosObligatorios = DB::table('catalogo_documentosproveedor')
+            ->where('ACTIVO', 1)
+            ->where('TIPO_DOCUMENTO', 1) 
+            ->where(function ($q) use ($tipoPersona) {
+                $q->where('TIPO_PERSONA', $tipoPersona)
+                    ->orWhere('TIPO_PERSONA', 3); 
+            })
+            ->where(function ($q) use ($tipoPersonaOpcion) {
+                $q->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)
+                    ->orWhere('TIPO_PERSONA_OPCION', 3);
+            })
+            ->get();
+
+        $documentosSubidos = DB::table('formulario_altadocumentoproveedores')
+            ->where('RFC_PROVEEDOR', $rfc)
+            ->pluck('TIPO_DOCUMENTO')
+            ->toArray();
+
+        foreach ($documentosObligatorios as $doc) {
+            if (!in_array($doc->ID_CATALOGO_DOCUMENTOSPROVEEDOR, $documentosSubidos)) {
+                $mensajes[] = 'Falta el documento: ' . $doc->NOMBRE_DOCUMENTO;
+            }
+        }
+
+        if (!empty($mensajes)) {
+            return response()->json([
+                'status' => 'incompleto',
+                'faltantes' => $mensajes
+            ]);
+        }
+
+        DB::table('formulario_altaproveedor')
+            ->where('RFC_ALTA', $rfc)
+            ->update(['VERIFICACION_SOLICITADA' => 1]);
+
+        return response()->json([
+            'status' => 'ok',
+            'message' => 'La solicitud de validación fue enviada correctamente.'
+        ]);
+    }
+
+
+
+    public function verificarBloqueoPorVerificacion()
+    {
+        $rfc = Auth::user()->RFC_PROVEEDOR;
+
+        $verificacion = DB::table('formulario_altaproveedor')
+            ->where('RFC_ALTA', $rfc)
+            ->value('VERIFICACION_SOLICITADA');
+
+        return response()->json([
+            'bloqueado' => $verificacion == 1
+        ]);
+    }
 
 
     public function store(Request $request)
