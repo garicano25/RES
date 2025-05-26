@@ -363,7 +363,7 @@
             </div>
           </div>
 
-          <label for="CONSTANCIA_LABEL">Constancia de situación fiscal *</label>
+          <label for="CONSTANCIA_LABEL" translate="no">Constancia de situación fiscal *</label>
 
           <div class="mt-3 d-flex align-items-center">
             <input type="file" class="form-control" id="CONSTANCIA_DOCUMENTO" name="CONSTANCIA_DOCUMENTO" accept=".pdf" style="width: auto; flex: 1;" required>
