@@ -132,6 +132,88 @@ Modalgiro.addEventListener('hidden.bs.modal', event => {
 
 
 
+// var Tabladirectorio = $("#Tabladirectorio").DataTable({
+//     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+//     lengthChange: true,
+//     lengthMenu: [
+//         [10, 25, 50, -1],
+//         [10, 25, 50, 'All']
+//     ],
+//     info: false,
+//     paging: true,
+//     searching: true,
+//     filtering: true,
+//     scrollY: '65vh',
+//     scrollCollapse: true,
+//     responsive: true,
+//     ajax: {
+//         dataType: 'json',
+//         data: {},
+//         method: 'GET',
+//         cache: false,
+//         url: '/Tabladirectorio',
+//         beforeSend: function () {
+//             mostrarCarga();
+//         },
+//         complete: function () {
+//             Tabladirectorio.columns.adjust().draw();
+//             ocultarCarga();
+//         },
+//         error: function (jqXHR, textStatus, errorThrown) {
+//             alertErrorAJAX(jqXHR, textStatus, errorThrown);
+//         },
+//         dataSrc: 'data'
+//     },
+//     order: [[0, 'asc']],
+//     columns: [
+//         {
+//             data: null,
+//             render: function(data, type, row, meta) {
+//                 return meta.row + 1;
+//             }
+//         },
+//         { data: 'RFC_PROVEEDOR' },
+//         { data: 'GIRO_PROVEEDOR' },
+//         { data: 'NOMBRE_COMERCIAL' },
+//         { data: 'RAZON_SOCIAL' },
+//         {
+//             data: 'SERVICIOS_JSON',
+//             render: function (data, type, row) {
+//                 if (data) {
+//                     let servicios = JSON.parse(data);
+//                     let lista = '<ul>';
+//                     servicios.forEach(servicio => {
+//                         lista += `<li>${servicio.NOMBRE_SERVICIO}</li>`;
+//                     });
+//                     lista += '</ul>';
+//                     return lista;
+//                 }
+//                 return '';
+//             }
+//         },
+//         { data: 'BTN_EDITAR' },
+//         { data: 'BTN_VISUALIZAR' },
+//         { data: 'BTN_DOCUMENTO' },
+//         { data: 'BTN_CORREO' },
+//         { data: 'BTN_ELIMINAR' }
+//     ],
+//     columnDefs: [
+//         { targets: 0, title: '#', className: 'all  text-center' },
+//         { targets: 1, title: 'RFC', className: 'all text-center nombre-column' },
+//         { targets: 2, title: 'Giro', className: 'all text-center nombre-column' },
+//         { targets: 3, title: 'Nombre comercial', className: 'all text-center nombre-column' },
+//         { targets: 4, title: 'Razón social/Nombre', className: 'all text-center nombre-column' },
+//         { targets: 5, title: 'Servicios que ofrece', className: 'all text-center nombre-column' },
+//         { targets: 6, title: 'Editar', className: 'all text-center' },
+//         { targets: 7, title: 'Visualizar', className: 'all text-center' },
+//         { targets: 8, title: 'C.S.F', className: 'all text-center  nombre-column' },
+//         { targets: 9, title: 'Correo', className: 'all text-center  nombre-column' },
+//         { targets: 10, title: 'Activo', className: 'all text-center' }
+//     ]
+// });
+
+
+
 var Tabladirectorio = $("#Tabladirectorio").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
@@ -164,6 +246,12 @@ var Tabladirectorio = $("#Tabladirectorio").DataTable({
         },
         dataSrc: 'data'
     },
+    createdRow: function (row, data, dataIndex) {
+        if (data.ROW_CLASS) {
+            $(row).addClass(data.ROW_CLASS);
+        }
+    },
+    
     order: [[0, 'asc']], 
     columns: [
         { 
@@ -194,10 +282,11 @@ var Tabladirectorio = $("#Tabladirectorio").DataTable({
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_DOCUMENTO' },
+        { data: 'BTN_CORREO' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
-        { targets: 0, title: '#', className: 'all  text-center' },
+        { targets: 0, title: '#', className: 'all text-center' },
         { targets: 1, title: 'RFC', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Giro', className: 'all text-center nombre-column' },
         { targets: 3, title: 'Nombre comercial', className: 'all text-center nombre-column' },
@@ -205,11 +294,65 @@ var Tabladirectorio = $("#Tabladirectorio").DataTable({
         { targets: 5, title: 'Servicios que ofrece', className: 'all text-center nombre-column' },
         { targets: 6, title: 'Editar', className: 'all text-center' },
         { targets: 7, title: 'Visualizar', className: 'all text-center' },
-        { targets: 8, title: 'C.S.F', className: 'all text-center  nombre-column' },
-        { targets: 9, title: 'Activo', className: 'all text-center' }
+        { targets: 8, title: 'C.S.F', className: 'all text-center nombre-column' },
+        { targets: 9, title: 'Correo', className: 'all text-center nombre-column' },
+        { targets: 10, title: 'Activo', className: 'all text-center' }
     ]
 });
 
+
+
+
+$(document).on("click", ".CORREO", function (e) {
+    e.preventDefault();
+
+    const $btn = $(this);
+    const id = $btn.data("id");
+
+    $btn.prop("disabled", true);
+
+    Swal.fire({
+        title: 'Enviando correo...',
+        text: 'Por favor, espere un momento.',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    $.ajax({
+        url: "/enviarCorreoProveedor",
+        type: "POST",
+        data: {
+            id: id,
+            _token: $('meta[name="csrf-token"]').attr("content")
+        },
+        success: function (response) {
+            Swal.close(); 
+
+            if (response.status === "success") {
+                Swal.fire("Correo enviado", response.message, "success");
+            } else {
+                Swal.fire("Atención", response.message, "warning");
+            }
+        },
+        error: function (xhr) {
+            Swal.close();
+
+            let mensaje = "Ocurrió un error inesperado al enviar el correo.";
+
+            if (xhr.responseJSON && xhr.responseJSON.message) {
+                mensaje = xhr.responseJSON.message;
+            }
+
+            Swal.fire("Error", mensaje, "error");
+        },
+        complete: function () {
+            $btn.prop("disabled", false);
+        }
+    });
+});
 
 
 

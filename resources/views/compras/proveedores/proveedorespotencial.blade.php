@@ -4,6 +4,11 @@
 
 
 
+<style>
+  .fila-verde {
+    background-color: #d4edda !important;
+  }
+</style>
 
 <div class="contenedor-contenido">
   <ol class="breadcrumb mb-5">

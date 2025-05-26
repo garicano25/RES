@@ -12,7 +12,6 @@ class altaproveedorModel extends Model
 
     protected $table = 'formulario_altaproveedor';
     protected $primaryKey = 'ID_FORMULARIO_ALTA';
-
     protected $fillable = [
         'TIPO_PERSONA_ALTA',
         'RAZON_SOCIAL_ALTA',

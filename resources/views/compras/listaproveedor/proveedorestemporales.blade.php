@@ -76,6 +76,40 @@
                     </div>
 
 
+                    <div class="col-12 mt-4">
+                        <div class="row">
+                            <div class="col-md-12 mb-3 text-center">
+                                <h5 class="form-label"><b>Requiere contrato </b></h5>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="REQUIERE_CONTRATO" id="contratosi" value="1" required>
+                                    <label class="form-check-label" for="contratosi">Sí</label>
+                                </div>
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="REQUIERE_CONTRATO" id="contratono" value="2">
+                                    <label class="form-check-label" for="contratono">No</label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-3" id="DOCUMENTO_CONTRATO" style="display: none;">
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Cargar contrato (PDF) *</label>
+                            <div class="d-flex align-items-center">
+                                <input type="file" class="form-control me-2" name="DOCUMENTO_SOPORTE" accept=".pdf">
+                                <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
 
 
                 </div>

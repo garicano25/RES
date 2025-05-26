@@ -405,7 +405,7 @@
 
 
     @if(request()->is('Banco_proveedores'))
-    <script src="/assets/js_sitio/proveedor/proveedorespotenciales.js?v=1.2"></script>
+    <script src="/assets/js_sitio/proveedor/proveedorespotenciales.js?v=1.3"></script>
     @endif
 
 
@@ -430,7 +430,7 @@
     @endif
 
     @if(request()->is('Proveedores_temporales'))
-    <script src="/assets/js_sitio/proveedor/proveedorestemp.js?v=1.2"></script>
+    <script src="/assets/js_sitio/proveedor/proveedorestemp.js?v=1.3"></script>
     @endif
 </body>
 

@@ -16,10 +16,48 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     $(".direcciondiv").empty();
 
 
+
+
+    document.getElementById('DOCUMENTO_CONTRATO').style.display = 'none';
+
+
+
+
 })
 
 
 
+
+document.addEventListener('DOMContentLoaded', function () {
+    const contratoSi = document.getElementById('contratosi');
+    const contratoNo = document.getElementById('contratono');
+    const documentoContrato = document.getElementById('DOCUMENTO_CONTRATO');
+
+    function toggleDocumentoContrato() {
+        if (contratoSi.checked) {
+            documentoContrato.style.display = 'block';
+        } else {
+            documentoContrato.style.display = 'none';
+        }
+    }
+
+    contratoSi.addEventListener('change', toggleDocumentoContrato);
+    contratoNo.addEventListener('change', toggleDocumentoContrato);
+});
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".botonEliminarArchivo").forEach(boton => {
+        boton.addEventListener("click", function () {
+            const inputArchivo = this.previousElementSibling;
+            if (inputArchivo && inputArchivo.type === "file") {
+                inputArchivo.value = ""; 
+            }
+        });
+    });
+});
 
 
 
@@ -229,6 +267,14 @@ var Tablaproveedortemporal = $("#Tablaproveedortemporal").DataTable({
         { data: 'NOMBRE_PROVEEDORTEMP' },        
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
+        {
+            data: 'BTN_DOCUMENTO',
+            className: 'text-center',
+            render: function (data, type, row) {
+                return row.DOCUMENTO_SOPORTE ? data : 'NA';
+            }
+        },
+    
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
@@ -238,12 +284,27 @@ var Tablaproveedortemporal = $("#Tablaproveedortemporal").DataTable({
         { targets: 3, title: 'Nombre comercial', className: 'all text-center nombre-column' },
         { targets: 4, title: 'Editar', className: 'all text-center' },
         { targets: 5, title: 'Visualizar', className: 'all text-center' },
-        { targets: 6, title: 'Activo', className: 'all text-center' }
+        { targets: 6, title: 'Contrato', className: 'all text-center' },
+        { targets: 7, title: 'Activo', className: 'all text-center' }
     ]
 });
 
 
+$('#Tablaproveedortemporal').on('click', '.ver-archivo-requierecontrato', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablaproveedortemporal.row(tr);
+    var id = $(this).data('id');
 
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+
+    var nombreDocumento = row.data().RAZON_PROVEEDORTEMP;
+    var url = '/mostrarequierecontrato/' + id;
+    
+    abrirModal(url, nombreDocumento);
+});
 
 
 $('#Tablaproveedortemporal tbody').on('change', 'td>label>input.ELIMINAR', function () {
@@ -276,6 +337,13 @@ $('#Tablaproveedortemporal tbody').on('click', 'td>button.EDITAR', function () {
     editarDatoTabla(row.data(), 'formularioPROVEEDORTEMP', 'miModal_proveedortemporal',1);
     $('#miModal_proveedortemporal .modal-title').html(row.data().RAZON_PROVEEDORTEMP);
 
+    if (row.data().REQUIERE_CONTRATO == 1) {
+        $('#DOCUMENTO_CONTRATO').show();
+        $('#contratosi').prop('checked', true);
+    } else {
+        $('#DOCUMENTO_CONTRATO').hide();
+        $('#contratono').prop('checked', true);
+    }
 
 });
 

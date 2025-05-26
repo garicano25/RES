@@ -17,6 +17,9 @@ use App\Models\usuario\usuarioModel;
 use App\Models\VerificationCode;
 
 use App\Models\proveedor\directorioModel;
+use App\Models\proveedor\altaproveedorModel;
+
+
 use App\Mail\VerificationMail;
 use Carbon\Carbon;
 
@@ -73,12 +76,33 @@ class AuthController extends Controller
             ]);
         }
 
+        // if (Auth::attempt(['RFC_PROVEEDOR' => $credentials['email'], 'password' => $credentials['password'], 'ACTIVO' => 1])) {
+        //     $user = Auth::user();
+        //     $directorio = directorioModel::where('RFC_PROVEEDOR', $credentials['email'])->first();
+
+        //     if ($directorio && $directorio->CORREO_DIRECTORIO) {
+        //         return $this->sendVerificationCode($directorio->CORREO_DIRECTORIO, $user);
+        //     }
+
+        //     return response()->json([
+        //         'status' => 'error',
+        //         'message' => 'No se encontró un correo asociado a este RFC.'
+        //     ]);
+        // }
+
         if (Auth::attempt(['RFC_PROVEEDOR' => $credentials['email'], 'password' => $credentials['password'], 'ACTIVO' => 1])) {
             $user = Auth::user();
+
             $directorio = directorioModel::where('RFC_PROVEEDOR', $credentials['email'])->first();
 
             if ($directorio && $directorio->CORREO_DIRECTORIO) {
                 return $this->sendVerificationCode($directorio->CORREO_DIRECTORIO, $user);
+            }
+
+            $alternativo = altaproveedorModel::where('RFC_ALTA', $credentials['email'])->first();
+
+            if ($alternativo && $alternativo->CORREO_DIRECTORIO) {
+                return $this->sendVerificationCode($alternativo->CORREO_DIRECTORIO, $user);
             }
 
             return response()->json([
@@ -86,6 +110,9 @@ class AuthController extends Controller
                 'message' => 'No se encontró un correo asociado a este RFC.'
             ]);
         }
+
+
+
 
         return response()->json([
             'status' => 'error',
@@ -113,6 +140,41 @@ class AuthController extends Controller
     }
 
 
+    // public function verifyCode(Request $request)
+    // {
+    //     $verification = VerificationCode::where('correo', $request->correo)
+    //         ->where('codigo', $request->codigo)
+    //         ->where('expires_at', '>', now())
+    //         ->first();
+
+    //     if (!$verification) {
+    //         Auth::logout();
+    //         session()->invalidate();
+    //         session()->regenerateToken();
+
+    //         return response()->json(['status' => 'error', 'message' => 'Código incorrecto o expirado']);
+    //     }
+
+    //     $directorio = directorioModel::where('CORREO_DIRECTORIO', $request->correo)->first();
+
+    //     if (!$directorio) {
+    //         return response()->json(['status' => 'error', 'message' => 'No se encontró el correo en formulario_directorio.']);
+    //     }
+
+    //     $user = usuarioModel::where('RFC_PROVEEDOR', $directorio->RFC_PROVEEDOR)->first();
+
+    //     if (!$user) {
+    //         return response()->json(['status' => 'error', 'message' => 'No se encontró un usuario con este RFC.']);
+    //     }
+
+    //     $verification->delete();
+    //     Auth::login($user);
+
+    //     return response()->json(['status' => 'success']);
+    // }
+
+
+
     public function verifyCode(Request $request)
     {
         $verification = VerificationCode::where('correo', $request->correo)
@@ -130,11 +192,17 @@ class AuthController extends Controller
 
         $directorio = directorioModel::where('CORREO_DIRECTORIO', $request->correo)->first();
 
-        if (!$directorio) {
-            return response()->json(['status' => 'error', 'message' => 'No se encontró el correo en formulario_directorio.']);
-        }
+        if ($directorio) {
+            $user = usuarioModel::where('RFC_PROVEEDOR', $directorio->RFC_PROVEEDOR)->first();
+        } else {
+            $altaproveedor = altaproveedorModel::where('CORREO_DIRECTORIO', $request->correo)->first();
 
-        $user = usuarioModel::where('RFC_PROVEEDOR', $directorio->RFC_PROVEEDOR)->first();
+            if (!$altaproveedor) {
+                return response()->json(['status' => 'error', 'message' => 'No se encontró el correo en ninguno de los formularios.']);
+            }
+
+            $user = usuarioModel::where('RFC_PROVEEDOR', $altaproveedor->RFC_ALTA)->first();
+        }
 
         if (!$user) {
             return response()->json(['status' => 'error', 'message' => 'No se encontró un usuario con este RFC.']);
@@ -145,6 +213,8 @@ class AuthController extends Controller
 
         return response()->json(['status' => 'success']);
     }
+
+
 
     public function logout(Request $request)
     {

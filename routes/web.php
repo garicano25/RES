@@ -753,6 +753,7 @@ Route::get('/Proveedores_temporales', function () { return view('compras.listapr
 Route::post('/TempSave', [proveedortempController::class, 'store']);
 Route::get('/Tablaproveedortemporal', [proveedortempController::class, 'Tablaproveedortemporal']);
 Route::get('/TempDelete', [proveedortempController::class, 'store']);
+Route::get('/mostrarequierecontrato/{id}', [proveedortempController::class, 'mostrarequierecontrato']);
 
 //==============================================    ORDEN DE COMPRA  ============================================== 
 
@@ -800,6 +801,11 @@ Route::get('/Directorio', function () {return view('compras.proveedores.director
 Route::post('/ServiciosSave', [directorioController::class, 'store']);
 Route::get('/mostrarconstanciaproveedor/{id}', [directorioController::class, 'mostrarconstanciaproveedor']);
 Route::post('/actualizarinfoproveedor', [directorioController::class, 'actualizarinfoproveedor'])->name('actualizarinfoproveedor');
+
+// Route::post('/directorio/enviar-correo', [directorioController::class, 'enviarCorreoProveedor'])->name('directorio.enviarCorreo');
+
+Route::post('/enviarCorreoProveedor', [directorioController::class, 'enviarCorreoProveedor']);
+
 
 
 //  ALTA 

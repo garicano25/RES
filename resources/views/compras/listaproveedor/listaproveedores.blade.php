@@ -469,7 +469,7 @@
                                     </div>
 
                                     <div class="col-12 mb-3">
-                                        <label>Días de crédito que otorga *</label>
+                                        <label>Días de crédito que otorga </label>
                                         <input type="number" class="form-control" name="DIAS_CREDITO_ALTA" id="DIAS_CREDITO_ALTA">
                                     </div>
 
