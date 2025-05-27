@@ -357,7 +357,7 @@
     <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
 
     <!-- Funciones generales -->
-    <script src="/assets/js_sitio/funciones.js?v=5.0"></script>
+    <script src="/assets/js_sitio/funciones.js?v=5.1"></script>
 
 
     <script>
@@ -405,7 +405,7 @@
 
 
     @if(request()->is('Banco_proveedores'))
-    <script src="/assets/js_sitio/proveedor/proveedorespotenciales.js?v=1.3"></script>
+    <script src="/assets/js_sitio/proveedor/proveedorespotenciales.js?v=1.4"></script>
     @endif
 
 
@@ -425,7 +425,7 @@
 
 
     @if(request()->is('Lista_proveedores'))
-    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=1.6"></script>
+    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=1.7"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 

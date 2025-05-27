@@ -132,19 +132,93 @@ class altacerticacionController extends Controller
 
 
 
+    // public function store(Request $request)
+    // {
+    //     try {
+    //         switch (intval($request->api)) {
+    //             case 1:
+    //                 $rfc = Auth::user()->RFC_PROVEEDOR;
+    //                 $requestData = $request->all();
+    //                 $requestData['RFC_PROVEEDOR'] = $rfc;
+
+    //                 if ($request->ID_FORMULARIO_CERTIFICACIONPROVEEDOR == 0) {
+    //                     DB::statement('ALTER TABLE formulario_altacertificacionproveedor AUTO_INCREMENT=1;');
+
+    //                     $cuentas = altacertificacionModel::create($requestData);
+
+    //                     $cuentas = $this->guardarArchivos($request, $cuentas, $rfc);
+    //                 } else {
+    //                     $cuentas = altacertificacionModel::find($request->ID_FORMULARIO_CERTIFICACIONPROVEEDOR);
+
+    //                     if (isset($request->ELIMINAR)) {
+    //                         $cuentas->ACTIVO = $request->ELIMINAR == 1 ? 0 : 1;
+    //                         $cuentas->save();
+
+    //                         return response()->json([
+    //                             'code' => 1,
+    //                             'cuenta' => $request->ELIMINAR == 1 ? 'Desactivada' : 'Activada'
+    //                         ]);
+    //                     }
+
+    //                     $cuentas = $this->guardarArchivos($request, $cuentas, $rfc);
+
+    //                     $cuentas->update(collect($requestData)->except('RFC_PROVEEDOR')->toArray());
+
+    //                     return response()->json([
+    //                         'code' => 1,
+    //                         'cuenta' => 'Actualizada'
+    //                     ]);
+    //                 }
+
+    //                 return response()->json([
+    //                     'code' => 1,
+    //                     'cuenta' => $cuentas
+    //                 ]);
+
+    //             default:
+    //                 return response()->json([
+    //                     'code' => 1,
+    //                     'msj' => 'API no encontrada'
+    //                 ]);
+    //         }
+    //     } catch (Exception $e) {
+    //         return response()->json([
+    //             'error' => 'Error al guardar: ' . $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
+
     public function store(Request $request)
     {
         try {
             switch (intval($request->api)) {
                 case 1:
                     $rfc = Auth::user()->RFC_PROVEEDOR;
-                    $requestData = $request->all();
+
+                    // Excluir archivos para evitar sobrescritura en update
+                    $requestData = collect($request->except([
+                        'DOCUMENTO_CERTIFICACION',
+                        'DOCUMENTO_ACREDITACION',
+                        'DOCUMENTO_AUTORIZACION',
+                        'DOCUMENTO_MEMBRESIA'
+                    ]))->toArray();
+
                     $requestData['RFC_PROVEEDOR'] = $rfc;
 
                     if ($request->ID_FORMULARIO_CERTIFICACIONPROVEEDOR == 0) {
                         DB::statement('ALTER TABLE formulario_altacertificacionproveedor AUTO_INCREMENT=1;');
 
-                        $cuentas = altacertificacionModel::create($requestData);
+                        // Reutilizar acreditación si solo viene autorización
+                        $yaExiste = altacertificacionModel::where('RFC_PROVEEDOR', $rfc)
+                            ->whereNotNull('DOCUMENTO_ACREDITACION')
+                            ->first();
+
+                        if ($yaExiste && $request->hasFile('DOCUMENTO_AUTORIZACION') && !$request->hasFile('DOCUMENTO_ACREDITACION')) {
+                            $cuentas = $yaExiste;
+                        } else {
+                            $cuentas = altacertificacionModel::create($requestData);
+                            $cuentas->refresh();
+                        }
 
                         $cuentas = $this->guardarArchivos($request, $cuentas, $rfc);
                     } else {
@@ -160,9 +234,11 @@ class altacerticacionController extends Controller
                             ]);
                         }
 
+                        // Guardar archivos nuevos sin borrar los que no se reemplazan
                         $cuentas = $this->guardarArchivos($request, $cuentas, $rfc);
 
-                        $cuentas->update(collect($requestData)->except('RFC_PROVEEDOR')->toArray());
+                        // Actualizar solo los campos sin archivos
+                        $cuentas->update($requestData);
 
                         return response()->json([
                             'code' => 1,
@@ -187,6 +263,7 @@ class altacerticacionController extends Controller
             ], 500);
         }
     }
+
 
 
 
@@ -219,4 +296,6 @@ class altacerticacionController extends Controller
         $cuentas->save();
         return $cuentas;
     }
+
+
 }

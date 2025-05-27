@@ -1,6 +1,7 @@
 ID_FORMULARIO_DIRECTORIO = 0
+ID_VERIFICACION_PROVEEDOR = 0
 
-
+var proveedor_id = null; 
 
 
 
@@ -130,87 +131,6 @@ Modalgiro.addEventListener('hidden.bs.modal', event => {
 })
 
 
-
-
-// var Tabladirectorio = $("#Tabladirectorio").DataTable({
-//     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-//     lengthChange: true,
-//     lengthMenu: [
-//         [10, 25, 50, -1],
-//         [10, 25, 50, 'All']
-//     ],
-//     info: false,
-//     paging: true,
-//     searching: true,
-//     filtering: true,
-//     scrollY: '65vh',
-//     scrollCollapse: true,
-//     responsive: true,
-//     ajax: {
-//         dataType: 'json',
-//         data: {},
-//         method: 'GET',
-//         cache: false,
-//         url: '/Tabladirectorio',
-//         beforeSend: function () {
-//             mostrarCarga();
-//         },
-//         complete: function () {
-//             Tabladirectorio.columns.adjust().draw();
-//             ocultarCarga();
-//         },
-//         error: function (jqXHR, textStatus, errorThrown) {
-//             alertErrorAJAX(jqXHR, textStatus, errorThrown);
-//         },
-//         dataSrc: 'data'
-//     },
-//     order: [[0, 'asc']],
-//     columns: [
-//         {
-//             data: null,
-//             render: function(data, type, row, meta) {
-//                 return meta.row + 1;
-//             }
-//         },
-//         { data: 'RFC_PROVEEDOR' },
-//         { data: 'GIRO_PROVEEDOR' },
-//         { data: 'NOMBRE_COMERCIAL' },
-//         { data: 'RAZON_SOCIAL' },
-//         {
-//             data: 'SERVICIOS_JSON',
-//             render: function (data, type, row) {
-//                 if (data) {
-//                     let servicios = JSON.parse(data);
-//                     let lista = '<ul>';
-//                     servicios.forEach(servicio => {
-//                         lista += `<li>${servicio.NOMBRE_SERVICIO}</li>`;
-//                     });
-//                     lista += '</ul>';
-//                     return lista;
-//                 }
-//                 return '';
-//             }
-//         },
-//         { data: 'BTN_EDITAR' },
-//         { data: 'BTN_VISUALIZAR' },
-//         { data: 'BTN_DOCUMENTO' },
-//         { data: 'BTN_CORREO' },
-//         { data: 'BTN_ELIMINAR' }
-//     ],
-//     columnDefs: [
-//         { targets: 0, title: '#', className: 'all  text-center' },
-//         { targets: 1, title: 'RFC', className: 'all text-center nombre-column' },
-//         { targets: 2, title: 'Giro', className: 'all text-center nombre-column' },
-//         { targets: 3, title: 'Nombre comercial', className: 'all text-center nombre-column' },
-//         { targets: 4, title: 'Razón social/Nombre', className: 'all text-center nombre-column' },
-//         { targets: 5, title: 'Servicios que ofrece', className: 'all text-center nombre-column' },
-//         { targets: 6, title: 'Editar', className: 'all text-center' },
-//         { targets: 7, title: 'Visualizar', className: 'all text-center' },
-//         { targets: 8, title: 'C.S.F', className: 'all text-center  nombre-column' },
-//         { targets: 9, title: 'Correo', className: 'all text-center  nombre-column' },
-//         { targets: 10, title: 'Activo', className: 'all text-center' }
-//     ]
-// });
 
 
 
@@ -373,21 +293,36 @@ $('#Tabladirectorio tbody').on('change', 'td>label>input.ELIMINAR', function () 
 
 
 
+
+
+
+
+
 $('#Tabladirectorio').on('click', '.ver-archivo-constancia', function () {
     var tr = $(this).closest('tr');
-    var row = Tabladirectorio.row(tr);
+    var row = Tabladirectorio.row(tr).data();
     var id = $(this).data('id');
 
-    if (!id) {
-        alert('ARCHIVO NO ENCONTRADO.');
+    // Verifica que el campo del archivo exista
+    if (!id || !row.CONSTANCIA_DOCUMENTO || row.CONSTANCIA_DOCUMENTO.trim() === "") {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Sin documento',
+            text: 'Este registro no tiene documento.',
+        });
         return;
     }
 
-    var nombreDocumento = row.data().NOMBRE_COMERCIAL;
     var url = '/mostrarconstanciaproveedor/' + id;
-    
-    abrirModal(url, nombreDocumento);
+    window.open(url, '_blank');
 });
+
+
+
+
+
+
+
 
 
 $('#Tabladirectorio tbody').on('click', 'td>button.EDITAR', function () {
@@ -395,6 +330,9 @@ $('#Tabladirectorio tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tabladirectorio.row(tr);
     ID_FORMULARIO_DIRECTORIO = row.data().ID_FORMULARIO_DIRECTORIO;
 
+
+
+    proveedor_id = row.data().ID_FORMULARIO_DIRECTORIO;
 
     $(".serviciodiv").empty();
     obtenerservicios(row);
@@ -452,12 +390,18 @@ $('#Tabladirectorio tbody').on('click', 'td>button.EDITAR', function () {
 
     }
 
-
-
-
     editarDatoTabla(row.data(), 'formularioDIRECTORIO', 'miModal_POTENCIALES', 1);
     
 
+
+    
+    $("#tab1-info").click();
+
+ 
+    
+    $("#tab2-verif").off("click").on("click", function () {
+        cargarTablaverificacion();
+    });
 
     
 });
@@ -469,9 +413,10 @@ $(document).ready(function() {
         var tr = $(this).closest('tr');
         var row = Tabladirectorio.row(tr);
         
-        hacerSoloLectura(row.data(), '#miModal_POTENCIALES');
+        hacerSoloLecturabancodeproveedores(row.data(), '#miModal_POTENCIALES');
 
         ID_FORMULARIO_DIRECTORIO = row.data().ID_FORMULARIO_DIRECTORIO;
+        proveedor_id = row.data().ID_FORMULARIO_DIRECTORIO;
 
 
         $(".serviciodiv").empty();
@@ -530,7 +475,19 @@ $(document).ready(function() {
             }
         
 
-        editarDatoTabla(row.data(), 'formularioDIRECTORIO', 'miModal_POTENCIALES',1);
+        editarDatoTabla(row.data(), 'formularioDIRECTORIO', 'miModal_POTENCIALES', 1);
+        
+
+           
+    $("#tab1-info").click();
+
+ 
+    
+    $("#tab2-verif").off("click").on("click", function () {
+        cargarTablaverificacion();
+    });
+
+        
     });
 
     $('#miModal_POTENCIALES').on('hidden.bs.modal', function () {
@@ -629,4 +586,237 @@ document.addEventListener("DOMContentLoaded", function () {
     
     }
     
+});
+
+
+
+/// VERIFICACION DEL PROVEEDOR
+
+$("#NUEVA_VERIFICACION").click(function (e) {
+    e.preventDefault();
+
+    
+    $('#formularioVERIFICACIONES').each(function(){
+        this.reset();
+    });
+
+    $("#miModal_VERIFICACIONES").modal("show");
+   
+});
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".botonEliminarArchivo").forEach(boton => {
+        boton.addEventListener("click", function () {
+            const inputArchivo = this.previousElementSibling;
+            if (inputArchivo && inputArchivo.type === "file") {
+                inputArchivo.value = ""; 
+            }
+        });
+    });
+});
+
+
+
+const Modalverificacion = document.getElementById('miModal_VERIFICACIONES');
+
+Modalverificacion.addEventListener('hidden.bs.modal', event => {
+    ID_VERIFICACION_PROVEEDOR = 0;
+    document.getElementById('formularioVERIFICACIONES').reset();
+
+    $('#miModal_VERIFICACIONES .modal-title').html('Nueva verificación');
+
+});
+
+
+
+
+
+$("#guardarVERIFICACION").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormularioV1('formularioVERIFICACIONES');
+
+    if (formularioValido) {
+
+    if (ID_VERIFICACION_PROVEEDOR == 0) {
+        
+        alertMensajeConfirm({
+            title: "¿Desea guardar la información?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarVERIFICACION')
+            await ajaxAwaitFormData({ api: 2,PROVEEDOR_ID:proveedor_id, ID_VERIFICACION_PROVEEDOR: ID_VERIFICACION_PROVEEDOR }, 'ServiciosSave', 'formularioVERIFICACIONES', 'guardarVERIFICACION', { callbackAfter: true, callbackBefore: true }, () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+                
+            }, function (data) {
+                    
+                ID_VERIFICACION_PROVEEDOR = data.cliente.ID_VERIFICACION_PROVEEDOR
+                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                     $('#miModal_VERIFICACIONES').modal('hide')
+                    document.getElementById('formularioVERIFICACIONES').reset();
+
+
+                    
+                    if ($.fn.DataTable.isDataTable('#Tablaverificacionproveedor')) {
+                        Tablaverificacionproveedor.ajax.reload(null, false); 
+                    }
+
+            })
+            
+        }, 1)
+        
+    } else {
+            alertMensajeConfirm({
+            title: "¿Desea editar la información de este formulario?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarVERIFICACION')
+            await ajaxAwaitFormData({ api: 2,PROVEEDOR_ID:proveedor_id ,ID_VERIFICACION_PROVEEDOR: ID_VERIFICACION_PROVEEDOR }, 'ServiciosSave', 'formularioVERIFICACIONES', 'guardarVERIFICACION', { callbackAfter: true, callbackBefore: true }, () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+            }, function (data) {
+                    
+                setTimeout(() => {
+
+                    ID_VERIFICACION_PROVEEDOR = data.cliente.ID_VERIFICACION_PROVEEDOR
+                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                     $('#miModal_VERIFICACIONES').modal('hide')
+                    document.getElementById('formularioVERIFICACIONES').reset();
+
+
+                    
+                    if ($.fn.DataTable.isDataTable('#Tablaverificacionproveedor')) {
+                        Tablaverificacionproveedor.ajax.reload(null, false); 
+                    }
+
+                }, 300);  
+            })
+        }, 1)
+    }
+
+} else {
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
+    
+});
+
+
+
+function cargarTablaverificacion() {
+    if ($.fn.DataTable.isDataTable('#Tablaverificacionproveedor')) {
+        Tablaverificacionproveedor.clear().destroy();
+    }
+
+    Tablaverificacionproveedor = $("#Tablaverificacionproveedor").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        ajax: {
+            dataType: 'json',
+            data: { proveedor: proveedor_id }, 
+            method: 'GET',
+            cache: false,
+            url: '/Tablaverificacionproveedor',  
+            beforeSend: function () {
+                $('#loadingIcon').css('display', 'inline-block');
+            },
+            complete: function () {
+                $('#loadingIcon').css('display', 'none');
+                Tablaverificacionproveedor.columns.adjust().draw(); 
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#loadingIcon').css('display', 'none');
+                alertErrorAJAX(jqXHR, textStatus, errorThrown);
+            },
+            dataSrc: 'data'
+        },
+        columns: [
+            { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+            { data: 'VERIFICADO_EN', className: 'text-center' },
+            { data: 'BTN_DOCUMENTO', className: 'text-center' },
+            { data: 'BTN_EDITAR', className: 'text-center' },
+        ],
+        columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'Verificado en:', className: 'all text-center' },  
+            { targets: 2, title: 'Documento', className: 'all text-center' },  
+            { targets: 3, title: 'Editar', className: 'all text-center' }, 
+
+        ],
+       
+    });
+}
+
+
+$('#Tablaverificacionproveedor').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablaverificacionproveedor.row(tr);
+
+    ID_VERIFICACION_PROVEEDOR = row.data().ID_VERIFICACION_PROVEEDOR;
+
+    editarDatoTabla(row.data(), 'formularioVERIFICACIONES', 'miModal_VERIFICACIONES', 1);
+
+    $('#miModal_VERIFICACIONES .modal-title').html(row.data().VERIFICADO_EN);
+});
+
+
+
+
+
+
+
+
+
+$('#Tablaverificacionproveedor').on('click', '.ver-archivo-verificacionproveedor', function (e) {
+    e.preventDefault(); // evita comportamiento por defecto
+    e.stopPropagation(); // evita burbujeo si aplica
+
+    var tr = $(this).closest('tr');
+    var row = Tablaverificacionproveedor.row(tr);
+    var id = $(this).data('id');
+
+    if (!id || !row.EVIDENCIA_VERIFICACION || row.EVIDENCIA_VERIFICACION.trim() === "") {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Sin documento',
+            text: 'Este registro no tiene documento.',
+        });
+        return;
+    }
+
+    var url = '/mostrarverificacionproveedor/' + id;
+
+    // Abre el documento en una nueva pestaña
+    window.open(url, '_blank');
 });

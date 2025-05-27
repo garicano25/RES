@@ -737,6 +737,10 @@ Route::get('/Tabladirectorio', [directorioController::class, 'Tabladirectorio'])
 Route::get('/ServicioDelete', [directorioController::class, 'store']);
 
 
+Route::get('/Tablaverificacionproveedor', [directorioController::class, 'Tablaverificacionproveedor']);
+Route::get('/mostrarverificacionproveedor/{id}', [directorioController::class, 'mostrarverificacionproveedor']);
+
+
 //==============================================    LISTA DE PROVEEDORES  ============================================== 
 
 Route::get('/Lista_proveedores', [listaproveedorController::class, 'index']);

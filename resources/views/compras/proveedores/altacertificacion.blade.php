@@ -28,7 +28,7 @@
         <div class="modal-content">
             <form method="post" enctype="multipart/form-data" id="formularioCertificaciones" style="background-color: #ffffff;">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva certificación, acreditación o membresía</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Certificación, acreditación o membresía</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -139,7 +139,7 @@
 
 
                                         <div class="col-6 mb-3">
-                                            <label>Desde *</label>
+                                            <label>Hasta *</label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="HASTA_ACREDITACION" name="HASTA_ACREDITACION">
                                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>

@@ -16,6 +16,8 @@ use Carbon\Carbon;
 use DB; 
 
 use App\Models\proveedor\directorioModel;
+use App\Models\proveedor\verificacionproveedor;
+
 
 class directorioController extends Controller
 {
@@ -158,52 +160,49 @@ class directorioController extends Controller
     }
 
 
-    //     public function store(Request $request)
-    //         {
-    //             try {
-    //                 switch (intval($request->api)) {
-    //                     case 1:
-    //                         if ($request->ID_FORMULARIO_DIRECTORIO == 0) {
-    //                             DB::statement('ALTER TABLE formulario_directorio AUTO_INCREMENT=1;');
 
-    //                             $data = $request->except(['servicios']);
-    //                              $servicios = directorioModel::create($data);
-    //                         } else { 
 
-    //                             if (isset($request->ELIMINAR)) {
-    //                                 if ($request->ELIMINAR == 1) {
-    //                                     $servicios = directorioModel::where('ID_FORMULARIO_DIRECTORIO', $request['ID_FORMULARIO_DIRECTORIO'])->update(['ACTIVO' => 0]);
-    //                                     $response['code'] = 1;
-    //                                     $response['servicio'] = 'Desactivada';
-    //                                 } else {
-    //                                     $servicios = directorioModel::where('ID_FORMULARIO_DIRECTORIO', $request['ID_FORMULARIO_DIRECTORIO'])->update(['ACTIVO' => 1]);
-    //                                     $response['code'] = 1;
-    //                                     $response['servicio'] = 'Activada';
-    //                                 }
-    //                             } else {
-    //                                 $servicios = directorioModel::find($request->ID_FORMULARIO_DIRECTORIO);
-    //                                 $servicios->update($request->all());
-    //                                 $response['code'] = 1;
-    //                                 $response['servicio'] = 'Actualizada';
-    //                             }
-    //                             return response()->json($response);
 
-    //                         }
-    //                         $response['code']  = 1;
-    //                         $response['servicio']  = $servicios;
-    //                         return response()->json($response);
-    //                         break;
-    //                     default:
-    //                         $response['code']  = 1;
-    //                         $response['msj']  = 'Api no encontrada';
-    //                         return response()->json($response);
-    //                 }
-    //             } catch (Exception $e) {
-    //                 return response()->json('Error al guardar');
-    //             }
-    //         }
 
-    // }
+    public function Tablaverificacionproveedor(Request $request)
+    {
+        try {
+            $proveedor = $request->get('proveedor');
+
+            $tabla = verificacionproveedor::where('PROVEEDOR_ID', $proveedor)->get();
+
+
+
+
+            foreach ($tabla as $value) {
+                if ($value->ACTIVO == 0) {
+
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-verificacionproveedor" data-id="' . $value->ID_VERIFICACION_PROVEEDOR . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                } else {
+
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-verificacionproveedor" data-id="' . $value->ID_VERIFICACION_PROVEEDOR . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                }
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
+
+    public function mostrarverificacionproveedor($id)
+    {
+        $archivo = verificacionproveedor::findOrFail($id)->EVIDENCIA_VERIFICACION;
+        return Storage::response($archivo);
+    }
 
 
 
@@ -274,6 +273,78 @@ class directorioController extends Controller
                     $response['servicio'] = $servicios;
                     return response()->json($response);
                     break;
+
+
+
+
+                case 2:
+                    if ($request->ID_VERIFICACION_PROVEEDOR == 0) {
+                        DB::statement('ALTER TABLE verificacion_proveedor AUTO_INCREMENT=1;');
+                        $cliente = verificacionproveedor::create($request->all());
+
+                        if ($request->hasFile('EVIDENCIA_VERIFICACION')) {
+                            $documento = $request->file('EVIDENCIA_VERIFICACION');
+                            $clienteId = $cliente->PROVEEDOR_ID;
+                            $registroId = $cliente->ID_VERIFICACION_PROVEEDOR;
+
+                            $extension = $documento->getClientOriginalExtension();
+                            $nombreBase = pathinfo($documento->getClientOriginalName(), PATHINFO_FILENAME);
+                            $nombreLimpio = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $nombreBase);
+                            $nombreArchivo = $nombreLimpio . '.' . $extension;
+
+                            $ruta = "compras/{$clienteId}/verificacion del proveedor/{$registroId}";
+                            $rutaCompleta = $documento->storeAs($ruta, $nombreArchivo);
+
+                            $cliente->EVIDENCIA_VERIFICACION = $rutaCompleta;
+                            $cliente->save();
+                        }
+                    } else {
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $cliente = verificacionproveedor::where('ID_VERIFICACION_PROVEEDOR', $request['ID_VERIFICACION_PROVEEDOR'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['cliente'] = 'Desactivada';
+                            } else {
+                                $cliente = verificacionproveedor::where('ID_VERIFICACION_PROVEEDOR', $request['ID_VERIFICACION_PROVEEDOR'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['cliente'] = 'Activada';
+                            }
+                        } else {
+                            $cliente = verificacionproveedor::find($request->ID_VERIFICACION_PROVEEDOR);
+                            $cliente->update($request->all());
+
+                            // Guardar nueva evidencia si viene
+                            if ($request->hasFile('EVIDENCIA_VERIFICACION')) {
+                                $documento = $request->file('EVIDENCIA_VERIFICACION');
+                                $clienteId = $cliente->PROVEEDOR_ID;
+                                $registroId = $cliente->ID_VERIFICACION_PROVEEDOR;
+
+                                $extension = $documento->getClientOriginalExtension();
+                                $nombreBase = pathinfo($documento->getClientOriginalName(), PATHINFO_FILENAME);
+                                $nombreLimpio = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $nombreBase);
+                                $nombreArchivo = $nombreLimpio . '.' . $extension;
+
+                                $ruta = "compras/{$clienteId}/verificacion del proveedor/{$registroId}";
+                                $rutaCompleta = $documento->storeAs($ruta, $nombreArchivo);
+
+                                $cliente->EVIDENCIA_VERIFICACION = $rutaCompleta;
+                                $cliente->save();
+                            }
+
+
+                            $response['code'] = 1;
+                            $response['cliente'] = 'Actualizada';
+                        }
+
+                        return response()->json($response);
+                    }
+
+                    $response['code'] = 1;
+                    $response['cliente'] = $cliente;
+                    return response()->json($response);
+                    break;
+
+
                 default:
                     $response['code'] = 1;
                     $response['msj'] = 'Api no encontrada';

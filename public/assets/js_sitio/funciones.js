@@ -2793,9 +2793,9 @@ function hacerSoloLectura(data, modalSelector) {
         $(this).prop('disabled', true);
     });
 
-    $(modalSelector).find('button').not('.btn-close, .btn-danger').hide();
+    $(modalSelector).find('button').not('.btn-close, .btn-danger, .nav-tabs button, .nav-link' ).hide();
 
-    $(modalSelector).find('.btn-close, .btn-danger').prop('disabled', false);
+    $(modalSelector).find('.btn-close, .btn-danger, .nav-tabs button, .nav-link').prop('disabled', false);
 
 for (var key in data) {
      if (data.hasOwnProperty(key)) {
@@ -2829,9 +2829,32 @@ function hacerSoloLectura2(data, modalSelector) {
         }
     });
 
-    modal.find('button').not('.btn-close, .btn-danger').hide();
+    modal.find('button').not('.btn-close, .btn-danger, .nav-tabs button, .nav-link').hide();
     
-    modal.find('.btn-close, .btn-danger').prop('disabled', false);
+    modal.find('.btn-close, .btn-danger, .nav-tabs button, .nav-link').prop('disabled', false);
+}
+
+
+
+function hacerSoloLecturabancodeproveedores(data, modalSelector) {
+  var modal = $(modalSelector);
+
+  modal.find(':input, select, textarea').each(function () {
+      var input = $(this);
+      var fieldName = input.attr('name');
+
+      if (input.attr('type') === 'file') {
+          input.prop('disabled', true);
+      } else if (input.is(':radio') || input.is(':checkbox')) {
+          input.prop('checked', data[fieldName] == input.val());
+      } else {
+          input.val(data[fieldName] || '');
+      }
+  });
+
+  modal.find('button').not('.btn-close, .btn-danger, .nav-tabs button, .nav-link, .EDITAR, .ver-archivo-verificacion').hide();
+  
+  modal.find('.btn-close, .btn-danger, .nav-tabs button, .nav-link, .EDITAR, .ver-archivo-verificacion').prop('disabled', false);
 }
 
 

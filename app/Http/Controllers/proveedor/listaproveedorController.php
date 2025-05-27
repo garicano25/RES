@@ -298,72 +298,71 @@ public function Tablacertificaciones(Request $request)
 
         $tabla = altacertificacionModel::where('RFC_PROVEEDOR', $rfc)->get();
 
-        foreach ($tabla as $value) {
-            $value->BTN_EDITAR = '';
-            $value->BTN_ELIMINAR = '';
-            $value->BTN_VISUALIZAR = '';
-            $value->BTN_DOCUMENTO = 'N/A';
+            foreach ($tabla as $value) {
+                $value->BTN_EDITAR = '';
+                $value->BTN_ELIMINAR = '';
+                $value->BTN_VISUALIZAR = '';
+                $value->BTN_DOCUMENTO = 'N/A';
 
-            // Botones comunes
-            $btnVisualizar = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-            $btnEditar = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-            $btnEditarDisabled = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-            $btnEliminarChecked = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" checked><span class="slider round"></span></label>';
-            $btnEliminarUnchecked = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '"><span class="slider round"></span></label>';
+                $btnVisualizar = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                $btnEditar = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                $btnEditarDisabled = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                $btnEliminarChecked = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" checked><span class="slider round"></span></label>';
+                $btnEliminarUnchecked = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '"><span class="slider round"></span></label>';
 
-            // Botones PDF por tipo
-            $btnCertificacion = $value->DOCUMENTO_CERTIFICACION
-                ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-certificación" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver certificación"><i class="bi bi-filetype-pdf"></i></button>'
-                : '';
+                $btnCertificacion = $value->DOCUMENTO_CERTIFICACION
+                    ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-certificación" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver certificación"><i class="bi bi-filetype-pdf"></i></button>'
+                    : '';
 
-            $btnAcreditacion = $value->DOCUMENTO_ACREDITACION
-                ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-acreditacion" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver acreditación"><i class="bi bi-filetype-pdf"></i></button>'
-                : '';
+                $btnAcreditacion = $value->DOCUMENTO_ACREDITACION
+                    ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-acreditacion" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver acreditación"><i class="bi bi-filetype-pdf"></i></button>'
+                    : '';
 
-            $btnAutorizacion = $value->DOCUMENTO_AUTORIZACION
-                ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-autorizacion" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver autorización"><i class="bi bi-filetype-pdf"></i></button>'
-                : '';
+                $btnAutorizacion = $value->DOCUMENTO_AUTORIZACION
+                    ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-autorizacion" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver autorización"><i class="bi bi-filetype-pdf"></i></button>'
+                    : '';
 
-            $btnMembresia = $value->DOCUMENTO_MEMBRESIA
-                ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-membresia" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver membresía"><i class="bi bi-filetype-pdf"></i></button>'
-                : '';
+                $btnMembresia = $value->DOCUMENTO_MEMBRESIA
+                    ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-membresia" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver membresía"><i class="bi bi-filetype-pdf"></i></button>'
+                    : '';
 
-            // Armar botón de documentos según tipo
-            switch ($value->TIPO_DOCUMENTO) {
-                case 'Certificación':
-                    $value->BTN_DOCUMENTO = $btnCertificacion ?: 'N/A';
-                    break;
-                case 'Acreditación':
-                    $botones = [];
-                    if ($btnAcreditacion) {
-                        $botones[] = '<div class="text-center"><small>Acreditación</small><br>' . $btnAcreditacion . '</div>';
-                    }
-                    if ($btnAutorizacion) {
-                        $botones[] = '<div class="text-center"><small>Autorización</small><br>' . $btnAutorizacion . '</div>';
-                    }
-                    $value->BTN_DOCUMENTO = count($botones) ? implode('&nbsp;&nbsp;', $botones) : 'N/A';
-                    break;
-                case 'Membresía':
-                    $value->BTN_DOCUMENTO = $btnMembresia ?: 'N/A';
-                    break;
-                default:
-                    $value->BTN_DOCUMENTO = 'N/A';
-                    break;
+                // Armar botón de documentos según tipo
+                switch ($value->TIPO_DOCUMENTO) {
+                    case 'Certificación':
+                        $value->BTN_DOCUMENTO = $btnCertificacion ?: 'N/A';
+                        break;
+                    case 'Acreditación':
+                        $botones = [];
+                        if ($btnAcreditacion) {
+                            $botones[] = '<div class="text-center"><small>Acreditación</small><br>' . $btnAcreditacion . '</div>';
+                        }
+                        if ($btnAutorizacion) {
+                            $botones[] = '<div class="text-center"><small>Autorización</small><br>' . $btnAutorizacion . '</div>';
+                        }
+                        $value->BTN_DOCUMENTO = count($botones) ? implode('&nbsp;&nbsp;', $botones) : 'N/A';
+                        break;
+
+                    case 'Membresía':
+                        $value->BTN_DOCUMENTO = $btnMembresia ?: 'N/A';
+                        break;
+                    default:
+                        $value->BTN_DOCUMENTO = 'N/A';
+                        break;
+                }
+
+                // Botones generales según estado
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_VISUALIZAR = $btnVisualizar;
+                    $value->BTN_ELIMINAR = $btnEliminarUnchecked;
+                    $value->BTN_EDITAR = $btnEditarDisabled;
+                } else {
+                    $value->BTN_VISUALIZAR = $btnVisualizar;
+                    $value->BTN_ELIMINAR = $btnEliminarChecked;
+                    $value->BTN_EDITAR = $btnEditar;
+                }
             }
 
-            // Botones generales según estado
-            if ($value->ACTIVO == 0) {
-                $value->BTN_VISUALIZAR = $btnVisualizar;
-                $value->BTN_ELIMINAR = $btnEliminarUnchecked;
-                $value->BTN_EDITAR = $btnEditarDisabled;
-            } else {
-                $value->BTN_VISUALIZAR = $btnVisualizar;
-                $value->BTN_ELIMINAR = $btnEliminarChecked;
-                $value->BTN_EDITAR = $btnEditar;
-            }
-        }
-
-        return response()->json([
+            return response()->json([
             'data' => $tabla,
             'msj' => 'Información consultada correctamente'
         ]);

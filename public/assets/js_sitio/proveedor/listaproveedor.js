@@ -718,14 +718,27 @@ function cargarTablacuentas() {
 
 
 $('#Tablacuentas').on('click', '.ver-archivo-caratula', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablacuentas.row(tr).data();
     var id = $(this).data('id');
-    if (!id) {
-        alert('ARCHIVO NO ENCONTRADO');
+
+    if (!id || !row.CARATULA_BANCARIA || row.CARATULA_BANCARIA.trim() === "") {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Sin documento',
+            text: 'Este registro no tiene documento.',
+        });
         return;
     }
+
     var url = '/mostrarcaratula/' + id;
-    abrirModal(url, 'Carátula bancaria');
+    window.open(url, '_blank');
 });
+
+
+
+
+
 
 
 
@@ -1316,57 +1329,95 @@ function cargarTablacertificaciones() {
 
 
 
-
 $('#Tablacertificaciones').on('click', '.ver-archivo-certificación', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablacertificaciones.row(tr).data();
     var id = $(this).data('id');
-    if (!id) {
-        alert('ARCHIVO NO ENCONTRADO');
+
+    if (!id || !row.DOCUMENTO_CERTIFICACION || row.DOCUMENTO_CERTIFICACION.trim() === "") {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Sin documento',
+            text: 'Este registro no tiene documento.',
+        });
         return;
     }
-    var url = '/mostrarcertificacion/' + id;
-    abrirModal(url, 'Certificación');
-});
 
+    var url = '/mostrarcertificacion/' + id;
+    window.open(url, '_blank');
+});
 
 
 
 
 $('#Tablacertificaciones').on('click', '.ver-archivo-acreditacion', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablacertificaciones.row(tr).data();
     var id = $(this).data('id');
-    if (!id) {
-        alert('ARCHIVO NO ENCONTRADO');
+
+    if (!id || !row.DOCUMENTO_ACREDITACION || row.DOCUMENTO_ACREDITACION.trim() === "") {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Sin documento',
+            text: 'Este registro no tiene documento.',
+        });
         return;
     }
+
     var url = '/mostraracreditacion/' + id;
-    abrirModal(url, 'Acreditación');
+    window.open(url, '_blank');
 });
+
 
 
 
 
 
 $('#Tablacertificaciones').on('click', '.ver-archivo-autorizacion', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablacertificaciones.row(tr).data();
     var id = $(this).data('id');
-    if (!id) {
-        alert('ARCHIVO NO ENCONTRADO');
+
+    if (!id || !row.DOCUMENTO_AUTORIZACION || row.DOCUMENTO_AUTORIZACION.trim() === "") {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Sin documento',
+            text: 'Este registro no tiene documento.',
+        });
         return;
     }
-    var url = '/mostrarautorizacion/' + id;
-    abrirModal(url, 'Autorización');
-});
 
+    var url = '/mostrarautorizacion/' + id;
+    window.open(url, '_blank');
+});
 
 
 
 $('#Tablacertificaciones').on('click', '.ver-archivo-membresia', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablacertificaciones.row(tr).data();
     var id = $(this).data('id');
-    if (!id) {
-        alert('ARCHIVO NO ENCONTRADO');
+
+    if (!id || !row.DOCUMENTO_MEMBRESIA || row.DOCUMENTO_MEMBRESIA.trim() === "") {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Sin documento',
+            text: 'Este registro no tiene documento.',
+        });
         return;
     }
+
     var url = '/mostrarmembresia/' + id;
-    abrirModal(url, 'Membresía');
+    window.open(url, '_blank');
 });
+
+
+
+
+
+
+
+
 
 
 
@@ -1933,21 +1984,30 @@ function cargarTablasoportes() {
 }
 
 
+
+
+
 $('#Tabladocumentosoporteproveedores').on('click', '.ver-archivo-documentosoporte', function () {
     var tr = $(this).closest('tr');
-    var row = Tabladocumentosoporteproveedores.row(tr);
+    var row = Tabladocumentosoporteproveedores.row(tr).data();
     var id = $(this).data('id');
 
-    if (!id) {
-        alert('ARCHIVO NO ENCONTRADO.');
+    if (!id || !row.DOCUMENTO_SOPORTE || row.DOCUMENTO_SOPORTE.trim() === "") {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Sin documento',
+            text: 'Este registro no tiene documento.',
+        });
         return;
     }
 
-    var nombreDocumentoSoporte = row.data().NOMBRE_DOCUMENTO;
     var url = '/mostrardocumentosoporteproveedor/' + id;
-    
-    abrirModal(url, nombreDocumentoSoporte);
+    window.open(url, '_blank');
 });
+
+
+
+
 
 
 

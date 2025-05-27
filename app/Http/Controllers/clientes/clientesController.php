@@ -119,14 +119,12 @@ public function Tablaverificacionusuario(Request $request)
             if ($value->ACTIVO == 0) {
 
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-verificacion" data-id="' . $value->ID_VERIFICACION_CLIENTE . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
-
-            } else {
+                    $value->BTN_DOCUMENTO = '<button type="button" class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-verificacionproveedor" data-id="' . $value->ID_VERIFICACION_PROVEEDOR . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                } else {
 
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-verificacion" data-id="' . $value->ID_VERIFICACION_CLIENTE . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
-
-            }
+                    $value->BTN_DOCUMENTO = '<button type="button" class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-verificacionproveedor" data-id="' . $value->ID_VERIFICACION_PROVEEDOR . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                }
         }
 
         return response()->json([
