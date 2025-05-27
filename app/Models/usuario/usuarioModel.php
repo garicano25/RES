@@ -91,4 +91,8 @@ class usuarioModel extends Authenticatable
     {
         return $this->hasAnyRole($roles);
     }
+
+
+ 
+
 }

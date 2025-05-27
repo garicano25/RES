@@ -38,6 +38,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\CheckSession::class, // Middleware personalizado
+            \App\Http\Middleware\DenyRoleGlobalMiddleware::class, 
 
         ],
 
@@ -67,6 +68,8 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' => \App\Http\Middleware\RoleMiddleware::class,
         'block.proveedor' => \App\Http\Middleware\BlockProveedorMiddleware::class,
+        'denyrole' => \App\Http\Middleware\DenyRoleMiddleware::class,
+
 
     ];
 }

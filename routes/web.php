@@ -164,7 +164,7 @@ Route::post('/enviar-codigo', [VerificationController::class, 'enviarCodigo']);
 Route::post('/verificar-codigo', [VerificationController::class, 'verificarCodigo']);
 //==============================================  Módulos  ============================================== 
 
-Route::get('/Módulos', [catalogoanuncioController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Módulos', [catalogoanuncioController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística)');
 
 
 //==============================================  USUARIO  ============================================== 
@@ -192,7 +192,7 @@ Route::get('/inicio', function () {return view('RH.externa.diseño');});
 Route::get('/tablero', function () {return view('tablero.index');});
 
 // ORGANIGRAMA
-Route::get('/organigrama', [areasController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/organigrama', [areasController::class, 'index']);
 Route::post('/areasSave', [areasController::class, 'store']);
 Route::get('/areasDelete', [areasController::class, 'store']);
 Route::get('/TablaAreas', [areasController::class, 'TablaAreas']);
@@ -204,7 +204,7 @@ Route::get('/getDataOrganigrama/{area_id}/{esGeneral}', [areasController::class,
 Route::get('/mostrarFoto/{id}', [areasController::class, 'mostrarFoto']);
 
 // PPT
-Route::get('/PPT', [pptController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/PPT', [pptController::class, 'index'])->middleware('role:Superusuario,Administrador,Analista HSEQ,Asistente de planeación y logística,Desarrollador de software,Intendente,Consultor-Instructor (Junior/Senior)');
 Route::post('/pptSave', [pptController::class, 'store']);
 Route::get('/TablaPPT', [pptController::class, 'TablaPPT']);
 Route::get('/autorizarPPT/{id_formulario}', [pptController::class, 'autorizarPPT']);
@@ -213,7 +213,7 @@ Route::get('/makeExcelPPT/{id_formulario}', [makeExcelController::class, 'makeEx
 Route::get('pptDelete', [pptController::class, 'store']);
 
 // DPT
-Route::get('/DPT', [dptController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/DPT', [dptController::class, 'index']);
 Route::post('/dptSave', [dptController::class, 'store']);
 Route::get('/TablaDPT', [dptController::class, 'TablaDPT']);
 Route::get('/dptDelete', [dptController::class, 'store']);
@@ -231,74 +231,73 @@ Route::get('/makeExcelRP/{id_formulario}', [makeExcelController::class, 'makeExc
 Route::get('/mostrardocumentorequisicion/{id}', [requerimientoPersonalController::class, 'mostrardocumentorequisicion']);
 
 // CATÁLOGO DE JERARQUÍA
-Route::get('/Jerárquico', function () {return view('RH.Catalogos.catalogo_Jerárquico');})->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
-
+Route::get('/Jerárquico', function () {return view('RH.Catalogos.catalogo_Jerárquico');});
 Route::post('/jerarquiaSave', [catalogosController::class, 'store']);
 Route::get('/jerarquiaDelete', [catalogosController::class, 'store']);
 Route::get('/Tablajerarquia', [catalogosController::class, 'Tablajerarquia']);
 
 // CATÁLOGO DE ASESORES
-Route::get('/Asesores', function () {return view('RH.Catalogos.catalogo_asesores');})->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Asesores', function () {return view('RH.Catalogos.catalogo_asesores');});
 Route::post('/asesorSave', [catalogosasesoresController::class, 'store']);
 Route::get('/asesorDelete', [catalogosasesoresController::class, 'store']);
 Route::get('/Tablaasesores', [catalogosasesoresController::class, 'Tablaasesores']);
 
 // CATÁLOGO DE FUNCIONES CARGO
-Route::get('/FuncionesCargo', [catalogosfuncionescargoController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/FuncionesCargo', [catalogosfuncionescargoController::class, 'index']);
 Route::post('/CargoSave', [catalogosfuncionescargoController::class, 'store']);
 Route::get('/CargoDelete', [catalogosfuncionescargoController::class, 'store']);
 Route::get('/Tablaafuncionescargo', [catalogosfuncionescargoController::class, 'Tablaafuncionescargo']);
 
 // CATÁLOGO DE FUNCIONES GESTIONES
-Route::get('/Funcionesgestión', function () {return view('RH.Catalogos.catalogo_funcionesgestion');})->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Funcionesgestión', function () {return view('RH.Catalogos.catalogo_funcionesgestion');});
 Route::post('/GestionSave', [catalogosfuncionesgestionController::class, 'store']);
 Route::get('/GestionDelete', [catalogosfuncionesgestionController::class, 'store']);
 Route::get('/Tablafuncionesgestion', [catalogosfuncionesgestionController::class, 'Tablafuncionesgestion']);
 
 // CATÁLOGO DE RELACIONES EXTERNAS 
-Route::get('/RelacionesExternas', function () {return view('RH.Catalogos.catalogo_relacionesexternas');})->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/RelacionesExternas', function () {return view('RH.Catalogos.catalogo_relacionesexternas');});
 Route::post('/ExternaSave', [catalogosrelacionesexternasController::class, 'store']);
 Route::get('/ExternaDelete', [catalogosrelacionesexternasController::class, 'store']);
 Route::get('/Tablarelacionesexterna', [catalogosrelacionesexternasController::class, 'Tablarelacionesexterna']);
 
 // CATÁLOGO DE CATEGORÍAS
-Route::get('/Categorías', [catalogocategoriaControlller::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Categorías', [catalogocategoriaControlller::class, 'index']);
 Route::post('/CategoriaSave', [catalogocategoriaControlller::class, 'store']);
 Route::get('CategoriaDelete', [catalogocategoriaControlller::class, 'store']);
 Route::get('/Tablacategoria', [catalogocategoriaControlller::class, 'Tablacategoria']);
 
 // CATÁLOGO DE GÉNERO 
-Route::get('/Género', function () {return view('RH.Catalogos.catalogo_genero');})->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Género', function () {return view('RH.Catalogos.catalogo_genero');});
 Route::post('/GeneroSave', [catalogogeneroControlller::class, 'store']);
 Route::get('/GeneroDelete', [catalogogeneroControlller::class, 'store']);
 Route::get('/Tablageneros', [catalogogeneroControlller::class, 'Tablageneros']);
 
 // CATÁLOGO DE PUESTO QUE SE REQUIERE COMO EXPERIENCIA
-Route::get('/Puesto-experiencia', function () {return view('RH.Catalogos.catalogo_experiencia');})->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Puesto-experiencia', function () {return view('RH.Catalogos.catalogo_experiencia');});
 Route::post('/PuestoSave', [catalogoexperienciaController::class, 'store']);
 Route::get('/PuestoDelete', [catalogoexperienciaController::class, 'store']);
 Route::get('/Tablaexperiencia', [catalogoexperienciaController::class, 'Tablaexperiencia']);
 
 // CATÁLOGO COMPETENCIAS BÁSICAS O CARDINALES 
-Route::get('/Competencias-básicas', function () {return view('RH.Catalogos.catalogo_competenciasbasicas');})->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Competencias-básicas', function () {return view('RH.Catalogos.catalogo_competenciasbasicas');});
 Route::post('/BasicoSave', [catalogocompetenciabasicaController::class, 'store']);
 Route::get('/BasicoDelete', [catalogocompetenciabasicaController::class, 'store']);
 Route::get('/Tablacompetenciabasica', [catalogocompetenciabasicaController::class, 'Tablacompetenciabasica']);
 
 // CATÁLOGO COMPETENCIAS GERENCIALES 
-Route::get('/Competencias-gerenciales', function () {return view('RH.Catalogos.catalogo_competenciasGerenciales'); })->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Competencias-gerenciales', function () {return view('RH.Catalogos.catalogo_competenciasGerenciales'); });
 Route::post('/GerencialesSave', [catalogoCompotenciasGerencialesController::class, 'store']);
 Route::get('/GerencialesDelete', [catalogoCompotenciasGerencialesController::class, 'store']);
 Route::get('/TablaCompetenciasGerenciales', [catalogoCompotenciasGerencialesController::class, 'TablaCompetenciasGerenciales']);
 
 // CATÁLOGO DE TIPO DE VACANTES
-Route::get('/Tipo-vacante', function () {return view('RH.Catalogos.catalogo_tipovacante');})->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Tipo-vacante', function () {return view('RH.Catalogos.catalogo_tipovacante');});
 Route::post('/TipoSave', [catalogotipovacanteController::class, 'store']);
 Route::get('/TipoDelete', [catalogotipovacanteController::class, 'store']);
 Route::get('/Tablatipovacantes', [catalogotipovacanteController::class, 'Tablatipovacantes']);
 
 // CATÁLOGO DE  MOTIVO DE VACANTES 
-Route::get('/Motivo-vacante', function () {return view('RH.Catalogos.catalogo_motivovacante');})->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Motivo-vacante', function () {return view('RH.Catalogos.catalogo_motivovacante');});
 Route::post('/MotivoSave', [catalogomotivovacanteControlller::class, 'store']);
 Route::get('/MotivoDelete', [catalogomotivovacanteControlller::class, 'store']);
 Route::get('/Tablamotivovacante', [catalogomotivovacanteControlller::class, 'Tablamotivovacante']);
@@ -306,17 +305,17 @@ Route::get('/Tablamotivovacante', [catalogomotivovacanteControlller::class, 'Tab
 
 
 // CATÁLOGO DE ANUNCIO
-Route::get('/Anuncios', function () { return view('RH.Catalogos.catalogo_anucios');})->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Anuncios', function () { return view('RH.Catalogos.catalogo_anucios');});
 Route::post('/AnuncioSave', [catalogoanuncioController::class, 'store']);
  Route::get('/Tablanuncios', [catalogoanuncioController::class, 'Tablanuncios']);
  Route::get('/AnuncioDelete', [catalogoanuncioController::class, 'store']);
 Route::get('/anunciofoto/{id}', [catalogoanuncioController::class, 'mostrarfotoanuncio'])->name('anunciofoto');
 
 // CATALOGOS
-Route::get('/Catálogo_ppt', function () {return view('RH.Catalogos.catalogo_ppt');})->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
-Route::get('/Catálogo_dpt', function () {return view('RH.Catalogos.catalogo_dpt');})->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
-Route::get('/Catálogo_requisición', function () {return view('RH.Catalogos.catalogo_requisicion');})->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
-Route::get('/Catálogo_generales', function () {return view('RH.Catalogos.catalogo_generales');})->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Catálogo_ppt', function () {return view('RH.Catalogos.catalogo_ppt');});
+Route::get('/Catálogo_dpt', function () {return view('RH.Catalogos.catalogo_dpt');});
+Route::get('/Catálogo_requisición', function () {return view('RH.Catalogos.catalogo_requisicion');});
+Route::get('/Catálogo_generales', function () {return view('RH.Catalogos.catalogo_generales');});
 
 
 
@@ -332,7 +331,7 @@ Route::post('/FormCVSave', [formCVController::class, 'store']);
 Route::post('/actualizarinfocv', [formCVController::class, 'actualizarinfocv'])->name('actualizarinfocv');
 
 //  TABLA PARA PODER LA INFORMACIÓN DEL FORMULARIO DE BANCO DE CV 
-Route::get('/Listavacantes', [bancocvController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Listavacantes', [bancocvController::class, 'index']);
 Route::get('/BancoDelete', [bancocvController::class, 'store']);
 Route::get('/Tablabancocv', [bancocvController::class, 'Tablabancocv']);
 Route::get('/mostrarCurpCv/{id}', [bancocvController::class, 'mostrarCurpCv']);
@@ -345,19 +344,19 @@ Route::post('/ActualizarSave', [PuestoController::class, 'store']);
 Route::post('/PostularseSave', [PuestoController::class, 'store1']);
 
 // CATÁLOGO DE VACANTES
-Route::get('/CatálogoDeVacantes', [catalogovacantesController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/CatálogoDeVacantes', [catalogovacantesController::class, 'index']);
 Route::post('/VacantesSave', [catalogovacantesController::class, 'store']);
 Route::get('/VacanteDelete', [catalogovacantesController::class, 'store']);
 Route::get('/Tablavacantes', [catalogovacantesController::class, 'Tablavacantes']);
 
 //  CATÁLOGO ÁREA DE INTERESES
-Route::get('/Área_interes', function () {return view('RH.Catalogos.catalogo_areainteres');})->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Área_interes', function () {return view('RH.Catalogos.catalogo_areainteres');});
 Route::post('/interesSave', [catalogoareainteresController::class, 'store']);
 Route::get('/interesDelete', [catalogoareainteresController::class, 'store']);
 Route::get('/Tablaareainteres', [catalogoareainteresController::class, 'Tablaareainteres']);
 
 // VISUALIZAR LA VACANTES Y PODER VER LOS QUE SE HAN POSTULADO Y PODER MANDAR A SELECCIÓN
-Route::get('/Postulaciones', [vacantesactivasController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Postulaciones', [vacantesactivasController::class, 'index']);
 Route::get('/Tablapostulaciones', [vacantesactivasController::class, 'Tablapostulaciones']);
 Route::post('/VacantesactSave', [vacantesactivasController::class, 'store']);
 
@@ -553,7 +552,8 @@ Route::get('/mostrardocumenadeudo/{id}', [desvinculacionController::class, 'most
 
 //==============================================   CLIENTES ============================================== 
 
-Route::get('/Clientes', [clientesController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+// Route::get('/Clientes', [clientesController::class, 'index']);
+Route::get('/Clientes', [clientesController::class, 'index']);
 Route::post('/ClienteSave', [clientesController::class, 'store']);
 Route::get('/Tablaclientesventas', [clientesController::class, 'Tablaclientesventas']);
 Route::get('/ClienteDelete', [clientesController::class, 'store']);
@@ -573,7 +573,7 @@ Route::get('/mostraractaclienteventas/{id}', [clientesController::class, 'mostra
 
 
 //==============================================  SOLICITUDES  ============================================== 
- Route::get('/Solicitudes', [solicitudesController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+ Route::get('/Solicitudes', [solicitudesController::class, 'index']);
 
 // Route::get('/Solicitudes', function () {
 //     // Encriptar la ruta para redirigir a la versión encriptada
@@ -594,7 +594,7 @@ Route::get('/buscarCliente', [solicitudesController::class, 'buscarCliente']);
 
 
 //==============================================  OFERTAS/COTIZACION  ============================================== 
-Route::get('/Ofertas', [ofertasController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Ofertas', [ofertasController::class, 'index']);
 Route::post('/ofertaSave', [ofertasController::class, 'store']);
 Route::get('/Tablaofertas', [ofertasController::class, 'Tablaofertas']);
 Route::get('/ofertaDelete', [ofertasController::class, 'store']);
@@ -604,7 +604,7 @@ Route::get('/mostrarterminos/{id}', [ofertasController::class, 'mostrarterminos'
 
 
 //==============================================   CONFIRMACION DEL SERVICIO  ============================================== 
-Route::get('/Confirmación', [confirmacionController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Confirmación', [confirmacionController::class, 'index']);
 Route::get('/Tablaconfirmacion', [confirmacionController::class, 'Tablaconfirmacion']);
 Route::post('/ContratacionSave', [confirmacionController::class, 'store']);
 Route::get('/mostraraceptacion/{id}', [confirmacionController::class, 'mostraraceptacion']);
@@ -612,7 +612,7 @@ Route::get('/confirmacionDelete', [confirmacionController::class, 'store']);
 Route::get('/mostrarevidencias/{id}', [confirmacionController::class, 'mostrarevidencias']);
 
 //==============================================   ORDEN DE TRABAJO  ============================================== 
-Route::get('/Orden_trabajo', [otController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Orden_trabajo', [otController::class, 'index']);
 Route::get('/Tablaordentrabajo', [otController::class, 'Tablaordentrabajo']);
 Route::post('/otSave', [otController::class, 'store']);
 Route::post('/obtenerDatosOferta', [otController::class, 'obtenerDatosOferta']);
@@ -713,7 +713,7 @@ Route::get('/Requisición_materiales_aprobación', function () {return view('com
 //==============================================  BITACORA M.R  ============================================== 
 
 
-Route::get('/Bitácora', [mrController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Bitácora', [mrController::class, 'index']);
 
 Route::get('/Tablabitacora', [mrController::class, 'Tablabitacora']);
 
@@ -732,14 +732,14 @@ Route::get('/mr/{id}/generar-pdf', [pdfController::class, 'descargarPDF'])->name
 
 //==============================================   DIRECTORIO INTERNO  ============================================== 
 
-Route::get('/Banco_proveedores', function () {return view('compras.proveedores.proveedorespotencial');})->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Banco_proveedores', function () {return view('compras.proveedores.proveedorespotencial');});
 Route::get('/Tabladirectorio', [directorioController::class, 'Tabladirectorio']);
 Route::get('/ServicioDelete', [directorioController::class, 'store']);
 
 
 //==============================================    LISTA DE PROVEEDORES  ============================================== 
 
-Route::get('/Lista_proveedores', [listaproveedorController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Asistente contable,Director');
+Route::get('/Lista_proveedores', [listaproveedorController::class, 'index']);
 Route::get('/Tablalistaproveedores', [listaproveedorController::class, 'Tablalistaproveedores']);
 Route::post('/AltaSave1', [listaproveedorController::class, 'store']);
 Route::get('/Tablacuentas', [listaproveedorController::class, 'Tablacuentas']);
@@ -753,7 +753,7 @@ Route::post('/enviarCorreoFaltantes/{id}', [listaproveedorController::class, 'en
 
 //==============================================     PROVEEDORES TEMPORALES  ============================================== 
 
-Route::get('/Proveedores_temporales', function () { return view('compras.listaproveedor.proveedorestemporales');})->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Director,Desarrollador de Software (Junior/Senior),Ama de Llave,Asistente RRHH,Ama de llaves,Asistente de nómina,Auxiliar de mantenimiento,Técnico en mantenimiento (Junior/Senior))');
+Route::get('/Proveedores_temporales', function () { return view('compras.listaproveedor.proveedorestemporales');});
 Route::post('/TempSave', [proveedortempController::class, 'store']);
 Route::get('/Tablaproveedortemporal', [proveedortempController::class, 'Tablaproveedortemporal']);
 Route::get('/TempDelete', [proveedortempController::class, 'store']);
@@ -813,7 +813,7 @@ Route::post('/enviarCorreoProveedor', [directorioController::class, 'enviarCorre
 
 
 //  ALTA 
-Route::get('/Alta', function () {return view('compras.proveedores.altaproveedores');});
+Route::get('/Alta', function () { return view('compras.proveedores.altaproveedores');})->name('Alta');
 Route::get('/obtenerDatosProveedor', [altaproveedorController::class, 'obtenerDatosProveedor']);
 Route::post('/AltaSave', [altaproveedorController::class, 'store']);
 Route::post('/solicitarValidacion', [altaproveedorController::class, 'solicitarValidacion']);

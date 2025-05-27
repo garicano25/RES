@@ -33,19 +33,7 @@ class solicitudesController extends Controller
 
 
 
-    // public function index()
-    // {
-    //     $medios = catalogomediocontactoModel::where('ACTIVO', 1)->get();
-    //     $necesidades = catalonecesidadModel::where('ACTIVO', 1)->get();
-    //     $giros = catalogiroempresaModel::where('ACTIVO', 1)->get();
-    //     $lineas = catalogolineanegociosModel::where('ACTIVO', 1)->get();
-    //     $tipos = catalogotiposervicioModel::where('ACTIVO', 1)->get();
-
-    //     return view('ventas.solicitudes.solicitudes', compact('medios', 'necesidades', 'giros', 'lineas', 'tipos'))
-    //         ->with('route', 'Solicitudes');
-    // }
-
-
+  
 
     public function index()
     {
