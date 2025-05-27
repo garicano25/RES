@@ -1126,7 +1126,7 @@
                                     <label class="form-label">Producto y/o servicio suministrado *</label>
                                     <input type="text" class="form-control" name="PRODUCTO_SERVICIO" id="PRODUCTO_SERVICIO" required>
                                 </div>
-                                <div class="col-4 mb-3">
+                                <div class="col-6 mb-3">
                                     <label class="form-label">Desde *</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" name="DESDE_REFERENCIA" id="DESDE_REFERENCIA" required>
@@ -1138,7 +1138,7 @@
                                 <input type="hidden" name="REFERENCIA_VIGENTE" id="referenciaVigenteInput">
 
 
-                                <div class="col-4 mb-3">
+                                <div class="col-6 mb-3">
                                     <label class="form-label">Hasta *</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" name="HASTA_REFERENCIA" id="HASTA_REFERENCIA" required>

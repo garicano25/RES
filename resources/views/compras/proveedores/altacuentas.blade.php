@@ -117,7 +117,7 @@
                                 <i class="bi bi-info-circle-fill" title="Anexar carátula bancaria sin saldo y que aparezcan los datos del beneficiario"></i>
                             </label>
                             <div class="input-group align-items-center">
-                                <input type="file" class="form-control" name="CARATULA_BANCARIA" id="CARATULA_BANCARIA" accept="application/pdf">
+                                <input type="file" class="form-control" name="CARATULA_BANCARIA" id="CARATULA_BANCARIA" accept="application/pdf" required>
                                 <i id="iconEliminarArchivo" class="bi bi-trash-fill ms-2 text-danger fs-5 d-none" style="cursor: pointer;" title="Eliminar archivo"></i>
                             </div>
                         </div>
