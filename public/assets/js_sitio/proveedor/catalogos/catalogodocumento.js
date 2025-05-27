@@ -190,7 +190,7 @@ $('#Tabladocumentosoportes tbody').on('change', 'td>label>input.ELIMINAR', funct
         ID_CATALOGO_DOCUMENTOSPROVEEDOR: row.data().ID_CATALOGO_DOCUMENTOSPROVEEDOR
     };
 
-    eliminarDatoTabla(data, [Tabladocumentosoportes], 'DocumentosDelete');
+    eliminarDatoTabla(data, [Tabladocumentosoportes], 'DocumentosDeleteProveedor');
 });
 
 

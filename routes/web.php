@@ -791,7 +791,7 @@ Route::get('/TituloDelete', [catalagotituloproveedorController::class, 'store'])
 Route::get('/Catálogo_documento_soporte', function () {return view('compras.Catalogos.catalogo_documentosoporte');});
 Route::post('/DocumentosSave', [catalagodocumentosproveedorController::class, 'store']);
 Route::get('/Tabladocumentosoportes', [catalagodocumentosproveedorController::class, 'Tabladocumentosoportes']);
-Route::get('/DocumentosDelete', [catalagodocumentosproveedorController::class, 'store']);
+Route::get('/DocumentosDeleteProveedor', [catalagodocumentosproveedorController::class, 'store']);
 
 
 //==============================================  PROVEEDOR  ============================================== 

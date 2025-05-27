@@ -80,22 +80,18 @@ class listaproveedorController extends Controller
                 $tipoPersona = $value->TIPO_PERSONA_ALTA;
                 $tipoPersonaOpcion = $value->TIPO_PERSONA_OPCION;
 
-                // Verificar contactos
                 if (!DB::table('formulario_altacontactoproveedor')->where('RFC_PROVEEDOR', $rfc)->exists()) {
                     $mensajes[] = 'Falta agregar contactos.';
                 }
 
-                // Verificar cuentas bancarias
                 if (!DB::table('formulario_altacuentaproveedor')->where('RFC_PROVEEDOR', $rfc)->exists()) {
                     $mensajes[] = 'Falta agregar cuentas bancarias.';
                 }
 
-                // Verificar referencias comerciales
                 if (!DB::table('formulario_altareferenciasproveedor')->where('RFC_PROVEEDOR', $rfc)->exists()) {
                     $mensajes[] = 'Faltan agregar referencias comerciales.';
                 }
 
-                // Verificar documentos
                 $documentosObligatorios = DB::table('catalogo_documentosproveedor')
                     ->where('ACTIVO', 1)
                     ->where('TIPO_DOCUMENTO', 1)
@@ -118,15 +114,12 @@ class listaproveedorController extends Controller
                     }
                 }
 
-                // Estatus
                 $value->ESTATUS_DATOS = empty($mensajes)
                     ? '<span class="badge bg-success">Completo</span>'
                     : implode('<br>', array_map(fn($msg) => "<span class='text-danger'>$msg</span>", $mensajes));
 
-                // Botones
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
 
-                // 👇 Solo mostrar si hay faltantes
                 $value->BTN_CORREO = empty($mensajes)
                     ? ''
                     : '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO" data-id="' . $value->ID_FORMULARIO_ALTA . '"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
