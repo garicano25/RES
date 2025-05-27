@@ -716,7 +716,7 @@
         <div class="modal-content">
             <form method="post" enctype="multipart/form-data" id="formularioCuentas" style="background-color: #ffffff;">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva cuenta</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Cuenta bancaria</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -1093,7 +1093,7 @@
         <div class="modal-content">
             <form method="post" enctype="multipart/form-data" id="formularioReferencias" style="background-color: #ffffff;">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva referencia comercial</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Referencia comercial</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
