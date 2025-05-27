@@ -169,7 +169,7 @@ class altaproveedorController extends Controller
 
         $documentosSubidos = DB::table('formulario_altadocumentoproveedores')
             ->where('RFC_PROVEEDOR', $rfc)
-            ->pluck('TIPO_DOCUMENTO')
+            ->pluck('TIPO_DOCUMENTO_PROVEEDOR')
             ->toArray();
 
         foreach ($documentosObligatorios as $doc) {

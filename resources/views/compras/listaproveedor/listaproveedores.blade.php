@@ -577,6 +577,9 @@
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-person-lines-fill"></i>&nbsp;Información para pago/depósito/transferencia interbancaria</h3>
 
+                            <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVA_CUENTA" data-bs-toggle="modal" data-bs-target="#miModal_cuentas" style="margin-left: auto;">
+                                Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                            </button>
                         </ol>
                         <div class="card-body position-relative">
                             <i id="loadingIcon2" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
@@ -592,7 +595,9 @@
                     <div id="step3-content" style="display: none;">
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-person-lines-fill"></i>&nbsp;Contactos</h3>
-
+                            <button type="button" class="btn btn-light waves-effect waves-light " id="NUEVO_CONTACTO" style="margin-left: auto;">
+                                Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                            </button>
                         </ol>
                         <div class="card-body position-relative">
                             <i id="loadingIcon3" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
@@ -609,7 +614,9 @@
                     <div id="step4-content" style="display: none;">
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-award-fill"></i>&nbsp;Certificaciones, acreditaciones y membresías</h3>
-
+                            <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVA_CERTIFICACION" data-bs-toggle="modal" data-bs-target="#miModal_certificaciones" style="margin-left: auto;">
+                                Nueva &nbsp;<i class="bi bi-plus-circle"></i>
+                            </button>
                         </ol>
                         <div class="card-body position-relative">
                             <i id="loadingIcon4" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
@@ -624,7 +631,9 @@
                     <div id="step5-content" style="display: none;">
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-journal-text"></i>&nbsp;Referencia comerciales</h3>
-
+                            <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVA_REFERENCIA" data-bs-toggle="modal" data-bs-target="#miModal_referencia" style="margin-left: auto;">
+                                Nueva &nbsp;<i class="bi bi-plus-circle"></i>
+                            </button>
                         </ol>
                         <div class="card-body position-relative">
                             <i id="loadingIcon5" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
@@ -639,6 +648,9 @@
                     <div id="step6-content" style="display: none;">
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-pdf-fill"></i>&nbsp;Documentos de soporte</h3>
+                            <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVO_DOCUMENTO" data-bs-toggle="modal" data-bs-target="#miModal_documentos" style="margin-left: auto;">
+                                Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                            </button>
                         </ol>
                         <div class="card-body position-relative">
                             <i id="loadingIcon6" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
@@ -817,7 +829,7 @@
         <div class="modal-content">
             <form method="post" enctype="multipart/form-data" id="formularioCONTACTOS" style="background-color: #ffffff;">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo contacto</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Contacto</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -902,7 +914,7 @@
         <div class="modal-content">
             <form method="post" enctype="multipart/form-data" id="formularioCertificaciones" style="background-color: #ffffff;">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva certificación, acreditación o membresía</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Certificación, acreditación o membresía</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -1122,14 +1134,6 @@
                                     </div>
                                 </div>
 
-                                <div class="col-4 mb-3">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="proveedorVigenteCheck">
-                                        <label class="form-check-label" for="proveedorVigenteCheck">
-                                            Proveedor vigente (actual)
-                                        </label>
-                                    </div>
-                                </div>
 
                                 <input type="hidden" name="REFERENCIA_VIGENTE" id="referenciaVigenteInput">
 
@@ -1176,20 +1180,31 @@
                     <div class="row">
                         <div class="col-md-12 mb-3">
                             <label class="form-label">Documento *</label>
-                            <select class="form-control" name="NOMBRE_DOCUMENTO" id="NOMBRE_DOCUMENTO" >
+                            <select class="form-control" name="TIPO_DOCUMENTO_PROVEEDOR" id="TIPO_DOCUMENTO_PROVEEDOR">
                                 <option value="" selected disabled>Seleccione una opción</option>
 
-                                @foreach ($documetoscatalogo as $documento)
-                                <option value="{{ $documento->NOMBRE_DOCUMENTO }}">
-                                    {{ $documento->NOMBRE_DOCUMENTO }}
-                                </option>
-                                @endforeach
+                                <optgroup label="Documentos obligatorios">
+                                    @foreach ($documetoscatalogo->where('TIPO_DOCUMENTO', 1) as $documento)
+                                    <option value="{{ $documento->ID_CATALOGO_DOCUMENTOSPROVEEDOR }}">
+                                        {{ $documento->NOMBRE_DOCUMENTO }}
+                                    </option>
+                                    @endforeach
+                                </optgroup>
+
+                                <optgroup label="Documentos opcionales">
+                                    @foreach ($documetoscatalogo->where('TIPO_DOCUMENTO', 2) as $documento)
+                                    <option value="{{ $documento->ID_CATALOGO_DOCUMENTOSPROVEEDOR }}">
+                                        {{ $documento->NOMBRE_DOCUMENTO }}
+                                    </option>
+                                    @endforeach
+                                </optgroup>
                             </select>
                         </div>
 
+
                         <div class="mb-3">
                             <label>Nombre del archivo </label>
-                            <input type="text" class="form-control" id="NOMBRE_DOCUMENTO" name="NOMBRE_DOCUMENTO" readonly required>
+                            <input type="text" class="form-control" id="NOMBRE_DOCUMENTO_PROVEEEDOR" name="NOMBRE_DOCUMENTO_PROVEEEDOR" readonly required>
                         </div>
 
                         <div class="col-12 mb-3">

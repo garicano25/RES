@@ -1,5 +1,5 @@
 //VARIABLES GLOBALES
-    var rfcSeleccionada; 
+var rfcSeleccionada; 
 
 
 
@@ -569,7 +569,7 @@ $("#guardarCuentas").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarCuentas')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_CUENTAPROVEEDOR: ID_FORMULARIO_CUENTAPROVEEDOR }, 'AltacuentaSave', 'formularioCuentas', 'guardarCuentas', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 2, RFC_PROVEEDOR:rfcSeleccionada, ID_FORMULARIO_CUENTAPROVEEDOR: ID_FORMULARIO_CUENTAPROVEEDOR }, 'AltaSave1', 'formularioCuentas', 'guardarCuentas', { callbackAfter: true, callbackBefore: true }, () => {
         
                
 
@@ -609,7 +609,7 @@ $("#guardarCuentas").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarCuentas')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_CUENTAPROVEEDOR: ID_FORMULARIO_CUENTAPROVEEDOR }, 'AltacuentaSave', 'formularioCuentas', 'guardarCuentas', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 2, RFC_PROVEEDOR: rfcSeleccionada, ID_FORMULARIO_CUENTAPROVEEDOR: ID_FORMULARIO_CUENTAPROVEEDOR }, 'AltaSave1', 'formularioCuentas', 'guardarCuentas', { callbackAfter: true, callbackBefore: true }, () => {
         
                 Swal.fire({
                     icon: 'info',
@@ -880,7 +880,7 @@ $("#guardarCONTACTOS").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarCONTACTOS')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_CONTACTOPROVEEDOR: ID_FORMULARIO_CONTACTOPROVEEDOR }, 'AltacontactoSave', 'formularioCONTACTOS', 'guardarCONTACTOS', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 3, RFC_PROVEEDOR:rfcSeleccionada,ID_FORMULARIO_CONTACTOPROVEEDOR: ID_FORMULARIO_CONTACTOPROVEEDOR }, 'AltaSave1', 'formularioCONTACTOS', 'guardarCONTACTOS', { callbackAfter: true, callbackBefore: true }, () => {
         
                
 
@@ -920,7 +920,7 @@ $("#guardarCONTACTOS").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarCONTACTOS')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_CONTACTOPROVEEDOR: ID_FORMULARIO_CONTACTOPROVEEDOR }, 'AltacontactoSave', 'formularioCONTACTOS', 'guardarCONTACTOS', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 3,RFC_PROVEEDOR:rfcSeleccionada, ID_FORMULARIO_CONTACTOPROVEEDOR: ID_FORMULARIO_CONTACTOPROVEEDOR }, 'AltaSave1', 'formularioCONTACTOS', 'guardarCONTACTOS', { callbackAfter: true, callbackBefore: true }, () => {
         
                 Swal.fire({
                     icon: 'info',
@@ -1168,6 +1168,48 @@ Modalcertificacion.addEventListener('hidden.bs.modal', event => {
  
 });
 
+
+
+
+document.getElementById('TIPO_DOCUMENTO').addEventListener('change', function () {
+    let tipo = this.value;
+
+    resetSection('DIV_CERTIFICACION');
+    resetSection('DIV_ACREDITACION');
+    resetSection('DIV_MEMBRESIA');
+
+    if (tipo === 'Certificación') {
+        document.getElementById('DIV_CERTIFICACION').style.display = 'block';
+    } else if (tipo === 'Acreditación') {
+        document.getElementById('DIV_ACREDITACION').style.display = 'block';
+    } else if (tipo === 'Membresía') {
+        document.getElementById('DIV_MEMBRESIA').style.display = 'block';
+    }
+});
+
+document.getElementById('REQUISITO_AUTORIZACION').addEventListener('change', function () {
+    if (this.value === 'Si') {
+        document.getElementById('DIV_AUTORIZACION').style.display = 'block';
+    } else {
+        resetSection('DIV_AUTORIZACION');
+    }
+});
+
+function resetSection(divId) {
+    let section = document.getElementById(divId);
+    section.style.display = 'none';
+    let inputs = section.querySelectorAll('input, select, textarea');
+    inputs.forEach(function (input) {
+        if (input.type === 'checkbox' || input.type === 'radio') {
+            input.checked = false;
+        } else {
+            input.value = '';
+        }
+    });
+}
+
+
+
 $("#guardarCertificaciones").click(function (e) {
     e.preventDefault();
 
@@ -1184,7 +1226,7 @@ $("#guardarCertificaciones").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarCertificaciones')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_CERTIFICACIONPROVEEDOR: ID_FORMULARIO_CERTIFICACIONPROVEEDOR }, 'AltacertificacionSave', 'formularioCertificaciones', 'guardarCertificaciones', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 4, RFC_PROVEEDOR:rfcSeleccionada,ID_FORMULARIO_CERTIFICACIONPROVEEDOR: ID_FORMULARIO_CERTIFICACIONPROVEEDOR }, 'AltaSave1', 'formularioCertificaciones', 'guardarCertificaciones', { callbackAfter: true, callbackBefore: true }, () => {
         
                
 
@@ -1225,7 +1267,7 @@ $("#guardarCertificaciones").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarCertificaciones')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_CERTIFICACIONPROVEEDOR: ID_FORMULARIO_CERTIFICACIONPROVEEDOR }, 'AltacertificacionSave', 'formularioCertificaciones', 'guardarCertificaciones', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 4,RFC_PROVEEDOR:rfcSeleccionada, ID_FORMULARIO_CERTIFICACIONPROVEEDOR: ID_FORMULARIO_CERTIFICACIONPROVEEDOR }, 'AltaSave1', 'formularioCertificaciones', 'guardarCertificaciones', { callbackAfter: true, callbackBefore: true }, () => {
         
                 Swal.fire({
                     icon: 'info',
@@ -1256,7 +1298,6 @@ $("#guardarCertificaciones").click(function (e) {
     }
 
 } else {
-    // Muestra un mensaje de error o realiza alguna otra acción
     alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
 
 }
@@ -1573,7 +1614,7 @@ $("#guardarREFERENCIAS").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarREFERENCIAS')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_REFERENCIASPROVEEDOR: ID_FORMULARIO_REFERENCIASPROVEEDOR }, 'AltareferenciaSave', 'formularioReferencias', 'guardarREFERENCIAS', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 5, RFC_PROVEEDOR:rfcSeleccionada, ID_FORMULARIO_REFERENCIASPROVEEDOR: ID_FORMULARIO_REFERENCIASPROVEEDOR }, 'AltaSave1', 'formularioReferencias', 'guardarREFERENCIAS', { callbackAfter: true, callbackBefore: true }, () => {
         
                
 
@@ -1613,7 +1654,7 @@ $("#guardarREFERENCIAS").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarREFERENCIAS')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_REFERENCIASPROVEEDOR: ID_FORMULARIO_REFERENCIASPROVEEDOR }, 'AltareferenciaSave', 'formularioReferencias', 'guardarREFERENCIAS', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 5, RFC_PROVEEDOR:rfcSeleccionada,ID_FORMULARIO_REFERENCIASPROVEEDOR: ID_FORMULARIO_REFERENCIASPROVEEDOR }, 'AltaSave1', 'formularioReferencias', 'guardarREFERENCIAS', { callbackAfter: true, callbackBefore: true }, () => {
         
                 Swal.fire({
                     icon: 'info',
@@ -1807,7 +1848,6 @@ document.getElementById('step6').addEventListener('click', function() {
 
 
 
-
 const Modaldocumentos = document.getElementById('miModal_documentos');
 
 Modaldocumentos.addEventListener('hidden.bs.modal', event => {
@@ -1815,11 +1855,12 @@ Modaldocumentos.addEventListener('hidden.bs.modal', event => {
     ID_FORMULARIO_DOCUMENTOSPROVEEDOR = 0;
 
     document.getElementById('formularioDOCUMENTOS').reset();
+    $('#TIPO_DOCUMENTO_PROVEEDOR').prop('disabled', false); 
 
-  
-
+    
     document.getElementById('DOCUMENTO_SOPORTE').value = '';
     document.getElementById('iconEliminarArchivo').classList.add('d-none');
+    $('#miModal_documentos .modal-title').html('Nuevo documento');
  
 });
 
@@ -1841,7 +1882,7 @@ $("#guardarDOCUMENTOS").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarDOCUMENTOS')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_DOCUMENTOSPROVEEDOR: ID_FORMULARIO_DOCUMENTOSPROVEEDOR }, 'AltaDocumentosSave', 'formularioDOCUMENTOS', 'guardarDOCUMENTOS', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 6,RFC_PROVEEDOR:rfcSeleccionada, ID_FORMULARIO_DOCUMENTOSPROVEEDOR: ID_FORMULARIO_DOCUMENTOSPROVEEDOR }, 'AltaSave1', 'formularioDOCUMENTOS', 'guardarDOCUMENTOS', { callbackAfter: true, callbackBefore: true }, () => {
         
                
 
@@ -1880,7 +1921,7 @@ $("#guardarDOCUMENTOS").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarDOCUMENTOS')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_DOCUMENTOSPROVEEDOR: ID_FORMULARIO_DOCUMENTOSPROVEEDOR }, 'AltaDocumentosSave', 'formularioDOCUMENTOS', 'guardarDOCUMENTOS', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 6,RFC_PROVEEDOR:rfcSeleccionada, ID_FORMULARIO_DOCUMENTOSPROVEEDOR: ID_FORMULARIO_DOCUMENTOSPROVEEDOR }, 'AltaSave1', 'formularioDOCUMENTOS', 'guardarDOCUMENTOS', { callbackAfter: true, callbackBefore: true }, () => {
         
                 Swal.fire({
                     icon: 'info',
@@ -1966,7 +2007,7 @@ function cargarTablasoportes() {
                 return meta.row + 1; 
             }
         },
-        { data: 'NOMBRE_DOCUMENTO' },
+        { data: 'NOMBRE_DOCUMENTO_PROVEEEDOR' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_DOCUMENTO' },
@@ -2039,12 +2080,10 @@ $('#Tabladocumentosoporteproveedores').on('click', 'td>button.EDITAR', function 
     editarDatoTabla(row.data(), 'formularioDOCUMENTOS', 'miModal_documentos', 1);
     
 
-    
-    $('#TIPO_DOCUMENTO').prop('disabled',true ); 
-    $('#NOMBRE_DOCUMENTO').prop('disabled', true); 
+    $('#TIPO_DOCUMENTO_PROVEEDOR').prop('disabled',true ); 
 
 
-    $('#miModal_documentos .modal-title').html(row.data().NOMBRE_DOCUMENTO);
+    $('#miModal_documentos .modal-title').html(row.data().NOMBRE_DOCUMENTO_PROVEEEDOR);
 
   
 });
@@ -2063,7 +2102,10 @@ $(document).ready(function() {
         ID_FORMULARIO_DOCUMENTOSPROVEEDOR = row.data().ID_FORMULARIO_DOCUMENTOSPROVEEDOR;
         editarDatoTabla(row.data(), 'formularioDOCUMENTOS', 'miModal_documentos', 1);
         
+    $('#TIPO_DOCUMENTO').prop('disabled',true ); 
+
        
+    $('#miModal_documentos .modal-title').html(row.data().NOMBRE_DOCUMENTO_PROVEEEDOR);
     
     });
 
@@ -2072,6 +2114,9 @@ $(document).ready(function() {
         resetFormulario('#miModal_documentos');
     });
 });
+
+
+
 
 
 
@@ -2094,4 +2139,20 @@ inputArchivo.addEventListener('change', function () {
 iconEliminar.addEventListener('click', function () {
     inputArchivo.value = '';
     iconEliminar.classList.add('d-none');
+});
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const selectTipoDocumento = document.getElementById("TIPO_DOCUMENTO_PROVEEDOR");
+    const inputNombreDocumento = document.getElementById("NOMBRE_DOCUMENTO_PROVEEEDOR");
+
+    selectTipoDocumento.addEventListener("change", function () {
+        const selectedOption = this.options[this.selectedIndex];
+        if (selectedOption && selectedOption.value) {
+            inputNombreDocumento.value = selectedOption.text.trim();
+        } else {
+            inputNombreDocumento.value = "";
+        }
+    });
 });

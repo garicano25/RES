@@ -384,7 +384,7 @@
 
 
     @if(request()->is('Proveedores_documentos'))
-    <script src="/assets/js_sitio/proveedor/altadocumentos.js?v=1.5"></script>
+    <script src="/assets/js_sitio/proveedor/altadocumentos.js?v=1.6"></script>
     @endif
 
 </body>

@@ -38,7 +38,7 @@
                     <div class="row">
                         <div class="col-md-12 mb-3">
                             <label class="form-label">Documento *</label>
-                            <select class="form-control" name="TIPO_DOCUMENTO" id="TIPO_DOCUMENTO">
+                            <select class="form-control" name="TIPO_DOCUMENTO_PROVEEDOR" id="TIPO_DOCUMENTO_PROVEEDOR">
                                 <option value="" selected disabled>Seleccione una opción</option>
 
                                 <optgroup label="Documentos obligatorios">
@@ -62,7 +62,7 @@
 
                         <div class="mb-3">
                             <label>Nombre del archivo </label>
-                            <input type="text" class="form-control" id="NOMBRE_DOCUMENTO" name="NOMBRE_DOCUMENTO" readonly required>
+                            <input type="text" class="form-control" id="NOMBRE_DOCUMENTO_PROVEEEDOR" name="NOMBRE_DOCUMENTO_PROVEEEDOR" readonly required>
                         </div>
 
 

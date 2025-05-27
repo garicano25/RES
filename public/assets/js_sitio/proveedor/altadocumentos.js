@@ -19,7 +19,7 @@ Modaldocumentos.addEventListener('hidden.bs.modal', event => {
 
     document.getElementById('formularioDOCUMENTOS').reset();
 
-    $('#TIPO_DOCUMENTO').prop('disabled', false); 
+    $('#TIPO_DOCUMENTO_PROVEEDOR').prop('disabled', false); 
     $('#DOCUMENTO_SOPORTE').prop('required', true); 
   
 
@@ -200,7 +200,7 @@ var Tabladocumentosproveedores = $("#Tabladocumentosproveedores").DataTable({
                 return meta.row + 1; 
             }
         },
-        { data: 'NOMBRE_DOCUMENTO' },
+        { data: 'NOMBRE_DOCUMENTO_PROVEEEDOR' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_DOCUMENTO' },
@@ -264,14 +264,14 @@ $('#Tabladocumentosproveedores tbody').on('click', 'td>button.EDITAR', function 
     editarDatoTabla(row.data(), 'formularioDOCUMENTOS', 'miModal_documentos', 1);
 
 
-    $('#TIPO_DOCUMENTO').prop('disabled',true ); 
+    $('#TIPO_DOCUMENTO_PROVEEDOR').prop('disabled',true ); 
 
 
 $('#DOCUMENTO_SOPORTE').removeAttr('required');
 
 
 
-    $('#miModal_documentos .modal-title').html(row.data().NOMBRE_DOCUMENTO);
+    $('#miModal_documentos .modal-title').html(row.data().NOMBRE_DOCUMENTO_PROVEEEDOR);
     
 
 
@@ -291,7 +291,7 @@ $(document).ready(function() {
 
         ID_FORMULARIO_DOCUMENTOSPROVEEDOR = row.data().ID_FORMULARIO_DOCUMENTOSPROVEEDOR;
         editarDatoTabla(row.data(), 'formularioDOCUMENTOS', 'miModal_documentos', 1);
-    $('#miModal_documentos .modal-title').html(row.data().NOMBRE_DOCUMENTO);
+    $('#miModal_documentos .modal-title').html(row.data().NOMBRE_DOCUMENTO_PROVEEEDOR);
         
        
     
@@ -329,8 +329,8 @@ iconEliminar.addEventListener('click', function () {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    const selectTipoDocumento = document.getElementById("TIPO_DOCUMENTO");
-    const inputNombreDocumento = document.getElementById("NOMBRE_DOCUMENTO");
+    const selectTipoDocumento = document.getElementById("TIPO_DOCUMENTO_PROVEEDOR");
+    const inputNombreDocumento = document.getElementById("NOMBRE_DOCUMENTO_PROVEEEDOR");
 
     selectTipoDocumento.addEventListener("change", function () {
         const selectedOption = this.options[this.selectedIndex];
