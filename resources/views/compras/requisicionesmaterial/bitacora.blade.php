@@ -94,6 +94,7 @@
                         <th class="text-center">Requisición No.</th>
                         <th class="text-center">Fecha de Solicitud</th>
                         <th class="text-center">Solicitante</th>
+                        <th class="text-center">Justificación</th>
                         <th class="text-center">Área Solicitante</th>
                         <th class="text-center">Fecha de Vo. Bo.</th>
                         <th class="text-center">Vo. Bo.</th>

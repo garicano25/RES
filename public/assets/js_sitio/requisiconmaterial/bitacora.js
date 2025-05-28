@@ -61,7 +61,7 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
         { targets: 2, width: '200px' },
         { targets: 3, width: '250px' },
         { targets: 4, width: '250px' },
-        { targets: 5, width: '200px' },
+        { targets: 5, width: '250px' },
         { targets: 6, width: '250px' },
         { targets: 7, width: '200px' },
         { targets: 8, width: '250px' },
@@ -69,7 +69,9 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
         { targets: 10, width: '300px' },
         { targets: 11, width: '200px' },
         { targets: 12, width: '300px' },
-        { targets: 13, width: '300px' },
+      { targets: 13, width: '300px' },
+      { targets: 14, width: '300px' },
+        
 
     ],
     columns: [
@@ -77,7 +79,8 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
         { data: 'BTN_NO_MR' },
         { data: 'NO_MR' },
         { data: 'FECHA_SOLICITUD_MR' },
-        { data: 'SOLICITANTE_MR' },
+      { data: 'SOLICITANTE_MR' },
+      { data: 'JUSTIFICACION_MR' },
         { data: 'AREA_SOLICITANTE_MR' },
         { data: 'FECHA_VISTO_MR' },
         { data: 'VISTO_BUENO' },
