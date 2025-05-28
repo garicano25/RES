@@ -83,7 +83,7 @@ class altadocumentosController extends Controller
         $documentos = DB::table('formulario_altadocumentoproveedores')
             ->where('RFC_PROVEEDOR', $rfc)
             ->where('ACTIVO', 1)
-            ->pluck('TIPO_DOCUMENTO'); 
+            ->pluck('TIPO_DOCUMENTO_PROVEEDOR'); 
 
         return response()->json($documentos); 
     }

@@ -45,7 +45,7 @@ function deshabilitarOpcionesTipoDocumento() {
     })
     .then(response => response.json())
     .then(idsRegistrados => {
-        const select = document.getElementById('TIPO_DOCUMENTO');
+        const select = document.getElementById('TIPO_DOCUMENTO_PROVEEDOR');
         if (!select) return;
 
         for (let i = 0; i < select.options.length; i++) {
