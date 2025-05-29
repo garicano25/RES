@@ -2126,16 +2126,15 @@ $(document).ready(function() {
     $('#Tabladocumentosoporteproveedores').on('click', 'td>button.VISUALIZAR', function () {
         var tr = $(this).closest('tr');
         var row = Tabladocumentosoporteproveedores.row(tr);
-        
+        const data = row.data();
         hacerSoloLectura2(row.data(), '#miModal_documentos');
 
-        ID_FORMULARIO_DOCUMENTOSPROVEEDOR = row.data().ID_FORMULARIO_DOCUMENTOSPROVEEDOR;
-        editarDatoTabla(row.data(), 'formularioDOCUMENTOS', 'miModal_documentos', 1);
-        
+        ID_FORMULARIO_DOCUMENTOSPROVEEDOR = data.ID_FORMULARIO_DOCUMENTOSPROVEEDOR;
 
-       
-        $('#miModal_documentos .modal-title').html(row.data().NOMBRE_DOCUMENTO_PROVEEEDOR);
-        
+        editarDatoTabla(data, 'formularioDOCUMENTOS', 'miModal_documentos', 1);
+    
+        $('#miModal_documentos .modal-title').html(data.NOMBRE_DOCUMENTO_PROVEEEDOR);
+    
         const select = $('#TIPO_DOCUMENTO_PROVEEDOR');
         select.prop('disabled', true);
     
@@ -2144,8 +2143,6 @@ $(document).ready(function() {
                 ${data.NOMBRE_DOCUMENTO_PROVEEEDOR}
             </option>
         `);
-
-        
     
     });
 
