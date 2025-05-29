@@ -164,7 +164,7 @@ Route::post('/enviar-codigo', [VerificationController::class, 'enviarCodigo']);
 Route::post('/verificar-codigo', [VerificationController::class, 'verificarCodigo']);
 //==============================================  Módulos  ============================================== 
 
-Route::get('/Módulos', [catalogoanuncioController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística');
+Route::get('/Módulos', [catalogoanuncioController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística|||');
 
 
 //==============================================  USUARIO  ============================================== 
@@ -752,6 +752,7 @@ Route::get('/Tablacertificaciones', [listaproveedorController::class, 'Tablacert
 Route::get('/Tablareferencias', [listaproveedorController::class, 'Tablareferencias']);
 Route::get('/Tabladocumentosoporteproveedores', [listaproveedorController::class, 'Tabladocumentosoporteproveedores']);
 
+Route::get('/documentosProveedorAdmin/{rfc}', [listaproveedorController::class, 'documentosProveedorAdmin']);
 
 Route::post('/enviarCorreoFaltantes/{id}', [listaproveedorController::class, 'enviarCorreoFaltantes']);
 

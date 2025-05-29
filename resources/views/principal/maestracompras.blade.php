@@ -425,12 +425,12 @@
 
 
     @if(request()->is('Lista_proveedores'))
-    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=1.8"></script>
+    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=1.9"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
     @if(request()->is('Proveedores_temporales'))
-    <script src="/assets/js_sitio/proveedor/proveedorestemp.js?v=1.3"></script>
+    <script src="/assets/js_sitio/proveedor/proveedorestemp.js?v=1.4"></script>
     @endif
 </body>
 

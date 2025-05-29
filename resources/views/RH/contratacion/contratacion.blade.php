@@ -371,7 +371,7 @@
 
                                 <div class="col-3">
                                     <div class="form-group">
-                                        <label id="FOTO_TITULO">Foto colaborador  (.png)*</label>
+                                        <label id="FOTO_TITULO">Foto colaborador (.png)*</label>
                                         <style>
                                             .dropify-wrapper {
                                                 height: 270px !important;
@@ -1095,6 +1095,48 @@
                         </div>
                     </div>
                     <div id="DOCUEMNTO_ERROR_CONTRATO" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
+
+
+
+
+                    <div class="col-12 mt-4" id="REQUIERE_ADENDA_CONTRATO" style="display: none;">
+                        <div class="row">
+                            <div class="col-md-12 mb-3 text-center">
+                                <h5 class="form-label"><b>Requiere adenda </b></h5>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="PROCEDE_ADENDA_CONTRATO" id="procedecontratosi" value="1">
+                                    <label class="form-check-label" for="procedecontratosi">Sí</label>
+                                </div>
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="PROCEDE_ADENDA_CONTRATO" id="procedecontratono" value="2">
+                                    <label class="form-check-label" for="procedecontratono">No</label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row" id="AGREGAR_ADENDA_CONTRATO" style="display: none;">
+                        <div class="mb-3 mt-3">
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label>Agregar adenda</label>
+                                    <button id="botonagregarevidenciacontrato" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                                        <i class="bi bi-plus-circle-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="adendacontratodiv mt-4"></div>
+                        </div>
+                    </div>
+
+
+
+
+
 
                 </div>
                 <div class="modal-footer">

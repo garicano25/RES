@@ -6,9 +6,12 @@ var rfcSeleccionada;
 
 // ID DE LOS FORMULARIOS
 
+ID_FORMULARIO_CUENTAPROVEEDOR = 0
+ID_FORMULARIO_CONTACTOPROVEEDOR = 0
+ID_FORMULARIO_CERTIFICACIONPROVEEDOR = 0
+ID_FORMULARIO_REFERENCIASPROVEEDOR = 0
+ID_FORMULARIO_DOCUMENTOSPROVEEDOR = 0
 
-
-// ID_FORMULARIO_ALTA = 0;
 
 window.ID_FORMULARIO_ALTA = 0;
 
@@ -1842,9 +1845,32 @@ document.getElementById('step6').addEventListener('click', function() {
         cargarTablasoportes();
         tablasoportesCargada = true;
     }
+
+    
   
 });
 
+
+
+
+$("#NUEVO_DOCUMENTO").click(function (e) {
+    e.preventDefault();
+
+    
+    $('#formularioDOCUMENTOS').each(function(){
+        this.reset();
+    });
+
+    $("#miModal_documentos").modal("show");
+   
+    ID_FORMULARIO_DOCUMENTOSPROVEEDOR = 0;
+
+
+    if (rfcSeleccionada) {
+        cargarSelectDocumentosPorProveedor(rfcSeleccionada);
+    }
+
+});
 
 
 
@@ -2072,20 +2098,24 @@ $('#Tabladocumentosoporteproveedores').on('change', 'td>label>input.ELIMINAR', f
 
 
 $('#Tabladocumentosoporteproveedores').on('click', 'td>button.EDITAR', function () {
-    var tr = $(this).closest('tr');
-    var row = Tabladocumentosoporteproveedores.row(tr);
-
-    ID_FORMULARIO_DOCUMENTOSPROVEEDOR = row.data().ID_FORMULARIO_DOCUMENTOSPROVEEDOR;
-
-    editarDatoTabla(row.data(), 'formularioDOCUMENTOS', 'miModal_documentos', 1);
+    const tr = $(this).closest('tr');
+    const row = Tabladocumentosoporteproveedores.row(tr);
+    const data = row.data();
     
+    ID_FORMULARIO_DOCUMENTOSPROVEEDOR = data.ID_FORMULARIO_DOCUMENTOSPROVEEDOR;
 
-    $('#TIPO_DOCUMENTO_PROVEEDOR').prop('disabled',true ); 
+    editarDatoTabla(data, 'formularioDOCUMENTOS', 'miModal_documentos', 1);
 
+    $('#miModal_documentos .modal-title').html(data.NOMBRE_DOCUMENTO_PROVEEEDOR);
 
-    $('#miModal_documentos .modal-title').html(row.data().NOMBRE_DOCUMENTO_PROVEEEDOR);
+    const select = $('#TIPO_DOCUMENTO_PROVEEDOR');
+    select.prop('disabled', true);
 
-  
+    select.empty().append(`
+        <option value="${data.TIPO_DOCUMENTO_PROVEEDOR}" selected>
+            ${data.NOMBRE_DOCUMENTO_PROVEEEDOR}
+        </option>
+    `);
 });
 
 
@@ -2102,10 +2132,20 @@ $(document).ready(function() {
         ID_FORMULARIO_DOCUMENTOSPROVEEDOR = row.data().ID_FORMULARIO_DOCUMENTOSPROVEEDOR;
         editarDatoTabla(row.data(), 'formularioDOCUMENTOS', 'miModal_documentos', 1);
         
-    $('#TIPO_DOCUMENTO').prop('disabled',true ); 
 
        
-    $('#miModal_documentos .modal-title').html(row.data().NOMBRE_DOCUMENTO_PROVEEEDOR);
+        $('#miModal_documentos .modal-title').html(row.data().NOMBRE_DOCUMENTO_PROVEEEDOR);
+        
+        const select = $('#TIPO_DOCUMENTO_PROVEEDOR');
+        select.prop('disabled', true);
+    
+        select.empty().append(`
+            <option value="${data.TIPO_DOCUMENTO_PROVEEDOR}" selected>
+                ${data.NOMBRE_DOCUMENTO_PROVEEEDOR}
+            </option>
+        `);
+
+        
     
     });
 
@@ -2156,3 +2196,50 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+
+function cargarSelectDocumentosPorProveedor(rfcSeleccionada) {
+    if (!rfcSeleccionada) return;
+
+    const select = document.getElementById('TIPO_DOCUMENTO_PROVEEDOR');
+    if (!select) return;
+
+    select.innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
+
+    fetch(`/documentosProveedorAdmin/${rfcSeleccionada}`)
+        .then(response => response.json())
+        .then(data => {
+            const obligatorios = data.catalogo.filter(doc => doc.TIPO_DOCUMENTO === "1");
+            const opcionales = data.catalogo.filter(doc => doc.TIPO_DOCUMENTO === "2");
+
+            const crearGrupo = (label, documentos) => {
+                const group = document.createElement('optgroup');
+                group.label = label;
+
+                documentos.forEach(doc => {
+                    const option = document.createElement('option');
+                    option.value = doc.ID_CATALOGO_DOCUMENTOSPROVEEDOR;
+                    option.textContent = doc.NOMBRE_DOCUMENTO;
+
+                    if (data.registrados.includes(String(doc.ID_CATALOGO_DOCUMENTOSPROVEEDOR))) {
+                        option.disabled = true;
+                        option.style.color = 'green';
+                        option.style.fontWeight = 'bold';
+                    }
+
+                    group.appendChild(option);
+                });
+
+                return group;
+            };
+
+            select.appendChild(crearGrupo('Documentos obligatorios', obligatorios));
+            select.appendChild(crearGrupo('Documentos opcionales', opcionales));
+        })
+        .catch(err => {
+            console.error('Error al cargar documentos:', err);
+        });
+}
+
+

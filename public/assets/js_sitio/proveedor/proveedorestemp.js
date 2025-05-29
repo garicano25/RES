@@ -78,7 +78,7 @@ $("#guardarPROVEEDORTEMP").click(function (e) {
                     var direccion = {
                         'TIPODEDOMICILIOFISCAL': 'nacional',
 
-                        'TIPO_DOMICILIO': $(this).find("input[name='TIPO_DOMICILIO']").val()?.trim() || '', 
+                        'TIPO_DOMICILIO': $(this).find("select[name='TIPO_DOMICILIO']").val()?.trim() || '', 
                         'CODIGO_POSTAL_DOMICILIO': $(this).find("input[name='CODIGO_POSTAL_DOMICILIO']").val()?.trim() || '',
                         'TIPO_VIALIDAD_DOMICILIO': $(this).find("input[name='TIPO_VIALIDAD_DOMICILIO']").val()?.trim() || '',
                         'NOMBRE_VIALIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_VIALIDAD_DOMICILIO']").val()?.trim() || '',
@@ -446,7 +446,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div class="row">
                     <div class="col-3 mb-3">
                         <label>Tipo de Domicilio *</label>
-                        <input type="text" class="form-control" name="TIPO_DOMICILIO">
+                         <select class="form-select"  name="TIPO_DOMICILIO" >
+                                <option value="">Seleccione una opción</option>
+                                <option value="1">Fiscal</option>
+                                <option value="2">Sucursal</option>
+                            </select>
+
                     </div>
                     <div class="col-3 mb-3">
                         <label>Código Postal </label>
@@ -596,8 +601,12 @@ function obtenerDirecciones(data) {
                 <div class="row">
                     <div class="col-3 mb-3">
                         <label>Tipo de Domicilio </label>
-                        <input type="text" class="form-control" name="TIPO_DOMICILIO" value="${direccion.TIPO_DOMICILIO || ''}">
-                    </div>
+                        <select class="form-select" name="TIPO_DOMICILIO">
+                                <option value="">Seleccione una opción</option>
+                                <option value="1" ${direccion.TIPO_DOMICILIO == "1" ? 'selected' : ''}>Fiscal</option>
+                                <option value="2" ${direccion.TIPO_DOMICILIO == "2" ? 'selected' : ''}>Sucursal</option>
+                            </select>                    
+                 </div>
                     <div class="col-3 mb-3">
                         <label>Código Postal </label>
                         <input type="number" class="form-control codigo-postal" name="CODIGO_POSTAL_DOMICILIO" value="${direccion.CODIGO_POSTAL_DOMICILIO || ''}">

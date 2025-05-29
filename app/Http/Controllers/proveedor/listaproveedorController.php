@@ -30,7 +30,7 @@ class listaproveedorController extends Controller
         $funcionesCuenta = catalogofuncionesproveedorModel::all();
         $titulosCuenta = catalogotituloproveedorModel::where('ACTIVO', 1)->get();
 
-        $documetoscatalogo = catalogodocumentoproveedorModel::all();
+        $documetoscatalogo = catalogodocumentoproveedorModel::where('ACTIVO', 1)->get();
 
         return view('compras.listaproveedor.listaproveedores', compact('funcionesCuenta', 'titulosCuenta', 'documetoscatalogo'));
     }
@@ -213,6 +213,41 @@ class listaproveedorController extends Controller
     }
 
 
+
+
+
+    public function documentosProveedorAdmin($rfc)
+    {
+        $proveedor = altaproveedorModel::where('RFC_ALTA', $rfc)->first();
+
+        if (!$proveedor) {
+            return response()->json(['status' => 'error', 'message' => 'Proveedor no encontrado']);
+        }
+
+        $tipoProveedor = $proveedor->TIPO_PERSONA_ALTA;
+        $tipoPersonaOpcion = $proveedor->TIPO_PERSONA_OPCION;
+
+        $catalogo = catalogodocumentoproveedorModel::where('ACTIVO', 1)
+            ->where(function ($q) use ($tipoProveedor) {
+                $q->where('TIPO_PERSONA', $tipoProveedor)
+                    ->orWhere('TIPO_PERSONA', 3);
+            })
+            ->where(function ($q) use ($tipoPersonaOpcion) {
+                $q->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)
+                    ->orWhere('TIPO_PERSONA_OPCION', 3);
+            })
+            ->get();
+
+        $registrados = DB::table('formulario_altadocumentoproveedores')
+            ->where('RFC_PROVEEDOR', $rfc)
+            ->where('ACTIVO', 1)
+            ->pluck('TIPO_DOCUMENTO_PROVEEDOR');
+
+        return response()->json([
+            'catalogo' => $catalogo,
+            'registrados' => $registrados,
+        ]);
+    }
 
 
 
