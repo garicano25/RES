@@ -328,7 +328,7 @@
                     <div class="mb-3">
                         <label class="form-label text-center">Cargar resultado *</label>
                         <div class="input-group">
-                            <input type="file" class="form-control" id="ARCHIVO_RESULTADO" name="ARCHIVO_RESULTADO" accept=".pdf" >
+                            <input type="file" class="form-control" id="ARCHIVO_RESULTADO" name="ARCHIVO_RESULTADO" accept=".pdf">
                             <button type="button" class="btn btn-light btn-sm ms-2" id="quitarResultado" style="display:none;">Quitar archivo</button>
                         </div>
                         <small id="errorArchivoResultado" class="text-danger" style="display:none;">El archivo debe ser un PDF.</small>
@@ -1492,9 +1492,9 @@
                                             <tr>
                                                 <th class="text-center">Idioma</th>
                                                 <th class="text-center">Aplica</th>
-                                                <th class="text-center">Aplica <br> A1,A2</th>
-                                                <th class="text-center">Básico <br> B1,B2</th>
-                                                <th class="text-center">Intermedio <br> C1,C2</th>
+                                                <th class="text-center">Básico<br> A1-A2</th>
+                                                <th class="text-center">Intermedio <br> B1-B2</th>
+                                                <th class="text-center">Avanzado <br> C1-C2</th>
                                                 <th class="text-center">Si</th>
                                                 <th class="text-center">No</th>
                                                 <th class="text-center">%</th>
