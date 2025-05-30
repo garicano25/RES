@@ -910,10 +910,10 @@
                                             </tr>
                                             <tr>
                                                 <th class="text-center">Idioma</th>
-                                                <th class="text-center">Aplica <br> A1,A2</th>
-                                                <th class="text-center">Básico <br> B1,B2</th>
-                                                <th class="text-center">Intermedio <br> C1,C2</th>
-                                                <th class="text-center">Avanzado</th>
+                                                <th class="text-center">Aplica </th>
+                                                <th class="text-center">Básico<br> A1,A2</th>
+                                                <th class="text-center">Intermedio <br> B1,B2</th>
+                                                <th class="text-center">Avanzado <br> C1,C2</th>
                                                 <th class="text-center">Si</th>
                                                 <th class="text-center">No</th>
                                                 <th class="text-center">%</th>
