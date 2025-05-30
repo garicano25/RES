@@ -2233,7 +2233,9 @@ function cargarDocumentosGuardados() {
 // <!--                                                          STEP 3                                                              -->
 // <!-- ============================================================================================================================ -->
 
+let fechaRenovacionGlobalcontrato = '';
 
+let fechaInicioRenovacionGlobalcontrato = '';
 
 document.getElementById('step3').addEventListener('click', function() {
     document.querySelectorAll('[id$="-content"]').forEach(function(content) {
@@ -2290,7 +2292,135 @@ ModalContrato.addEventListener('hidden.bs.modal', event => {
     document.getElementById('quitar_contrato').style.display = 'none';
 
     document.getElementById('DOCUEMNTO_ERROR_CONTRATO').style.display = 'none';
+
+
+    document.getElementById('REQUIERE_ADENDA_CONTRATO').style.display = 'none';
+
+    document.getElementById('AGREGAR_ADENDA_CONTRATO').style.display = 'none';
+
+    $(".adendadivcontrato").empty();
+
 });
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const radioSi = document.getElementById('procedecontratosi');
+    const radioNo = document.getElementById('procedecontratono');
+    const agregarAdendaDiv = document.getElementById('AGREGAR_ADENDA_CONTRATO');
+
+    function toggleAdendaDiv() {
+        if (radioSi.checked) {
+            agregarAdendaDiv.style.display = 'block';
+        } else {
+            agregarAdendaDiv.style.display = 'none';
+        }
+    }
+
+    radioSi.addEventListener('change', toggleAdendaDiv);
+    radioNo.addEventListener('change', toggleAdendaDiv);
+});
+ 
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const botonagregarevidencia = document.getElementById('botonagregarevidenciacontrato');
+    const btnVerificacion = document.getElementById('btnVerificacion');
+
+
+    botonagregarevidencia.addEventListener('click', function () {
+        agregarevidencia();
+    });
+
+   
+function agregarevidencia() {
+    const divVerificacion = document.createElement('div');
+    divVerificacion.classList.add('row', 'generarverificacioncontrato', 'mb-3');
+    divVerificacion.innerHTML = `
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <label>Fecha Inicio *</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" name="FECHAI_ADENDA_CONTRATO[]">
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <label>Fecha Fin *</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" name="FECHAF_ADENDA_CONTRATO[]">
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <label>Comentario *</label>
+                    <textarea class="form-control" name="COMENTARIO_ADENDA_CONTRATO[]" rows="3"></textarea>
+                </div>
+                <div class="col-12 mt-2">
+                    <label class="form-label">Subir documento (PDF) *</label>
+                    <div class="d-flex align-items-center">
+                        <input type="file" class="form-control me-2" name="DOCUMENTO_ADENDA_CONTRATO[]" accept=".pdf">
+                        <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mt-4">
+            <div class="form-group text-center">
+                <button type="button" class="btn btn-danger botonEliminarVerificacion">Eliminar adenda <i class="bi bi-trash-fill"></i></button>
+            </div>
+        </div>
+    `;
+
+    const contenedor = document.querySelector('.adendacontratodiv');
+    contenedor.appendChild(divVerificacion);
+
+    const fechaInicioInput = divVerificacion.querySelector('input[name="FECHAI_ADENDA_CONTRATO[]"]');
+
+    if (fechaInicioRenovacionGlobalcontrato) {
+        const [year, month, day] = fechaInicioRenovacionGlobalcontrato.split("-");
+        const fechaMinima = new Date(year, month - 1, parseInt(day) + 1); 
+
+        $(fechaInicioInput).datepicker({
+            format: 'yyyy-mm-dd',
+            weekStart: 1,
+            autoclose: true,
+            todayHighlight: true,
+            language: 'es',
+            startDate: fechaMinima
+        }).on('click', function () {
+            $(this).datepicker('setDate', $(this).val());
+        });
+    }
+
+
+    const fechaFinInput = divVerificacion.querySelector('input[name="FECHAF_ADENDA_CONTRATO[]"]');
+    if (fechaRenovacionGlobalcontrato) {
+        fechaFinInput.value = fechaRenovacionGlobalcontrato;
+    }
+
+
+    const botonEliminar = divVerificacion.querySelector('.botonEliminarVerificacion');
+    botonEliminar.addEventListener('click', function () {
+        contenedor.removeChild(divVerificacion);
+    });
+
+    const botonEliminarArchivo = divVerificacion.querySelector('.botonEliminarArchivo');
+    const inputArchivo = divVerificacion.querySelector('input[type="file"]');
+    botonEliminarArchivo.addEventListener('click', function () {
+        inputArchivo.value = '';
+    });
+}
+
+
+});
+
+
+
 
 $("#guardarCONTRATO").click(function (e) {
     e.preventDefault();
@@ -2536,6 +2666,35 @@ $('#Tablacontratosyanexos').on('click', 'td>button.EDITAR', function () {
 
     editarDatoTabla(rowDataLimpio, 'formularioCONTRATO', 'miModal_CONTRATO', 1);
     $('#miModal_CONTRATO .modal-title').html(row.data().NOMBRE_DOCUMENTO_CONTRATO);
+
+
+    document.getElementById('REQUIERE_ADENDA_CONTRATO').style.display = 'block';
+
+
+    fechaRenovacionGlobalcontrato = row.data().VIGENCIA_CONTRATO || ''; 
+    fechaInicioRenovacionGlobalcontrato = row.data().FECHAI_CONTRATO || '';
+
+
+
+//     if (row.data().PROCEDE_ADENDA_CONTRATO == "1") {
+//         document.getElementById('AGREGAR_ADENDA_CONTRATO').style.display = 'block';
+//         document.getElementById('procedecontratosi').checked = true;
+//     } else if (row.data().PROCEDE_ADENDA_CONTRATO == "2") {
+//         document.getElementById('AGREGAR_ADENDA').style.display = 'none';
+//         document.getElementById('procedecontratono').checked = true;
+//     } else {
+//         document.getElementById('AGREGAR_ADENDA_CONTRATO').style.display = 'none';
+//         document.getElementById('procedecontratosi').checked = false;
+//         document.getElementById('procedecontratono').checked = false;
+//     }
+
+   $(".adendacontratodiv").empty();
+
+// if (row.data().ADENDAS && row.data().ADENDAS.length > 0) {
+//         obtenerAdendas(row.data().ADENDAS);
+//     }
+
+
 
 
 });

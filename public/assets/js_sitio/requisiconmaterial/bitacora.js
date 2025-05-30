@@ -1,8 +1,6 @@
 ID_FORMULARIO_MR = 0
 
 
-
-
 const Modalmr = document.getElementById('miModal_MR');
 Modalmr.addEventListener('hidden.bs.modal', event => {
     ID_FORMULARIO_MR = 0;
@@ -298,63 +296,6 @@ function cargarMaterialesDesdeJSON(materialesJson) {
 
 
 
-// $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', function () {
-
-
-
-
-
-
-//     const row = Tablabitacora.row($(this).closest('tr')).data();
-//     console.log("Fila seleccionada:", row); // 👈 Diagnóstico
-
-//     if (row.ESTADO_APROBACION === null) {
-//         alertToast('La MR aún no ha sido aprobada', 'warning');
-//         return;
-//     }
-//     if (row.ESTADO_APROBACION === 'Rechazada') {
-//         alertToast('La MR fue rechazada', 'error');
-//         return;
-//     }
-
-//     try {
-//         let materiales = [];
-
-//         // Detecta si ya es un arreglo o hay que parsear
-//         if (Array.isArray(row.MATERIALES_JSON)) {
-//             materiales = row.MATERIALES_JSON;
-//         } else if (typeof row.MATERIALES_JSON === 'string') {
-//             materiales = JSON.parse(row.MATERIALES_JSON);
-//         }
-
-//         console.log("Materiales parseados:", materiales); // 👈 Confirma estructura
-
-//         const listaFiltrada = materiales.filter(
-//             m => m.CHECK_VO === 'SI' && m.CHECK_MATERIAL === 'SI'
-//         );
-
-//         let html = '';
-//         if (listaFiltrada.length === 0) {
-//             html = `<li class="list-group-item">No hay materiales aprobados disponibles.</li>`;
-//         } else {
-//             listaFiltrada.forEach(mat => {
-//                 html += `<li class="list-group-item">${mat.DESCRIPCION}</li>`;
-//             });
-//         }
-
-//         $('#listaMateriales').html(html);
-
-//         const modal = new bootstrap.Modal(document.getElementById('modalMateriales'));
-//         modal.show();
-//     } catch (err) {
-//         console.error('Error al procesar MATERIALES_JSON', err);
-//         alertToast('Error al procesar los materiales', 'error');
-//     }
-// });
-
-
-
-// Función para cargar la lista de materiales al modal
 
 
 
@@ -367,116 +308,6 @@ function inicializarDatepickers() {
                 language: 'es' // Configura el idioma en español
   });
 }
-
-
-// $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', function () {
-//   const row = Tablabitacora.row($(this).closest('tr')).data();
-
-//   if (row.ESTADO_APROBACION === null) {
-//       alertToast('La MR aún no ha sido aprobada', 'warning');
-//       return;
-//   }
-
-//   if (row.ESTADO_APROBACION === 'Rechazada') {
-//       alertToast('La MR fue rechazada', 'error');
-//       return;
-//   }
-
-//   try {
-//       let materiales = [];
-//       if (Array.isArray(row.MATERIALES_JSON)) {
-//           materiales = row.MATERIALES_JSON;
-//       } else if (typeof row.MATERIALES_JSON === 'string') {
-//           materiales = JSON.parse(row.MATERIALES_JSON);
-//       }
-
-//       const listaFiltrada = materiales.filter(m => m.CHECK_VO === 'SI' && m.CHECK_MATERIAL === 'SI');
-
-//       $('#contenedorProductos').empty();
-//       $('#preguntaProveedorUnico').removeClass('d-none');
-//       $('#contenedorProductos').hide();
-
-//       // Eliminar eventos anteriores para evitar múltiples asignaciones
-//       $('#respuestaProveedorUnicoSi').off('click');
-//       $('#respuestaProveedorUnicoNo').off('click');
-
-//       const modal = new bootstrap.Modal(document.getElementById('modalMateriales'));
-//       modal.show();
-
-//       $('#noMRModal').text(row.NO_MR || 'No disponible');
-// $('#inputNoMR').val(row.NO_MR || '');
-    
-//       if (listaFiltrada.length === 0) {
-//           $('#contenedorProductos')
-//               .html('<div class="alert alert-info">No hay materiales aprobados disponibles.</div>')
-//               .show();
-//           $('#preguntaProveedorUnico').addClass('d-none');
-//           return;
-//       }
-
-//       // ✅ Opción SÍ: Un solo proveedor
-//       $('#respuestaProveedorUnicoSi').on('click', function () {
-//           $('#preguntaProveedorUnico').addClass('d-none');
-//           $('#contenedorProductos').show();
-
-//           const template = document.querySelector('#templateProducto');
-//           const clon = document.importNode(template.content, true);
-
-//           clon.querySelector('.producto-titulo').textContent = 'Materiales';
-
-//           // Ocultar bloque de cantidad/unidad
-//           const detalleCantidadUnidad = clon.querySelector('.detalle-cantidad-unidad');
-//           if (detalleCantidadUnidad) {
-//             detalleCantidadUnidad.style.setProperty('display', 'none', 'important');
-//           }
-//           // Insertar lista de materiales combinados
-//           const descripcionDiv = clon.querySelector('.descripcion-materiales');
-//           const listaHtml = listaFiltrada.map(m =>
-//               `<li>${m.DESCRIPCION} (${m.CANTIDAD} ${m.UNIDAD_MEDIDA})</li>`
-//           ).join('');
-//           descripcionDiv.innerHTML = `<ul class="mb-0">${listaHtml}</ul>`;
-
-//         $('#contenedorProductos').append(clon);
-//         inicializarDatepickers(); // 👈 activa los datepickers
-        
-//       });
-
-//       // ✅ Opción NO: Una tarjeta por material
-//       $('#respuestaProveedorUnicoNo').on('click', function () {
-//           $('#preguntaProveedorUnico').addClass('d-none');
-//           $('#contenedorProductos').show();
-
-//           listaFiltrada.forEach(material => {
-//               const template = document.querySelector('#templateProducto');
-//               const clon = document.importNode(template.content, true);
-
-//               clon.querySelector('.producto-titulo').textContent = material.DESCRIPCION;
-//               clon.querySelector('.producto-cantidad').textContent = material.CANTIDAD;
-//               clon.querySelector('.producto-unidad').textContent = material.UNIDAD_MEDIDA;
-
-//               // Eliminar descripción combinada en modo individual
-//               const descripcionDiv = clon.querySelector('.descripcion-materiales');
-//               if (descripcionDiv) {
-//                   descripcionDiv.remove();
-//               }
-
-//             $('#contenedorProductos').append(clon);
-//             inicializarDatepickers(); // 👈 activa los datepickers
-//           });
-//       });
-
-//   } catch (err) {
-//       console.error('Error al procesar MATERIALES_JSON', err);
-//       alertToast('Error al procesar los materiales', 'error');
-//   }
-
-
-
-  
-  
-
-// });
-
 
 
 
@@ -1292,7 +1123,8 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
   $clon.find('.td-cotizacionq2-cantidadmr, .td-cotizacionq2-cantidadreal, .td-cotizacionq2-preciounitario').hide();
   $clon.find('.td-cotizacionq3-cantidadmr, .td-cotizacionq3-cantidadreal, .td-cotizacionq3-preciounitario').hide();
 
-  $('#contenedorProductos').append($clon);
+    $('#contenedorProductos').append($clon);
+    
 
   inicializarSelectizeEnClon($clon[0]);
   actualizarProveedoresSugeridos($clon[0]);
