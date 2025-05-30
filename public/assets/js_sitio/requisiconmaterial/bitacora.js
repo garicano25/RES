@@ -55,7 +55,7 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
         dataSrc: 'data'
     },
     columnDefs: [
-            { targets: '_all', className: 'text-center' }, // 👈 centra todo
+        { targets: '_all', className: 'text-center' }, 
         { targets: 0, width: '150px' },
         { targets: 1, width: '150px' },
         { targets: 2, width: '200px' },
@@ -79,8 +79,11 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
         { data: 'BTN_NO_MR' },
         { data: 'NO_MR' },
         { data: 'FECHA_SOLICITUD_MR' },
-      { data: 'SOLICITANTE_MR' },
-      { data: 'JUSTIFICACION_MR' },
+        { data: 'SOLICITANTE_MR' },
+        {
+          data: 'JUSTIFICACION_MR',
+          className: 'col-justificacion', // Clase solo para esta columna
+        },
         { data: 'AREA_SOLICITANTE_MR' },
         { data: 'FECHA_VISTO_MR' },
         { data: 'VISTO_BUENO' },

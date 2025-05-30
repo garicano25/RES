@@ -3,6 +3,7 @@
 @section('contenido')
 
 <style>
+    /* ========== TABLA BITÁCORA GENERAL ========== */
     #Tablabitacora {
         table-layout: fixed !important;
         width: 100% !important;
@@ -17,8 +18,19 @@
         vertical-align: middle;
     }
 
+    /* ========== EXCEPCIÓN: COLUMNA JUSTIFICACIÓN ========== */
+    #Tablabitacora td.col-justificacion {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: unset !important;
+        word-wrap: break-word !important;
+        text-align: center !important;
+        vertical-align: middle !important;
+        height: auto !important;
+        line-height: 1.3em;
+    }
 
-
+    /* ========== TABLA COTIZACIONES (si aplica) ========== */
     #tablaCotizaciones {
         table-layout: fixed !important;
         width: 100% !important;
@@ -32,6 +44,7 @@
         text-align: center;
         vertical-align: middle;
     }
+
 
 
 
