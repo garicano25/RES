@@ -172,9 +172,7 @@
                     <div class="mb-2">
                         <strong>No. MR:</strong> <span id="noMRModal" class="text-primary fw-bold"></span>
                     </div>
-
                     <input type="hidden" id="inputNoMR" name="NO_MR">
-
 
 
                     <!-- Pregunta inicial -->
@@ -185,18 +183,17 @@
 
                     </div>
 
-
-
-                    <!-- Contenedor de tarjetas de productos -->
                     <div id="contenedorProductos"></div>
 
+                    <input type="hidden" name="ES_UNICO" id="esProveedorUnico" value="NO">
 
+                    
                     <template id="templateProducto">
                         <div class="card mb-4 producto-card">
                             <div class="card-header bg-primary text-white">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <h5 class="producto-titulo mb-0 fw-bold"></h5>
-                                    <div class="d-flex align-items-center detalle-cantidad-unidad"> <!-- esta clase es clave -->
+                                    <div class="d-flex align-items-center detalle-cantidad-unidad">
                                         <div class="border-start ps-3 ms-3">
                                             <div class="d-flex align-items-center">
                                                 <span class="fw-medium me-2">Cantidad:</span>
@@ -218,12 +215,9 @@
 
                             <input type="hidden" class="form-control ID_HOJA" name="id[]">
 
-
                             <div class="card-body">
-                                <!-- Descripción combinada para materiales múltiples -->
                                 <div class="descripcion-materiales mb-3 text-muted small"></div>
 
-                                <!-- Sección de cotizaciones -->
                                 <h6 class="fw-bold">Cotizaciones</h6>
                                 <div class="grupo-producto">
 
@@ -232,7 +226,12 @@
                                             <thead class="table-secondary">
                                                 <tr>
                                                     <th class="text-center" width="200">Cotización</th>
-                                                    <th class="text-center" width="300">Proveedor</th>
+                                                    <th class="text-center" width="350">Proveedor</th>
+
+                                                    <th class="text-center th-cantidadmr" width="100">Cantidad <br>MR</th>
+                                                    <th class="text-center th-cantidadreal" width="100">Cantidad <br>real</th>
+                                                    <th class="text-center th-preciounitario" width="150">Precio Unitario</th>
+
                                                     <th class="text-center" width="200">Subtotal</th>
                                                     <th class="text-center" width="200">IVA</th>
                                                     <th class="text-center" width="200">Importe</th>
@@ -264,6 +263,25 @@
                                                             </optgroup>
                                                         </select>
                                                     </td>
+                                                    <td class="text-center td-cotizacionq1-cantidadmr">
+                                                        <div class="input-group">
+                                                            <input type="number" class="form-control cantidadmr-cotizacionq1" name="CANTIDAD_MRQ1[]" readonly>
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="text-center td-cotizacionq1-cantidadreal">
+                                                        <div class="input-group">
+                                                            <input type="number" class="form-control cantidadreal-cotizacionq1" name="CANTIDAD_REALQ1[]">
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="text-center td-cotizacionq1-preciounitario">
+                                                        <div class="input-group">
+                                                            <input type="number" class="form-control preciounitario-cotizacionq1" name="PRECIO_UNITARIOQ1[]">
+                                                        </div>
+                                                    </td>
+
+
                                                     <td class="text-center">
                                                         <div class="input-group">
                                                             <span class="input-group-text">$</span>
@@ -319,6 +337,23 @@
                                                                 @endforeach
                                                             </optgroup>
                                                         </select>
+                                                    </td>
+                                                    <td class="text-center  td-cotizacionq2-cantidadmr">
+                                                        <div class="input-group">
+                                                            <input type="number" class="form-control cantidadmr-cotizacionq2" name="CANTIDAD_MRQ2[]" readonly>
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="text-center td-cotizacionq2-cantidadreal">
+                                                        <div class="input-group">
+                                                            <input type="number" class="form-control cantidadreal-cotizacionq2" name="CANTIDAD_REALQ2[]">
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="text-center td-cotizacionq2-preciounitario">
+                                                        <div class="input-group">
+                                                            <input type="number" class="form-control preciounitario-cotizacionq2" name="PRECIO_UNITARIOQ2[]">
+                                                        </div>
                                                     </td>
                                                     <td class="text-center">
                                                         <div class="input-group">
@@ -376,6 +411,26 @@
                                                             </optgroup>
                                                         </select>
                                                     </td>
+
+                                                    <td class="text-center td-cotizacionq3-cantidadmr">
+                                                        <div class="input-group">
+                                                            <input type="number" class="form-control cantidadmr-cotizacionq3" name="CANTIDAD_MRQ3[]" readonly>
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="text-center td-cotizacionq3-cantidadreal">
+                                                        <div class="input-group">
+                                                            <input type="number" class="form-control cantidadreal-cotizacionq3" name="CANTIDAD_REALQ3[]">
+                                                        </div>
+                                                    </td>
+
+                                                    <td class="text-center td-cotizacionq3-preciounitario">
+                                                        <div class="input-group">
+                                                            <input type="number" class="form-control preciounitario-cotizacionq3" name="PRECIO_UNITARIOQ3[]">
+                                                        </div>
+                                                    </td>
+
+
                                                     <td class="text-center">
                                                         <div class="input-group">
                                                             <span class="input-group-text">$</span>

@@ -24,6 +24,11 @@ class HojaTrabajo extends Model
         'FECHA_COTIZACION_Q1',
         'DOCUMENTO_Q1',
 
+
+        'CANTIDAD_MRQ1',
+        'CANTIDAD_REALQ1',
+        'PRECIO_UNITARIOQ1',
+
         // Cotización Q2
         'PROVEEDOR_Q2',
         'SUBTOTAL_Q2',
@@ -32,6 +37,12 @@ class HojaTrabajo extends Model
         'OBSERVACIONES_Q2',
         'FECHA_COTIZACION_Q2',
         'DOCUMENTO_Q2',
+
+
+        'CANTIDAD_MRQ2',
+        'CANTIDAD_REALQ2',
+        'PRECIO_UNITARIOQ2',
+
 
         // Cotización Q3
         'PROVEEDOR_Q3',
@@ -42,6 +53,11 @@ class HojaTrabajo extends Model
         'FECHA_COTIZACION_Q3',
         'DOCUMENTO_Q3',
 
+
+        'CANTIDAD_MRQ3',
+        'CANTIDAD_REALQ3',
+        'PRECIO_UNITARIOQ3',
+        
         // Datos adicionales
         'SOLICITAR_VERIFICACION',
         'PROVEEDOR_SUGERIDO',
@@ -55,6 +71,7 @@ class HojaTrabajo extends Model
         'MOTIVO_RECHAZO',
         'FECHA_APROBACION',
         'REQUIERE_COMENTARIO',
-        'COMENTARIO_APROBACION'
+        'COMENTARIO_APROBACION',
+        'MATERIALES_HOJA_JSON'
     ];
 }

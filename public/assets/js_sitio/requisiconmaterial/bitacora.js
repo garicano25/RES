@@ -493,7 +493,378 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 
 
 
+// $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () {
+//   const row = Tablabitacora.row($(this).closest('tr')).data();
+//   const no_mr = row.NO_MR;
 
+//   if (!no_mr) {
+//     alertToast('No se encontró el número de MR.', 'error');
+//     return;
+//   }
+
+//   if (row.ESTADO_APROBACION === null) {
+//     alertToast('La MR aún no ha sido aprobada', 'warning');
+//     return;
+//   }
+
+//   if (row.ESTADO_APROBACION === 'Rechazada') {
+//     alertToast('La MR fue rechazada', 'error');
+//     return;
+//   }
+
+//   $('#contenedorProductos').empty();
+//   $('#preguntaProveedorUnico').addClass('d-none');
+//   $('#contenedorProductos').hide();
+//   $('#respuestaProveedorUnicoSi').off('click');
+//   $('#respuestaProveedorUnicoNo').off('click');
+
+//   $('#noMRModal').text(no_mr || 'No disponible');
+//   $('#inputNoMR').val(no_mr || '');
+
+//   const modal = new bootstrap.Modal(document.getElementById('modalMateriales'));
+//   modal.show();
+
+//   try {
+//     const res = await fetch(`/api/hoja-trabajo/${no_mr}`);
+//     const result = await res.json();
+
+//     if (result.success && result.data.length > 0) {
+//       $('#contenedorProductos').show();
+//       $('#preguntaProveedorUnico').addClass('d-none');
+
+//       result.data.forEach((item, index) => {
+//         const template = document.querySelector('#templateProducto');
+//         const clon = document.importNode(template.content, true);
+
+  
+
+//           // === MOSTRAR ENCABEZADO O LISTA SEGÚN Nº DE PRODUCTOS ===
+//     const descripcion = item.DESCRIPCION || '';
+//     const cantidad = item.CANTIDAD || '';
+//     const unidad = item.UNIDAD_MEDIDA || '';
+
+//     const descripciones = descripcion.split('*#');
+//     const cantidades = cantidad.split('*#');
+//     const unidades = unidad.split('*#');
+
+//     const titulo = clon.querySelector('.producto-titulo');
+//     const cantSpan = clon.querySelector('.producto-cantidad');
+//     const unidadSpan = clon.querySelector('.producto-unidad');
+//     const descripcionDiv = clon.querySelector('.descripcion-materiales');
+//     const detalleCantidadUnidad = clon.querySelector('.detalle-cantidad-unidad');
+
+//     if (descripciones.length === 1) {
+//       if (titulo) titulo.textContent = descripciones[0] || '-';
+//       if (cantSpan) cantSpan.textContent = cantidades[0] || '-';
+//       if (unidadSpan) unidadSpan.textContent = unidades[0] || '-';
+//       if (descripcionDiv) descripcionDiv.innerHTML = '';
+//     } else {
+//       const listaHtml = descripciones.map((desc, i) => {
+//         const cant = cantidades[i] || '-';
+//         const uni = unidades[i] || '-';
+//         return `<li>${desc} (${cant} ${uni})</li>`;
+//       }).join('');
+//       if (descripcionDiv) descripcionDiv.innerHTML = `<ul class="mb-0">${listaHtml}</ul>`;
+
+//       if (titulo) titulo.textContent = '';
+//       if (cantSpan) cantSpan.textContent = '';
+//       if (unidadSpan) unidadSpan.textContent = '';
+//       if (detalleCantidadUnidad) detalleCantidadUnidad.remove(); 
+//     }
+        
+
+//         clon.querySelector('.descripcion-input').value = item.DESCRIPCION || '';
+//         clon.querySelector('.cantidad-input').value = item.CANTIDAD || '';
+//         clon.querySelector('.unidad-input').value = item.UNIDAD_MEDIDA || '';
+
+
+//         const filas = clon.querySelectorAll('.fila-cotizacion');
+
+//         filas.forEach((fila) => {
+//           const cot = fila.getAttribute('data-cotizacion'); // "Q1", "Q2" o "Q3"
+
+//           if (cot === 'Q1') {
+//             fila.querySelector('.proveedor-cotizacionq1').value = item.PROVEEDOR_Q1 || '';
+//             fila.querySelector('.cantidadmr-cotizacionq1').value = item.CANTIDAD_MRQ1 || '';
+//             fila.querySelector('.cantidadreal-cotizacionq1').value = item.CANTIDAD_REALQ1 || '';
+//             fila.querySelector('.preciounitario-cotizacionq1').value = item.PRECIO_UNITARIOQ1 || '';
+//             fila.querySelector('.importe-cotizacionq1').value = item.SUBTOTAL_Q1 || '';
+//             fila.querySelector('.iva-cotizacionq1').value = item.IVA_Q1 || '';
+//             fila.querySelector('.total-cotizacionq1').value = item.IMPORTE_Q1 || '';
+//             fila.querySelector('.textareaq1').value = item.OBSERVACIONES_Q1 || '';
+//             fila.querySelector('.fecha-cotizacionq1').value = item.FECHA_COTIZACION_Q1 || '';
+
+//             const inputFile = fila.querySelector('.doc-cotizacionq1');
+//             const contenedor = inputFile?.closest('.input-group');
+//             if (contenedor && item.DOCUMENTO_Q1) {
+//               const link = document.createElement('a');
+//               link.href = `/mostrarcotizacionq1/${item.id}`;
+//               link.target = "_blank";
+//               link.textContent = "Ver documento actual";
+//               link.classList.add('btn', 'btn-outline-primary', 'btn-sm', 'ms-2');
+//               contenedor.appendChild(link);
+//             }
+
+//           }
+
+//           if (cot === 'Q2') {
+//             fila.querySelector('.proveedor-cotizacionq2').value = item.PROVEEDOR_Q2 || '';
+//             fila.querySelector('.cantidadmr-cotizacionq2').value = item.CANTIDAD_MRQ2 || '';
+//             fila.querySelector('.cantidadreal-cotizacionq2').value = item.CANTIDAD_REALQ2 || '';
+//             fila.querySelector('.preciounitario-cotizacionq2').value = item.PRECIO_UNITARIOQ2 || '';
+//             fila.querySelector('.importe-cotizacionq2').value = item.SUBTOTAL_Q2 || '';
+//             fila.querySelector('.iva-cotizacionq2').value = item.IVA_Q2 || '';
+//             fila.querySelector('.total-cotizacionq2').value = item.IMPORTE_Q2 || '';
+//             fila.querySelector('.textareaq2').value = item.OBSERVACIONES_Q2 || '';
+//             fila.querySelector('.fecha-cotizacionq2').value = item.FECHA_COTIZACION_Q2 || '';
+
+
+//             const inputFile = fila.querySelector('.doc-cotizacionq2');
+//             const contenedor = inputFile?.closest('.input-group');
+//             if (contenedor && item.DOCUMENTO_Q2) {
+//               const link = document.createElement('a');
+//               link.href = `/mostrarcotizacionq2/${item.id}`;
+//               link.target = "_blank";
+//               link.textContent = "Ver documento actual";
+//               link.classList.add('btn', 'btn-outline-primary', 'btn-sm', 'ms-2');
+//               contenedor.appendChild(link);
+//             }
+
+
+//           }
+
+//           if (cot === 'Q3') {
+//             fila.querySelector('.proveedor-cotizacionq3').value = item.PROVEEDOR_Q3 || '';
+
+//             fila.querySelector('.cantidadmr-cotizacionq3').value = item.CANTIDAD_MRQ3 || '';
+//             fila.querySelector('.cantidadreal-cotizacionq3').value = item.CANTIDAD_REALQ3 || '';
+//             fila.querySelector('.preciounitario-cotizacionq3').value = item.PRECIO_UNITARIOQ3 || '';
+
+//             fila.querySelector('.importe-cotizacionq3').value = item.SUBTOTAL_Q3 || '';
+//             fila.querySelector('.iva-cotizacionq3').value = item.IVA_Q3 || '';
+//             fila.querySelector('.total-cotizacionq3').value = item.IMPORTE_Q3 || '';
+//             fila.querySelector('.textareaq3').value = item.OBSERVACIONES_Q3 || '';
+//             fila.querySelector('.fecha-cotizacionq3').value = item.FECHA_COTIZACION_Q3 || '';
+//             const inputFile = fila.querySelector('.doc-cotizacionq3');
+//             const contenedor = inputFile?.closest('.input-group');
+//             if (contenedor && item.DOCUMENTO_Q3) {
+//               const link = document.createElement('a');
+//               link.href = `/mostrarcotizacionq3/${item.id}`;
+//               link.target = "_blank";
+//               link.textContent = "Ver documento actual";
+//               link.classList.add('btn', 'btn-outline-primary', 'btn-sm', 'ms-2');
+//               contenedor.appendChild(link);
+//             }
+
+
+//           }
+
+//         });
+
+//           const ID_HOJA = clon.querySelector('.ID_HOJA');
+//          if (ID_HOJA) ID_HOJA.value = item.id || '';
+              
+
+//       const proveedorSugerido = clon.querySelector('.proveedor-sugerido');
+//         if (proveedorSugerido) proveedorSugerido.value = item.PROVEEDOR_SUGERIDO || '';
+        
+
+//         const solicitarverificacion = clon.querySelector('.solicitar-verificacion');
+//         if (solicitarverificacion) {
+//           solicitarverificacion.value = item.SOLICITAR_VERIFICACION || '';
+        
+//           const aprobacionDireccion = clon.querySelector('.aprobacion-direccion-hoja');
+//           if (aprobacionDireccion) {
+//             aprobacionDireccion.style.display = (solicitarverificacion.value === 'Sí') ? 'block' : 'none';
+//           }
+//         }
+        
+
+//         const formaAdquisicion = clon.querySelector('.forma-adquisicion');
+//         if (formaAdquisicion) formaAdquisicion.value = item.FORMA_ADQUISICION || '';
+
+//         const proveedorSeleccionado = clon.querySelector('.proveedor-seleccionado');
+//         if (proveedorSeleccionado) proveedorSeleccionado.value = item.PROVEEDOR_SELECCIONADO || '';
+
+//         const montoFinal = clon.querySelector('.monto-final');
+//         if (montoFinal) montoFinal.value = item.MONTO_FINAL || '';
+
+//         const formaPago = clon.querySelector('.forma-pago');
+//         if (formaPago) formaPago.value = item.FORMA_PAGO || '';
+
+
+//         const  requierepo = clon.querySelector('.requiere-po');
+//         if (requierepo) requierepo.value = item.REQUIERE_PO || '';
+
+
+//         const  fechaverificacion = clon.querySelector('.fecha-verificacion');
+//         if (fechaverificacion) fechaverificacion.value = item.FECHA_VERIFICACION || '';
+        
+        
+        
+//         const  fechaaprobacion = clon.querySelector('.fecha-aprobacion');
+//         if (fechaaprobacion) fechaaprobacion.value = item.FECHA_APROBACION || '';
+        
+        
+
+//         const estadoaprobacion = clon.querySelector('.estado-aprobacion');
+//         if (estadoaprobacion) {
+//           estadoaprobacion.value = item.ESTADO_APROBACION || '';
+//           cambiarColor(estadoaprobacion); 
+//         }
+        
+
+//         const requierecomentarios = clon.querySelector('.requiere-comentario');
+//         if (requierecomentarios) {
+//           requierecomentarios.value = item.REQUIERE_COMENTARIO || '';
+//           requierecomentario(requierecomentarios); 
+//         }
+        
+
+//         const  comentarioaprobacion = clon.querySelector('.comentario-aprobacion');
+//         if (comentarioaprobacion) comentarioaprobacion.value = item.COMENTARIO_APROBACION || '';
+        
+
+//         const  motivorechazo = clon.querySelector('.motivo-rechazo');
+//         if (motivorechazo) motivorechazo.value = item.MOTIVO_RECHAZO || '';
+        
+
+
+//         actualizarProveedoresSugeridos(clon, item.PROVEEDOR_SUGERIDO || '');
+
+//         actualizarProveedoresseleccionado(clon, item.PROVEEDOR_SELECCIONADO || '');
+
+
+    
+//         $('#contenedorProductos').append(clon);
+
+
+        
+//         inicializarSelectizeEnClon(clon);
+      
+
+//       });
+
+//       inicializarDatepickers();
+    
+//       inicializarSumaImportes();
+
+//       return;
+//     }
+
+
+  
+//     // VOLVER A PONERLES ANTES DEL RETURN CUANDO YA LAS FECHAS VAYAN EN ORDEN
+    
+//       // asignarFechaVerificacion();
+//       // bloquearFechaDesdeInicio();
+    
+
+
+
+//     // Si no hay hoja_trabajo: usar MATERIALES_JSON
+//     let materiales = [];
+//     if (Array.isArray(row.MATERIALES_JSON)) {
+//       materiales = row.MATERIALES_JSON;
+//     } else if (typeof row.MATERIALES_JSON === 'string') {
+//       materiales = JSON.parse(row.MATERIALES_JSON);
+//     }
+
+//     const listaFiltrada = materiales.filter(m => m.CHECK_VO === 'SI' && m.CHECK_MATERIAL === 'SI');
+
+//     if (listaFiltrada.length === 0) {
+//       $('#contenedorProductos')
+//         .html('<div class="alert alert-info">No hay materiales aprobados disponibles.</div>')
+//         .show();
+//       $('#preguntaProveedorUnico').addClass('d-none');
+//       return;
+//     }
+
+//     // Mostrar pregunta
+//     $('#preguntaProveedorUnico').removeClass('d-none');
+//     $('#contenedorProductos').hide();
+
+//     $('#respuestaProveedorUnicoSi').on('click', function () {
+//       $('#preguntaProveedorUnico').addClass('d-none');
+//       $('#contenedorProductos').show();
+
+//       const template = document.querySelector('#templateProducto');
+//       const clon = document.importNode(template.content, true);
+
+//       clon.querySelector('.producto-titulo').textContent = 'Materiales';
+
+//       const detalleCantidadUnidad = clon.querySelector('.detalle-cantidad-unidad');
+//       if (detalleCantidadUnidad) {
+//         detalleCantidadUnidad.style.setProperty('display', 'none', 'important');
+//       }
+
+//       const descripcionDiv = clon.querySelector('.descripcion-materiales');
+//       const listaHtml = listaFiltrada.map(m =>
+//         `<li>${m.DESCRIPCION} (${m.CANTIDAD} ${m.UNIDAD_MEDIDA})</li>`
+//       ).join('');
+//       descripcionDiv.innerHTML = `<ul class="mb-0">${listaHtml}</ul>`;
+
+//       clon.querySelector('.descripcion-input').value = listaFiltrada.map(m => m.DESCRIPCION).join('*#');
+//       clon.querySelector('.cantidad-input').value = listaFiltrada.map(m => m.CANTIDAD).join('*#');
+//       clon.querySelector('.unidad-input').value = listaFiltrada.map(m => m.UNIDAD_MEDIDA).join('*#');
+
+//       $('#contenedorProductos').append(clon);
+//       inicializarSelectizeEnClon(clon);
+//       actualizarProveedoresSugeridos(clon);
+//       actualizarProveedoresseleccionado(clon);
+      
+
+//       inicializarDatepickers();
+//       // asignarFechaVerificacion();
+//       // bloquearFechaDesdeInicio();
+//       inicializarSumaImportes();
+
+
+
+//     });
+
+//     $('#respuestaProveedorUnicoNo').on('click', function () {
+//       $('#preguntaProveedorUnico').addClass('d-none');
+//       $('#contenedorProductos').show();
+
+//       listaFiltrada.forEach(material => {
+//         const template = document.querySelector('#templateProducto');
+//         const clon = document.importNode(template.content, true);
+
+//         clon.querySelector('.producto-titulo').textContent = material.DESCRIPCION;
+//         clon.querySelector('.producto-cantidad').textContent = material.CANTIDAD;
+//         clon.querySelector('.producto-unidad').textContent = material.UNIDAD_MEDIDA;
+
+//         const descripcionDiv = clon.querySelector('.descripcion-materiales');
+//         if (descripcionDiv) {
+//           descripcionDiv.remove();
+//         }
+
+//         clon.querySelector('.descripcion-input').value = material.DESCRIPCION;
+//         clon.querySelector('.cantidad-input').value = material.CANTIDAD;
+//         clon.querySelector('.unidad-input').value = material.UNIDAD_MEDIDA;
+
+//         $('#contenedorProductos').append(clon);
+//         inicializarSelectizeEnClon(clon);
+//         actualizarProveedoresSugeridos(clon);
+//         actualizarProveedoresseleccionado(clon);
+
+
+//         inicializarDatepickers();
+//         // asignarFechaVerificacion();
+//         // bloquearFechaDesdeInicio();
+//         inicializarSumaImportes();
+
+//       });
+
+
+//     });
+
+//   } catch (err) {
+//     console.error('Error al cargar hoja de trabajo:', err);
+//     alertToast('Error al cargar la hoja de trabajo', 'error');
+//   }
+// });
 
 
 $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () {
@@ -528,233 +899,296 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
   modal.show();
 
   try {
+    
+
     const res = await fetch(`/api/hoja-trabajo/${no_mr}`);
-    const result = await res.json();
+        const result = await res.json();
+    
+        if (result.success && result.data.length > 0) {
+          $('#contenedorProductos').show();
+          $('#preguntaProveedorUnico').addClass('d-none');
+    
+          const esProveedorUnico = result.data[0]?.ES_UNICO_PROVEEDOR === 'SI';
 
-    if (result.success && result.data.length > 0) {
-      $('#contenedorProductos').show();
-      $('#preguntaProveedorUnico').addClass('d-none');
+          document.getElementById('esProveedorUnico').value = esProveedorUnico ? 'SI' : 'NO';
 
-      result.data.forEach((item, index) => {
-        const template = document.querySelector('#templateProducto');
-        const clon = document.importNode(template.content, true);
+              result.data.forEach((item) => {
+          const template = document.querySelector('#templateProducto');
+          const clon = document.importNode(template.content, true);
+
+          const descripcionDiv = clon.querySelector('.descripcion-materiales');
+          const titulo = clon.querySelector('.producto-titulo');
+          const cantSpan = clon.querySelector('.producto-cantidad');
+          const unidadSpan = clon.querySelector('.producto-unidad');
+          const detalleCantidadUnidad = clon.querySelector('.detalle-cantidad-unidad');
+
+          
+
+          if (esProveedorUnico) {
+            // Limpiar bloque visual
+            if (titulo) titulo.textContent = '';
+            if (cantSpan) cantSpan.textContent = '';
+            if (unidadSpan) unidadSpan.textContent = '';
+            if (detalleCantidadUnidad) detalleCantidadUnidad.remove();
+
+            // Usar JSON de materiales
+            const materiales = JSON.parse(item.MATERIALES_HOJA_JSON || '[]');
+            const inputsHtml = materiales.map(m => `
+              <div class="row mb-2">
+                <div class="col-4">
+                  <label class="form-label">Descripción</label>
+                  <input type="text" class="form-control" name="DESCRIPCION[]" value="${m.DESCRIPCION}" readonly>
+                </div>
+                <div class="col-1">
+                  <label class="form-label">Cantidad</label>
+                  <input type="number" class="form-control" name="CANTIDAD[]" value="${m.CANTIDAD}" readonly>
+                </div>
+                <div class="col-2">
+                  <label class="form-label">Unidad</label>
+                  <input type="text" class="form-control" name="UNIDAD_MEDIDA[]" value="${m.UNIDAD_MEDIDA}" readonly>
+                </div>
+                <div class="col-2">
+                  <label class="form-label">Cantidad Real</label>
+                  <input type="number" class="form-control" name="CANTIDAD_REAL[]" value="${m.CANTIDAD_REAL}" min="0" step="any" required>
+                </div>
+                <div class="col-3">
+                  <label class="form-label">Precio Unitario</label>
+                  <input type="number" class="form-control" name="PRECIO_UNITARIO[]" value="${m.PRECIO_UNITARIO}" min="0" step="0.01" required>
+                </div>
+              </div>
+            `).join('');
+            if (descripcionDiv) descripcionDiv.innerHTML = inputsHtml;
+
+
+                  
+          if (clon.querySelector('.descripcion-input')) clon.querySelector('.descripcion-input').remove();
+          if (clon.querySelector('.cantidad-input')) clon.querySelector('.cantidad-input').remove();
+                if (clon.querySelector('.unidad-input')) clon.querySelector('.unidad-input').remove();
+                
+            
+            
+            // Ocultar columnas específicas
+            $(clon).find('.th-cantidadmr, .th-cantidadreal, .th-preciounitario').hide();
+            $(clon).find('.td-cotizacionq1-cantidadmr, .td-cotizacionq1-cantidadreal, .td-cotizacionq1-preciounitario').hide();
+            $(clon).find('.td-cotizacionq2-cantidadmr, .td-cotizacionq2-cantidadreal, .td-cotizacionq2-preciounitario').hide();
+            $(clon).find('.td-cotizacionq3-cantidadmr, .td-cotizacionq3-cantidadreal, .td-cotizacionq3-preciounitario').hide();
+
+          } else {
+            // Procesamiento normal (NO proveedor único)
+            const descripcion = item.DESCRIPCION || '';
+            const cantidad = item.CANTIDAD || '';
+            const unidad = item.UNIDAD_MEDIDA || '';
+
+            const descripciones = descripcion.split('*#');
+            const cantidades = cantidad.split('*#');
+            const unidades = unidad.split('*#');
+
+            if (descripciones.length === 1) {
+              if (titulo) titulo.textContent = descripciones[0] || '-';
+              if (cantSpan) cantSpan.textContent = cantidades[0] || '-';
+              if (unidadSpan) unidadSpan.textContent = unidades[0] || '-';
+              if (descripcionDiv) descripcionDiv.innerHTML = '';
+            } else {
+              const listaHtml = descripciones.map((desc, i) => {
+                const cant = cantidades[i] || '-';
+                const uni = unidades[i] || '-';
+                return `<li>${desc} (${cant} ${uni})</li>`;
+              }).join('');
+              if (descripcionDiv) descripcionDiv.innerHTML = `<ul class="mb-0">${listaHtml}</ul>`;
+
+              if (titulo) titulo.textContent = '';
+              if (cantSpan) cantSpan.textContent = '';
+              if (unidadSpan) unidadSpan.textContent = '';
+              if (detalleCantidadUnidad) detalleCantidadUnidad.remove();
+            }
+
+            clon.querySelector('.descripcion-input').value = item.DESCRIPCION || '';
+            clon.querySelector('.cantidad-input').value = item.CANTIDAD || '';
+            clon.querySelector('.unidad-input').value = item.UNIDAD_MEDIDA || '';
+          }
+            
+    
+            const filas = clon.querySelectorAll('.fila-cotizacion');
+    
+            filas.forEach((fila) => {
+              const cot = fila.getAttribute('data-cotizacion'); 
+    
+              if (cot === 'Q1') {
+                fila.querySelector('.proveedor-cotizacionq1').value = item.PROVEEDOR_Q1 || '';
+                fila.querySelector('.cantidadmr-cotizacionq1').value = item.CANTIDAD_MRQ1 || '';
+                fila.querySelector('.cantidadreal-cotizacionq1').value = item.CANTIDAD_REALQ1 || '';
+                fila.querySelector('.preciounitario-cotizacionq1').value = item.PRECIO_UNITARIOQ1 || '';
+                fila.querySelector('.importe-cotizacionq1').value = item.SUBTOTAL_Q1 || '';
+                fila.querySelector('.iva-cotizacionq1').value = item.IVA_Q1 || '';
+                fila.querySelector('.total-cotizacionq1').value = item.IMPORTE_Q1 || '';
+                fila.querySelector('.textareaq1').value = item.OBSERVACIONES_Q1 || '';
+                fila.querySelector('.fecha-cotizacionq1').value = item.FECHA_COTIZACION_Q1 || '';
+    
+                const inputFile = fila.querySelector('.doc-cotizacionq1');
+                const contenedor = inputFile?.closest('.input-group');
+                if (contenedor && item.DOCUMENTO_Q1) {
+                  const link = document.createElement('a');
+                  link.href = `/mostrarcotizacionq1/${item.id}`;
+                  link.target = "_blank";
+                  link.textContent = "Ver documento actual";
+                  link.classList.add('btn', 'btn-outline-primary', 'btn-sm', 'ms-2');
+                  contenedor.appendChild(link);
+                }
+    
+              }
+    
+              if (cot === 'Q2') {
+                fila.querySelector('.proveedor-cotizacionq2').value = item.PROVEEDOR_Q2 || '';
+                fila.querySelector('.cantidadmr-cotizacionq2').value = item.CANTIDAD_MRQ2 || '';
+                fila.querySelector('.cantidadreal-cotizacionq2').value = item.CANTIDAD_REALQ2 || '';
+                fila.querySelector('.preciounitario-cotizacionq2').value = item.PRECIO_UNITARIOQ2 || '';
+                fila.querySelector('.importe-cotizacionq2').value = item.SUBTOTAL_Q2 || '';
+                fila.querySelector('.iva-cotizacionq2').value = item.IVA_Q2 || '';
+                fila.querySelector('.total-cotizacionq2').value = item.IMPORTE_Q2 || '';
+                fila.querySelector('.textareaq2').value = item.OBSERVACIONES_Q2 || '';
+                fila.querySelector('.fecha-cotizacionq2').value = item.FECHA_COTIZACION_Q2 || '';
+    
+    
+                const inputFile = fila.querySelector('.doc-cotizacionq2');
+                const contenedor = inputFile?.closest('.input-group');
+                if (contenedor && item.DOCUMENTO_Q2) {
+                  const link = document.createElement('a');
+                  link.href = `/mostrarcotizacionq2/${item.id}`;
+                  link.target = "_blank";
+                  link.textContent = "Ver documento actual";
+                  link.classList.add('btn', 'btn-outline-primary', 'btn-sm', 'ms-2');
+                  contenedor.appendChild(link);
+                }
+    
+    
+              }
+    
+              if (cot === 'Q3') {
+                fila.querySelector('.proveedor-cotizacionq3').value = item.PROVEEDOR_Q3 || '';
+    
+                fila.querySelector('.cantidadmr-cotizacionq3').value = item.CANTIDAD_MRQ3 || '';
+                fila.querySelector('.cantidadreal-cotizacionq3').value = item.CANTIDAD_REALQ3 || '';
+                fila.querySelector('.preciounitario-cotizacionq3').value = item.PRECIO_UNITARIOQ3 || '';
+    
+                fila.querySelector('.importe-cotizacionq3').value = item.SUBTOTAL_Q3 || '';
+                fila.querySelector('.iva-cotizacionq3').value = item.IVA_Q3 || '';
+                fila.querySelector('.total-cotizacionq3').value = item.IMPORTE_Q3 || '';
+                fila.querySelector('.textareaq3').value = item.OBSERVACIONES_Q3 || '';
+                fila.querySelector('.fecha-cotizacionq3').value = item.FECHA_COTIZACION_Q3 || '';
+                const inputFile = fila.querySelector('.doc-cotizacionq3');
+                const contenedor = inputFile?.closest('.input-group');
+                if (contenedor && item.DOCUMENTO_Q3) {
+                  const link = document.createElement('a');
+                  link.href = `/mostrarcotizacionq3/${item.id}`;
+                  link.target = "_blank";
+                  link.textContent = "Ver documento actual";
+                  link.classList.add('btn', 'btn-outline-primary', 'btn-sm', 'ms-2');
+                  contenedor.appendChild(link);
+                }
+    
+    
+              }
+    
+            });
+    
+              const ID_HOJA = clon.querySelector('.ID_HOJA');
+             if (ID_HOJA) ID_HOJA.value = item.id || '';
+                  
+    
+          const proveedorSugerido = clon.querySelector('.proveedor-sugerido');
+            if (proveedorSugerido) proveedorSugerido.value = item.PROVEEDOR_SUGERIDO || '';
+            
+    
+            const solicitarverificacion = clon.querySelector('.solicitar-verificacion');
+            if (solicitarverificacion) {
+              solicitarverificacion.value = item.SOLICITAR_VERIFICACION || '';
+            
+              const aprobacionDireccion = clon.querySelector('.aprobacion-direccion-hoja');
+              if (aprobacionDireccion) {
+                aprobacionDireccion.style.display = (solicitarverificacion.value === 'Sí') ? 'block' : 'none';
+              }
+            }
+            
+    
+            const formaAdquisicion = clon.querySelector('.forma-adquisicion');
+            if (formaAdquisicion) formaAdquisicion.value = item.FORMA_ADQUISICION || '';
+    
+            const proveedorSeleccionado = clon.querySelector('.proveedor-seleccionado');
+            if (proveedorSeleccionado) proveedorSeleccionado.value = item.PROVEEDOR_SELECCIONADO || '';
+    
+            const montoFinal = clon.querySelector('.monto-final');
+            if (montoFinal) montoFinal.value = item.MONTO_FINAL || '';
+    
+            const formaPago = clon.querySelector('.forma-pago');
+            if (formaPago) formaPago.value = item.FORMA_PAGO || '';
+    
+    
+            const  requierepo = clon.querySelector('.requiere-po');
+            if (requierepo) requierepo.value = item.REQUIERE_PO || '';
+    
+    
+            const  fechaverificacion = clon.querySelector('.fecha-verificacion');
+            if (fechaverificacion) fechaverificacion.value = item.FECHA_VERIFICACION || '';
+            
+            
+            
+            const  fechaaprobacion = clon.querySelector('.fecha-aprobacion');
+            if (fechaaprobacion) fechaaprobacion.value = item.FECHA_APROBACION || '';
+            
+            
+    
+            const estadoaprobacion = clon.querySelector('.estado-aprobacion');
+            if (estadoaprobacion) {
+              estadoaprobacion.value = item.ESTADO_APROBACION || '';
+              cambiarColor(estadoaprobacion); 
+            }
+            
+    
+            const requierecomentarios = clon.querySelector('.requiere-comentario');
+            if (requierecomentarios) {
+              requierecomentarios.value = item.REQUIERE_COMENTARIO || '';
+              requierecomentario(requierecomentarios); 
+            }
+            
+    
+            const  comentarioaprobacion = clon.querySelector('.comentario-aprobacion');
+            if (comentarioaprobacion) comentarioaprobacion.value = item.COMENTARIO_APROBACION || '';
+            
+    
+            const  motivorechazo = clon.querySelector('.motivo-rechazo');
+            if (motivorechazo) motivorechazo.value = item.MOTIVO_RECHAZO || '';
+            
+    
+    
+            actualizarProveedoresSugeridos(clon, item.PROVEEDOR_SUGERIDO || '');
+    
+            actualizarProveedoresseleccionado(clon, item.PROVEEDOR_SELECCIONADO || '');
+    
+    
+        
+            $('#contenedorProductos').append(clon);
+    
+    
+            
+            inicializarSelectizeEnClon(clon);
+          
+    
+          });
+    
+          inicializarDatepickers();
+        
+          inicializarSumaImportes();
+          inicializarCantidadPorPrecio();
+
+          return;
+        }
+    
+
 
   
-
-          // === MOSTRAR ENCABEZADO O LISTA SEGÚN Nº DE PRODUCTOS ===
-    const descripcion = item.DESCRIPCION || '';
-    const cantidad = item.CANTIDAD || '';
-    const unidad = item.UNIDAD_MEDIDA || '';
-
-    const descripciones = descripcion.split('*#');
-    const cantidades = cantidad.split('*#');
-    const unidades = unidad.split('*#');
-
-    const titulo = clon.querySelector('.producto-titulo');
-    const cantSpan = clon.querySelector('.producto-cantidad');
-    const unidadSpan = clon.querySelector('.producto-unidad');
-    const descripcionDiv = clon.querySelector('.descripcion-materiales');
-    const detalleCantidadUnidad = clon.querySelector('.detalle-cantidad-unidad');
-
-    if (descripciones.length === 1) {
-      if (titulo) titulo.textContent = descripciones[0] || '-';
-      if (cantSpan) cantSpan.textContent = cantidades[0] || '-';
-      if (unidadSpan) unidadSpan.textContent = unidades[0] || '-';
-      if (descripcionDiv) descripcionDiv.innerHTML = '';
-    } else {
-      const listaHtml = descripciones.map((desc, i) => {
-        const cant = cantidades[i] || '-';
-        const uni = unidades[i] || '-';
-        return `<li>${desc} (${cant} ${uni})</li>`;
-      }).join('');
-      if (descripcionDiv) descripcionDiv.innerHTML = `<ul class="mb-0">${listaHtml}</ul>`;
-
-      if (titulo) titulo.textContent = '';
-      if (cantSpan) cantSpan.textContent = '';
-      if (unidadSpan) unidadSpan.textContent = '';
-      if (detalleCantidadUnidad) detalleCantidadUnidad.remove(); 
-    }
-        
-
-        clon.querySelector('.descripcion-input').value = item.DESCRIPCION || '';
-        clon.querySelector('.cantidad-input').value = item.CANTIDAD || '';
-        clon.querySelector('.unidad-input').value = item.UNIDAD_MEDIDA || '';
-
-
-        const filas = clon.querySelectorAll('.fila-cotizacion');
-
-        filas.forEach((fila) => {
-          const cot = fila.getAttribute('data-cotizacion'); // "Q1", "Q2" o "Q3"
-
-          if (cot === 'Q1') {
-            fila.querySelector('.proveedor-cotizacionq1').value = item.PROVEEDOR_Q1 || '';
-            fila.querySelector('.importe-cotizacionq1').value = item.SUBTOTAL_Q1 || '';
-            fila.querySelector('.iva-cotizacionq1').value = item.IVA_Q1 || '';
-            fila.querySelector('.total-cotizacionq1').value = item.IMPORTE_Q1 || '';
-            fila.querySelector('.textareaq1').value = item.OBSERVACIONES_Q1 || '';
-            fila.querySelector('.fecha-cotizacionq1').value = item.FECHA_COTIZACION_Q1 || '';
-
-            const inputFile = fila.querySelector('.doc-cotizacionq1');
-            const contenedor = inputFile?.closest('.input-group');
-            if (contenedor && item.DOCUMENTO_Q1) {
-              const link = document.createElement('a');
-              link.href = `/mostrarcotizacionq1/${item.id}`;
-              link.target = "_blank";
-              link.textContent = "Ver documento actual";
-              link.classList.add('btn', 'btn-outline-primary', 'btn-sm', 'ms-2');
-              contenedor.appendChild(link);
-            }
-
-          }
-
-          if (cot === 'Q2') {
-            fila.querySelector('.proveedor-cotizacionq2').value = item.PROVEEDOR_Q2 || '';
-            fila.querySelector('.importe-cotizacionq2').value = item.SUBTOTAL_Q2 || '';
-            fila.querySelector('.iva-cotizacionq2').value = item.IVA_Q2 || '';
-            fila.querySelector('.total-cotizacionq2').value = item.IMPORTE_Q2 || '';
-            fila.querySelector('.textareaq2').value = item.OBSERVACIONES_Q2 || '';
-            fila.querySelector('.fecha-cotizacionq2').value = item.FECHA_COTIZACION_Q2 || '';
-
-
-            const inputFile = fila.querySelector('.doc-cotizacionq2');
-            const contenedor = inputFile?.closest('.input-group');
-            if (contenedor && item.DOCUMENTO_Q2) {
-              const link = document.createElement('a');
-              link.href = `/mostrarcotizacionq2/${item.id}`;
-              link.target = "_blank";
-              link.textContent = "Ver documento actual";
-              link.classList.add('btn', 'btn-outline-primary', 'btn-sm', 'ms-2');
-              contenedor.appendChild(link);
-            }
-
-
-          }
-
-          if (cot === 'Q3') {
-            fila.querySelector('.proveedor-cotizacionq3').value = item.PROVEEDOR_Q3 || '';
-            fila.querySelector('.importe-cotizacionq3').value = item.SUBTOTAL_Q3 || '';
-            fila.querySelector('.iva-cotizacionq3').value = item.IVA_Q3 || '';
-            fila.querySelector('.total-cotizacionq3').value = item.IMPORTE_Q3 || '';
-            fila.querySelector('.textareaq3').value = item.OBSERVACIONES_Q3 || '';
-            fila.querySelector('.fecha-cotizacionq3').value = item.FECHA_COTIZACION_Q3 || '';
-            const inputFile = fila.querySelector('.doc-cotizacionq3');
-            const contenedor = inputFile?.closest('.input-group');
-            if (contenedor && item.DOCUMENTO_Q3) {
-              const link = document.createElement('a');
-              link.href = `/mostrarcotizacionq3/${item.id}`;
-              link.target = "_blank";
-              link.textContent = "Ver documento actual";
-              link.classList.add('btn', 'btn-outline-primary', 'btn-sm', 'ms-2');
-              contenedor.appendChild(link);
-            }
-
-
-          }
-
-        });
-
-          const ID_HOJA = clon.querySelector('.ID_HOJA');
-         if (ID_HOJA) ID_HOJA.value = item.id || '';
-              
-
-      const proveedorSugerido = clon.querySelector('.proveedor-sugerido');
-        if (proveedorSugerido) proveedorSugerido.value = item.PROVEEDOR_SUGERIDO || '';
-        
-
-        const solicitarverificacion = clon.querySelector('.solicitar-verificacion');
-        if (solicitarverificacion) {
-          solicitarverificacion.value = item.SOLICITAR_VERIFICACION || '';
-        
-          const aprobacionDireccion = clon.querySelector('.aprobacion-direccion-hoja');
-          if (aprobacionDireccion) {
-            aprobacionDireccion.style.display = (solicitarverificacion.value === 'Sí') ? 'block' : 'none';
-          }
-        }
-        
-
-        const formaAdquisicion = clon.querySelector('.forma-adquisicion');
-        if (formaAdquisicion) formaAdquisicion.value = item.FORMA_ADQUISICION || '';
-
-        const proveedorSeleccionado = clon.querySelector('.proveedor-seleccionado');
-        if (proveedorSeleccionado) proveedorSeleccionado.value = item.PROVEEDOR_SELECCIONADO || '';
-
-        const montoFinal = clon.querySelector('.monto-final');
-        if (montoFinal) montoFinal.value = item.MONTO_FINAL || '';
-
-        const formaPago = clon.querySelector('.forma-pago');
-        if (formaPago) formaPago.value = item.FORMA_PAGO || '';
-
-
-        const  requierepo = clon.querySelector('.requiere-po');
-        if (requierepo) requierepo.value = item.REQUIERE_PO || '';
-
-
-        const  fechaverificacion = clon.querySelector('.fecha-verificacion');
-        if (fechaverificacion) fechaverificacion.value = item.FECHA_VERIFICACION || '';
-        
-        
-        
-        const  fechaaprobacion = clon.querySelector('.fecha-aprobacion');
-        if (fechaaprobacion) fechaaprobacion.value = item.FECHA_APROBACION || '';
-        
-        
-
-        const estadoaprobacion = clon.querySelector('.estado-aprobacion');
-        if (estadoaprobacion) {
-          estadoaprobacion.value = item.ESTADO_APROBACION || '';
-          cambiarColor(estadoaprobacion); 
-        }
-        
-
-        const requierecomentarios = clon.querySelector('.requiere-comentario');
-        if (requierecomentarios) {
-          requierecomentarios.value = item.REQUIERE_COMENTARIO || '';
-          requierecomentario(requierecomentarios); 
-        }
-        
-
-        const  comentarioaprobacion = clon.querySelector('.comentario-aprobacion');
-        if (comentarioaprobacion) comentarioaprobacion.value = item.COMENTARIO_APROBACION || '';
-        
-
-        const  motivorechazo = clon.querySelector('.motivo-rechazo');
-        if (motivorechazo) motivorechazo.value = item.MOTIVO_RECHAZO || '';
-        
-
-
-        actualizarProveedoresSugeridos(clon, item.PROVEEDOR_SUGERIDO || '');
-
-        actualizarProveedoresseleccionado(clon, item.PROVEEDOR_SELECCIONADO || '');
-
-
-    
-        $('#contenedorProductos').append(clon);
-
-
-        
-        inicializarSelectizeEnClon(clon);
-      
-
-      });
-
-      inicializarDatepickers();
-    
-      inicializarSumaImportes();
-
-      return;
-    }
-
-
-  
-    // VOLVER A PONERLES ANTES DEL RETURN CUANDO YA LAS FECHAS VAYAN EN ORDEN
-    
-      // asignarFechaVerificacion();
-      // bloquearFechaDesdeInicio();
     
 
 
-
-    // Si no hay hoja_trabajo: usar MATERIALES_JSON
     let materiales = [];
     if (Array.isArray(row.MATERIALES_JSON)) {
       materiales = row.MATERIALES_JSON;
@@ -772,50 +1206,106 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
       return;
     }
 
-    // Mostrar pregunta
     $('#preguntaProveedorUnico').removeClass('d-none');
     $('#contenedorProductos').hide();
+ 
 
-    $('#respuestaProveedorUnicoSi').on('click', function () {
-      $('#preguntaProveedorUnico').addClass('d-none');
-      $('#contenedorProductos').show();
+  $('#respuestaProveedorUnicoSi').on('click', function () {
+  $('#esProveedorUnico').val('SI');
 
-      const template = document.querySelector('#templateProducto');
-      const clon = document.importNode(template.content, true);
+  $('#preguntaProveedorUnico').addClass('d-none');
+  $('#contenedorProductos').show();
 
-      clon.querySelector('.producto-titulo').textContent = 'Materiales';
+  const template = document.querySelector('#templateProducto');
+  const clon = document.importNode(template.content, true);
 
-      const detalleCantidadUnidad = clon.querySelector('.detalle-cantidad-unidad');
-      if (detalleCantidadUnidad) {
-        detalleCantidadUnidad.style.setProperty('display', 'none', 'important');
-      }
+  // Quita encabezado visual
+  const header = clon.querySelector('.card-header');
+  if (header) header.remove();
 
-      const descripcionDiv = clon.querySelector('.descripcion-materiales');
-      const listaHtml = listaFiltrada.map(m =>
-        `<li>${m.DESCRIPCION} (${m.CANTIDAD} ${m.UNIDAD_MEDIDA})</li>`
-      ).join('');
-      descripcionDiv.innerHTML = `<ul class="mb-0">${listaHtml}</ul>`;
+  // Elimina inputs ocultos si existen
+  if (clon.querySelector('.descripcion-input')) clon.querySelector('.descripcion-input').remove();
+  if (clon.querySelector('.cantidad-input')) clon.querySelector('.cantidad-input').remove();
+  if (clon.querySelector('.unidad-input')) clon.querySelector('.unidad-input').remove();
 
-      clon.querySelector('.descripcion-input').value = listaFiltrada.map(m => m.DESCRIPCION).join('*#');
-      clon.querySelector('.cantidad-input').value = listaFiltrada.map(m => m.CANTIDAD).join('*#');
-      clon.querySelector('.unidad-input').value = listaFiltrada.map(m => m.UNIDAD_MEDIDA).join('*#');
+  // Agrega inputs visibles por material
+  const descripcionDiv = clon.querySelector('.descripcion-materiales');
+  if (descripcionDiv) {
+    const inputsHtml = listaFiltrada.map(m => {
+      return `
+        <div class="row mb-2">
+          <div class="col-4">
+            <label class="form-label">Descripción</label>
+            <input type="text" class="form-control" name="DESCRIPCION[]" value="${m.DESCRIPCION}" readonly>
+          </div>
+          <div class="col-1">
+            <label class="form-label">Cantidad</label>
+            <input type="number" class="form-control" name="CANTIDAD[]" value="${m.CANTIDAD}" readonly>
+          </div>
+          <div class="col-2">
+            <label class="form-label">Unidad</label>
+            <input type="text" class="form-control" name="UNIDAD_MEDIDA[]" value="${m.UNIDAD_MEDIDA}" readonly>
+          </div>
+          <div class="col-2">
+            <label class="form-label">Cantidad Real</label>
+            <input type="number" class="form-control" name="CANTIDAD_REAL[]" min="0" step="any" required>
+          </div>
+          <div class="col-3">
+            <label class="form-label">Precio Unitario</label>
+            <input type="number" class="form-control" name="PRECIO_UNITARIO[]" min="0" step="0.01" required>
+          </div>
+        </div>
+      `;
+    }).join('');
+    descripcionDiv.innerHTML = inputsHtml;
+  }
 
-      $('#contenedorProductos').append(clon);
-      inicializarSelectizeEnClon(clon);
-      actualizarProveedoresSugeridos(clon);
-      actualizarProveedoresseleccionado(clon);
-      
+  const form = document.getElementById('formularioBITACORA');
+  if (form) {
+    let existingJsonInput = form.querySelector('input[name="MATERIALES_HOJA_JSON[]"]');
+    if (existingJsonInput) existingJsonInput.remove(); 
 
-      inicializarDatepickers();
-      // asignarFechaVerificacion();
-      // bloquearFechaDesdeInicio();
-      inicializarSumaImportes();
+    const nuevasDescripciones = Array.from(document.querySelectorAll('input[name="DESCRIPCION[]"]')).map(input => input.value);
+    const nuevasCantidades = Array.from(document.querySelectorAll('input[name="CANTIDAD[]"]')).map(input => input.value);
+    const nuevasUnidades = Array.from(document.querySelectorAll('input[name="UNIDAD_MEDIDA[]"]')).map(input => input.value);
+    const nuevasCantidadesReales = Array.from(document.querySelectorAll('input[name="CANTIDAD_REAL[]"]')).map(input => input.value);
+    const nuevosPreciosUnitarios = Array.from(document.querySelectorAll('input[name="PRECIO_UNITARIO[]"]')).map(input => input.value);
+
+    const materialesCompletos = nuevasDescripciones.map((_, i) => ({
+      DESCRIPCION: nuevasDescripciones[i],
+      CANTIDAD: nuevasCantidades[i],
+      UNIDAD_MEDIDA: nuevasUnidades[i],
+      CANTIDAD_REAL: nuevasCantidadesReales[i],
+      PRECIO_UNITARIO: nuevosPreciosUnitarios[i]
+    }));
+
+    const inputHidden = document.createElement('input');
+    inputHidden.type = 'hidden';
+    inputHidden.name = 'MATERIALES_HOJA_JSON[]';
+    inputHidden.value = JSON.stringify(materialesCompletos);
+    form.appendChild(inputHidden);
+  }
+
+  const $clon = $(clon);
+  $clon.find('.th-cantidadmr, .th-cantidadreal, .th-preciounitario').hide();
+  $clon.find('.td-cotizacionq1-cantidadmr, .td-cotizacionq1-cantidadreal, .td-cotizacionq1-preciounitario').hide();
+  $clon.find('.td-cotizacionq2-cantidadmr, .td-cotizacionq2-cantidadreal, .td-cotizacionq2-preciounitario').hide();
+  $clon.find('.td-cotizacionq3-cantidadmr, .td-cotizacionq3-cantidadreal, .td-cotizacionq3-preciounitario').hide();
+
+  $('#contenedorProductos').append($clon);
+
+  inicializarSelectizeEnClon($clon[0]);
+  actualizarProveedoresSugeridos($clon[0]);
+  actualizarProveedoresseleccionado($clon[0]);
+  inicializarDatepickers();
+  inicializarSumaImportes();
+});
 
 
-
-    });
 
     $('#respuestaProveedorUnicoNo').on('click', function () {
+      $('#esProveedorUnico').val('NO'); 
+
       $('#preguntaProveedorUnico').addClass('d-none');
       $('#contenedorProductos').show();
 
@@ -836,6 +1326,13 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
         clon.querySelector('.cantidad-input').value = material.CANTIDAD;
         clon.querySelector('.unidad-input').value = material.UNIDAD_MEDIDA;
 
+
+        clon.querySelector('.cantidadmr-cotizacionq1').value = material.CANTIDAD || '';
+        clon.querySelector('.cantidadmr-cotizacionq2').value = material.CANTIDAD || '';
+        clon.querySelector('.cantidadmr-cotizacionq3').value = material.CANTIDAD || '';
+
+        
+
         $('#contenedorProductos').append(clon);
         inicializarSelectizeEnClon(clon);
         actualizarProveedoresSugeridos(clon);
@@ -843,9 +1340,8 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
 
 
         inicializarDatepickers();
-        // asignarFechaVerificacion();
-        // bloquearFechaDesdeInicio();
         inicializarSumaImportes();
+        inicializarCantidadPorPrecio();
 
       });
 
@@ -857,6 +1353,10 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
     alertToast('Error al cargar la hoja de trabajo', 'error');
   }
 });
+
+
+
+
 
 
 
@@ -987,31 +1487,140 @@ $(document).on('change', '.proveedor-cotizacionq1, .proveedor-cotizacionq2, .pro
 
 
 
+// $('#btnGuardarTodo').on('click', function () {
+//   const form = document.getElementById('formularioBITACORA');
+
+//   // Borrar input previo
+//   const existente = form.querySelector('input[name="MATERIALES_HOJA_JSON[]"]');
+//   if (existente) existente.remove();
+
+//   // Recolectar datos actuales ingresados
+//   const descripciones = Array.from(form.querySelectorAll('input[name="DESCRIPCION[]"]')).map(e => e.value);
+//   const cantidades = Array.from(form.querySelectorAll('input[name="CANTIDAD[]"]')).map(e => e.value);
+//   const unidades = Array.from(form.querySelectorAll('input[name="UNIDAD_MEDIDA[]"]')).map(e => e.value);
+//   const reales = Array.from(form.querySelectorAll('input[name="CANTIDAD_REAL[]"]')).map(e => e.value);
+//   const precios = Array.from(form.querySelectorAll('input[name="PRECIO_UNITARIO[]"]')).map(e => e.value);
+
+//   const materialesJson = descripciones.map((_, i) => ({
+//     DESCRIPCION: descripciones[i],
+//     CANTIDAD: cantidades[i],
+//     UNIDAD_MEDIDA: unidades[i],
+//     CANTIDAD_REAL: reales[i],
+//     PRECIO_UNITARIO: precios[i]
+//   }));
+
+//   const inputHidden = document.createElement('input');
+//   inputHidden.type = 'hidden';
+//   inputHidden.name = 'MATERIALES_HOJA_JSON[]';
+//   inputHidden.value = JSON.stringify(materialesJson);
+//   form.appendChild(inputHidden);
+
+//   // Enviar
+//   const formData = new FormData(form);
+//   fetch('/guardarHOJAS', {
+//     method: 'POST',
+//     body: formData
+//   })
+//     .then(response => response.json())
+//     .then(data => {
+//       if (data.success) {
+//         alertToast('Hoja de trabajo guardada con éxito', 'success');
+//         $('#modalMateriales').modal('hide');
+//       } else {
+//         alertToast('Ocurrió un error al guardar', 'error');
+//       }
+//     })
+//     .catch(error => {
+//       console.error('Error al guardar:', error);
+//       alertToast('Error en la conexión con el servidor', 'error');
+//     });
+// });
+
+
+
 
 $('#btnGuardarTodo').on('click', function () {
-  const form = document.getElementById('formularioBITACORA');
-  const formData = new FormData(form);
+  Swal.fire({
+    title: '¿Deseas guardar la información?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, guardar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const form = document.getElementById('formularioBITACORA');
 
-  fetch('/guardarHOJAS', {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      alertToast('Hoja de trabajo guardada con éxito', 'success');
-      $('#modalMateriales').modal('hide');
-    } else {
-      alertToast('Ocurrió un error al guardar', 'error');
+      // Mostrar alerta de guardando
+      Swal.fire({
+        title: 'Guardando información...',
+        text: 'Por favor, espere un momento.',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
+      // Borrar input previo
+      const existente = form.querySelector('input[name="MATERIALES_HOJA_JSON[]"]');
+      if (existente) existente.remove();
+
+      // Recolectar datos actuales ingresados
+      const descripciones = Array.from(form.querySelectorAll('input[name="DESCRIPCION[]"]')).map(e => e.value);
+      const cantidades = Array.from(form.querySelectorAll('input[name="CANTIDAD[]"]')).map(e => e.value);
+      const unidades = Array.from(form.querySelectorAll('input[name="UNIDAD_MEDIDA[]"]')).map(e => e.value);
+      const reales = Array.from(form.querySelectorAll('input[name="CANTIDAD_REAL[]"]')).map(e => e.value);
+      const precios = Array.from(form.querySelectorAll('input[name="PRECIO_UNITARIO[]"]')).map(e => e.value);
+
+      const materialesJson = descripciones.map((_, i) => ({
+        DESCRIPCION: descripciones[i],
+        CANTIDAD: cantidades[i],
+        UNIDAD_MEDIDA: unidades[i],
+        CANTIDAD_REAL: reales[i],
+        PRECIO_UNITARIO: precios[i]
+      }));
+
+      const inputHidden = document.createElement('input');
+      inputHidden.type = 'hidden';
+      inputHidden.name = 'MATERIALES_HOJA_JSON[]';
+      inputHidden.value = JSON.stringify(materialesJson);
+      form.appendChild(inputHidden);
+
+      // Enviar
+      const formData = new FormData(form);
+      fetch('/guardarHOJAS', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          Swal.close(); // Cerrar alerta de carga
+
+          if (data.success) {
+            Swal.fire('Éxito', 'Hoja de trabajo guardada con éxito', 'success');
+            $('#modalMateriales').modal('hide');
+          } else {
+            Swal.fire('Error', 'Ocurrió un error al guardar', 'error');
+          }
+        })
+        .catch(error => {
+          console.error('Error al guardar:', error);
+          Swal.close();
+          Swal.fire('Error', 'Error en la conexión con el servidor', 'error');
+        });
     }
-  })
-  .catch(error => {
-    console.error('Error al guardar:', error);
-    alertToast('Error en la conexión con el servidor', 'error');
   });
 });
 
 
+
+
+$('form').on('submit', function (e) {
+  const formData = new FormData(this);
+  for (const pair of formData.entries()) {
+    console.log(pair[0], pair[1]);
+  }
+});
 
 
 /// QUITAR COMENTARIO CUANDO YA ESTEN LAS FECHAS CORRECTAS
@@ -1146,6 +1755,42 @@ function inicializarSumaImportes() {
         const maxDecimales = Math.max(decimalesSubtotal, decimalesIva);
 
         totalInput.value = suma.toFixed(maxDecimales);
+      }
+    });
+  });
+}
+
+
+function inicializarCantidadPorPrecio() {
+  document.addEventListener('input', function (e) {
+    const tipos = ['q1', 'q2', 'q3'];
+
+    tipos.forEach(tipo => {
+      if (
+        e.target.classList.contains(`cantidadreal-cotizacion${tipo}`) ||
+        e.target.classList.contains(`preciounitario-cotizacion${tipo}`)
+      ) {
+        const grupo = e.target.closest('.grupo-producto');
+        if (!grupo) return;
+
+        const cantidadInput = grupo.querySelector(`.cantidadreal-cotizacion${tipo}`);
+        const precioInput = grupo.querySelector(`.preciounitario-cotizacion${tipo}`);
+        const subtotalInput = grupo.querySelector(`.importe-cotizacion${tipo}`);
+
+        if (!cantidadInput || !precioInput || !subtotalInput) return;
+
+        const cantidadStr = cantidadInput.value.trim();
+        const precioStr = precioInput.value.trim();
+
+        const cantidad = parseFloat(cantidadStr) || 0;
+        const precio = parseFloat(precioStr) || 0;
+        const subtotal = cantidad * precio;
+
+        const decimalesCantidad = (cantidadStr.split('.')[1] || '').length;
+        const decimalesPrecio = (precioStr.split('.')[1] || '').length;
+        const maxDecimales = Math.max(decimalesCantidad, decimalesPrecio);
+
+        subtotalInput.value = subtotal.toFixed(maxDecimales);
       }
     });
   });
