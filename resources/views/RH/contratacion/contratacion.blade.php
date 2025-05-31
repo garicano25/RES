@@ -98,6 +98,18 @@
         flex-direction: column;
         justify-content: center;
     }
+
+
+
+     .bloque-contrato,
+    .bloque-adenda-contrato {
+        min-height: 93px;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+
+    
 </style>
 
 

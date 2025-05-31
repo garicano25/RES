@@ -23,6 +23,8 @@ use App\Models\contratacion\renovacioncontratoModel;
 use App\Models\contratacion\adendarenovacionModel;
 use App\Models\contratacion\requisicioncontratacion;
 
+use App\Models\contratacion\adendacontratoModel;
+
 
 use App\Models\organizacion\catalogotipovacanteModel;
 use App\Models\organizacion\catalogomotivovacanteModel;
@@ -719,6 +721,29 @@ public function obtenerguardados(Request $request)
             $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
             $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
             $value->BTN_CONTRATO = '<button type="button" class="btn btn-success btn-custom rounded-pill informacion" id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
+
+
+            $adendas = DB::table('adenda_contratos')
+                ->where('CONTRATO_ID', $value->ID_CONTRATOS_ANEXOS)
+                ->get();
+
+            $adendasAgrupadas = [];
+
+            foreach ($adendas as $adenda) {
+                $adendasAgrupadas[] = [
+                    'ID_ADENDA_CONTRATO'        => $adenda->ID_ADENDA_CONTRATO,
+                    'FECHAI_ADENDA_CONTRATO'    => $adenda->FECHAI_ADENDA_CONTRATO,
+                    'FECHAF_ADENDA_CONTRATO'    => $adenda->FECHAF_ADENDA_CONTRATO,
+                    'COMENTARIO_ADENDA_CONTRATO'=> $adenda->COMENTARIO_ADENDA_CONTRATO,
+                    'DOCUMENTO_ADENDA_CONTRATO' => $adenda->DOCUMENTO_ADENDA_CONTRATO,
+                    'BTN_DOCUMENTO'             => '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-adendacontrato" data-id="' . $adenda->ID_ADENDA_CONTRATO . '" title="Ver Adenda"><i class="bi bi-filetype-pdf"></i></button>',
+                ];
+            }
+
+            $value->ADENDAS = $adendasAgrupadas;
+
+
+
         }
 
         return response()->json([
@@ -742,6 +767,14 @@ public function mostrarcontratosyanexos($id)
 }
 
 
+ public function mostraradendacontrato($id)
+    {
+        $archivo = adendacontratoModel::findOrFail($id)->DOCUMENTO_ADENDA_CONTRATO;
+        return Storage::response($archivo);
+    }
+
+
+    
 
     public function obtenerInformacionContrato($contrato_id)
     {
@@ -1469,6 +1502,52 @@ public function obtenerdocumentosoportescontratos(Request $request)
                             $response['soporte'] = 'Actualizada';
                         }
                     }
+
+
+
+
+                      // ADENDAS
+                    if ($request->filled('FECHAI_ADENDA_CONTRATO')) {
+                        $fechasInicio = $request->FECHAI_ADENDA_CONTRATO;
+                        $fechasFin = $request->FECHAF_ADENDA_CONTRATO;
+                        $comentarios = $request->COMENTARIO_ADENDA_CONTRATO;
+
+
+
+                        $archivos = $request->file('DOCUMENTO_ADENDA_CONTRATO');
+                        $curp = $request->CURP;
+                        $renovacionId = $soportes->ID_CONTRATOS_ANEXOS;
+
+                        $adendasAnteriores = adendacontratoModel::where('CONTRATO_ID', $renovacionId)->get()->toArray();
+
+                        adendacontratoModel::where('CONTRATO_ID', $renovacionId)->delete();
+
+                        foreach ($fechasInicio as $i => $inicio) {
+                            $archivoRuta = null;
+
+                            if (isset($archivos[$i]) && $archivos[$i]->isValid()) {
+                                $archivo = $archivos[$i];
+                                $nombre = 'adenda_' . ($i + 1) . '.' . $archivo->getClientOriginalExtension();
+
+                                $rutaAdenda = "reclutamiento/{$curp}/Documentos de contratos y anexos/{$renovacionId}/adenda de contrato/" . ($i + 1);
+                                $archivoRuta = $archivo->storeAs($rutaAdenda, $nombre);
+                            } elseif (isset($adendasAnteriores[$i]['DOCUMENTO_ADENDA_CONTRATO'])) {
+                                $archivoRuta = $adendasAnteriores[$i]['DOCUMENTO_ADENDA_CONTRATO'];
+                            }
+
+                            adendacontratoModel::create([
+                                'CONTRATO_ID' => $renovacionId,
+                                'FECHAI_ADENDA_CONTRATO' => $inicio,
+                                'FECHAF_ADENDA_CONTRATO' => $fechasFin[$i] ?? null,
+                                'COMENTARIO_ADENDA_CONTRATO' => $comentarios[$i] ?? '',
+                                'DOCUMENTO_ADENDA_CONTRATO' => $archivoRuta
+                            ]);
+                        }
+                    }
+
+
+
+
 
                     $response['code'] = 1;
                     $response['soporte'] = $soportes;

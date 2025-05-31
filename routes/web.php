@@ -464,6 +464,9 @@ Route::post('/obtenerguardados', [contratacionController::class, 'obtenerguardad
 Route::get('/Tablacontratosyanexos', [contratacionController::class, 'Tablacontratosyanexos']);
 Route::get('/mostrarcontratosyanexos/{id}', [contratacionController::class, 'mostrarcontratosyanexos']);
 
+Route::get('/mostraradendacontrato/{id}', [contratacionController::class, 'mostraradendacontrato']);
+
+
 // DOCUMENTOS DE SOPORTE DEL CONTRATO  
 Route::get('/Tabladocumentosoportecontrato', [contratacionController::class, 'Tabladocumentosoportecontrato']);
 Route::get('/mostrardocumentosoportecontrato/{id}', [contratacionController::class, 'mostrardocumentosoportecontrato']);

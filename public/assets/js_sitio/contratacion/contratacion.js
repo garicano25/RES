@@ -2515,6 +2515,7 @@ $("#guardarCONTRATO").click(function (e) {
     
 });
 
+
 // function cargarTablaContratosyanexos() {
 //     if ($.fn.DataTable.isDataTable('#Tablacontratosyanexos')) {
 //         Tablacontratosyanexos.clear().destroy();
@@ -2536,16 +2537,16 @@ $("#guardarCONTRATO").click(function (e) {
 //         responsive: true,
 //         ajax: {
 //             dataType: 'json',
-//             data: { curp: curpSeleccionada },
+//             data: { curp: curpSeleccionada }, 
 //             method: 'GET',
 //             cache: false,
-//             url: '/Tablacontratosyanexos',
+//             url: '/Tablacontratosyanexos',  
 //             beforeSend: function () {
 //                 $('#loadingIcon1').css('display', 'inline-block');
 //             },
 //             complete: function () {
 //                 $('#loadingIcon1').css('display', 'none');
-//                 Tablacontratosyanexos.columns.adjust().draw();
+//                 Tablacontratosyanexos.columns.adjust().draw(); 
 //             },
 //             error: function (jqXHR, textStatus, errorThrown) {
 //                 $('#loadingIcon1').css('display', 'none');
@@ -2556,34 +2557,32 @@ $("#guardarCONTRATO").click(function (e) {
 //         columns: [
 //             { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
 //             { data: 'NOMBRE_DOCUMENTO_CONTRATO', className: 'text-center' },
-//             {
-//                 data: 'NOMBRE_CATEGORIA',
+//             { 
+//                 data: 'NOMBRE_CATEGORIA', 
 //                 className: 'text-center',
 //                 render: function(data) { return data ? data : 'N/A'; }
-//             },
+//             }, 
 //             {
-//                 data: null,
-//                 render: function (data, type, row) {
-//                     return  row.FECHAI_CONTRATO + '<br>' + row.VIGENCIA_CONTRATO;
-//                 }
+//                 data: 'FECHA_ESTADO', // Ahora solo mostramos un texto limpio desde PHP
+//                 className: 'text-center'
 //             },
-            
 //             { data: 'BTN_DOCUMENTO', className: 'text-center' },
 //             { data: 'BTN_EDITAR', className: 'text-center' },
 //             { data: 'BTN_CONTRATO', className: 'text-center' }
 //         ],
 //         columnDefs: [
 //             { targets: 0, title: '#', className: 'all text-center' },
-//             { targets: 1, title: 'Tipo de contrato', className: 'all text-center' },
-//             { targets: 2, title: 'Nombre del Cargo', className: 'all text-center' },
-//             { targets: 3, title: 'Fecha inicio  <br> Fecha fin', className: 'all text-center' },
-//             { targets: 4, title: 'Documento', className: 'all text-center' },
-//             { targets: 5, title: 'Editar', className: 'all text-center' },
-//             { targets: 6, title: 'Contrato', className: 'all text-center' },
-
+//             { targets: 1, title: 'Tipo de contrato', className: 'all text-center' },  
+//             { targets: 2, title: 'Nombre del Cargo', className: 'all text-center' },  
+//             { targets: 3, title: 'Fechas y Estado', className: 'all text-center' },  
+//             { targets: 4, title: 'Documento', className: 'all text-center' },  
+//             { targets: 5, title: 'Editar', className: 'all text-center' }, 
+//             { targets: 6, title: 'Contrato', className: 'all text-center' }
 //         ],
 //     });
 // }
+
+
 
 function cargarTablaContratosyanexos() {
     if ($.fn.DataTable.isDataTable('#Tablacontratosyanexos')) {
@@ -2593,10 +2592,7 @@ function cargarTablaContratosyanexos() {
     Tablacontratosyanexos = $("#Tablacontratosyanexos").DataTable({
         language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
         lengthChange: true,
-        lengthMenu: [
-            [10, 25, 50, -1],
-            [10, 25, 50, 'All']
-        ],
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'All']],
         info: false,
         paging: true,
         searching: true,
@@ -2606,16 +2602,16 @@ function cargarTablaContratosyanexos() {
         responsive: true,
         ajax: {
             dataType: 'json',
-            data: { curp: curpSeleccionada }, 
+            data: { curp: curpSeleccionada },
             method: 'GET',
             cache: false,
-            url: '/Tablacontratosyanexos',  
+            url: '/Tablacontratosyanexos',
             beforeSend: function () {
                 $('#loadingIcon1').css('display', 'inline-block');
             },
             complete: function () {
                 $('#loadingIcon1').css('display', 'none');
-                Tablacontratosyanexos.columns.adjust().draw(); 
+                Tablacontratosyanexos.columns.adjust().draw();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 $('#loadingIcon1').css('display', 'none');
@@ -2624,28 +2620,101 @@ function cargarTablaContratosyanexos() {
             dataSrc: 'data'
         },
         columns: [
-            { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
-            { data: 'NOMBRE_DOCUMENTO_CONTRATO', className: 'text-center' },
-            { 
-                data: 'NOMBRE_CATEGORIA', 
-                className: 'text-center',
-                render: function(data) { return data ? data : 'N/A'; }
-            }, 
             {
-                data: 'FECHA_ESTADO', // Ahora solo mostramos un texto limpio desde PHP
+                data: null,
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                },
                 className: 'text-center'
             },
-            { data: 'BTN_DOCUMENTO', className: 'text-center' },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    let html = `
+                        <div class="bloque-contrato p-2 mb-2 border-bottom border-secondary">
+                            <strong>${row.NOMBRE_DOCUMENTO_CONTRATO || 'Contrato'}</strong>
+                        </div>
+                    `;
+
+                    if (row.ADENDAS && row.ADENDAS.length > 0) {
+                        row.ADENDAS.forEach((adenda, index) => {
+                            html += `
+                                <div class="bloque-adenda-contrato p-2 mb-2 border-bottom border-secondary bg-light">
+                                    <span class="text-muted">Adenda ${index + 1}</span>
+                                    <div class="text-sm text-dark mt-1">${adenda.COMENTARIO_ADENDA_CONTRATO || ''}</div>
+                                </div>
+                            `;
+                        });
+                    }
+
+                    return html;
+                },
+                className: 'text-center'
+            },
+            {
+                data: 'NOMBRE_CATEGORIA',
+                className: 'text-center',
+                render: function (data) {
+                    return data ? data : 'N/A';
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    let html = `
+                        <div class="bloque-contrato p-2 mb-2 border-bottom border-secondary">
+                            ${row.FECHA_ESTADO || ''}
+                        </div>
+                    `;
+
+                    if (row.ADENDAS && row.ADENDAS.length > 0) {
+                        row.ADENDAS.forEach(adenda => {
+                            html += `
+                                <div class="bloque-adenda-contrato p-2 mb-2 border-bottom border-secondary bg-light">
+                                    <div>${adenda.FECHAI_ADENDA_CONTRATO || ''}</div>
+                                    <div>${adenda.FECHAF_ADENDA_CONTRATO || ''}</div>
+                                </div>
+                            `;
+                        });
+                    }
+
+                    return html;
+                },
+                className: 'text-center'
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    let html = `
+                        <div class="bloque-contrato p-2 mb-2 border-bottom border-secondary">
+                            ${row.BTN_DOCUMENTO || ''}
+                        </div>
+                    `;
+
+                    if (row.ADENDAS && row.ADENDAS.length > 0) {
+                        row.ADENDAS.forEach(adenda => {
+                            html += `
+                                <div class="bloque-adenda-contrato p-2 mb-2 border-bottom border-secondary bg-light">
+                                    ${adenda.BTN_DOCUMENTO || ''}
+                                </div>
+                            `;
+                        });
+                    }
+
+                    return html;
+                },
+                className: 'text-center'
+            },
             { data: 'BTN_EDITAR', className: 'text-center' },
             { data: 'BTN_CONTRATO', className: 'text-center' }
         ],
         columnDefs: [
             { targets: 0, title: '#', className: 'all text-center' },
-            { targets: 1, title: 'Tipo de contrato', className: 'all text-center' },  
-            { targets: 2, title: 'Nombre del Cargo', className: 'all text-center' },  
-            { targets: 3, title: 'Fechas y Estado', className: 'all text-center' },  
-            { targets: 4, title: 'Documento', className: 'all text-center' },  
-            { targets: 5, title: 'Editar', className: 'all text-center' }, 
+            { targets: 1, title: 'Tipo de contrato / Adendas', className: 'all text-center' },
+            { targets: 2, title: 'Nombre del Cargo', className: 'all text-center' },
+            { targets: 3, title: 'Fechas y Estado', className: 'all text-center' },
+            { targets: 4, title: 'Documentos', className: 'all text-center' },
+            { targets: 5, title: 'Editar', className: 'all text-center' },
             { targets: 6, title: 'Contrato', className: 'all text-center' }
         ],
     });
@@ -2676,28 +2745,95 @@ $('#Tablacontratosyanexos').on('click', 'td>button.EDITAR', function () {
 
 
 
-//     if (row.data().PROCEDE_ADENDA_CONTRATO == "1") {
-//         document.getElementById('AGREGAR_ADENDA_CONTRATO').style.display = 'block';
-//         document.getElementById('procedecontratosi').checked = true;
-//     } else if (row.data().PROCEDE_ADENDA_CONTRATO == "2") {
-//         document.getElementById('AGREGAR_ADENDA').style.display = 'none';
-//         document.getElementById('procedecontratono').checked = true;
-//     } else {
-//         document.getElementById('AGREGAR_ADENDA_CONTRATO').style.display = 'none';
-//         document.getElementById('procedecontratosi').checked = false;
-//         document.getElementById('procedecontratono').checked = false;
-//     }
+    if (row.data().PROCEDE_ADENDA_CONTRATO == "1") {
+        document.getElementById('AGREGAR_ADENDA_CONTRATO').style.display = 'block';
+        document.getElementById('procedecontratosi').checked = true;
+    } else if (row.data().PROCEDE_ADENDA_CONTRATO == "2") {
+        document.getElementById('AGREGAR_ADENDA').style.display = 'none';
+        document.getElementById('procedecontratono').checked = true;
+    } else {
+        document.getElementById('AGREGAR_ADENDA_CONTRATO').style.display = 'none';
+        document.getElementById('procedecontratosi').checked = false;
+        document.getElementById('procedecontratono').checked = false;
+    }
 
    $(".adendacontratodiv").empty();
 
-// if (row.data().ADENDAS && row.data().ADENDAS.length > 0) {
-//         obtenerAdendas(row.data().ADENDAS);
-//     }
-
+if (row.data().ADENDAS && row.data().ADENDAS.length > 0) {
+        obtenerAdendascontrato(row.data().ADENDAS);
+    }
 
 
 
 });
+
+
+
+function obtenerAdendascontrato(adendas) {
+    const contenedor = document.querySelector('.adendacontratodiv');
+    contenedor.innerHTML = '';
+
+    adendas.forEach(function (item, index) {
+        const divVerificacion = document.createElement('div');
+        divVerificacion.classList.add('row', 'generarverificacioncontrato', 'mb-3');
+
+        divVerificacion.innerHTML = `
+            <div class="col-12 mb-2">
+                <label>Adenda ${index + 1}</label>
+            </div>
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-4 mt-2">
+                        <label>Fecha Inicio *</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control mydatepicker" name="FECHAI_ADENDA_CONTRATO[]" value="${item.FECHAI_ADENDA_CONTRATO || ''}" placeholder="aaaa-mm-dd">
+                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-4 mt-2">
+                        <label>Fecha Fin *</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control mydatepicker" name="FECHAF_ADENDA_CONTRATO[]" value="${item.FECHAF_ADENDA_CONTRATO || ''}" placeholder="aaaa-mm-dd" >
+                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-4 mt-2">
+                        <label>Comentario *</label>
+                        <textarea class="form-control" name="COMENTARIO_ADENDA_CONTRATO[]" rows="3">${item.COMENTARIO_ADENDA_CONTRATO || ''}</textarea>
+                    </div>
+                    <div class="col-12 mt-2">
+                        <label class="form-label">Subir documento (PDF) *</label>
+                        <div class="d-flex align-items-center">
+                            <input type="file" class="form-control me-2" name="DOCUMENTO_ADENDA_CONTRATO[]" accept=".pdf">
+                            <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-4">
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-danger botonEliminarVerificacion">Eliminar adenda <i class="bi bi-trash-fill"></i></button>
+                </div>
+            </div>
+        `;
+
+        contenedor.appendChild(divVerificacion);
+
+        const botonEliminar = divVerificacion.querySelector('.botonEliminarVerificacion');
+        botonEliminar.addEventListener('click', function () {
+            contenedor.removeChild(divVerificacion);
+        });
+
+        const botonEliminarArchivo = divVerificacion.querySelector('.botonEliminarArchivo');
+        const inputArchivo = divVerificacion.querySelector('input[type="file"]');
+        botonEliminarArchivo.addEventListener('click', function () {
+            inputArchivo.value = '';
+        });
+    });
+}
 
 $('#Tablacontratosyanexos').on('click', '.ver-archivo-contratosyanexos', function () {
     var tr = $(this).closest('tr');
@@ -2714,6 +2850,19 @@ $('#Tablacontratosyanexos').on('click', '.ver-archivo-contratosyanexos', functio
     
     abrirModal(url, nombreDocumento);
 });
+
+
+
+
+$('#Tablacontratosyanexos').on('click', '.ver-archivo-adendacontrato', function () {
+    var id = $(this).data('id');
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO');
+        return;
+    }
+    var url = '/mostraradendacontrato/' + id;
+    abrirModal(url, 'Archivo adenda');
+})
 
 $('#Tablacontratosyanexos').on('click', 'button.informacion', function () {
 
@@ -3630,6 +3779,8 @@ $('#Tablarenovacioncontrato').on('click', '.ver-archivo-informacionadenda', func
     var url = '/mostraradenda/' + id;
     abrirModal(url, 'Archivo adenda');
 });
+
+
 // <!-- ============================================================== -->
 // <!--INFORMACION MEDICA-->
 // <!-- ============================================================== -->

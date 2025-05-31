@@ -20,7 +20,8 @@ class contratosanexosModel extends Model
         'SALARIO_CONTRATO',
         'VIGENCIA_ACUERDO',
         'DOCUMENTO_CONTRATO',
-        'ACTIVO'
+        'ACTIVO',
+        'PROCEDE_ADENDA_CONTRATO'
 
         
     ];}
