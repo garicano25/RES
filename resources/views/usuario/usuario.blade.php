@@ -245,7 +245,7 @@
                                         <div class="col-6 mb-3">
                                             <label>Generar contraseña</label>
                                             <button id="btnGENERARCONTRASEÑA" type="button" class="btn btn-primary ml-2 rounded-pill" title="Agregar">
-                                                <i class="bi bi-plus-circle-fill"></i>
+                                                <i class="bi bi-arrow-clockwise"></i>
                                             </button>
                                         </div>
                                     </div>

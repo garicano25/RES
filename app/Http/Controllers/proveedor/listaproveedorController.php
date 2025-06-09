@@ -146,9 +146,15 @@ class listaproveedorController extends Controller
         $proveedor = altaproveedorModel::findOrFail($idFormularioAlta);
         $rfc = $proveedor->RFC_ALTA;
 
-        $correo = DB::table('formulario_directorio')
-            ->where('RFC_PROVEEDOR', $rfc)
+        // $correo = DB::table('formulario_directorio')
+        //     ->where('RFC_PROVEEDOR', $rfc)
+        //     ->value('CORREO_DIRECTORIO');
+
+
+        $correo = DB::table('formulario_altaproveedor')
+            ->where('RFC_ALTA', $rfc)
             ->value('CORREO_DIRECTORIO');
+
 
         if (!$correo) {
             return response()->json(['status' => 'error', 'message' => 'No se encontró un correo asociado al proveedor.']);
