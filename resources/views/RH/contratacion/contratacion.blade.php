@@ -698,7 +698,7 @@
                     <div id="step4-content" style="display: none;">
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-person-fill"></i> &nbsp;Documentos de soportes del contrato</h3>
-                            <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_SOPORTECONTRATO" style="margin-left: auto;">
+                            <button type="button" class="btn btn-light waves-effect waves-light " id="NUEVO_DOCUMENTOSOPORTESCONTRATO" style="margin-left: auto;">
                                 Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
                             </button>
                         </ol>
@@ -1073,7 +1073,7 @@
                             </select>
                         </div>
                         <div class="row  mb-3">
-                            <div class="col-4">
+                            <div class="col-6">
                                 <label>Fecha Inicio *</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_CONTRATO" name="FECHAI_CONTRATO" required>
@@ -1081,7 +1081,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-6">
                                 <label>Fecha Fin *</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="VIGENCIA_CONTRATO" name="VIGENCIA_CONTRATO" required>
@@ -1089,12 +1089,27 @@
 
                                 </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-6 mt-3">
                                 <label>Salario *</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="SALARIO_CONTRATO" name="SALARIO_CONTRATO" required>
                                 </div>
                             </div>
+
+                            <div class="col-6  mt-4">
+                                <label>Requiere crendencial *</label>
+                                <div class="input-group">
+                                    <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="REQUIERE_CREDENCIAL" id="procedecredencialsi" value="1" required>
+                                    <label class="form-check-label" for="procedecredencialsi">Sí</label>
+                                </div>
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="REQUIERE_CREDENCIAL" id="procedecredencialno" value="2">
+                                    <label class="form-check-label" for="procedecredencialno">No</label>
+                                </div>                                </div>
+                            </div>
+                            
                         </div>
 
                     </div>
@@ -1240,6 +1255,35 @@
                         </div>
                     </div>
                     <div id="DOCUEMNTO_ERROR_SOPORTECONTRATO" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
+
+
+                <div class="mb-3" id="DIV_FOTO_FIRMA" style="display: none">
+                        <div class="form-group">
+                            <label  >Firma colaborador (.png)*</label>
+                            <style>
+                                .dropify-wrapper {
+                                    height: 270px !important;
+                                    border-radius: 5px;
+                                    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+                                    text-align: center;
+                                }
+
+                                .dropify-message p {
+                                    font-size: 14px;
+                                    margin: 0;
+                                }
+                            </style>
+                            <input type="file"
+                                accept="image/png"
+                                id="FOTO_FIRMA"
+                                name="FOTO_FIRMA"
+                                class="dropify"
+                                data-allowed-file-extensions="png"
+                                data-height="300"
+                                data-default-file="">
+
+                        </div>
+                    </div>
 
                 </div>
                 <div class="modal-footer">

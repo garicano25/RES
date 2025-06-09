@@ -788,49 +788,13 @@ document.getElementById('step1').addEventListener('click', function() {
 
 
 document.getElementById('DESCARGAR_CREDENCIAL').addEventListener('click', function() {
-    // Usar la variable global curpSeleccionada
     if (typeof curpSeleccionada === 'undefined' || !curpSeleccionada) {
         alert('Por favor seleccione un empleado primero');
         return;
     }
+        window.location.href = '/descargar-credencial?curp=' + encodeURIComponent(curpSeleccionada);
     
-    // Opción 1: Descarga directa con parámetros en la URL
-    window.location.href = '/descargar-credencial?curp=' + encodeURIComponent(curpSeleccionada);
-    
-    /* 
-    // Opción 2: Alternativa con Fetch API para más control
-    fetch('/descargar-credencial', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({
-            curp: curpSeleccionada
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            return response.json().then(data => {
-                throw new Error(data.error || 'Error al descargar la credencial');
-            });
-        }
-        return response.blob();
-    })
-    .then(blob => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = url;
-        a.download = 'credencial_' + curpSeleccionada + '.pptx';
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-    })
-    .catch(error => {
-        alert('Error: ' + error.message);
-    });
-    */
+
 });
 
 
@@ -973,7 +937,7 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     $('#step2-content, #step3-content, #step4-content,#step5-content,#step6-content,#step7-content').css("display", 'none');
 
 
-    $('#DESCARGAR_CREDENCIAL').css("display", 'block');
+    $('#DESCARGAR_CREDENCIAL').css("display", 'none');
 
 
     
@@ -2706,6 +2670,7 @@ function cargarTablaContratosyanexos() {
                 className: 'text-center'
             },
             { data: 'BTN_EDITAR', className: 'text-center' },
+            { data: 'BTN_CREDENCIAL', className: 'text-center' },
             { data: 'BTN_CONTRATO', className: 'text-center' }
         ],
         columnDefs: [
@@ -2715,12 +2680,36 @@ function cargarTablaContratosyanexos() {
             { targets: 3, title: 'Fechas y Estado', className: 'all text-center' },
             { targets: 4, title: 'Documentos', className: 'all text-center' },
             { targets: 5, title: 'Editar', className: 'all text-center' },
-            { targets: 6, title: 'Contrato', className: 'all text-center' }
+            { targets: 6, title: 'Credencial', className: 'all text-center' },
+            { targets: 7, title: 'Contrato', className: 'all text-center' }
         ],
     });
 }
 
 
+
+$('#Tablacontratosyanexos').on('click', '.generar-credencial', function () {
+    const idContrato = $(this).data('id');
+    const curp = $(this).data('curp');
+
+    if (!curp || !idContrato) {
+        alert('No se puede generar la credencial. Falta la CURP o el ID del contrato.');
+        return;
+    }
+
+    Swal.fire({
+        title: 'Generando credencial...',
+        text: 'Espere un momento mientras se descarga.',
+        allowOutsideClick: false,
+        didOpen: () => Swal.showLoading(),
+    });
+
+    window.location.href = `/descargar-credencial?curp=${encodeURIComponent(curp)}&id_contrato=${idContrato}`;
+
+    setTimeout(() => {
+        Swal.close(); // cerrar el loader después de unos segundos por precaución
+    }, 6000);
+});
 
 
 
@@ -4840,6 +4829,46 @@ $('#Tablarecibonomina').on('click', '.ver-archivo-recibonomina', function () {
 // <!--                                                          STEP 4                                                              -->
 // <!-- ============================================================================================================================ -->
 
+
+
+
+$(document).ready(function() {
+    $('#NUEVO_DOCUMENTOSOPORTESCONTRATO').on('click', function() {
+        limpiarFormulariocontrato(); 
+
+        $('#FOTO_FIRMA').dropify({
+            messages: {
+                'default': 'Arrastre la imagen aquí o haga clic',
+                'replace': 'Arrastre la imagen aquí o haga clic para reemplazar',
+                'remove':  'Quitar',
+                'error':   'Ooops, ha ocurrido un error.'
+            },
+            error: {
+                'fileSize': 'El archivo es demasiado grande (máx. {{ value }}).',
+                'minWidth': 'El ancho de la imagen es demasiado pequeño (mín. {{ value }}px).',
+                'maxWidth': 'El ancho de la imagen es demasiado grande (máx. {{ value }}px).',
+                'minHeight': 'La altura de la imagen es demasiado pequeña (mín. {{ value }}px).',
+                'maxHeight': 'La altura de la imagen es demasiado grande (máx. {{ value }}px).',
+                'imageFormat': 'Formato no permitido, sólo se aceptan: ({{ value }}).'
+            }
+        });
+
+        $('#miModal_SOPORTECONTRATO').modal('show');
+    });
+
+});
+
+
+
+function limpiarFormulariocontrato() {
+    $('#formularioSOPORTECONTRATO')[0].reset(); 
+
+    var drEvent = $('#FOTO_FIRMA').dropify().data('dropify');
+    drEvent.resetPreview();
+    drEvent.clearElement();
+}
+
+
 document.getElementById('step4').addEventListener('click', function() {
     document.querySelectorAll('[id$="-content"]').forEach(function(content) {
         content.style.display = 'none';
@@ -5014,6 +5043,10 @@ MiModal_SOPORTECONTRATO.addEventListener('hidden.bs.modal', event => {
     document.getElementById('FECHAS_SOPORTEDOCUMENTOSCONTRATO').style.display = 'none';
 
 
+    document.getElementById('DIV_FOTO_FIRMA').style.display = 'none';
+
+
+
 })
 
 
@@ -5033,6 +5066,28 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const selectTipoDocumento7 = document.getElementById('TIPO_DOCUMENTO_SOPORTECONTRATO');
+    const divFoto = document.getElementById('DIV_FOTO_FIRMA');
+
+    const valoresPermitidos7 = ['7'];
+
+    selectTipoDocumento7.addEventListener('change', function () {
+        const valorSeleccionado7 = this.value;
+
+        if (valoresPermitidos7.includes(valorSeleccionado7)) {
+            divFoto.style.display = 'block';
+        } else {
+            divFoto.style.display = 'none';
+        }
+    });
+});
+
+
+
 
 
 
@@ -5119,6 +5174,10 @@ $('#Tablasoportecontrato').on('click', 'td>button.EDITAR', function () {
 
 
     const mostrarDivdocumentos = ['11','14'];
+
+    const mostrarfoto = ['7'];
+
+
     const tipoSeleccionado1 = String(row.data().TIPO_DOCUMENTO_SOPORTECONTRATO); // asegurar que es string
 
     if (mostrarDivdocumentos.includes(tipoSeleccionado1)) {
@@ -5126,7 +5185,57 @@ $('#Tablasoportecontrato').on('click', 'td>button.EDITAR', function () {
     } else {
         document.getElementById('FECHAS_SOPORTEDOCUMENTOSCONTRATO').style.display = 'none';
     }
+
+
+    const tipoSeleccionado7 = String(row.data().TIPO_DOCUMENTO_SOPORTECONTRATO); // asegurar que es string
+
+     if (mostrarfoto.includes(tipoSeleccionado7)) {
+        document.getElementById('DIV_FOTO_FIRMA').style.display = 'block';
+    } else {
+        document.getElementById('DIV_FOTO_FIRMA').style.display = 'none';
+    }
  
+
+
+
+
+      if (row.data().FOTO_FIRMA) {
+        var archivo = row.data().FOTO_FIRMA;
+        var extension = archivo.substring(archivo.lastIndexOf("."));
+        var imagenUrl = '/firmacolaborador/' + row.data().ID_DOCUMENTO_COLABORADOR_CONTRATO + extension;
+        console.log(imagenUrl); 
+
+        if ($('#FOTO_FIRMA').data('dropify')) {
+            $('#FOTO_FIRMA').dropify().data('dropify').destroy();
+            $('#FOTO_FIRMA').dropify().data('dropify').settings.defaultFile = imagenUrl;
+            $('#FOTO_FIRMA').dropify().data('dropify').init();
+        } else {
+            $('#FOTO_FIRMA').attr('data-default-file', imagenUrl);
+            $('#FOTO_FIRMA').dropify({
+                messages: {
+                    'default': 'Arrastre la imagen aquí o haga click',
+                    'replace': 'Arrastre la imagen o haga clic para reemplazar',
+                    'remove': 'Quitar',
+                    'error': 'Ooops, ha ocurrido un error.'
+                },
+                error: {
+                    'fileSize': 'Demasiado grande ({{ value }} max).',
+                    'minWidth': 'Ancho demasiado pequeño (min {{ value }}}px).',
+                    'maxWidth': 'Ancho demasiado grande (max {{ value }}}px).',
+                    'minHeight': 'Alto demasiado pequeño (min {{ value }}}px).',
+                    'maxHeight': 'Alto demasiado grande (max {{ value }}px max).',
+                    'imageFormat': 'Formato no permitido, sólo ({{ value }}).'
+                }
+            });
+        }
+    } else {
+        $('#FOTO_FIRMA').dropify().data('dropify').resetPreview();
+        $('#FOTO_FIRMA').dropify().data('dropify').clearElement();
+    }
+
+
+
+
 });
 
 

@@ -9,116 +9,269 @@ use Illuminate\Support\Facades\Storage;
 
 class PowerPointController extends Controller
 {
+    // public function descargarCredencial(Request $request)
+    // {
+    //     try {
+    //         // Obtener la CURP de la petición o de JavaScript
+    //         $curp = $request->input('curp');
+
+    //         if (empty($curp)) {
+    //             return response()->json(['error' => 'CURP no proporcionada.'], 400);
+    //         }
+
+    //         // Ruta de la plantilla en el storage
+    //         $rutaPlantilla = storage_path('app/CREDENCIAL/Credenciales_ID.pptx');
+
+    //         if (!file_exists($rutaPlantilla)) {
+    //             return response()->json(['error' => 'La plantilla no existe.'], 404);
+    //         }
+
+    //         // Obtener datos del empleado desde la base de datos
+    //         $empleado = DB::table('formulario_contratacion')
+    //             ->where('CURP', $curp)
+    //             ->first();
+
+    //         if (!$empleado) {
+    //             return response()->json(['error' => 'No se encontró al empleado con la CURP proporcionada.'], 404);
+    //         }
+
+    //         // Obtener el cargo del empleado
+    //         $cargo = DB::table('contratos_anexos_contratacion as cac')
+    //             ->join('catalogo_categorias as cc', 'cc.ID_CATALOGO_CATEGORIA', '=', 'cac.NOMBRE_CARGO')
+    //             ->where('cac.CURP', $curp)
+    //             ->orderBy('cac.ID_CONTRATOS_ANEXOS', 'desc')
+    //             ->select('cc.NOMBRE_CATEGORIA')
+    //             ->first();
+
+    //         $nombreCargo = $cargo ? $cargo->NOMBRE_CATEGORIA : "No disponible";
+
+    //         // Generar el nombre completo
+    //         $nombreCompleto = trim($empleado->NOMBRE_COLABORADOR . ' ' . $empleado->PRIMER_APELLIDO . ' ' . ($empleado->SEGUNDO_APELLIDO ?? ''));
+
+
+    //         $idContrato = $request->input('id_contrato');
+
+    //         $fechasContrato = DB::table('contratos_anexos_contratacion as cac')
+    //             ->leftJoin('renovacion_contrato as rc', 'rc.CONTRATO_ID', '=', 'cac.ID_CONTRATOS_ANEXOS')
+    //             ->where('cac.ID_CONTRATOS_ANEXOS', $idContrato)
+    //             ->select(
+    //                 'cac.VIGENCIA_CONTRATO',
+    //                 DB::raw('MAX(rc.FECHAF_RENOVACION) as FECHAF_RENOVACION')
+    //             )
+    //             ->first();
+
+    //         // Determinar la fecha final
+    //         $fechaFinal = $fechasContrato->FECHAF_RENOVACION ?: $fechasContrato->VIGENCIA_CONTRATO ?: 'N/A';
+
+    //         // Formatear la fecha: "8 de junio de 2025"
+    //         setlocale(LC_TIME, 'es_MX.UTF-8');
+    //         Carbon\Carbon::setLocale('es');
+    //         $fechaFinalCarbon = \Carbon\Carbon::parse($fechaFinal);
+    //         $fechaFormateada = $fechaFinalCarbon->translatedFormat('j \d\e F \d\e Y');
+
+
+
+    //         // Preparar los datos para reemplazar en la plantilla
+    //         $datos = [
+    //             '${NOMBRE_EMPLEADO}'   => $nombreCompleto,
+    //             '${CARGO_EMPLEADO}'    => $nombreCargo,
+    //             '${NUMERO_EMPLEADO}'   => $empleado->NUMERO_EMPLEADO ?? 'N/A',
+    //             '${CURP_EMPLEADO}'     => $empleado->CURP ?? 'N/A',
+    //             '${RFC_EMPLEADO}'      => $empleado->RFC_COLABORADOR ?? 'N/A',
+    //             '${NUMERO_SEGURO}'     => $empleado->NSS_COLABORADOR ?? 'N/A',
+    //             '${TIPO_SANGRE}'       => $empleado->TIPO_SANGRE ?? 'N/A',
+    //             '${FECHA}' => $fechaFormateada,
+
+    //         ];
+
+    //         // Crear directorio temporal único
+    //         $tempDir = storage_path('app/temp_' . uniqid());
+    //         if (!file_exists($tempDir)) {
+    //             mkdir($tempDir, 0755, true);
+    //         }
+
+    //         // Extraer el archivo .pptx (que es un archivo ZIP)
+    //         $zip = new \ZipArchive();
+    //         if ($zip->open($rutaPlantilla) === TRUE) {
+    //             $zip->extractTo($tempDir);
+    //             $zip->close();
+    //         } else {
+    //             return response()->json(['error' => 'No se pudo extraer la plantilla.'], 500);
+    //         }
+
+    //         // Procesamos los archivos slide*.xml donde están los textos
+    //         $slideFiles = glob($tempDir . '/ppt/slides/slide*.xml');
+    //         foreach ($slideFiles as $slideFile) {
+    //             $content = file_get_contents($slideFile);
+
+    //             // Reemplazar cada marcador manteniendo el formato XML original
+    //             foreach ($datos as $marcador => $valor) {
+    //                 $content = str_replace($marcador, $valor, $content);
+    //             }
+
+    //             // Guardamos el contenido modificado
+    //             file_put_contents($slideFile, $content);
+    //         }
+
+    //         // Procesar la imagen del colaborador en una función separada
+    //         $this->reemplazarFotoColaborador($tempDir, $curp);
+
+    //         $this->reemplazarFotoFirma($tempDir, $curp); // <- esta es la nueva
+
+
+     
+
+    //         // Crear el nuevo archivo .pptx
+    //         $outputFile = storage_path('app/credencial_' . $curp . '_' . uniqid() . '.pptx');
+    //         $zip = new \ZipArchive();
+    //         if ($zip->open($outputFile, \ZipArchive::CREATE) === TRUE) {
+    //             // Añadir todos los archivos del directorio temporal
+    //             $this->addFolderToZip($tempDir, $zip, $tempDir);
+    //             $zip->close();
+    //         } else {
+    //             return response()->json(['error' => 'No se pudo crear el archivo de salida.'], 500);
+    //         }
+
+    //         // Limpiar el directorio temporal
+    //         $this->removeDirectory($tempDir);
+
+    //         // Descargar el archivo
+    //         return response()->download($outputFile, 'credencial_' . $curp . '.pptx')->deleteFileAfterSend(true);
+    //     } catch (\Exception $e) {
+    //         \Log::error('Error al procesar la presentación: ' . $e->getMessage());
+    //         return response()->json(['error' => 'Ocurrió un problema al generar la presentación: ' . $e->getMessage()], 500);
+    //     }
+    // }
+
+
     public function descargarCredencial(Request $request)
-    {
-        try {
-            // Obtener la CURP de la petición o de JavaScript
-            $curp = $request->input('curp');
+{
+    try {
+        // Obtener la CURP de la petición
+        $curp = $request->input('curp');
+        $idContrato = $request->input('id_contrato');
 
-            if (empty($curp)) {
-                return response()->json(['error' => 'CURP no proporcionada.'], 400);
-            }
-
-            // Ruta de la plantilla en el storage
-            $rutaPlantilla = storage_path('app/CREDENCIAL/Credenciales_ID.pptx');
-
-            if (!file_exists($rutaPlantilla)) {
-                return response()->json(['error' => 'La plantilla no existe.'], 404);
-            }
-
-            // Obtener datos del empleado desde la base de datos
-            $empleado = DB::table('formulario_contratacion')
-                ->where('CURP', $curp)
-                ->first();
-
-            if (!$empleado) {
-                return response()->json(['error' => 'No se encontró al empleado con la CURP proporcionada.'], 404);
-            }
-
-            // Obtener el cargo del empleado
-            $cargo = DB::table('contratos_anexos_contratacion as cac')
-                ->join('catalogo_categorias as cc', 'cc.ID_CATALOGO_CATEGORIA', '=', 'cac.NOMBRE_CARGO')
-                ->where('cac.CURP', $curp)
-                ->orderBy('cac.ID_CONTRATOS_ANEXOS', 'desc')
-                ->select('cc.NOMBRE_CATEGORIA')
-                ->first();
-
-            $nombreCargo = $cargo ? $cargo->NOMBRE_CATEGORIA : "No disponible";
-
-            // Generar el nombre completo
-            $nombreCompleto = trim($empleado->NOMBRE_COLABORADOR . ' ' . $empleado->PRIMER_APELLIDO . ' ' . ($empleado->SEGUNDO_APELLIDO ?? ''));
-
-            // Preparar los datos para reemplazar en la plantilla
-            $datos = [
-                '${NOMBRE_EMPLEADO}'   => $nombreCompleto,
-                '${CARGO_EMPLEADO}'    => $nombreCargo,
-                '${NUMERO_EMPLEADO}'   => $empleado->NUMERO_EMPLEADO ?? 'N/A',
-                '${CURP_EMPLEADO}'     => $empleado->CURP ?? 'N/A',
-                '${RFC_EMPLEADO}'      => $empleado->RFC_COLABORADOR ?? 'N/A',
-                '${NUMERO_SEGURO}'     => $empleado->NSS_COLABORADOR ?? 'N/A',
-                '${TIPO_SANGRE}'       => $empleado->TIPO_SANGRE ?? 'N/A',
-            ];
-
-            // Crear directorio temporal único
-            $tempDir = storage_path('app/temp_' . uniqid());
-            if (!file_exists($tempDir)) {
-                mkdir($tempDir, 0755, true);
-            }
-
-            // Extraer el archivo .pptx (que es un archivo ZIP)
-            $zip = new \ZipArchive();
-            if ($zip->open($rutaPlantilla) === TRUE) {
-                $zip->extractTo($tempDir);
-                $zip->close();
-            } else {
-                return response()->json(['error' => 'No se pudo extraer la plantilla.'], 500);
-            }
-
-            // Procesamos los archivos slide*.xml donde están los textos
-            $slideFiles = glob($tempDir . '/ppt/slides/slide*.xml');
-            foreach ($slideFiles as $slideFile) {
-                $content = file_get_contents($slideFile);
-
-                // Reemplazar cada marcador manteniendo el formato XML original
-                foreach ($datos as $marcador => $valor) {
-                    $content = str_replace($marcador, $valor, $content);
-                }
-
-                // Guardamos el contenido modificado
-                file_put_contents($slideFile, $content);
-            }
-
-            // Procesar la imagen del colaborador en una función separada
-            $this->reemplazarFotoColaborador($tempDir, $curp);
-
-            // Crear el nuevo archivo .pptx
-            $outputFile = storage_path('app/credencial_' . $curp . '_' . uniqid() . '.pptx');
-            $zip = new \ZipArchive();
-            if ($zip->open($outputFile, \ZipArchive::CREATE) === TRUE) {
-                // Añadir todos los archivos del directorio temporal
-                $this->addFolderToZip($tempDir, $zip, $tempDir);
-                $zip->close();
-            } else {
-                return response()->json(['error' => 'No se pudo crear el archivo de salida.'], 500);
-            }
-
-            // Limpiar el directorio temporal
-            $this->removeDirectory($tempDir);
-
-            // Descargar el archivo
-            return response()->download($outputFile, 'credencial_' . $curp . '.pptx')->deleteFileAfterSend(true);
-        } catch (\Exception $e) {
-            \Log::error('Error al procesar la presentación: ' . $e->getMessage());
-            return response()->json(['error' => 'Ocurrió un problema al generar la presentación: ' . $e->getMessage()], 500);
+        if (empty($curp) || empty($idContrato)) {
+            return response()->json(['error' => 'CURP o ID de contrato no proporcionados.'], 400);
         }
+
+        // Ruta de la plantilla en el storage
+        $rutaPlantilla = storage_path('app/CREDENCIAL/Credenciales_ID.pptx');
+
+        if (!file_exists($rutaPlantilla)) {
+            return response()->json(['error' => 'La plantilla no existe.'], 404);
+        }
+
+        // Obtener datos del empleado desde la base de datos
+        $empleado = DB::table('formulario_contratacion')
+            ->where('CURP', $curp)
+            ->first();
+
+        if (!$empleado) {
+            return response()->json(['error' => 'No se encontró al empleado con la CURP proporcionada.'], 404);
+        }
+
+        // Obtener el cargo del empleado
+        $cargo = DB::table('contratos_anexos_contratacion as cac')
+            ->join('catalogo_categorias as cc', 'cc.ID_CATALOGO_CATEGORIA', '=', 'cac.NOMBRE_CARGO')
+            ->where('cac.CURP', $curp)
+            ->orderBy('cac.ID_CONTRATOS_ANEXOS', 'desc')
+            ->select('cc.NOMBRE_CATEGORIA')
+            ->first();
+
+        $nombreCargo = $cargo ? $cargo->NOMBRE_CATEGORIA : "No disponible";
+
+        // Generar el nombre completo
+        $nombreCompleto = trim($empleado->NOMBRE_COLABORADOR . ' ' . $empleado->PRIMER_APELLIDO . ' ' . ($empleado->SEGUNDO_APELLIDO ?? ''));
+
+        // Obtener la vigencia y la renovación del contrato
+        $contrato = DB::table('contratos_anexos_contratacion')
+            ->where('ID_CONTRATOS_ANEXOS', $idContrato)
+            ->select('VIGENCIA_CONTRATO')
+            ->first();
+
+        $vigenciaContrato = $contrato ? $contrato->VIGENCIA_CONTRATO : null;
+
+        $renovacion = DB::table('renovacion_contrato')
+            ->where('CONTRATO_ID', $idContrato)
+            ->max('FECHAF_RENOVACION');
+
+        // Determinar la fecha final
+        $fechaFinal = $renovacion ?: $vigenciaContrato ?: 'N/A';
+
+        // Formatear la fecha en español
+        setlocale(LC_TIME, 'es_MX.UTF-8');
+        \Carbon\Carbon::setLocale('es');
+        $fechaFinalCarbon = \Carbon\Carbon::parse($fechaFinal);
+$fechaFormateada = $fechaFinalCarbon->format('m/Y');
+
+        // Preparar los datos para reemplazar en la plantilla
+        $datos = [
+            '${NOMBRE_EMPLEADO}'   => $nombreCompleto,
+            '${CARGO_EMPLEADO}'    => $nombreCargo,
+            '${NUMERO_EMPLEADO}'   => $empleado->NUMERO_EMPLEADO ?? 'N/A',
+            '${CURP_EMPLEADO}'     => $empleado->CURP ?? 'N/A',
+            '${RFC_EMPLEADO}'      => $empleado->RFC_COLABORADOR ?? 'N/A',
+            '${NUMERO_SEGURO}'     => $empleado->NSS_COLABORADOR ?? 'N/A',
+            '${TIPO_SANGRE}'       => $empleado->TIPO_SANGRE ?? 'N/A',
+            '${FECHA}'             => $fechaFormateada,
+        ];
+
+        // Crear directorio temporal único
+        $tempDir = storage_path('app/temp_' . uniqid());
+        if (!file_exists($tempDir)) {
+            mkdir($tempDir, 0755, true);
+        }
+
+        // Extraer el archivo .pptx (ZIP)
+        $zip = new \ZipArchive();
+        if ($zip->open($rutaPlantilla) === TRUE) {
+            $zip->extractTo($tempDir);
+            $zip->close();
+        } else {
+            return response()->json(['error' => 'No se pudo extraer la plantilla.'], 500);
+        }
+
+        // Reemplazar marcadores en slides
+        $slideFiles = glob($tempDir . '/ppt/slides/slide*.xml');
+        foreach ($slideFiles as $slideFile) {
+            $content = file_get_contents($slideFile);
+            foreach ($datos as $marcador => $valor) {
+                $content = str_replace($marcador, htmlspecialchars($valor, ENT_XML1 | ENT_QUOTES, 'UTF-8'), $content);
+            }
+            file_put_contents($slideFile, $content);
+        }
+
+        // Reemplazar imagen del colaborador y firma
+        $this->reemplazarFotoColaborador($tempDir, $curp);
+        $this->reemplazarFotoFirma($tempDir, $curp);
+
+        // Crear el nuevo archivo .pptx
+        $outputFile = storage_path('app/credencial_' . $curp . '_' . uniqid() . '.pptx');
+        $zip = new \ZipArchive();
+        if ($zip->open($outputFile, \ZipArchive::CREATE) === TRUE) {
+            $this->addFolderToZip($tempDir, $zip, $tempDir);
+            $zip->close();
+        } else {
+            return response()->json(['error' => 'No se pudo crear el archivo de salida.'], 500);
+        }
+
+        // Limpiar temporal
+        $this->removeDirectory($tempDir);
+
+        // Descargar el archivo
+        return response()->download($outputFile, 'credencial_' . $curp . '.pptx')->deleteFileAfterSend(true);
+    } catch (\Exception $e) {
+        \Log::error('Error al procesar la presentación: ' . $e->getMessage());
+        return response()->json(['error' => 'Ocurrió un problema al generar la presentación: ' . $e->getMessage()], 500);
     }
+}
+
 
     /**
      * Función para reemplazar la foto del colaborador manteniendo la forma circular
      */
-    /**
-     * Función para reemplazar la foto del colaborador manteniendo la forma circular
-     */
+   
 
 
 
@@ -185,11 +338,11 @@ class PowerPointController extends Controller
                             // Añadir nueva relación
                             $relsContent = str_replace(
                                 '</Relationships>',
-                                '  <Relationship Id="' . $nuevoRelId . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/' . $nuevaImagenNombre . '"/>
-</Relationships>',
-                                $relsContent
-                            );
-                        } else {
+                                            '  <Relationship Id="' . $nuevoRelId . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/' . $nuevaImagenNombre . '"/>
+            </Relationships>',
+                                            $relsContent
+                                        );
+                                    } else {
                             // Extraer el ID existente si ya hay una relación con esta imagen
                             preg_match('/Id="(rId[^"]+)" [^>]*Target="[^"]*' . preg_quote($nuevaImagenNombre, '/') . '"/', $relsContent, $idMatch);
                             if (!empty($idMatch)) {
@@ -199,10 +352,10 @@ class PowerPointController extends Controller
                     } else {
                         // Crear nuevo archivo de relaciones
                         $relsContent = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-  <Relationship Id="' . $nuevoRelId . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/' . $nuevaImagenNombre . '"/>
-</Relationships>';
-                    }
+                        <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+                        <Relationship Id="' . $nuevoRelId . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/' . $nuevaImagenNombre . '"/>
+                        </Relationships>';
+                                            }
 
                     // Guardar el archivo de relaciones
                     file_put_contents($relsFile, $relsContent);
@@ -237,27 +390,27 @@ class PowerPointController extends Controller
 
                                     // Modificar el contenido de la forma para usar la imagen como relleno
                                     $modifiedSpPr = '<p:spPr>
-    ' . $xfrmXml . '
-    <a:prstGeom prst="ellipse">
-        <a:avLst/>
-    </a:prstGeom>
-    <a:blipFill rotWithShape="1">
-        <a:blip r:embed="' . $nuevoRelId . '">
-            <a:lum/>
-        </a:blip>
-        <a:srcRect/>
-        <a:stretch>
-            <a:fillRect/>
-        </a:stretch>
-    </a:blipFill>
-    <a:ln w="38100"> <!-- 3 puntos = 38100 EMUs (1pt = 12700 EMUs) -->
-        <a:solidFill>
-            <a:srgbClr val="007DBA"/> <!-- Color hexadecimal #007DBA -->
-        </a:solidFill>
-    </a:ln>
-</p:spPr>';
+                                    ' . $xfrmXml . '
+                                    <a:prstGeom prst="ellipse">
+                                        <a:avLst/>
+                                    </a:prstGeom>
+                                    <a:blipFill rotWithShape="1">
+                                        <a:blip r:embed="' . $nuevoRelId . '">
+                                            <a:lum/>
+                                        </a:blip>
+                                        <a:srcRect/>
+                                        <a:stretch>
+                                            <a:fillRect/>
+                                        </a:stretch>
+                                    </a:blipFill>
+                                    <a:ln w="38100"> <!-- 3 puntos = 38100 EMUs (1pt = 12700 EMUs) -->
+                                        <a:solidFill>
+                                            <a:srgbClr val="007DBA"/> <!-- Color hexadecimal #007DBA -->
+                                        </a:solidFill>
+                                    </a:ln>
+                                </p:spPr>';
 
-                                    // Reemplazar la sección spPr en la forma original
+                                                                    // Reemplazar la sección spPr en la forma original
                                     $modifiedShapeXml = preg_replace('/<p:spPr[^>]*>.*?<\/p:spPr>/s', $modifiedSpPr, $shapeXml);
 
                                     // Reemplazar el texto marcador con texto vacío
@@ -306,72 +459,72 @@ class PowerPointController extends Controller
 
                         // Crear una nueva forma con la imagen
                         $nuevaForma = '<p:sp>
-  <p:nvSpPr>
-    <p:cNvPr id="' . rand(1000, 9999) . '" name="Foto Colaborador">
-      <a:extLst/>
-    </p:cNvPr>
-    <p:cNvSpPr/>
-    <p:nvPr/>
-  </p:nvSpPr>
-  <p:spPr>
-    ' . $xfrmXml . '
-    <a:prstGeom prst="ellipse">
-      <a:avLst/>
-    </a:prstGeom>
-    <a:blipFill rotWithShape="1">
-      <a:blip r:embed="' . $nuevoRelId . '">
-        <a:lum/>
-      </a:blip>
-      <a:srcRect/>
-      <a:stretch>
-        <a:fillRect/>
-      </a:stretch>
-    </a:blipFill>
-    <a:ln w="38100"> <!-- 3 puntos = 38100 EMUs (1pt = 12700 EMUs) -->
-      <a:solidFill>
-        <a:srgbClr val="007DBA"/> <!-- Color hexadecimal #007DBA -->
-      </a:solidFill>
-    </a:ln>
-  </p:spPr>vPr id="' . rand(1000, 9999) . '" name="Foto Colaborador">
-      <a:extLst/>
-    </p:cNvPr>
-    <p:cNvSpPr/>
-    <p:nvPr/>
-  </p:nvSpPr>
-  <p:spPr>
-    ' . $xfrmXml . '
-    <a:prstGeom prst="' . $formaOriginal . '">
-      <a:avLst/>
-    </a:prstGeom>
-    <a:noFill/> <!-- Sin relleno de fondo -->
-    <a:ln w="0"> <!-- Línea con ancho 0 (sin contorno) -->
-      <a:noFill/> <!-- Sin relleno para la línea -->
-    </a:ln>
-    <a:blipFill rotWithShape="1">
-      <a:blip r:embed="' . $nuevoRelId . '">
-        <a:lum/>
-      </a:blip>
-      <a:srcRect/>
-      <a:stretch>
-        <a:fillRect/>
-      </a:stretch>
-    </a:blipFill>
-  </p:spPr>
-  <p:txBody>
-    <a:bodyPr rtlCol="0" anchor="ctr"/>
-    <a:lstStyle/>
-    <a:p>
-      <a:pPr algn="ctr"/>
-      <a:r>
-        <a:rPr lang="es-ES" altLang="en-US" smtClean="0"/>
-        <a:t></a:t>
-      </a:r>
-      <a:endParaRPr lang="es-ES" altLang="en-US"/>
-    </a:p>
-  </p:txBody>
-</p:sp>';
+                                <p:nvSpPr>
+                                    <p:cNvPr id="' . rand(1000, 9999) . '" name="Foto Colaborador">
+                                    <a:extLst/>
+                                    </p:cNvPr>
+                                    <p:cNvSpPr/>
+                                    <p:nvPr/>
+                                </p:nvSpPr>
+                                <p:spPr>
+                                    ' . $xfrmXml . '
+                                    <a:prstGeom prst="ellipse">
+                                    <a:avLst/>
+                                    </a:prstGeom>
+                                    <a:blipFill rotWithShape="1">
+                                    <a:blip r:embed="' . $nuevoRelId . '">
+                                        <a:lum/>
+                                    </a:blip>
+                                    <a:srcRect/>
+                                    <a:stretch>
+                                        <a:fillRect/>
+                                    </a:stretch>
+                                    </a:blipFill>
+                                    <a:ln w="38100"> <!-- 3 puntos = 38100 EMUs (1pt = 12700 EMUs) -->
+                                    <a:solidFill>
+                                        <a:srgbClr val="007DBA"/> <!-- Color hexadecimal #007DBA -->
+                                    </a:solidFill>
+                                    </a:ln>
+                                </p:spPr>vPr id="' . rand(1000, 9999) . '" name="Foto Colaborador">
+                                    <a:extLst/>
+                                    </p:cNvPr>
+                                    <p:cNvSpPr/>
+                                    <p:nvPr/>
+                                </p:nvSpPr>
+                                <p:spPr>
+                                    ' . $xfrmXml . '
+                                    <a:prstGeom prst="' . $formaOriginal . '">
+                                    <a:avLst/>
+                                    </a:prstGeom>
+                                    <a:noFill/> <!-- Sin relleno de fondo -->
+                                    <a:ln w="0"> <!-- Línea con ancho 0 (sin contorno) -->
+                                    <a:noFill/> <!-- Sin relleno para la línea -->
+                                    </a:ln>
+                                    <a:blipFill rotWithShape="1">
+                                    <a:blip r:embed="' . $nuevoRelId . '">
+                                        <a:lum/>
+                                    </a:blip>
+                                    <a:srcRect/>
+                                    <a:stretch>
+                                        <a:fillRect/>
+                                    </a:stretch>
+                                    </a:blipFill>
+                                </p:spPr>
+                                <p:txBody>
+                                    <a:bodyPr rtlCol="0" anchor="ctr"/>
+                                    <a:lstStyle/>
+                                    <a:p>
+                                    <a:pPr algn="ctr"/>
+                                    <a:r>
+                                        <a:rPr lang="es-ES" altLang="en-US" smtClean="0"/>
+                                        <a:t></a:t>
+                                    </a:r>
+                                    <a:endParaRPr lang="es-ES" altLang="en-US"/>
+                                    </a:p>
+                                </p:txBody>
+                                </p:sp>';
 
-                        // Reemplazar la forma original con la nueva
+                                                        // Reemplazar la forma original con la nueva
                         $xmlModificado = str_replace($formaMatch[0], $nuevaForma, $xmlAnterior);
                         file_put_contents($slideFile, $xmlModificado);
 
@@ -411,6 +564,143 @@ class PowerPointController extends Controller
     }
 
     
+    /**
+     * Función para reemplazar la firma del colaborador manteniendo 
+     */
+   
+
+
+
+ 
+
+
+     private function reemplazarFotoFirma($tempDir, $curp)
+{
+    try {
+        // Buscar en la base de datos la firma del colaborador (tipo documento 7)
+        $firma = DB::table('documentos_colaborador_contrato')
+            ->where('CURP', $curp)
+            ->where('TIPO_DOCUMENTO_SOPORTECONTRATO', 7)
+            ->whereNotNull('FOTO_FIRMA')
+            ->orderByDesc('ID_DOCUMENTO_COLABORADOR_CONTRATO')
+            ->first();
+
+        if (!$firma || !Storage::exists($firma->FOTO_FIRMA)) {
+            \Log::warning("No se encontró la firma del colaborador: CURP={$curp}");
+            return false;
+        }
+
+        // Obtener el contenido de la imagen
+        $imagenContenido = Storage::get($firma->FOTO_FIRMA);
+
+        // Buscar el marcador en los slides
+        $slideFiles = glob($tempDir . '/ppt/slides/slide*.xml');
+        $marcador = '${FOTO_FIRMA}';
+        $encontrado = false;
+
+        foreach ($slideFiles as $slideFile) {
+            $slideContent = file_get_contents($slideFile);
+            preg_match('/slide(\d+)\.xml/', $slideFile, $matches);
+            $slideNumber = $matches[1];
+
+            if (strpos($slideContent, $marcador) !== false) {
+                $encontrado = true;
+
+                // Guardar la imagen en ppt/media/
+                $mediaDir = $tempDir . '/ppt/media';
+                if (!file_exists($mediaDir)) {
+                    mkdir($mediaDir, 0755, true);
+                }
+
+                $extension = pathinfo($firma->FOTO_FIRMA, PATHINFO_EXTENSION);
+                $nombreImagen = 'firma_empleado_' . $slideNumber . '.' . $extension;
+                $rutaImagen = $mediaDir . '/' . $nombreImagen;
+                file_put_contents($rutaImagen, $imagenContenido);
+
+                // Preparar archivo de relaciones
+                $relsFile = $tempDir . '/ppt/slides/_rels/slide' . $slideNumber . '.xml.rels';
+                if (!file_exists(dirname($relsFile))) {
+                    mkdir(dirname($relsFile), 0755, true);
+                }
+
+                $nuevoRelId = 'rId' . (950 + $slideNumber);
+
+                if (file_exists($relsFile)) {
+                    $relsContent = file_get_contents($relsFile);
+                    if (strpos($relsContent, $nombreImagen) === false) {
+                        $relsContent = str_replace(
+                            '</Relationships>',
+                            '  <Relationship Id="' . $nuevoRelId . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/' . $nombreImagen . '"/>
+                    </Relationships>',
+                            $relsContent
+                        );
+                    }
+                } else {
+                    $relsContent = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+                    <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+                    <Relationship Id="' . $nuevoRelId . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/' . $nombreImagen . '"/>
+                    </Relationships>';
+                }
+
+                file_put_contents($relsFile, $relsContent);
+
+                // Reemplazar marcador con XML de imagen conservando la forma original
+                if (preg_match_all('/<a:t[^>]*>([^<]*' . preg_quote($marcador, '/') . '[^<]*)<\/a:t>/s', $slideContent, $matches, PREG_OFFSET_CAPTURE)) {
+                    foreach ($matches[0] as $match) {
+                        $textoCompleto = $match[0];
+                        $posicion = $match[1];
+
+                        $posicionInicio = strrpos(substr($slideContent, 0, $posicion), '<p:sp');
+                        $posicionFin = strpos($slideContent, '</p:sp>', $posicion);
+                        if ($posicionInicio !== false && $posicionFin !== false) {
+                            $shapeXml = substr($slideContent, $posicionInicio, $posicionFin - $posicionInicio + 6);
+
+                            // Extraer la geometría y transformación existente del shape
+                            preg_match('/<a:xfrm>.*?<\/a:xfrm>/s', $shapeXml, $xfrmMatch);
+                            $xfrmXml = $xfrmMatch[0] ?? '<a:xfrm><a:off x="3048000" y="1524000"/><a:ext cx="3048000" cy="3048000"/></a:xfrm>';
+                            
+                            // Extraer la geometría existente (puede ser rect, roundRect, etc.)
+                            preg_match('/<a:prstGeom prst="([^"]+)"[^>]*>.*?<\/a:prstGeom>/s', $shapeXml, $geomMatch);
+                            $geometriaExistente = $geomMatch[0] ?? '<a:prstGeom prst="rect"><a:avLst/></a:prstGeom>';
+
+                            // Crear el spPr modificado manteniendo la forma original y sin borde
+                            $spPrModificado = '<p:spPr>' . $xfrmXml . $geometriaExistente . '<a:blipFill rotWithShape="1"><a:blip r:embed="' . $nuevoRelId . '"/><a:stretch><a:fillRect/></a:stretch></a:blipFill><a:ln><a:noFill/></a:ln></p:spPr>';
+
+                            // Reemplazar el spPr existente
+                            $shapeModificado = preg_replace('/<p:spPr[^>]*>.*?<\/p:spPr>/s', $spPrModificado, $shapeXml);
+                            
+                            // Limpiar el texto del marcador
+                            $shapeModificado = str_replace($textoCompleto, '<a:t></a:t>', $shapeModificado);
+
+                            // Asegurar namespace r
+                            if (strpos($slideContent, 'xmlns:r=') === false) {
+                                $slideContent = preg_replace('/<p:sld([^>]*)>/', '<p:sld$1 xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">', $slideContent);
+                            }
+
+                            // Insertar forma modificada
+                            $slideContent = substr_replace($slideContent, $shapeModificado, $posicionInicio, $posicionFin - $posicionInicio + 6);
+                            file_put_contents($slideFile, $slideContent);
+
+                            \Log::info("Marcador ${FOTO_FIRMA} reemplazado con la imagen correctamente en slide {$slideNumber}");
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (!$encontrado) {
+            \Log::warning("Marcador ${FOTO_FIRMA} no encontrado en ninguna diapositiva para CURP={$curp}");
+        }
+    } catch (\Exception $e) {
+        \Log::error("Error al reemplazar la firma: " . $e->getMessage());
+        return false;
+    }
+}
+
+
+
+
     
     /**
      * Función auxiliar para añadir un directorio completo a un archivo ZIP

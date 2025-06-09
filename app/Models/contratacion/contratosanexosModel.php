@@ -21,7 +21,8 @@ class contratosanexosModel extends Model
         'VIGENCIA_ACUERDO',
         'DOCUMENTO_CONTRATO',
         'ACTIVO',
-        'PROCEDE_ADENDA_CONTRATO'
+        'PROCEDE_ADENDA_CONTRATO',
+        'REQUIERE_CREDENCIAL'
 
         
     ];}

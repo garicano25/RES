@@ -498,6 +498,7 @@ Route::get('/Tablasoportecontrato', [contratacionController::class, 'Tablasoport
 Route::get('/mostrardocumentocolaboradorcontratosoporte/{id}', [contratacionController::class, 'mostrardocumentocolaboradorcontratosoporte']);
 Route::post('/obtenerdocumentosoportescontratos', [contratacionController::class, 'obtenerdocumentosoportescontratos']);
 
+Route::get('/firmacolaborador/{id}', [contratacionController::class, 'mostrarFotofirma']);
 
 /////////////////////////////////////// STEP 5 CV
 

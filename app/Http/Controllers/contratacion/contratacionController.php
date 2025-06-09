@@ -723,6 +723,16 @@ public function obtenerguardados(Request $request)
             $value->BTN_CONTRATO = '<button type="button" class="btn btn-success btn-custom rounded-pill informacion" id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
 
 
+            if ($value->REQUIERE_CREDENCIAL == 1) {
+$value->BTN_CREDENCIAL = '<button class="btn btn-danger btn-custom rounded-pill generar-credencial" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" data-curp="' . $value->CURP . '" title="Generar credencial"><i class="bi bi-person-badge-fill"></i></button>';
+            } else {
+                $value->BTN_CREDENCIAL = '<button type="button" class="btn btn-secondary btn-custom rounded-pill " disabled><i class="bi bi-ban"></i></button>';
+            }
+
+
+
+
+
             $adendas = DB::table('adenda_contratos')
                 ->where('CONTRATO_ID', $value->ID_CONTRATOS_ANEXOS)
                 ->get();
@@ -1230,6 +1240,16 @@ public function obtenerdocumentosoportescontratos(Request $request)
     return response()->json($documentos);
 }
 
+
+
+ public function mostrarFotofirma($id)
+    {
+        $foto = documentoscolaboradorcontratoModel::findOrFail($id);
+        return Storage::response($foto->FOTO_FIRMA);
+    }
+
+
+
     /////////////////////////////////////////// STEP 5  CREACION DE CV´S  //////////////////////////////////
 
 
@@ -1557,68 +1577,164 @@ public function obtenerdocumentosoportescontratos(Request $request)
 
                         // STEP 4 DOCUMENTOS DE SOPORTE DE LOS CONTRATOS EN GENERAL
 
+                        // case 4:
+                        //     if ($request->ID_DOCUMENTO_COLABORADOR_CONTRATO == 0) {
+                        //         DB::statement('ALTER TABLE documentos_colaborador_contrato AUTO_INCREMENT=1;');
+                        //         $soportes = documentoscolaboradorcontratoModel::create($request->except('DOCUMENTO_SOPORTECONTRATO')); 
+
+                        //         if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
+                        //             $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
+                        //             $curp = $request->CURP;
+                        //             $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                        //             $nombreArchivo =  preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
+
+                        //             $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
+                        //             $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                        //             $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
+                        //             $soportes->save();
+                        //         }
+                        //     } else {
+                        //         if (isset($request->ELIMINAR)) {
+                        //             if ($request->ELIMINAR == 1) {
+                        //                 $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
+                        //                     ->update(['ACTIVO' => 0]);
+                        //                 $response['code'] = 1;
+                        //                 $response['soporte'] = 'Desactivada';
+                        //             } else {
+                        //                 $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
+                        //                     ->update(['ACTIVO' => 1]);
+                        //                 $response['code'] = 1;
+                        //                 $response['soporte'] = 'Activada';
+                        //             }
+                        //         } else {
+                        //             $soportes = documentoscolaboradorcontratoModel::find($request->ID_DOCUMENTO_COLABORADOR_CONTRATO);
+                        //             $soportes->update($request->except('DOCUMENTO_SOPORTECONTRATO'));
+
+                        //             if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
+                        //                 if ($soportes->DOCUMENTO_SOPORTECONTRATO && Storage::exists($soportes->DOCUMENTO_SOPORTECONTRATO)) {
+                        //                     Storage::delete($soportes->DOCUMENTO_SOPORTECONTRATO); 
+                        //                 }
+
+                        //                 $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
+                        //                 $curp = $request->CURP;
+                        //                 $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                        //                 $nombreArchivo =  preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
+
+                        //                 $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
+                        //                 $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                        //                 $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
+                        //                 $soportes->save();
+                        //             }
+
+                        //             $response['code'] = 1;
+                        //             $response['soporte'] = 'Actualizada';
+                        //         }
+                        //     }
+
+                        //     $response['code'] = 1;
+                        //     $response['soporte'] = $soportes;
+                        //     return response()->json($response);
+                        //     break;
+
+
                         case 4:
-                            if ($request->ID_DOCUMENTO_COLABORADOR_CONTRATO == 0) {
-                                DB::statement('ALTER TABLE documentos_colaborador_contrato AUTO_INCREMENT=1;');
-                                $soportes = documentoscolaboradorcontratoModel::create($request->except('DOCUMENTO_SOPORTECONTRATO')); 
+    if ($request->ID_DOCUMENTO_COLABORADOR_CONTRATO == 0) {
+        DB::statement('ALTER TABLE documentos_colaborador_contrato AUTO_INCREMENT=1;');
+        $soportes = documentoscolaboradorcontratoModel::create($request->except(['DOCUMENTO_SOPORTECONTRATO', 'FOTO_FIRMA'])); 
 
-                                if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
-                                    $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
-                                    $curp = $request->CURP;
-                                    $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+        if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
+            $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
+            $curp = $request->CURP;
+            $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
 
-                                    $nombreArchivo =  preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
+            $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
 
-                                    $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
-                                    $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+            $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
+            $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
 
-                                    $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
-                                    $soportes->save();
-                                }
-                            } else {
-                                if (isset($request->ELIMINAR)) {
-                                    if ($request->ELIMINAR == 1) {
-                                        $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
-                                            ->update(['ACTIVO' => 0]);
-                                        $response['code'] = 1;
-                                        $response['soporte'] = 'Desactivada';
-                                    } else {
-                                        $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
-                                            ->update(['ACTIVO' => 1]);
-                                        $response['code'] = 1;
-                                        $response['soporte'] = 'Activada';
-                                    }
-                                } else {
-                                    $soportes = documentoscolaboradorcontratoModel::find($request->ID_DOCUMENTO_COLABORADOR_CONTRATO);
-                                    $soportes->update($request->except('DOCUMENTO_SOPORTECONTRATO'));
+            $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
+            $soportes->save();
+        }
 
-                                    if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
-                                        if ($soportes->DOCUMENTO_SOPORTECONTRATO && Storage::exists($soportes->DOCUMENTO_SOPORTECONTRATO)) {
-                                            Storage::delete($soportes->DOCUMENTO_SOPORTECONTRATO); 
-                                        }
+        if ($request->hasFile('FOTO_FIRMA')) {
+            $firma = $request->file('FOTO_FIRMA');
+            $curp = $request->CURP;
+            $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
 
-                                        $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
-                                        $curp = $request->CURP;
-                                        $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+            $nombreFirma = 'firma_colaborador.' . $firma->getClientOriginalExtension();
+            $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma del colaborador';
+            $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
 
-                                        $nombreArchivo =  preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
+            $soportes->FOTO_FIRMA = $rutaFirmaCompleta;
+            $soportes->save();
+        }
 
-                                        $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
-                                        $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+    } else {
+        if (isset($request->ELIMINAR)) {
+            if ($request->ELIMINAR == 1) {
+                $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
+                    ->update(['ACTIVO' => 0]);
+                $response['code'] = 1;
+                $response['soporte'] = 'Desactivada';
+            } else {
+                $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
+                    ->update(['ACTIVO' => 1]);
+                $response['code'] = 1;
+                $response['soporte'] = 'Activada';
+            }
+        } else {
+            $soportes = documentoscolaboradorcontratoModel::find($request->ID_DOCUMENTO_COLABORADOR_CONTRATO);
+            $soportes->update($request->except(['DOCUMENTO_SOPORTECONTRATO', 'FOTO_FIRMA']));
 
-                                        $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
-                                        $soportes->save();
-                                    }
+            if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
+                if ($soportes->DOCUMENTO_SOPORTECONTRATO && Storage::exists($soportes->DOCUMENTO_SOPORTECONTRATO)) {
+                    Storage::delete($soportes->DOCUMENTO_SOPORTECONTRATO); 
+                }
 
-                                    $response['code'] = 1;
-                                    $response['soporte'] = 'Actualizada';
-                                }
-                            }
+                $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
+                $curp = $request->CURP;
+                $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
 
-                            $response['code'] = 1;
-                            $response['soporte'] = $soportes;
-                            return response()->json($response);
-                            break;
+                $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
+
+                $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
+                $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
+                $soportes->save();
+            }
+
+            if ($request->hasFile('FOTO_FIRMA')) {
+                if ($soportes->FOTO_FIRMA && Storage::exists($soportes->FOTO_FIRMA)) {
+                    Storage::delete($soportes->FOTO_FIRMA);
+                }
+
+                $firma = $request->file('FOTO_FIRMA');
+                $curp = $request->CURP;
+                $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                $nombreFirma = 'firma_colaborador.' . $firma->getClientOriginalExtension();
+                $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma del colaborador';
+                $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
+
+                $soportes->FOTO_FIRMA = $rutaFirmaCompleta;
+                $soportes->save();
+            }
+
+            $response['code'] = 1;
+            $response['soporte'] = 'Actualizada';
+        }
+    }
+
+    $response['code'] = 1;
+    $response['soporte'] = $soportes;
+    return response()->json($response);
+    break;
+
 
 
                 /////////////////////////////////////////// DOCUMENTOS DE CONTRATO //////////////////////////////////
@@ -1964,171 +2080,6 @@ public function obtenerdocumentosoportescontratos(Request $request)
                             $response['soporte'] = $soportes;
                             return response()->json($response);
                             break;
-
-
-
-                // RENOVACIOND DE CONTRATO
-                //  case 10:
-                //     if ($request->ID_RENOVACION_CONTATO == 0) {
-                //         DB::statement('ALTER TABLE renovacion_contrato AUTO_INCREMENT=1;');
-                //         $soportes = renovacioncontratoModel::create($request->except('DOCUMENTOS_RENOVACION')); 
-
-                //         if ($request->hasFile('DOCUMENTOS_RENOVACION')) {
-                //             $documento = $request->file('DOCUMENTOS_RENOVACION');
-                //             $curp = $request->CURP;
-                //             $idDocumento = $soportes->ID_RENOVACION_CONTATO;
-                //             $contratoId = $soportes->CONTRATO_ID; 
-
-                //             $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_RENOVACION) . '.' . $documento->getClientOriginalExtension();
-
-                //             $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Renovación de contrato/' . $idDocumento;
-                //             $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
-
-                //             $soportes->DOCUMENTOS_RENOVACION = $rutaCompleta;
-                //             $soportes->save();
-                //         }
-                //     } else {
-                //         if (isset($request->ELIMINAR)) {
-                //             if ($request->ELIMINAR == 1) {
-                //                 $soportes = renovacioncontratoModel::where('ID_RENOVACION_CONTATO', $request['ID_RENOVACION_CONTATO'])
-                //                     ->update(['ACTIVO' => 0]);
-                //                 $response['code'] = 1;
-                //                 $response['soporte'] = 'Desactivada';
-                //             } else {
-                //                 $soportes = renovacioncontratoModel::where('ID_RENOVACION_CONTATO', $request['ID_RENOVACION_CONTATO'])
-                //                     ->update(['ACTIVO' => 1]);
-                //                 $response['code'] = 1;
-                //                 $response['soporte'] = 'Activada';
-                //             }
-                //         } else {
-                //             $soportes = renovacioncontratoModel::find($request->ID_RENOVACION_CONTATO);
-                //             $soportes->update($request->except('DOCUMENTOS_RENOVACION'));
-
-                //             if ($request->hasFile('DOCUMENTOS_RENOVACION')) {
-                //                 if ($soportes->DOCUMENTOS_RENOVACION && Storage::exists($soportes->DOCUMENTOS_RENOVACION)) {
-                //                     Storage::delete($soportes->DOCUMENTOS_RENOVACION); 
-                //                 }
-
-                //                 $documento = $request->file('DOCUMENTOS_RENOVACION');
-                //                 $curp = $request->CURP;
-                //                 $idDocumento = $soportes->ID_RENOVACION_CONTATO;
-                //                 $contratoId = $soportes->CONTRATO_ID; 
-
-                //                 $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_RENOVACION) . '.' . $documento->getClientOriginalExtension();
-
-                //                 $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Renovación de contrato/' . $idDocumento;
-                //                 $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
-
-                //                 $soportes->DOCUMENTOS_RENOVACION = $rutaCompleta;
-                //                 $soportes->save();
-                //             }
-
-                //             $response['code'] = 1;
-                //             $response['soporte'] = 'Actualizada';
-                //         }
-                //     }
-
-                //     $response['code'] = 1;
-                //     $response['soporte'] = $soportes;
-                //     return response()->json($response);
-                //     break;
-
-
-                // case 10:
-
-                //             if ($request->ID_RENOVACION_CONTATO == 0) {
-                //                 DB::statement('ALTER TABLE renovacion_contrato AUTO_INCREMENT=1;');
-                //                 $soportes = renovacioncontratoModel::create($request->except('DOCUMENTOS_RENOVACION'));
-
-                //                 if ($request->hasFile('DOCUMENTOS_RENOVACION')) {
-                //                     $documento = $request->file('DOCUMENTOS_RENOVACION');
-                //                     $curp = $request->CURP;
-                //                     $idDocumento = $soportes->ID_RENOVACION_CONTATO;
-                //                     $contratoId = $soportes->CONTRATO_ID;
-
-                //                     $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_RENOVACION) . '.' . $documento->getClientOriginalExtension();
-
-                //                     $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Renovación de contrato/' . $idDocumento;
-                //                     $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
-
-                //                     $soportes->DOCUMENTOS_RENOVACION = $rutaCompleta;
-                //                     $soportes->save();
-                //                 }
-                //             } else {
-                //                 if (isset($request->ELIMINAR)) {
-                //                     if ($request->ELIMINAR == 1) {
-                //                         $soportes = renovacioncontratoModel::where('ID_RENOVACION_CONTATO', $request['ID_RENOVACION_CONTATO'])
-                //                             ->update(['ACTIVO' => 0]);
-                //                         $response['code'] = 1;
-                //                         $response['soporte'] = 'Desactivada';
-                //                     } else {
-                //                         $soportes = renovacioncontratoModel::where('ID_RENOVACION_CONTATO', $request['ID_RENOVACION_CONTATO'])
-                //                             ->update(['ACTIVO' => 1]);
-                //                         $response['code'] = 1;
-                //                         $response['soporte'] = 'Activada';
-                //                     }
-                //                 } else {
-                //                     $soportes = renovacioncontratoModel::find($request->ID_RENOVACION_CONTATO);
-                //                     $soportes->update($request->except('DOCUMENTOS_RENOVACION'));
-
-                //                     if ($request->hasFile('DOCUMENTOS_RENOVACION')) {
-                //                         if ($soportes->DOCUMENTOS_RENOVACION && Storage::exists($soportes->DOCUMENTOS_RENOVACION)) {
-                //                             Storage::delete($soportes->DOCUMENTOS_RENOVACION);
-                //                         }
-
-                //                         $documento = $request->file('DOCUMENTOS_RENOVACION');
-                //                         $curp = $request->CURP;
-                //                         $idDocumento = $soportes->ID_RENOVACION_CONTATO;
-                //                         $contratoId = $soportes->CONTRATO_ID;
-
-                //                         $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_RENOVACION) . '.' . $documento->getClientOriginalExtension();
-
-                //                         $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Renovación de contrato/' . $idDocumento;
-                //                         $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
-
-                //                         $soportes->DOCUMENTOS_RENOVACION = $rutaCompleta;
-                //                         $soportes->save();
-                //                     }
-
-                //                     $response['code'] = 1;
-                //                     $response['soporte'] = 'Actualizada';
-                //                 }
-                //             }
-
-                //             if ($request->filled('FECHAI_ADENDA')) {
-                //                 $fechasInicio = $request->FECHAI_ADENDA;
-                //                 $fechasFin = $request->FECHAF_ADENDA;
-                //                 $comentarios = $request->COMENTARIO_ADENDA;
-                //                 $archivos = $request->file('DOCUMENTO_ADENDA');
-                //                 $curp = $request->CURP;
-                //                 $contratoId = $soportes->CONTRATO_ID;
-                //                 $renovacionId = $soportes->ID_RENOVACION_CONTATO;
-
-                //                 foreach ($fechasInicio as $i => $inicio) {
-                //                     $archivoRuta = null;
-
-                //                     if (isset($archivos[$i]) && $archivos[$i]->isValid()) {
-                //                         $archivo = $archivos[$i];
-                //                         $nombre = 'adenda_' . ($i + 1) . '.' . $archivo->getClientOriginalExtension();
-
-                //                         $rutaAdenda = 'reclutamiento/' . $curp . '/Documentos del contrato/' . $contratoId . '/Renovación de contrato/' . $renovacionId . '/adenda/' . ($i + 1);
-                //                         $archivoRuta = $archivo->storeAs($rutaAdenda, $nombre);
-                //                     }
-
-                //                     adendarenovacionModel::create([
-                //                         'RENOVACION_ID' => $renovacionId,
-                //                         'FECHAI_ADENDA' => $inicio,
-                //                         'FECHAF_ADENDA' => $fechasFin[$i] ?? null,
-                //                         'COMENTARIO_ADENDA' => $comentarios[$i] ?? '',
-                //                         'DOCUMENTO_ADENDA' => $archivoRuta
-                //                     ]);
-                //                 }
-                //             }
-
-                //             $response['code'] = 1;
-                //             $response['soporte'] = $soportes;
-                //             return response()->json($response);
-                //             break;
 
 
 

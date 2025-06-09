@@ -17,7 +17,8 @@ class documentoscolaboradorcontratoModel extends Model
         'DOCUMENTO_SOPORTECONTRATO',
         'ACTIVO',
         'FECHAI_DOCUMENTOSOPORTECONTRATO',
-        'FECHAF_DOCUMENTOSOPORTECONTRATO'
+        'FECHAF_DOCUMENTOSOPORTECONTRATO',
+        'FOTO_FIRMA'
     ];
 
 }
