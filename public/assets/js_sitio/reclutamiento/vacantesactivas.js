@@ -151,12 +151,6 @@ var Tablapostulaciones = $("#Tablapostulaciones").DataTable({
         { data: 'LUGAR_VACANTE' },
         { data: 'LA_VACANTES_ES' },
         { data: 'DESCRIPCION_VACANTE' },
-        { 
-            data: 'created_at',
-            render: function(data, type, row) {
-                return data.split(' ')[0]; 
-            }
-        },
         { data: 'FECHA_EXPIRACION' },
         { data: 'TOTAL_POSTULANTES' }, 
         { data: null,
@@ -181,10 +175,9 @@ var Tablapostulaciones = $("#Tablapostulaciones").DataTable({
                 return data;
             }
         },
-        { targets: 5, title: 'Fecha de publicación', className: 'all text-center' },
-        { targets: 6, title: 'Fecha de expiración', className: 'all text-center' },
-        { targets: 7, title: 'Total de postulaciones', className: 'all text-center' },
-        { targets: 8, title: 'Visualizar', className: 'all text-center' }
+        { targets: 5, title: 'Fecha de expiración', className: 'all text-center' },
+        { targets: 6, title: 'Total de postulaciones', className: 'all text-center' },
+        { targets: 7, title: 'Visualizar', className: 'all text-center' }
     ]
 });
 

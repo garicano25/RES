@@ -479,7 +479,7 @@
     @endif
 
     @if(request()->is('Postulaciones'))
-    <script src="/assets/js_sitio/reclutamiento/vacantesactivas.js?v=6.0"></script>
+    <script src="/assets/js_sitio/reclutamiento/vacantesactivas.js?v=6.1"></script>
     @endif
 
     @if(request()->is('Motivo-vacante'))
