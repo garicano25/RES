@@ -354,7 +354,7 @@ $(document).ready(function() {
         var tr = $(this).closest('tr');
         var row = Tablaproveedortemporal.row(tr);
         
-        hacerSoloLectura(row.data(), '#miModal_proveedortemporal');
+        hacerSoloLectura2(row.data(), '#miModal_proveedortemporal');
 
         
         ID_FORMULARIO_PROVEEDORTEMP = row.data().ID_FORMULARIO_PROVEEDORTEMP;

@@ -430,7 +430,7 @@
     @endif
 
     @if(request()->is('Proveedores_temporales'))
-    <script src="/assets/js_sitio/proveedor/proveedorestemp.js?v=1.4"></script>
+    <script src="/assets/js_sitio/proveedor/proveedorestemp.js?v=1.5"></script>
     @endif
 </body>
 
