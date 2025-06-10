@@ -368,6 +368,13 @@ $(document).ready(function() {
         $('#miModal_proveedortemporal .modal-title').html(row.data().RAZON_PROVEEDORTEMP);
             
 
+        if (row.data().REQUIERE_CONTRATO == 1) {
+            $('#DOCUMENTO_CONTRATO').show();
+            $('#contratosi').prop('checked', true);
+        } else {
+            $('#DOCUMENTO_CONTRATO').hide();
+            $('#contratono').prop('checked', true);
+        }
     });
 
     $('#miModal_proveedortemporal').on('hidden.bs.modal', function () {
