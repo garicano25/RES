@@ -7,19 +7,19 @@
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
-        <h3  style="color: #ffffff; margin: 0;"><i class="bi bi-person-lines-fill"></i>&nbsp;Vacantes activas</h3>
+        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-person-lines-fill"></i>&nbsp;Vacantes activas</h3>
 
 
-        
+
         <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_VACANTESACT" style="margin-left: auto;">
-            Nuevo  &nbsp;<i class="bi bi-plus-circle"></i>
+            Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
         </button>
 
 
 
     </ol>
 
-    
+
     <div class="card-body">
         <table id="Tablapostulaciones" class="table table-hover bg-white table-bordered text-center w-100 TableCustom"></table>
     </div>
@@ -38,7 +38,7 @@
             </div>
             <div class="modal-body">
                 <!-- Contenedor para mostrar el total de resultados -->
-                
+
                 <!-- Tabs -->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
@@ -52,7 +52,7 @@
                         </button>
                     </li>
                 </ul>
-                
+
                 <br>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="postulante" role="tabpanel" aria-labelledby="postulante-tab">
@@ -86,7 +86,7 @@
                     {!! csrf_field() !!}
                     <div class="mb-3">
                         <label>Tipo de vacante *</label>
-                    
+
                         <select class="form-select" id="LA_VACANTES_ES" name="LA_VACANTES_ES" required>
                             <option value="0" disabled selected>Seleccione una opción</option>
                             <option value="Pública">Pública</option>
@@ -108,20 +108,20 @@
                     </div>
                     <div class="mb-3">
                         <label>Lugar de la vacante</label>
-                        <input  type="text" name="LUGAR_VACANTE" id="LUGAR_VACANTE" class="form-control" required>
+                        <input type="text" name="LUGAR_VACANTE" id="LUGAR_VACANTE" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label>Fecha de expiración de la vacante</label>
-                        <input type="date" name="FECHA_EXPIRACION" id="FECHA_EXPIRACION"  class="form-control" required>
+                        <input type="date" name="FECHA_EXPIRACION" id="FECHA_EXPIRACION" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label>Requerimiento de Vacantes:</label>
                         <button id="botonAgregar" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar requerimiento"><i class="bi bi-plus-circle-fill"></i></button>
                         <div id="inputs-container" class="mt-3"></div>
                     </div>
-                    
 
-                
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
@@ -137,14 +137,14 @@
 <div class="modal fade" id="miModal_VACANTESACT" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post"  enctype="multipart/form-data" id="formularioVACANTESACT" style="background-color: #ffffff;">
+            <form method="post" enctype="multipart/form-data" id="formularioVACANTESACT" style="background-color: #ffffff;">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Agregar a vacante</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     {!! csrf_field() !!}
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label>Vacante *</label>
                         <select class="form-control" id="VACANTES_ID" name="VACANTES_ID" required>
                             <option selected disabled>Seleccione una opción</option>
@@ -153,16 +153,29 @@
                                     {{ $vacante->NOMBRE_CATEGORIA }}
                                 </option>
                             @endforeach
+                        </select>                
+                    </div> -->
+
+                    <div class="mb-3">
+                        <label>Vacante *</label>
+                        <select class="form-control" id="VACANTES_ID" name="VACANTES_ID" required>
+                            <option selected disabled>Seleccione una opción</option>
+                            @foreach($vacantes as $vacante)
+                            <option value="{{ $vacante->ID_CATALOGO_VACANTE }}">
+                                {{ $vacante->NOMBRE_CATEGORIA }} (expira: {{ \Carbon\Carbon::parse($vacante->FECHA_EXPIRACION)->format('d/m/Y') }})
+                            </option>
+                            @endforeach
                         </select>
-                                           
                     </div>
+
+                    
                     <div class="mb-3">
                         <label>CURP * </label>
                         <input type="text" class="form-control" id="CURP" name="CURP" required>
                     </div>
 
-                      
-                    
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>

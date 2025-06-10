@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Storage;
 
 
 use DB;
+use Carbon\Carbon;
+
 class vacantesactivasController extends Controller
 {
     
@@ -29,14 +31,28 @@ class vacantesactivasController extends Controller
         $areas = catalogocategoriaModel::where('ES_LIDER_CATEGORIA', 0)
             ->orderBy('NOMBRE_CATEGORIA', 'ASC')
             ->get();
-    
-            $vacantes = DB::table('catalogo_vacantes')
+
+        // $vacantes = DB::table('catalogo_vacantes')
+        // ->join('catalogo_categorias', 'catalogo_vacantes.CATEGORIA_VACANTE', '=', 'catalogo_categorias.ID_CATALOGO_CATEGORIA')
+        // ->select('catalogo_vacantes.ID_CATALOGO_VACANTE', 'catalogo_categorias.NOMBRE_CATEGORIA')
+        // ->where('catalogo_vacantes.LA_VACANTES_ES', 'Privada')
+        // ->orderBy('catalogo_categorias.NOMBRE_CATEGORIA', 'ASC')
+        // ->get(); 
+
+
+        $vacantes = DB::table('catalogo_vacantes')
             ->join('catalogo_categorias', 'catalogo_vacantes.CATEGORIA_VACANTE', '=', 'catalogo_categorias.ID_CATALOGO_CATEGORIA')
-            ->select('catalogo_vacantes.ID_CATALOGO_VACANTE', 'catalogo_categorias.NOMBRE_CATEGORIA')
+            ->select(
+                'catalogo_vacantes.ID_CATALOGO_VACANTE',
+                'catalogo_categorias.NOMBRE_CATEGORIA',
+                'catalogo_vacantes.FECHA_EXPIRACION'
+            )
             ->where('catalogo_vacantes.LA_VACANTES_ES', 'Privada')
+            ->whereDate('catalogo_vacantes.FECHA_EXPIRACION', '>=', Carbon::now()->toDateString())
             ->orderBy('catalogo_categorias.NOMBRE_CATEGORIA', 'ASC')
-            ->get(); 
-    
+            ->get();
+
+            
         return view('RH.reclutamiento.Vacantes_activas', compact('areas', 'vacantes'));
     }
     
