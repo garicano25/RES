@@ -162,13 +162,13 @@
                             <option selected disabled>Seleccione una opción</option>
                             @foreach($vacantes as $vacante)
                             <option value="{{ $vacante->ID_CATALOGO_VACANTE }}">
-                                {{ $vacante->NOMBRE_CATEGORIA }} (expira: {{ \Carbon\Carbon::parse($vacante->FECHA_EXPIRACION)->format('d/m/Y') }})
+                                {{ $vacante->NOMBRE_CATEGORIA }} (expira: {{ $vacante->FECHA_EXPIRACION }})
                             </option>
                             @endforeach
                         </select>
                     </div>
 
-                    
+
                     <div class="mb-3">
                         <label>CURP * </label>
                         <input type="text" class="form-control" id="CURP" name="CURP" required>

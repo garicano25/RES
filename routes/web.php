@@ -477,7 +477,7 @@ Route::get('/mostrardocumentorenovacion/{id}', [contratacionController::class, '
 Route::get('/mostraradenda/{id}', [contratacionController::class, 'mostraradenda']);
 
 
-// INFORAMCION MEDICA 
+// INFORMACION MEDICA 
 Route::get('/Tablainformacionmedica', [contratacionController::class, 'Tablainformacionmedica']);
 Route::get('/mostrarinformacionmedica/{id}', [contratacionController::class, 'mostrarinformacionmedica']);
 
@@ -485,7 +485,7 @@ Route::get('/mostrarinformacionmedica/{id}', [contratacionController::class, 'mo
 Route::get('/Tablaincidencias', [contratacionController::class, 'Tablaincidencias']);
 Route::get('/mostrarincidencias/{id}', [contratacionController::class, 'mostrarincidencias']);
 
-// INCIDENCIAS 
+// ACCIONES DISCIPLINARIAS 
 Route::get('/Tablaccionesdisciplinarias', [contratacionController::class, 'Tablaccionesdisciplinarias']);
 Route::get('/mostraracciones/{id}', [contratacionController::class, 'mostraracciones']);
 

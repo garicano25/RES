@@ -416,7 +416,7 @@
                             @endforeach
                         </div>
                         @else
-                        
+
                         @endif
 
                         {{-- CARRUSEL: Anuncios del Mes --}}
@@ -728,10 +728,10 @@
                                     </a>
 
                                 </div>
-                                <div class="softwares__greyCard">
-                                    <!-- <img class="softwares__image" src="assets/Modulos/img/sehilab.png" alt=""> -->
-                                    <h3 class="content__paragraph">BUZÓN</h3>
+                                <div class="softwares__greyCard" onclick="window.open('https://wclearningexperience.results-in-performance.com/', '_blank')" style="cursor: pointer;">
+                                    <h3 class="content__paragraph">WELL CONTROL</h3>
                                 </div>
+
                             </div>
 
                             <div class="softwares__bottom">
