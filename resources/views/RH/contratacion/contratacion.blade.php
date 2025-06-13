@@ -2160,7 +2160,7 @@
                                 </div>
                                 <div class="col-6">
                                     <label>Categoría a sustituir</label>
-                                    <select class="form-control" id="SUSTITUYE_CATEGORIA_RP" name="SUSTITUYE_CATEGORIA_RP" required>
+                                    <select class="form-control" id="SUSTITUYE_CATEGORIA_RP" name="SUSTITUYE_CATEGORIA_RP" >
                                         <option selected disabled>Seleccione una opción</option>
                                         @foreach ($todascategoria as $cat)
                                         <option value="{{ $cat->ID_CATALOGO_CATEGORIA }}">{{ $cat->NOMBRE }}</option>
