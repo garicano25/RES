@@ -244,7 +244,9 @@
                     </nav>
 
 
-                    <button type="submit" id="SOLICITAR_VERIFICACION" class="btn btn-primary btn-sm w-100">
+                    <button type="submit" id="SOLICITAR_VERIFICACION"
+                        class="btn w-100 text-white fw-bold"
+                        style="background-color: #ff4c4c; border-color: #ff4c4c;">
                         Solicitar validación de la información
                     </button>
                 </div>
@@ -351,7 +353,27 @@
     </script>
 
 
+    <script>
+        document.addEventListener('input', function(event) {
+            if ((event.target.tagName === 'INPUT' && event.target.type === 'text') || event.target.tagName === 'TEXTAREA') {
+                const palabras = event.target.value.split(' ').map(palabra => {
+                    if (palabra.length === 0) return '';
 
+                    const primeraMayuscula = palabra[0].toUpperCase() + palabra.substring(1).toLowerCase();
+
+                    // Si la palabra no es igual a toda minúscula, ni igual a primera mayúscula → corregimos
+                    if (palabra !== palabra.toLowerCase() && palabra !== primeraMayuscula) {
+                        return primeraMayuscula;
+                    } else {
+                        return palabra;
+                    }
+                });
+
+                event.target.value = palabras.join(' ');
+            }
+        });
+        
+    </script>
 
 
     @if(request()->is('Alta'))
