@@ -24,6 +24,7 @@ class altacuentaModel extends Model
         'CIUDAD',
         'PAIS',
         'CARATULA_BANCARIA',
-        'ACTIVO'
+        'ACTIVO',
+        'TIPO_BANCO'
     ];
 }

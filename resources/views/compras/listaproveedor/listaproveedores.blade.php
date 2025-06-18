@@ -648,7 +648,7 @@
                     <div id="step6-content" style="display: none;">
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-pdf-fill"></i>&nbsp;Documentos de soporte</h3>
-                            <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVO_DOCUMENTO"  style="margin-left: auto;">
+                            <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVO_DOCUMENTO" style="margin-left: auto;">
                                 Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
                             </button>
                         </ol>
@@ -735,12 +735,16 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
+                                    <label class="form-label">Tipo de banco *</label>
+                                    <input type="text" class="form-control" name="TIPO_BANCO" id="TIPO_BANCO" required>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
                                     <label class="form-label">Nombre del beneficiario *</label>
                                     <input type="text" class="form-control" name="NOMBRE_BENEFICIARIO" id="NOMBRE_BENEFICIARIO" required>
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-12">
                             <div class="row">
                                 <div class="col-md-6 mb-3">

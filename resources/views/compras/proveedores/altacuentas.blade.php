@@ -50,6 +50,11 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
+                                    <label class="form-label">Tipo de banco *</label>
+                                    <input type="text" class="form-control" name="TIPO_BANCO" id="TIPO_BANCO" required>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
                                     <label class="form-label">Nombre del beneficiario *</label>
                                     <input type="text" class="form-control" name="NOMBRE_BENEFICIARIO" id="NOMBRE_BENEFICIARIO" required>
                                 </div>
