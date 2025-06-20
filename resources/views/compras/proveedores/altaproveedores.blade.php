@@ -180,6 +180,7 @@
                             <option value="19">De los Regimenes Fiscales Preferentes y de las Empresas Multinacionales</option>
                             <option value="20">Enajenación de acciones en bolsa de valores </option>
                             <option value="21">Régimen de los ingresos por obtención de premios </option>
+                            <option value="23">Régimen simplificado de confianza </option>
                             <option value="22">Otro </option>
 
 
@@ -294,7 +295,7 @@
 
                     <div class="col-6 mb-3">
                         <label>Correo electrónico *</label>
-                        <input type="text" class="form-control" name="CORREO_DIRECTORIO" id="CORREO_DIRECTORIO" required >
+                        <input type="text" class="form-control" name="CORREO_DIRECTORIO" id="CORREO_DIRECTORIO" required>
                     </div>
 
                     <div class="col-6 mb-3">
