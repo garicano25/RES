@@ -944,7 +944,7 @@
                                     <input type="text" class="form-control" name="NORMA_CERTIFICACION" id="NORMA_CERTIFICACION">
                                 </div>
                                 <div class="col-6 mb-3">
-                                    <label class="form-label">Versión *</label>
+                                    <label class="form-label">Versión </label>
                                     <input type="text" class="form-control" name="VERSION_CERTIFICACION" id="VERSION_CERTIFICACION">
                                 </div>
                                 <div class="col-12 mb-3">
@@ -983,11 +983,11 @@
                                     <input type="text" class="form-control" name="NORMA_ACREDITACION" id="NORMA_ACREDITACION">
                                 </div>
                                 <div class="col-6 mb-3">
-                                    <label class="form-label">Versión *</label>
+                                    <label class="form-label">Versión </label>
                                     <input type="text" class="form-control" name="VERSION_ACREDITACION" id="VERSION_ACREDITACION">
                                 </div>
                                 <div class="col-12 mb-3">
-                                    <label class="form-label">Alcance de la certificación *</label>
+                                    <label class="form-label">Alcance de la certificación </label>
                                     <input type="text" class="form-control" name="ALCANCE_ACREDITACION" id="ALCANCE_ACREDITACION">
                                 </div>
                                 <div class="col-12 mb-3">

@@ -131,7 +131,11 @@ $("#guardarALTA").click(function (e) {
                 ID_FORMULARIO_ALTA = data.alta.ID_FORMULARIO_ALTA
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                     
-        
+                    setTimeout(() => {
+                        window.scrollTo(0, 0); // Lleva al tope
+                        location.reload();     // Luego recarga
+                    }, 1600);
+                    
             })
             
             
