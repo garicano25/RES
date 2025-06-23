@@ -66,7 +66,8 @@ class DenyRoleGlobalMiddleware
         'Catálogo_títulos',
         'Catálogo_documento_soporte',
         'Módulos',
-        'usuario'
+        'usuario',
+        'Catálogo_verificación_proveedor',
 
     ];
 

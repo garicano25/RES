@@ -171,7 +171,6 @@ class PowerPointController extends Controller
             return response()->json(['error' => 'No se encontró al empleado con la CURP proporcionada.'], 404);
         }
 
-        // Obtener el cargo del empleado
         $cargo = DB::table('contratos_anexos_contratacion as cac')
             ->join('catalogo_categorias as cc', 'cc.ID_CATALOGO_CATEGORIA', '=', 'cac.NOMBRE_CARGO')
             ->where('cac.CURP', $curp)
@@ -203,7 +202,7 @@ class PowerPointController extends Controller
         setlocale(LC_TIME, 'es_MX.UTF-8');
         \Carbon\Carbon::setLocale('es');
         $fechaFinalCarbon = \Carbon\Carbon::parse($fechaFinal);
-$fechaFormateada = $fechaFinalCarbon->format('m/Y');
+        $fechaFormateada = $fechaFinalCarbon->format('m/Y');
 
         // Preparar los datos para reemplazar en la plantilla
         $datos = [

@@ -143,9 +143,9 @@ class directorioController extends Controller
         if (!$usuario) {
             return response()->json(['status' => 'error', 'message' => 'No se encontró un usuario con ese RFC.']);
         }
+        $carbon = Carbon::now('America/Mexico_City');
+        $saludo = $carbon->hour < 12 ? 'Buenos días' : 'Buenas tardes';
 
-        $hora = Carbon::now()->format('H');
-        $saludo = $hora < 12 ? 'Buenos días' : 'Buenas tardes';
 
         Mail::send('emails.enviaracceso', [
             'saludo' => $saludo,

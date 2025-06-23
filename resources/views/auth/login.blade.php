@@ -90,7 +90,7 @@
                 <input type="password" class="form-control" name="password" placeholder="Contraseña" required>
             </div>
             <button type="submit" class="btn">ENTRAR</button>
-            <img src="assets/images/rip_logocolores.png" alt="Logo">
+            <img src="assets/images/Colorancho.png" alt="Logo">
         </form>
     </div>
 

@@ -25,16 +25,15 @@
     <!-- Select opcion selectize -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" />
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.2.0/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;700&display=swap" rel="stylesheet">
 
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
 
     <style>
         body {
             font-family: 'Poppins', sans-serif;
+
         }
 
         #details-container {
@@ -66,10 +65,7 @@
             align-items: center;
         }
 
-        body {
-            font-family: 'Maven Pro', Arial, sans-serif;
-            /* Aplicar la fuente Maven Pro */
-        }
+
 
         .card {
             transition: 0.3s ease-in-out;
@@ -286,7 +282,7 @@
                 <h1 style="font-size: 2.5em;">Encuentra el <span style="color: #A4D65E;">trabajo</span> que <span style="font-family: 'Satisfy', cursive;">quieres</span><span style="font-size: 2em;">→</span></h1>
 
                 <div class="text-center mt-5">
-                    <img src="/assets/images/image.png" alt="Logo Blanco" class="img-fluid">
+                    <img src="/assets/images/logoBlanco.png" alt="Logo Blanco" class="img-fluid">
                 </div>
 
                 <div class="d-flex justify-content-center mt-5">

@@ -724,10 +724,10 @@ public function obtenerguardados(Request $request)
 
 
             if ($value->REQUIERE_CREDENCIAL == 1) {
-$value->BTN_CREDENCIAL = '<button class="btn btn-danger btn-custom rounded-pill generar-credencial" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" data-curp="' . $value->CURP . '" title="Generar credencial"><i class="bi bi-person-badge-fill"></i></button>';
-            } else {
-                $value->BTN_CREDENCIAL = '<button type="button" class="btn btn-secondary btn-custom rounded-pill " disabled><i class="bi bi-ban"></i></button>';
-            }
+                $value->BTN_CREDENCIAL = '<button class="btn btn-danger btn-custom rounded-pill generar-credencial" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" data-curp="' . $value->CURP . '" title="Generar credencial"><i class="bi bi-person-badge-fill"></i></button>';
+                            } else {
+                                $value->BTN_CREDENCIAL = '<button type="button" class="btn btn-secondary btn-custom rounded-pill " disabled><i class="bi bi-ban"></i></button>';
+                            }
 
 
 

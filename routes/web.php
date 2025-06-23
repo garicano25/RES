@@ -798,11 +798,18 @@ Route::get('/TituloDelete', [catalagotituloproveedorController::class, 'store'])
 //  CATALOGO DOCUMENTOS DE SOPORTE DEL PROVEEDOR 
 
 
+Route::get('/Catálogo_verificación_proveedor', function () {return view('compras.Catalogos.catalogo_verificacionproveedor');});
+// Route::post('/DocumentosSave', [catalagodocumentosproveedorController::class, 'store']);
+// Route::get('/Tabladocumentosoportes', [catalagodocumentosproveedorController::class, 'Tabladocumentosoportes']);
+// Route::get('/DocumentosDeleteProveedor', [catalagodocumentosproveedorController::class, 'store']);
+
+//  CATALOGO VERIFICACION DE LA INFORMACION DEL PROVEEDOR 
+
+
 Route::get('/Catálogo_documento_soporte', function () {return view('compras.Catalogos.catalogo_documentosoporte');});
 Route::post('/DocumentosSave', [catalagodocumentosproveedorController::class, 'store']);
 Route::get('/Tabladocumentosoportes', [catalagodocumentosproveedorController::class, 'Tabladocumentosoportes']);
 Route::get('/DocumentosDeleteProveedor', [catalagodocumentosproveedorController::class, 'store']);
-
 
 //==============================================  PROVEEDOR  ============================================== 
 

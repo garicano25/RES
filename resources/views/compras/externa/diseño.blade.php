@@ -7,10 +7,10 @@
     <link rel="icon" type="image/png" sizes="20x20" href="/assets/images/favicon.png">
     <title>Results in Performance</title>
     <!-- Importar la fuente Maven Pro de Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Maven Pro', Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
             /* Aplicar la fuente Maven Pro */
             background-color: #f0f0f0;
             margin: 0;
@@ -63,7 +63,7 @@
         }
 
         .logo img {
-            width: 100%;
+            width: 140%;
             height: auto;
             object-fit: contain;
         }
@@ -92,7 +92,7 @@
         <a href="{{ url('/Directorio') }}" target="_blank">
             <div class="card">
                 <div class="logo">
-                    <img src="/assets/images/RIP_Logo_Color (2).png" alt="Logo de la empresa">
+                    <img src="/assets/images/Colorlargo.png" alt="Logo de la empresa">
                 </div>
                 <div class="title">Registrarse en el banco de proveedores</div>
                 <div class="description">Ingresa tus datos y regístrate.</div>
@@ -102,7 +102,7 @@
         <a href="{{ url('/login') }}" target="_blank">
             <div class="card">
                 <div class="logo">
-                    <img src="/assets/images/RIP_Logo_Color (2).png" alt="Logo de la empresa">
+                    <img src="/assets/images/Colorlargo.png" alt="Logo de la empresa">
                 </div>
                 <div class="title">Iniciar sesión como proveedor</div>
                 <div class="description">Iniciar sesión.</div>

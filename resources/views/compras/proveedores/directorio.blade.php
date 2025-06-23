@@ -28,7 +28,6 @@
   <link rel="stylesheet" href="assets/css/estilos.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;700&display=swap" rel="stylesheet">
 
 </head>
 
@@ -37,7 +36,7 @@
 
   <style>
     body {
-      font-family: 'Maven Pro', Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
       /* Aplicar la fuente Maven Pro */
       /* background-color: #007DBA; */
     }
@@ -156,8 +155,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: transparent; background-image: url(/assets/images/Logo3.png); background-size: cover; display: block" id="nav_var">
       <div class="container-fluid">
         <a class="navbar-brand" href="http://www.results-in-performance.com/">
-          <img src="/assets/images/rip_logoblanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
-          {{-- <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo"> --}}
+          <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
+
         </a>
       </div>
     </nav>
@@ -165,9 +164,8 @@
 
 
     <div class="card" id="formulario_servicio" style="display: block">
-      <img src="/assets/images/rip_logocolores.png" class="card-img-top" alt="Imagen superior">
 
-      {{-- <img src="/assets/images/Colorancho.png" class="card-img-top" alt="Imagen superior"> --}}
+      <img src="/assets/images/Colorancho.png" class="card-img-top" alt="Imagen superior">
       <div class="card-body">
         <form method="post" enctype="multipart/form-data" id="formularioDIRECTORIO">
           {!! csrf_field() !!}

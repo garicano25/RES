@@ -138,6 +138,19 @@ var Tablalistaproveedores = $("#Tablalistaproveedores").DataTable({
 
 
     ],
+    createdRow: function(row, data) {
+        if (data.VERIFICACION_SOLICITADA == 1) {
+
+            $(row).css("background-color", "#fff3cd"); 
+            $(row).attr("title", "Verificación de información solicitada");
+            $(row).tooltip();
+        } else {
+            $(row).css("background-color", ""); 
+            $(row).attr("title", "");
+            $(row).tooltip();
+        }
+    },
+    
     columnDefs: [
         { targets: 0, title: '#', className: 'all text-center' },
         { targets: 1, title: 'RFC/Tax ID ', className: 'all text-center nombre-column' },
