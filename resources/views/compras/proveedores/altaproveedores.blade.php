@@ -5,9 +5,8 @@
 
 <style>
     body {
-        font-family: 'Maven Pro', Arial, sans-serif;
-        /* Aplicar la fuente Maven Pro */
-        /* background-color: #007DBA; */
+        font-family: 'Poppins', sans-serif;
+
     }
 
     .card {
@@ -111,9 +110,8 @@
 
 
 <div class="card" id="formulario_servicio" style="display: block">
-    <img src="/assets/images/rip_logocolores.png" class="card-img-top" alt="Imagen superior">
 
-    {{-- <img src="/assets/images/Colorancho.png" class="card-img-top" alt="Imagen superior"> --}}
+    <img src="/assets/images/Colorancho.png" class="card-img-top" alt="Imagen superior"> 
     <div class="card-body">
         <form method="post" enctype="multipart/form-data" id="formularioALTA">
             {!! csrf_field() !!}

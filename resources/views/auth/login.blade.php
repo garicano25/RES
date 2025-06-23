@@ -8,7 +8,14 @@
     <title>Results in Performance</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
     <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+
+        }
+
         body,
         html {
             height: 100%;

@@ -95,7 +95,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="https://results-erp.results-in-performance.com/assets/images/rip_logoblanco.png"
+            <img src="https://results-erp.results-in-performance.com/assets/images/logoBlanco.png"
                 alt="Results In Performance" width="170">
         </div>
         <div class="content">
