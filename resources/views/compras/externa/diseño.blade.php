@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" sizes="20x20" href="/assets/images/favicon.png">
-    <title>Results in Performance</title>
+    <title>Results In Performance</title>
     <!-- Importar la fuente Maven Pro de Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <style>

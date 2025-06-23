@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" type="image/png" sizes="20x20" href="/assets/images/favicon.png">
-    <title>Results in Performance</title>
+    <title>Results In Performance</title>
 
 
 
