@@ -624,6 +624,8 @@
                                                                     <option value="5">Efectivo (caja chica)</option>
                                                                     <option value="3">Tarjeta de crédito</option>
                                                                     <option value="4">Tarjeta de débito</option>
+                                                                    <option value="6">Crédito otorgado por el proveedor</option>
+
 
                                                                 </select>
                                                             </div>

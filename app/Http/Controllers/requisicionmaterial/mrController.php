@@ -740,31 +740,31 @@ class mrController extends Controller
                 $hoja->save();
             }
 
-            if (($requiere_po[0] ?? null) === 'Sí') {
-                $ordenExistente = DB::table('formulario_ordencompra')
-                    ->where('HOJA_ID', $id)
-                    ->first();
+            // if (($requiere_po[0] ?? null) === 'Sí') {
+            //     $ordenExistente = DB::table('formulario_ordencompra')
+            //         ->where('HOJA_ID', $id)
+            //         ->first();
 
-                if (!$ordenExistente) {
-                    $año = now()->format('y');
-                    $ultimo = DB::table('formulario_ordencompra')
-                        ->where('NO_PO', 'like', "RES-PO$año-%")
-                        ->orderByDesc('ID_FORMULARIO_PO')
-                        ->value('NO_PO');
+            //     if (!$ordenExistente) {
+            //         $año = now()->format('y');
+            //         $ultimo = DB::table('formulario_ordencompra')
+            //             ->where('NO_PO', 'like', "RES-PO$año-%")
+            //             ->orderByDesc('ID_FORMULARIO_PO')
+            //             ->value('NO_PO');
 
-                    $consecutivo = $ultimo ? (int)substr($ultimo, -3) + 1 : 1;
-                    $numeroOrden = sprintf("RES-PO%s-%03d", $año, $consecutivo);
+            //         $consecutivo = $ultimo ? (int)substr($ultimo, -3) + 1 : 1;
+            //         $numeroOrden = sprintf("RES-PO%s-%03d", $año, $consecutivo);
 
-                    DB::table('formulario_ordencompra')->insert([
-                        'HOJA_ID' => $id,
-                        'NO_MR' => $no_mr,
-                        'NO_PO' => $numeroOrden,
-                        'ACTIVO' => 1,
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ]);
-                }
-            }
+            //         DB::table('formulario_ordencompra')->insert([
+            //             'HOJA_ID' => $id,
+            //             'NO_MR' => $no_mr,
+            //             'NO_PO' => $numeroOrden,
+            //             'ACTIVO' => 1,
+            //             'created_at' => now(),
+            //             'updated_at' => now(),
+            //         ]);
+            //     }
+            // }
 
         } else {
             $descripciones = $request->input('DESCRIPCION');
@@ -860,31 +860,31 @@ class mrController extends Controller
 
 
 
-                if (($requiere_po[$i] ?? null) === 'Sí') {
-                    $ordenExistente = DB::table('formulario_ordencompra')
-                        ->where('HOJA_ID', $id)
-                        ->first();
+                // if (($requiere_po[$i] ?? null) === 'Sí') {
+                //     $ordenExistente = DB::table('formulario_ordencompra')
+                //         ->where('HOJA_ID', $id)
+                //         ->first();
 
-                    if (!$ordenExistente) {
-                        $año = now()->format('y');
-                        $ultimo = DB::table('formulario_ordencompra')
-                            ->where('NO_PO', 'like', "RES-PO$año-%")
-                            ->orderByDesc('ID_FORMULARIO_PO')
-                            ->value('NO_PO');
+                //     if (!$ordenExistente) {
+                //         $año = now()->format('y');
+                //         $ultimo = DB::table('formulario_ordencompra')
+                //             ->where('NO_PO', 'like', "RES-PO$año-%")
+                //             ->orderByDesc('ID_FORMULARIO_PO')
+                //             ->value('NO_PO');
 
-                        $consecutivo = $ultimo ? (int)substr($ultimo, -3) + 1 : 1;
-                        $numeroOrden = sprintf("RES-PO%s-%03d", $año, $consecutivo);
+                //         $consecutivo = $ultimo ? (int)substr($ultimo, -3) + 1 : 1;
+                //         $numeroOrden = sprintf("RES-PO%s-%03d", $año, $consecutivo);
 
-                        DB::table('formulario_ordencompra')->insert([
-                            'HOJA_ID' => $id,
-                            'NO_MR' => $no_mr,
-                            'NO_PO' => $numeroOrden,
-                            'ACTIVO' => 1,
-                            'created_at' => now(),
-                            'updated_at' => now(),
-                        ]);
-                    }
-                }
+                //         DB::table('formulario_ordencompra')->insert([
+                //             'HOJA_ID' => $id,
+                //             'NO_MR' => $no_mr,
+                //             'NO_PO' => $numeroOrden,
+                //             'ACTIVO' => 1,
+                //             'created_at' => now(),
+                //             'updated_at' => now(),
+                //         ]);
+                //     }
+                // }
             }
         }
 
