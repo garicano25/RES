@@ -430,13 +430,18 @@ class mrController extends Controller
 
 
 
+
+
+
+
+
     // public function guardarHOJAS(Request $request)
     // {
-    //     $ids = $request->input('id');
+    //     $esUnico = $request->input('ES_UNICO');
     //     $no_mr = $request->input('NO_MR');
-    //     $descripciones = $request->input('DESCRIPCION');
-    //     $cantidades = $request->input('CANTIDAD');
-    //     $unidades = $request->input('UNIDAD_MEDIDA');
+    //     $ids = $request->input('id');
+
+    //     // Campos comunes
     //     $proveedor_q1 = $request->input('PROVEEDOR_Q1');
     //     $subtotal_q1 = $request->input('SUBTOTAL_Q1');
     //     $iva_q1 = $request->input('IVA_Q1');
@@ -468,104 +473,153 @@ class mrController extends Controller
     //     $requiere_po = $request->input('REQUIERE_PO');
     //     $requierecomentario = $request->input('REQUIERE_COMENTARIO');
     //     $comentarioaprobacion = $request->input('COMENTARIO_APROBACION');
-    //     $cantidadmrq1 = $request->input('CANTIDAD_MRQ1');
-    //     $cantidadrealq1 = $request->input('CANTIDAD_REALQ1');
-    //     $preciounitarioq1 = $request->input('PRECIO_UNITARIOQ1');
-    //     $cantidadmrq2 = $request->input('CANTIDAD_MRQ2');
-    //     $cantidadrealq2 = $request->input('CANTIDAD_REALQ2');
-    //     $preciounitarioq2 = $request->input('PRECIO_UNITARIOQ2');
-    //     $cantidadmrq3 = $request->input('CANTIDAD_MRQ3');
-    //     $cantidadrealq3 = $request->input('CANTIDAD_REALQ3');
-    //     $preciounitarioq3 = $request->input('PRECIO_UNITARIOQ3');
 
+    //     if ($esUnico === 'SI') {
+    //         $materiales_hoja_json = $request->input('MATERIALES_HOJA_JSON')[0] ?? null;
+    //         $id_hoja = $ids[0] ?? null;
 
-
-    //     $total = count($descripciones);
-
-    //     for ($i = 0; $i < $total; $i++) {
     //         $data = [
     //             'NO_MR' => $no_mr,
-    //             'DESCRIPCION' => $descripciones[$i] ?? '',
-    //             'CANTIDAD' => $cantidades[$i] ?? '',
-    //             'UNIDAD_MEDIDA' => $unidades[$i] ?? '',
-    //             'PROVEEDOR_Q1' => $proveedor_q1[$i] ?? null,
-    //             'SUBTOTAL_Q1' => $subtotal_q1[$i] ?? null,
-    //             'IVA_Q1' => $iva_q1[$i] ?? null,
-    //             'IMPORTE_Q1' => $importe_q1[$i] ?? null,
-    //             'OBSERVACIONES_Q1' => $observaciones_q1[$i] ?? null,
-    //             'FECHA_COTIZACION_Q1' => $fecha_q1[$i] ?? null,
-    //             'PROVEEDOR_Q2' => $proveedor_q2[$i] ?? null,
-    //             'SUBTOTAL_Q2' => $subtotal_q2[$i] ?? null,
-    //             'IVA_Q2' => $iva_q2[$i] ?? null,
-    //             'IMPORTE_Q2' => $importe_q2[$i] ?? null,
-    //             'OBSERVACIONES_Q2' => $observaciones_q2[$i] ?? null,
-    //             'FECHA_COTIZACION_Q2' => $fecha_q2[$i] ?? null,
-    //             'PROVEEDOR_Q3' => $proveedor_q3[$i] ?? null,
-    //             'SUBTOTAL_Q3' => $subtotal_q3[$i] ?? null,
-    //             'IVA_Q3' => $iva_q3[$i] ?? null,
-    //             'IMPORTE_Q3' => $importe_q3[$i] ?? null,
-    //             'OBSERVACIONES_Q3' => $observaciones_q3[$i] ?? null,
-    //             'FECHA_COTIZACION_Q3' => $fecha_q3[$i] ?? null,
-    //             'PROVEEDOR_SUGERIDO' => $proveedor_sugerido[$i] ?? null,
-    //             'SOLICITAR_VERIFICACION' => $solicitarverificacion[$i] ?? null,
-    //             'FORMA_ADQUISICION' => $forma_adquisicion[$i] ?? null,
-    //             'PROVEEDOR_SELECCIONADO' => $proveedor_seleccionado[$i] ?? null,
-    //             'FECHA_VERIFICACION' => $fechaverificacion[$i] ?? null,
-    //             'REQUIERE_COMENTARIO' => $requierecomentario[$i] ?? null,
-    //             'COMENTARIO_APROBACION' => $comentarioaprobacion[$i] ?? null,
-    //             'ESTADO_APROBACION' => $estadoaprobacion[$i] ?? null,
-    //             'MOTIVO_RECHAZO' => $motivorechazo[$i] ?? null,
-    //             'FECHA_APROBACION' => $fechaaprobacion[$i] ?? null,
-    //             'MONTO_FINAL' => $monto_final[$i] ?? null,
-    //             'FORMA_PAGO' => $forma_pago[$i] ?? null,
-    //             'REQUIERE_PO' => $requiere_po[$i] ?? null,
-    //             'CANTIDAD_MRQ1' => $cantidadmrq1[$i] ?? null,
-    //             'CANTIDAD_REALQ1' => $cantidadrealq1[$i] ?? null,
-    //             'PRECIO_UNITARIOQ1' => $preciounitarioq1[$i] ?? null,
-    //             'CANTIDAD_MRQ2' => $cantidadmrq2[$i] ?? null,
-    //             'CANTIDAD_REALQ2' => $cantidadrealq2[$i] ?? null,
-    //             'PRECIO_UNITARIOQ2' => $preciounitarioq2[$i] ?? null,
-    //             'CANTIDAD_MRQ3' => $cantidadmrq3[$i] ?? null,
-    //             'CANTIDAD_REALQ3' => $cantidadrealq3[$i] ?? null,
-    //             'PRECIO_UNITARIOQ3' => $preciounitarioq3[$i] ?? null,
-
-
+    //             'PROVEEDOR_Q1' => $proveedor_q1[0] ?? null,
+    //             'SUBTOTAL_Q1' => $subtotal_q1[0] ?? null,
+    //             'IVA_Q1' => $iva_q1[0] ?? null,
+    //             'IMPORTE_Q1' => $importe_q1[0] ?? null,
+    //             'OBSERVACIONES_Q1' => $observaciones_q1[0] ?? null,
+    //             'FECHA_COTIZACION_Q1' => $fecha_q1[0] ?? null,
+    //             'PROVEEDOR_Q2' => $proveedor_q2[0] ?? null,
+    //             'SUBTOTAL_Q2' => $subtotal_q2[0] ?? null,
+    //             'IVA_Q2' => $iva_q2[0] ?? null,
+    //             'IMPORTE_Q2' => $importe_q2[0] ?? null,
+    //             'OBSERVACIONES_Q2' => $observaciones_q2[0] ?? null,
+    //             'FECHA_COTIZACION_Q2' => $fecha_q2[0] ?? null,
+    //             'PROVEEDOR_Q3' => $proveedor_q3[0] ?? null,
+    //             'SUBTOTAL_Q3' => $subtotal_q3[0] ?? null,
+    //             'IVA_Q3' => $iva_q3[0] ?? null,
+    //             'IMPORTE_Q3' => $importe_q3[0] ?? null,
+    //             'OBSERVACIONES_Q3' => $observaciones_q3[0] ?? null,
+    //             'FECHA_COTIZACION_Q3' => $fecha_q3[0] ?? null,
+    //             'PROVEEDOR_SUGERIDO' => $proveedor_sugerido[0] ?? null,
+    //             'SOLICITAR_VERIFICACION' => $solicitarverificacion[0] ?? null,
+    //             'FECHA_VERIFICACION' => $fechaverificacion[0] ?? null,
+    //             'ESTADO_APROBACION' => $estadoaprobacion[0] ?? null,
+    //             'MOTIVO_RECHAZO' => $motivorechazo[0] ?? null,
+    //             'FECHA_APROBACION' => $fechaaprobacion[0] ?? null,
+    //             'FORMA_ADQUISICION' => $forma_adquisicion[0] ?? null,
+    //             'PROVEEDOR_SELECCIONADO' => $proveedor_seleccionado[0] ?? null,
+    //             'MONTO_FINAL' => $monto_final[0] ?? null,
+    //             'FORMA_PAGO' => $forma_pago[0] ?? null,
+    //             'REQUIERE_PO' => $requiere_po[0] ?? null,
+    //             'REQUIERE_COMENTARIO' => $requierecomentario[0] ?? null,
+    //             'COMENTARIO_APROBACION' => $comentarioaprobacion[0] ?? null,
+    //             'MATERIALES_HOJA_JSON' => $materiales_hoja_json,
     //         ];
 
-    //         if (!empty($ids[$i])) {
-    //             $hoja = HojaTrabajo::find($ids[$i]);
+    //         if ($id_hoja) {
+    //             $hoja = HojaTrabajo::find($id_hoja);
     //             if ($hoja) {
     //                 $hoja->update($data);
+    //             } else {
+    //                 $hoja = HojaTrabajo::create($data);
     //             }
     //         } else {
     //             $hoja = HojaTrabajo::create($data);
     //         }
 
-    //         if (isset($hoja)) {
+    //         $id = $hoja->id;
+
+    //         foreach (['Q1', 'Q2', 'Q3'] as $q) {
+    //             if ($request->hasFile("DOCUMENTO_{$q}.0")) {
+    //                 $file = $request->file("DOCUMENTO_{$q}")[0];
+    //                 $fileName = $file->getClientOriginalName();
+    //                 $folder = "compras/{$no_mr}/{$id}/{$q}";
+    //                 $path = $file->storeAs($folder, $fileName);
+    //                 $hoja["DOCUMENTO_{$q}"] = $path;
+    //             }
+    //         }
+
+    //         $hoja->save();
+    //     } else {
+    //         $descripciones = $request->input('DESCRIPCION');
+    //         $cantidades = $request->input('CANTIDAD');
+    //         $unidades = $request->input('UNIDAD_MEDIDA');
+    //         $cantidadmrq1 = $request->input('CANTIDAD_MRQ1');
+    //         $cantidadrealq1 = $request->input('CANTIDAD_REALQ1');
+    //         $preciounitarioq1 = $request->input('PRECIO_UNITARIOQ1');
+    //         $cantidadmrq2 = $request->input('CANTIDAD_MRQ2');
+    //         $cantidadrealq2 = $request->input('CANTIDAD_REALQ2');
+    //         $preciounitarioq2 = $request->input('PRECIO_UNITARIOQ2');
+    //         $cantidadmrq3 = $request->input('CANTIDAD_MRQ3');
+    //         $cantidadrealq3 = $request->input('CANTIDAD_REALQ3');
+    //         $preciounitarioq3 = $request->input('PRECIO_UNITARIOQ3');
+
+    //         $total = count($descripciones);
+
+    //         for ($i = 0; $i < $total; $i++) {
+    //             $data = [
+    //                 'NO_MR' => $no_mr,
+    //                 'DESCRIPCION' => $descripciones[$i] ?? '',
+    //                 'CANTIDAD' => $cantidades[$i] ?? '',
+    //                 'UNIDAD_MEDIDA' => $unidades[$i] ?? '',
+    //                 'CANTIDAD_MRQ1' => $cantidadmrq1[$i] ?? null,
+    //                 'CANTIDAD_REALQ1' => $cantidadrealq1[$i] ?? null,
+    //                 'PRECIO_UNITARIOQ1' => $preciounitarioq1[$i] ?? null,
+    //                 'CANTIDAD_MRQ2' => $cantidadmrq2[$i] ?? null,
+    //                 'CANTIDAD_REALQ2' => $cantidadrealq2[$i] ?? null,
+    //                 'PRECIO_UNITARIOQ2' => $preciounitarioq2[$i] ?? null,
+    //                 'CANTIDAD_MRQ3' => $cantidadmrq3[$i] ?? null,
+
+    //                 'CANTIDAD_REALQ3' => $cantidadrealq3[$i] ?? null,
+    //                 'PRECIO_UNITARIOQ3' => $preciounitarioq3[$i] ?? null,
+    //                 'PROVEEDOR_Q1' => $proveedor_q1[$i] ?? null,
+    //                 'SUBTOTAL_Q1' => $subtotal_q1[$i] ?? null,
+    //                 'IVA_Q1' => $iva_q1[$i] ?? null,
+    //                 'IMPORTE_Q1' => $importe_q1[$i] ?? null,
+    //                 'OBSERVACIONES_Q1' => $observaciones_q1[$i] ?? null,
+    //                 'FECHA_COTIZACION_Q1' => $fecha_q1[$i] ?? null,
+    //                 'PROVEEDOR_Q2' => $proveedor_q2[$i] ?? null,
+    //                 'SUBTOTAL_Q2' => $subtotal_q2[$i] ?? null,
+    //                 'IVA_Q2' => $iva_q2[$i] ?? null,
+    //                 'IMPORTE_Q2' => $importe_q2[$i] ?? null,
+    //                 'OBSERVACIONES_Q2' => $observaciones_q2[$i] ?? null,
+    //                 'FECHA_COTIZACION_Q2' => $fecha_q2[$i] ?? null,
+    //                 'PROVEEDOR_Q3' => $proveedor_q3[$i] ?? null,
+    //                 'SUBTOTAL_Q3' => $subtotal_q3[$i] ?? null,
+    //                 'IVA_Q3' => $iva_q3[$i] ?? null,
+    //                 'IMPORTE_Q3' => $importe_q3[$i] ?? null,
+    //                 'OBSERVACIONES_Q3' => $observaciones_q3[$i] ?? null,
+    //                 'FECHA_COTIZACION_Q3' => $fecha_q3[$i] ?? null,
+    //                 'PROVEEDOR_SUGERIDO' => $proveedor_sugerido[$i] ?? null,
+    //                 'SOLICITAR_VERIFICACION' => $solicitarverificacion[$i] ?? null,
+    //                 'FECHA_VERIFICACION' => $fechaverificacion[$i] ?? null,
+    //                 'ESTADO_APROBACION' => $estadoaprobacion[$i] ?? null,
+    //                 'MOTIVO_RECHAZO' => $motivorechazo[$i] ?? null,
+    //                 'FECHA_APROBACION' => $fechaaprobacion[$i] ?? null,
+    //                 'FORMA_ADQUISICION' => $forma_adquisicion[$i] ?? null,
+    //                 'PROVEEDOR_SELECCIONADO' => $proveedor_seleccionado[$i] ?? null,
+    //                 'MONTO_FINAL' => $monto_final[$i] ?? null,
+    //                 'FORMA_PAGO' => $forma_pago[$i] ?? null,
+    //                 'REQUIERE_PO' => $requiere_po[$i] ?? null,
+    //                 'REQUIERE_COMENTARIO' => $requierecomentario[$i] ?? null,
+    //                 'COMENTARIO_APROBACION' => $comentarioaprobacion[$i] ?? null,
+    //             ];
+
+    //             $hoja = !empty($ids[$i]) ? HojaTrabajo::find($ids[$i]) : null;
+    //             if ($hoja) {
+    //                 $hoja->update($data);
+    //             } else {
+    //                 $hoja = HojaTrabajo::create($data);
+    //             }
+
     //             $id = $hoja->id;
 
-    //             if ($request->hasFile("DOCUMENTO_Q1.$i")) {
-    //                 $file = $request->file("DOCUMENTO_Q1")[$i];
-    //                 $fileName = $file->getClientOriginalName();
-    //                 $folder = "compras/{$no_mr}/{$id}/Q1";
-    //                 $path = $file->storeAs($folder, $fileName);
-    //                 $hoja->DOCUMENTO_Q1 = $path;
-    //             }
-
-    //             if ($request->hasFile("DOCUMENTO_Q2.$i")) {
-    //                 $file = $request->file("DOCUMENTO_Q2")[$i];
-    //                 $fileName = $file->getClientOriginalName();
-    //                 $folder = "compras/{$no_mr}/{$id}/Q2";
-    //                 $path = $file->storeAs($folder, $fileName);
-    //                 $hoja->DOCUMENTO_Q2 = $path;
-    //             }
-
-    //             if ($request->hasFile("DOCUMENTO_Q3.$i")) {
-    //                 $file = $request->file("DOCUMENTO_Q3")[$i];
-    //                 $fileName = $file->getClientOriginalName();
-    //                 $folder = "compras/{$no_mr}/{$id}/Q3";
-    //                 $path = $file->storeAs($folder, $fileName);
-    //                 $hoja->DOCUMENTO_Q3 = $path;
+    //             foreach (['Q1', 'Q2', 'Q3'] as $q) {
+    //                 if ($request->hasFile("DOCUMENTO_{$q}.$i")) {
+    //                     $file = $request->file("DOCUMENTO_{$q}")[$i];
+    //                     $fileName = $file->getClientOriginalName();
+    //                     $folder = "compras/{$no_mr}/{$id}/{$q}";
+    //                     $path = $file->storeAs($folder, $fileName);
+    //                     $hoja["DOCUMENTO_{$q}"] = $path;
+    //                 }
     //             }
 
     //             $hoja->save();
@@ -574,8 +628,6 @@ class mrController extends Controller
 
     //     return response()->json(['success' => true]);
     // }
-
-
 
 
 
@@ -619,7 +671,6 @@ class mrController extends Controller
         $comentarioaprobacion = $request->input('COMENTARIO_APROBACION');
 
         if ($esUnico === 'SI') {
-            // ✅ NUEVA LÓGICA PARA EDITAR SI EXISTE ID
             $materiales_hoja_json = $request->input('MATERIALES_HOJA_JSON')[0] ?? null;
             $id_hoja = $ids[0] ?? null;
 
@@ -683,8 +734,39 @@ class mrController extends Controller
             }
 
             $hoja->save();
+
+            if (($solicitarverificacion[0] ?? null) === 'Sí' && !$hoja->SOLICITO_ID) {
+                $hoja->SOLICITO_ID = auth()->user()->ID_USUARIO;
+                $hoja->save();
+            }
+
+            if (($requiere_po[0] ?? null) === 'Sí') {
+                $ordenExistente = DB::table('formulario_ordencompra')
+                    ->where('HOJA_ID', $id)
+                    ->first();
+
+                if (!$ordenExistente) {
+                    $año = now()->format('y');
+                    $ultimo = DB::table('formulario_ordencompra')
+                        ->where('NO_PO', 'like', "RES-PO$año-%")
+                        ->orderByDesc('ID_FORMULARIO_PO')
+                        ->value('NO_PO');
+
+                    $consecutivo = $ultimo ? (int)substr($ultimo, -3) + 1 : 1;
+                    $numeroOrden = sprintf("RES-PO%s-%03d", $año, $consecutivo);
+
+                    DB::table('formulario_ordencompra')->insert([
+                        'HOJA_ID' => $id,
+                        'NO_MR' => $no_mr,
+                        'NO_PO' => $numeroOrden,
+                        'ACTIVO' => 1,
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                }
+            }
+
         } else {
-            // Guardado individual por producto
             $descripciones = $request->input('DESCRIPCION');
             $cantidades = $request->input('CANTIDAD');
             $unidades = $request->input('UNIDAD_MEDIDA');
@@ -769,6 +851,40 @@ class mrController extends Controller
                 }
 
                 $hoja->save();
+
+                if (($solicitarverificacion[$i] ?? null) === 'Sí' && !$hoja->SOLICITO_ID) {
+                    $hoja->SOLICITO_ID = auth()->user()->ID_USUARIO;
+                    $hoja->save();
+                }
+
+
+
+
+                if (($requiere_po[$i] ?? null) === 'Sí') {
+                    $ordenExistente = DB::table('formulario_ordencompra')
+                        ->where('HOJA_ID', $id)
+                        ->first();
+
+                    if (!$ordenExistente) {
+                        $año = now()->format('y');
+                        $ultimo = DB::table('formulario_ordencompra')
+                            ->where('NO_PO', 'like', "RES-PO$año-%")
+                            ->orderByDesc('ID_FORMULARIO_PO')
+                            ->value('NO_PO');
+
+                        $consecutivo = $ultimo ? (int)substr($ultimo, -3) + 1 : 1;
+                        $numeroOrden = sprintf("RES-PO%s-%03d", $año, $consecutivo);
+
+                        DB::table('formulario_ordencompra')->insert([
+                            'HOJA_ID' => $id,
+                            'NO_MR' => $no_mr,
+                            'NO_PO' => $numeroOrden,
+                            'ACTIVO' => 1,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]);
+                    }
+                }
             }
         }
 
