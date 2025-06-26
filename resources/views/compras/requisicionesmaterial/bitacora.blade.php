@@ -510,141 +510,142 @@
                                         </div>
                                     </div>
 
-                                </div>
 
 
-                                @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
+
+                                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
 
 
-                                <div class="aprobacion-direccion-hoja mt-5" style="display: none;">
+                                    <div class="aprobacion-direccion-hoja mt-5" style="display: none;">
 
 
-                                    <div class="bloque-aprobacion">
-                                        <div class="row">
-                                            <!-- Estado de Aprobación -->
-                                            <div class="col-md-4 mb-3">
-                                                <label class="form-label fw-bold">Estado de Aprobación</label>
-                                                <select class="form-control estado-aprobacion" name="ESTADO_APROBACION[]">
-                                                    <option value="" selected disabled>Seleccione una opción</option>
-                                                    <option value="Aprobada">Aprobada</option>
-                                                    <option value="Rechazada">Rechazada</option>
-                                                </select>
-                                            </div>
-
-                                            <!-- Fecha de Aprobación -->
-                                            <div class="col-md-4 mb-3">
-                                                <label class="form-label fw-bold">Fecha de aprobación *</label>
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control mydatepicker fecha-aprobacion" placeholder="aaaa-mm-dd" name="FECHA_APROBACION[]">
-                                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                        <div class="bloque-aprobacion">
+                                            <div class="row">
+                                                <!-- Estado de Aprobación -->
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label fw-bold">Estado de Aprobación</label>
+                                                    <select class="form-control estado-aprobacion" name="ESTADO_APROBACION[]">
+                                                        <option value="" selected disabled>Seleccione una opción</option>
+                                                        <option value="Aprobada">Aprobada</option>
+                                                        <option value="Rechazada">Rechazada</option>
+                                                    </select>
                                                 </div>
-                                            </div>
 
-                                            <!-- Requiere comentario -->
-                                            <div class="col-md-4 mb-3">
-                                                <label class="form-label fw-bold">Requiere algún comentario</label>
-                                                <select class="form-control requiere-comentario" name="REQUIERE_COMENTARIO[]">
-                                                    <option value="" selected disabled>Seleccione una opción</option>
-                                                    <option value="Sí">Sí</option>
-                                                    <option value="No">No</option>
-                                                </select>
-                                            </div>
-
-                                            <!-- Comentario visible si selecciona "Sí" -->
-                                            <div class="col-md-12 comentario-aprobacion-hoja mt-3" style="display: none;">
-                                                <label class="form-label fw-bold">Comentario</label>
-                                                <textarea class="form-control comentario-aprobacion" name="COMENTARIO_APROBACION[]"></textarea>
-                                            </div>
-                                        </div>
-
-                                        <!-- Motivo de Rechazo -->
-                                        <div class="mt-3 motivo-rechazo-hoja" style="display: none;">
-                                            <label class="form-label fw-bold">Motivo del rechazo</label>
-                                            <textarea class="form-control motivo-rechazo" name="MOTIVO_RECHAZO[]" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
-                                        </div>
-                                    </div>
-
-
-
-                                    <!-- Sección inicial de PO -->
-                                    <div class="row mt-4">
-                                        <div class="col-md-12">
-                                            <div class="card border-primary">
-                                                <div class="card-body">
-                                                    <div class="mb-3">
-                                                        <label class="form-label fw-bold">¿Requiere PO?</label>
-                                                        <select class="form-select requiere-po" name="REQUIERE_PO[]">
-                                                            <option value="">Seleccione una opción</option>
-                                                            <option value="Sí">Sí</option>
-                                                            <option value="No">No</option>
-                                                        </select>
+                                                <!-- Fecha de Aprobación -->
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label fw-bold">Fecha de aprobación *</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control mydatepicker fecha-aprobacion" placeholder="aaaa-mm-dd" name="FECHA_APROBACION[]">
+                                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                                     </div>
+                                                </div>
+
+                                                <!-- Requiere comentario -->
+                                                <div class="col-md-4 mb-3">
+                                                    <label class="form-label fw-bold">Requiere algún comentario</label>
+                                                    <select class="form-control requiere-comentario" name="REQUIERE_COMENTARIO[]">
+                                                        <option value="" selected disabled>Seleccione una opción</option>
+                                                        <option value="Sí">Sí</option>
+                                                        <option value="No">No</option>
+                                                    </select>
+                                                </div>
+
+                                                <!-- Comentario visible si selecciona "Sí" -->
+                                                <div class="col-md-12 comentario-aprobacion-hoja mt-3" style="display: none;">
+                                                    <label class="form-label fw-bold">Comentario</label>
+                                                    <textarea class="form-control comentario-aprobacion" name="COMENTARIO_APROBACION[]"></textarea>
+                                                </div>
+                                            </div>
+
+                                            <!-- Motivo de Rechazo -->
+                                            <div class="mt-3 motivo-rechazo-hoja" style="display: none;">
+                                                <label class="form-label fw-bold">Motivo del rechazo</label>
+                                                <textarea class="form-control motivo-rechazo" name="MOTIVO_RECHAZO[]" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
+                                            </div>
+                                        </div>
 
 
+
+                                        <!-- Sección inicial de PO -->
+                                        <div class="row mt-4">
+                                            <div class="col-md-12">
+                                                <div class="card border-primary">
+                                                    <div class="card-body">
+                                                        <div class="mb-3">
+                                                            <label class="form-label fw-bold">¿Requiere PO?</label>
+                                                            <select class="form-select requiere-po" name="REQUIERE_PO[]">
+                                                                <option value="">Seleccione una opción</option>
+                                                                <option value="Sí">Sí</option>
+                                                                <option value="No">No</option>
+                                                            </select>
+                                                        </div>
+
+
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
 
-                                    <!-- Sección de selección final -->
-                                    <div class="row mt-4">
-                                        <div class="col-md-12">
-                                            <div class="card border-success">
-                                                <div class="card-header bg-light">
-                                                    <h6 class="mb-0 fw-bold">Proveedor seleccionado y detalles de pago</h6>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="mb-3">
-                                                                <label class="form-label fw-bold">Proveedor seleccionado:</label>
-                                                                <select class="form-select proveedor-seleccionado" name="PROVEEDOR_SELECCIONADO[]">
-                                                                    <option value="">Seleccionar proveedor sugerido</option>
-                                                                    <!-- Se llena dinámicamente -->
-                                                                </select>
+                                        <!-- Sección de selección final -->
+                                        <div class="row mt-4">
+                                            <div class="col-md-12">
+                                                <div class="card border-success">
+                                                    <div class="card-header bg-light">
+                                                        <h6 class="mb-0 fw-bold">Proveedor seleccionado y detalles de pago</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label fw-bold">Proveedor seleccionado:</label>
+                                                                    <select class="form-select proveedor-seleccionado" name="PROVEEDOR_SELECCIONADO[]">
+                                                                        <option value="">Seleccionar proveedor sugerido</option>
+                                                                        <!-- Se llena dinámicamente -->
+                                                                    </select>
 
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-3">
-                                                                <label class="form-label fw-bold">Monto final:</label>
-                                                                <div class="input-group">
-                                                                    <span class="input-group-text">$</span>
-                                                                    <input type="number" class="form-control monto-final" name="MONTO_FINAL[]">
+                                                            <div class="col-md-4">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label fw-bold">Monto final:</label>
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-text">$</span>
+                                                                        <input type="number" class="form-control monto-final" name="MONTO_FINAL[]">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label fw-bold">Forma de pago:</label>
+                                                                    <select class="form-select forma-pago" name="FORMA_PAGO[]">
+                                                                        <option value="">Seleccionar forma de pago</option>
+                                                                        <option value="1">Transferencia bancaria</option>
+                                                                        <option value="5">Efectivo (caja chica)</option>
+                                                                        <option value="3">Tarjeta de crédito</option>
+                                                                        <option value="4">Tarjeta de débito</option>
+                                                                        <option value="6">Crédito otorgado por el proveedor</option>
+
+
+                                                                    </select>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-4">
-                                                            <div class="mb-3">
-                                                                <label class="form-label fw-bold">Forma de pago:</label>
-                                                                <select class="form-select forma-pago" name="FORMA_PAGO[]">
-                                                                    <option value="">Seleccionar forma de pago</option>
-                                                                    <option value="1">Transferencia bancaria</option>
-                                                                    <option value="5">Efectivo (caja chica)</option>
-                                                                    <option value="3">Tarjeta de crédito</option>
-                                                                    <option value="4">Tarjeta de débito</option>
-                                                                    <option value="6">Crédito otorgado por el proveedor</option>
 
-
-                                                                </select>
-                                                            </div>
+                                                        <div class="alert alert-warning matriz-comparativa d-none">
+                                                            <i class="fas fa-exclamation-triangle me-2"></i>
+                                                            <strong>Aviso:</strong> Se requiere realizar una Matriz comparativa de cotizaciones
                                                         </div>
-                                                    </div>
-
-                                                    <div class="alert alert-warning matriz-comparativa d-none">
-                                                        <i class="fas fa-exclamation-triangle me-2"></i>
-                                                        <strong>Aviso:</strong> Se requiere realizar una Matriz comparativa de cotizaciones
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
 
+                                    @endif
+
                                 </div>
-
-                                @endif
-
                             </div>
                         </div>
                     </template>

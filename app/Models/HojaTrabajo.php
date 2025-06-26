@@ -73,6 +73,7 @@ class HojaTrabajo extends Model
         'REQUIERE_COMENTARIO',
         'COMENTARIO_APROBACION',
         'MATERIALES_HOJA_JSON',
-        'SOLICITO_ID'
+        'SOLICITO_ID',
+        'APROBADO_ID'
     ];
 }
