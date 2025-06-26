@@ -621,10 +621,9 @@
                                                                 <select class="form-select forma-pago" name="FORMA_PAGO[]">
                                                                     <option value="">Seleccionar forma de pago</option>
                                                                     <option value="1">Transferencia bancaria</option>
-                                                                    <option value="2">Efectivo</option>
+                                                                    <option value="5">Efectivo (caja chica)</option>
                                                                     <option value="3">Tarjeta de crédito</option>
                                                                     <option value="4">Tarjeta de débito</option>
-                                                                    <option value="5">Caja chica</option>
 
                                                                 </select>
                                                             </div>
