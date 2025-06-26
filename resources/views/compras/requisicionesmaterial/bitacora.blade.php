@@ -187,7 +187,7 @@
 
                     <input type="hidden" name="ES_UNICO" id="esProveedorUnico" value="NO">
 
-                    
+
                     <template id="templateProducto">
                         <div class="card mb-4 producto-card">
                             <div class="card-header bg-primary text-white">
@@ -620,10 +620,11 @@
                                                                 <label class="form-label fw-bold">Forma de pago:</label>
                                                                 <select class="form-select forma-pago" name="FORMA_PAGO[]">
                                                                     <option value="">Seleccionar forma de pago</option>
-                                                                    <option value="Transferencia">Transferencia bancaria</option>
-                                                                    <option value="Efectivo">Efectivo</option>
-                                                                    <option value="Tarjeta">Tarjeta de crédito/débito</option>
-                                                                    <option value="Caja chica">Caja chica</option>
+                                                                    <option value="1">Transferencia bancaria</option>
+                                                                    <option value="2">Efectivo</option>
+                                                                    <option value="3">Tarjeta de crédito</option>
+                                                                    <option value="4">Tarjeta de débito</option>
+                                                                    <option value="5">Caja chica</option>
 
                                                                 </select>
                                                             </div>
