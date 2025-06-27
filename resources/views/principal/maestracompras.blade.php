@@ -399,7 +399,7 @@
 
 
     @if(request()->is('Bitácora'))
-    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.10"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.11"></script>
     @endif
 
 
@@ -432,6 +432,11 @@
 
     @if(request()->is('Proveedores_temporales'))
     <script src="/assets/js_sitio/proveedor/proveedorestemp.js?v=1.6"></script>
+    @endif
+
+
+    @if(request()->is('Orden_compra'))
+    <script src="/assets/js_sitio/orden_compra/orden_compra.js"></script>
     @endif
 </body>
 
