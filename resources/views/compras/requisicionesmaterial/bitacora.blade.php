@@ -265,7 +265,7 @@
                                                     </td>
                                                     <td class="text-center td-cotizacionq1-cantidadmr">
                                                         <div class="input-group">
-                                                            <input type="number" class="form-control cantidadmr-cotizacionq1" name="CANTIDAD_MRQ1[]" readonly>
+                                                            <input type="number" class="form-control cantidadmr-cotizacionq1" name="CANTIDAD_MRQ1[]" >
                                                         </div>
                                                     </td>
 
@@ -340,7 +340,7 @@
                                                     </td>
                                                     <td class="text-center  td-cotizacionq2-cantidadmr">
                                                         <div class="input-group">
-                                                            <input type="number" class="form-control cantidadmr-cotizacionq2" name="CANTIDAD_MRQ2[]" readonly>
+                                                            <input type="number" class="form-control cantidadmr-cotizacionq2" name="CANTIDAD_MRQ2[]" >
                                                         </div>
                                                     </td>
 
@@ -414,7 +414,7 @@
 
                                                     <td class="text-center td-cotizacionq3-cantidadmr">
                                                         <div class="input-group">
-                                                            <input type="number" class="form-control cantidadmr-cotizacionq3" name="CANTIDAD_MRQ3[]" readonly>
+                                                            <input type="number" class="form-control cantidadmr-cotizacionq3" name="CANTIDAD_MRQ3[]" >
                                                         </div>
                                                     </td>
 
