@@ -84,7 +84,7 @@
     <table>
         <tr>
             <td rowspan="3" style="width: 25%; text-align: center;">
-                <img src="{{ public_path('assets/images/Colorlargo.png') }}" class="logo">
+                <img src="{{ public_path('assets/images/MARCAREGISTRADA.png') }}" class="logo">
             </td>
             <td colspan="2" class="titulo">Requisición de Materiales - MR</td>
 
