@@ -23,8 +23,6 @@ class HojaTrabajo extends Model
         'OBSERVACIONES_Q1',
         'FECHA_COTIZACION_Q1',
         'DOCUMENTO_Q1',
-
-
         'CANTIDAD_MRQ1',
         'CANTIDAD_REALQ1',
         'PRECIO_UNITARIOQ1',
@@ -37,8 +35,6 @@ class HojaTrabajo extends Model
         'OBSERVACIONES_Q2',
         'FECHA_COTIZACION_Q2',
         'DOCUMENTO_Q2',
-
-
         'CANTIDAD_MRQ2',
         'CANTIDAD_REALQ2',
         'PRECIO_UNITARIOQ2',
@@ -52,8 +48,6 @@ class HojaTrabajo extends Model
         'OBSERVACIONES_Q3',
         'FECHA_COTIZACION_Q3',
         'DOCUMENTO_Q3',
-
-
         'CANTIDAD_MRQ3',
         'CANTIDAD_REALQ3',
         'PRECIO_UNITARIOQ3',

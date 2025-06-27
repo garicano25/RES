@@ -115,11 +115,13 @@ use App\Http\Controllers\proveedor\listaproveedorController;
 use App\Http\Controllers\proveedor\proveedortempController;
 
 
-
 use App\Http\Controllers\proveedor\catalagofuncionesproveedorController;
 use App\Http\Controllers\proveedor\catalagotituloproveedorController;
 use App\Http\Controllers\proveedor\catalagodocumentosproveedorController;
 
+// CONTROLADORES DE PO 
+
+use App\Http\Controllers\ordencompra\poController;
 
 // GENERAR PDF
 
@@ -771,9 +773,15 @@ Route::get('/mostrarequierecontrato/{id}', [proveedortempController::class, 'mos
 //==============================================    ORDEN DE COMPRA  ============================================== 
 
 
-Route::get('/Matriz_comparativa', function () {return view('compras.ordencompra.matrizcomparativa');});
+Route::get('/Tablaordencompra', [poController::class, 'Tablaordencompra']);
 
 Route::get('/Orden_compra', function () { return view('compras.ordencompra.ordencompra');});
+
+Route::get('/Matriz_comparativa', function () {return view('compras.ordencompra.matrizcomparativa');});
+
+
+
+Route::get('/ordencompra/materiales/{hoja_id}', [poController::class, 'obtenerMaterialesPO']);
 
 //==============================================   CATALOGOS PROVEEDORES  ============================================== 
 Route::get('/Catálogos_proveedores', function () {return view('compras.Catalogos.catalogo_generales');});
