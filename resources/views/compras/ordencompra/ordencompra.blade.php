@@ -58,7 +58,7 @@
                             <thead>
                                 <tr>
                                     <th>Descripción</th>
-                                    <th>Cantidad real</th>
+                                    <th>Cantidad </th>
                                     <th>Precio unitario</th>
                                 </tr>
                             </thead>
