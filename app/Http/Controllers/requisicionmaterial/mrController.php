@@ -395,13 +395,73 @@ class mrController extends Controller
 
     /////////////////////////////////////////////////////////// BITACORA REQUISICION //////////////////////////////////////////////////////////////
 
+    // public function Tablabitacora()
+    // {
+    //     try {
+    //         // Solo obtener registros con ESTADO_APROBACION = 'Aprobada'
+    //         $tabla = mrModel::where('ESTADO_APROBACION', 'Aprobada')->get();
+
+    //         foreach ($tabla as $value) {
+    //             if ($value->ACTIVO == 0) {
+    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '"><span class="slider round"></span></label>';
+    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-eye"></i></button>';
+    //             } else {
+    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '" checked><span class="slider round"></span></label>';
+    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //             }
+
+    //             $value->BTN_NO_MR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //         }
+
+    //         return response()->json([
+    //             'data' => $tabla,
+    //             'msj' => 'Información consultada correctamente'
+    //         ]);
+    //     } catch (Exception $e) {
+    //         return response()->json([
+    //             'msj' => 'Error ' . $e->getMessage(),
+    //             'data' => 0
+    //         ]);
+    //     }
+    // }
+
+
+
     public function Tablabitacora()
     {
         try {
-            // Solo obtener registros con ESTADO_APROBACION = 'Aprobada'
             $tabla = mrModel::where('ESTADO_APROBACION', 'Aprobada')->get();
 
             foreach ($tabla as $value) {
+                $no_mr = $value->NO_MR;
+
+                $hojas = DB::table('hoja_trabajo')->where('NO_MR', $no_mr)->get();
+
+                $total = $hojas->count();
+
+                if ($total === 0) {
+                    // No hay registros relacionados
+                    $value->ESTADO_FINAL = 'Sin datos';
+                    $value->COLOR = null;
+                    $value->DISABLED_SELECT = true;
+                } else {
+                    $aprobadas = $hojas->where('ESTADO_APROBACION', 'Aprobada')->count();
+                    $requiere_po = $hojas->where('REQUIERE_PO', 'Sí')->count();
+
+                    if ($aprobadas === $total && $requiere_po === 0) {
+                        $value->ESTADO_FINAL = 'Finalizada';
+                        $value->COLOR = '#d4edda'; // Verde
+                        $value->DISABLED_SELECT = false;
+                    } else {
+                        $value->ESTADO_FINAL = 'En proceso';
+                        $value->COLOR = '#fff3cd'; // Amarillo
+                        $value->DISABLED_SELECT = false;
+                    }
+                }
+
+                // BOTONES
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '"><span class="slider round"></span></label>';
@@ -426,10 +486,6 @@ class mrController extends Controller
             ]);
         }
     }
-
-
-
-
 
 
 

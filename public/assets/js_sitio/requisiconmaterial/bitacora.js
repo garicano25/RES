@@ -90,28 +90,49 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
         { data: 'PRIORIDAD_MR' },
 
         {
-            data: null,
-            render: () => `
-                <select class="form-select" style="width: 100%">
-                    <option value="">Seleccionar</option>
-                    <option value="En proceso">En proceso</option>
-                    <option value="Canceladas">Canceladas</option>
-                    <option value="Finalizada">Finalizada</option>
-                </select>`
-        },
+          data: null,
+          render: function (data) {
+              let estado = data.ESTADO_FINAL || '';
+              let clase = '';
+      
+              if (estado === 'Finalizada') {
+                  clase = 'select-finalizada';
+              } else if (estado === 'En proceso') {
+                  clase = 'select-en-proceso';
+              } else {
+                  estado = 'Sin datos';
+                  clase = 'select-sin-datos';
+              }
+      
+              return `
+                  <select class="form-select ${clase}" disabled>
+                      <option value="Sin datos" ${estado === "Sin datos" ? "selected" : ""}>Sin datos</option>
+                      <option value="En proceso" ${estado === "En proceso" ? "selected" : ""}>En proceso</option>
+                      <option value="Finalizada" ${estado === "Finalizada" ? "selected" : ""}>Finalizada</option>
+                  </select>`;
+          }
+      },
+      
+      
+      
         {
             data: null,
             render: () => `<textarea type="text" class="form-control" style="width: 100%" rowas="5"></textarea>`
         },
         {
             data: null,
-            render: () => `<input type="date" class="form-control" style="width: 100%">`
+            render: () => `<input type="text" class="form-control mydatepicker " placeholder="aaaa-mm-dd">
+`
         },
           { data: 'MATERIALES_JSON', visible: false }, 
     { data: 'ESTADO_APROBACION', visible: false } 
         
        
-    ]
+  ],
+  createdRow: function (row, data, dataIndex) {
+    $(row).css('background-color', data.COLOR);
+}
+
 });
 
 

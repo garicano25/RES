@@ -33,4 +33,13 @@ class mrModel extends Model
         'JEFEINMEDIATO_ID'
 
     ];
+
+
+
+    public function hojasRelacionadas()
+    {
+        return $this->hasMany(HojaTrabajo::class, 'NO_MR', 'NO_MR');
+    }
+
+    
 }

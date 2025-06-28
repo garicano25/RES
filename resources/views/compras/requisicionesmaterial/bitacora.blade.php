@@ -84,6 +84,29 @@
         background-color: #e9ecef;
         cursor: not-allowed;
     } */
+
+
+
+    .select-finalizada {
+        background-color: #d4edda !important;
+        /* Verde */
+        color: #155724 !important;
+        font-weight: bold;
+    }
+
+    .select-en-proceso {
+        background-color: #fff3cd !important;
+        /* Amarillo */
+        color: #856404 !important;
+        font-weight: bold;
+    }
+
+    .select-sin-datos {
+        background-color: #f8d7da !important;
+        /* Rojo claro o gris claro si prefieres */
+        color: #721c24 !important;
+        font-weight: bold;
+    }
 </style>
 
 <div class="contenedor-contenido">
@@ -265,7 +288,7 @@
                                                     </td>
                                                     <td class="text-center td-cotizacionq1-cantidadmr">
                                                         <div class="input-group">
-                                                            <input type="number" class="form-control cantidadmr-cotizacionq1" name="CANTIDAD_MRQ1[]" >
+                                                            <input type="number" class="form-control cantidadmr-cotizacionq1" name="CANTIDAD_MRQ1[]">
                                                         </div>
                                                     </td>
 
@@ -340,7 +363,7 @@
                                                     </td>
                                                     <td class="text-center  td-cotizacionq2-cantidadmr">
                                                         <div class="input-group">
-                                                            <input type="number" class="form-control cantidadmr-cotizacionq2" name="CANTIDAD_MRQ2[]" >
+                                                            <input type="number" class="form-control cantidadmr-cotizacionq2" name="CANTIDAD_MRQ2[]">
                                                         </div>
                                                     </td>
 
@@ -414,7 +437,7 @@
 
                                                     <td class="text-center td-cotizacionq3-cantidadmr">
                                                         <div class="input-group">
-                                                            <input type="number" class="form-control cantidadmr-cotizacionq3" name="CANTIDAD_MRQ3[]" >
+                                                            <input type="number" class="form-control cantidadmr-cotizacionq3" name="CANTIDAD_MRQ3[]">
                                                         </div>
                                                     </td>
 
