@@ -435,6 +435,7 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
             
                <div class="col-1">
                   <label class="form-label">Precio Unitario Q2</label>
+                  <input type="number" class="form-control" name="PRECIO_UNITARIO_Q2[]" value="${m.PRECIO_UNITARIO_Q2}" min="0" step="0.01" required>
                 </div>
 
             
