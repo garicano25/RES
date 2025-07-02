@@ -82,7 +82,7 @@ class poController extends Controller
                 $importe = $hoja->IMPORTE_Q3;
             }
 
-            if (!empty($hoja->MATERIALES_HOJA_JSON)) {
+            if (!empty($hoja->MATERIALES_HOJA_JSON)) { 
                 $json = json_decode($hoja->MATERIALES_HOJA_JSON, true);
                 $materiales = [];
 

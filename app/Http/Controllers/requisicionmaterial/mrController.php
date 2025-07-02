@@ -452,11 +452,11 @@ class mrController extends Controller
 
                     if ($aprobadas === $total && $requiere_po === 0) {
                         $value->ESTADO_FINAL = 'Finalizada';
-                        $value->COLOR = '#d4edda'; // Verde
+                        $value->COLOR = '#d4edda'; 
                         $value->DISABLED_SELECT = false;
                     } else {
                         $value->ESTADO_FINAL = 'En proceso';
-                        $value->COLOR = '#fff3cd'; // Amarillo
+                        $value->COLOR = '#fff3cd'; 
                         $value->DISABLED_SELECT = false;
                     }
                 }
