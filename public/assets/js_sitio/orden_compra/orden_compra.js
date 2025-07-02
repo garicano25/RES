@@ -63,6 +63,101 @@ var Tablaordencompra = $("#Tablaordencompra").DataTable({
 
 
 
+$("#guardarPO").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormulario($('#formularioPO'))
+
+    if (formularioValido) {
+
+    if (ID_FORMULARIO_PO == 0) {
+        
+        alertMensajeConfirm({
+            title: "¿Desea guardar la información?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarPO')
+            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_PO: ID_FORMULARIO_PO }, 'PoSave', 'formularioPO', 'guardarPO', { callbackAfter: true, callbackBefore: true }, () => {
+        
+               
+
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
+                    
+
+                ID_FORMULARIO_PO = data.compra.ID_FORMULARIO_PO
+                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                     $('#miModal_PO').modal('hide')
+                    document.getElementById('formularioPO').reset();
+                    Tablaordencompra.ajax.reload()
+
+        
+            })
+            
+            
+            
+        }, 1)
+        
+    } else {
+            alertMensajeConfirm({
+            title: "¿Desea editar la información de este formulario?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarPO')
+            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_PO: ID_FORMULARIO_PO }, 'PoSave', 'formularioPO', 'guardarPO', { callbackAfter: true, callbackBefore: true }, () => {
+        
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
+                    
+                setTimeout(() => {
+
+                    
+                    ID_FORMULARIO_PO = data.compra.ID_FORMULARIO_PO
+                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                     $('#miModal_PO').modal('hide')
+                    document.getElementById('formularioPO').reset();
+                    Tablaordencompra.ajax.reload()
+
+
+                }, 300);  
+            })
+        }, 1)
+    }
+
+} else {
+    // Muestra un mensaje de error o realiza alguna otra acción
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
+    
+});
+
+
+
+
+
 $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablaordencompra.row(tr);

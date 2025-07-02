@@ -5,7 +5,7 @@
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
         <h3 style="color: #ffffff; margin: 0;">&nbsp;Orden de compra</h3>
-       
+
     </ol>
 
     <div class="card-body">
@@ -86,6 +86,8 @@
 
                     <div class="modal-footer mx-5">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-success" id="guardarPO">Guardar</button>
+
 
                     </div>
             </form>

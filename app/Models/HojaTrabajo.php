@@ -51,8 +51,9 @@ class HojaTrabajo extends Model
         'CANTIDAD_MRQ3',
         'CANTIDAD_REALQ3',
         'PRECIO_UNITARIOQ3',
-        
+
         // Datos adicionales
+        'REQUIERE_MATRIZ',
         'SOLICITAR_VERIFICACION',
         'PROVEEDOR_SUGERIDO',
         'FORMA_ADQUISICION',

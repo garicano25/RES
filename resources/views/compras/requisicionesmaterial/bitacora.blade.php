@@ -238,6 +238,10 @@
 
                             <input type="hidden" class="form-control ID_HOJA" name="id[]">
 
+
+                            <input type="hidden" class="form-control REQUIERE_MATRIZ" name="REQUIERE_MATRIZ[]" >
+
+
                             <div class="card-body">
                                 <div class="descripcion-materiales mb-3 text-muted small"></div>
 
@@ -512,7 +516,7 @@
                                                         <!-- Solicitar verificación -->
                                                         <div class="col-md-4 mb-3">
                                                             <label class="form-label fw-bold">¿Solicitar aprobación?</label>
-                                                            <select class="form-select solicitar-verificacion" name="SOLICITAR_VERIFICACION[]" >
+                                                            <select class="form-select solicitar-verificacion" name="SOLICITAR_VERIFICACION[]">
                                                                 <option value="">Seleccione una opción</option>
                                                                 <option value="Sí">Sí</option>
                                                                 <option value="No">No</option>

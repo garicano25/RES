@@ -6,11 +6,11 @@
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
-        <h3 style="color: #ffffff; margin: 0;">&nbsp;Matriz comparativa de cotizaciones</h3>
+        <h3 style="color: #ffffff; margin: 0;">&nbsp;Matriz comparativa por aprobar</h3>
 
     </ol>
     <div class="card-body">
-        <table id="Tablamatrizcomparativa" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+        <table id="Tablamatirzaprobada" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
         </table>
     </div>
 
@@ -233,7 +233,7 @@
 
 
 
-                    <div class="aprobacion-direccion-hoja mt-5" id="APROBACION_HOJA" style="display: none;">
+                    <div class="aprobacion-direccion-hoja mt-5" id="APROBACION_HOJA" style="display: block;">
 
 
                         <div class="bloque-aprobacion">
@@ -241,7 +241,7 @@
                                 <!-- Estado de Aprobación -->
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label fw-bold">Estado de Aprobación</label>
-                                    <select class="form-control estado-aprobacion" name="ESTADO_APROBACION" id="ESTADO_APROBACION">
+                                    <select class="form-control estado-aprobacion" name="ESTADO_APROBACION" id="ESTADO_APROBACION" required>
                                         <option value="" selected disabled>Seleccione una opción</option>
                                         <option value="Aprobada">Aprobada</option>
                                         <option value="Rechazada">Rechazada</option>
@@ -252,7 +252,7 @@
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label fw-bold">Fecha de aprobación *</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker fecha-aprobacion" placeholder="aaaa-mm-dd" name="FECHA_APROBACION" id="FECHA_APROBACION">
+                                        <input type="text" class="form-control mydatepicker fecha-aprobacion" placeholder="aaaa-mm-dd" name="FECHA_APROBACION" id="FECHA_APROBACION" required>
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                     </div>
                                 </div>
@@ -276,7 +276,7 @@
                                     <div class="card-body">
                                         <div class="mb-3">
                                             <label class="form-label fw-bold">¿Requiere PO?</label>
-                                            <select class="form-select requiere-po" name="REQUIERE_PO" id="REQUIERE_PO">
+                                            <select class="form-select requiere-po" name="REQUIERE_PO" id="REQUIERE_PO" required>
                                                 <option value="">Seleccione una opción</option>
                                                 <option value="Sí">Sí</option>
                                                 <option value="No">No</option>
@@ -302,7 +302,7 @@
                                             <div class="col-md-3">
                                                 <div class="mb-3">
                                                     <label class="form-label fw-bold">Criterios de selección</label>
-                                                    <select class="form-select forma-pago" name="CRITERIO_SELECCION" id="CRITERIO_SELECCION">
+                                                    <select class="form-select forma-pago" name="CRITERIO_SELECCION" id="CRITERIO_SELECCION" required>
                                                         <option value="">Seleccionar forma de pago</option>
                                                         <option value="1">Precio</option>
                                                         <option value="2">Calidad</option>
@@ -339,7 +339,7 @@
                                             <div class="col-md-3">
                                                 <div class="mb-3">
                                                     <label class="form-label fw-bold">Forma de pago:</label>
-                                                    <select class="form-select forma-pago" name="FORMA_PAGO" id="FORMA_PAGO">
+                                                    <select class="form-select forma-pago" name="FORMA_PAGO" id="FORMA_PAGO" required>
                                                         <option value="">Seleccionar forma de pago</option>
                                                         <option value="1">Transferencia bancaria (Pago anticipado)</option>
                                                         <option value="5">Efectivo (caja chica)</option>

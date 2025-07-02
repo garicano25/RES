@@ -420,18 +420,31 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
                   <label class="form-label">Cantidad</label>
                   <input type="number" class="form-control" name="CANTIDAD[]" value="${m.CANTIDAD}" readonly>
                 </div>
-                <div class="col-2">
+                <div class="col-1">
                   <label class="form-label">Unidad</label>
                   <input type="text" class="form-control" name="UNIDAD_MEDIDA[]" value="${m.UNIDAD_MEDIDA}" readonly>
                 </div>
-                <div class="col-2">
-                  <label class="form-label">Cantidad Real</label>
+                <div class="col-1">
+                  <label class="form-label">Cantidad Real </label>
                   <input type="number" class="form-control" name="CANTIDAD_REAL[]" value="${m.CANTIDAD_REAL}" min="0" step="any" required>
                 </div>
-                <div class="col-3">
-                  <label class="form-label">Precio Unitario</label>
+                <div class="col-1">
+                  <label class="form-label">Precio Unitario Q1</label>
                   <input type="number" class="form-control" name="PRECIO_UNITARIO[]" value="${m.PRECIO_UNITARIO}" min="0" step="0.01" required>
                 </div>
+            
+               <div class="col-1">
+                  <label class="form-label">Precio Unitario Q2</label>
+                </div>
+
+            
+                <div class="col-1">
+                  <label class="form-label">Precio Unitario Q3</label>
+                  <input type="number" class="form-control" name="PRECIO_UNITARIO_Q3[]" value="${m.PRECIO_UNITARIO_Q3}" min="0" step="0.01" required>
+                </div>
+
+
+
               </div>
             `).join('');
             if (descripcionDiv) descripcionDiv.innerHTML = inputsHtml;
@@ -576,7 +589,7 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
             if (proveedorSugerido) proveedorSugerido.value = item.PROVEEDOR_SUGERIDO || '';
             
     
-            const solicitarverificacion = clon.querySelector('.solicitar-verificacion');
+             const solicitarverificacion = clon.querySelector('.solicitar-verificacion');
             if (solicitarverificacion) {
               solicitarverificacion.value = item.SOLICITAR_VERIFICACION || '';
             
@@ -586,6 +599,19 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
               }
             }
             
+                
+            const solicitarmatriz = clon.querySelector('.REQUIERE_MATRIZ');
+            if (solicitarmatriz) {
+              solicitarmatriz.value = item.REQUIERE_MATRIZ || '';
+            
+              const aprobacionDireccion1 = clon.querySelector('.aprobacion-direccion-hoja');
+              if (aprobacionDireccion1) {
+                aprobacionDireccion1.style.display = (solicitarmatriz.value === 'Sí') ? 'none' : 'block';
+              }
+                }
+                
+
+
     
             const formaAdquisicion = clon.querySelector('.forma-adquisicion');
             if (formaAdquisicion) formaAdquisicion.value = item.FORMA_ADQUISICION || '';
@@ -719,18 +745,35 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
             <label class="form-label">Cantidad</label>
             <input type="number" class="form-control" name="CANTIDAD[]" value="${m.CANTIDAD}" readonly>
           </div>
-          <div class="col-2">
+          <div class="col-1">
             <label class="form-label">Unidad</label>
             <input type="text" class="form-control" name="UNIDAD_MEDIDA[]" value="${m.UNIDAD_MEDIDA}" readonly>
           </div>
-          <div class="col-2">
-            <label class="form-label">Cantidad Real</label>
+          <div class="col-1">
+            <label class="form-label">Cantidad Real </label>
             <input type="number" class="form-control" name="CANTIDAD_REAL[]" min="0" step="any" required>
           </div>
-          <div class="col-3">
-            <label class="form-label">Precio Unitario</label>
+          <div class="col-1">
+            <label class="form-label">Precio Unitario Q1</label>
             <input type="number" class="form-control" name="PRECIO_UNITARIO[]" min="0" step="0.01" required>
           </div>
+
+
+        
+          <div class="col-1">
+            <label class="form-label">Precio Unitario Q2</label>
+            <input type="number" class="form-control" name="PRECIO_UNITARIO_Q2[]" min="0" step="0.01" required>
+          </div>
+
+       
+        
+
+          <div class="col-1">
+            <label class="form-label">Precio Unitario Q3</label>
+            <input type="number" class="form-control" name="PRECIO_UNITARIO_Q3[]" min="0" step="0.01" required>
+          </div>
+
+
         </div>
       `;
     }).join('');
@@ -748,12 +791,26 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
     const nuevasCantidadesReales = Array.from(document.querySelectorAll('input[name="CANTIDAD_REAL[]"]')).map(input => input.value);
     const nuevosPreciosUnitarios = Array.from(document.querySelectorAll('input[name="PRECIO_UNITARIO[]"]')).map(input => input.value);
 
+
+
+
+    const nuevosPreciosUnitariosQ2 = Array.from(document.querySelectorAll('input[name="PRECIO_UNITARIO_Q2[]"]')).map(input => input.value);
+
+
+    const nuevosPreciosUnitariosQ3 = Array.from(document.querySelectorAll('input[name="PRECIO_UNITARIO_Q3[]"]')).map(input => input.value);
+
+    
+
     const materialesCompletos = nuevasDescripciones.map((_, i) => ({
       DESCRIPCION: nuevasDescripciones[i],
       CANTIDAD: nuevasCantidades[i],
       UNIDAD_MEDIDA: nuevasUnidades[i],
       CANTIDAD_REAL: nuevasCantidadesReales[i],
-      PRECIO_UNITARIO: nuevosPreciosUnitarios[i]
+      PRECIO_UNITARIO: nuevosPreciosUnitarios[i],
+      PRECIO_UNITARIO_Q2: nuevosPreciosUnitariosQ2[i],
+      PRECIO_UNITARIO_Q3: nuevosPreciosUnitariosQ3[i]
+
+
     }));
 
     const inputHidden = document.createElement('input');
@@ -1016,13 +1073,20 @@ $('#btnGuardarTodo').on('click', function () {
       const unidades = Array.from(form.querySelectorAll('input[name="UNIDAD_MEDIDA[]"]')).map(e => e.value);
       const reales = Array.from(form.querySelectorAll('input[name="CANTIDAD_REAL[]"]')).map(e => e.value);
       const precios = Array.from(form.querySelectorAll('input[name="PRECIO_UNITARIO[]"]')).map(e => e.value);
+      const preciosQ2 = Array.from(form.querySelectorAll('input[name="PRECIO_UNITARIO_Q2[]"]')).map(e => e.value);
+      const preciosQ3 = Array.from(form.querySelectorAll('input[name="PRECIO_UNITARIO_Q3[]"]')).map(e => e.value);
 
+    
       const materialesJson = descripciones.map((_, i) => ({
+        
         DESCRIPCION: descripciones[i],
         CANTIDAD: cantidades[i],
         UNIDAD_MEDIDA: unidades[i],
         CANTIDAD_REAL: reales[i],
-        PRECIO_UNITARIO: precios[i]
+        PRECIO_UNITARIO: precios[i],
+        PRECIO_UNITARIO_Q2: preciosQ2[i],
+        PRECIO_UNITARIO_Q3: preciosQ3[i]
+
       }));
 
       const inputHidden = document.createElement('input');

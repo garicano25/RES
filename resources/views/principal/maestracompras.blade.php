@@ -236,6 +236,8 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{ url('/Matriz_comparativa') }}">Matriz comparativa de cotizaciones</a>
                                     </li>
+                                    <li><a class="dropdown-item" href="{{ url('/Matriz_aprobación') }}">Matriz comparativa por aprobar</a>
+                                    </li>
                                     <hr class="dropdown-divider">
                                     <li><a class="dropdown-item" href="{{url('/Orden_compra')}}">Orden de compra</a>
                                     </li>
@@ -437,6 +439,16 @@
 
     @if(request()->is('Orden_compra'))
     <script src="/assets/js_sitio/orden_compra/orden_compra.js"></script>
+    @endif
+
+
+    @if(request()->is('Matriz_comparativa'))
+    <script src="/assets/js_sitio/matrizcomparativa/matrizcomparativa.js"></script>
+    @endif
+
+
+    @if(request()->is('Matriz_aprobación'))
+    <script src="/assets/js_sitio/matrizcomparativa/aprobacionmatriz.js"></script>
     @endif
 </body>
 

@@ -123,6 +123,11 @@ use App\Http\Controllers\proveedor\catalagodocumentosproveedorController;
 
 use App\Http\Controllers\ordencompra\poController;
 
+// CONTROLADORES DE MATRIX COMPARATIVA
+
+use App\Http\Controllers\matrizcomparativa\matrizController;
+
+
 // GENERAR PDF
 
 use App\Http\Controllers\pdf\pdfController;
@@ -777,11 +782,23 @@ Route::get('/Tablaordencompra', [poController::class, 'Tablaordencompra']);
 
 Route::get('/Orden_compra', function () { return view('compras.ordencompra.ordencompra');});
 
-Route::get('/Matriz_comparativa', function () {return view('compras.ordencompra.matrizcomparativa');});
-
-
-
 Route::get('/ordencompra/materiales/{hoja_id}', [poController::class, 'obtenerMaterialesPO']);
+
+Route::post('/PoSave', [poController::class, 'store']);
+
+//==============================================    MATRIZ COMPARATIVA  ============================================== 
+
+Route::get('/Matriz_comparativa', [matrizController::class, 'index']);
+
+Route::get('/Tablamatrizcomparativa', [matrizController::class, 'Tablamatrizcomparativa']);
+Route::post('/MatrizSave', [matrizController::class, 'store']);
+
+
+Route::get('/Matriz_aprobación', [matrizController::class, 'index1']);
+
+Route::get('/Tablamatirzaprobada', [matrizController::class, 'Tablamatirzaprobada']);
+
+
 
 //==============================================   CATALOGOS PROVEEDORES  ============================================== 
 Route::get('/Catálogos_proveedores', function () {return view('compras.Catalogos.catalogo_generales');});
