@@ -170,17 +170,19 @@ $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
     $('#NO_MR').val(data.NO_MR);
     $('#PROVEEDOR_SELECCIONADO').val(data.PROVEEDOR_SELECCIONADO);
 
-    
+
     $('#SUBTOTAL').val(data.SUBTOTAL);
     $('#IVA').val(data.IVA);
     $('#IMPORTE').val(data.IMPORTE);
 
+    const porcentaje = data.PORCENTAJE_IVA;
+    $(`input[name="PORCENTAJE_IVA"][value="${porcentaje}"]`).prop('checked', true);
+
 
     
 
-    // Limpiar tabla de productos
-    $('#tabla-productos-body').empty();
-    $('#subtotal_general, #iva_general, #importe_general').val('');
+ $('#tabla-productos-body').empty();
+    $('#subtotal_general').val('');
 
     let materiales = [];
     try {
@@ -191,7 +193,7 @@ $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
 
     let subtotal = 0;
 
-    materiales.forEach((mat, index) => {
+    materiales.forEach((mat) => {
         const descripcion = mat.DESCRIPCION || '';
         const cantidad = parseFloat(mat.CANTIDAD_ || 0);
         const unitario = parseFloat(mat.PRECIO_UNITARIO || 0);
@@ -209,13 +211,28 @@ $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
         $('#tabla-productos-body').append(filaHTML);
     });
 
-    const iva = parseFloat((subtotal * 0.16).toFixed(2));
-    const importe = parseFloat((subtotal + iva).toFixed(2));
-
     $('#SUBTOTAL').val(subtotal.toFixed(2));
-    $('#IVA').val(iva.toFixed(2));
-    $('#IMPORTE').val(importe.toFixed(2));
+
+
+
 
     // Mostrar modal
     $('#miModal_PO').modal('show');
+});
+
+
+function actualizarIVAeImporte() {
+    const subtotal = parseFloat($('#SUBTOTAL').val()) || 0;
+    const porcentajeIVA = parseFloat($('input[name="PORCENTAJE_IVA"]:checked').val()) || 0;
+
+    const iva = subtotal * porcentajeIVA;
+    const total = subtotal + iva;
+
+    $('#IVA').val(iva);
+    $('#IMPORTE').val(total);
+}
+
+// Escuchar cambios en los radio buttons
+$('input[name="PORCENTAJE_IVA"]').on('change', function () {
+    actualizarIVAeImporte();
 });

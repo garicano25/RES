@@ -34,18 +34,36 @@
                         <div class="col-12">
                             <div class="row">
 
-                                <div class="col-4 mb-3">
+                                <div class="col-3 mb-3">
                                     <label class="form-label">N° PO </label>
                                     <input type="text" class="form-control" id="NO_PO" name="NO_PO">
                                 </div>
-                                <div class="col-4 mb-3">
+                                <div class="col-3 mb-3">
                                     <label class="form-label">N° MR</label>
                                     <input type="text" class="form-control" id="NO_MR" name="NO_MR">
                                 </div>
 
-                                <div class="col-4 mb-3">
+                                <div class="col-6 mb-3">
                                     <label class="form-label">Proveedor seleccionado</label>
-                                    <input type="text" class="form-control" id="PROVEEDOR_SELECCIONADO" name="PROVEEDOR_SELECCIONADO" readonly>
+                                    <select class="form-select proveedor-cotizacionq3 text-center" name="PROVEEDOR_SELECCIONADO" id="PROVEEDOR_SELECCIONADO">
+                                        <option value="">Seleccionar proveedor</option>
+                                        <optgroup label="Proveedor oficial">
+                                            @foreach ($proveedoresOficiales as $proveedor)
+                                            <option value="{{ $proveedor->RFC_ALTA }}">
+                                                {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
+                                            </option>
+                                            @endforeach
+                                        </optgroup>
+                                        <optgroup label="Proveedores temporales">
+                                            @foreach ($proveedoresTemporales as $proveedor)
+                                            <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
+                                                {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
+                                            </option>
+                                            @endforeach
+                                        </optgroup>
+                                    </select>
+
+
                                 </div>
 
                             </div>
@@ -64,20 +82,38 @@
                             <tbody id="tabla-productos-body"></tbody>
                         </table>
 
+
+
+
                         <div class="row mt-3">
-                            <div class="col-md-4">
+                            <div class="col-md-4 mt-2">
                                 <label>Subtotal</label>
-                                <input type="text" readonly class="form-control text-end" id="SUBTOTAL" name="SUBTOTAL">
+                                <input type="text" readonly class="form-control text-end" id="SUBTOTAL" name="SUBTOTAL" value="0">
                             </div>
+
                             <div class="col-md-4">
-                                <label>IVA (16%)</label>
-                                <input type="text" readonly class="form-control text-end" id="IVA" name="IVA">
+                                <label class="form-label d-flex align-items-center">
+                                    IVA:
+                                    <div class="ms-2 d-inline-flex align-items-center gap-2">
+                                        <div class="form-check form-check-inline mb-0">
+                                            <input class="form-check-input" type="radio" name="PORCENTAJE_IVA" id="iva8" value="0.08">
+                                            <label class="form-check-label" for="iva8">8%</label>
+                                        </div>
+                                        <div class="form-check form-check-inline mb-0">
+                                            <input class="form-check-input" type="radio" name="PORCENTAJE_IVA" id="iva16" value="0.16">
+                                            <label class="form-check-label" for="iva16">16%</label>
+                                        </div>
+                                    </div>
+                                </label>
+
+                                <input type="text" class="form-control text-end mt-1" id="IVA" name="IVA" readonly>
                             </div>
-                            <div class="col-md-4">
+
+
+                            <div class="col-md-4 mt-2">
                                 <label>Importe Total</label>
                                 <input type="text" readonly class="form-control text-end" id="IMPORTE" name="IMPORTE">
                             </div>
-    
                         </div>
 
 
@@ -86,16 +122,16 @@
 
 
 
-
-
                     </div>
 
-                    <div class="modal-footer mx-5">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-success" id="guardarPO">Guardar</button>
+                </div>
+
+                <div class="modal-footer mx-5">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" id="guardarPO">Guardar</button>
 
 
-                    </div>
+                </div>
             </form>
         </div>
     </div>

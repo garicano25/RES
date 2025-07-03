@@ -777,14 +777,11 @@ Route::get('/mostrarequierecontrato/{id}', [proveedortempController::class, 'mos
 
 //==============================================    ORDEN DE COMPRA  ============================================== 
 
-
+Route::get('/Orden_compra', [poController::class, 'index']);
 Route::get('/Tablaordencompra', [poController::class, 'Tablaordencompra']);
-
-Route::get('/Orden_compra', function () { return view('compras.ordencompra.ordencompra');});
-
-Route::get('/ordencompra/materiales/{hoja_id}', [poController::class, 'obtenerMaterialesPO']);
-
 Route::post('/PoSave', [poController::class, 'store']);
+
+
 
 //==============================================    MATRIZ COMPARATIVA  ============================================== 
 

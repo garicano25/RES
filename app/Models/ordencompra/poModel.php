@@ -19,7 +19,8 @@ class poModel extends Model
         'PROVEEDOR_SELECCIONADO',
         'SUBTOTAL',
         'IVA',
-        'IMPORTE'
+        'IMPORTE',
+        'PORCENTAJE_IVA'
 
 
     ];
