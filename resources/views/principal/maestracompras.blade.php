@@ -236,6 +236,8 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{ url('/Matriz_comparativa') }}">Matriz comparativa de cotizaciones</a>
                                     </li>
+                                    <hr class="dropdown-divider">
+
                                     <li><a class="dropdown-item" href="{{ url('/Matriz_aprobación') }}">Matriz comparativa por aprobar</a>
                                     </li>
                                     <hr class="dropdown-divider">
