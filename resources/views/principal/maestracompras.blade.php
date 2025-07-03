@@ -147,7 +147,7 @@
 
                         <li class="nav-item dropdown" style="margin-left: 8px;">
                             <a class="nav-link BOTON" href="{{ url('/Requisición_Materiales') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Requisición de Materiales - MR</span>
+                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Requisición de Materiales - MR</span><span class="d-none d-lg-inline">Requisición de Materiales - MR</span>
                             </a>
                         </li>
 
@@ -180,7 +180,7 @@
 
                         <li class="nav-item dropdown" style="margin-left: 8px;">
                             <a class="nav-link BOTON" href="{{ url('/Bitácora') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Bitácora de consecutivos MR</span>
+                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Bitácora de consecutivos MR</span><span class="d-none d-lg-inline">Bitácora de consecutivos MR</span>
                             </a>
                         </li>
 
@@ -230,8 +230,8 @@
                             <li class="nav-item dropdown" style="margin-left: 8px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
-                                    <span class="d-lg-none">Orden de compra</span>
-                                    <span class="d-none d-lg-inline">Orden de compra</span>
+                                    <span class="d-lg-none">Matriz comparativa</span>
+                                    <span class="d-none d-lg-inline">Matriz comparativa</span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{ url('/Matriz_comparativa') }}">Matriz comparativa de cotizaciones</a>
@@ -240,14 +240,17 @@
 
                                     <li><a class="dropdown-item" href="{{ url('/Matriz_aprobación') }}">Matriz comparativa por aprobar</a>
                                     </li>
-                                    <hr class="dropdown-divider">
-                                    <li><a class="dropdown-item" href="{{url('/Orden_compra')}}">Orden de compra</a>
-                                    </li>
+                                  
 
                                 </ul>
                             </li>
                         </ul>
 
+                        <li class="nav-item dropdown" style="margin-left: 8px;">
+                            <a class="nav-link BOTON" href="{{ url('/Orden_compra') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Orden de compra</span><span class="d-none d-lg-inline">Orden de compra</span>
+                            </a>
+                        </li>
 
 
                         <ul class="navbar-nav">
