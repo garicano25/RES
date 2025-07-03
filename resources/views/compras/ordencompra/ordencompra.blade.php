@@ -34,50 +34,56 @@
                         <div class="col-12">
                             <div class="row">
 
-                                <div class="col-6 mb-3">
+                                <div class="col-4 mb-3">
                                     <label class="form-label">N° PO </label>
-                                    <input type="text" class="form-control" id="NO_PO" name="NO_PO" readonly>
+                                    <input type="text" class="form-control" id="NO_PO" name="NO_PO">
                                 </div>
-                                <div class="col-6 mb-3">
+                                <div class="col-4 mb-3">
                                     <label class="form-label">N° MR</label>
-                                    <input type="text" class="form-control" id="NO_MR" name="NO_MR" readonly>
+                                    <input type="text" class="form-control" id="NO_MR" name="NO_MR">
                                 </div>
 
+                                <div class="col-4 mb-3">
+                                    <label class="form-label">Proveedor seleccionado</label>
+                                    <input type="text" class="form-control" id="PROVEEDOR_SELECCIONADO" name="PROVEEDOR_SELECCIONADO" readonly>
+                                </div>
 
                             </div>
 
                         </div>
 
-
-                        <div class="form-group mb-3">
-                            <label for="proveedor_seleccionado">Proveedor seleccionado</label>
-                            <input type="text" class="form-control" id="proveedor_seleccionado" readonly>
-                        </div>
-
-                        <table id="tabla_materiales" class="table">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>Descripción</th>
-                                    <th>Cantidad </th>
-                                    <th>Precio unitario</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Total</th>
                                 </tr>
                             </thead>
-                            <tbody></tbody>
+                            <tbody id="tabla-productos-body"></tbody>
                         </table>
-                        <div class="mt-4">
-                            <div class="row mb-2">
-                                <div class="col-md-3"><strong>Subtotal:</strong></div>
-                                <div class="col-md-3"><input type="text" id="subtotal_q" class="form-control" readonly></div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <label>Subtotal</label>
+                                <input type="text" readonly class="form-control text-end" id="SUBTOTAL" name="SUBTOTAL">
                             </div>
-                            <div class="row mb-2">
-                                <div class="col-md-3"><strong>IVA:</strong></div>
-                                <div class="col-md-3"><input type="text" id="iva_q" class="form-control" readonly></div>
+                            <div class="col-md-4">
+                                <label>IVA (16%)</label>
+                                <input type="text" readonly class="form-control text-end" id="IVA" name="IVA">
                             </div>
-                            <div class="row mb-2">
-                                <div class="col-md-3"><strong>Total:</strong></div>
-                                <div class="col-md-3"><input type="text" id="importe_q" class="form-control" readonly></div>
+                            <div class="col-md-4">
+                                <label>Importe Total</label>
+                                <input type="text" readonly class="form-control text-end" id="IMPORTE" name="IMPORTE">
                             </div>
+    
                         </div>
+
+
+
+
+
 
 
 

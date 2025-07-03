@@ -159,45 +159,63 @@ $("#guardarPO").click(function (e) {
 
 
 $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
-    var tr = $(this).closest('tr');
-    var row = Tablaordencompra.row(tr);
-    var HOJA_ID = row.data().HOJA_ID;
-    ID_FORMULARIO_PO = row.data().ID_FORMULARIO_PO;
+    const tr = $(this).closest('tr');
+    const row = Tablaordencompra.row(tr);
+    const data = row.data();
+    ID_FORMULARIO_PO = data.ID_FORMULARIO_PO;
 
-    $.ajax({
-        url: `/ordencompra/materiales/${HOJA_ID}`,
-        method: 'GET',
-        success: function (response) {
-            if (response.status === 'success') {
-                const { proveedor, materiales, subtotal, iva, importe } = response;
+
     
-                $('#proveedor_seleccionado').val(proveedor ?? '');
+    $('#NO_PO').val(data.NO_PO);
+    $('#NO_MR').val(data.NO_MR);
+    $('#PROVEEDOR_SELECCIONADO').val(data.PROVEEDOR_SELECCIONADO);
+
     
-                $('#tabla_materiales tbody').empty();
-                materiales.forEach(m => {
-                    $('#tabla_materiales tbody').append(`
-                        <tr>
-                            <td>${m.DESCRIPCION}</td>
-                            <td>${m.CANTIDAD_REAL}</td>
-                            <td>${m.PRECIO_UNITARIO}</td>
-                        </tr>
-                    `);
-                });
+    $('#SUBTOTAL').val(data.SUBTOTAL);
+    $('#IVA').val(data.IVA);
+    $('#IMPORTE').val(data.IMPORTE);
+
+
     
-                $('#subtotal_q').val(subtotal ?? '');
-                $('#iva_q').val(iva ?? '');
-                $('#importe_q').val(importe ?? '');
-    
-                $('#miModal_PO').modal('show');
-            } else {
-                alert('Error al obtener materiales.');
-            }
-        },
-        error: function () {
-            alert('Error en la solicitud al servidor.');
-        }
+
+    // Limpiar tabla de productos
+    $('#tabla-productos-body').empty();
+    $('#subtotal_general, #iva_general, #importe_general').val('');
+
+    let materiales = [];
+    try {
+        materiales = JSON.parse(data.MATERIALES_JSON || '[]');
+    } catch (e) {
+        console.error('Error al parsear MATERIALES_JSON:', e);
+    }
+
+    let subtotal = 0;
+
+    materiales.forEach((mat, index) => {
+        const descripcion = mat.DESCRIPCION || '';
+        const cantidad = parseFloat(mat.CANTIDAD_ || 0);
+        const unitario = parseFloat(mat.PRECIO_UNITARIO || 0);
+        const total = cantidad * unitario;
+
+        subtotal += total;
+
+        const filaHTML = `
+            <tr>
+                <td>${descripcion}</td>
+                <td>${cantidad}</td>
+                <td>$ ${unitario.toFixed(2)}</td>
+                <td>$ ${total.toFixed(2)}</td>
+            </tr>`;
+        $('#tabla-productos-body').append(filaHTML);
     });
-    
 
-    editarDatoTabla(row.data(), 'formularioPO', 'miModal_PO');
+    const iva = parseFloat((subtotal * 0.16).toFixed(2));
+    const importe = parseFloat((subtotal + iva).toFixed(2));
+
+    $('#SUBTOTAL').val(subtotal.toFixed(2));
+    $('#IVA').val(iva.toFixed(2));
+    $('#IMPORTE').val(importe.toFixed(2));
+
+    // Mostrar modal
+    $('#miModal_PO').modal('show');
 });

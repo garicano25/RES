@@ -15,8 +15,11 @@ class poModel extends Model
         'NO_MR',
         'HOJA_ID', 
         'ACTIVO',
-
-
+        'MATERIALES_JSON',
+        'PROVEEDOR_SELECCIONADO',
+        'SUBTOTAL',
+        'IVA',
+        'IMPORTE'
 
 
     ];
