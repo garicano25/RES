@@ -233,6 +233,87 @@ function actualizarIVAeImporte() {
 }
 
 
+
+$(document).ready(function() {
+
+    $('#Tablaordencompra tbody').on('click', 'td>button.VISUALIZAR', function () {
+        const tr = $(this).closest('tr');
+    const row = Tablaordencompra.row(tr);
+    const data = row.data();
+    ID_FORMULARIO_PO = data.ID_FORMULARIO_PO;
+        
+        hacerSoloLectura(row.data(), '#miModal_PO');
+
+      
+        
+    $('#NO_PO').val(data.NO_PO);
+    $('#NO_MR').val(data.NO_MR);
+    $('#PROVEEDOR_SELECCIONADO').val(data.PROVEEDOR_SELECCIONADO);
+
+
+    $('#SUBTOTAL').val(data.SUBTOTAL);
+    $('#IVA').val(data.IVA);
+    $('#IMPORTE').val(data.IMPORTE);
+
+    const porcentaje = data.PORCENTAJE_IVA;
+    $(`input[name="PORCENTAJE_IVA"][value="${porcentaje}"]`).prop('checked', true);
+
+
+    
+
+ $('#tabla-productos-body').empty();
+    $('#subtotal_general').val('');
+
+    let materiales = [];
+    try {
+        materiales = JSON.parse(data.MATERIALES_JSON || '[]');
+    } catch (e) {
+        console.error('Error al parsear MATERIALES_JSON:', e);
+    }
+
+    let subtotal = 0;
+
+    materiales.forEach((mat) => {
+        const descripcion = mat.DESCRIPCION || '';
+        const cantidad = parseFloat(mat.CANTIDAD_ || 0);
+        const unitario = parseFloat(mat.PRECIO_UNITARIO || 0);
+        const total = cantidad * unitario;
+
+        subtotal += total;
+
+        const filaHTML = `
+            <tr>
+                <td>${descripcion}</td>
+                <td>${cantidad}</td>
+                <td>$ ${unitario.toFixed(2)}</td>
+                <td>$ ${total.toFixed(2)}</td>
+            </tr>`;
+        $('#tabla-productos-body').append(filaHTML);
+    });
+
+    $('#SUBTOTAL').val(subtotal.toFixed(2));
+
+
+      
+    
+    
+    // Mostrar modal manualmente
+        $('#miModal_PO').modal('show');
+        
+
+
+
+
+    });
+
+    $('#miModal_PO').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_PO');
+    });
+});
+
+
+
+
 // Escuchar cambios en los radio buttons
 $('input[name="PORCENTAJE_IVA"]').on('change', function () {
     actualizarIVAeImporte();

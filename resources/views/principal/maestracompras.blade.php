@@ -443,7 +443,7 @@
 
 
     @if(request()->is('Orden_compra'))
-    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.2"></script>
+    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.3"></script>
     @endif
 
 
