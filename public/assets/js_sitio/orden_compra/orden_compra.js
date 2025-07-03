@@ -228,9 +228,10 @@ function actualizarIVAeImporte() {
     const iva = subtotal * porcentajeIVA;
     const total = subtotal + iva;
 
-    $('#IVA').val(iva);
-    $('#IMPORTE').val(total);
+    $('#IVA').val(iva.toFixed(2));
+    $('#IMPORTE').val(total.toFixed(2));
 }
+
 
 // Escuchar cambios en los radio buttons
 $('input[name="PORCENTAJE_IVA"]').on('change', function () {
