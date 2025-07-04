@@ -69,7 +69,7 @@ class matrizController extends Controller
                 } elseif ($value->SOLICITAR_VERIFICACION == 'Sí') {
                     $value->ESTADO_BADGE = '<span class="badge bg-warning text-dark">En revisión</span>';
                 } else {
-                    $value->ESTADO_BADGE = ''; // vacío u opcional
+                    $value->ESTADO_BADGE = '<span class="badge bg-secondary">Sin estatus</span>'; // vacío u opcional
                 }
             }
 

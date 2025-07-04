@@ -240,19 +240,35 @@
 
                                     <li><a class="dropdown-item" href="{{ url('/Matriz_aprobación') }}">Matriz comparativa por aprobar</a>
                                     </li>
-                                  
+
 
                                 </ul>
                             </li>
                         </ul>
 
-                        <li class="nav-item dropdown" style="margin-left: 8px;">
-                            <a class="nav-link BOTON" href="{{ url('/Orden_compra') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Orden de compra</span><span class="d-none d-lg-inline">Orden de compra</span>
-                            </a>
-                        </li>
+
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown" style="margin-left: 8px;">
+                                <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                    <span class="d-lg-none">Orden de compra</span>
+                                    <span class="d-none d-lg-inline">Orden de compra</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{ url('/Orden_compra') }}">Orden de compra</a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+
+                                    <li><a class="dropdown-item" href="{{ url('/Orden_compra_aprobación') }}">Orden de compra por aprobar</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
 
 
+
+                        
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: 8px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -443,8 +459,14 @@
 
 
     @if(request()->is('Orden_compra'))
-    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.4"></script>
+    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.5"></script>
     @endif
+
+
+    @if(request()->is('Orden_compra_aprobación'))
+    <script src="/assets/js_sitio/orden_compra/aprobacioncompra.js"></script>
+    @endif
+
 
 
     @if(request()->is('Matriz_comparativa'))

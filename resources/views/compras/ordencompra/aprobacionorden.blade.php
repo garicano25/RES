@@ -4,12 +4,12 @@
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
-        <h3 style="color: #ffffff; margin: 0;">&nbsp;Orden de compra</h3>
+        <h3 style="color: #ffffff; margin: 0;">&nbsp;Orden de compra por aprobar</h3>
 
     </ol>
 
     <div class="card-body">
-        <table id="Tablaordencompra" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+        <table id="Tablaordencompraprobacion" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
         </table>
     </div>
 </div>
@@ -187,7 +187,7 @@
 
 
 
-                        <div class="aprobacion-direccion-hoja mt-5" id="APROBACION_HOJA" style="display: none;">
+                        <div class="aprobacion-direccion-hoja mt-5" id="APROBACION_HOJA" style="display: block;">
 
 
                             <div class="bloque-aprobacion">
@@ -195,7 +195,7 @@
                                     <!-- Estado de Aprobación -->
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label fw-bold">Estado de Aprobación</label>
-                                        <select class="form-control" id="ESTADO_APROBACION" name="ESTADO_APROBACION" style="pointer-events: none; background-color: #e9ecef;">
+                                        <select class="form-control estado-aprobacion" name="ESTADO_APROBACION" id="ESTADO_APROBACION" required>
                                             <option value="" disabled>Seleccione una opción</option>
                                             <option value="Aprobada">Aprobada</option>
                                             <option value="Rechazada">Rechazada</option>
@@ -207,7 +207,7 @@
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label fw-bold">Fecha de aprobación *</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control mydatepicker fecha-aprobacion" placeholder="aaaa-mm-dd" name="FECHA_APROBACION" id="FECHA_APROBACION">
+                                            <input type="text" class="form-control mydatepicker fecha-aprobacion" placeholder="aaaa-mm-dd" name="FECHA_APROBACION" id="FECHA_APROBACION" required>
                                             <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                         </div>
                                     </div>
@@ -225,7 +225,7 @@
                                 <div class="row">
                                     <div class="col-12 mb-3">
                                         <label>Aprobado por:</label>
-                                        <input type="text" class="form-control" id="APROBADO_POR" name="APROBADO_POR" readonly>
+                                        <input type="text" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" class="form-control" id="APROBADO_POR" name="APROBADO_POR" readonly>
                                     </div>
                                 </div>
                             </div>

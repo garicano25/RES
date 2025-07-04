@@ -4,7 +4,7 @@
 ID_FORMULARIO_PO = 0
 
 
-var Tablaordencompra = $("#Tablaordencompra").DataTable({
+var Tablaordencompraprobacion = $("#Tablaordencompraprobacion").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
     lengthMenu: [
@@ -23,12 +23,12 @@ var Tablaordencompra = $("#Tablaordencompra").DataTable({
         data: {},
         method: 'GET',
         cache: false,
-        url: '/Tablaordencompra',
+        url: '/Tablaordencompraprobacion',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablaordencompra.columns.adjust().draw();
+            Tablaordencompraprobacion.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -46,7 +46,6 @@ var Tablaordencompra = $("#Tablaordencompra").DataTable({
         },
         { data: 'NO_PO' },
         { data: 'NO_MR' },
-        { data: 'ESTADO_BADGE' }, // Nueva columna
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
 
@@ -55,9 +54,8 @@ var Tablaordencompra = $("#Tablaordencompra").DataTable({
         { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'N° PO', className: 'all text-center' },
         { targets: 2, title: 'N° MR', className: 'all text-center' },
-        { targets: 3, title: 'Estado', className: 'all text-center' }, // NUEVO
-        { targets: 4, title: 'Editar', className: 'all text-center' },
-        { targets: 5, title: 'Visualizar', className: 'all text-center' },
+        { targets: 3, title: 'Editar', className: 'all text-center' },
+        { targets: 4, title: 'Visualizar', className: 'all text-center' },
 
     ]
 });
@@ -81,7 +79,7 @@ $("#guardarPO").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarPO')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_PO: ID_FORMULARIO_PO }, 'PoSave', 'formularioPO', 'guardarPO', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 2, ID_FORMULARIO_PO: ID_FORMULARIO_PO }, 'PoSave', 'formularioPO', 'guardarPO', { callbackAfter: true, callbackBefore: true }, () => {
         
                
 
@@ -102,7 +100,7 @@ $("#guardarPO").click(function (e) {
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                      $('#miModal_PO').modal('hide')
                     document.getElementById('formularioPO').reset();
-                    Tablaordencompra.ajax.reload()
+                    Tablaordencompraprobacion.ajax.reload()
 
         
             })
@@ -119,7 +117,7 @@ $("#guardarPO").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarPO')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_PO: ID_FORMULARIO_PO }, 'PoSave', 'formularioPO', 'guardarPO', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 2, ID_FORMULARIO_PO: ID_FORMULARIO_PO }, 'PoSave', 'formularioPO', 'guardarPO', { callbackAfter: true, callbackBefore: true }, () => {
         
                 Swal.fire({
                     icon: 'info',
@@ -140,7 +138,7 @@ $("#guardarPO").click(function (e) {
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                      $('#miModal_PO').modal('hide')
                     document.getElementById('formularioPO').reset();
-                    Tablaordencompra.ajax.reload()
+                    Tablaordencompraprobacion.ajax.reload()
 
 
                 }, 300);  
@@ -160,9 +158,9 @@ $("#guardarPO").click(function (e) {
 
 
 
-$('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
+$('#Tablaordencompraprobacion tbody').on('click', 'td>button.EDITAR', function () {
     const tr = $(this).closest('tr');
-    const row = Tablaordencompra.row(tr);
+    const row = Tablaordencompraprobacion.row(tr);
     const data = row.data();
     ID_FORMULARIO_PO = data.ID_FORMULARIO_PO;
 
@@ -188,7 +186,7 @@ $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
 
     
 
-    // $('#USUARIO_ID').val(data.USUARIO_ID);
+    $('#USUARIO_ID').val(data.USUARIO_ID);
 
 
     if (data.USUARIO_ID) {
@@ -203,28 +201,9 @@ $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
             }
         });
     } else {
-        $('#SOLICITADO_POR').val('No se ha solicitado una aprobación');
+        $('#SOLICITADO_POR').val('');
     }
     
-
-
-    if (data.APROBO_ID) {
-        $.ajax({
-            url: `/obtenerNombreUsuario/${data.APROBO_ID}`,
-            method: 'GET',
-            success: function (response) {
-                $('#APROBADO_POR').val(response.nombre_completo);
-            },
-            error: function () {
-                $('#APROBADO_POR').val('');
-            }
-        });
-    } else {
-        $('#APROBADO_POR').val('No se ha solicitado una aprobación');
-    }
-    
-
-
 
     $('#ESTADO_APROBACION').val(data.ESTADO_APROBACION || '');
     $('#MOTIVO_RECHAZO').val(data.MOTIVO_RECHAZO || '');
@@ -232,7 +211,6 @@ $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
     
     
 
-    verificarEstadoAprobacion();
 
 
     if (data.REQUIERE_COMENTARIO === 'Sí') {
@@ -308,9 +286,9 @@ $('input[name="PORCENTAJE_IVA"]').on('change', function () {
 
 $(document).ready(function() {
 
-    $('#Tablaordencompra tbody').on('click', 'td>button.VISUALIZAR', function () {
+    $('#Tablaordencompraprobacion tbody').on('click', 'td>button.VISUALIZAR', function () {
         const tr = $(this).closest('tr');
-    const row = Tablaordencompra.row(tr);
+    const row = Tablaordencompraprobacion.row(tr);
     const data = row.data();
     ID_FORMULARIO_PO = data.ID_FORMULARIO_PO;
         
@@ -354,21 +332,6 @@ $(document).ready(function() {
         $('#SOLICITADO_POR').val('');
     }
     
-    if (data.APROBO_ID) {
-        $.ajax({
-            url: `/obtenerNombreUsuario/${data.APROBO_ID}`,
-            method: 'GET',
-            success: function (response) {
-                $('#APROBADO_POR').val(response.nombre_completo);
-            },
-            error: function () {
-                $('#APROBADO_POR').val('');
-            }
-        });
-    } else {
-    }
-    
-        
         
     $('#ESTADO_APROBACION').val(data.ESTADO_APROBACION || '');
     $('#MOTIVO_RECHAZO').val(data.MOTIVO_RECHAZO || '');
@@ -376,7 +339,6 @@ $(document).ready(function() {
     
     
 
-        verificarEstadoAprobacion();
         
         
     if (data.REQUIERE_COMENTARIO === 'Sí') {
@@ -466,17 +428,6 @@ $('#ESTADO_APROBACION').on('change', togglerechazo);
 
 
 
-function verificarEstadoAprobacion() {
-    const estado = $('#ESTADO_APROBACION').val();
-    if (estado === 'Aprobada' || estado === 'Rechazada') {
-        $('#APROBACION_HOJA').show();
-    } else {
-        $('#APROBACION_HOJA').hide();
-    }
-}
-
-// Detectar cambio en tiempo real
-$('#ESTADO_APROBACION').on('change', verificarEstadoAprobacion);
 
 
 

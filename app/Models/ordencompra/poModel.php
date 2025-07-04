@@ -20,8 +20,20 @@ class poModel extends Model
         'SUBTOTAL',
         'IVA',
         'IMPORTE',
-        'PORCENTAJE_IVA'
+        'PORCENTAJE_IVA',
 
+
+        'FECHA_EMISION',
+        'FECHA_ENTREGA',
+        'SOLICITAR_AUTORIZACION',
+        'USUARIO_ID',
+        'REQUIERE_COMENTARIO',
+        'COMENTARIO_SOLICITUD',
+
+        'ESTADO_APROBACION',
+        'FECHA_APROBACION',
+        'MOTIVO_RECHAZO',
+        'APROBO_ID'
 
     ];
 }
