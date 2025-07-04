@@ -96,6 +96,11 @@
                                     IVA:
                                     <div class="ms-2 d-inline-flex align-items-center gap-2">
                                         <div class="form-check form-check-inline mb-0">
+                                            <input class="form-check-input" type="radio" name="PORCENTAJE_IVA" id="iva0" value="0">
+                                            <label for="iva0">0%</label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline mb-0">
                                             <input class="form-check-input" type="radio" name="PORCENTAJE_IVA" id="iva8" value="0.08">
                                             <label for="iva8">8%</label>
                                         </div>

@@ -346,37 +346,32 @@ $('#Tablamatirzaprobada tbody').on('click', 'td>button.EDITAR', function () {
         
         $('#CERTIFIACION_CALIDAD_PROVEEDOR1').val(data.CERTIFIACION_CALIDAD_PROVEEDOR1);
         $('#CERTIFIACION_CALIDAD_PROVEEDOR2').val(data.CERTIFIACION_CALIDAD_PROVEEDOR2);
-    $('#CERTIFIACION_CALIDAD_PROVEEDOR3').val(data.CERTIFIACION_CALIDAD_PROVEEDOR3);
-    
+        $('#CERTIFIACION_CALIDAD_PROVEEDOR3').val(data.CERTIFIACION_CALIDAD_PROVEEDOR3);
+        
+       
+        $('#SOLICITAR_VERIFICACION').val(data.SOLICITAR_VERIFICACION);
+
+        $('#FECHA_APROBACION').val(data.FECHA_APROBACION);
+        $('#REQUIERE_PO').val(data.REQUIERE_PO);
+        $('#PROVEEDOR_SELECCIONADO').val(data.PROVEEDOR_SELECCIONADO);
+        $('#MONTO_FINAL').val(data.MONTO_FINAL);
+        $('#FORMA_PAGO').val(data.FORMA_PAGO);
+
+        $('#CRITERIO_SELECCION').val(data.CRITERIO_SELECCION);
+                
+        $('#REQUIERE_COMENTARIO').val(data.REQUIERE_COMENTARIO || '');
+        $('#COMENTARIO_SOLICITUD').val(data.COMENTARIO_SOLICITUD || '');
+        toggleComentario();
+        
 
         
-    $('#SOLICITAR_VERIFICACION').val(data.SOLICITAR_VERIFICACION);
-
-
-    $('#FECHA_APROBACION').val(data.FECHA_APROBACION);
-    $('#REQUIERE_PO').val(data.REQUIERE_PO);
-    $('#PROVEEDOR_SELECCIONADO').val(data.PROVEEDOR_SELECCIONADO);
-    $('#MONTO_FINAL').val(data.MONTO_FINAL);
-    $('#FORMA_PAGO').val(data.FORMA_PAGO);
-
-    $('#CRITERIO_SELECCION').val(data.CRITERIO_SELECCION);
-    
-    
-    
-    $('#REQUIERE_COMENTARIO').val(data.REQUIERE_COMENTARIO || '');
-    $('#COMENTARIO_SOLICITUD').val(data.COMENTARIO_SOLICITUD || '');
-        toggleComentario();
-    
-
-    
         $('#ESTADO_APROBACION').val(data.ESTADO_APROBACION || '');
         $('#MOTIVO_RECHAZO').val(data.MOTIVO_RECHAZO || '');
         togglerechazo();
-    
+        
     
 
-    
-        $('#body-proveedores').empty();
+      $('#body-proveedores').empty();
         $('.th-pu1, .th-pu2, .th-pu3, .th-total1, .th-total2, .th-total3, #head-prov1, #head-prov2, #head-prov3').addClass('d-none');
         $('.col-prov1, .col-prov2, .col-prov3, .fila-extra').hide();
         
@@ -389,7 +384,7 @@ $('#Tablamatirzaprobada tbody').on('click', 'td>button.EDITAR', function () {
         const columnasActivas = proveedores.map(p => p.materiales ? true : false);
         
         let filas = [];
-        let totales = [{ subtotal: 0, iva: 0, importe: 0 }, { subtotal: 0, iva: 0, importe: 0 }, { subtotal: 0, iva: 0, importe: 0 }];
+        let totales = [{ subtotal: 0 }, { subtotal: 0 }, { subtotal: 0 }];
         
         for (let i = 0; i < 100; i++) {
             let fila = { descripcion: '', cantidad: '', precios: [] };
@@ -423,11 +418,6 @@ $('#Tablamatirzaprobada tbody').on('click', 'td>button.EDITAR', function () {
             if (hayDatos) filas.push(fila);
             else break;
         }
-        
-        totales.forEach(t => {
-            t.iva = parseFloat((t.subtotal * 0.16).toFixed(2));
-            t.importe = parseFloat((t.subtotal + t.iva).toFixed(2));
-        });
         
         function llenarSelectProveedores(selectId, valorSeleccionado = '') {
             let html = '<option value="">Seleccionar proveedor</option>';
@@ -476,25 +466,68 @@ $('#Tablamatirzaprobada tbody').on('click', 'td>button.EDITAR', function () {
             $('#body-proveedores').append(tr);
         });
         
-        const tipos = ['subtotal', 'iva', 'importe'];
+        // Mostrar SUBTOTAL, IVA (editable), IMPORTE (calculado) por proveedor
         const etiquetas = ['Subtotal', 'IVA', 'Importe'];
-        const campos = ['SUBTOTAL_PROVEEDOR', 'IVA_PROVEEDOR', 'IMPORTE_PROVEEDOR'];
-        
-        tipos.forEach((tipo, index) => {
+        for (let filaTipo = 0; filaTipo < 3; filaTipo++) {
             let tr = `<tr class="fila-extra"><td></td><td></td>`;
             for (let i = 0; i < 3; i++) {
                 if (columnasActivas[i]) {
-                    const nombreCampo = `${campos[index]}${i + 1}`;
-                    const valor = parseFloat(totales[i][tipo] || 0).toFixed(2);
-                    tr += `
-                        <td class="col-prov${i + 1}"><strong>${etiquetas[index]}</strong></td>
-                        <td class="col-prov${i + 1}">
-                            <input type="text" class="form-control text-center" readonly name="${nombreCampo}" id="${nombreCampo}" value="${valor}">
-                        </td>`;
+                    const idSubtotal = `SUBTOTAL_PROVEEDOR${i + 1}`;
+                    const idIva = `IVA_PROVEEDOR${i + 1}`;
+                    const idImporte = `IMPORTE_PROVEEDOR${i + 1}`;
+                    const subtotal = parseFloat(totales[i].subtotal || 0).toFixed(2);
+        
+                    if (filaTipo === 0) {
+                        tr += `
+                            <td class="col-prov${i + 1}"><strong>${etiquetas[filaTipo]}</strong></td>
+                            <td class="col-prov${i + 1}">
+                                <input type="text" class="form-control text-center" readonly name="${idSubtotal}" id="${idSubtotal}" value="${subtotal}">
+                            </td>`;
+                    } else if (filaTipo === 1) {
+                        tr += `
+                            <td class="col-prov${i + 1}"><strong>${etiquetas[filaTipo]}</strong></td>
+                            <td class="col-prov${i + 1}">
+                                <input type="number" step="any" class="form-control text-center iva-input" data-subtotal-id="${idSubtotal}" data-importe-id="${idImporte}" name="${idIva}" id="${idIva}">
+                            </td>`;
+                    } else if (filaTipo === 2) {
+                        tr += `
+                            <td class="col-prov${i + 1}"><strong>${etiquetas[filaTipo]}</strong></td>
+                            <td class="col-prov${i + 1}">
+                                <input type="text" class="form-control text-center" readonly name="${idImporte}" id="${idImporte}">
+                            </td>`;
+                    }
                 }
             }
             tr += '</tr>';
             $('#body-proveedores').append(tr);
+
+
+    }
+    
+     $('#SUBTOTAL_PROVEEDOR1').val(data.SUBTOTAL_PROVEEDOR1);
+        $('#IVA_PROVEEDOR1').val(data.IVA_PROVEEDOR1);
+        $('#IMPORTE_PROVEEDOR1').val(data.IMPORTE_PROVEEDOR1);
+
+        $('#SUBTOTAL_PROVEEDOR2').val(data.SUBTOTAL_PROVEEDOR2);
+        $('#IVA_PROVEEDOR2').val(data.IVA_PROVEEDOR2);
+        $('#IMPORTE_PROVEEDOR2').val(data.IMPORTE_PROVEEDOR2);
+
+        $('#SUBTOTAL_PROVEEDOR3').val(data.SUBTOTAL_PROVEEDOR3);
+        $('#IVA_PROVEEDOR3').val(data.IVA_PROVEEDOR3);
+        $('#IMPORTE_PROVEEDOR3').val(data.IMPORTE_PROVEEDOR3);
+
+    
+    
+    
+        
+        // Evento: al escribir IVA manual por proveedor, se actualiza el IMPORTE correspondiente
+        $(document).off('input', '.iva-input').on('input', '.iva-input', function () {
+            const iva = parseFloat($(this).val()) || 0;
+            const subtotalId = $(this).data('subtotal-id');
+            const importeId = $(this).data('importe-id');
+            const subtotal = parseFloat($(`#${subtotalId}`).val()) || 0;
+            const total = subtotal + iva;
+            $(`#${importeId}`).val(total.toFixed(2));
         });
 
     
@@ -506,40 +539,40 @@ $('#Tablamatirzaprobada tbody').on('click', 'td>button.EDITAR', function () {
 
     
         // 1. Guardar importes disponibles según proveedor
-const importesProveedores = {};
-if (data.PROVEEDOR1) importesProveedores[data.PROVEEDOR1] = parseFloat(data.IMPORTE_PROVEEDOR1 || 0);
-if (data.PROVEEDOR2) importesProveedores[data.PROVEEDOR2] = parseFloat(data.IMPORTE_PROVEEDOR2 || 0);
-if (data.PROVEEDOR3) importesProveedores[data.PROVEEDOR3] = parseFloat(data.IMPORTE_PROVEEDOR3 || 0);
+            const importesProveedores = {};
+            if (data.PROVEEDOR1) importesProveedores[data.PROVEEDOR1] = parseFloat(data.IMPORTE_PROVEEDOR1 || 0);
+            if (data.PROVEEDOR2) importesProveedores[data.PROVEEDOR2] = parseFloat(data.IMPORTE_PROVEEDOR2 || 0);
+            if (data.PROVEEDOR3) importesProveedores[data.PROVEEDOR3] = parseFloat(data.IMPORTE_PROVEEDOR3 || 0);
 
-// 2. Llenar <select> de proveedores disponibles
-const $select = $('#PROVEEDOR_SELECCIONADO');
-$select.empty().append(`<option value="">Seleccionar proveedor sugerido</option>`);
+            // 2. Llenar <select> de proveedores disponibles
+            const $select = $('#PROVEEDOR_SELECCIONADO');
+            $select.empty().append(`<option value="">Seleccionar proveedor sugerido</option>`);
 
-const proveedoresDisponibles = [
-    data.PROVEEDOR1,
-    data.PROVEEDOR2,
-    data.PROVEEDOR3,
-].filter(p => p); // elimina vacíos
+            const proveedoresDisponibles = [
+                data.PROVEEDOR1,
+                data.PROVEEDOR2,
+                data.PROVEEDOR3,
+            ].filter(p => p); // elimina vacíos
 
-proveedoresDisponibles.forEach(nombre => {
-    $select.append(`<option value="${nombre}">${nombre}</option>`);
-});
+            proveedoresDisponibles.forEach(nombre => {
+                $select.append(`<option value="${nombre}">${nombre}</option>`);
+            });
 
-// 3. Establecer el proveedor guardado (si lo hay)
-$select.val(data.PROVEEDOR_SELECCIONADO || '');
+            // 3. Establecer el proveedor guardado (si lo hay)
+            $select.val(data.PROVEEDOR_SELECCIONADO || '');
 
-// 4. Función para actualizar el input del importe
-function actualizarMontoFinal() {
-    const proveedorSeleccionado = $select.val();
-    const importe = importesProveedores[proveedorSeleccionado] || 0;
-    $('#MONTO_FINAL').val(importe.toFixed(2));
-}
+            // 4. Función para actualizar el input del importe
+            function actualizarMontoFinal() {
+                const proveedorSeleccionado = $select.val();
+                const importe = importesProveedores[proveedorSeleccionado] || 0;
+                $('#MONTO_FINAL').val(importe.toFixed(2));
+            }
 
-// 5. Asignar evento y ejecutar una vez
-$select.on('change', actualizarMontoFinal);
-actualizarMontoFinal();
+            // 5. Asignar evento y ejecutar una vez
+            $select.on('change', actualizarMontoFinal);
+            actualizarMontoFinal();
 
-    
+                
     
 });
 
@@ -596,27 +629,28 @@ $(document).ready(function() {
         
         $('#CERTIFIACION_CALIDAD_PROVEEDOR1').val(data.CERTIFIACION_CALIDAD_PROVEEDOR1);
         $('#CERTIFIACION_CALIDAD_PROVEEDOR2').val(data.CERTIFIACION_CALIDAD_PROVEEDOR2);
-    $('#CERTIFIACION_CALIDAD_PROVEEDOR3').val(data.CERTIFIACION_CALIDAD_PROVEEDOR3);
-    
-
+        $('#CERTIFIACION_CALIDAD_PROVEEDOR3').val(data.CERTIFIACION_CALIDAD_PROVEEDOR3);
         
-    $('#SOLICITAR_VERIFICACION').val(data.SOLICITAR_VERIFICACION);
+        
+
+            
+        $('#SOLICITAR_VERIFICACION').val(data.SOLICITAR_VERIFICACION);
 
 
-    $('#FECHA_APROBACION').val(data.FECHA_APROBACION);
-    $('#REQUIERE_PO').val(data.REQUIERE_PO);
-    $('#PROVEEDOR_SELECCIONADO').val(data.PROVEEDOR_SELECCIONADO);
-    $('#MONTO_FINAL').val(data.MONTO_FINAL);
-    $('#FORMA_PAGO').val(data.FORMA_PAGO);
+        $('#FECHA_APROBACION').val(data.FECHA_APROBACION);
+        $('#REQUIERE_PO').val(data.REQUIERE_PO);
+        $('#PROVEEDOR_SELECCIONADO').val(data.PROVEEDOR_SELECCIONADO);
+        $('#MONTO_FINAL').val(data.MONTO_FINAL);
+        $('#FORMA_PAGO').val(data.FORMA_PAGO);
 
     
-    $('#CRITERIO_SELECCION').val(data.CRITERIO_SELECCION);
-    
-    
-    $('#REQUIERE_COMENTARIO').val(data.REQUIERE_COMENTARIO || '');
-    $('#COMENTARIO_SOLICITUD').val(data.COMENTARIO_SOLICITUD || '');
-        toggleComentario();
-    
+        $('#CRITERIO_SELECCION').val(data.CRITERIO_SELECCION);
+        
+        
+        $('#REQUIERE_COMENTARIO').val(data.REQUIERE_COMENTARIO || '');
+        $('#COMENTARIO_SOLICITUD').val(data.COMENTARIO_SOLICITUD || '');
+            toggleComentario();
+        
 
     
         $('#ESTADO_APROBACION').val(data.ESTADO_APROBACION || '');
@@ -626,7 +660,7 @@ $(document).ready(function() {
     
 
     
-        $('#body-proveedores').empty();
+              $('#body-proveedores').empty();
         $('.th-pu1, .th-pu2, .th-pu3, .th-total1, .th-total2, .th-total3, #head-prov1, #head-prov2, #head-prov3').addClass('d-none');
         $('.col-prov1, .col-prov2, .col-prov3, .fila-extra').hide();
         
@@ -639,7 +673,7 @@ $(document).ready(function() {
         const columnasActivas = proveedores.map(p => p.materiales ? true : false);
         
         let filas = [];
-        let totales = [{ subtotal: 0, iva: 0, importe: 0 }, { subtotal: 0, iva: 0, importe: 0 }, { subtotal: 0, iva: 0, importe: 0 }];
+        let totales = [{ subtotal: 0 }, { subtotal: 0 }, { subtotal: 0 }];
         
         for (let i = 0; i < 100; i++) {
             let fila = { descripcion: '', cantidad: '', precios: [] };
@@ -673,11 +707,6 @@ $(document).ready(function() {
             if (hayDatos) filas.push(fila);
             else break;
         }
-        
-        totales.forEach(t => {
-            t.iva = parseFloat((t.subtotal * 0.16).toFixed(2));
-            t.importe = parseFloat((t.subtotal + t.iva).toFixed(2));
-        });
         
         function llenarSelectProveedores(selectId, valorSeleccionado = '') {
             let html = '<option value="">Seleccionar proveedor</option>';
@@ -726,26 +755,68 @@ $(document).ready(function() {
             $('#body-proveedores').append(tr);
         });
         
-        const tipos = ['subtotal', 'iva', 'importe'];
         const etiquetas = ['Subtotal', 'IVA', 'Importe'];
-        const campos = ['SUBTOTAL_PROVEEDOR', 'IVA_PROVEEDOR', 'IMPORTE_PROVEEDOR'];
-        
-        tipos.forEach((tipo, index) => {
+        for (let filaTipo = 0; filaTipo < 3; filaTipo++) {
             let tr = `<tr class="fila-extra"><td></td><td></td>`;
             for (let i = 0; i < 3; i++) {
                 if (columnasActivas[i]) {
-                    const nombreCampo = `${campos[index]}${i + 1}`;
-                    const valor = parseFloat(totales[i][tipo] || 0).toFixed(2);
-                    tr += `
-                        <td class="col-prov${i + 1}"><strong>${etiquetas[index]}</strong></td>
-                        <td class="col-prov${i + 1}">
-                            <input type="text" class="form-control text-center" readonly name="${nombreCampo}" id="${nombreCampo}" value="${valor}">
-                        </td>`;
+                    const idSubtotal = `SUBTOTAL_PROVEEDOR${i + 1}`;
+                    const idIva = `IVA_PROVEEDOR${i + 1}`;
+                    const idImporte = `IMPORTE_PROVEEDOR${i + 1}`;
+                    const subtotal = parseFloat(totales[i].subtotal || 0).toFixed(2);
+        
+                    if (filaTipo === 0) {
+                        tr += `
+                            <td class="col-prov${i + 1}"><strong>${etiquetas[filaTipo]}</strong></td>
+                            <td class="col-prov${i + 1}">
+                                <input type="text" class="form-control text-center" readonly name="${idSubtotal}" id="${idSubtotal}" value="${subtotal}">
+                            </td>`;
+                    } else if (filaTipo === 1) {
+                        tr += `
+                            <td class="col-prov${i + 1}"><strong>${etiquetas[filaTipo]}</strong></td>
+                            <td class="col-prov${i + 1}">
+                                <input type="number" step="any" class="form-control text-center iva-input" data-subtotal-id="${idSubtotal}" data-importe-id="${idImporte}" name="${idIva}" id="${idIva}">
+                            </td>`;
+                    } else if (filaTipo === 2) {
+                        tr += `
+                            <td class="col-prov${i + 1}"><strong>${etiquetas[filaTipo]}</strong></td>
+                            <td class="col-prov${i + 1}">
+                                <input type="text" class="form-control text-center" readonly name="${idImporte}" id="${idImporte}">
+                            </td>`;
+                    }
                 }
             }
             tr += '</tr>';
             $('#body-proveedores').append(tr);
+        }
+
+
+        $('#SUBTOTAL_PROVEEDOR1').val(data.SUBTOTAL_PROVEEDOR1);
+        $('#IVA_PROVEEDOR1').val(data.IVA_PROVEEDOR1);
+        $('#IMPORTE_PROVEEDOR1').val(data.IMPORTE_PROVEEDOR1);
+
+        $('#SUBTOTAL_PROVEEDOR2').val(data.SUBTOTAL_PROVEEDOR2);
+        $('#IVA_PROVEEDOR2').val(data.IVA_PROVEEDOR2);
+        $('#IMPORTE_PROVEEDOR2').val(data.IMPORTE_PROVEEDOR2);
+
+        $('#SUBTOTAL_PROVEEDOR3').val(data.SUBTOTAL_PROVEEDOR3);
+        $('#IVA_PROVEEDOR3').val(data.IVA_PROVEEDOR3);
+        $('#IMPORTE_PROVEEDOR3').val(data.IMPORTE_PROVEEDOR3);
+
+        
+        
+        // Evento: al escribir IVA manual por proveedor, se actualiza el IMPORTE correspondiente
+        $(document).off('input', '.iva-input').on('input', '.iva-input', function () {
+            const iva = parseFloat($(this).val()) || 0;
+            const subtotalId = $(this).data('subtotal-id');
+            const importeId = $(this).data('importe-id');
+            const subtotal = parseFloat($(`#${subtotalId}`).val()) || 0;
+            const total = subtotal + iva;
+            $(`#${importeId}`).val(total.toFixed(2));
         });
+    
+    
+
 
     
     

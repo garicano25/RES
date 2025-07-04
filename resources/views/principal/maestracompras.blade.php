@@ -443,17 +443,17 @@
 
 
     @if(request()->is('Orden_compra'))
-    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.3"></script>
+    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.4"></script>
     @endif
 
 
     @if(request()->is('Matriz_comparativa'))
-    <script src="/assets/js_sitio/matrizcomparativa/matrizcomparativa.js?v=1.0"></script>
+    <script src="/assets/js_sitio/matrizcomparativa/matrizcomparativa.js?v=1.1"></script>
     @endif
 
 
     @if(request()->is('Matriz_aprobación'))
-    <script src="/assets/js_sitio/matrizcomparativa/aprobacionmatriz.js?v=1.0"></script>
+    <script src="/assets/js_sitio/matrizcomparativa/aprobacionmatriz.js?v=1.1"></script>
     @endif
 </body>
 

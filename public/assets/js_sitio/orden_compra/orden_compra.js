@@ -233,6 +233,11 @@ function actualizarIVAeImporte() {
 }
 
 
+// Escuchar cambios en los radio buttons
+$('input[name="PORCENTAJE_IVA"]').on('change', function () {
+    actualizarIVAeImporte();
+});
+
 
 $(document).ready(function() {
 
@@ -314,7 +319,3 @@ $(document).ready(function() {
 
 
 
-// Escuchar cambios en los radio buttons
-$('input[name="PORCENTAJE_IVA"]').on('change', function () {
-    actualizarIVAeImporte();
-});
