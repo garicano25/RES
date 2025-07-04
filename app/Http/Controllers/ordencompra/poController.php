@@ -211,48 +211,8 @@ class poController extends Controller
 
 
 
-
-
-
-
-
-
-                // case 2:
-                //     if ($request->ID_FORMULARIO_PO == 0) {
-                //         DB::statement('ALTER TABLE formulario_ordencompra AUTO_INCREMENT=1;');
-                //         $compras = poModel::create($request->all());
-                //     } else {
-
-                //         if (isset($request->ELIMINAR)) {
-                //             if ($request->ELIMINAR == 1) {
-                //                 $compras = poModel::where('ID_FORMULARIO_PO', $request['ID_FORMULARIO_PO'])->update(['ACTIVO' => 0]);
-                //                 $response['code'] = 1;
-                //                 $response['compra'] = 'Desactivada';
-                //             } else {
-                //                 $compras = poModel::where('ID_FORMULARIO_PO', $request['ID_FORMULARIO_PO'])->update(['ACTIVO' => 1]);
-                //                 $response['code'] = 1;
-                //                 $response['compra'] = 'Activada';
-                //             }
-                //         } else {
-                //             $compras = poModel::find($request->ID_FORMULARIO_PO);
-                //             $compras->update($request->all());
-                //             $response['code'] = 1;
-                //             $response['compra'] = 'Actualizada';
-                //         }
-                //         return response()->json($response);
-                //     }
-                //     $response['code']  = 1;
-                //     $response['compra']  = $compras;
-                //     return response()->json($response);
-
-
-
-                //     break;
-
-
                 case 2:
                     if ($request->ID_FORMULARIO_PO == 0) {
-                        // NUEVO REGISTRO
                         DB::statement('ALTER TABLE formulario_ordencompra AUTO_INCREMENT=1;');
                         $compras = poModel::create($request->all());
 
@@ -260,7 +220,6 @@ class poController extends Controller
                         $response['compra']  = $compras;
                         return response()->json($response);
                     } else {
-                        // EDICIÓN O CAMBIO DE ESTADO
                         if (isset($request->ELIMINAR)) {
                             if ($request->ELIMINAR == 1) {
                                 $compras = poModel::where('ID_FORMULARIO_PO', $request['ID_FORMULARIO_PO'])->update(['ACTIVO' => 0]);
@@ -274,7 +233,6 @@ class poController extends Controller
                         } else {
                             $compras = poModel::find($request->ID_FORMULARIO_PO);
 
-                            // Solo guardar el APROBO_ID si el estado es "Aprobada" o "Rechazada" y no se ha asignado ya
                             if (
                                 in_array($request->ESTADO_APROBACION, ['Aprobada', 'Rechazada']) &&
                                 empty($compras->APROBO_ID)
@@ -293,7 +251,7 @@ class poController extends Controller
 
                     break;
 
-                    
+
 
 
 
