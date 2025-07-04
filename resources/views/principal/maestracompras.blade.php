@@ -268,7 +268,7 @@
 
 
 
-                        
+
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: 8px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -459,12 +459,12 @@
 
 
     @if(request()->is('Orden_compra'))
-    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.5"></script>
+    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.6"></script>
     @endif
 
 
     @if(request()->is('Orden_compra_aprobación'))
-    <script src="/assets/js_sitio/orden_compra/aprobacioncompra.js"></script>
+    <script src="/assets/js_sitio/orden_compra/aprobacioncompra.js?v=1.0"></script>
     @endif
 
 

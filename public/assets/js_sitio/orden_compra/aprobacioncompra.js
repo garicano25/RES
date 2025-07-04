@@ -147,7 +147,6 @@ $("#guardarPO").click(function (e) {
     }
 
 } else {
-    // Muestra un mensaje de error o realiza alguna otra acción
     alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
 
 }
@@ -261,7 +260,6 @@ $('#Tablaordencompraprobacion tbody').on('click', 'td>button.EDITAR', function (
 
 
 
-    // Mostrar modal
     $('#miModal_PO').modal('show');
 });
 
@@ -278,7 +276,6 @@ function actualizarIVAeImporte() {
 }
 
 
-// Escuchar cambios en los radio buttons
 $('input[name="PORCENTAJE_IVA"]').on('change', function () {
     actualizarIVAeImporte();
 });
@@ -423,7 +420,6 @@ function togglerechazo() {
     }
 }
 
-// Al cambiar la opción del select
 $('#ESTADO_APROBACION').on('change', togglerechazo);
 
 
@@ -431,5 +427,4 @@ $('#ESTADO_APROBACION').on('change', togglerechazo);
 
 
 
-// $('#NO_MR').val(data.NO_MR);
 

@@ -46,7 +46,7 @@ var Tablaordencompra = $("#Tablaordencompra").DataTable({
         },
         { data: 'NO_PO' },
         { data: 'NO_MR' },
-        { data: 'ESTADO_BADGE' }, // Nueva columna
+        { data: 'ESTADO_BADGE' }, 
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
 
@@ -55,7 +55,7 @@ var Tablaordencompra = $("#Tablaordencompra").DataTable({
         { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'N° PO', className: 'all text-center' },
         { targets: 2, title: 'N° MR', className: 'all text-center' },
-        { targets: 3, title: 'Estado', className: 'all text-center' }, // NUEVO
+        { targets: 3, title: 'Estado', className: 'all text-center' }, 
         { targets: 4, title: 'Editar', className: 'all text-center' },
         { targets: 5, title: 'Visualizar', className: 'all text-center' },
 
@@ -188,7 +188,6 @@ $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
 
     
 
-    // $('#USUARIO_ID').val(data.USUARIO_ID);
 
 
     if (data.USUARIO_ID) {
@@ -283,7 +282,6 @@ $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
 
 
 
-    // Mostrar modal
     $('#miModal_PO').modal('show');
 });
 
@@ -300,7 +298,6 @@ function actualizarIVAeImporte() {
 }
 
 
-// Escuchar cambios en los radio buttons
 $('input[name="PORCENTAJE_IVA"]').on('change', function () {
     actualizarIVAeImporte();
 });
@@ -461,7 +458,6 @@ function togglerechazo() {
     }
 }
 
-// Al cambiar la opción del select
 $('#ESTADO_APROBACION').on('change', togglerechazo);
 
 
@@ -475,10 +471,8 @@ function verificarEstadoAprobacion() {
     }
 }
 
-// Detectar cambio en tiempo real
 $('#ESTADO_APROBACION').on('change', verificarEstadoAprobacion);
 
 
 
-// $('#NO_MR').val(data.NO_MR);
 
