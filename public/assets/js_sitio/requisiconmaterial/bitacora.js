@@ -412,7 +412,7 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
             const materiales = JSON.parse(item.MATERIALES_HOJA_JSON || '[]');
             const inputsHtml = materiales.map(m => `
               <div class="row mb-2">
-                <div class="col-4">
+                <div class="col-3">
                   <label class="form-label">Descripción</label>
                   <input type="text" class="form-control" name="DESCRIPCION[]" value="${m.DESCRIPCION}" readonly>
                 </div>
@@ -428,18 +428,18 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
                   <label class="form-label">Cantidad Real </label>
                   <input type="number" class="form-control" name="CANTIDAD_REAL[]" value="${m.CANTIDAD_REAL}" min="0" step="any" required>
                 </div>
-                <div class="col-1">
+                <div class="col-2">
                   <label class="form-label">Precio Unitario Q1</label>
                   <input type="number" class="form-control" name="PRECIO_UNITARIO[]" value="${m.PRECIO_UNITARIO}" min="0" step="0.01" required>
                 </div>
             
-               <div class="col-1">
+               <div class="col-2">
                   <label class="form-label">Precio Unitario Q2</label>
                   <input type="number" class="form-control" name="PRECIO_UNITARIO_Q2[]" value="${m.PRECIO_UNITARIO_Q2}" min="0" step="0.01" required>
                 </div>
 
             
-                <div class="col-1">
+                <div class="col-2">
                   <label class="form-label">Precio Unitario Q3</label>
                   <input type="number" class="form-control" name="PRECIO_UNITARIO_Q3[]" value="${m.PRECIO_UNITARIO_Q3}" min="0" step="0.01" required>
                 </div>
@@ -738,7 +738,7 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
     const inputsHtml = listaFiltrada.map(m => {
       return `
         <div class="row mb-2">
-          <div class="col-4">
+          <div class="col-3">
             <label class="form-label">Descripción</label>
             <input type="text" class="form-control" name="DESCRIPCION[]" value="${m.DESCRIPCION}" readonly>
           </div>
@@ -754,14 +754,14 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
             <label class="form-label">Cantidad Real </label>
             <input type="number" class="form-control" name="CANTIDAD_REAL[]" min="0" step="any" required>
           </div>
-          <div class="col-1">
+          <div class="col-2">
             <label class="form-label">Precio Unitario Q1</label>
             <input type="number" class="form-control" name="PRECIO_UNITARIO[]" min="0" step="0.01" required>
           </div>
 
 
         
-          <div class="col-1">
+          <div class="col-2">
             <label class="form-label">Precio Unitario Q2</label>
             <input type="number" class="form-control" name="PRECIO_UNITARIO_Q2[]" min="0" step="0.01" required>
           </div>
@@ -769,7 +769,7 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
        
         
 
-          <div class="col-1">
+          <div class="col-2">
             <label class="form-label">Precio Unitario Q3</label>
             <input type="number" class="form-control" name="PRECIO_UNITARIO_Q3[]" min="0" step="0.01" required>
           </div>
