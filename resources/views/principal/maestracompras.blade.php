@@ -470,12 +470,12 @@
 
 
     @if(request()->is('Matriz_comparativa'))
-    <script src="/assets/js_sitio/matrizcomparativa/matrizcomparativa.js?v=1.1"></script>
+    <script src="/assets/js_sitio/matrizcomparativa/matrizcomparativa.js?v=1.2"></script>
     @endif
 
 
     @if(request()->is('Matriz_aprobación'))
-    <script src="/assets/js_sitio/matrizcomparativa/aprobacionmatriz.js?v=1.1"></script>
+    <script src="/assets/js_sitio/matrizcomparativa/aprobacionmatriz.js?v=1.2"></script>
     @endif
 </body>
 
