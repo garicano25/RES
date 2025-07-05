@@ -688,7 +688,7 @@ $(document).ready(function() {
       
 
 
-           var rowData;
+    var rowData;
     if (row.data()) {
         rowData = row.data();
 

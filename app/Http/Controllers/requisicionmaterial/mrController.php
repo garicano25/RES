@@ -898,18 +898,36 @@ class mrController extends Controller
 
                     $materialesPorProveedor = [];
 
+                    // foreach ($materiales_json as $m) {
+                    //     // Construcción dinámica de campos por proveedor
+                    //     $cantidadCampo = $q === 1 ? 'CANTIDAD_REAL' : "CANTIDAD_REAL";
+                    //     $precioCampo   = $q === 1 ? 'PRECIO_UNITARIO' : "PRECIO_UNITARIO_Q{$q}";
+
+                    //     $materialesPorProveedor[] = [
+                    //         'DESCRIPCION'     => $m['DESCRIPCION'] ?? '',
+                    //         'CANTIDAD_'       => $m[$cantidadCampo] ?? '',
+                    //         'PRECIO_UNITARIO' => $m[$precioCampo] ?? '',
+                    //     ];
+                    // }
+
                     foreach ($materiales_json as $m) {
                         // Construcción dinámica de campos por proveedor
-                        $cantidadCampo = $q === 1 ? 'CANTIDAD_REAL' : "CANTIDAD_REAL";
+                        $cantidadCampo = 'CANTIDAD_REAL';
                         $precioCampo   = $q === 1 ? 'PRECIO_UNITARIO' : "PRECIO_UNITARIO_Q{$q}";
+
+                        // Saltar si la cantidad es 0 o vacía
+                        if (empty($m[$cantidadCampo]) || $m[$cantidadCampo] == 0) {
+                            continue;
+                        }
 
                         $materialesPorProveedor[] = [
                             'DESCRIPCION'     => $m['DESCRIPCION'] ?? '',
-                            'CANTIDAD_'       => $m[$cantidadCampo] ?? '',
+                            'CANTIDAD_'       => $m[$cantidadCampo],
                             'PRECIO_UNITARIO' => $m[$precioCampo] ?? '',
                         ];
                     }
 
+                    
                     $materiales_detectados["MATERIALES_JSON_PROVEEDOR{$q}"] = json_encode($materialesPorProveedor, JSON_UNESCAPED_UNICODE);
                 }
             }

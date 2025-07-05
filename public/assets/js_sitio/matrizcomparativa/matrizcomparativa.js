@@ -633,15 +633,12 @@ $('#Tablamatrizcomparativa tbody').on('click', 'td>button.EDITAR', function () {
     }
     
 
-    $('#SUBTOTAL_PROVEEDOR1').val(data.SUBTOTAL_PROVEEDOR1);
     $('#IVA_PROVEEDOR1').val(data.IVA_PROVEEDOR1);
     $('#IMPORTE_PROVEEDOR1').val(data.IMPORTE_PROVEEDOR1);
     
-    $('#SUBTOTAL_PROVEEDOR2').val(data.SUBTOTAL_PROVEEDOR2);
     $('#IVA_PROVEEDOR2').val(data.IVA_PROVEEDOR2);
     $('#IMPORTE_PROVEEDOR2').val(data.IMPORTE_PROVEEDOR2);
     
-    $('#SUBTOTAL_PROVEEDOR3').val(data.SUBTOTAL_PROVEEDOR3);
     $('#IVA_PROVEEDOR3').val(data.IVA_PROVEEDOR3);
     $('#IMPORTE_PROVEEDOR3').val(data.IMPORTE_PROVEEDOR3);
     
@@ -902,15 +899,12 @@ $(document).ready(function() {
         
 
         
-        $('#SUBTOTAL_PROVEEDOR1').val(data.SUBTOTAL_PROVEEDOR1);
         $('#IVA_PROVEEDOR1').val(data.IVA_PROVEEDOR1);
         $('#IMPORTE_PROVEEDOR1').val(data.IMPORTE_PROVEEDOR1);
 
-        $('#SUBTOTAL_PROVEEDOR2').val(data.SUBTOTAL_PROVEEDOR2);
         $('#IVA_PROVEEDOR2').val(data.IVA_PROVEEDOR2);
         $('#IMPORTE_PROVEEDOR2').val(data.IMPORTE_PROVEEDOR2);
 
-        $('#SUBTOTAL_PROVEEDOR3').val(data.SUBTOTAL_PROVEEDOR3);
         $('#IVA_PROVEEDOR3').val(data.IVA_PROVEEDOR3);
         $('#IMPORTE_PROVEEDOR3').val(data.IMPORTE_PROVEEDOR3);
 
