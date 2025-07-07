@@ -282,7 +282,7 @@ document.addEventListener("DOMContentLoaded", function() {
             document.getElementById("CIUDAD_EXTRANJERO").value = data.CIUDAD_EXTRANJERO;
             document.getElementById("ESTADO_EXTRANJERO").value = data.ESTADO_EXTRANJERO;
             document.getElementById("PAIS_EXTRANJERO").value = data.PAIS_EXTRANJERO;
-            document.getElementById("DEPARTAMENTO_EXTRANJERO").value = data.DEPARTAMENTO_EXTRANJERO;
+            // document.getElementById("DEPARTAMENTO_EXTRANJERO").value = data.DEPARTAMENTO_EXTRANJERO;
         }
 
         document.getElementById("REPRESENTANTE_LEGAL_ALTA").value = data.REPRESENTANTE_LEGAL_ALTA || '';
