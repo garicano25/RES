@@ -232,16 +232,10 @@ function bloquearBotones() {
         'guardarINCIDENCIAS',
         'guardarACCIONES',
         'guardarFormRP',
-        'miModal_DOCUMENTOS_SOPORTE',
         'NUEVO_REQUISICION',
-        'miModal_CONTRATO',
-        'miModal_DOCUMENTOSOPORTECONTRATO',
         'guardarDOCUMENTOSOPORTECONTRATO',
         'guardarRENOVACION',
         'NUEVA_INFORMACIONMEDICA',
-        'miModal_INCIDENCIAS',
-        'miModal_ACCIONES_DISCIPLINARIAS',
-        'miModal_RECIBOS_NOMINA',
         'NUEVO_DOCUMENTOSOPORTESCONTRATO',
         'guardarSOPORTECONTRATO'
     ];
@@ -267,16 +261,10 @@ function desbloquearBotones() {
         'guardarINCIDENCIAS',
         'guardarACCIONES',
         'guardarFormRP',
-        'miModal_DOCUMENTOS_SOPORTE',
         'NUEVO_REQUISICION',
-        'miModal_CONTRATO',
-        'miModal_DOCUMENTOSOPORTECONTRATO',
         'guardarDOCUMENTOSOPORTECONTRATO',
         'guardarRENOVACION',
         'NUEVA_INFORMACIONMEDICA',
-        'miModal_INCIDENCIAS',
-        'miModal_ACCIONES_DISCIPLINARIAS',
-        'miModal_RECIBOS_NOMINA',
         'NUEVO_DOCUMENTOSOPORTESCONTRATO',
         'guardarSOPORTECONTRATO'
     ];
