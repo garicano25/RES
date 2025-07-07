@@ -441,7 +441,7 @@
                 </div>
                 <div class="col-md-4 mt-3">
                   <label class="form-label">Nombre *</label>
-                  <input type="text" class="form-control" name="NOMBRE_CONTACTO_SOLICITUD" id="NOMBRE_CONTACTO_SOLICITUD">
+                  <input type="text" class="form-control" name="CONTACTO_SOLICITUD" id="CONTACTO_SOLICITUD">
                 </div>
                 <div class="col-md-6 mt-3">
                   <label class="form-label">Cargo *</label>

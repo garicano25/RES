@@ -1027,7 +1027,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (contacto) {
             document.getElementById('TITULO_CONTACTO_SOLICITUD').value = contacto.TITULO_CONTACTO_SOLICITUD || '';
-            document.getElementById('NOMBRE_CONTACTO_SOLICITUD').value = contacto.CONTACTO_SOLICITUD || '';
+            document.getElementById('CONTACTO_SOLICITUD').value = contacto.CONTACTO_SOLICITUD || '';
             document.getElementById('CARGO_SOLICITUD').value = contacto.CARGO_SOLICITUD || '';
             document.getElementById('TELEFONO_SOLICITUD').value = contacto.TELEFONO_SOLICITUD || '';
             document.getElementById('EXTENSION_SOLICITUD').value = contacto.EXTENSION_SOLICITUD || '';
