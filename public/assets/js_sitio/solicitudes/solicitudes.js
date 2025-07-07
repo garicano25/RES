@@ -453,14 +453,8 @@ $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
     $(".observacionesdiv").empty();
     obtenerObservaciones(row);
 
-
-
-
-    
     editarDatoTabla(row.data(), 'formularioSOLICITUDES', 'miModal_SOLICITUDES', 1);
     $('#miModal_SOLICITUDES .modal-title').html(row.data().NOMBRE_COMERCIAL_SOLICITUD);
-
-  
 
     const servicioTercero = Number(row.data().SERVICIO_TERCERO);
     if (servicioTercero === 1) {
@@ -471,7 +465,46 @@ $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
         document.getElementById('servicioPropio').checked = true;
     }
 
+    const rfcEditado = row.data().RFC_SOLICITUD || '';
 
+    if (rfcEditado !== '') {
+        fetch(`/buscarCliente?rfc=${encodeURIComponent(rfcEditado)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const selectorDireccion = document.getElementById('SELECTOR_DIRECCION');
+                    selectorDireccion.innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
+                    if (data.data.DIRECCIONES && data.data.DIRECCIONES.length > 0) {
+                        data.data.DIRECCIONES.forEach((direccion) => {
+                            const option = document.createElement('option');
+                            option.value = direccion.direccion;
+                            option.text = `${direccion.tipo}: ${direccion.direccion}`;
+                            selectorDireccion.appendChild(option);
+                        });
+                    }
+    
+                    const selectorContacto = document.getElementById('SELECTOR_CONTACTO');
+                    selectorContacto.innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
+                    if (data.data.CONTACTOS && data.data.CONTACTOS.length > 0) {
+                        data.data.CONTACTOS.forEach((contacto, index) => {
+                            const option = document.createElement('option');
+                            option.value = index;
+                            option.text = contacto.CONTACTO_SOLICITUD;
+                            selectorContacto.appendChild(option);
+                        });
+    
+                        window.contactosGuardados = data.data.CONTACTOS;
+                    }
+                } else {
+                    console.warn('Cliente no encontrado al editar');
+                }
+            })
+            .catch(error => {
+                console.error('Error al buscar el cliente:', error);
+            });
+    }
+
+    
      if (row.data().CODIGO_POSTAL) {
         fetch(`/codigo-postal/${row.data().CODIGO_POSTAL}`)
              .then(response => response.json())
@@ -531,18 +564,10 @@ $(document).ready(function() {
         var row = Tablasolicitudes.row(tr);
         
     hacerSoloLectura(row.data(), '#miModal_SOLICITUDES');
-  
-
         ID_FORMULARIO_SOLICITUDES = row.data().ID_FORMULARIO_SOLICITUDES;
-        
-
     $(".observacionesdiv").empty();
     obtenerObservaciones(row);
 
-
-
-        
-    
     editarDatoTabla(row.data(), 'formularioSOLICITUDES', 'miModal_SOLICITUDES', 1);
     $('#miModal_SOLICITUDES .modal-title').html(row.data().NOMBRE_COMERCIAL_SOLICITUD);
 

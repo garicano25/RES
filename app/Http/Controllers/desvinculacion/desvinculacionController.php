@@ -22,7 +22,10 @@ class desvinculacionController extends Controller
     {
 
 
-        $contratacion = contratacionModel::where('ACTIVO', 1)->get();
+        // $contratacion = contratacionModel::where('ACTIVO', 1)->get();
+
+
+        $contratacion = contratacionModel::orderBy('CURP', 'ASC')->get();
 
 
         return view('RH.desvinculacion.desvinculacion', compact('contratacion'));
