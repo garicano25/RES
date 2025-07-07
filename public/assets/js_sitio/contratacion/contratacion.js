@@ -230,7 +230,20 @@ function bloquearBotones() {
         'guardarRECIBONOMINA',
         'guardarINFORMACIONMEDICA',
         'guardarINCIDENCIAS',
-        'guardarACCIONES'
+        'guardarACCIONES',
+        'guardarFormRP',
+        'miModal_DOCUMENTOS_SOPORTE',
+        'NUEVO_REQUISICION',
+        'miModal_CONTRATO',
+        'miModal_DOCUMENTOSOPORTECONTRATO',
+        'guardarDOCUMENTOSOPORTECONTRATO',
+        'guardarRENOVACION',
+        'NUEVA_INFORMACIONMEDICA',
+        'miModal_INCIDENCIAS',
+        'miModal_ACCIONES_DISCIPLINARIAS',
+        'miModal_RECIBOS_NOMINA',
+        'NUEVO_DOCUMENTOSOPORTESCONTRATO',
+        'guardarSOPORTECONTRATO'
     ];
 
     botones.forEach(botonId => {
@@ -252,7 +265,20 @@ function desbloquearBotones() {
         'guardarRECIBONOMINA',
         'guardarINFORMACIONMEDICA',
         'guardarINCIDENCIAS',
-        'guardarACCIONES'
+        'guardarACCIONES',
+        'guardarFormRP',
+        'miModal_DOCUMENTOS_SOPORTE',
+        'NUEVO_REQUISICION',
+        'miModal_CONTRATO',
+        'miModal_DOCUMENTOSOPORTECONTRATO',
+        'guardarDOCUMENTOSOPORTECONTRATO',
+        'guardarRENOVACION',
+        'NUEVA_INFORMACIONMEDICA',
+        'miModal_INCIDENCIAS',
+        'miModal_ACCIONES_DISCIPLINARIAS',
+        'miModal_RECIBOS_NOMINA',
+        'NUEVO_DOCUMENTOSOPORTESCONTRATO',
+        'guardarSOPORTECONTRATO'
     ];
 
     botones.forEach(botonId => {
@@ -851,6 +877,7 @@ $("#guardarDatosGenerales").click(function (e) {
             };
             documentos.push(documento);
         });
+
         const requestData = {
             api: 1,
             ID_FORMULARIO_CONTRATACION: ID_FORMULARIO_CONTRATACION,
