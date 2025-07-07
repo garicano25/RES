@@ -232,11 +232,8 @@ function bloquearBotones() {
         'guardarINCIDENCIAS',
         'guardarACCIONES',
         'guardarFormRP',
-        'NUEVO_REQUISICION',
         'guardarDOCUMENTOSOPORTECONTRATO',
         'guardarRENOVACION',
-        'NUEVA_INFORMACIONMEDICA',
-        'NUEVO_DOCUMENTOSOPORTESCONTRATO',
         'guardarSOPORTECONTRATO'
     ];
 
@@ -261,11 +258,8 @@ function desbloquearBotones() {
         'guardarINCIDENCIAS',
         'guardarACCIONES',
         'guardarFormRP',
-        'NUEVO_REQUISICION',
         'guardarDOCUMENTOSOPORTECONTRATO',
         'guardarRENOVACION',
-        'NUEVA_INFORMACIONMEDICA',
-        'NUEVO_DOCUMENTOSOPORTESCONTRATO',
         'guardarSOPORTECONTRATO'
     ];
 
