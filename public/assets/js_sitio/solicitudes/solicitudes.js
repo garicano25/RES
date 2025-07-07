@@ -465,44 +465,58 @@ $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
         document.getElementById('servicioPropio').checked = true;
     }
 
+   
+
+
     const rfcEditado = row.data().RFC_SOLICITUD || '';
 
-    if (rfcEditado !== '') {
-        fetch(`/buscarCliente?rfc=${encodeURIComponent(rfcEditado)}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const selectorDireccion = document.getElementById('SELECTOR_DIRECCION');
-                    selectorDireccion.innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
-                    if (data.data.DIRECCIONES && data.data.DIRECCIONES.length > 0) {
-                        data.data.DIRECCIONES.forEach((direccion) => {
-                            const option = document.createElement('option');
-                            option.value = direccion.direccion;
-                            option.text = `${direccion.tipo}: ${direccion.direccion}`;
-                            selectorDireccion.appendChild(option);
-                        });
+        // Limpiar antes de cargar nuevos datos
+        const selectorDireccion = document.getElementById('SELECTOR_DIRECCION');
+        selectorDireccion.innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
+
+        const selectorContacto = document.getElementById('SELECTOR_CONTACTO');
+        selectorContacto.innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
+
+        window.contactosGuardados = []; // Limpiar contactos previos
+
+        if (rfcEditado !== '') {
+            fetch(`/buscarCliente?rfc=${encodeURIComponent(rfcEditado)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Llenar selector de direcciones
+                        if (data.data.DIRECCIONES && data.data.DIRECCIONES.length > 0) {
+                            data.data.DIRECCIONES.forEach((direccion) => {
+                                const option = document.createElement('option');
+                                option.value = direccion.direccion;
+                                option.text = `${direccion.tipo}: ${direccion.direccion}`;
+                                selectorDireccion.appendChild(option);
+                            });
+                        }
+
+                        // Llenar selector de contactos
+                        if (data.data.CONTACTOS && data.data.CONTACTOS.length > 0) {
+                            data.data.CONTACTOS.forEach((contacto, index) => {
+                                const option = document.createElement('option');
+                                option.value = index;
+                                option.text = contacto.CONTACTO_SOLICITUD;
+                                selectorContacto.appendChild(option);
+                            });
+
+                            window.contactosGuardados = data.data.CONTACTOS;
+                        }
+                    } else {
+                        // Si no encontró, ya están vacíos desde antes
+                        console.warn('Cliente no encontrado al editar');
                     }
+                })
+                .catch(error => {
+                    console.error('Error al buscar el cliente:', error);
+                });
+        }
+
+            
     
-                    const selectorContacto = document.getElementById('SELECTOR_CONTACTO');
-                    selectorContacto.innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
-                    if (data.data.CONTACTOS && data.data.CONTACTOS.length > 0) {
-                        data.data.CONTACTOS.forEach((contacto, index) => {
-                            const option = document.createElement('option');
-                            option.value = index;
-                            option.text = contacto.CONTACTO_SOLICITUD;
-                            selectorContacto.appendChild(option);
-                        });
-    
-                        window.contactosGuardados = data.data.CONTACTOS;
-                    }
-                } else {
-                    console.warn('Cliente no encontrado al editar');
-                }
-            })
-            .catch(error => {
-                console.error('Error al buscar el cliente:', error);
-            });
-    }
 
     
      if (row.data().CODIGO_POSTAL) {
