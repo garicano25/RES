@@ -234,7 +234,7 @@ function bloquearBotones() {
         'guardarFormRP',
         'guardarDOCUMENTOSOPORTECONTRATO',
         'guardarRENOVACION',
-        'guardarSOPORTECONTRATO'
+        'guardarSOPORTECONTRATO',
     ];
 
     botones.forEach(botonId => {
