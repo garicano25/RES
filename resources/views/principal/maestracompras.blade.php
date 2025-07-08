@@ -477,6 +477,14 @@
     @if(request()->is('Matriz_aprobación'))
     <script src="/assets/js_sitio/matrizcomparativa/aprobacionmatriz.js?v=1.2"></script>
     @endif
+
+
+    @if(request()->is('Catálogo_verificación_proveedor'))
+    <script src="/assets/js_sitio/proveedor/catalogos/catalogoverproveedor.js"></script>
+    @endif
+
+
+
 </body>
 
 </body>

@@ -17,13 +17,13 @@
     </ol>
 
     <div class="card-body">
-        <table id="Tablaverificacionproveedor" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+        <table id="Tablacatalogoverificacionproveedor" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
 
         </table>
     </div>
 </div>
 
-<div class="modal fade" id="miModal_VERIFICACIONPROVEEDRO" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="miModal_VERIFICACIONPROVEEDOR" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form method="post" enctype="multipart/form-data" id="formularioVERIFICACIONPROVEEDOR" style="background-color: #ffffff;">
@@ -41,7 +41,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-success" id="guardarVERIFICACION">Guardar</button>
+                    <button type="submit" class="btn btn-success" id="guardarVERIFICACIONPROVEEDOR">Guardar</button>
                 </div>
             </form>
         </div>
