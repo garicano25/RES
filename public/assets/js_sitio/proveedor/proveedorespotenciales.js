@@ -799,11 +799,11 @@ $('#Tablaverificacionproveedor').on('click', 'td>button.EDITAR', function () {
 
 
 $('#Tablaverificacionproveedor').on('click', '.ver-archivo-verificacionproveedor', function (e) {
-    e.preventDefault(); // evita comportamiento por defecto
-    e.stopPropagation(); // evita burbujeo si aplica
+    e.preventDefault(); 
+    e.stopPropagation(); 
 
     var tr = $(this).closest('tr');
-    var row = Tablaverificacionproveedor.row(tr);
+    var row = Tablaverificacionproveedor.row(tr).data();
     var id = $(this).data('id');
 
     if (!id || !row.EVIDENCIA_VERIFICACION || row.EVIDENCIA_VERIFICACION.trim() === "") {
@@ -817,6 +817,5 @@ $('#Tablaverificacionproveedor').on('click', '.ver-archivo-verificacionproveedor
 
     var url = '/mostrarverificacionproveedor/' + id;
 
-    // Abre el documento en una nueva pestaña
     window.open(url, '_blank');
 });
