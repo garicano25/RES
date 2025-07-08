@@ -855,7 +855,9 @@ $("#guardarDatosGenerales").click(function (e) {
                 'EMISION_DOCUMENTO': $(this).find("input[name='EMISION_DOCUMENTO']").val(),
                 'VIGENCIA_DOCUMENTO': $(this).find("input[name='VIGENCIA_DOCUMENTO']").val(),
                 'NUMERO_DOCUMENTO': $(this).find("input[name='NUMERO_DOCUMENTO']").val(),
-                'EXPEDIDO_DOCUMENTO': $(this).find("input[name='EXPEDIDO_DOCUMENTO']").val()
+                'EXPEDIDO_DOCUMENTO': $(this).find("input[name='EXPEDIDO_DOCUMENTO']").val(),
+                'EMITIDO_POR_DOCUMENTO': $(this).find("input[name='EMITIDO_POR_DOCUMENTO']").val()
+
             };
             documentos.push(documento);
         });
@@ -1338,11 +1340,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     <option value="0" disabled selected>Seleccione una opción</option>
                     <option value="1">Residencia temporal</option>
                     <option value="2">Residencia Permanente</option>
-                    <option value="3">INE</option>
+                    <option value="3">Credencial para votar</option>
                     <option value="4">Pasaporte</option>
                     <option value="5">Licencia de conducir</option>
                 </select>
             </div>
+            <div class="col-2 mb-3">
+                <label>Emitido por *</label>
+                <input type="text" class="form-control" name="EMITIDO_POR_DOCUMENTO" required>
+            </div> 
              <div class="col-2 mb-3">
                 <label>Emisión *</label>
                 <div class="input-group">
@@ -1357,13 +1363,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                 </div>
             </div>
-            <div class="col-3 mb-3">
+            <div class="col-2 mb-3">
                 <label>Número *</label>
-                <input type="text" class="form-control" id="NUMERO_DOCUMENTO" name="NUMERO_DOCUMENTO" required>
+                <input type="text" class="form-control" name="NUMERO_DOCUMENTO" required>
             </div>
-            <div class="col-3 mb-3">
+            <div class="col-2 mb-3">
                 <label>Expedido en *</label>
-                <input type="text" class="form-control" id="EXPEDIDO_DOCUMENTO" name="EXPEDIDO_DOCUMENTO" required>
+                <input type="text" class="form-control" name="EXPEDIDO_DOCUMENTO" required>
             </div> 
             <br>
             <div class="col-12 mt-4">
@@ -1398,78 +1404,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-// function obtenerDocumentosOficiales(data) {
-//     let row = data.data().DOCUMENTOS_JSON;
-//     var documentos = JSON.parse(row);
-//     let contadorDocumentos = 1;
 
-//     $.each(documentos, function (index, contacto) {
-//         var tipo = contacto.TIPO_DOCUMENTO_IDENTIFICACION;
-//         var emision = contacto.EMISION_DOCUMENTO;
-//         var vigencia = contacto.VIGENCIA_DOCUMENTO;
-//         var numero = contacto.NUMERO_DOCUMENTO;
-//         var expedido = contacto.EXPEDIDO_DOCUMENTO;
 
-//         const divDocumentoOfi = document.createElement('div');
-//         divDocumentoOfi.classList.add('row', 'generardocumento', 'm-3');
-//         divDocumentoOfi.innerHTML = `
-//             <div class="col-lg-12 col-sm-1">
-//                 <div class="form-group d-flex align-items-center">
-//                     <h5><i class="bi bi-person"></i> Documento N° ${contadorDocumentos} &nbsp;</h5>
-//                 </div>
-//             </div>
-//             <div class="col-2 mb-3">
-//                 <label>Tipo *</label>
-//                 <select class="form-control" name="TIPO_DOCUMENTO_IDENTIFICACION" required>
-//                     <option value="0" disabled>Seleccione una opción</option>
-//                     <option value="1" ${tipo == 1 ? 'selected' : ''}>Residencia temporal</option>
-//                     <option value="2" ${tipo == 2 ? 'selected' : ''}>Residencia Permanente</option>
-//                     <option value="3" ${tipo == 3 ? 'selected' : ''}>INE</option>
-//                     <option value="4" ${tipo == 4 ? 'selected' : ''}>Pasaporte</option>
-//                     <option value="5" ${tipo == 5 ? 'selected' : ''}>Licencia de conducir</option>
-//                 </select>
-//             </div>
-//              <div class="col-2 mb-3">
-//                 <label>Emisión *</label>
-//                 <div class="input-group">
-//                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd"  name="EMISION_DOCUMENTO"   value="${emision}" required>
-//                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-//                 </div>
-//             </div>
-//              <div class="col-2 mb-3">
-//                 <label>Vigencia *</label>
-//                 <div class="input-group">
-//                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="VIGENCIA_DOCUMENTO" name="VIGENCIA_DOCUMENTO" value="${vigencia}" required>
-//                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-//                 </div>
-//             </div>
-//             <div class="col-3 mb-3">
-//                 <label>Número *</label>
-//                 <input type="text" class="form-control" id="NUMERO_DOCUMENTO" name="NUMERO_DOCUMENTO" value="${numero}" required>
-//             </div>
-//             <div class="col-3 mb-3">
-//                 <label>Expedido en *</label>
-//                 <input type="text" class="form-control" id="EXPEDIDO_DOCUMENTO" name="EXPEDIDO_DOCUMENTO" value="${expedido}" required>
-//             </div>
-//             <br>
-//             <div class="col-12 mt-4">
-//                 <div class="form-group" style="text-align: center;">
-//                     <button type="button" class="btn btn-danger botonEliminarDocumento">Eliminar documento <i class="bi bi-trash-fill"></i></button>
-//                 </div>
-//             </div>
-//         `;
-//         const contenedor = document.querySelector('.listadedocumentoficial');
-//         contenedor.appendChild(divDocumentoOfi);
-
-//         contadorDocumentos++;
-
-//         const botonEliminar = divDocumentoOfi.querySelector('.botonEliminarDocumento');
-//         botonEliminar.addEventListener('click', function () {
-//             contenedor.removeChild(divDocumentoOfi);
-//         });
-//     });
-
-// }
 
 
 
@@ -1484,6 +1420,8 @@ function obtenerDocumentosOficiales(data) {
         let vigencia = contacto.VIGENCIA_DOCUMENTO;
         let numero = contacto.NUMERO_DOCUMENTO;
         let expedido = contacto.EXPEDIDO_DOCUMENTO;
+        let emitidopor = contacto.EMITIDO_POR_DOCUMENTO;
+
 
         const hoy = new Date();
         const fechaEmision = new Date(emision);
@@ -1524,11 +1462,15 @@ function obtenerDocumentosOficiales(data) {
                     <option value="0" disabled>Seleccione una opción</option>
                     <option value="1" ${tipo == 1 ? 'selected' : ''}>Residencia temporal</option>
                     <option value="2" ${tipo == 2 ? 'selected' : ''}>Residencia Permanente</option>
-                    <option value="3" ${tipo == 3 ? 'selected' : ''}>INE</option>
+                    <option value="3" ${tipo == 3 ? 'selected' : ''}>Credencial para votar</option>
                     <option value="4" ${tipo == 4 ? 'selected' : ''}>Pasaporte</option>
                     <option value="5" ${tipo == 5 ? 'selected' : ''}>Licencia de conducir</option>
                 </select>
             </div>
+            <div class="col-2 mb-3">
+                <label>Emitido por *</label>
+                <input type="text" class="form-control" name="EMITIDO_POR_DOCUMENTO" value="${emitidopor}" required>
+            </div> 
             <div class="col-2 mb-3">
                 <label>Emisión *</label>
                 <div class="input-group">
@@ -1543,11 +1485,11 @@ function obtenerDocumentosOficiales(data) {
                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                 </div>
             </div>
-            <div class="col-3 mb-3">
+            <div class="col-2 mb-3">
                 <label>Número *</label>
                 <input type="text" class="form-control" name="NUMERO_DOCUMENTO" value="${numero}" required>
             </div>
-            <div class="col-3 mb-3">
+            <div class="col-2 mb-3">
                 <label>Expedido en *</label>
                 <input type="text" class="form-control" name="EXPEDIDO_DOCUMENTO" value="${expedido}" required>
             </div>
