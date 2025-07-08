@@ -119,6 +119,8 @@ $("#guardarDIRECTORIO").click(async function (e) {
     }
 });
 
+
+
 const Modalgiro = document.getElementById('miModal_POTENCIALES')
 Modalgiro.addEventListener('hidden.bs.modal', event => {
     
@@ -819,3 +821,28 @@ $('#Tablaverificacionproveedor').on('click', '.ver-archivo-verificacionproveedor
 
     window.open(url, '_blank');
 });
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const guardarBtn = document.getElementById('guardarDIRECTORIO');
+    const tabs = document.querySelectorAll('#tabsCliente button[data-bs-toggle="tab"]');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('shown.bs.tab', function (event) {
+        const target = event.target.getAttribute('data-bs-target');
+        if (target === '#contenido-info') {
+          guardarBtn.style.display = 'inline-block';
+        } else {
+          guardarBtn.style.display = 'none';
+        }
+      });
+    });
+
+    // Ocultar el botón al iniciar si no está en el primer tab
+    const activeTab = document.querySelector('#tabsCliente button.active');
+    if (activeTab && activeTab.getAttribute('data-bs-target') !== '#contenido-info') {
+      guardarBtn.style.display = 'none';
+    }
+});
+  

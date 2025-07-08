@@ -189,12 +189,9 @@
                 </div>
               </div>
 
-
-
               <div class="mb-3">
                 <h4><b>Contacto</b></label>
               </div>
-
 
 
               <div class="col-12">
@@ -241,9 +238,6 @@
                   <div class="serviciodiv mt-4"></div>
                 </div>
               </div>
-
-
-
 
             </div>
 
