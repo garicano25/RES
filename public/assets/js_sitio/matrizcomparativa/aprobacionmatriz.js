@@ -363,6 +363,7 @@ $('#Tablamatirzaprobada tbody').on('click', 'td>button.EDITAR', function () {
         $('#COMENTARIO_SOLICITUD').val(data.COMENTARIO_SOLICITUD || '');
         toggleComentario();
         
+        $('#FECHA_SOLCITIUD').val(data.FECHA_SOLCITIUD || '');
 
         
         $('#ESTADO_APROBACION').val(data.ESTADO_APROBACION || '');
@@ -628,6 +629,7 @@ $(document).ready(function() {
         $('#CERTIFIACION_CALIDAD_PROVEEDOR2').val(data.CERTIFIACION_CALIDAD_PROVEEDOR2);
         $('#CERTIFIACION_CALIDAD_PROVEEDOR3').val(data.CERTIFIACION_CALIDAD_PROVEEDOR3);
         
+        $('#FECHA_SOLCITIUD').val(data.FECHA_SOLCITIUD || '');
         
 
             

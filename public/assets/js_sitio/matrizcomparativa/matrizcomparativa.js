@@ -354,19 +354,21 @@ $('#Tablamatrizcomparativa tbody').on('click', 'td>button.EDITAR', function () {
         $('#SOLICITAR_VERIFICACION').val(data.SOLICITAR_VERIFICACION);
 
 
-    $('#FECHA_APROBACION').val(data.FECHA_APROBACION);
-    $('#REQUIERE_PO').val(data.REQUIERE_PO);
-    $('#PROVEEDOR_SELECCIONADO').val(data.PROVEEDOR_SELECCIONADO);
-    $('#MONTO_FINAL').val(data.MONTO_FINAL);
-    $('#FORMA_PAGO').val(data.FORMA_PAGO);
+        $('#FECHA_APROBACION').val(data.FECHA_APROBACION);
+        $('#REQUIERE_PO').val(data.REQUIERE_PO);
+        $('#PROVEEDOR_SELECCIONADO').val(data.PROVEEDOR_SELECCIONADO);
+        $('#MONTO_FINAL').val(data.MONTO_FINAL);
+        $('#FORMA_PAGO').val(data.FORMA_PAGO);
 
-    $('#CRITERIO_SELECCION').val(data.CRITERIO_SELECCION);
-    
-    
-    
-    $('#REQUIERE_COMENTARIO').val(data.REQUIERE_COMENTARIO || '');
+        $('#CRITERIO_SELECCION').val(data.CRITERIO_SELECCION);
+        
+        $('#FECHA_SOLCITIUD').val(data.FECHA_SOLCITIUD || '');
+        
+        
+        $('#REQUIERE_COMENTARIO').val(data.REQUIERE_COMENTARIO || '');
     $('#COMENTARIO_SOLICITUD').val(data.COMENTARIO_SOLICITUD || '');
-        toggleComentario();
+    
+            toggleComentario();
     
 
     
@@ -378,128 +380,7 @@ $('#Tablamatrizcomparativa tbody').on('click', 'td>button.EDITAR', function () {
         verificarEstadoAprobacion();
 
     
-        // $('#body-proveedores').empty();
-        // $('.th-pu1, .th-pu2, .th-pu3, .th-total1, .th-total2, .th-total3, #head-prov1, #head-prov2, #head-prov3').addClass('d-none');
-        // $('.col-prov1, .col-prov2, .col-prov3, .fila-extra').hide();
-        
-        // const proveedores = [
-        //     { nombre: data.PROVEEDOR1, materiales: data.MATERIALES_JSON_PROVEEDOR1 },
-        //     { nombre: data.PROVEEDOR2, materiales: data.MATERIALES_JSON_PROVEEDOR2 },
-        //     { nombre: data.PROVEEDOR3, materiales: data.MATERIALES_JSON_PROVEEDOR3 }
-        // ];
-        
-        // const columnasActivas = proveedores.map(p => p.materiales ? true : false);
-        
-        // let filas = [];
-        // let totales = [{ subtotal: 0, iva: 0, importe: 0 }, { subtotal: 0, iva: 0, importe: 0 }, { subtotal: 0, iva: 0, importe: 0 }];
-        
-        // for (let i = 0; i < 100; i++) {
-        //     let fila = { descripcion: '', cantidad: '', precios: [] };
-        //     let hayDatos = false;
-        
-        //     proveedores.forEach((prov, idx) => {
-        //         if (prov.materiales) {
-        //             let materiales = [];
-        //             try { materiales = JSON.parse(prov.materiales); } catch (e) {}
-        
-        //             const mat = materiales[i];
-        //             if (mat) {
-        //                 const cantidad = parseFloat(mat.CANTIDAD_ || 0);
-        //                 const unitario = parseFloat(mat.PRECIO_UNITARIO || 0);
-        //                 const total = unitario * cantidad;
-        
-        //                 if (!fila.descripcion) fila.descripcion = mat.DESCRIPCION || '';
-        //                 if (!fila.cantidad) fila.cantidad = mat.CANTIDAD_ || '';
-        
-        //                 fila.precios[idx] = {
-        //                     unitario: unitario.toFixed(2),
-        //                     total: total.toFixed(2)
-        //                 };
-        
-        //                 totales[idx].subtotal += total;
-        //                 hayDatos = true;
-        //             }
-        //         }
-        //     });
-        
-        //     if (hayDatos) filas.push(fila);
-        //     else break;
-        // }
-        
-        // totales.forEach(t => {
-        //     t.iva = parseFloat((t.subtotal * 0.16).toFixed(2));
-        //     t.importe = parseFloat((t.subtotal + t.iva).toFixed(2));
-        // });
-        
-        // function llenarSelectProveedores(selectId, valorSeleccionado = '') {
-        //     let html = '<option value="">Seleccionar proveedor</option>';
-        
-        //     html += '<optgroup label="Proveedor oficial">';
-        //     proveedoresOficiales.forEach(p => {
-        //         const selected = (valorSeleccionado === p.RFC_ALTA) ? 'selected' : '';
-        //         html += `<option value="${p.RFC_ALTA}" ${selected}>${p.RAZON_SOCIAL_ALTA} (${p.RFC_ALTA})</option>`;
-        //     });
-        //     html += '</optgroup>';
-        
-        //     html += '<optgroup label="Proveedores temporales">';
-        //     proveedoresTemporales.forEach(p => {
-        //         const selected = (valorSeleccionado === p.RAZON_PROVEEDORTEMP) ? 'selected' : '';
-        //         html += `<option value="${p.RAZON_PROVEEDORTEMP}" ${selected}>${p.RAZON_PROVEEDORTEMP} (${p.NOMBRE_PROVEEDORTEMP})</option>`;
-        //     });
-        //     html += '</optgroup>';
-        
-        //     $(`#PROVEEDOR${selectId}`).html(html);
-        // }
-        
-        // proveedores.forEach((prov, idx) => {
-        //     const num = idx + 1;
-        //     if (prov.materiales) {
-        //         $(`#head-prov${num}`).removeClass('d-none');
-        //         $(`.th-pu${num}`).removeClass('d-none');
-        //         $(`.th-total${num}`).removeClass('d-none');
-        //         $(`.col-prov${num}`).show();
-        //         $('.fila-extra').show();
-        //         llenarSelectProveedores(num, prov.nombre);
-        //     }
-        // });
-        
-        // filas.forEach(fila => {
-        //     let tr = `<tr><td>${fila.descripcion}</td><td>${fila.cantidad}</td>`;
-        //     for (let i = 0; i < 3; i++) {
-        //         if (columnasActivas[i]) {
-        //             if (fila.precios[i]) {
-        //                 tr += `<td>$ ${fila.precios[i].unitario}</td><td>$ ${fila.precios[i].total}</td>`;
-        //             } else {
-        //                 tr += `<td></td><td></td>`;
-        //             }
-        //         }
-        //     }
-        //     tr += '</tr>';
-        //     $('#body-proveedores').append(tr);
-        // });
-        
-        // const tipos = ['subtotal', 'iva', 'importe'];
-        // const etiquetas = ['Subtotal', 'IVA', 'Importe'];
-        // const campos = ['SUBTOTAL_PROVEEDOR', 'IVA_PROVEEDOR', 'IMPORTE_PROVEEDOR'];
-        
-        // tipos.forEach((tipo, index) => {
-        //     let tr = `<tr class="fila-extra"><td></td><td></td>`;
-        //     for (let i = 0; i < 3; i++) {
-        //         if (columnasActivas[i]) {
-        //             const nombreCampo = `${campos[index]}${i + 1}`;
-        //             const valor = parseFloat(totales[i][tipo] || 0).toFixed(2);
-        //             tr += `
-        //                 <td class="col-prov${i + 1}"><strong>${etiquetas[index]}</strong></td>
-        //                 <td class="col-prov${i + 1}">
-        //                     <input type="text" class="form-control text-center" readonly name="${nombreCampo}" id="${nombreCampo}" value="${valor}">
-        //                 </td>`;
-        //         }
-        //     }
-        //     tr += '</tr>';
-        //     $('#body-proveedores').append(tr);
-        // });
-
-    
+     
     
         $('#body-proveedores').empty();
         $('.th-pu1, .th-pu2, .th-pu3, .th-total1, .th-total2, .th-total3, #head-prov1, #head-prov2, #head-prov3').addClass('d-none');
@@ -757,6 +638,9 @@ $(document).ready(function() {
     
         $('#ESTADO_APROBACION').val(data.ESTADO_APROBACION || '');
         $('#MOTIVO_RECHAZO').val(data.MOTIVO_RECHAZO || '');
+
+        $('#FECHA_SOLCITIUD').val(data.FECHA_SOLCITIUD || '');
+
         togglerechazo();
         
         

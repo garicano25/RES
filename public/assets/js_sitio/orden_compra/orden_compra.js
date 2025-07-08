@@ -186,6 +186,7 @@ $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
 
     $('#FECHA_APROBACION').val(data.FECHA_APROBACION);
 
+    $('#FECHA_SOLCITIUD').val(data.FECHA_SOLCITIUD || '');
     
 
 
@@ -331,6 +332,7 @@ $(document).ready(function() {
     $('#COMENTARIO_SOLICITUD').val(data.COMENTARIO_SOLICITUD);
         
     $('#FECHA_APROBACION').val(data.FECHA_APROBACION);
+    $('#FECHA_SOLCITIUD').val(data.FECHA_SOLCITIUD || '');
     
         
     $('#USUARIO_ID').val(data.USUARIO_ID);

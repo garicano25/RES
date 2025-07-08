@@ -136,14 +136,13 @@
                         </div>
 
 
-
                         <div class="row mt-4">
                             <div class="col-md-12">
                                 <div class="card border-info">
                                     <div class="card-body">
                                         <div class="row">
                                             <!-- Solicitar verificación -->
-                                            <div class="col-md-6 mb-3">
+                                            <div class="col-md-4 mb-3">
                                                 <label class="form-label fw-bold">¿Solicitar aprobación?</label>
                                                 <select class="form-select solicitar-verificacion" name="SOLICITAR_AUTORIZACION" id="SOLICITAR_AUTORIZACION">
                                                     <option value="">Seleccione una opción</option>
@@ -152,8 +151,15 @@
                                                 </select>
                                             </div>
 
+                                            <div class="col-md-4 mb-3">
+                                                <label class="form-label fw-bold">Fecha de solicitud *</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control mydatepicker fecha-aprobacion" placeholder="aaaa-mm-dd" name="FECHA_SOLCITIUD" id="FECHA_SOLCITIUD">
+                                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                                </div>
+                                            </div>
 
-                                            <div class="col-md-6 mb-3">
+                                            <div class="col-md-4 mb-3">
                                                 <label class="form-label fw-bold">Requiere algún comentario</label>
                                                 <select class="form-select solicitar-verificacion" name="REQUIERE_COMENTARIO" id="REQUIERE_COMENTARIO">
                                                     <option value="">Seleccione una opción</option>
@@ -166,7 +172,6 @@
                                 </div>
                             </div>
                         </div>
-
 
                         <div class="col-md-12 mt-3" style="display: none;" id="COMENTARIO_SOLICITUD_PO">
                             <label class="form-label fw-bold">Comentario</label>

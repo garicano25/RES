@@ -33,7 +33,8 @@ class poModel extends Model
         'ESTADO_APROBACION',
         'FECHA_APROBACION',
         'MOTIVO_RECHAZO',
-        'APROBO_ID'
+        'APROBO_ID',
+        'FECHA_SOLCITIUD'
 
     ];
 }

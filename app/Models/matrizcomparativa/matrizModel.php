@@ -77,7 +77,8 @@ class matrizModel extends Model
         'PROVEEDOR_SELECCIONADO',
         'MONTO_FINAL',
         'FORMA_PAGO',
-        'CRITERIO_SELECCION'
+        'CRITERIO_SELECCION',
+        'FECHA_SOLCITIUD'
 
 
 
