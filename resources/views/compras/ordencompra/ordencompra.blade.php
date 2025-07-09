@@ -84,17 +84,20 @@
 
                         </div>
 
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Descripción</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio Unitario</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabla-productos-body"></tbody>
-                        </table>
+
+
+
+                        <div class="mt-3">
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <!-- <label>Agregar servicio</label> -->
+                                    <!-- <button id="botonmaterial" id="botonmaterial" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                                        <i class="bi bi-plus-circle-fill"></i>
+                                    </button> -->
+                                </div>
+                            </div>
+                            <div class="materialesdiv mt-4"></div>
+                        </div>
 
 
 
@@ -240,6 +243,16 @@
 
 
 
+                        <div class="col-12 text-center">
+                            <div class="col-md-6 mx-auto">
+                                <button type="button" id="crearREVISION" class="btn btn-warning w-100">
+                                    Crear Revisión
+                                </button>
+                            </div>
+                        </div>
+
+                        
+
 
                     </div>
 
@@ -256,6 +269,27 @@
     </div>
 </div>
 
+
+
+<div class="modal fade" id="modalMotivoRevision" tabindex="-1" aria-labelledby="modalMotivoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalMotivoLabel">Motivo de la Revisión</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea id="motivoRevisionInput" class="form-control" rows="4" placeholder="Escriba el motivo de la revisión..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="confirmarMotivoRevision" class="btn btn-primary">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @endsection

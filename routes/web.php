@@ -124,6 +124,8 @@ use App\Http\Controllers\proveedor\catalogoverificacionproveedorController;
 // CONTROLADORES DE PO 
 
 use App\Http\Controllers\ordencompra\poController;
+use App\Http\Controllers\ordencompra\pdfpoController;
+
 
 // CONTROLADORES DE MATRIX COMPARATIVA
 
@@ -788,9 +790,10 @@ Route::get('/Tablaordencompraprobacion', [poController::class, 'Tablaordencompra
 
 
 Route::post('/PoSave', [poController::class, 'store']);
-
 Route::get('/obtenerNombreUsuario/{id}', [poController::class, 'obtenerNombreUsuario']);
 
+
+Route::get('/generarPDFPO/{id}', [pdfpoController::class, 'generarPDFPO']);
 
 //==============================================    MATRIZ COMPARATIVA  ============================================== 
 

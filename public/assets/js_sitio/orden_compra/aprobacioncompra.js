@@ -63,6 +63,7 @@ var Tablaordencompraprobacion = $("#Tablaordencompraprobacion").DataTable({
 
 
 
+
 $("#guardarPO").click(function (e) {
     e.preventDefault();
 
@@ -70,44 +71,63 @@ $("#guardarPO").click(function (e) {
 
     if (formularioValido) {
 
-    if (ID_FORMULARIO_PO == 0) {
-        
-        alertMensajeConfirm({
-            title: "¿Desea guardar la información?",
-            text: "Al guardarla, se podra usar",
-            icon: "question",
-        },async function () { 
-
-            await loaderbtn('guardarPO')
-            await ajaxAwaitFormData({ api: 2, ID_FORMULARIO_PO: ID_FORMULARIO_PO }, 'PoSave', 'formularioPO', 'guardarPO', { callbackAfter: true, callbackBefore: true }, () => {
-        
+        var servicios = [];
+        $(".material-item").each(function() {
+            var servicio = {
+                'DESCRIPCION': $(this).find("input[name='DESCRIPCION']").val(),
+                'CANTIDAD_': $(this).find("input[name='CANTIDAD_']").val(),
+                'PRECIO_UNITARIO': $(this).find("input[name='PRECIO_UNITARIO']").val()
                
+            };
+            servicios.push(servicio);
+        });
 
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                })
+        const requestData = {
+                api: 2,
+                ID_FORMULARIO_PO: ID_FORMULARIO_PO,
+                MATERIALES_JSON: JSON.stringify(servicios)
 
-                $('.swal2-popup').addClass('ld ld-breath')
-        
+
+            };
+
+        if (ID_FORMULARIO_PO == 0) {
+            
+            alertMensajeConfirm({
+                title: "¿Desea guardar la información?",
+                text: "Al guardarla, se podra usar",
+                icon: "question",
+            },async function () { 
+
+                await loaderbtn('guardarPO')
+                await ajaxAwaitFormData( requestData, 'PoSave', 'formularioPO', 'guardarPO', { callbackAfter: true, callbackBefore: true }, () => {
+            
                 
-            }, function (data) {
+
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    })
+
+                    $('.swal2-popup').addClass('ld ld-breath')
+            
                     
+                }, function (data) {
+                        
 
-                ID_FORMULARIO_PO = data.compra.ID_FORMULARIO_PO
-                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
-                     $('#miModal_PO').modal('hide')
-                    document.getElementById('formularioPO').reset();
-                    Tablaordencompraprobacion.ajax.reload()
+                    ID_FORMULARIO_PO = data.compra.ID_FORMULARIO_PO
+                        alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                        $('#miModal_PO').modal('hide')
+                        document.getElementById('formularioPO').reset();
+                        Tablaordencompraprobacion.ajax.reload()
 
-        
-            })
             
-            
-            
-        }, 1)
+                })
+                
+                
+                
+            }, 1)
         
     } else {
             alertMensajeConfirm({
@@ -117,7 +137,7 @@ $("#guardarPO").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarPO')
-            await ajaxAwaitFormData({ api: 2, ID_FORMULARIO_PO: ID_FORMULARIO_PO }, 'PoSave', 'formularioPO', 'guardarPO', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData(requestData, 'PoSave', 'formularioPO', 'guardarPO', { callbackAfter: true, callbackBefore: true }, () => {
         
                 Swal.fire({
                     icon: 'info',
@@ -147,14 +167,12 @@ $("#guardarPO").click(function (e) {
     }
 
 } else {
+    // Muestra un mensaje de error o realiza alguna otra acción
     alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
 
 }
     
 });
-
-
-
 
 
 $('#Tablaordencompraprobacion tbody').on('click', 'td>button.EDITAR', function () {
@@ -226,37 +244,13 @@ $('#Tablaordencompraprobacion tbody').on('click', 'td>button.EDITAR', function (
 
     
 
- $('#tabla-productos-body').empty();
-    $('#subtotal_general').val('');
+    $(".materialesdiv").empty();
 
-    let materiales = [];
-    try {
-        materiales = JSON.parse(data.MATERIALES_JSON || '[]');
-    } catch (e) {
-        console.error('Error al parsear MATERIALES_JSON:', e);
+    if (data.MATERIALES_JSON) {
+        cargarMaterialesDesdeJSON(data.MATERIALES_JSON);
     }
 
-    let subtotal = 0;
-
-    materiales.forEach((mat) => {
-        const descripcion = mat.DESCRIPCION || '';
-        const cantidad = parseFloat(mat.CANTIDAD_ || 0);
-        const unitario = parseFloat(mat.PRECIO_UNITARIO || 0);
-        const total = cantidad * unitario;
-
-        subtotal += total;
-
-        const filaHTML = `
-            <tr>
-                <td>${descripcion}</td>
-                <td>${cantidad}</td>
-                <td>$ ${unitario.toFixed(2)}</td>
-                <td>$ ${total.toFixed(2)}</td>
-            </tr>`;
-        $('#tabla-productos-body').append(filaHTML);
-    });
-
-    $('#SUBTOTAL').val(subtotal.toFixed(2));
+      
 
 
 
@@ -353,38 +347,13 @@ $(document).ready(function() {
 
     
 
- $('#tabla-productos-body').empty();
-    $('#subtotal_general').val('');
+    $(".materialesdiv").empty();
 
-    let materiales = [];
-    try {
-        materiales = JSON.parse(data.MATERIALES_JSON || '[]');
-    } catch (e) {
-        console.error('Error al parsear MATERIALES_JSON:', e);
+    if (data.MATERIALES_JSON) {
+        cargarMaterialesDesdeJSON(data.MATERIALES_JSON);
     }
 
-    let subtotal = 0;
-
-    materiales.forEach((mat) => {
-        const descripcion = mat.DESCRIPCION || '';
-        const cantidad = parseFloat(mat.CANTIDAD_ || 0);
-        const unitario = parseFloat(mat.PRECIO_UNITARIO || 0);
-        const total = cantidad * unitario;
-
-        subtotal += total;
-
-        const filaHTML = `
-            <tr>
-                <td>${descripcion}</td>
-                <td>${cantidad}</td>
-                <td>$ ${unitario.toFixed(2)}</td>
-                <td>$ ${total.toFixed(2)}</td>
-            </tr>`;
-        $('#tabla-productos-body').append(filaHTML);
-    });
-
-    $('#SUBTOTAL').val(subtotal.toFixed(2));
-
+      
 
       
     
@@ -425,6 +394,93 @@ function togglerechazo() {
 $('#ESTADO_APROBACION').on('change', togglerechazo);
 
 
+
+
+
+function cargarMaterialesDesdeJSON(serviciosJson) {
+    const contenedorMateriales = document.querySelector('.materialesdiv');
+    contenedorMateriales.innerHTML = '';
+    contadorMateriales = 1;
+
+    try {
+        const servicios = typeof serviciosJson === 'string' ? JSON.parse(serviciosJson) : serviciosJson;
+
+        servicios.forEach(servicio => {
+            const divMaterial = document.createElement('div');
+            divMaterial.classList.add('row', 'material-item', 'mt-1');
+
+            divMaterial.innerHTML = `
+                <div class="col-6">
+                    <label class="form-label">Descripción</label>
+                    <input type="text" class="form-control" name="DESCRIPCION" value="${servicio.DESCRIPCION}" required>
+                </div>
+                <div class="col-2">
+                    <label class="form-label">Cantidad</label>
+                    <input type="number" step="any" class="form-control cantidad-input" name="CANTIDAD_" value="${servicio.CANTIDAD_}" required>
+                </div>
+                <div class="col-2">
+                    <label class="form-label">Precio Unitario</label>
+                    <input type="number" step="any" class="form-control precio-input" name="PRECIO_UNITARIO" value="${servicio.PRECIO_UNITARIO}" required>
+                </div>
+                <div class="col-2">
+                    <label class="form-label">Total</label>
+                    <input type="text" class="form-control total-input" name="TOTAL" readonly>
+                </div>
+                <div class="col-12 mt-4">
+                    <div class="form-group" style="text-align: center;">
+                        <button type="button" class="btn btn-danger botonEliminarMaterial">Eliminar <i class="bi bi-trash-fill"></i></button>
+                    </div>
+                </div>
+            `;
+
+            contenedorMateriales.appendChild(divMaterial);
+
+            const cantidadInput = divMaterial.querySelector('.cantidad-input');
+            const precioInput = divMaterial.querySelector('.precio-input');
+            const totalInput = divMaterial.querySelector('.total-input');
+
+            function calcularYActualizarTotal() {
+                const cantidad = parseFloat(cantidadInput.value) || 0;
+                const precio = parseFloat(precioInput.value) || 0;
+                const total = cantidad * precio;
+                totalInput.value = total.toFixed(2);
+                
+                actualizarSubtotal();          // recalcula subtotal general
+                actualizarIVAeImporte();       // recalcula IVA + Importe también
+            }
+
+            // Calcular total al iniciar
+            calcularYActualizarTotal();
+
+            // Recalcular cuando cambien los valores
+            cantidadInput.addEventListener('input', calcularYActualizarTotal);
+            precioInput.addEventListener('input', calcularYActualizarTotal);
+
+            // Botón eliminar
+            const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
+            botonEliminar.addEventListener('click', function () {
+                contenedorMateriales.removeChild(divMaterial);
+                actualizarSubtotal(); // actualizar subtotal después de eliminar
+            });
+        });
+
+        // Subtotal general después de cargar todo
+        actualizarSubtotal();
+
+    } catch (e) {
+        console.error('Error al parsear MATERIALES_JSON:', e);
+    }
+}
+
+
+
+function actualizarSubtotal() {
+    let subtotal = 0;
+    document.querySelectorAll('.total-input').forEach(input => {
+        subtotal += parseFloat(input.value) || 0;
+    });
+    document.getElementById('SUBTOTAL').value = subtotal.toFixed(2);
+}
 
 
 

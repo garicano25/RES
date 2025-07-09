@@ -36,11 +36,13 @@ class directorioModel extends Model
         'CONSTANCIA_DOCUMENTO',
         'CORREO_DIRECTORIO',
         'TIPO_PERSONA',
+
         'DOMICILIO_EXTRANJERO',
         'CODIGO_EXTRANJERO',
         'CIUDAD_EXTRANJERO',
         'ESTADO_EXTRANJERO',
         'PAIS_EXTRANJERO',
         'DEPARTAMENTO_EXTRANJERO'
+        
     ];
 }

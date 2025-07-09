@@ -84,17 +84,18 @@
 
                         </div>
 
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Descripción</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio Unitario</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabla-productos-body"></tbody>
-                        </table>
+
+                        <div class="mt-3">
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <!-- <label>Agregar servicio</label> -->
+                                    <!-- <button id="botonmaterial" id="botonmaterial" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
+                                        <i class="bi bi-plus-circle-fill"></i>
+                                    </button> -->
+                                </div>
+                            </div>
+                            <div class="materialesdiv mt-4"></div>
+                        </div>
 
 
 

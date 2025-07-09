@@ -43,22 +43,59 @@ class poController extends Controller
     }
 
 
+    // public function Tablaordencompra()
+    // {
+    //     try {
+    //         $tabla = poModel::get();
+
+    //         foreach ($tabla as $value) {
+    //             // BOTONES
+    //             if ($value->ESTADO_APROBACION == 'Aprobada') {
+    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+    //             } else {
+    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //             }
+
+    //             // BADGE DE ESTADO
+    //             if ($value->ESTADO_APROBACION == 'Aprobada') {
+    //                 $value->ESTADO_BADGE = '<span class="badge bg-success">Aprobado</span>';
+    //             } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
+    //                 $value->ESTADO_BADGE = '<span class="badge bg-danger">Rechazado</span>';
+    //             } elseif ($value->SOLICITAR_AUTORIZACION == 'Sí') {
+    //                 $value->ESTADO_BADGE = '<span class="badge bg-warning text-dark">En revisión</span>';
+    //             } else {
+    //                 $value->ESTADO_BADGE = '<span class="badge bg-secondary">Sin estatus</span>'; // vacío u opcional
+    //             }
+    //         }
+
+    //         // Respuesta
+    //         return response()->json([
+    //             'data' => $tabla,
+    //             'msj' => 'Información consultada correctamente'
+    //         ]);
+    //     } catch (Exception $e) {
+    //         return response()->json([
+    //             'msj' => 'Error ' . $e->getMessage(),
+    //             'data' => 0
+    //         ]);
+    //     }
+    // }
+
+
     public function Tablaordencompra()
     {
         try {
-            $tabla = poModel::get();
+            // Última versión de cada PO (agrupado sin -Rev)
+            $tabla = poModel::whereIn('ID_FORMULARIO_PO', function ($query) {
+                $query->select(DB::raw('MAX(ID_FORMULARIO_PO)'))
+                    ->from('formulario_ordencompra')
+                    ->groupBy(DB::raw("SUBSTRING_INDEX(NO_PO, '-Rev', 1)"));
+            })->get();
 
             foreach ($tabla as $value) {
-                // BOTONES
-                if ($value->ESTADO_APROBACION == 'Aprobada') {
-                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-                } else {
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                }
-
-                // BADGE DE ESTADO
+                // Estado visual
                 if ($value->ESTADO_APROBACION == 'Aprobada') {
                     $value->ESTADO_BADGE = '<span class="badge bg-success">Aprobado</span>';
                 } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
@@ -66,22 +103,46 @@ class poController extends Controller
                 } elseif ($value->SOLICITAR_AUTORIZACION == 'Sí') {
                     $value->ESTADO_BADGE = '<span class="badge bg-warning text-dark">En revisión</span>';
                 } else {
-                    $value->ESTADO_BADGE = '<span class="badge bg-secondary">Sin estatus</span>'; // vacío u opcional
+                    $value->ESTADO_BADGE = '<span class="badge bg-secondary">Sin estatus</span>';
                 }
+
+                // Botones
+                if ($value->ESTADO_APROBACION == 'Aprobada') {
+                    $value->BTN_EDITAR = '<button class="btn btn-secondary rounded-pill" disabled><i class="bi bi-ban"></i></button>';
+                } else {
+                    $value->BTN_EDITAR = '<button class="btn btn-warning rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                }
+
+                $value->BTN_VISUALIZAR = '<button class="btn btn-primary rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                $value->DESCARGA_PO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button " data-id="' . $value->ID_FORMULARIO_PO . '" title="Descargar"><i class="bi bi-filetype-pdf"></i></button>';
+
+
+                $basePO = preg_replace('/-Rev\d+$/', '', $value->NO_PO);
+
+                $revisiones = poModel::where(function ($q) use ($basePO) {
+                    $q->where('NO_PO', $basePO)
+                        ->orWhere('NO_PO', 'like', "$basePO-Rev%");
+                })
+                    ->where('ID_FORMULARIO_PO', '<', $value->ID_FORMULARIO_PO)
+                    ->orderBy('ID_FORMULARIO_PO')
+                    ->get();
+
+                foreach ($revisiones as $rev) {
+                    $rev->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR" data-id="' . $rev->ID_FORMULARIO_PO . '"><i class="bi bi-pencil-square"></i></button>';
+                }
+
+                $value->REVISIONES = $revisiones;
             }
 
-            // Respuesta
             return response()->json([
                 'data' => $tabla,
-                'msj' => 'Información consultada correctamente'
+                'msj' => 'Últimas órdenes cargadas'
             ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'msj' => 'Error ' . $e->getMessage(),
-                'data' => 0
-            ]);
+        } catch (\Exception $e) {
+            return response()->json(['data' => [], 'msj' => 'Error: ' . $e->getMessage()]);
         }
     }
+
 
 
 
@@ -176,7 +237,12 @@ class poController extends Controller
                             $request->merge(['USUARIO_ID' => auth()->user()->ID_USUARIO]);
                         }
 
-                        $compras = poModel::create($request->all());
+
+                        $data = $request->except(['servicios']);
+                        // $contratos = contratacionModel::create($data);
+
+
+                        $compras = poModel::create($data);
                         $response['code']  = 1;
                         $response['compra'] = $compras;
                         return response()->json($response);
@@ -214,7 +280,14 @@ class poController extends Controller
                 case 2:
                     if ($request->ID_FORMULARIO_PO == 0) {
                         DB::statement('ALTER TABLE formulario_ordencompra AUTO_INCREMENT=1;');
-                        $compras = poModel::create($request->all());
+
+                        $data = $request->except(['servicios']);
+                        // $contratos = contratacionModel::create($data);
+
+
+                        $compras = poModel::create($data);
+
+                        // $compras = poModel::create($request->all());
 
                         $response['code']  = 1;
                         $response['compra']  = $compras;
@@ -252,8 +325,35 @@ class poController extends Controller
                     break;
 
 
+                case 3:
+                    $ofertaOriginal = poModel::find($request->ID_FORMULARIO_PO);
 
+                    if ($ofertaOriginal) {
+                        $noOfertaBase = explode('-Rev', $ofertaOriginal->NO_PO)[0];
 
+                        $ultimaRevision = poModel::where('NO_PO', 'LIKE', "$noOfertaBase%")
+                            ->orderBy('REVISION_PO', 'desc')
+                            ->first();
+
+                        $revisionNumero = $ultimaRevision ? $ultimaRevision->REVISION_PO + 1 : 1;
+                        $noOfertaConRevision = $noOfertaBase . '-Rev' . $revisionNumero;
+
+                        $nuevaOferta = $ofertaOriginal->replicate();
+                        $nuevaOferta->NO_PO = $noOfertaConRevision;
+                        $nuevaOferta->REVISION_PO = $revisionNumero;
+                        $nuevaOferta->MOTIVO_REVISION_PO = $request->MOTIVO_REVISION_PO;
+
+                        $nuevaOferta->save();
+
+                        $response['code'] = 1;
+                        $response['compra'] = $nuevaOferta;
+                    } else {
+                        $response['code'] = 0;
+                        $response['message'] = 'PO no encontrada';
+                    }
+                    return response()->json($response);
+
+                    break;
 
                 default:
                     $response['code']  = 1;
