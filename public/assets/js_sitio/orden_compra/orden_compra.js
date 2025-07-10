@@ -618,14 +618,12 @@ function cargarMaterialesDesdeJSON(serviciosJson) {
                 const total = cantidad * precio;
                 totalInput.value = total.toFixed(2);
                 
-                actualizarSubtotal();          // recalcula subtotal general
-                actualizarIVAeImporte();       // recalcula IVA + Importe también
+                actualizarSubtotal();         
+                actualizarIVAeImporte();       
             }
 
-            // Calcular total al iniciar
             calcularYActualizarTotal();
 
-            // Recalcular cuando cambien los valores
             cantidadInput.addEventListener('input', calcularYActualizarTotal);
             precioInput.addEventListener('input', calcularYActualizarTotal);
 
@@ -633,11 +631,12 @@ function cargarMaterialesDesdeJSON(serviciosJson) {
             const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
             botonEliminar.addEventListener('click', function () {
                 contenedorMateriales.removeChild(divMaterial);
-                actualizarSubtotal(); // actualizar subtotal después de eliminar
+                actualizarSubtotal();       
+                actualizarIVAeImporte();    
             });
+            
         });
 
-        // Subtotal general después de cargar todo
         actualizarSubtotal();
 
     } catch (e) {
