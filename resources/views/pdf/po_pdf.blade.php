@@ -269,15 +269,15 @@
 
         </tr>
     </table>
-    <table class="tabla-info_2"">
+    <table class="tabla-info_2">
         <thead>
-            <tr class=" bg-gray text-center">
-        <th style="width: 5%;">No.</th>
-        <th style="width: 55%;">Descripción</th>
-        <th style="width: 10%;">Cantidad</th>
-        <th style="width: 15%;">Precio Unitario</th>
-        <th style="width: 15%;">Importe Total</th>
-        </tr>
+            <tr class="bg-gray text-center">
+                <th style="width: 5%;">No.</th>
+                <th style="width: 55%;">Descripción</th>
+                <th style="width: 10%;">Cantidad</th>
+                <th style="width: 15%;">Precio Unitario</th>
+                <th style="width: 15%;">Importe Total</th>
+            </tr>
         </thead>
         <tbody>
             @php
@@ -291,8 +291,8 @@
             $unitario = is_numeric($material['PRECIO_UNITARIO']) ? (float)$material['PRECIO_UNITARIO'] : 0;
             $total = $cantidad * $unitario;
 
-            $precioUnitarioTexto = number_format($unitario, 2, '.', '');
-            $importeTexto = number_format($total, 2, '.', '');
+            $precioUnitarioTexto = number_format($unitario, 2, '.', ',');
+            $importeTexto = number_format($total, 2, '.', ',');
             @endphp
             <tr>
                 <td class="text-center">{{ $contador++ }}</td>
@@ -308,19 +308,25 @@
             <tr>
                 <td colspan="3" rowspan="3"></td>
                 <td class="text-right bold bg-gray">Subtotal</td>
-                <td class="text-right">${{ number_format($orden->SUBTOTAL ?? 0, 2, '.', '') }}</td>
+                <td class="text-right">
+                    ${{ number_format($orden->SUBTOTAL ?? 0, 2, '.', ',') }}
+                </td>
             </tr>
             <tr>
                 <td class="text-right bold bg-gray">IVA</td>
-                <td class="text-right">${{ number_format($orden->IVA ?? 0, 2, '.', '') }}</td>
+                <td class="text-right">
+                    ${{ number_format($orden->IVA ?? 0, 2, '.', ',') }}
+                </td>
             </tr>
             <tr>
                 <td class="text-right bold bg-gray">Total</td>
-                <td class="text-right">${{ number_format($orden->IMPORTE ?? 0, 2, '.', '') }}</td>
+                <td class="text-right">
+                    ${{ number_format($orden->IMPORTE ?? 0, 2, '.', ',') }}
+                </td>
             </tr>
         </tfoot>
-
     </table>
+
     <table class="tabla-observaciones">
         <tr>
             <th colspan="2" class="encabezado-observaciones" style="text-align: center; ">Observaciones o indicaciones especiales</th>
