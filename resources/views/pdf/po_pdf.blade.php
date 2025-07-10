@@ -256,7 +256,7 @@
             <td class="bg-gray bold">Teléfono</td>
             <td>{{ $proveedor->TELEFONO_DIRECOTORIO && trim($proveedor->TELEFONO_DIRECOTORIO) !== '' ? $proveedor->TELEFONO_DIRECOTORIO : 'N/P' }}</td>
             <td class="bg-gray bold">Celular</td>
-            <td>{{ $proveedor->CELULAR && trim($proveedor->CELULAR) !== '' ? $proveedor->CELULAR : 'N/P' }}</td>
+            <td>{{ $proveedor->CELULAR_DIRECTORIO && trim($proveedor->CELULAR_DIRECTORIO) !== '' ? $proveedor->CELULAR_DIRECTORIO : 'N/P' }}</td>
 
         </tr>
         <tr>
