@@ -107,7 +107,7 @@ class poController extends Controller
                 }
 
                 // Botones
-                if ($value->ESTADO_APROBACION == 'Aprobada') {
+                if ($value->ACTIVO == 0) {
                     $value->BTN_EDITAR = '<button class="btn btn-secondary rounded-pill" disabled><i class="bi bi-ban"></i></button>';
                 } else {
                     $value->BTN_EDITAR = '<button class="btn btn-warning rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
