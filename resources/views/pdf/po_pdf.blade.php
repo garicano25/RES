@@ -227,9 +227,7 @@
                 Col. {{ $proveedor->NOMBRE_COLONIA_EMPRESA ?? '' }}<br>
                 C.P. {{ $proveedor->CODIGO_POSTAL ?? '' }},
                 {{ $proveedor->NOMBRE_LOCALIDAD_EMPRESA ?? '' }},
-                {{ $proveedor->NOMBRE_MUNICIPIO_EMPRESA ?? '' }},
-                {{ $proveedor->NOMBRE_ENTIDAD_EMPRESA ?? '' }},
-                {{ $proveedor->PAIS_EMPRESA ?? '' }}
+                {{ $proveedor->NOMBRE_ENTIDAD_EMPRESA ?? '' }}
                 @elseif ($proveedor->TIPO_PERSONA == '2')
                 {{ $proveedor->DOMICILIO_EXTRANJERO ?? '' }},
                 {{ $proveedor->DEPARTAMENTO_EXTRANJERO ?? '' }},
