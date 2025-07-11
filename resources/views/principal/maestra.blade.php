@@ -232,7 +232,7 @@
                             <li><a class="dropdown-item" href="{{ url('/Brecha_competencia') }}">Brecha de competencia</a></li>
                             <hr class="dropdown-divider">
 
-                            <li><a class="dropdown-item" href="{{url('/')}}">Capacitación</a></li>
+                            <li><a class="dropdown-item" href="{{url('/#')}}">Capacitación</a></li>
                         </ul>
                     </li>
 
