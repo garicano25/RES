@@ -44,8 +44,19 @@ var Tablaordencompraprobacion = $("#Tablaordencompraprobacion").DataTable({
                 return meta.row + 1; 
             }
         },
-        { data: 'NO_PO' },
+        {
+            data: 'NO_PO',
+            render: function (data, type, row) {
+                return `<button class="btn btn-link ver-revisiones-po" data-revisiones='${JSON.stringify(row.REVISIONES || [])}'>${data}</button>`;
+            }
+        }, 
         { data: 'NO_MR' },
+        {
+            data: 'MOTIVO_REVISION_PO',
+            render: function (data, type, row) {
+                return data && data.trim() !== '' ? data : 'Revisión inicial';
+            }
+        },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
 
@@ -54,13 +65,67 @@ var Tablaordencompraprobacion = $("#Tablaordencompraprobacion").DataTable({
         { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'N° PO', className: 'all text-center' },
         { targets: 2, title: 'N° MR', className: 'all text-center' },
-        { targets: 3, title: 'Editar', className: 'all text-center' },
-        { targets: 4, title: 'Visualizar', className: 'all text-center' },
+        { targets: 3, title: 'Motivo de la revisión', className: 'text-center' },
+        { targets: 4, title: 'Editar', className: 'all text-center' },
+        { targets: 5, title: 'Visualizar', className: 'all text-center' },
 
     ]
 });
 
 
+$("#Tablaordencompraprobacion tbody").on("click", ".ver-revisiones-po", function () {
+    let btn = $(this);
+    let tr = btn.closest("tr");
+    let row = Tablaordencompraprobacion.row(tr);
+    let revisiones = btn.data("revisiones");
+
+    if (!revisiones.length) {
+        alertToast("No hay revisiones anteriores para esta orden de compra.", "warning", 3000);
+        return;
+    }
+
+    if (row.child.isShown()) {
+        row.child.hide();
+        tr.removeClass("shown");
+        btn.removeClass("opened");
+    } else {
+        btn.addClass("opened");
+
+        let html = `<table class="table table-sm table-bordered w-100 mb-0">
+                        <thead>
+                            <tr>
+                                <th>Versión</th>
+                                <th>N° PO</th>
+                                <th>N° MR</th>
+                                <th>Motivo de la revisión</th>
+                                <th>Visualizar</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+
+        revisiones.forEach(rev => {
+            html += `<tr class="bg-light">
+                        <td>${rev.REVISION_PO || '0'}</td>
+                        <td>${rev.NO_PO}</td>
+                        <td>${rev.NO_MR}</td>
+
+                          <td>${rev.MOTIVO_REVISION_PO  || 'Revisión inicial' }</td>
+                      <td>
+                        <button class="btn btn-primary btn-sm EDITAR" 
+                            data-id="${rev.ID_FORMULARIO_PO}"
+                            data-revision='${JSON.stringify(rev)}'>
+                            <i class="bi bi-pencil-square"></i> Visualizar
+                        </button>
+                    </td>
+                    </tr>`;
+        });
+
+        html += `</tbody></table>`;
+
+        row.child(html).show();
+        tr.addClass("shown");
+    }
+});
 
 
 
@@ -178,8 +243,17 @@ $("#guardarPO").click(function (e) {
 $('#Tablaordencompraprobacion tbody').on('click', 'td>button.EDITAR', function () {
     const tr = $(this).closest('tr');
     const row = Tablaordencompraprobacion.row(tr);
-    const data = row.data();
+    let data;
 
+    if (row.data()) {
+        data = row.data();
+        $('#guardarPO').show();
+        $('#crearREVISION').show();
+    } else {
+        data = $(this).data('revision');
+        $('#guardarPO').hide();
+        $('#crearREVISION').hide();
+    }
 
     ID_FORMULARIO_PO = data.ID_FORMULARIO_PO;
 

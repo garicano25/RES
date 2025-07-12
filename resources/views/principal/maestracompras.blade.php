@@ -459,12 +459,12 @@
 
 
     @if(request()->is('Orden_compra'))
-    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.9"></script>
+    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.10"></script>
     @endif
 
 
     @if(request()->is('Orden_compra_aprobación'))
-    <script src="/assets/js_sitio/orden_compra/aprobacioncompra.js?v=1.3"></script>
+    <script src="/assets/js_sitio/orden_compra/aprobacioncompra.js?v=1.4"></script>
     @endif
 
 

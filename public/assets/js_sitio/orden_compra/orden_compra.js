@@ -365,6 +365,21 @@ $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
     $('#ESTADO_APROBACION').val(data.ESTADO_APROBACION || '');
     $('#MOTIVO_RECHAZO').val(data.MOTIVO_RECHAZO || '');
 
+
+    const estado = $('#ESTADO_APROBACION').val();
+
+    if (estado === 'Aprobada' || estado === 'Rechazada') {
+        $('#guardarPO').hide();
+        $('#crearREVISION').show();
+
+    } else {
+        $('#guardarPO').show();
+        $('#crearREVISION').hide();
+
+        }
+        
+
+
     togglerechazo();
     verificarEstadoAprobacion();
 
