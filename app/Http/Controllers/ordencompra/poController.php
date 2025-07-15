@@ -49,12 +49,26 @@ class poController extends Controller
     public function Tablaordencompra()
     {
         try {
-            // Última versión de cada PO (agrupado sin -Rev)
-            $tabla = poModel::whereIn('ID_FORMULARIO_PO', function ($query) {
-                $query->select(DB::raw('MAX(ID_FORMULARIO_PO)'))
-                    ->from('formulario_ordencompra')
-                    ->groupBy(DB::raw("SUBSTRING_INDEX(NO_PO, '-Rev', 1)"));
-            })->get();
+            // $tabla = poModel::whereIn('ID_FORMULARIO_PO', function ($query) {
+            //     $query->select(DB::raw('MAX(ID_FORMULARIO_PO)'))
+            //         ->from('formulario_ordencompra')
+            //         ->groupBy(DB::raw("SUBSTRING_INDEX(NO_PO, '-Rev', 1)"));
+            // })->get();
+
+            $tabla = DB::table('formulario_ordencompra as po')
+                ->leftJoin('formulario_altaproveedor as p', 'po.PROVEEDOR_SELECCIONADO', '=', 'p.RFC_ALTA')
+                ->whereIn('po.ID_FORMULARIO_PO', function ($query) {
+                    $query->select(DB::raw('MAX(ID_FORMULARIO_PO)'))
+                        ->from('formulario_ordencompra')
+                        ->groupBy(DB::raw("SUBSTRING_INDEX(NO_PO, '-Rev', 1)"));
+                })
+                ->select(
+                    'po.*',
+                    DB::raw("CONCAT(p.RAZON_SOCIAL_ALTA, ' (', p.RFC_ALTA, ')') as PROVEEDORES")
+                )
+                ->get();
+
+
 
             foreach ($tabla as $value) {
                 // Estado visual
@@ -162,19 +176,36 @@ class poController extends Controller
     public function Tablaordencompraprobacion()
     {
         try {
-            // 1. Obtener la última revisión de cada grupo de NO_PO (sin importar su estado)
-            $ultimasPO = poModel::select(DB::raw('MAX(ID_FORMULARIO_PO) as ID_FORMULARIO_PO'))
+            // $ultimasPO = poModel::select(DB::raw('MAX(ID_FORMULARIO_PO) as ID_FORMULARIO_PO'))
+            //     ->groupBy(DB::raw("SUBSTRING_INDEX(NO_PO, '-Rev', 1)"));
+
+            // $tabla = poModel::whereIn('ID_FORMULARIO_PO', $ultimasPO)
+            //     ->where('SOLICITAR_AUTORIZACION', 'Sí')
+            //     ->where(function ($query) {
+            //         $query->whereNull('ESTADO_APROBACION')
+            //             ->orWhereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
+            //     })
+            //     ->get();
+
+            $ultimasPO = DB::table('formulario_ordencompra')
+                ->select(DB::raw('MAX(ID_FORMULARIO_PO) as ID_FORMULARIO_PO'))
                 ->groupBy(DB::raw("SUBSTRING_INDEX(NO_PO, '-Rev', 1)"));
 
-            // 2. Filtrar solo las últimas que siguen en revisión
-            $tabla = poModel::whereIn('ID_FORMULARIO_PO', $ultimasPO)
-                ->where('SOLICITAR_AUTORIZACION', 'Sí')
+            $tabla = DB::table('formulario_ordencompra as po')
+                ->leftJoin('formulario_altaproveedor as p', 'po.PROVEEDOR_SELECCIONADO', '=', 'p.RFC_ALTA')
+                ->whereIn('po.ID_FORMULARIO_PO', $ultimasPO)
+                ->where('po.SOLICITAR_AUTORIZACION', 'Sí')
                 ->where(function ($query) {
-                    $query->whereNull('ESTADO_APROBACION')
-                        ->orWhereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
+                    $query->whereNull('po.ESTADO_APROBACION')
+                        ->orWhereNotIn('po.ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
                 })
+                ->select(
+                    'po.*',
+                    DB::raw("CONCAT(p.RAZON_SOCIAL_ALTA, ' (', p.RFC_ALTA, ')') as PROVEEDORES")
+                )
                 ->get();
 
+                
             foreach ($tabla as $value) {
                 // Botones
                 if ($value->ACTIVO == 0) {

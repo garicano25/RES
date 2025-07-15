@@ -50,7 +50,9 @@ var Tablaordencompra = $("#Tablaordencompra").DataTable({
             render: function (data, type, row) {
                 return `<button class="btn btn-link ver-revisiones-po" data-revisiones='${JSON.stringify(row.REVISIONES || [])}'>${data}</button>`;
             }
-        },        
+        },     
+        { data: 'FECHA_EMISION' },
+        { data: 'PROVEEDORES' },
         { data: 'NO_MR' },
         {
             data: 'MOTIVO_REVISION_PO',
@@ -67,12 +69,14 @@ var Tablaordencompra = $("#Tablaordencompra").DataTable({
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'N° PO', className: 'all text-center' },
-        { targets: 2, title: 'N° MR', className: 'all text-center' },
-        { targets: 3, title: 'Motivo de la revisión', className: 'text-center' },
-        { targets: 4, title: 'Estado', className: 'all text-center' }, 
-        { targets: 5, title: 'Descargar PO', className: 'all text-center' },
-        { targets: 6, title: 'Editar', className: 'all text-center' },
-        { targets: 7, title: 'Visualizar', className: 'all text-center' },
+        { targets: 2, title: 'Fecha PO', className: 'all text-center' },
+        { targets: 3, title: 'Proveedor', className: 'all text-center' },
+        { targets: 4, title: 'N° MR', className: 'all text-center' },
+        { targets: 5, title: 'Motivo de la revisión', className: 'text-center' },
+        { targets: 6, title: 'Estado', className: 'all text-center' }, 
+        { targets: 7, title: 'Descargar PO', className: 'all text-center' },
+        { targets: 8, title: 'Editar', className: 'all text-center' },
+        { targets: 9, title: 'Visualizar', className: 'all text-center' },
 
     ]
 });
