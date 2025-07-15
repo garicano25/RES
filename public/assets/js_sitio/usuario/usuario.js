@@ -137,10 +137,7 @@ $("#guardarFormUSUARIO").click(function (e) {
                     Tablausuarios.ajax.reload()
 
                     
-                    if ($.fn.DataTable.isDataTable('#Tablaproveedores')) {
-                        Tablaproveedores.ajax.reload(null, false);
-                    }
-                        
+                  
 
                 }, 300);
                 
@@ -183,9 +180,6 @@ $("#guardarFormUSUARIO").click(function (e) {
                     Tablausuarios.ajax.reload()
 
                 
-                    if ($.fn.DataTable.isDataTable('#Tablacontratacion1')) {
-                        Tablacontratacion1.ajax.reload(null, false);
-                        }
                             
 
 
