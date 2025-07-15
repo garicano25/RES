@@ -335,7 +335,7 @@
             <td colspan="2" class="contenido-observaciones">
                 <strong>De acuerdo con la nueva disposición fiscal del SAT para la facturación versión 4.0 considerar lo siguientes:</strong><br><br>
 
-                <u>Forma de pago</u>: <strong>"99" por definir</strong> posteriormente debe emitirse el complemento de pago "REP": <strong>"03" transferencia electrónica de fondos</strong><br><br>
+                <u>Forma de pago</u>: <strong>"99" por definir</strong> posteriormente debe emitirse el Recibo Electrónico de Pago - (REP): <strong>"03" transferencia electrónica de fondos</strong><br><br>
 
                 <u>Método de pago</u>: <strong>"PPD" pago en parcialidades o diferido</strong><br><br>
 
