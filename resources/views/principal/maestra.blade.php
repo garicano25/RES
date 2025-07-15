@@ -508,7 +508,7 @@
 
 
     @if(request()->is('usuario'))
-    <script src="/assets/js_sitio/usuario/usuario.js?v=4.5"></script>
+    <script src="/assets/js_sitio/usuario/usuario.js?v=4.6"></script>
     @endif
 
     @if(request()->is('Contratación'))

@@ -366,12 +366,6 @@ function cargarTablaProveedores() {
                         return meta.row + 1; 
                     }
                 },
-                { 
-                    data: 'FOTO_USUARIO_HTML',
-                    orderable: false,
-                    searchable: false,
-                    className: 'text-center'
-                },
                 { data: 'RFC_PROVEEDOR' },
                 { data: 'NOMBRE_COMERCIAL_PROVEEDOR' },
                 { data: 'USUARIO_TIPOS' },
@@ -389,20 +383,19 @@ function cargarTablaProveedores() {
             ],
         columnDefs: [
             { targets: 0, title: '#', className: 'all text-center' },
-            { targets: 1, title: 'Foto', className: 'all text-center' },
-            { targets: 2, title: 'RFC', className: 'all text-center' },
-            { targets: 3, title: 'Nombre comercial', className: 'all text-center' },
-            { targets: 4, title: 'Tipo usuario', className: 'all text-center' },
+            { targets: 1, title: 'RFC', className: 'all text-center' },
+            { targets: 2, title: 'Nombre comercial', className: 'all text-center' },
+            { targets: 3, title: 'Tipo usuario', className: 'all text-center' },
             {
-                targets: 5, 
+                targets: 4, 
                 title: 'Perfil de accesos',
                 className: 'all text-center', 
                 createdCell: function (td, cellData, rowData, row, col) {
                     $(td).css('text-align', 'left'); 
                 }
             },
-            { targets: 6, title: 'Editar', className: 'all text-center' },
-            { targets: 7, title: 'Activo', className: 'all text-center' }
+            { targets: 5, title: 'Editar', className: 'all text-center' },
+            { targets: 6, title: 'Activo', className: 'all text-center' }
         ]
     });
 }
