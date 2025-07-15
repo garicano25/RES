@@ -447,7 +447,9 @@ class mrController extends Controller
                     $value->COLOR = null;
                     $value->DISABLED_SELECT = true;
                 } else {
-                    $aprobadas = $hojas->where('ESTADO_APROBACION', 'Aprobada')->count();
+                    // $aprobadas = $hojas->where('ESTADO_APROBACION', 'Aprobada')->count();
+                    $aprobadas = $hojas->whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])->count();
+
                     $requiere_po = $hojas->where('REQUIERE_PO', 'Sí')->count();
 
                     // Inicialmente asumimos que no hay PO aprobada
