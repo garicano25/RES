@@ -450,13 +450,33 @@ class mrController extends Controller
                     $aprobadas = $hojas->where('ESTADO_APROBACION', 'Aprobada')->count();
                     $requiere_po = $hojas->where('REQUIERE_PO', 'Sí')->count();
 
-                    if ($aprobadas === $total && $requiere_po === 0) {
+                    // Inicialmente asumimos que no hay PO aprobada
+                    $po_aprobada_o_rechazada = false;
+
+                    // Revisamos cada hoja
+                    foreach ($hojas as $hoja) {
+                        $hoja_id = $hoja->id;
+
+                        // Buscamos en formulario_ordencompra donde HOJA_ID contenga este ID
+                        $po_relacionadas = DB::table('formulario_ordencompra')
+                            ->whereJsonContains('HOJA_ID', (string)$hoja_id)
+                            ->whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])
+                            ->count();
+
+                        if ($po_relacionadas > 0) {
+                            $po_aprobada_o_rechazada = true;
+                            break; // con uno es suficiente
+                        }
+                    }
+
+                    // Evaluamos el estado final
+                    if ($aprobadas === $total && ($requiere_po === 0 || $po_aprobada_o_rechazada)) {
                         $value->ESTADO_FINAL = 'Finalizada';
-                        $value->COLOR = '#d4edda'; 
+                        $value->COLOR = '#d4edda';
                         $value->DISABLED_SELECT = false;
                     } else {
                         $value->ESTADO_FINAL = 'En proceso';
-                        $value->COLOR = '#fff3cd'; 
+                        $value->COLOR = '#fff3cd';
                         $value->DISABLED_SELECT = false;
                     }
                 }
