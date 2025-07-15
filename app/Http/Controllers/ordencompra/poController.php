@@ -55,6 +55,20 @@ class poController extends Controller
             //         ->groupBy(DB::raw("SUBSTRING_INDEX(NO_PO, '-Rev', 1)"));
             // })->get();
 
+            // $tabla = DB::table('formulario_ordencompra as po')
+            //     ->leftJoin('formulario_altaproveedor as p', 'po.PROVEEDOR_SELECCIONADO', '=', 'p.RFC_ALTA')
+            //     ->whereIn('po.ID_FORMULARIO_PO', function ($query) {
+            //         $query->select(DB::raw('MAX(ID_FORMULARIO_PO)'))
+            //             ->from('formulario_ordencompra')
+            //             ->groupBy(DB::raw("SUBSTRING_INDEX(NO_PO, '-Rev', 1)"));
+            //     })
+            //     ->select(
+            //         'po.*',
+            //         DB::raw("CONCAT(p.RAZON_SOCIAL_ALTA, ' (', p.RFC_ALTA, ')') as PROVEEDORES")
+            //     )
+            //     ->get();
+
+
             $tabla = DB::table('formulario_ordencompra as po')
                 ->leftJoin('formulario_altaproveedor as p', 'po.PROVEEDOR_SELECCIONADO', '=', 'p.RFC_ALTA')
                 ->whereIn('po.ID_FORMULARIO_PO', function ($query) {
@@ -66,6 +80,7 @@ class poController extends Controller
                     'po.*',
                     DB::raw("CONCAT(p.RAZON_SOCIAL_ALTA, ' (', p.RFC_ALTA, ')') as PROVEEDORES")
                 )
+                ->orderByRaw("CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(po.NO_PO, '-', -1), '-Rev', 1) AS UNSIGNED)")
                 ->get();
 
 
@@ -122,56 +137,7 @@ class poController extends Controller
 
 
 
-    // public function Tablaordencompraprobacion()
-    // {
-    //     try {
-    //         $tabla = poModel::where('SOLICITAR_AUTORIZACION', 'Sí')
-    //             ->where(function ($query) {
-    //                 $query->whereNull('ESTADO_APROBACION')
-    //                     ->orWhereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
-    //             })
-
-    //             ->get();
-
-    //         foreach ($tabla as $value) {
-    //             if ($value->ACTIVO == 0) {
-    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-    //             } else {
-    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-    //             }
-
-    //             if ($value->SOLICITAR_AUTORIZACION == 'Sí') {
-    //                 $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">En revisión</span>';
-    //             } elseif ($value->DAR_BUENO == 1) {
-    //                 $value->ESTADO_REVISION = '<span class="badge bg-success">✔</span>';
-    //             } elseif ($value->DAR_BUENO == 2) {
-    //                 $value->ESTADO_REVISION = '<span class="badge bg-danger">✖</span>';
-    //             } else {
-    //                 $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
-    //             }
-
-    //             if ($value->ESTADO_APROBACION == 'Aprobada') {
-    //                 $value->ESTATUS = '<span class="badge bg-success">Aprobado</span>';
-    //             } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
-    //                 $value->ESTATUS = '<span class="badge bg-danger">Rechazado</span>';
-    //             } else {
-    //                 $value->ESTATUS = '<span class="badge bg-secondary">Aprobar</span>';
-    //             }
-    //         }
-
-    //         return response()->json([
-    //             'data' => $tabla,
-    //             'msj' => 'Información consultada correctamente'
-    //         ]);
-    //     } catch (Exception $e) {
-    //         return response()->json([
-    //             'msj' => 'Error ' . $e->getMessage(),
-    //             'data' => 0
-    //         ]);
-    //     }
-    // }
+ 
 
     public function Tablaordencompraprobacion()
     {
@@ -186,6 +152,25 @@ class poController extends Controller
             //             ->orWhereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
             //     })
             //     ->get();
+
+            // $ultimasPO = DB::table('formulario_ordencompra')
+            //     ->select(DB::raw('MAX(ID_FORMULARIO_PO) as ID_FORMULARIO_PO'))
+            //     ->groupBy(DB::raw("SUBSTRING_INDEX(NO_PO, '-Rev', 1)"));
+
+            // $tabla = DB::table('formulario_ordencompra as po')
+            //     ->leftJoin('formulario_altaproveedor as p', 'po.PROVEEDOR_SELECCIONADO', '=', 'p.RFC_ALTA')
+            //     ->whereIn('po.ID_FORMULARIO_PO', $ultimasPO)
+            //     ->where('po.SOLICITAR_AUTORIZACION', 'Sí')
+            //     ->where(function ($query) {
+            //         $query->whereNull('po.ESTADO_APROBACION')
+            //             ->orWhereNotIn('po.ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
+            //     })
+            //     ->select(
+            //         'po.*',
+            //         DB::raw("CONCAT(p.RAZON_SOCIAL_ALTA, ' (', p.RFC_ALTA, ')') as PROVEEDORES")
+            //     )
+            //     ->get();
+
 
             $ultimasPO = DB::table('formulario_ordencompra')
                 ->select(DB::raw('MAX(ID_FORMULARIO_PO) as ID_FORMULARIO_PO'))
@@ -203,6 +188,7 @@ class poController extends Controller
                     'po.*',
                     DB::raw("CONCAT(p.RAZON_SOCIAL_ALTA, ' (', p.RFC_ALTA, ')') as PROVEEDORES")
                 )
+                ->orderByRaw("CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(po.NO_PO, '-', -1), '-Rev', 1) AS UNSIGNED)")
                 ->get();
 
                 
@@ -216,7 +202,7 @@ class poController extends Controller
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 }
 
-                // Estado revisión
+              
                 if ($value->SOLICITAR_AUTORIZACION == 'Sí') {
                     $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">En revisión</span>';
                 } elseif ($value->DAR_BUENO == 1) {
@@ -227,7 +213,6 @@ class poController extends Controller
                     $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
                 }
 
-                // Estatus
                 if ($value->ESTADO_APROBACION == 'Aprobada') {
                     $value->ESTATUS = '<span class="badge bg-success">Aprobado</span>';
                 } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
@@ -236,7 +221,6 @@ class poController extends Controller
                     $value->ESTATUS = '<span class="badge bg-secondary">Aprobar</span>';
                 }
 
-                // Revisiones anteriores (opcional, solo si necesitas mostrarlas)
                 $basePO = preg_replace('/-Rev\d+$/', '', $value->NO_PO);
 
                 $revisiones = poModel::where(function ($q) use ($basePO) {
