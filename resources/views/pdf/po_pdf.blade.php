@@ -149,7 +149,7 @@
                 <td class="text-center bold">PS-CP-FO-07</td>
             </tr>
             <tr>
-                <td class="text-center"> Versión {{ $orden->REVISION_PO ?? '0' ?: '0' }}</td>
+                <td class="text-center"> Versión 1</td>
             </tr>
             <tr>
                 <td class="text-center">Página {{ $currentPage }} de {{ $totalPages }}</td>
@@ -335,7 +335,7 @@
             <td colspan="2" class="contenido-observaciones">
                 <strong>De acuerdo con la nueva disposición fiscal del SAT para la facturación versión 4.0 considerar lo siguientes:</strong><br><br>
 
-                <u>Forma de pago</u>: <strong>"99" por definir</strong> posteriormente debe emitirse el complemento de pago : <strong>"03" transferencia electrónica de fondos</strong><br><br>
+                <u>Forma de pago</u>: <strong>"99" por definir</strong> posteriormente debe emitirse el complemento de pago "REP": <strong>"03" transferencia electrónica de fondos</strong><br><br>
 
                 <u>Método de pago</u>: <strong>"PPD" pago en parcialidades o diferido</strong><br><br>
 
@@ -358,7 +358,7 @@
                 <div style="font-size: 14px; font-weight: bold;">
                     {{ $usuarioSolicito->EMPLEADO_NOMBRE }} {{ $usuarioSolicito->EMPLEADO_APELLIDOPATERNO }} {{ $usuarioSolicito->EMPLEADO_APELLIDOMATERNO }}
                 </div>
-                <div style="font-size: 10px;">Firmado Digitalmente por {{ $usuarioSolicito->EMPLEADO_NOMBRE }} {{ $usuarioSolicito->EMPLEADO_APELLIDOPATERNO }} {{ $usuarioSolicito->EMPLEADO_APELLIDOMATERNO }} mediante el software Synaptix</div>
+                <div style="font-size: 10px;">Firmado Digitalmente por {{ $usuarioSolicito->EMPLEADO_NOMBRE }} {{ $usuarioSolicito->EMPLEADO_APELLIDOPATERNO }} {{ $usuarioSolicito->EMPLEADO_APELLIDOMATERNO }} <br> mediante el software Synaptix</div>
                 <div style="font-size: 10px;">Fecha: {{ $orden->FECHA_SOLCITIUD }}</div>
                 @else
                 <div>No disponible</div>
@@ -369,7 +369,7 @@
                 <div style="font-size: 14px; font-weight: bold;">
                     {{ $usuarioAprobo->EMPLEADO_NOMBRE }} {{ $usuarioAprobo->EMPLEADO_APELLIDOPATERNO }} {{ $usuarioAprobo->EMPLEADO_APELLIDOMATERNO }}
                 </div>
-                <div style="font-size: 10px;">Firmado Digitalmente por {{ $usuarioAprobo->EMPLEADO_NOMBRE }} {{ $usuarioSolicito->EMPLEADO_APELLIDOPATERNO }} {{ $usuarioSolicito->EMPLEADO_APELLIDOMATERNO }} mediante el software Synaptix</div>
+                <div style="font-size: 10px;">Firmado Digitalmente por {{ $usuarioAprobo->EMPLEADO_NOMBRE }} {{ $usuarioAprobo->EMPLEADO_APELLIDOPATERNO }} {{ $usuarioAprobo->EMPLEADO_APELLIDOMATERNO }} <br> mediante el software Synaptix</div>
                 <div style="font-size: 10px;">Fecha: {{ $orden->FECHA_APROBACION }}</div>
                 @else
                 <div>No disponible</div>
