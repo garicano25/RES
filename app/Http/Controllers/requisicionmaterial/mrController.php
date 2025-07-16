@@ -747,6 +747,8 @@ class mrController extends Controller
         $requiere_po = $request->input('REQUIERE_PO');
         $requierecomentario = $request->input('REQUIERE_COMENTARIO');
         $comentarioaprobacion = $request->input('COMENTARIO_APROBACION');
+        $comentariosolicitud = $request->input('COMENTARIO_SOLICITUD');
+
 
         if ($esUnico === 'SI') {
             $materiales_hoja_json = $request->input('MATERIALES_HOJA_JSON')[0] ?? null;
@@ -785,6 +787,8 @@ class mrController extends Controller
                 'REQUIERE_PO' => $requiere_po[0] ?? null,
                 'REQUIERE_COMENTARIO' => $requierecomentario[0] ?? null,
                 'COMENTARIO_APROBACION' => $comentarioaprobacion[0] ?? null,
+                'COMENTARIO_SOLICITUD' => $comentariosolicitud[0] ?? null,
+
                 'MATERIALES_HOJA_JSON' => $materiales_hoja_json,
             ];
 
@@ -1132,6 +1136,9 @@ class mrController extends Controller
                     'REQUIERE_PO' => $requiere_po[$i] ?? null,
                     'REQUIERE_COMENTARIO' => $requierecomentario[$i] ?? null,
                     'COMENTARIO_APROBACION' => $comentarioaprobacion[$i] ?? null,
+
+                    'COMENTARIO_SOLICITUD' => $comentariosolicitud[$i] ?? null,
+
                 ];
 
                 $hoja = !empty($ids[$i]) ? HojaTrabajo::find($ids[$i]) : null;

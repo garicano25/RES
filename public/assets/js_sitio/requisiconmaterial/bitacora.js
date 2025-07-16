@@ -659,6 +659,11 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
             if (comentarioaprobacion) comentarioaprobacion.value = item.COMENTARIO_APROBACION || '';
             
     
+            const  comentariosolicitud = clon.querySelector('.comentario-solicitud');
+            if (comentariosolicitud) comentariosolicitud.value = item.COMENTARIO_SOLICITUD || '';
+            
+                
+                
             const  motivorechazo = clon.querySelector('.motivo-rechazo');
             if (motivorechazo) motivorechazo.value = item.MOTIVO_RECHAZO || '';
             

@@ -239,7 +239,7 @@
                             <input type="hidden" class="form-control ID_HOJA" name="id[]">
 
 
-                            <input type="hidden" class="form-control REQUIERE_MATRIZ" name="REQUIERE_MATRIZ[]" >
+                            <input type="hidden" class="form-control REQUIERE_MATRIZ" name="REQUIERE_MATRIZ[]">
 
 
                             <div class="card-body">
@@ -532,6 +532,13 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    <div class="col-md-12  mt-3">
+                                                        <label class="form-label fw-bold">Comentario</label>
+                                                        <textarea class="form-control comentario-solicitud" name="COMENTARIO_SOLICITUD[]"></textarea>
+                                                    </div>
+
+
                                                 </div>
                                             </div>
                                         </div>
