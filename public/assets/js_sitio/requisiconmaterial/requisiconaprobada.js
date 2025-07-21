@@ -593,7 +593,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     </div>
                     <div class="col-4">
                         <label class="form-label">Descripción</label>
-                        <input type="text" class="form-control" name="DESCRIPCION" value="${material.DESCRIPCION}">
+        <input type="text" class="form-control" name="DESCRIPCION" value="${escapeHtml(material.DESCRIPCION)}" required>
                     </div>
                     <div class="col-1">
                         <label class="form-label">Cantidad</label>

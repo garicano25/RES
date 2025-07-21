@@ -253,7 +253,7 @@ class mrController extends Controller
             'observaciones' => 'nullable|string',
             'fecha_visto' => 'required|date',
             'visto_bueno' => 'required|string',
-            'materiales_json' => 'required|string',
+            'materiales_json' => 'required',
         ]);
 
         $formulario = mrModel::find($request->id);
@@ -261,12 +261,20 @@ class mrController extends Controller
         $formulario->OBSERVACIONES_MR = $request->observaciones;
         $formulario->FECHA_VISTO_MR = $request->fecha_visto;
         $formulario->VISTO_BUENO = $request->visto_bueno;
-        $formulario->MATERIALES_JSON = $request->materiales_json;
         $formulario->DAR_BUENO = 1;
-        $formulario->JEFEINMEDIATO_ID = Auth::id(); 
+        $formulario->JEFEINMEDIATO_ID = Auth::id();
+
+        // Asegura formato JSON válido
+        $formulario->MATERIALES_JSON = is_string($request->materiales_json)
+            ? $request->materiales_json
+            : json_encode($request->materiales_json, JSON_UNESCAPED_UNICODE);
+
         $formulario->save();
 
-        return response()->json(['success' => true, 'message' => 'Formulario actualizado con visto bueno.']);
+        return response()->json([
+            'success' => true,
+            'message' => 'Formulario actualizado con visto bueno.'
+        ]);
     }
 
 
@@ -279,8 +287,7 @@ class mrController extends Controller
             'observaciones' => 'nullable|string',
             'fecha_visto' => 'required|date',
             'visto_bueno' => 'required|string',
-            'materiales_json' => 'required|string',
-
+            'materiales_json' => 'required',
         ]);
 
         $formulario = mrModel::find($request->id);
@@ -290,12 +297,20 @@ class mrController extends Controller
         $formulario->VISTO_BUENO = $request->visto_bueno;
         $formulario->DAR_BUENO = 2;
         $formulario->MOTIVO_RECHAZO_JEFE = $request->motivo;
-        $formulario->MATERIALES_JSON = $request->materiales_json;
+
+        // Asegura formato JSON válido
+        $formulario->MATERIALES_JSON = is_string($request->materiales_json)
+            ? $request->materiales_json
+            : json_encode($request->materiales_json, JSON_UNESCAPED_UNICODE);
 
         $formulario->save();
 
-        return response()->json(['success' => true, 'message' => 'Formulario rechazado correctamente.']);
+        return response()->json([
+            'success' => true,
+            'message' => 'Formulario rechazado correctamente.'
+        ]);
     }
+
 
 
 
@@ -1688,13 +1703,18 @@ class mrController extends Controller
                         $nextNumber = $lastMR ? intval(substr($lastMR->NO_MR, -3)) + 1 : 1;
                         $noMR = sprintf("RES-MR%s-%03d", $year, $nextNumber);
 
-                        // Creamos el formulario nuevo con MATERIALES_JSON y USUARIO_ID
+                        // Asegurar que MATERIALES_JSON se guarde limpio
+                        $materialesJson = is_string($request->MATERIALES_JSON)
+                            ? $request->MATERIALES_JSON
+                            : json_encode($request->MATERIALES_JSON, JSON_UNESCAPED_UNICODE);
+
+                        // Crear nuevo formulario
                         $mrs = mrModel::create(array_merge(
-                            $request->all(),
+                            $request->except(['MATERIALES_JSON']),
                             [
                                 'NO_MR' => $noMR,
-                                'USUARIO_ID' => auth()->user()->ID_USUARIO, 
-                                'MATERIALES_JSON' => $request->MATERIALES_JSON
+                                'USUARIO_ID' => auth()->user()->ID_USUARIO,
+                                'MATERIALES_JSON' => $materialesJson
                             ]
                         ));
 
@@ -1716,8 +1736,16 @@ class mrController extends Controller
                         } else {
                             $mrs = mrModel::find($request->ID_FORMULARIO_MR);
                             if ($mrs) {
-                                // No se actualiza USUARIO_ID, pero sí MATERIALES_JSON
-                                $mrs->update($request->except(['USUARIO_ID']));
+                                $datos = $request->except(['USUARIO_ID']);
+
+                                // Validar formato correcto de MATERIALES_JSON
+                                if (isset($datos['MATERIALES_JSON'])) {
+                                    $datos['MATERIALES_JSON'] = is_string($datos['MATERIALES_JSON'])
+                                        ? $datos['MATERIALES_JSON']
+                                        : json_encode($datos['MATERIALES_JSON'], JSON_UNESCAPED_UNICODE);
+                                }
+
+                                $mrs->update($datos);
 
                                 return response()->json([
                                     'code' => 1,
