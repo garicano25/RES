@@ -375,6 +375,37 @@ class poController extends Controller
                     break;
 
 
+                // case 3:
+                //     $ofertaOriginal = poModel::find($request->ID_FORMULARIO_PO);
+
+                //     if ($ofertaOriginal) {
+                //         $noOfertaBase = explode('-Rev', $ofertaOriginal->NO_PO)[0];
+
+                //         $ultimaRevision = poModel::where('NO_PO', 'LIKE', "$noOfertaBase%")
+                //             ->orderBy('REVISION_PO', 'desc')
+                //             ->first();
+
+                //         $revisionNumero = $ultimaRevision ? $ultimaRevision->REVISION_PO + 1 : 1;
+                //         $noOfertaConRevision = $noOfertaBase . '-Rev' . $revisionNumero;
+
+                //         $nuevaOferta = $ofertaOriginal->replicate();
+                //         $nuevaOferta->NO_PO = $noOfertaConRevision;
+                //         $nuevaOferta->REVISION_PO = $revisionNumero;
+                //         $nuevaOferta->MOTIVO_REVISION_PO = $request->MOTIVO_REVISION_PO;
+
+                //         $nuevaOferta->save();
+
+                //         $response['code'] = 1;
+                //         $response['compra'] = $nuevaOferta;
+                //     } else {
+                //         $response['code'] = 0;
+                //         $response['message'] = 'PO no encontrada';
+                //     }
+                //     return response()->json($response);
+
+                //     break;
+
+
                 case 3:
                     $ofertaOriginal = poModel::find($request->ID_FORMULARIO_PO);
 
@@ -389,9 +420,22 @@ class poController extends Controller
                         $noOfertaConRevision = $noOfertaBase . '-Rev' . $revisionNumero;
 
                         $nuevaOferta = $ofertaOriginal->replicate();
+
+                        // Campos que se deben modificar para la nueva revisión
                         $nuevaOferta->NO_PO = $noOfertaConRevision;
                         $nuevaOferta->REVISION_PO = $revisionNumero;
                         $nuevaOferta->MOTIVO_REVISION_PO = $request->MOTIVO_REVISION_PO;
+
+                        // Campos que NO deben copiarse
+                        $nuevaOferta->SOLICITAR_AUTORIZACION = null;
+                        $nuevaOferta->USUARIO_ID = null;
+                        $nuevaOferta->REQUIERE_COMENTARIO = null;
+                        $nuevaOferta->COMENTARIO_SOLICITUD = null;
+                        $nuevaOferta->ESTADO_APROBACION = null;
+                        $nuevaOferta->FECHA_APROBACION = null;
+                        $nuevaOferta->MOTIVO_RECHAZO = null;
+                        $nuevaOferta->APROBO_ID = null;
+                        $nuevaOferta->FECHA_SOLCITIUD = null;
 
                         $nuevaOferta->save();
 
@@ -401,10 +445,12 @@ class poController extends Controller
                         $response['code'] = 0;
                         $response['message'] = 'PO no encontrada';
                     }
-                    return response()->json($response);
 
+                    return response()->json($response);
                     break;
 
+
+                    
                 default:
                     $response['code']  = 1;
                     $response['msj']  = 'Api no encontrada';
