@@ -68,6 +68,8 @@ class DenyRoleGlobalMiddleware
         'Módulos',
         'usuario',
         'Catálogo_verificación_proveedor',
+        'Matriz_aprobación',
+        'Orden_compra_aprobación'
 
     ];
 
