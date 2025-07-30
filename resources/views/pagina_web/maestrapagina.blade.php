@@ -34,18 +34,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/css/dropify.min.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css"> <!--Archivo css -->
-    <link rel="stylesheet" href="assets/css/estilos.css">
 
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
 
 
-    @if(request()->is('DPT'))
-    <link rel="stylesheet" href="assets/css/dpt.css">
-    @endif
+    <link rel="stylesheet" href="assets/css/estilos.css">
 
-    @if(request()->is('Contratación'))
+
+    @if(request()->is('Lista_proveedores'))
     <!-- form_wizard_steps -->
     <link href="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_style.css" rel="stylesheet">
     </link>
@@ -92,7 +90,7 @@
             </a>
             <!-- Contenedor para centrar el título -->
             <div class="d-flex justify-content-center align-items-center w-100" style="position: absolute; top: 0; left: 0; height: 100px;">
-                <h1 class="text-white m-0" style="color:#ffff;font-weight: bold;">Solicitudes ofertas y contratos</h1>
+                <h1 class="text-white m-0" style="color:#ffff;font-weight: bold;">Página web</h1>
             </div>
             <!-- Menú lateral derecho -->
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav1">
@@ -146,66 +144,16 @@
                         </a>
                     </li>
 
-                    <li class="nav-item dropdown" style="margin-left: 8px;">
-                        <a class="nav-link BOTON" href="{{ url('/Clientes') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Clientes</span><span class="d-none d-lg-inline">Clientes</span>
-                        </a>
-                    </li>
 
-
-                    <li class="nav-item dropdown" style="margin-left: 8px;">
-                        <a class="nav-link BOTON" href="{{ url('/Solicitudes') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-pencil-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Solicitudes</span><span class="d-none d-lg-inline">Solicitudes</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item dropdown" style="margin-left: 8px;">
-                        <a class="nav-link BOTON" href="{{ url('/Ofertas') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-currency-dollar" style="margin-right: 5px;"></i> <span class="d-lg-none">Ofertas/Cotizaciones</span><span class="d-none d-lg-inline">Ofertas/Cotizaciones</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item dropdown" style="margin-left: 8px;">
-                        <a class="nav-link BOTON" href="{{ url('/Confirmación') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-patch-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Confirmación del servicio </span><span class="d-none d-lg-inline">Confirmación del servicio </span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item dropdown" style="margin-left: 8px;">
-                        <a class="nav-link BOTON" href="{{ url('/Orden_trabajo') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-patch-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Orden de trabajo - OT</span><span class="d-none d-lg-inline">Orden de trabajo - OT</span>
-                        </a>
-                    </li>
-
-
-                    <li class="nav-item dropdown" style="margin-left: 8px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-aspect-ratio-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">General </span><span class="d-none d-lg-inline">General </span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item dropdown" style="margin-left: 8px;">
-                        <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="" style="margin-right: 5px;"></i> <span class="d-lg-none">Indicadores </span><span class="d-none d-lg-inline">Indicadores </span>
-                        </a>
-                    </li>
                     <ul class="navbar-nav">
+
                         <li class="nav-item dropdown" style="margin-left: 8px;">
-                            <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
-                                <span class="d-lg-none">Catálogos</span>
-                                <span class="d-none d-lg-inline">Catálogos</span>
+                            <a class="nav-link BOTON" href="{{ url('/Mensajes_paginaweb') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Mensajes</span><span class="d-none d-lg-inline">Mensajes</span>
                             </a>
-                            <ul class="dropdown-menu">
-
-                                <li><a class="dropdown-item" href="{{url('/Catálogo_solicitudes')}}">Catálogos de solicitudes</a>
-                                </li>
-                                <hr class="dropdown-divider">
-                                <li><a class="dropdown-item" href="{{url('/Catálogo_confirmación')}}">Catálogos de confirmación</a>
-                                </li>
-
-                            </ul>
                         </li>
+
+
                     </ul>
 
 
@@ -321,67 +269,13 @@
 
 
 
-    @if(request()->is('Clientes'))
-    <script src="/assets/js_sitio/clientes/clientes.js?v=1.8"></script>
-    @endif
 
-
-    @if(request()->is('Solicitudes'))
-    <script src="/assets/js_sitio/solicitudes/solicitudes.js?v=5.10"></script>
+    @if(request()->is('Mensajes_paginaweb'))
+    <script src="/assets/js_sitio/pagina_web/mensajes.js"></script>
     @endif
 
 
 
-
-
-    @if(request()->is('Ofertas'))
-    <script src="/assets/js_sitio/ofertas/ofertas.js?v=5.4"></script>
-    @endif
-
-
-
-    @if(request()->is('Confirmación'))
-    <script src="/assets/js_sitio/confirmacion/confirmacion.js?v=2.3"></script>
-    @endif
-
-
-
-    @if(request()->is('Catálogo_medio_contacto'))
-    <script src="/assets/js_sitio/solicitudes/catalogos/catalogomotivo.js?v=1.0"></script>
-    @endif
-
-
-    @if(request()->is('Catálogo_giro_empresa'))
-    <script src="/assets/js_sitio/solicitudes/catalogos/catalogogiroempresa.js?v=1.0"></script>
-    @endif
-
-    @if(request()->is('Catálogo_necesidad_servicio'))
-    <script src="/assets/js_sitio/solicitudes/catalogos/catalogonecesidadservicio.js?v=1.0"></script>
-    @endif
-
-
-    @if(request()->is('Orden_trabajo'))
-    <script src="/assets/js_sitio/orden_trabajo/orden_trabajo.js?v=1.1"></script>
-    @endif
-
-    @if(request()->is('Catálogo_línea_negocio'))
-    <script src="/assets/js_sitio/solicitudes/catalogos/catalogolinea.js?v=1.0"></script>
-    @endif
-
-
-    @if(request()->is('Catálogo_tipo_servicio'))
-    <script src="/assets/js_sitio/solicitudes/catalogos/catalogotiposervicio.js?v=1.0"></script>
-    @endif
-
-
-    @if(request()->is('Catálogo_verificación'))
-    <script src="/assets/js_sitio/solicitudes/catalogos/catalogoverificacioninformacion.js?v=1.0"></script>
-    @endif
-
-
-    @if(request()->is('Catálogo_clientes_titulos'))
-    <script src="/assets/js_sitio/solicitudes/catalogos/catalogotitulosclientes.js"></script>
-    @endif
 
 </body>
 

@@ -137,6 +137,12 @@ use App\Http\Controllers\matrizcomparativa\matrizController;
 use App\Http\Controllers\pdf\pdfController;
 
 
+
+
+// CONTROLADORES DE LA PAGINA WEB
+
+use App\Http\Controllers\paginaweb\mensajespaginaController;
+
 //==============================================  login  ============================================== 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -924,9 +930,18 @@ Route::get('/mostrarcaratula/{id}', [altacuentaController::class, 'mostrarcaratu
 Route::get('/Proveedor', function () {return view('compras.externa.diseño');});
 
 
+
+
+//==============================================  PAGINA WEB  ============================================== 
+
+
+Route::get('/Mensajes_paginaweb', function () {    return view('pagina_web.mensajespagina');});
+
+Route::get('/Tablamensajepaginaweb', [mensajespaginaController::class, 'Tablamensajepaginaweb']);
+Route::get('/MensajespaginaDelete', [mensajespaginaController::class, 'store']);
+
+
 //============================================== ENCRIPTAR TURAS ============================================== 
-
-
 // Route::get('/{encryptedRoute}', function ($encryptedRoute) {
 //     try {
 //         $decryptedRoute = Crypt::decryptString($encryptedRoute);

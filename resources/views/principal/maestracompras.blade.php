@@ -180,7 +180,7 @@
 
                         <li class="nav-item dropdown" style="margin-left: 8px;">
                             <a class="nav-link BOTON" href="{{ url('/Bitácora') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Bitácora de consecutivos MR</span><span class="d-none d-lg-inline">Bitácora de consecutivos MR</span>
+                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Bitácora de consecutivos - MR</span><span class="d-none d-lg-inline">Bitácora de consecutivos - MR</span>
                             </a>
                         </li>
 
@@ -251,8 +251,8 @@
                             <li class="nav-item dropdown" style="margin-left: 8px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
-                                    <span class="d-lg-none">Orden de compra</span>
-                                    <span class="d-none d-lg-inline">Orden de compra</span>
+                                    <span class="d-lg-none">Orden de compra - PO</span>
+                                    <span class="d-none d-lg-inline">Orden de compra - PO</span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{ url('/Orden_compra') }}">Orden de compra</a>

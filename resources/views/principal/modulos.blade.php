@@ -247,7 +247,6 @@
             position: relative;
         }
 
-        /* ✅ Tamaño controlado para la imagen del modal */
         .modal-contenido img {
             max-width: 300px;
             height: auto;
@@ -293,8 +292,6 @@
                 opacity: 1;
             }
         }
-
-        /* Reutiliza los estilos previos para .content__noticias, etc */
     </style>
 
 
@@ -712,6 +709,25 @@
                                 <h2 class="modules__text">Calidad</h2>
                             </div>
                             @endif
+
+
+                            {{-- Página web --}}
+                            @if($tieneRolRestringidoUnico)
+                            <div class="modules__card" onclick="noPermiso('Ventas')">
+                                <div class="modules__circle"><img src="assets/Modulos/img/sitoweb.png" alt=""></div>
+                                <h2 class="modules__text">Página web</h2>
+                            </div>
+                            @else
+                            <a href="{{ url('/Mensajes_paginaweb') }}" class="modules__link">
+                                <div class="modules__card">
+                                    <div class="modules__circle"><img src="assets/Modulos/img/sitoweb2.png" alt=""></div>
+                                    <h2 class="modules__text">Página web</h2>
+                                </div>
+                            </a>
+                            @endif
+
+
+
                         </div>
 
                     </div>
