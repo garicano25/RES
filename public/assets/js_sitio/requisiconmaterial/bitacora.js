@@ -1204,6 +1204,8 @@ $('#btnGuardarTodo').on('click', function () {
           if (data.success) {
             Swal.fire('Éxito', 'Hoja de trabajo guardada con éxito', 'success');
             $('#modalMateriales').modal('hide');
+                $('#Tablabitacora').DataTable().ajax.reload(null, false);
+
           } else {
             Swal.fire('Error', 'Ocurrió un error al guardar', 'error');
           }
