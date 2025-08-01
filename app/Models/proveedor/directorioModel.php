@@ -42,7 +42,9 @@ class directorioModel extends Model
         'CIUDAD_EXTRANJERO',
         'ESTADO_EXTRANJERO',
         'PAIS_EXTRANJERO',
-        'DEPARTAMENTO_EXTRANJERO'
+        'DEPARTAMENTO_EXTRANJERO',
+
+        'PROVEEDOR_VERIFICADO'
         
     ];
 }

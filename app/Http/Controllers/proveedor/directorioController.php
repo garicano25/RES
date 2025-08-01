@@ -71,7 +71,6 @@ class directorioController extends Controller
                 ->toArray();
 
             foreach ($tabla as $value) {
-
                 $tieneAlta = in_array(strtoupper(trim($value->RFC_PROVEEDOR)), $rfcAlta);
 
                 $value->ROW_CLASS = $tieneAlta ? 'fila-verde' : '';
@@ -81,13 +80,17 @@ class directorioController extends Controller
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_DIRECTORIO . '"><span class="slider round"></span></label>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
                     $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-constancia" data-id="' . $value->ID_FORMULARIO_DIRECTORIO . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
-                    $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO" data-id="' . $value->ID_FORMULARIO_DIRECTORIO . '"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
                 } else {
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_DIRECTORIO . '" checked><span class="slider round"></span></label>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-constancia" data-id="' . $value->ID_FORMULARIO_DIRECTORIO . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                }
+
+                if ($value->PROVEEDOR_VERIFICADO == 1) {
                     $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO" data-id="' . $value->ID_FORMULARIO_DIRECTORIO . '"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
+                } else {
+                    $value->BTN_CORREO = '<button type="button" class="btn btn-secondary btn-custom rounded-pill CORREO" disabled><i class="bi bi-ban"></i></button>';
                 }
             }
 
@@ -160,6 +163,32 @@ class directorioController extends Controller
     }
 
 
+    public function verificarProveedor(Request $request)
+    {
+        try {
+            $tieneVerificacion = DB::table('verificacion_proveedor')
+                ->where('PROVEEDOR_ID', $request->ID_FORMULARIO_DIRECTORIO)
+                ->exists();
+
+            if (!$tieneVerificacion) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Este proveedor no tiene evidencia de verificación registrada.'
+                ]);
+            }
+
+            $proveedor = directorioModel::findOrFail($request->ID_FORMULARIO_DIRECTORIO);
+            $proveedor->PROVEEDOR_VERIFICADO = 1;
+            $proveedor->save();
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al verificar: ' . $e->getMessage()
+            ]);
+        }
+    }
 
 
 

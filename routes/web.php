@@ -868,6 +868,7 @@ Route::post('/actualizarinfoproveedor', [directorioController::class, 'actualiza
 
 Route::post('/enviarCorreoProveedor', [directorioController::class, 'enviarCorreoProveedor']);
 
+Route::post('/verificarProveedor', [directorioController::class, 'verificarProveedor']);
 
 
 //  ALTA 

@@ -110,7 +110,8 @@
 </style>
 
 <div class="contenedor-contenido">
-    <ol class="breadcrumb mb-5">
+    
+    <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
         <h3 style="color: #ffffff; margin: 0;">&nbsp; Bitácora de consecutivos MR</h3>
 
 

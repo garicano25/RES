@@ -405,6 +405,14 @@ $('#Tabladirectorio tbody').on('click', 'td>button.EDITAR', function () {
         cargarTablaverificacion();
     });
 
+
+            if (row.data().PROVEEDOR_VERIFICADO == 1) {
+                $('#PROVEEDORES_VALIDACION').hide(); 
+            } else {
+                $('#PROVEEDORES_VALIDACION').show(); 
+            }
+
+
     
 });
 
@@ -498,6 +506,47 @@ $(document).ready(function() {
 });
 
 
+$(document).on('click', '.btn-verificar-proveedor', function (e) {
+    e.preventDefault(); 
+
+    if (!ID_FORMULARIO_DIRECTORIO) {
+        Swal.fire('Error', 'No se encontró el ID del proveedor.', 'error');
+        return;
+    }
+
+    Swal.fire({
+        title: '¿Verificar proveedor?',
+        text: 'Esto marcará al proveedor como verificado.',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, verificar',
+        cancelButtonText: 'Cancelar',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/verificarProveedor',
+                method: 'POST',
+                data: {
+                    ID_FORMULARIO_DIRECTORIO: ID_FORMULARIO_DIRECTORIO,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+             success: function (response) {
+                if (response.success) {
+                    Swal.fire('Verificado', 'El proveedor ha sido verificado.', 'success');
+                    Tabladirectorio.ajax.reload();
+                    $('#miModal_POTENCIALES').modal('hide');
+                } else {
+                    Swal.fire('Error', response.message || 'No se pudo verificar.', 'error');
+                }
+            },
+
+                error: function () {
+                    Swal.fire('Error', 'Error de conexión con el servidor.', 'error');
+                }
+            });
+        }
+    });
+});
 
 
 
@@ -771,7 +820,7 @@ function cargarTablaverificacion() {
         ],
         columnDefs: [
             { targets: 0, title: '#', className: 'all text-center' },
-            { targets: 1, title: 'Verificado en:', className: 'all text-center' },  
+            { targets: 1, title: 'Verificación/validación en:', className: 'all text-center' },  
             { targets: 2, title: 'Documento', className: 'all text-center' },  
             { targets: 3, title: 'Editar', className: 'all text-center' }, 
 

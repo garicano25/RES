@@ -11,7 +11,7 @@
 </style>
 
 <div class="contenedor-contenido">
-  <ol class="breadcrumb mb-5">
+  <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
     <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-person-lines-fill"></i> &nbsp; Banco de proveedores
     </h3>
 
@@ -45,7 +45,7 @@
               <button class="nav-link active" id="tab1-info" data-bs-toggle="tab" data-bs-target="#contenido-info" type="button" role="tab">Información del proveedor</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link" id="tab2-verif" data-bs-toggle="tab" data-bs-target="#contenido-verif" type="button" role="tab">Verificación del proveedor</button>
+              <button class="nav-link" id="tab2-verif" data-bs-toggle="tab" data-bs-target="#contenido-verif" type="button" role="tab">Verificación/validación del proveedor</button>
             </li>
 
           </ul>
@@ -239,12 +239,23 @@
                 </div>
               </div>
 
+
+              <div style="text-align: center;" id="PROVEEDORES_VALIDACION">
+                <button class="btn btn-success btn-verificar-proveedor" style="width: 70%;">
+                  Verificar proveedor <i class="fa fa-check-circle"></i>
+                </button>
+              </div>
+
+
+
+
+
             </div>
 
             <!-- TAB 2: Verificación del cliente -->
             <div class="tab-pane fade" id="contenido-verif" role="tabpanel">
               <ol class="breadcrumb mb-5">
-                <h3 style="color: #ffffff; margin: 0;">&nbsp;Verificación del proveedor</h3>
+                <h3 style="color: #ffffff; margin: 0;">&nbsp;Verificación/validación del proveedor</h3>
                 <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVA_VERIFICACION" style="margin-left: auto;">
                   Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
                 </button>
@@ -280,7 +291,7 @@
     <div class="modal-content">
       <form method="post" enctype="multipart/form-data" id="formularioVERIFICACIONES" style="background-color: #ffffff;">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva verificación</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Nueva verificación/validación</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
