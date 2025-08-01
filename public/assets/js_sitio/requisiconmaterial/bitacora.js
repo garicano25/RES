@@ -1,6 +1,8 @@
 ID_FORMULARIO_MR = 0
 
 
+
+
 const Modalmr = document.getElementById('miModal_MR');
 Modalmr.addEventListener('hidden.bs.modal', event => {
     ID_FORMULARIO_MR = 0;
@@ -80,7 +82,7 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
         { data: 'SOLICITANTE_MR' },
         {
           data: 'JUSTIFICACION_MR',
-          className: 'col-justificacion', // Clase solo para esta columna
+          className: 'col-justificacion', 
         },
         { data: 'AREA_SOLICITANTE_MR' },
         { data: 'FECHA_VISTO_MR' },
@@ -131,10 +133,43 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
   ],
   createdRow: function (row, data, dataIndex) {
     $(row).css('background-color', data.COLOR);
+  },
+
+drawCallback: function () {
+    const topScroll = document.querySelector('.tabla-scroll-top');
+    const scrollInner = document.querySelector('.tabla-scroll-top .scroll-inner');
+    const table = document.querySelector('#Tablabitacora');
+    const scrollBody = document.querySelector('.dataTables_scrollBody');
+
+    if (!topScroll || !scrollInner || !table || !scrollBody) return;
+
+    // ✅ Usa el ancho real de la tabla
+    const tableWidth = table.scrollWidth;
+
+    // Establecer ancho al scroll superior (exacto)
+    scrollInner.style.width = tableWidth + 'px';
+
+    // Sincronizar scroll
+    let syncingTop = false;
+    let syncingBottom = false;
+
+    topScroll.addEventListener('scroll', function () {
+        if (syncingTop) return;
+        syncingBottom = true;
+        scrollBody.scrollLeft = topScroll.scrollLeft;
+        syncingBottom = false;
+    });
+
+    scrollBody.addEventListener('scroll', function () {
+        if (syncingBottom) return;
+        syncingTop = true;
+        topScroll.scrollLeft = scrollBody.scrollLeft;
+        syncingTop = false;
+    });
 }
 
-});
 
+});
 
 
 
@@ -1365,3 +1400,7 @@ function inicializarCantidadPorPrecio() {
     });
   });
 }
+
+
+
+

@@ -3,6 +3,27 @@
 @section('contenido')
 
 <style>
+    .tabla-scroll-wrapper {
+        width: 100%;
+    }
+
+    .tabla-scroll-top {
+        overflow-x: auto;
+        height: 20px;
+        background: #f8f9fa;
+    }
+
+    .tabla-scroll-top .scroll-inner {
+        height: 1px;
+        background: transparent;
+    }
+
+    .tabla-scroll-bottom {
+        overflow-x: auto;
+        margin-top: 5px;
+    }
+
+
     /* ========== TABLA BITÁCORA GENERAL ========== */
     #Tablabitacora {
         table-layout: fixed !important;
@@ -89,21 +110,18 @@
 
     .select-finalizada {
         background-color: #d4edda !important;
-        /* Verde */
         color: #155724 !important;
         font-weight: bold;
     }
 
     .select-en-proceso {
         background-color: #fff3cd !important;
-        /* Amarillo */
         color: #856404 !important;
         font-weight: bold;
     }
 
     .select-sin-datos {
         background-color: #f8d7da !important;
-        /* Rojo claro o gris claro si prefieres */
         color: #721c24 !important;
         font-weight: bold;
     }
@@ -113,41 +131,46 @@
 
     <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
         <h3 style="color: #ffffff; margin: 0;">&nbsp; Bitácora de consecutivos MR</h3>
-
-
-
     </ol>
-
 
 
     <div class="card-body">
 
-        <div class="table-responsive" style="overflow-x: auto;">
-            <table id="Tablabitacora" class="table table-hover table-bordered text-center w-100" style="min-width: 3000px; table-layout: fixed;">
-                <thead class="thead-dark">
-                    <tr>
-                        <th class="text-center">Visualizar</th>
-                        <th class="text-center">Hoja</th>
-                        <th class="text-center">Requisición No.</th>
-                        <th class="text-center">Fecha de Solicitud</th>
-                        <th class="text-center">Solicitante</th>
-                        <th class="text-center">Justificación</th>
-                        <th class="text-center">Área Solicitante</th>
-                        <th class="text-center">Fecha de Vo. Bo.</th>
-                        <th class="text-center">Vo. Bo.</th>
-                        <th class="text-center">Fecha Aprobación</th>
-                        <th class="text-center">Aprobación</th>
-                        <th class="text-center">Prioridad</th>
-                        <th class="text-center">Estatus</th>
-                        <th class="text-center">Comentario</th>
 
-                        <th class="text-center">Fecha de Adquisición</th>
 
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+
+        <div class="tabla-scroll-wrapper">
+            <div class="tabla-scroll-top">
+                <div class="scroll-inner"></div>
+            </div>
+            <div class="tabla-scroll-bottom">
+                <div class="table-responsive">
+                    <table id="Tablabitacora" class="table table-hover table-bordered text-center w-100" style="min-width: 3000px; table-layout: fixed;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Visualizar</th>
+                                <th>Hoja</th>
+                                <th>Requisición No.</th>
+                                <th>Fecha de Solicitud</th>
+                                <th>Solicitante</th>
+                                <th class="col-justificacion">Justificación</th>
+                                <th>Área Solicitante</th>
+                                <th>Fecha de Vo. Bo.</th>
+                                <th>Vo. Bo.</th>
+                                <th>Fecha Aprobación</th>
+                                <th>Aprobación</th>
+                                <th>Prioridad</th>
+                                <th>Estatus</th>
+                                <th>Comentario</th>
+                                <th>Fecha de Adquisición</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+
 
 
     </div>
@@ -883,11 +906,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
 
 
 

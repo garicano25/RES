@@ -422,7 +422,7 @@
 
 
     @if(request()->is('Bitácora'))
-    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.16"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.17"></script>
     @endif
 
 
