@@ -947,42 +947,48 @@ function actualizarProveedoresSugeridos(grupo, valorSeleccionado = null) {
 
 
 
-function actualizarProveedoresseleccionado(grupo, valorSeleccionado = null) {
-  if (!grupo) return; 
+// function actualizarProveedoresseleccionado(grupo, valorSeleccionado = null) {
+//   if (!grupo) return;
 
-  const selects = grupo.querySelectorAll('.proveedor-cotizacionq1, .proveedor-cotizacionq2, .proveedor-cotizacionq3');
-  const proveedorSugeridoSelect = grupo.querySelector('.proveedor-seleccionado');
-  if (!proveedorSugeridoSelect) return;
+//   const selects = grupo.querySelectorAll('.proveedor-cotizacionq1, .proveedor-cotizacionq2, .proveedor-cotizacionq3');
+//   const proveedorSugeridoSelect = grupo.querySelector('.proveedor-seleccionado');
+//   if (!proveedorSugeridoSelect) return;
 
-  const proveedoresUnicos = new Map();
+//   const proveedoresUnicos = new Map();
 
-  selects.forEach(select => {
-    const selectedOption = select.options[select.selectedIndex];
-    const value = selectedOption?.value;
-    const text = selectedOption?.text;
+//   selects.forEach(select => {
+//     const selectedOption = select.options[select.selectedIndex];
+//     const value = selectedOption?.value;
+//     const text = selectedOption?.text;
 
-    if (value && !proveedoresUnicos.has(value)) {
-      proveedoresUnicos.set(value, text);
-    }
-  });
+//     if (value && !proveedoresUnicos.has(value)) {
+//       proveedoresUnicos.set(value, text);
+//     }
+//   });
 
-  proveedorSugeridoSelect.innerHTML = '<option value="">Proveedor seleccionado</option>';
-  proveedoresUnicos.forEach((text, value) => {
-    const option = document.createElement('option');
-    option.value = value;
-    option.textContent = text;
-    proveedorSugeridoSelect.appendChild(option);
-  });
+//   proveedorSugeridoSelect.innerHTML = '<option value="">Proveedor seleccionado</option>';
+//   proveedoresUnicos.forEach((text, value) => {
+//     const option = document.createElement('option');
+//     option.value = value;
+//     option.textContent = text;
+//     proveedorSugeridoSelect.appendChild(option);
+//   });
 
-  if (valorSeleccionado) {
-    proveedorSugeridoSelect.value = valorSeleccionado;
-  } else {
-    const valores = Array.from(selects).map(sel => sel.value).filter(v => v);
-    if (valores.length === 3 && new Set(valores).size === 1) {
-      proveedorSugeridoSelect.value = valores[0];
-    }
-  }
-}
+//   if (valorSeleccionado) {
+//     proveedorSugeridoSelect.value = valorSeleccionado;
+//   } else {
+//     const valores = Array.from(selects).map(sel => sel.value).filter(v => v);
+//     if (valores.length === 3 && new Set(valores).size === 1) {
+//       proveedorSugeridoSelect.value = valores[0];
+//     }
+//   }
+// }
+
+
+
+
+
+
 
 
 
@@ -1023,7 +1029,56 @@ function inicializarSelectizeEnClon(clon) {
 }
 
 
+function actualizarProveedoresseleccionado(grupo, valorSeleccionado = null) {
+  if (!grupo) return;
 
+  const proveedorQ1 = grupo.querySelector('.proveedor-cotizacionq1');
+  const proveedorQ2 = grupo.querySelector('.proveedor-cotizacionq2');
+  const proveedorQ3 = grupo.querySelector('.proveedor-cotizacionq3');
+
+  const totalQ1 = grupo.querySelector('.total-cotizacionq1')?.value || '';
+  const totalQ2 = grupo.querySelector('.total-cotizacionq2')?.value || '';
+  const totalQ3 = grupo.querySelector('.total-cotizacionq3')?.value || '';
+
+  const proveedorSugerido = grupo.querySelector('.proveedor-seleccionado');
+  const montoFinalInput = grupo.querySelector('.monto-final');
+
+  if (!proveedorSugerido || !montoFinalInput) return;
+
+  // Crear mapa de proveedores seleccionados → importe
+  const mapaProveedores = new Map();
+
+  const selectedQ1 = proveedorQ1?.value;
+  const selectedQ2 = proveedorQ2?.value;
+  const selectedQ3 = proveedorQ3?.value;
+
+  if (selectedQ1) mapaProveedores.set(selectedQ1, totalQ1);
+  if (selectedQ2) mapaProveedores.set(selectedQ2, totalQ2);
+  if (selectedQ3) mapaProveedores.set(selectedQ3, totalQ3);
+
+  // Llenar select solo con proveedores seleccionados
+  proveedorSugerido.innerHTML = '<option value="">Seleccionar proveedor sugerido</option>';
+  mapaProveedores.forEach((_, value) => {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = value;
+    proveedorSugerido.appendChild(option);
+  });
+
+  // Asignar valor si viene precargado o si los 3 coinciden
+  if (valorSeleccionado) {
+    proveedorSugerido.value = valorSeleccionado;
+  } else if (selectedQ1 && selectedQ1 === selectedQ2 && selectedQ2 === selectedQ3) {
+    proveedorSugerido.value = selectedQ1;
+  }
+
+  // Evento de cambio manual del proveedor
+  proveedorSugerido.addEventListener('change', function () {
+    const selected = this.value;
+    const monto = mapaProveedores.get(selected) || '';
+    montoFinalInput.value = monto;
+  });
+}
 
 $(document).on('change', '.proveedor-cotizacionq1, .proveedor-cotizacionq2, .proveedor-cotizacionq3', function () {
   const grupo = this.closest('.grupo-producto');
