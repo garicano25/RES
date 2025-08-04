@@ -344,10 +344,14 @@ $('#Tabladirectorio tbody').on('click', 'td>button.EDITAR', function () {
 
     
     const domicilioNacional = document.getElementById("DOMICILIO_NACIONAL");
+    const ineNacional = document.getElementById("INE_NACIONAL");
+
     const domicilioExtranjero = document.getElementById("DOMICILIO_ERXTRANJERO");
 
     if (row.data().TIPO_PERSONA == "1") {
         domicilioNacional.style.display = "block";
+        ineNacional.style.display = "block";
+
         domicilioExtranjero.style.display = "none";
                         document.querySelector('label[for="RFC_LABEL"]').textContent = "RFC";
 
@@ -387,6 +391,9 @@ $('#Tabladirectorio tbody').on('click', 'td>button.EDITAR', function () {
         }
     } else if (row.data().TIPO_PERSONA == "2") {
         domicilioNacional.style.display = "none";
+        ineNacional.style.display = "none";
+
+    
         domicilioExtranjero.style.display = "block";
                         document.querySelector('label[for="RFC_LABEL"]').textContent = "Tax ID";
 
@@ -436,10 +443,12 @@ $(document).ready(function() {
 
 
         const domicilioNacional = document.getElementById("DOMICILIO_NACIONAL");
+    const ineNacional = document.getElementById("INE_NACIONAL");
             const domicilioExtranjero = document.getElementById("DOMICILIO_ERXTRANJERO");
 
             if (row.data().TIPO_PERSONA == "1") {
                 domicilioNacional.style.display = "block";
+                ineNacional.style.display = "block";
                 domicilioExtranjero.style.display = "none";
                                 document.querySelector('label[for="RFC_LABEL"]').textContent = "RFC";
 
@@ -479,6 +488,7 @@ $(document).ready(function() {
                 }
             } else if (row.data().TIPO_PERSONA == "2") {
                 domicilioNacional.style.display = "none";
+                ineNacional.style.display = "none";
                 domicilioExtranjero.style.display = "block";
                                 document.querySelector('label[for="RFC_LABEL"]').textContent = "Tax ID";
 
