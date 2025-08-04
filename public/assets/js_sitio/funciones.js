@@ -2654,6 +2654,48 @@ function validarFormulario(form) {
   return formularioValido;
 }
 
+
+
+
+
+function validarFormulario3(form) {
+  var formulario = form;
+
+  // Busca todos los elementos requeridos visibles y no deshabilitados y agrega la clase "validar"
+  formulario.find('input[required]:not([disabled]):visible, textarea[required]:not([disabled]):visible, select[required]:not([disabled]):visible')
+    .addClass('validar')
+    .removeClass('error');
+
+  var campos = formulario.find('.validar');
+  var formularioValido = true;
+
+  campos.each(function () {
+    var tipoCampo = $(this).attr('type');
+    var valorCampo = $(this).val();
+
+    // Verifica si el campo es un radio o checkbox
+    if (tipoCampo === 'radio' || tipoCampo === 'checkbox') {
+      var nombreGrupo = $(this).attr('name');
+      if ($('input[name="' + nombreGrupo + '"]:checked').length === 0 && $(this).is(':visible')) {
+        $('input[name="' + nombreGrupo + '"]').addClass('error');
+        formularioValido = false;
+      } else {
+        $('input[name="' + nombreGrupo + '"]').removeClass('error');
+      }
+    } 
+    // Valida otros campos visibles
+    else if ((valorCampo === '' || valorCampo === null) && $(this).is(':visible')) {
+      $(this).addClass('error');
+      formularioValido = false;
+    } else {
+      $(this).removeClass('error');
+    }
+  });
+
+  return formularioValido;
+}
+
+
 // Evento para eliminar la clase "error" cuando el campo cambia o recibe entrada
 $(document).on('input change', 'input[required], textarea[required], select[required]', function() {
   var tipoCampo = $(this).attr('type');

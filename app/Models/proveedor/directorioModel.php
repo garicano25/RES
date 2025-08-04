@@ -36,6 +36,9 @@ class directorioModel extends Model
         'CONSTANCIA_DOCUMENTO',
         'CORREO_DIRECTORIO',
         'TIPO_PERSONA',
+        'CIC_DIRECTORIO',
+        'IDENTIFICADOR_DIRECTORIO',
+
 
         'DOMICILIO_EXTRANJERO',
         'CODIGO_EXTRANJERO',

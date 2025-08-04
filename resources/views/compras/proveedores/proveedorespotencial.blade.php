@@ -225,6 +225,23 @@
                 </div>
               </div>
 
+
+              <div class="col-12" id="INE_NACIONAL" style="display: block;">
+                <div class="row">
+                  <div class="col-6 mb-3">
+                    <label>Código de Identificación de la Credencial (CIC): </label>
+                    <input type="text" class="form-control" name="CIC_DIRECTORIO" id="CIC_DIRECTORIO">
+                  </div>
+
+                  <div class="col-6 mb-3">
+                    <label>Identificador del Ciudadano: </label>
+                    <input type="text" class="form-control" name="IDENTIFICADOR_DIRECTORIO" id="IDENTIFICADOR_DIRECTORIO">
+                  </div>
+                </div>
+              </div>
+
+
+
               <div class="row">
                 <div class="mb-3">
                   <div class="row">

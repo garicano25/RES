@@ -347,6 +347,31 @@
             </div>
           </div>
 
+
+          <div class="col-12" id="INE_NACIONAL" style="display: block;">
+            <!-- Imagen modelo de credencial -->
+            <div class="text-center mb-3">
+              <img src="assets/images/credencialmodelo.png" alt="Modelo de Credencial INE" style="max-width: 100%; height: auto; border: 1px solid #ccc; border-radius: 8px;">
+            </div>
+
+            <div class="row">
+              <!-- CIC -->
+              <div class="col-6 mb-3">
+                <label for="CIC_DIRECTORIO">1. CÓDIGO DE IDENTIFICACIÓN DE LA CREDENCIAL (CIC):</label>
+                <input type="text" class="form-control" name="CIC_DIRECTORIO" id="CIC_DIRECTORIO" maxlength="9" pattern="\d{9}" title="Ingrese exactamente 9 dígitos" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,9)">
+                <small class="text-muted">Escribe tu CIC tal como aparece en tu credencial, incluyendo los ceros a la izquierda (0)</small>
+              </div>
+
+              <!-- Identificador del ciudadano -->
+              <div class="col-6 mt-4">
+                <label for="IDENTIFICADOR_DIRECTORIO">2. IDENTIFICADOR DEL CIUDADANO:</label>
+                <input type="text" class="form-control" name="IDENTIFICADOR_DIRECTORIO" id="IDENTIFICADOR_DIRECTORIO" maxlength="9" pattern="\d{9}" title="Ingrese exactamente 9 dígitos" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,9)">
+                <small class="text-muted">Escribe tu Identificador de Ciudadano tal como aparece en tu credencial, incluyendo los ceros a la izquierda (0)</small>
+              </div>
+            </div>
+          </div>
+
+
           <div class="row">
             <div class="mb-3">
               <div class="row">
@@ -438,8 +463,8 @@
     <!-- Select opcion selectize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
     <!-- Funciones generales -->
-    <script src="/assets/js_sitio/funciones.js?v=5.0"></script>
-    <script src="/assets/js_sitio/proveedor/directorio.js?v=1.7"></script>
+    <script src="/assets/js_sitio/funciones.js?v=5.2"></script>
+    <script src="/assets/js_sitio/proveedor/directorio.js?v=1.8"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>

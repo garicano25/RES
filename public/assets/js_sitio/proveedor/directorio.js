@@ -11,7 +11,7 @@ ID_FORMULARIO_DIRECTORIO = 0
 $("#guardarDIRECTORIO").click(async function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioDIRECTORIO'));
+    formularioValido = validarFormulario3($('#formularioDIRECTORIO'));
 
     if (formularioValido) {
 
@@ -197,103 +197,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let consultaRealizada = false;
 
-
-// document.querySelectorAll('#RFC_PROVEEDOR').forEach(element => {
-//     element.addEventListener('change', function () {
-//         var rfc = this.value.trim();
-
-//         if (rfc && !consultaRealizada) {
-//             consultaRealizada = true;
-
-//             fetch('/actualizarinfoproveedor', {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                     'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-//                 },
-//                 body: JSON.stringify({ rfc: rfc })
-//             })
-//             .then(response => {
-//                 if (!response.ok) {
-//                     throw new Error('HTTP error, status = ' + response.status);
-//                 }
-//                 return response.json();
-//             })
-//             .then(data => {
-//                 if (data && !data.message) {
-//                     Swal.fire({
-//                         title: 'Usted ya está registrado',
-//                         text: '¿Desea actualizar su información?',
-//                         icon: 'warning',
-//                         showCancelButton: true,
-//                         confirmButtonText: 'Sí, actualizar',
-//                         cancelButtonText: 'No'
-//                     }).then((result) => {
-//                         if (result.isConfirmed) {
-
-//                             document.getElementById('ID_FORMULARIO_DIRECTORIO').value = data.ID_FORMULARIO_DIRECTORIO || '';
-//                             document.getElementById('RAZON_SOCIAL').value = data.RAZON_SOCIAL || '';
-//                             document.getElementById('RFC_PROVEEDOR').value = data.RFC_PROVEEDOR || '';
-//                             document.getElementById('NOMBRE_COMERCIAL').value = data.NOMBRE_COMERCIAL || '';
-//                             document.getElementById('GIRO_PROVEEDOR').value = data.GIRO_PROVEEDOR || '';
-
-//                             let codigoPostalInput = document.getElementById("CODIGO_POSTAL");
-//                             codigoPostalInput.value = data.CODIGO_POSTAL || '';
-
-//                             let coloniaGuardada = data.NOMBRE_COLONIA_EMPRESA || '';
-
-//                             codigoPostalInput.dispatchEvent(new Event('change'));
-
-//                             let coloniaSelect = document.getElementById('NOMBRE_COLONIA_EMPRESA');
-//                             let observer = new MutationObserver(() => {
-//                                 if (coloniaSelect.options.length > 1) {
-//                                     coloniaSelect.value = coloniaGuardada;
-//                                     observer.disconnect();
-//                                 }
-//                             });
-
-//                             observer.observe(coloniaSelect, { childList: true });
-
-//                             document.getElementById('TIPO_VIALIDAD_EMPRESA').value = data.TIPO_VIALIDAD_EMPRESA || '';
-//                             document.getElementById('NOMBRE_VIALIDAD_EMPRESA').value = data.NOMBRE_VIALIDAD_EMPRESA || '';
-//                             document.getElementById('NUMERO_EXTERIOR_EMPRESA').value = data.NUMERO_EXTERIOR_EMPRESA || '';
-//                             document.getElementById('NUMERO_INTERIOR_EMPRESA').value = data.NUMERO_INTERIOR_EMPRESA || '';
-//                             document.getElementById('NOMBRE_LOCALIDAD_EMPRESA').value = data.NOMBRE_LOCALIDAD_EMPRESA || '';
-//                             document.getElementById('NOMBRE_MUNICIPIO_EMPRESA').value = data.NOMBRE_MUNICIPIO_EMPRESA || '';
-//                             document.getElementById('NOMBRE_ENTIDAD_EMPRESA').value = data.NOMBRE_ENTIDAD_EMPRESA || '';
-//                             document.getElementById('PAIS_EMPRESA').value = data.PAIS_EMPRESA || '';
-//                             document.getElementById('ENTRE_CALLE_EMPRESA').value = data.ENTRE_CALLE_EMPRESA || '';
-//                             document.getElementById('ENTRE_CALLE2_EMPRESA').value = data.ENTRE_CALLE2_EMPRESA || '';
-//                             document.getElementById('NOMBRE_DIRECTORIO').value = data.NOMBRE_DIRECTORIO || '';
-//                             document.getElementById('CARGO_DIRECTORIO').value = data.CARGO_DIRECTORIO || '';
-//                             document.getElementById('TELEFONO_DIRECOTORIO').value = data.TELEFONO_DIRECOTORIO || '';
-//                             document.getElementById('EXSTENSION_DIRECTORIO').value = data.EXSTENSION_DIRECTORIO || '';
-//                             document.getElementById('CELULAR_DIRECTORIO').value = data.CELULAR_DIRECTORIO || '';
-//                             document.getElementById('CORREO_DIRECTORIO').value = data.CORREO_DIRECTORIO || '';
-
-//                             const contenedorServicios = document.querySelector('.serviciodiv');
-//                             contenedorServicios.innerHTML = '';
-
-//                             if (Array.isArray(data.SERVICIOS_JSON)) {
-//                                 data.SERVICIOS_JSON.forEach(servicio => {
-//                                     agregarServicio(servicio.NOMBRE_SERVICIO);
-//                                 });
-//                             }
-//                         } else {
-//                             document.getElementById('formularioDIRECTORIO').reset();
-//                             consultaRealizada = false;
-//                         }
-//                     });
-//                 }
-//             })
-//             .catch(error => {
-//                 console.error('Error:', error);
-//                 consultaRealizada = false;
-//             });
-//         }
-//     });
-// });
-
 document.querySelectorAll('#RFC_PROVEEDOR').forEach(element => {
     element.addEventListener('change', function () {
         var rfc = this.value.trim();
@@ -392,7 +295,6 @@ function verificarCodigoAntesDeActualizar(correo, codigo, data) {
                 icon: 'success'
             });
 
-              // Asignar valores a los campos de formulario
             document.getElementById('ID_FORMULARIO_DIRECTORIO').value = data.ID_FORMULARIO_DIRECTORIO || '';
             document.getElementById('TIPO_PERSONA').value = data.TIPO_PERSONA || '';
             document.getElementById('RAZON_SOCIAL').value = data.RAZON_SOCIAL || '';
@@ -403,13 +305,16 @@ function verificarCodigoAntesDeActualizar(correo, codigo, data) {
 
             const tipoPersona = document.getElementById("TIPO_PERSONA");
             const domicilioNacional = document.getElementById("DOMICILIO_NACIONAL");
+
+            const ineNacional = document.getElementById("INE_NACIONAL");
+
             const domicilioExtranjero = document.getElementById("DOMICILIO_ERXTRANJERO");
 
             if (tipoPersona.value === "1") {
                 domicilioNacional.style.display = "block";
+                ineNacional.style.display = "block";
                 domicilioExtranjero.style.display = "none";
 
-                // Ejecutar lógica para datos nacionales
                 let codigoPostalInput = document.getElementById("CODIGO_POSTAL");
                 codigoPostalInput.value = data.CODIGO_POSTAL || '';
 
@@ -428,6 +333,8 @@ function verificarCodigoAntesDeActualizar(correo, codigo, data) {
 
             } else if (tipoPersona.value === "2") {
                 domicilioNacional.style.display = "none";
+                ineNacional.style.display = "none";
+
                 domicilioExtranjero.style.display = "block";
                 document.querySelector('label[for="CONSTANCIA_LABEL"]').textContent = "Registro ante Hacienda / Tax ID *";
                 document.querySelector('label[for="RFC_LABEL"]').textContent = "Tax ID";
@@ -450,6 +357,11 @@ function verificarCodigoAntesDeActualizar(correo, codigo, data) {
             document.getElementById('EXSTENSION_DIRECTORIO').value = data.EXSTENSION_DIRECTORIO || '';
             document.getElementById('CELULAR_DIRECTORIO').value = data.CELULAR_DIRECTORIO || '';
             document.getElementById('CORREO_DIRECTORIO').value = data.CORREO_DIRECTORIO || '';
+
+
+            document.getElementById('CIC_DIRECTORIO').value = data.CIC_DIRECTORIO || '';
+            document.getElementById('IDENTIFICADOR_DIRECTORIO').value = data.IDENTIFICADOR_DIRECTORIO || '';
+
 
 
 
@@ -514,30 +426,45 @@ function agregarServicio(nombreServicio = '') {
 
 document.addEventListener("DOMContentLoaded", function () {
     const tipoPersona = document.getElementById("TIPO_PERSONA");
+    const ineNacional = document.getElementById("INE_NACIONAL");
+
+    const inputCIC = document.getElementById("CIC_DIRECTORIO");
+    const inputIdentificador = document.getElementById("IDENTIFICADOR_DIRECTORIO");
+
     const domicilioNacional = document.getElementById("DOMICILIO_NACIONAL");
     const domicilioExtranjero = document.getElementById("DOMICILIO_ERXTRANJERO");
-    const labelDomicilio = document.querySelector('label[for="CONSTANCIA_LABEL"]'); // Selecciona el label específico
-    const labelRFC = document.querySelector('label[for="RFC_LABEL"]'); // Selecciona el label específico
 
+    const labelDomicilio = document.querySelector('label[for="CONSTANCIA_LABEL"]');
+    const labelRFC = document.querySelector('label[for="RFC_LABEL"]');
 
     tipoPersona.addEventListener("change", function () {
         if (this.value === "1") {
+            ineNacional.style.display = "block";
+            inputCIC.setAttribute('required', true);
+            inputIdentificador.setAttribute('required', true);
+
             domicilioNacional.style.display = "block";
             domicilioExtranjero.style.display = "none";
+
             labelDomicilio.textContent = "Constancia de situación fiscal *";
             labelRFC.textContent = "RFC *";
 
         } else if (this.value === "2") {
+            ineNacional.style.display = "none";
+            inputCIC.removeAttribute('required');
+            inputIdentificador.removeAttribute('required');
+
             domicilioNacional.style.display = "none";
             domicilioExtranjero.style.display = "block";
+
             labelDomicilio.textContent = "Registro ante Hacienda / Tax ID *";
             labelRFC.textContent = "Tax ID *";
-
         }
     });
 
-
-        
+    if (tipoPersona.value === "1" || tipoPersona.value === "2") {
+        tipoPersona.dispatchEvent(new Event("change"));
+    }
 });
 
 
