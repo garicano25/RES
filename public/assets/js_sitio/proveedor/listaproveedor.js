@@ -1041,7 +1041,7 @@ function cargarTablacontactos() {
             {
                 data: null,
                 render: function (data, type, row) {
-                    return row.TITULO_CUENTA ? `${row.TITULO_CUENTA}. ${row.NOMBRE_CONTACTO_CUENTA}` : row.NOMBRE_CONTACTO_CUENTA;
+                    return row.TITULO_CUENTA ? `${row.TITULO_CUENTA} ${row.NOMBRE_CONTACTO_CUENTA}` : row.NOMBRE_CONTACTO_CUENTA;
                 }
             },
             { data: 'CARGO_CONTACTO_CUENTA' },
