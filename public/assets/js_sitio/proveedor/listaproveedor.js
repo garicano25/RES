@@ -818,6 +818,21 @@ $(document).ready(function() {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const tipoCuentaSelect = document.querySelector('select[name="TIPO_CUENTA"]');
+    const divExtranjero = document.getElementById("DIV_EXTRAJERO");
+    const clabeInterbancaria = document.getElementById("CLABE_INTERBANCARIA");
+
+    tipoCuentaSelect.addEventListener("change", function () {
+        if (this.value === "Extranjera") {
+            divExtranjero.style.display = "block";
+            clabeInterbancaria.style.display = "none";
+        } else {
+            divExtranjero.style.display = "none";
+            clabeInterbancaria.style.display = "block";
+        }
+    });
+});
 
 
 // // <!-- ============================================================================================================================ -->

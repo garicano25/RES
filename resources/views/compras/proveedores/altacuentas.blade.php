@@ -76,7 +76,7 @@
 
                         <div class="col-12 mb-3" id="CLABE_INTERBANCARIA" style="display: block;">
                             <label class="form-label">CLABE interbancaria *</label>
-                            <input type="text" class="form-control" name="CLABE_INTERBANCARIA" id="CLABE_INTERBANCARIA" pattern="\d{18}" maxlength="18" placeholder="Ingrese 18 dígitos">
+                            <input type="text" class="form-control" name="CLABE_INTERBANCARIA" id="CLABE_INTERBANCARIA" pattern="\d{18}" maxlength="18" placeholder="Ingrese 18 dígitos" required>
                         </div>
 
                         <div id="DIV_EXTRAJERO" style="display: none;">
