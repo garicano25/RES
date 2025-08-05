@@ -572,7 +572,7 @@ Modalcuenta.addEventListener('hidden.bs.modal', event => {
 $("#guardarCuentas").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioCuentas'))
+    formularioValido = validarFormulario3($('#formularioCuentas'))
 
     if (formularioValido) {
 
