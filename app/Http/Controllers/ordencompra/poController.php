@@ -49,25 +49,7 @@ class poController extends Controller
     public function Tablaordencompra()
     {
         try {
-            // $tabla = poModel::whereIn('ID_FORMULARIO_PO', function ($query) {
-            //     $query->select(DB::raw('MAX(ID_FORMULARIO_PO)'))
-            //         ->from('formulario_ordencompra')
-            //         ->groupBy(DB::raw("SUBSTRING_INDEX(NO_PO, '-Rev', 1)"));
-            // })->get();
-
-            // $tabla = DB::table('formulario_ordencompra as po')
-            //     ->leftJoin('formulario_altaproveedor as p', 'po.PROVEEDOR_SELECCIONADO', '=', 'p.RFC_ALTA')
-            //     ->whereIn('po.ID_FORMULARIO_PO', function ($query) {
-            //         $query->select(DB::raw('MAX(ID_FORMULARIO_PO)'))
-            //             ->from('formulario_ordencompra')
-            //             ->groupBy(DB::raw("SUBSTRING_INDEX(NO_PO, '-Rev', 1)"));
-            //     })
-            //     ->select(
-            //         'po.*',
-            //         DB::raw("CONCAT(p.RAZON_SOCIAL_ALTA, ' (', p.RFC_ALTA, ')') as PROVEEDORES")
-            //     )
-            //     ->get();
-
+    
 
             $tabla = DB::table('formulario_ordencompra as po')
                 ->leftJoin('formulario_altaproveedor as p', 'po.PROVEEDOR_SELECCIONADO', '=', 'p.RFC_ALTA')
@@ -86,7 +68,6 @@ class poController extends Controller
 
 
             foreach ($tabla as $value) {
-                // Estado visual
                 if ($value->ESTADO_APROBACION == 'Aprobada') {
                     $value->ESTADO_BADGE = '<span class="badge bg-success">Aprobado</span>';
                 } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
@@ -97,7 +78,6 @@ class poController extends Controller
                     $value->ESTADO_BADGE = '<span class="badge bg-secondary">Sin estatus</span>';
                 }
 
-                // Botones
                 if ($value->ACTIVO == 0) {
                     $value->BTN_EDITAR = '<button class="btn btn-secondary rounded-pill" disabled><i class="bi bi-ban"></i></button>';
                 } else {
@@ -142,34 +122,7 @@ class poController extends Controller
     public function Tablaordencompraprobacion()
     {
         try {
-            // $ultimasPO = poModel::select(DB::raw('MAX(ID_FORMULARIO_PO) as ID_FORMULARIO_PO'))
-            //     ->groupBy(DB::raw("SUBSTRING_INDEX(NO_PO, '-Rev', 1)"));
-
-            // $tabla = poModel::whereIn('ID_FORMULARIO_PO', $ultimasPO)
-            //     ->where('SOLICITAR_AUTORIZACION', 'Sí')
-            //     ->where(function ($query) {
-            //         $query->whereNull('ESTADO_APROBACION')
-            //             ->orWhereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
-            //     })
-            //     ->get();
-
-            // $ultimasPO = DB::table('formulario_ordencompra')
-            //     ->select(DB::raw('MAX(ID_FORMULARIO_PO) as ID_FORMULARIO_PO'))
-            //     ->groupBy(DB::raw("SUBSTRING_INDEX(NO_PO, '-Rev', 1)"));
-
-            // $tabla = DB::table('formulario_ordencompra as po')
-            //     ->leftJoin('formulario_altaproveedor as p', 'po.PROVEEDOR_SELECCIONADO', '=', 'p.RFC_ALTA')
-            //     ->whereIn('po.ID_FORMULARIO_PO', $ultimasPO)
-            //     ->where('po.SOLICITAR_AUTORIZACION', 'Sí')
-            //     ->where(function ($query) {
-            //         $query->whereNull('po.ESTADO_APROBACION')
-            //             ->orWhereNotIn('po.ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
-            //     })
-            //     ->select(
-            //         'po.*',
-            //         DB::raw("CONCAT(p.RAZON_SOCIAL_ALTA, ' (', p.RFC_ALTA, ')') as PROVEEDORES")
-            //     )
-            //     ->get();
+            
 
 
             $ultimasPO = DB::table('formulario_ordencompra')
@@ -289,7 +242,6 @@ class poController extends Controller
 
 
                         $data = $request->except(['servicios']);
-                        // $contratos = contratacionModel::create($data);
 
 
                         $compras = poModel::create($data);
@@ -332,12 +284,10 @@ class poController extends Controller
                         DB::statement('ALTER TABLE formulario_ordencompra AUTO_INCREMENT=1;');
 
                         $data = $request->except(['servicios']);
-                        // $contratos = contratacionModel::create($data);
 
 
                         $compras = poModel::create($data);
 
-                        // $compras = poModel::create($request->all());
 
                         $response['code']  = 1;
                         $response['compra']  = $compras;
@@ -375,36 +325,6 @@ class poController extends Controller
                     break;
 
 
-                // case 3:
-                //     $ofertaOriginal = poModel::find($request->ID_FORMULARIO_PO);
-
-                //     if ($ofertaOriginal) {
-                //         $noOfertaBase = explode('-Rev', $ofertaOriginal->NO_PO)[0];
-
-                //         $ultimaRevision = poModel::where('NO_PO', 'LIKE', "$noOfertaBase%")
-                //             ->orderBy('REVISION_PO', 'desc')
-                //             ->first();
-
-                //         $revisionNumero = $ultimaRevision ? $ultimaRevision->REVISION_PO + 1 : 1;
-                //         $noOfertaConRevision = $noOfertaBase . '-Rev' . $revisionNumero;
-
-                //         $nuevaOferta = $ofertaOriginal->replicate();
-                //         $nuevaOferta->NO_PO = $noOfertaConRevision;
-                //         $nuevaOferta->REVISION_PO = $revisionNumero;
-                //         $nuevaOferta->MOTIVO_REVISION_PO = $request->MOTIVO_REVISION_PO;
-
-                //         $nuevaOferta->save();
-
-                //         $response['code'] = 1;
-                //         $response['compra'] = $nuevaOferta;
-                //     } else {
-                //         $response['code'] = 0;
-                //         $response['message'] = 'PO no encontrada';
-                //     }
-                //     return response()->json($response);
-
-                //     break;
-
 
                 case 3:
                     $ofertaOriginal = poModel::find($request->ID_FORMULARIO_PO);
@@ -421,12 +341,10 @@ class poController extends Controller
 
                         $nuevaOferta = $ofertaOriginal->replicate();
 
-                        // Campos que se deben modificar para la nueva revisión
                         $nuevaOferta->NO_PO = $noOfertaConRevision;
                         $nuevaOferta->REVISION_PO = $revisionNumero;
                         $nuevaOferta->MOTIVO_REVISION_PO = $request->MOTIVO_REVISION_PO;
 
-                        // Campos que NO deben copiarse
                         $nuevaOferta->SOLICITAR_AUTORIZACION = null;
                         $nuevaOferta->USUARIO_ID = null;
                         $nuevaOferta->REQUIERE_COMENTARIO = null;
