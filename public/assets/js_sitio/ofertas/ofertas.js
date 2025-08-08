@@ -176,114 +176,6 @@ $("#guardarOFERTA").click(function (e) {
 
 
 
-
-
-
-
-// var Tablaofertas = $("#Tablaofertas").DataTable({
-//     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-//     lengthChange: true,
-//     lengthMenu: [
-//         [10, 25, 50, -1],
-//         [10, 25, 50, 'All']
-//     ],
-//     info: false,
-//     paging: true,
-//     searching: true,
-//     filtering: true,
-//     scrollY: '65vh',
-//     scrollCollapse: true,
-//     responsive: true,
-//     ajax: {
-//         dataType: 'json',
-//         data: {},
-//         method: 'GET',
-//         cache: false,
-//         url: '/Tablaofertas',
-//         beforeSend: function () {
-//             mostrarCarga();
-//         },
-//         complete: function () {
-//             Tablaofertas.columns.adjust().draw();
-//             ocultarCarga();
-//         },
-//         error: function (jqXHR, textStatus, errorThrown) {
-//             alertErrorAJAX(jqXHR, textStatus, errorThrown);
-//         },
-//         dataSrc: 'data'
-//     },
-//     order: [[0, 'asc']], 
-//     columns: [
-//         { 
-//             data: null,
-//             render: function(data, type, row, meta) {
-//                 return meta.row + 1; 
-//             }
-//         },
-//         { data: 'REVISION_OFERTA' },
-
-//         {
-//             data: null,
-//             render: function(data, type, row) {
-//                 return `${row.NO_SOLICITUD} - ${row.NOMBRE_COMERCIAL_SOLICITUD}`;
-//             }
-//         },
-//         { data: 'NO_OFERTA' },
-
-//         { 
-//             data: 'FECHA_OFERTA',
-//             render: function(data, type, row) {
-//                 let diasRestantes = calcularDiasRestantes(row.FECHA_OFERTA, row.DIAS_VALIDACION_OFERTA);
-//                 return `${row.FECHA_OFERTA} <span style="font-weight:bold;">(${diasRestantes})</span>`;
-//             }
-//         },
-
-//         { 
-//             data: 'ESTATUS_OFERTA',
-//             render: function(data, type, row) {
-//                 const colors = {
-//                     'Aceptada': 'background-color: green; color: white;',
-//                     'Revisión': 'background-color: orange; color: white;',
-//                     'Rechazada': 'background-color: red; color: white;'
-//                 };
-
-//                 const isDisabled = (data === 'Aceptada' || data === 'Rechazada') ? 'disabled' : '';
-
-//                 return `
-//                     <select class="form-select ESTATUS_OFERTA" 
-//                             data-id="${row.ID_FORMULARIO_OFERTAS}" 
-//                             style="${colors[data] || ''}" ${isDisabled}>
-//                         <option value="" ${!data ? 'selected' : ''} disabled style="background-color: white; color: black;">Seleccione una opción</option>
-//                         <option value="Aceptada" ${data === 'Aceptada' ? 'selected' : ''} style="background-color: green; color: white;">Aceptada</option>
-//                         <option value="Revisión" ${data === 'Revisión' ? 'selected' : ''} style="background-color: orange; color: white;">Revisión</option>
-//                         <option value="Rechazada" ${data === 'Rechazada' ? 'selected' : ''} style="background-color: red; color: white;">Rechazada</option>
-//                     </select>
-//                     <textarea class="form-control MOTIVO_RECHAZO d-none" placeholder="Motivo de rechazo..." data-id="${row.ID_FORMULARIO_OFERTAS}" ${isDisabled}>${row.MOTIVO_RECHAZO || ''}</textarea>
-//                 `;
-//             }
-//         },
-//         { data: 'BTN_DOCUMENTO', className: 'text-center' },
-//         { data: 'BTN_EDITAR' },
-//         { data: 'BTN_VISUALIZAR' },
-//         { data: 'BTN_ELIMINAR' }
-//     ],
-//     columnDefs: [
-//         { targets: 0, title: '#', className: 'all text-center' },
-//         { targets: 1, title: 'Versión', className: 'all text-center nombre-column' },
-//         { targets: 2, title: 'N° de solicitud', className: 'all text-center nombre-column' },
-//         { targets: 3, title: 'N° de Oferta/Cotización', className: 'all text-center nombre-column' },
-//         { targets: 4, title: 'Fecha (Días Restantes)', className: 'all text-center nombre-column' }, 
-//         { targets: 5, title: 'Estatus de la oferta', className: 'all text-center nombre-column' },
-//         { targets: 6, title: 'Cotización', className: 'all text-center nombre-column' },
-//         { targets: 7, title: 'Editar', className: 'all text-center' },
-//         { targets: 8, title: 'Visualizar', className: 'all text-center' },
-//         { targets: 9, title: 'Activo', className: 'all text-center' }
-//     ]
-// });
-
-
-
-
 var Tablaofertas = $("#Tablaofertas").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
@@ -473,41 +365,6 @@ $('#Tablaofertas').on('click', '.ver-archivo-terminos', function () {
 
 
 
-// function calcularDiasRestantes(fechaOferta, diasValidacion) {
-//     if (!fechaOferta || !diasValidacion) return "N/A";
-
-//     let fechaInicio = new Date(fechaOferta);
-    
-//     let fechaVencimiento = new Date(fechaInicio);
-//     fechaVencimiento.setDate(fechaVencimiento.getDate() + parseInt(diasValidacion));
-
-//     let hoy = new Date();
-
-//     let diasTotales = Math.ceil((fechaVencimiento - fechaInicio) / (1000 * 60 * 60 * 24));
-//     let diasTranscurridos = diasTotales - Math.ceil((fechaVencimiento - hoy) / (1000 * 60 * 60 * 24));
-    
-//     diasTranscurridos = Math.max(diasTranscurridos, 0);
-//     let porcentaje = (diasTranscurridos / diasTotales) * 100;
-
-//     let color = "green"; 
-//     if (porcentaje >= 60 && porcentaje < 80) {
-//         color = "orange"; 
-//     } else if (porcentaje >= 80) {
-//         color = "red"; 
-//     }
-
-//     // Si ya ha vencido
-//     if (hoy >= fechaVencimiento) {
-//         return `<span style="color: red; font-weight: bold;">Expirado</span>`;
-//     }
-
-//     let diasRestantes = Math.ceil((fechaVencimiento - hoy) / (1000 * 60 * 60 * 24));
-
-//     return `<span style="color: ${color}; font-weight: bold;">${diasRestantes} días</span>`;
-// }
-
-
-
 
 
 function calcularDiasRestantes(fechaOferta, diasValidacion) {
@@ -550,59 +407,7 @@ function estaExpirada(fechaOferta, diasValidacion) {
 
 
 
-// $('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {
-//     var tr = $(this).closest('tr');
-//     var row = Tablaofertas.row(tr);
 
-//     ID_FORMULARIO_OFERTAS = row.data().ID_FORMULARIO_OFERTAS;
-
-//     editarDatoTabla(row.data(), 'formularioOFERTAS', 'miModal_OFERTAS', 1);
-
-//     var selectize = $('#SOLICITUD_ID')[0].selectize;
-//     selectize.clear(); 
-
-//     var solicitudSeleccionado = row.data().SOLICITUD_ID;
-
-//     if (solicitudSeleccionado) {
-//         selectize.addOption({
-//             value: solicitudSeleccionado,
-//             text: `${row.data().NO_SOLICITUD} (${row.data().NOMBRE_COMERCIAL_SOLICITUD})`
-//         });
-//         selectize.setValue(solicitudSeleccionado); 
-//     }
-
-//     if (row.data().SOLICITUDES && row.data().SOLICITUDES.length > 0) {
-//         row.data().SOLICITUDES.forEach(solicitud => {
-//             if (solicitud.ID_FORMULARIO_SOLICITUDES !== solicitudSeleccionado) {
-//                 selectize.addOption({
-//                     value: solicitud.ID_FORMULARIO_SOLICITUDES,
-//                     text: `${solicitud.NO_SOLICITUD} (${solicitud.NOMBRE_COMERCIAL_SOLICITUD})`
-//                 });
-//             }
-//         });
-//     }
-
-//     selectize.refreshOptions(false); 
-
-//     $(".observacionesdiv").empty();
-//     obtenerObservaciones(row);
-
-//     $('#miModal_OFERTAS .modal-title').html(row.data().NO_OFERTA);
-
-//     var estatus = row.data().ESTATUS_OFERTA;
-//     if (estatus === 'Aceptada') {
-//         $('#ACEPTADA').show();
-//         $('#RECHAZO').hide();
-//     } else if (estatus === 'Rechazada') {
-//         $('#RECHAZO').show();
-//         $('#ACEPTADA').hide();
-//     } else {
-//         $('#ACEPTADA').hide();
-//         $('#RECHAZO').hide();
-//     }
-
-//     $("#miModal_OFERTAS").modal("show");
-// });
 
 
 $('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {

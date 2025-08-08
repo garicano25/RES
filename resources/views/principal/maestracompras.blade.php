@@ -459,7 +459,7 @@
 
 
     @if(request()->is('Orden_compra'))
-    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.11"></script>
+    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.12"></script>
     @endif
 
 

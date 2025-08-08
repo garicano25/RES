@@ -341,14 +341,37 @@ $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
 
     let data;
 
+    const estado = $('#ESTADO_APROBACION').val();
+
+
     if (row.data()) {
         data = row.data();
         $('#guardarPO').show();
         $('#crearREVISION').show();
+
+            if (estado === 'Aprobada' || estado === 'Rechazada') {
+                    $('#guardarPO').hide();
+                    $('#crearREVISION').show();
+            } else {
+                    $('#guardarPO').show();
+                    $('#crearREVISION').hide();
+            }
+
     } else {
+
         data = $(this).data('revision');
+        
         $('#guardarPO').hide();
         $('#crearREVISION').hide();
+
+          if (estado === 'Aprobada' || estado === 'Rechazada') {
+                  $('#guardarPO').hide();
+                  $('#crearREVISION').hide();
+          } else {
+                  $('#guardarPO').hide();
+                  $('#crearREVISION').hide();
+          }
+
     }
 
     ID_FORMULARIO_PO = data.ID_FORMULARIO_PO;
@@ -370,17 +393,8 @@ $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
     $('#MOTIVO_RECHAZO').val(data.MOTIVO_RECHAZO || '');
 
 
-    const estado = $('#ESTADO_APROBACION').val();
 
-    if (estado === 'Aprobada' || estado === 'Rechazada') {
-        $('#guardarPO').hide();
-        $('#crearREVISION').show();
 
-    } else {
-        $('#guardarPO').show();
-        $('#crearREVISION').hide();
-
-        }
         
 
 

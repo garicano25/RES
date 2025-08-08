@@ -335,7 +335,7 @@
 
 
     @if(request()->is('Ofertas'))
-    <script src="/assets/js_sitio/ofertas/ofertas.js?v=5.4"></script>
+    <script src="/assets/js_sitio/ofertas/ofertas.js?v=5.5"></script>
     @endif
 
 
