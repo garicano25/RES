@@ -12,6 +12,8 @@ use App\Models\proveedor\altacontactos;
 use App\Models\proveedor\catalogofuncionesproveedorModel;
 use App\Models\proveedor\catalogotituloproveedorModel;
 use App\Models\proveedor\catalogodocumentoproveedorModel;
+use App\Models\proveedor\catalogoverificacionproveedorModel;
+
 
 use App\Models\proveedor\altacertificacionModel;
 use App\Models\proveedor\altacuentaModel;
@@ -29,32 +31,77 @@ class listaproveedorController extends Controller
     {
         $funcionesCuenta = catalogofuncionesproveedorModel::all();
         $titulosCuenta = catalogotituloproveedorModel::where('ACTIVO', 1)->get();
-
         $documetoscatalogo = catalogodocumentoproveedorModel::where('ACTIVO', 1)->get();
+        $verificacioncatalogo = catalogoverificacionproveedorModel::where('ACTIVO', 1)
+            ->orderBy('NOMBRE_VERIFICACION')
+            ->get();
 
-        return view('compras.listaproveedor.listaproveedores', compact('funcionesCuenta', 'titulosCuenta', 'documetoscatalogo'));
+
+        return view('compras.listaproveedor.listaproveedores', compact('funcionesCuenta', 'titulosCuenta', 'documetoscatalogo', 'verificacioncatalogo'));
     }
 
 
-    //     public function Tablalistaproveedores()
+
+
+
+
+    // public function Tablalistaproveedores()
     // {
     //     try {
     //         $tabla = altaproveedorModel::get();
 
     //         foreach ($tabla as $value) {
+    //             $mensajes = [];
 
+    //             $rfc = $value->RFC_ALTA;
+    //             $tipoPersona = $value->TIPO_PERSONA_ALTA;
+    //             $tipoPersonaOpcion = $value->TIPO_PERSONA_OPCION;
 
-    //         $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
-    //                 // $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-    //         $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO" data-id="' . $value->ID_FORMULARIO_ALTA . '"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
+    //             if (!DB::table('formulario_altacontactoproveedor')->where('RFC_PROVEEDOR', $rfc)->exists()) {
+    //                 $mensajes[] = 'Falta agregar contactos.';
+    //             }
 
+    //             if (!DB::table('formulario_altacuentaproveedor')->where('RFC_PROVEEDOR', $rfc)->exists()) {
+    //                 $mensajes[] = 'Falta agregar cuentas bancarias.';
+    //             }
 
+    //             if (!DB::table('formulario_altareferenciasproveedor')->where('RFC_PROVEEDOR', $rfc)->exists()) {
+    //                 $mensajes[] = 'Faltan agregar referencias comerciales.';
+    //             }
 
+    //             $documentosObligatorios = DB::table('catalogo_documentosproveedor')
+    //                 ->where('ACTIVO', 1)
+    //                 ->where('TIPO_DOCUMENTO', 1)
+    //                 ->where(function ($q) use ($tipoPersona) {
+    //                     $q->where('TIPO_PERSONA', $tipoPersona)->orWhere('TIPO_PERSONA', 3);
+    //                 })
+    //                 ->where(function ($q) use ($tipoPersonaOpcion) {
+    //                     $q->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)->orWhere('TIPO_PERSONA_OPCION', 3);
+    //                 })
+    //                 ->get();
 
+    //             $documentosSubidos = DB::table('formulario_altadocumentoproveedores')
+    //                 ->where('RFC_PROVEEDOR', $rfc)
+    //                 ->pluck('TIPO_DOCUMENTO_PROVEEDOR')
+    //                 ->toArray();
 
+    //             foreach ($documentosObligatorios as $doc) {
+    //                 if (!in_array($doc->ID_CATALOGO_DOCUMENTOSPROVEEDOR, $documentosSubidos)) {
+    //                     $mensajes[] = 'Falta el documento: ' . $doc->NOMBRE_DOCUMENTO;
+    //                 }
+    //             }
+
+    //             $value->ESTATUS_DATOS = empty($mensajes)
+    //                 ? '<span class="badge bg-success">Completo</span>'
+    //                 : implode('<br>', array_map(fn($msg) => "<span class='text-danger'>$msg</span>", $mensajes));
+
+    //             $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+
+    //             $value->BTN_CORREO = empty($mensajes)
+    //                 ? ''
+    //                 : '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO" data-id="' . $value->ID_FORMULARIO_ALTA . '"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
     //         }
 
-    //         // Respuesta
     //         return response()->json([
     //             'data' => $tabla,
     //             'msj' => 'Información consultada correctamente'
@@ -67,16 +114,21 @@ class listaproveedorController extends Controller
     //     }
     // }
 
-
-
     public function Tablalistaproveedores()
     {
         try {
-            $tabla = altaproveedorModel::get();
+            $tabla = altaproveedorModel::select('*')->get();
 
             foreach ($tabla as $value) {
-                $mensajes = [];
 
+                if ((int) $value->VERIFICACION_SOLICITADA === 1) {
+                    $value->ESTATUS_DATOS = '<span class="badge bg-success">Completo</span>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_CORREO = ''; 
+                    continue;
+                }
+
+                $mensajes = [];
                 $rfc = $value->RFC_ALTA;
                 $tipoPersona = $value->TIPO_PERSONA_ALTA;
                 $tipoPersonaOpcion = $value->TIPO_PERSONA_OPCION;
@@ -97,10 +149,12 @@ class listaproveedorController extends Controller
                     ->where('ACTIVO', 1)
                     ->where('TIPO_DOCUMENTO', 1)
                     ->where(function ($q) use ($tipoPersona) {
-                        $q->where('TIPO_PERSONA', $tipoPersona)->orWhere('TIPO_PERSONA', 3);
+                        $q->where('TIPO_PERSONA', $tipoPersona)
+                            ->orWhere('TIPO_PERSONA', 3);
                     })
                     ->where(function ($q) use ($tipoPersonaOpcion) {
-                        $q->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)->orWhere('TIPO_PERSONA_OPCION', 3);
+                        $q->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)
+                            ->orWhere('TIPO_PERSONA_OPCION', 3);
                     })
                     ->get();
 
@@ -140,16 +194,12 @@ class listaproveedorController extends Controller
 
 
 
-
     public function enviarCorreoFaltantes($idFormularioAlta)
     {
         $proveedor = altaproveedorModel::findOrFail($idFormularioAlta);
         $rfc = $proveedor->RFC_ALTA;
 
-        // $correo = DB::table('formulario_directorio')
-        //     ->where('RFC_PROVEEDOR', $rfc)
-        //     ->value('CORREO_DIRECTORIO');
-
+      
 
         $correo = DB::table('formulario_altaproveedor')
             ->where('RFC_ALTA', $rfc)
@@ -217,6 +267,63 @@ class listaproveedorController extends Controller
 
         return response()->json(['status' => 'success', 'message' => 'Correo enviado correctamente.']);
     }
+
+
+
+
+    public function actualizarVerificacionSolicitada(Request $request)
+    {
+        $rfc = $request->input('rfc');
+
+        if (!$rfc) {
+            return response()->json(['success' => false, 'message' => 'RFC no proporcionado.'], 400);
+        }
+
+        try {
+            $actualizado = DB::table('formulario_altaproveedor')
+                ->where('RFC_ALTA', $rfc)
+                ->update(['VERIFICACION_SOLICITADA' => 1]);
+
+            if ($actualizado) {
+                return response()->json(['success' => true, 'message' => 'Verificación solicitada correctamente.']);
+            } else {
+                return response()->json(['success' => false, 'message' => 'No se encontró proveedor con ese RFC.'], 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error: ' . $e->getMessage()], 500);
+        }
+    }
+
+
+
+    public function verificarEstadoVerificacion(Request $request)
+    {
+        $rfc = $request->input('rfc');
+
+        if (!$rfc) {
+            return response()->json(['success' => false, 'message' => 'RFC no proporcionado.'], 400);
+        }
+
+        try {
+            $registro = DB::table('formulario_altaproveedor')
+                ->select('VERIFICACION_SOLICITADA')
+                ->where('RFC_ALTA', $rfc)
+                ->first();
+
+            if (!$registro) {
+                return response()->json(['success' => false, 'message' => 'Proveedor no encontrado.'], 404);
+            }
+
+            if ((int)$registro->VERIFICACION_SOLICITADA === 1) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false, 'message' => 'No se ha solicitado la verificación.']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error: ' . $e->getMessage()], 500);
+        }
+    }
+
 
 
 
@@ -535,16 +642,14 @@ public function Tablareferencias(Request $request)
 
                 case 2:
                     $requestData = $request->all();
-                    $rfc = $requestData['RFC_PROVEEDOR'] ?? null; // asegúrate de que venga del frontend
+                    $rfc = $requestData['RFC_PROVEEDOR'] ?? null; 
 
                     // CREACIÓN DE REGISTRO NUEVO
                     if ($request->ID_FORMULARIO_CUENTAPROVEEDOR == 0) {
                         DB::statement('ALTER TABLE formulario_altacuentaproveedor AUTO_INCREMENT=1;');
 
-                        // Se crea el registro sin archivo
                         $cuentas = altacuentaModel::create($requestData);
 
-                        // Si viene archivo, se guarda después de tener el ID
                         if ($request->hasFile('CARATULA_BANCARIA')) {
                             $file = $request->file('CARATULA_BANCARIA');
                             $folderPath = "proveedores/{$rfc}/Caratula de cuentas/{$cuentas->ID_FORMULARIO_CUENTAPROVEEDOR}";
@@ -611,7 +716,7 @@ public function Tablareferencias(Request $request)
                     // CREAR NUEVO REGISTRO
                     if ($request->ID_FORMULARIO_CONTACTOPROVEEDOR == 0) {
 
-                        DB::statement('ALTER TABLE formulario_altacuentaproveedor AUTO_INCREMENT = 1;');
+                        DB::statement('ALTER TABLE formulario_altacontactoproveedor AUTO_INCREMENT = 1;');
 
                         $cuentas = altacontactos::create($requestData);
 

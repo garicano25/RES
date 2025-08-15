@@ -136,7 +136,9 @@ use App\Http\Controllers\matrizcomparativa\matrizController;
 
 use App\Http\Controllers\pdf\pdfController;
 
+// CONTROLADORES GR  
 
+use App\Http\Controllers\requisicongr\grController;
 
 
 // CONTROLADORES DE LA PAGINA WEB
@@ -772,10 +774,11 @@ Route::get('/Tablacontactos', [listaproveedorController::class, 'Tablacontactos'
 Route::get('/Tablacertificaciones', [listaproveedorController::class, 'Tablacertificaciones']);
 Route::get('/Tablareferencias', [listaproveedorController::class, 'Tablareferencias']);
 Route::get('/Tabladocumentosoporteproveedores', [listaproveedorController::class, 'Tabladocumentosoporteproveedores']);
-
 Route::get('/documentosProveedorAdmin/{rfc}', [listaproveedorController::class, 'documentosProveedorAdmin']);
-
 Route::post('/enviarCorreoFaltantes/{id}', [listaproveedorController::class, 'enviarCorreoFaltantes']);
+
+Route::post('/actualizarVerificacionSolicitada', [listaproveedorController::class, 'actualizarVerificacionSolicitada']);
+Route::post('/verificarEstadoVerificacion', [listaproveedorController::class, 'verificarEstadoVerificacion']);
 
 //==============================================     PROVEEDORES TEMPORALES  ============================================== 
 
@@ -804,15 +807,16 @@ Route::get('/generarPDFPO/{id}', [pdfpoController::class, 'generarPDFPO']);
 //==============================================    MATRIZ COMPARATIVA  ============================================== 
 
 Route::get('/Matriz_comparativa', [matrizController::class, 'index']);
-
 Route::get('/Tablamatrizcomparativa', [matrizController::class, 'Tablamatrizcomparativa']);
 Route::post('/MatrizSave', [matrizController::class, 'store']);
-
-
 Route::get('/Matriz_aprobación', [matrizController::class, 'index1']);
-
 Route::get('/Tablamatirzaprobada', [matrizController::class, 'Tablamatirzaprobada']);
 
+//==============================================    Recepción de bienes y/o servicios - GR  ============================================== 
+
+Route::get('/Bitácora-GR', function () { return view('compras.recepciongr.recepcionbienesgr');});
+
+Route::get('/Tablabitacoragr', [grController::class, 'Tablabitacoragr']);
 
 
 //==============================================   CATALOGOS PROVEEDORES  ============================================== 

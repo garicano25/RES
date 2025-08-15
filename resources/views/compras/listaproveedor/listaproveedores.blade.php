@@ -16,18 +16,6 @@
         height: 40px;
     }
 
-    /* .multisteps-form__progress::before {
-    content: '';
-    position: absolute;
-    top: 24%; 
-    left: calc(7%); 
-    width: calc(87%); 
-    height: 7px; 
-    background-color: #e0e0e0;
-    z-index: 0;
-    transform: translateY(-50%); 
-} */
-
 
 
 
@@ -84,6 +72,115 @@
     .text-success {
         color: green !important;
     }
+
+
+
+
+    .verif-header {
+        background: #a6d66e;
+        color: #fff;
+        font-weight: 700;
+        letter-spacing: .2px;
+        display: flex;
+        align-items: center;
+        gap: .6rem;
+        padding: .9rem 1.2rem;
+        border-radius: .5rem;
+    }
+
+    .verif-list {
+        list-style: none;
+        margin: 1rem 0 0;
+        padding: 0;
+        border: 1px solid #e6ebf1;
+        border-radius: .75rem;
+        overflow: hidden;
+    }
+
+    .verif-item {
+        display: grid;
+        grid-template-columns: minmax(220px, 1fr) minmax(260px, 380px);
+        gap: 1rem;
+        padding: .85rem 1rem;
+        align-items: center;
+        background: #fff;
+    }
+
+    .verif-item+.verif-item {
+        border-top: 1px solid #eef2f6;
+    }
+
+    .verif-title {
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    .verif-controls {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .4rem;
+    }
+
+    .verif-status .badge {
+        font-size: .8rem;
+        padding: .28rem .6rem;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        display: inline-block;
+    }
+
+    .badge-success {
+        background: #e6f4ea;
+        color: #1e7e34;
+        border-color: #b6e0c0;
+    }
+
+    .badge-danger {
+        background: #fdecea;
+        color: #b02a37;
+        border-color: #f5c2c7;
+    }
+
+    .badge-neutral {
+        background: #f2f4f7;
+        color: #667085;
+        border-color: #e4e7ec;
+    }
+
+    .verif-radios {
+        display: flex;
+        gap: 1.25rem;
+        align-items: center;
+    }
+
+    .verif-radio {
+        display: flex;
+        align-items: center;
+        gap: .45rem;
+        margin: 0;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .verif-item-empty {
+        padding: 1rem;
+        color: #6c757d;
+        background: #fff;
+        text-align: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 680px) {
+        .verif-item {
+            grid-template-columns: 1fr;
+            align-items: flex-start;
+        }
+
+        .verif-controls {
+            align-items: flex-start;
+        }
+    }
 </style>
 
 
@@ -136,6 +233,7 @@
 
                 <!-- Datos Generales Tab -->
                 <div class="tab-pane fade" id="datosgenerales" role="tabpanel" aria-labelledby="datosgenerales-tab">
+
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
@@ -145,13 +243,21 @@
                                             <tr>
                                                 <td width="auto" style="text-align: left; border: none; vertical-align: middle;">
                                                     <h7 style="margin: 0px;">
-                                                        <i class="bi bi-person-circle"></i>&nbsp;&nbsp; <span class="text-primary div_trabajador_nombre">RFC PROVEEDOR</span>
+                                                        <i class="bi bi-person-circle"></i>&nbsp;&nbsp;
+                                                        <span class="text-primary div_trabajador_nombre">RFC PROVEEDOR</span>
+                                                        <br>
+                                                        <i class="bi bi-person-lines-fill" aria-hidden="true"></i>&nbsp; <span class="text-primary div_trabajador_cargo" style="color: #AAAAAA; font-size: 12px;">RAZON SOCIAL</span> &nbsp;
                                                     </h7>
-
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <div class="text-center">
+                                        <button id="VALIDAR_INFORMACION_PROVEEDOR" class="btn btn-success">
+                                            Mandar a verificación
+                                        </button>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -200,8 +306,13 @@
                                         </div>
                                         <span>Documentos de soporte</span>
                                     </div>
-
-
+<!-- 
+                                    <div class="multisteps-form__progress-btn" id="step7">
+                                        <div class="step-circle">
+                                            <i class="bi bi-check2-circle"></i>
+                                        </div>
+                                        <span>Verificar información</span>
+                                    </div> -->
 
                                 </div>
                             </div>
@@ -216,7 +327,6 @@
                             <h3 style="color: #ffffff; margin: 0;">
                                 <i class="bi bi-person"></i>&nbsp;&nbsp;Información del proveedor
                             </h3>
-                            <button class="btn" style="background-color: #236192; color: #ffffff; border: none; padding: 10px 20px; border-radius: 5px; display: none;" id="DESCARGAR_CREDENCIAL">Crear Credencial</button>
                         </ol>
 
                         <!-- Formulario de Datos Generales -->
@@ -226,6 +336,7 @@
 
 
                             <input type="hidden" name="ID_FORMULARIO_ALTA" id="ID_FORMULARIO_ALTA" value="0">
+                            <input type="hidden" name="VERIFICACION_SOLICITADA" id="VERIFICACION_SOLICITADA" value="">
 
 
                             <div class="col-12">
@@ -572,7 +683,7 @@
 
 
 
-                    <!-- Step 2 de Documentos del colaborador -->
+                    <!-- Step 2 Información para pago/depósito/transferencia interbancaria -->
 
                     <div id="step2-content" style="display: none;">
                         <ol class="breadcrumb mt-5">
@@ -590,7 +701,7 @@
                     </div>
 
 
-                    <!-- Step 3 Contratos y anexos -->
+                    <!-- Step 3 Contactos -->
 
 
                     <div id="step3-content" style="display: none;">
@@ -610,7 +721,7 @@
 
 
 
-                    <!-- Step 4 DOCUMENTOS DE SOPORTE DE LOS CONTRATOS EN GENERAL -->
+                    <!-- Step 4 Certificaciones, acreditaciones y membresías -->
 
                     <div id="step4-content" style="display: none;">
                         <ol class="breadcrumb mt-5">
@@ -627,7 +738,7 @@
                     </div>
 
 
-                    <!-- Step 5 CV´S -->
+                    <!-- Step 5  Referencia comerciales-->
 
                     <div id="step5-content" style="display: none;">
                         <ol class="breadcrumb mt-5">
@@ -644,7 +755,7 @@
                     </div>
 
 
-                    <!-- Step 6 Requisición de personal  -->
+                    <!-- Step 6  Documentos de soporte -->
 
                     <div id="step6-content" style="display: none;">
                         <ol class="breadcrumb mt-5">
@@ -666,11 +777,73 @@
 
 
 
+                    <!-- Step 7 -->
+                    <!-- 
+                    <div id="step7-content" style="display: none;">
+                        <ol class="breadcrumb mt-5" style="display: flex; justify-content: center; align-items: center;">
+                            <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-check2-circle"></i>&nbsp;Verificar información del proveedor</h3>
+                        </ol>
+                    </div> -->
 
 
 
+                    <div id="step7-content" style="display:none;">
+                        <!-- Encabezado -->
+                        <ol class="breadcrumb mt-5" style="display: flex; justify-content: center; align-items: center;">
+                            <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-check2-circle"></i>&nbsp;Verificar información del proveedor</h3>
+                        </ol>
 
+                        <div class="container my-3 px-0">
+                            <ul class="verif-list">
+                                @forelse($verificacioncatalogo as $item)
+                                @php
+                                $id = $item->ID_CATALOGO_VERIFICACION_PROVEEDOR;
+                                // 1 = Sí, 0 = No, null = sin marcar
+                                $valor = $respuestas[$id] ?? null;
+                                @endphp
 
+                                <li class="verif-item" data-id="{{ $id }}">
+                                    <div class="verif-title">
+                                        {{ $item->NOMBRE_VERIFICACION }}
+                                    </div>
+
+                                    <div class="verif-controls">
+                                        <!-- Estado ARRIBA de los radios -->
+                                        <div class="verif-status" id="status_{{ $id }}"
+                                            data-value="{{ $valor === 1 ? '1' : ($valor === 0 ? '0' : '') }}">
+                                            <span class="badge badge-neutral">Sin seleccionar</span>
+                                        </div>
+
+                                        <!-- Radios -->
+                                        <div class="verif-radios">
+                                            <label class="form-check form-check-inline verif-radio">
+                                                <input class="form-check-input"
+                                                    type="radio"
+                                                    name="VERIFICACIONES[{{ $id }}]"
+                                                    id="verif_{{ $id }}_si"
+                                                    value="1" {{ $valor === 1 ? 'checked' : '' }}>
+                                                <span>Sí</span>
+                                            </label>
+
+                                            <label class="form-check form-check-inline verif-radio">
+                                                <input class="form-check-input"
+                                                    type="radio"
+                                                    name="VERIFICACIONES[{{ $id }}]"
+                                                    id="verif_{{ $id }}_no"
+                                                    value="0" {{ $valor === 0 ? 'checked' : '' }}>
+                                                <span>No</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </li>
+                                @empty
+                                <li class="verif-item-empty">
+                                    No hay criterios de verificación activos en el catálogo.
+                                </li>
+                                @endforelse
+                            </ul>
+                        </div>
+                    </div>
 
 
 

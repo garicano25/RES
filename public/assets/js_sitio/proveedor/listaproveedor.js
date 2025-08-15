@@ -430,17 +430,38 @@ $('#Tablalistaproveedores tbody').on('click', 'td>button.EDITAR', function () {
     $("#PAIS_EXTRANJERO").val(row.data().PAIS_EXTRANJERO);
     $("#DEPARTAMENTO_EXTRANJERO").val(row.data().DEPARTAMENTO_EXTRANJERO);
     
+
+    var verificacionSolicitada = row.data().VERIFICACION_SOLICITADA || 0;
+    $("#VERIFICACION_SOLICITADA").val(verificacionSolicitada);
+
+    if (parseInt(verificacionSolicitada) === 1) {
+        $("#VALIDAR_INFORMACION_PROVEEDOR").hide();
+    } else {
+        $("#VALIDAR_INFORMACION_PROVEEDOR").show();
+        }
+
+
+
    
 let actividad = $(`input[name="ACTIVIDAD_ECONOMICA"][value="${row.data().ACTIVIDAD_ECONOMICA}"]`);
 if (actividad.length) actividad.prop('checked', true);
 
 let descuento = $(`input[name="DESCUENTOS_ACTIVIDAD_ECONOMICA"][value="${row.data().DESCUENTOS_ACTIVIDAD_ECONOMICA}"]`);
-if (descuento.length) {
-    descuento.prop('checked', true);
-    if (row.data().DESCUENTOS_ACTIVIDAD_ECONOMICA == "4") {
-        $("#CUAL_DESCUENTOS").show();
+    if (descuento.length) {
+        descuento.prop('checked', true);
+        if (row.data().DESCUENTOS_ACTIVIDAD_ECONOMICA == "4") {
+            $("#CUAL_DESCUENTOS").show();
+
+        } else {
+            $("#CUAL_DESCUENTOS").hide();
+            
+        }
     }
-}
+    
+
+
+    
+    
 
 let vinculo = $(`input[name="VINCULO_FAMILIAR"][value="${row.data().VINCULO_FAMILIAR}"]`);
 if (vinculo.length) {
@@ -513,12 +534,27 @@ if (row.data().TIPO_PERSONA_ALTA == "1") {
 
 
     $(".div_trabajador_nombre").html(row.data().RFC_ALTA);
+    $(".div_trabajador_cargo").html(row.data().RAZON_SOCIAL_ALTA);
+
 
 
 
     $("#step1").click();
 });
 
+function cualdescuentos() {
+    var otrosCheckbox = document.getElementById('OTROS_DESCUENTO');
+    var actividadDiv = document.getElementById('CUAL_DESCUENTOS');
+    
+    actividadDiv.style.display = otrosCheckbox.checked ? 'block' : 'none';
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    var radios = document.getElementsByName('DESCUENTOS_ACTIVIDAD_ECONOMICA');
+    radios.forEach(function (radio) {
+        radio.addEventListener("change", cualdescuentos);
+    });
+});
 
 
 function actualizarStepsConCurp(rfc) {
@@ -527,6 +563,65 @@ function actualizarStepsConCurp(rfc) {
 }
 
 
+
+$('#VALIDAR_INFORMACION_PROVEEDOR').on('click', function() {
+    if (!rfcSeleccionada) {
+        Swal.fire({
+            icon: 'warning',
+            title: '¡Atención!',
+            text: 'No se ha seleccionado ningún RFC.'
+        });
+        return;
+    }
+
+    Swal.fire({
+        title: '¿Quieres mandar a verificar la información?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, solicitar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/actualizarVerificacionSolicitada',
+                method: 'POST',
+                data: { rfc: rfcSeleccionada },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    if(response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Hecho!',
+                            text: response.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        $('#VALIDAR_INFORMACION_PROVEEDOR').hide();
+
+                        Tablalistaproveedores.ajax.reload();
+
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: response.message
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ocurrió un error al solicitar la verificación.'
+                    });
+                    console.error(xhr.responseText);
+                }
+            });
+        }
+    });
+});
 
 
 // <!-- ============================================================================================================================ -->
@@ -2007,7 +2102,6 @@ $("#guardarDOCUMENTOS").click(function (e) {
     }
 
 } else {
-    // Muestra un mensaje de error o realiza alguna otra acción
     alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
 
 }
@@ -2268,3 +2362,128 @@ function cargarSelectDocumentosPorProveedor(rfcSeleccionada) {
 }
 
 
+
+// <!-- ============================================================================================================================ -->
+// <!--                                                          STEP 7                                                              -->
+// <!-- ============================================================================================================================ -->
+
+function activarStepsHasta(stepId) {
+    const pasos = ['step1','step2','step3','step4','step5','step6','step7'];
+
+    const indexActual = pasos.indexOf(stepId);
+    if (indexActual === -1) return; 
+
+    for (let i = 0; i <= indexActual; i++) {
+        const step = document.getElementById(pasos[i]);
+        if (step && !step.classList.contains('js-active')) {
+            step.classList.add('js-active');
+        }
+    }
+}
+
+activarStepsHasta('step7');
+
+
+document.getElementById('step7').addEventListener('click', function(event) {
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    if (!rfcSeleccionada) {
+        Swal.fire({
+            icon: 'warning',
+            title: '¡Atención!',
+            text: 'No se ha seleccionado ningún RFC.'
+        });
+        return;
+    }
+
+    const stepClicked = this;
+
+    $.ajax({
+        url: '/verificarEstadoVerificacion',
+        method: 'POST',
+        data: { rfc: rfcSeleccionada },
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            if (response.success) {
+                activarStepsHasta('step7');
+
+                document.querySelectorAll('[id$="-content"]').forEach(c => c.style.display = 'none');
+                const contenido = document.getElementById(stepClicked.id + '-content');
+                if (contenido) contenido.style.display = 'block';
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Acceso denegado',
+                    text: response.message || 'No puedes acceder a este paso porque no está solicitada la verificación.'
+                });
+            }
+        },
+        error: function(xhr) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Ocurrió un error al verificar el estado de la verificación.'
+            });
+            console.error(xhr.responseText);
+        }
+    });
+});
+
+
+
+
+ (function(){
+    function setBadge(elStatus, value){
+      // Limpia clases previas
+      elStatus.innerHTML = "";
+      const span = document.createElement('span');
+      if(value === "1"){
+        span.className = "badge badge-success";
+        span.textContent = "Cumple";
+      }else if(value === "0"){
+        span.className = "badge badge-danger";
+        span.textContent = "No cumple";
+      }else{
+        span.className = "badge badge-neutral";
+        span.textContent = "Sin seleccionar";
+      }
+      elStatus.appendChild(span);
+    }
+
+    function initBadges(){
+      document.querySelectorAll(".verif-status").forEach(s => {
+        const v = s.getAttribute("data-value") || "";
+        setBadge(s, v);
+      });
+    }
+
+    function bindChanges(){
+      // Delegación en el contenedor del step 7
+      const container = document.getElementById("step7-content");
+      if(!container) return;
+
+      container.addEventListener("change", function(e){
+        const input = e.target;
+        if(input && input.type === "radio" && input.name.startsWith("VERIFICACIONES[")){
+          const li = input.closest(".verif-item");
+          if(!li) return;
+          const id = li.getAttribute("data-id");
+          const status = document.getElementById("status_" + id);
+          const value = input.value; // "1" ó "0"
+          setBadge(status, value);
+          status.setAttribute("data-value", value);
+        }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+      initBadges();
+      bindChanges();
+    });
+
+    // Si al abrir el paso 7 los radios ya estaban marcados y no quieres esperar al DOMContentLoaded:
+    // setTimeout(initBadges, 0);
+  })();

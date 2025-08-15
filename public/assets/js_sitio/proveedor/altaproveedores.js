@@ -17,7 +17,6 @@ function cualdescuentos() {
     var otrosCheckbox = document.getElementById('OTROS_DESCUENTO');
     var actividadDiv = document.getElementById('CUAL_DESCUENTOS');
     
-    // Verifica si "Otros" está seleccionado
     actividadDiv.style.display = otrosCheckbox.checked ? 'block' : 'none';
 }
 
@@ -65,7 +64,6 @@ function politicamentexpuesto() {
     var otrosCheckbox1 = document.getElementById('SI_BENEFICIOS_PERSONA');
     var actividadDiv1 = document.getElementById('PERSONA_EXPUESTA');
     
-    // Verifica si "Otros" está seleccionado
     actividadDiv1.style.display = otrosCheckbox1.checked ? 'block' : 'none';
 }
 

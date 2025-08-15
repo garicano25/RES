@@ -267,6 +267,26 @@
                         </ul>
 
 
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown" style="margin-left: 8px;">
+                                <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                    <span class="d-lg-none">Recepción de bienes y/o servicios - GR</span>
+                                    <span class="d-none d-lg-inline">Recepción de bienes y/o servicios - GR</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{ url('/Bitácora-GR') }}">Lista de recepción B.y.S</a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+
+                                    <li><a class="dropdown-item" href="{{ url('/') }}">Vo.Bo. de usuario de B.y.S</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
+
+
 
 
                         <ul class="navbar-nav">
@@ -449,7 +469,7 @@
 
 
     @if(request()->is('Lista_proveedores'))
-    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=1.13"></script>
+    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=1.14"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
@@ -481,6 +501,11 @@
 
     @if(request()->is('Catálogo_verificación_proveedor'))
     <script src="/assets/js_sitio/proveedor/catalogos/catalogoverproveedor.js"></script>
+    @endif
+
+
+    @if(request()->is('Bitácora-GR'))
+    <script src="/assets/js_sitio/requisiciongr/requisicongr.js"></script>
     @endif
 
 
