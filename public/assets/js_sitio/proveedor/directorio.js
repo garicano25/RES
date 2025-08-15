@@ -306,13 +306,11 @@ function verificarCodigoAntesDeActualizar(correo, codigo, data) {
             const tipoPersona = document.getElementById("TIPO_PERSONA");
             const domicilioNacional = document.getElementById("DOMICILIO_NACIONAL");
 
-            const ineNacional = document.getElementById("INE_NACIONAL");
 
             const domicilioExtranjero = document.getElementById("DOMICILIO_ERXTRANJERO");
 
             if (tipoPersona.value === "1") {
                 domicilioNacional.style.display = "block";
-                ineNacional.style.display = "block";
                 domicilioExtranjero.style.display = "none";
 
                 let codigoPostalInput = document.getElementById("CODIGO_POSTAL");
@@ -333,7 +331,6 @@ function verificarCodigoAntesDeActualizar(correo, codigo, data) {
 
             } else if (tipoPersona.value === "2") {
                 domicilioNacional.style.display = "none";
-                ineNacional.style.display = "none";
 
                 domicilioExtranjero.style.display = "block";
                 document.querySelector('label[for="CONSTANCIA_LABEL"]').textContent = "Registro ante Hacienda / Tax ID *";
@@ -358,9 +355,6 @@ function verificarCodigoAntesDeActualizar(correo, codigo, data) {
             document.getElementById('CELULAR_DIRECTORIO').value = data.CELULAR_DIRECTORIO || '';
             document.getElementById('CORREO_DIRECTORIO').value = data.CORREO_DIRECTORIO || '';
 
-
-            document.getElementById('CIC_DIRECTORIO').value = data.CIC_DIRECTORIO || '';
-            document.getElementById('IDENTIFICADOR_DIRECTORIO').value = data.IDENTIFICADOR_DIRECTORIO || '';
 
 
 
@@ -426,10 +420,7 @@ function agregarServicio(nombreServicio = '') {
 
 document.addEventListener("DOMContentLoaded", function () {
     const tipoPersona = document.getElementById("TIPO_PERSONA");
-    const ineNacional = document.getElementById("INE_NACIONAL");
 
-    const inputCIC = document.getElementById("CIC_DIRECTORIO");
-    const inputIdentificador = document.getElementById("IDENTIFICADOR_DIRECTORIO");
 
     const domicilioNacional = document.getElementById("DOMICILIO_NACIONAL");
     const domicilioExtranjero = document.getElementById("DOMICILIO_ERXTRANJERO");
@@ -439,9 +430,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     tipoPersona.addEventListener("change", function () {
         if (this.value === "1") {
-            ineNacional.style.display = "block";
-            inputCIC.setAttribute('required', true);
-            inputIdentificador.setAttribute('required', true);
+           
 
             domicilioNacional.style.display = "block";
             domicilioExtranjero.style.display = "none";
@@ -450,9 +439,7 @@ document.addEventListener("DOMContentLoaded", function () {
             labelRFC.textContent = "RFC *";
 
         } else if (this.value === "2") {
-            ineNacional.style.display = "none";
-            inputCIC.removeAttribute('required');
-            inputIdentificador.removeAttribute('required');
+           
 
             domicilioNacional.style.display = "none";
             domicilioExtranjero.style.display = "block";
