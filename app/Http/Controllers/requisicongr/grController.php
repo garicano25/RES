@@ -96,13 +96,13 @@ class grController extends Controller
                         if (is_array($materiales)) {
                             $total = count($materiales);
                             foreach ($materiales as $index => $mat) {
-                                if ($index < 10) {
+                                if ($index < 3) {
                                     $bienes .= "<div>{$mat['DESCRIPCION']} ({$mat['CANTIDAD_']})</div>";
                                 }
                             }
-                            if ($total > 10) {
+                            if ($total > 3) {
                                 $extra = '';
-                                for ($i = 10; $i < $total; $i++) {
+                                for ($i = 3; $i < $total; $i++) {
                                     $extra .= "<div>{$materiales[$i]['DESCRIPCION']} ({$materiales[$i]['CANTIDAD_']})</div>";
                                 }
                                 $bienes .= "<div class='extra-materiales' style='display:none;'>{$extra}</div>";
