@@ -905,17 +905,31 @@ $(document).ready(function() {
 });
 
 
+// document.addEventListener("DOMContentLoaded", function () {
+//     const btnGenerar = document.getElementById("btnGENERARCONTRASEÑA");
+
+//     btnGenerar.addEventListener("click", function () {
+//         const password = Math.floor(100000 + Math.random() * 900000).toString();
+
+//         document.getElementById("PASSWORD").value = password;
+//         document.getElementById("PASSWORD_2").value = password;
+
+        
+//     });
+
+// });
+    
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const btnGenerar = document.getElementById("btnGENERARCONTRASEÑA");
 
     btnGenerar.addEventListener("click", function () {
-        const password = Math.floor(100000 + Math.random() * 900000).toString();
+        const numero = Math.floor(100000 + Math.random() * 900000);
+        const password = "RES" + numero;
 
         document.getElementById("PASSWORD").value = password;
         document.getElementById("PASSWORD_2").value = password;
-
-        
     });
-
 });
-    
