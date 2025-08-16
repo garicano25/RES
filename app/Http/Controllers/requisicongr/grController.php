@@ -1161,6 +1161,7 @@ class grController extends Controller
 
 
 
+
     public function Tablabitacoragr()
     {
         try {
@@ -1172,62 +1173,154 @@ class grController extends Controller
                     'po.FECHA_APROBACION',
                     'po.FECHA_ENTREGA',
                     'po.PROVEEDOR_SELECCIONADO',
-                    'po.MATERIALES_JSON'
+                    'po.MATERIALES_JSON',
+                    'po.ESTADO_APROBACION'
                 )
                 ->join(
-                    DB::raw('( 
-                    SELECT REPLACE(SUBSTRING_INDEX(NO_PO, "-Rev", 1), " ", "") AS PO_BASE, 
-                           MAX(FECHA_APROBACION) AS max_fecha 
-                    FROM formulario_ordencompra 
-                    GROUP BY PO_BASE 
-                ) AS ult'),
+                    DB::raw('(
+                SELECT 
+                    REPLACE(SUBSTRING_INDEX(NO_PO, "-Rev", 1), " ", "") AS PO_BASE,
+                    MAX(FECHA_APROBACION) AS max_fecha
+                FROM formulario_ordencompra
+                GROUP BY PO_BASE
+            ) AS ult'),
                     function ($join) {
-                        $join->on(DB::raw('REPLACE(SUBSTRING_INDEX(po.NO_PO, "-Rev", 1), " ", "")'), '=', 'ult.PO_BASE')
+                        $join->on(
+                            DB::raw('REPLACE(SUBSTRING_INDEX(po.NO_PO, "-Rev", 1), " ", "")'),
+                            '=',
+                            'ult.PO_BASE'
+                        )
                             ->on('po.FECHA_APROBACION', '=', 'ult.max_fecha');
                     }
                 );
 
-            $rows = DB::table('hoja_trabajo as ht')
-                ->join('formulario_requisiconmaterial as mr', 'ht.NO_MR', '=', 'mr.NO_MR')
+            // === CONSULTA ORIGINAL PARA CASOS CON PO ===
+            $rowsConPO = DB::table('hoja_trabajo as ht')
+                ->join('formulario_requisiconmaterial as mr', 'mr.NO_MR', '=', 'ht.NO_MR')
                 ->leftJoinSub($poUltimo, 'po', function ($join) {
-                    $join->on('ht.id', '=', 'po.HOJA_ID');
+                    $join->whereRaw("
+                FIND_IN_SET(
+                    CAST(ht.id AS CHAR), 
+                    REPLACE(REPLACE(REPLACE(REPLACE(po.HOJA_ID, '[', ''), ']', ''), '\"', ''), ' ', '')
+                )
+            ");
                 })
-                ->leftJoin('formulario_directorio as prov', 'ht.PROVEEDOR_KEY', '=', 'prov.ID_FORMULARIO_DIRECTORIO')
-                ->leftJoin('formulario_proveedortemporal as provtemp', 'ht.PROVEEDOR_KEY', '=', 'provtemp.ID_FORMULARIO_PROVEEDOR')
-                ->select(
-                    'ht.id as HOJA_ID',
-                    'ht.NO_MR',
+                ->leftJoin('formulario_altaproveedor as prov', function ($join) {
+                    $join->on('prov.RFC_ALTA', '=', 'po.PROVEEDOR_SELECCIONADO');
+                })
+                ->leftJoin('formulario_proveedortemp as provtemp', function ($join) {
+                    $join->on('provtemp.RAZON_PROVEEDORTEMP', '=', 'po.PROVEEDOR_SELECCIONADO');
+                })
+                ->whereNotNull('po.NO_PO')
+                ->where('po.ESTADO_APROBACION', 'Aprobada')
+                ->select([
+                    DB::raw('COALESCE(po.NO_PO, CONCAT("HT-", ht.id)) as AGRUPADOR'),
+                    'mr.NO_MR',
                     'mr.FECHA_APRUEBA_MR',
                     'po.NO_PO',
                     'po.FECHA_APROBACION as FECHA_APROBACION_PO',
                     'po.FECHA_ENTREGA as FECHA_ENTREGA_PO',
                     DB::raw("
-                    CASE 
-                        WHEN prov.RAZON_SOCIAL_ALTA IS NOT NULL 
-                             THEN CONCAT(prov.RAZON_SOCIAL_ALTA, ' (', prov.RFC_ALTA, ')')
-                        WHEN provtemp.RAZON_PROVEEDORTEMP IS NOT NULL 
-                             THEN CONCAT(provtemp.RAZON_PROVEEDORTEMP, ' (', provtemp.RFC_PROVEEDORTEMP, ')')
-                        ELSE 'Proveedor no registrado'
-                    END AS PROVEEDOR
-                "),
-                    'ht.MATERIALES_HOJA_JSON',
+                CASE 
+                    WHEN prov.RAZON_SOCIAL_ALTA IS NOT NULL 
+                        THEN CONCAT(prov.RAZON_SOCIAL_ALTA, ' (', prov.RFC_ALTA, ')')
+                    WHEN provtemp.RAZON_PROVEEDORTEMP IS NOT NULL 
+                        THEN CONCAT(provtemp.RAZON_PROVEEDORTEMP, 
+                            IF(provtemp.RFC_PROVEEDORTEMP IS NOT NULL AND provtemp.RFC_PROVEEDORTEMP != '', 
+                                CONCAT(' (', provtemp.RFC_PROVEEDORTEMP, ')'), ''))
+                    ELSE NULL 
+                END as PROVEEDOR
+            "),
                     'po.MATERIALES_JSON',
-                    'ht.HT_DESCRIPCION',
-                    'ht.PROVEEDOR_KEY',
+                    DB::raw('NULL as HT_DESCRIPCION'),
+                    DB::raw('NULL as MATERIALES_HOJA_JSON'),
+                    DB::raw('po.PROVEEDOR_SELECCIONADO as PROVEEDOR_KEY'),
+                    DB::raw('NULL as PROVEEDOR_Q1'),
+                    DB::raw('NULL as PROVEEDOR_Q2'),
+                    DB::raw('NULL as PROVEEDOR_Q3'),
+                    DB::raw('NULL as CANTIDAD_REALQ1'),
+                    DB::raw('NULL as CANTIDAD_REALQ2'),
+                    DB::raw('NULL as CANTIDAD_REALQ3')
+                ])
+                ->groupBy(
+                    'AGRUPADOR',
+                    'mr.NO_MR',
+                    'mr.FECHA_APRUEBA_MR',
+                    'po.NO_PO',
+                    'po.FECHA_APROBACION',
+                    'po.FECHA_ENTREGA',
+                    'prov.RAZON_SOCIAL_ALTA',
+                    'prov.RFC_ALTA',
+                    'po.MATERIALES_JSON',
+                    'provtemp.RAZON_PROVEEDORTEMP',
+                    'provtemp.RFC_PROVEEDORTEMP',
+                    'po.PROVEEDOR_SELECCIONADO'
+                );
+
+            // === CONSULTA PARA CASOS SIN PO ===
+            $rowsSinPO = DB::table('hoja_trabajo as ht')
+                ->join('formulario_requisiconmaterial as mr', 'mr.NO_MR', '=', 'ht.NO_MR')
+                ->leftJoinSub($poUltimo, 'po', function ($join) {
+                    $join->whereRaw("
+                FIND_IN_SET(
+                    CAST(ht.id AS CHAR), 
+                    REPLACE(REPLACE(REPLACE(REPLACE(po.HOJA_ID, '[', ''), ']', ''), '\"', ''), ' ', '')
+                )
+            ");
+                })
+                ->leftJoin('formulario_altaproveedor as prov', function ($join) {
+                    $join->on('prov.RFC_ALTA', '=', 'ht.PROVEEDOR_SELECCIONADO');
+                })
+                ->leftJoin('formulario_proveedortemp as provtemp', function ($join) {
+                    $join->on('provtemp.RAZON_PROVEEDORTEMP', '=', 'ht.PROVEEDOR_SELECCIONADO');
+                })
+                ->whereNull('po.NO_PO')
+                ->where('ht.ESTADO_APROBACION', 'Aprobada')
+                ->select([
+                    DB::raw('CONCAT("HT-", ht.NO_MR, "-", ht.PROVEEDOR_SELECCIONADO) as AGRUPADOR'),
+                    'mr.NO_MR',
+                    'mr.FECHA_APRUEBA_MR',
+                    DB::raw('NULL as NO_PO'),
+                    DB::raw('NULL as FECHA_APROBACION_PO'),
+                    DB::raw('NULL as FECHA_ENTREGA_PO'),
+                    DB::raw("
+                CASE 
+                    WHEN prov.RAZON_SOCIAL_ALTA IS NOT NULL 
+                        THEN CONCAT(prov.RAZON_SOCIAL_ALTA, ' (', prov.RFC_ALTA, ')')
+                    WHEN provtemp.RAZON_PROVEEDORTEMP IS NOT NULL 
+                        THEN CONCAT(provtemp.RAZON_PROVEEDORTEMP, 
+                            IF(provtemp.RFC_PROVEEDORTEMP IS NOT NULL AND provtemp.RFC_PROVEEDORTEMP != '', 
+                                CONCAT(' (', provtemp.RFC_PROVEEDORTEMP, ')'), ''))
+                    WHEN ht.PROVEEDOR_SELECCIONADO IS NOT NULL 
+                        THEN ht.PROVEEDOR_SELECCIONADO
+                    ELSE NULL 
+                END as PROVEEDOR
+            "),
+                    DB::raw('NULL as MATERIALES_JSON'),
+                    'ht.DESCRIPCION as HT_DESCRIPCION',
+                    'ht.MATERIALES_HOJA_JSON',
+                    'ht.PROVEEDOR_SELECCIONADO as PROVEEDOR_KEY',
                     'ht.PROVEEDOR_Q1',
                     'ht.PROVEEDOR_Q2',
                     'ht.PROVEEDOR_Q3',
                     'ht.CANTIDAD_REALQ1',
                     'ht.CANTIDAD_REALQ2',
                     'ht.CANTIDAD_REALQ3'
-                )
-                ->orderBy('ht.NO_MR', 'desc')
+                ]);
+
+            // === UNIR CONSULTAS ===
+            $union = $rowsConPO->unionAll($rowsSinPO);
+
+            // === AGRUPACIÓN FINAL ===
+            $rows = DB::query()
+                ->fromSub($union, 't')
+                ->orderBy('t.NO_MR', 'desc')
                 ->get()
-                ->groupBy('NO_MR')
+                ->groupBy('AGRUPADOR')
                 ->map(function ($group) {
                     $first = $group->first();
 
-                    $materialesArray = []; // aquí juntamos todos los materiales
+                    $materialesArray = [];
 
                     foreach ($group as $row) {
                         if (!empty($row->MATERIALES_JSON)) {
@@ -1267,26 +1360,22 @@ class grController extends Controller
                         }
                     }
 
-                    // Construcción del HTML con "ver más"
+                    // Mostrar solo 3 y agregar botón
                     $bienes = '';
                     if (!empty($materialesArray)) {
                         $mostrar = array_slice($materialesArray, 0, 3);
                         $ocultos = array_slice($materialesArray, 3);
 
-                        // primeros 3 visibles
                         foreach ($mostrar as $m) {
                             $bienes .= "<div>{$m}</div>";
                         }
 
-                        // los demás ocultos
                         if (!empty($ocultos)) {
                             $bienes .= '<div class="extra-materiales" style="display:none">';
                             foreach ($ocultos as $m) {
                                 $bienes .= "<div>{$m}</div>";
                             }
                             $bienes .= '</div>';
-
-                            // botón
                             $bienes .= '<button type="button" class="btn-ver-mas-materiales btn btn-link p-0">Ver más</button>';
                         }
                     } else {
@@ -1300,12 +1389,13 @@ class grController extends Controller
                 })
                 ->values();
 
-            return datatables()->of($rows)->toJson();
-        } catch (\Exception $e) {
+            return response()->json(['data' => $rows]);
+        } catch (\Throwable $e) {
             return response()->json([
-                'error' => $e->getMessage()
-            ]);
+                'data' => [],
+                'error' => true,
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
-
 }
