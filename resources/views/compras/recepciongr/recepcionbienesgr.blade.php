@@ -52,7 +52,12 @@
     }
 
 
-
+    table.dataTable td {
+        white-space: normal !important;
+        /* permite que el texto haga salto de línea */
+        word-wrap: break-word;
+        /* corta palabras largas si no caben */
+    }
 
 
     .bg-verde-suave {
@@ -92,6 +97,11 @@
         cursor: not-allowed;
     } */
 
+
+    .col-bien-servicio {
+        white-space: normal !important;
+        word-wrap: break-word;
+    }
 
 
     .select-finalizada {
