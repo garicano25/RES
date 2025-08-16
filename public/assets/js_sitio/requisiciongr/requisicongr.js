@@ -108,7 +108,14 @@ var Tablabitacoragr = $("#Tablabitacoragr").DataTable({
         dataSrc: 'data'
     },
     columnDefs: [
-        { targets: '_all', defaultContent: 'N/A' }
+        { targets: '_all', defaultContent: 'N/A' },
+        { targets: 0, width: '250px', className: 'text-center'  },
+        { targets: 1, width: '250px',className: 'text-center'  },
+        { targets: 2, width: '200px',className: 'text-center'  },
+        { targets: 3, width: '250px', className: 'text-center' },
+        { targets: 4, width: '400px' },
+        { targets: 5, width: '250px',className: 'text-center'  },
+        { targets: 6, width: '400px' },
     ],
     columns: [
         { data: 'NO_MR' },
