@@ -113,9 +113,9 @@ var Tablabitacoragr = $("#Tablabitacoragr").DataTable({
         { targets: 1, width: '250px',className: 'text-center'  },
         { targets: 2, width: '200px',className: 'text-center'  },
         { targets: 3, width: '250px', className: 'text-center' },
-        { targets: 4, width: '400px' },
+        { targets: 4, width: '600px' },
         { targets: 5, width: '250px',className: 'text-center'  },
-        { targets: 6, width: '400px' },
+        { targets: 6, width: '600px' },
     ],
     columns: [
         { data: 'NO_MR' },
