@@ -35,7 +35,7 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        text-align: center;
+        /* text-align: center; */
         vertical-align: middle;
     }
 
@@ -45,26 +45,12 @@
         overflow: visible !important;
         text-overflow: unset !important;
         word-wrap: break-word !important;
-        text-align: center !important;
+        /* text-align: center !important; */
         vertical-align: middle !important;
         height: auto !important;
         line-height: 1.3em;
     }
 
-    /* ========== TABLA COTIZACIONES (si aplica) ========== */
-    #tablaCotizaciones {
-        table-layout: fixed !important;
-        width: 100% !important;
-    }
-
-    #tablaCotizaciones th,
-    #tablaCotizaciones td {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-align: center;
-        vertical-align: middle;
-    }
 
 
 
@@ -130,7 +116,7 @@
 <div class="contenedor-contenido">
 
     <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
-        <h3 style="color: #ffffff; margin: 0;">&nbsp; Bitácora de consecutivos MR</h3>
+        <h3 style="color: #ffffff; margin: 0;">&nbsp; Bitácora de Recepción de bienes y/o servicios - GR</h3>
     </ol>
 
 
