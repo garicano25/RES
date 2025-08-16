@@ -151,6 +151,8 @@
                                 <th class="text-center">Proveedor</th>
                                 <th class="text-center">Fecha de entrega.PO</th>
                                 <th class="text-center">Bien o servicio</th>
+                                <th class="text-center">GR</th>
+
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -168,6 +170,75 @@
 
 
 
+<div class="modal fade" id="modalGR" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-xl" role="document"> <!-- XL para hacerlo más grande -->
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title">Detalle de GR</h5>
+                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label class="form-label">No. MR</label>
+                        <input type="text" class="form-control" id="modal_no_mr" readonly>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Fecha Aprobación MR</label>
+                        <input type="text" class="form-control" id="modal_fecha_mr" readonly>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">No. PO</label>
+                        <input type="text" class="form-control" id="modal_no_po" readonly>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Fecha Aprobación PO</label>
+                        <input type="text" class="form-control" id="modal_fecha_po" readonly>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Proveedor</label>
+                        <input type="text" class="form-control" id="modal_proveedor" readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Fecha Entrega PO</label>
+                        <input type="text" class="form-control" id="modal_fecha_entrega" readonly>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">No. recepción de orden - GR</label>
+                        <input type="text" class="form-control" id="modal_fecha_entrega" readonly>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Fecha de emisión</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_ACREDITACION" name="DESDE_ACREDITACION">
+                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <hr>
+                <h5 class="mb-3">Bien o Servicio</h5>
+                <div id="modal_bien_servicio"></div> <!-- aquí inyectamos inputs dinámicos -->
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-success">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
