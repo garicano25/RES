@@ -589,7 +589,7 @@
                             </div>
 
                         </div>
-
+                        <!-- 
                         @php
                         $user = auth()->user();
 
@@ -728,7 +728,156 @@
 
 
 
+                        </div> -->
+
+                        @php
+                        $user = auth()->user();
+
+                        $tieneSoloRolIntendente = $user->roles->count() === 1 && $user->hasRole('Intendente');
+                        $tieneSoloRolSSTJunior = $user->roles->count() === 1 && $user->hasRole('Consultor-Instructor (Junior/Senior)');
+                        $tieneSoloRolAsistentePlaneacion = $user->roles->count() === 1 && $user->hasRole('Asistente de planeación y logística');
+                        $tieneSoloRolAlmacenista = $user->roles->count() === 1 && $user->hasRole('Almacenista');
+
+                        $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRolAsistentePlaneacion;
+                        @endphp
+
+                        <div class="modules">
+
+                            {{-- RRHH --}}
+                            @if($tieneRolRestringidoUnico)
+                            <div class="modules__card" onclick="noPermiso('RRHH')">
+                                <div class="modules__circle"><img src="assets/Modulos/img/RRHH.png" alt=""></div>
+                                <h2 class="modules__text">RRHH</h2>
+                            </div>
+                            @else
+                            <a href="{{ url('/tablero') }}" class="modules__link">
+                                <div class="modules__card">
+                                    <div class="modules__circle"><img src="assets/Modulos/img/RRHH.png" alt=""></div>
+                                    <h2 class="modules__text">RRHH</h2>
+                                </div>
+                            </a>
+                            @endif
+
+                            {{-- Compras --}}
+                            @if($tieneSoloRolAlmacenista)
+                            {{-- Almacenista va directo a Bitácora-GR --}}
+                            <a href="{{ url('/Bitácora-GR') }}" class="modules__link">
+                                <div class="modules__card">
+                                    <div class="modules__circle"><img src="assets/Modulos/img/Compras.png" alt=""></div>
+                                    <h2 class="modules__text">Compras</h2>
+                                </div>
+                            </a>
+                            @else
+                            {{-- Todos los demás van a Requisición de materiales --}}
+                            <a href="{{ url('/Requisición_Materiales') }}" class="modules__link">
+                                <div class="modules__card">
+                                    <div class="modules__circle"><img src="assets/Modulos/img/Compras.png" alt=""></div>
+                                    <h2 class="modules__text">Compras</h2>
+                                </div>
+                            </a>
+                            @endif
+
+                            {{-- Ventas --}}
+                            @if($tieneRolRestringidoUnico)
+                            <div class="modules__card" onclick="noPermiso('Ventas')">
+                                <div class="modules__circle"><img src="assets/Modulos/img/Ventas.png" alt=""></div>
+                                <h2 class="modules__text">Ventas</h2>
+                            </div>
+                            @else
+                            <a href="{{ url('/Clientes') }}" class="modules__link">
+                                <div class="modules__card">
+                                    <div class="modules__circle"><img src="assets/Modulos/img/Ventas.png" alt=""></div>
+                                    <h2 class="modules__text">Ventas</h2>
+                                </div>
+                            </a>
+                            @endif
+
+                            {{-- Admón --}}
+                            @if($tieneRolRestringidoUnico)
+                            <div class="modules__card" onclick="noPermiso('Admón')">
+                                <div class="modules__circle"><img src="assets/Modulos/img/Admon.png" alt=""></div>
+                                <h2 class="modules__text">Admón</h2>
+                            </div>
+                            @else
+                            <div class="modules__card">
+                                <div class="modules__circle"><img src="assets/Modulos/img/Admon.png" alt=""></div>
+                                <h2 class="modules__text">Admón</h2>
+                            </div>
+                            @endif
+
+                            {{-- Almacén --}}
+                            @if($tieneRolRestringidoUnico)
+                            <div class="modules__card" onclick="noPermiso('Almacén')">
+                                <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
+                                <h2 class="modules__text">Almacén</h2>
+                            </div>
+                            @else
+                            <a href="{{ url('/Almacen') }}" class="modules__link">
+                                <div class="modules__card">
+                                    <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
+                                    <h2 class="modules__text">Almacén</h2>
+                                </div>
+                            </a>
+                            @endif
+
+                            {{-- Mantenimiento --}}
+                            @if($tieneRolRestringidoUnico)
+                            <div class="modules__card" onclick="noPermiso('Mantenimiento')">
+                                <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
+                                <h2 class="modules__text">Mantenimiento</h2>
+                            </div>
+                            @else
+                            <div class="modules__card">
+                                <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
+                                <h2 class="modules__text">Mantenimiento</h2>
+                            </div>
+                            @endif
+
+                            {{-- HSE --}}
+                            @if($tieneRolRestringidoUnico)
+                            <div class="modules__card" onclick="noPermiso('HSE')">
+                                <div class="modules__circle"><img src="assets/Modulos/img/RRHH.png" alt=""></div>
+                                <h2 class="modules__text">HSE</h2>
+                            </div>
+                            @else
+                            <div class="modules__card">
+                                <div class="modules__circle"><img src="assets/Modulos/img/RRHH.png" alt=""></div>
+                                <h2 class="modules__text">HSE</h2>
+                            </div>
+                            @endif
+
+                            {{-- Calidad --}}
+                            @if($tieneRolRestringidoUnico)
+                            <div class="modules__card" onclick="noPermiso('Calidad')">
+                                <div class="modules__circle"><img src="assets/Modulos/img/Calidad.png" alt=""></div>
+                                <h2 class="modules__text">Calidad</h2>
+                            </div>
+                            @else
+                            <div class="modules__card">
+                                <div class="modules__circle"><img src="assets/Modulos/img/Calidad.png" alt=""></div>
+                                <h2 class="modules__text">Calidad</h2>
+                            </div>
+                            @endif
+
+                            {{-- Página web --}}
+                            @if($tieneRolRestringidoUnico)
+                            <div class="modules__card" onclick="noPermiso('Ventas')">
+                                <div class="modules__circle"><img src="assets/Modulos/img/sitoweb.png" alt=""></div>
+                                <h2 class="modules__text">Página web</h2>
+                            </div>
+                            @else
+                            <a href="{{ url('/Mensajes_paginaweb') }}" class="modules__link">
+                                <div class="modules__card">
+                                    <div class="modules__circle"><img src="assets/Modulos/img/sitoweb2.png" alt=""></div>
+                                    <h2 class="modules__text">Página web</h2>
+                                </div>
+                            </a>
+                            @endif
+
                         </div>
+
+                        
+
 
                     </div>
 
