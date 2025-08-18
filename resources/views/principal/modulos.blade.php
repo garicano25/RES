@@ -743,6 +743,28 @@
 
                         <div class="modules">
 
+                            {{-- CASO ESPECIAL: SOLO ALMACENISTA --}}
+                            @if($tieneSoloRolAlmacenista)
+
+                            {{-- Compras -> Bitácora-GR --}}
+                            <a href="{{ url('/Bitácora-GR') }}" class="modules__link">
+                                <div class="modules__card">
+                                    <div class="modules__circle"><img src="assets/Modulos/img/Compras.png" alt=""></div>
+                                    <h2 class="modules__text">Compras</h2>
+                                </div>
+                            </a>
+
+                            {{-- Almacén --}}
+                            <a href="{{ url('/Almacen') }}" class="modules__link">
+                                <div class="modules__card">
+                                    <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
+                                    <h2 class="modules__text">Almacén</h2>
+                                </div>
+                            </a>
+
+                            @else
+                            {{-- CASO GENERAL (TODOS LOS DEMÁS ROLES) --}}
+
                             {{-- RRHH --}}
                             @if($tieneRolRestringidoUnico)
                             <div class="modules__card" onclick="noPermiso('RRHH')">
@@ -758,24 +780,13 @@
                             </a>
                             @endif
 
-                            {{-- Compras --}}
-                            @if($tieneSoloRolAlmacenista)
-                            {{-- Almacenista va directo a Bitácora-GR --}}
-                            <a href="{{ url('/Bitácora-GR') }}" class="modules__link">
-                                <div class="modules__card">
-                                    <div class="modules__circle"><img src="assets/Modulos/img/Compras.png" alt=""></div>
-                                    <h2 class="modules__text">Compras</h2>
-                                </div>
-                            </a>
-                            @else
-                            {{-- Todos los demás van a Requisición de materiales --}}
+                            {{-- Compras (libre para todos excepto Almacenista) --}}
                             <a href="{{ url('/Requisición_Materiales') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/Compras.png" alt=""></div>
                                     <h2 class="modules__text">Compras</h2>
                                 </div>
                             </a>
-                            @endif
 
                             {{-- Ventas --}}
                             @if($tieneRolRestringidoUnico)
@@ -874,9 +885,12 @@
                             </a>
                             @endif
 
+                            @endif
+
                         </div>
 
-                        
+
+
 
 
                     </div>
