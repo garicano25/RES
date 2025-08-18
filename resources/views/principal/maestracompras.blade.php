@@ -152,28 +152,47 @@
                         </li>
 
 
-                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones']))
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones','Administrador']))
 
                         <li class="nav-item dropdown" style="margin-left: 8px;">
-                            <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle BOTON" href="#"
+                                style="color: #fff; font-weight: bold; text-decoration: none;"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
                                 <span class="d-lg-none">M.R para Vo.Bo y aprobación</span>
                                 <span class="d-none d-lg-inline">M.R para Vo.Bo y aprobación</span>
                             </a>
+
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{url('/Requisición_materiales_líderes')}}">Requisiciones de materiales por dar visto bueno</a>
+                                {{-- Para líderes --}}
+                                @if(auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones']))
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/Requisición_materiales_líderes') }}">
+                                        Requisiciones de materiales por dar visto bueno
+                                    </a>
                                 </li>
+                                @endif
+
                                 <hr class="dropdown-divider">
-                                <li><a class="dropdown-item" href="{{url('/Requisición_materiales_aprobación')}}">Requisiciones de materiales por aprobar</a>
+
+                                {{-- Para administradores --}}
+                                @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/Requisición_materiales_aprobación') }}">
+                                        Requisiciones de materiales por aprobar
+                                    </a>
                                 </li>
+                                @endif
                             </ul>
                         </li>
 
-
-
-
-
                         @endif
+
+
+
+
+
+
 
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
 
@@ -184,116 +203,163 @@
                             </a>
                         </li>
 
-
-
-
                         @endif
 
-                        @i f(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de planeación y logística','Asistente de compras']))
 
+
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de planeación y logística','Asistente de compras']))
 
                         <li class="nav-item dropdown" style="margin-left: 8px;">
-                            <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle BOTON" href="#"
+                                style="color: #fff; font-weight: bold; text-decoration: none;"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i>
                                 <span class="d-lg-none">Proveedores</span>
                                 <span class="d-none d-lg-inline">Proveedores</span>
                             </a>
+
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{url('/Banco_proveedores')}}">Banco de proveedores</a>
+                                {{-- Todos los roles anteriores lo ven --}}
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/Banco_proveedores') }}">
+                                        Banco de proveedores
+                                    </a>
                                 </li>
 
-                                @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
-
+                                {{-- Solo Superusuario, Administrador y Asistente de compras --}}
+                                @if(auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de compras']))
                                 <hr class="dropdown-divider">
-                                <li><a class="dropdown-item" href="{{url('/Lista_proveedores')}}">Lista proveedores </a>
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/Lista_proveedores') }}">
+                                        Lista proveedores
+                                    </a>
                                 </li>
-
                                 @endif
 
-                                @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de planeación y logística','Asistente de compras']))
-
+                                {{-- Superusuario, Administrador, Asistente de planeación y logística y Asistente de compras --}}
+                                @if(auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de planeación y logística','Asistente de compras']))
                                 <hr class="dropdown-divider">
-                                <li><a class="dropdown-item" href="{{url('/Proveedores_temporales')}}">Proveedores temporales </a>
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/Proveedores_temporales') }}">
+                                        Proveedores temporales
+                                    </a>
                                 </li>
                                 @endif
-
                             </ul>
                         </li>
+
+                        @endif
+
+
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
+
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown" style="margin-left: 8px;">
+                                <a class="nav-link dropdown-toggle BOTON" href="#"
+                                    style="color: #fff; font-weight: bold; text-decoration: none;"
+                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                    <span class="d-lg-none">Matriz comparativa</span>
+                                    <span class="d-none d-lg-inline">Matriz comparativa</span>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    {{-- Visible para Superusuario, Administrador y Asistente de compras --}}
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('/Matriz_comparativa') }}">
+                                            Matriz comparativa de cotizaciones
+                                        </a>
+                                    </li>
+
+                                    {{-- Solo Superusuario y Administrador --}}
+                                    @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
+                                    <hr class="dropdown-divider">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('/Matriz_aprobación') }}">
+                                            Matriz comparativa por aprobar
+                                        </a>
+                                    </li>
+                                    @endif
+                                </ul>
+                            </li>
+                        </ul>
+
+                        @endif
+
+
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
+
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown" style="margin-left: 8px;">
+                                <a class="nav-link dropdown-toggle BOTON" href="#"
+                                    style="color: #fff; font-weight: bold; text-decoration: none;"
+                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                    <span class="d-lg-none">Orden de compra - PO</span>
+                                    <span class="d-none d-lg-inline">Orden de compra - PO</span>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    {{-- Visible para Superusuario, Administrador y Asistente de compras --}}
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('/Orden_compra') }}">
+                                            Orden de compra
+                                        </a>
+                                    </li>
+
+                                    {{-- Solo Superusuario y Administrador --}}
+                                    @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
+                                    <hr class="dropdown-divider">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('/Orden_compra_aprobación') }}">
+                                            Orden de compra por aprobar
+                                        </a>
+                                    </li>
+                                    @endif
+                                </ul>
+                            </li>
+                        </ul>
+
+                        @endif
+
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Almacenista']))
+
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown" style="margin-left: 8px;">
+                                <a class="nav-link dropdown-toggle BOTON" href="#"
+                                    style="color: #fff; font-weight: bold; text-decoration: none;"
+                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                    <span class="d-lg-none">Recepción de bienes y/o servicios - GR</span>
+                                    <span class="d-none d-lg-inline">Recepción de bienes y/o servicios - GR</span>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    {{-- Solo Superusuario, Administrador y Almacenista --}}
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('/Bitácora-GR') }}">
+                                            Lista de recepción B.y.S
+                                        </a>
+                                    </li>
+
+                                    <hr class="dropdown-divider">
+
+                                    {{-- Opción visible para todos los que ven el menú --}}
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('/') }}">
+                                            Vo.Bo. de usuario de B.y.S
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
                         @endif
 
 
 
 
-
-                        <ul class="navbar-nav">
-                            <li class="nav-item dropdown" style="margin-left: 8px;">
-                                <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
-                                    <span class="d-lg-none">Matriz comparativa</span>
-                                    <span class="d-none d-lg-inline">Matriz comparativa</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
-
-                                    <li><a class="dropdown-item" href="{{ url('/Matriz_comparativa') }}">Matriz comparativa de cotizaciones</a>
-                                    </li>
-                                    @endif
-
-                                    <hr class="dropdown-divider">
-
-                                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
-
-                                    <li><a class="dropdown-item" href="{{ url('/Matriz_aprobación') }}">Matriz comparativa por aprobar</a>
-                                    </li>
-                                    @endif
-
-
-                                </ul>
-                            </li>
-                        </ul>
-
-                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
-                        <ul class="navbar-nav">
-                            <li class="nav-item dropdown" style="margin-left: 8px;">
-                                <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
-                                    <span class="d-lg-none">Orden de compra - PO</span>
-                                    <span class="d-none d-lg-inline">Orden de compra - PO</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{ url('/Orden_compra') }}">Orden de compra</a>
-                                    </li>
-                                    <hr class="dropdown-divider">
-
-                                    <li><a class="dropdown-item" href="{{ url('/Orden_compra_aprobación') }}">Orden de compra por aprobar</a>
-                                    </li>
-
-                                </ul>
-                            </li>
-                        </ul>
-
-
-                        <ul class="navbar-nav">
-                            <li class="nav-item dropdown" style="margin-left: 8px;">
-                                <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
-                                    <span class="d-lg-none">Recepción de bienes y/o servicios - GR</span>
-                                    <span class="d-none d-lg-inline">Recepción de bienes y/o servicios - GR</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{ url('/Bitácora-GR') }}">Lista de recepción B.y.S</a>
-                                    </li>
-                                    <hr class="dropdown-divider">
-
-                                    <li><a class="dropdown-item" href="{{ url('/') }}">Vo.Bo. de usuario de B.y.S</a>
-                                    </li>
-
-                                </ul>
-                            </li>
-                        </ul>
-
-
-
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
 
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: 8px;">
@@ -312,8 +378,8 @@
                         </ul>
                         </li>
                     </ul>
-
                     @endif
+
 
 
                 </ul>
