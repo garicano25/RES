@@ -757,7 +757,7 @@
                             </a>
                             @endif
 
-                            {{-- Compras --}}
+                            {{-- Compras (SIEMPRE LIBRE, excepto Almacenista que va a Bitácora-GR) --}}
                             @if($tieneSoloRolAlmacenista)
                             <a href="{{ url('/Bitácora-GR') }}" class="modules__link">
                                 <div class="modules__card">
@@ -765,11 +765,6 @@
                                     <h2 class="modules__text">Compras</h2>
                                 </div>
                             </a>
-                            @elseif($tieneRolRestringidoUnico)
-                            <div class="modules__card" onclick="noPermiso('Compras')">
-                                <div class="modules__circle"><img src="assets/Modulos/img/Compras.png" alt=""></div>
-                                <h2 class="modules__text">Compras</h2>
-                            </div>
                             @else
                             <a href="{{ url('/Requisición_Materiales') }}" class="modules__link">
                                 <div class="modules__card">
@@ -778,6 +773,7 @@
                                 </div>
                             </a>
                             @endif
+
 
                             {{-- Ventas --}}
                             @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista)
