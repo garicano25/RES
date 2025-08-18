@@ -175,7 +175,7 @@
 
                         @endif
 
-                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
 
 
                         <li class="nav-item dropdown" style="margin-left: 8px;">
@@ -189,7 +189,7 @@
 
                         @endif
 
-                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de planeación y logística']))
+                        @i f(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de planeación y logística','Asistente de compras']))
 
 
                         <li class="nav-item dropdown" style="margin-left: 8px;">
@@ -202,7 +202,7 @@
                                 <li><a class="dropdown-item" href="{{url('/Banco_proveedores')}}">Banco de proveedores</a>
                                 </li>
 
-                                @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
+                                @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
 
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/Lista_proveedores')}}">Lista proveedores </a>
@@ -210,7 +210,7 @@
 
                                 @endif
 
-                                @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de planeación y logística']))
+                                @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de planeación y logística','Asistente de compras']))
 
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/Proveedores_temporales')}}">Proveedores temporales </a>
@@ -223,7 +223,6 @@
 
 
 
-                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
 
 
                         <ul class="navbar-nav">
@@ -234,19 +233,26 @@
                                     <span class="d-none d-lg-inline">Matriz comparativa</span>
                                 </a>
                                 <ul class="dropdown-menu">
+                                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
+
                                     <li><a class="dropdown-item" href="{{ url('/Matriz_comparativa') }}">Matriz comparativa de cotizaciones</a>
                                     </li>
+                                    @endif
+
                                     <hr class="dropdown-divider">
+
+                                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
 
                                     <li><a class="dropdown-item" href="{{ url('/Matriz_aprobación') }}">Matriz comparativa por aprobar</a>
                                     </li>
+                                    @endif
 
 
                                 </ul>
                             </li>
                         </ul>
 
-
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: 8px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
