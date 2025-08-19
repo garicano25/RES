@@ -113,37 +113,107 @@ class inventarioController extends Controller
     {
         try {
             switch (intval($request->api)) {
+                // case 1:
+                //     if ($request->ID_FORMULARIO_INVENTARIO == 0) {
+                //         DB::statement('ALTER TABLE formulario_inventario AUTO_INCREMENT=1;');
+                //         $inventarios = inventarioModel::create($request->all());
+                //     } else {
+                //         if (isset($request->ELIMINAR)) {
+                //             if ($request->ELIMINAR == 1) {
+                //                 $inventarios = inventarioModel::where('ID_FORMULARIO_INVENTARIO', $request['ID_FORMULARIO_INVENTARIO'])
+                //                     ->update(['ACTIVO' => 0]);
+                //                 $response['code'] = 1;
+                //                 $response['inventario'] = 'Desactivada';
+                //             } else {
+                //                 $inventarios = inventarioModel::where('ID_FORMULARIO_INVENTARIO', $request['ID_FORMULARIO_INVENTARIO'])
+                //                     ->update(['ACTIVO' => 1]);
+                //                 $response['code'] = 1;
+                //                 $response['inventario'] = 'Activada';
+                //             }
+                //         } else {
+                //             $inventarios = inventarioModel::find($request->ID_FORMULARIO_INVENTARIO);
+                //             $inventarios->update($request->all());
+                //             $response['code'] = 1;
+                //             $response['inventario'] = 'Actualizada';
+                //         }
+                //         return response()->json($response);
+                //     }
+                //     $response['code']  = 1;
+                //     $response['inventario']  = $inventarios;
+                //     return response()->json($response);
+                //     break;
+
+
+
+
                 case 1:
                     if ($request->ID_FORMULARIO_INVENTARIO == 0) {
+                        // Reiniciar AUTO_INCREMENT al crear un nuevo registro
                         DB::statement('ALTER TABLE formulario_inventario AUTO_INCREMENT=1;');
-                        $inventarios = inventarioModel::create($request->all());
+
+                        // Guardar datos excepto la foto
+                        $datos = $request->except('FOTO_EQUIPO');
+                        $inventarios = inventarioModel::create($datos);
+
+                        // Manejar la foto si viene en el request
+                        if ($request->hasFile('FOTO_EQUIPO')) {
+                            $file = $request->file('FOTO_EQUIPO');
+                            $folder = "Almacén/Inventario/{$inventarios->ID_FORMULARIO_INVENTARIO}";
+                            $filename = 'foto_equipo.' . $file->getClientOriginalExtension();
+                            $path = $file->storeAs($folder, $filename);
+
+                            $inventarios->FOTO_EQUIPO = $path;
+                            $inventarios->save();
+                        }
+
+                        $response['code']  = 1;
+                        $response['inventario']  = $inventarios;
+                        return response()->json($response);
                     } else {
+                        // Activar / Desactivar
                         if (isset($request->ELIMINAR)) {
-                            if ($request->ELIMINAR == 1) {
-                                $inventarios = inventarioModel::where('ID_FORMULARIO_INVENTARIO', $request['ID_FORMULARIO_INVENTARIO'])
-                                    ->update(['ACTIVO' => 0]);
-                                $response['code'] = 1;
-                                $response['inventario'] = 'Desactivada';
-                            } else {
-                                $inventarios = inventarioModel::where('ID_FORMULARIO_INVENTARIO', $request['ID_FORMULARIO_INVENTARIO'])
-                                    ->update(['ACTIVO' => 1]);
-                                $response['code'] = 1;
-                                $response['inventario'] = 'Activada';
-                            }
+                            $estado = $request->ELIMINAR == 1 ? 0 : 1;
+                            $accion = $estado == 1 ? 'Activada' : 'Desactivada';
+
+                            inventarioModel::where('ID_FORMULARIO_INVENTARIO', $request->ID_FORMULARIO_INVENTARIO)
+                                ->update(['ACTIVO' => $estado]);
+
+                            $response['code'] = 1;
+                            $response['inventario'] = $accion;
+                            return response()->json($response);
                         } else {
+                            // Actualización normal
                             $inventarios = inventarioModel::find($request->ID_FORMULARIO_INVENTARIO);
-                            $inventarios->update($request->all());
+
+                            if (!$inventarios) {
+                                return response()->json(['code' => 0, 'msj' => 'Inventario no encontrado']);
+                            }
+
+                            // Reemplazo de foto si se sube una nueva
+                            if ($request->hasFile('FOTO_EQUIPO')) {
+                                if ($inventarios->FOTO_EQUIPO && Storage::exists($inventarios->FOTO_EQUIPO)) {
+                                    Storage::delete($inventarios->FOTO_EQUIPO);
+                                }
+
+                                $file = $request->file('FOTO_EQUIPO');
+                                $folder = "Almacén/Inventario/{$inventarios->ID_FORMULARIO_INVENTARIO}";
+                                $filename = 'foto_equipo.' . $file->getClientOriginalExtension();
+                                $path = $file->storeAs($folder, $filename);
+
+                                $inventarios->FOTO_EQUIPO = $path;
+                            }
+
+                            // Actualizar con los demás datos
+                            $inventarios->fill($request->except('FOTO_EQUIPO'))->save();
+
                             $response['code'] = 1;
                             $response['inventario'] = 'Actualizada';
+                            return response()->json($response);
                         }
-                        return response()->json($response);
                     }
-                    $response['code']  = 1;
-                    $response['inventario']  = $inventarios;
-                    return response()->json($response);
                     break;
 
-                case 2: // 👉 Carga Excel + imágenes desde fila 3
+                case 2: 
                     try {
                         if ($request->hasFile('excelEquipos')) {
                             $excel = $request->file('excelEquipos');
@@ -152,16 +222,13 @@ class inventarioController extends Controller
                             $sheet = $spreadsheet->getActiveSheet();
                             $data = $sheet->toArray(null, true, true, true);
 
-                            // ❌ Antes: solo quitaba 1 encabezado
-                            // ✅ Ahora quitamos 2 encabezados (fila 1 y 2)
                             array_shift($data);
                             array_shift($data);
 
-                            // Procesar filas (a partir de fila 3 real)
                             $datosGenerales = [];
                             foreach ($data as $row) {
                                 if (!empty(array_filter($row))) {
-                                    array_shift($row); // limpiar índice innecesario
+                                    array_shift($row); 
                                     if (count($row) > 1) {
                                         array_splice($row, -2, 1);
                                     }
@@ -218,7 +285,6 @@ class inventarioController extends Controller
                                     $extension = $drawing->getExtension();
                                 }
 
-                                // ✅ Guardar en la ruta Inventario/Almacén/{ID_FORMULARIO_INVENTARIO}/
                                 $filename = 'equipo_' . $coun . '.' . $extension;
                                 $path = 'Inventario/Almacén/' . $request['ID_FORMULARIO_INVENTARIO'] . '/' . $filename;
                                 Storage::put($path, $imageContents);
