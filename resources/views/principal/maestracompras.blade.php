@@ -145,11 +145,17 @@
                     </li>
                     <ul class="navbar-nav">
 
+                        @if(auth()->check() && !auth()->user()->hasRoles(['Almacenista','Asistente de compras']))
                         <li class="nav-item dropdown" style="margin-left: 8px;">
-                            <a class="nav-link BOTON" href="{{ url('/Requisición_Materiales') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Requisición de Materiales - MR</span><span class="d-none d-lg-inline">Requisición de Materiales - MR</span>
+                            <a class="nav-link BOTON" href="{{ url('/Requisición_Materiales') }}"
+                                style="color: #fff; font-weight: bold; text-decoration: none;">
+                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                <span class="d-lg-none">Requisición de Materiales - MR</span>
+                                <span class="d-none d-lg-inline">Requisición de Materiales - MR</span>
                             </a>
                         </li>
+                        @endif
+
 
 
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones','Administrador']))
