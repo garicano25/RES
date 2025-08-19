@@ -73,7 +73,8 @@ class DenyRoleGlobalMiddleware
         'Matriz_aprobación',
         'Orden_compra_aprobación',
         'Bitácora-GR',
-        'RequisiciónDePersonal'
+        'RequisiciónDePersonal',
+        'Inventario'
 
     ];
 

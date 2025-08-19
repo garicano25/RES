@@ -145,6 +145,11 @@ use App\Http\Controllers\requisicongr\grController;
 
 use App\Http\Controllers\paginaweb\mensajespaginaController;
 
+// CONTROLADORES DE INVENTARIO
+
+use App\Http\Controllers\inventario\inventarioController;
+
+
 //==============================================  login  ============================================== 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -562,11 +567,6 @@ Route::get('/mostrardocumenadeudo/{id}', [desvinculacionController::class, 'most
 
 
 
-
-
-
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////VENTAS///////////////////////////////////////////////////////7
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -887,8 +887,10 @@ Route::get('/Proveedor', function () {return view('compras.externa.diseño');});
 
 
 
-
-
+Route::get('/Inventario', function () { return view('almacen.inventario.inventario');});
+Route::get('/Tablainventario', [inventarioController::class, 'Tablainventario']);
+Route::post('/InventarioSave', [inventarioController::class, 'store']);
+Route::get('/equipofoto/{id}', [inventarioController::class, 'mostrarFotoEquipo'])->name('equipofoto');
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

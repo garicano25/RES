@@ -805,19 +805,19 @@
 
                             {{-- Almacén --}}
                             @if($tieneSoloRolAlmacenista)
-                            <a href="{{ url('/Almacen') }}" class="modules__link">
+                            <a href="{{ url('/Inventario') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
                                     <h2 class="modules__text">Almacén</h2>
                                 </div>
                             </a>
                             @elseif($tieneRolRestringidoUnico)
-                            <div class="modules__card" onclick="noPermiso('Almacén')">
+                            <div class="modules__card" onclick="noPermiso('Inventario')">
                                 <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
                                 <h2 class="modules__text">Almacén</h2>
                             </div>
                             @else
-                            <a href="{{ url('/Almacen') }}" class="modules__link">
+                            <a href="{{ url('/Inventario') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
                                     <h2 class="modules__text">Almacén</h2>
