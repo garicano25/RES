@@ -545,9 +545,7 @@ Route::get('/Rec.Empleado', function () {return view('RH.RecEmpleados.RecEmplead
 
 /// BRECHA DE COMPETENCIA
 
-
 Route::get('/Brecha_competencia', function () {  return view('RH.capacitacion.brechacomp');});
-
 Route::get('/Tablabrecha', [brechaController::class, 'Tablabrecha']);
 
 
@@ -575,36 +573,19 @@ Route::get('/mostrardocumenadeudo/{id}', [desvinculacionController::class, 'most
 
 //==============================================   CLIENTES ============================================== 
 
-// Route::get('/Clientes', [clientesController::class, 'index']);
 Route::get('/Clientes', [clientesController::class, 'index']);
 Route::post('/ClienteSave', [clientesController::class, 'store']);
 Route::get('/Tablaclientesventas', [clientesController::class, 'Tablaclientesventas']);
 Route::get('/ClienteDelete', [clientesController::class, 'store']);
 Route::get('/mostrarconstanciacliente/{id}', [clientesController::class, 'mostrarconstanciacliente']);
-
-// VERIFICACION DEL CLIENTE
 Route::get('/Tablaverificacionusuario', [clientesController::class, 'Tablaverificacionusuario']);
 Route::get('/mostrarverificacionclienteventas/{id}', [clientesController::class, 'mostrarverificacionclienteventas']);
-
-// ACTA CONSTITUTIVA  DEL CLIENTE
 Route::get('/Tablactaconstitutivausuario', [clientesController::class, 'Tablactaconstitutivausuario']);
-
 Route::get('/mostraractaclienteventas/{id}', [clientesController::class, 'mostraractaclienteventas']);
-
-
-// Route::get('/Clientes', function () {return view('ventas.clientes.clientes');});
 
 
 //==============================================  SOLICITUDES  ============================================== 
  Route::get('/Solicitudes', [solicitudesController::class, 'index']);
-
-// Route::get('/Solicitudes', function () {
-//     // Encriptar la ruta para redirigir a la versión encriptada
-//     $encryptedRoute = Crypt::encryptString('Solicitudes');
-//     return redirect()->route('route.encrypted', ['encryptedRoute' => $encryptedRoute]);
-// });
-
-
 Route::post('/solicitudSave', [solicitudesController::class, 'store']);
 Route::get('/Tablasolicitudes', [solicitudesController::class, 'Tablasolicitudes']);
 Route::get('/solicitudDelete', [solicitudesController::class, 'store']);
@@ -650,7 +631,6 @@ Route::get('/Catálogo_solicitudes', function () {return view('ventas.Catalogos.
 
 Route::get('/Catálogo_clientes_titulos', function () { return view('ventas.Catalogos.catalogo_titulosclientes');});
 
-
 // CATÁLOGO DE MEDIO DE CONTACTO 
 
 Route::get('/Catálogo_medio_contacto', function () {return view('ventas.Catalogos.catalogo_mediocontacto');});
@@ -693,7 +673,6 @@ Route::get('/Tablatiposervicio', [catalogotiposervicioController::class, 'Tablat
 Route::get('/Catálogo_confirmación', function () {return view('ventas.Catalogos.catalogos_confirmacion');});
 
 
-
 // CATÁLOGO DE VERIFIACION DEL CLIENTE
 
 Route::get('/Catálogo_verificación', function () {return view('ventas.Catalogos.catalago_verificacioncliente');});
@@ -706,7 +685,7 @@ Route::get('/Tablaverificacioncliente', [catalagoverificacioninformacionControll
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////COMPRAS///////////////////////////////////////////////////////7
+////////////////////////////////////////////////////////////////COMPRAS///////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //==============================================  M.R  ============================================== 
@@ -737,20 +716,12 @@ Route::get('/Requisición_materiales_aprobación', function () {return view('com
 
 
 Route::get('/Bitácora', [mrController::class, 'index']);
-
 Route::get('/Tablabitacora', [mrController::class, 'Tablabitacora']);
-
-
 Route::post('/guardarHOJAS', [mrController::class, 'guardarHOJAS']);
-
 Route::get('/api/hoja-trabajo/{no_mr}', [mrController::class, 'obtenerPorMR']);
-
-
 Route::get('/mostrarcotizacionq1/{id}', [mrController::class, 'mostrarcotizacionq1']);
 Route::get('/mostrarcotizacionq2/{id}', [mrController::class, 'mostrarcotizacionq2']);
 Route::get('/mostrarcotizacionq3/{id}', [mrController::class, 'mostrarcotizacionq3']);
-
-
 Route::get('/mr/{id}/generar-pdf', [pdfController::class, 'descargarPDF'])->name('mr.generar.pdf');
 
 //==============================================   DIRECTORIO INTERNO  ============================================== 
@@ -758,8 +729,6 @@ Route::get('/mr/{id}/generar-pdf', [pdfController::class, 'descargarPDF'])->name
 Route::get('/Banco_proveedores', function () {return view('compras.proveedores.proveedorespotencial');});
 Route::get('/Tabladirectorio', [directorioController::class, 'Tabladirectorio']);
 Route::get('/ServicioDelete', [directorioController::class, 'store']);
-
-
 Route::get('/Tablaverificacionproveedor', [directorioController::class, 'Tablaverificacionproveedor']);
 Route::get('/mostrarverificacionproveedor/{id}', [directorioController::class, 'mostrarverificacionproveedor']);
 
@@ -776,7 +745,6 @@ Route::get('/Tablareferencias', [listaproveedorController::class, 'Tablareferenc
 Route::get('/Tabladocumentosoporteproveedores', [listaproveedorController::class, 'Tabladocumentosoporteproveedores']);
 Route::get('/documentosProveedorAdmin/{rfc}', [listaproveedorController::class, 'documentosProveedorAdmin']);
 Route::post('/enviarCorreoFaltantes/{id}', [listaproveedorController::class, 'enviarCorreoFaltantes']);
-
 Route::post('/actualizarVerificacionSolicitada', [listaproveedorController::class, 'actualizarVerificacionSolicitada']);
 Route::post('/verificarEstadoVerificacion', [listaproveedorController::class, 'verificarEstadoVerificacion']);
 
@@ -792,16 +760,10 @@ Route::get('/mostrarequierecontrato/{id}', [proveedortempController::class, 'mos
 
 Route::get('/Orden_compra', [poController::class, 'index']);
 Route::get('/Tablaordencompra', [poController::class, 'Tablaordencompra']);
-
 Route::get('/Orden_compra_aprobación', [poController::class, 'index1']);
 Route::get('/Tablaordencompraprobacion', [poController::class, 'Tablaordencompraprobacion']);
-
-
-
 Route::post('/PoSave', [poController::class, 'store']);
 Route::get('/obtenerNombreUsuario/{id}', [poController::class, 'obtenerNombreUsuario']);
-
-
 Route::get('/generarPDFPO/{id}', [pdfpoController::class, 'generarPDFPO']);
 
 //==============================================    MATRIZ COMPARATIVA  ============================================== 
@@ -815,13 +777,11 @@ Route::get('/Tablamatirzaprobada', [matrizController::class, 'Tablamatirzaprobad
 //==============================================    Recepción de bienes y/o servicios - GR  ============================================== 
 
 Route::get('/Bitácora-GR', function () { return view('compras.recepciongr.recepcionbienesgr');});
-
 Route::get('/Tablabitacoragr', [grController::class, 'Tablabitacoragr']);
 
 
 //==============================================   CATALOGOS PROVEEDORES  ============================================== 
 Route::get('/Catálogos_proveedores', function () {return view('compras.Catalogos.catalogo_generales');});
-
 
 
 //  CATALOGO FUNCIONEES/AREAS CONTACTOS
@@ -830,15 +790,12 @@ Route::post('/FuncionesareasSave', [catalagofuncionesproveedorController::class,
 Route::get('/Tablafuncionescontacto', [catalagofuncionesproveedorController::class, 'Tablafuncionescontacto']);
 Route::get('/FuncionesareasDelete', [catalagofuncionesproveedorController::class, 'store']);
 
-
 //  CATALOGO TITULO 
 
 Route::get('/Catálogo_títulos', function () { return view('compras.Catalogos.catalogo_titulosproveedor');});
 Route::post('/TituloSave', [catalagotituloproveedorController::class, 'store']);
 Route::get('/Tablatitulocontacto', [catalagotituloproveedorController::class, 'Tablatitulocontacto']);
 Route::get('/TituloDelete', [catalagotituloproveedorController::class, 'store']);
-
-
 
 //  CATALOGO VERIFICACION DE LA INFORMACION DEL PROVEEDOR 
 
@@ -847,9 +804,6 @@ Route::get('/Tablacatalogoverificacionproveedor', [catalogoverificacionproveedor
 Route::post('/CatVerProSave', [catalogoverificacionproveedorController::class, 'store']);
 Route::get('/CatVerProDelete', [catalogoverificacionproveedorController::class, 'store']);
 
-
-
-
 //  CATALOGO DOCUMENTOS DE SOPORTE DEL PROVEEDOR 
 
 Route::get('/Catálogo_documento_soporte', function () {return view('compras.Catalogos.catalogo_documentosoporte');});
@@ -857,21 +811,17 @@ Route::post('/DocumentosSave', [catalagodocumentosproveedorController::class, 's
 Route::get('/Tabladocumentosoportes', [catalagodocumentosproveedorController::class, 'Tabladocumentosoportes']);
 Route::get('/DocumentosDeleteProveedor', [catalagodocumentosproveedorController::class, 'store']);
 
+
 //==============================================  PROVEEDOR  ============================================== 
 
 
 //  DIRECTORIO EXTERNO
 
-
 Route::get('/Directorio', function () {return view('compras.proveedores.directorio');});
 Route::post('/ServiciosSave', [directorioController::class, 'store']);
 Route::get('/mostrarconstanciaproveedor/{id}', [directorioController::class, 'mostrarconstanciaproveedor']);
 Route::post('/actualizarinfoproveedor', [directorioController::class, 'actualizarinfoproveedor'])->name('actualizarinfoproveedor');
-
-// Route::post('/directorio/enviar-correo', [directorioController::class, 'enviarCorreoProveedor'])->name('directorio.enviarCorreo');
-
 Route::post('/enviarCorreoProveedor', [directorioController::class, 'enviarCorreoProveedor']);
-
 Route::post('/verificarProveedor', [directorioController::class, 'verificarProveedor']);
 
 
@@ -912,14 +862,10 @@ Route::get('/ContactoDelete', [altacontactoController::class, 'store']);
 //ALTA DOCUMENTOS DE SOPORTE
 
 Route::get('/Proveedores_documentos', [altadocumentosController::class, 'index']);
-
-// Route::get('/Proveedores_documentos', function () { return view('compras.proveedores.altadocumentosoporte');});
-
 Route::get('/Tabladocumentosproveedores', [altadocumentosController::class, 'Tabladocumentosproveedores']);
 Route::post('/AltaDocumentosSave', [altadocumentosController::class, 'store']);
 Route::get('/DocumentosDelete', [altadocumentosController::class, 'store']);
 Route::get('/mostrardocumentosoporteproveedor/{id}', [altadocumentosController::class, 'mostrardocumentosoporteproveedor']);
-
 Route::get('/documentosRegistrados', [altadocumentosController::class, 'documentosRegistrados']);
 
 
@@ -931,17 +877,26 @@ Route::get('/CuentasDelete', [altacuentaController::class, 'store']);
 Route::get('/mostrarcaratula/{id}', [altacuentaController::class, 'mostrarcaratula']);
 
 
-//==============================================  EXTERNO  ============================================== 
+// EXTERNO 
 Route::get('/Proveedor', function () {return view('compras.externa.diseño');});
 
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////ALMACEN//////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-//==============================================  PAGINA WEB  ============================================== 
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////PAGINA WEB///////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 Route::get('/Mensajes_paginaweb', function () {    return view('pagina_web.mensajespagina');});
-
 Route::get('/Tablamensajepaginaweb', [mensajespaginaController::class, 'Tablamensajepaginaweb']);
 Route::get('/MensajespaginaDelete', [mensajespaginaController::class, 'store']);
 

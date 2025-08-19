@@ -5,6 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
+
 
 class DenyRoleGlobalMiddleware
 {
@@ -69,24 +71,62 @@ class DenyRoleGlobalMiddleware
         'usuario',
         'Catálogo_verificación_proveedor',
         'Matriz_aprobación',
-        'Orden_compra_aprobación'
+        'Orden_compra_aprobación',
+        'Bitácora-GR',
+        'RequisiciónDePersonal'
 
     ];
+
+    // public function handle($request, Closure $next)
+    // {
+    //     if (Auth::check()) {
+    //         $user = Auth::user();
+
+    //         // Obtiene roles activos
+    //         $userRoles = $user->roles()->where('ACTIVO', 1)->pluck('NOMBRE_ROL')->map(fn($rol) => strtolower(trim($rol)))->toArray();
+
+    //         if (in_array('Proveedor', $userRoles)) {
+    //             $rutaActual = $request->path(); // Ejemplo: "Clientes"
+    //             $rutaActualBase = explode('/', $rutaActual)[0]; // Toma solo el primer segmento
+
+    //             if (in_array($rutaActualBase, $this->rutasProtegidas)) {
+    //                 return redirect()->route('Alta')->with('error', 'No tienes permiso para acceder a esta sección.');
+    //             }
+    //         }
+    //     }
+
+    //     return $next($request);
+    // }
+
+
+
 
     public function handle($request, Closure $next)
     {
         if (Auth::check()) {
             $user = Auth::user();
 
-            // Obtiene roles activos
-            $userRoles = $user->roles()->where('ACTIVO', 1)->pluck('NOMBRE_ROL')->map(fn($rol) => strtolower(trim($rol)))->toArray();
+            $userRoles = $user->roles()
+                ->where('ACTIVO', 1)
+                ->pluck('NOMBRE_ROL')
+                ->map(fn($rol) => trim($rol))
+                ->toArray();
 
-            if (in_array('proveedor', $userRoles)) {
-                $rutaActual = $request->path(); // Ejemplo: "Clientes"
-                $rutaActualBase = explode('/', $rutaActual)[0]; // Toma solo el primer segmento
+            if (in_array('Proveedor', $userRoles)) {
+                // Nombre de la ruta actual
+                $rutaActual = Route::currentRouteName();
 
-                if (in_array($rutaActualBase, $this->rutasProtegidas)) {
-                    return redirect()->route('Alta')->with('error', 'No tienes permiso para acceder a esta sección.');
+                // Normalizamos ruta actual y rutas protegidas (sin tildes)
+                $rutaNormalizada = Str::ascii($rutaActual);
+
+                $rutasProtegidasNormalizadas = array_map(
+                    fn($r) => Str::ascii($r),
+                    $this->rutasProtegidas
+                );
+
+                if ($rutaActual && in_array($rutaNormalizada, $rutasProtegidasNormalizadas)) {
+                    return redirect()->route('Alta')
+                        ->with('error', 'No tienes permiso para acceder a esta sección.');
                 }
             }
         }
@@ -94,3 +134,8 @@ class DenyRoleGlobalMiddleware
         return $next($request);
     }
 }
+
+
+
+
+
