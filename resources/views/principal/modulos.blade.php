@@ -812,7 +812,7 @@
                                 </div>
                             </a>
                             @elseif($tieneRolRestringidoUnico)
-                            <div class="modules__card" onclick="noPermiso('Inventario')">
+                            <div class="modules__card" onclick="noPermiso('Almacén')">
                                 <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
                                 <h2 class="modules__text">Almacén</h2>
                             </div>
