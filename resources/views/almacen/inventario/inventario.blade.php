@@ -206,8 +206,8 @@
         <div class="modal-content">
             <form enctype="multipart/form-data" method="post" name="formExcelEquipos" id="formExcelEquipos">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Carga de Equipos por medio de un Excel</h4>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Carga de Equipos por medio de un Excel</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -247,7 +247,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
 
-                    
+
                     <button type="submit" class="btn btn-success" id="botonCargarExcelEquipos">Guardar</button>
 
 

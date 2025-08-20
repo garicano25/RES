@@ -185,6 +185,12 @@ var Tablainventario = $("#Tablainventario").DataTable({
                 return meta.row + 1; 
             }
         },
+         { 
+            data: 'FOTO_EQUIPO_HTML',
+            orderable: false,
+            searchable: false,
+            className: 'text-center'
+        },
         { data: 'DESCRIPCION_EQUIPO' },
         { data: 'MARCA_EQUIPO' },
         { data: 'MODELO_EQUIPO' },
@@ -196,14 +202,15 @@ var Tablainventario = $("#Tablainventario").DataTable({
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
-        { targets: 1, title: 'Descripción', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'Marca', className: 'all text-center nombre-column' },
-        { targets: 3, title: 'Modelo', className: 'all text-center nombre-column' },
-        { targets: 4, title: 'Serie', className: 'all text-center nombre-column' },
-        { targets: 5, title: 'Código de Identificación ', className: 'all text-center nombre-column' },
-        { targets: 6, title: 'Editar', className: 'all text-center' },
-        { targets: 7, title: 'Visualizar', className: 'all text-center' },
-        { targets: 8, title: 'Activo', className: 'all text-center' }
+        { targets: 1, title: 'Foto', className: 'all text-center',width: '250px' },
+        { targets: 2, title: 'Descripción', className: 'all text-center nombre-column' },
+        { targets: 3, title: 'Marca', className: 'all text-center nombre-column' },
+        { targets: 4, title: 'Modelo', className: 'all text-center nombre-column' },
+        { targets: 5, title: 'Serie', className: 'all text-center nombre-column' },
+        { targets: 6, title: 'Código de Identificación ', className: 'all text-center nombre-column' },
+        { targets: 7, title: 'Editar', className: 'all text-center' },
+        { targets: 8, title: 'Visualizar', className: 'all text-center' },
+        { targets: 9, title: 'Activo', className: 'all text-center' }
     ]
 });
 
