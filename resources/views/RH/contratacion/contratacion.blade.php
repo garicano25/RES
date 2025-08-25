@@ -101,15 +101,12 @@
 
 
 
-     .bloque-contrato,
+    .bloque-contrato,
     .bloque-adenda-contrato {
         min-height: 93px;
         flex-direction: column;
         justify-content: center;
     }
-
-
-    
 </style>
 
 
@@ -1100,16 +1097,17 @@
                                 <label>Requiere crendencial *</label>
                                 <div class="input-group">
                                     <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="REQUIERE_CREDENCIAL" id="procedecredencialsi" value="1" required>
-                                    <label class="form-check-label" for="procedecredencialsi">Sí</label>
-                                </div>
+                                        <input class="form-check-input" type="radio" name="REQUIERE_CREDENCIAL" id="procedecredencialsi" value="1" required>
+                                        <label class="form-check-label" for="procedecredencialsi">Sí</label>
+                                    </div>
 
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="REQUIERE_CREDENCIAL" id="procedecredencialno" value="2">
-                                    <label class="form-check-label" for="procedecredencialno">No</label>
-                                </div>                                </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="REQUIERE_CREDENCIAL" id="procedecredencialno" value="2">
+                                        <label class="form-check-label" for="procedecredencialno">No</label>
+                                    </div>
+                                </div>
                             </div>
-                            
+
                         </div>
 
                     </div>
@@ -1256,32 +1254,81 @@
                     </div>
                     <div id="DOCUEMNTO_ERROR_SOPORTECONTRATO" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
 
+                    <!-- 
+                    <div class="mb-3" id="DIV_FOTO_FIRMA" style="display: none">
+                            <div class="form-group">
+                                <label  >Firma colaborador (.png)*</label>
+                                <style>
+                                    .dropify-wrapper {
+                                        height: 270px !important;
+                                        border-radius: 5px;
+                                        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+                                        text-align: center;
+                                    }
 
-                <div class="mb-3" id="DIV_FOTO_FIRMA" style="display: none">
-                        <div class="form-group">
-                            <label  >Firma colaborador (.png)*</label>
-                            <style>
-                                .dropify-wrapper {
-                                    height: 270px !important;
-                                    border-radius: 5px;
-                                    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-                                    text-align: center;
-                                }
+                                    .dropify-message p {
+                                        font-size: 14px;
+                                        margin: 0;
+                                    }
+                                </style>
+                                <input type="file"
+                                    accept="image/png"
+                                    id="FOTO_FIRMA"
+                                    name="FOTO_FIRMA"
+                                    class="dropify"
+                                    data-allowed-file-extensions="png"
+                                    data-height="300"
+                                    data-default-file="">
 
-                                .dropify-message p {
-                                    font-size: 14px;
-                                    margin: 0;
-                                }
-                            </style>
-                            <input type="file"
-                                accept="image/png"
-                                id="FOTO_FIRMA"
-                                name="FOTO_FIRMA"
-                                class="dropify"
-                                data-allowed-file-extensions="png"
-                                data-height="300"
-                                data-default-file="">
+                            </div>
+                    </div> -->
 
+
+
+                    <div class="mb-3" id="DIV_FOTO_FIRMA" style="display: none">
+                        <div class="row">
+                            <!-- Col 6: Firma colaborador -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Firma colaborador (.png)*</label>
+                                    <style>
+                                        .dropify-wrapper {
+                                            height: 270px !important;
+                                            border-radius: 5px;
+                                            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+                                            text-align: center;
+                                        }
+
+                                        .dropify-message p {
+                                            font-size: 14px;
+                                            margin: 0;
+                                        }
+                                    </style>
+                                    <input type="file"
+                                        accept="image/png"
+                                        id="FOTO_FIRMA"
+                                        name="FOTO_FIRMA"
+                                        class="dropify"
+                                        data-allowed-file-extensions="png"
+                                        data-height="300"
+                                        data-default-file="">
+                                </div>
+                            </div>
+
+                            <!-- Col 6: Firma RH -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Firma RH (.png)*</label>
+                                    <input type="file"
+                                        accept="image/png"
+                                        id="FOTO_FIRMA_RH"
+                                        name="FOTO_FIRMA_RH"
+                                        class="dropify"
+                                        data-allowed-file-extensions="png"
+                                        data-height="300"
+                                        data-default-file="">
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -2160,7 +2207,7 @@
                                 </div>
                                 <div class="col-6">
                                     <label>Categoría a sustituir</label>
-                                    <select class="form-control" id="SUSTITUYE_CATEGORIA_RP" name="SUSTITUYE_CATEGORIA_RP" >
+                                    <select class="form-control" id="SUSTITUYE_CATEGORIA_RP" name="SUSTITUYE_CATEGORIA_RP">
                                         <option selected disabled>Seleccione una opción</option>
                                         @foreach ($todascategoria as $cat)
                                         <option value="{{ $cat->ID_CATALOGO_CATEGORIA }}">{{ $cat->NOMBRE }}</option>

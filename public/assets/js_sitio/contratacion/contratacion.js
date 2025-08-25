@@ -4804,6 +4804,30 @@ $(document).ready(function() {
             }
         });
 
+
+
+
+          $('#FOTO_FIRMA_RH').dropify({
+            messages: {
+                'default': 'Arrastre la imagen aquí o haga clic',
+                'replace': 'Arrastre la imagen aquí o haga clic para reemplazar',
+                'remove':  'Quitar',
+                'error':   'Ooops, ha ocurrido un error.'
+            },
+            error: {
+                'fileSize': 'El archivo es demasiado grande (máx. {{ value }}).',
+                'minWidth': 'El ancho de la imagen es demasiado pequeño (mín. {{ value }}px).',
+                'maxWidth': 'El ancho de la imagen es demasiado grande (máx. {{ value }}px).',
+                'minHeight': 'La altura de la imagen es demasiado pequeña (mín. {{ value }}px).',
+                'maxHeight': 'La altura de la imagen es demasiado grande (máx. {{ value }}px).',
+                'imageFormat': 'Formato no permitido, sólo se aceptan: ({{ value }}).'
+            }
+          });
+        
+        
+        
+        
+        
         $('#miModal_SOPORTECONTRATO').modal('show');
     });
 
@@ -5186,6 +5210,42 @@ $('#Tablasoportecontrato').on('click', 'td>button.EDITAR', function () {
 
 
 
+
+
+    
+      if (row.data().FOTO_FIRMA_RH) {
+        var archivo = row.data().FOTO_FIRMA_RH;
+        var extension = archivo.substring(archivo.lastIndexOf("."));
+        var imagenUrl = '/firmarh/' + row.data().ID_DOCUMENTO_COLABORADOR_CONTRATO + extension;
+        console.log(imagenUrl); 
+
+        if ($('#FOTO_FIRMA_RH').data('dropify')) {
+            $('#FOTO_FIRMA_RH').dropify().data('dropify').destroy();
+            $('#FOTO_FIRMA_RH').dropify().data('dropify').settings.defaultFile = imagenUrl;
+            $('#FOTO_FIRMA_RH').dropify().data('dropify').init();
+        } else {
+            $('#FOTO_FIRMA_RH').attr('data-default-file', imagenUrl);
+            $('#FOTO_FIRMA_RH').dropify({
+                messages: {
+                    'default': 'Arrastre la imagen aquí o haga click',
+                    'replace': 'Arrastre la imagen o haga clic para reemplazar',
+                    'remove': 'Quitar',
+                    'error': 'Ooops, ha ocurrido un error.'
+                },
+                error: {
+                    'fileSize': 'Demasiado grande ({{ value }} max).',
+                    'minWidth': 'Ancho demasiado pequeño (min {{ value }}}px).',
+                    'maxWidth': 'Ancho demasiado grande (max {{ value }}}px).',
+                    'minHeight': 'Alto demasiado pequeño (min {{ value }}}px).',
+                    'maxHeight': 'Alto demasiado grande (max {{ value }}px max).',
+                    'imageFormat': 'Formato no permitido, sólo ({{ value }}).'
+                }
+            });
+        }
+    } else {
+        $('#FOTO_FIRMA_RH').dropify().data('dropify').resetPreview();
+        $('#FOTO_FIRMA_RH').dropify().data('dropify').clearElement();
+    }
 
 });
 

@@ -1250,6 +1250,13 @@ public function obtenerdocumentosoportescontratos(Request $request)
 
 
 
+    public function mostrarFotofirmaRH($id)
+    {
+        $foto = documentoscolaboradorcontratoModel::findOrFail($id);
+        return Storage::response($foto->FOTO_FIRMA_RH);
+    }
+
+
     /////////////////////////////////////////// STEP 5  CREACION DE CV´S  //////////////////////////////////
 
 
@@ -1644,7 +1651,7 @@ public function obtenerdocumentosoportescontratos(Request $request)
                         case 4:
     if ($request->ID_DOCUMENTO_COLABORADOR_CONTRATO == 0) {
         DB::statement('ALTER TABLE documentos_colaborador_contrato AUTO_INCREMENT=1;');
-        $soportes = documentoscolaboradorcontratoModel::create($request->except(['DOCUMENTO_SOPORTECONTRATO', 'FOTO_FIRMA'])); 
+        $soportes = documentoscolaboradorcontratoModel::create($request->except(['DOCUMENTO_SOPORTECONTRATO', 'FOTO_FIRMA','FOTO_FIRMA_RH'])); 
 
         if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
             $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
@@ -1673,7 +1680,21 @@ public function obtenerdocumentosoportescontratos(Request $request)
             $soportes->save();
         }
 
-    } else {
+
+        if ($request->hasFile('FOTO_FIRMA_RH')) {
+            $firma = $request->file('FOTO_FIRMA_RH');
+            $curp = $request->CURP;
+            $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+            $nombreFirma = 'firma_rh.' . $firma->getClientOriginalExtension();
+            $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma RH';
+            $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
+
+            $soportes->FOTO_FIRMA_RH = $rutaFirmaCompleta;
+            $soportes->save();
+        }
+
+                    } else {
         if (isset($request->ELIMINAR)) {
             if ($request->ELIMINAR == 1) {
                 $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
@@ -1688,7 +1709,7 @@ public function obtenerdocumentosoportescontratos(Request $request)
             }
         } else {
             $soportes = documentoscolaboradorcontratoModel::find($request->ID_DOCUMENTO_COLABORADOR_CONTRATO);
-            $soportes->update($request->except(['DOCUMENTO_SOPORTECONTRATO', 'FOTO_FIRMA']));
+            $soportes->update($request->except(['DOCUMENTO_SOPORTECONTRATO', 'FOTO_FIRMA', 'FOTO_FIRMA_RH']));
 
             if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
                 if ($soportes->DOCUMENTO_SOPORTECONTRATO && Storage::exists($soportes->DOCUMENTO_SOPORTECONTRATO)) {
@@ -1724,6 +1745,22 @@ public function obtenerdocumentosoportescontratos(Request $request)
                 $soportes->FOTO_FIRMA = $rutaFirmaCompleta;
                 $soportes->save();
             }
+
+
+            if ($request->hasFile('FOTO_FIRMA_RH')) {
+                $firma = $request->file('FOTO_FIRMA_RH');
+                $curp = $request->CURP;
+                $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                $nombreFirma = 'firma_rh.' . $firma->getClientOriginalExtension();
+                $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma RH';
+                $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
+
+                $soportes->FOTO_FIRMA_RH = $rutaFirmaCompleta;
+                $soportes->save();
+            }
+
+
 
             $response['code'] = 1;
             $response['soporte'] = 'Actualizada';

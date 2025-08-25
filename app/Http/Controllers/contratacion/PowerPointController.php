@@ -244,6 +244,12 @@ class PowerPointController extends Controller
         // Reemplazar imagen del colaborador y firma
         $this->reemplazarFotoColaborador($tempDir, $curp);
         $this->reemplazarFotoFirma($tempDir, $curp);
+         $this->reemplazarFirmaRH($tempDir, $curp);
+
+
+
+
+            
 
         // Crear el nuevo archivo .pptx
         $outputFile = storage_path('app/credencial_' . $curp . '_' . uniqid() . '.pptx');
@@ -700,7 +706,135 @@ class PowerPointController extends Controller
 
 
 
-    
+
+    private function reemplazarFirmaRH($tempDir, $curp)
+    {
+        try {
+            // Buscar en la base de datos la firma RH (tipo documento 7)
+            $firma = DB::table('documentos_colaborador_contrato')
+                ->where('CURP', $curp)
+                ->where('TIPO_DOCUMENTO_SOPORTECONTRATO', 7)
+                ->whereNotNull('FOTO_FIRMA_RH')
+                ->orderByDesc('ID_DOCUMENTO_COLABORADOR_CONTRATO')
+                ->first();
+
+            if (!$firma || !Storage::exists($firma->FOTO_FIRMA_RH)) {
+                \Log::warning("No se encontró la firma RH: CURP={$curp}");
+                return false;
+            }
+
+            // Obtener el contenido de la imagen
+            $imagenContenido = Storage::get($firma->FOTO_FIRMA_RH);
+
+            // Buscar el marcador en los slides
+            $slideFiles = glob($tempDir . '/ppt/slides/slide*.xml');
+            $marcador = '${FOTO_FIRMA_RH}';
+            $encontrado = false;
+
+            foreach ($slideFiles as $slideFile) {
+                $slideContent = file_get_contents($slideFile);
+                preg_match('/slide(\d+)\.xml/', $slideFile, $matches);
+                $slideNumber = $matches[1];
+
+                if (strpos($slideContent, $marcador) !== false) {
+                    $encontrado = true;
+
+                    // Guardar la imagen en ppt/media/
+                    $mediaDir = $tempDir . '/ppt/media';
+                    if (!file_exists($mediaDir)) {
+                        mkdir($mediaDir, 0755, true);
+                    }
+
+                    // ⚠️ Usar un nombre seguro para la imagen interna (sin espacios ni caracteres raros)
+                    $extension = pathinfo($firma->FOTO_FIRMA_RH, PATHINFO_EXTENSION) ?: 'png';
+                    $nombreImagen = 'firma_rh_' . $slideNumber . '.' . $extension;
+                    $rutaImagen = $mediaDir . '/' . $nombreImagen;
+                    file_put_contents($rutaImagen, $imagenContenido);
+
+                    // Preparar archivo de relaciones
+                    $relsFile = $tempDir . '/ppt/slides/_rels/slide' . $slideNumber . '.xml.rels';
+                    if (!file_exists(dirname($relsFile))) {
+                        mkdir(dirname($relsFile), 0755, true);
+                    }
+
+                    // ⚠️ Cambiar rango para no chocar con firmas de colaborador
+                    $nuevoRelId = 'rId' . (1050 + $slideNumber);
+
+                    if (file_exists($relsFile)) {
+                        $relsContent = file_get_contents($relsFile);
+                        if (strpos($relsContent, $nombreImagen) === false) {
+                            $relsContent = str_replace(
+                                '</Relationships>',
+                                '  <Relationship Id="' . $nuevoRelId . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/' . $nombreImagen . '"/>
+                    </Relationships>',
+                                $relsContent
+                            );
+                        }
+                    } else {
+                        $relsContent = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+                    <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+                    <Relationship Id="' . $nuevoRelId . '" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/' . $nombreImagen . '"/>
+                    </Relationships>';
+                    }
+
+                    file_put_contents($relsFile, $relsContent);
+
+                    // Reemplazar marcador con XML de imagen conservando la forma original
+                    if (preg_match_all('/<a:t[^>]*>([^<]*' . preg_quote($marcador, '/') . '[^<]*)<\/a:t>/s', $slideContent, $matches, PREG_OFFSET_CAPTURE)) {
+                        foreach ($matches[0] as $match) {
+                            $textoCompleto = $match[0];
+                            $posicion = $match[1];
+
+                            $posicionInicio = strrpos(substr($slideContent, 0, $posicion), '<p:sp');
+                            $posicionFin = strpos($slideContent, '</p:sp>', $posicion);
+                            if ($posicionInicio !== false && $posicionFin !== false) {
+                                $shapeXml = substr($slideContent, $posicionInicio, $posicionFin - $posicionInicio + 6);
+
+                                // Extraer la geometría y transformación existente del shape
+                                preg_match('/<a:xfrm>.*?<\/a:xfrm>/s', $shapeXml, $xfrmMatch);
+                                $xfrmXml = $xfrmMatch[0] ?? '<a:xfrm><a:off x="3048000" y="1524000"/><a:ext cx="3048000" cy="3048000"/></a:xfrm>';
+
+                                // Extraer la geometría existente
+                                preg_match('/<a:prstGeom prst="([^"]+)"[^>]*>.*?<\/a:prstGeom>/s', $shapeXml, $geomMatch);
+                                $geometriaExistente = $geomMatch[0] ?? '<a:prstGeom prst="rect"><a:avLst/></a:prstGeom>';
+
+                                // Crear el spPr modificado
+                                $spPrModificado = '<p:spPr>' . $xfrmXml . $geometriaExistente . '<a:blipFill rotWithShape="1"><a:blip r:embed="' . $nuevoRelId . '"/><a:stretch><a:fillRect/></a:stretch></a:blipFill><a:ln><a:noFill/></a:ln></p:spPr>';
+
+                                // Reemplazar el spPr existente
+                                $shapeModificado = preg_replace('/<p:spPr[^>]*>.*?<\/p:spPr>/s', $spPrModificado, $shapeXml);
+
+                                // Limpiar el texto del marcador
+                                $shapeModificado = str_replace($textoCompleto, '<a:t></a:t>', $shapeModificado);
+
+                                // Asegurar namespace r
+                                if (strpos($slideContent, 'xmlns:r=') === false) {
+                                    $slideContent = preg_replace('/<p:sld([^>]*)>/', '<p:sld$1 xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">', $slideContent);
+                                }
+
+                                // Insertar forma modificada
+                                $slideContent = substr_replace($slideContent, $shapeModificado, $posicionInicio, $posicionFin - $posicionInicio + 6);
+                                file_put_contents($slideFile, $slideContent);
+
+                                \Log::info("Marcador ${FOTO_FIRMA_RH} reemplazado con la imagen correctamente en slide {$slideNumber}");
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!$encontrado) {
+                \Log::warning("Marcador ${FOTO_FIRMA_RH} no encontrado en ninguna diapositiva para CURP={$curp}");
+            }
+        } catch (\Exception $e) {
+            \Log::error("Error al reemplazar la firma RH: " . $e->getMessage());
+            return false;
+        }
+    }
+
+
+
     /**
      * Función auxiliar para añadir un directorio completo a un archivo ZIP
      */
