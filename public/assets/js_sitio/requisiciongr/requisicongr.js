@@ -234,12 +234,12 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                   <div class="col-6">
                     <label class="form-label d-block">Cumple lo especificado el B o S</label>
                     <div>
-                      <label><input type="radio" name="CUMPLE_${index}" value="B"> B</label>
-                      <label class="ml-3"><input type="radio" name="CUMPLE_${index}" value="S"> S</label>
+                      <label><input type="radio" name="CUMPLE_${index}" value="Sí">Sí</label>
+                      <label class="ml-3"><input type="radio" name="CUMPLE_${index}" value="No">No</label>
                     </div>
                   </div>
                   <div class="col-6">
-                    <label class="form-label">Comentario</label>
+                    <label class="form-label">Comentario especificación</label>
                     <input type="text" class="form-control" name="COMENTARIO_CUMPLE[]">
                   </div>
                 </div>

@@ -175,7 +175,7 @@
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
                 <h5 class="modal-title">Detalle de GR</h5>
-                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
 
@@ -229,11 +229,11 @@
 
                 <hr>
                 <h5 class="mb-3">Bien o Servicio</h5>
-                <div id="modal_bien_servicio"></div> 
+                <div id="modal_bien_servicio"></div>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-success">Guardar</button>
             </div>
         </div>

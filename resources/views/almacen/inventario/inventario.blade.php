@@ -226,8 +226,16 @@
                         </div>
                     </div>
                     <div class="row mx-2" id="alertaVerificacion" style="display:none">
-                        <p class="text-danger"><i class="fa fa-info-circle" aria-hidden="true"></i> Por favor, asegúrese de que el archivo Excel contenga fechas en los formatos válidos: '2024-01-01', '01-01-2024', '2024/01/01', '01/01/2024' (no se admiten fechas con texto).</p>
+                        <p class="text-danger">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            Por favor, asegúrese de que el archivo Excel contenga la fecha en el formato válido:
+                            <b>'2024-01-01'</b> (no se admiten fechas con texto) y también que el campo
+                            <b>tipo</b> contenga únicamente uno de los siguientes valores, escritos <b>tal y como están</b>:
+                            <u>Consumible</u>, <u>AF</u>, <u>ANF</u>, <u>Comercialización</u>,
+                            <u>Material para curso</u>, <u>EPP</u>, <u>Vehículos</u>.
+                        </p>
                     </div>
+
                     <div class="row mt-3" id="divCargaEquipos" style="display: none;">
 
                         <div class="col-12 text-center">

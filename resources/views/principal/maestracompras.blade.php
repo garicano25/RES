@@ -79,40 +79,7 @@
 
 
 
-        .navbar .collapse {
-            width: 100%;
-        }
 
-        .navbar-nav {
-            flex-wrap: wrap;
-            width: 100%;
-        }
-
-        .navbar-nav .nav-item {
-            white-space: nowrap;
-        }
-
-        @media (max-width: 1200px) {
-            .navbar-nav .nav-link {
-                font-size: 0.9rem;
-                padding: 0.4rem 0.6rem;
-            }
-        }
-
-        @media (max-width: 992px) {
-            .navbar-nav .nav-link {
-                font-size: 0.85rem;
-                padding: 0.3rem 0.5rem;
-            }
-        }
-
-
-
-
-
-        .dropdown-menu .dropdown-item {
-            white-space: nowrap;
-        }
     </style>
 
 
@@ -167,7 +134,7 @@
 
 
 
-    <!-- <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0, 124, 186, 0.850); -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75);">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0, 124, 186, 0.850); -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75);">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -419,12 +386,12 @@
                 </ul>
             </div>
         </div>
-    </nav> -->
+    </nav> 
 
 
 
 
-    <nav class="navbar navbar-expand-lg navbar-dark"
+    <!-- <nav class="navbar navbar-expand-lg navbar-dark"
         style="background-color: rgba(0, 124, 186, 0.85); 
             -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); 
             -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); 
@@ -439,7 +406,6 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
 
-                    <!-- Inicio -->
                     <li class="nav-item" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="{{ url('/Módulos') }}" style="color: #fff; font-weight: bold;">
                             <i class="bi bi-grid-3x3-gap-fill"></i>
@@ -448,7 +414,6 @@
                         </a>
                     </li>
 
-                    <!-- Requisición de materiales -->
                     @if(auth()->check() && !auth()->user()->hasRoles(['Almacenista','Asistente de compras']))
                     <li class="nav-item" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="{{ url('/Requisición_Materiales') }}" style="color: #fff; font-weight: bold;">
@@ -459,7 +424,6 @@
                     </li>
                     @endif
 
-                    <!-- M.R para Vo.Bo y aprobación -->
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones','Administrador']))
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
@@ -488,7 +452,6 @@
                     </li>
                     @endif
 
-                    <!-- Bitácora -->
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de compras']))
                     <li class="nav-item" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="{{ url('/Bitácora') }}" style="color: #fff; font-weight: bold;">
@@ -499,7 +462,6 @@
                     </li>
                     @endif
 
-                    <!-- Proveedores -->
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de planeación y logística','Asistente de compras']))
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
@@ -522,7 +484,6 @@
                     </li>
                     @endif
 
-                    <!-- Matriz comparativa -->
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de compras']))
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
@@ -550,7 +511,6 @@
                     </li>
                     @endif
 
-                    <!-- Orden de compra -->
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de compras']))
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
@@ -569,7 +529,6 @@
                     </li>
                     @endif
 
-                    <!-- Recepción de bienes -->
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','Almacenista']))
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
@@ -586,7 +545,6 @@
                     </li>
                     @endif
 
-                    <!-- Catálogos -->
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de compras']))
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
@@ -604,7 +562,7 @@
                 </ul>
             </div>
         </div>
-    </nav>
+    </nav> -->
 
 
 
@@ -795,7 +753,7 @@
 
 
     @if(request()->is('Bitácora-GR'))
-    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.3"></script>
+    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.4"></script>
     @endif
 
 
