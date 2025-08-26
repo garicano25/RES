@@ -220,32 +220,26 @@ var Tablainventario = $("#Tablainventario").DataTable({
 
 $(document).ready(function () {
 
-    // 👉 Abrir modal al dar clic en Importar
     $('#boton_cargarExcelEquipos').on('click', function (e) {
         e.preventDefault();
 
-        // Ocultar alertas y loader
         $('#divCargaEquipos').css('display', 'none');
         $('#alertaVerificacion').css('display', 'none');
 
-        // Resetear formulario
         $('#formExcelEquipos')[0].reset();
 
-        // Mostrar modal correctamente
         $('#modal_excel_equipo').modal({
             backdrop: false,
             keyboard: true
         }).modal('show');
     });
 
-    // 👉 Limpiar modal al cerrarse
     $('#modal_excel_equipo').on('hidden.bs.modal', function () {
         $('#formExcelEquipos')[0].reset();
         $('#divCargaEquipos').css('display', 'none');
         $('#alertaVerificacion').css('display', 'none');
     });
 
-    // 👉 Botón de cargar Excel
  $("#botonCargarExcelEquipos").click(function (e) {
     e.preventDefault();
 
@@ -438,7 +432,6 @@ function hacerSoloLectura4(data, modalSelector) {
                 if (element.is(':radio') || element.is(':checkbox')) {
                     element.prop('checked', data[key]);
                 } else if (element.attr('type') === 'file') {
-                    // ⚠️ Evitar asignar valor directo al input file
                     continue;
                 } else {
                     element.val(data[key]);

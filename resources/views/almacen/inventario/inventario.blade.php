@@ -239,7 +239,7 @@
                     <div class="row mt-3" id="divCargaEquipos" style="display: none;">
 
                         <div class="col-12 text-center">
-                            <h2>Cargando equipo espere un momento...</h2>
+                            <h2>Cargando equipos espere un momento...</h2>
                         </div>
                         <div class="col-12 text-center">
                             <i class='fa fa-spin fa-spinner fa-5x'></i>
