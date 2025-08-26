@@ -333,6 +333,146 @@ class inventarioController extends Controller
                 //     }
                 //     break;
 
+                // case 2:
+                //     try {
+                //         if ($request->hasFile('excelEquipos')) {
+                //             $excel = $request->file('excelEquipos');
+
+                //             $spreadsheet = IOFactory::load($excel->getPathname());
+                //             $sheet = $spreadsheet->getActiveSheet();
+                //             $data = $sheet->toArray(null, true, true, true);
+
+                //             array_shift($data);
+                //             array_shift($data);
+
+                //             $datosGenerales = [];
+                //             foreach ($data as $row) {
+                //                 if (!empty(array_filter($row))) {
+                //                     $datosGenerales[] = $row;
+                //                 }
+                //             }
+
+                //             $drawings = $sheet->getDrawingCollection();
+                //             $imagenes = [];
+                //             $processedCoordinates = [];
+
+                //             foreach ($drawings as $drawing) {
+                //                 $coordinates = $drawing->getCoordinates();
+
+                //                 // Solo columna K
+                //                 if (strpos(strtoupper($coordinates), 'K') !== 0) {
+                //                     continue;
+                //                 }
+
+                //                 if (in_array($coordinates, $processedCoordinates)) {
+                //                     continue;
+                //                 }
+                //                 $processedCoordinates[] = $coordinates;
+
+                //                 if ($drawing instanceof MemoryDrawing) {
+                //                     ob_start();
+                //                     call_user_func($drawing->getRenderingFunction(), $drawing->getImageResource());
+                //                     $imageContents = ob_get_contents();
+                //                     ob_end_clean();
+
+                //                     $extension = 'png';
+                //                     switch ($drawing->getMimeType()) {
+                //                         case MemoryDrawing::MIMETYPE_PNG:
+                //                             $extension = 'png';
+                //                             break;
+                //                         case MemoryDrawing::MIMETYPE_GIF:
+                //                             $extension = 'gif';
+                //                             break;
+                //                         case MemoryDrawing::MIMETYPE_JPEG:
+                //                             $extension = 'jpg';
+                //                             break;
+                //                     }
+                //                 } elseif ($drawing instanceof Drawing) {
+                //                     $zipReader = fopen($drawing->getPath(), 'r');
+                //                     $imageContents = '';
+                //                     while (!feof($zipReader)) {
+                //                         $imageContents .= fread($zipReader, 1024);
+                //                     }
+                //                     fclose($zipReader);
+
+                //                     $extension = $drawing->getExtension();
+                //                 }
+
+                //                 $imagenes[] = [
+                //                     'contents' => $imageContents,
+                //                     'extension' => $extension,
+                //                     'coord' => $coordinates
+                //                 ];
+                //             }
+
+                //             // ============= Guardar en DB ==================
+                //             $totalEquipos = count($datosGenerales);
+                //             $equipoInsertados = 0;
+                //             $posicionImagenEquipo = 0;
+
+                //             foreach ($datosGenerales as $rowData) {
+                //                 $nuevoEquipo = inventarioModel::create([
+
+                //                     'DESCRIPCION_EQUIPO'  => !empty($rowData['B']) ? $rowData['B'] : null,
+                //                     // 'DESCRIPCION_EQUIPO' => $rowData['B'] ?? "EL NOMBRE DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
+                //                     'MARCA_EQUIPO'  => !empty($rowData['C']) ? $rowData['C'] : null,
+                //                     // 'MARCA_EQUIPO'       => $rowData['C'] ?? "LA MARCA DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
+                //                     'MODELO_EQUIPO'  => !empty($rowData['D']) ? $rowData['D'] : null,
+                //                     // 'MODELO_EQUIPO'      => $rowData['D'] ?? "EL MODELO DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
+                //                     'SERIE_EQUIPO'  => !empty($rowData['E']) ? $rowData['E'] : null,
+                //                     // 'SERIE_EQUIPO'       => $rowData['E'] ?? "LA SERIE DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
+                //                     'CODIGO_EQUIPO'  => !empty($rowData['F']) ? $rowData['F'] : null,
+                //                     // 'CODIGO_EQUIPO'      => $rowData['F'] ?? "EL CODIGO DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
+                //                     'CANTIDAD_EQUIPO'  => !empty($rowData['G']) ? $rowData['G'] : null,
+                //                     // 'CANTIDAD_EQUIPO'    => $rowData['G'] ?? "0",
+                //                     'UBICACION_EQUIPO'  => !empty($rowData['I']) ? $rowData['I'] : null,
+                //                     // 'UBICACION_EQUIPO'   => $rowData['I'] ?? "LA UBICACION DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
+                //                     'ESTADO_EQUIPO'  => !empty($rowData['J']) ? $rowData['J'] : null,
+                //                     // 'ESTADO_EQUIPO'      => $rowData['J'] ?? "EL ESTADO DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
+                //                     'FECHA_ADQUISICION'  => !empty($rowData['L']) ? $rowData['L'] : null,
+                //                     'PROVEEDOR_EQUIPO'  => !empty($rowData['M']) ? $rowData['M'] : null,
+                //                     // 'PROVEEDOR_EQUIPO'   => $rowData['M'] ?? "EL PROVEEDOR DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
+                //                     'UNITARIO_EQUIPO'  => !empty($rowData['N']) ? $rowData['N'] : null,
+                //                     // 'UNITARIO_EQUIPO'    => $rowData['N'] ?? "EL PRECIO UNITARIO DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
+                //                     'TOTAL_EQUIPO'  => !empty($rowData['O']) ? $rowData['O'] : null,
+                //                     // 'TOTAL_EQUIPO'       => $rowData['O'] ?? "EL PRECIO TOTAL DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
+                //                     'TIPO_EQUIPO'  => !empty($rowData['P']) ? $rowData['P'] : null,
+                //                     // 'TIPO_EQUIPO'        => $rowData['P'] ?? "EL TIPO DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
+                //                     'FOTO_EQUIPO'        => null
+                //                 ]);
+
+                //                 if (isset($imagenes[$posicionImagenEquipo])) {
+                //                     $imagen = $imagenes[$posicionImagenEquipo];
+                //                     $filename = 'foto_equipo.' . $imagen['extension'];
+                //                     $pathFinal = 'Almacén/Inventario/' . $nuevoEquipo->ID_FORMULARIO_INVENTARIO . '/' . $filename;
+
+                //                     Storage::put($pathFinal, $imagen['contents']);
+
+                //                     $nuevoEquipo->update([
+                //                         'FOTO_EQUIPO' => $pathFinal
+                //                     ]);
+                //                 }
+
+                //                 $posicionImagenEquipo++;
+                //                 $equipoInsertados++;
+                //             }
+
+                //             return response()->json([
+                //                 'msj'  => 'Total de equipos agregados : ' . $equipoInsertados . ' de ' . $totalEquipos,
+                //                 'code' => 200
+                //             ]);
+                //         } else {
+                //             return response()->json(["msj" => 'No se ha subido ningún archivo', "code" => 500]);
+                //         }
+                //     } catch (Exception $e) {
+                //         return response()->json([
+                //             'msj'  => 'Se produjo un error al intentar cargar los equipos: ' . $e->getMessage(),
+                //             'code' => 500
+                //         ]);
+                //     }
+
+
+
                 case 2:
                     try {
                         if ($request->hasFile('excelEquipos')) {
@@ -342,6 +482,7 @@ class inventarioController extends Controller
                             $sheet = $spreadsheet->getActiveSheet();
                             $data = $sheet->toArray(null, true, true, true);
 
+                            // Saltar encabezados (filas 1 y 2)
                             array_shift($data);
                             array_shift($data);
 
@@ -352,23 +493,19 @@ class inventarioController extends Controller
                                 }
                             }
 
+                            // Obtener imágenes y mapearlas a su fila
                             $drawings = $sheet->getDrawingCollection();
-                            $imagenes = [];
-                            $processedCoordinates = [];
+                            $imagenesMap = []; // Mapa: fila => imagen
 
                             foreach ($drawings as $drawing) {
                                 $coordinates = $drawing->getCoordinates();
+                                $col = strtoupper(preg_replace('/[0-9]/', '', $coordinates));
+                                $rowNum = preg_replace('/[^0-9]/', '', $coordinates);
 
                                 // Solo columna K
-                                if (strpos(strtoupper($coordinates), 'K') !== 0) {
-                                    continue;
-                                }
+                                if ($col !== 'K') continue;
 
-                                if (in_array($coordinates, $processedCoordinates)) {
-                                    continue;
-                                }
-                                $processedCoordinates[] = $coordinates;
-
+                                // Extraer contenido de la imagen
                                 if ($drawing instanceof MemoryDrawing) {
                                     ob_start();
                                     call_user_func($drawing->getRenderingFunction(), $drawing->getImageResource());
@@ -377,9 +514,6 @@ class inventarioController extends Controller
 
                                     $extension = 'png';
                                     switch ($drawing->getMimeType()) {
-                                        case MemoryDrawing::MIMETYPE_PNG:
-                                            $extension = 'png';
-                                            break;
                                         case MemoryDrawing::MIMETYPE_GIF:
                                             $extension = 'gif';
                                             break;
@@ -394,55 +528,42 @@ class inventarioController extends Controller
                                         $imageContents .= fread($zipReader, 1024);
                                     }
                                     fclose($zipReader);
-
                                     $extension = $drawing->getExtension();
                                 }
 
-                                $imagenes[] = [
+                                $imagenesMap[$rowNum] = [
                                     'contents' => $imageContents,
-                                    'extension' => $extension,
-                                    'coord' => $coordinates
+                                    'extension' => $extension
                                 ];
                             }
 
-                            // ============= Guardar en DB ==================
+                            // Guardar en DB
                             $totalEquipos = count($datosGenerales);
                             $equipoInsertados = 0;
-                            $posicionImagenEquipo = 0;
+                            $filaExcel = 3; // La fila de datos inicia en 3 (ya se saltaron 2 encabezados)
 
                             foreach ($datosGenerales as $rowData) {
+                                // Insertar equipo
                                 $nuevoEquipo = inventarioModel::create([
-
-                                    'DESCRIPCION_EQUIPO'  => !empty($rowData['B']) ? $rowData['B'] : null,
-                                    // 'DESCRIPCION_EQUIPO' => $rowData['B'] ?? "EL NOMBRE DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
-                                    'MARCA_EQUIPO'  => !empty($rowData['C']) ? $rowData['C'] : null,
-                                    // 'MARCA_EQUIPO'       => $rowData['C'] ?? "LA MARCA DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
-                                    'MODELO_EQUIPO'  => !empty($rowData['D']) ? $rowData['D'] : null,
-                                    // 'MODELO_EQUIPO'      => $rowData['D'] ?? "EL MODELO DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
-                                    'SERIE_EQUIPO'  => !empty($rowData['E']) ? $rowData['E'] : null,
-                                    // 'SERIE_EQUIPO'       => $rowData['E'] ?? "LA SERIE DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
-                                    'CODIGO_EQUIPO'  => !empty($rowData['F']) ? $rowData['F'] : null,
-                                    // 'CODIGO_EQUIPO'      => $rowData['F'] ?? "EL CODIGO DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
-                                    'CANTIDAD_EQUIPO'  => !empty($rowData['G']) ? $rowData['G'] : null,
-                                    // 'CANTIDAD_EQUIPO'    => $rowData['G'] ?? "0",
-                                    'UBICACION_EQUIPO'  => !empty($rowData['I']) ? $rowData['I'] : null,
-                                    // 'UBICACION_EQUIPO'   => $rowData['I'] ?? "LA UBICACION DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
-                                    'ESTADO_EQUIPO'  => !empty($rowData['J']) ? $rowData['J'] : null,
-                                    // 'ESTADO_EQUIPO'      => $rowData['J'] ?? "EL ESTADO DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
+                                    'DESCRIPCION_EQUIPO' => !empty($rowData['B']) ? $rowData['B'] : null,
+                                    'MARCA_EQUIPO'       => !empty($rowData['C']) ? $rowData['C'] : null,
+                                    'MODELO_EQUIPO'      => !empty($rowData['D']) ? $rowData['D'] : null,
+                                    'SERIE_EQUIPO'       => !empty($rowData['E']) ? $rowData['E'] : null,
+                                    'CODIGO_EQUIPO'      => !empty($rowData['F']) ? $rowData['F'] : null,
+                                    'CANTIDAD_EQUIPO'    => !empty($rowData['G']) ? $rowData['G'] : null,
+                                    'UBICACION_EQUIPO'   => !empty($rowData['I']) ? $rowData['I'] : null,
+                                    'ESTADO_EQUIPO'      => !empty($rowData['J']) ? $rowData['J'] : null,
                                     'FECHA_ADQUISICION'  => !empty($rowData['L']) ? $rowData['L'] : null,
-                                    'PROVEEDOR_EQUIPO'  => !empty($rowData['M']) ? $rowData['M'] : null,
-                                    // 'PROVEEDOR_EQUIPO'   => $rowData['M'] ?? "EL PROVEEDOR DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
-                                    'UNITARIO_EQUIPO'  => !empty($rowData['N']) ? $rowData['N'] : null,
-                                    // 'UNITARIO_EQUIPO'    => $rowData['N'] ?? "EL PRECIO UNITARIO DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
-                                    'TOTAL_EQUIPO'  => !empty($rowData['O']) ? $rowData['O'] : null,
-                                    // 'TOTAL_EQUIPO'       => $rowData['O'] ?? "EL PRECIO TOTAL DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
-                                    'TIPO_EQUIPO'  => !empty($rowData['P']) ? $rowData['P'] : null,
-                                    // 'TIPO_EQUIPO'        => $rowData['P'] ?? "EL TIPO DEL EQUIPO NO FUE ESPECIFICADO EN EL EXCEL",
+                                    'PROVEEDOR_EQUIPO'   => !empty($rowData['M']) ? $rowData['M'] : null,
+                                    'UNITARIO_EQUIPO'    => !empty($rowData['N']) ? $rowData['N'] : null,
+                                    'TOTAL_EQUIPO'       => !empty($rowData['O']) ? $rowData['O'] : null,
+                                    'TIPO_EQUIPO'        => !empty($rowData['P']) ? $rowData['P'] : null,
                                     'FOTO_EQUIPO'        => null
                                 ]);
 
-                                if (isset($imagenes[$posicionImagenEquipo])) {
-                                    $imagen = $imagenes[$posicionImagenEquipo];
+                                // Verificar si hay imagen en la fila actual
+                                if (isset($imagenesMap[$filaExcel])) {
+                                    $imagen = $imagenesMap[$filaExcel];
                                     $filename = 'foto_equipo.' . $imagen['extension'];
                                     $pathFinal = 'Almacén/Inventario/' . $nuevoEquipo->ID_FORMULARIO_INVENTARIO . '/' . $filename;
 
@@ -451,14 +572,19 @@ class inventarioController extends Controller
                                     $nuevoEquipo->update([
                                         'FOTO_EQUIPO' => $pathFinal
                                     ]);
+                                } else {
+                                    // Si no hay imagen, opcionalmente puedes dejar null o 'N/A'
+                                    $nuevoEquipo->update([
+                                        'FOTO_EQUIPO' => null // o 'N/A' si quieres texto explícito
+                                    ]);
                                 }
 
-                                $posicionImagenEquipo++;
                                 $equipoInsertados++;
+                                $filaExcel++;
                             }
 
                             return response()->json([
-                                'msj'  => 'Total de equipos agregados : ' . $equipoInsertados . ' de ' . $totalEquipos,
+                                'msj'  => 'Total de equipos agregados: ' . $equipoInsertados . ' de ' . $totalEquipos,
                                 'code' => 200
                             ]);
                         } else {
@@ -472,6 +598,8 @@ class inventarioController extends Controller
                     }
 
 
+
+                    
                 default:
                     $response['code']  = 1;
                     $response['msj']  = 'Api no encontrada';
@@ -481,7 +609,7 @@ class inventarioController extends Controller
 
             
         } catch (Exception $e) {
-            return response()->json('Error al guardar el asesor');
+            return response()->json('Error al guardar');
         }
     }
 
