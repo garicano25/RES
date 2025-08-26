@@ -118,14 +118,11 @@ class altacuentaController extends Controller
                 $requestData = $request->all();
                 $requestData['RFC_PROVEEDOR'] = $rfc;
 
-                // CREACIÓN DE REGISTRO NUEVO
                 if ($request->ID_FORMULARIO_CUENTAPROVEEDOR == 0) {
                     DB::statement('ALTER TABLE formulario_altacuentaproveedor AUTO_INCREMENT=1;');
 
-                    // Se crea el registro sin archivo
                     $cuentas = altacuentaModel::create($requestData);
 
-                    // Si viene archivo, se guarda después de tener el ID
                     if ($request->hasFile('CARATULA_BANCARIA')) {
                         $file = $request->file('CARATULA_BANCARIA');
                         $folderPath = "proveedores/{$rfc}/Caratula de cuentas/{$cuentas->ID_FORMULARIO_CUENTAPROVEEDOR}";

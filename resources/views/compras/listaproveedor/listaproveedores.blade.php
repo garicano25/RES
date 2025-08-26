@@ -306,7 +306,7 @@
                                         </div>
                                         <span>Documentos de soporte</span>
                                     </div>
-<!-- 
+                                    <!-- 
                                     <div class="multisteps-form__progress-btn" id="step7">
                                         <div class="step-circle">
                                             <i class="bi bi-check2-circle"></i>
@@ -777,7 +777,7 @@
 
 
 
-                    <!-- Step 7 -->
+                    <!-- Step 7 NO ESTA HECHO SOLO CONSULTA DEL CATALAGO "Catálogo Verificación de información del proveedor"-->
                     <!-- 
                     <div id="step7-content" style="display: none;">
                         <ol class="breadcrumb mt-5" style="display: flex; justify-content: center; align-items: center;">
@@ -808,13 +808,11 @@
                                     </div>
 
                                     <div class="verif-controls">
-                                        <!-- Estado ARRIBA de los radios -->
                                         <div class="verif-status" id="status_{{ $id }}"
                                             data-value="{{ $valor === 1 ? '1' : ($valor === 0 ? '0' : '') }}">
                                             <span class="badge badge-neutral">Sin seleccionar</span>
                                         </div>
 
-                                        <!-- Radios -->
                                         <div class="verif-radios">
                                             <label class="form-check form-check-inline verif-radio">
                                                 <input class="form-check-input"

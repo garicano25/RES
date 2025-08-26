@@ -40,8 +40,6 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            /* position: relative; /* Asegura el posicionamiento relativo */
-            /* z-index: 999; Asegúrate de que esté por debajo de SweetAlert */
             overflow-y: auto;
         }
 
@@ -203,7 +201,6 @@
             overflow-y: auto;
         }
 
-        /* SweetAlert Styles */
         .swal2-container {
             z-index: 10050 !important;
         }

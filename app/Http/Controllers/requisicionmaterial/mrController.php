@@ -165,7 +165,7 @@ class mrController extends Controller
                 })
                 ->where(function ($query) {
                     $query->whereNull('JEFEINMEDIATO_ID')
-                        ->orWhere('JEFEINMEDIATO_ID', '!=', Auth::id()); // <<--- Aquí filtramos
+                        ->orWhere('JEFEINMEDIATO_ID', '!=', Auth::id()); 
                 })
                 ->get();
 
@@ -410,38 +410,7 @@ class mrController extends Controller
 
     /////////////////////////////////////////////////////////// BITACORA REQUISICION //////////////////////////////////////////////////////////////
 
-    // public function Tablabitacora()
-    // {
-    //     try {
-    //         // Solo obtener registros con ESTADO_APROBACION = 'Aprobada'
-    //         $tabla = mrModel::where('ESTADO_APROBACION', 'Aprobada')->get();
-
-    //         foreach ($tabla as $value) {
-    //             if ($value->ACTIVO == 0) {
-    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '"><span class="slider round"></span></label>';
-    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-eye"></i></button>';
-    //             } else {
-    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '" checked><span class="slider round"></span></label>';
-    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
-    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-    //             }
-
-    //             $value->BTN_NO_MR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-    //         }
-
-    //         return response()->json([
-    //             'data' => $tabla,
-    //             'msj' => 'Información consultada correctamente'
-    //         ]);
-    //     } catch (Exception $e) {
-    //         return response()->json([
-    //             'msj' => 'Error ' . $e->getMessage(),
-    //             'data' => 0
-    //         ]);
-    //     }
-    // }
-
+  
 
 
     public function Tablabitacora()
@@ -457,24 +426,19 @@ class mrController extends Controller
                 $total = $hojas->count();
 
                 if ($total === 0) {
-                    // No hay registros relacionados
                     $value->ESTADO_FINAL = 'Sin datos';
                     $value->COLOR = null;
                     $value->DISABLED_SELECT = true;
                 } else {
-                    // $aprobadas = $hojas->where('ESTADO_APROBACION', 'Aprobada')->count();
                     $aprobadas = $hojas->whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])->count();
 
                     $requiere_po = $hojas->where('REQUIERE_PO', 'Sí')->count();
 
-                    // Inicialmente asumimos que no hay PO aprobada
                     $po_aprobada_o_rechazada = false;
 
-                    // Revisamos cada hoja
                     foreach ($hojas as $hoja) {
                         $hoja_id = $hoja->id;
 
-                        // Buscamos en formulario_ordencompra donde HOJA_ID contenga este ID
                         $po_relacionadas = DB::table('formulario_ordencompra')
                             ->whereJsonContains('HOJA_ID', (string)$hoja_id)
                             ->whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])
@@ -482,11 +446,10 @@ class mrController extends Controller
 
                         if ($po_relacionadas > 0) {
                             $po_aprobada_o_rechazada = true;
-                            break; // con uno es suficiente
+                            break; 
                         }
                     }
 
-                    // Evaluamos el estado final
                     if ($aprobadas === $total && ($requiere_po === 0 || $po_aprobada_o_rechazada)) {
                         $value->ESTADO_FINAL = 'Finalizada';
                         $value->COLOR = '#d4edda';
@@ -1068,15 +1031,13 @@ class mrController extends Controller
                     ->first();
 
                 if ($registroExistente) {
-                    // Si existe, actualizar el registro
                     DB::table('formulario_matrizcomparativa')
-                        ->where('ID_FORMULARIO_MATRIZ', $registroExistente->ID_FORMULARIO_MATRIZ) // Asegúrate que el campo se llama 'id'
+                        ->where('ID_FORMULARIO_MATRIZ', $registroExistente->ID_FORMULARIO_MATRIZ) 
                         ->update(array_merge([
                             'HOJA_ID'    => json_encode([(string) $id], JSON_UNESCAPED_UNICODE),
                             'updated_at' => now(),
                         ], $proveedores_detectados, $materiales_detectados));
                 } else {
-                    // Si no existe, marcar la hoja y guardar nuevo registro
                     HojaTrabajo::where('id', $id)->update(['REQUIERE_MATRIZ' => 'Sí']);
 
                     DB::table('formulario_matrizcomparativa')->insert(array_merge([
@@ -1283,7 +1244,7 @@ class mrController extends Controller
             //         $subtotalQ2 <= 10001 &&
             //         $subtotalQ3 <= 10001
             //     ) {
-            //         continue; // ❌ No se considera este producto
+            //         continue; //  No se considera este producto
             //     }
 
             //     $proveedoresRaw = [
@@ -1360,7 +1321,7 @@ class mrController extends Controller
             //             });
 
             //         if ($registroExistente) {
-            //             // 🔁 Actualizar existente
+            //             //  Actualizar existente
             //             $hojasActuales = json_decode($registroExistente->HOJA_ID, true) ?? [];
             //             $hojasNuevas = array_values(array_unique(array_merge($hojasActuales, $grupo['ids'])));
 
@@ -1395,7 +1356,7 @@ class mrController extends Controller
             //             HojaTrabajo::whereIn('id', $grupo['ids'])
             //                 ->update(['REQUIERE_MATRIZ' => 'Sí']);
             //         } else {
-            //             // 🆕 Insertar nuevo registro
+            //             //  Insertar nuevo registro
             //             HojaTrabajo::whereIn('id', $grupo['ids'])
             //                 ->update(['REQUIERE_MATRIZ' => 'Sí']);
 
@@ -1516,7 +1477,6 @@ class mrController extends Controller
                         ->first();
 
                     if ($registroExistente) {
-                        // 🔁 Actualizar: REEMPLAZA por completo materiales, subtotales, etc.
                         $hojasActuales = json_decode($registroExistente->HOJA_ID ?? '[]', true);
                         $hojasNuevas = array_values(array_unique(array_merge($hojasActuales, $grupo['ids'])));
 
@@ -1543,7 +1503,6 @@ class mrController extends Controller
                         HojaTrabajo::whereIn('id', $grupo['ids'])
                             ->update(['REQUIERE_MATRIZ' => 'Sí']);
                     } else {
-                        // 🆕 Insertar nuevo registro
                         HojaTrabajo::whereIn('id', $grupo['ids'])
                             ->update(['REQUIERE_MATRIZ' => 'Sí']);
 
@@ -1703,12 +1662,10 @@ class mrController extends Controller
                         $nextNumber = $lastMR ? intval(substr($lastMR->NO_MR, -3)) + 1 : 1;
                         $noMR = sprintf("RES-MR%s-%03d", $year, $nextNumber);
 
-                        // Asegurar que MATERIALES_JSON se guarde limpio
                         $materialesJson = is_string($request->MATERIALES_JSON)
                             ? $request->MATERIALES_JSON
                             : json_encode($request->MATERIALES_JSON, JSON_UNESCAPED_UNICODE);
 
-                        // Crear nuevo formulario
                         $mrs = mrModel::create(array_merge(
                             $request->except(['MATERIALES_JSON']),
                             [
@@ -1723,7 +1680,6 @@ class mrController extends Controller
                             'mr' => $mrs
                         ]);
                     } else {
-                        // EDICIÓN
                         if (isset($request->ELIMINAR)) {
                             $estado = $request->ELIMINAR == 1 ? 0 : 1;
                             mrModel::where('ID_FORMULARIO_MR', $request->ID_FORMULARIO_MR)
@@ -1738,7 +1694,6 @@ class mrController extends Controller
                             if ($mrs) {
                                 $datos = $request->except(['USUARIO_ID']);
 
-                                // Validar formato correcto de MATERIALES_JSON
                                 if (isset($datos['MATERIALES_JSON'])) {
                                     $datos['MATERIALES_JSON'] = is_string($datos['MATERIALES_JSON'])
                                         ? $datos['MATERIALES_JSON']

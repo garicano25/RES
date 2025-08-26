@@ -55,7 +55,6 @@ class altacerticacionController extends Controller
                     ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-membresia" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver membresía"><i class="bi bi-filetype-pdf"></i></button>'
                     : '';
 
-                // Armar botón de documentos según tipo
                 switch ($value->TIPO_DOCUMENTO) {
                     case 'Certificación':
                         $value->BTN_DOCUMENTO = $btnCertificacion ?: 'N/A';

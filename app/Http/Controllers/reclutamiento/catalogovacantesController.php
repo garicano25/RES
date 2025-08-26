@@ -23,13 +23,6 @@ class catalogovacantesController extends Controller
     {
        
 
-    //     $areas = catalogocategoriaModel::where('ES_LIDER_CATEGORIA', 0)
-    // ->whereIn('ID_CATALOGO_CATEGORIA', function($query) {
-    //     $query->select('PUESTO_RP')
-    //           ->from('formulario_requerimientos');
-    // })
-    // ->orderBy('NOMBRE_CATEGORIA', 'ASC')
-    // ->get();
 
     $areas = catalogocategoriaModel::whereIn('ID_CATALOGO_CATEGORIA', function($query) {
         $query->select('PUESTO_RP')
@@ -86,63 +79,6 @@ class catalogovacantesController extends Controller
 }
 
     
-// public function store(Request $request)
-//     {
-//         try {
-//             switch (intval($request->api)) {
-//                 case 1:
-//                     DB::beginTransaction(); 
-
-//                     if ($request->ID_CATALOGO_VACANTE == 0) {
-//                         DB::statement('ALTER TABLE catalogo_vacantes AUTO_INCREMENT=1;');
-//                         $vacante = catalogovacantesModel::create($request->all());
-
-//                     } else { 
-
-//                         if (!isset($request->ELIMINAR)) {
-//                             $vacante = catalogovacantesModel::find($request->ID_CATALOGO_VACANTE);
-//                             $vacante->update($request->all());
-//                             requerimientoModel::where('CATALOGO_VACANTES_ID', $request->ID_CATALOGO_VACANTE)->delete();
-                      
-//                         } else {
-
-//                             $vacante = catalogovacantesModel::where('ID_CATALOGO_VACANTE', $request['ID_CATALOGO_VACANTE'])->update(['ACTIVO' => 0]);
-//                             $response['code']  = 1;
-//                             $response['vacante']  = 'Desactivada';
-//                             DB::commit();
-//                             return response()->json($response);
-//                         }
-//                     }
-    
-//                    if ($request->has('NOMBRE_REQUERIMINETO')) {
-//                         foreach ($request->NOMBRE_REQUERIMINETO as $index => $requerimiento) {
-//                             requerimientoModel::create([
-//                                 'CATALOGO_VACANTES_ID' => $vacante->ID_CATALOGO_VACANTE,
-//                                 'NOMBRE_REQUERIMINETO' => $requerimiento,
-//                                 'PORCENTAJE' => $request->PORCENTAJE[$index]
-//                             ]);
-//                         }
-//                     }
-
-    
-//                     $response['code']  = 1;
-//                     $response['vacante']  = $vacante;
-//                     DB::commit(); 
-//                     return response()->json($response);
-//                     break;
-
-                    
-//                 default:
-//                     $response['code']  = 1;
-//                     $response['msj']  = 'Api no encontrada';
-//                     return response()->json($response);
-//             }
-//         } catch (Exception $e) {
-//             DB::rollBack(); 
-//             return response()->json('Error al guardar la nueva vacante');
-//         }
-//     }
-// }
 
 
 public function store(Request $request)

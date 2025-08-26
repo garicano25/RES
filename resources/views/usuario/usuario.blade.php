@@ -5,28 +5,20 @@
 
 
 <style type="text/css" media="screen">
-    /* Estilos personalizados para Dropify */
-    /* Estilos personalizados para Dropify */
+    
     .dropify-wrapper {
         height: 270px !important;
-        /* Ajuste de altura */
         border-radius: 5px;
-        /* Borde redondeado */
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        /* Sombra */
         text-align: center;
-        /* Centrar el contenido */
     }
 
     .dropify-message p {
         font-size: 14px;
-        /* Tamaño de fuente del mensaje */
         margin: 0;
-        /* Quitar márgenes */
     }
 
 
-    /* Otros ajustes de estilo para el modal */
     .modal-header .close {
         font-size: 1.5rem;
     }

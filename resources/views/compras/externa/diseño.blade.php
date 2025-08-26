@@ -6,12 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" sizes="20x20" href="/assets/images/favicon.png">
     <title>Results In Performance</title>
-    <!-- Importar la fuente Maven Pro de Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            /* Aplicar la fuente Maven Pro */
             background-color: #f0f0f0;
             margin: 0;
             padding: 0;
@@ -37,13 +35,9 @@
             padding: 40px;
             display: flex;
             flex-direction: column;
-            /* Disponer los elementos en columna */
             align-items: center;
-            /* Centrar el contenido horizontalmente */
             justify-content: center;
-            /* Centrar el contenido verticalmente */
             height: 250px;
-            /* Asegurar que todas las cards tengan el mismo tamaño */
             max-width: 700px;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -56,10 +50,8 @@
 
         .logo {
             width: 100px;
-            /* Reducir el tamaño del logo */
             height: auto;
             margin-bottom: 20px;
-            /* Separar el logo del texto */
         }
 
         .logo img {
@@ -88,7 +80,6 @@
 
 <body>
     <div class="container">
-        <!-- Primera tarjeta con el logo centrado y más pequeño -->
         <a href="{{ url('/Directorio') }}" target="_blank">
             <div class="card">
                 <div class="logo">
@@ -98,7 +89,6 @@
                 <div class="description">Ingresa tus datos y regístrate.</div>
             </div>
         </a>
-        <!-- Segunda tarjeta sin logo pero del mismo tamaño -->
         <a href="{{ url('/login') }}" target="_blank">
             <div class="card">
                 <div class="logo">

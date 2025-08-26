@@ -57,7 +57,7 @@ class usuarioController extends Controller
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                 }
 
-                $value->ROLES_ASIGNADOS = $value->roles->pluck('NOMBRE_ROL'); // Devuelve un array con los nombres de los roles
+                $value->ROLES_ASIGNADOS = $value->roles->pluck('NOMBRE_ROL'); 
                 
             }
 
@@ -106,8 +106,7 @@ class usuarioController extends Controller
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                 }
 
-                // Añade los roles asociados al usuario
-                $value->ROLES_ASIGNADOS = $value->roles->pluck('NOMBRE_ROL'); // Devuelve un array con los nombres de los roles
+                $value->ROLES_ASIGNADOS = $value->roles->pluck('NOMBRE_ROL'); 
             }
 
             return response()->json([
@@ -134,12 +133,11 @@ public function mostrarFotoUsuario($usuario_id)
 public function store(Request $request)
 {
     try {
-        DB::beginTransaction(); // Iniciar una transacción para garantizar la integridad de los datos
+        DB::beginTransaction(); 
 
         switch (intval($request->api)) {
             case 1:
                 if ($request->ID_USUARIO == 0) {
-                    // Crear nuevo usuario
                     DB::statement('ALTER TABLE usuarios AUTO_INCREMENT=1;');
 
                     $datosUsuario = $request->all();
@@ -157,7 +155,6 @@ public function store(Request $request)
                         $usuarios->save();
                     }
 
-                    // Guardar los roles seleccionados
                     if ($request->has('NOMBRE_ROL')) {
                         foreach ($request->NOMBRE_ROL as $rol) {
                             rolesModel::create([
@@ -170,13 +167,11 @@ public function store(Request $request)
                 } else {
                     if (isset($request->ELIMINAR)) {
                         if ($request->ELIMINAR == 1) {
-                            // Desactivar usuario
                             usuarioModel::where('ID_USUARIO', $request['ID_USUARIO'])->update(['ACTIVO' => 0]);
                             rolesModel::where('USUARIO_ID', $request['ID_USUARIO'])->update(['ACTIVO' => 0]);
                             $response['code'] = 1;
                             $response['usuario'] = 'Desactivada';
                         } else {
-                            // Activar usuario
                             usuarioModel::where('ID_USUARIO', $request['ID_USUARIO'])->update(['ACTIVO' => 1]);
                             rolesModel::where('USUARIO_ID', $request['ID_USUARIO'])->update(['ACTIVO' => 1]);
                             $response['code'] = 1;
@@ -190,31 +185,24 @@ public function store(Request $request)
                         }
 
                         if ($request->hasFile('FOTO_USUARIO')) {
-                            // Eliminar la foto anterior si existe
                             if ($usuarios->FOTO_USUARIO && Storage::exists($usuarios->FOTO_USUARIO)) {
                                 Storage::delete($usuarios->FOTO_USUARIO);
                             }
 
-                            // Obtener la nueva imagen
                             $imagen = $request->file('FOTO_USUARIO');
                             $rutaCarpetaUsuario = 'usuarios/' . $usuarios->ID_USUARIO;
                             $nombreArchivo = 'foto_usuario.' . $imagen->getClientOriginalExtension();
                             $rutaCompleta = $imagen->storeAs($rutaCarpetaUsuario, $nombreArchivo);
 
-                            // Actualizar la ruta de la nueva imagen en el modelo
                             $usuarios->FOTO_USUARIO = $rutaCompleta;
                         }
 
-                        // Actualizar otros datos del usuario
                         $usuarios->update($request->except('FOTO_USUARIO'));
                         $usuarios->save();
 
-                        // Actualizar roles
                         if ($request->has('NOMBRE_ROL')) {
-                            // Eliminar roles actuales
                             rolesModel::where('USUARIO_ID', $usuarios->ID_USUARIO)->delete();
 
-                            // Guardar los nuevos roles
                             foreach ($request->NOMBRE_ROL as $rol) {
                                 rolesModel::create([
                                     'USUARIO_ID' => $usuarios->ID_USUARIO,
@@ -227,13 +215,13 @@ public function store(Request $request)
                         $response['code'] = 1;
                         $response['usuario'] = 'Actualizada';
                     }
-                    DB::commit(); // Confirmar la transacción
+                    DB::commit(); 
                     return response()->json($response);
                 }
 
                 $response['code'] = 1;
                 $response['usuario'] = $usuarios;
-                DB::commit(); // Confirmar la transacción
+                DB::commit(); 
                 return response()->json($response);
 
             default:
@@ -242,7 +230,7 @@ public function store(Request $request)
                 return response()->json($response);
         }
     } catch (Exception $e) {
-        DB::rollBack(); // Revertir la transacción en caso de error
+        DB::rollBack(); 
         return response()->json('Error al guardar la jerarquía: ' . $e->getMessage());
     }
 }

@@ -20,101 +20,6 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 
 
 
-
-// $("#guardarDOCUMENTO").click(function (e) {
-//     e.preventDefault();
-
-//     formularioValido = validarFormulario($('#formularioDOCUMENTOS'))
-
-//     if (formularioValido) {
-
-//     if (ID_BRECHA_COMPETENCIAS == 0) {
-        
-//         alertMensajeConfirm({
-//             title: "¿Desea guardar la información?",
-//             text: "Al guardarla, se podra usar",
-//             icon: "question",
-//         },async function () { 
-
-//             await loaderbtn('guardarDOCUMENTO')
-//             await ajaxAwaitFormData({ api: 1, ID_BRECHA_COMPETENCIAS: ID_BRECHA_COMPETENCIAS }, 'DocumentosSave', 'formularioDOCUMENTOS', 'guardarDOCUMENTO', { callbackAfter: true, callbackBefore: true }, () => {
-        
-               
-
-//                 Swal.fire({
-//                     icon: 'info',
-//                     title: 'Espere un momento',
-//                     text: 'Estamos guardando la información',
-//                     showConfirmButton: false
-//                 })
-
-//                 $('.swal2-popup').addClass('ld ld-breath')
-        
-                
-//             }, function (data) {
-                    
-
-//                     ID_BRECHA_COMPETENCIAS = data.documento.ID_BRECHA_COMPETENCIAS
-//                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
-//                      $('#miModal_documentos').modal('hide')
-//                     document.getElementById('formularioDOCUMENTOS').reset();
-//                     Tablabrecha.ajax.reload()
-
-           
-                
-                
-//             })
-            
-            
-            
-//         }, 1)
-        
-//     } else {
-//             alertMensajeConfirm({
-//             title: "¿Desea editar la información de este formulario?",
-//             text: "Al guardarla, se podra usar",
-//             icon: "question",
-//         },async function () { 
-
-//             await loaderbtn('guardarDOCUMENTO')
-//             await ajaxAwaitFormData({ api: 1, ID_BRECHA_COMPETENCIAS: ID_BRECHA_COMPETENCIAS }, 'DocumentosSave', 'formularioDOCUMENTOS', 'guardarDOCUMENTO', { callbackAfter: true, callbackBefore: true }, () => {
-        
-//                 Swal.fire({
-//                     icon: 'info',
-//                     title: 'Espere un momento',
-//                     text: 'Estamos guardando la información',
-//                     showConfirmButton: false
-//                 })
-
-//                 $('.swal2-popup').addClass('ld ld-breath')
-        
-                
-//             }, function (data) {
-                    
-//                 setTimeout(() => {
-
-                    
-//                     ID_BRECHA_COMPETENCIAS = data.documento.ID_BRECHA_COMPETENCIAS
-//                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
-//                      $('#miModal_documentos').modal('hide')
-//                     document.getElementById('formularioDOCUMENTOS').reset();
-//                     Tablabrecha.ajax.reload()
-
-
-//                 }, 300);  
-//             })
-//         }, 1)
-//     }
-
-// } else {
-//     alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
-
-// }
-    
-// });
-
-
-
 var Tablabrecha = $("#Tablabrecha").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
@@ -172,50 +77,6 @@ var Tablabrecha = $("#Tablabrecha").DataTable({
 
 
 
-
-
-
-
-// $('#Tablabrecha tbody').on('click', 'td>button.EDITAR', function () {
-//     var tr = $(this).closest('tr');
-//     var row = Tablabrecha.row(tr);
-//     ID_BRECHA_COMPETENCIAS = row.data().ID_BRECHA_COMPETENCIAS;
-
-//     editarDatoTabla(row.data(), 'formularioBRECHA', 'miModal_BRECHA', 1);
-
-//     const brechasJson = JSON.parse(row.data().BRECHA_JSON || '{}');
-
-//     let totalBrechas = 0;
-//     let listaBrechasHtml = '';
-
-//     const secciones = {
-//         formacion: "Formación",
-//         habilidades: "Habilidades",
-//         conocimientos: "Conocimientos",
-//         experiencia: "Experiencia",
-//         cursos: "Cursos"
-//     };
-
-//     Object.entries(secciones).forEach(([clave, titulo]) => {
-//         const brechas = brechasJson[clave] || [];
-
-//         if (brechas.length > 0) {
-//             totalBrechas += brechas.length;
-
-         
-//             listaBrechasHtml += brechas.map(item => `
-//                 <div class="fila-brecha">
-//                     <div class="mensaje-brecha">${item.mensaje}</div>
-//                     <div class="porcentaje-brecha">${parseFloat(item.porcentaje).toFixed(1)}%</div>
-//                 </div>
-//             `).join('');
-//         }
-//     });
-
-//     $('#listaBrechas').html(listaBrechasHtml || '<em>No hay brechas registradas</em>');
-//     $('#contadorBrechas').text(`Total de brechas: ${totalBrechas}`);
-// });
-
 $('#Tablabrecha tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablabrecha.row(tr);
@@ -229,7 +90,6 @@ $('#Tablabrecha tbody').on('click', 'td>button.EDITAR', function () {
     let listaBrechasHtml = '';
     let todasLasBrechas = [];
 
-    // Recopilar todas las brechas en un solo array
     const secciones = {
         formacion: "Formación",
         habilidades: "Habilidades",
@@ -238,7 +98,6 @@ $('#Tablabrecha tbody').on('click', 'td>button.EDITAR', function () {
         cursos: "Cursos"
     };
 
-    // Simplemente recopilamos todas las brechas sin clasificar
     Object.entries(secciones).forEach(([clave, titulo]) => {
         const brechas = brechasJson[clave] || [];
         
@@ -250,11 +109,9 @@ $('#Tablabrecha tbody').on('click', 'td>button.EDITAR', function () {
         });
     });
 
-    // Si no hay brechas, mostrar mensaje
     if (totalBrechas === 0) {
         listaBrechasHtml = '<div class="sin-brechas">No hay brechas registradas</div>';
     } else {
-        // Generar HTML para todas las brechas en un solo listado
         todasLasBrechas.forEach((item, index) => {
             const porcentaje = parseFloat(item.porcentaje).toFixed(1);
             let claseColor = 'porcentaje-bajo';

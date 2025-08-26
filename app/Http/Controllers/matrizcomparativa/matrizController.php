@@ -69,7 +69,7 @@ class matrizController extends Controller
                 } elseif ($value->SOLICITAR_VERIFICACION == 'Sí') {
                     $value->ESTADO_BADGE = '<span class="badge bg-warning text-dark">En revisión</span>';
                 } else {
-                    $value->ESTADO_BADGE = '<span class="badge bg-secondary">Sin estatus</span>'; // vacío u opcional
+                    $value->ESTADO_BADGE = '<span class="badge bg-secondary">Sin estatus</span>'; 
                 }
             }
 
@@ -177,50 +177,6 @@ class matrizController extends Controller
 
 
 
-                // case 2:
-                //     if ($request->ID_FORMULARIO_MATRIZ == 0) {
-                //         DB::statement('ALTER TABLE formulario_matrizcomparativa AUTO_INCREMENT=1;');
-                //         $matrizes = matrizModel::create($request->all());
-                //     } else {
-                //         if (isset($request->ELIMINAR)) {
-                //             if ($request->ELIMINAR == 1) {
-                //                 matrizModel::where('ID_FORMULARIO_MATRIZ', $request['ID_FORMULARIO_MATRIZ'])->update(['ACTIVO' => 0]);
-                //                 return response()->json(['code' => 1, 'matriz' => 'Desactivada']);
-                //             } else {
-                //                 matrizModel::where('ID_FORMULARIO_MATRIZ', $request['ID_FORMULARIO_MATRIZ'])->update(['ACTIVO' => 1]);
-                //                 return response()->json(['code' => 1, 'matriz' => 'Activada']);
-                //             }
-                //         } else {
-                //             $matrizes = matrizModel::find($request->ID_FORMULARIO_MATRIZ);
-                //             $matrizes->update($request->all());
-                //         }
-                //     }
-
-                //     $hojas = json_decode($matrizes->HOJA_ID, true);
-
-                //     if (is_array($hojas)) {
-                //         foreach ($hojas as $hojaId) {
-                //             DB::table('hoja_trabajo')
-                //                 ->where('id', $hojaId)
-                //                 ->update([
-                //                     'ESTADO_APROBACION'      => $request->ESTADO_APROBACION,
-                //                     'FECHA_APROBACION'       => $request->FECHA_APROBACION,
-                //                     'MOTIVO_RECHAZO'         => $request->MOTIVO_RECHAZO,
-                //                     'REQUIERE_PO'            => $request->REQUIERE_PO,
-                //                     'PROVEEDOR_SELECCIONADO' => $request->PROVEEDOR_SELECCIONADO,
-                //                     'MONTO_FINAL'            => $request->MONTO_FINAL,
-                //                     'FORMA_PAGO'             => $request->FORMA_PAGO,
-                //                     'REQUIERE_MATRIZ'        => 'No',
-                //                         'APROBADO_ID' => auth()->user()->ID_USUARIO,
-                //             ]);
-                //         }
-                //     }
-
-                //     return response()->json([
-                //         'code'   => 1,
-                //         'matriz' => $matrizes
-                //     ]);
-                //     break;
 
                 case 2:
                     if ($request->ID_FORMULARIO_MATRIZ == 0) {
@@ -274,7 +230,6 @@ class matrizController extends Controller
                             $consecutivo = $ultimo ? (int)substr($ultimo, -3) + 1 : 1;
                             $numeroOrden = sprintf("RES-PO%s-%03d", $año, $consecutivo);
 
-                            // Obtener información del proveedor seleccionado
                             $proveedor = $request->PROVEEDOR_SELECCIONADO;
                             $materialesJson = null;
                             $subtotal = null;
@@ -301,7 +256,7 @@ class matrizController extends Controller
                             DB::table('formulario_ordencompra')->insert([
                                 'NO_PO'                  => $numeroOrden,
                                 'NO_MR'                  => $matrizes->NO_MR,
-                                'HOJA_ID'                => json_encode($hojas), // <- Arreglo como string JSON
+                                'HOJA_ID'                => json_encode($hojas), 
                                 'MATERIALES_JSON'        => $materialesJson,
                                 'PROVEEDOR_SELECCIONADO' => $proveedor,
                                 'SUBTOTAL'               => $subtotal,

@@ -2484,6 +2484,5 @@ document.getElementById('step7').addEventListener('click', function(event) {
       bindChanges();
     });
 
-    // Si al abrir el paso 7 los radios ya estaban marcados y no quieres esperar al DOMContentLoaded:
-    // setTimeout(initBadges, 0);
+   
   })();

@@ -22,7 +22,6 @@ class desvinculacionController extends Controller
     {
 
 
-        // $contratacion = contratacionModel::where('ACTIVO', 1)->get();
 
 
         $contratacion = contratacionModel::orderBy('CURP', 'ASC')->get();
@@ -104,65 +103,7 @@ public function store(Request $request)
 {
     try {
         switch (intval($request->api)) {
-                // case 1:
-                //     $curp = $request->CURP;
-
-                //     if ($request->ID_FORMULARIO_DESVINCULACION == 0) {
-                //         // Crear nuevo registro
-                //         DB::statement('ALTER TABLE formulario_desvinculacion AUTO_INCREMENT=1;');
-                //         $basicos = desvinculacioModel::create($request->except(['DOCUMENTO_ADEUDO', 'DOCUMENTO_BAJA', 'DOCUMENTO_CONVENIO']));
-
-                //         // Desactivar CURP en contratacionModel
-                //         contratacionModel::where('CURP', $curp)->update(['ACTIVO' => 0]);
-                //     } else {
-                //         // Actualizar registro existente
-                //         $basicos = desvinculacioModel::find($request->ID_FORMULARIO_DESVINCULACION);
-
-                //         // Verificar y actualizar DOCUMENTO_ADEUDO
-                //         if ($request->hasFile('DOCUMENTO_ADEUDO')) {
-                //             if ($basicos->DOCUMENTO_ADEUDO && Storage::exists($basicos->DOCUMENTO_ADEUDO)) {
-                //                 Storage::delete($basicos->DOCUMENTO_ADEUDO);
-                //             }
-                //             $rutaAdeudo = 'reclutamiento/' . $curp . '/Documentos de desvinculacion/' . $basicos->ID_FORMULARIO_DESVINCULACION . '/ADEUDO';
-                //             $nombreArchivo = $request->file('DOCUMENTO_ADEUDO')->getClientOriginalName();
-                //             $pathAdeudo = $request->file('DOCUMENTO_ADEUDO')->storeAs($rutaAdeudo, $nombreArchivo);
-                //             $basicos->DOCUMENTO_ADEUDO = $pathAdeudo;
-                //         }
-
-                //         // Verificar y actualizar DOCUMENTO_BAJA
-                //         if ($request->hasFile('DOCUMENTO_BAJA')) {
-                //             if ($basicos->DOCUMENTO_BAJA && Storage::exists($basicos->DOCUMENTO_BAJA)) {
-                //                 Storage::delete($basicos->DOCUMENTO_BAJA);
-                //             }
-                //             $rutaBaja = 'reclutamiento/' . $curp . '/Documentos de desvinculacion/' . $basicos->ID_FORMULARIO_DESVINCULACION . '/BAJA';
-                //             $nombreArchivo = $request->file('DOCUMENTO_BAJA')->getClientOriginalName();
-                //             $pathBaja = $request->file('DOCUMENTO_BAJA')->storeAs($rutaBaja, $nombreArchivo);
-                //             $basicos->DOCUMENTO_BAJA = $pathBaja;
-                //         }
-
-                //         // Verificar y actualizar DOCUMENTO_CONVENIO
-                //         if ($request->hasFile('DOCUMENTO_CONVENIO')) {
-                //             if ($basicos->DOCUMENTO_CONVENIO && Storage::exists($basicos->DOCUMENTO_CONVENIO)) {
-                //                 Storage::delete($basicos->DOCUMENTO_CONVENIO);
-                //             }
-                //             $rutaConvenio = 'reclutamiento/' . $curp . '/Documentos de desvinculacion/' . $basicos->ID_FORMULARIO_DESVINCULACION . '/CONVENIO';
-                //             $nombreArchivo = $request->file('DOCUMENTO_CONVENIO')->getClientOriginalName();
-                //             $pathConvenio = $request->file('DOCUMENTO_CONVENIO')->storeAs($rutaConvenio, $nombreArchivo);
-                //             $basicos->DOCUMENTO_CONVENIO = $pathConvenio;
-                //         }
-
-                //         $basicos->update($request->except(['DOCUMENTO_ADEUDO', 'DOCUMENTO_BAJA', 'DOCUMENTO_CONVENIO']));
-                //     }
-
-                //     // Guardar cambios
-                //     $basicos->save();
-
-                //     // Respuesta
-                //     $response['code']  = 1;
-                //     $response['basico']  = $basicos;
-                //     return response()->json($response);
-                //     break;
-
+             
 
                 case 1:
                     $curp = $request->CURP;

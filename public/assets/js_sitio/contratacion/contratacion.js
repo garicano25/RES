@@ -358,7 +358,7 @@ var Tablacontratacion = $("#Tablacontratacion").DataTable({
         },
         { data: 'CURP' },
         { data: 'NUMERO_EMPLEADO' },
-        { data: 'ESTATUS_CONTRATO' }, // NUEVA COLUMNA
+        { data: 'ESTATUS_CONTRATO' }, 
         { data: 'BTN_EDITAR' }
     ],
     
@@ -367,7 +367,7 @@ var Tablacontratacion = $("#Tablacontratacion").DataTable({
         { targets: 1, title: 'Nombre del colaborador', className: 'all text-center nombre-column' },
         { targets: 2, title: 'CURP', className: 'all text-center' },
         { targets: 3, title: 'No. empleado', className: 'all text-center' },
-        { targets: 4, title: 'Estatus del contrato', className: 'all text-center' }, // NUEVO TÍTULO
+        { targets: 4, title: 'Estatus del contrato', className: 'all text-center' }, 
         { targets: 5, title: 'Mostrar', className: 'all text-center' }
     ]
 });
@@ -834,7 +834,6 @@ $("#guardarDatosGenerales").click(function (e) {
     formularioValido = validarFormularioV1('FormularioCONTRATACION');
 
     if (formularioValido) {
-        // Generar lista de beneficiarios
         var beneficiarios = [];
         $(".generarlistadebeneficiario").each(function() {
             var beneficiario = {
@@ -1560,7 +1559,6 @@ function obtenerDocumentosOficiales(data) {
 function cargarBajasColaborador() {
     const container = document.getElementById('BAJAS_COLABORADOR');
     
-    // Limpiar y agregar título
     container.innerHTML = `<h5>Historial del colaborador</h5>`;
 
     fetch(`/obtenerbajasalta`, {
@@ -1573,7 +1571,6 @@ function cargarBajasColaborador() {
     })
     .then(response => response.json())
     .then(data => {
-        // Crear tabla
         let tabla = '<table class="table table-bordered">';
         tabla += `
             <thead>
@@ -1600,7 +1597,6 @@ function cargarBajasColaborador() {
 
         tabla += '</tbody></table>';
 
-        // Insertar tabla en el contenedor
         container.innerHTML += tabla;
     })
     .catch(error => {
@@ -1871,7 +1867,6 @@ function cargarTablaDocumentosSoporte() {
                     const inicioRaw = row.FECHAI_DOCUMENTOSOPORTE;
                     const finRaw = row.FECHAF_DOCUMENTOSOPORTE;
             
-                    // Validar que haya fechas válidas
                     if (!inicioRaw || !finRaw) {
                         return `
                             <div class="text-center">
@@ -1887,7 +1882,6 @@ function cargarTablaDocumentosSoporte() {
                     const totalDias = Math.ceil((fin - inicio) / (1000 * 60 * 60 * 24));
                     const diasRestantes = Math.ceil((fin - hoy) / (1000 * 60 * 60 * 24));
             
-                    // Definimos los umbrales como porcentaje de días restantes
                     const umbralVerde = totalDias * 0.60;     // VERDE si quedan más del 60%
                     const umbralAmarillo = totalDias * 0.30;  // AMARILLO si quedan entre 30 y 60%
             
@@ -1951,10 +1945,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const selectTipoDocumento = document.getElementById('TIPO_DOCUMENTO');
     const divFechasSoporte = document.getElementById('FECHAS_SOPORTEDOCUMENTOS');
 
-    // Aquí se listan los valores que deben mostrar el div
     const valoresPermitidos = ['1', '2', '3','14'];
 
-    // Escuchamos cambios en el <select>
     selectTipoDocumento.addEventListener('change', function () {
         const valorSeleccionado = this.value;
 
@@ -2004,7 +1996,7 @@ document.addEventListener("DOMContentLoaded", function () {
             requiereFecha.style.display = "block";
         } else {
             requiereFecha.style.display = "none";
-            fechasSoporte.style.display = "none"; // ocultar también en caso de cambiar tipo
+            fechasSoporte.style.display = "none"; 
             document.querySelectorAll('input[name="PROCEDE_FECHA_DOC"]').forEach(r => r.checked = false);
         }
     });
@@ -2658,7 +2650,7 @@ $('#Tablacontratosyanexos').on('click', '.generar-credencial', function () {
     window.location.href = `/descargar-credencial?curp=${encodeURIComponent(curp)}&id_contrato=${idContrato}`;
 
     setTimeout(() => {
-        Swal.close(); // cerrar el loader después de unos segundos por precaución
+        Swal.close(); 
     }, 6000);
 });
 
@@ -5153,7 +5145,7 @@ $('#Tablasoportecontrato').on('click', 'td>button.EDITAR', function () {
     const mostrarfoto = ['7'];
 
 
-    const tipoSeleccionado1 = String(row.data().TIPO_DOCUMENTO_SOPORTECONTRATO); // asegurar que es string
+    const tipoSeleccionado1 = String(row.data().TIPO_DOCUMENTO_SOPORTECONTRATO); 
 
     if (mostrarDivdocumentos.includes(tipoSeleccionado1)) {
         document.getElementById('FECHAS_SOPORTEDOCUMENTOSCONTRATO').style.display = 'block';
@@ -5162,7 +5154,7 @@ $('#Tablasoportecontrato').on('click', 'td>button.EDITAR', function () {
     }
 
 
-    const tipoSeleccionado7 = String(row.data().TIPO_DOCUMENTO_SOPORTECONTRATO); // asegurar que es string
+    const tipoSeleccionado7 = String(row.data().TIPO_DOCUMENTO_SOPORTECONTRATO); 
 
      if (mostrarfoto.includes(tipoSeleccionado7)) {
         document.getElementById('DIV_FOTO_FIRMA').style.display = 'block';
@@ -5629,18 +5621,15 @@ document.addEventListener('DOMContentLoaded', function () {
 const botonAgregarExperiencia = document.getElementById('botonAgregarExperiencia');
 const experienciaLaboralContainer = document.getElementById('Experiencia-laboral');
 
-// Delegar eventos para campos de fecha en el contenedor principal
 experienciaLaboralContainer.addEventListener('input', function (event) {
     const target = event.target;
 
-    // Verificar si el cambio ocurrió en un campo de fecha
     if (target && (target.name === "FECHA_INICIO[]" || target.name === "FECHA_FIN[]")) {
         ordenarCronologicamente();
         actualizarContadorGlobal();
     }
 });
 
-// Inicializar eventos de datepicker para campos dinámicos
 function inicializarDatepickers() {
     $('.mydatepicker').datepicker({
         format: 'yyyy-mm-dd',
@@ -5767,22 +5756,18 @@ botonAgregarExperiencia.addEventListener('click', function () {
 
     experienciaLaboralContainer.appendChild(experienciaDiv);
 
-    // Inicializar datepicker y eventos para los nuevos campos
     inicializarDatepickers();
 
-    // Ordenar cronológicamente y actualizar contador
     ordenarCronologicamente();
     actualizarContadorGlobal();
 
-    // Evento para eliminar el archivo del documento
     experienciaDiv.querySelector('.eliminar-documento').addEventListener('click', function () {
         const fileInput = this.previousElementSibling;
         if (fileInput && fileInput.type === 'file') {
-            fileInput.value = ''; // Limpiar el archivo cargado
+            fileInput.value = ''; 
         }
     });
 
-    // Evento para eliminar el contenedor completo
     experienciaDiv.querySelector('.eliminar-experiencia').addEventListener('click', function () {
         experienciaLaboralContainer.removeChild(experienciaDiv);
         ordenarCronologicamente();
@@ -5790,7 +5775,6 @@ botonAgregarExperiencia.addEventListener('click', function () {
     });
 });
 
-// Función para ordenar cronológicamente
 function ordenarCronologicamente() {
     const experienciaContenedores = Array.from(document.querySelectorAll('.experiencia-contenedor'));
     experienciaContenedores.sort((a, b) => {
@@ -5799,11 +5783,9 @@ function ordenarCronologicamente() {
         return new Date(fechaFinB) - new Date(fechaFinA);
     });
 
-    // Reordenar en el contenedor principal
     experienciaContenedores.forEach(contenedor => experienciaLaboralContainer.appendChild(contenedor));
 }
 
-// Función para calcular tiempo de experiencia
 function calcularTiempoExperiencia() {
     const experiencias = [];
     const experienciaContenedores = document.querySelectorAll('.experiencia-contenedor');
@@ -5850,7 +5832,6 @@ function calcularTiempoExperiencia() {
 }
 
 
-// Función para actualizar contador global
 function actualizarContadorGlobal() {
     const contadorDiv = document.getElementById('contador-global');
     const tiempo = calcularTiempoExperiencia();
@@ -6559,7 +6540,6 @@ $('#SELECCIONAR_CATEGORIA_RP').on('change', function () {
             if (response.success) {
                 const data = response.data;
 
-                // Mostrar u ocultar DIVs
                 if (data.ANTES_DE1 == 1) {
                     $('#MOSTRAR_ANTES').show();
                     $('#MOSTRAR_TODO').hide();
@@ -6574,7 +6554,6 @@ $('#SELECCIONAR_CATEGORIA_RP').on('change', function () {
                     $('#MOSTRAR_ANTES').hide();
                     $('#MOSTRAR_TODO').show();
 
-                    // Llenar todos los campos
                     $('#FECHA_RP').val(data.FECHA_RP);
                     $('#PRIORIDAD_RP').val(data.PRIORIDAD_RP);
                     $('#TIPO_VACANTE_RP').val(data.TIPO_VACANTE_RP);

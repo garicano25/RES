@@ -189,7 +189,6 @@ class altadocumentosController extends Controller
 
                         $cuentas = altadocumentosModel::create($requestData);
 
-                        // Guardar DOCUMENTO_SOPORTE si se proporciona
                         $rfc = Auth::user()->RFC_PROVEEDOR;
                         if ($request->hasFile('DOCUMENTO_SOPORTE')) {
                             $file = $request->file('DOCUMENTO_SOPORTE');
@@ -217,10 +216,8 @@ class altadocumentosController extends Controller
                             $cuentas = altadocumentosModel::find($request->ID_FORMULARIO_DOCUMENTOSPROVEEDOR);
                             $cuentas->update($request->except('RFC_PROVEEDOR'));
 
-                            // Reemplazar DOCUMENTO_SOPORTE si se proporciona uno nuevo
                             $rfc = Auth::user()->RFC_PROVEEDOR;
                             if ($request->hasFile('DOCUMENTO_SOPORTE')) {
-                                // Eliminar archivo anterior si existe
                                 if ($cuentas->DOCUMENTO_SOPORTE && Storage::exists($cuentas->DOCUMENTO_SOPORTE)) {
                                     Storage::delete($cuentas->DOCUMENTO_SOPORTE);
                                 }

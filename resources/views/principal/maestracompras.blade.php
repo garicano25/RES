@@ -79,24 +79,19 @@
 
 
 
-        /* Asegura que los items se comporten bien dentro del collapse */
         .navbar .collapse {
             width: 100%;
         }
 
-        /* Los ítems de la nav */
         .navbar-nav {
             flex-wrap: wrap;
-            /* permite que bajen de línea si se quedan sin espacio */
             width: 100%;
         }
 
         .navbar-nav .nav-item {
             white-space: nowrap;
-            /* evita que se corte el texto dentro de cada botón */
         }
 
-        /* Ajustes de tipografía para pantallas más pequeñas */
         @media (max-width: 1200px) {
             .navbar-nav .nav-link {
                 font-size: 0.9rem;
@@ -622,9 +617,9 @@
                 title: 'Acceso Denegado',
                 text: 'No tienes acceso a este módulo.',
                 confirmButtonText: 'Entendido',
-                background: '#f8d7da', // Fondo rojo claro
+                background: '#f8d7da', 
                 customClass: {
-                    popup: 'swal-wide' // Clase personalizada para ampliar la alerta
+                    popup: 'swal-wide' 
                 }
             });
 

@@ -38,13 +38,9 @@
             padding: 40px;
             display: flex;
             flex-direction: column;
-            /* Disponer los elementos en columna */
             align-items: center;
-            /* Centrar el contenido horizontalmente */
             justify-content: center;
-            /* Centrar el contenido verticalmente */
             height: 250px;
-            /* Asegurar que todas las cards tengan el mismo tamaño */
             max-width: 700px;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -57,10 +53,8 @@
 
         .logo {
             width: 100px;
-            /* Reducir el tamaño del logo */
             height: auto;
             margin-bottom: 20px;
-            /* Separar el logo del texto */
         }
 
         .logo img {
@@ -89,7 +83,6 @@
 
 <body>
     <div class="container">
-        <!-- Primera tarjeta con el logo centrado y más pequeño -->
         <a href="https://results-erp.results-in-performance.com/Formulario-vacantes" target="_blank">
             <div class="card">
                 <div class="logo">
@@ -99,7 +92,6 @@
                 <div class="description">Ingresa tus datos y regístrate.</div>
             </div>
         </a>
-        <!-- Segunda tarjeta sin logo pero del mismo tamaño -->
         <a href="https://results-erp.results-in-performance.com/Vacantes" target="_blank">
             <div class="card">
                 <div class="title">Vacantes disponibles</div>

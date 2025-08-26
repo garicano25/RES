@@ -105,15 +105,12 @@ public function store(Request $request)
     try {
         switch (intval($request->api)) {
             case 1:
-                // Preparar los datos de los checkboxes
                 $data = $this->prepareCheckboxData($request->all());
 
                 if ($request->ID_CATALOGO_FUNCIONESGESTION == 0) {
-                    // Crear nuevo registro
                     DB::statement('ALTER TABLE catalogo_funcionesgestiones AUTO_INCREMENT=1;');
                     $gestiones = catalogofuncionesgestionModel::create($data);
                 } else {
-                    // Editar registro existente
                     $gestiones = catalogofuncionesgestionModel::find($request->ID_CATALOGO_FUNCIONESGESTION);
                     if ($gestiones) {
                         $gestiones->update($data);

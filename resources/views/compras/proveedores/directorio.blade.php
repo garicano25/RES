@@ -502,7 +502,6 @@
 
             const primeraMayuscula = palabra[0].toUpperCase() + palabra.substring(1).toLowerCase();
 
-            // Si la palabra no es igual a toda minúscula, ni igual a primera mayúscula → corregimos
             if (palabra !== palabra.toLowerCase() && palabra !== primeraMayuscula) {
               return primeraMayuscula;
             } else {

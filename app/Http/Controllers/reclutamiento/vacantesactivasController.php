@@ -32,13 +32,7 @@ class vacantesactivasController extends Controller
             ->orderBy('NOMBRE_CATEGORIA', 'ASC')
             ->get();
 
-        // $vacantes = DB::table('catalogo_vacantes')
-        // ->join('catalogo_categorias', 'catalogo_vacantes.CATEGORIA_VACANTE', '=', 'catalogo_categorias.ID_CATALOGO_CATEGORIA')
-        // ->select('catalogo_vacantes.ID_CATALOGO_VACANTE', 'catalogo_categorias.NOMBRE_CATEGORIA')
-        // ->where('catalogo_vacantes.LA_VACANTES_ES', 'Privada')
-        // ->orderBy('catalogo_categorias.NOMBRE_CATEGORIA', 'ASC')
-        // ->get(); 
-
+       
 
         $vacantes = DB::table('catalogo_vacantes')
             ->join('catalogo_categorias', 'catalogo_vacantes.CATEGORIA_VACANTE', '=', 'catalogo_categorias.ID_CATALOGO_CATEGORIA')
@@ -137,7 +131,6 @@ public function informacionpreseleccion($idVacante)
 public function informacionpostulantes($idVacante)
 {
     try {
-        // Consulta para obtener los datos únicos de los postulantes
         $postulantes = DB::select("
             SELECT 
                 fb.NOMBRE_CV,
@@ -233,7 +226,7 @@ public function guardarPostulantes (Request $request)
 }
 
 
-//  FUNCION PARA GUARDAR LAS PERSONAS QUE SE PRESELECCIONARON  Y MANDARLO A SELECCIO  
+//  FUNCION PARA GUARDAR LAS PERSONAS QUE SE PRESELECCIONARON  Y MANDARLO A SELECCION
 
 public function guardarPreseleccion(Request $request)
     {

@@ -71,27 +71,21 @@ public function store(Request $request)
     try {
         switch (intval($request->api)) {
             case 1:
-                // Obtener el valor de CURP o Pasaporte (los dos se almacenan en CURP_CV)
                 $identificador = $request->CURP_CV ? $request->CURP_CV : 'extranjero_' . time();
                 
-                // Buscar en la base de datos por CURP o Pasaporte
                 $bancocvs = bancocvModel::where('CURP_CV', $request->CURP_CV)->first();
 
                 if ($bancocvs) {
-                    // Actualizar INTERES_ADMINISTRATIVA e INTERES_OPERATIVAS si es necesario
                     $interes_admon = $request->INTERES_ADMINISTRATIVA ?? $bancocvs->INTERES_ADMINISTRATIVA;
                     $interes_ope = $request->INTERES_OPERATIVAS ?? $bancocvs->INTERES_OPERATIVAS;
 
-                    // Actualizar otros campos
                     $bancocvs->update(array_merge($bancocvs->toArray(), $request->except(['ARCHIVO_CURP_CV', 'ARCHIVO_PASAPORTE_CV', 'ARCHIVO_CV']), [
                         'INTERES_ADMINISTRATIVA' => $interes_admon,
                         'INTERES_OPERATIVAS' => $interes_ope,
                     ]));
 
-                    // Guardar archivos (CURP o Pasaporte)
-                    $curpFolder = 'reclutamiento/' . $identificador; // Carpeta base para almacenar archivos
+                    $curpFolder = 'reclutamiento/' . $identificador; 
 
-                    // Guardar archivo CURP o Pasaporte
                     if ($request->hasFile('ARCHIVO_CURP_CV') || $request->hasFile('ARCHIVO_PASAPORTE_CV')) {
                         if ($request->hasFile('ARCHIVO_CURP_CV')) {
                             $curpFile = $request->file('ARCHIVO_CURP_CV');
@@ -104,11 +98,10 @@ public function store(Request $request)
                             $pasaporteFileFolder = $curpFolder . '/PASAPORTE/';
                             $pasaporteFileName = 'PASAPORTE_' . $identificador . '.' . $pasaporteFile->getClientOriginalExtension();
                             $pasaporteFile->storeAs($pasaporteFileFolder, $pasaporteFileName);
-                            $bancocvs->ARCHIVO_CURP_CV = $pasaporteFileFolder . $pasaporteFileName; // Usa el mismo campo
+                            $bancocvs->ARCHIVO_CURP_CV = $pasaporteFileFolder . $pasaporteFileName; 
                         }
                     }
 
-                    // Guardar el archivo CV
                     if ($request->hasFile('ARCHIVO_CV')) {
                         $cvFile = $request->file('ARCHIVO_CV');
                         $cvFileFolder = $curpFolder . '/CV/';
@@ -117,17 +110,15 @@ public function store(Request $request)
                         $bancocvs->ARCHIVO_CV = $cvFileFolder . $cvFileName;
                     }
 
-                    // Crear la postulación
                     listapostulacionesModel::create([
                         'VACANTES_ID' => $request->VACANTES_ID,
-                        'CURP' => $request->CURP_CV, // Ya sea CURP o Pasaporte
+                        'CURP' => $request->CURP_CV, 
                     ]);
 
                     $response['code'] = 1;
                     $response['bancocv'] = $bancocvs;
                     return response()->json($response);
                 } else {
-                    // Mensaje de error si no se encuentra el registro
                     $response['code'] = 0;
                     $response['msj'] = 'No se encontró un registro con esa CURP o Pasaporte';
                     return response()->json($response);
@@ -167,10 +158,8 @@ public function store1(Request $request)
                 }
 
                 if ($request->ID_LISTA_POSTULANTES == 0) {
-                    // Reinicia el auto-incremento si es necesario
                     DB::statement('ALTER TABLE lista_postulantes AUTO_INCREMENT=1;');
 
-                    // Crear el registro en la tabla lista_postulantes
                     $listas = listapostulacionesModel::create([
                         'VACANTES_ID' => $request->VACANTES_ID,
                         'CURP' => $request->CURP,

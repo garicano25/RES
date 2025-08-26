@@ -229,7 +229,7 @@
 
                 <hr>
                 <h5 class="mb-3">Bien o Servicio</h5>
-                <div id="modal_bien_servicio"></div> <!-- aquí inyectamos inputs dinámicos -->
+                <div id="modal_bien_servicio"></div> 
 
             </div>
             <div class="modal-footer">

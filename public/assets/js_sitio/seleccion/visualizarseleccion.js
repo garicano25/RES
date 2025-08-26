@@ -4398,27 +4398,24 @@ $("#guardarFormSeleccionPPT").click(function (e) {
 
 
 function calcularPorcentajeTotal2() {
-    var porcentajeGuardado = parseFloat($('#porcentajeTotalPrueba').val()) || 0;  // Tomar el porcentaje ya guardado
-    var sumaNuevas = 0;  // Suma de porcentajes de las nuevas pruebas
-    var totalNuevas = 0;  // Contador de nuevas pruebas
+    var porcentajeGuardado = parseFloat($('#porcentajeTotalPrueba').val()) || 0;  
+    var sumaNuevas = 0;  
+    var totalNuevas = 0;  
     var camposLlenos = false; 
 
-    // **Tomamos en cuenta SOLO las nuevas pruebas**
     $('input[name="TOTAL_PORCENTAJE[]"]').each(function() {
         var nuevoPorcentaje = parseFloat($(this).val()) || 0;
 
         if (!isNaN(nuevoPorcentaje) && nuevoPorcentaje > 0) {  
-            sumaNuevas += nuevoPorcentaje; // Sumar porcentaje de nuevas pruebas
-            totalNuevas++;  // Contamos cuántas nuevas pruebas hay
+            sumaNuevas += nuevoPorcentaje; 
+            totalNuevas++;  
         }
     });
 
-    // **Si hay nuevas pruebas, recalculamos el porcentaje**
-    var porcentajeFinal = porcentajeGuardado; // Mantener el porcentaje original si no hay cambios
+    var porcentajeFinal = porcentajeGuardado; 
     if (totalNuevas > 0) {
-        porcentajeFinal = sumaNuevas / totalNuevas;  // Se recalcula SOLO si hay nuevas pruebas
+        porcentajeFinal = sumaNuevas / totalNuevas;  
     }
 
-    // **Mostrar resultado**
     $('#porcentajeTotalPrueba').val(Math.round(porcentajeFinal));  
 }

@@ -153,14 +153,11 @@ class inventarioController extends Controller
 
                 case 1:
                     if ($request->ID_FORMULARIO_INVENTARIO == 0) {
-                        // Reiniciar AUTO_INCREMENT al crear un nuevo registro
                         DB::statement('ALTER TABLE formulario_inventario AUTO_INCREMENT=1;');
 
-                        // Guardar datos excepto la foto
                         $datos = $request->except('FOTO_EQUIPO');
                         $inventarios = inventarioModel::create($datos);
 
-                        // Manejar la foto si viene en el request
                         if ($request->hasFile('FOTO_EQUIPO')) {
                             $file = $request->file('FOTO_EQUIPO');
                             $folder = "Almacén/Inventario/{$inventarios->ID_FORMULARIO_INVENTARIO}";
@@ -175,7 +172,6 @@ class inventarioController extends Controller
                         $response['inventario']  = $inventarios;
                         return response()->json($response);
                     } else {
-                        // Activar / Desactivar
                         if (isset($request->ELIMINAR)) {
                             $estado = $request->ELIMINAR == 1 ? 0 : 1;
                             $accion = $estado == 1 ? 'Activada' : 'Desactivada';
@@ -187,14 +183,12 @@ class inventarioController extends Controller
                             $response['inventario'] = $accion;
                             return response()->json($response);
                         } else {
-                            // Actualización normal
                             $inventarios = inventarioModel::find($request->ID_FORMULARIO_INVENTARIO);
 
                             if (!$inventarios) {
                                 return response()->json(['code' => 0, 'msj' => 'Inventario no encontrado']);
                             }
 
-                            // Reemplazo de foto si se sube una nueva
                             if ($request->hasFile('FOTO_EQUIPO')) {
                                 if ($inventarios->FOTO_EQUIPO && Storage::exists($inventarios->FOTO_EQUIPO)) {
                                     Storage::delete($inventarios->FOTO_EQUIPO);
@@ -208,7 +202,6 @@ class inventarioController extends Controller
                                 $inventarios->FOTO_EQUIPO = $path;
                             }
 
-                            // Actualizar con los demás datos
                             $inventarios->fill($request->except('FOTO_EQUIPO'))->save();
 
                             $response['code'] = 1;
@@ -349,7 +342,6 @@ class inventarioController extends Controller
                             $sheet = $spreadsheet->getActiveSheet();
                             $data = $sheet->toArray(null, true, true, true);
 
-                            // ❌ Saltar filas de encabezado (1 y 2)
                             array_shift($data);
                             array_shift($data);
 
@@ -360,7 +352,6 @@ class inventarioController extends Controller
                                 }
                             }
 
-                            // ✅ Extraer imágenes de columna K
                             $drawings = $sheet->getDrawingCollection();
                             $imagenes = [];
                             $processedCoordinates = [];
@@ -450,7 +441,6 @@ class inventarioController extends Controller
                                     'FOTO_EQUIPO'        => null
                                 ]);
 
-                                // 📸 Guardar foto si existe en columna K
                                 if (isset($imagenes[$posicionImagenEquipo])) {
                                     $imagen = $imagenes[$posicionImagenEquipo];
                                     $filename = 'foto_equipo.' . $imagen['extension'];
@@ -487,6 +477,9 @@ class inventarioController extends Controller
                     $response['msj']  = 'Api no encontrada';
                     return response()->json($response);
             }
+
+
+            
         } catch (Exception $e) {
             return response()->json('Error al guardar el asesor');
         }

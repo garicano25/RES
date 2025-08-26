@@ -35,8 +35,8 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            iniciarCarrusel('carruselDiaAnio', 5000); // carrusel de anuncios del día/año
-            iniciarCarrusel('carruselMes', 5000); // carrusel de anuncios del mes
+            iniciarCarrusel('carruselDiaAnio', 5000); 
+            iniciarCarrusel('carruselMes', 5000); 
         });
 
         document.getElementById('logoutButton').addEventListener('click', function(e) {

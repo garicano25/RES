@@ -63,53 +63,7 @@ class altacontactoController extends Controller
         }
     }
     
-    // public function store(Request $request)
-    // {
-    //     try {
-    //         switch (intval($request->api)) {
-    //             case 1:
-    //                 if ($request->ID_FORMULARIO_CONTACTOPROVEEDOR == 0) {
-    //                     DB::statement('ALTER TABLE formulario_altacuentaproveedor AUTO_INCREMENT=1;');
-
-    //                     $requestData = $request->all();
-    //                     $requestData['RFC_PROVEEDOR'] = Auth::user()->RFC_PROVEEDOR;
-
-    //                     $cuentas = altacontactos::create($requestData);
-    //                 } else {
-    //                     if (isset($request->ELIMINAR)) {
-    //                         if ($request->ELIMINAR == 1) {
-    //                             $cuentas = altacontactos::where('ID_FORMULARIO_CONTACTOPROVEEDOR', $request['ID_FORMULARIO_CONTACTOPROVEEDOR'])
-    //                                 ->update(['ACTIVO' => 0]);
-    //                             $response['code'] = 1;
-    //                             $response['cuenta'] = 'Desactivada';
-    //                         } else {
-    //                             $cuentas = altacontactos::where('ID_FORMULARIO_CONTACTOPROVEEDOR', $request['ID_FORMULARIO_CONTACTOPROVEEDOR'])
-    //                                 ->update(['ACTIVO' => 1]);
-    //                             $response['code'] = 1;
-    //                             $response['cuenta'] = 'Activada';
-    //                         }
-    //                     } else {
-    //                         $cuentas = altacontactos::find($request->ID_FORMULARIO_CONTACTOPROVEEDOR);
-    //                         $cuentas->update($request->except('RFC_PROVEEDOR')); 
-    //                         $response['code'] = 1;
-    //                         $response['cuenta'] = 'Actualizada';
-    //                     }
-    //                     return response()->json($response);
-    //                 }
-    //                 $response['code']  = 1;
-    //                 $response['cuenta']  = $cuentas;
-    //                 return response()->json($response);
-    //                 break;
-    //             default:
-    //                 $response['code']  = 1;
-    //                 $response['msj']  = 'API no encontrada';
-    //                 return response()->json($response);
-    //         }
-    //     } catch (Exception $e) {
-    //         return response()->json(['error' => 'Error al guardar'], 500);
-    //     }
-    // }
-
+   
 
     public function store(Request $request)
     {
@@ -119,8 +73,6 @@ class altacontactoController extends Controller
 
                     $requestData = $request->all();
 
-                    // Si el campo FUNCIONES_CUENTA existe y es un array, lo convertimos a JSON.
-                    // Si no existe o viene vacío, lo dejamos como null.
                     if ($request->has('FUNCIONES_CUENTA') && is_array($request->FUNCIONES_CUENTA)) {
                         $requestData['FUNCIONES_CUENTA'] = json_encode($request->FUNCIONES_CUENTA);
                     } else {

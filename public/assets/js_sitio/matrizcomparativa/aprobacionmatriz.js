@@ -518,7 +518,6 @@ $('#Tablamatirzaprobada tbody').on('click', 'td>button.EDITAR', function () {
     
     
         
-        // Evento: al escribir IVA manual por proveedor, se actualiza el IMPORTE correspondiente
         $(document).off('input', '.iva-input').on('input', '.iva-input', function () {
             const iva = parseFloat($(this).val()) || 0;
             const subtotalId = $(this).data('subtotal-id');
@@ -536,13 +535,11 @@ $('#Tablamatirzaprobada tbody').on('click', 'td>button.EDITAR', function () {
     $('#miModal_MATRIZ').modal('show');
 
     
-        // 1. Guardar importes disponibles según proveedor
             const importesProveedores = {};
             if (data.PROVEEDOR1) importesProveedores[data.PROVEEDOR1] = parseFloat(data.IMPORTE_PROVEEDOR1 || 0);
             if (data.PROVEEDOR2) importesProveedores[data.PROVEEDOR2] = parseFloat(data.IMPORTE_PROVEEDOR2 || 0);
             if (data.PROVEEDOR3) importesProveedores[data.PROVEEDOR3] = parseFloat(data.IMPORTE_PROVEEDOR3 || 0);
 
-            // 2. Llenar <select> de proveedores disponibles
             const $select = $('#PROVEEDOR_SELECCIONADO');
             $select.empty().append(`<option value="">Seleccionar proveedor sugerido</option>`);
 
@@ -550,23 +547,20 @@ $('#Tablamatirzaprobada tbody').on('click', 'td>button.EDITAR', function () {
                 data.PROVEEDOR1,
                 data.PROVEEDOR2,
                 data.PROVEEDOR3,
-            ].filter(p => p); // elimina vacíos
+            ].filter(p => p); 
 
             proveedoresDisponibles.forEach(nombre => {
                 $select.append(`<option value="${nombre}">${nombre}</option>`);
             });
 
-            // 3. Establecer el proveedor guardado (si lo hay)
             $select.val(data.PROVEEDOR_SELECCIONADO || '');
 
-            // 4. Función para actualizar el input del importe
             function actualizarMontoFinal() {
                 const proveedorSeleccionado = $select.val();
                 const importe = importesProveedores[proveedorSeleccionado] || 0;
                 $('#MONTO_FINAL').val(importe.toFixed(2));
             }
 
-            // 5. Asignar evento y ejecutar una vez
             $select.on('change', actualizarMontoFinal);
             actualizarMontoFinal();
 
@@ -801,7 +795,6 @@ $(document).ready(function() {
 
         
         
-        // Evento: al escribir IVA manual por proveedor, se actualiza el IMPORTE correspondiente
         $(document).off('input', '.iva-input').on('input', '.iva-input', function () {
             const iva = parseFloat($(this).val()) || 0;
             const subtotalId = $(this).data('subtotal-id');
@@ -816,7 +809,6 @@ $(document).ready(function() {
 
     
     
-    // Mostrar modal manualmente
         $('#miModal_MATRIZ').modal('show');
         
         
@@ -846,7 +838,6 @@ function toggleComentario() {
     }
 }
 
-// Al cambiar la opción del select
 $('#REQUIERE_COMENTARIO').on('change', toggleComentario);
 
 
@@ -860,9 +851,7 @@ function togglerechazo() {
     }
 }
 
-// Al cambiar la opción del select
 $('#ESTADO_APROBACION').on('change', togglerechazo);
 
 
 
-// $('#NO_MR').val(data.NO_MR);

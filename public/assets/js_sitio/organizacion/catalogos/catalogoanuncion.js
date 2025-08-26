@@ -94,7 +94,6 @@ function limpiarFormularioUsuario() {
             mostrarCampos(this.value);
         });
 
-        // Mostrar el correcto si ya hay uno seleccionado
         mostrarCampos(tipoRepeticion.value);
     });
 

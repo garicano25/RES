@@ -132,7 +132,6 @@ $(document).on('click', '.GUARDAR', function () {
         confirmButtonText: 'Enviar',
         cancelButtonText: 'Cancelar',
         didOpen: () => {
-            // Inicializar la librería en el input
             $('.mydatepicker').datepicker({
                 format: 'yyyy-mm-dd',
                 autoclose: true,
@@ -163,7 +162,7 @@ $(document).on('click', '.GUARDAR', function () {
                     DIA_FECHA_PC: dia,
                     MES_FECHA_PC: mes,
                     ANIO_FECHA_PC: anio,
-                    FECHA_INGRESO: fechaIngreso, // Enviar la fecha de ingreso
+                    FECHA_INGRESO: fechaIngreso, 
                     _token: $('meta[name="csrf-token"]').attr('content'),
                 },
                 success: function (response) {

@@ -279,14 +279,12 @@ public function mostraractaclienteventas($id)
                     if ($request->ID_FORMULARIO_CLIENTES == 0) {
                         DB::statement('ALTER TABLE formulario_clientes AUTO_INCREMENT=1;');
 
-                        // Excluir arrays puros y agregar los JSON correctamente
                         $data = $request->except(['contactos', 'direcciones', 'CONSTANCIA_DOCUMENTO']);
                         $data['CONTACTOS_JSON'] = is_string($request->CONTACTOS_JSON) ? $request->CONTACTOS_JSON : json_encode($request->CONTACTOS_JSON ?? []);
                         $data['DIRECCIONES_JSON'] = is_string($request->DIRECCIONES_JSON) ? $request->DIRECCIONES_JSON : json_encode($request->DIRECCIONES_JSON ?? []);
 
                         $cliente = clienteModel::create($data);
 
-                        // Guardar documento si viene
                         if ($request->hasFile('CONSTANCIA_DOCUMENTO')) {
                             $documento = $request->file('CONSTANCIA_DOCUMENTO');
                             $idCliente = $cliente->ID_FORMULARIO_CLIENTES;
@@ -383,7 +381,6 @@ public function mostraractaclienteventas($id)
                                 $cliente = verificacionclienteModel::find($request->ID_VERIFICACION_CLIENTE);
                                 $cliente->update($request->all());
                     
-                                // Guardar nueva evidencia si viene
                                 if ($request->hasFile('EVIDENCIA_VERIFICACION')) {
                                     $documento = $request->file('EVIDENCIA_VERIFICACION');
                                     $clienteId = $cliente->CLIENTE_ID;

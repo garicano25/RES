@@ -892,7 +892,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
 
-    // Ocultar el botón al iniciar si no está en el primer tab
     const activeTab = document.querySelector('#tabsCliente button.active');
     if (activeTab && activeTab.getAttribute('data-bs-target') !== '#contenido-info') {
       guardarBtn.style.display = 'none';

@@ -65,56 +65,6 @@ class otController extends Controller
 
 
 
-
-    // public function Tablaordentrabajo()
-    // {
-    //     try {
-    //         $tabla = otModel::select('formulario_ordentrabajo.*')
-    //         ->get();
-
-    //         foreach ($tabla as $value) {
-    //             $ofertaIds = !empty($value->OFERTA_ID) ? json_decode($value->OFERTA_ID, true) : [];
-
-    //             if (!empty($ofertaIds)) {
-    //                 $ofertas = DB::table('formulario_ofertas')
-    //                 ->whereIn('ID_FORMULARIO_OFERTAS', $ofertaIds)
-    //                     ->pluck('NO_OFERTA')
-    //                     ->toArray();
-
-    //                 $value->NO_OFERTA = implode('<br> ', $ofertas);
-    //             } else {
-    //                 $value->NO_OFERTA = "Sin oferta";
-    //             }
-
-    //             if ($value->ACTIVO == 0) {
-    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_ORDEN . '"><span class="slider round"></span></label>';
-    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-    //                 $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO" disabled><i class="bi  bi-ban"></i></button>';
-    //             } else {
-    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_ORDEN . '" checked><span class="slider round"></span></label>';
-    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-    //                 $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
-    //             }
-    //         }
-
-    //         // Respuesta
-    //         return response()->json([
-    //             'data' => $tabla,
-    //             'msj' => 'Información consultada correctamente'
-    //         ]);
-    //     } catch (Exception $e) {
-    //         return response()->json([
-    //             'msj' => 'Error ' . $e->getMessage(),
-    //             'data' => 0
-    //         ]);
-    //     }
-    // }
-
-
-
-
     public function obtenerDatosOferta(Request $request)
     {
         $ofertaIds = $request->input('oferta_ids', []);

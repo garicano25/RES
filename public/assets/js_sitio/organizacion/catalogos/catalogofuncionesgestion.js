@@ -305,10 +305,8 @@ $('#Tablafuncionesgestion tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablafuncionesgestion.row(tr);
     ID_CATALOGO_FUNCIONESGESTION = row.data().ID_CATALOGO_FUNCIONESGESTION;
 
-    // Llamar a la función existente para rellenar datos en el formulario
     editarDatoTabla(row.data(), 'formularioFUNCIONESGESTION', 'miModal_FUNCIONESGESTION', 1);
 
-    // Ajuste específico para los checkboxes (si no está incluido en editarDatoTabla)
     var data = row.data();
     $('#formularioFUNCIONESGESTION').find('input[type="checkbox"]').each(function () {
         var inputName = $(this).attr('name');

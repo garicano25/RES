@@ -151,20 +151,17 @@ public function Tablacontratacion()
         $tabla = contratacionModel::where('ACTIVO', 1)->get();
 
         foreach ($tabla as $value) {
-            // Consulta del contrato más reciente del colaborador
             $contrato = DB::table('contratos_anexos_contratacion')
                 ->where('CURP', $value->CURP)
-                ->orderByDesc('ID_CONTRATOS_ANEXOS') // suponiendo que el ID más alto es el más nuevo
+                ->orderByDesc('ID_CONTRATOS_ANEXOS') 
                 ->first();
 
             if ($contrato) {
-                // Buscar renovaciones del contrato
                 $renovacion = DB::table('renovacion_contrato')
                     ->where('CONTRATO_ID', $contrato->ID_CONTRATOS_ANEXOS)
                     ->orderByDesc('FECHAF_RENOVACION')
                     ->first();
 
-                // Si hay renovación, usamos esas fechas; si no, usamos las del contrato base
                 $fechaInicio = $renovacion ? $renovacion->FECHAI_RENOVACION : $contrato->FECHAI_CONTRATO;
                 $fechaFin = $renovacion ? $renovacion->FECHAF_RENOVACION : $contrato->VIGENCIA_CONTRATO;
             } else {
@@ -172,7 +169,6 @@ public function Tablacontratacion()
                 $fechaFin = null;
             }
 
-            // Calcular estado visual del contrato
             if ($fechaInicio && $fechaFin) {
                 $inicio = new \DateTime($fechaInicio);
                 $fin = new \DateTime($fechaFin);
@@ -181,7 +177,6 @@ public function Tablacontratacion()
                 $totalDias = $inicio->diff($fin)->days;
                 $diasRestantes = ($fin >= $hoy) ? $hoy->diff($fin)->days : -$hoy->diff($fin)->days;
 
-                // Umbrales basados en porcentaje de días restantes
                 $umbralVerde = $totalDias * 0.60;
                 $umbralAmarillo = $totalDias * 0.30;
 
@@ -261,33 +256,6 @@ public function verificarestadobloqueo(Request $request)
     return response()->json(['bloqueodesactivado' => $bloqueodesactivado]);
 }
 
-// public function activarColaborador(Request $request, $id)
-// {
-//     try {
-//         $colaborador = contratacionModel::findOrFail($id);
-
-//         if ($colaborador->ACTIVO == 1) {
-//             return response()->json([
-//                 'msj' => 'El colaborador ya está activo',
-//                 'status' => 'info'
-//             ]);
-//         }
-
-//         $colaborador->ACTIVO = 1;
-//         $colaborador->save();
-
-//         return response()->json([
-//             'msj' => 'El colaborador ha sido activado exitosamente',
-//             'status' => 'success'
-//         ]);
-//     } catch (Exception $e) {
-//         return response()->json([
-//             'msj' => 'Error: ' . $e->getMessage(),
-//             'status' => 'error'
-//         ]);
-//     }
-// }
-
 
 
 public function activarColaborador(Request $request, $id)
@@ -295,7 +263,6 @@ public function activarColaborador(Request $request, $id)
     try {
         $colaborador = contratacionModel::findOrFail($id);
 
-        // Validar si ya está activo
         if ($colaborador->ACTIVO == 1) {
             return response()->json([
                 'msj' => 'El colaborador ya está activo',
@@ -333,55 +300,6 @@ public function mostrarfotocolaborador($colaborador_id)
     return Storage::response($foto->FOTO_USUARIO);
 }
     
-
-// public function obtenerbajasalta(Request $request) {
-//     $curp = $request->input('curp');
-
-//     // Validar que la CURP esté presente
-//     if (!$curp) {
-//         return response()->json(['error' => 'CURP no proporcionada.'], 400);
-//     }
-
-//     // Obtener las altas
-//     $altas = DB::table('formulario_contratacion')
-//         ->select('FECHA_INGRESO as fecha')
-//         ->where('CURP', $curp)
-//         ->get();
-
-//     // Obtener las bajas
-//     $bajas = DB::table('formulario_desvinculacion')
-//         ->select('FECHA_BAJA as fecha')
-//         ->where('CURP', $curp)
-//         ->get();
-
-//     // Obtener los reingresos
-//     $reingresos = DB::table('reingreso_contratacion')
-//         ->select('FECHA_REINGRESO as fecha')
-//         ->where('CURP', $curp)
-//         ->get();
-
-//     // Combinar y etiquetar resultados
-//     $resultados = [];
-
-//     foreach ($altas as $alta) {
-//         $resultados[] = ['tipo' => 'ALTA', 'fecha' => $alta->fecha];
-//     }
-
-//     foreach ($bajas as $baja) {
-//         $resultados[] = ['tipo' => 'BAJA', 'fecha' => $baja->fecha];
-//     }
-
-//     foreach ($reingresos as $reingreso) {
-//         $resultados[] = ['tipo' => 'REINGRESO', 'fecha' => $reingreso->fecha];
-//     }
-
-//     // Ordenar por fecha
-//     usort($resultados, function($a, $b) {
-//         return strtotime($a['fecha']) - strtotime($b['fecha']);
-//     });
-
-//     return response()->json($resultados);
-// }
 
 
 
@@ -443,14 +361,12 @@ public function obtenerbajasalta(Request $request) {
         } elseif ($evento['tipo'] === 'BAJA' && $fechaInicio !== null) {
             $fechaFin = $evento['fecha'];
             $dias = (strtotime($fechaFin) - strtotime($fechaInicio)) / 86400;
-            // Agregar BAJA
             $historial[] = [
                 'tipo' => 'BAJA',
                 'fecha' => $fechaFin,
                 'fecha_fin' => $fechaFin,
                 'dias_transcurridos' => floor($dias)
             ];
-            // Actualizar ALTA o REINGRESO anterior con fecha_fin y días
             $historial[$indiceInicio]['fecha_fin'] = $fechaFin;
             $historial[$indiceInicio]['dias_transcurridos'] = floor($dias);
             $fechaInicio = null;
@@ -529,133 +445,6 @@ public function obtenerguardados(Request $request)
 
     /////////////////////////////////////////// STEP 3  CONTRATOS Y ANEXOS //////////////////////////////////
 
-    // public function Tablacontratosyanexos(Request $request)
-    // {
-    //     try {
-    //         $curp = $request->get('curp');
-
-    //         if (!$curp) {
-    //             return response()->json([
-    //                 'msj' => 'CURP no proporcionada',
-    //                 'data' => []
-    //             ], 400);
-    //         }
-
-    //         $tabla = DB::select("
-    //             SELECT rec.*, cat.NOMBRE_CATEGORIA
-    //             FROM contratos_anexos_contratacion rec
-    //             LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = rec.NOMBRE_CARGO
-    //             WHERE rec.CURP = ?
-    //         ", [$curp]);
-
-    //         foreach ($tabla as $value) {
-    //             if ($value->ACTIVO == 0) {
-    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
-    //                 $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
-    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-    //                 $value->BTN_CONTRATO = '<button type="button" class="btn btn-success btn-custom rounded-pill informacion" id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
-
-    //             } else {
-    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-    //                 $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
-    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-    //                 $value->BTN_CONTRATO = '<button type="button" class="btn btn-success btn-custom rounded-pill informacion" id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
-
-    //             }
-    //         }
-
-    //         // Retornar respuesta JSON
-    //         return response()->json([
-    //             'data' => $tabla,
-    //             'msj' => 'Información consultada correctamente'
-    //         ]);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'msj' => 'Error: ' . $e->getMessage(),
-    //             'data' => []
-    //         ]);
-    //     }
-    // }
-
-    
-    // public function Tablacontratosyanexos(Request $request)
-    // {
-    //     try {
-    //         $curp = $request->get('curp');
-
-    //         if (!$curp) {
-    //             return response()->json([
-    //                 'msj' => 'CURP no proporcionada',
-    //                 'data' => []
-    //             ], 400);
-    //         }
-
-    //         $tabla = DB::select("
-    //         SELECT 
-    //             rec.*, 
-    //             cat.NOMBRE_CATEGORIA,
-    //             (SELECT MAX(FECHAI_RENOVACION) FROM renovacion_contrato WHERE CONTRATO_ID = rec.ID_CONTRATOS_ANEXOS) AS ULTIMA_FECHA_INICIO,
-    //             (SELECT MAX(FECHAF_RENOVACION) FROM renovacion_contrato WHERE CONTRATO_ID = rec.ID_CONTRATOS_ANEXOS) AS ULTIMA_FECHA_FIN
-    //         FROM contratos_anexos_contratacion rec
-    //         LEFT JOIN catalogo_categorias cat 
-    //             ON cat.ID_CATALOGO_CATEGORIA = rec.NOMBRE_CARGO
-    //         WHERE rec.CURP = ?
-    //     ", [$curp]);
-
-    //         foreach ($tabla as $value) {
-    //             $fecha_inicio_mostrar = !empty($value->ULTIMA_FECHA_INICIO) ? $value->ULTIMA_FECHA_INICIO : $value->FECHAI_CONTRATO;
-    //             $fecha_fin_mostrar = !empty($value->ULTIMA_FECHA_FIN) ? $value->ULTIMA_FECHA_FIN : $value->VIGENCIA_CONTRATO;
-
-    //                         if ($fecha_fin_mostrar !== "Sin fecha" && $fecha_inicio_mostrar !== "Sin fecha") {
-    //                 $inicio = new \DateTime($fecha_inicio_mostrar);
-    //                 $fin = new \DateTime($fecha_fin_mostrar);
-    //                 $hoy = new \DateTime();
-
-    //                 $totalDias = $inicio->diff($fin)->days;
-    //                 $diasRestantes = $fin >= $hoy ? $hoy->diff($fin)->days : -$hoy->diff($fin)->days;
-
-    //                 if ($fin < $hoy) {
-    //                     $estado_dias = "<span style='color: red;'>(Terminado)</span>";
-    //                 } else {
-    //                     $porcentajeRestante = ($diasRestantes / $totalDias) * 100;
-
-    //                     if ($porcentajeRestante > 40) {
-    //                         $estado_dias = "<span style='color: green;'>($diasRestantes días restantes)</span>";
-    //                     } elseif ($porcentajeRestante > 20) {
-    //                         $estado_dias = "<span style='color: orange;'>($diasRestantes días restantes)</span>";
-    //                     } else {
-    //                         $estado_dias = "<span style='color: red;'>($diasRestantes días restantes)</span>";
-    //                     }
-    //                 }
-    //             } else {
-    //                 $estado_dias = "<span style='color: gray;'>(Fecha desconocida)</span>";
-    //             }
-
-
-    //             $value->FECHA_ESTADO = $fecha_inicio_mostrar . "<br>" . $fecha_fin_mostrar . "<br>". $estado_dias;
-
-    //             if ($value->ACTIVO == 0) {
-    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
-    //             } else {
-    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-    //             }
-    //             $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
-    //             $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-    //             $value->BTN_CONTRATO = '<button type="button" class="btn btn-success btn-custom rounded-pill informacion" id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
-    //         }
-
-    //         return response()->json([
-    //             'data' => $tabla,
-    //             'msj' => 'Información consultada correctamente'
-    //         ]);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'msj' => 'Error: ' . $e->getMessage(),
-    //             'data' => []
-    //         ]);
-    //     }
-    // }
-
 
     public function Tablacontratosyanexos(Request $request)
 {
@@ -693,9 +482,8 @@ public function obtenerguardados(Request $request)
                 $totalDias = $inicio->diff($fin)->days;
                 $diasRestantes = ($fin >= $hoy) ? $hoy->diff($fin)->days : -$hoy->diff($fin)->days;
 
-                // Calcular umbrales en días (según porcentaje)
-                $umbralVerde = $totalDias * 0.60;     // Verde si quedan más del 60%
-                $umbralAmarillo = $totalDias * 0.30;  // Amarillo si quedan entre 30% y 60%
+                $umbralVerde = $totalDias * 0.60;     
+                $umbralAmarillo = $totalDias * 0.30;  
 
                 if ($diasRestantes <= 0) {
                     $estado_dias = "<span style='color: red;'>(Terminado)</span>";
@@ -877,46 +665,6 @@ public function mostrardocumentosoportecontrato($id)
     $archivo = documentosoportecontratoModel::findOrFail($id)->DOCUMENTOS_SOPORTECONTRATOS;
     return Storage::response($archivo);
 }
-
-
-    // RENOVACION CONTRATO
-    // public function Tablarenovacioncontrato(Request $request)
-    // {
-    //     try {
-    //         $contrato = $request->get('contrato');
-
-    //         $tabla = renovacioncontratoModel::where('CONTRATO_ID', $contrato)->get();
-
-
-
-
-    //         foreach ($tabla as $value) {
-    //             if ($value->ACTIVO == 0) {
-
-    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR" ><i class="bi bi-eye"></i></button>';
-    //                 $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-informacionrenovacion" data-id="' . $value->ID_RENOVACION_CONTATO . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
-    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-
-    //             } else {
-
-    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-    //                 $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-informacionrenovacion" data-id="' . $value->ID_RENOVACION_CONTATO . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
-    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-
-    //             }
-    //         }
-
-    //         return response()->json([
-    //             'data' => $tabla,
-    //             'msj' => 'Información consultada correctamente'
-    //         ]);
-    //     } catch (Exception $e) {
-    //         return response()->json([
-    //             'msj' => 'Error ' . $e->getMessage(),
-    //             'data' => 0
-    //         ]);
-    //     }
-    // }
 
 
     public function Tablarenovacioncontrato(Request $request)
@@ -1343,7 +1091,6 @@ public function obtenerdocumentosoportescontratos(Request $request)
             case 1:
                 if ($request->ID_FORMULARIO_CONTRATACION == 0) {
 
-                    // Restablecer el auto_increment si es necesario
                     DB::statement('ALTER TABLE formulario_contratacion AUTO_INCREMENT=1;');
                 
                     $data = $request->except(['FOTO_USUARIO', 'beneficiarios','documentos']);
@@ -1649,128 +1396,128 @@ public function obtenerdocumentosoportescontratos(Request $request)
 
 
                         case 4:
-    if ($request->ID_DOCUMENTO_COLABORADOR_CONTRATO == 0) {
-        DB::statement('ALTER TABLE documentos_colaborador_contrato AUTO_INCREMENT=1;');
-        $soportes = documentoscolaboradorcontratoModel::create($request->except(['DOCUMENTO_SOPORTECONTRATO', 'FOTO_FIRMA','FOTO_FIRMA_RH'])); 
+                            if ($request->ID_DOCUMENTO_COLABORADOR_CONTRATO == 0) {
+                                DB::statement('ALTER TABLE documentos_colaborador_contrato AUTO_INCREMENT=1;');
+                                $soportes = documentoscolaboradorcontratoModel::create($request->except(['DOCUMENTO_SOPORTECONTRATO', 'FOTO_FIRMA','FOTO_FIRMA_RH'])); 
 
-        if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
-            $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
-            $curp = $request->CURP;
-            $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+                                if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
+                                    $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
+                                    $curp = $request->CURP;
+                                    $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
 
-            $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
+                                    $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
 
-            $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
-            $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+                                    $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
+                                    $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
 
-            $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
-            $soportes->save();
-        }
+                                    $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
+                                    $soportes->save();
+                                }
 
-        if ($request->hasFile('FOTO_FIRMA')) {
-            $firma = $request->file('FOTO_FIRMA');
-            $curp = $request->CURP;
-            $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+                                if ($request->hasFile('FOTO_FIRMA')) {
+                                    $firma = $request->file('FOTO_FIRMA');
+                                    $curp = $request->CURP;
+                                    $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
 
-            $nombreFirma = 'firma_colaborador.' . $firma->getClientOriginalExtension();
-            $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma del colaborador';
-            $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
+                                    $nombreFirma = 'firma_colaborador.' . $firma->getClientOriginalExtension();
+                                    $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma del colaborador';
+                                    $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
 
-            $soportes->FOTO_FIRMA = $rutaFirmaCompleta;
-            $soportes->save();
-        }
-
-
-        if ($request->hasFile('FOTO_FIRMA_RH')) {
-            $firma = $request->file('FOTO_FIRMA_RH');
-            $curp = $request->CURP;
-            $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
-
-            $nombreFirma = 'firma_rh.' . $firma->getClientOriginalExtension();
-            $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma RH';
-            $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
-
-            $soportes->FOTO_FIRMA_RH = $rutaFirmaCompleta;
-            $soportes->save();
-        }
-
-                    } else {
-        if (isset($request->ELIMINAR)) {
-            if ($request->ELIMINAR == 1) {
-                $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
-                    ->update(['ACTIVO' => 0]);
-                $response['code'] = 1;
-                $response['soporte'] = 'Desactivada';
-            } else {
-                $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
-                    ->update(['ACTIVO' => 1]);
-                $response['code'] = 1;
-                $response['soporte'] = 'Activada';
-            }
-        } else {
-            $soportes = documentoscolaboradorcontratoModel::find($request->ID_DOCUMENTO_COLABORADOR_CONTRATO);
-            $soportes->update($request->except(['DOCUMENTO_SOPORTECONTRATO', 'FOTO_FIRMA', 'FOTO_FIRMA_RH']));
-
-            if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
-                if ($soportes->DOCUMENTO_SOPORTECONTRATO && Storage::exists($soportes->DOCUMENTO_SOPORTECONTRATO)) {
-                    Storage::delete($soportes->DOCUMENTO_SOPORTECONTRATO); 
-                }
-
-                $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
-                $curp = $request->CURP;
-                $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
-
-                $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
-
-                $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
-                $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
-
-                $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
-                $soportes->save();
-            }
-
-            if ($request->hasFile('FOTO_FIRMA')) {
-                if ($soportes->FOTO_FIRMA && Storage::exists($soportes->FOTO_FIRMA)) {
-                    Storage::delete($soportes->FOTO_FIRMA);
-                }
-
-                $firma = $request->file('FOTO_FIRMA');
-                $curp = $request->CURP;
-                $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
-
-                $nombreFirma = 'firma_colaborador.' . $firma->getClientOriginalExtension();
-                $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma del colaborador';
-                $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
-
-                $soportes->FOTO_FIRMA = $rutaFirmaCompleta;
-                $soportes->save();
-            }
+                                    $soportes->FOTO_FIRMA = $rutaFirmaCompleta;
+                                    $soportes->save();
+                                }
 
 
-            if ($request->hasFile('FOTO_FIRMA_RH')) {
-                $firma = $request->file('FOTO_FIRMA_RH');
-                $curp = $request->CURP;
-                $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+                                if ($request->hasFile('FOTO_FIRMA_RH')) {
+                                    $firma = $request->file('FOTO_FIRMA_RH');
+                                    $curp = $request->CURP;
+                                    $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
 
-                $nombreFirma = 'firma_rh.' . $firma->getClientOriginalExtension();
-                $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma RH';
-                $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
+                                    $nombreFirma = 'firma_rh.' . $firma->getClientOriginalExtension();
+                                    $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma RH';
+                                    $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
 
-                $soportes->FOTO_FIRMA_RH = $rutaFirmaCompleta;
-                $soportes->save();
-            }
+                                    $soportes->FOTO_FIRMA_RH = $rutaFirmaCompleta;
+                                    $soportes->save();
+                                }
+
+                                            } else {
+                                if (isset($request->ELIMINAR)) {
+                                    if ($request->ELIMINAR == 1) {
+                                        $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
+                                            ->update(['ACTIVO' => 0]);
+                                        $response['code'] = 1;
+                                        $response['soporte'] = 'Desactivada';
+                                    } else {
+                                        $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
+                                            ->update(['ACTIVO' => 1]);
+                                        $response['code'] = 1;
+                                        $response['soporte'] = 'Activada';
+                                    }
+                                } else {
+                                    $soportes = documentoscolaboradorcontratoModel::find($request->ID_DOCUMENTO_COLABORADOR_CONTRATO);
+                                    $soportes->update($request->except(['DOCUMENTO_SOPORTECONTRATO', 'FOTO_FIRMA', 'FOTO_FIRMA_RH']));
+
+                                    if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
+                                        if ($soportes->DOCUMENTO_SOPORTECONTRATO && Storage::exists($soportes->DOCUMENTO_SOPORTECONTRATO)) {
+                                            Storage::delete($soportes->DOCUMENTO_SOPORTECONTRATO); 
+                                        }
+
+                                        $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
+                                        $curp = $request->CURP;
+                                        $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                                        $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
+
+                                        $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
+                                        $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                                        $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
+                                        $soportes->save();
+                                    }
+
+                                    if ($request->hasFile('FOTO_FIRMA')) {
+                                        if ($soportes->FOTO_FIRMA && Storage::exists($soportes->FOTO_FIRMA)) {
+                                            Storage::delete($soportes->FOTO_FIRMA);
+                                        }
+
+                                        $firma = $request->file('FOTO_FIRMA');
+                                        $curp = $request->CURP;
+                                        $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                                        $nombreFirma = 'firma_colaborador.' . $firma->getClientOriginalExtension();
+                                        $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma del colaborador';
+                                        $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
+
+                                        $soportes->FOTO_FIRMA = $rutaFirmaCompleta;
+                                        $soportes->save();
+                                    }
+
+
+                                    if ($request->hasFile('FOTO_FIRMA_RH')) {
+                                        $firma = $request->file('FOTO_FIRMA_RH');
+                                        $curp = $request->CURP;
+                                        $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                                        $nombreFirma = 'firma_rh.' . $firma->getClientOriginalExtension();
+                                        $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma RH';
+                                        $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
+
+                                        $soportes->FOTO_FIRMA_RH = $rutaFirmaCompleta;
+                                        $soportes->save();
+                                    }
 
 
 
-            $response['code'] = 1;
-            $response['soporte'] = 'Actualizada';
-        }
-    }
+                                    $response['code'] = 1;
+                                    $response['soporte'] = 'Actualizada';
+                                }
+                            }
 
-    $response['code'] = 1;
-    $response['soporte'] = $soportes;
-    return response()->json($response);
-    break;
+                            $response['code'] = 1;
+                            $response['soporte'] = $soportes;
+                            return response()->json($response);
+                            break;
 
 
 
@@ -2185,7 +1932,6 @@ public function obtenerdocumentosoportescontratos(Request $request)
                         }
                     }
 
-                    // ADENDAS
                     if ($request->filled('FECHAI_ADENDA')) {
                         $fechasInicio = $request->FECHAI_ADENDA;
                         $fechasFin = $request->FECHAF_ADENDA;
@@ -2195,10 +1941,8 @@ public function obtenerdocumentosoportescontratos(Request $request)
                         $contratoId = $soportes->CONTRATO_ID;
                         $renovacionId = $soportes->ID_RENOVACION_CONTATO;
 
-                        // ✅ Guardar adendas anteriores antes de eliminar
                         $adendasAnteriores = adendarenovacionModel::where('RENOVACION_ID', $renovacionId)->get()->toArray();
 
-                        // 🧹 Eliminar adendas anteriores
                         adendarenovacionModel::where('RENOVACION_ID', $renovacionId)->delete();
 
                         foreach ($fechasInicio as $i => $inicio) {
@@ -2211,7 +1955,6 @@ public function obtenerdocumentosoportescontratos(Request $request)
                                 $rutaAdenda = "reclutamiento/{$curp}/Documentos del contrato/{$contratoId}/Renovación de contrato/{$renovacionId}/adenda/" . ($i + 1);
                                 $archivoRuta = $archivo->storeAs($rutaAdenda, $nombre);
                             } elseif (isset($adendasAnteriores[$i]['DOCUMENTO_ADENDA'])) {
-                                // ✅ Reutiliza el documento anterior si no se sube uno nuevo
                                 $archivoRuta = $adendasAnteriores[$i]['DOCUMENTO_ADENDA'];
                             }
 
