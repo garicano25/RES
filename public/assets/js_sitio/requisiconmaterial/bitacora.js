@@ -284,7 +284,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     </div>
                     <div class="col-4">
                         <label class="form-label">Descripción</label>
-                        <input type="text" class="form-control" name="DESCRIPCION" value="${material.DESCRIPCION}" required>
+                        <input type="text" class="form-control" name="DESCRIPCION" value="${escapeHtml(material.DESCRIPCION)}" required>
                     </div>
                     <div class="col-1">
                         <label class="form-label">Cantidad</label>
@@ -449,7 +449,7 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
               <div class="row mb-2">
                 <div class="col-3">
                   <label class="form-label">Descripción</label>
-                  <input type="text" class="form-control" name="DESCRIPCION[]" value="${m.DESCRIPCION}" readonly>
+                  <input type="text" class="form-control" name="DESCRIPCION[]"  value="${escapeHtml(m.DESCRIPCION)}" readonly>
                 </div>
                 <div class="col-1">
                   <label class="form-label">Cantidad</label>
@@ -780,7 +780,10 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
         <div class="row mb-2">
           <div class="col-3">
             <label class="form-label">Descripción</label>
-            <input type="text" class="form-control" name="DESCRIPCION[]" value="${m.DESCRIPCION}" readonly>
+
+             
+
+            <input type="text" class="form-control" name="DESCRIPCION[]" value="${escapeHtml(m.DESCRIPCION)}" readonly>
           </div>
           <div class="col-1">
             <label class="form-label">Cantidad</label>

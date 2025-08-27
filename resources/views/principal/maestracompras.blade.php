@@ -690,7 +690,7 @@
 
 
     @if(request()->is('Bitácora'))
-    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.18"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.19++++++"></script>
     @endif
 
 
@@ -753,7 +753,7 @@
 
 
     @if(request()->is('Bitácora-GR'))
-    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.4"></script>
+    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.5"></script>
     @endif
 
 

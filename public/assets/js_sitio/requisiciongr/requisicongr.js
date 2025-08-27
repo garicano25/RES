@@ -205,7 +205,7 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                 <div class="row mb-2">
                   <div class="col-4">
                     <label class="form-label">Descripción</label>
-                    <input type="text" class="form-control" name="DESCRIPCION[]" value="${descripcion}" readonly>
+                    <input type="text" class="form-control" name="DESCRIPCION[]" value="${escapeHtml(descripcion)}" readonly>
                   </div>
                   <div class="col-2">
                     <label class="form-label">Cantidad</label>
