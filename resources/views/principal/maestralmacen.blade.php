@@ -285,7 +285,7 @@
 
 
     @if(request()->is('Inventario'))
-    <script src="/assets/js_sitio/inventario/inventario.js?v=1.1"></script>
+    <script src="/assets/js_sitio/inventario/inventario.js?v=1.2"></script>
     @endif
 
 

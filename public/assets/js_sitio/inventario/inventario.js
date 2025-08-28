@@ -8,6 +8,9 @@ Modalinventario.addEventListener('hidden.bs.modal', event => {
     ID_FORMULARIO_INVENTARIO = 0
     document.getElementById('formularioINVENTARIO').reset();
    
+    $('#Modal_inventario .modal-title').html('Equipo');
+
+
 })
 
 $(document).ready(function() {
@@ -352,6 +355,11 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
     }
 
 
+    $('#Modal_inventario .modal-title').html(row.data().DESCRIPCION_EQUIPO);
+
+    
+
+
 });
 
 
@@ -402,6 +410,7 @@ $(document).ready(function() {
         $('#FOTO_EQUIPO').dropify().data('dropify').clearElement();
         }
         
+    $('#Modal_inventario .modal-title').html(row.data().DESCRIPCION_EQUIPO);
 
 
     });

@@ -1329,203 +1329,318 @@ public function obtenerdocumentosoportescontratos(Request $request)
                     break;
 
 
-                        // STEP 4 DOCUMENTOS DE SOPORTE DE LOS CONTRATOS EN GENERAL
-
-                        // case 4:
-                        //     if ($request->ID_DOCUMENTO_COLABORADOR_CONTRATO == 0) {
-                        //         DB::statement('ALTER TABLE documentos_colaborador_contrato AUTO_INCREMENT=1;');
-                        //         $soportes = documentoscolaboradorcontratoModel::create($request->except('DOCUMENTO_SOPORTECONTRATO')); 
-
-                        //         if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
-                        //             $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
-                        //             $curp = $request->CURP;
-                        //             $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
-
-                        //             $nombreArchivo =  preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
-
-                        //             $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
-                        //             $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
-
-                        //             $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
-                        //             $soportes->save();
-                        //         }
-                        //     } else {
-                        //         if (isset($request->ELIMINAR)) {
-                        //             if ($request->ELIMINAR == 1) {
-                        //                 $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
-                        //                     ->update(['ACTIVO' => 0]);
-                        //                 $response['code'] = 1;
-                        //                 $response['soporte'] = 'Desactivada';
-                        //             } else {
-                        //                 $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
-                        //                     ->update(['ACTIVO' => 1]);
-                        //                 $response['code'] = 1;
-                        //                 $response['soporte'] = 'Activada';
-                        //             }
-                        //         } else {
-                        //             $soportes = documentoscolaboradorcontratoModel::find($request->ID_DOCUMENTO_COLABORADOR_CONTRATO);
-                        //             $soportes->update($request->except('DOCUMENTO_SOPORTECONTRATO'));
-
-                        //             if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
-                        //                 if ($soportes->DOCUMENTO_SOPORTECONTRATO && Storage::exists($soportes->DOCUMENTO_SOPORTECONTRATO)) {
-                        //                     Storage::delete($soportes->DOCUMENTO_SOPORTECONTRATO); 
-                        //                 }
-
-                        //                 $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
-                        //                 $curp = $request->CURP;
-                        //                 $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
-
-                        //                 $nombreArchivo =  preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
-
-                        //                 $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
-                        //                 $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
-
-                        //                 $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
-                        //                 $soportes->save();
-                        //             }
-
-                        //             $response['code'] = 1;
-                        //             $response['soporte'] = 'Actualizada';
-                        //         }
-                        //     }
-
-                        //     $response['code'] = 1;
-                        //     $response['soporte'] = $soportes;
-                        //     return response()->json($response);
-                        //     break;
+                // STEP 4 DOCUMENTOS DE SOPORTE DE LOS CONTRATOS EN GENERAL
 
 
-                        case 4:
-                            if ($request->ID_DOCUMENTO_COLABORADOR_CONTRATO == 0) {
-                                DB::statement('ALTER TABLE documentos_colaborador_contrato AUTO_INCREMENT=1;');
-                                $soportes = documentoscolaboradorcontratoModel::create($request->except(['DOCUMENTO_SOPORTECONTRATO', 'FOTO_FIRMA','FOTO_FIRMA_RH'])); 
+                // case 4:
+                //     if ($request->ID_DOCUMENTO_COLABORADOR_CONTRATO == 0) {
+                //         DB::statement('ALTER TABLE documentos_colaborador_contrato AUTO_INCREMENT=1;');
+                //         $soportes = documentoscolaboradorcontratoModel::create($request->except(['DOCUMENTO_SOPORTECONTRATO', 'FOTO_FIRMA','FOTO_FIRMA_RH'])); 
 
-                                if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
-                                    $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
-                                    $curp = $request->CURP;
-                                    $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+                //         if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
+                //             $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
+                //             $curp = $request->CURP;
+                //             $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
 
-                                    $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
+                //             $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
 
-                                    $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
-                                    $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+                //             $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
+                //             $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
 
-                                    $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
-                                    $soportes->save();
+                //             $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
+                //             $soportes->save();
+                //         }
+
+                //         if ($request->hasFile('FOTO_FIRMA')) {
+                //             $firma = $request->file('FOTO_FIRMA');
+                //             $curp = $request->CURP;
+                //             $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                //             $nombreFirma = 'firma_colaborador.' . $firma->getClientOriginalExtension();
+                //             $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma del colaborador';
+                //             $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
+
+                //             $soportes->FOTO_FIRMA = $rutaFirmaCompleta;
+                //             $soportes->save();
+                //         }
+
+
+                //         if ($request->hasFile('FOTO_FIRMA_RH')) {
+                //             $firma = $request->file('FOTO_FIRMA_RH');
+                //             $curp = $request->CURP;
+                //             $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                //             $nombreFirma = 'firma_rh.' . $firma->getClientOriginalExtension();
+                //             $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma RH';
+                //             $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
+
+                //             $soportes->FOTO_FIRMA_RH = $rutaFirmaCompleta;
+                //             $soportes->save();
+                //         }
+
+                //                     } else {
+                //         if (isset($request->ELIMINAR)) {
+                //             if ($request->ELIMINAR == 1) {
+                //                 $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
+                //                     ->update(['ACTIVO' => 0]);
+                //                 $response['code'] = 1;
+                //                 $response['soporte'] = 'Desactivada';
+                //             } else {
+                //                 $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
+                //                     ->update(['ACTIVO' => 1]);
+                //                 $response['code'] = 1;
+                //                 $response['soporte'] = 'Activada';
+                //             }
+                //         } else {
+                //             $soportes = documentoscolaboradorcontratoModel::find($request->ID_DOCUMENTO_COLABORADOR_CONTRATO);
+                //             $soportes->update($request->except(['DOCUMENTO_SOPORTECONTRATO', 'FOTO_FIRMA', 'FOTO_FIRMA_RH']));
+
+                //             if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
+                //                 if ($soportes->DOCUMENTO_SOPORTECONTRATO && Storage::exists($soportes->DOCUMENTO_SOPORTECONTRATO)) {
+                //                     Storage::delete($soportes->DOCUMENTO_SOPORTECONTRATO); 
+                //                 }
+
+                //                 $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
+                //                 $curp = $request->CURP;
+                //                 $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                //                 $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
+
+                //                 $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
+                //                 $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                //                 $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
+                //                 $soportes->save();
+                //             }
+
+                //             if ($request->hasFile('FOTO_FIRMA')) {
+                //                 if ($soportes->FOTO_FIRMA && Storage::exists($soportes->FOTO_FIRMA)) {
+                //                     Storage::delete($soportes->FOTO_FIRMA);
+                //                 }
+
+                //                 $firma = $request->file('FOTO_FIRMA');
+                //                 $curp = $request->CURP;
+                //                 $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                //                 $nombreFirma = 'firma_colaborador.' . $firma->getClientOriginalExtension();
+                //                 $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma del colaborador';
+                //                 $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
+
+                //                 $soportes->FOTO_FIRMA = $rutaFirmaCompleta;
+                //                 $soportes->save();
+                //             }
+
+
+                //             if ($request->hasFile('FOTO_FIRMA_RH')) {
+                //                 $firma = $request->file('FOTO_FIRMA_RH');
+                //                 $curp = $request->CURP;
+                //                 $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                //                 $nombreFirma = 'firma_rh.' . $firma->getClientOriginalExtension();
+                //                 $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma RH';
+                //                 $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
+
+                //                 $soportes->FOTO_FIRMA_RH = $rutaFirmaCompleta;
+                //                 $soportes->save();
+                //             }
+
+
+
+                //             $response['code'] = 1;
+                //             $response['soporte'] = 'Actualizada';
+                //         }
+                //     }
+
+                //     $response['code'] = 1;
+                //     $response['soporte'] = $soportes;
+                //     return response()->json($response);
+                //     break;
+
+
+
+
+                case 4:
+                    if ($request->ID_DOCUMENTO_COLABORADOR_CONTRATO == 0) {
+                       
+                        DB::statement('ALTER TABLE documentos_colaborador_contrato AUTO_INCREMENT=1;');
+
+                        $soportes = documentoscolaboradorcontratoModel::create(
+                            $request->except(['DOCUMENTO_SOPORTECONTRATO', 'FOTO_FIRMA', 'FOTO_FIRMA_RH'])
+                        );
+
+                        if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
+                            $documento   = $request->file('DOCUMENTO_SOPORTECONTRATO');
+                            $curp        = $request->CURP;
+                            $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                            $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO)
+                                . '.' . $documento->getClientOriginalExtension();
+
+                            $rutaCarpeta  = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
+                            $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                            $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
+                            $soportes->save();
+                        }
+
+                        if ($request->hasFile('FOTO_FIRMA')) {
+                            $firma       = $request->file('FOTO_FIRMA');
+                            $curp        = $request->CURP;
+                            $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                            $nombreFirma       = 'firma_colaborador.' . $firma->getClientOriginalExtension();
+                            $rutaFirma         = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma del colaborador';
+                            $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
+
+                            $soportes->FOTO_FIRMA = $rutaFirmaCompleta;
+                            $soportes->save();
+                        }
+
+                        
+                        if ($request->hasFile('FOTO_FIRMA_RH')) {
+                            $firma       = $request->file('FOTO_FIRMA_RH');
+                            $curp        = $request->CURP;
+                            $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                            $nombreFirma       = 'firma_rh.' . $firma->getClientOriginalExtension();
+                            $rutaFirma         = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma RH';
+                            $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
+
+                            $soportes->FOTO_FIRMA_RH = $rutaFirmaCompleta;
+                            $soportes->save();
+                        }
+                    } else {
+                        
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $soportes = documentoscolaboradorcontratoModel::where(
+                                    'ID_DOCUMENTO_COLABORADOR_CONTRATO',
+                                    $request['ID_DOCUMENTO_COLABORADOR_CONTRATO']
+                                )->update(['ACTIVO' => 0]);
+
+                                $response['code']    = 1;
+                                $response['soporte'] = 'Desactivada';
+                            } else {
+                                $soportes = documentoscolaboradorcontratoModel::where(
+                                    'ID_DOCUMENTO_COLABORADOR_CONTRATO',
+                                    $request['ID_DOCUMENTO_COLABORADOR_CONTRATO']
+                                )->update(['ACTIVO' => 1]);
+
+                                $response['code']    = 1;
+                                $response['soporte'] = 'Activada';
+                            }
+                        } else {
+                            
+                            $soportes = documentoscolaboradorcontratoModel::find($request->ID_DOCUMENTO_COLABORADOR_CONTRATO);
+
+                            
+                            $soportes->update($request->except([
+                                'DOCUMENTO_SOPORTECONTRATO',
+                                'FOTO_FIRMA',
+                                'FOTO_FIRMA_RH',
+                                'ELIMINAR_DOCUMENTO_SOPORTECONTRATO',
+                                'ELIMINAR_FOTO_FIRMA',
+                                'ELIMINAR_FOTO_FIRMA_RH'
+                            ]));
+
+
+                            if ($request->boolean('ELIMINAR_DOCUMENTO_SOPORTECONTRATO')) {
+                                if ($soportes->DOCUMENTO_SOPORTECONTRATO && Storage::exists($soportes->DOCUMENTO_SOPORTECONTRATO)) {
+                                    Storage::delete($soportes->DOCUMENTO_SOPORTECONTRATO);
                                 }
-
-                                if ($request->hasFile('FOTO_FIRMA')) {
-                                    $firma = $request->file('FOTO_FIRMA');
-                                    $curp = $request->CURP;
-                                    $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
-
-                                    $nombreFirma = 'firma_colaborador.' . $firma->getClientOriginalExtension();
-                                    $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma del colaborador';
-                                    $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
-
-                                    $soportes->FOTO_FIRMA = $rutaFirmaCompleta;
-                                    $soportes->save();
-                                }
-
-
-                                if ($request->hasFile('FOTO_FIRMA_RH')) {
-                                    $firma = $request->file('FOTO_FIRMA_RH');
-                                    $curp = $request->CURP;
-                                    $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
-
-                                    $nombreFirma = 'firma_rh.' . $firma->getClientOriginalExtension();
-                                    $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma RH';
-                                    $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
-
-                                    $soportes->FOTO_FIRMA_RH = $rutaFirmaCompleta;
-                                    $soportes->save();
-                                }
-
-                                            } else {
-                                if (isset($request->ELIMINAR)) {
-                                    if ($request->ELIMINAR == 1) {
-                                        $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
-                                            ->update(['ACTIVO' => 0]);
-                                        $response['code'] = 1;
-                                        $response['soporte'] = 'Desactivada';
-                                    } else {
-                                        $soportes = documentoscolaboradorcontratoModel::where('ID_DOCUMENTO_COLABORADOR_CONTRATO', $request['ID_DOCUMENTO_COLABORADOR_CONTRATO'])
-                                            ->update(['ACTIVO' => 1]);
-                                        $response['code'] = 1;
-                                        $response['soporte'] = 'Activada';
-                                    }
-                                } else {
-                                    $soportes = documentoscolaboradorcontratoModel::find($request->ID_DOCUMENTO_COLABORADOR_CONTRATO);
-                                    $soportes->update($request->except(['DOCUMENTO_SOPORTECONTRATO', 'FOTO_FIRMA', 'FOTO_FIRMA_RH']));
-
-                                    if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
-                                        if ($soportes->DOCUMENTO_SOPORTECONTRATO && Storage::exists($soportes->DOCUMENTO_SOPORTECONTRATO)) {
-                                            Storage::delete($soportes->DOCUMENTO_SOPORTECONTRATO); 
-                                        }
-
-                                        $documento = $request->file('DOCUMENTO_SOPORTECONTRATO');
-                                        $curp = $request->CURP;
-                                        $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
-
-                                        $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO) . '.' . $documento->getClientOriginalExtension();
-
-                                        $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
-                                        $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
-
-                                        $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
-                                        $soportes->save();
-                                    }
-
-                                    if ($request->hasFile('FOTO_FIRMA')) {
-                                        if ($soportes->FOTO_FIRMA && Storage::exists($soportes->FOTO_FIRMA)) {
-                                            Storage::delete($soportes->FOTO_FIRMA);
-                                        }
-
-                                        $firma = $request->file('FOTO_FIRMA');
-                                        $curp = $request->CURP;
-                                        $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
-
-                                        $nombreFirma = 'firma_colaborador.' . $firma->getClientOriginalExtension();
-                                        $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma del colaborador';
-                                        $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
-
-                                        $soportes->FOTO_FIRMA = $rutaFirmaCompleta;
-                                        $soportes->save();
-                                    }
-
-
-                                    if ($request->hasFile('FOTO_FIRMA_RH')) {
-                                        $firma = $request->file('FOTO_FIRMA_RH');
-                                        $curp = $request->CURP;
-                                        $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
-
-                                        $nombreFirma = 'firma_rh.' . $firma->getClientOriginalExtension();
-                                        $rutaFirma = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma RH';
-                                        $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
-
-                                        $soportes->FOTO_FIRMA_RH = $rutaFirmaCompleta;
-                                        $soportes->save();
-                                    }
-
-
-
-                                    $response['code'] = 1;
-                                    $response['soporte'] = 'Actualizada';
-                                }
+                                $soportes->DOCUMENTO_SOPORTECONTRATO = null;
+                                $soportes->save();
                             }
 
-                            $response['code'] = 1;
-                            $response['soporte'] = $soportes;
-                            return response()->json($response);
-                            break;
+                            if ($request->boolean('ELIMINAR_FOTO_FIRMA')) {
+                                if ($soportes->FOTO_FIRMA && Storage::exists($soportes->FOTO_FIRMA)) {
+                                    Storage::delete($soportes->FOTO_FIRMA);
+                                }
+                                $soportes->FOTO_FIRMA = null;
+                                $soportes->save();
+                            }
+
+                            if ($request->boolean('ELIMINAR_FOTO_FIRMA_RH')) {
+                                if ($soportes->FOTO_FIRMA_RH && Storage::exists($soportes->FOTO_FIRMA_RH)) {
+                                    Storage::delete($soportes->FOTO_FIRMA_RH);
+                                }
+                                $soportes->FOTO_FIRMA_RH = null;
+                                $soportes->save();
+                            }
+
+
+                            if ($request->hasFile('DOCUMENTO_SOPORTECONTRATO')) {
+                                if ($soportes->DOCUMENTO_SOPORTECONTRATO && Storage::exists($soportes->DOCUMENTO_SOPORTECONTRATO)) {
+                                    Storage::delete($soportes->DOCUMENTO_SOPORTECONTRATO);
+                                }
+
+                                $documento   = $request->file('DOCUMENTO_SOPORTECONTRATO');
+                                $curp        = $request->CURP;
+                                $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                                $nombreArchivo = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO_SOPORTECONTRATO)
+                                    . '.' . $documento->getClientOriginalExtension();
+
+                                $rutaCarpeta  = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento;
+                                $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                                $soportes->DOCUMENTO_SOPORTECONTRATO = $rutaCompleta;
+                                $soportes->save();
+                            }
+
+                            if ($request->hasFile('FOTO_FIRMA')) {
+                                if ($soportes->FOTO_FIRMA && Storage::exists($soportes->FOTO_FIRMA)) {
+                                    Storage::delete($soportes->FOTO_FIRMA);
+                                }
+
+                                $firma       = $request->file('FOTO_FIRMA');
+                                $curp        = $request->CURP;
+                                $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                                $nombreFirma       = 'firma_colaborador.' . $firma->getClientOriginalExtension();
+                                $rutaFirma         = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma del colaborador';
+                                $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
+
+                                $soportes->FOTO_FIRMA = $rutaFirmaCompleta;
+                                $soportes->save();
+                            }
+
+                            if ($request->hasFile('FOTO_FIRMA_RH')) {
+                                if ($soportes->FOTO_FIRMA_RH && Storage::exists($soportes->FOTO_FIRMA_RH)) {
+                                    Storage::delete($soportes->FOTO_FIRMA_RH);
+                                }
+
+                                $firma       = $request->file('FOTO_FIRMA_RH');
+                                $curp        = $request->CURP;
+                                $idDocumento = $soportes->ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+                                $nombreFirma       = 'firma_rh.' . $firma->getClientOriginalExtension();
+                                $rutaFirma         = 'reclutamiento/' . $curp . '/Documentos de soporte de los contratos en general/' . $idDocumento . '/firma RH';
+                                $rutaFirmaCompleta = $firma->storeAs($rutaFirma, $nombreFirma);
+
+                                $soportes->FOTO_FIRMA_RH = $rutaFirmaCompleta;
+                                $soportes->save();
+                            }
+
+                            $response['code']    = 1;
+                            $response['soporte'] = 'Actualizada';
+                        }
+                    }
+
+                    $response['code']    = 1;
+                    $response['soporte'] = $soportes;
+                    return response()->json($response);
+                    break;
+
+
 
 
 
                 /////////////////////////////////////////// DOCUMENTOS DE CONTRATO //////////////////////////////////
 
-                    // INFORMACION MEDICA
+                // INFORMACION MEDICA
 
-                    case 5:
+                case 5:
                     if ($request->ID_INFORMACION_MEDICA == 0) {
                         DB::statement('ALTER TABLE informacion_medica_contrato AUTO_INCREMENT=1;');
                         $soportes = informacionmedicaModel::create($request->except('DOCUMENTO_INFORMACION_MEDICA', 'observacion')); 

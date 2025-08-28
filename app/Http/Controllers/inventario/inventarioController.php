@@ -558,6 +558,7 @@ class inventarioController extends Controller
                                     'UNITARIO_EQUIPO'    => !empty($rowData['N']) ? $rowData['N'] : null,
                                     'TOTAL_EQUIPO'       => !empty($rowData['O']) ? $rowData['O'] : null,
                                     'TIPO_EQUIPO'        => !empty($rowData['P']) ? $rowData['P'] : null,
+                                    'OBSERVACION_EQUIPO' => !empty($rowData['Q']) ? $rowData['Q'] : null,
                                     'FOTO_EQUIPO'        => null
                                 ]);
 

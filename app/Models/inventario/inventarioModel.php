@@ -27,7 +27,8 @@ class inventarioModel extends Model
         'UNITARIO_EQUIPO',
         'TOTAL_EQUIPO',
         'TIPO_EQUIPO',
-        'ACTIVO'
+        'ACTIVO',
+        'OBSERVACION_EQUIPO'
 
 
 

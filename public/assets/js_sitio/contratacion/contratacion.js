@@ -5129,6 +5129,117 @@ $('#Tablasoportecontrato').on('click', '.ver-archivo-documentocolaboradorsoporte
 });
 
 
+// $('#Tablasoportecontrato').on('click', 'td>button.EDITAR', function () {
+//     var tr = $(this).closest('tr');
+//     var row = Tablasoportecontrato.row(tr);
+
+//     ID_DOCUMENTO_COLABORADOR_CONTRATO = row.data().ID_DOCUMENTO_COLABORADOR_CONTRATO;
+
+//     editarDatoTabla(row.data(), 'formularioSOPORTECONTRATO', 'miModal_SOPORTECONTRATO', 1);
+
+//     $('#miModal_SOPORTECONTRATO .modal-title').html(row.data().NOMBRE_DOCUMENTO_SOPORTECONTRATO);
+
+
+//     const mostrarDivdocumentos = ['11','14'];
+
+//     const mostrarfoto = ['7'];
+
+
+//     const tipoSeleccionado1 = String(row.data().TIPO_DOCUMENTO_SOPORTECONTRATO); 
+
+//     if (mostrarDivdocumentos.includes(tipoSeleccionado1)) {
+//         document.getElementById('FECHAS_SOPORTEDOCUMENTOSCONTRATO').style.display = 'block';
+//     } else {
+//         document.getElementById('FECHAS_SOPORTEDOCUMENTOSCONTRATO').style.display = 'none';
+//     }
+
+
+//     const tipoSeleccionado7 = String(row.data().TIPO_DOCUMENTO_SOPORTECONTRATO); 
+
+//      if (mostrarfoto.includes(tipoSeleccionado7)) {
+//         document.getElementById('DIV_FOTO_FIRMA').style.display = 'block';
+//     } else {
+//         document.getElementById('DIV_FOTO_FIRMA').style.display = 'none';
+//     }
+ 
+
+
+
+
+//       if (row.data().FOTO_FIRMA) {
+//         var archivo = row.data().FOTO_FIRMA;
+//         var extension = archivo.substring(archivo.lastIndexOf("."));
+//         var imagenUrl = '/firmacolaborador/' + row.data().ID_DOCUMENTO_COLABORADOR_CONTRATO + extension;
+
+//         if ($('#FOTO_FIRMA').data('dropify')) {
+//             $('#FOTO_FIRMA').dropify().data('dropify').destroy();
+//             $('#FOTO_FIRMA').dropify().data('dropify').settings.defaultFile = imagenUrl;
+//             $('#FOTO_FIRMA').dropify().data('dropify').init();
+//         } else {
+//             $('#FOTO_FIRMA').attr('data-default-file', imagenUrl);
+//             $('#FOTO_FIRMA').dropify({
+//                 messages: {
+//                     'default': 'Arrastre la imagen aquí o haga click',
+//                     'replace': 'Arrastre la imagen o haga clic para reemplazar',
+//                     'remove': 'Quitar',
+//                     'error': 'Ooops, ha ocurrido un error.'
+//                 },
+//                 error: {
+//                     'fileSize': 'Demasiado grande ({{ value }} max).',
+//                     'minWidth': 'Ancho demasiado pequeño (min {{ value }}}px).',
+//                     'maxWidth': 'Ancho demasiado grande (max {{ value }}}px).',
+//                     'minHeight': 'Alto demasiado pequeño (min {{ value }}}px).',
+//                     'maxHeight': 'Alto demasiado grande (max {{ value }}px max).',
+//                     'imageFormat': 'Formato no permitido, sólo ({{ value }}).'
+//                 }
+//             });
+//         }
+//     } else {
+//         $('#FOTO_FIRMA').dropify().data('dropify').resetPreview();
+//         $('#FOTO_FIRMA').dropify().data('dropify').clearElement();
+//     }
+
+
+
+
+
+    
+//       if (row.data().FOTO_FIRMA_RH) {
+//         var archivo = row.data().FOTO_FIRMA_RH;
+//         var extension = archivo.substring(archivo.lastIndexOf("."));
+//         var imagenUrl = '/firmarh/' + row.data().ID_DOCUMENTO_COLABORADOR_CONTRATO + extension;
+
+//         if ($('#FOTO_FIRMA_RH').data('dropify')) {
+//             $('#FOTO_FIRMA_RH').dropify().data('dropify').destroy();
+//             $('#FOTO_FIRMA_RH').dropify().data('dropify').settings.defaultFile = imagenUrl;
+//             $('#FOTO_FIRMA_RH').dropify().data('dropify').init();
+//         } else {
+//             $('#FOTO_FIRMA_RH').attr('data-default-file', imagenUrl);
+//             $('#FOTO_FIRMA_RH').dropify({
+//                 messages: {
+//                     'default': 'Arrastre la imagen aquí o haga click',
+//                     'replace': 'Arrastre la imagen o haga clic para reemplazar',
+//                     'remove': 'Quitar',
+//                     'error': 'Ooops, ha ocurrido un error.'
+//                 },
+//                 error: {
+//                     'fileSize': 'Demasiado grande ({{ value }} max).',
+//                     'minWidth': 'Ancho demasiado pequeño (min {{ value }}}px).',
+//                     'maxWidth': 'Ancho demasiado grande (max {{ value }}}px).',
+//                     'minHeight': 'Alto demasiado pequeño (min {{ value }}}px).',
+//                     'maxHeight': 'Alto demasiado grande (max {{ value }}px max).',
+//                     'imageFormat': 'Formato no permitido, sólo ({{ value }}).'
+//                 }
+//             });
+//         }
+//     } else {
+//         $('#FOTO_FIRMA_RH').dropify().data('dropify').resetPreview();
+//         $('#FOTO_FIRMA_RH').dropify().data('dropify').clearElement();
+//     }
+
+// });
+
+
 $('#Tablasoportecontrato').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablasoportecontrato.row(tr);
@@ -5139,11 +5250,8 @@ $('#Tablasoportecontrato').on('click', 'td>button.EDITAR', function () {
 
     $('#miModal_SOPORTECONTRATO .modal-title').html(row.data().NOMBRE_DOCUMENTO_SOPORTECONTRATO);
 
-
     const mostrarDivdocumentos = ['11','14'];
-
     const mostrarfoto = ['7'];
-
 
     const tipoSeleccionado1 = String(row.data().TIPO_DOCUMENTO_SOPORTECONTRATO); 
 
@@ -5153,24 +5261,19 @@ $('#Tablasoportecontrato').on('click', 'td>button.EDITAR', function () {
         document.getElementById('FECHAS_SOPORTEDOCUMENTOSCONTRATO').style.display = 'none';
     }
 
-
     const tipoSeleccionado7 = String(row.data().TIPO_DOCUMENTO_SOPORTECONTRATO); 
 
-     if (mostrarfoto.includes(tipoSeleccionado7)) {
+    if (mostrarfoto.includes(tipoSeleccionado7)) {
         document.getElementById('DIV_FOTO_FIRMA').style.display = 'block';
     } else {
         document.getElementById('DIV_FOTO_FIRMA').style.display = 'none';
     }
- 
 
-
-
-
-      if (row.data().FOTO_FIRMA) {
+    // ======= Firma COLABORADOR (igual que tenías) =======
+    if (row.data().FOTO_FIRMA) {
         var archivo = row.data().FOTO_FIRMA;
         var extension = archivo.substring(archivo.lastIndexOf("."));
         var imagenUrl = '/firmacolaborador/' + row.data().ID_DOCUMENTO_COLABORADOR_CONTRATO + extension;
-        console.log(imagenUrl); 
 
         if ($('#FOTO_FIRMA').data('dropify')) {
             $('#FOTO_FIRMA').dropify().data('dropify').destroy();
@@ -5200,16 +5303,25 @@ $('#Tablasoportecontrato').on('click', 'td>button.EDITAR', function () {
         $('#FOTO_FIRMA').dropify().data('dropify').clearElement();
     }
 
+    // ======= NUEVO: flags y eventos para COLABORADOR =======
+    $('#ELIMINAR_FOTO_FIRMA').val('0'); // reset flag por si venías de otra edición
+    $('#FOTO_FIRMA')
+        .off('dropify.afterClear._flag change._flag') // evitar handlers duplicados
+        .on('dropify.afterClear._flag', function () {
+            $('#ELIMINAR_FOTO_FIRMA').val('1'); // pedir borrado en backend
+            $(this).val('');                     // limpiar input file real
+        })
+        .on('change._flag', function () {
+            if (this.files && this.files.length > 0) {
+                $('#ELIMINAR_FOTO_FIRMA').val('0'); // si elige archivo, no borrar
+            }
+        });
 
-
-
-
-    
-      if (row.data().FOTO_FIRMA_RH) {
+    // ======= Firma RH (igual que tenías) =======
+    if (row.data().FOTO_FIRMA_RH) {
         var archivo = row.data().FOTO_FIRMA_RH;
         var extension = archivo.substring(archivo.lastIndexOf("."));
         var imagenUrl = '/firmarh/' + row.data().ID_DOCUMENTO_COLABORADOR_CONTRATO + extension;
-        console.log(imagenUrl); 
 
         if ($('#FOTO_FIRMA_RH').data('dropify')) {
             $('#FOTO_FIRMA_RH').dropify().data('dropify').destroy();
@@ -5239,8 +5351,22 @@ $('#Tablasoportecontrato').on('click', 'td>button.EDITAR', function () {
         $('#FOTO_FIRMA_RH').dropify().data('dropify').clearElement();
     }
 
-});
+    // ======= NUEVO: flags y eventos para RH =======
+    $('#ELIMINAR_FOTO_FIRMA_RH').val('0'); // reset flag
+    $('#FOTO_FIRMA_RH')
+        .off('dropify.afterClear._flag change._flag')
+        .on('dropify.afterClear._flag', function () {
+            $('#ELIMINAR_FOTO_FIRMA_RH').val('1');
+            $(this).val('');
+        })
+        .on('change._flag', function () {
+            if (this.files && this.files.length > 0) {
+                $('#ELIMINAR_FOTO_FIRMA_RH').val('0');
+            }
+        });
 
+    $('#miModal_SOPORTECONTRATO').modal('show');
+});
 
 
 

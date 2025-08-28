@@ -1288,9 +1288,13 @@
                     <div class="mb-3" id="DIV_FOTO_FIRMA" style="display: none">
                         <div class="row">
                             <!-- Col 6: Firma colaborador -->
+
+                            <input type="hidden" name="ELIMINAR_FOTO_FIRMA" id="ELIMINAR_FOTO_FIRMA" value="0">
+                            <input type="hidden" name="ELIMINAR_FOTO_FIRMA_RH" id="ELIMINAR_FOTO_FIRMA_RH" value="0">
+
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Firma colaborador (.png)*</label>
+                                    <label>Firma colaborador (.png)</label>
                                     <style>
                                         .dropify-wrapper {
                                             height: 270px !important;
@@ -1318,7 +1322,7 @@
                             <!-- Col 6: Firma RH -->
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Firma RH (.png)*</label>
+                                    <label>Firma RH (.png)</label>
                                     <input type="file"
                                         accept="image/png"
                                         id="FOTO_FIRMA_RH"

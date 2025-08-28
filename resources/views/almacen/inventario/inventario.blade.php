@@ -75,32 +75,32 @@
                                             {!! csrf_field() !!}
                                         </div>
 
-                                        <div class="col-8 ">
+                                        <div class="col-12">
                                             <div class="form-group">
                                                 <label> Descripción del equipo*</label>
-                                                <input type="text" class="form-control" id="DESCRIPCION_EQUIPO" name="DESCRIPCION_EQUIPO" required>
+                                                <textarea class="form-control" id="DESCRIPCION_EQUIPO" name="DESCRIPCION_EQUIPO" rows="5" required></textarea>
                                             </div>
                                         </div>
 
-                                        <div class="col-4">
+                                        <div class="col-3 mt-2">
                                             <div class="form-group">
                                                 <label> Marca </label>
                                                 <input type="text" class="form-control" id="MARCA_EQUIPO" name="MARCA_EQUIPO">
                                             </div>
                                         </div>
-                                        <div class="col-4 mt-2">
+                                        <div class="col-3 mt-2">
                                             <div class="form-group">
                                                 <label> Modelo </label>
                                                 <input type="text" class="form-control" id="MODELO_EQUIPO" name="MODELO_EQUIPO">
                                             </div>
                                         </div>
-                                        <div class="col-4 mt-2">
+                                        <div class="col-3 mt-2">
                                             <div class="form-group">
                                                 <label> Serie </label>
                                                 <input type="text" class="form-control" id="SERIE_EQUIPO" name="SERIE_EQUIPO">
                                             </div>
                                         </div>
-                                        <div class="col-4 mt-2">
+                                        <div class="col-3 mt-2">
                                             <div class="form-group">
                                                 <label>Código de Identificación </label>
                                                 <input type="text" class="form-control" id="CODIGO_EQUIPO" name="CODIGO_EQUIPO">
@@ -169,10 +169,19 @@
                                                     <option value="Material para curso">Material para curso</option>
                                                     <option value="EPP">EPP</option>
                                                     <option value="Vehículos">Vehículos</option>
+                                                    <option value="Donación">Donación</option>
+
                                                 </select>
                                             </div>
                                         </div>
 
+
+                                        <div class="col-12 mt-3">
+                                            <div class="form-group">
+                                                <label> Observación</label>
+                                                <textarea class="form-control" id="OBSERVACION_EQUIPO" name="OBSERVACION_EQUIPO" rows="5" required></textarea>
+                                            </div>
+                                        </div>
 
 
                                     </div>
