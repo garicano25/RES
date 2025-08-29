@@ -181,26 +181,32 @@ $(document).on('click', '.btn-ver-mas-materiales', function() {
 $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
     var data = Tablabitacoragr.row($(this).parents('tr')).data();
 
-    // Llenamos cabecera
     $('#modal_no_mr').val(data.NO_MR ?? '');
     $('#modal_fecha_mr').val(data.FECHA_APRUEBA_MR ?? '');
     $('#modal_no_po').val(data.NO_PO ?? '');
     $('#modal_fecha_po').val(data.FECHA_APROBACION_PO ?? '');
-  // $('#PROVEEDOR_EQUIPO').val(data.PROVEEDOR ?? '');
-  $('#PROVEEDOR_EQUIPO').val(data.PROVEEDOR_KEY ?? '');
-
+    $('#PROVEEDOR_EQUIPO').val(data.PROVEEDOR_KEY ?? '');
     $('#modal_fecha_entrega').val(data.FECHA_ENTREGA_PO ?? '');
 
-    // Contenedor de Bien o Servicio
     let contenedor = $("#modal_bien_servicio");
     contenedor.empty();
 
     if (data.BIEN_SERVICIO) {
         $(data.BIEN_SERVICIO).each(function (index) {
-            const texto = $(this).text(); // "• descripcion (3)"
-            let match = texto.match(/•\s*(.*?)\s*\((\d+)\)$/);
-            let descripcion = match ? match[1] : texto.replace("•", "").trim();
-            let cantidad = match ? match[2] : 0;
+           const texto = $(this).text().trim();
+
+        let limpio = texto.replace(/^•\s*/, "");
+
+        let partes = limpio.split(" - $ ");
+        let descYcantidad = partes[0];
+        let precio = partes[1] ?? "";
+
+        // Extraer descripción y cantidad
+        let match = descYcantidad.match(/^(.*)\((\d+)\)$/);
+        let descripcion = match ? match[1].trim() : descYcantidad.trim();
+        let cantidad = match ? match[2] : 0;
+
+
 
             let bloque = $(`
               <div class="border rounded p-3 mb-3 bg-light">
@@ -221,6 +227,10 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                     <label class="form-label">Cantidad Aceptada</label>
                     <input type="number" class="form-control cantidad-aceptada" name="CANTIDAD_ACEPTADA[]" value="0" min="0">
                   </div>
+                  <div class="col-2">
+                    <label class="form-label">Precio Unitario</label>
+                    <input type="text" class="form-control  precio_unitario" name="PRECIO_UNITARIO[]" value="${precio}" readonly>
+                  </div>
                 </div>
 
                 <!-- Comentario si cantidad aceptada difiere -->
@@ -234,17 +244,19 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                 <!-- Radios Cumple especificado -->
                 <div class="row mb-2">
                   <div class="col-6">
-                    <label class="form-label d-block">Cumple lo especificado el B o S</label>
-                    <div>
-                      <label><input type="radio" name="CUMPLE_${index}" value="Sí">Sí</label>
-                      <label class="ml-3"><input type="radio" name="CUMPLE_${index}" value="No">No</label>
-                    </div>
+                    <label class="form-label">Cumple lo especificado el B o S</label>
+                    <select class="form-control" name="CUMPLE[]">
+                      <option value="">Seleccione</option>
+                      <option value="Sí">Sí</option>
+                      <option value="No">No</option>
+                    </select>
                   </div>
                   <div class="col-6">
                     <label class="form-label">Comentario especificación</label>
                     <input type="text" class="form-control" name="COMENTARIO_CUMPLE[]">
                   </div>
                 </div>
+
 
           
                 <div class="row mb-2">
@@ -277,7 +289,10 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                 }
             });
         });
-    } else {
+    }
+    
+    
+    else {
         contenedor.html('<div class="text-muted">No hay bienes o servicios</div>');
     }
 

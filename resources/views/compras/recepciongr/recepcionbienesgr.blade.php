@@ -244,7 +244,7 @@
 
 
                 <hr>
-                <h5 class="mb-3">Bien o Servicio</h5>
+                <h5 class="mb-3 text-center">Bienes o Servicios (B o S)</h5>
                 <div id="modal_bien_servicio"></div>
 
             </div>
