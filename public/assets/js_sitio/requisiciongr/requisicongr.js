@@ -115,7 +115,7 @@ var Tablabitacoragr = $("#Tablabitacoragr").DataTable({
         { targets: 3, width: '250px', className: 'text-center' },
         { targets: 4, width: '600px' },
         { targets: 5, width: '250px',className: 'text-center'  },
-{ targets: 6, width: '600px', className: 'col-bien-servicio' }
+        { targets: 6, width: '700px', className: 'col-bien-servicio' }
     ],
     columns: [
         { data: 'NO_MR' },
@@ -193,15 +193,15 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
 
     if (data.BIEN_SERVICIO) {
         $(data.BIEN_SERVICIO).each(function (index) {
-           const texto = $(this).text().trim();
+        
+        
+
+        const texto = $(this).text().trim();
 
         let limpio = texto.replace(/^•\s*/, "");
-
         let partes = limpio.split(" - $ ");
         let descYcantidad = partes[0];
         let precio = partes[1] ?? "";
-
-        // Extraer descripción y cantidad
         let match = descYcantidad.match(/^(.*)\((\d+)\)$/);
         let descripcion = match ? match[1].trim() : descYcantidad.trim();
         let cantidad = match ? match[2] : 0;
