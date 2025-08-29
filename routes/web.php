@@ -778,7 +778,9 @@ Route::get('/Tablamatirzaprobada', [matrizController::class, 'Tablamatirzaprobad
 
 //==============================================    Recepción de bienes y/o servicios - GR  ============================================== 
 
-Route::get('/Bitácora-GR', function () { return view('compras.recepciongr.recepcionbienesgr');});
+Route::get('/Bitácora-GR', [grController::class, 'index']);
+
+// Route::get('/Bitácora-GR', function () { return view('compras.recepciongr.recepcionbienesgr');});
 Route::get('/Tablabitacoragr', [grController::class, 'Tablabitacoragr']);
 
 

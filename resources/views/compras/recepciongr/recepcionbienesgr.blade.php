@@ -201,7 +201,23 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label">Proveedor</label>
-                        <input type="text" class="form-control" id="modal_proveedor" readonly>
+                            <select class="form-select text-center"  id="PROVEEDOR_EQUIPO">
+                                <option value="">Seleccionar proveedor</option>
+                                <optgroup label="Proveedor oficial">
+                                    @foreach ($proveedoresOficiales as $proveedor)
+                                    <option value="{{ $proveedor->RFC_ALTA }}">
+                                        {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
+                                    </option>
+                                    @endforeach
+                                </optgroup>
+                                <optgroup label="Proveedores temporales">
+                                    @foreach ($proveedoresTemporales as $proveedor)
+                                    <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
+                                        {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
+                                    </option>
+                                    @endforeach
+                                </optgroup>
+                            </select>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Fecha Entrega PO</label>

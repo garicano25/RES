@@ -186,7 +186,9 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
     $('#modal_fecha_mr').val(data.FECHA_APRUEBA_MR ?? '');
     $('#modal_no_po').val(data.NO_PO ?? '');
     $('#modal_fecha_po').val(data.FECHA_APROBACION_PO ?? '');
-    $('#modal_proveedor').val(data.PROVEEDOR ?? '');
+  // $('#PROVEEDOR_EQUIPO').val(data.PROVEEDOR ?? '');
+  $('#PROVEEDOR_EQUIPO').val(data.PROVEEDOR_KEY ?? '');
+
     $('#modal_fecha_entrega').val(data.FECHA_ENTREGA_PO ?? '');
 
     // Contenedor de Bien o Servicio
