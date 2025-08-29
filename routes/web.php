@@ -148,6 +148,8 @@ use App\Http\Controllers\paginaweb\mensajespaginaController;
 // CONTROLADORES DE INVENTARIO
 
 use App\Http\Controllers\inventario\inventarioController;
+use App\Http\Controllers\inventario\catalogotipoinventarioController;
+
 
 
 //==============================================  login  ============================================== 
@@ -890,11 +892,21 @@ Route::get('/Proveedor', function () {return view('compras.externa.diseño');});
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+Route::get('/Inventario', [inventarioController::class, 'index']);
 
-Route::get('/Inventario', function () { return view('almacen.inventario.inventario');});
+// Route::get('/Inventario', function () { return view('almacen.inventario.inventario');});
 Route::get('/Tablainventario', [inventarioController::class, 'Tablainventario']);
 Route::post('/InventarioSave', [inventarioController::class, 'store']);
 Route::get('/equipofoto/{id}', [inventarioController::class, 'mostrarFotoEquipo'])->name('equipofoto');
+
+
+
+//==============================================   CATALOGOS INVENTRARIO  ============================================== 
+Route::get('/Catálogos_inventarios', function () { return view('almacen.Catalogos.catalogo_inventarios');});
+Route::get('/Catálogo_tipo_inventario', function () { return view('almacen.Catalogos.catalogo_tipo');});
+Route::post('/TipoinventarioSave', [catalogotipoinventarioController::class, 'store']);
+Route::get('/Tablatipoinventario', [catalogotipoinventarioController::class, 'Tablatipoinventario']);
+Route::get('/TipoinventarioDelete', [catalogotipoinventarioController::class, 'store']);
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

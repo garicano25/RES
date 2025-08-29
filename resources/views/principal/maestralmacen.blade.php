@@ -159,7 +159,20 @@
 
 
 
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown" style="margin-left: 8px;">
+                                <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                    <span class="d-lg-none">Catálogos</span>
+                                    <span class="d-none d-lg-inline">Catálogos</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{url('/Catálogos_inventarios')}}">Catálogo de inventario</a>
+                                    </li>
 
+                                </ul>
+                            </li>
+                        </ul>
 
 
 
@@ -290,6 +303,9 @@
 
 
 
+    @if(request()->is('Catálogo_tipo_inventario'))
+    <script src="/assets/js_sitio/inventario/catalogos/catalogotipos.js"></script>
+    @endif
 
 </body>
 

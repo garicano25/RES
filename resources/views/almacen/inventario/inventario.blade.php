@@ -161,7 +161,7 @@
                                             <div class="form-group">
                                                 <label>Tipo </label>
                                                 <select class="form-select" id="TIPO_EQUIPO" name="TIPO_EQUIPO" required>
-                                                    <option disabled selected>Seleccione una opción</option>
+                                                    <!-- <option disabled selected>Seleccione una opción</option>
                                                     <option value="Consumible">Consumible</option>
                                                     <option value="AF">AF</option>
                                                     <option value="ANF">ANF</option>
@@ -169,7 +169,12 @@
                                                     <option value="Material para curso">Material para curso</option>
                                                     <option value="EPP">EPP</option>
                                                     <option value="Vehículos">Vehículos</option>
-                                                    <option value="Donación">Donación</option>
+                                                    <option value="Donación">Donación</option> -->
+                                                    <option value="0" disabled selected>Seleccione una opción</option>
+                                                    @foreach ($tipoinventario as $tipos)
+                                                    <option value="{{ $tipos->DESCRIPCION_TIPO }}">{{ $tipos->DESCRIPCION_TIPO }}</option>
+                                                    @endforeach
+
 
                                                 </select>
                                             </div>
@@ -241,7 +246,7 @@
                             <b>'2024-01-01'</b> (no se admiten fechas con texto) y también que el campo
                             <b>tipo</b> contenga únicamente uno de los siguientes valores, escritos <b>tal y como están</b>:
                             <u>Consumible</u>, <u>AF</u>, <u>ANF</u>, <u>Comercialización</u>,
-                            <u>Material para curso</u>, <u>EPP</u>, <u>Vehículos</u>.
+                            <u>Material para curso</u>, <u>EPP</u>, <u>Vehículos</u>, <u>Donación</u>.
                         </p>
                     </div>
 

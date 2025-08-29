@@ -367,9 +367,6 @@
                                     <span class="d-none d-lg-inline">Catálogos</span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    {{-- <li><a class="dropdown-item" href="{{ url('/Jerárquico') }}">Catálogo nivel Jerárquico</a>
-                            </li>
-                            <hr class="dropdown-divider"> --}}
                             <li><a class="dropdown-item" href="{{url('/Catálogos_proveedores')}}">Catálogos de proveedores</a>
                             </li>
 

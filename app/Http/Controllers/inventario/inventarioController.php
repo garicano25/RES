@@ -16,11 +16,28 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
+use App\Models\inventario\catalogotipoinventarioModel;
+
 
 use DB;
 
 class inventarioController extends Controller
 {
+
+
+    public function index()
+    {
+        $tipoinventario = catalogotipoinventarioModel::where('ACTIVO', 1)->get();
+
+
+        return view('almacen.inventario.inventario', compact('tipoinventario'));
+    }
+
+
+
+
+
+    
     public function Tablainventario()
     {
         try {

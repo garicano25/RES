@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCatalagoVerificacionproveedor extends Migration
+class CreateCatalogoTipoinventario extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateCatalagoVerificacionproveedor extends Migration
      */
     public function up()
     {
-        Schema::create('catalago_verificacionproveedor', function (Blueprint $table) {
-            $table->increments('ID_CATALOGO_VERIFICACION_PROVEEDOR');
+        Schema::create('catalogo_tipoinventario', function (Blueprint $table) {
+            $table->increments('ID_CATALOGO_TIPOINVENTARIO');
             $table->text('DESCRIPCION_TIPO')->nullable();
             $table->boolean('ACTIVO')->default(1);
             $table->timestamps();
@@ -28,6 +28,6 @@ class CreateCatalagoVerificacionproveedor extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('catalago_verificacionproveedor');
+        Schema::dropIfExists('catalogo_tipoinventario');
     }
 }
