@@ -173,104 +173,98 @@
 <div class="modal fade" id="modalGR" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title">Detalle de GR</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-                <div class="row mb-3">
-                    <div class="col-md-3">
-                        <label class="form-label">No. MR</label>
-                        <input type="text" class="form-control" id="modal_no_mr" readonly>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">Fecha Aprobación MR</label>
-                        <input type="text" class="form-control" id="modal_fecha_mr" readonly>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">No. PO</label>
-                        <input type="text" class="form-control" id="modal_no_po" readonly>
-                    </div>
-                    <div class="col-md-3">
-                        <label class="form-label">Fecha Aprobación PO</label>
-                        <input type="text" class="form-control" id="modal_fecha_po" readonly>
-                    </div>
+            <form method="post" enctype="multipart/form-data" id="formulariorecepciongr" style="background-color: #ffffff;">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title">Detalle de GR</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body">
+                    {!! csrf_field() !!}
 
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label">Proveedor</label>
-                        <select class="form-select text-center" id="PROVEEDOR_EQUIPO">
-                            <option value="">Seleccionar proveedor</option>
-                            <optgroup label="Proveedor oficial">
-                                @foreach ($proveedoresOficiales as $proveedor)
-                                <option value="{{ $proveedor->RFC_ALTA }}">
-                                    {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
-                                </option>
-                                @endforeach
-                            </optgroup>
-                            <optgroup label="Proveedores temporales">
-                                @foreach ($proveedoresTemporales as $proveedor)
-                                <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
-                                    {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
-                                </option>
-                                @endforeach
-                            </optgroup>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Fecha Entrega PO</label>
-                        <input type="text" class="form-control" id="modal_fecha_entrega" readonly>
-                    </div>
-                </div>
-
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label">No. recepción de orden - GR</label>
-                        <input type="text" class="form-control" id="modal_fecha_entrega" readonly>
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <label class="form-label">No. MR</label>
+                            <input type="text" class="form-control" id="modal_no_mr" readonly>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Fecha Aprobación MR</label>
+                            <input type="text" class="form-control" id="modal_fecha_mr" readonly>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">No. PO</label>
+                            <input type="text" class="form-control" id="modal_no_po" readonly>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">Fecha Aprobación PO</label>
+                            <input type="text" class="form-control" id="modal_fecha_po" readonly>
+                        </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <label class="form-label">Fecha de emisión</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_ACREDITACION" name="DESDE_ACREDITACION">
-                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Proveedor</label>
+                            <select class="form-select text-center" id="PROVEEDOR_EQUIPO">
+                                <option value="">Seleccionar proveedor</option>
+                                <optgroup label="Proveedor oficial">
+                                    @foreach ($proveedoresOficiales as $proveedor)
+                                    <option value="{{ $proveedor->RFC_ALTA }}">
+                                        {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
+                                    </option>
+                                    @endforeach
+                                </optgroup>
+                                <optgroup label="Proveedores temporales">
+                                    @foreach ($proveedoresTemporales as $proveedor)
+                                    <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
+                                        {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
+                                    </option>
+                                    @endforeach
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Fecha Entrega PO</label>
+                            <input type="text" class="form-control" id="modal_fecha_entrega" readonly>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">No. recepción de orden - GR</label>
+                            <input type="text" class="form-control" id="modal_fecha_entrega" >
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Fecha de emisión</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_ACREDITACION" name="DESDE_ACREDITACION">
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <h5 class="mb-3 text-center">Bienes o Servicios (B o S)</h5>
+                    <div id="modal_bien_servicio"></div>
+                    <hr>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label class="form-label">Usuario que solicito</label>
+                            <input type="text" class="form-control" id="modal_usuario_nombre" readonly>
                         </div>
                     </div>
                 </div>
-
-
-
-
-                <hr>
-                <h5 class="mb-3 text-center">Bienes o Servicios (B o S)</h5>
-                <div id="modal_bien_servicio"></div>
-
-
-                <hr>
-                <div class="row mb-3">
-                    <div class="col-md-12">
-                        <label class="form-label">Usuario que solicito</label>
-                        <input type="text" class="form-control" id="modal_usuario_nombre" readonly>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success">Guardar</button>
                 </div>
 
-
-
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-success">Guardar</button>
-            </div>
+            </form>
         </div>
     </div>
 </div>
 
 
 
-<!-- Template para cada producto -->
+
 
 
 

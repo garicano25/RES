@@ -75,6 +75,19 @@
 // });
 
 
+const modalgr = document.getElementById('modalGR')
+modalgr.addEventListener('hidden.bs.modal', event => {
+    
+    
+    document.getElementById('formulariorecepciongr').reset();
+   
+
+})
+
+
+
+
+
 
 
 
@@ -178,6 +191,131 @@ $(document).on('click', '.btn-ver-mas-materiales', function() {
 
 
 
+// $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
+//     var data = Tablabitacoragr.row($(this).parents('tr')).data();
+
+//     $('#modal_no_mr').val(data.NO_MR ?? '');
+//     $('#modal_fecha_mr').val(data.FECHA_APRUEBA_MR ?? '');
+//     $('#modal_no_po').val(data.NO_PO ?? '');
+//     $('#modal_fecha_po').val(data.FECHA_APROBACION_PO ?? '');
+//     $('#PROVEEDOR_EQUIPO').val(data.PROVEEDOR_KEY ?? '');
+//     $('#modal_fecha_entrega').val(data.FECHA_ENTREGA_PO ?? '');
+//     $('#modal_usuario_nombre').val(data.USUARIO_NOMBRE ?? '');
+
+  
+//     let contenedor = $("#modal_bien_servicio");
+//     contenedor.empty();
+
+//     if (data.BIEN_SERVICIO) {
+//         $(data.BIEN_SERVICIO).each(function (index) {
+        
+        
+
+//         const texto = $(this).text().trim();
+
+//         let limpio = texto.replace(/^•\s*/, "");
+//         let partes = limpio.split(" - $ ");
+//         let descYcantidad = partes[0];
+//         let precio = partes[1] ?? "";
+//         let match = descYcantidad.match(/^(.*)\((\d+)\)$/);
+//         let descripcion = match ? match[1].trim() : descYcantidad.trim();
+//         let cantidad = match ? match[2] : 0;
+
+
+
+//             let bloque = $(`
+//               <div class="border rounded p-3 mb-3 bg-light">
+//                 <div class="row mb-2">
+//                   <div class="col-4">
+//                     <label class="form-label">Descripción</label>
+//                     <input type="text" class="form-control" name="DESCRIPCION[]" value="${escapeHtml(descripcion)}" readonly>
+//                   </div>
+//                   <div class="col-2">
+//                     <label class="form-label">Cantidad</label>
+//                     <input type="number" class="form-control cantidad" name="CANTIDAD[]" value="${cantidad}" readonly>
+//                   </div>
+//                   <div class="col-2">
+//                     <label class="form-label">Cantidad Rechazada</label>
+//                     <input type="number" class="form-control" name="CANTIDAD_RECHAZADA[]" value="0" min="0">
+//                   </div>
+//                   <div class="col-2">
+//                     <label class="form-label">Cantidad Aceptada</label>
+//                     <input type="number" class="form-control cantidad-aceptada" name="CANTIDAD_ACEPTADA[]" value="0" min="0">
+//                   </div>
+//                   <div class="col-2">
+//                     <label class="form-label">Precio Unitario</label>
+//                     <input type="text" class="form-control  precio_unitario" name="PRECIO_UNITARIO[]" value="${precio}" readonly>
+//                   </div>
+//                 </div>
+
+//                 <!-- Comentario si cantidad aceptada difiere -->
+//                 <div class="row mb-2 comentario-diferencia" style="display:none;">
+//                   <div class="col-12">
+//                     <label class="form-label">Comentario por diferencia en cantidad</label>
+//                     <textarea class="form-control" name="COMENTARIO_DIFERENCIA[]" rows="2"></textarea>
+//                   </div>
+//                 </div>
+
+//                 <!-- Radios Cumple especificado -->
+//                 <div class="row mb-2">
+//                   <div class="col-6">
+//                     <label class="form-label">Cumple lo especificado el B o S</label>
+//                     <select class="form-control" name="CUMPLE[]">
+//                       <option value="">Seleccione</option>
+//                       <option value="Sí">Sí</option>
+//                       <option value="No">No</option>
+//                     </select>
+//                   </div>
+//                   <div class="col-6">
+//                     <label class="form-label">Comentario especificación</label>
+//                     <input type="text" class="form-control" name="COMENTARIO_CUMPLE[]">
+//                   </div>
+//                 </div>
+
+
+          
+//                 <div class="row mb-2">
+//                   <div class="col-6">
+//                     <label class="form-label">Estado del B o S</label>
+//                     <select class="form-control" name="ESTADO_FISICO[]">
+//                       <option value="">Seleccione</option>
+//                       <option value="BUEN_ESTADO">En buen estado</option>
+//                       <option value="MAL_ESTADO">Mal estado</option>
+//                     </select>
+//                   </div>
+//                   <div class="col-6">
+//                     <label class="form-label">Comentario Estado</label>
+//                     <input type="text" class="form-control" name="COMENTARIO_ESTADO[]">
+//                   </div>
+//                 </div>
+//               </div>
+//             `);
+
+//             contenedor.append(bloque);
+
+//             bloque.find(".cantidad-aceptada").on("input", function () {
+//                 let cant = parseFloat(bloque.find(".cantidad").val());
+//                 let aceptada = parseFloat($(this).val());
+//                 if (!isNaN(cant) && !isNaN(aceptada) && cant !== aceptada) {
+//                     bloque.find(".comentario-diferencia").show();
+//                 } else {
+//                     bloque.find(".comentario-diferencia").hide();
+//                 }
+//             });
+//         });
+//     }
+    
+    
+//     else {
+//         contenedor.html('<div class="text-muted">No hay bienes o servicios</div>');
+//     }
+
+//     $('#modalGR').modal('show');
+// });
+
+
+
+
 $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
     var data = Tablabitacoragr.row($(this).parents('tr')).data();
 
@@ -189,33 +327,27 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
     $('#modal_fecha_entrega').val(data.FECHA_ENTREGA_PO ?? '');
     $('#modal_usuario_nombre').val(data.USUARIO_NOMBRE ?? '');
 
-  
     let contenedor = $("#modal_bien_servicio");
     contenedor.empty();
 
     if (data.BIEN_SERVICIO) {
         $(data.BIEN_SERVICIO).each(function (index) {
-        
-        
+            const texto = $(this).text().trim();
 
-        const texto = $(this).text().trim();
+            let limpio = texto.replace(/^•\s*/, "");
+            let partes = limpio.split(" - $ ");
+            let descYcantidad = partes[0];
+            let precio = partes[1] ?? "";
+            let match = descYcantidad.match(/^(.*)\((\d+)\)$/);
+            let descripcion = match ? match[1].trim() : descYcantidad.trim();
+            let cantidad = match ? match[2] : 0;
 
-        let limpio = texto.replace(/^•\s*/, "");
-        let partes = limpio.split(" - $ ");
-        let descYcantidad = partes[0];
-        let precio = partes[1] ?? "";
-        let match = descYcantidad.match(/^(.*)\((\d+)\)$/);
-        let descripcion = match ? match[1].trim() : descYcantidad.trim();
-        let cantidad = match ? match[2] : 0;
-
-
-
-            let bloque = $(`
+          let bloque = $(`
               <div class="border rounded p-3 mb-3 bg-light">
                 <div class="row mb-2">
-                  <div class="col-4">
+                  <div class="col-3">
                     <label class="form-label">Descripción</label>
-                    <input type="text" class="form-control" name="DESCRIPCION[]" value="${escapeHtml(descripcion)}" readonly>
+                    <textarea class="form-control" name="DESCRIPCION[]" rows="2" readonly>${escapeHtml(descripcion)}</textarea>
                   </div>
                   <div class="col-2">
                     <label class="form-label">Cantidad</label>
@@ -227,15 +359,14 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                   </div>
                   <div class="col-2">
                     <label class="form-label">Cantidad Aceptada</label>
-                    <input type="number" class="form-control cantidad-aceptada" name="CANTIDAD_ACEPTADA[]" value="0" min="0">
+                    <input type="number" class="form-control cantidad-aceptada" name="CANTIDAD_ACEPTADA[]" value="0" min="0" max="${cantidad}">
                   </div>
-                  <div class="col-2">
+                  <div class="col-3">
                     <label class="form-label">Precio Unitario</label>
-                    <input type="text" class="form-control  precio_unitario" name="PRECIO_UNITARIO[]" value="${precio}" readonly>
+                    <input type="text" class="form-control precio_unitario" name="PRECIO_UNITARIO[]" value="${precio}" readonly>
                   </div>
                 </div>
 
-                <!-- Comentario si cantidad aceptada difiere -->
                 <div class="row mb-2 comentario-diferencia" style="display:none;">
                   <div class="col-12">
                     <label class="form-label">Comentario por diferencia en cantidad</label>
@@ -243,7 +374,6 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                   </div>
                 </div>
 
-                <!-- Radios Cumple especificado -->
                 <div class="row mb-2">
                   <div class="col-6">
                     <label class="form-label">Cumple lo especificado el B o S</label>
@@ -255,12 +385,10 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                   </div>
                   <div class="col-6">
                     <label class="form-label">Comentario especificación</label>
-                    <input type="text" class="form-control" name="COMENTARIO_CUMPLE[]">
+                    <textarea class="form-control" name="COMENTARIO_CUMPLE[]" rows="2"></textarea>
                   </div>
                 </div>
 
-
-          
                 <div class="row mb-2">
                   <div class="col-6">
                     <label class="form-label">Estado del B o S</label>
@@ -272,28 +400,46 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                   </div>
                   <div class="col-6">
                     <label class="form-label">Comentario Estado</label>
-                    <input type="text" class="form-control" name="COMENTARIO_ESTADO[]">
+                    <textarea class="form-control" name="COMENTARIO_ESTADO[]" rows="2"></textarea>
+                  </div>
+                </div>
+
+                <div class="row mb-2">
+                  <div class="col-12">
+                    <label class="form-label">Tipo</label>
+                    <select class="form-control" name="TIPO_BS[]">
+                      <option value="">Seleccione</option>
+                      <option value="Bien">Bien</option>
+                      <option value="Servicio">Servicio</option>
+                    </select>
                   </div>
                 </div>
               </div>
             `);
 
+
+
+
             contenedor.append(bloque);
 
-            bloque.find(".cantidad-aceptada").on("input", function () {
+          bloque.find(".cantidad-aceptada").on("input", function () {
                 let cant = parseFloat(bloque.find(".cantidad").val());
                 let aceptada = parseFloat($(this).val());
+
+                if (aceptada > cant) {
+                    $(this).val(cant);
+                    aceptada = cant; 
+                }
+
                 if (!isNaN(cant) && !isNaN(aceptada) && cant !== aceptada) {
                     bloque.find(".comentario-diferencia").show();
                 } else {
                     bloque.find(".comentario-diferencia").hide();
                 }
             });
+
         });
-    }
-    
-    
-    else {
+    } else {
         contenedor.html('<div class="text-muted">No hay bienes o servicios</div>');
     }
 
