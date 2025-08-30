@@ -278,7 +278,9 @@ class grController extends Controller
 
 
 
-    /// PRECIOS CUANTO TIENEN PO 
+
+    /// CONSULTA CON TODOS LOS DATOS SOLO QUE NO TIENE LO DEL USUARIO
+
 
     // public function Tablabitacoragr()
     // {
@@ -358,8 +360,12 @@ class grController extends Controller
     //                 DB::raw('NULL as PROVEEDOR_Q3'),
     //                 DB::raw('NULL as CANTIDAD_REALQ1'),
     //                 DB::raw('NULL as CANTIDAD_REALQ2'),
-    //                 DB::raw('NULL as CANTIDAD_REALQ3')
-    //             ])
+    //                 DB::raw('NULL as CANTIDAD_REALQ3'),
+    //                 DB::raw('NULL as PRECIO_UNITARIOQ1'),
+    //                 DB::raw('NULL as PRECIO_UNITARIOQ2'),
+    //                 DB::raw('NULL as PRECIO_UNITARIOQ3')
+
+    //         ])
     //             ->groupBy(
     //                 'AGRUPADOR',
     //                 'mr.NO_MR',
@@ -423,8 +429,13 @@ class grController extends Controller
     //                 'ht.PROVEEDOR_Q3',
     //                 'ht.CANTIDAD_REALQ1',
     //                 'ht.CANTIDAD_REALQ2',
-    //                 'ht.CANTIDAD_REALQ3'
-    //             ]);
+    //                 'ht.CANTIDAD_REALQ3',
+
+    //                 'ht.PRECIO_UNITARIOQ1',
+    //                 'ht.PRECIO_UNITARIOQ2',
+    //                 'ht.PRECIO_UNITARIOQ3'
+
+    //         ]);
 
     //         // === UNIR CONSULTAS ===
     //         $union = $rowsConPO->unionAll($rowsSinPO);
@@ -440,52 +451,95 @@ class grController extends Controller
 
     //                 $materialesArray = [];
 
-    //                 foreach ($group as $row) {
+
+    //             $vistos = []; 
+
+    //             foreach ($group as $row) {
+
     //                 if (!empty($row->MATERIALES_JSON)) {
     //                     $materiales = json_decode($row->MATERIALES_JSON, true);
     //                     if (is_array($materiales)) {
     //                         foreach ($materiales as $mat) {
     //                             $cantidad = $mat['CANTIDAD_'] ?? 0;
-    //                             $precio = $mat['PRECIO_UNITARIO'] ?? null;
+    //                             $precio   = $mat['PRECIO_UNITARIO'] ?? null;
+    //                             $key      = $mat['DESCRIPCION'] . '-' . $cantidad . '-' . $precio;
 
-    //                             if ($cantidad > 0) {
-    //                                 if ($precio !== null) {
-    //                                     $materialesArray[] = "• {$mat['DESCRIPCION']} ({$cantidad}) - $ {$precio}";
-    //                                 } else {
-    //                                     $materialesArray[] = "• {$mat['DESCRIPCION']} ({$cantidad})";
+    //                             if ($cantidad > 0 && !isset($vistos[$key])) {
+    //                                 $vistos[$key] = true;
+    //                                 $texto = "• {$mat['DESCRIPCION']} ({$cantidad})";
+    //                                 if ($precio !== null && $precio !== '') {
+    //                                     $texto .= " - $ {$precio}";
     //                                 }
+    //                                 $materialesArray[] = $texto;
     //                             }
-    //                         }
-    //                     }
-    //                 } elseif (!empty($row->MATERIALES_HOJA_JSON)) {
-    //                         $materiales = json_decode($row->MATERIALES_HOJA_JSON, true);
-    //                         if (is_array($materiales)) {
-    //                             foreach ($materiales as $mat) {
-    //                                 $cantidad = $mat['CANTIDAD_REAL'] ?? ($mat['CANTIDAD'] ?? 0);
-    //                                 if ($cantidad > 0) {
-    //                                     $materialesArray[] = "• {$mat['DESCRIPCION']} ({$cantidad})";
-    //                                 }
-    //                             }
-    //                         }
-    //                     } elseif (!empty($row->HT_DESCRIPCION)) {
-    //                         $cantidad = 0;
-    //                         if ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q1) {
-    //                             $cantidad = $row->CANTIDAD_REALQ1;
-    //                         } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q2) {
-    //                             $cantidad = $row->CANTIDAD_REALQ2;
-    //                         } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q3) {
-    //                             $cantidad = $row->CANTIDAD_REALQ3;
-    //                         }
-
-    //                         if ($cantidad > 0) {
-    //                             $materialesArray[] = "• {$row->HT_DESCRIPCION} ({$cantidad})";
-    //                         } else {
-    //                             $materialesArray[] = "• {$row->HT_DESCRIPCION}";
     //                         }
     //                     }
     //                 }
 
-    //                 $bienes = '';
+    //                 // === Caso SIN PO, usando JSON de hoja_trabajo ===
+    //                 elseif (!empty($row->MATERIALES_HOJA_JSON)) {
+    //                     $materiales = json_decode($row->MATERIALES_HOJA_JSON, true);
+    //                     if (is_array($materiales)) {
+    //                         foreach ($materiales as $mat) {
+    //                             $cantidad = $mat['CANTIDAD_REAL'] ?? ($mat['CANTIDAD'] ?? 0);
+    //                             if ($cantidad <= 0) continue;
+
+    //                             // Precio según proveedor seleccionado
+    //                             $precio = null;
+    //                             if ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q1) {
+    //                                 $precio = $mat['PRECIO_UNITARIO'] ?? null;
+    //                             } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q2) {
+    //                                 $precio = $mat['PRECIO_UNITARIO_Q2'] ?? null;
+    //                             } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q3) {
+    //                                 $precio = $mat['PRECIO_UNITARIO_Q3'] ?? null;
+    //                             }
+
+    //                             $key = $mat['DESCRIPCION'] . '-' . $cantidad . '-' . $precio;
+    //                             if (!isset($vistos[$key])) {
+    //                                 $vistos[$key] = true;
+    //                                 $texto = "• {$mat['DESCRIPCION']} ({$cantidad})";
+    //                                 if ($precio !== null && $precio !== '') {
+    //                                     $texto .= " - $ {$precio}";
+    //                                 }
+    //                                 $materialesArray[] = $texto;
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+
+    //                 // === Caso SIN PO, usando solo descripción/columnas ===
+    //                 elseif (!empty($row->HT_DESCRIPCION)) {
+    //                     $cantidad = 0;
+    //                     $precio   = null;
+
+    //                     if ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q1) {
+    //                         $cantidad = $row->CANTIDAD_REALQ1;
+    //                         $precio   = $row->PRECIO_UNITARIOQ1;
+    //                     } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q2) {
+    //                         $cantidad = $row->CANTIDAD_REALQ2;
+    //                         $precio   = $row->PRECIO_UNITARIOQ2;
+    //                     } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q3) {
+    //                         $cantidad = $row->CANTIDAD_REALQ3;
+    //                         $precio   = $row->PRECIO_UNITARIOQ3;
+    //                     }
+
+    //                     if ($cantidad > 0) {
+    //                         $key = $row->HT_DESCRIPCION . '-' . $cantidad . '-' . $precio;
+    //                         if (!isset($vistos[$key])) {
+    //                             $vistos[$key] = true;
+    //                             $texto = "• {$row->HT_DESCRIPCION} ({$cantidad})";
+    //                             if ($precio !== null && $precio !== '') {
+    //                                 $texto .= " - $ {$precio}";
+    //                             }
+    //                             $materialesArray[] = $texto;
+    //                         }
+    //                     }
+    //                 }
+    //             }
+
+
+
+    //             $bienes = '';
     //                 if (!empty($materialesArray)) {
     //                     $mostrar = array_slice($materialesArray, 0, 3);
     //                     $ocultos = array_slice($materialesArray, 3);
@@ -524,7 +578,6 @@ class grController extends Controller
     // }
 
 
-
     public function Tablabitacoragr()
     {
         try {
@@ -541,12 +594,12 @@ class grController extends Controller
                 )
                 ->join(
                     DB::raw('(
-                SELECT 
-                    REPLACE(SUBSTRING_INDEX(NO_PO, "-Rev", 1), " ", "") AS PO_BASE,
-                    MAX(FECHA_APROBACION) AS max_fecha
-                FROM formulario_ordencompra
-                GROUP BY PO_BASE
-            ) AS ult'),
+            SELECT 
+                REPLACE(SUBSTRING_INDEX(NO_PO, "-Rev", 1), " ", "") AS PO_BASE,
+                MAX(FECHA_APROBACION) AS max_fecha
+            FROM formulario_ordencompra
+            GROUP BY PO_BASE
+        ) AS ult'),
                     function ($join) {
                         $join->on(
                             DB::raw('REPLACE(SUBSTRING_INDEX(po.NO_PO, "-Rev", 1), " ", "")'),
@@ -560,13 +613,14 @@ class grController extends Controller
             // === CONSULTA ORIGINAL PARA CASOS CON PO ===
             $rowsConPO = DB::table('hoja_trabajo as ht')
                 ->join('formulario_requisiconmaterial as mr', 'mr.NO_MR', '=', 'ht.NO_MR')
+                ->leftJoin('usuarios as u', 'u.ID_USUARIO', '=', 'mr.USUARIO_ID') // JOIN usuarios
                 ->leftJoinSub($poUltimo, 'po', function ($join) {
                     $join->whereRaw("
-                FIND_IN_SET(
-                    CAST(ht.id AS CHAR), 
-                    REPLACE(REPLACE(REPLACE(REPLACE(po.HOJA_ID, '[', ''), ']', ''), '\"', ''), ' ', '')
-                )
-            ");
+            FIND_IN_SET(
+                CAST(ht.id AS CHAR), 
+                REPLACE(REPLACE(REPLACE(REPLACE(po.HOJA_ID, '[', ''), ']', ''), '\"', ''), ' ', '')
+            )
+        ");
                 })
                 ->leftJoin('formulario_altaproveedor as prov', function ($join) {
                     $join->on('prov.RFC_ALTA', '=', 'po.PROVEEDOR_SELECCIONADO');
@@ -580,20 +634,21 @@ class grController extends Controller
                     DB::raw('COALESCE(po.NO_PO, CONCAT("HT-", ht.id)) as AGRUPADOR'),
                     'mr.NO_MR',
                     'mr.FECHA_APRUEBA_MR',
+                    DB::raw("CONCAT(u.EMPLEADO_NOMBRE, ' ', u.EMPLEADO_APELLIDOPATERNO, ' ', u.EMPLEADO_APELLIDOMATERNO) as USUARIO_NOMBRE"), // Nombre usuario
                     'po.NO_PO',
                     'po.FECHA_APROBACION as FECHA_APROBACION_PO',
                     'po.FECHA_ENTREGA as FECHA_ENTREGA_PO',
                     DB::raw("
-                CASE 
-                    WHEN prov.RAZON_SOCIAL_ALTA IS NOT NULL 
-                        THEN CONCAT(prov.RAZON_SOCIAL_ALTA, ' (', prov.RFC_ALTA, ')')
-                    WHEN provtemp.RAZON_PROVEEDORTEMP IS NOT NULL 
-                        THEN CONCAT(provtemp.RAZON_PROVEEDORTEMP, 
-                            IF(provtemp.RFC_PROVEEDORTEMP IS NOT NULL AND provtemp.RFC_PROVEEDORTEMP != '', 
-                                CONCAT(' (', provtemp.RFC_PROVEEDORTEMP, ')'), ''))
-                    ELSE NULL 
-                END as PROVEEDOR
-            "),
+            CASE 
+                WHEN prov.RAZON_SOCIAL_ALTA IS NOT NULL 
+                    THEN CONCAT(prov.RAZON_SOCIAL_ALTA, ' (', prov.RFC_ALTA, ')')
+                WHEN provtemp.RAZON_PROVEEDORTEMP IS NOT NULL 
+                    THEN CONCAT(provtemp.RAZON_PROVEEDORTEMP, 
+                        IF(provtemp.RFC_PROVEEDORTEMP IS NOT NULL AND provtemp.RFC_PROVEEDORTEMP != '', 
+                            CONCAT(' (', provtemp.RFC_PROVEEDORTEMP, ')'), ''))
+                ELSE NULL 
+            END as PROVEEDOR
+        "),
                     'po.MATERIALES_JSON',
                     DB::raw('NULL as HT_DESCRIPCION'),
                     DB::raw('NULL as MATERIALES_HOJA_JSON'),
@@ -608,11 +663,14 @@ class grController extends Controller
                     DB::raw('NULL as PRECIO_UNITARIOQ2'),
                     DB::raw('NULL as PRECIO_UNITARIOQ3')
 
-            ])
+                ])
                 ->groupBy(
                     'AGRUPADOR',
                     'mr.NO_MR',
                     'mr.FECHA_APRUEBA_MR',
+                    'u.EMPLEADO_NOMBRE',
+                    'u.EMPLEADO_APELLIDOPATERNO',
+                    'u.EMPLEADO_APELLIDOMATERNO',
                     'po.NO_PO',
                     'po.FECHA_APROBACION',
                     'po.FECHA_ENTREGA',
@@ -627,13 +685,14 @@ class grController extends Controller
             // === CONSULTA PARA CASOS SIN PO ===
             $rowsSinPO = DB::table('hoja_trabajo as ht')
                 ->join('formulario_requisiconmaterial as mr', 'mr.NO_MR', '=', 'ht.NO_MR')
+                ->leftJoin('usuarios as u', 'u.ID_USUARIO', '=', 'mr.USUARIO_ID') // JOIN usuarios
                 ->leftJoinSub($poUltimo, 'po', function ($join) {
                     $join->whereRaw("
-                FIND_IN_SET(
-                    CAST(ht.id AS CHAR), 
-                    REPLACE(REPLACE(REPLACE(REPLACE(po.HOJA_ID, '[', ''), ']', ''), '\"', ''), ' ', '')
-                )
-            ");
+            FIND_IN_SET(
+                CAST(ht.id AS CHAR), 
+                REPLACE(REPLACE(REPLACE(REPLACE(po.HOJA_ID, '[', ''), ']', ''), '\"', ''), ' ', '')
+            )
+        ");
                 })
                 ->leftJoin('formulario_altaproveedor as prov', function ($join) {
                     $join->on('prov.RFC_ALTA', '=', 'ht.PROVEEDOR_SELECCIONADO');
@@ -647,22 +706,23 @@ class grController extends Controller
                     DB::raw('CONCAT("HT-", ht.NO_MR, "-", ht.PROVEEDOR_SELECCIONADO) as AGRUPADOR'),
                     'mr.NO_MR',
                     'mr.FECHA_APRUEBA_MR',
+                    DB::raw("CONCAT(u.EMPLEADO_NOMBRE, ' ', u.EMPLEADO_APELLIDOPATERNO, ' ', u.EMPLEADO_APELLIDOMATERNO) as USUARIO_NOMBRE"), // Nombre usuario
                     DB::raw('NULL as NO_PO'),
                     DB::raw('NULL as FECHA_APROBACION_PO'),
                     DB::raw('NULL as FECHA_ENTREGA_PO'),
                     DB::raw("
-                CASE 
-                    WHEN prov.RAZON_SOCIAL_ALTA IS NOT NULL 
-                        THEN CONCAT(prov.RAZON_SOCIAL_ALTA, ' (', prov.RFC_ALTA, ')')
-                    WHEN provtemp.RAZON_PROVEEDORTEMP IS NOT NULL 
-                        THEN CONCAT(provtemp.RAZON_PROVEEDORTEMP, 
-                            IF(provtemp.RFC_PROVEEDORTEMP IS NOT NULL AND provtemp.RFC_PROVEEDORTEMP != '', 
-                                CONCAT(' (', provtemp.RFC_PROVEEDORTEMP, ')'), ''))
-                    WHEN ht.PROVEEDOR_SELECCIONADO IS NOT NULL 
-                        THEN ht.PROVEEDOR_SELECCIONADO
-                    ELSE NULL 
-                END as PROVEEDOR
-            "),
+            CASE 
+                WHEN prov.RAZON_SOCIAL_ALTA IS NOT NULL 
+                    THEN CONCAT(prov.RAZON_SOCIAL_ALTA, ' (', prov.RFC_ALTA, ')')
+                WHEN provtemp.RAZON_PROVEEDORTEMP IS NOT NULL 
+                    THEN CONCAT(provtemp.RAZON_PROVEEDORTEMP, 
+                        IF(provtemp.RFC_PROVEEDORTEMP IS NOT NULL AND provtemp.RFC_PROVEEDORTEMP != '', 
+                            CONCAT(' (', provtemp.RFC_PROVEEDORTEMP, ')'), ''))
+                WHEN ht.PROVEEDOR_SELECCIONADO IS NOT NULL 
+                    THEN ht.PROVEEDOR_SELECCIONADO
+                ELSE NULL 
+            END as PROVEEDOR
+        "),
                     DB::raw('NULL as MATERIALES_JSON'),
                     'ht.DESCRIPCION as HT_DESCRIPCION',
                     'ht.MATERIALES_HOJA_JSON',
@@ -673,12 +733,10 @@ class grController extends Controller
                     'ht.CANTIDAD_REALQ1',
                     'ht.CANTIDAD_REALQ2',
                     'ht.CANTIDAD_REALQ3',
-
                     'ht.PRECIO_UNITARIOQ1',
                     'ht.PRECIO_UNITARIOQ2',
                     'ht.PRECIO_UNITARIOQ3'
-
-            ]);
+                ]);
 
             // === UNIR CONSULTAS ===
             $union = $rowsConPO->unionAll($rowsSinPO);
@@ -693,54 +751,74 @@ class grController extends Controller
                     $first = $group->first();
 
                     $materialesArray = [];
+                    $vistos = [];
 
-           
-                $vistos = []; 
+                    foreach ($group as $row) {
+                        if (!empty($row->MATERIALES_JSON)) {
+                            $materiales = json_decode($row->MATERIALES_JSON, true);
+                            if (is_array($materiales)) {
+                                foreach ($materiales as $mat) {
+                                    $cantidad = $mat['CANTIDAD_'] ?? 0;
+                                    $precio   = $mat['PRECIO_UNITARIO'] ?? null;
+                                    $key      = $mat['DESCRIPCION'] . '-' . $cantidad . '-' . $precio;
 
-                foreach ($group as $row) {
-                    
-                    if (!empty($row->MATERIALES_JSON)) {
-                        $materiales = json_decode($row->MATERIALES_JSON, true);
-                        if (is_array($materiales)) {
-                            foreach ($materiales as $mat) {
-                                $cantidad = $mat['CANTIDAD_'] ?? 0;
-                                $precio   = $mat['PRECIO_UNITARIO'] ?? null;
-                                $key      = $mat['DESCRIPCION'] . '-' . $cantidad . '-' . $precio;
-
-                                if ($cantidad > 0 && !isset($vistos[$key])) {
-                                    $vistos[$key] = true;
-                                    $texto = "• {$mat['DESCRIPCION']} ({$cantidad})";
-                                    if ($precio !== null && $precio !== '') {
-                                        $texto .= " - $ {$precio}";
+                                    if ($cantidad > 0 && !isset($vistos[$key])) {
+                                        $vistos[$key] = true;
+                                        $texto = "• {$mat['DESCRIPCION']} ({$cantidad})";
+                                        if ($precio !== null && $precio !== '') {
+                                            $texto .= " - $ {$precio}";
+                                        }
+                                        $materialesArray[] = $texto;
                                     }
-                                    $materialesArray[] = $texto;
                                 }
                             }
-                        }
-                    }
+                        } elseif (!empty($row->MATERIALES_HOJA_JSON)) {
+                            $materiales = json_decode($row->MATERIALES_HOJA_JSON, true);
+                            if (is_array($materiales)) {
+                                foreach ($materiales as $mat) {
+                                    $cantidad = $mat['CANTIDAD_REAL'] ?? ($mat['CANTIDAD'] ?? 0);
+                                    if ($cantidad <= 0) continue;
 
-                    // === Caso SIN PO, usando JSON de hoja_trabajo ===
-                    elseif (!empty($row->MATERIALES_HOJA_JSON)) {
-                        $materiales = json_decode($row->MATERIALES_HOJA_JSON, true);
-                        if (is_array($materiales)) {
-                            foreach ($materiales as $mat) {
-                                $cantidad = $mat['CANTIDAD_REAL'] ?? ($mat['CANTIDAD'] ?? 0);
-                                if ($cantidad <= 0) continue;
+                                    $precio = null;
+                                    if ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q1) {
+                                        $precio = $mat['PRECIO_UNITARIO'] ?? null;
+                                    } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q2) {
+                                        $precio = $mat['PRECIO_UNITARIO_Q2'] ?? null;
+                                    } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q3) {
+                                        $precio = $mat['PRECIO_UNITARIO_Q3'] ?? null;
+                                    }
 
-                                // Precio según proveedor seleccionado
-                                $precio = null;
-                                if ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q1) {
-                                    $precio = $mat['PRECIO_UNITARIO'] ?? null;
-                                } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q2) {
-                                    $precio = $mat['PRECIO_UNITARIO_Q2'] ?? null;
-                                } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q3) {
-                                    $precio = $mat['PRECIO_UNITARIO_Q3'] ?? null;
+                                    $key = $mat['DESCRIPCION'] . '-' . $cantidad . '-' . $precio;
+                                    if (!isset($vistos[$key])) {
+                                        $vistos[$key] = true;
+                                        $texto = "• {$mat['DESCRIPCION']} ({$cantidad})";
+                                        if ($precio !== null && $precio !== '') {
+                                            $texto .= " - $ {$precio}";
+                                        }
+                                        $materialesArray[] = $texto;
+                                    }
                                 }
+                            }
+                        } elseif (!empty($row->HT_DESCRIPCION)) {
+                            $cantidad = 0;
+                            $precio   = null;
 
-                                $key = $mat['DESCRIPCION'] . '-' . $cantidad . '-' . $precio;
+                            if ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q1) {
+                                $cantidad = $row->CANTIDAD_REALQ1;
+                                $precio   = $row->PRECIO_UNITARIOQ1;
+                            } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q2) {
+                                $cantidad = $row->CANTIDAD_REALQ2;
+                                $precio   = $row->PRECIO_UNITARIOQ2;
+                            } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q3) {
+                                $cantidad = $row->CANTIDAD_REALQ3;
+                                $precio   = $row->PRECIO_UNITARIOQ3;
+                            }
+
+                            if ($cantidad > 0) {
+                                $key = $row->HT_DESCRIPCION . '-' . $cantidad . '-' . $precio;
                                 if (!isset($vistos[$key])) {
                                     $vistos[$key] = true;
-                                    $texto = "• {$mat['DESCRIPCION']} ({$cantidad})";
+                                    $texto = "• {$row->HT_DESCRIPCION} ({$cantidad})";
                                     if ($precio !== null && $precio !== '') {
                                         $texto .= " - $ {$precio}";
                                     }
@@ -750,39 +828,7 @@ class grController extends Controller
                         }
                     }
 
-                    // === Caso SIN PO, usando solo descripción/columnas ===
-                    elseif (!empty($row->HT_DESCRIPCION)) {
-                        $cantidad = 0;
-                        $precio   = null;
-
-                        if ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q1) {
-                            $cantidad = $row->CANTIDAD_REALQ1;
-                            $precio   = $row->PRECIO_UNITARIOQ1;
-                        } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q2) {
-                            $cantidad = $row->CANTIDAD_REALQ2;
-                            $precio   = $row->PRECIO_UNITARIOQ2;
-                        } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q3) {
-                            $cantidad = $row->CANTIDAD_REALQ3;
-                            $precio   = $row->PRECIO_UNITARIOQ3;
-                        }
-
-                        if ($cantidad > 0) {
-                            $key = $row->HT_DESCRIPCION . '-' . $cantidad . '-' . $precio;
-                            if (!isset($vistos[$key])) {
-                                $vistos[$key] = true;
-                                $texto = "• {$row->HT_DESCRIPCION} ({$cantidad})";
-                                if ($precio !== null && $precio !== '') {
-                                    $texto .= " - $ {$precio}";
-                                }
-                                $materialesArray[] = $texto;
-                            }
-                        }
-                    }
-                }
-
-
-
-                $bienes = '';
+                    $bienes = '';
                     if (!empty($materialesArray)) {
                         $mostrar = array_slice($materialesArray, 0, 3);
                         $ocultos = array_slice($materialesArray, 3);
@@ -819,7 +865,4 @@ class grController extends Controller
             ], 500);
         }
     }
-
-
-
 }

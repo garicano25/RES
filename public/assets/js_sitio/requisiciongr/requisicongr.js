@@ -187,7 +187,9 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
     $('#modal_fecha_po').val(data.FECHA_APROBACION_PO ?? '');
     $('#PROVEEDOR_EQUIPO').val(data.PROVEEDOR_KEY ?? '');
     $('#modal_fecha_entrega').val(data.FECHA_ENTREGA_PO ?? '');
+    $('#modal_usuario_nombre').val(data.USUARIO_NOMBRE ?? '');
 
+  
     let contenedor = $("#modal_bien_servicio");
     contenedor.empty();
 
@@ -278,7 +280,6 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
 
             contenedor.append(bloque);
 
-            // Listener para mostrar comentario si difiere cantidad aceptada
             bloque.find(".cantidad-aceptada").on("input", function () {
                 let cant = parseFloat(bloque.find(".cantidad").val());
                 let aceptada = parseFloat($(this).val());

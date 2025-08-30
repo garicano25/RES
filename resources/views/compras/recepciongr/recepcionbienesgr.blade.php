@@ -171,7 +171,7 @@
 
 
 <div class="modal fade" id="modalGR" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-xl" role="document"> <!-- XL para hacerlo más grande -->
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
                 <h5 class="modal-title">Detalle de GR</h5>
@@ -201,23 +201,23 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label">Proveedor</label>
-                            <select class="form-select text-center"  id="PROVEEDOR_EQUIPO">
-                                <option value="">Seleccionar proveedor</option>
-                                <optgroup label="Proveedor oficial">
-                                    @foreach ($proveedoresOficiales as $proveedor)
-                                    <option value="{{ $proveedor->RFC_ALTA }}">
-                                        {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
-                                    </option>
-                                    @endforeach
-                                </optgroup>
-                                <optgroup label="Proveedores temporales">
-                                    @foreach ($proveedoresTemporales as $proveedor)
-                                    <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
-                                        {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
-                                    </option>
-                                    @endforeach
-                                </optgroup>
-                            </select>
+                        <select class="form-select text-center" id="PROVEEDOR_EQUIPO">
+                            <option value="">Seleccionar proveedor</option>
+                            <optgroup label="Proveedor oficial">
+                                @foreach ($proveedoresOficiales as $proveedor)
+                                <option value="{{ $proveedor->RFC_ALTA }}">
+                                    {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
+                                </option>
+                                @endforeach
+                            </optgroup>
+                            <optgroup label="Proveedores temporales">
+                                @foreach ($proveedoresTemporales as $proveedor)
+                                <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
+                                    {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
+                                </option>
+                                @endforeach
+                            </optgroup>
+                        </select>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Fecha Entrega PO</label>
@@ -246,6 +246,18 @@
                 <hr>
                 <h5 class="mb-3 text-center">Bienes o Servicios (B o S)</h5>
                 <div id="modal_bien_servicio"></div>
+
+
+                <hr>
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label class="form-label">Usuario solicito</label>
+                        <input type="text" class="form-control" id="modal_usuario_nombre" readonly>
+                    </div>
+                </div>
+
+
+
 
             </div>
             <div class="modal-footer">
