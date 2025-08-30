@@ -239,7 +239,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mx-2" id="alertaVerificacion" style="display:none">
+                    <!-- <div class="row mx-2" id="alertaVerificacion" style="display:none">
                         <p class="text-danger">
                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                             Por favor, asegúrese de que el archivo Excel contenga la fecha en el formato válido:
@@ -247,6 +247,19 @@
                             <b>tipo</b> contenga únicamente uno de los siguientes valores, escritos <b>tal y como están</b>:
                             <u>Consumible</u>, <u>AF</u>, <u>ANF</u>, <u>Comercialización</u>,
                             <u>Material para curso</u>, <u>EPP</u>, <u>Vehículos</u>, <u>Donación</u>.
+                        </p>
+                    </div> -->
+
+                    <div class="row mx-2" id="alertaVerificacion" style="display:none">
+                        <p class="text-danger">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            Por favor, asegúrese de que el archivo Excel contenga la fecha en el formato válido:
+                            <b>'2024-01-01'</b> (no se admiten fechas con texto) y también que el campo
+                            <b>tipo</b> contenga únicamente uno de los siguientes valores, escritos <b>tal y como están</b>:
+                            @foreach($tipoinventario as $tipo)
+                            <u>{{ $tipo->DESCRIPCION_TIPO }}</u>@if(!$loop->last),@endif
+                            @endforeach
+                            .
                         </p>
                     </div>
 

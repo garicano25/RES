@@ -74,49 +74,6 @@ class inventarioController extends Controller
     }
 
 
-    // public function store(Request $request)
-    // {
-    //     try {
-    //         switch (intval($request->api)) {
-    //             case 1:
-    //                 if ($request->ID_FORMULARIO_INVENTARIO == 0) {
-    //                     DB::statement('ALTER TABLE formulario_inventario AUTO_INCREMENT=1;');
-    //                     $inventarios = inventarioModel::create($request->all());
-    //                 } else {
-
-    //                     if (isset($request->ELIMINAR)) {
-    //                         if ($request->ELIMINAR == 1) {
-
-    //                             $inventarios = inventarioModel::where('ID_FORMULARIO_INVENTARIO', $request['ID_FORMULARIO_INVENTARIO'])->update(['ACTIVO' => 0]);
-    //                             $response['code'] = 1;
-    //                             $response['inventario'] = 'Desactivada';
-    //                         } else {
-    //                             $inventarios = inventarioModel::where('ID_FORMULARIO_INVENTARIO', $request['ID_FORMULARIO_INVENTARIO'])->update(['ACTIVO' => 1]);
-    //                             $response['code'] = 1;
-    //                             $response['inventario'] = 'Activada';
-    //                         }
-    //                     } else {
-    //                         $inventarios = inventarioModel::find($request->ID_FORMULARIO_INVENTARIO);
-    //                         $inventarios->update($request->all());
-    //                         $response['code'] = 1;
-    //                         $response['inventario'] = 'Actualizada';
-    //                     }
-    //                     return response()->json($response);
-    //                 }
-    //                 $response['code']  = 1;
-    //                 $response['inventario']  = $inventarios;
-    //                 return response()->json($response);
-    //                 break;
-
-    //             default:
-    //                 $response['code']  = 1;
-    //                 $response['msj']  = 'Api no encontrada';
-    //                 return response()->json($response);
-    //         }
-    //     } catch (Exception $e) {
-    //         return response()->json('Error al guardar el asesor');
-    //     }
-    // }
 
 
 
@@ -499,7 +456,6 @@ class inventarioController extends Controller
                             $sheet = $spreadsheet->getActiveSheet();
                             $data = $sheet->toArray(null, true, true, true);
 
-                            // Saltar encabezados (filas 1 y 2)
                             array_shift($data);
                             array_shift($data);
 
@@ -510,19 +466,16 @@ class inventarioController extends Controller
                                 }
                             }
 
-                            // Obtener imágenes y mapearlas a su fila
                             $drawings = $sheet->getDrawingCollection();
-                            $imagenesMap = []; // Mapa: fila => imagen
+                            $imagenesMap = []; 
 
                             foreach ($drawings as $drawing) {
                                 $coordinates = $drawing->getCoordinates();
                                 $col = strtoupper(preg_replace('/[0-9]/', '', $coordinates));
                                 $rowNum = preg_replace('/[^0-9]/', '', $coordinates);
 
-                                // Solo columna K
                                 if ($col !== 'K') continue;
 
-                                // Extraer contenido de la imagen
                                 if ($drawing instanceof MemoryDrawing) {
                                     ob_start();
                                     call_user_func($drawing->getRenderingFunction(), $drawing->getImageResource());
@@ -554,13 +507,11 @@ class inventarioController extends Controller
                                 ];
                             }
 
-                            // Guardar en DB
                             $totalEquipos = count($datosGenerales);
                             $equipoInsertados = 0;
-                            $filaExcel = 3; // La fila de datos inicia en 3 (ya se saltaron 2 encabezados)
+                            $filaExcel = 3; 
 
                             foreach ($datosGenerales as $rowData) {
-                                // Insertar equipo
                                 $nuevoEquipo = inventarioModel::create([
                                     'DESCRIPCION_EQUIPO' => !empty($rowData['B']) ? $rowData['B'] : null,
                                     'MARCA_EQUIPO'       => !empty($rowData['C']) ? $rowData['C'] : null,
@@ -579,7 +530,6 @@ class inventarioController extends Controller
                                     'FOTO_EQUIPO'        => null
                                 ]);
 
-                                // Verificar si hay imagen en la fila actual
                                 if (isset($imagenesMap[$filaExcel])) {
                                     $imagen = $imagenesMap[$filaExcel];
                                     $filename = 'foto_equipo.' . $imagen['extension'];
@@ -591,9 +541,8 @@ class inventarioController extends Controller
                                         'FOTO_EQUIPO' => $pathFinal
                                     ]);
                                 } else {
-                                    // Si no hay imagen, opcionalmente puedes dejar null o 'N/A'
                                     $nuevoEquipo->update([
-                                        'FOTO_EQUIPO' => null // o 'N/A' si quieres texto explícito
+                                        'FOTO_EQUIPO' => null 
                                     ]);
                                 }
 
