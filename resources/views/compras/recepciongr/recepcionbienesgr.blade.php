@@ -251,7 +251,7 @@
                 <hr>
                 <div class="row mb-3">
                     <div class="col-md-12">
-                        <label class="form-label">Usuario solicito</label>
+                        <label class="form-label">Usuario que solicito</label>
                         <input type="text" class="form-control" id="modal_usuario_nombre" readonly>
                     </div>
                 </div>
