@@ -181,6 +181,12 @@
                 <div class="modal-body">
                     {!! csrf_field() !!}
 
+
+                    <input type="hidden" id="ID_GR" name="ID_GR">
+
+
+
+                    
                     <div class="row mb-3">
                         <div class="col-md-3">
                             <label class="form-label">No. MR</label>

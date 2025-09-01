@@ -350,6 +350,9 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
         if (resp.existe) {
             let cab = resp.cabecera;
 
+          
+          $('#ID_GR').val(cab.ID_GR ?? '');
+
             $('#modal_no_mr').val(cab.NO_MR);
             $('#modal_fecha_mr').val(data.FECHA_APRUEBA_MR ?? '');
             $('#modal_no_po').val(cab.NO_PO ?? '');

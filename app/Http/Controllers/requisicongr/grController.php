@@ -939,30 +939,91 @@ class grController extends Controller
 
 
 
+    // public function guardarGR(Request $request)
+    // {
+    //     DB::beginTransaction();
+    //     try {
+    //         $no_gr = $this->generarNoGR();
+
+    //         $noRecepcion = $this->generarNoRecepcion();
+
+    //         $idGR = DB::table('formulario_bitacoragr')->insertGetId([
+    //             'NO_GR'            => $no_gr,
+    //             'NO_MR'            => $request->modal_no_mr,
+    //             'NO_PO'            => $request->modal_no_po,
+    //             'PROVEEDOR_KEY'    => $request->PROVEEDOR_EQUIPO,
+    //             'USUARIO_SOLICITO' => $request->modal_usuario_nombre,
+    //             'FECHA_EMISION'    => $request->DESDE_ACREDITACION,
+    //             'NO_RECEPCION'     => $noRecepcion,
+    //             'CREATED_AT'       => now(),
+    //         ]);
+
+    //         if ($request->has('DESCRIPCION')) {
+    //             foreach ($request->DESCRIPCION as $i => $desc) {
+    //                 DB::table('formulario_bitacoragr_detalle')->insert([
+    //                     'ID_GR'                 => $idGR,
+    //                     'DESCRIPCION'           => $desc,
+    //                     'CANTIDAD'              => $request->CANTIDAD[$i] ?? 0,
+    //                     'CANTIDAD_RECHAZADA'    => $request->CANTIDAD_RECHAZADA[$i] ?? 0,
+    //                     'CANTIDAD_ACEPTADA'     => $request->CANTIDAD_ACEPTADA[$i] ?? 0,
+    //                     'PRECIO_UNITARIO'       => $request->PRECIO_UNITARIO[$i] ?? null,
+    //                     'CUMPLE'                => $request->CUMPLE[$i] ?? null,
+    //                     'COMENTARIO_CUMPLE'     => $request->COMENTARIO_CUMPLE[$i] ?? null,
+    //                     'ESTADO_FISICO'         => $request->ESTADO_FISICO[$i] ?? null,
+    //                     'COMENTARIO_ESTADO'     => $request->COMENTARIO_ESTADO[$i] ?? null,
+    //                     'COMENTARIO_DIFERENCIA' => $request->COMENTARIO_DIFERENCIA[$i] ?? null,
+    //                     'TIPO_BS'               => $request->TIPO_BS[$i] ?? null,
+    //                 ]);
+    //             }
+    //         }
+
+    //         DB::commit();
+    //         return response()->json([
+    //             'ok'          => true,
+    //             'no_gr'       => $no_gr,
+    //             'no_recepcion' => $noRecepcion,
+    //             'msg'         => "GR guardada correctamente",
+    //         ]);
+    //     } catch (\Throwable $e) {
+    //         DB::rollBack();
+    //         return response()->json([
+    //             'error'   => true,
+    //             'msg'     => $e->getMessage(),
+    //             'trace'   => $e->getTraceAsString(),
+    //         ], 500);
+    //     }
+    // }
+
+
+
+
+
     public function guardarGR(Request $request)
     {
         DB::beginTransaction();
         try {
-            // 1. Generar número NO_GR único
-            $no_gr = $this->generarNoGR();
+            if ($request->filled('ID_GR')) {
+                // ========================
+                // MODO EDITAR
+                // ========================
+                $idGR = $request->ID_GR;
 
-            // 2. Generar NO_RECEPCION automático
-            $noRecepcion = $this->generarNoRecepcion();
+                DB::table('formulario_bitacoragr')
+                    ->where('ID_GR', $idGR)
+                    ->update([
+                        'NO_MR'            => $request->modal_no_mr,
+                        'NO_PO'            => $request->modal_no_po,
+                        'PROVEEDOR_KEY'    => $request->PROVEEDOR_EQUIPO,
+                        'USUARIO_SOLICITO' => $request->modal_usuario_nombre,
+                        'FECHA_EMISION'    => $request->DESDE_ACREDITACION,
+                        // quitamos updated_at porque no existe en tu tabla
+                    ]);
 
-            // 3. Guardar cabecera
-            $idGR = DB::table('formulario_bitacoragr')->insertGetId([
-                'NO_GR'            => $no_gr,
-                'NO_MR'            => $request->modal_no_mr,
-                'NO_PO'            => $request->modal_no_po,
-                'PROVEEDOR_KEY'    => $request->PROVEEDOR_EQUIPO,
-                'USUARIO_SOLICITO' => $request->modal_usuario_nombre,
-                'FECHA_EMISION'    => $request->DESDE_ACREDITACION,
-                'NO_RECEPCION'     => $noRecepcion,
-                'CREATED_AT'       => now(),
-            ]);
+                // Borrar detalle anterior y volver a insertar
+                DB::table('formulario_bitacoragr_detalle')
+                    ->where('ID_GR', $idGR)
+                    ->delete();
 
-            // 4. Guardar detalle (productos/servicios dinámicos)
-            if ($request->has('DESCRIPCION')) {
                 foreach ($request->DESCRIPCION as $i => $desc) {
                     DB::table('formulario_bitacoragr_detalle')->insert([
                         'ID_GR'                 => $idGR,
@@ -979,40 +1040,83 @@ class grController extends Controller
                         'TIPO_BS'               => $request->TIPO_BS[$i] ?? null,
                     ]);
                 }
-            }
 
-            DB::commit();
-            return response()->json([
-                'ok'          => true,
-                'no_gr'       => $no_gr,
-                'no_recepcion' => $noRecepcion,
-                'msg'         => "GR guardada correctamente",
-            ]);
+                DB::commit();
+                return response()->json([
+                    'ok'    => true,
+                    'edit'  => true,
+                    'msg'   => "GR actualizada correctamente",
+                ]);
+            } else {
+                // ========================
+                // MODO CREAR
+                // ========================
+                $no_gr       = $this->generarNoGR();
+                $noRecepcion = $this->generarNoRecepcion();
+
+                $idGR = DB::table('formulario_bitacoragr')->insertGetId([
+                    'NO_GR'            => $no_gr,
+                    'NO_MR'            => $request->modal_no_mr,
+                    'NO_PO'            => $request->modal_no_po,
+                    'PROVEEDOR_KEY'    => $request->PROVEEDOR_EQUIPO,
+                    'USUARIO_SOLICITO' => $request->modal_usuario_nombre,
+                    'FECHA_EMISION'    => $request->DESDE_ACREDITACION,
+                    'NO_RECEPCION'     => $noRecepcion,
+                    'CREATED_AT'       => now(),
+                ]);
+
+                foreach ($request->DESCRIPCION as $i => $desc) {
+                    DB::table('formulario_bitacoragr_detalle')->insert([
+                        'ID_GR'                 => $idGR,
+                        'DESCRIPCION'           => $desc,
+                        'CANTIDAD'              => $request->CANTIDAD[$i] ?? 0,
+                        'CANTIDAD_RECHAZADA'    => $request->CANTIDAD_RECHAZADA[$i] ?? 0,
+                        'CANTIDAD_ACEPTADA'     => $request->CANTIDAD_ACEPTADA[$i] ?? 0,
+                        'PRECIO_UNITARIO'       => $request->PRECIO_UNITARIO[$i] ?? null,
+                        'CUMPLE'                => $request->CUMPLE[$i] ?? null,
+                        'COMENTARIO_CUMPLE'     => $request->COMENTARIO_CUMPLE[$i] ?? null,
+                        'ESTADO_FISICO'         => $request->ESTADO_FISICO[$i] ?? null,
+                        'COMENTARIO_ESTADO'     => $request->COMENTARIO_ESTADO[$i] ?? null,
+                        'COMENTARIO_DIFERENCIA' => $request->COMENTARIO_DIFERENCIA[$i] ?? null,
+                        'TIPO_BS'               => $request->TIPO_BS[$i] ?? null,
+                    ]);
+                }
+
+                DB::commit();
+                return response()->json([
+                    'ok'          => true,
+                    'edit'        => false,
+                    'no_gr'       => $no_gr,
+                    'no_recepcion' => $noRecepcion,
+                    'msg'         => "GR creada correctamente",
+                ]);
+            }
         } catch (\Throwable $e) {
             DB::rollBack();
             return response()->json([
-                'error'   => true,
-                'msg'     => $e->getMessage(),
-                'trace'   => $e->getTraceAsString(),
+                'error' => true,
+                'msg'   => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
             ], 500);
         }
     }
 
 
 
+
+
     private function generarNoGR()
     {
-        $anio = date('y'); // "25"
+        $anio = date('y'); 
         $prefijo = "RES-GR{$anio}-";
 
-        // Buscar el último consecutivo en ese año
         $ultimo = DB::table('formulario_bitacoragr')
             ->where('NO_GR', 'like', $prefijo . '%')
             ->orderBy('NO_GR', 'desc')
             ->value('NO_GR');
 
         if ($ultimo) {
-            $num = (int) substr($ultimo, -3); // últimos 3 dígitos
+            $num = (int) substr($ultimo, -3); 
             $nuevo = str_pad($num + 1, 3, '0', STR_PAD_LEFT);
         } else {
             $nuevo = "001";
@@ -1024,17 +1128,16 @@ class grController extends Controller
 
     private function generarNoRecepcion()
     {
-        $anio = date('y'); // "25"
+        $anio = date('y'); 
         $prefijo = "RES-GR{$anio}-";
 
-        // Buscar el último consecutivo en ese año
         $ultimo = DB::table('formulario_bitacoragr')
             ->where('NO_RECEPCION', 'like', $prefijo . '%')
             ->orderBy('NO_RECEPCION', 'desc')
             ->value('NO_RECEPCION');
 
         if ($ultimo) {
-            $num = (int) substr($ultimo, -3); // últimos 3 dígitos
+            $num = (int) substr($ultimo, -3); 
             $nuevo = str_pad($num + 1, 3, '0', STR_PAD_LEFT);
         } else {
             $nuevo = "001";
