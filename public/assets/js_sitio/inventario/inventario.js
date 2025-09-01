@@ -449,3 +449,24 @@ function hacerSoloLectura4(data, modalSelector) {
         }
     }
 }
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const cantidad = document.getElementById("CANTIDAD_EQUIPO");
+    const unitario = document.getElementById("UNITARIO_EQUIPO");
+    const total = document.getElementById("TOTAL_EQUIPO");
+
+    function calcularTotal() {
+        let cant = parseFloat(cantidad.value) || 0;
+        let precio = parseFloat(unitario.value) || 0;
+        let resultado = cant * precio;
+
+        total.value = resultado.toFixed(2); // 2 decimales
+    }
+
+    cantidad.addEventListener("input", calcularTotal);
+    unitario.addEventListener("input", calcularTotal);
+});
+
+
