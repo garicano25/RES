@@ -158,6 +158,7 @@
 
 
 
+                        @if(auth()->check() && !auth()->user()->hasRoles(['Almacenista','Asistente de compras']))
 
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: 8px;">
@@ -173,6 +174,8 @@
                                 </ul>
                             </li>
                         </ul>
+
+                        @endif
 
 
 
