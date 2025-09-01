@@ -786,6 +786,11 @@ Route::get('/Bitácora-GR', [grController::class, 'index']);
 Route::get('/Tablabitacoragr', [grController::class, 'Tablabitacoragr']);
 
 
+
+Route::post('/guardarGR', [grController::class, 'guardarGR']);
+// web.php
+Route::post('/consultar-gr', [grController::class, 'consultarGR'])->name('consultar.gr');
+
 //==============================================   CATALOGOS PROVEEDORES  ============================================== 
 Route::get('/Catálogos_proveedores', function () {return view('compras.Catalogos.catalogo_generales');});
 

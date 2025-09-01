@@ -865,4 +865,137 @@ class grController extends Controller
             ], 500);
         }
     }
+
+
+
+
+    private function generarNoGR()
+    {
+        $year = date('y'); // 25
+        $ultimo = DB::table('formulario_bitacoragr')
+            ->whereRaw("SUBSTRING(NO_GR, 8, 2) = ?", [$year])
+            ->orderByDesc('ID_GR')
+            ->first();
+
+        $consecutivo = 1;
+        if ($ultimo) {
+            $partes = explode('-', $ultimo->NO_GR); // RES-GR25-021
+            $consecutivo = intval($partes[2]) + 1;
+        }
+
+        return "RES-GR{$year}-" . str_pad($consecutivo, 3, "0", STR_PAD_LEFT);
+    }
+
+
+
+    public function guardarGR(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            // 1. Generar NO_GR
+            $no_gr = $this->generarNoGR();
+
+            // 2. Guardar cabecera
+            $idGR = DB::table('formulario_bitacoragr')->insertGetId([
+                'NO_GR' => $no_gr,
+                'NO_MR' => $request->modal_no_mr,
+                'NO_PO' => $request->modal_no_po,
+                'PROVEEDOR_KEY' => $request->PROVEEDOR_EQUIPO,
+                'USUARIO_SOLICITO' => $request->modal_usuario_nombre,
+                'FECHA_EMISION' => $request->DESDE_ACREDITACION,
+                'NO_RECEPCION' => $request->NO_RECEPCION,
+            ]);
+
+            // 3. Guardar detalle (JSON convertido en arrays)
+            if ($request->has('DESCRIPCION')) {
+                foreach ($request->DESCRIPCION as $i => $desc) {
+                    DB::table('formulario_bitacoragr_detalle')->insert([
+                        'ID_GR' => $idGR,
+                        'DESCRIPCION' => $desc,
+                        'CANTIDAD' => $request->CANTIDAD[$i] ?? 0,
+                        'CANTIDAD_RECHAZADA' => $request->CANTIDAD_RECHAZADA[$i] ?? 0,
+                        'CANTIDAD_ACEPTADA' => $request->CANTIDAD_ACEPTADA[$i] ?? 0,
+                        'PRECIO_UNITARIO' => $request->PRECIO_UNITARIO[$i] ?? null,
+                        'CUMPLE' => $request->CUMPLE[$i] ?? null,
+                        'COMENTARIO_CUMPLE' => $request->COMENTARIO_CUMPLE[$i] ?? null,
+                        'ESTADO_FISICO' => $request->ESTADO_FISICO[$i] ?? null,
+                        'COMENTARIO_ESTADO' => $request->COMENTARIO_ESTADO[$i] ?? null,
+                        'COMENTARIO_DIFERENCIA' => $request->COMENTARIO_DIFERENCIA[$i] ?? null,
+                        'TIPO_BS' => $request->TIPO_BS[$i] ?? null,
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return response()->json(['ok' => true, 'no_gr' => $no_gr]);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return response()->json(['error' => true, 'msg' => $e->getMessage()]);
+        }
+    }
+
+
+
+    public function consultarGR(Request $request)
+    {
+        $no_mr = $request->NO_MR;
+        $no_po = $request->NO_PO;
+        $proveedor = $request->PROVEEDOR;
+
+        $query = DB::table('formulario_bitacoragr as gr')
+            ->leftJoin('formulario_bitacoragr_detalle as d', 'd.ID_GR', '=', 'gr.ID_GR')
+            ->select(
+                'gr.*',
+                'd.DESCRIPCION',
+                'd.CANTIDAD',
+                'd.CANTIDAD_RECHAZADA',
+                'd.CANTIDAD_ACEPTADA',
+                'd.PRECIO_UNITARIO',
+                'd.CUMPLE',
+                'd.COMENTARIO_CUMPLE',
+                'd.ESTADO_FISICO',
+                'd.COMENTARIO_ESTADO',
+                'd.COMENTARIO_DIFERENCIA',
+                'd.TIPO_BS'
+            )
+            ->where('gr.NO_MR', $no_mr);
+
+        if ($no_po) {
+            $query->where('gr.NO_PO', $no_po);
+        } else {
+            $query->where('gr.PROVEEDOR_KEY', $proveedor);
+        }
+
+        $registros = $query->get();
+
+        if ($registros->isEmpty()) {
+            return response()->json(['existe' => false]);
+        }
+
+        $cabecera = $registros->first();
+        $detalle = $registros->map(function ($row) {
+            return [
+                'DESCRIPCION' => $row->DESCRIPCION,
+                'CANTIDAD' => $row->CANTIDAD,
+                'CANTIDAD_RECHAZADA' => $row->CANTIDAD_RECHAZADA,
+                'CANTIDAD_ACEPTADA' => $row->CANTIDAD_ACEPTADA,
+                'PRECIO_UNITARIO' => $row->PRECIO_UNITARIO,
+                'CUMPLE' => $row->CUMPLE,
+                'COMENTARIO_CUMPLE' => $row->COMENTARIO_CUMPLE,
+                'ESTADO_FISICO' => $row->ESTADO_FISICO,
+                'COMENTARIO_ESTADO' => $row->COMENTARIO_ESTADO,
+                'COMENTARIO_DIFERENCIA' => $row->COMENTARIO_DIFERENCIA,
+                'TIPO_BS' => $row->TIPO_BS,
+            ];
+        });
+
+        return response()->json([
+            'existe' => true,
+            'cabecera' => $cabecera,
+            'detalle' => $detalle
+        ]);
+    }
+
+
+
 }
