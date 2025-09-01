@@ -1016,6 +1016,7 @@ class grController extends Controller
                         'PROVEEDOR_KEY'    => $request->PROVEEDOR_EQUIPO,
                         'USUARIO_SOLICITO' => $request->modal_usuario_nombre,
                         'FECHA_EMISION'    => $request->DESDE_ACREDITACION,
+                    'NO_RECEPCION'     => $request->NO_RECEPCION,
                         // quitamos updated_at porque no existe en tu tabla
                     ]);
 
