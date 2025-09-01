@@ -214,9 +214,11 @@ var Tablainventario = $("#Tablainventario").DataTable({
         { targets: 7, title: 'Editar', className: 'all text-center' },
         { targets: 8, title: 'Visualizar', className: 'all text-center' },
         { targets: 9, title: 'Activo', className: 'all text-center' }
-    ]
+    ],
+    createdRow: function (row, data) {
+        $(row).addClass(data.ROW_CLASS);
+    }
 });
-
 
 
 

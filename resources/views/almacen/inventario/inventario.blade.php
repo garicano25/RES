@@ -15,6 +15,18 @@
         font-size: 14px;
         margin: 0;
     }
+
+
+    .bg-verde-suave {
+        background-color: #d1e7dd !important;
+    }
+
+    .bg-rojo-suave {
+        background-color: #f8d7da !important;
+    }
+
+
+    
 </style>
 
 
@@ -28,7 +40,7 @@
             Importar <i class="bi bi-file-earmark-excel-fill"></i>
         </button>
         @endif
-        
+
         <button type="button" class="btn btn-light waves-effect waves-light " id="NUEVO_EQUIPO" style="margin-left: auto;">
             Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
         </button>
@@ -143,6 +155,28 @@
                                             <div class="form-group">
                                                 <label> Nombre del proveedor </label>
                                                 <input type="text" step="any" class="form-control" id="PROVEEDOR_EQUIPO" name="PROVEEDOR_EQUIPO">
+
+
+                                                <!-- <select class="form-select text-center" id="PROVEEDOR_EQUIPO" name="PROVEEDOR_EQUIPO">
+                                                    <option value="">Seleccionar proveedor</option>
+                                                    <optgroup label="Proveedor oficial">
+                                                        @foreach ($proveedoresOficiales as $proveedor)
+                                                        <option value="{{ $proveedor->RFC_ALTA }}">
+                                                            {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
+                                                        </option>
+                                                        @endforeach
+                                                    </optgroup>
+                                                    <optgroup label="Proveedores temporales">
+                                                        @foreach ($proveedoresTemporales as $proveedor)
+                                                        <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
+                                                            {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
+                                                        </option>
+                                                        @endforeach
+                                                    </optgroup>
+                                                </select> -->
+
+
+
                                             </div>
                                         </div>
                                         <div class="col-4 mt-2">
