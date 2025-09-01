@@ -236,7 +236,7 @@
                         <div class="col-md-6">
                             <label class="form-label">Fecha de emisión</label>
                             <div class="input-group">
-                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_EMISION" name="FECHA_EMISION">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_ACREDITACION" name="DESDE_ACREDITACION">
                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                             </div>
                         </div>
@@ -257,6 +257,7 @@
                     <!-- <button type="button" class="btn btn-success">Guardar</button> -->
 
                     <button type="button" class="btn btn-success" id="btnGuardarGR">Guardar</button>
+
 
                 </div>
 
