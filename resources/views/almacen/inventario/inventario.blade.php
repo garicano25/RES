@@ -23,10 +23,12 @@
         <h3 style="color: #ffffff; margin: 0;"> <i class="bi bi-card-list" style="margin-right: 5px;"></i> Inventario
         </h3>
 
+        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
         <button type="button" class="btn btn-secondary waves-effect waves-light " data-toggle="tooltip" title="Cargar equipos por medio de un archivo Excel" id="boton_cargarExcelEquipos" style="margin-left: 77%;">
             Importar <i class="bi bi-file-earmark-excel-fill"></i>
         </button>
-
+        @endif
+        
         <button type="button" class="btn btn-light waves-effect waves-light " id="NUEVO_EQUIPO" style="margin-left: auto;">
             Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
         </button>
