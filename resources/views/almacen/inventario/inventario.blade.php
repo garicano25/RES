@@ -78,45 +78,45 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label> Descripción del equipo*</label>
-                                                <textarea class="form-control" id="DESCRIPCION_EQUIPO" name="DESCRIPCION_EQUIPO" rows="5" required></textarea>
+                                                <textarea class="form-control" id="DESCRIPCION_EQUIPO" name="DESCRIPCION_EQUIPO" rows="5" required readonly></textarea>
                                             </div>
                                         </div>
 
                                         <div class="col-3 mt-2">
                                             <div class="form-group">
                                                 <label> Marca </label>
-                                                <input type="text" class="form-control" id="MARCA_EQUIPO" name="MARCA_EQUIPO">
+                                                <input type="text" class="form-control" id="MARCA_EQUIPO" name="MARCA_EQUIPO" readonly>
                                             </div>
                                         </div>
                                         <div class="col-3 mt-2">
                                             <div class="form-group">
                                                 <label> Modelo </label>
-                                                <input type="text" class="form-control" id="MODELO_EQUIPO" name="MODELO_EQUIPO">
+                                                <input type="text" class="form-control" id="MODELO_EQUIPO" name="MODELO_EQUIPO" readonly>
                                             </div>
                                         </div>
                                         <div class="col-3 mt-2">
                                             <div class="form-group">
                                                 <label> Serie </label>
-                                                <input type="text" class="form-control" id="SERIE_EQUIPO" name="SERIE_EQUIPO">
+                                                <input type="text" class="form-control" id="SERIE_EQUIPO" name="SERIE_EQUIPO" readonly>
                                             </div>
                                         </div>
                                         <div class="col-3 mt-2">
                                             <div class="form-group">
                                                 <label>Código de Identificación </label>
-                                                <input type="text" class="form-control" id="CODIGO_EQUIPO" name="CODIGO_EQUIPO">
+                                                <input type="text" class="form-control" id="CODIGO_EQUIPO" name="CODIGO_EQUIPO" readonly>
                                             </div>
                                         </div>
                                         <div class="col-4 mt-2">
                                             <div class="form-group">
                                                 <label> Cantidad </label>
-                                                <input type="Number" step="any" class="form-control" id="CANTIDAD_EQUIPO" name="CANTIDAD_EQUIPO">
+                                                <input type="Number" step="any" class="form-control" id="CANTIDAD_EQUIPO" name="CANTIDAD_EQUIPO" readonly>
                                             </div>
                                         </div>
 
                                         <div class="col-8 mt-2">
                                             <div class="form-group">
                                                 <label> Ubicación </label>
-                                                <input type="text" step="any" class="form-control" id="UBICACION_EQUIPO" name="UBICACION_EQUIPO">
+                                                <input type="text" step="any" class="form-control" id="UBICACION_EQUIPO" name="UBICACION_EQUIPO" readonly>
                                             </div>
                                         </div>
 
@@ -124,7 +124,7 @@
                                         <div class="col-6 mt-2">
                                             <div class="form-group">
                                                 <label> Estado </label>
-                                                <input type="text" step="any" class="form-control" id="ESTADO_EQUIPO" name="ESTADO_EQUIPO">
+                                                <input type="text" step="any" class="form-control" id="ESTADO_EQUIPO" name="ESTADO_EQUIPO" readonly>
                                             </div>
                                         </div>
 
