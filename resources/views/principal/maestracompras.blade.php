@@ -122,7 +122,7 @@
                         </ul>
                         @else
                         <script>
-                            window.location.href = "{{ route('login') }}"; // Redirige al login si no está autenticado
+                            window.location.href = "{{ route('login') }}"; 
                         </script>
                         @endauth
                     </li>
@@ -388,182 +388,6 @@
 
 
 
-    <!-- <nav class="navbar navbar-expand-lg navbar-dark"
-        style="background-color: rgba(0, 124, 186, 0.85); 
-            -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); 
-            -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); 
-            box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75);">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNav" aria-controls="navbarNav"
-                aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-
-                    <li class="nav-item" style="margin-left: 8px;">
-                        <a class="nav-link BOTON" href="{{ url('/Módulos') }}" style="color: #fff; font-weight: bold;">
-                            <i class="bi bi-grid-3x3-gap-fill"></i>
-                            <span class="d-lg-none">Inicio</span>
-                            <span class="d-none d-lg-inline">Inicio</span>
-                        </a>
-                    </li>
-
-                    @if(auth()->check() && !auth()->user()->hasRoles(['Almacenista','Asistente de compras']))
-                    <li class="nav-item" style="margin-left: 8px;">
-                        <a class="nav-link BOTON" href="{{ url('/Requisición_Materiales') }}" style="color: #fff; font-weight: bold;">
-                            <i class="bi bi-file-earmark-fill"></i>
-                            <span class="d-lg-none">Requisición de Materiales - MR</span>
-                            <span class="d-none d-lg-inline">Requisición de Materiales - MR</span>
-                        </a>
-                    </li>
-                    @endif
-
-                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones','Administrador']))
-                    <li class="nav-item dropdown" style="margin-left: 8px;">
-                        <a class="nav-link dropdown-toggle BOTON" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                            style="color: #fff; font-weight: bold;">
-                            <i class="bi bi-file-earmark-fill"></i>
-                            <span class="d-lg-none">M.R para Vo.Bo y aprobación</span>
-                            <span class="d-none d-lg-inline">M.R para Vo.Bo y aprobación</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            @if(auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones']))
-                            <li>
-                                <a class="dropdown-item" href="{{ url('/Requisición_materiales_líderes') }}">
-                                    Requisiciones de materiales<br>por dar visto bueno
-                                </a>
-                            </li>
-                            @endif
-                            <hr class="dropdown-divider">
-                            @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
-                            <li>
-                                <a class="dropdown-item" href="{{ url('/Requisición_materiales_aprobación') }}">
-                                    Requisiciones de materiales<br>por aprobar
-                                </a>
-                            </li>
-                            @endif
-                        </ul>
-                    </li>
-                    @endif
-
-                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de compras']))
-                    <li class="nav-item" style="margin-left: 8px;">
-                        <a class="nav-link BOTON" href="{{ url('/Bitácora') }}" style="color: #fff; font-weight: bold;">
-                            <i class="bi bi-file-earmark-fill"></i>
-                            <span class="d-lg-none">Bitácora de consecutivos - MR</span>
-                            <span class="d-none d-lg-inline">Bitácora de consecutivos - MR</span>
-                        </a>
-                    </li>
-                    @endif
-
-                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de planeación y logística','Asistente de compras']))
-                    <li class="nav-item dropdown" style="margin-left: 8px;">
-                        <a class="nav-link dropdown-toggle BOTON" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                            style="color: #fff; font-weight: bold;">
-                            <i class="bi bi-person-lines-fill"></i>
-                            <span class="d-lg-none">Proveedores</span>
-                            <span class="d-none d-lg-inline">Proveedores</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url('/Banco_proveedores') }}">Banco de proveedores</a></li>
-                            @if(auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de compras']))
-                            <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{ url('/Lista_proveedores') }}">Lista proveedores</a></li>
-                            @endif
-                            @if(auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de planeación y logística','Asistente de compras']))
-                            <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{ url('/Proveedores_temporales') }}">Proveedores temporales</a></li>
-                            @endif
-                        </ul>
-                    </li>
-                    @endif
-
-                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de compras']))
-                    <li class="nav-item dropdown" style="margin-left: 8px;">
-                        <a class="nav-link dropdown-toggle BOTON" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                            style="color: #fff; font-weight: bold;">
-                            <i class="bi bi-file-earmark-fill"></i>
-                            <span class="d-lg-none">Matriz comparativa</span>
-                            <span class="d-none d-lg-inline">Matriz comparativa</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" href="{{ url('/Matriz_comparativa') }}">
-                                    <span class="d-block">Matriz comparativa</span>
-                                    <span class="d-block">de cotizaciones</span>
-                                </a>
-                            </li>
-                            @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
-                            <hr class="dropdown-divider">
-                            <li>
-                                <a class="dropdown-item" href="{{ url('/Matriz_aprobación') }}">
-                                    Matriz comparativa por aprobar
-                                </a>
-                            </li>
-                            @endif
-                        </ul>
-                    </li>
-                    @endif
-
-                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de compras']))
-                    <li class="nav-item dropdown" style="margin-left: 8px;">
-                        <a class="nav-link dropdown-toggle BOTON" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                            style="color: #fff; font-weight: bold;">
-                            <i class="bi bi-file-earmark-fill"></i>
-                            <span class="d-lg-none">Orden de compra - PO</span>
-                            <span class="d-none d-lg-inline">Orden de compra - PO</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url('/Orden_compra') }}">Orden de compra</a></li>
-                            @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
-                            <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{ url('/Orden_compra_aprobación') }}">Orden de compra por aprobar</a></li>
-                            @endif
-                        </ul>
-                    </li>
-                    @endif
-
-                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','Almacenista']))
-                    <li class="nav-item dropdown" style="margin-left: 8px;">
-                        <a class="nav-link dropdown-toggle BOTON" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                            style="color: #fff; font-weight: bold;">
-                            <i class="bi bi-file-earmark-fill"></i>
-                            <span class="d-lg-none">Recepción de bienes y/o servicios - GR</span>
-                            <span class="d-none d-lg-inline">Recepción de bienes y/o servicios - GR</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url('/Bitácora-GR') }}">Lista de recepción B.y.S</a></li>
-                            <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{ url('/') }}">Vo.Bo. de usuario de B.y.S</a></li>
-                        </ul>
-                    </li>
-                    @endif
-
-                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de compras']))
-                    <li class="nav-item dropdown" style="margin-left: 8px;">
-                        <a class="nav-link dropdown-toggle BOTON" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                            style="color: #fff; font-weight: bold;">
-                            <i class="bi bi-file-earmark-fill"></i>
-                            <span class="d-lg-none">Catálogos</span>
-                            <span class="d-none d-lg-inline">Catálogos</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{url('/Catálogos_proveedores')}}">Catálogos de proveedores</a></li>
-                        </ul>
-                    </li>
-                    @endif
-
-                </ul>
-            </div>
-        </div>
-    </nav> -->
-
-
-
-
     @if(session('error'))
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -750,7 +574,7 @@
 
 
     @if(request()->is('Bitácora-GR'))
-    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.12"></script>
+    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.13"></script>
     @endif
 
 
