@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="col-4 mb-3">
                                     <label>N° MR</label>
-                                    <input type="text" class="form-control" id="NO_MR" name="NO_MR">
+                                    <input type="text" class="form-control" id="NO_MR" name="NO_MR" readonly>
                                 </div>
                                 <div class="col-4 mb-3">
                                     <label>Fecha de emisión *</label>
@@ -88,7 +88,7 @@
                         <div class="mt-3">
                             <div class="row">
                                 <div class="col-6 mb-3">
-                                   
+
                                 </div>
                             </div>
                             <div class="materialesdiv mt-4"></div>
