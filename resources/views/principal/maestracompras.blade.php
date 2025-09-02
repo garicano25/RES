@@ -435,6 +435,8 @@
         <img src="/assets/images/Colorancho.png" class="ld ld-bounce" alt="Cargando" style="max-width: 100%; max-height: 214px;" id="loading-image">
     </div>
 
+    
+
 
     <div style="margin-top: 25px;">
         @yield('contenido')
@@ -457,13 +459,9 @@
     <!-- Select opcion selectize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
 
-
     <!-- datepicker -->
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js"></script>
-
-
 
     <!-- Dropify -->
 
@@ -471,7 +469,6 @@
 
     <!-- Funciones generales -->
     <script src="/assets/js_sitio/funciones.js?v=5.2"></script>
-
 
     <script>
         $(document).ready(function() {
@@ -499,30 +496,21 @@
     <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=4.5"></script>
     @endif
 
-
     @if(request()->is('Requisición_materiales_líderes'))
     <script src="/assets/js_sitio/requisiconmaterial/requisiconlider.js?v=2.11"></script>
     @endif
-
 
     @if(request()->is('Requisición_materiales_aprobación'))
     <script src="/assets/js_sitio/requisiconmaterial/requisiconaprobada.js?v=2.3"></script>
     @endif
 
-
     @if(request()->is('Bitácora'))
     <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.19++++++"></script>
     @endif
 
-
-
-
     @if(request()->is('Banco_proveedores'))
     <script src="/assets/js_sitio/proveedor/proveedorespotenciales.js?v=1.10"></script>
     @endif
-
-
-
 
     @if(request()->is('Catálogo_funciones'))
     <script src="/assets/js_sitio/proveedor/catalogos/catalogofunciones.js?v=1.0"></script>
@@ -536,7 +524,6 @@
     <script src="/assets/js_sitio/proveedor/catalogos/catalogodocumento.js?v=1.3"></script>
     @endif
 
-
     @if(request()->is('Lista_proveedores'))
     <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=1.14"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
@@ -546,32 +533,25 @@
     <script src="/assets/js_sitio/proveedor/proveedorestemp.js?v=1.7"></script>
     @endif
 
-
     @if(request()->is('Orden_compra'))
     <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.13"></script>
     @endif
-
 
     @if(request()->is('Orden_compra_aprobación'))
     <script src="/assets/js_sitio/orden_compra/aprobacioncompra.js?v=1.5"></script>
     @endif
 
-
-
     @if(request()->is('Matriz_comparativa'))
     <script src="/assets/js_sitio/matrizcomparativa/matrizcomparativa.js?v=1.3"></script>
     @endif
-
 
     @if(request()->is('Matriz_aprobación'))
     <script src="/assets/js_sitio/matrizcomparativa/aprobacionmatriz.js?v=1.3"></script>
     @endif
 
-
     @if(request()->is('Catálogo_verificación_proveedor'))
     <script src="/assets/js_sitio/proveedor/catalogos/catalogoverproveedor.js"></script>
     @endif
-
 
     @if(request()->is('Bitácora-GR'))
     <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.16"></script>
