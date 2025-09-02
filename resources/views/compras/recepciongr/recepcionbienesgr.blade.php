@@ -257,14 +257,24 @@
                             <input type="text" class="form-control" id="modal_usuario_nombre" name="modal_usuario_nombre" readonly>
                         </div>
                     </div>
+
+
+                    <div class="col-12 mt-3">
+                        <label>Mandar a Vo.Bo de usuario</label>
+                        <div id="estado-container" class="p-2 rounded">
+                            <select class="form-control" id="MANDAR_USUARIO_VOBO" name="MANDAR_USUARIO_VOBO">
+                                <option value="" selected disabled>Seleccione una opción</option>
+                                <option value="Sí">Sí</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <!-- <button type="button" class="btn btn-success">Guardar</button> -->
-
                     <button type="button" class="btn btn-success" id="btnGuardarGR">Guardar</button>
-
-
                 </div>
 
             </form>
