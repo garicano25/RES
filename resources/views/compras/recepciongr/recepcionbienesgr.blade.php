@@ -251,25 +251,24 @@
                     <h5 class="mb-3 text-center">Bienes o Servicios (B o S)</h5>
                     <div id="modal_bien_servicio"></div>
                     <hr>
+
                     <div class="row mb-3">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <label class="form-label">Usuario que solicito</label>
                             <input type="text" class="form-control" id="modal_usuario_nombre" name="modal_usuario_nombre" readonly>
                         </div>
-                    </div>
 
-
-                    <div class="col-12 mt-3">
-                        <label>Mandar a Vo.Bo de usuario</label>
-                        <div id="estado-container" class="p-2 rounded">
-                            <select class="form-control" id="MANDAR_USUARIO_VOBO" name="MANDAR_USUARIO_VOBO">
-                                <option value="" selected disabled>Seleccione una opción</option>
-                                <option value="Sí">Sí</option>
-                                <option value="No">No</option>
-                            </select>
+                        <div class="col-md-6">
+                            <label>Mandar a Vo.Bo de usuario</label>
+                            <div id="estado-container" class="p-2 rounded">
+                                <select class="form-control" id="MANDAR_USUARIO_VOBO" name="MANDAR_USUARIO_VOBO">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="Sí">Sí</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-
 
                 </div>
                 <div class="modal-footer">

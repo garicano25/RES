@@ -165,14 +165,13 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
             $('#MANDAR_USUARIO_VOBO').val(cab.MANDAR_USUARIO_VOBO ?? '');
 
 
-            // Detalle guardado
             resp.detalle.forEach(det => {
                 let bloque = $(`
                     <div class="border rounded p-3 mb-3 bg-light">
                         <div class="row mb-2">
                           <div class="col-3">
                             <label class="form-label">Descripción</label>
-                            <textarea class="form-control" name="DESCRIPCION[]" rows="2" readonly>${det.DESCRIPCION}</textarea>
+                            <textarea class="form-control" name="DESCRIPCION[]" rows="2" >${det.DESCRIPCION}</textarea>
                           </div>
 
                           <div class="col-3">
@@ -294,7 +293,6 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
 
                 calcularTotales(bloque);
 
-                // Mostrar comentario diferencia si cambia la cantidad aceptada
                 bloque.find(".cantidad_aceptada").on("input", function () {
                     calcularTotales(bloque);
                     let cant = parseFloat(bloque.find(".cantidad").val()) || 0;
@@ -302,7 +300,6 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                     bloque.find(".comentario-diferencia").toggle(cant !== aceptada);
                 });
 
-                // Mostrar/ocultar inventario según select
                 bloque.find(".en_inventario").on("change", function () {
                     if ($(this).val() === "Sí") {
                         bloque.find(".bloque-inventario").show();
@@ -313,7 +310,6 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                     }
                 });
 
-                // Dependencia tipo → inventario
                 bloque.find(".tipo_inventario").on("change", function () {
                     let tipoDesc = $(this).find("option:selected").text();
                     let inventarioSelect = bloque.find(".inventario");
@@ -335,7 +331,7 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
         // Caso: NO EXISTE GR
         // ==========================
         } else {
-            $('#ID_GR').val(""); // nuevo GR
+            $('#ID_GR').val(""); 
             $('#modal_no_mr').val(data.NO_MR ?? '');
             $('#modal_fecha_mr').val(data.FECHA_APRUEBA_MR ?? '');
             $('#modal_no_po').val(data.NO_PO ?? '');
@@ -360,7 +356,7 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                           <div class="row mb-2">
                             <div class="col-3">
                               <label class="form-label">Descripción</label>
-                              <textarea class="form-control" name="DESCRIPCION[]" rows="2" readonly>${escapeHtml(descripcion)}</textarea>
+                              <textarea class="form-control" name="DESCRIPCION[]" rows="2" >${escapeHtml(descripcion)}</textarea>
                             </div>
 
                             <div class="col-3">
@@ -478,7 +474,6 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                   calcularTotales(bloque);
 
                 
-                    // Mostrar comentario diferencia si cambia la cantidad aceptada
                     bloque.find(".cantidad_aceptada").on("input", function () {
                         calcularTotales(bloque);
                         let cant = parseFloat(bloque.find(".cantidad").val()) || 0;
@@ -486,7 +481,6 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                         bloque.find(".comentario-diferencia").toggle(cant !== aceptada);
                     });
 
-                    // Mostrar/ocultar inventario
                     bloque.find(".en_inventario").on("change", function () {
                         if ($(this).val() === "Sí") {
                             bloque.find(".bloque-inventario").show();
@@ -497,7 +491,6 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                         }
                     });
 
-                    // Dependencia tipo → inventario
                     bloque.find(".tipo_inventario").on("change", function () {
                         let tipoDesc = $(this).find("option:selected").text();
                         let inventarioSelect = bloque.find(".inventario");
@@ -525,17 +518,14 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
 
 
 
-// ==========================
-// Función de cálculo común
-// ==========================
 function calcularTotales(bloque) {
     let cantidad = parseFloat(bloque.find(".cantidad").val()) || 0;
     let precioUnit = parseFloat(bloque.find(".precio_unitario").val()) || 0;
 
-    // Precio Total MR
+   
     let totalMr = cantidad * precioUnit;
     bloque.find(".precio_total_mr").val(totalMr.toFixed(2));
-
+    
     let aceptada = parseFloat(bloque.find(".cantidad_aceptada").val()) || 0;
 
     let precioUnitGr = (aceptada > 0) ? (totalMr / aceptada) : 0;
@@ -561,18 +551,47 @@ function calcularTotales(bloque) {
 $('#btnGuardarGR').on('click', function () {
     let formData = $("#formulariorecepciongr").serialize();
 
-    $.ajax({
-        url: '/guardarGR',
-        method: 'POST',
-        data: formData,
-        success: function (resp) {
-            if (resp.ok) {
-                Swal.fire('Éxito', 'GR guardada con número ' + resp.no_gr, 'success');
-                $('#modalGR').modal('hide');
-                Tablabitacoragr.ajax.reload();
-            } else {
-                Swal.fire('Error', resp.msg, 'error');
-            }
+    Swal.fire({
+        title: '¿Desea guardar la GR?',
+        text: "Confirme para continuar",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, guardar',
+        cancelButtonText: 'No, cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/guardarGR',
+                method: 'POST',
+                data: formData,
+                beforeSend: function () {
+                    Swal.fire({
+                        title: 'Guardando...',
+                        text: 'Por favor espere',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                },
+                success: function (resp) {
+                    Swal.close(); 
+
+                    if (resp.ok) {
+                        Swal.fire('Éxito', 'GR guardada', 'success');
+                        $('#modalGR').modal('hide');
+                        Tablabitacoragr.ajax.reload();
+                    } else {
+                        Swal.fire('Error', resp.msg, 'error');
+                    }
+                },
+                error: function () {
+                    Swal.close();
+                    Swal.fire('Error', 'Ocurrió un problema al guardar la GR', 'error');
+                }
+            });
         }
     });
 });
+
