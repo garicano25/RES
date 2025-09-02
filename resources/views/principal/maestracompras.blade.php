@@ -435,7 +435,7 @@
         <img src="/assets/images/Colorancho.png" class="ld ld-bounce" alt="Cargando" style="max-width: 100%; max-height: 214px;" id="loading-image">
     </div>
 
-    
+
 
 
     <div style="margin-top: 25px;">
@@ -554,7 +554,7 @@
     @endif
 
     @if(request()->is('Bitácora-GR'))
-    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.16"></script>
+    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.17"></script>
     @endif
 
 

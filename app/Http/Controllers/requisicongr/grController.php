@@ -423,7 +423,6 @@ class grController extends Controller
                     'FECHA_EMISION'    => $request->DESDE_ACREDITACION,
                     'NO_RECEPCION'     => $noRecepcion,
                     'MANDAR_USUARIO_VOBO'   => $request->MANDAR_USUARIO_VOBO,
-
                     'CREATED_AT'       => now(),
                 ]);
 

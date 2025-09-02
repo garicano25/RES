@@ -169,12 +169,12 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                 let bloque = $(`
                     <div class="border rounded p-3 mb-3 bg-light">
                         <div class="row mb-2">
-                          <div class="col-3">
+                          <div class="col-3 mt-2">
                             <label class="form-label">Descripción</label>
                             <textarea class="form-control" name="DESCRIPCION[]" rows="2" >${det.DESCRIPCION}</textarea>
                           </div>
 
-                          <div class="col-3">
+                          <div class="col-3 mt-2">
                             <label class="form-label">¿Está en inventario?</label>
                             <select class="form-control en_inventario" name="EN_INVENTARIO[]">
                               <option value="">Seleccione</option>
@@ -185,7 +185,7 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                           </div>
                           <div class="col-6 bloque-inventario" style="display:${det.INVENTARIO_ID ? 'block' : 'none'};">
                             <div class="row">
-                              <div class="col-6">
+                              <div class="col-6 mt-2">
                                 <label class="form-label">Tipo Inventario</label>
                                 <select class="form-control tipo_inventario" name="TIPO_INVENTARIO[]">
                                   <option value="">Seleccione</option>
@@ -194,7 +194,7 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                                   ).join("") : ""}
                                 </select>
                               </div>
-                              <div class="col-6">
+                              <div class="col-6 mt-2">
                                 <label class="form-label">Inventario</label>
                                 <select class="form-control inventario" name="INVENTARIO[]">
                                   <option value="">Seleccione</option>
@@ -207,47 +207,47 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                               </div>
                             </div>
                           </div>
-                          <div class="col-4">
+                          <div class="col-4 mt-2">
                             <label class="form-label">Cantidad</label>
                             <input type="number" class="form-control cantidad" name="CANTIDAD[]" value="${det.CANTIDAD}" readonly>
                           </div>
-                          <div class="col-4">
+                          <div class="col-4 mt-2">
                             <label class="form-label">Precio Unitario</label>
                             <input type="text" class="form-control precio_unitario" name="PRECIO_UNITARIO[]" value="${det.PRECIO_UNITARIO}" readonly>
                           </div>
-                          <div class="col-4">
+                          <div class="col-4 mt-2">
                             <label class="form-label">Precio Total</label>
                             <input type="text" class="form-control precio_total_mr" name="PRECIO_TOTAL_MR[]" value="${det.PRECIO_TOTAL_MR ?? 0}" readonly>
                           </div>
                         </div>
 
                         <div class="row mb-2">
-                          <div class="col-3">
+                          <div class="col-3 mt-2">
                             <label class="form-label">Cantidad Rechazada</label>
                             <input type="number" class="form-control" name="CANTIDAD_RECHAZADA[]" value="${det.CANTIDAD_RECHAZADA}">
                           </div>
-                          <div class="col-3">
+                          <div class="col-3 mt-2">
                             <label class="form-label">Cantidad Aceptada</label>
                             <input type="number" class="form-control cantidad_aceptada" name="CANTIDAD_ACEPTADA[]" value="${det.CANTIDAD_ACEPTADA}">
                           </div>
-                          <div class="col-3">
+                          <div class="col-3 mt-2">
                             <label class="form-label">Precio Unitario GR</label>
                             <input type="text" class="form-control precio_unitario_gr" name="PRECIO_UNITARIO_GR[]" value="${det.PRECIO_UNITARIO_GR ?? 0}" readonly>
                           </div>
-                          <div class="col-3">
+                          <div class="col-3 mt-2">
                             <label class="form-label">Precio Total GR</label>
                             <input type="text" class="form-control precio_total_gr" name="PRECIO_TOTAL_GR[]" value="${det.PRECIO_TOTAL_GR ?? 0}" readonly>
                           </div>
                         </div>
 
                         <div class="row mb-2 comentario-diferencia" style="display:${det.CANTIDAD != det.CANTIDAD_ACEPTADA ? 'block' : 'none'};">
-                          <div class="col-12">
+                          <div class="col-12 mt-2">
                             <label class="form-label">Comentario por diferencia en cantidad</label>
                             <textarea class="form-control" name="COMENTARIO_DIFERENCIA[]" rows="2">${det.COMENTARIO_DIFERENCIA ?? ""}</textarea>
                           </div>
                         </div>
                       <div class="row mb-2">
-                          <div class="col-6">
+                          <div class="col-6 mt-2">
                             <label class="form-label">Cumple</label>
                             <select class="form-control" name="CUMPLE[]">
                               <option value="">Seleccione</option>
@@ -255,14 +255,14 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                               <option value="No" ${det.CUMPLE=="No"?"selected":""}>No</option>
                             </select>
                           </div>
-                          <div class="col-6">
+                          <div class="col-6 mt-2">
                             <label class="form-label">Comentario especificación</label>
                             <textarea class="form-control" name="COMENTARIO_CUMPLE[]" rows="2">${det.COMENTARIO_CUMPLE??""}</textarea>
                           </div>
                         </div>
 
                         <div class="row mb-2">
-                          <div class="col-6">
+                          <div class="col-6 mt-2">
                             <label class="form-label">Estado</label>
                             <select class="form-control" name="ESTADO_BS[]">
                               <option value="">Seleccione</option>
@@ -270,14 +270,14 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                               <option value="MAL_ESTADO" ${det.ESTADO_BS=="MAL_ESTADO"?"selected":""}>Mal estado</option>
                             </select>
                           </div>
-                          <div class="col-6">
+                          <div class="col-6 mt-2">
                             <label class="form-label">Comentario Estado</label>
                             <textarea class="form-control" name="COMENTARIO_ESTADO[]" rows="2">${det.COMENTARIO_ESTADO??""}</textarea>
                           </div>
                         </div>
 
                         <div class="row mb-2">
-                          <div class="col-12">
+                          <div class="col-12 mt-2">
                             <label class="form-label">Tipo</label>
                             <select class="form-control" name="TIPO_BS[]">
                               <option value="">Seleccione</option>
@@ -354,12 +354,12 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                     let bloque = $(`
                         <div class="border rounded p-3 mb-3 bg-light">
                           <div class="row mb-2">
-                            <div class="col-3">
+                            <div class="col-3 mt-2">
                               <label class="form-label">Descripción</label>
                               <textarea class="form-control" name="DESCRIPCION[]" rows="2" >${escapeHtml(descripcion)}</textarea>
                             </div>
 
-                            <div class="col-3">
+                            <div class="col-3 mt-2">
                               <label class="form-label">¿Está en inventario?</label>  
                               <select class="form-control en_inventario" name="EN_INVENTARIO[]">
                                 <option value="" >Seleccione</option>
@@ -369,7 +369,7 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                             </div>
                               <div class="col-6 bloque-inventario" style="display:none;">
                                 <div class="row">
-                                  <div class="col-6">
+                                  <div class="col-6 mt-2">
                                     <label class="form-label">Tipo Inventario</label>
                                     <select class="form-control tipo_inventario" name="TIPO_INVENTARIO[]">
                                       <option value="">Seleccione</option>
@@ -378,7 +378,7 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                                       ).join("")}
                                     </select>
                                   </div>
-                                  <div class="col-6">
+                                  <div class="col-6 mt-2">
                                     <label class="form-label">Inventario</label>
                                     <select class="form-control inventario" name="INVENTARIO[]">
                                       <option value="">Seleccione</option>
@@ -386,48 +386,48 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                                   </div>
                                 </div>
                               </div>
-                            <div class="col-4">
+                            <div class="col-4 mt-2">
                               <label class="form-label">Cantidad</label>
                               <input type="number" class="form-control cantidad" name="CANTIDAD[]" value="${cantidad}" readonly>
                             </div>
-                            <div class="col-4">
+                            <div class="col-4 mt-2">
                               <label class="form-label">Precio Unitario</label>
                               <input type="text" class="form-control precio_unitario" name="PRECIO_UNITARIO[]" value="${precio}" readonly>
                             </div>
-                            <div class="col-4">
+                            <div class="col-4 mt-2">
                               <label class="form-label">Precio Total</label>
                               <input type="text" class="form-control precio_total_mr" name="PRECIO_TOTAL_MR[]" value="0" readonly>
                             </div>
                           </div>
 
                           <div class="row mb-2">
-                            <div class="col-3">
+                            <div class="col-3 mt-2">
                               <label class="form-label">Cantidad Rechazada</label>
                               <input type="number" class="form-control" name="CANTIDAD_RECHAZADA[]" value="0" min="0">
                             </div>
-                            <div class="col-3">
+                            <div class="col-3 mt-2">
                               <label class="form-label">Cantidad Aceptada</label>
                               <input type="number" class="form-control cantidad_aceptada" name="CANTIDAD_ACEPTADA[]" value="0" min="0" max="${cantidad}">
                             </div>
-                            <div class="col-3">
+                            <div class="col-3 mt-2">
                               <label class="form-label">Precio Unitario GR</label>
                               <input type="text" class="form-control precio_unitario_gr" name="PRECIO_UNITARIO_GR[]" value="0" readonly>
                             </div>
-                            <div class="col-3">
+                            <div class="col-3 mt-2">
                               <label class="form-label">Precio Total GR</label>
                               <input type="text" class="form-control precio_total_gr" name="PRECIO_TOTAL_GR[]" value="0" readonly>
                             </div>
                           </div>
 
                           <div class="row mb-2 comentario-diferencia" style="display:none;">
-                            <div class="col-12">
+                            <div class="col-12 mt-2">
                               <label class="form-label">Comentario por diferencia en cantidad</label>
                               <textarea class="form-control" name="COMENTARIO_DIFERENCIA[]" rows="2"></textarea>
                             </div>
                           </div>
 
                         <div class="row mb-2">
-                            <div class="col-6">
+                            <div class="col-6 mt-2">
                               <label class="form-label">Cumple lo especificado el B o S</label>
                               <select class="form-control" name="CUMPLE[]">
                                 <option value="">Seleccione</option>
@@ -435,14 +435,14 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                                 <option value="No">No</option>
                               </select>
                             </div>
-                            <div class="col-6">
+                            <div class="col-6 mt-2">
                               <label class="form-label">Comentario especificación</label>
                               <textarea class="form-control" name="COMENTARIO_CUMPLE[]" rows="2"></textarea>
                             </div>
                           </div>
 
                           <div class="row mb-2">
-                            <div class="col-6">
+                            <div class="col-6 mt-2">
                               <label class="form-label">Estado del B o S</label>
                               <select class="form-control" name="ESTADO_BS[]">
                                 <option value="">Seleccione</option>
@@ -450,14 +450,14 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                                 <option value="MAL_ESTADO">Mal estado</option>
                               </select>
                             </div>
-                            <div class="col-6">
+                            <div class="col-6 mt-2">
                               <label class="form-label">Comentario Estado</label>
                               <textarea class="form-control" name="COMENTARIO_ESTADO[]" rows="2"></textarea>
                             </div>
                           </div>
 
                           <div class="row mb-2">
-                            <div class="col-12">
+                            <div class="col-12 mt-2">
                               <label class="form-label">Tipo</label>
                               <select class="form-control" name="TIPO_BS[]">
                                 <option value="">Seleccione</option>
