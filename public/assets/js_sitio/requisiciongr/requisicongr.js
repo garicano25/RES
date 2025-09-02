@@ -124,6 +124,7 @@ $(document).on('click', '.btn-ver-mas-materiales', function() {
 
 
 
+
 // $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
 //     var data = Tablabitacoragr.row($(this).parents('tr')).data();
 
@@ -135,7 +136,7 @@ $(document).on('click', '.btn-ver-mas-materiales', function() {
 //         _token: $('input[name="_token"]').val()
 //     };
 
-//     $.post('/consultar-gr', requestData, function(resp) {
+//     $.post('/consultar-gr', requestData, function (resp) {
 //         let contenedor = $("#modal_bien_servicio");
 //         contenedor.empty();
 
@@ -145,9 +146,7 @@ $(document).on('click', '.btn-ver-mas-materiales', function() {
 //         if (resp.existe) {
 //             let cab = resp.cabecera;
 
-          
-//           $('#ID_GR').val(cab.ID_GR ?? '');
-
+//             $('#ID_GR').val(cab.ID_GR ?? '');
 //             $('#modal_no_mr').val(cab.NO_MR);
 //             $('#modal_fecha_mr').val(data.FECHA_APRUEBA_MR ?? '');
 //             $('#modal_no_po').val(cab.NO_PO ?? '');
@@ -167,23 +166,68 @@ $(document).on('click', '.btn-ver-mas-materiales', function() {
 //                             <label class="form-label">Descripción</label>
 //                             <textarea class="form-control" name="DESCRIPCION[]" rows="2" readonly>${det.DESCRIPCION}</textarea>
 //                           </div>
+//                           <div class="col-3">
+//                             <label class="form-label">Tipo Inventario</label>
+//                             <select class="form-control tipo_inventario" name="TIPO_INVENTARIO[]">
+//                               <option value="">Seleccione</option>
+//                               ${resp.tipoinventario.map(t => 
+//                                 `<option value="${t.ID_CATALOGO_TIPOINVENTARIO}" ${det.TIPO_EQUIPO == t.ID_CATALOGO_TIPOINVENTARIO ? "selected" : ""}>${t.DESCRIPCION_TIPO}</option>`
+//                               ).join("")}
+//                             </select>
+//                           </div>
+
+//                           <div class="col-3">
+//                             <label class="form-label">Inventario</label>
+//                             <select class="form-control inventario" name="INVENTARIO[]">
+//                               <option value="">Seleccione</option>
+//                               ${resp.inventario
+//                                 .filter(inv => inv.TIPO_EQUIPO == det.TIPO_EQUIPO)
+//                                 .map(inv =>
+//                                   `<option value="${inv.ID_FORMULARIO_INVENTARIO}" ${det.INVENTARIO_ID == inv.ID_FORMULARIO_INVENTARIO ? "selected" : ""}>${inv.DESCRIPCION_EQUIPO}</option>`
+//                                 ).join("")}
+//                             </select>
+//                           </div>
+
 //                           <div class="col-2">
 //                             <label class="form-label">Cantidad</label>
 //                             <input type="number" class="form-control cantidad" name="CANTIDAD[]" value="${det.CANTIDAD}" readonly>
 //                           </div>
+//                           <div class="col-3">
+//                             <label class="form-label">Precio Unitario</label>
+//                             <input type="text" class="form-control precio_unitario" name="PRECIO_UNITARIO[]" value="${det.PRECIO_UNITARIO}" readonly>
+//                           </div>
+//                           <div class="col-2">
+//                             <label class="form-label">Precio Total </label>
+//                             <input type="text" class="form-control precio_total_mr" name="PRECIO_TOTAL_MR[]" value="${det.PRECIO_TOTAL_MR ?? 0}" readonly>
+//                           </div>
+//                         </div>
+
+//                         <div class="row mb-2">
 //                           <div class="col-2">
 //                             <label class="form-label">Cantidad Rechazada</label>
 //                             <input type="number" class="form-control" name="CANTIDAD_RECHAZADA[]" value="${det.CANTIDAD_RECHAZADA}">
 //                           </div>
 //                           <div class="col-2">
 //                             <label class="form-label">Cantidad Aceptada</label>
-//                             <input type="number" class="form-control cantidad-aceptada" name="CANTIDAD_ACEPTADA[]" value="${det.CANTIDAD_ACEPTADA}">
+//                             <input type="number" class="form-control cantidad_aceptada" name="CANTIDAD_ACEPTADA[]" value="${det.CANTIDAD_ACEPTADA}">
 //                           </div>
-//                           <div class="col-3">
-//                             <label class="form-label">Precio Unitario</label>
-//                             <input type="text" class="form-control precio_unitario" name="PRECIO_UNITARIO[]" value="${det.PRECIO_UNITARIO}" readonly>
+//                           <div class="col-2">
+//                             <label class="form-label">Precio Unitario GR</label>
+//                             <input type="text" class="form-control precio_unitario_gr" name="PRECIO_UNITARIO_GR[]" value="${det.PRECIO_UNITARIO_GR ?? 0}" readonly>
+//                           </div>
+//                           <div class="col-2">
+//                             <label class="form-label">Precio Total GR</label>
+//                             <input type="text" class="form-control precio_total_gr" name="PRECIO_TOTAL_GR[]" value="${det.PRECIO_TOTAL_GR ?? 0}" readonly>
 //                           </div>
 //                         </div>
+
+//                         <div class="row mb-2 comentario-diferencia" style="display:none;">
+//                           <div class="col-12">
+//                             <label class="form-label">Comentario por diferencia en cantidad</label>
+//                             <textarea class="form-control" name="COMENTARIO_DIFERENCIA[]" rows="2">${det.COMENTARIO_DIFERENCIA ?? ""}</textarea>
+//                           </div>
+//                         </div>
+
 //                         <div class="row mb-2">
 //                           <div class="col-6">
 //                             <label class="form-label">Cumple</label>
@@ -198,6 +242,7 @@ $(document).on('click', '.btn-ver-mas-materiales', function() {
 //                             <textarea class="form-control" name="COMENTARIO_CUMPLE[]" rows="2">${det.COMENTARIO_CUMPLE??""}</textarea>
 //                           </div>
 //                         </div>
+
 //                         <div class="row mb-2">
 //                           <div class="col-6">
 //                             <label class="form-label">Estado</label>
@@ -212,6 +257,7 @@ $(document).on('click', '.btn-ver-mas-materiales', function() {
 //                             <textarea class="form-control" name="COMENTARIO_ESTADO[]" rows="2">${det.COMENTARIO_ESTADO??""}</textarea>
 //                           </div>
 //                         </div>
+
 //                         <div class="row mb-2">
 //                           <div class="col-12">
 //                             <label class="form-label">Tipo</label>
@@ -224,7 +270,14 @@ $(document).on('click', '.btn-ver-mas-materiales', function() {
 //                         </div>
 //                     </div>
 //                 `);
+
 //                 contenedor.append(bloque);
+
+//                 calcularTotales(bloque);
+
+//                 bloque.find(".cantidad_aceptada").on("input", function () {
+//                     calcularTotales(bloque);
+//                 });
 //             });
 
 //         // ==========================
@@ -239,11 +292,9 @@ $(document).on('click', '.btn-ver-mas-materiales', function() {
 //             $('#modal_fecha_entrega').val(data.FECHA_ENTREGA_PO ?? '');
 //             $('#modal_usuario_nombre').val(data.USUARIO_NOMBRE ?? '');
 
-//             // === Lógica original ===
 //             if (data.BIEN_SERVICIO) {
 //                 $(data.BIEN_SERVICIO).each(function (index) {
 //                     const texto = $(this).text().trim();
-
 //                     let limpio = texto.replace(/^•\s*/, "");
 //                     let partes = limpio.split(" - $ ");
 //                     let descYcantidad = partes[0];
@@ -259,21 +310,56 @@ $(document).on('click', '.btn-ver-mas-materiales', function() {
 //                               <label class="form-label">Descripción</label>
 //                               <textarea class="form-control" name="DESCRIPCION[]" rows="2" readonly>${escapeHtml(descripcion)}</textarea>
 //                             </div>
+
+//                             <div class="col-3">
+//                             <label class="form-label">Tipo Inventario</label>
+//                             <select class="form-control tipo_inventario" name="TIPO_INVENTARIO[]">
+//                               <option value="">Seleccione</option>
+//                               ${resp.tipoinventario.map(t => 
+//                                 `<option value="${t.ID_CATALOGO_TIPOINVENTARIO}">${t.DESCRIPCION_TIPO}</option>`
+//                               ).join("")}
+//                             </select>
+//                           </div>
+
+//                           <div class="col-3">
+//                             <label class="form-label">Inventario</label>
+//                             <select class="form-control inventario" name="INVENTARIO[]">
+//                               <option value="">Seleccione</option>
+//                             </select>
+//                           </div>
+
+
+
 //                             <div class="col-2">
 //                               <label class="form-label">Cantidad</label>
 //                               <input type="number" class="form-control cantidad" name="CANTIDAD[]" value="${cantidad}" readonly>
 //                             </div>
+//                             <div class="col-3">
+//                               <label class="form-label">Precio Unitario</label>
+//                               <input type="text" class="form-control precio_unitario" name="PRECIO_UNITARIO[]" value="${precio}" readonly>
+//                             </div>
+//                             <div class="col-2">
+//                               <label class="form-label">Precio Total</label>
+//                               <input type="text" class="form-control precio_total_mr" name="PRECIO_TOTAL_MR[]" value="0" readonly>
+//                             </div>
+//                           </div>
+
+//                           <div class="row mb-2">
 //                             <div class="col-2">
 //                               <label class="form-label">Cantidad Rechazada</label>
 //                               <input type="number" class="form-control" name="CANTIDAD_RECHAZADA[]" value="0" min="0">
 //                             </div>
 //                             <div class="col-2">
 //                               <label class="form-label">Cantidad Aceptada</label>
-//                               <input type="number" class="form-control cantidad-aceptada" name="CANTIDAD_ACEPTADA[]" value="0" min="0" max="${cantidad}">
+//                               <input type="number" class="form-control cantidad_aceptada" name="CANTIDAD_ACEPTADA[]" value="0" min="0" max="${cantidad}">
 //                             </div>
-//                             <div class="col-3">
-//                               <label class="form-label">Precio Unitario</label>
-//                               <input type="text" class="form-control precio_unitario" name="PRECIO_UNITARIO[]" value="${precio}" readonly>
+//                             <div class="col-2">
+//                               <label class="form-label">Precio Unitario GR</label>
+//                               <input type="text" class="form-control precio_unitario_gr" name="PRECIO_UNITARIO_GR[]" value="0" readonly>
+//                             </div>
+//                             <div class="col-2">
+//                               <label class="form-label">Precio Total GR</label>
+//                               <input type="text" class="form-control precio_total_gr" name="PRECIO_TOTAL_GR[]" value="0" readonly>
 //                             </div>
 //                           </div>
 
@@ -329,20 +415,10 @@ $(document).on('click', '.btn-ver-mas-materiales', function() {
 
 //                     contenedor.append(bloque);
 
-//                     bloque.find(".cantidad-aceptada").on("input", function () {
-//                         let cant = parseFloat(bloque.find(".cantidad").val());
-//                         let aceptada = parseFloat($(this).val());
+//                     calcularTotales(bloque);
 
-//                         // if (aceptada > cant) {
-//                         //     $(this).val(cant);
-//                         //     aceptada = cant;
-//                         // }
-
-//                         if (!isNaN(cant) && !isNaN(aceptada) && cant !== aceptada) {
-//                             bloque.find(".comentario-diferencia").show();
-//                         } else {
-//                             bloque.find(".comentario-diferencia").hide();
-//                         }
+//                     bloque.find(".cantidad_aceptada").on("input", function () {
+//                         calcularTotales(bloque);
 //                     });
 //                 });
 //             } else {
@@ -356,13 +432,9 @@ $(document).on('click', '.btn-ver-mas-materiales', function() {
 
 
 
-
-
-
 $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
     var data = Tablabitacoragr.row($(this).parents('tr')).data();
 
-    // Cabecera base
     let requestData = {
         NO_MR: data.NO_MR ?? '',
         NO_PO: data.NO_PO ?? '',
@@ -396,51 +468,80 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                 let bloque = $(`
                     <div class="border rounded p-3 mb-3 bg-light">
                         <div class="row mb-2">
-                          <div class="col-3">
+                          <div class="col-4">
                             <label class="form-label">Descripción</label>
                             <textarea class="form-control" name="DESCRIPCION[]" rows="2" readonly>${det.DESCRIPCION}</textarea>
                           </div>
-                          <div class="col-2">
+
+                          <div class="col-4">
+                            <label class="form-label">¿Está en inventario?</label>
+                            <select class="form-control en_inventario" name="EN_INVENTARIO[]">
+                              <option value="">Seleccione</option>
+                              <option value="Sí" ${det.EN_INVENTARIO=="Sí"?"selected":""}>Sí</option>
+                              <option value="No" ${det.EN_INVENTARIO == "No" ? "selected" : ""}>No</option>
+                              
+                            </select>
+                          </div>
+
+                          <div class="col-4 bloque-inventario" style="display:${det.INVENTARIO_ID ? 'block' : 'none'};">
+                            <label class="form-label">Tipo Inventario</label>
+                            <select class="form-control tipo_inventario" name="TIPO_INVENTARIO[]">
+                              <option value="">Seleccione</option>
+                              ${resp.tipoinventario ? resp.tipoinventario.map(t => 
+                                `<option value="${t.ID_CATALOGO_TIPOINVENTARIO}" ${det.TIPO_EQUIPO == t.DESCRIPCION_TIPO ? "selected" : ""}>${t.DESCRIPCION_TIPO}</option>`
+                              ).join("") : ""}
+                            </select>
+                            <label class="form-label mt-2">Inventario</label>
+                            <select class="form-control inventario" name="INVENTARIO[]">
+                              <option value="">Seleccione</option>
+                              ${resp.inventario ? resp.inventario
+                                .filter(inv => inv.TIPO_EQUIPO == det.TIPO_EQUIPO)
+                                .map(inv =>
+                                  `<option value="${inv.ID_FORMULARIO_INVENTARIO}" ${det.INVENTARIO_ID == inv.ID_FORMULARIO_INVENTARIO ? "selected" : ""}>${inv.DESCRIPCION_EQUIPO}</option>`
+                                ).join("") : ""}
+                            </select>
+                          </div>
+
+                          <div class="col-4">
                             <label class="form-label">Cantidad</label>
                             <input type="number" class="form-control cantidad" name="CANTIDAD[]" value="${det.CANTIDAD}" readonly>
                           </div>
-                          <div class="col-3">
+                          <div class="col-4">
                             <label class="form-label">Precio Unitario</label>
                             <input type="text" class="form-control precio_unitario" name="PRECIO_UNITARIO[]" value="${det.PRECIO_UNITARIO}" readonly>
                           </div>
-                          <div class="col-2">
-                            <label class="form-label">Precio Total </label>
+                          <div class="col-4">
+                            <label class="form-label">Precio Total</label>
                             <input type="text" class="form-control precio_total_mr" name="PRECIO_TOTAL_MR[]" value="${det.PRECIO_TOTAL_MR ?? 0}" readonly>
                           </div>
                         </div>
 
                         <div class="row mb-2">
-                          <div class="col-2">
+                          <div class="col-3">
                             <label class="form-label">Cantidad Rechazada</label>
                             <input type="number" class="form-control" name="CANTIDAD_RECHAZADA[]" value="${det.CANTIDAD_RECHAZADA}">
                           </div>
-                          <div class="col-2">
+                          <div class="col-3">
                             <label class="form-label">Cantidad Aceptada</label>
                             <input type="number" class="form-control cantidad_aceptada" name="CANTIDAD_ACEPTADA[]" value="${det.CANTIDAD_ACEPTADA}">
                           </div>
-                          <div class="col-2">
+                          <div class="col-3">
                             <label class="form-label">Precio Unitario GR</label>
                             <input type="text" class="form-control precio_unitario_gr" name="PRECIO_UNITARIO_GR[]" value="${det.PRECIO_UNITARIO_GR ?? 0}" readonly>
                           </div>
-                          <div class="col-2">
+                          <div class="col-3">
                             <label class="form-label">Precio Total GR</label>
                             <input type="text" class="form-control precio_total_gr" name="PRECIO_TOTAL_GR[]" value="${det.PRECIO_TOTAL_GR ?? 0}" readonly>
                           </div>
                         </div>
 
-                        <div class="row mb-2 comentario-diferencia" style="display:none;">
+                        <div class="row mb-2 comentario-diferencia" style="display:${det.CANTIDAD != det.CANTIDAD_ACEPTADA ? 'block' : 'none'};">
                           <div class="col-12">
                             <label class="form-label">Comentario por diferencia en cantidad</label>
                             <textarea class="form-control" name="COMENTARIO_DIFERENCIA[]" rows="2">${det.COMENTARIO_DIFERENCIA ?? ""}</textarea>
                           </div>
                         </div>
-
-                        <div class="row mb-2">
+                      <div class="row mb-2">
                           <div class="col-6">
                             <label class="form-label">Cumple</label>
                             <select class="form-control" name="CUMPLE[]">
@@ -487,8 +588,44 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
 
                 calcularTotales(bloque);
 
+                //bloque.find(".cantidad_aceptada").on("input", function () {
+                   // calcularTotales(bloque);
+                //});
+              
+                // Mostrar comentario diferencia si cambia la cantidad aceptada
                 bloque.find(".cantidad_aceptada").on("input", function () {
                     calcularTotales(bloque);
+                    let cant = parseFloat(bloque.find(".cantidad").val()) || 0;
+                    let aceptada = parseFloat($(this).val()) || 0;
+                    bloque.find(".comentario-diferencia").toggle(cant !== aceptada);
+                });
+
+                // Mostrar/ocultar inventario según select
+                bloque.find(".en_inventario").on("change", function () {
+                    if ($(this).val() === "Sí") {
+                        bloque.find(".bloque-inventario").show();
+                    } else {
+                        bloque.find(".bloque-inventario").hide();
+                        bloque.find(".tipo_inventario").val("");
+                        bloque.find(".inventario").empty().append('<option value="">Seleccione</option>');
+                    }
+                });
+
+                // Dependencia tipo → inventario
+                bloque.find(".tipo_inventario").on("change", function () {
+                    let tipoDesc = $(this).find("option:selected").text();
+                    let inventarioSelect = bloque.find(".inventario");
+                    inventarioSelect.empty().append('<option value="">Seleccione</option>');
+
+                    if (tipoDesc) {
+                        resp.inventario
+                            .filter(inv => inv.TIPO_EQUIPO == tipoDesc)
+                            .forEach(inv => {
+                                inventarioSelect.append(
+                                    `<option value="${inv.ID_FORMULARIO_INVENTARIO}">${inv.DESCRIPCION_EQUIPO}</option>`
+                                );
+                            });
+                    }
                 });
             });
 
@@ -496,6 +633,7 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
         // Caso: NO EXISTE GR
         // ==========================
         } else {
+            $('#ID_GR').val(""); // nuevo GR
             $('#modal_no_mr').val(data.NO_MR ?? '');
             $('#modal_fecha_mr').val(data.FECHA_APRUEBA_MR ?? '');
             $('#modal_no_po').val(data.NO_PO ?? '');
@@ -522,34 +660,58 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                               <label class="form-label">Descripción</label>
                               <textarea class="form-control" name="DESCRIPCION[]" rows="2" readonly>${escapeHtml(descripcion)}</textarea>
                             </div>
-                            <div class="col-2">
+
+                            <div class="col-3">
+                              <label class="form-label">¿Está en inventario?</label>  
+                              <select class="form-control en_inventario" name="EN_INVENTARIO[]">
+                                <option value="" >Seleccione</option>
+                                <option value="Sí">Sí</option>
+                                <option value="No">No</option>
+                              </select>
+                            </div>
+
+                            <div class="col-3 bloque-inventario" style="display:none;">
+                              <label class="form-label">Tipo Inventario</label>
+                              <select class="form-control tipo_inventario" name="TIPO_INVENTARIO[]">
+                                <option value="">Seleccione</option>
+                                ${resp.tipoinventario.map(t => 
+                                  `<option value="${t.ID_CATALOGO_TIPOINVENTARIO}">${t.DESCRIPCION_TIPO}</option>`
+                                ).join("")}
+                              </select>
+                              <label class="form-label mt-2">Inventario</label>
+                              <select class="form-control inventario" name="INVENTARIO[]">
+                                <option value="">Seleccione</option>
+                              </select>
+                            </div>
+
+                            <div class="col-4">
                               <label class="form-label">Cantidad</label>
                               <input type="number" class="form-control cantidad" name="CANTIDAD[]" value="${cantidad}" readonly>
                             </div>
-                            <div class="col-3">
+                            <div class="col-4">
                               <label class="form-label">Precio Unitario</label>
                               <input type="text" class="form-control precio_unitario" name="PRECIO_UNITARIO[]" value="${precio}" readonly>
                             </div>
-                            <div class="col-2">
+                            <div class="col-4">
                               <label class="form-label">Precio Total</label>
                               <input type="text" class="form-control precio_total_mr" name="PRECIO_TOTAL_MR[]" value="0" readonly>
                             </div>
                           </div>
 
                           <div class="row mb-2">
-                            <div class="col-2">
+                            <div class="col-3">
                               <label class="form-label">Cantidad Rechazada</label>
                               <input type="number" class="form-control" name="CANTIDAD_RECHAZADA[]" value="0" min="0">
                             </div>
-                            <div class="col-2">
+                            <div class="col-3">
                               <label class="form-label">Cantidad Aceptada</label>
                               <input type="number" class="form-control cantidad_aceptada" name="CANTIDAD_ACEPTADA[]" value="0" min="0" max="${cantidad}">
                             </div>
-                            <div class="col-2">
+                            <div class="col-3">
                               <label class="form-label">Precio Unitario GR</label>
                               <input type="text" class="form-control precio_unitario_gr" name="PRECIO_UNITARIO_GR[]" value="0" readonly>
                             </div>
-                            <div class="col-2">
+                            <div class="col-3">
                               <label class="form-label">Precio Total GR</label>
                               <input type="text" class="form-control precio_total_gr" name="PRECIO_TOTAL_GR[]" value="0" readonly>
                             </div>
@@ -561,8 +723,7 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                               <textarea class="form-control" name="COMENTARIO_DIFERENCIA[]" rows="2"></textarea>
                             </div>
                           </div>
-
-                          <div class="row mb-2">
+                        <div class="row mb-2">
                             <div class="col-6">
                               <label class="form-label">Cumple lo especificado el B o S</label>
                               <select class="form-control" name="CUMPLE[]">
@@ -607,10 +768,46 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
 
                     contenedor.append(bloque);
 
-                    calcularTotales(bloque);
+                  calcularTotales(bloque);
 
+                    // bloque.find(".cantidad_aceptada").on("input", function () {
+                      //   calcularTotales(bloque);
+                     //});
+                  
+                    // Mostrar comentario diferencia si cambia la cantidad aceptada
                     bloque.find(".cantidad_aceptada").on("input", function () {
                         calcularTotales(bloque);
+                        let cant = parseFloat(bloque.find(".cantidad").val()) || 0;
+                        let aceptada = parseFloat($(this).val()) || 0;
+                        bloque.find(".comentario-diferencia").toggle(cant !== aceptada);
+                    });
+
+                    // Mostrar/ocultar inventario
+                    bloque.find(".en_inventario").on("change", function () {
+                        if ($(this).val() === "Sí") {
+                            bloque.find(".bloque-inventario").show();
+                        } else {
+                            bloque.find(".bloque-inventario").hide();
+                            bloque.find(".tipo_inventario").val("");
+                            bloque.find(".inventario").empty().append('<option value="">Seleccione</option>');
+                        }
+                    });
+
+                    // Dependencia tipo → inventario
+                    bloque.find(".tipo_inventario").on("change", function () {
+                        let tipoDesc = $(this).find("option:selected").text();
+                        let inventarioSelect = bloque.find(".inventario");
+                        inventarioSelect.empty().append('<option value="">Seleccione</option>');
+
+                        if (tipoDesc) {
+                            resp.inventario
+                                .filter(inv => inv.TIPO_EQUIPO == tipoDesc)
+                                .forEach(inv => {
+                                    inventarioSelect.append(
+                                        `<option value="${inv.ID_FORMULARIO_INVENTARIO}">${inv.DESCRIPCION_EQUIPO}</option>`
+                                    );
+                                });
+                        }
                     });
                 });
             } else {
@@ -621,6 +818,8 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
         $('#modalGR').modal('show');
     });
 });
+
+
 
 // ==========================
 // Función de cálculo común
@@ -633,18 +832,14 @@ function calcularTotales(bloque) {
     let totalMr = cantidad * precioUnit;
     bloque.find(".precio_total_mr").val(totalMr.toFixed(2));
 
-    // Cantidad Aceptada
     let aceptada = parseFloat(bloque.find(".cantidad_aceptada").val()) || 0;
 
-    // Precio Unitario GR = Precio Total MR ÷ Cantidad Aceptada
     let precioUnitGr = (aceptada > 0) ? (totalMr / aceptada) : 0;
     bloque.find(".precio_unitario_gr").val(precioUnitGr.toFixed(2));
 
-    // Precio Total GR = Cantidad Aceptada × Precio Unitario GR
     let totalGr = aceptada * precioUnitGr;
     bloque.find(".precio_total_gr").val(totalGr.toFixed(2));
 
-    // Mostrar comentario si CANTIDAD ≠ CANTIDAD_ACEPTADA
     if (cantidad !== aceptada) {
         bloque.find(".comentario-diferencia").show();
     } else {

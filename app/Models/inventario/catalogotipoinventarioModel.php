@@ -11,7 +11,6 @@ class catalogotipoinventarioModel extends Model
     protected $table = 'catalogo_tipoinventario';
     protected $fillable = [
         'DESCRIPCION_TIPO',
-        'ABREVIATURA_TIPO',
         'ACTIVO'
     ];
 }

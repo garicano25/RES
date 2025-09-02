@@ -276,6 +276,10 @@
 
 
 
+<script>
+    window.tipoinventario = @json($tipoinventario);
+    window.inventario = @json($inventario);
+</script>
 
 
 
