@@ -2562,7 +2562,7 @@ function eliminarDatoTabla1(data, arregloTable, url) {
 
 function eliminarDatoTabla(data, arregloTable, url) {
   var accion = data.ELIMINAR == 1 ? 'desactivar' : 'activar'; 
-  var accion1 = data.ELIMINAR == 1 ? 'desactivado' : 'actviado'; 
+  var accion1 = data.ELIMINAR == 1 ? 'desactivado' : 'activado'; 
 
   
   alertMensajeConfirm({

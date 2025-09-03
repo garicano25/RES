@@ -76,10 +76,6 @@
         .dropdown-item span.badge {
             font-size: 0.85rem;
         }
-
-
-
-
     </style>
 
 
@@ -122,7 +118,7 @@
                         </ul>
                         @else
                         <script>
-                            window.location.href = "{{ route('login') }}"; 
+                            window.location.href = "{{ route('login') }}";
                         </script>
                         @endauth
                     </li>
@@ -328,7 +324,7 @@
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: 8px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#"
-                                    style="color: #fff; font-weight: bold; text-decoration: none;" 
+                                    style="color: #fff; font-weight: bold; text-decoration: none;"
                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
                                     <span class="d-lg-none">Recepción de bienes y/o servicios - GR</span>
@@ -347,7 +343,7 @@
 
                                     {{-- Opción visible para todos los que ven el menú --}}
                                     <li>
-                                        <a class="dropdown-item" href="{{ url('/') }}">
+                                        <a class="dropdown-item" href="{{ url('/Vo.Bo_GRusuario') }}">
                                             Vo.Bo. de usuario de B.y.S
                                         </a>
                                     </li>
@@ -367,23 +363,23 @@
                                     <span class="d-none d-lg-inline">Catálogos</span>
                                 </a>
                                 <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{url('/Catálogos_proveedores')}}">Catálogos de proveedores</a>
+                                    <li><a class="dropdown-item" href="{{url('/Catálogos_proveedores')}}">Catálogos de proveedores</a>
+                                    </li>
+
+                                </ul>
                             </li>
-
                         </ul>
-                        </li>
+                        @endif
+
+
+
                     </ul>
-                    @endif
-
-
-
-                </ul>
 
 
                 </ul>
             </div>
         </div>
-    </nav> 
+    </nav>
 
 
 
@@ -396,9 +392,9 @@
                 title: 'Acceso Denegado',
                 text: 'No tienes acceso a este módulo.',
                 confirmButtonText: 'Entendido',
-                background: '#f8d7da', 
+                background: '#f8d7da',
                 customClass: {
-                    popup: 'swal-wide' 
+                    popup: 'swal-wide'
                 }
             });
 
@@ -468,7 +464,7 @@
     <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
 
     <!-- Funciones generales -->
-    <script src="/assets/js_sitio/funciones.js?v=5.2"></script>
+    <script src="/assets/js_sitio/funciones.js?v=5.3"></script>
 
     <script>
         $(document).ready(function() {
@@ -555,6 +551,11 @@
 
     @if(request()->is('Bitácora-GR'))
     <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.18"></script>
+    @endif
+
+
+    @if(request()->is('Vo.Bo_GRusuario'))
+    <script src="/assets/js_sitio/requisiciongr/vobogrusuario.js"></script>
     @endif
 
 
