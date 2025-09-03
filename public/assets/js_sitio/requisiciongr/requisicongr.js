@@ -519,26 +519,26 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
 
 
 function calcularTotales(bloque) {
-    let cantidad = parseFloat(bloque.find(".cantidad").val()) || 0;
-    let precioUnit = parseFloat(bloque.find(".precio_unitario").val()) || 0;
+      let cantidad = parseFloat(bloque.find(".cantidad").val()) || 0;
+      let precioUnit = parseFloat(bloque.find(".precio_unitario").val()) || 0;
 
-   
-    let totalMr = cantidad * precioUnit;
-    bloque.find(".precio_total_mr").val(totalMr.toFixed(2));
     
-    let aceptada = parseFloat(bloque.find(".cantidad_aceptada").val()) || 0;
+      let totalMr = cantidad * precioUnit;
+      bloque.find(".precio_total_mr").val(totalMr.toFixed(2));
+      
+      let aceptada = parseFloat(bloque.find(".cantidad_aceptada").val()) || 0;
 
-    let precioUnitGr = (aceptada > 0) ? (totalMr / aceptada) : 0;
-    bloque.find(".precio_unitario_gr").val(precioUnitGr.toFixed(2));
+      let precioUnitGr = (aceptada > 0) ? (totalMr / aceptada) : 0;
+      bloque.find(".precio_unitario_gr").val(precioUnitGr.toFixed(2));
 
-    let totalGr = aceptada * precioUnitGr;
-    bloque.find(".precio_total_gr").val(totalGr.toFixed(2));
-
-    if (cantidad !== aceptada) {
-        bloque.find(".comentario-diferencia").show();
-    } else {
-        bloque.find(".comentario-diferencia").hide();
-    }
+      let totalGr = aceptada * precioUnitGr;
+      bloque.find(".precio_total_gr").val(totalGr.toFixed(2));
+  
+      if (cantidad !== aceptada) {
+          bloque.find(".comentario-diferencia").show();
+      } else {
+          bloque.find(".comentario-diferencia").hide();
+      }
 }
 
 
