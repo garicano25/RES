@@ -550,12 +550,12 @@
     @endif
 
     @if(request()->is('Bitácora-GR'))
-    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.19"></script>
+    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.20"></script>
     @endif
 
 
     @if(request()->is('Vo.Bo_GRusuario'))
-    <script src="/assets/js_sitio/requisiciongr/vobogrusuario.js"></script>
+    <script src="/assets/js_sitio/requisiciongr/vobogrusuario.jsjs?v=1.0"></script>
     @endif
 
 

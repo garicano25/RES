@@ -163,7 +163,7 @@
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <form method="post" enctype="multipart/form-data" id="formulariorecepciongr" style="background-color: #ffffff;">
-                <div class="modal-header bg-dark text-white">
+                <div class="modal-header bg-white text-dark">
                     <h5 class="modal-title">Detalle de GR</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -219,15 +219,22 @@
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label">No. recepción de orden - GR</label>
                             <input type="text" class="form-control" id="NO_RECEPCION" name="NO_RECEPCION">
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label">Fecha de emisión</label>
                             <div class="input-group">
                                 <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_ACREDITACION" name="DESDE_ACREDITACION">
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Fecha de entrega GR</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ENTREGA_GR" name="FECHA_ENTREGA_GR">
                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                             </div>
                         </div>
@@ -256,35 +263,62 @@
 
                     </div>
 
-                        <div class="row mb-3">
+                    <div class="row mb-3" id="VISTOBOUSUARIO" style="display: none;">
 
-                            <div class="col-md-6">
-                                <label class="form-label">Fecha Vo.Bo usuario</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VOUSUARIO" name="FECHA_VOUSUARIO">
-                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Fecha Vo.Bo usuario</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VOUSUARIO" name="FECHA_VOUSUARIO">
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                             </div>
-                            <div class="col-md-6">
-                                <label>Estado de Vo.Bo </label>
-                                <div id="estado-container" class="p-2 rounded">
-                                    <select class="form-control" id="VO_BO_USUARIO" name="VO_BO_USUARIO">
-                                        <option value="" selected disabled>Seleccione una opción</option>
-                                        <option value="Aprobada">Aprobada</option>
-                                        <option value="Rechazada">Rechazada</option>
-                                    </select>
-                                </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Estado de Vo.Bo </label>
+                            <div id="estado-container" class="p-2 rounded">
+                                <select class="form-control" id="VO_BO_USUARIO" name="VO_BO_USUARIO">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="Aprobada">Aprobada</option>
+                                    <option value="Rechazada">Rechazada</option>
+                                </select>
                             </div>
-
-
-
                         </div>
 
+
+                        <div class="col-md-6">
+                            <label>GR parcial </label>
+                            <div class="p-2 rounded">
+                                <select class="form-control" id="GR_PARCIAL" name="GR_PARCIAL">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="Sí">Sí</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-md-6">
+                            <label>Finalizar GR </label>
+                            <div class="p-2 rounded">
+                                <select class="form-control" id="FINALIZAR_GR" name="FINALIZAR_GR">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="Sí">Sí</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+
+
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-success" id="btnGuardarGR">Guardar</button>
-                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-success" id="btnGuardarGR">Guardar</button>
+                </div>
 
             </form>
         </div>
@@ -298,6 +332,9 @@
 <script>
     window.tipoinventario = @json($tipoinventario);
     window.inventario = @json($inventario);
+
+    window.proveedoresOficiales = @json($proveedoresOficiales);
+    window.proveedoresTemporales = @json($proveedoresTemporales);
 </script>
 
 

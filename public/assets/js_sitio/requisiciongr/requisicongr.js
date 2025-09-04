@@ -132,27 +132,688 @@ $(document).on('click', '.btn-ver-mas-materiales', function() {
 
 
 
+// $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
+//     var data = Tablabitacoragr.row($(this).parents('tr')).data();
+
+//     let requestData = {
+//         NO_MR: data.NO_MR ?? '',
+//         NO_PO: data.NO_PO ?? '',
+//         PROVEEDOR: data.PROVEEDOR_KEY ?? '',
+//         _token: $('input[name="_token"]').val()
+//     };
+
+//     $.post('/consultar-gr', requestData, function (resp) {
+//         let contenedor = $("#modal_bien_servicio");
+//         contenedor.empty();
+
+//         // ==========================
+//         // Caso: YA EXISTE GR
+//         // ==========================
+//         if (resp.existe) {
+//             let cab = resp.cabecera;
+
+//             $('#ID_GR').val(cab.ID_GR ?? '');
+//             $('#modal_no_mr').val(cab.NO_MR);
+//             $('#modal_fecha_mr').val(data.FECHA_APRUEBA_MR ?? '');
+//             $('#modal_no_po').val(cab.NO_PO ?? '');
+//             $('#modal_fecha_po').val(data.FECHA_APROBACION_PO ?? '');
+//             $('#PROVEEDOR_EQUIPO').val(cab.PROVEEDOR_KEY ?? '');
+//             $('#modal_fecha_entrega').val(data.FECHA_ENTREGA_PO ?? '');
+//             $('#modal_usuario_nombre').val(cab.USUARIO_SOLICITO ?? '');
+//             $('#DESDE_ACREDITACION').val(cab.FECHA_EMISION ?? '');
+//             $('#NO_RECEPCION').val(cab.NO_RECEPCION ?? '');
+//             $('#MANDAR_USUARIO_VOBO').val(cab.MANDAR_USUARIO_VOBO ?? '');
+//             $('#FECHA_VOUSUARIO').val(cab.FECHA_VOUSUARIO ?? '');
+//             $('#VO_BO_USUARIO').val(cab.VO_BO_USUARIO ?? '');
+
+
+
+//             resp.detalle.forEach(det => {
+//                 let bloque = $(`
+//                     <div class="border rounded p-3 mb-3 bg-light">
+//                         <div class="row mb-2">
+//                           <div class="col-3 mt-2">
+//                             <label class="form-label">Descripción</label>
+//                             <textarea class="form-control" name="DESCRIPCION[]" rows="2" >${det.DESCRIPCION}</textarea>
+//                           </div>
+
+//                           <div class="col-3 mt-2">
+//                             <label class="form-label">¿Está en inventario?</label>
+//                             <select class="form-control en_inventario" name="EN_INVENTARIO[]">
+//                               <option value="">Seleccione</option>
+//                               <option value="Sí" ${det.EN_INVENTARIO=="Sí"?"selected":""}>Sí</option>
+//                               <option value="No" ${det.EN_INVENTARIO == "No" ? "selected" : ""}>No</option>
+                              
+//                             </select>
+//                           </div>
+//                           <div class="col-6 bloque-inventario" style="display:${det.INVENTARIO_ID ? 'block' : 'none'};">
+//                             <div class="row">
+//                               <div class="col-6 mt-2">
+//                                 <label class="form-label">Tipo Inventario</label>
+//                                 <select class="form-control tipo_inventario" name="TIPO_INVENTARIO[]">
+//                                   <option value="">Seleccione</option>
+//                                   ${resp.tipoinventario ? resp.tipoinventario.map(t =>
+//                                     `<option value="${t.ID_CATALOGO_TIPOINVENTARIO}" ${det.TIPO_EQUIPO == t.DESCRIPCION_TIPO ? "selected" : ""}>${t.DESCRIPCION_TIPO}</option>`
+//                                   ).join("") : ""}
+//                                 </select>
+//                               </div>
+//                               <div class="col-6 mt-2">
+//                                 <label class="form-label">Inventario</label>
+//                                 <select class="form-control inventario" name="INVENTARIO[]">
+//                                   <option value="">Seleccione</option>
+//                                   ${resp.inventario ? resp.inventario
+//                                     .filter(inv => inv.TIPO_EQUIPO == det.TIPO_EQUIPO)
+//                                     .map(inv =>
+//                                       `<option value="${inv.ID_FORMULARIO_INVENTARIO}" ${det.INVENTARIO_ID == inv.ID_FORMULARIO_INVENTARIO ? "selected" : ""}>${inv.DESCRIPCION_EQUIPO}</option>`
+//                                     ).join("") : ""}
+//                                 </select>
+//                               </div>
+//                             </div>
+//                           </div>
+//                           <div class="col-4 mt-2">
+//                             <label class="form-label">Cantidad</label>
+//                             <input type="number" class="form-control cantidad" name="CANTIDAD[]" value="${det.CANTIDAD}" readonly>
+//                           </div>
+//                           <div class="col-4 mt-2">
+//                             <label class="form-label">Precio Unitario</label>
+//                             <input type="text" class="form-control precio_unitario" name="PRECIO_UNITARIO[]" value="${det.PRECIO_UNITARIO}" readonly>
+//                           </div>
+//                           <div class="col-4 mt-2">
+//                             <label class="form-label">Precio Total</label>
+//                             <input type="text" class="form-control precio_total_mr" name="PRECIO_TOTAL_MR[]" value="${det.PRECIO_TOTAL_MR ?? 0}" readonly>
+//                           </div>
+//                         </div>
+
+//                         <div class="row mb-2">
+//                           <div class="col-3 mt-2">
+//                             <label class="form-label">Cantidad Rechazada</label>
+//                             <input type="number" class="form-control" name="CANTIDAD_RECHAZADA[]" value="${det.CANTIDAD_RECHAZADA}">
+//                           </div>
+//                           <div class="col-3 mt-2">
+//                             <label class="form-label">Cantidad Aceptada</label>
+//                             <input type="number" class="form-control cantidad_aceptada" name="CANTIDAD_ACEPTADA[]" value="${det.CANTIDAD_ACEPTADA}">
+//                           </div>
+//                           <div class="col-3 mt-2">
+//                             <label class="form-label">Precio Unitario GR</label>
+//                             <input type="text" class="form-control precio_unitario_gr" name="PRECIO_UNITARIO_GR[]" value="${det.PRECIO_UNITARIO_GR ?? 0}" readonly>
+//                           </div>
+//                           <div class="col-3 mt-2">
+//                             <label class="form-label">Precio Total GR</label>
+//                             <input type="text" class="form-control precio_total_gr" name="PRECIO_TOTAL_GR[]" value="${det.PRECIO_TOTAL_GR ?? 0}" readonly>
+//                           </div>
+//                         </div>
+
+//                         <div class="row mb-2 comentario-diferencia" style="display:${det.CANTIDAD != det.CANTIDAD_ACEPTADA ? 'block' : 'none'};">
+//                           <div class="col-12 mt-2">
+//                             <label class="form-label">Comentario por diferencia en cantidad</label>
+//                             <textarea class="form-control" name="COMENTARIO_DIFERENCIA[]" rows="2">${det.COMENTARIO_DIFERENCIA ?? ""}</textarea>
+//                           </div>
+//                         </div>
+//                       <div class="row mb-2">
+//                           <div class="col-6 mt-2">
+//                             <label class="form-label">Cumple</label>
+//                             <select class="form-control" name="CUMPLE[]">
+//                               <option value="">Seleccione</option>
+//                               <option value="Sí" ${det.CUMPLE=="Sí"?"selected":""}>Sí</option>
+//                               <option value="No" ${det.CUMPLE=="No"?"selected":""}>No</option>
+//                             </select>
+//                           </div>
+//                           <div class="col-6 mt-2">
+//                             <label class="form-label">Comentario especificación</label>
+//                             <textarea class="form-control" name="COMENTARIO_CUMPLE[]" rows="2">${det.COMENTARIO_CUMPLE??""}</textarea>
+//                           </div>
+//                         </div>
+
+//                         <div class="row mb-2">
+//                           <div class="col-6 mt-2">
+//                             <label class="form-label">Estado</label>
+//                             <select class="form-control" name="ESTADO_BS[]">
+//                               <option value="">Seleccione</option>
+//                               <option value="BUEN_ESTADO" ${det.ESTADO_BS=="BUEN_ESTADO"?"selected":""}>En buen estado</option>
+//                               <option value="MAL_ESTADO" ${det.ESTADO_BS=="MAL_ESTADO"?"selected":""}>Mal estado</option>
+//                             </select>
+//                           </div>
+//                           <div class="col-6 mt-2">
+//                             <label class="form-label">Comentario Estado</label>
+//                             <textarea class="form-control" name="COMENTARIO_ESTADO[]" rows="2">${det.COMENTARIO_ESTADO??""}</textarea>
+//                           </div>
+//                         </div>
+
+//                           <div class="row mb-3">
+//                           <div class="col-12 text-center">
+//                             <h4>Vo.Bo usuario</h4>
+//                           </div>
+//                         </div>
+//                           <div class="row mb-2">
+//                           <div class="col-2 mt-2">
+//                             <label class="form-label">Cantidad aceptada por usuario</label>
+//                             <input type="number" class="form-control" name="CANTIDAD_ACEPTADA_USUARIO[]" value="${det.CANTIDAD_ACEPTADA_USUARIO}">
+//                           </div>
+//                           <div class="col-2 mt-2">
+//                             <label class="form-label">Cumple lo especificado usuario</label>
+//                             <select class="form-control" name="CUMPLE_ESPECIFICADO_USUARIO[]">
+//                               <option value="">Seleccione</option>
+//                               <option value="Sí" ${det.CUMPLE_ESPECIFICADO_USUARIO=="Sí"?"selected":""}>Sí</option>
+//                               <option value="No" ${det.CUMPLE_ESPECIFICADO_USUARIO=="No"?"selected":""}>No</option>
+//                             </select>
+//                           </div>
+//                           <div class="col-3 mt-2">
+//                             <label class="form-label">Comentario especificación usuario</label>
+//                             <textarea class="form-control" name="COMENTARIO_CUMPLE_USUARIO[]" rows="2">${det.COMENTARIO_CUMPLE_USUARIO??""}</textarea>
+//                           </div>
+//                          <div class="col-2 mt-2">
+//                             <label class="form-label">Estado del B o S usuario</label>
+//                             <select class="form-control" name="ESTADO_BS_USUARIO[]">
+//                               <option value="">Seleccione</option>
+//                                  <option value="BUEN_ESTADO" ${det.ESTADO_BS_USUARIO=="BUEN_ESTADO"?"selected":""}>En buen estado</option>
+//                               <option value="MAL_ESTADO" ${det.ESTADO_BS_USUARIO=="MAL_ESTADO"?"selected":""}>Mal estado</option>
+//                             </select>
+//                           </div>
+
+//                           <div class="col-3 mt-2">
+//                             <label class="form-label">Comentario estado usuario</label>
+//                             <textarea class="form-control" name="COMENTARIO_ESTADO_USUARIO[]" rows="2">${det.COMENTARIO_ESTADO_USUARIO??""}</textarea>
+//                           </div>
+//                         </div>
+
+
+
+                        
+
+//                         <div class="row mb-2">
+//                           <div class="col-12 mt-2">
+//                             <label class="form-label">Tipo</label>
+//                             <select class="form-control" name="TIPO_BS[]">
+//                               <option value="">Seleccione</option>
+//                               <option value="Bien" ${det.TIPO_BS=="Bien"?"selected":""}>Bien</option>
+//                               <option value="Servicio" ${det.TIPO_BS=="Servicio"?"selected":""}>Servicio</option>
+//                             </select>
+//                           </div>
+//                         </div>
+//                     </div>
+//                 `);
+
+//                 contenedor.append(bloque);
+
+//                 calcularTotales(bloque);
+
+//                 bloque.find(".cantidad_aceptada").on("input", function () {
+//                     calcularTotales(bloque);
+//                     let cant = parseFloat(bloque.find(".cantidad").val()) || 0;
+//                     let aceptada = parseFloat($(this).val()) || 0;
+//                     bloque.find(".comentario-diferencia").toggle(cant !== aceptada);
+//                 });
+
+//                 bloque.find(".en_inventario").on("change", function () {
+//                     if ($(this).val() === "Sí") {
+//                         bloque.find(".bloque-inventario").show();
+//                     } else {
+//                         bloque.find(".bloque-inventario").hide();
+//                         bloque.find(".tipo_inventario").val("");
+//                         bloque.find(".inventario").empty().append('<option value="">Seleccione</option>');
+//                     }
+//                 });
+
+//                 bloque.find(".tipo_inventario").on("change", function () {
+//                     let tipoDesc = $(this).find("option:selected").text();
+//                     let inventarioSelect = bloque.find(".inventario");
+//                     inventarioSelect.empty().append('<option value="">Seleccione</option>');
+
+//                     if (tipoDesc) {
+//                         resp.inventario
+//                             .filter(inv => inv.TIPO_EQUIPO == tipoDesc)
+//                             .forEach(inv => {
+//                                 inventarioSelect.append(
+//                                     `<option value="${inv.ID_FORMULARIO_INVENTARIO}">${inv.DESCRIPCION_EQUIPO}</option>`
+//                                 );
+//                             });
+//                     }
+//                 });
+//             });
+
+          
+//               $('#VISTOBOUSUARIO').show();
+          
+          
+          
+//         // ==========================
+//         // Caso: NO EXISTE GR
+//         // ==========================
+//         } else {
+//             $('#ID_GR').val("");
+//             $('#modal_no_mr').val(data.NO_MR ?? '');
+//             $('#modal_fecha_mr').val(data.FECHA_APRUEBA_MR ?? '');
+//             $('#modal_no_po').val(data.NO_PO ?? '');
+//             $('#modal_fecha_po').val(data.FECHA_APROBACION_PO ?? '');
+//             $('#PROVEEDOR_EQUIPO').val(data.PROVEEDOR_KEY ?? '');
+//             $('#modal_fecha_entrega').val(data.FECHA_ENTREGA_PO ?? '');
+//             $('#modal_usuario_nombre').val(data.USUARIO_NOMBRE ?? '');
+
+//             if (data.BIEN_SERVICIO) {
+//                 $(data.BIEN_SERVICIO).each(function (index) {
+//                     const texto = $(this).text().trim();
+//                     let limpio = texto.replace(/^•\s*/, "");
+//                     let partes = limpio.split(" - $ ");
+//                     let descYcantidad = partes[0];
+//                     let precio = partes[1] ?? "";
+//                     let match = descYcantidad.match(/^(.*)\((\d+)\)$/);
+//                     let descripcion = match ? match[1].trim() : descYcantidad.trim();
+//                     let cantidad = match ? match[2] : 0;
+
+//                     let bloque = $(`
+//                         <div class="border rounded p-3 mb-3 bg-light">
+//                           <div class="row mb-2">
+//                             <div class="col-3 mt-2">
+//                               <label class="form-label">Descripción</label>
+//                               <textarea class="form-control" name="DESCRIPCION[]" rows="2" >${escapeHtml(descripcion)}</textarea>
+//                             </div>
+
+//                             <div class="col-3 mt-2">
+//                               <label class="form-label">¿Está en inventario?</label>
+//                               <select class="form-control en_inventario" name="EN_INVENTARIO[]">
+//                                 <option value="" >Seleccione</option>
+//                                 <option value="Sí">Sí</option>
+//                                 <option value="No">No</option>
+//                               </select>
+//                             </div>
+//                               <div class="col-6 bloque-inventario" style="display:none;">
+//                                 <div class="row">
+//                                   <div class="col-6 mt-2">
+//                                     <label class="form-label">Tipo Inventario</label>
+//                                     <select class="form-control tipo_inventario" name="TIPO_INVENTARIO[]">
+//                                       <option value="">Seleccione</option>
+//                                       ${resp.tipoinventario.map(t =>
+//                                         `<option value="${t.ID_CATALOGO_TIPOINVENTARIO}">${t.DESCRIPCION_TIPO}</option>`
+//                                       ).join("")}
+//                                     </select>
+//                                   </div>
+//                                   <div class="col-6 mt-2">
+//                                     <label class="form-label">Inventario</label>
+//                                     <select class="form-control inventario" name="INVENTARIO[]">
+//                                       <option value="">Seleccione</option>
+//                                     </select>
+//                                   </div>
+//                                 </div>
+//                               </div>
+//                             <div class="col-4 mt-2">
+//                               <label class="form-label">Cantidad</label>
+//                               <input type="number" class="form-control cantidad" name="CANTIDAD[]" value="${cantidad}" readonly>
+//                             </div>
+//                             <div class="col-4 mt-2">
+//                               <label class="form-label">Precio Unitario</label>
+//                               <input type="text" class="form-control precio_unitario" name="PRECIO_UNITARIO[]" value="${precio}" readonly>
+//                             </div>
+//                             <div class="col-4 mt-2">
+//                               <label class="form-label">Precio Total</label>
+//                               <input type="text" class="form-control precio_total_mr" name="PRECIO_TOTAL_MR[]" value="0" readonly>
+//                             </div>
+//                           </div>
+
+//                           <div class="row mb-2">
+//                             <div class="col-3 mt-2">
+//                               <label class="form-label">Cantidad Rechazada</label>
+//                               <input type="number" class="form-control" name="CANTIDAD_RECHAZADA[]" value="0" min="0">
+//                             </div>
+//                             <div class="col-3 mt-2">
+//                               <label class="form-label">Cantidad Aceptada</label>
+//                               <input type="number" class="form-control cantidad_aceptada" name="CANTIDAD_ACEPTADA[]" value="0" min="0" max="${cantidad}">
+//                             </div>
+//                             <div class="col-3 mt-2">
+//                               <label class="form-label">Precio Unitario GR</label>
+//                               <input type="text" class="form-control precio_unitario_gr" name="PRECIO_UNITARIO_GR[]" value="0" readonly>
+//                             </div>
+//                             <div class="col-3 mt-2">
+//                               <label class="form-label">Precio Total GR</label>
+//                               <input type="text" class="form-control precio_total_gr" name="PRECIO_TOTAL_GR[]" value="0" readonly>
+//                             </div>
+//                           </div>
+
+//                           <div class="row mb-2 comentario-diferencia" style="display:none;">
+//                             <div class="col-12 mt-2">
+//                               <label class="form-label">Comentario por diferencia en cantidad</label>
+//                               <textarea class="form-control" name="COMENTARIO_DIFERENCIA[]" rows="2"></textarea>
+//                             </div>
+//                           </div>
+
+//                         <div class="row mb-2">
+//                             <div class="col-6 mt-2">
+//                               <label class="form-label">Cumple lo especificado el B o S</label>
+//                               <select class="form-control" name="CUMPLE[]">
+//                                 <option value="">Seleccione</option>
+//                                 <option value="Sí">Sí</option>
+//                                 <option value="No">No</option>
+//                               </select>
+//                             </div>
+//                             <div class="col-6 mt-2">
+//                               <label class="form-label">Comentario especificación</label>
+//                               <textarea class="form-control" name="COMENTARIO_CUMPLE[]" rows="2"></textarea>
+//                             </div>
+//                           </div>
+
+//                           <div class="row mb-2">
+//                             <div class="col-6 mt-2">
+//                               <label class="form-label">Estado del B o S</label>
+//                               <select class="form-control" name="ESTADO_BS[]">
+//                                 <option value="">Seleccione</option>
+//                                 <option value="BUEN_ESTADO">En buen estado</option>
+//                                 <option value="MAL_ESTADO">Mal estado</option>
+//                               </select>
+//                             </div>
+//                             <div class="col-6 mt-2">
+//                               <label class="form-label">Comentario Estado</label>
+//                               <textarea class="form-control" name="COMENTARIO_ESTADO[]" rows="2"></textarea>
+//                             </div>
+//                           </div>
+
+//                           <div class="row mb-2">
+//                             <div class="col-12 mt-2">
+//                               <label class="form-label">Tipo</label>
+//                               <select class="form-control" name="TIPO_BS[]">
+//                                 <option value="">Seleccione</option>
+//                                 <option value="Bien">Bien</option>
+//                                 <option value="Servicio">Servicio</option>
+//                               </select>
+//                             </div>
+//                           </div>
+//                         </div>
+//                     `);
+
+//                     contenedor.append(bloque);
+
+//                   calcularTotales(bloque);
+
+                
+//                     bloque.find(".cantidad_aceptada").on("input", function () {
+//                         calcularTotales(bloque);
+//                         let cant = parseFloat(bloque.find(".cantidad").val()) || 0;
+//                         let aceptada = parseFloat($(this).val()) || 0;
+//                         bloque.find(".comentario-diferencia").toggle(cant !== aceptada);
+//                     });
+
+//                     bloque.find(".en_inventario").on("change", function () {
+//                         if ($(this).val() === "Sí") {
+//                             bloque.find(".bloque-inventario").show();
+//                         } else {
+//                             bloque.find(".bloque-inventario").hide();
+//                             bloque.find(".tipo_inventario").val("");
+//                             bloque.find(".inventario").empty().append('<option value="">Seleccione</option>');
+//                         }
+//                     });
+
+//                     bloque.find(".tipo_inventario").on("change", function () {
+//                         let tipoDesc = $(this).find("option:selected").text();
+//                         let inventarioSelect = bloque.find(".inventario");
+//                         inventarioSelect.empty().append('<option value="">Seleccione</option>');
+
+//                         if (tipoDesc) {
+//                             resp.inventario
+//                                 .filter(inv => inv.TIPO_EQUIPO == tipoDesc)
+//                                 .forEach(inv => {
+//                                     inventarioSelect.append(
+//                                         `<option value="${inv.ID_FORMULARIO_INVENTARIO}">${inv.DESCRIPCION_EQUIPO}</option>`
+//                                     );
+//                                 });
+//                         }
+//                     });
+//                 });
+//             } else {
+//                 contenedor.html('<div class="text-muted">No hay bienes o servicios</div>');
+//           }
+          
+
+//               $('#VISTOBOUSUARIO').hide();
+
+//         }
+
+//         $('#modalGR').modal('show');
+//     });
+// });
+
+
+
+
+
+
 $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
-    var data = Tablabitacoragr.row($(this).parents('tr')).data();
+  var data = Tablabitacoragr.row($(this).parents('tr')).data();
 
-    let requestData = {
-        NO_MR: data.NO_MR ?? '',
-        NO_PO: data.NO_PO ?? '',
-        PROVEEDOR: data.PROVEEDOR_KEY ?? '',
-        _token: $('input[name="_token"]').val()
-    };
+  let requestData = {
+    NO_MR: data.NO_MR ?? '',
+    NO_PO: data.NO_PO ?? '',
+    PROVEEDOR: data.PROVEEDOR_KEY ?? '',
+    _token: $('input[name="_token"]').val()
+  };
 
-    $.post('/consultar-gr', requestData, function (resp) {
-        let contenedor = $("#modal_bien_servicio");
-        contenedor.empty();
+  $.post('/consultar-gr', requestData, function (resp) {
+    let contenedor = $("#modal_bien_servicio");
+    contenedor.empty();
 
-        // ==========================
-        // Caso: YA EXISTE GR
-        // ==========================
-        if (resp.existe) {
-            let cab = resp.cabecera;
+      
+      // ==========================
+      // Caso: YA EXISTE GR
+      // ==========================
+if (resp.existe) {
+    // ==========================
+    // VARIAS GR (Parciales)
+    // ==========================
+    if (resp.grs && Object.keys(resp.grs).length > 1) {
+        let contenedor = $("#formulariorecepciongr .modal-body");
+        contenedor.empty(); 
 
-            $('#ID_GR').val(cab.ID_GR ?? '');
+        let tabs = `<ul class="nav nav-tabs" id="tabsGR" role="tablist">`;
+        let panes = `<div class="tab-content" id="tabsGRContent">`;
+
+        let idx = 0;
+        for (let id in resp.grs) {
+            let grupo   = resp.grs[id] || {};
+            let cab     = grupo.cabecera || {};
+            let detalle = grupo.detalle || [];
+
+            let active = idx === 0 ? 'active' : '';
+            let show   = idx === 0 ? 'show active' : '';
+
+            tabs += `
+              <li class="nav-item" role="presentation">
+                <button class="nav-link ${active}" id="tab-${id}" data-bs-toggle="tab" 
+                        data-bs-target="#pane-${id}" type="button" role="tab">
+                  GR #${cab.ID_GR} ${cab.GR_PARCIAL === "Sí" ? "(Parcial)" : ""}
+                </button>
+              </li>
+            `;
+
+          panes += `
+             
+          
+              <div class="tab-pane fade ${show}" id="pane-${id}" role="tabpanel">
+                <form class="form-gr" data-id="${cab.ID_GR}">
+                
+               
+                  
+                  <input type="hidden" name="ID_GR[]" value="${cab.ID_GR}">
+
+
+                  <!-- Cabecera -->
+                  <div class="row mb-3">
+                      <div class="col-md-3 mt-2">
+                          <label>No. MR</label>
+                          <input type="text" class="form-control" value="${cab.NO_MR ?? ''}"  name="modal_no_mr" readonly>
+                      </div>
+                      <div class="col-md-3 mt-2">
+                          <label>Fecha Aprobación MR</label>
+                          <input type="text" class="form-control" value="${data.FECHA_APRUEBA_MR ?? ''}"  name="modal_fecha_mr"  readonly>
+                      </div>
+                      <div class="col-md-3 mt-2">
+                          <label>No. PO</label>
+                          <input type="text" class="form-control" value="${cab.NO_PO ?? ''}"  name="modal_no_po" readonly>
+                      </div>
+                      <div class="col-md-3 mt-2">
+                          <label>Fecha Aprobación PO</label>
+                          <input type="text" class="form-control" value="${data.FECHA_APROBACION_PO ?? ''}"  name="modal_fecha_po" readonly>
+                      </div>
+                  </div>
+
+                  <div class="row mb-3">
+                      <div class="col-md-6">
+                          <label>Proveedor</label>
+
+                          <select class="form-select text-center" name="PROVEEDOR_EQUIPO">
+                              <option value="">Seleccionar proveedor</option>
+                              <optgroup label="Proveedor oficial">
+                                  ${window.proveedoresOficiales.map(p => `
+                                      <option value="${p.RFC_ALTA}" ${cab.PROVEEDOR_KEY === p.RFC_ALTA ? "selected" : ""}>
+                                          ${p.RAZON_SOCIAL_ALTA} (${p.RFC_ALTA})
+                                      </option>
+                                  `).join("")}
+                              </optgroup>
+                              <optgroup label="Proveedores temporales">
+                                  ${window.proveedoresTemporales.map(p => `
+                                      <option value="${p.RAZON_PROVEEDORTEMP}" ${cab.PROVEEDOR_KEY === p.RAZON_PROVEEDORTEMP ? "selected" : ""}>
+                                          ${p.RAZON_PROVEEDORTEMP} (${p.NOMBRE_PROVEEDORTEMP})
+                                      </option>
+                                  `).join("")}
+                              </optgroup>
+                          </select>
+
+
+
+                      </div>
+                      <div class="col-md-6">
+                          <label>Fecha Entrega PO</label>
+                          <input type="text" class="form-control" value="${data.FECHA_ENTREGA_PO ?? ''}" name="modal_fecha_entrega" >
+                      </div>
+                  </div>
+
+                  <div class="row mb-3">
+                      <div class="col-md-4">
+                          <label>No. Recepción GR</label>
+                          <input type="text" class="form-control" value="${cab.NO_RECEPCION ?? ''}"  name="NO_RECEPCION">
+                      </div>
+                      <div class="col-md-4">
+                          <label>Fecha de emisión</label>
+                           <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" value="${cab.FECHA_EMISION ?? ''}"  name="DESDE_ACREDITACION" >
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                            </div>
+                      </div>
+
+                       <div class="col-md-4">
+                            <label>Fecha de entrega GR</label>
+                           <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" value="${cab.FECHA_ENTREGA_GR ?? ''}"  name="FECHA_ENTREGA_GR" >
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                            </div>
+                      </div>
+                  </div>
+
+
+                  <hr>
+                  <h5 class="mb-3 text-center">Bienes o Servicios (B o S)</h5>
+                  <div class="detalles-gr"></div>
+                  <hr>
+
+                  <div class="row mb-3">
+                      <div class="col-md-6">
+                          <label>Usuario que solicitó</label>
+                          <input type="text" class="form-control" value="${cab.USUARIO_SOLICITO ?? ''}"  name="modal_usuario_nombre" readonly>
+                      </div>
+                      <div class="col-md-6">
+
+                       <label>Mandar a Vo.Bo usuario</label>
+                          <select class="form-control" name="MANDAR_USUARIO_VOBO" 
+                              <option value="">Seleccione</option>
+                                  <option value="">Seleccione</option>
+                                <option value="Sí" ${cab.MANDAR_USUARIO_VOBO === "Sí" ? "selected" : ""}>Sí</option>
+                              <option value="No" ${cab.MANDAR_USUARIO_VOBO === "No" ? "selected" : ""}>No</option>
+                          </select>
+
+
+                         
+                      </div>
+                  </div>
+
+
+                  
+                  <!-- Mandar a VoBo y Parcial -->
+                  <div class="row mb-3">
+                      <div class="col-md-6">
+                          <label>Estado Vo.Bo usuario</label>
+                          <select class="form-control" name="VO_BO_USUARIO">
+                              <option value="">Seleccione</option>
+                              <option value="Aprobada" ${cab.VO_BO_USUARIO === "Aprobada" ? "selected" : ""}>Aprobada</option>
+                              <option value="Rechazada" ${cab.VO_BO_USUARIO === "Rechazada" ? "selected" : ""}>Rechazada</option>
+                          </select>
+                      </div>
+
+
+                      <div class="col-md-6">
+                            <label class="form-label">Fecha Vo.Bo usuario</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" value="${cab.FECHA_VOUSUARIO ?? ''}" name="FECHA_VOUSUARIO">
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                            </div>
+                        </div>
+
+
+                      <div class="col-md-12">
+                          <label>GR Parcial</label>
+                          <select class="form-control" name="GR_PARCIAL">
+                              <option value="">Seleccione</option>
+                              <option value="Sí" ${cab.GR_PARCIAL === "Sí" ? "selected" : ""}>Sí</option>
+                              <option value="No" ${cab.GR_PARCIAL === "No" ? "selected" : ""}>No</option>
+                          </select>
+                      </div>
+                  </div>
+
+
+                </form>
+              </div>
+            `;
+
+            idx++;
+
+  
+          
+
+         setTimeout(() => {
+            let detalleCont = $(`#pane-${id} .detalles-gr`);
+            detalle.forEach(det => {
+                let bloque = crearBloqueDetalle(det, resp);
+                detalleCont.append(bloque);
+            });
+
+            // 🔹 Insertar token CSRF en el form de este tab
+            let $form = $(`#pane-${id} form.form-gr`);
+            if ($form.find('input[name="_token"]').length === 0) {
+                $form.prepend(
+                    `<input type="hidden" name="_token" value="${$('meta[name="csrf-token"]').attr('content')}">`
+                );
+            }
+
+            // 🔹 Inicializar datepicker en este tab después de insertarlo
+            $(`#pane-${id} .mydatepicker`).datepicker({
+                format: 'yyyy-mm-dd',
+                weekStart: 1,
+                autoclose: true,
+                todayHighlight: true,
+                language: 'es'
+            });
+        }, 200);
+
+          
+          
+        }
+
+        tabs += `</ul>`;
+        panes += `</div>`;
+        contenedor.append(tabs + panes);
+    } 
+    // ==========================
+    // SOLO UNA GR
+    // ==========================
+    else {
+        let cab = resp.cabecera;
+
+                   $('#ID_GR').val(cab.ID_GR ?? '');
             $('#modal_no_mr').val(cab.NO_MR);
             $('#modal_fecha_mr').val(data.FECHA_APRUEBA_MR ?? '');
             $('#modal_no_po').val(cab.NO_PO ?? '');
@@ -165,212 +826,28 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
             $('#MANDAR_USUARIO_VOBO').val(cab.MANDAR_USUARIO_VOBO ?? '');
             $('#FECHA_VOUSUARIO').val(cab.FECHA_VOUSUARIO ?? '');
             $('#VO_BO_USUARIO').val(cab.VO_BO_USUARIO ?? '');
+      $('#GR_PARCIAL').val(cab.GR_PARCIAL ?? '');
+      
+            $('#FECHA_ENTREGA_GR').val(cab.FECHA_ENTREGA_GR ?? '');
 
 
+      
 
-            resp.detalle.forEach(det => {
-                let bloque = $(`
-                    <div class="border rounded p-3 mb-3 bg-light">
-                        <div class="row mb-2">
-                          <div class="col-3 mt-2">
-                            <label class="form-label">Descripción</label>
-                            <textarea class="form-control" name="DESCRIPCION[]" rows="2" >${det.DESCRIPCION}</textarea>
-                          </div>
+        // Llenar detalles con tu función
+        let detalleCont = $("#modal_bien_servicio");
+        detalleCont.empty();
+        resp.detalle.forEach(det => {
+            let bloque = crearBloqueDetalle(det, resp);
+            detalleCont.append(bloque);
+        });
 
-                          <div class="col-3 mt-2">
-                            <label class="form-label">¿Está en inventario?</label>
-                            <select class="form-control en_inventario" name="EN_INVENTARIO[]">
-                              <option value="">Seleccione</option>
-                              <option value="Sí" ${det.EN_INVENTARIO=="Sí"?"selected":""}>Sí</option>
-                              <option value="No" ${det.EN_INVENTARIO == "No" ? "selected" : ""}>No</option>
-                              
-                            </select>
-                          </div>
-                          <div class="col-6 bloque-inventario" style="display:${det.INVENTARIO_ID ? 'block' : 'none'};">
-                            <div class="row">
-                              <div class="col-6 mt-2">
-                                <label class="form-label">Tipo Inventario</label>
-                                <select class="form-control tipo_inventario" name="TIPO_INVENTARIO[]">
-                                  <option value="">Seleccione</option>
-                                  ${resp.tipoinventario ? resp.tipoinventario.map(t => 
-                                    `<option value="${t.ID_CATALOGO_TIPOINVENTARIO}" ${det.TIPO_EQUIPO == t.DESCRIPCION_TIPO ? "selected" : ""}>${t.DESCRIPCION_TIPO}</option>`
-                                  ).join("") : ""}
-                                </select>
-                              </div>
-                              <div class="col-6 mt-2">
-                                <label class="form-label">Inventario</label>
-                                <select class="form-control inventario" name="INVENTARIO[]">
-                                  <option value="">Seleccione</option>
-                                  ${resp.inventario ? resp.inventario
-                                    .filter(inv => inv.TIPO_EQUIPO == det.TIPO_EQUIPO)
-                                    .map(inv =>
-                                      `<option value="${inv.ID_FORMULARIO_INVENTARIO}" ${det.INVENTARIO_ID == inv.ID_FORMULARIO_INVENTARIO ? "selected" : ""}>${inv.DESCRIPCION_EQUIPO}</option>`
-                                    ).join("") : ""}
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-4 mt-2">
-                            <label class="form-label">Cantidad</label>
-                            <input type="number" class="form-control cantidad" name="CANTIDAD[]" value="${det.CANTIDAD}" readonly>
-                          </div>
-                          <div class="col-4 mt-2">
-                            <label class="form-label">Precio Unitario</label>
-                            <input type="text" class="form-control precio_unitario" name="PRECIO_UNITARIO[]" value="${det.PRECIO_UNITARIO}" readonly>
-                          </div>
-                          <div class="col-4 mt-2">
-                            <label class="form-label">Precio Total</label>
-                            <input type="text" class="form-control precio_total_mr" name="PRECIO_TOTAL_MR[]" value="${det.PRECIO_TOTAL_MR ?? 0}" readonly>
-                          </div>
-                        </div>
+        $('#VISTOBOUSUARIO').show();
+    }
 
-                        <div class="row mb-2">
-                          <div class="col-3 mt-2">
-                            <label class="form-label">Cantidad Rechazada</label>
-                            <input type="number" class="form-control" name="CANTIDAD_RECHAZADA[]" value="${det.CANTIDAD_RECHAZADA}">
-                          </div>
-                          <div class="col-3 mt-2">
-                            <label class="form-label">Cantidad Aceptada</label>
-                            <input type="number" class="form-control cantidad_aceptada" name="CANTIDAD_ACEPTADA[]" value="${det.CANTIDAD_ACEPTADA}">
-                          </div>
-                          <div class="col-3 mt-2">
-                            <label class="form-label">Precio Unitario GR</label>
-                            <input type="text" class="form-control precio_unitario_gr" name="PRECIO_UNITARIO_GR[]" value="${det.PRECIO_UNITARIO_GR ?? 0}" readonly>
-                          </div>
-                          <div class="col-3 mt-2">
-                            <label class="form-label">Precio Total GR</label>
-                            <input type="text" class="form-control precio_total_gr" name="PRECIO_TOTAL_GR[]" value="${det.PRECIO_TOTAL_GR ?? 0}" readonly>
-                          </div>
-                        </div>
+    
 
-                        <div class="row mb-2 comentario-diferencia" style="display:${det.CANTIDAD != det.CANTIDAD_ACEPTADA ? 'block' : 'none'};">
-                          <div class="col-12 mt-2">
-                            <label class="form-label">Comentario por diferencia en cantidad</label>
-                            <textarea class="form-control" name="COMENTARIO_DIFERENCIA[]" rows="2">${det.COMENTARIO_DIFERENCIA ?? ""}</textarea>
-                          </div>
-                        </div>
-                      <div class="row mb-2">
-                          <div class="col-6 mt-2">
-                            <label class="form-label">Cumple</label>
-                            <select class="form-control" name="CUMPLE[]">
-                              <option value="">Seleccione</option>
-                              <option value="Sí" ${det.CUMPLE=="Sí"?"selected":""}>Sí</option>
-                              <option value="No" ${det.CUMPLE=="No"?"selected":""}>No</option>
-                            </select>
-                          </div>
-                          <div class="col-6 mt-2">
-                            <label class="form-label">Comentario especificación</label>
-                            <textarea class="form-control" name="COMENTARIO_CUMPLE[]" rows="2">${det.COMENTARIO_CUMPLE??""}</textarea>
-                          </div>
-                        </div>
-
-                        <div class="row mb-2">
-                          <div class="col-6 mt-2">
-                            <label class="form-label">Estado</label>
-                            <select class="form-control" name="ESTADO_BS[]">
-                              <option value="">Seleccione</option>
-                              <option value="BUEN_ESTADO" ${det.ESTADO_BS=="BUEN_ESTADO"?"selected":""}>En buen estado</option>
-                              <option value="MAL_ESTADO" ${det.ESTADO_BS=="MAL_ESTADO"?"selected":""}>Mal estado</option>
-                            </select>
-                          </div>
-                          <div class="col-6 mt-2">
-                            <label class="form-label">Comentario Estado</label>
-                            <textarea class="form-control" name="COMENTARIO_ESTADO[]" rows="2">${det.COMENTARIO_ESTADO??""}</textarea>
-                          </div>
-                        </div>
-
-                          <div class="row mb-3">
-                          <div class="col-12 text-center">
-                            <h4>Vo.Bo usuario</h4>
-                          </div>
-                        </div>
-                          <div class="row mb-2">
-                          <div class="col-2 mt-2">
-                            <label class="form-label">Cantidad aceptada por usuario</label>
-                            <input type="number" class="form-control" name="CANTIDAD_ACEPTADA_USUARIO[]" value="${det.CANTIDAD_ACEPTADA_USUARIO}">
-                          </div>
-                          <div class="col-2 mt-2">
-                            <label class="form-label">Cumple lo especificado usuario</label>
-                            <select class="form-control" name="CUMPLE_ESPECIFICADO_USUARIO[]">
-                              <option value="">Seleccione</option>
-                              <option value="Sí" ${det.CUMPLE_ESPECIFICADO_USUARIO=="Sí"?"selected":""}>Sí</option>
-                              <option value="No" ${det.CUMPLE_ESPECIFICADO_USUARIO=="No"?"selected":""}>No</option>
-                            </select>
-                          </div>
-                          <div class="col-3 mt-2">
-                            <label class="form-label">Comentario especificación usuario</label>
-                            <textarea class="form-control" name="COMENTARIO_CUMPLE_USUARIO[]" rows="2">${det.COMENTARIO_CUMPLE_USUARIO??""}</textarea>
-                          </div>
-                         <div class="col-2 mt-2">
-                            <label class="form-label">Estado del B o S usuario</label>
-                            <select class="form-control" name="ESTADO_BS_USUARIO[]">
-                              <option value="">Seleccione</option>
-                                 <option value="BUEN_ESTADO" ${det.ESTADO_BS_USUARIO=="BUEN_ESTADO"?"selected":""}>En buen estado</option>
-                              <option value="MAL_ESTADO" ${det.ESTADO_BS_USUARIO=="MAL_ESTADO"?"selected":""}>Mal estado</option>
-                            </select>
-                          </div>
-
-                          <div class="col-3 mt-2">
-                            <label class="form-label">Comentario estado usuario</label>
-                            <textarea class="form-control" name="COMENTARIO_ESTADO_USUARIO[]" rows="2">${det.COMENTARIO_ESTADO_USUARIO??""}</textarea>
-                          </div>
-                        </div>
-
-
-
-                        
-
-                        <div class="row mb-2">
-                          <div class="col-12 mt-2">
-                            <label class="form-label">Tipo</label>
-                            <select class="form-control" name="TIPO_BS[]">
-                              <option value="">Seleccione</option>
-                              <option value="Bien" ${det.TIPO_BS=="Bien"?"selected":""}>Bien</option>
-                              <option value="Servicio" ${det.TIPO_BS=="Servicio"?"selected":""}>Servicio</option>
-                            </select>
-                          </div>
-                        </div>
-                    </div>
-                `);
-
-                contenedor.append(bloque);
-
-                calcularTotales(bloque);
-
-                bloque.find(".cantidad_aceptada").on("input", function () {
-                    calcularTotales(bloque);
-                    let cant = parseFloat(bloque.find(".cantidad").val()) || 0;
-                    let aceptada = parseFloat($(this).val()) || 0;
-                    bloque.find(".comentario-diferencia").toggle(cant !== aceptada);
-                });
-
-                bloque.find(".en_inventario").on("change", function () {
-                    if ($(this).val() === "Sí") {
-                        bloque.find(".bloque-inventario").show();
-                    } else {
-                        bloque.find(".bloque-inventario").hide();
-                        bloque.find(".tipo_inventario").val("");
-                        bloque.find(".inventario").empty().append('<option value="">Seleccione</option>');
-                    }
-                });
-
-                bloque.find(".tipo_inventario").on("change", function () {
-                    let tipoDesc = $(this).find("option:selected").text();
-                    let inventarioSelect = bloque.find(".inventario");
-                    inventarioSelect.empty().append('<option value="">Seleccione</option>');
-
-                    if (tipoDesc) {
-                        resp.inventario
-                            .filter(inv => inv.TIPO_EQUIPO == tipoDesc)
-                            .forEach(inv => {
-                                inventarioSelect.append(
-                                    `<option value="${inv.ID_FORMULARIO_INVENTARIO}">${inv.DESCRIPCION_EQUIPO}</option>`
-                                );
-                            });
-                    }
-                });
-            });
-
+      
+          
         // ==========================
         // Caso: NO EXISTE GR
         // ==========================
@@ -553,12 +1030,17 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                 });
             } else {
                 contenedor.html('<div class="text-muted">No hay bienes o servicios</div>');
-            }
+          }
+          
+
+              $('#VISTOBOUSUARIO').hide();
+
         }
 
         $('#modalGR').modal('show');
     });
 });
+
 
 
 
@@ -592,8 +1074,74 @@ function calcularTotales(bloque) {
 
 
 
+// $('#btnGuardarGR').on('click', function () {
+//     let formData = $("#formulariorecepciongr").serialize();
+
+//     Swal.fire({
+//         title: '¿Desea guardar la GR?',
+//         text: "Confirme para continuar",
+//         icon: 'question',
+//         showCancelButton: true,
+//         confirmButtonText: 'Sí, guardar',
+//         cancelButtonText: 'No, cancelar'
+//     }).then((result) => {
+//         if (result.isConfirmed) {
+//             $.ajax({
+//                 url: '/guardarGR',
+//                 method: 'POST',
+//                 data: formData,
+//                 beforeSend: function () {
+//                     Swal.fire({
+//                         title: 'Guardando...',
+//                         text: 'Por favor espere',
+//                         allowOutsideClick: false,
+//                         allowEscapeKey: false,
+//                         didOpen: () => {
+//                             Swal.showLoading();
+//                         }
+//                     });
+//                 },
+//                 success: function (resp) {
+//                     Swal.close();
+
+//                     if (resp.ok) {
+//                         Swal.fire('Éxito', 'GR guardada', 'success');
+//                         $('#modalGR').modal('hide');
+//                         Tablabitacoragr.ajax.reload();
+//                     } else {
+//                         Swal.fire('Error', resp.msg, 'error');
+//                     }
+//                 },
+//                 error: function () {
+//                     Swal.close();
+//                     Swal.fire('Error', 'Ocurrió un problema al guardar la GR', 'error');
+//                 }
+//             });
+//         }
+//     });
+// });
+
+
+
+
 $('#btnGuardarGR').on('click', function () {
-    let formData = $("#formulariorecepciongr").serialize();
+    let formData = [];
+
+    // Detectar si hay tabs parciales
+    if ($(".form-gr").length > 0) {
+        // Solo tomar el formulario del tab activo
+        let activeForm = $(".tab-pane.active .form-gr");
+        formData = formData.concat(activeForm.serializeArray());
+    } else {
+        // Caso: nuevo o sin parciales → tomar formulario principal
+        formData = formData.concat($("#formulariorecepciongr").serializeArray());
+    }
+
+    // Token CSRF
+    formData.push({
+        name: "_token",
+        value: $('meta[name="csrf-token"]').attr('content')
+    });
 
     Swal.fire({
         title: '¿Desea guardar la GR?',
@@ -607,7 +1155,7 @@ $('#btnGuardarGR').on('click', function () {
             $.ajax({
                 url: '/guardarGR',
                 method: 'POST',
-                data: formData,
+                data: $.param(formData),
                 beforeSend: function () {
                     Swal.fire({
                         title: 'Guardando...',
@@ -620,7 +1168,7 @@ $('#btnGuardarGR').on('click', function () {
                     });
                 },
                 success: function (resp) {
-                    Swal.close(); 
+                    Swal.close();
 
                     if (resp.ok) {
                         Swal.fire('Éxito', 'GR guardada', 'success');
@@ -639,3 +1187,272 @@ $('#btnGuardarGR').on('click', function () {
     });
 });
 
+
+
+// $('#btnGuardarGR').on('click', function () {
+//     // Recolectar todos los forms parciales
+//     let formData = [];
+
+//     // Formulario principal (cuando no hay parciales)
+//     formData = formData.concat($("#formulariorecepciongr").serializeArray());
+
+//     // Formularios parciales (si existen)
+//     $(".form-gr").each(function () {
+//         formData = formData.concat($(this).serializeArray());
+//     });
+
+//     // Token CSRF
+//     formData.push({
+//         name: "_token",
+//         value: $('meta[name="csrf-token"]').attr('content')
+//     });
+
+//     Swal.fire({
+//         title: '¿Desea guardar la GR?',
+//         text: "Confirme para continuar",
+//         icon: 'question',
+//         showCancelButton: true,
+//         confirmButtonText: 'Sí, guardar',
+//         cancelButtonText: 'No, cancelar'
+//     }).then((result) => {
+//         if (result.isConfirmed) {
+//             $.ajax({
+//                 url: '/guardarGR',
+//                 method: 'POST',
+//                 data: $.param(formData), 
+//                 beforeSend: function () {
+//                     Swal.fire({
+//                         title: 'Guardando...',
+//                         text: 'Por favor espere',
+//                         allowOutsideClick: false,
+//                         allowEscapeKey: false,
+//                         didOpen: () => {
+//                             Swal.showLoading();
+//                         }
+//                     });
+//                 },
+//                 success: function (resp) {
+//                     Swal.close();
+
+//                     if (resp.ok) {
+//                         Swal.fire('Éxito', 'GR guardada', 'success');
+//                         $('#modalGR').modal('hide');
+//                         Tablabitacoragr.ajax.reload();
+//                     } else {
+//                         Swal.fire('Error', resp.msg, 'error');
+//                     }
+//                 },
+//                 error: function () {
+//                     Swal.close();
+//                     Swal.fire('Error', 'Ocurrió un problema al guardar la GR', 'error');
+//                 }
+//             });
+//         }
+//     });
+// });
+
+
+
+function crearBloqueDetalle(det, resp) {
+    let bloque = $(`
+          <div class="border rounded p-3 mb-3 bg-light">
+                        <div class="row mb-2">
+                          <div class="col-3 mt-2">
+                            <label class="form-label">Descripción</label>
+                            <textarea class="form-control" name="DESCRIPCION[]" rows="2" >${det.DESCRIPCION}</textarea>
+                          </div>
+
+                          <div class="col-3 mt-2">
+                            <label class="form-label">¿Está en inventario?</label>
+                            <select class="form-control en_inventario" name="EN_INVENTARIO[]">
+                              <option value="">Seleccione</option>
+                              <option value="Sí" ${det.EN_INVENTARIO=="Sí"?"selected":""}>Sí</option>
+                              <option value="No" ${det.EN_INVENTARIO == "No" ? "selected" : ""}>No</option>
+                              
+                            </select>
+                          </div>
+                          <div class="col-6 bloque-inventario" style="display:${det.INVENTARIO_ID ? 'block' : 'none'};">
+                            <div class="row">
+                              <div class="col-6 mt-2">
+                                <label class="form-label">Tipo Inventario</label>
+                                <select class="form-control tipo_inventario" name="TIPO_INVENTARIO[]">
+                                  <option value="">Seleccione</option>
+                                  ${resp.tipoinventario ? resp.tipoinventario.map(t => 
+                                    `<option value="${t.ID_CATALOGO_TIPOINVENTARIO}" ${det.TIPO_EQUIPO == t.DESCRIPCION_TIPO ? "selected" : ""}>${t.DESCRIPCION_TIPO}</option>`
+                                  ).join("") : ""}
+                                </select>
+                              </div>
+                              <div class="col-6 mt-2">
+                                <label class="form-label">Inventario</label>
+                                <select class="form-control inventario" name="INVENTARIO[]">
+                                  <option value="">Seleccione</option>
+                                  ${resp.inventario ? resp.inventario
+                                    .filter(inv => inv.TIPO_EQUIPO == det.TIPO_EQUIPO)
+                                    .map(inv =>
+                                      `<option value="${inv.ID_FORMULARIO_INVENTARIO}" ${det.INVENTARIO_ID == inv.ID_FORMULARIO_INVENTARIO ? "selected" : ""}>${inv.DESCRIPCION_EQUIPO}</option>`
+                                    ).join("") : ""}
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-4 mt-2">
+                            <label class="form-label">Cantidad</label>
+                            <input type="number" class="form-control cantidad" name="CANTIDAD[]" value="${det.CANTIDAD}" readonly>
+                          </div>
+                          <div class="col-4 mt-2">
+                            <label class="form-label">Precio Unitario</label>
+                            <input type="text" class="form-control precio_unitario" name="PRECIO_UNITARIO[]" value="${det.PRECIO_UNITARIO}" readonly>
+                          </div>
+                          <div class="col-4 mt-2">
+                            <label class="form-label">Precio Total</label>
+                            <input type="text" class="form-control precio_total_mr" name="PRECIO_TOTAL_MR[]" value="${det.PRECIO_TOTAL_MR ?? 0}" readonly>
+                          </div>
+                        </div>
+
+                        <div class="row mb-2">
+                          <div class="col-3 mt-2">
+                            <label class="form-label">Cantidad Rechazada</label>
+                            <input type="number" class="form-control" name="CANTIDAD_RECHAZADA[]" value="${det.CANTIDAD_RECHAZADA}">
+                          </div>
+                          <div class="col-3 mt-2">
+                            <label class="form-label">Cantidad Aceptada</label>
+                            <input type="number" class="form-control cantidad_aceptada" name="CANTIDAD_ACEPTADA[]" value="${det.CANTIDAD_ACEPTADA}">
+                          </div>
+                          <div class="col-3 mt-2">
+                            <label class="form-label">Precio Unitario GR</label>
+                            <input type="text" class="form-control precio_unitario_gr" name="PRECIO_UNITARIO_GR[]" value="${det.PRECIO_UNITARIO_GR ?? 0}" readonly>
+                          </div>
+                          <div class="col-3 mt-2">
+                            <label class="form-label">Precio Total GR</label>
+                            <input type="text" class="form-control precio_total_gr" name="PRECIO_TOTAL_GR[]" value="${det.PRECIO_TOTAL_GR ?? 0}" readonly>
+                          </div>
+                        </div>
+
+                        <div class="row mb-2 comentario-diferencia" style="display:${det.CANTIDAD != det.CANTIDAD_ACEPTADA ? 'block' : 'none'};">
+                          <div class="col-12 mt-2">
+                            <label class="form-label">Comentario por diferencia en cantidad</label>
+                            <textarea class="form-control" name="COMENTARIO_DIFERENCIA[]" rows="2">${det.COMENTARIO_DIFERENCIA ?? ""}</textarea>
+                          </div>
+                        </div>
+                      <div class="row mb-2">
+                          <div class="col-6 mt-2">
+                            <label class="form-label">Cumple</label>
+                            <select class="form-control" name="CUMPLE[]">
+                              <option value="">Seleccione</option>
+                              <option value="Sí" ${det.CUMPLE=="Sí"?"selected":""}>Sí</option>
+                              <option value="No" ${det.CUMPLE=="No"?"selected":""}>No</option>
+                            </select>
+                          </div>
+                          <div class="col-6 mt-2">
+                            <label class="form-label">Comentario especificación</label>
+                            <textarea class="form-control" name="COMENTARIO_CUMPLE[]" rows="2">${det.COMENTARIO_CUMPLE??""}</textarea>
+                          </div>
+                        </div>
+
+                        <div class="row mb-2">
+                          <div class="col-6 mt-2">
+                            <label class="form-label">Estado</label>
+                            <select class="form-control" name="ESTADO_BS[]">
+                              <option value="">Seleccione</option>
+                              <option value="BUEN_ESTADO" ${det.ESTADO_BS=="BUEN_ESTADO"?"selected":""}>En buen estado</option>
+                              <option value="MAL_ESTADO" ${det.ESTADO_BS=="MAL_ESTADO"?"selected":""}>Mal estado</option>
+                            </select>
+                          </div>
+                          <div class="col-6 mt-2">
+                            <label class="form-label">Comentario Estado</label>
+                            <textarea class="form-control" name="COMENTARIO_ESTADO[]" rows="2">${det.COMENTARIO_ESTADO??""}</textarea>
+                          </div>
+                        </div>
+
+                          <div class="row mb-3">
+                          <div class="col-12 text-center">
+                            <h4>Vo.Bo usuario</h4>
+                          </div>
+                        </div>
+                          <div class="row mb-2">
+                          <div class="col-2 mt-2">
+                            <label class="form-label">Cantidad aceptada por usuario</label>
+                            <input type="number" class="form-control" name="CANTIDAD_ACEPTADA_USUARIO[]" value="${det.CANTIDAD_ACEPTADA_USUARIO}">
+                          </div>
+                          <div class="col-2 mt-2">
+                            <label class="form-label">Cumple lo especificado usuario</label>
+                            <select class="form-control" name="CUMPLE_ESPECIFICADO_USUARIO[]">
+                              <option value="">Seleccione</option>
+                              <option value="Sí" ${det.CUMPLE_ESPECIFICADO_USUARIO=="Sí"?"selected":""}>Sí</option>
+                              <option value="No" ${det.CUMPLE_ESPECIFICADO_USUARIO=="No"?"selected":""}>No</option>
+                            </select>
+                          </div>
+                          <div class="col-3 mt-2">
+                            <label class="form-label">Comentario especificación usuario</label>
+                            <textarea class="form-control" name="COMENTARIO_CUMPLE_USUARIO[]" rows="2">${det.COMENTARIO_CUMPLE_USUARIO??""}</textarea>
+                          </div>
+                         <div class="col-2 mt-2">
+                            <label class="form-label">Estado del B o S usuario</label>
+                            <select class="form-control" name="ESTADO_BS_USUARIO[]">
+                              <option value="">Seleccione</option>
+                                 <option value="BUEN_ESTADO" ${det.ESTADO_BS_USUARIO=="BUEN_ESTADO"?"selected":""}>En buen estado</option>
+                              <option value="MAL_ESTADO" ${det.ESTADO_BS_USUARIO=="MAL_ESTADO"?"selected":""}>Mal estado</option>
+                            </select>
+                          </div>
+
+                          <div class="col-3 mt-2">
+                            <label class="form-label">Comentario estado usuario</label>
+                            <textarea class="form-control" name="COMENTARIO_ESTADO_USUARIO[]" rows="2">${det.COMENTARIO_ESTADO_USUARIO??""}</textarea>
+                          </div>
+                        </div>
+
+
+
+                        
+
+                        <div class="row mb-2">
+                          <div class="col-12 mt-2">
+                            <label class="form-label">Tipo</label>
+                            <select class="form-control" name="TIPO_BS[]">
+                              <option value="">Seleccione</option>
+                              <option value="Bien" ${det.TIPO_BS=="Bien"?"selected":""}>Bien</option>
+                              <option value="Servicio" ${det.TIPO_BS=="Servicio"?"selected":""}>Servicio</option>
+                            </select>
+                          </div>
+                        </div>
+                    </div>
+    `);
+
+    // 🔹 Eventos
+    calcularTotales(bloque);
+
+    bloque.find(".cantidad_aceptada").on("input", function () {
+        calcularTotales(bloque);
+        let cant = parseFloat(bloque.find(".cantidad").val()) || 0;
+        let aceptada = parseFloat($(this).val()) || 0;
+        bloque.find(".comentario-diferencia").toggle(cant !== aceptada);
+    });
+
+    bloque.find(".en_inventario").on("change", function () {
+        if ($(this).val() === "Sí") {
+            bloque.find(".bloque-inventario").show();
+        } else {
+            bloque.find(".bloque-inventario").hide();
+            bloque.find(".tipo_inventario").val("");
+            bloque.find(".inventario").empty().append('<option value="">Seleccione</option>');
+        }
+    });
+
+    bloque.find(".tipo_inventario").on("change", function () {
+        let tipoDesc = $(this).find("option:selected").text();
+        let inventarioSelect = bloque.find(".inventario");
+        inventarioSelect.empty().append('<option value="">Seleccione</option>');
+
+        if (tipoDesc) {
+            resp.inventario
+                .filter(inv => inv.TIPO_EQUIPO == tipoDesc)
+                .forEach(inv => {
+                    inventarioSelect.append(
+                        `<option value="${inv.ID_FORMULARIO_INVENTARIO}">${inv.DESCRIPCION_EQUIPO}</option>`
+                    );
+                });
+        }
+    });
+
+    return bloque;
+}
