@@ -139,6 +139,8 @@ use App\Http\Controllers\pdf\pdfController;
 // CONTROLADORES GR  
 
 use App\Http\Controllers\requisicongr\grController;
+use App\Http\Controllers\requisicongr\vobogrusuarioController;
+
 
 
 // CONTROLADORES DE LA PAGINA WEB
@@ -781,15 +783,24 @@ Route::get('/Tablamatirzaprobada', [matrizController::class, 'Tablamatirzaprobad
 //==============================================    Recepción de bienes y/o servicios - GR  ============================================== 
 
 Route::get('/Bitácora-GR', [grController::class, 'index']);
-
-// Route::get('/Bitácora-GR', function () { return view('compras.recepciongr.recepcionbienesgr');});
 Route::get('/Tablabitacoragr', [grController::class, 'Tablabitacoragr']);
-
-
-
 Route::post('/guardarGR', [grController::class, 'guardarGR']);
-// web.php
 Route::post('/consultar-gr', [grController::class, 'consultarGR'])->name('consultar.gr');
+
+
+
+/// Vo.Bo Usuario en GR
+
+
+Route::get('/Vo.Bo_GRusuario', [vobogrusuarioController::class, 'index']);
+
+Route::get('/TablaVoBoGRusuarios', [vobogrusuarioController::class, 'TablaVoBoGRusuarios']);
+
+
+Route::get('/ConsultarProductosVoBo/{idGR}', [vobogrusuarioController::class, 'ConsultarProductosVoBo']);
+
+
+Route::post('/guardarVoBoUsuario', [vobogrusuarioController::class, 'guardarVoBoUsuario']);
 
 //==============================================   CATALOGOS PROVEEDORES  ============================================== 
 Route::get('/Catálogos_proveedores', function () {return view('compras.Catalogos.catalogo_generales');});

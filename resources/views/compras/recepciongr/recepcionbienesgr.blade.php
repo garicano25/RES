@@ -45,7 +45,6 @@
         overflow: visible !important;
         text-overflow: unset !important;
         word-wrap: break-word !important;
-        /* text-align: center !important; */
         vertical-align: middle !important;
         height: auto !important;
         line-height: 1.3em;
@@ -54,9 +53,7 @@
 
     table.dataTable td {
         white-space: normal !important;
-        /* permite que el texto haga salto de línea */
         word-wrap: break-word;
-        /* corta palabras largas si no caben */
     }
 
 
@@ -87,15 +84,7 @@
         z-index: 10;
         background: transparent;
         pointer-events: all;
-        /* esto bloquea todo */
     }
-
-
-    /* .input-bloqueado {
-        pointer-events: none;
-        background-color: #e9ecef;
-        cursor: not-allowed;
-    } */
 
 
     .col-bien-servicio {
@@ -181,11 +170,7 @@
                 <div class="modal-body">
                     {!! csrf_field() !!}
 
-
                     <input type="hidden" id="ID_GR" name="ID_GR" value="0">
-
-
-
 
                     <div class="row mb-3">
                         <div class="col-md-3">
@@ -268,13 +253,38 @@
                                 </select>
                             </div>
                         </div>
+
                     </div>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-success" id="btnGuardarGR">Guardar</button>
-                </div>
+                        <div class="row mb-3">
+
+                            <div class="col-md-6">
+                                <label class="form-label">Fecha Vo.Bo usuario</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VOUSUARIO" name="FECHA_VOUSUARIO">
+                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Estado de Vo.Bo </label>
+                                <div id="estado-container" class="p-2 rounded">
+                                    <select class="form-control" id="VO_BO_USUARIO" name="VO_BO_USUARIO">
+                                        <option value="" selected disabled>Seleccione una opción</option>
+                                        <option value="Aprobada">Aprobada</option>
+                                        <option value="Rechazada">Rechazada</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-success" id="btnGuardarGR">Guardar</button>
+                    </div>
 
             </form>
         </div>

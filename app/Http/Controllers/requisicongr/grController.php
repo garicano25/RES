@@ -361,6 +361,10 @@ class grController extends Controller
                         'FECHA_EMISION'    => $request->DESDE_ACREDITACION,
                         'NO_RECEPCION'     => $request->NO_RECEPCION,
                         'MANDAR_USUARIO_VOBO'     => $request->MANDAR_USUARIO_VOBO,
+                        'VO_BO_USUARIO'     => $request->VO_BO_USUARIO,
+                        'FECHA_VOUSUARIO'     => $request->FECHA_VOUSUARIO,
+
+
 
                 ]);
 
@@ -397,6 +401,15 @@ class grController extends Controller
                         'TIPO_EQUIPO'           => $tipoEquipoDesc,
                         'INVENTARIO_ID'         => $request->INVENTARIO[$i] ?? null,
                         'EN_INVENTARIO'         => $request->EN_INVENTARIO[$i] ?? null,
+                        'CANTIDAD_ACEPTADA_USUARIO'         => $request->CANTIDAD_ACEPTADA_USUARIO[$i] ?? null,
+                        'CUMPLE_ESPECIFICADO_USUARIO'         => $request->CUMPLE_ESPECIFICADO_USUARIO[$i] ?? null,
+                        'COMENTARIO_CUMPLE_USUARIO'         => $request->COMENTARIO_CUMPLE_USUARIO[$i] ?? null,
+                        'ESTADO_BS_USUARIO'         => $request->ESTADO_BS_USUARIO[$i] ?? null,
+                        'COMENTARIO_ESTADO_USUARIO'         => $request->COMENTARIO_ESTADO_USUARIO[$i] ?? null,
+
+
+                        
+
 
                     ]);
                 }
@@ -551,8 +564,15 @@ class grController extends Controller
                 'd.TIPO_BS',
                 'd.TIPO_EQUIPO',
                 'd.INVENTARIO_ID',
-                'd.EN_INVENTARIO'
-            )
+                'd.EN_INVENTARIO',
+                'd.CANTIDAD_ACEPTADA_USUARIO',
+                'd.CUMPLE_ESPECIFICADO_USUARIO',
+                'd.COMENTARIO_CUMPLE_USUARIO',
+                'd.ESTADO_BS_USUARIO',
+                'd.COMENTARIO_ESTADO_USUARIO',
+              
+
+        )
             ->where('gr.NO_MR', $no_mr);
 
         if ($no_po) {
@@ -594,6 +614,11 @@ class grController extends Controller
                 'TIPO_EQUIPO' => $row->TIPO_EQUIPO,
                 'INVENTARIO_ID' => $row->INVENTARIO_ID,
                 'EN_INVENTARIO' => $row->EN_INVENTARIO,
+                'CANTIDAD_ACEPTADA_USUARIO' => $row->CANTIDAD_ACEPTADA_USUARIO,
+                'CUMPLE_ESPECIFICADO_USUARIO' => $row->CUMPLE_ESPECIFICADO_USUARIO,
+                'COMENTARIO_CUMPLE_USUARIO' => $row->COMENTARIO_CUMPLE_USUARIO,
+                'ESTADO_BS_USUARIO' => $row->ESTADO_BS_USUARIO,
+                'COMENTARIO_ESTADO_USUARIO' => $row->COMENTARIO_ESTADO_USUARIO,
             ];
         });
 

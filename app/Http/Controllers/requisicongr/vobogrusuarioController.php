@@ -1,0 +1,190 @@
+<?php
+
+namespace App\Http\Controllers\requisicongr;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+
+
+use Artisan;
+use Exception;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+
+use Carbon\Carbon;
+
+use DB;
+use App\Models\proveedor\altaproveedorModel;
+use App\Models\proveedor\proveedortempModel;
+use App\Models\inventario\inventarioModel;
+use App\Models\inventario\catalogotipoinventarioModel;
+
+
+
+class vobogrusuarioController extends Controller
+{
+    public function index()
+    {
+        $proveedoresOficiales = altaproveedorModel::select('RAZON_SOCIAL_ALTA', 'RFC_ALTA')->get();
+        $proveedoresTemporales = proveedortempModel::select('RAZON_PROVEEDORTEMP', 'RFC_PROVEEDORTEMP', 'NOMBRE_PROVEEDORTEMP')->get();
+
+        $tipoinventario = catalogotipoinventarioModel::where('ACTIVO', 1)->get();
+        $inventario = inventarioModel::where('ACTIVO', 1)->get();
+
+
+        return view('compras.recepciongr.vobousuariogr', compact('proveedoresOficiales', 'proveedoresTemporales', 'tipoinventario', 'inventario'));
+    }
+
+
+    // public function TablaVoBoGRusuarios()
+    // {
+    //     try {
+    //         $usuarioId = auth()->id();
+
+    //         $rows = DB::table('formulario_bitacoragr as gr')
+    //             ->where('gr.USUARIO_ID', $usuarioId)
+    //             ->where('gr.MANDAR_USUARIO_VOBO', 'Sí')
+    //             ->select(
+    //                 'gr.ID_GR',
+    //                 'gr.NO_RECEPCION',
+    //                 DB::raw('COUNT(d.ID_DETALLE) as TOTAL_PRODUCTOS')
+    //             )
+    //             ->join('formulario_bitacoragr_detalle as d', 'd.ID_GR', '=', 'gr.ID_GR')
+    //             ->groupBy('gr.ID_GR', 'gr.NO_RECEPCION')
+    //             ->get();
+
+    //         foreach ($rows as $value) {
+    //             $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR" data-id="' . $value->ID_GR . '"><i class="bi bi-pencil-square"></i></button>';
+    //         }
+
+    //         return response()->json(['data' => $rows]);
+    //     } catch (\Throwable $e) {
+    //         return response()->json([
+    //             'data' => [],
+    //             'error' => true,
+    //             'message' => $e->getMessage(),
+    //         ], 500);
+    //     }
+    // }
+
+
+    public function TablaVoBoGRusuarios()
+    {
+        try {
+            $usuarioId = auth()->id();
+
+            $rows = DB::table('formulario_bitacoragr as gr')
+                ->join('formulario_bitacoragr_detalle as d', 'd.ID_GR', '=', 'gr.ID_GR')
+                ->where('gr.USUARIO_ID', $usuarioId)
+                ->where('gr.MANDAR_USUARIO_VOBO', 'Sí')
+                ->whereNull('gr.VO_BO_USUARIO') 
+                ->select(
+                    'gr.ID_GR',
+                    'gr.NO_RECEPCION',
+                    DB::raw('COUNT(d.ID_DETALLE) as TOTAL_PRODUCTOS')
+                )
+                ->groupBy('gr.ID_GR', 'gr.NO_RECEPCION')
+                ->get();
+
+            foreach ($rows as $value) {
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR" data-id="' . $value->ID_GR . '"><i class="bi bi-pencil-square"></i></button>';
+            }
+
+            return response()->json(['data' => $rows]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'data' => [],
+                'error' => true,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+
+    public function ConsultarProductosVoBo($idGR)
+    {
+        try {
+            // Traer cabecera (para NO_RECEPCION y ID_GR)
+            $cabecera = DB::table('formulario_bitacoragr')
+                ->where('ID_GR', $idGR)
+                ->select('ID_GR', 'NO_RECEPCION')
+                ->first();
+
+            if (!$cabecera) {
+                return response()->json(['ok' => false, 'msg' => 'No se encontró la recepción']);
+            }
+
+            // Traer productos relacionados con la GR
+            $detalle = DB::table('formulario_bitacoragr_detalle')
+                ->where('ID_GR', $idGR)
+                ->select(
+                    'ID_DETALLE',
+                    'DESCRIPCION',
+                    'CANTIDAD_ACEPTADA',
+                    'CANTIDAD_ACEPTADA_USUARIO',
+                    'CUMPLE_ESPECIFICADO_USUARIO',
+                    'COMENTARIO_CUMPLE_USUARIO',
+                    'ESTADO_BS_USUARIO',
+                    'COMENTARIO_ESTADO_USUARIO'
+                )
+                ->get();
+
+            return response()->json([
+                'ok' => true,
+                'cabecera' => $cabecera,
+                'detalle' => $detalle
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'ok' => false,
+                'msg' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+
+    public function guardarVoBoUsuario(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $idGR = $request->ID_GR;
+
+            // 1. Actualizar datos globales en formulario_bitacoragr
+            DB::table('formulario_bitacoragr')
+                ->where('ID_GR', $idGR)
+                ->update([
+                    'FECHA_VOUSUARIO' => $request->FECHA_VOUSUARIO,
+                    'VO_BO_USUARIO'   => $request->VO_BO_USUARIO,
+                    'UPDATED_AT'      => now(),
+                ]);
+
+            // 2. Actualizar cada producto (detalle)
+            if ($request->has('CANTIDAD_ACEPTADA_USUARIO')) {
+                foreach ($request->CANTIDAD_ACEPTADA_USUARIO as $idDetalle => $cantidadAceptadaUsuario) {
+                    DB::table('formulario_bitacoragr_detalle')
+                        ->where('ID_DETALLE', $idDetalle)
+                        ->update([
+                            'CANTIDAD_ACEPTADA_USUARIO'   => $cantidadAceptadaUsuario,
+                            'CUMPLE_ESPECIFICADO_USUARIO' => $request->CUMPLE_ESPECIFICADO_USUARIO[$idDetalle] ?? null,
+                            'COMENTARIO_CUMPLE_USUARIO'   => $request->COMENTARIO_CUMPLE_USUARIO[$idDetalle] ?? null,
+                            'ESTADO_BS_USUARIO'           => $request->ESTADO_BS_USUARIO[$idDetalle] ?? null,
+                            'COMENTARIO_ESTADO_USUARIO'   => $request->COMENTARIO_ESTADO_USUARIO[$idDetalle] ?? null,
+                            'UPDATED_AT'                  => now(),
+                        ]);
+                }
+            }
+
+            DB::commit();
+            return response()->json(['ok' => true, 'msg' => 'Vo.Bo guardado correctamente']);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return response()->json([
+                'ok' => false,
+                'msg' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ], 500);
+        }
+    }
+}

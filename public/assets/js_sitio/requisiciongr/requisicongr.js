@@ -163,6 +163,9 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
             $('#DESDE_ACREDITACION').val(cab.FECHA_EMISION ?? '');
             $('#NO_RECEPCION').val(cab.NO_RECEPCION ?? '');
             $('#MANDAR_USUARIO_VOBO').val(cab.MANDAR_USUARIO_VOBO ?? '');
+            $('#FECHA_VOUSUARIO').val(cab.FECHA_VOUSUARIO ?? '');
+            $('#VO_BO_USUARIO').val(cab.VO_BO_USUARIO ?? '');
+
 
 
             resp.detalle.forEach(det => {
@@ -275,6 +278,47 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
                             <textarea class="form-control" name="COMENTARIO_ESTADO[]" rows="2">${det.COMENTARIO_ESTADO??""}</textarea>
                           </div>
                         </div>
+
+                          <div class="row mb-3">
+                          <div class="col-12 text-center">
+                            <h4>Vo.Bo usuario</h4>
+                          </div>
+                        </div>
+                          <div class="row mb-2">
+                          <div class="col-2 mt-2">
+                            <label class="form-label">Cantidad aceptada por usuario</label>
+                            <input type="number" class="form-control" name="CANTIDAD_ACEPTADA_USUARIO[]" value="${det.CANTIDAD_ACEPTADA_USUARIO}">
+                          </div>
+                          <div class="col-2 mt-2">
+                            <label class="form-label">Cumple lo especificado usuario</label>
+                            <select class="form-control" name="CUMPLE_ESPECIFICADO_USUARIO[]">
+                              <option value="">Seleccione</option>
+                              <option value="Sí" ${det.CUMPLE_ESPECIFICADO_USUARIO=="Sí"?"selected":""}>Sí</option>
+                              <option value="No" ${det.CUMPLE_ESPECIFICADO_USUARIO=="No"?"selected":""}>No</option>
+                            </select>
+                          </div>
+                          <div class="col-3 mt-2">
+                            <label class="form-label">Comentario especificación usuario</label>
+                            <textarea class="form-control" name="COMENTARIO_CUMPLE_USUARIO[]" rows="2">${det.COMENTARIO_CUMPLE_USUARIO??""}</textarea>
+                          </div>
+                         <div class="col-2 mt-2">
+                            <label class="form-label">Estado del B o S usuario</label>
+                            <select class="form-control" name="ESTADO_BS_USUARIO[]">
+                              <option value="">Seleccione</option>
+                                 <option value="BUEN_ESTADO" ${det.ESTADO_BS_USUARIO=="BUEN_ESTADO"?"selected":""}>En buen estado</option>
+                              <option value="MAL_ESTADO" ${det.ESTADO_BS_USUARIO=="MAL_ESTADO"?"selected":""}>Mal estado</option>
+                            </select>
+                          </div>
+
+                          <div class="col-3 mt-2">
+                            <label class="form-label">Comentario estado usuario</label>
+                            <textarea class="form-control" name="COMENTARIO_ESTADO_USUARIO[]" rows="2">${det.COMENTARIO_ESTADO_USUARIO??""}</textarea>
+                          </div>
+                        </div>
+
+
+
+                        
 
                         <div class="row mb-2">
                           <div class="col-12 mt-2">
