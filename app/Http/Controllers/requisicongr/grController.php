@@ -127,9 +127,11 @@ class grController extends Controller
                     DB::raw('NULL as CANTIDAD_REALQ3'),
                     DB::raw('NULL as PRECIO_UNITARIOQ1'),
                     DB::raw('NULL as PRECIO_UNITARIOQ2'),
-                    DB::raw('NULL as PRECIO_UNITARIOQ3')
+                    DB::raw('NULL as PRECIO_UNITARIOQ3'),
+                     DB::raw('NULL as UNIDAD_MEDIDA')
 
-                ])
+
+            ])
                 ->groupBy(
                     'AGRUPADOR',
                     'mr.NO_MR',
@@ -201,7 +203,8 @@ class grController extends Controller
                     'ht.CANTIDAD_REALQ3',
                     'ht.PRECIO_UNITARIOQ1',
                     'ht.PRECIO_UNITARIOQ2',
-                    'ht.PRECIO_UNITARIOQ3'
+                    'ht.PRECIO_UNITARIOQ3',
+                    'ht.UNIDAD_MEDIDA'
                 ]);
 
             // === UNIR CONSULTAS ===
@@ -219,72 +222,99 @@ class grController extends Controller
                     $materialesArray = [];
                     $vistos = [];
 
-                    foreach ($group as $row) {
-                        if (!empty($row->MATERIALES_JSON)) {
-                            $materiales = json_decode($row->MATERIALES_JSON, true);
-                            if (is_array($materiales)) {
-                                foreach ($materiales as $mat) {
-                                    $cantidad = $mat['CANTIDAD_'] ?? 0;
-                                    $precio   = $mat['PRECIO_UNITARIO'] ?? null;
-                                    $key      = $mat['DESCRIPCION'] . '-' . $cantidad . '-' . $precio;
+                // foreach ($group as $row) {
+                //     if (!empty($row->MATERIALES_JSON)) {
+                //         $materiales = json_decode($row->MATERIALES_JSON, true);
 
-                                    if ($cantidad > 0 && !isset($vistos[$key])) {
-                                        $vistos[$key] = true;
-                                        $texto = "• {$mat['DESCRIPCION']} ({$cantidad})";
-                                        if ($precio !== null && $precio !== '') {
-                                            $texto .= " - $ {$precio}";
-                                        }
-                                        $materialesArray[] = $texto;
-                                    }
-                                }
-                            }
-                        } elseif (!empty($row->MATERIALES_HOJA_JSON)) {
-                            $materiales = json_decode($row->MATERIALES_HOJA_JSON, true);
-                            if (is_array($materiales)) {
-                                foreach ($materiales as $mat) {
-                                    $cantidad = $mat['CANTIDAD_REAL'] ?? ($mat['CANTIDAD'] ?? 0);
-                                    if ($cantidad <= 0) continue;
+                //         if (is_array($materiales)) {
+                //             foreach ($materiales as $mat) {
+                //                 $cantidad = $mat['CANTIDAD_'] ?? 0;
+                //                 $precio   = $mat['PRECIO_UNITARIO'] ?? null;
+                //                 $key      = $mat['DESCRIPCION'] . '-' . $cantidad . '-' . $precio;
 
-                                    $precio = null;
-                                    if ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q1) {
-                                        $precio = $mat['PRECIO_UNITARIO'] ?? null;
-                                    } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q2) {
-                                        $precio = $mat['PRECIO_UNITARIO_Q2'] ?? null;
-                                    } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q3) {
-                                        $precio = $mat['PRECIO_UNITARIO_Q3'] ?? null;
-                                    }
+                //                 if ($cantidad > 0 && !isset($vistos[$key])) {
+                //                     $vistos[$key] = true;
+                //                     $texto = "• {$mat['DESCRIPCION']} ({$cantidad})";
+                //                     if ($precio !== null && $precio !== '') {
+                //                         $texto .= " - $ {$precio}";
+                //                     }
+                //                     $materialesArray[] = $texto;
+                //                 }
+                //             }
+                //         }
+                //     } elseif (!empty($row->MATERIALES_HOJA_JSON)) {
+                //         $materiales = json_decode($row->MATERIALES_HOJA_JSON, true);
+                //         if (is_array($materiales)) {
+                //             foreach ($materiales as $mat) {
+                //                 $cantidad = $mat['CANTIDAD_REAL'] ?? ($mat['CANTIDAD'] ?? 0);
+                //                 if ($cantidad <= 0) continue;
 
-                                    $key = $mat['DESCRIPCION'] . '-' . $cantidad . '-' . $precio;
-                                    if (!isset($vistos[$key])) {
-                                        $vistos[$key] = true;
-                                        $texto = "• {$mat['DESCRIPCION']} ({$cantidad})";
-                                        if ($precio !== null && $precio !== '') {
-                                            $texto .= " - $ {$precio}";
-                                        }
-                                        $materialesArray[] = $texto;
-                                    }
-                                }
-                            }
-                        } elseif (!empty($row->HT_DESCRIPCION)) {
-                            $cantidad = 0;
-                            $precio   = null;
+                //                 $precio = null;
+                //                 if ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q1) {
+                //                     $precio = $mat['PRECIO_UNITARIO'] ?? null;
+                //                 } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q2) {
+                //                     $precio = $mat['PRECIO_UNITARIO_Q2'] ?? null;
+                //                 } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q3) {
+                //                     $precio = $mat['PRECIO_UNITARIO_Q3'] ?? null;
+                //                 }
 
-                            if ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q1) {
-                                $cantidad = $row->CANTIDAD_REALQ1;
-                                $precio   = $row->PRECIO_UNITARIOQ1;
-                            } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q2) {
-                                $cantidad = $row->CANTIDAD_REALQ2;
-                                $precio   = $row->PRECIO_UNITARIOQ2;
-                            } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q3) {
-                                $cantidad = $row->CANTIDAD_REALQ3;
-                                $precio   = $row->PRECIO_UNITARIOQ3;
-                            }
+                //                 $key = $mat['DESCRIPCION'] . '-' . $cantidad . '-' . $precio;
+                //                 if (!isset($vistos[$key])) {
+                //                     $vistos[$key] = true;
+                //                     $texto = "• {$mat['DESCRIPCION']} ({$cantidad})";
+                //                     if ($precio !== null && $precio !== '') {
+                //                         $texto .= " - $ {$precio}";
+                //                     }
+                //                     $materialesArray[] = $texto;
+                //                 }
+                //             }
+                //         }
+                //     } elseif (!empty($row->HT_DESCRIPCION)) {
+                //         $cantidad = 0;
+                //         $precio   = null;
 
-                            if ($cantidad > 0) {
-                                $key = $row->HT_DESCRIPCION . '-' . $cantidad . '-' . $precio;
-                                if (!isset($vistos[$key])) {
+                //         if ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q1) {
+                //             $cantidad = $row->CANTIDAD_REALQ1;
+                //             $precio   = $row->PRECIO_UNITARIOQ1;
+                //         } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q2) {
+                //             $cantidad = $row->CANTIDAD_REALQ2;
+                //             $precio   = $row->PRECIO_UNITARIOQ2;
+                //         } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q3) {
+                //             $cantidad = $row->CANTIDAD_REALQ3;
+                //             $precio   = $row->PRECIO_UNITARIOQ3;
+                //         }
+
+                //         if ($cantidad > 0) {
+                //             $key = $row->HT_DESCRIPCION . '-' . $cantidad . '-' . $precio;
+                //             if (!isset($vistos[$key])) {
+                //                 $vistos[$key] = true;
+                //                 $texto = "• {$row->HT_DESCRIPCION} ({$cantidad})";
+                //                 if ($precio !== null && $precio !== '') {
+                //                     $texto .= " - $ {$precio}";
+                //                 }
+                //                 $materialesArray[] = $texto;
+                //             }
+                //         }
+                //     }
+                // }
+
+                foreach ($group as $row) {
+                    // === Caso 1: MATERIALES_JSON (cuando tiene PO) ===
+                    if (!empty($row->MATERIALES_JSON)) {
+                        $materiales = json_decode($row->MATERIALES_JSON, true);
+
+                        if (is_array($materiales)) {
+                            foreach ($materiales as $mat) {
+                                $cantidad     = $mat['CANTIDAD_'] ?? 0;
+                                $precio       = $mat['PRECIO_UNITARIO'] ?? null;
+                                $unidad       = $mat['UNIDAD_MEDIDA'] ?? '';
+                                $descripcion  = $mat['DESCRIPCION'] ?? '';
+
+                                $key = $descripcion . '-' . $cantidad . '-' . $precio . '-' . $unidad;
+
+                                if ($cantidad > 0 && !isset($vistos[$key])) {
                                     $vistos[$key] = true;
-                                    $texto = "• {$row->HT_DESCRIPCION} ({$cantidad})";
+                                    $texto = "• {$descripcion} ({$cantidad} {$unidad})"; // 👈 unidad incluida
                                     if ($precio !== null && $precio !== '') {
                                         $texto .= " - $ {$precio}";
                                     }
@@ -294,7 +324,74 @@ class grController extends Controller
                         }
                     }
 
-                    $bienes = '';
+                    // === Caso 2: MATERIALES_HOJA_JSON (cuando no tiene PO pero sí JSON en hoja) ===
+                    elseif (!empty($row->MATERIALES_HOJA_JSON)) {
+                        $materiales = json_decode($row->MATERIALES_HOJA_JSON, true);
+                        if (is_array($materiales)) {
+                            foreach ($materiales as $mat) {
+                                $cantidad     = $mat['CANTIDAD_REAL'] ?? ($mat['CANTIDAD'] ?? 0);
+                                if ($cantidad <= 0) continue;
+
+                                $unidad      = $mat['UNIDAD_MEDIDA'] ?? '';
+                                $descripcion = $mat['DESCRIPCION'] ?? '';
+
+                                $precio = null;
+                                if ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q1) {
+                                    $precio = $mat['PRECIO_UNITARIO'] ?? null;
+                                } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q2) {
+                                    $precio = $mat['PRECIO_UNITARIO_Q2'] ?? null;
+                                } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q3) {
+                                    $precio = $mat['PRECIO_UNITARIO_Q3'] ?? null;
+                                }
+
+                                $key = $descripcion . '-' . $cantidad . '-' . $precio . '-' . $unidad;
+                                if (!isset($vistos[$key])) {
+                                    $vistos[$key] = true;
+                                    $texto = "• {$descripcion} ({$cantidad} {$unidad})"; // 👈 unidad incluida
+                                    if ($precio !== null && $precio !== '') {
+                                        $texto .= " - $ {$precio}";
+                                    }
+                                    $materialesArray[] = $texto;
+                                }
+                            }
+                        }
+                    }
+
+                    // === Caso 3: HT_DESCRIPCION (sin JSON, directo desde hoja_trabajo) ===
+                    elseif (!empty($row->HT_DESCRIPCION)) {
+                        $cantidad     = 0;
+                        $precio       = null;
+                        $unidad       = $row->UNIDAD_MEDIDA ?? ''; // 👈 asegúrate de traerlo en el SELECT
+                        $descripcion  = $row->HT_DESCRIPCION;
+
+                        if ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q1) {
+                            $cantidad = $row->CANTIDAD_REALQ1;
+                            $precio   = $row->PRECIO_UNITARIOQ1;
+                        } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q2) {
+                            $cantidad = $row->CANTIDAD_REALQ2;
+                            $precio   = $row->PRECIO_UNITARIOQ2;
+                        } elseif ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q3) {
+                            $cantidad = $row->CANTIDAD_REALQ3;
+                            $precio   = $row->PRECIO_UNITARIOQ3;
+                        }
+
+                        if ($cantidad > 0) {
+                            $key = $descripcion . '-' . $cantidad . '-' . $precio . '-' . $unidad;
+                            if (!isset($vistos[$key])) {
+                                $vistos[$key] = true;
+                                $texto = "• {$descripcion} ({$cantidad} {$unidad})"; // 👈 unidad incluida
+                                if ($precio !== null && $precio !== '') {
+                                    $texto .= " - $ {$precio}";
+                                }
+                                $materialesArray[] = $texto;
+                            }
+                        }
+                    }
+                }
+
+
+
+                $bienes = '';
                     if (!empty($materialesArray)) {
                         $mostrar = array_slice($materialesArray, 0, 3);
                         $ocultos = array_slice($materialesArray, 3);
@@ -631,6 +728,8 @@ class grController extends Controller
     }
 
 ////  PRIMERAS FUNCIONES
+
+
     // public function guardarGR(Request $request)
     // {
     //     DB::beginTransaction();
@@ -1313,7 +1412,6 @@ class grController extends Controller
                 ->where('NO_MR', $request->modal_no_mr)
                 ->value('USUARIO_ID');
 
-            // Normalizar ID_GR: puede ser string, null o array
             $idsGR = is_array($request->ID_GR) ? $request->ID_GR : [$request->ID_GR];
 
             foreach ($idsGR as $idGR) {

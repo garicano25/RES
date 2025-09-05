@@ -178,7 +178,7 @@
                             <input type="text" class="form-control" id="modal_no_mr" name="modal_no_mr" readonly>
                         </div>
                         <div class="col-md-3">
-                            <label class="form-label">Fecha Aprobación MR</label>
+                            <label class="form-label">Fecha aprobación MR</label>
                             <input type="text" class="form-control" id="modal_fecha_mr" name="modal_fecha_mr" readonly>
                         </div>
                         <div class="col-md-3">
@@ -186,7 +186,7 @@
                             <input type="text" class="form-control" id="modal_no_po" name="modal_no_po" readonly>
                         </div>
                         <div class="col-md-3">
-                            <label class="form-label">Fecha Aprobación PO</label>
+                            <label class="form-label">Fecha aprobación PO</label>
                             <input type="text" class="form-control" id="modal_fecha_po" name="modal_fecha_po" readonly>
                         </div>
                     </div>
@@ -213,30 +213,42 @@
                             </select>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Fecha Entrega PO</label>
+                            <label class="form-label">Fecha entrega PO</label>
                             <input type="text" class="form-control" id="modal_fecha_entrega" name="modal_fecha_entrega" readonly>
                         </div>
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label class="form-label">No. recepción de orden - GR</label>
                             <input type="text" class="form-control" id="NO_RECEPCION" name="NO_RECEPCION">
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label class="form-label">Fecha de emisión</label>
                             <div class="input-group">
                                 <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_ACREDITACION" name="DESDE_ACREDITACION">
                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
                             <label class="form-label">Fecha de entrega GR</label>
                             <div class="input-group">
                                 <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ENTREGA_GR" name="FECHA_ENTREGA_GR">
                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                             </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">La GR es parcial </label>
+                            <select class="form-control" id="GR_PARCIAL" name="GR_PARCIAL">
+                                <option value="" selected>Seleccione una opción</option>
+                                <option value="Sí">Sí</option>
+                                <option value="No">No</option>
+                            </select>
+
                         </div>
                     </div>
                     <hr>
@@ -251,14 +263,12 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label>Mandar a Vo.Bo de usuario</label>
-                            <div id="estado-container" class="p-2 rounded">
-                                <select class="form-control" id="MANDAR_USUARIO_VOBO" name="MANDAR_USUARIO_VOBO">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="Sí">Sí</option>
-                                    <option value="No">No</option>
-                                </select>
-                            </div>
+                            <label class="form-label">Mandar a Vo.Bo de usuario</label>
+                            <select class="form-control" id="MANDAR_USUARIO_VOBO" name="MANDAR_USUARIO_VOBO">
+                                <option value="" selected disabled>Seleccione una opción</option>
+                                <option value="Sí">Sí</option>
+                                <option value="No">No</option>
+                            </select>
                         </div>
 
                     </div>
@@ -282,36 +292,15 @@
                                 </select>
                             </div>
                         </div>
-
-
-                        <div class="col-md-6">
-                            <label>GR parcial </label>
-                            <div class="p-2 rounded">
-                                <select class="form-control" id="GR_PARCIAL" name="GR_PARCIAL">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="Sí">Sí</option>
-                                    <option value="No">No</option>
-                                </select>
-                            </div>
-                        </div>
-
-
-
-
                         <div class="col-md-6">
                             <label>Finalizar GR </label>
-                            <div class="p-2 rounded">
-                                <select class="form-control" id="FINALIZAR_GR" name="FINALIZAR_GR">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="Sí">Sí</option>
-                                    <option value="No">No</option>
-                                </select>
-                            </div>
+                            <select class="form-control" id="FINALIZAR_GR" name="FINALIZAR_GR">
+                                <option value="" selected>Seleccione una opción</option>
+                                <option value="Sí">Sí</option>
+                                <option value="No">No</option>
+                            </select>
+
                         </div>
-
-
-
-
                     </div>
 
                 </div>

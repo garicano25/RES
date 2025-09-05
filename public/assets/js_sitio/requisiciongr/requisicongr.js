@@ -627,9 +627,8 @@ if (resp.existe) {
               <div class="tab-pane fade ${show}" id="pane-${id}" role="tabpanel">
                 <form class="form-gr" data-id="${cab.ID_GR}">
                 
-               
-                  
-                  <input type="hidden" name="ID_GR[]" value="${cab.ID_GR}">
+                    
+                 <input type="hidden" name="ID_GR[]" value="${cab.ID_GR}">
 
 
                   <!-- Cabecera -->
@@ -684,24 +683,33 @@ if (resp.existe) {
                   </div>
 
                   <div class="row mb-3">
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                           <label>No. Recepción GR</label>
                           <input type="text" class="form-control" value="${cab.NO_RECEPCION ?? ''}"  name="NO_RECEPCION">
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                           <label>Fecha de emisión</label>
                            <div class="input-group">
                                 <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" value="${cab.FECHA_EMISION ?? ''}"  name="DESDE_ACREDITACION" >
                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                             </div>
                       </div>
-
-                       <div class="col-md-4">
+                  </div>
+                  <div class="row mb-3">
+                       <div class="col-md-6">
                             <label>Fecha de entrega GR</label>
                            <div class="input-group">
                                 <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" value="${cab.FECHA_ENTREGA_GR ?? ''}"  name="FECHA_ENTREGA_GR" >
                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                             </div>
+                      </div>
+                       <div class="col-md-6">
+                          <label class="form-label"> GR Parcial</label>
+                          <select class="form-control" name="GR_PARCIAL">
+                              <option value="">Seleccione</option>
+                              <option value="Sí" ${cab.GR_PARCIAL === "Sí" ? "selected" : ""}>Sí</option>
+                              <option value="No" ${cab.GR_PARCIAL === "No" ? "selected" : ""}>No</option>
+                          </select>
                       </div>
                   </div>
 
@@ -717,17 +725,13 @@ if (resp.existe) {
                           <input type="text" class="form-control" value="${cab.USUARIO_SOLICITO ?? ''}"  name="modal_usuario_nombre" readonly>
                       </div>
                       <div class="col-md-6">
-
-                       <label>Mandar a Vo.Bo usuario</label>
-                          <select class="form-control" name="MANDAR_USUARIO_VOBO" 
-                              <option value="">Seleccione</option>
+                          <label class="form-label"> Mandar a Vo.Bo usuario</label>
+                              <select class="form-control" name="MANDAR_USUARIO_VOBO" 
                                   <option value="">Seleccione</option>
-                                <option value="Sí" ${cab.MANDAR_USUARIO_VOBO === "Sí" ? "selected" : ""}>Sí</option>
-                              <option value="No" ${cab.MANDAR_USUARIO_VOBO === "No" ? "selected" : ""}>No</option>
+                                      <option value="">Seleccione</option>
+                                    <option value="Sí" ${cab.MANDAR_USUARIO_VOBO === "Sí" ? "selected" : ""}>Sí</option>
+                                  <option value="No" ${cab.MANDAR_USUARIO_VOBO === "No" ? "selected" : ""}>No</option>
                           </select>
-
-
-                         
                       </div>
                   </div>
 
@@ -754,14 +758,7 @@ if (resp.existe) {
                         </div>
 
 
-                      <div class="col-md-12">
-                          <label>GR Parcial</label>
-                          <select class="form-control" name="GR_PARCIAL">
-                              <option value="">Seleccione</option>
-                              <option value="Sí" ${cab.GR_PARCIAL === "Sí" ? "selected" : ""}>Sí</option>
-                              <option value="No" ${cab.GR_PARCIAL === "No" ? "selected" : ""}>No</option>
-                          </select>
-                      </div>
+                     
                   </div>
 
 
@@ -781,7 +778,6 @@ if (resp.existe) {
                 detalleCont.append(bloque);
             });
 
-            // 🔹 Insertar token CSRF en el form de este tab
             let $form = $(`#pane-${id} form.form-gr`);
             if ($form.find('input[name="_token"]').length === 0) {
                 $form.prepend(
@@ -789,7 +785,6 @@ if (resp.existe) {
                 );
             }
 
-            // 🔹 Inicializar datepicker en este tab después de insertarlo
             $(`#pane-${id} .mydatepicker`).datepicker({
                 format: 'yyyy-mm-dd',
                 weekStart: 1,
@@ -813,7 +808,7 @@ if (resp.existe) {
     else {
         let cab = resp.cabecera;
 
-                   $('#ID_GR').val(cab.ID_GR ?? '');
+            $('#ID_GR').val(cab.ID_GR ?? '');
             $('#modal_no_mr').val(cab.NO_MR);
             $('#modal_fecha_mr').val(data.FECHA_APRUEBA_MR ?? '');
             $('#modal_no_po').val(cab.NO_PO ?? '');
@@ -826,14 +821,12 @@ if (resp.existe) {
             $('#MANDAR_USUARIO_VOBO').val(cab.MANDAR_USUARIO_VOBO ?? '');
             $('#FECHA_VOUSUARIO').val(cab.FECHA_VOUSUARIO ?? '');
             $('#VO_BO_USUARIO').val(cab.VO_BO_USUARIO ?? '');
-      $('#GR_PARCIAL').val(cab.GR_PARCIAL ?? '');
-      
+            $('#GR_PARCIAL').val(cab.GR_PARCIAL ?? '');
             $('#FECHA_ENTREGA_GR').val(cab.FECHA_ENTREGA_GR ?? '');
 
 
       
 
-        // Llenar detalles con tu función
         let detalleCont = $("#modal_bien_servicio");
         detalleCont.empty();
         resp.detalle.forEach(det => {
@@ -862,80 +855,68 @@ if (resp.existe) {
             $('#modal_usuario_nombre').val(data.USUARIO_NOMBRE ?? '');
 
             if (data.BIEN_SERVICIO) {
-                $(data.BIEN_SERVICIO).each(function (index) {
-                    const texto = $(this).text().trim();
-                    let limpio = texto.replace(/^•\s*/, "");
-                    let partes = limpio.split(" - $ ");
-                    let descYcantidad = partes[0];
-                    let precio = partes[1] ?? "";
-                    let match = descYcantidad.match(/^(.*)\((\d+)\)$/);
-                    let descripcion = match ? match[1].trim() : descYcantidad.trim();
-                    let cantidad = match ? match[2] : 0;
+              $(data.BIEN_SERVICIO).each(function (index) {
+                  
+            const texto = $(this).text().trim();
+            let limpio = texto.replace(/^•\s*/, "");
+            let partes = limpio.split(" - $ ");
+            let descYcantidad = partes[0];
+            let precio = partes[1] ?? "";
 
+            let match = descYcantidad.match(/^(.*)\((\d+)\s*([^)]+)\)$/);
+            let descripcion = match ? match[1].trim() : descYcantidad.trim();
+            let cantidad = match ? match[2].trim() : 0;
+            let unidad = match ? match[3].trim() : "";  
+                  
                     let bloque = $(`
                         <div class="border rounded p-3 mb-3 bg-light">
+                        
                           <div class="row mb-2">
+                          
+                          <div class="col-12 text-center">
+                            <h5>Cantidad solicitada</h5>
+                          </div>
+                       
                             <div class="col-3 mt-2">
                               <label class="form-label">Descripción</label>
                               <textarea class="form-control" name="DESCRIPCION[]" rows="2" >${escapeHtml(descripcion)}</textarea>
                             </div>
-
-                            <div class="col-3 mt-2">
-                              <label class="form-label">¿Está en inventario?</label>  
-                              <select class="form-control en_inventario" name="EN_INVENTARIO[]">
-                                <option value="" >Seleccione</option>
-                                <option value="Sí">Sí</option>
-                                <option value="No">No</option>
-                              </select>
-                            </div>
-                              <div class="col-6 bloque-inventario" style="display:none;">
-                                <div class="row">
-                                  <div class="col-6 mt-2">
-                                    <label class="form-label">Tipo Inventario</label>
-                                    <select class="form-control tipo_inventario" name="TIPO_INVENTARIO[]">
-                                      <option value="">Seleccione</option>
-                                      ${resp.tipoinventario.map(t => 
-                                        `<option value="${t.ID_CATALOGO_TIPOINVENTARIO}">${t.DESCRIPCION_TIPO}</option>`
-                                      ).join("")}
-                                    </select>
-                                  </div>
-                                  <div class="col-6 mt-2">
-                                    <label class="form-label">Inventario</label>
-                                    <select class="form-control inventario" name="INVENTARIO[]">
-                                      <option value="">Seleccione</option>
-                                    </select>
-                                  </div>
+                            <div class="col-2 mt-2">
+                                  <label class="form-label">U.M.</label>
+                                  <input type="text" class="form-control" name="UNIDAD[]" value="${unidad}" readonly>
                                 </div>
-                              </div>
-                            <div class="col-4 mt-2">
+                           
+                            <div class="col-2 mt-2">
                               <label class="form-label">Cantidad</label>
                               <input type="number" class="form-control cantidad" name="CANTIDAD[]" value="${cantidad}" readonly>
                             </div>
-                            <div class="col-4 mt-2">
-                              <label class="form-label">Precio Unitario</label>
+                            <div class="col-2 mt-2">
+                              <label class="form-label">Precio unitario</label>
                               <input type="text" class="form-control precio_unitario" name="PRECIO_UNITARIO[]" value="${precio}" readonly>
                             </div>
-                            <div class="col-4 mt-2">
-                              <label class="form-label">Precio Total</label>
+                            <div class="col-2 mt-2">
+                              <label class="form-label">Precio total</label>
                               <input type="text" class="form-control precio_total_mr" name="PRECIO_TOTAL_MR[]" value="0" readonly>
                             </div>
                           </div>
-
+                              <div class="col-12 text-center">
+                                <h5>Cantidad recibida y especificación del bien o servicio</h5>
+                              </div>
                           <div class="row mb-2">
                             <div class="col-3 mt-2">
-                              <label class="form-label">Cantidad Rechazada</label>
+                              <label class="form-label">Cantidad rechazada</label>
                               <input type="number" class="form-control" name="CANTIDAD_RECHAZADA[]" value="0" min="0">
                             </div>
                             <div class="col-3 mt-2">
-                              <label class="form-label">Cantidad Aceptada</label>
+                              <label class="form-label">Cantidad aceptada</label>
                               <input type="number" class="form-control cantidad_aceptada" name="CANTIDAD_ACEPTADA[]" value="0" min="0" max="${cantidad}">
                             </div>
                             <div class="col-3 mt-2">
-                              <label class="form-label">Precio Unitario GR</label>
+                              <label class="form-label">Precio unitario GR</label>
                               <input type="text" class="form-control precio_unitario_gr" name="PRECIO_UNITARIO_GR[]" value="0" readonly>
                             </div>
                             <div class="col-3 mt-2">
-                              <label class="form-label">Precio Total GR</label>
+                              <label class="form-label">Precio total GR</label>
                               <input type="text" class="form-control precio_total_gr" name="PRECIO_TOTAL_GR[]" value="0" readonly>
                             </div>
                           </div>
@@ -972,11 +953,10 @@ if (resp.existe) {
                               </select>
                             </div>
                             <div class="col-6 mt-2">
-                              <label class="form-label">Comentario Estado</label>
+                              <label class="form-label">Comentario del estado</label>
                               <textarea class="form-control" name="COMENTARIO_ESTADO[]" rows="2"></textarea>
                             </div>
                           </div>
-
                           <div class="row mb-2">
                             <div class="col-12 mt-2">
                               <label class="form-label">Tipo</label>
@@ -987,6 +967,39 @@ if (resp.existe) {
                               </select>
                             </div>
                           </div>
+
+
+                          <div class="row mb-2">
+                           <div class="col-4 mt-2">
+                              <label class="form-label">¿Está en inventario?</label>  
+                              <select class="form-control en_inventario" name="EN_INVENTARIO[]">
+                                <option value="" >Seleccione</option>
+                                <option value="Sí">Sí</option>
+                                <option value="No">No</option>
+                              </select>
+                            </div>
+                              <div class="col-8 bloque-inventario" style="display:none;">
+                                <div class="row">
+                                  <div class="col-6 mt-2">
+                                    <label class="form-label">Tipo Inventario</label>
+                                    <select class="form-control tipo_inventario" name="TIPO_INVENTARIO[]">
+                                      <option value="">Seleccione</option>
+                                      ${resp.tipoinventario.map(t => 
+                                        `<option value="${t.ID_CATALOGO_TIPOINVENTARIO}">${t.DESCRIPCION_TIPO}</option>`
+                                      ).join("")}
+                                    </select>
+                                  </div>
+                                  <div class="col-4 mt-2">
+                                    <label class="form-label">Inventario</label>
+                                    <select class="form-control inventario" name="INVENTARIO[]">
+                                      <option value="">Seleccione</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+
+
                         </div>
                     `);
 
