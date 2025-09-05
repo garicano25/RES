@@ -153,8 +153,9 @@ $("#guardarPO").click(function (e) {
             var servicio = {
                 'DESCRIPCION': $(this).find("input[name='DESCRIPCION']").val(),
                 'CANTIDAD_': $(this).find("input[name='CANTIDAD_']").val(),
-                'PRECIO_UNITARIO': $(this).find("input[name='PRECIO_UNITARIO']").val()
-               
+                'PRECIO_UNITARIO': $(this).find("input[name='PRECIO_UNITARIO']").val(),
+                'UNIDAD_MEDIDA': $(this).find("input[name='UNIDAD_MEDIDA']").val()
+               ,
             };
             servicios.push(servicio);
         });
@@ -520,9 +521,13 @@ function cargarMaterialesDesdeJSON(serviciosJson) {
             divMaterial.classList.add('row', 'material-item', 'mt-1');
 
             divMaterial.innerHTML = `
-                <div class="col-6">
+                <div class="col-4">
                     <label class="form-label">Descripción</label>
-                    <input type="text" class="form-control" name="DESCRIPCION" value="${servicio.DESCRIPCION}" required>
+                    <input type="text" class="form-control" name="DESCRIPCION" value="${escapeHtml(servicio.DESCRIPCION)}" required>
+                </div>
+                 <div class="col-2">
+                    <label class="form-label">U.M.</label>
+                    <input type="text"  class="form-control" name="UNIDAD_MEDIDA" value="${servicio.UNIDAD_MEDIDA}" required>
                 </div>
                 <div class="col-2">
                     <label class="form-label">Cantidad</label>

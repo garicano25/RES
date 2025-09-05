@@ -530,11 +530,11 @@
     @endif
 
     @if(request()->is('Orden_compra'))
-    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.13"></script>
+    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.14"></script>
     @endif
 
     @if(request()->is('Orden_compra_aprobación'))
-    <script src="/assets/js_sitio/orden_compra/aprobacioncompra.js?v=1.5"></script>
+    <script src="/assets/js_sitio/orden_compra/aprobacioncompra.js?v=1.6"></script>
     @endif
 
     @if(request()->is('Matriz_comparativa'))

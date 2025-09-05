@@ -491,6 +491,7 @@ class mrController extends Controller
 
 
 
+
     // public function guardarHOJAS(Request $request)
     // {
     //     $esUnico = $request->input('ES_UNICO');
@@ -529,6 +530,8 @@ class mrController extends Controller
     //     $requiere_po = $request->input('REQUIERE_PO');
     //     $requierecomentario = $request->input('REQUIERE_COMENTARIO');
     //     $comentarioaprobacion = $request->input('COMENTARIO_APROBACION');
+    //     $comentariosolicitud = $request->input('COMENTARIO_SOLICITUD');
+
 
     //     if ($esUnico === 'SI') {
     //         $materiales_hoja_json = $request->input('MATERIALES_HOJA_JSON')[0] ?? null;
@@ -567,6 +570,8 @@ class mrController extends Controller
     //             'REQUIERE_PO' => $requiere_po[0] ?? null,
     //             'REQUIERE_COMENTARIO' => $requierecomentario[0] ?? null,
     //             'COMENTARIO_APROBACION' => $comentarioaprobacion[0] ?? null,
+    //             'COMENTARIO_SOLICITUD' => $comentariosolicitud[0] ?? null,
+
     //             'MATERIALES_HOJA_JSON' => $materiales_hoja_json,
     //         ];
 
@@ -594,6 +599,261 @@ class mrController extends Controller
     //         }
 
     //         $hoja->save();
+
+    //         if (($solicitarverificacion[0] ?? null) === 'Sí' && !$hoja->SOLICITO_ID) {
+    //             $hoja->SOLICITO_ID = auth()->user()->ID_USUARIO;
+    //             $hoja->save();
+    //         }
+
+    //         if (in_array(($estadoaprobacion[0] ?? null), ['Aprobada', 'Rechazada']) && !$hoja->APROBADO_ID) {
+    //             $hoja->APROBADO_ID = auth()->user()->ID_USUARIO;
+    //             $hoja->save();
+    //         }
+
+
+    //         if (($requiere_po[0] ?? null) === 'Sí' && ($estadoaprobacion[0] ?? null) === 'Aprobada') {
+    //             $ordenExistente = DB::table('formulario_ordencompra')
+    //                 ->get()
+    //                 ->first(function ($registro) use ($id) {
+    //                     $hojas = json_decode($registro->HOJA_ID ?? '[]', true);
+    //                     return in_array((string) $id, $hojas);
+    //                 });
+
+    //             if (!$ordenExistente) {
+    //                 // Detectar proveedor y su Q
+    //                 $proveedorSeleccionado = $proveedor_seleccionado[0] ?? null;
+
+    //                 $posicionQ = null;
+    //                 if ($proveedorSeleccionado === ($proveedor_q1[0] ?? null)) {
+    //                     $posicionQ = 1;
+    //                 } elseif ($proveedorSeleccionado === ($proveedor_q2[0] ?? null)) {
+    //                     $posicionQ = 2;
+    //                 } elseif ($proveedorSeleccionado === ($proveedor_q3[0] ?? null)) {
+    //                     $posicionQ = 3;
+    //                 }
+
+    //                 $materiales_json = json_decode($materiales_hoja_json ?? '[]', true);
+    //                 $materialesFiltrados = [];
+
+    //                 foreach ($materiales_json as $m) {
+    //                     $cantidad = $m['CANTIDAD_REAL'] ?? '';
+    //                     $precio = '';
+
+    //                     if ($posicionQ === 1) {
+    //                         $precio = $m['PRECIO_UNITARIO'] ?? '';
+    //                     } elseif ($posicionQ === 2) {
+    //                         $precio = $m['PRECIO_UNITARIO_Q2'] ?? '';
+    //                     } elseif ($posicionQ === 3) {
+    //                         $precio = $m['PRECIO_UNITARIO_Q3'] ?? '';
+    //                     }
+
+    //                     $materialesFiltrados[] = [
+    //                         'DESCRIPCION'     => $m['DESCRIPCION'] ?? '',
+    //                         'CANTIDAD_'       => $cantidad,
+    //                         'PRECIO_UNITARIO' => $precio,
+    //                     ];
+    //                 }
+
+    //                 $año = now()->format('y');
+    //                 $ultimo = DB::table('formulario_ordencompra')
+    //                     ->where('NO_PO', 'like', "RES-PO$año-%")
+    //                     ->orderByDesc('ID_FORMULARIO_PO')
+    //                     ->value('NO_PO');
+
+    //                 $consecutivo = $ultimo ? (int)substr($ultimo, -3) + 1 : 1;
+    //                 $numeroOrden = sprintf("RES-PO%s-%03d", $año, $consecutivo);
+
+    //                 DB::table('formulario_ordencompra')->insert([
+    //                     'HOJA_ID'                 => json_encode([(string) $id]),
+    //                     'NO_MR'                   => $no_mr,
+    //                     'NO_PO'                   => $numeroOrden,
+    //                     'PROVEEDOR_SELECCIONADO' => $proveedorSeleccionado,
+    //                     'MATERIALES_JSON'        => json_encode($materialesFiltrados, JSON_UNESCAPED_UNICODE),
+    //                     'ACTIVO'                  => 1,
+    //                     'created_at'              => now(),
+    //                     'updated_at'              => now(),
+    //                 ]);
+    //             }
+    //         }
+
+
+
+    //         // /*****************************************************************
+    //         //  * MATRIZ COMPARATIVA — SOLO CUANDO ES UNICO
+    //         //  *****************************************************************/
+    //         // $proveedores = [
+    //         //     1 => $proveedor_q1[0] ?? null,
+    //         //     2 => $proveedor_q2[0] ?? null,
+    //         //     3 => $proveedor_q3[0] ?? null,
+    //         // ];
+
+    //         // $subtotales = [
+    //         //     1 => $subtotal_q1[0] ?? 0,
+    //         //     2 => $subtotal_q2[0] ?? 0,
+    //         //     3 => $subtotal_q3[0] ?? 0,
+    //         // ];
+
+    //         // $materiales_json = json_decode($materiales_hoja_json ?? '[]', true);
+
+    //         // $proveedores_detectados = [];
+    //         // $materiales_detectados = [];
+
+    //         // foreach ([1, 2, 3] as $q) {
+    //         //     $prov = $proveedores[$q];
+    //         //     $subt = $subtotales[$q];
+
+    //         //     if ($subt > 10001 && !empty($prov)) {
+    //         //         $proveedores_detectados["PROVEEDOR{$q}"] = $prov;
+
+    //         //         $materialesPorProveedor = [];
+
+    //         //         foreach ($materiales_json as $m) {
+    //         //             // Construcción dinámica de campos por proveedor
+    //         //             $cantidadCampo = 'CANTIDAD_REAL';
+    //         //             $precioCampo   = $q === 1 ? 'PRECIO_UNITARIO' : "PRECIO_UNITARIO_Q{$q}";
+
+    //         //             // Saltar si la cantidad es 0 o vacía
+    //         //             if (empty($m[$cantidadCampo]) || $m[$cantidadCampo] == 0) {
+    //         //                 continue;
+    //         //             }
+
+    //         //             $materialesPorProveedor[] = [
+    //         //                 'DESCRIPCION'     => $m['DESCRIPCION'] ?? '',
+    //         //                 'CANTIDAD_'       => $m[$cantidadCampo],
+    //         //                 'PRECIO_UNITARIO' => $m[$precioCampo] ?? '',
+    //         //             ];
+    //         //         }
+
+
+    //         //         $materiales_detectados["MATERIALES_JSON_PROVEEDOR{$q}"] = json_encode($materialesPorProveedor, JSON_UNESCAPED_UNICODE);
+    //         //     }
+    //         // }
+
+    //         // // Si al menos un proveedor pasó los 10,001
+    //         // if (!empty($proveedores_detectados)) {
+    //         //     // Verificar si ya existe la combinación exacta de proveedores (sin importar orden)
+    //         //     $proveedores_set = array_values(array_filter($proveedores_detectados));
+    //         //     sort($proveedores_set, SORT_STRING);
+
+    //         //     $yaExiste = DB::table('formulario_matrizcomparativa')
+    //         //         ->where('NO_MR', $no_mr)
+    //         //         ->get()
+    //         //         ->filter(function ($registro) use ($proveedores_set) {
+    //         //             $existentes = array_filter([
+    //         //                 $registro->PROVEEDOR1 ?? null,
+    //         //                 $registro->PROVEEDOR2 ?? null,
+    //         //                 $registro->PROVEEDOR3 ?? null,
+    //         //             ]);
+    //         //             sort($existentes, SORT_STRING);
+    //         //             return $existentes === $proveedores_set;
+    //         //         })->isNotEmpty();
+
+    //         //     if (!$yaExiste) {
+    //         //         // Marcar la hoja como REQUIERE_MATRIZ
+    //         //         HojaTrabajo::where('id', $id)->update(['REQUIERE_MATRIZ' => 'Sí']);
+
+    //         //         // Insertar en la tabla matriz comparativa
+    //         //         DB::table('formulario_matrizcomparativa')->insert(array_merge([
+    //         //             'HOJA_ID' => json_encode([(string) $id], JSON_UNESCAPED_UNICODE),
+    //         //             'NO_MR'      => $no_mr,
+    //         //             'created_at' => now(),
+    //         //             'updated_at' => now(),
+    //         //         ], $proveedores_detectados, $materiales_detectados));
+    //         //     }
+    //         // }
+    //         // /********** FIN MATRIZ COMPARATIVA PARA PROVEEDOR UNICO *************/
+    //         /*****************************************************************
+    //          * MATRIZ COMPARATIVA — SOLO CUANDO ES UNICO
+    //          *****************************************************************/
+    //         $proveedores = [
+    //             1 => $proveedor_q1[0] ?? null,
+    //             2 => $proveedor_q2[0] ?? null,
+    //             3 => $proveedor_q3[0] ?? null,
+    //         ];
+
+    //         $subtotales = [
+    //             1 => $subtotal_q1[0] ?? 0,
+    //             2 => $subtotal_q2[0] ?? 0,
+    //             3 => $subtotal_q3[0] ?? 0,
+    //         ];
+
+    //         $materiales_json = json_decode($materiales_hoja_json ?? '[]', true);
+
+    //         $proveedores_detectados = [];
+    //         $materiales_detectados = [];
+
+    //         foreach ([1, 2, 3] as $q) {
+    //             $prov = $proveedores[$q];
+    //             $subt = $subtotales[$q];
+
+    //             if ($subt > 10001 && !empty($prov)) {
+    //                 $proveedores_detectados["PROVEEDOR{$q}"] = $prov;
+
+    //                 $materialesPorProveedor = [];
+
+    //                 foreach ($materiales_json as $m) {
+    //                     $cantidadCampo = 'CANTIDAD_REAL';
+    //                     $precioCampo   = $q === 1 ? 'PRECIO_UNITARIO' : "PRECIO_UNITARIO_Q{$q}";
+
+    //                     if (empty($m[$cantidadCampo]) || $m[$cantidadCampo] == 0) {
+    //                         continue;
+    //                     }
+
+    //                     $materialesPorProveedor[] = [
+    //                         'DESCRIPCION'     => $m['DESCRIPCION'] ?? '',
+    //                         'CANTIDAD_'       => $m[$cantidadCampo],
+    //                         'PRECIO_UNITARIO' => $m[$precioCampo] ?? '',
+    //                     ];
+    //                 }
+
+    //                 $materiales_detectados["MATERIALES_JSON_PROVEEDOR{$q}"] = json_encode($materialesPorProveedor, JSON_UNESCAPED_UNICODE);
+    //             }
+    //         }
+
+    //         if (!empty($proveedores_detectados)) {
+    //             $proveedores_set = array_values(array_filter($proveedores_detectados));
+    //             sort($proveedores_set, SORT_STRING);
+
+    //             $registroExistente = DB::table('formulario_matrizcomparativa')
+    //                 ->where('NO_MR', $no_mr)
+    //                 ->get()
+    //                 ->filter(function ($registro) use ($proveedores_set, $id) {
+    //                     $existentes = array_filter([
+    //                         $registro->PROVEEDOR1 ?? null,
+    //                         $registro->PROVEEDOR2 ?? null,
+    //                         $registro->PROVEEDOR3 ?? null,
+    //                     ]);
+    //                     sort($existentes, SORT_STRING);
+
+    //                     if ($existentes !== $proveedores_set) {
+    //                         return false;
+    //                     }
+
+    //                     $hoja_ids = json_decode($registro->HOJA_ID ?? '[]', true);
+    //                     return in_array((string) $id, $hoja_ids);
+    //                 })
+    //                 ->values()
+    //                 ->first();
+
+    //             if ($registroExistente) {
+    //                 DB::table('formulario_matrizcomparativa')
+    //                     ->where('ID_FORMULARIO_MATRIZ', $registroExistente->ID_FORMULARIO_MATRIZ) 
+    //                     ->update(array_merge([
+    //                         'HOJA_ID'    => json_encode([(string) $id], JSON_UNESCAPED_UNICODE),
+    //                         'updated_at' => now(),
+    //                     ], $proveedores_detectados, $materiales_detectados));
+    //             } else {
+    //                 HojaTrabajo::where('id', $id)->update(['REQUIERE_MATRIZ' => 'Sí']);
+
+    //                 DB::table('formulario_matrizcomparativa')->insert(array_merge([
+    //                     'HOJA_ID'    => json_encode([(string) $id], JSON_UNESCAPED_UNICODE),
+    //                     'NO_MR'      => $no_mr,
+    //                     'created_at' => now(),
+    //                     'updated_at' => now(),
+    //                 ], $proveedores_detectados, $materiales_detectados));
+    //             }
+    //         }
+    //         /********** FIN MATRIZ COMPARATIVA PARA PROVEEDOR UNICO *************/
     //     } else {
     //         $descripciones = $request->input('DESCRIPCION');
     //         $cantidades = $request->input('CANTIDAD');
@@ -657,6 +917,9 @@ class mrController extends Controller
     //                 'REQUIERE_PO' => $requiere_po[$i] ?? null,
     //                 'REQUIERE_COMENTARIO' => $requierecomentario[$i] ?? null,
     //                 'COMENTARIO_APROBACION' => $comentarioaprobacion[$i] ?? null,
+
+    //                 'COMENTARIO_SOLICITUD' => $comentariosolicitud[$i] ?? null,
+
     //             ];
 
     //             $hoja = !empty($ids[$i]) ? HojaTrabajo::find($ids[$i]) : null;
@@ -679,7 +942,397 @@ class mrController extends Controller
     //             }
 
     //             $hoja->save();
+
+    //             if (($solicitarverificacion[$i] ?? null) === 'Sí' && !$hoja->SOLICITO_ID) {
+    //                 $hoja->SOLICITO_ID = auth()->user()->ID_USUARIO;
+    //                 $hoja->save();
+    //             }
+
+
+    //             if (in_array(($estadoaprobacion[$i] ?? null), ['Aprobada', 'Rechazada']) && !$hoja->APROBADO_ID) {
+    //                 $hoja->APROBADO_ID = auth()->user()->ID_USUARIO;
+    //                 $hoja->save();
+    //             }
+
+
     //         }
+
+
+    //         $grupos = [];
+
+    //         for ($i = 0; $i < $total; $i++) {
+    //             // Validación: solo si está aprobada y requiere PO
+    //             if (($requiere_po[$i] ?? null) === 'Sí' && ($estadoaprobacion[$i] ?? null) === 'Aprobada') {
+    //                 $proveedorSeleccionado = $proveedor_seleccionado[$i] ?? null;
+
+    //                 if ($proveedorSeleccionado) {
+    //                     if (!isset($grupos[$proveedorSeleccionado])) {
+    //                         $grupos[$proveedorSeleccionado] = [
+    //                             'ids' => [],
+    //                             'materiales' => [],
+    //                         ];
+    //                     }
+
+    //                     $grupos[$proveedorSeleccionado]['ids'][] = $ids[$i];
+
+    //                     // Identificar de qué Q viene
+    //                     $cant = '';
+    //                     $prec = '';
+
+    //                     if ($proveedorSeleccionado === ($proveedor_q1[$i] ?? null)) {
+    //                         $cant = $cantidadrealq1[$i] ?? '';
+    //                         $prec = $preciounitarioq1[$i] ?? '';
+    //                     } elseif ($proveedorSeleccionado === ($proveedor_q2[$i] ?? null)) {
+    //                         $cant = $cantidadrealq2[$i] ?? '';
+    //                         $prec = $preciounitarioq2[$i] ?? '';
+    //                     } elseif ($proveedorSeleccionado === ($proveedor_q3[$i] ?? null)) {
+    //                         $cant = $cantidadrealq3[$i] ?? '';
+    //                         $prec = $preciounitarioq3[$i] ?? '';
+    //                     }
+
+    //                     $grupos[$proveedorSeleccionado]['materiales'][] = [
+    //                         'DESCRIPCION'     => $descripciones[$i] ?? '',
+    //                         'CANTIDAD_'       => $cant,
+    //                         'PRECIO_UNITARIO' => $prec,
+    //                     ];
+    //                 }
+    //             }
+    //         }
+
+    //         foreach ($grupos as $proveedor => $grupo) {
+    //             $registroExistente = DB::table('formulario_ordencompra')
+    //                 ->get()
+    //                 ->first(function ($registro) use ($grupo) {
+    //                     $hojasExistentes = json_decode($registro->HOJA_ID ?? '[]', true);
+    //                     return count(array_intersect($hojasExistentes, $grupo['ids'])) > 0;
+    //                 });
+
+    //             if (!$registroExistente) {
+    //                 $año = now()->format('y');
+    //                 $ultimo = DB::table('formulario_ordencompra')
+    //                     ->where('NO_PO', 'like', "RES-PO$año-%")
+    //                     ->orderByDesc('ID_FORMULARIO_PO')
+    //                     ->value('NO_PO');
+
+    //                 $consecutivo = $ultimo ? (int)substr($ultimo, -3) + 1 : 1;
+    //                 $numeroOrden = sprintf("RES-PO%s-%03d", $año, $consecutivo);
+
+    //                 DB::table('formulario_ordencompra')->insert([
+    //                     'HOJA_ID'                 => json_encode($grupo['ids']),
+    //                     'NO_MR'                   => $no_mr,
+    //                     'NO_PO'                   => $numeroOrden,
+    //                     'PROVEEDOR_SELECCIONADO' => $proveedor,
+    //                     'MATERIALES_JSON'        => json_encode($grupo['materiales'], JSON_UNESCAPED_UNICODE),
+    //                     'ACTIVO'                  => 1,
+    //                     'created_at'              => now(),
+    //                     'updated_at'              => now(),
+    //                 ]);
+    //             }
+    //         }
+
+
+
+    //         // /*****************************************************************
+    //         //  * MATRIZ COMPARATIVA — AGRUPADA POR PROVEEDORES (SIN ORDEN)
+    //         //  * + Marcar REQUIERE_MATRIZ = 'Sí' en hoja_trabajo
+    //         //  *****************************************************************/
+    //         // $grupos = [];
+
+    //         // for ($i = 0; $i < $total; $i++) {
+    //         //     // Verificar si al menos una cotización supera el límite
+    //         //     $subtotalQ1 = $subtotal_q1[$i] ?? 0;
+    //         //     $subtotalQ2 = $subtotal_q2[$i] ?? 0;
+    //         //     $subtotalQ3 = $subtotal_q3[$i] ?? 0;
+
+    //         //     if (
+    //         //         $subtotalQ1 <= 10001 &&
+    //         //         $subtotalQ2 <= 10001 &&
+    //         //         $subtotalQ3 <= 10001
+    //         //     ) {
+    //         //         continue; //  No se considera este producto
+    //         //     }
+
+    //         //     $proveedoresRaw = [
+    //         //         $proveedor_q1[$i] ?? '',
+    //         //         $proveedor_q2[$i] ?? '',
+    //         //         $proveedor_q3[$i] ?? '',
+    //         //     ];
+
+    //         //     // Eliminar vacíos y ordenar alfabéticamente
+    //         //     $proveedoresOrdenados = array_values(array_filter($proveedoresRaw));
+    //         //     sort($proveedoresOrdenados, SORT_STRING);
+    //         //     $grupoKey = implode('|', $proveedoresOrdenados);
+
+    //         //     if (!isset($grupos[$grupoKey])) {
+    //         //         $grupos[$grupoKey] = [
+    //         //             'proveedores_set' => $proveedoresOrdenados,
+    //         //             'proveedor_map' => [],
+    //         //             'ids' => [],
+    //         //             'materiales_por_proveedor' => [],
+    //         //             'subtotales' => [],
+    //         //             'ivas' => [],
+    //         //             'importes' => [],
+    //         //         ];
+    //         //     }
+
+    //         //     $grupos[$grupoKey]['ids'][] = $ids[$i];
+
+    //         //     foreach ([1, 2, 3] as $q) {
+    //         //         $prov = ${"proveedor_q$q"}[$i] ?? null;
+    //         //         $subt = ${"subtotal_q$q"}[$i] ?? 0;
+    //         //         $iva = ${"iva_q$q"}[$i] ?? 0;
+    //         //         $imp = ${"importe_q$q"}[$i] ?? 0;
+    //         //         $cant = ${"cantidadrealq$q"}[$i] ?? '';
+    //         //         $prec = ${"preciounitarioq$q"}[$i] ?? '';
+
+    //         //         if (!empty($prov)) {
+    //         //             $grupos[$grupoKey]['proveedor_map'][$prov] = true;
+    //         //             $grupos[$grupoKey]['subtotales'][$prov][] = $subt;
+    //         //             $grupos[$grupoKey]['ivas'][$prov][] = $iva;
+    //         //             $grupos[$grupoKey]['importes'][$prov][] = $imp;
+    //         //             $grupos[$grupoKey]['materiales_por_proveedor'][$prov][] = [
+    //         //                 'DESCRIPCION'     => $descripciones[$i] ?? '',
+    //         //                 'CANTIDAD_'       => $cant,
+    //         //                 'PRECIO_UNITARIO' => $prec,
+    //         //             ];
+    //         //         }
+    //         //     }
+    //         // }
+
+    //         // foreach ($grupos as $grupo) {
+    //         //     $superaLimite = false;
+
+    //         //     foreach ($grupo['subtotales'] as $subtotales) {
+    //         //         foreach ($subtotales as $subt) {
+    //         //             if ($subt > 10001) {
+    //         //                 $superaLimite = true;
+    //         //                 break 2;
+    //         //             }
+    //         //         }
+    //         //     }
+
+    //         //     if ($superaLimite) {
+    //         //         $registroExistente = DB::table('formulario_matrizcomparativa')
+    //         //             ->where('NO_MR', $no_mr)
+    //         //             ->get()
+    //         //             ->first(function ($registro) use ($grupo) {
+    //         //                 $existentes = array_filter([
+    //         //                     $registro->PROVEEDOR1,
+    //         //                     $registro->PROVEEDOR2,
+    //         //                     $registro->PROVEEDOR3,
+    //         //                 ]);
+    //         //                 sort($existentes);
+    //         //                 return $existentes === $grupo['proveedores_set'];
+    //         //             });
+
+    //         //         if ($registroExistente) {
+    //         //             //  Actualizar existente
+    //         //             $hojasActuales = json_decode($registroExistente->HOJA_ID, true) ?? [];
+    //         //             $hojasNuevas = array_values(array_unique(array_merge($hojasActuales, $grupo['ids'])));
+
+    //         //             $datosUpdate = [
+    //         //                 'HOJA_ID'    => json_encode($hojasNuevas),
+    //         //                 'updated_at' => now(),
+    //         //             ];
+
+    //         //             foreach ($grupo['proveedores_set'] as $idx => $prov) {
+    //         //                 $num = $idx + 1;
+
+    //         //                 $materialesActuales = json_decode($registroExistente->{"MATERIALES_JSON_PROVEEDOR{$num}"} ?? '[]', true);
+    //         //                 $materialesNuevos = $grupo['materiales_por_proveedor'][$prov] ?? [];
+
+    //         //                 $materialesFinal = collect(array_merge($materialesActuales, $materialesNuevos))
+    //         //                     ->unique(function ($item) {
+    //         //                         return $item['DESCRIPCION'] . '|' . $item['CANTIDAD_'] . '|' . $item['PRECIO_UNITARIO'];
+    //         //                     })
+    //         //                     ->values()
+    //         //                     ->all();
+
+    //         //                 $datosUpdate["MATERIALES_JSON_PROVEEDOR{$num}"] = json_encode($materialesFinal, JSON_UNESCAPED_UNICODE);
+    //         //                 $datosUpdate["SUBTOTAL_PROVEEDOR{$num}"] = array_sum($grupo['subtotales'][$prov] ?? []);
+    //         //                 $datosUpdate["IVA_PROVEEDOR{$num}"] = array_sum($grupo['ivas'][$prov] ?? []);
+    //         //                 $datosUpdate["IMPORTE_PROVEEDOR{$num}"] = array_sum($grupo['importes'][$prov] ?? []);
+    //         //             }
+
+    //         //             DB::table('formulario_matrizcomparativa')
+    //         //                 ->where('ID_FORMULARIO_MATRIZ', $registroExistente->ID_FORMULARIO_MATRIZ)
+    //         //                 ->update($datosUpdate);
+
+    //         //             HojaTrabajo::whereIn('id', $grupo['ids'])
+    //         //                 ->update(['REQUIERE_MATRIZ' => 'Sí']);
+    //         //         } else {
+    //         //             //  Insertar nuevo registro
+    //         //             HojaTrabajo::whereIn('id', $grupo['ids'])
+    //         //                 ->update(['REQUIERE_MATRIZ' => 'Sí']);
+
+    //         //             $dataInsert = [
+    //         //                 'HOJA_ID'    => json_encode(array_values($grupo['ids'])),
+    //         //                 'NO_MR'      => $no_mr,
+    //         //                 'created_at' => now(),
+    //         //                 'updated_at' => now(),
+    //         //             ];
+
+    //         //             $proveedoresUnicos = array_values($grupo['proveedores_set']);
+    //         //             foreach ($proveedoresUnicos as $idx => $prov) {
+    //         //                 $num = $idx + 1;
+    //         //                 $dataInsert["PROVEEDOR{$num}"] = $prov;
+    //         //                 $dataInsert["MATERIALES_JSON_PROVEEDOR{$num}"] = json_encode($grupo['materiales_por_proveedor'][$prov], JSON_UNESCAPED_UNICODE);
+    //         //                 $dataInsert["SUBTOTAL_PROVEEDOR{$num}"] = array_sum($grupo['subtotales'][$prov] ?? []);
+    //         //                 $dataInsert["IVA_PROVEEDOR{$num}"] = array_sum($grupo['ivas'][$prov] ?? []);
+    //         //                 $dataInsert["IMPORTE_PROVEEDOR{$num}"] = array_sum($grupo['importes'][$prov] ?? []);
+    //         //             }
+
+    //         //             DB::table('formulario_matrizcomparativa')->insert($dataInsert);
+    //         //         }
+    //         //     }
+    //         // }
+    //         // /********** FIN MATRIZ COMPARATIVA AGRUPADA Y ACTUALIZADA *************/
+
+    //         /*****************************************************************
+    //          * MATRIZ COMPARATIVA — AGRUPADA POR PROVEEDORES (SIN ORDEN)
+    //          * + Marcar REQUIERE_MATRIZ = 'Sí' en hoja_trabajo
+    //          *****************************************************************/
+    //         $grupos = [];
+
+    //         for ($i = 0; $i < $total; $i++) {
+    //             $subtotalQ1 = $subtotal_q1[$i] ?? 0;
+    //             $subtotalQ2 = $subtotal_q2[$i] ?? 0;
+    //             $subtotalQ3 = $subtotal_q3[$i] ?? 0;
+
+    //             if (
+    //                 $subtotalQ1 <= 10001 &&
+    //                 $subtotalQ2 <= 10001 &&
+    //                 $subtotalQ3 <= 10001
+    //             ) {
+    //                 continue;
+    //             }
+
+    //             $proveedoresRaw = [
+    //                 $proveedor_q1[$i] ?? '',
+    //                 $proveedor_q2[$i] ?? '',
+    //                 $proveedor_q3[$i] ?? '',
+    //             ];
+
+    //             $proveedoresOrdenados = array_values(array_filter($proveedoresRaw));
+    //             sort($proveedoresOrdenados, SORT_STRING);
+    //             $grupoKey = implode('|', $proveedoresOrdenados);
+
+    //             if (!isset($grupos[$grupoKey])) {
+    //                 $grupos[$grupoKey] = [
+    //                     'proveedores_set' => $proveedoresOrdenados,
+    //                     'proveedor_map' => [],
+    //                     'ids' => [],
+    //                     'materiales_por_proveedor' => [],
+    //                     'subtotales' => [],
+    //                     'ivas' => [],
+    //                     'importes' => [],
+    //                 ];
+    //             }
+
+    //             $grupos[$grupoKey]['ids'][] = $ids[$i];
+
+    //             foreach ([1, 2, 3] as $q) {
+    //                 $prov = ${"proveedor_q$q"}[$i] ?? null;
+    //                 $subt = ${"subtotal_q$q"}[$i] ?? 0;
+    //                 $iva = ${"iva_q$q"}[$i] ?? 0;
+    //                 $imp = ${"importe_q$q"}[$i] ?? 0;
+    //                 $cant = ${"cantidadrealq$q"}[$i] ?? '';
+    //                 $prec = ${"preciounitarioq$q"}[$i] ?? '';
+
+    //                 if (!empty($prov) && $cant > 0) {
+    //                     $grupos[$grupoKey]['proveedor_map'][$prov] = true;
+    //                     $grupos[$grupoKey]['subtotales'][$prov][] = $subt;
+    //                     $grupos[$grupoKey]['ivas'][$prov][] = $iva;
+    //                     $grupos[$grupoKey]['importes'][$prov][] = $imp;
+    //                     $grupos[$grupoKey]['materiales_por_proveedor'][$prov][] = [
+    //                         'DESCRIPCION'     => $descripciones[$i] ?? '',
+    //                         'CANTIDAD_'       => $cant,
+    //                         'PRECIO_UNITARIO' => $prec,
+    //                     ];
+    //                 }
+    //             }
+    //         }
+
+    //         foreach ($grupos as $grupo) {
+    //             $superaLimite = false;
+
+    //             foreach ($grupo['subtotales'] as $subtotales) {
+    //                 foreach ($subtotales as $subt) {
+    //                     if ($subt > 10001) {
+    //                         $superaLimite = true;
+    //                         break 2;
+    //                     }
+    //                 }
+    //             }
+
+    //             if ($superaLimite) {
+    //                 $registroExistente = DB::table('formulario_matrizcomparativa')
+    //                     ->where('NO_MR', $no_mr)
+    //                     ->get()
+    //                     ->filter(function ($registro) use ($grupo) {
+    //                         $existentes = array_filter([
+    //                             $registro->PROVEEDOR1 ?? null,
+    //                             $registro->PROVEEDOR2 ?? null,
+    //                             $registro->PROVEEDOR3 ?? null,
+    //                         ]);
+    //                         sort($existentes, SORT_STRING);
+    //                         return $existentes === $grupo['proveedores_set'];
+    //                     })
+    //                     ->values()
+    //                     ->first();
+
+    //                 if ($registroExistente) {
+    //                     $hojasActuales = json_decode($registroExistente->HOJA_ID ?? '[]', true);
+    //                     $hojasNuevas = array_values(array_unique(array_merge($hojasActuales, $grupo['ids'])));
+
+    //                     $datosUpdate = [
+    //                         'HOJA_ID'    => json_encode($hojasNuevas),
+    //                         'updated_at' => now(),
+    //                     ];
+
+    //                     foreach ($grupo['proveedores_set'] as $idx => $prov) {
+    //                         $num = $idx + 1;
+
+    //                         $materialesNuevos = $grupo['materiales_por_proveedor'][$prov] ?? [];
+
+    //                         $datosUpdate["MATERIALES_JSON_PROVEEDOR{$num}"] = json_encode($materialesNuevos, JSON_UNESCAPED_UNICODE);
+    //                         $datosUpdate["SUBTOTAL_PROVEEDOR{$num}"] = array_sum($grupo['subtotales'][$prov] ?? []);
+    //                         $datosUpdate["IVA_PROVEEDOR{$num}"] = array_sum($grupo['ivas'][$prov] ?? []);
+    //                         $datosUpdate["IMPORTE_PROVEEDOR{$num}"] = array_sum($grupo['importes'][$prov] ?? []);
+    //                     }
+
+    //                     DB::table('formulario_matrizcomparativa')
+    //                         ->where('ID_FORMULARIO_MATRIZ', $registroExistente->ID_FORMULARIO_MATRIZ)
+    //                         ->update($datosUpdate);
+
+    //                     HojaTrabajo::whereIn('id', $grupo['ids'])
+    //                         ->update(['REQUIERE_MATRIZ' => 'Sí']);
+    //                 } else {
+    //                     HojaTrabajo::whereIn('id', $grupo['ids'])
+    //                         ->update(['REQUIERE_MATRIZ' => 'Sí']);
+
+    //                     $dataInsert = [
+    //                         'HOJA_ID'    => json_encode(array_values($grupo['ids'])),
+    //                         'NO_MR'      => $no_mr,
+    //                         'created_at' => now(),
+    //                         'updated_at' => now(),
+    //                     ];
+
+    //                     $proveedoresUnicos = array_values($grupo['proveedores_set']);
+    //                     foreach ($proveedoresUnicos as $idx => $prov) {
+    //                         $num = $idx + 1;
+    //                         $dataInsert["PROVEEDOR{$num}"] = $prov;
+    //                         $dataInsert["MATERIALES_JSON_PROVEEDOR{$num}"] = json_encode($grupo['materiales_por_proveedor'][$prov], JSON_UNESCAPED_UNICODE);
+    //                         $dataInsert["SUBTOTAL_PROVEEDOR{$num}"] = array_sum($grupo['subtotales'][$prov] ?? []);
+    //                         $dataInsert["IVA_PROVEEDOR{$num}"] = array_sum($grupo['ivas'][$prov] ?? []);
+    //                         $dataInsert["IMPORTE_PROVEEDOR{$num}"] = array_sum($grupo['importes'][$prov] ?? []);
+    //                     }
+
+    //                     DB::table('formulario_matrizcomparativa')->insert($dataInsert);
+    //                 }
+    //             }
+    //         }
+    //         /********** FIN MATRIZ COMPARATIVA AGRUPADA Y ACTUALIZADA *************/
     //     }
 
     //     return response()->json(['success' => true]);
@@ -846,6 +1499,8 @@ class mrController extends Controller
                             'DESCRIPCION'     => $m['DESCRIPCION'] ?? '',
                             'CANTIDAD_'       => $cantidad,
                             'PRECIO_UNITARIO' => $precio,
+                            'UNIDAD_MEDIDA'   => $m['UNIDAD_MEDIDA'] ?? '', 
+
                         ];
                     }
 
@@ -872,94 +1527,6 @@ class mrController extends Controller
             }
 
 
-
-            // /*****************************************************************
-            //  * MATRIZ COMPARATIVA — SOLO CUANDO ES UNICO
-            //  *****************************************************************/
-            // $proveedores = [
-            //     1 => $proveedor_q1[0] ?? null,
-            //     2 => $proveedor_q2[0] ?? null,
-            //     3 => $proveedor_q3[0] ?? null,
-            // ];
-
-            // $subtotales = [
-            //     1 => $subtotal_q1[0] ?? 0,
-            //     2 => $subtotal_q2[0] ?? 0,
-            //     3 => $subtotal_q3[0] ?? 0,
-            // ];
-
-            // $materiales_json = json_decode($materiales_hoja_json ?? '[]', true);
-
-            // $proveedores_detectados = [];
-            // $materiales_detectados = [];
-
-            // foreach ([1, 2, 3] as $q) {
-            //     $prov = $proveedores[$q];
-            //     $subt = $subtotales[$q];
-
-            //     if ($subt > 10001 && !empty($prov)) {
-            //         $proveedores_detectados["PROVEEDOR{$q}"] = $prov;
-
-            //         $materialesPorProveedor = [];
-
-            //         foreach ($materiales_json as $m) {
-            //             // Construcción dinámica de campos por proveedor
-            //             $cantidadCampo = 'CANTIDAD_REAL';
-            //             $precioCampo   = $q === 1 ? 'PRECIO_UNITARIO' : "PRECIO_UNITARIO_Q{$q}";
-
-            //             // Saltar si la cantidad es 0 o vacía
-            //             if (empty($m[$cantidadCampo]) || $m[$cantidadCampo] == 0) {
-            //                 continue;
-            //             }
-
-            //             $materialesPorProveedor[] = [
-            //                 'DESCRIPCION'     => $m['DESCRIPCION'] ?? '',
-            //                 'CANTIDAD_'       => $m[$cantidadCampo],
-            //                 'PRECIO_UNITARIO' => $m[$precioCampo] ?? '',
-            //             ];
-            //         }
-
-
-            //         $materiales_detectados["MATERIALES_JSON_PROVEEDOR{$q}"] = json_encode($materialesPorProveedor, JSON_UNESCAPED_UNICODE);
-            //     }
-            // }
-
-            // // Si al menos un proveedor pasó los 10,001
-            // if (!empty($proveedores_detectados)) {
-            //     // Verificar si ya existe la combinación exacta de proveedores (sin importar orden)
-            //     $proveedores_set = array_values(array_filter($proveedores_detectados));
-            //     sort($proveedores_set, SORT_STRING);
-
-            //     $yaExiste = DB::table('formulario_matrizcomparativa')
-            //         ->where('NO_MR', $no_mr)
-            //         ->get()
-            //         ->filter(function ($registro) use ($proveedores_set) {
-            //             $existentes = array_filter([
-            //                 $registro->PROVEEDOR1 ?? null,
-            //                 $registro->PROVEEDOR2 ?? null,
-            //                 $registro->PROVEEDOR3 ?? null,
-            //             ]);
-            //             sort($existentes, SORT_STRING);
-            //             return $existentes === $proveedores_set;
-            //         })->isNotEmpty();
-
-            //     if (!$yaExiste) {
-            //         // Marcar la hoja como REQUIERE_MATRIZ
-            //         HojaTrabajo::where('id', $id)->update(['REQUIERE_MATRIZ' => 'Sí']);
-
-            //         // Insertar en la tabla matriz comparativa
-            //         DB::table('formulario_matrizcomparativa')->insert(array_merge([
-            //             'HOJA_ID' => json_encode([(string) $id], JSON_UNESCAPED_UNICODE),
-            //             'NO_MR'      => $no_mr,
-            //             'created_at' => now(),
-            //             'updated_at' => now(),
-            //         ], $proveedores_detectados, $materiales_detectados));
-            //     }
-            // }
-            // /********** FIN MATRIZ COMPARATIVA PARA PROVEEDOR UNICO *************/
-            /*****************************************************************
-             * MATRIZ COMPARATIVA — SOLO CUANDO ES UNICO
-             *****************************************************************/
             $proveedores = [
                 1 => $proveedor_q1[0] ?? null,
                 2 => $proveedor_q2[0] ?? null,
@@ -998,6 +1565,7 @@ class mrController extends Controller
                             'DESCRIPCION'     => $m['DESCRIPCION'] ?? '',
                             'CANTIDAD_'       => $m[$cantidadCampo],
                             'PRECIO_UNITARIO' => $m[$precioCampo] ?? '',
+                            'UNIDAD_MEDIDA'   => $m['UNIDAD_MEDIDA'] ?? '', 
                         ];
                     }
 
@@ -1032,7 +1600,7 @@ class mrController extends Controller
 
                 if ($registroExistente) {
                     DB::table('formulario_matrizcomparativa')
-                        ->where('ID_FORMULARIO_MATRIZ', $registroExistente->ID_FORMULARIO_MATRIZ) 
+                        ->where('ID_FORMULARIO_MATRIZ', $registroExistente->ID_FORMULARIO_MATRIZ)
                         ->update(array_merge([
                             'HOJA_ID'    => json_encode([(string) $id], JSON_UNESCAPED_UNICODE),
                             'updated_at' => now(),
@@ -1049,7 +1617,324 @@ class mrController extends Controller
                 }
             }
             /********** FIN MATRIZ COMPARATIVA PARA PROVEEDOR UNICO *************/
-        } else {
+         }
+        //else {
+        //     $descripciones = $request->input('DESCRIPCION');
+        //     $cantidades = $request->input('CANTIDAD');
+        //     $unidades = $request->input('UNIDAD_MEDIDA');
+        //     $cantidadmrq1 = $request->input('CANTIDAD_MRQ1');
+        //     $cantidadrealq1 = $request->input('CANTIDAD_REALQ1');
+        //     $preciounitarioq1 = $request->input('PRECIO_UNITARIOQ1');
+        //     $cantidadmrq2 = $request->input('CANTIDAD_MRQ2');
+        //     $cantidadrealq2 = $request->input('CANTIDAD_REALQ2');
+        //     $preciounitarioq2 = $request->input('PRECIO_UNITARIOQ2');
+        //     $cantidadmrq3 = $request->input('CANTIDAD_MRQ3');
+        //     $cantidadrealq3 = $request->input('CANTIDAD_REALQ3');
+        //     $preciounitarioq3 = $request->input('PRECIO_UNITARIOQ3');
+
+        //     $total = count($descripciones);
+
+        //     for ($i = 0; $i < $total; $i++) {
+        //         $data = [
+        //             'NO_MR' => $no_mr,
+        //             'DESCRIPCION' => $descripciones[$i] ?? '',
+        //             'CANTIDAD' => $cantidades[$i] ?? '',
+        //             'UNIDAD_MEDIDA' => $unidades[$i] ?? '',
+        //             'CANTIDAD_MRQ1' => $cantidadmrq1[$i] ?? null,
+        //             'CANTIDAD_REALQ1' => $cantidadrealq1[$i] ?? null,
+        //             'PRECIO_UNITARIOQ1' => $preciounitarioq1[$i] ?? null,
+        //             'CANTIDAD_MRQ2' => $cantidadmrq2[$i] ?? null,
+        //             'CANTIDAD_REALQ2' => $cantidadrealq2[$i] ?? null,
+        //             'PRECIO_UNITARIOQ2' => $preciounitarioq2[$i] ?? null,
+        //             'CANTIDAD_MRQ3' => $cantidadmrq3[$i] ?? null,
+
+        //             'CANTIDAD_REALQ3' => $cantidadrealq3[$i] ?? null,
+        //             'PRECIO_UNITARIOQ3' => $preciounitarioq3[$i] ?? null,
+        //             'PROVEEDOR_Q1' => $proveedor_q1[$i] ?? null,
+        //             'SUBTOTAL_Q1' => $subtotal_q1[$i] ?? null,
+        //             'IVA_Q1' => $iva_q1[$i] ?? null,
+        //             'IMPORTE_Q1' => $importe_q1[$i] ?? null,
+        //             'OBSERVACIONES_Q1' => $observaciones_q1[$i] ?? null,
+        //             'FECHA_COTIZACION_Q1' => $fecha_q1[$i] ?? null,
+        //             'PROVEEDOR_Q2' => $proveedor_q2[$i] ?? null,
+        //             'SUBTOTAL_Q2' => $subtotal_q2[$i] ?? null,
+        //             'IVA_Q2' => $iva_q2[$i] ?? null,
+        //             'IMPORTE_Q2' => $importe_q2[$i] ?? null,
+        //             'OBSERVACIONES_Q2' => $observaciones_q2[$i] ?? null,
+        //             'FECHA_COTIZACION_Q2' => $fecha_q2[$i] ?? null,
+        //             'PROVEEDOR_Q3' => $proveedor_q3[$i] ?? null,
+        //             'SUBTOTAL_Q3' => $subtotal_q3[$i] ?? null,
+        //             'IVA_Q3' => $iva_q3[$i] ?? null,
+        //             'IMPORTE_Q3' => $importe_q3[$i] ?? null,
+        //             'OBSERVACIONES_Q3' => $observaciones_q3[$i] ?? null,
+        //             'FECHA_COTIZACION_Q3' => $fecha_q3[$i] ?? null,
+        //             'PROVEEDOR_SUGERIDO' => $proveedor_sugerido[$i] ?? null,
+        //             'SOLICITAR_VERIFICACION' => $solicitarverificacion[$i] ?? null,
+        //             'FECHA_VERIFICACION' => $fechaverificacion[$i] ?? null,
+        //             'ESTADO_APROBACION' => $estadoaprobacion[$i] ?? null,
+        //             'MOTIVO_RECHAZO' => $motivorechazo[$i] ?? null,
+        //             'FECHA_APROBACION' => $fechaaprobacion[$i] ?? null,
+        //             'FORMA_ADQUISICION' => $forma_adquisicion[$i] ?? null,
+        //             'PROVEEDOR_SELECCIONADO' => $proveedor_seleccionado[$i] ?? null,
+        //             'MONTO_FINAL' => $monto_final[$i] ?? null,
+        //             'FORMA_PAGO' => $forma_pago[$i] ?? null,
+        //             'REQUIERE_PO' => $requiere_po[$i] ?? null,
+        //             'REQUIERE_COMENTARIO' => $requierecomentario[$i] ?? null,
+        //             'COMENTARIO_APROBACION' => $comentarioaprobacion[$i] ?? null,
+
+        //             'COMENTARIO_SOLICITUD' => $comentariosolicitud[$i] ?? null,
+
+        //         ];
+
+        //         $hoja = !empty($ids[$i]) ? HojaTrabajo::find($ids[$i]) : null;
+        //         if ($hoja) {
+        //             $hoja->update($data);
+        //         } else {
+        //             $hoja = HojaTrabajo::create($data);
+        //         }
+
+        //         $id = $hoja->id;
+
+        //         foreach (['Q1', 'Q2', 'Q3'] as $q) {
+        //             if ($request->hasFile("DOCUMENTO_{$q}.$i")) {
+        //                 $file = $request->file("DOCUMENTO_{$q}")[$i];
+        //                 $fileName = $file->getClientOriginalName();
+        //                 $folder = "compras/{$no_mr}/{$id}/{$q}";
+        //                 $path = $file->storeAs($folder, $fileName);
+        //                 $hoja["DOCUMENTO_{$q}"] = $path;
+        //             }
+        //         }
+
+        //         $hoja->save();
+
+        //         if (($solicitarverificacion[$i] ?? null) === 'Sí' && !$hoja->SOLICITO_ID) {
+        //             $hoja->SOLICITO_ID = auth()->user()->ID_USUARIO;
+        //             $hoja->save();
+        //         }
+
+
+        //         if (in_array(($estadoaprobacion[$i] ?? null), ['Aprobada', 'Rechazada']) && !$hoja->APROBADO_ID) {
+        //             $hoja->APROBADO_ID = auth()->user()->ID_USUARIO;
+        //             $hoja->save();
+        //         }
+        //     }
+
+
+        //     $grupos = [];
+
+        //     for ($i = 0; $i < $total; $i++) {
+        //         // Validación: solo si está aprobada y requiere PO
+        //         if (($requiere_po[$i] ?? null) === 'Sí' && ($estadoaprobacion[$i] ?? null) === 'Aprobada') {
+        //             $proveedorSeleccionado = $proveedor_seleccionado[$i] ?? null;
+
+        //             if ($proveedorSeleccionado) {
+        //                 if (!isset($grupos[$proveedorSeleccionado])) {
+        //                     $grupos[$proveedorSeleccionado] = [
+        //                         'ids' => [],
+        //                         'materiales' => [],
+        //                     ];
+        //                 }
+
+        //                 $grupos[$proveedorSeleccionado]['ids'][] = $ids[$i];
+
+        //                 // Identificar de qué Q viene
+        //                 $cant = '';
+        //                 $prec = '';
+
+        //                 if ($proveedorSeleccionado === ($proveedor_q1[$i] ?? null)) {
+        //                     $cant = $cantidadrealq1[$i] ?? '';
+        //                     $prec = $preciounitarioq1[$i] ?? '';
+        //                 } elseif ($proveedorSeleccionado === ($proveedor_q2[$i] ?? null)) {
+        //                     $cant = $cantidadrealq2[$i] ?? '';
+        //                     $prec = $preciounitarioq2[$i] ?? '';
+        //                 } elseif ($proveedorSeleccionado === ($proveedor_q3[$i] ?? null)) {
+        //                     $cant = $cantidadrealq3[$i] ?? '';
+        //                     $prec = $preciounitarioq3[$i] ?? '';
+        //                 }
+
+        //                 $grupos[$proveedorSeleccionado]['materiales'][] = [
+        //                     'DESCRIPCION'     => $descripciones[$i] ?? '',
+        //                     'CANTIDAD_'       => $cant,
+        //                     'PRECIO_UNITARIO' => $prec,
+        //                 ];
+        //             }
+        //         }
+        //     }
+
+        //     foreach ($grupos as $proveedor => $grupo) {
+        //         $registroExistente = DB::table('formulario_ordencompra')
+        //             ->get()
+        //             ->first(function ($registro) use ($grupo) {
+        //                 $hojasExistentes = json_decode($registro->HOJA_ID ?? '[]', true);
+        //                 return count(array_intersect($hojasExistentes, $grupo['ids'])) > 0;
+        //             });
+
+        //         if (!$registroExistente) {
+        //             $año = now()->format('y');
+        //             $ultimo = DB::table('formulario_ordencompra')
+        //                 ->where('NO_PO', 'like', "RES-PO$año-%")
+        //                 ->orderByDesc('ID_FORMULARIO_PO')
+        //                 ->value('NO_PO');
+
+        //             $consecutivo = $ultimo ? (int)substr($ultimo, -3) + 1 : 1;
+        //             $numeroOrden = sprintf("RES-PO%s-%03d", $año, $consecutivo);
+
+        //             DB::table('formulario_ordencompra')->insert([
+        //                 'HOJA_ID'                 => json_encode($grupo['ids']),
+        //                 'NO_MR'                   => $no_mr,
+        //                 'NO_PO'                   => $numeroOrden,
+        //                 'PROVEEDOR_SELECCIONADO' => $proveedor,
+        //                 'MATERIALES_JSON'        => json_encode($grupo['materiales'], JSON_UNESCAPED_UNICODE),
+        //                 'ACTIVO'                  => 1,
+        //                 'created_at'              => now(),
+        //                 'updated_at'              => now(),
+        //             ]);
+        //         }
+        //     }
+        //     $grupos = [];
+
+        //     for ($i = 0; $i < $total; $i++) {
+        //         $subtotalQ1 = $subtotal_q1[$i] ?? 0;
+        //         $subtotalQ2 = $subtotal_q2[$i] ?? 0;
+        //         $subtotalQ3 = $subtotal_q3[$i] ?? 0;
+
+        //         if (
+        //             $subtotalQ1 <= 10001 &&
+        //             $subtotalQ2 <= 10001 &&
+        //             $subtotalQ3 <= 10001
+        //         ) {
+        //             continue;
+        //         }
+
+        //         $proveedoresRaw = [
+        //             $proveedor_q1[$i] ?? '',
+        //             $proveedor_q2[$i] ?? '',
+        //             $proveedor_q3[$i] ?? '',
+        //         ];
+
+        //         $proveedoresOrdenados = array_values(array_filter($proveedoresRaw));
+        //         sort($proveedoresOrdenados, SORT_STRING);
+        //         $grupoKey = implode('|', $proveedoresOrdenados);
+
+        //         if (!isset($grupos[$grupoKey])) {
+        //             $grupos[$grupoKey] = [
+        //                 'proveedores_set' => $proveedoresOrdenados,
+        //                 'proveedor_map' => [],
+        //                 'ids' => [],
+        //                 'materiales_por_proveedor' => [],
+        //                 'subtotales' => [],
+        //                 'ivas' => [],
+        //                 'importes' => [],
+        //             ];
+        //         }
+
+        //         $grupos[$grupoKey]['ids'][] = $ids[$i];
+
+        //         foreach ([1, 2, 3] as $q) {
+        //             $prov = ${"proveedor_q$q"}[$i] ?? null;
+        //             $subt = ${"subtotal_q$q"}[$i] ?? 0;
+        //             $iva = ${"iva_q$q"}[$i] ?? 0;
+        //             $imp = ${"importe_q$q"}[$i] ?? 0;
+        //             $cant = ${"cantidadrealq$q"}[$i] ?? '';
+        //             $prec = ${"preciounitarioq$q"}[$i] ?? '';
+
+        //             if (!empty($prov) && $cant > 0) {
+        //                 $grupos[$grupoKey]['proveedor_map'][$prov] = true;
+        //                 $grupos[$grupoKey]['subtotales'][$prov][] = $subt;
+        //                 $grupos[$grupoKey]['ivas'][$prov][] = $iva;
+        //                 $grupos[$grupoKey]['importes'][$prov][] = $imp;
+        //                 $grupos[$grupoKey]['materiales_por_proveedor'][$prov][] = [
+        //                     'DESCRIPCION'     => $descripciones[$i] ?? '',
+        //                     'CANTIDAD_'       => $cant,
+        //                     'PRECIO_UNITARIO' => $prec,
+        //                 ];
+        //             }
+        //         }
+        //     }
+
+        //     foreach ($grupos as $grupo) {
+        //         $superaLimite = false;
+
+        //         foreach ($grupo['subtotales'] as $subtotales) {
+        //             foreach ($subtotales as $subt) {
+        //                 if ($subt > 10001) {
+        //                     $superaLimite = true;
+        //                     break 2;
+        //                 }
+        //             }
+        //         }
+
+        //         if ($superaLimite) {
+        //             $registroExistente = DB::table('formulario_matrizcomparativa')
+        //                 ->where('NO_MR', $no_mr)
+        //                 ->get()
+        //                 ->filter(function ($registro) use ($grupo) {
+        //                     $existentes = array_filter([
+        //                         $registro->PROVEEDOR1 ?? null,
+        //                         $registro->PROVEEDOR2 ?? null,
+        //                         $registro->PROVEEDOR3 ?? null,
+        //                     ]);
+        //                     sort($existentes, SORT_STRING);
+        //                     return $existentes === $grupo['proveedores_set'];
+        //                 })
+        //                 ->values()
+        //                 ->first();
+
+        //             if ($registroExistente) {
+        //                 $hojasActuales = json_decode($registroExistente->HOJA_ID ?? '[]', true);
+        //                 $hojasNuevas = array_values(array_unique(array_merge($hojasActuales, $grupo['ids'])));
+
+        //                 $datosUpdate = [
+        //                     'HOJA_ID'    => json_encode($hojasNuevas),
+        //                     'updated_at' => now(),
+        //                 ];
+
+        //                 foreach ($grupo['proveedores_set'] as $idx => $prov) {
+        //                     $num = $idx + 1;
+
+        //                     $materialesNuevos = $grupo['materiales_por_proveedor'][$prov] ?? [];
+
+        //                     $datosUpdate["MATERIALES_JSON_PROVEEDOR{$num}"] = json_encode($materialesNuevos, JSON_UNESCAPED_UNICODE);
+        //                     $datosUpdate["SUBTOTAL_PROVEEDOR{$num}"] = array_sum($grupo['subtotales'][$prov] ?? []);
+        //                     $datosUpdate["IVA_PROVEEDOR{$num}"] = array_sum($grupo['ivas'][$prov] ?? []);
+        //                     $datosUpdate["IMPORTE_PROVEEDOR{$num}"] = array_sum($grupo['importes'][$prov] ?? []);
+        //                 }
+
+        //                 DB::table('formulario_matrizcomparativa')
+        //                     ->where('ID_FORMULARIO_MATRIZ', $registroExistente->ID_FORMULARIO_MATRIZ)
+        //                     ->update($datosUpdate);
+
+        //                 HojaTrabajo::whereIn('id', $grupo['ids'])
+        //                     ->update(['REQUIERE_MATRIZ' => 'Sí']);
+        //             } else {
+        //                 HojaTrabajo::whereIn('id', $grupo['ids'])
+        //                     ->update(['REQUIERE_MATRIZ' => 'Sí']);
+
+        //                 $dataInsert = [
+        //                     'HOJA_ID'    => json_encode(array_values($grupo['ids'])),
+        //                     'NO_MR'      => $no_mr,
+        //                     'created_at' => now(),
+        //                     'updated_at' => now(),
+        //                 ];
+
+        //                 $proveedoresUnicos = array_values($grupo['proveedores_set']);
+        //                 foreach ($proveedoresUnicos as $idx => $prov) {
+        //                     $num = $idx + 1;
+        //                     $dataInsert["PROVEEDOR{$num}"] = $prov;
+        //                     $dataInsert["MATERIALES_JSON_PROVEEDOR{$num}"] = json_encode($grupo['materiales_por_proveedor'][$prov], JSON_UNESCAPED_UNICODE);
+        //                     $dataInsert["SUBTOTAL_PROVEEDOR{$num}"] = array_sum($grupo['subtotales'][$prov] ?? []);
+        //                     $dataInsert["IVA_PROVEEDOR{$num}"] = array_sum($grupo['ivas'][$prov] ?? []);
+        //                     $dataInsert["IMPORTE_PROVEEDOR{$num}"] = array_sum($grupo['importes'][$prov] ?? []);
+        //                 }
+
+        //                 DB::table('formulario_matrizcomparativa')->insert($dataInsert);
+        //             }
+        //         }
+        //     }
+        //     /********** FIN MATRIZ COMPARATIVA AGRUPADA Y ACTUALIZADA *************/
+        // }
+
+        else {
             $descripciones = $request->input('DESCRIPCION');
             $cantidades = $request->input('CANTIDAD');
             $unidades = $request->input('UNIDAD_MEDIDA');
@@ -1078,7 +1963,6 @@ class mrController extends Controller
                     'CANTIDAD_REALQ2' => $cantidadrealq2[$i] ?? null,
                     'PRECIO_UNITARIOQ2' => $preciounitarioq2[$i] ?? null,
                     'CANTIDAD_MRQ3' => $cantidadmrq3[$i] ?? null,
-
                     'CANTIDAD_REALQ3' => $cantidadrealq3[$i] ?? null,
                     'PRECIO_UNITARIOQ3' => $preciounitarioq3[$i] ?? null,
                     'PROVEEDOR_Q1' => $proveedor_q1[$i] ?? null,
@@ -1112,9 +1996,7 @@ class mrController extends Controller
                     'REQUIERE_PO' => $requiere_po[$i] ?? null,
                     'REQUIERE_COMENTARIO' => $requierecomentario[$i] ?? null,
                     'COMENTARIO_APROBACION' => $comentarioaprobacion[$i] ?? null,
-
                     'COMENTARIO_SOLICITUD' => $comentariosolicitud[$i] ?? null,
-
                 ];
 
                 $hoja = !empty($ids[$i]) ? HojaTrabajo::find($ids[$i]) : null;
@@ -1124,13 +2006,14 @@ class mrController extends Controller
                     $hoja = HojaTrabajo::create($data);
                 }
 
-                $id = $hoja->id;
+                // 🔹 Guardamos el ID real en el array global
+                $ids[$i] = $hoja->id;
 
                 foreach (['Q1', 'Q2', 'Q3'] as $q) {
                     if ($request->hasFile("DOCUMENTO_{$q}.$i")) {
                         $file = $request->file("DOCUMENTO_{$q}")[$i];
                         $fileName = $file->getClientOriginalName();
-                        $folder = "compras/{$no_mr}/{$id}/{$q}";
+                        $folder = "compras/{$no_mr}/{$ids[$i]}/{$q}";
                         $path = $file->storeAs($folder, $fileName);
                         $hoja["DOCUMENTO_{$q}"] = $path;
                     }
@@ -1143,23 +2026,17 @@ class mrController extends Controller
                     $hoja->save();
                 }
 
-
                 if (in_array(($estadoaprobacion[$i] ?? null), ['Aprobada', 'Rechazada']) && !$hoja->APROBADO_ID) {
                     $hoja->APROBADO_ID = auth()->user()->ID_USUARIO;
                     $hoja->save();
                 }
-
-
             }
 
-
+            // ================== ORDEN DE COMPRA ==================
             $grupos = [];
-
             for ($i = 0; $i < $total; $i++) {
-                // Validación: solo si está aprobada y requiere PO
                 if (($requiere_po[$i] ?? null) === 'Sí' && ($estadoaprobacion[$i] ?? null) === 'Aprobada') {
                     $proveedorSeleccionado = $proveedor_seleccionado[$i] ?? null;
-
                     if ($proveedorSeleccionado) {
                         if (!isset($grupos[$proveedorSeleccionado])) {
                             $grupos[$proveedorSeleccionado] = [
@@ -1168,12 +2045,15 @@ class mrController extends Controller
                             ];
                         }
 
-                        $grupos[$proveedorSeleccionado]['ids'][] = $ids[$i];
+                      
 
-                        // Identificar de qué Q viene
+                        if (!in_array((string)$ids[$i], $grupos[$proveedorSeleccionado]['ids'])) {
+                            $grupos[$proveedorSeleccionado]['ids'][] = (string)$ids[$i];
+                        }
+
+                        
                         $cant = '';
                         $prec = '';
-
                         if ($proveedorSeleccionado === ($proveedor_q1[$i] ?? null)) {
                             $cant = $cantidadrealq1[$i] ?? '';
                             $prec = $preciounitarioq1[$i] ?? '';
@@ -1189,6 +2069,8 @@ class mrController extends Controller
                             'DESCRIPCION'     => $descripciones[$i] ?? '',
                             'CANTIDAD_'       => $cant,
                             'PRECIO_UNITARIO' => $prec,
+                            'UNIDAD_MEDIDA'   => $unidades[$i] ?? '', 
+
                         ];
                     }
                 }
@@ -1225,180 +2107,14 @@ class mrController extends Controller
                 }
             }
 
-
-
-            // /*****************************************************************
-            //  * MATRIZ COMPARATIVA — AGRUPADA POR PROVEEDORES (SIN ORDEN)
-            //  * + Marcar REQUIERE_MATRIZ = 'Sí' en hoja_trabajo
-            //  *****************************************************************/
-            // $grupos = [];
-
-            // for ($i = 0; $i < $total; $i++) {
-            //     // Verificar si al menos una cotización supera el límite
-            //     $subtotalQ1 = $subtotal_q1[$i] ?? 0;
-            //     $subtotalQ2 = $subtotal_q2[$i] ?? 0;
-            //     $subtotalQ3 = $subtotal_q3[$i] ?? 0;
-
-            //     if (
-            //         $subtotalQ1 <= 10001 &&
-            //         $subtotalQ2 <= 10001 &&
-            //         $subtotalQ3 <= 10001
-            //     ) {
-            //         continue; //  No se considera este producto
-            //     }
-
-            //     $proveedoresRaw = [
-            //         $proveedor_q1[$i] ?? '',
-            //         $proveedor_q2[$i] ?? '',
-            //         $proveedor_q3[$i] ?? '',
-            //     ];
-
-            //     // Eliminar vacíos y ordenar alfabéticamente
-            //     $proveedoresOrdenados = array_values(array_filter($proveedoresRaw));
-            //     sort($proveedoresOrdenados, SORT_STRING);
-            //     $grupoKey = implode('|', $proveedoresOrdenados);
-
-            //     if (!isset($grupos[$grupoKey])) {
-            //         $grupos[$grupoKey] = [
-            //             'proveedores_set' => $proveedoresOrdenados,
-            //             'proveedor_map' => [],
-            //             'ids' => [],
-            //             'materiales_por_proveedor' => [],
-            //             'subtotales' => [],
-            //             'ivas' => [],
-            //             'importes' => [],
-            //         ];
-            //     }
-
-            //     $grupos[$grupoKey]['ids'][] = $ids[$i];
-
-            //     foreach ([1, 2, 3] as $q) {
-            //         $prov = ${"proveedor_q$q"}[$i] ?? null;
-            //         $subt = ${"subtotal_q$q"}[$i] ?? 0;
-            //         $iva = ${"iva_q$q"}[$i] ?? 0;
-            //         $imp = ${"importe_q$q"}[$i] ?? 0;
-            //         $cant = ${"cantidadrealq$q"}[$i] ?? '';
-            //         $prec = ${"preciounitarioq$q"}[$i] ?? '';
-
-            //         if (!empty($prov)) {
-            //             $grupos[$grupoKey]['proveedor_map'][$prov] = true;
-            //             $grupos[$grupoKey]['subtotales'][$prov][] = $subt;
-            //             $grupos[$grupoKey]['ivas'][$prov][] = $iva;
-            //             $grupos[$grupoKey]['importes'][$prov][] = $imp;
-            //             $grupos[$grupoKey]['materiales_por_proveedor'][$prov][] = [
-            //                 'DESCRIPCION'     => $descripciones[$i] ?? '',
-            //                 'CANTIDAD_'       => $cant,
-            //                 'PRECIO_UNITARIO' => $prec,
-            //             ];
-            //         }
-            //     }
-            // }
-
-            // foreach ($grupos as $grupo) {
-            //     $superaLimite = false;
-
-            //     foreach ($grupo['subtotales'] as $subtotales) {
-            //         foreach ($subtotales as $subt) {
-            //             if ($subt > 10001) {
-            //                 $superaLimite = true;
-            //                 break 2;
-            //             }
-            //         }
-            //     }
-
-            //     if ($superaLimite) {
-            //         $registroExistente = DB::table('formulario_matrizcomparativa')
-            //             ->where('NO_MR', $no_mr)
-            //             ->get()
-            //             ->first(function ($registro) use ($grupo) {
-            //                 $existentes = array_filter([
-            //                     $registro->PROVEEDOR1,
-            //                     $registro->PROVEEDOR2,
-            //                     $registro->PROVEEDOR3,
-            //                 ]);
-            //                 sort($existentes);
-            //                 return $existentes === $grupo['proveedores_set'];
-            //             });
-
-            //         if ($registroExistente) {
-            //             //  Actualizar existente
-            //             $hojasActuales = json_decode($registroExistente->HOJA_ID, true) ?? [];
-            //             $hojasNuevas = array_values(array_unique(array_merge($hojasActuales, $grupo['ids'])));
-
-            //             $datosUpdate = [
-            //                 'HOJA_ID'    => json_encode($hojasNuevas),
-            //                 'updated_at' => now(),
-            //             ];
-
-            //             foreach ($grupo['proveedores_set'] as $idx => $prov) {
-            //                 $num = $idx + 1;
-
-            //                 $materialesActuales = json_decode($registroExistente->{"MATERIALES_JSON_PROVEEDOR{$num}"} ?? '[]', true);
-            //                 $materialesNuevos = $grupo['materiales_por_proveedor'][$prov] ?? [];
-
-            //                 $materialesFinal = collect(array_merge($materialesActuales, $materialesNuevos))
-            //                     ->unique(function ($item) {
-            //                         return $item['DESCRIPCION'] . '|' . $item['CANTIDAD_'] . '|' . $item['PRECIO_UNITARIO'];
-            //                     })
-            //                     ->values()
-            //                     ->all();
-
-            //                 $datosUpdate["MATERIALES_JSON_PROVEEDOR{$num}"] = json_encode($materialesFinal, JSON_UNESCAPED_UNICODE);
-            //                 $datosUpdate["SUBTOTAL_PROVEEDOR{$num}"] = array_sum($grupo['subtotales'][$prov] ?? []);
-            //                 $datosUpdate["IVA_PROVEEDOR{$num}"] = array_sum($grupo['ivas'][$prov] ?? []);
-            //                 $datosUpdate["IMPORTE_PROVEEDOR{$num}"] = array_sum($grupo['importes'][$prov] ?? []);
-            //             }
-
-            //             DB::table('formulario_matrizcomparativa')
-            //                 ->where('ID_FORMULARIO_MATRIZ', $registroExistente->ID_FORMULARIO_MATRIZ)
-            //                 ->update($datosUpdate);
-
-            //             HojaTrabajo::whereIn('id', $grupo['ids'])
-            //                 ->update(['REQUIERE_MATRIZ' => 'Sí']);
-            //         } else {
-            //             //  Insertar nuevo registro
-            //             HojaTrabajo::whereIn('id', $grupo['ids'])
-            //                 ->update(['REQUIERE_MATRIZ' => 'Sí']);
-
-            //             $dataInsert = [
-            //                 'HOJA_ID'    => json_encode(array_values($grupo['ids'])),
-            //                 'NO_MR'      => $no_mr,
-            //                 'created_at' => now(),
-            //                 'updated_at' => now(),
-            //             ];
-
-            //             $proveedoresUnicos = array_values($grupo['proveedores_set']);
-            //             foreach ($proveedoresUnicos as $idx => $prov) {
-            //                 $num = $idx + 1;
-            //                 $dataInsert["PROVEEDOR{$num}"] = $prov;
-            //                 $dataInsert["MATERIALES_JSON_PROVEEDOR{$num}"] = json_encode($grupo['materiales_por_proveedor'][$prov], JSON_UNESCAPED_UNICODE);
-            //                 $dataInsert["SUBTOTAL_PROVEEDOR{$num}"] = array_sum($grupo['subtotales'][$prov] ?? []);
-            //                 $dataInsert["IVA_PROVEEDOR{$num}"] = array_sum($grupo['ivas'][$prov] ?? []);
-            //                 $dataInsert["IMPORTE_PROVEEDOR{$num}"] = array_sum($grupo['importes'][$prov] ?? []);
-            //             }
-
-            //             DB::table('formulario_matrizcomparativa')->insert($dataInsert);
-            //         }
-            //     }
-            // }
-            // /********** FIN MATRIZ COMPARATIVA AGRUPADA Y ACTUALIZADA *************/
-
-            /*****************************************************************
-             * MATRIZ COMPARATIVA — AGRUPADA POR PROVEEDORES (SIN ORDEN)
-             * + Marcar REQUIERE_MATRIZ = 'Sí' en hoja_trabajo
-             *****************************************************************/
+            // ================== MATRIZ COMPARATIVA ==================
             $grupos = [];
-
             for ($i = 0; $i < $total; $i++) {
                 $subtotalQ1 = $subtotal_q1[$i] ?? 0;
                 $subtotalQ2 = $subtotal_q2[$i] ?? 0;
                 $subtotalQ3 = $subtotal_q3[$i] ?? 0;
 
-                if (
-                    $subtotalQ1 <= 10001 &&
-                    $subtotalQ2 <= 10001 &&
-                    $subtotalQ3 <= 10001
-                ) {
+                if ($subtotalQ1 <= 10001 && $subtotalQ2 <= 10001 && $subtotalQ3 <= 10001) {
                     continue;
                 }
 
@@ -1424,7 +2140,13 @@ class mrController extends Controller
                     ];
                 }
 
-                $grupos[$grupoKey]['ids'][] = $ids[$i];
+            
+
+
+                if (!empty($ids[$i]) && !in_array((string)$ids[$i], $grupos[$grupoKey]['ids'])) {
+                    $grupos[$grupoKey]['ids'][] = (string)$ids[$i];
+                }
+
 
                 foreach ([1, 2, 3] as $q) {
                     $prov = ${"proveedor_q$q"}[$i] ?? null;
@@ -1443,6 +2165,8 @@ class mrController extends Controller
                             'DESCRIPCION'     => $descripciones[$i] ?? '',
                             'CANTIDAD_'       => $cant,
                             'PRECIO_UNITARIO' => $prec,
+                            'UNIDAD_MEDIDA'   => $unidades[$i] ?? '', 
+
                         ];
                     }
                 }
@@ -1450,7 +2174,6 @@ class mrController extends Controller
 
             foreach ($grupos as $grupo) {
                 $superaLimite = false;
-
                 foreach ($grupo['subtotales'] as $subtotales) {
                     foreach ($subtotales as $subt) {
                         if ($subt > 10001) {
@@ -1487,9 +2210,7 @@ class mrController extends Controller
 
                         foreach ($grupo['proveedores_set'] as $idx => $prov) {
                             $num = $idx + 1;
-
                             $materialesNuevos = $grupo['materiales_por_proveedor'][$prov] ?? [];
-
                             $datosUpdate["MATERIALES_JSON_PROVEEDOR{$num}"] = json_encode($materialesNuevos, JSON_UNESCAPED_UNICODE);
                             $datosUpdate["SUBTOTAL_PROVEEDOR{$num}"] = array_sum($grupo['subtotales'][$prov] ?? []);
                             $datosUpdate["IVA_PROVEEDOR{$num}"] = array_sum($grupo['ivas'][$prov] ?? []);
@@ -1530,9 +2251,11 @@ class mrController extends Controller
             /********** FIN MATRIZ COMPARATIVA AGRUPADA Y ACTUALIZADA *************/
         }
 
+
+
+
         return response()->json(['success' => true]);
     }
-
 
 
 
