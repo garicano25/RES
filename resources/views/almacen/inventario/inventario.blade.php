@@ -24,34 +24,41 @@
     .bg-rojo-suave {
         background-color: #f8d7da !important;
     }
-
-
-    
 </style>
 
 
 <div class="contenedor-contenido">
-    <ol class="breadcrumb mb-5">
-        <h3 style="color: #ffffff; margin: 0;"> <i class="bi bi-card-list" style="margin-right: 5px;"></i> Inventario
+    <ol class="breadcrumb mb-5 d-flex justify-content-between align-items-center" style="background:#a7d46f; border-radius:10px; padding:10px;">
+
+        <h3 class="mb-0 text-white">
+            <i class="bi bi-card-list me-2"></i> Inventario
         </h3>
 
-        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
-        <button type="button" class="btn btn-secondary waves-effect waves-light " data-toggle="tooltip" title="Cargar equipos por medio de un archivo Excel" id="boton_cargarExcelEquipos" style="margin-left: 77%;">
-            Importar <i class="bi bi-file-earmark-excel-fill"></i>
-        </button>
-        @endif
+        <div class="d-flex gap-2">
+            @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
+            <button type="button"
+                class="btn btn-secondary waves-effect waves-light"
+                data-toggle="tooltip"
+                title="Cargar equipos por medio de un archivo Excel"
+                id="boton_cargarExcelEquipos">
+                Importar <i class="bi bi-file-earmark-excel-fill"></i>
+            </button>
+            @endif
 
-        <button type="button" class="btn btn-light waves-effect waves-light " id="NUEVO_EQUIPO" style="margin-left: auto;">
-            Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
-        </button>
+            <button type="button"
+                class="btn btn-light waves-effect waves-light"
+                id="NUEVO_EQUIPO">
+                Nuevo <i class="bi bi-plus-circle"></i>
+            </button>
+        </div>
     </ol>
 
     <div class="card-body">
         <table id="Tablainventario" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
-
         </table>
     </div>
 </div>
+
 
 
 
