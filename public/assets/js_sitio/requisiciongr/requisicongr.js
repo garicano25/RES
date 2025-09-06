@@ -726,7 +726,7 @@ if (resp.existe) {
                       </div>
                       <div class="col-md-6">
                           <label class="form-label"> Mandar a Vo.Bo usuario</label>
-                              <select class="form-control" name="MANDAR_USUARIO_VOBO" 
+                              <select class="form-control" name="MANDAR_USUARIO_VOBO" disabled>
                                   <option value="">Seleccione</option>
                                       <option value="">Seleccione</option>
                                     <option value="Sí" ${cab.MANDAR_USUARIO_VOBO === "Sí" ? "selected" : ""}>Sí</option>
@@ -844,7 +844,8 @@ if (resp.existe) {
         // ==========================
         // Caso: NO EXISTE GR
         // ==========================
-        } else {
+        }
+         else {
             $('#ID_GR').val(""); 
             $('#modal_no_mr').val(data.NO_MR ?? '');
             $('#modal_fecha_mr').val(data.FECHA_APRUEBA_MR ?? '');
@@ -957,8 +958,14 @@ if (resp.existe) {
                               <textarea class="form-control" name="COMENTARIO_ESTADO[]" rows="2"></textarea>
                             </div>
                           </div>
+
                           <div class="row mb-2">
-                            <div class="col-12 mt-2">
+                            <div class="col-4 mt-2">
+                              <label class="form-label">Cantidad que entra a almacén</label>
+                              <input type="number" class="form-control " name="CANTIDAD_ENTRA_ALMACEN[]" value="0" min="0">
+                            </div>
+
+                            <div class="col-4 mt-2">
                               <label class="form-label">Tipo</label>
                               <select class="form-control" name="TIPO_BS[]">
                                 <option value="">Seleccione</option>
@@ -966,6 +973,16 @@ if (resp.existe) {
                                 <option value="Servicio">Servicio</option>
                               </select>
                             </div>
+
+                            <div class="col-4 mt-2">
+                              <label class="form-label">El B o S es parcial</label>
+                              <select class="form-control bs-esparcial" name="BIENS_PARCIAL[]" disabled>
+                                <option value="">Seleccione</option>
+                                <option value="Sí">Sí</option>
+                                <option value="No">No</option>
+                              </select>
+                            </div>
+
                           </div>
 
 
@@ -1275,6 +1292,13 @@ function crearBloqueDetalle(det, resp) {
                             <textarea class="form-control" name="DESCRIPCION[]" rows="2" >${det.DESCRIPCION}</textarea>
                           </div>
 
+                           <div class="col-2 mt-2">
+                                  <label class="form-label">U.M.</label>
+                                  <input type="text" class="form-control" name="UNIDAD[]" value="${det.UNIDAD}" readonly>
+                                </div>
+                           
+
+
                           <div class="col-3 mt-2">
                             <label class="form-label">¿Está en inventario?</label>
                             <select class="form-control en_inventario" name="EN_INVENTARIO[]">
@@ -1384,10 +1408,6 @@ function crearBloqueDetalle(det, resp) {
                         </div>
                           <div class="row mb-2">
                           <div class="col-2 mt-2">
-                            <label class="form-label">Cantidad aceptada por usuario</label>
-                            <input type="number" class="form-control" name="CANTIDAD_ACEPTADA_USUARIO[]" value="${det.CANTIDAD_ACEPTADA_USUARIO}">
-                          </div>
-                          <div class="col-2 mt-2">
                             <label class="form-label">Cumple lo especificado usuario</label>
                             <select class="form-control" name="CUMPLE_ESPECIFICADO_USUARIO[]">
                               <option value="">Seleccione</option>
@@ -1412,6 +1432,18 @@ function crearBloqueDetalle(det, resp) {
                             <label class="form-label">Comentario estado usuario</label>
                             <textarea class="form-control" name="COMENTARIO_ESTADO_USUARIO[]" rows="2">${det.COMENTARIO_ESTADO_USUARIO??""}</textarea>
                           </div>
+
+                          
+                           <div class="col-2">
+                            <label class="form-label">Vo. Bo</label>
+                              <select class="form-control" name="VOBO_USUARIO_PRODUCTO[]">
+                                <option value="">Seleccione</option>
+                                <option value="Sí" ${det.VOBO_USUARIO_PRODUCTO=="Sí"?"selected":""}>Sí</option>
+                                <option value="No" ${det.VOBO_USUARIO_PRODUCTO=="No"?"selected":""}>No</option>
+                            </select>
+                        </div>
+
+
                         </div>
 
 
@@ -1469,3 +1501,14 @@ function crearBloqueDetalle(det, resp) {
 
     return bloque;
 }
+
+
+$('#GR_PARCIAL').on('change', function () {
+    if ($(this).val() === "Sí") {
+        $('.bs-esparcial').prop('disabled', false);
+    } else {
+        $('.bs-esparcial').prop('disabled', true).val("");
+    }
+});
+
+

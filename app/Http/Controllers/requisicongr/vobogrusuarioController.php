@@ -126,7 +126,8 @@ class vobogrusuarioController extends Controller
                     'CUMPLE_ESPECIFICADO_USUARIO',
                     'COMENTARIO_CUMPLE_USUARIO',
                     'ESTADO_BS_USUARIO',
-                    'COMENTARIO_ESTADO_USUARIO'
+                    'COMENTARIO_ESTADO_USUARIO',
+                    'VOBO_USUARIO_PRODUCTO'
                 )
                 ->get();
 
@@ -161,20 +162,21 @@ class vobogrusuarioController extends Controller
                 ]);
 
             // 2. Actualizar cada producto (detalle)
-            if ($request->has('CANTIDAD_ACEPTADA_USUARIO')) {
-                foreach ($request->CANTIDAD_ACEPTADA_USUARIO as $idDetalle => $cantidadAceptadaUsuario) {
+            if ($request->has('CUMPLE_ESPECIFICADO_USUARIO')) {
+                foreach ($request->CUMPLE_ESPECIFICADO_USUARIO as $idDetalle => $cumpleUsuario) {
                     DB::table('formulario_bitacoragr_detalle')
                         ->where('ID_DETALLE', $idDetalle)
                         ->update([
-                            'CANTIDAD_ACEPTADA_USUARIO'   => $cantidadAceptadaUsuario,
-                            'CUMPLE_ESPECIFICADO_USUARIO' => $request->CUMPLE_ESPECIFICADO_USUARIO[$idDetalle] ?? null,
+                            'CUMPLE_ESPECIFICADO_USUARIO' => $cumpleUsuario ?? null,
                             'COMENTARIO_CUMPLE_USUARIO'   => $request->COMENTARIO_CUMPLE_USUARIO[$idDetalle] ?? null,
                             'ESTADO_BS_USUARIO'           => $request->ESTADO_BS_USUARIO[$idDetalle] ?? null,
                             'COMENTARIO_ESTADO_USUARIO'   => $request->COMENTARIO_ESTADO_USUARIO[$idDetalle] ?? null,
+                            'VOBO_USUARIO_PRODUCTO'       => $request->VOBO_USUARIO_PRODUCTO[$idDetalle] ?? null,
                             'UPDATED_AT'                  => now(),
                         ]);
                 }
             }
+
 
             DB::commit();
             return response()->json(['ok' => true, 'msg' => 'Vo.Bo guardado correctamente']);

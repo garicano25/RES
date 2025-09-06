@@ -68,19 +68,6 @@ $(document).on('click', '.EDITAR', function () {
 
                         <div class="row mb-2">
                             <div class="col-6">
-                                <label>Cantidad</label>
-                                <input type="number" class="form-control" value="${det.CANTIDAD_ACEPTADA}" readonly>
-                            </div>
-                            <div class="col-6">
-                                <label>Cantidad Aceptada por Usuario</label>
-                                <input type="number" class="form-control" 
-                                    name="CANTIDAD_ACEPTADA_USUARIO[${det.ID_DETALLE}]" 
-                                    value="${det.CANTIDAD_ACEPTADA_USUARIO ?? ''}">
-                            </div>
-                        </div>
-
-                        <div class="row mb-2">
-                            <div class="col-6">
                                 <label>Cumple lo especificado</label>
                                 <select class="form-control" name="CUMPLE_ESPECIFICADO_USUARIO[${det.ID_DETALLE}]">
                                     <option value="">Seleccione</option>
@@ -108,6 +95,17 @@ $(document).on('click', '.EDITAR', function () {
                                 <textarea class="form-control" name="COMENTARIO_ESTADO_USUARIO[${det.ID_DETALLE}]">${det.COMENTARIO_ESTADO_USUARIO ?? ''}</textarea>
                             </div>
                         </div>
+
+                        <div class="col-12">
+                        <label class="form-label">Vo. Bo</label>
+                        <select class="form-control" name="VOBO_USUARIO_PRODUCTO[${det.ID_DETALLE}]">
+                                    <option value="">Seleccione</option>
+                            <option value="Sí" ${det.VOBO_USUARIO_PRODUCTO == "Sí" ? "selected" : ""}>Sí</option>
+                            <option value="No" ${det.VOBO_USUARIO_PRODUCTO == "No" ? "selected" : ""}>No</option>
+                        </select>
+                        </div>
+
+
                     </div>
                 `);
             });

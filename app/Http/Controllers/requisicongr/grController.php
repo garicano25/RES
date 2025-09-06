@@ -1474,6 +1474,14 @@ class grController extends Controller
                             'COMENTARIO_CUMPLE_USUARIO' => $request->COMENTARIO_CUMPLE_USUARIO[$i] ?? null,
                             'ESTADO_BS_USUARIO'         => $request->ESTADO_BS_USUARIO[$i] ?? null,
                             'COMENTARIO_ESTADO_USUARIO' => $request->COMENTARIO_ESTADO_USUARIO[$i] ?? null,
+                            'VOBO_USUARIO_PRODUCTO' => $request->VOBO_USUARIO_PRODUCTO[$i] ?? null,
+                            'UNIDAD' => $request->UNIDAD[$i] ?? null,
+                            'CANTIDAD_ENTRA_ALMACEN' => $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? null,
+                            'BIENS_PARCIAL' => $request->BIENS_PARCIAL[$i] ?? null,
+                            'GUARDO_INVENTARIO' => $request->GUARDO_INVENTARIO[$i] ?? null,
+
+
+
                         ]);
                     }
 
@@ -1540,6 +1548,12 @@ class grController extends Controller
                             'TIPO_EQUIPO'           => $tipoEquipoDesc,
                             'INVENTARIO_ID'         => $request->INVENTARIO[$i] ?? null,
                             'EN_INVENTARIO'         => $request->EN_INVENTARIO[$i] ?? null,
+                            'UNIDAD'         => $request->UNIDAD[$i] ?? null,
+                            'BIENS_PARCIAL'         => $request->BIENS_PARCIAL[$i] ?? null,
+                            'CANTIDAD_ENTRA_ALMACEN'         => $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? null,
+
+
+
                         ]);
                     }
 
@@ -1646,8 +1660,14 @@ class grController extends Controller
                 'd.CUMPLE_ESPECIFICADO_USUARIO',
                 'd.COMENTARIO_CUMPLE_USUARIO',
                 'd.ESTADO_BS_USUARIO',
-                'd.COMENTARIO_ESTADO_USUARIO'
-            )
+                'd.COMENTARIO_ESTADO_USUARIO',
+                'd.GUARDO_INVENTARIO',
+                'd.VOBO_USUARIO_PRODUCTO',
+                'd.UNIDAD',
+                'd.CANTIDAD_ENTRA_ALMACEN',
+                'd.BIENS_PARCIAL'
+
+        )
             ->where('gr.NO_MR', $no_mr);
 
         if ($no_po) {
@@ -1696,6 +1716,12 @@ class grController extends Controller
                     'COMENTARIO_CUMPLE_USUARIO' => $row->COMENTARIO_CUMPLE_USUARIO,
                     'ESTADO_BS_USUARIO' => $row->ESTADO_BS_USUARIO,
                     'COMENTARIO_ESTADO_USUARIO' => $row->COMENTARIO_ESTADO_USUARIO,
+                    'GUARDO_INVENTARIO' => $row->GUARDO_INVENTARIO,
+                    'VOBO_USUARIO_PRODUCTO' => $row->VOBO_USUARIO_PRODUCTO,
+                    'UNIDAD' => $row->UNIDAD,
+                    'CANTIDAD_ENTRA_ALMACEN' => $row->CANTIDAD_ENTRA_ALMACEN,
+                    'BIENS_PARCIAL' => $row->BIENS_PARCIAL,
+
                 ];
             });
 
