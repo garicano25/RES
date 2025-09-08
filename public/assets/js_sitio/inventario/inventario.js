@@ -403,9 +403,7 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
 
     $('#Modal_inventario .modal-title').html(row.data().DESCRIPCION_EQUIPO);
 
-    // =========================
-    // Calcular TOTAL_EQUIPO
-    // =========================
+   
     const cantidad = document.getElementById("CANTIDAD_EQUIPO");
     const unitario = document.getElementById("UNITARIO_EQUIPO");
     const total = document.getElementById("TOTAL_EQUIPO");
@@ -414,7 +412,6 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
         let cant = parseFloat(cantidad.value) || 0;
         let precio = parseFloat(unitario.value) || 0;
 
-        // Si no hay cantidad o precio, total = 0.00
         if (cant === 0 || precio === 0) {
             total.value = "0.00";
         } else {
@@ -422,13 +419,11 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
         }
     }
 
-    // Disparar cálculo al escribir
-    cantidad.removeEventListener("input", calcularTotal); // limpiar duplicados
+    cantidad.removeEventListener("input", calcularTotal); 
     unitario.removeEventListener("input", calcularTotal);
     cantidad.addEventListener("input", calcularTotal);
     unitario.addEventListener("input", calcularTotal);
 
-    // Calcular de inicio por si ya viene con datos
     calcularTotal();
 });
 
@@ -479,7 +474,32 @@ $(document).ready(function() {
         $('#FOTO_EQUIPO').dropify().data('dropify').clearElement();
         }
         
-    $('#Modal_inventario .modal-title').html(row.data().DESCRIPCION_EQUIPO);
+        $('#Modal_inventario .modal-title').html(row.data().DESCRIPCION_EQUIPO);
+        
+        
+                
+        const cantidad = document.getElementById("CANTIDAD_EQUIPO");
+        const unitario = document.getElementById("UNITARIO_EQUIPO");
+        const total = document.getElementById("TOTAL_EQUIPO");
+
+        function calcularTotal() {
+            let cant = parseFloat(cantidad.value) || 0;
+            let precio = parseFloat(unitario.value) || 0;
+
+            if (cant === 0 || precio === 0) {
+                total.value = "0.00";
+            } else {
+                total.value = (cant * precio).toFixed(2);
+            }
+        }
+
+        cantidad.removeEventListener("input", calcularTotal); 
+        unitario.removeEventListener("input", calcularTotal);
+        cantidad.addEventListener("input", calcularTotal);
+        unitario.addEventListener("input", calcularTotal);
+
+            calcularTotal();
+                    
 
 
     });

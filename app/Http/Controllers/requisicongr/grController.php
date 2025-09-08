@@ -1704,11 +1704,11 @@ class grController extends Controller
                             'UNIDAD'                    => $request->UNIDAD[$i] ?? null,
                             'CANTIDAD_ENTRA_ALMACEN'    => $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? null,
                             'BIENS_PARCIAL'             => $request->BIENS_PARCIAL[$i] ?? null,
-                            'GUARDO_INVENTARIO'         => $guardoInventario, // 🚨 Mantener valor si ya existía
+                            'GUARDO_INVENTARIO'         => $guardoInventario, 
                         ]);
 
                         // =======================
-                        // 🚨 Lógica de inventario al finalizar GR
+                        //  Lógica de inventario al finalizar GR
                         // =======================
                         if (
                             $request->FINALIZAR_GR === "Sí" &&
@@ -1767,7 +1767,7 @@ class grController extends Controller
                                 ->update(['TIENE_PARCIAL' => 1]);
                         }
                     }
-                    
+
                 } else {
                     // ======================== CREAR ========================
                     $noRecepcion = $this->generarNoRecepcion();
