@@ -744,14 +744,14 @@
 
                             {{-- RRHH --}}
                             @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista)
-                            <a href="{{ url('/tablero') }}" class="modules__link">
+                            <a href="{{ url('/Rec.Empleado') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/RRHH.png" alt=""></div>
                                     <h2 class="modules__text">RRHH</h2>
                                 </div>
                             </a>
                             @else
-                            <a href="{{ url('/Empleado') }}" class="modules__link">
+                            <a href="{{ url('/tablero') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/RRHH.png" alt=""></div>
                                     <h2 class="modules__text">RRHH</h2>
