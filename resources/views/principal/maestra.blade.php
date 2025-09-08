@@ -146,6 +146,7 @@
                             <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Inicio</span>
                         </a>
                     </li>
+                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
 
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link BOTON" href="{{ url('/tablero') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
@@ -162,15 +163,15 @@
                             <li><a class="dropdown-item" href="{{url('/PPT')}}">PPT</a></li>
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/DPT')}}">DPT</a></li>
-
-
-                            @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/RequisiciónDePersonal')}}">Requisición de personal </a></li>
-                            @endif
+
 
                         </ul>
                     </li>
+                    @endif
+
+                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
 
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -178,14 +179,15 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url('/Listavacantes') }}">Banco de CV</a></li>
-                            @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
 
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/Postulaciones')}}">Vacantes activas</a></li>
 
-                            @endif
                         </ul>
                     </li>
+
+                    @endif
+
 
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
                     <li class="nav-item dropdown" style="margin-left: 8px;">
@@ -285,6 +287,8 @@
                         </a>
                     </li>
                     @endif
+
+
                 </ul>
             </div>
         </div>
