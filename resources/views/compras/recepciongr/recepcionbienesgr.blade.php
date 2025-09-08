@@ -292,8 +292,8 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <label>Finalizar GR </label>
+                        <div class="col-md-12">
+                            <label class="form-label">Finalizar GR </label>
                             <select class="form-control" id="FINALIZAR_GR" name="FINALIZAR_GR">
                                 <option value="" selected>Seleccione una opción</option>
                                 <option value="Sí">Sí</option>

@@ -299,7 +299,6 @@ class grController extends Controller
                 // }
 
                 foreach ($group as $row) {
-                    // === Caso 1: MATERIALES_JSON (cuando tiene PO) ===
                     if (!empty($row->MATERIALES_JSON)) {
                         $materiales = json_decode($row->MATERIALES_JSON, true);
 
@@ -314,7 +313,7 @@ class grController extends Controller
 
                                 if ($cantidad > 0 && !isset($vistos[$key])) {
                                     $vistos[$key] = true;
-                                    $texto = "• {$descripcion} ({$cantidad} {$unidad})"; // 👈 unidad incluida
+                                    $texto = "• {$descripcion} ({$cantidad} {$unidad})"; 
                                     if ($precio !== null && $precio !== '') {
                                         $texto .= " - $ {$precio}";
                                     }
@@ -324,7 +323,6 @@ class grController extends Controller
                         }
                     }
 
-                    // === Caso 2: MATERIALES_HOJA_JSON (cuando no tiene PO pero sí JSON en hoja) ===
                     elseif (!empty($row->MATERIALES_HOJA_JSON)) {
                         $materiales = json_decode($row->MATERIALES_HOJA_JSON, true);
                         if (is_array($materiales)) {
@@ -347,7 +345,7 @@ class grController extends Controller
                                 $key = $descripcion . '-' . $cantidad . '-' . $precio . '-' . $unidad;
                                 if (!isset($vistos[$key])) {
                                     $vistos[$key] = true;
-                                    $texto = "• {$descripcion} ({$cantidad} {$unidad})"; // 👈 unidad incluida
+                                    $texto = "• {$descripcion} ({$cantidad} {$unidad})"; 
                                     if ($precio !== null && $precio !== '') {
                                         $texto .= " - $ {$precio}";
                                     }
@@ -357,11 +355,10 @@ class grController extends Controller
                         }
                     }
 
-                    // === Caso 3: HT_DESCRIPCION (sin JSON, directo desde hoja_trabajo) ===
                     elseif (!empty($row->HT_DESCRIPCION)) {
                         $cantidad     = 0;
                         $precio       = null;
-                        $unidad       = $row->UNIDAD_MEDIDA ?? ''; // 👈 asegúrate de traerlo en el SELECT
+                        $unidad       = $row->UNIDAD_MEDIDA ?? ''; 
                         $descripcion  = $row->HT_DESCRIPCION;
 
                         if ($row->PROVEEDOR_KEY == $row->PROVEEDOR_Q1) {
@@ -379,7 +376,7 @@ class grController extends Controller
                             $key = $descripcion . '-' . $cantidad . '-' . $precio . '-' . $unidad;
                             if (!isset($vistos[$key])) {
                                 $vistos[$key] = true;
-                                $texto = "• {$descripcion} ({$cantidad} {$unidad})"; // 👈 unidad incluida
+                                $texto = "• {$descripcion} ({$cantidad} {$unidad})"; 
                                 if ($precio !== null && $precio !== '') {
                                     $texto .= " - $ {$precio}";
                                 }
@@ -1434,6 +1431,8 @@ class grController extends Controller
                             'FECHA_VOUSUARIO'     => $request->FECHA_VOUSUARIO,
                             'GR_PARCIAL'          => $request->GR_PARCIAL,
                             'FECHA_ENTREGA_GR'          => $request->FECHA_ENTREGA_GR,
+                            'FINALIZAR_GR'          => $request->FINALIZAR_GR,
+
 
                         'UPDATED_AT'          => now(),
                         ]);

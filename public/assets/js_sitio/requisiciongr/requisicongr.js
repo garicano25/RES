@@ -901,7 +901,7 @@ if (resp.existe) {
                             </div>
                           </div>
                               <div class="col-12 text-center">
-                                <h5>Cantidad recibida y especificación del bien o servicio</h5>
+                                <h5>Cantidad recibida </h5>
                               </div>
                           <div class="row mb-2">
                             <div class="col-3 mt-2">
@@ -929,35 +929,7 @@ if (resp.existe) {
                             </div>
                           </div>
 
-                        <div class="row mb-2">
-                            <div class="col-6 mt-2">
-                              <label class="form-label">Cumple lo especificado el B o S</label>
-                              <select class="form-control" name="CUMPLE[]">
-                                <option value="">Seleccione</option>
-                                <option value="Sí">Sí</option>
-                                <option value="No">No</option>
-                              </select>
-                            </div>
-                            <div class="col-6 mt-2">
-                              <label class="form-label">Comentario especificación</label>
-                              <textarea class="form-control" name="COMENTARIO_CUMPLE[]" rows="2"></textarea>
-                            </div>
-                          </div>
-
-                          <div class="row mb-2">
-                            <div class="col-6 mt-2">
-                              <label class="form-label">Estado del B o S</label>
-                              <select class="form-control" name="ESTADO_BS[]">
-                                <option value="">Seleccione</option>
-                                <option value="BUEN_ESTADO">En buen estado</option>
-                                <option value="MAL_ESTADO">Mal estado</option>
-                              </select>
-                            </div>
-                            <div class="col-6 mt-2">
-                              <label class="form-label">Comentario del estado</label>
-                              <textarea class="form-control" name="COMENTARIO_ESTADO[]" rows="2"></textarea>
-                            </div>
-                          </div>
+                      
 
                           <div class="row mb-2">
                             <div class="col-4 mt-2">
@@ -1287,6 +1259,12 @@ function crearBloqueDetalle(det, resp) {
     let bloque = $(`
           <div class="border rounded p-3 mb-3 bg-light">
                         <div class="row mb-2">
+
+                         <div class="col-12 text-center">
+                            <h5>Cantidad solicitada</h5>
+                          </div>
+
+                          
                           <div class="col-3 mt-2">
                             <label class="form-label">Descripción</label>
                             <textarea class="form-control" name="DESCRIPCION[]" rows="2" >${det.DESCRIPCION}</textarea>
@@ -1298,54 +1276,31 @@ function crearBloqueDetalle(det, resp) {
                                 </div>
                            
 
-
-                          <div class="col-3 mt-2">
-                            <label class="form-label">¿Está en inventario?</label>
-                            <select class="form-control en_inventario" name="EN_INVENTARIO[]">
-                              <option value="">Seleccione</option>
-                              <option value="Sí" ${det.EN_INVENTARIO=="Sí"?"selected":""}>Sí</option>
-                              <option value="No" ${det.EN_INVENTARIO == "No" ? "selected" : ""}>No</option>
-                              
-                            </select>
-                          </div>
-                          <div class="col-6 bloque-inventario" style="display:${det.INVENTARIO_ID ? 'block' : 'none'};">
-                            <div class="row">
-                              <div class="col-6 mt-2">
-                                <label class="form-label">Tipo Inventario</label>
-                                <select class="form-control tipo_inventario" name="TIPO_INVENTARIO[]">
-                                  <option value="">Seleccione</option>
-                                  ${resp.tipoinventario ? resp.tipoinventario.map(t => 
-                                    `<option value="${t.ID_CATALOGO_TIPOINVENTARIO}" ${det.TIPO_EQUIPO == t.DESCRIPCION_TIPO ? "selected" : ""}>${t.DESCRIPCION_TIPO}</option>`
-                                  ).join("") : ""}
-                                </select>
-                              </div>
-                              <div class="col-6 mt-2">
-                                <label class="form-label">Inventario</label>
-                                <select class="form-control inventario" name="INVENTARIO[]">
-                                  <option value="">Seleccione</option>
-                                  ${resp.inventario ? resp.inventario
-                                    .filter(inv => inv.TIPO_EQUIPO == det.TIPO_EQUIPO)
-                                    .map(inv =>
-                                      `<option value="${inv.ID_FORMULARIO_INVENTARIO}" ${det.INVENTARIO_ID == inv.ID_FORMULARIO_INVENTARIO ? "selected" : ""}>${inv.DESCRIPCION_EQUIPO}</option>`
-                                    ).join("") : ""}
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-4 mt-2">
+                                 
+                          <div class="col-2 mt-2">
                             <label class="form-label">Cantidad</label>
                             <input type="number" class="form-control cantidad" name="CANTIDAD[]" value="${det.CANTIDAD}" readonly>
                           </div>
-                          <div class="col-4 mt-2">
+                          <div class="col-2 mt-2">
                             <label class="form-label">Precio Unitario</label>
                             <input type="text" class="form-control precio_unitario" name="PRECIO_UNITARIO[]" value="${det.PRECIO_UNITARIO}" readonly>
                           </div>
-                          <div class="col-4 mt-2">
+                          <div class="col-2 mt-2">
                             <label class="form-label">Precio Total</label>
                             <input type="text" class="form-control precio_total_mr" name="PRECIO_TOTAL_MR[]" value="${det.PRECIO_TOTAL_MR ?? 0}" readonly>
                           </div>
                         </div>
 
+
+
+                       
+
+                              <div class="col-12 text-center">
+                                <h5>Cantidad recibida </h5>
+                              </div>
+
+
+                        
                         <div class="row mb-2">
                           <div class="col-3 mt-2">
                             <label class="form-label">Cantidad Rechazada</label>
@@ -1371,36 +1326,79 @@ function crearBloqueDetalle(det, resp) {
                             <textarea class="form-control" name="COMENTARIO_DIFERENCIA[]" rows="2">${det.COMENTARIO_DIFERENCIA ?? ""}</textarea>
                           </div>
                         </div>
-                      <div class="row mb-2">
-                          <div class="col-6 mt-2">
-                            <label class="form-label">Cumple</label>
-                            <select class="form-control" name="CUMPLE[]">
+                  
+
+                         <div class="row mb-2">
+                            <div class="col-4 mt-2">
+                              <label class="form-label">Cantidad que entra a almacén</label>
+                              <input type="number" class="form-control " name="CANTIDAD_ENTRA_ALMACEN[]" value="${det.CANTIDAD_ENTRA_ALMACEN}">
+                          </div>
+                       
+
+
+                        <div class="col-4 mt-2">
+                            <label class="form-label">Tipo</label>
+                            <select class="form-control" name="TIPO_BS[]">
                               <option value="">Seleccione</option>
-                              <option value="Sí" ${det.CUMPLE=="Sí"?"selected":""}>Sí</option>
-                              <option value="No" ${det.CUMPLE=="No"?"selected":""}>No</option>
+                              <option value="Bien" ${det.TIPO_BS=="Bien"?"selected":""}>Bien</option>
+                              <option value="Servicio" ${det.TIPO_BS=="Servicio"?"selected":""}>Servicio</option>
                             </select>
                           </div>
-                          <div class="col-6 mt-2">
-                            <label class="form-label">Comentario especificación</label>
-                            <textarea class="form-control" name="COMENTARIO_CUMPLE[]" rows="2">${det.COMENTARIO_CUMPLE??""}</textarea>
-                          </div>
-                        </div>
 
-                        <div class="row mb-2">
-                          <div class="col-6 mt-2">
-                            <label class="form-label">Estado</label>
-                            <select class="form-control" name="ESTADO_BS[]">
+                               <div class="col-4 mt-2">
+                              <label class="form-label">El B o S es parcial</label>
+                              <select class="form-control bs-esparcial" name="BIENS_PARCIAL[]" disabled>
+                                <option value="">Seleccione</option>
+                              <option value="Si" ${det.BIENS_PARCIAL=="Sí"?"selected":""}>Sí</option>
+                              <option value="No" ${det.BIENS_PARCIAL=="No"?"selected":""}>No</option>
+                              </select>
+                            </div>
+
+                          </div>
+
+
+
+
+                        
+                           <div class="row mb-2">
+                             <div class="col-4 mt-2">
+                            <label class="form-label">¿Está en inventario?</label>
+                            <select class="form-control en_inventario" name="EN_INVENTARIO[]">
                               <option value="">Seleccione</option>
-                              <option value="BUEN_ESTADO" ${det.ESTADO_BS=="BUEN_ESTADO"?"selected":""}>En buen estado</option>
-                              <option value="MAL_ESTADO" ${det.ESTADO_BS=="MAL_ESTADO"?"selected":""}>Mal estado</option>
+                              <option value="Sí" ${det.EN_INVENTARIO=="Sí"?"selected":""}>Sí</option>
+                              <option value="No" ${det.EN_INVENTARIO == "No" ? "selected" : ""}>No</option>
                             </select>
                           </div>
-                          <div class="col-6 mt-2">
-                            <label class="form-label">Comentario Estado</label>
-                            <textarea class="form-control" name="COMENTARIO_ESTADO[]" rows="2">${det.COMENTARIO_ESTADO??""}</textarea>
+                          <div class="col-8 bloque-inventario" style="display:${det.INVENTARIO_ID ? 'block' : 'none'};">
+                            <div class="row">
+                              <div class="col-6 mt-2">
+                                <label class="form-label">Tipo Inventario</label>
+                                <select class="form-control tipo_inventario" name="TIPO_INVENTARIO[]">
+                                  <option value="">Seleccione</option>
+                                  ${resp.tipoinventario ? resp.tipoinventario.map(t => 
+                                    `<option value="${t.ID_CATALOGO_TIPOINVENTARIO}" ${det.TIPO_EQUIPO == t.DESCRIPCION_TIPO ? "selected" : ""}>${t.DESCRIPCION_TIPO}</option>`
+                                  ).join("") : ""}
+                                </select>
+                              </div>
+                              <div class="col-6 mt-2">
+                                <label class="form-label">Inventario</label>
+                                <select class="form-control inventario" name="INVENTARIO[]">
+                                  <option value="">Seleccione</option>
+                                  ${resp.inventario ? resp.inventario
+                                    .filter(inv => inv.TIPO_EQUIPO == det.TIPO_EQUIPO)
+                                    .map(inv =>
+                                      `<option value="${inv.ID_FORMULARIO_INVENTARIO}" ${det.INVENTARIO_ID == inv.ID_FORMULARIO_INVENTARIO ? "selected" : ""}>${inv.DESCRIPCION_EQUIPO}</option>`
+                                    ).join("") : ""}
+                                </select>
+                              </div>
+                            </div>
                           </div>
-                        </div>
+                          </div>
 
+
+
+
+                          
                           <div class="row mb-3">
                           <div class="col-12 text-center">
                             <h4>Vo.Bo usuario</h4>
@@ -1450,16 +1448,8 @@ function crearBloqueDetalle(det, resp) {
 
                         
 
-                        <div class="row mb-2">
-                          <div class="col-12 mt-2">
-                            <label class="form-label">Tipo</label>
-                            <select class="form-control" name="TIPO_BS[]">
-                              <option value="">Seleccione</option>
-                              <option value="Bien" ${det.TIPO_BS=="Bien"?"selected":""}>Bien</option>
-                              <option value="Servicio" ${det.TIPO_BS=="Servicio"?"selected":""}>Servicio</option>
-                            </select>
-                          </div>
-                        </div>
+
+
                     </div>
     `);
 
