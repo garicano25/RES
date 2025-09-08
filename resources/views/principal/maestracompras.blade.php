@@ -319,7 +319,7 @@
 
                         @endif
 
-                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Almacenista']))
+                        <!-- @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Almacenista']))
 
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: 8px;">
@@ -351,8 +351,40 @@
                             </li>
                         </ul>
 
-                        @endif
+                        @endif -->
 
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown" style="margin-left: 8px;">
+                                <a class="nav-link dropdown-toggle BOTON" href="#"
+                                    style="color: #fff; font-weight: bold; text-decoration: none;"
+                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                    <span class="d-lg-none">Recepción de bienes y/o servicios - GR</span>
+                                    <span class="d-none d-lg-inline">Recepción de bienes y/o servicios - GR</span>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    {{-- Solo Superusuario, Administrador y Almacenista --}}
+                                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','Almacenista']))
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('/Bitácora-GR') }}">
+                                            Lista de recepción B.y.S
+                                        </a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+                                    @endif
+
+                                    {{-- Opción visible para todos los usuarios autenticados --}}
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('/Vo.Bo_GRusuario') }}">
+                                            Vo.Bo. de usuario de B.y.S
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
 
                         <ul class="navbar-nav">
