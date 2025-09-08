@@ -823,6 +823,8 @@ if (resp.existe) {
             $('#VO_BO_USUARIO').val(cab.VO_BO_USUARIO ?? '');
             $('#GR_PARCIAL').val(cab.GR_PARCIAL ?? '');
             $('#FECHA_ENTREGA_GR').val(cab.FECHA_ENTREGA_GR ?? '');
+            $('#FINALIZAR_GR').val(cab.FINALIZAR_GR ?? '');
+
 
 
       

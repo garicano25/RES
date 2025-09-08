@@ -314,16 +314,69 @@ $(document).ready(function () {
 });
 
 
+// $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
+//     var tr = $(this).closest('tr');
+//     var row = Tablainventario.row(tr);
+//     ID_FORMULARIO_INVENTARIO = row.data().ID_FORMULARIO_INVENTARIO;
+
+//     editarDatoTabla(row.data(), 'formularioINVENTARIO', 'Modal_inventario', 1);
+    
+
+
+//      if (row.data().FOTO_EQUIPO) {
+//         var archivo = row.data().FOTO_EQUIPO;
+//         var extension = archivo.substring(archivo.lastIndexOf("."));
+//         var imagenUrl = '/equipofoto/' + row.data().ID_FORMULARIO_INVENTARIO + extension;
+
+//         if ($('#FOTO_EQUIPO').data('dropify')) {
+//             $('#FOTO_EQUIPO').dropify().data('dropify').destroy();
+//             $('#FOTO_EQUIPO').dropify().data('dropify').settings.defaultFile = imagenUrl;
+//             $('#FOTO_EQUIPO').dropify().data('dropify').init();
+//         } else {
+//             $('#FOTO_EQUIPO').attr('data-default-file', imagenUrl);
+//             $('#FOTO_EQUIPO').dropify({
+//                 messages: {
+//                     'default': 'Arrastre la imagen aquí o haga click',
+//                     'replace': 'Arrastre la imagen o haga clic para reemplazar',
+//                     'remove': 'Quitar',
+//                     'error': 'Ooops, ha ocurrido un error.'
+//                 },
+//                 error: {
+//                     'fileSize': 'Demasiado grande ({{ value }} max).',
+//                     'minWidth': 'Ancho demasiado pequeño (min {{ value }}}px).',
+//                     'maxWidth': 'Ancho demasiado grande (max {{ value }}}px).',
+//                     'minHeight': 'Alto demasiado pequeño (min {{ value }}}px).',
+//                     'maxHeight': 'Alto demasiado grande (max {{ value }}px).',
+//                     'imageFormat': 'Formato no permitido, sólo ({{ value }}).'
+//                 }
+//             });
+//         }
+//     } else {
+//         $('#FOTO_EQUIPO').dropify().data('dropify').resetPreview();
+//         $('#FOTO_EQUIPO').dropify().data('dropify').clearElement();
+//     }
+
+
+//     $('#Modal_inventario .modal-title').html(row.data().DESCRIPCION_EQUIPO);
+
+    
+
+
+// });
+
+
+
 $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablainventario.row(tr);
     ID_FORMULARIO_INVENTARIO = row.data().ID_FORMULARIO_INVENTARIO;
 
     editarDatoTabla(row.data(), 'formularioINVENTARIO', 'Modal_inventario', 1);
-    
 
-
-     if (row.data().FOTO_EQUIPO) {
+    // =========================
+    // FOTO - Dropify
+    // =========================
+    if (row.data().FOTO_EQUIPO) {
         var archivo = row.data().FOTO_EQUIPO;
         var extension = archivo.substring(archivo.lastIndexOf("."));
         var imagenUrl = '/equipofoto/' + row.data().ID_FORMULARIO_INVENTARIO + extension;
@@ -340,14 +393,6 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
                     'replace': 'Arrastre la imagen o haga clic para reemplazar',
                     'remove': 'Quitar',
                     'error': 'Ooops, ha ocurrido un error.'
-                },
-                error: {
-                    'fileSize': 'Demasiado grande ({{ value }} max).',
-                    'minWidth': 'Ancho demasiado pequeño (min {{ value }}}px).',
-                    'maxWidth': 'Ancho demasiado grande (max {{ value }}}px).',
-                    'minHeight': 'Alto demasiado pequeño (min {{ value }}}px).',
-                    'maxHeight': 'Alto demasiado grande (max {{ value }}px).',
-                    'imageFormat': 'Formato no permitido, sólo ({{ value }}).'
                 }
             });
         }
@@ -356,14 +401,36 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
         $('#FOTO_EQUIPO').dropify().data('dropify').clearElement();
     }
 
-
     $('#Modal_inventario .modal-title').html(row.data().DESCRIPCION_EQUIPO);
 
-    
+    // =========================
+    // Calcular TOTAL_EQUIPO
+    // =========================
+    const cantidad = document.getElementById("CANTIDAD_EQUIPO");
+    const unitario = document.getElementById("UNITARIO_EQUIPO");
+    const total = document.getElementById("TOTAL_EQUIPO");
 
+    function calcularTotal() {
+        let cant = parseFloat(cantidad.value) || 0;
+        let precio = parseFloat(unitario.value) || 0;
 
+        // Si no hay cantidad o precio, total = 0.00
+        if (cant === 0 || precio === 0) {
+            total.value = "0.00";
+        } else {
+            total.value = (cant * precio).toFixed(2);
+        }
+    }
+
+    // Disparar cálculo al escribir
+    cantidad.removeEventListener("input", calcularTotal); // limpiar duplicados
+    unitario.removeEventListener("input", calcularTotal);
+    cantidad.addEventListener("input", calcularTotal);
+    unitario.addEventListener("input", calcularTotal);
+
+    // Calcular de inicio por si ya viene con datos
+    calcularTotal();
 });
-
 
 
 

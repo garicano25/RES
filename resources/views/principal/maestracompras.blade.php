@@ -384,7 +384,7 @@
                             </li>
                         </ul>
 
-                        
+
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
 
                         <ul class="navbar-nav">
@@ -582,7 +582,7 @@
     @endif
 
     @if(request()->is('Bitácora-GR'))
-    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.23"></script>
+    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.24"></script>
     @endif
 
 
