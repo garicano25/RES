@@ -586,7 +586,6 @@ function cargartablaentradainventario() {
         }
     },
     { data: 'TIPO', className: 'text-center' }, 
-    { data: 'BTN_EDITAR', className: 'text-center' },
 ],
 columnDefs: [
    { targets: 0, title: '#', className: 'all text-center' },
@@ -595,7 +594,6 @@ columnDefs: [
     { targets: 3, title: 'Valor unitario de compras', className: 'all text-center' },  
     { targets: 4, title: 'Total', className: 'all text-center' },
     { targets: 5, title: 'Tipo', className: 'all text-center' },  
-    { targets: 6, title: 'Editar', className: 'all text-center' }, 
 ],
 
     });
