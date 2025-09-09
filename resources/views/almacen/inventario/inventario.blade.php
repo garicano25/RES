@@ -48,7 +48,7 @@
                 <i class="bi bi-copy"></i> Respaldar Inventario
             </button>
 
-            
+
             @endif
 
             <button type="button"
@@ -88,7 +88,7 @@
                             <button class="nav-link active" id="tab1-info" data-bs-toggle="tab" data-bs-target="#contenido-info" type="button" role="tab">Información del producto</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="tab2-entrada" data-bs-toggle="tab" data-bs-target="#contenido-entrada" type="button" role="tab">Entradas del producto</button>
+                            <button class="nav-link" id="tab2-entrada" data-bs-toggle="tab" data-bs-target="#contenido-entrada" type="button" role="tab">Bitácora</button>
                         </li>
 
                     </ul>
