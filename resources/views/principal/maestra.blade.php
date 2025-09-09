@@ -538,6 +538,11 @@
     @endif
 
 
+
+    @if(request()->is('Rec.Empleado'))
+    <script src="/assets/js_sitio/RecEmpleados/recursosempleado.js"></script>
+    @endif
+
 </body>
 
 </html>

@@ -60,6 +60,14 @@ use App\Http\Controllers\contratacion\PowerPointController;
 use App\Http\Controllers\contratacion\pendientecontratarController;
 use App\Http\Controllers\contratacion\CvController;
 
+
+// CONTROLADORES DE REC.EMPLEADOS
+
+
+use App\Http\Controllers\recursosempleado\recempleadoController;
+
+
+
 // CONTROLADORES DE CAPACITACION 
 use App\Http\Controllers\capacitacion\brechaController;
 
@@ -548,6 +556,9 @@ Route::get('/mostrarrequisicon/{id}', [contratacionController::class, 'mostrarre
 //============================================== RECURSOS DE LOS EMPLEADOS ============================================== 
 
 Route::get('/Rec.Empleado', function () {return view('RH.RecEmpleados.RecEmpleados');});
+
+
+Route::get('/obtenerDatosPermiso', [recempleadoController::class, 'obtenerDatosPermiso']);
 
 
 

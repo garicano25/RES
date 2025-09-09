@@ -2006,7 +2006,7 @@ class mrController extends Controller
                     $hoja = HojaTrabajo::create($data);
                 }
 
-                // 🔹 Guardamos el ID real en el array global
+                // Guardamos el ID real en el array global
                 $ids[$i] = $hoja->id;
 
                 foreach (['Q1', 'Q2', 'Q3'] as $q) {
