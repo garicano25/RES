@@ -2908,7 +2908,7 @@ function hacerSoloLectura3(data, modalSelector) {
         var input = $(this);
         var fieldName = input.attr('name');
 
-        if (fieldName && data.hasOwnProperty(fieldName)) { // 🔥 Verifica que fieldName no sea undefined y exista en data
+        if (fieldName && data.hasOwnProperty(fieldName)) { 
             if (input.attr('type') === 'file') {
                 input.prop('disabled', true);
             } else if (input.is(':radio') || input.is(':checkbox')) {
@@ -2942,6 +2942,27 @@ function resetFormulario(modalSelector) {
 
 
 
+
+function hacerSoloLecturainventario(data, modalSelector) {
+  var modal = $(modalSelector);
+
+  modal.find(':input, select, textarea').each(function () {
+      var input = $(this);
+      var fieldName = input.attr('name');
+
+      if (input.attr('type') === 'file') {
+          input.prop('disabled', true);
+      } else if (input.is(':radio') || input.is(':checkbox')) {
+          input.prop('checked', data[fieldName] == input.val());
+      } else {
+          input.val(data[fieldName] || '');
+      }
+  });
+
+  modal.find('button').not('.btn-close, .btn-danger, .nav-tabs button, .nav-link, .EDITAR, .ver-archivo-verificacion').hide();
+  
+  modal.find('.btn-close, .btn-danger, .nav-tabs button, .nav-link, .EDITAR, .ver-archivo-verificacion').prop('disabled', false);
+}
 
 
 

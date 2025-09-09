@@ -918,6 +918,8 @@ Route::get('/Proveedor', function () {return view('compras.externa.diseño');});
 ////////////////////////////////////////////////////////////////ALMACEN//////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//==============================================    INVENTRARIO  ============================================== 
+
 
 Route::get('/Inventario', [inventarioController::class, 'index']);
 
@@ -927,6 +929,9 @@ Route::post('/InventarioSave', [inventarioController::class, 'store']);
 Route::get('/equipofoto/{id}', [inventarioController::class, 'mostrarFotoEquipo'])->name('equipofoto');
 
 
+/// Entrada inventario
+
+Route::get('/Tablaentradainventario', [inventarioController::class, 'Tablaentradainventario']);
 
 //==============================================   CATALOGOS INVENTRARIO  ============================================== 
 Route::get('/Catálogos_inventarios', function () { return view('almacen.Catalogos.catalogo_inventarios');});

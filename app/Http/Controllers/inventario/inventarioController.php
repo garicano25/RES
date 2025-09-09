@@ -18,6 +18,9 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
 use App\Models\inventario\catalogotipoinventarioModel;
 
+use App\Models\inventario\entradasinventarioModel;
+
+
 use App\Models\proveedor\altaproveedorModel;
 use App\Models\proveedor\proveedortempModel;
 
@@ -41,49 +44,6 @@ class inventarioController extends Controller
     }
 
 
-
-
-
-
-    // public function Tablainventario()
-    // {
-    //     try {
-    //         $tabla = inventarioModel::get();
-
-    //         foreach ($tabla as $value) {
-    //             if ($value->ACTIVO == 0) {
-    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_INVENTARIO . '"><span class="slider round"></span></label>';
-    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-    //             } else {
-    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_INVENTARIO . '" checked><span class="slider round"></span></label>';
-    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-    //             }
-
-
-    //             $value->FOTO_EQUIPO_HTML = '<img src="/equipofoto/' . $value->ID_FORMULARIO_INVENTARIO . '" alt="Foto" class="img-fluid" width="50" height="60">';
-
-
-    //         }
-
-    //         // Respuesta
-    //         return response()->json([
-    //             'data' => $tabla,
-    //             'msj' => 'Información consultada correctamente'
-    //         ]);
-    //     } catch (Exception $e) {
-    //         return response()->json([
-    //             'msj' => 'Error ' . $e->getMessage(),
-    //             'data' => 0
-    //         ]);
-    //     }
-    // }
-
-
-
-
-
     public function Tablainventario()
     {
         try {
@@ -100,10 +60,8 @@ class inventarioController extends Controller
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 }
 
-                // Foto en miniatura
                 $value->FOTO_EQUIPO_HTML = '<img src="/equipofoto/' . $value->ID_FORMULARIO_INVENTARIO . '" alt="Foto" class="img-fluid" width="50" height="60">';
 
-                // 🔹 Validamos si todos los campos (menos FOTO_EQUIPO) están llenos
                 $campos = [
                     'DESCRIPCION_EQUIPO',
                     'MARCA_EQUIPO',
@@ -130,7 +88,6 @@ class inventarioController extends Controller
                     }
                 }
 
-                // 🔹 Asignamos clase según si está completo o no
                 $value->ROW_CLASS = $completo ? 'bg-verde-suave' : 'bg-rojo-suave';
             }
 
@@ -156,6 +113,34 @@ class inventarioController extends Controller
     {
         $foto = inventarioModel::findOrFail($usuario_id);
         return Storage::response($foto->FOTO_EQUIPO);
+    }
+
+
+    /////////////////////////////////// ENTRADA INVENTARIO /////////////////////////////////// 
+    public function Tablaentradainventario(Request $request)
+    {
+        try {
+            $inventario = $request->get('inventario');
+
+            $tabla = entradasinventarioModel::where('INVENTARIO_ID', $inventario)->get();
+
+
+            foreach ($tabla as $value) {
+
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
     }
 
 

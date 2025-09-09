@@ -1,4 +1,9 @@
-var ID_FORMULARIO_INVENTARIO = 0
+ID_FORMULARIO_INVENTARIO = 0
+ID_ENTRADA_FORMULARIO = 0
+
+
+
+var inventario_id = null; 
 
 
 
@@ -35,6 +40,13 @@ $(document).ready(function() {
         });
 
         $('#Modal_inventario').modal('show');
+
+
+        $("#tab1-info").click();
+        $("#tab2-entrada").prop("disabled", true);
+  
+        
+
     });
 
 });
@@ -314,55 +326,6 @@ $(document).ready(function () {
 });
 
 
-// $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
-//     var tr = $(this).closest('tr');
-//     var row = Tablainventario.row(tr);
-//     ID_FORMULARIO_INVENTARIO = row.data().ID_FORMULARIO_INVENTARIO;
-
-//     editarDatoTabla(row.data(), 'formularioINVENTARIO', 'Modal_inventario', 1);
-    
-
-
-//      if (row.data().FOTO_EQUIPO) {
-//         var archivo = row.data().FOTO_EQUIPO;
-//         var extension = archivo.substring(archivo.lastIndexOf("."));
-//         var imagenUrl = '/equipofoto/' + row.data().ID_FORMULARIO_INVENTARIO + extension;
-
-//         if ($('#FOTO_EQUIPO').data('dropify')) {
-//             $('#FOTO_EQUIPO').dropify().data('dropify').destroy();
-//             $('#FOTO_EQUIPO').dropify().data('dropify').settings.defaultFile = imagenUrl;
-//             $('#FOTO_EQUIPO').dropify().data('dropify').init();
-//         } else {
-//             $('#FOTO_EQUIPO').attr('data-default-file', imagenUrl);
-//             $('#FOTO_EQUIPO').dropify({
-//                 messages: {
-//                     'default': 'Arrastre la imagen aquí o haga click',
-//                     'replace': 'Arrastre la imagen o haga clic para reemplazar',
-//                     'remove': 'Quitar',
-//                     'error': 'Ooops, ha ocurrido un error.'
-//                 },
-//                 error: {
-//                     'fileSize': 'Demasiado grande ({{ value }} max).',
-//                     'minWidth': 'Ancho demasiado pequeño (min {{ value }}}px).',
-//                     'maxWidth': 'Ancho demasiado grande (max {{ value }}}px).',
-//                     'minHeight': 'Alto demasiado pequeño (min {{ value }}}px).',
-//                     'maxHeight': 'Alto demasiado grande (max {{ value }}px).',
-//                     'imageFormat': 'Formato no permitido, sólo ({{ value }}).'
-//                 }
-//             });
-//         }
-//     } else {
-//         $('#FOTO_EQUIPO').dropify().data('dropify').resetPreview();
-//         $('#FOTO_EQUIPO').dropify().data('dropify').clearElement();
-//     }
-
-
-//     $('#Modal_inventario .modal-title').html(row.data().DESCRIPCION_EQUIPO);
-
-    
-
-
-// });
 
 
 
@@ -371,11 +334,21 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablainventario.row(tr);
     ID_FORMULARIO_INVENTARIO = row.data().ID_FORMULARIO_INVENTARIO;
 
+
+
+    inventario_id = row.data().ID_FORMULARIO_INVENTARIO;
+
+    $("#tab1-info").click();
+
+    $("#tab2-entrada").off("click").on("click", function () {
+        cargartablaentradainventario();
+    });
+
+
+
     editarDatoTabla(row.data(), 'formularioINVENTARIO', 'Modal_inventario', 1);
 
-    // =========================
-    // FOTO - Dropify
-    // =========================
+
     if (row.data().FOTO_EQUIPO) {
         var archivo = row.data().FOTO_EQUIPO;
         var extension = archivo.substring(archivo.lastIndexOf("."));
@@ -434,9 +407,24 @@ $(document).ready(function() {
         var tr = $(this).closest('tr');
         var row = Tablainventario.row(tr);
         
-        hacerSoloLectura4(row.data(), '#Modal_inventario');
+        hacerSoloLecturainventario(row.data(), '#Modal_inventario');
 
         ID_FORMULARIO_INVENTARIO = row.data().ID_FORMULARIO_INVENTARIO;
+
+
+
+          inventario_id = row.data().ID_FORMULARIO_INVENTARIO;
+    
+        $("#tab1-info").click();
+    
+        $("#tab2-entrada").off("click").on("click", function () {
+            cargartablaentradainventario();
+        });
+
+
+                
+        
+        
         editarDatoTabla(row.data(), 'formularioINVENTARIO', 'Modal_inventario', 1);
         
 
@@ -512,32 +500,6 @@ $(document).ready(function() {
 
 
 
-// FUNCIÓN SOLO LECTURA (ignora el file input)
-function hacerSoloLectura4(data, modalSelector) {
-    var formElements = $(modalSelector).find(':input, select');
-
-    formElements.each(function() {
-        $(this).prop('disabled', true);
-    });
-
-    $(modalSelector).find('button').not('.btn-close, .btn-danger, .nav-tabs button, .nav-link').hide();
-    $(modalSelector).find('.btn-close, .btn-danger, .nav-tabs button, .nav-link').prop('disabled', false);
-
-    for (var key in data) {
-        if (data.hasOwnProperty(key)) {
-            var element = $(modalSelector).find('[name="' + key + '"]');
-            if (element.length) {
-                if (element.is(':radio') || element.is(':checkbox')) {
-                    element.prop('checked', data[key]);
-                } else if (element.attr('type') === 'file') {
-                    continue;
-                } else {
-                    element.val(data[key]);
-                }
-            }
-        }
-    }
-}
 
 
 
@@ -551,11 +513,88 @@ document.addEventListener("DOMContentLoaded", function () {
         let precio = parseFloat(unitario.value) || 0;
         let resultado = cant * precio;
 
-        total.value = resultado.toFixed(2); // 2 decimales
+        total.value = resultado.toFixed(2); 
     }
 
     cantidad.addEventListener("input", calcularTotal);
     unitario.addEventListener("input", calcularTotal);
 });
+
+
+
+///// ENTRADA INVENTARIO TAB 2
+
+
+function cargartablaentradainventario() {
+    if ($.fn.DataTable.isDataTable('#Tablaentradainventario')) {
+        Tablaentradainventario.clear().destroy();
+    }
+
+    Tablaentradainventario = $("#Tablaentradainventario").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        ajax: {
+            dataType: 'json',
+            data: { inventario: inventario_id }, 
+            method: 'GET',
+            cache: false,
+            url: '/Tablaentradainventario',  
+            beforeSend: function () {
+                $('#loadingIcon').css('display', 'inline-block');
+            },
+            complete: function () {
+                $('#loadingIcon').css('display', 'none');
+                Tablaentradainventario.columns.adjust().draw(); 
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#loadingIcon').css('display', 'none');
+                alertErrorAJAX(jqXHR, textStatus, errorThrown);
+            },
+            dataSrc: 'data'
+        },
+        columns: [
+            { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+            { data: 'FECHA_INGRESO', className: 'text-center' },
+            { data: 'CANTIDAD_PRODUCTO', className: 'text-center' },
+            { 
+                data: 'VALOR_UNITARIO', 
+                className: 'text-center',
+                render: function(data, type, row) {
+                    if (data == null || data === '') {
+                        return '';
+                    }
+                    let numero = parseFloat(data);
+
+                    if (isNaN(numero)) {
+                        return data;
+                    }
+                    return '$ ' + numero.toFixed(2);
+                }
+            },
+            { data: 'BTN_EDITAR', className: 'text-center' },
+        ],
+        columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'Fecha', className: 'all text-center' },  
+            { targets: 2, title: 'Cantidad', className: 'all text-center' },  
+            { targets: 3, title: 'Valor unitario de compras ', className: 'all text-center' },  
+            { targets: 4, title: 'Editar', className: 'all text-center' }, 
+
+        ],
+       
+    });
+}
+
 
 
