@@ -43,6 +43,12 @@
                 id="boton_cargarExcelEquipos">
                 Importar <i class="bi bi-file-earmark-excel-fill"></i>
             </button>
+
+            <button id="btnRespaldarInventario" class="btn btn-primary">
+                <i class="bi bi-copy"></i> Respaldar Inventario
+            </button>
+
+            
             @endif
 
             <button type="button"
@@ -228,7 +234,7 @@
                         <!-- TAB 2: Entrada del producto -->
                         <div class="tab-pane fade" id="contenido-entrada" role="tabpanel">
                             <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
-                                <h3 style="color: #ffffff; margin: 0;">&nbsp;Entradas del producto</h3>
+                                <h3 style="color: #ffffff; margin: 0;">&nbsp;Bitácora</h3>
                             </ol>
 
                             <div class="card-body">

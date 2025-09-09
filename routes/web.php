@@ -933,6 +933,9 @@ Route::get('/equipofoto/{id}', [inventarioController::class, 'mostrarFotoEquipo'
 
 Route::get('/Tablaentradainventario', [inventarioController::class, 'Tablaentradainventario']);
 
+
+Route::post('/inventario/respaldar', [inventarioController::class, 'respaldarInventario'])->name('inventario.respaldar');
+
 //==============================================   CATALOGOS INVENTRARIO  ============================================== 
 Route::get('/Catálogos_inventarios', function () { return view('almacen.Catalogos.catalogo_inventarios');});
 Route::get('/Catálogo_tipo_inventario', function () { return view('almacen.Catalogos.catalogo_tipo');});

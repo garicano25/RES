@@ -301,7 +301,7 @@
 
 
     @if(request()->is('Inventario'))
-    <script src="/assets/js_sitio/inventario/inventario.js?v=1.7"></script>
+    <script src="/assets/js_sitio/inventario/inventario.js?v=1.8"></script>
     @endif
 
 

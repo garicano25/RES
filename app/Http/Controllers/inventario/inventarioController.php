@@ -116,32 +116,131 @@ class inventarioController extends Controller
     }
 
 
+
+    public function respaldarInventario()
+    {
+        try {
+            // Obtener todos los registros de formulario_inventario
+            $inventarios = DB::table('formulario_inventario')->get();
+
+            foreach ($inventarios as $inv) {
+                DB::table('inventario_respaldo')->insert([
+                    'INVENTARIO_ID'       => $inv->ID_FORMULARIO_INVENTARIO, // ID original
+                    'FOTO_EQUIPO'         => $inv->FOTO_EQUIPO,
+                    'DESCRIPCION_EQUIPO'  => $inv->DESCRIPCION_EQUIPO,
+                    'MARCA_EQUIPO'        => $inv->MARCA_EQUIPO,
+                    'MODELO_EQUIPO'       => $inv->MODELO_EQUIPO,
+                    'SERIE_EQUIPO'        => $inv->SERIE_EQUIPO,
+                    'CODIGO_EQUIPO'       => $inv->CODIGO_EQUIPO,
+                    'CANTIDAD_EQUIPO'     => $inv->CANTIDAD_EQUIPO,
+                    'UBICACION_EQUIPO'    => $inv->UBICACION_EQUIPO,
+                    'ESTADO_EQUIPO'       => $inv->ESTADO_EQUIPO,
+                    'FECHA_ADQUISICION'   => $inv->FECHA_ADQUISICION,
+                    'PROVEEDOR_EQUIPO'    => $inv->PROVEEDOR_EQUIPO,
+                    'UNITARIO_EQUIPO'     => $inv->UNITARIO_EQUIPO,
+                    'TOTAL_EQUIPO'        => $inv->TOTAL_EQUIPO,
+                    'TIPO_EQUIPO'         => $inv->TIPO_EQUIPO,
+                    'ACTIVO'              => $inv->ACTIVO,
+                    'OBSERVACION_EQUIPO'  => $inv->OBSERVACION_EQUIPO,
+                    'created_at'          => now(),
+                    'updated_at'          => now(),
+                ]);
+            }
+
+            return response()->json(['message' => 'Respaldo realizado con éxito.']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error al respaldar: ' . $e->getMessage()], 500);
+        }
+    }
+
+
+
     /////////////////////////////////// ENTRADA INVENTARIO /////////////////////////////////// 
     public function Tablaentradainventario(Request $request)
     {
         try {
-            $inventario = $request->get('inventario');
+            $inventarioId = $request->get('inventario');
+            $data = [];
+            $primerEntradaId = null;
 
-            $tabla = entradasinventarioModel::where('INVENTARIO_ID', $inventario)->get();
+            // =========================
+            // 1. Buscar saldo inicial en inventario_respaldo
+            // =========================
+            $saldoInicial = DB::table('inventario_respaldo')
+                ->where('INVENTARIO_ID', $inventarioId)
+                ->first(['CANTIDAD_EQUIPO', 'FECHA_ADQUISICION', 'UNITARIO_EQUIPO']);
 
+            if ($saldoInicial) {
+                // viene del respaldo
+                $data[] = [
+                    'FECHA_INGRESO'    => $saldoInicial->FECHA_ADQUISICION,
+                    'CANTIDAD_PRODUCTO' => $saldoInicial->CANTIDAD_EQUIPO,
+                    'VALOR_UNITARIO'   => $saldoInicial->UNITARIO_EQUIPO,
+                    'COSTO_TOTAL'      => $saldoInicial->CANTIDAD_EQUIPO * $saldoInicial->UNITARIO_EQUIPO,
+                    'TIPO'             => '<span class="badge bg-warning text-dark">Saldo inicial</span>',
+                    'BTN_EDITAR'       => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
+                    'BTN_VISUALIZAR'   => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
+                ];
+            } else {
+                // =========================
+                // 2. Si no hay respaldo, usar primer registro de entradas_inventario
+                // =========================
+                $primerEntrada = DB::table('entradas_inventario')
+                    ->where('INVENTARIO_ID', $inventarioId)
+                    ->orderBy('FECHA_INGRESO', 'asc')
+                    ->first();
 
-            foreach ($tabla as $value) {
+                if ($primerEntrada) {
+                    $primerEntradaId = $primerEntrada->ID_ENTRADA_FORMULARIO; // guardar ID para excluirlo luego
 
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $data[] = [
+                        'FECHA_INGRESO'    => $primerEntrada->FECHA_INGRESO,
+                        'CANTIDAD_PRODUCTO' => $primerEntrada->CANTIDAD_PRODUCTO,
+                        'VALOR_UNITARIO'   => $primerEntrada->VALOR_UNITARIO,
+                        'COSTO_TOTAL'      => $primerEntrada->CANTIDAD_PRODUCTO * $primerEntrada->VALOR_UNITARIO,
+                        'TIPO'             => '<span class="badge bg-warning text-dark">Saldo inicial</span>',
+                        'BTN_EDITAR'       => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
+                        'BTN_VISUALIZAR'   => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
+                    ];
+                }
+            }
+
+            // =========================
+            // 3. Agregar las demás entradas, excluyendo la primera si ya se usó como saldo inicial
+            // =========================
+            $entradasQuery = DB::table('entradas_inventario')
+                ->where('INVENTARIO_ID', $inventarioId);
+
+            if ($primerEntradaId) {
+                $entradasQuery->where('ID_ENTRADA_FORMULARIO', '!=', $primerEntradaId);
+            }
+
+            $entradas = $entradasQuery->get();
+
+            foreach ($entradas as $entrada) {
+                $data[] = [
+                    'FECHA_INGRESO'    => $entrada->FECHA_INGRESO,
+                    'CANTIDAD_PRODUCTO' => $entrada->CANTIDAD_PRODUCTO,
+                    'VALOR_UNITARIO'   => $entrada->VALOR_UNITARIO,
+                    'COSTO_TOTAL'      => $entrada->CANTIDAD_PRODUCTO * $entrada->VALOR_UNITARIO,
+                    'TIPO'             => '', // vacío para los demás
+                    'BTN_EDITAR'       => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
+                    'BTN_VISUALIZAR'   => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
+                ];
             }
 
             return response()->json([
-                'data' => $tabla,
-                'msj' => 'Información consultada correctamente'
+                'data' => $data,
+                'msj'  => 'Información consultada correctamente'
             ]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'msj' => 'Error ' . $e->getMessage(),
                 'data' => 0
             ]);
         }
     }
+
 
 
 

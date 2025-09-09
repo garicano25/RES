@@ -564,37 +564,65 @@ function cargartablaentradainventario() {
             dataSrc: 'data'
         },
         columns: [
-            { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
-            { data: 'FECHA_INGRESO', className: 'text-center' },
-            { data: 'CANTIDAD_PRODUCTO', className: 'text-center' },
-            { 
-                data: 'VALOR_UNITARIO', 
-                className: 'text-center',
-                render: function(data, type, row) {
-                    if (data == null || data === '') {
-                        return '';
-                    }
-                    let numero = parseFloat(data);
+     { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+    { data: 'FECHA_INGRESO', className: 'text-center' },
+    { data: 'CANTIDAD_PRODUCTO', className: 'text-center' },
+    { 
+        data: 'VALOR_UNITARIO', 
+        className: 'text-center',
+        render: function(data) {
+            if (!data) return '';
+            let numero = parseFloat(data);
+            return isNaN(numero) ? data : '$ ' + numero.toFixed(2);
+        }
+    },
+    { 
+        data: 'COSTO_TOTAL',
+        className: 'text-center',
+        render: function(data) {
+            if (!data) return '';
+            let numero = parseFloat(data);
+            return isNaN(numero) ? data : '$ ' + numero.toFixed(2);
+        }
+    },
+    { data: 'TIPO', className: 'text-center' }, 
+    { data: 'BTN_EDITAR', className: 'text-center' },
+],
+columnDefs: [
+   { targets: 0, title: '#', className: 'all text-center' },
+    { targets: 1, title: 'Fecha', className: 'all text-center' },  
+    { targets: 2, title: 'Cantidad', className: 'all text-center' },  
+    { targets: 3, title: 'Valor unitario de compras', className: 'all text-center' },  
+    { targets: 4, title: 'Total', className: 'all text-center' },
+    { targets: 5, title: 'Tipo', className: 'all text-center' },  
+    { targets: 6, title: 'Editar', className: 'all text-center' }, 
+],
 
-                    if (isNaN(numero)) {
-                        return data;
-                    }
-                    return '$ ' + numero.toFixed(2);
-                }
-            },
-            { data: 'BTN_EDITAR', className: 'text-center' },
-        ],
-        columnDefs: [
-            { targets: 0, title: '#', className: 'all text-center' },
-            { targets: 1, title: 'Fecha', className: 'all text-center' },  
-            { targets: 2, title: 'Cantidad', className: 'all text-center' },  
-            { targets: 3, title: 'Valor unitario de compras ', className: 'all text-center' },  
-            { targets: 4, title: 'Editar', className: 'all text-center' }, 
-
-        ],
-       
     });
 }
 
 
+
+
+
+
+document.getElementById('btnRespaldarInventario').addEventListener('click', function () {
+    if (confirm("¿Seguro que deseas respaldar toda la información del inventario?")) {
+        fetch('/inventario/respaldar', {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Ocurrió un error al respaldar el inventario.");
+        });
+    }
+});
 
