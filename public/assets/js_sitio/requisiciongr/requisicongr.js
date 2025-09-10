@@ -156,9 +156,8 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
     contenedor.empty();
 
       
-      // ==========================
-      // Caso: YA EXISTE GR
-      // ==========================
+    $("#formulariorecepciongr .modal-body").empty();
+
 if (resp.existe) {
     // ==========================
     // VARIAS GR (Parciales)

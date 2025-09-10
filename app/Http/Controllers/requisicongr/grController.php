@@ -807,15 +807,87 @@ class grController extends Controller
                         // =======================
                         //  Lógica de inventario al finalizar GR
                         // =======================
+                        // if (
+                        //     $request->FINALIZAR_GR === "Sí" &&
+                        //     ($request->VOBO_USUARIO_PRODUCTO[$i] ?? null) === "Sí" &&
+                        //     ($request->TIPO_BS[$i] ?? null) === "Bien"
+                        // ) {
+                        //     $cantidadEntra  = $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? 0;
+                        //     $precioUnitario = $request->PRECIO_UNITARIO_GR[$i] ?? null;
+                        //     $unidaddetalles = $request->UNIDAD_MEDIDA_ALMACEN[$i] ?? null;
+
+
+                        //     // Verificar si ya se guardó en inventario
+                        //     if ($guardoInventario == 0) {
+                        //         if (($request->EN_INVENTARIO[$i] ?? "No") === "No") {
+                        //             // Crear nuevo registro en inventario
+                        //             $inventarioId = DB::table('formulario_inventario')->insertGetId([
+                        //                 'DESCRIPCION_EQUIPO' => $desc,
+                        //                 'CANTIDAD_EQUIPO'    => $cantidadEntra,
+                        //                 'UNITARIO_EQUIPO'    => $precioUnitario,
+                        //                 'UNIDAD_MEDIDA'    => $unidaddetalles,
+                        //                 'FECHA_ADQUISICION'  => $fechaAdquisicion,
+                        //                 'PROVEEDOR_EQUIPO'  => $proveedorkey,
+                        //                 'created_at'         => now(),
+                        //                 'updated_at'         => now(),
+                        //             ]);
+
+                        //             // Guardar historial de entrada
+                        //             DB::table('entradas_inventario')->insert([
+                        //                 'INVENTARIO_ID'   => $inventarioId,
+                        //                 'FECHA_INGRESO'   => $fechaAdquisicion,
+                        //                 'CANTIDAD_PRODUCTO' => $cantidadEntra,
+                        //                 'VALOR_UNITARIO'  => $precioUnitario,
+                        //                 'UNIDAD_MEDIDA'  => $unidaddetalles,
+
+                        //             ]);
+                        //         } else {
+                        //             // Ya existe en inventario → actualizar
+                        //             $inventarioId = $request->INVENTARIO[$i] ?? null;
+                        //             if ($inventarioId) {
+                        //                 DB::table('formulario_inventario')
+                        //                     ->where('ID_FORMULARIO_INVENTARIO', $inventarioId)
+                        //                     ->update([
+                        //                         'CANTIDAD_EQUIPO'   => DB::raw("CANTIDAD_EQUIPO + {$cantidadEntra}"),
+                        //                         'UNITARIO_EQUIPO'   => $precioUnitario,
+                        //                         'UNIDAD_MEDIDA'   => $unidaddetalles,
+                        //                         'FECHA_ADQUISICION' => $fechaAdquisicion,
+                        //                         'PROVEEDOR_EQUIPO'  => $proveedorkey,
+                        //                     'updated_at'        => now(),
+                        //                     ]);
+
+                        //                 // Guardar historial de entrada
+                        //                 DB::table('entradas_inventario')->insert([
+                        //                     'INVENTARIO_ID'     => $inventarioId,
+                        //                     'FECHA_INGRESO'     => $fechaAdquisicion,
+                        //                     'CANTIDAD_PRODUCTO' => $cantidadEntra,
+                        //                     'VALOR_UNITARIO'    => $precioUnitario,
+                        //                     'UNIDAD_MEDIDA'  => $unidaddetalles,
+
+                        //                 ]);
+                        //             }
+                        //         }
+
+                        //         // Marcar detalle como guardado en inventario
+                        //         DB::table('formulario_bitacoragr_detalle')
+                        //             ->where('ID_DETALLE', $idDetalle)
+                        //             ->update(['GUARDO_INVENTARIO' => 1]);
+                        //     }
+                        // }
+
                         if (
                             $request->FINALIZAR_GR === "Sí" &&
                             ($request->VOBO_USUARIO_PRODUCTO[$i] ?? null) === "Sí" &&
                             ($request->TIPO_BS[$i] ?? null) === "Bien"
                         ) {
-                            $cantidadEntra  = $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? 0;
+                            $cantidadEntra  = (float)($request->CANTIDAD_ENTRA_ALMACEN[$i] ?? 0);
                             $precioUnitario = $request->PRECIO_UNITARIO_GR[$i] ?? null;
                             $unidaddetalles = $request->UNIDAD_MEDIDA_ALMACEN[$i] ?? null;
 
+                            //  Evitar guardar si no hay cantidad válida
+                            if ($cantidadEntra <= 0) {
+                                continue;
+                            }
 
                             // Verificar si ya se guardó en inventario
                             if ($guardoInventario == 0) {
@@ -825,21 +897,20 @@ class grController extends Controller
                                         'DESCRIPCION_EQUIPO' => $desc,
                                         'CANTIDAD_EQUIPO'    => $cantidadEntra,
                                         'UNITARIO_EQUIPO'    => $precioUnitario,
-                                        'UNIDAD_MEDIDA'    => $unidaddetalles,
+                                        'UNIDAD_MEDIDA'      => $unidaddetalles,
                                         'FECHA_ADQUISICION'  => $fechaAdquisicion,
-                                        'PROVEEDOR_EQUIPO'  => $proveedorkey,
+                                        'PROVEEDOR_EQUIPO'   => $proveedorkey,
                                         'created_at'         => now(),
                                         'updated_at'         => now(),
                                     ]);
 
                                     // Guardar historial de entrada
                                     DB::table('entradas_inventario')->insert([
-                                        'INVENTARIO_ID'   => $inventarioId,
-                                        'FECHA_INGRESO'   => $fechaAdquisicion,
+                                        'INVENTARIO_ID'     => $inventarioId,
+                                        'FECHA_INGRESO'     => $fechaAdquisicion,
                                         'CANTIDAD_PRODUCTO' => $cantidadEntra,
-                                        'VALOR_UNITARIO'  => $precioUnitario,
-                                        'UNIDAD_MEDIDA'  => $unidaddetalles,
-
+                                        'VALOR_UNITARIO'    => $precioUnitario,
+                                        'UNIDAD_MEDIDA'     => $unidaddetalles,
                                     ]);
                                 } else {
                                     // Ya existe en inventario → actualizar
@@ -850,10 +921,10 @@ class grController extends Controller
                                             ->update([
                                                 'CANTIDAD_EQUIPO'   => DB::raw("CANTIDAD_EQUIPO + {$cantidadEntra}"),
                                                 'UNITARIO_EQUIPO'   => $precioUnitario,
-                                                'UNIDAD_MEDIDA'   => $unidaddetalles,
+                                                'UNIDAD_MEDIDA'     => $unidaddetalles,
                                                 'FECHA_ADQUISICION' => $fechaAdquisicion,
                                                 'PROVEEDOR_EQUIPO'  => $proveedorkey,
-                                            'updated_at'        => now(),
+                                                'updated_at'        => now(),
                                             ]);
 
                                         // Guardar historial de entrada
@@ -862,8 +933,7 @@ class grController extends Controller
                                             'FECHA_INGRESO'     => $fechaAdquisicion,
                                             'CANTIDAD_PRODUCTO' => $cantidadEntra,
                                             'VALOR_UNITARIO'    => $precioUnitario,
-                                            'UNIDAD_MEDIDA'  => $unidaddetalles,
-
+                                            'UNIDAD_MEDIDA'     => $unidaddetalles,
                                         ]);
                                     }
                                 }
@@ -874,6 +944,10 @@ class grController extends Controller
                                     ->update(['GUARDO_INVENTARIO' => 1]);
                             }
                         }
+
+
+
+
                     }
 
                     // ================= GR PARCIAL =================
