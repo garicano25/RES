@@ -44,9 +44,9 @@
                 Importar <i class="bi bi-file-earmark-excel-fill"></i>
             </button>
 
-            <button id="btnRespaldarInventario" class="btn btn-primary">
+            <!-- <button id="btnRespaldarInventario" class="btn btn-primary">
                 <i class="bi bi-copy"></i> Respaldar Inventario
-            </button>
+            </button> -->
 
 
             @endif
