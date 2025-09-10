@@ -1763,6 +1763,8 @@ class grController extends Controller
                             'BIENS_PARCIAL'               => $request->BIENS_PARCIAL[$i] ?? null,
                             'GUARDO_INVENTARIO'           => $guardoInventario,
                             'COMENTARIO_VO_RECHAZO'       => $request->COMENTARIO_VO_RECHAZO[$i] ?? null,
+                            'UNIDAD_MEDIDA_ALMACEN'       => $request->UNIDAD_MEDIDA_ALMACEN[$i] ?? null,
+
 
                         ]);
 
@@ -1776,6 +1778,8 @@ class grController extends Controller
                         ) {
                             $cantidadEntra  = $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? 0;
                             $precioUnitario = $request->PRECIO_UNITARIO_GR[$i] ?? null;
+                            $unidaddetalles = $request->UNIDAD_MEDIDA_ALMACEN[$i] ?? null;
+
 
                             // Verificar si ya se guardó en inventario
                             if ($guardoInventario == 0) {
@@ -1785,6 +1789,7 @@ class grController extends Controller
                                         'DESCRIPCION_EQUIPO' => $desc,
                                         'CANTIDAD_EQUIPO'    => $cantidadEntra,
                                         'UNITARIO_EQUIPO'    => $precioUnitario,
+                                        'UNIDAD_MEDIDA'    => $unidaddetalles,
                                         'FECHA_ADQUISICION'  => $fechaAdquisicion,
                                         'created_at'         => now(),
                                         'updated_at'         => now(),
@@ -1796,6 +1801,8 @@ class grController extends Controller
                                         'FECHA_INGRESO'   => $fechaAdquisicion,
                                         'CANTIDAD_PRODUCTO' => $cantidadEntra,
                                         'VALOR_UNITARIO'  => $precioUnitario,
+                                        'UNIDAD_MEDIDA'  => $unidaddetalles,
+
                                     ]);
                                 } else {
                                     // Ya existe en inventario → actualizar
@@ -1806,6 +1813,7 @@ class grController extends Controller
                                             ->update([
                                                 'CANTIDAD_EQUIPO'   => DB::raw("CANTIDAD_EQUIPO + {$cantidadEntra}"),
                                                 'UNITARIO_EQUIPO'   => $precioUnitario,
+                                                'UNIDAD_MEDIDA'   => $unidaddetalles,
                                                 'FECHA_ADQUISICION' => $fechaAdquisicion,
                                                 'updated_at'        => now(),
                                             ]);
@@ -1816,6 +1824,8 @@ class grController extends Controller
                                             'FECHA_INGRESO'     => $fechaAdquisicion,
                                             'CANTIDAD_PRODUCTO' => $cantidadEntra,
                                             'VALOR_UNITARIO'    => $precioUnitario,
+                                            'UNIDAD_MEDIDA'  => $unidaddetalles,
+
                                         ]);
                                     }
                                 }
@@ -1969,6 +1979,8 @@ class grController extends Controller
                             'UNIDAD'                => $request->UNIDAD[$i] ?? null,
                             'BIENS_PARCIAL'         => $request->BIENS_PARCIAL[$i] ?? null,
                             'CANTIDAD_ENTRA_ALMACEN' => $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? null,
+                            'UNIDAD_MEDIDA_ALMACEN' => $request->UNIDAD_MEDIDA_ALMACEN[$i] ?? null,
+
                         ]);
                     }
 
@@ -2067,7 +2079,6 @@ class grController extends Controller
         ]);
 
         foreach ($request->DESCRIPCION as $i => $desc) {
-            // 🔑 Solo copiar si el detalle está marcado como parcial
             if (($request->BIENS_PARCIAL[$i] ?? null) !== "Sí") {
                 continue;
             }
@@ -2132,7 +2143,8 @@ class grController extends Controller
                 'd.UNIDAD',
                 'd.CANTIDAD_ENTRA_ALMACEN',
                 'd.BIENS_PARCIAL',
-                'd.COMENTARIO_VO_RECHAZO'
+                'd.COMENTARIO_VO_RECHAZO',
+                'd.UNIDAD_MEDIDA_ALMACEN'
 
 
         )
@@ -2190,6 +2202,8 @@ class grController extends Controller
                     'CANTIDAD_ENTRA_ALMACEN' => $row->CANTIDAD_ENTRA_ALMACEN,
                     'BIENS_PARCIAL' => $row->BIENS_PARCIAL,
                     'COMENTARIO_VO_RECHAZO' => $row->COMENTARIO_VO_RECHAZO,
+                    'UNIDAD_MEDIDA_ALMACEN' => $row->UNIDAD_MEDIDA_ALMACEN,
+
 
 
                 ];

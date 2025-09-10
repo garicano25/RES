@@ -149,12 +149,22 @@
                                                         <input type="text" class="form-control" id="CODIGO_EQUIPO" name="CODIGO_EQUIPO">
                                                     </div>
                                                 </div>
-                                                <div class="col-4 mt-2">
+                                                <div class="col-2 mt-2">
                                                     <div class="form-group">
                                                         <label> Cantidad </label>
                                                         <input type="Number" step="any" class="form-control" id="CANTIDAD_EQUIPO" name="CANTIDAD_EQUIPO">
                                                     </div>
                                                 </div>
+
+
+                                                <div class="col-2 mt-2">
+                                                    <div class="form-group">
+                                                        <label> U.M. </label>
+                                                        <input type="text" step="any" class="form-control" id="UNIDAD_MEDIDA" name="UNIDAD_MEDIDA">
+                                                    </div>
+                                                </div>
+
+
 
                                                 <div class="col-8 mt-2">
                                                     <div class="form-group">

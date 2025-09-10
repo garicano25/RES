@@ -506,12 +506,18 @@ if (resp.existe) {
                       
 
                           <div class="row mb-2">
-                            <div class="col-4 mt-2">
+                            <div class="col-3 mt-2">
                               <label class="form-label">Cantidad que entra a almacén</label>
                               <input type="number" class="form-control cantidad_entraalmacen" name="CANTIDAD_ENTRA_ALMACEN[]" value="0" min="0">
                             </div>
 
-                            <div class="col-4 mt-2">
+                           <div class="col-3 mt-2">
+                              <label class="form-label">U.M</label>
+                              <input type="text" class="form-control " name="UNIDAD_MEDIDA_ALMACEN[]" >
+                            </div>
+
+
+                            <div class="col-3 mt-2">
                               <label class="form-label">Tipo</label>
                               <select class="form-control" name="TIPO_BS[]">
                                 <option value="">Seleccione</option>
@@ -520,7 +526,7 @@ if (resp.existe) {
                               </select>
                             </div>
 
-                            <div class="col-4 mt-2">
+                            <div class="col-3 mt-2">
                               <label class="form-label">El B o S es parcial</label>
                               <select class="form-control bs-esparcial" name="BIENS_PARCIAL[]" disabled>
                                 <option value="">Seleccione</option>
@@ -777,14 +783,20 @@ function crearBloqueDetalle(det, resp) {
                   
 
                          <div class="row mb-2">
-                            <div class="col-4 mt-2">
+                            <div class="col-3 mt-2">
                               <label class="form-label">Cantidad que entra a almacén</label>
                               <input type="number" class="form-control cantidad_entraalmacen" name="CANTIDAD_ENTRA_ALMACEN[]" value="${det.CANTIDAD_ENTRA_ALMACEN}">
                           </div>
                        
 
+                          <div class="col-3 mt-2">
+                              <label class="form-label">U.M</label>
+                              <input type="text" class="form-control" name="UNIDAD_MEDIDA_ALMACEN[]" value="${det.UNIDAD_MEDIDA_ALMACEN}">
+                            </div>
 
-                        <div class="col-4 mt-2">
+
+
+                        <div class="col-3 mt-2">
                             <label class="form-label">Tipo</label>
                             <select class="form-control" name="TIPO_BS[]">
                               <option value="">Seleccione</option>
@@ -793,7 +805,7 @@ function crearBloqueDetalle(det, resp) {
                             </select>
                           </div>
 
-                               <div class="col-4 mt-2">
+                               <div class="col-3 mt-2">
                               <label class="form-label">El B o S es parcial</label>
                               <select class="form-control bs-esparcial" name="BIENS_PARCIAL[]" disabled>
                                 <option value="">Seleccione</option>
