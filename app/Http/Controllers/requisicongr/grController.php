@@ -1762,6 +1762,8 @@ class grController extends Controller
                             'CANTIDAD_ENTRA_ALMACEN'      => $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? null,
                             'BIENS_PARCIAL'               => $request->BIENS_PARCIAL[$i] ?? null,
                             'GUARDO_INVENTARIO'           => $guardoInventario,
+                            'COMENTARIO_VO_RECHAZO'       => $request->COMENTARIO_VO_RECHAZO[$i] ?? null,
+
                         ]);
 
                         // =======================
@@ -1927,7 +1929,7 @@ class grController extends Controller
      * Crear GR Parcial con cantidades remanentes
      */
     private function crearGRParcial(Request $request, $usuarioId)
-    {
+    {   
         $noRecepcion = $this->generarNoRecepcion();
 
         $idGRParcial = DB::table('formulario_bitacoragr')->insertGetId([
@@ -1958,13 +1960,10 @@ class grController extends Controller
                     'ID_GR'                 => $idGRParcial,
                     'DESCRIPCION'           => $desc,
                     'CANTIDAD'              => $aceptada, 
-                    'CANTIDAD_RECHAZADA'    => $request->CANTIDAD_RECHAZADA[$i] ?? 0,
                     'PRECIO_UNITARIO'       => $request->PRECIO_UNITARIO[$i] ?? null,
                     'PRECIO_TOTAL_MR'       => $request->PRECIO_TOTAL_MR[$i] ?? null,
-                    'TIPO_BS'               => $request->TIPO_BS[$i] ?? null,
-                    'TIPO_EQUIPO'           => $tipoEquipoDesc,
-                    'INVENTARIO_ID'         => $request->INVENTARIO[$i] ?? null,
-                    'EN_INVENTARIO'         => $request->EN_INVENTARIO[$i] ?? null,
+                    'UNIDAD'                => $request->UNIDAD[$i] ?? null,
+
                 ]);
             }
         }
@@ -2006,7 +2005,9 @@ class grController extends Controller
                 'd.VOBO_USUARIO_PRODUCTO',
                 'd.UNIDAD',
                 'd.CANTIDAD_ENTRA_ALMACEN',
-                'd.BIENS_PARCIAL'
+                'd.BIENS_PARCIAL',
+                'd.COMENTARIO_VO_RECHAZO'
+
 
         )
             ->where('gr.NO_MR', $no_mr);
@@ -2062,6 +2063,8 @@ class grController extends Controller
                     'UNIDAD' => $row->UNIDAD,
                     'CANTIDAD_ENTRA_ALMACEN' => $row->CANTIDAD_ENTRA_ALMACEN,
                     'BIENS_PARCIAL' => $row->BIENS_PARCIAL,
+                    'COMENTARIO_VO_RECHAZO' => $row->COMENTARIO_VO_RECHAZO,
+
 
                 ];
             });

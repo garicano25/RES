@@ -172,6 +172,7 @@ class vobogrusuarioController extends Controller
                             'ESTADO_BS_USUARIO'           => $request->ESTADO_BS_USUARIO[$idDetalle] ?? null,
                             'COMENTARIO_ESTADO_USUARIO'   => $request->COMENTARIO_ESTADO_USUARIO[$idDetalle] ?? null,
                             'VOBO_USUARIO_PRODUCTO'       => $request->VOBO_USUARIO_PRODUCTO[$idDetalle] ?? null,
+                            'COMENTARIO_VO_RECHAZO'       => $request->COMENTARIO_VO_RECHAZO[$idDetalle] ?? null,
                             'UPDATED_AT'                  => now(),
                         ]);
                 }

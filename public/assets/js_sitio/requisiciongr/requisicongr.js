@@ -1265,20 +1265,14 @@ function crearBloqueDetalle(det, resp) {
                          <div class="col-12 text-center">
                             <h5>Cantidad solicitada</h5>
                           </div>
-
-                          
                           <div class="col-3 mt-2">
                             <label class="form-label">Descripción</label>
                             <textarea class="form-control" name="DESCRIPCION[]" rows="2" >${det.DESCRIPCION}</textarea>
                           </div>
-
                            <div class="col-2 mt-2">
-                                  <label class="form-label">U.M.</label>
-                                  <input type="text" class="form-control" name="UNIDAD[]" value="${det.UNIDAD}" readonly>
-                                </div>
-                           
-
-                                 
+                                <label class="form-label">U.M.</label>
+                                <input type="text" class="form-control" name="UNIDAD[]" value="${det.UNIDAD}" readonly>
+                          </div>
                           <div class="col-2 mt-2">
                             <label class="form-label">Cantidad</label>
                             <input type="number" class="form-control cantidad" name="CANTIDAD[]" value="${det.CANTIDAD}" readonly>
@@ -1293,15 +1287,9 @@ function crearBloqueDetalle(det, resp) {
                           </div>
                         </div>
 
-
-
-                       
-
-                              <div class="col-12 text-center">
-                                <h5>Cantidad recibida </h5>
-                              </div>
-
-
+                        <div class="col-12 text-center">
+                          <h5>Cantidad recibida </h5>
+                        </div>
                         
                         <div class="row mb-2">
                           <div class="col-3 mt-2">
@@ -1441,7 +1429,13 @@ function crearBloqueDetalle(det, resp) {
                                 <option value="Sí" ${det.VOBO_USUARIO_PRODUCTO=="Sí"?"selected":""}>Sí</option>
                                 <option value="No" ${det.VOBO_USUARIO_PRODUCTO=="No"?"selected":""}>No</option>
                             </select>
-                        </div>
+                          </div>
+
+                          <div class="col-12 mt-2 comentario-rechazada" 
+                              style="display:${det.VOBO_USUARIO_PRODUCTO=="No" ? "block" : "none"};">
+                              <label class="form-label">Comentario de rechazo</label>
+                              <textarea class="form-control" name="COMENTARIO_VO_RECHAZO[]" rows="2">${det.COMENTARIO_VO_RECHAZO ?? ""}</textarea>
+                          </div>
 
 
                         </div>
@@ -1490,6 +1484,22 @@ function crearBloqueDetalle(det, resp) {
                 });
         }
     });
+  
+  
+   bloque.find(".vobo-usuario").on("change", function () {
+        let selectVal = $(this).val();
+        let comentarioDiv = bloque.find(".comentario-rechazada");
+
+        if (selectVal === "No") {
+            comentarioDiv.show();
+            comentarioDiv.find("textarea").attr("required", true);
+        } else {
+            comentarioDiv.hide();
+            comentarioDiv.find("textarea").removeAttr("required").val("");
+        }
+   });
+  
+  
 
     return bloque;
 }
