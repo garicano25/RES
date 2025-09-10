@@ -45,7 +45,8 @@ $(document).ready(function() {
         $("#tab1-info").click();
         $("#tab2-entrada").prop("disabled", true);
   
-        
+         $("#ANTES_2024").hide();
+            $("#DESPUES_2024").show();
 
     });
 
@@ -346,7 +347,7 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
 
 
 
-    editarDatoTabla(row.data(), 'formularioINVENTARIO', 'Modal_inventario', 1);
+    editarDatoTablainventario(row.data(), 'formularioINVENTARIO', 'Modal_inventario', 1);
 
 
     if (row.data().FOTO_EQUIPO) {
@@ -398,6 +399,28 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
     unitario.addEventListener("input", calcularTotal);
 
     calcularTotal();
+
+
+
+       let fechaAdquisicion = row.data().FECHA_ADQUISICION || "";
+    if (fechaAdquisicion === "2024-12-31") {
+        // Mostrar campo ANTES_2024
+        $("#ANTES_2024").show();
+        $("#DESPUES_2024").hide();
+
+        // Poner el valor de PROVEEDOR_EQUIPO en el input especial
+        $("#PROVEEDOR_ANTESDEL2024").val(row.data().PROVEEDOR_EQUIPO || "");
+    } else {
+        // Mostrar campo DESPUES_2024
+        $("#ANTES_2024").hide();
+        $("#DESPUES_2024").show();
+
+        // Seleccionar en el <select> normal
+        $("#PROVEEDOR_EQUIPO").val(row.data().PROVEEDOR_EQUIPO || "");
+    }
+
+    
+    
 });
 
 
@@ -425,7 +448,7 @@ $(document).ready(function() {
                 
         
         
-        editarDatoTabla(row.data(), 'formularioINVENTARIO', 'Modal_inventario', 1);
+        editarDatoTablainventario(row.data(), 'formularioINVENTARIO', 'Modal_inventario', 1);
         
 
 
@@ -487,7 +510,26 @@ $(document).ready(function() {
         unitario.addEventListener("input", calcularTotal);
 
             calcularTotal();
-                    
+                   
+        
+        
+        
+       let fechaAdquisicion = row.data().FECHA_ADQUISICION || "";
+        if (fechaAdquisicion === "2024-12-31") {
+            $("#ANTES_2024").show();
+            $("#DESPUES_2024").hide();
+
+            $("#PROVEEDOR_ANTESDEL2024").val(row.data().PROVEEDOR_EQUIPO || "");
+        } else {
+            $("#ANTES_2024").hide();
+            $("#DESPUES_2024").show();
+
+            $("#PROVEEDOR_EQUIPO").val(row.data().PROVEEDOR_EQUIPO || "");
+        }
+
+        
+        
+        
 
 
     });
@@ -602,27 +644,6 @@ columnDefs: [
 
 
 
-
-
-// document.getElementById('btnRespaldarInventario').addEventListener('click', function () {
-//     if (confirm("¿Seguro que deseas respaldar toda la información del inventario?")) {
-//         fetch('/inventario/respaldar', {
-//             method: 'POST',
-//             headers: {
-//                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-//                 'Content-Type': 'application/json'
-//             }
-//         })
-//         .then(response => response.json())
-//         .then(data => {
-//             alert(data.message);
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//             alert("Ocurrió un error al respaldar el inventario.");
-//         });
-//     }
-// });
 
 
 

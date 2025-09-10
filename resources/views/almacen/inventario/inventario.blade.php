@@ -190,9 +190,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            
-                                                <div class="col-12 mt-2">
+
+                                                <div class="col-12 mt-2" id="DESPUES_2024" style="display: block;">
                                                     <label class="form-label">Proveedor</label>
+
+                                                 
+
                                                     <select class="form-select text-center" id="PROVEEDOR_EQUIPO" name="PROVEEDOR_EQUIPO">
                                                         <option value="">Seleccionar proveedor</option>
                                                         <optgroup label="Proveedor oficial">
@@ -213,6 +216,10 @@
                                                 </div>
 
 
+                                                <div class="col-12 mt-2" id="ANTES_2024" style="display: none;">
+                                                    <label class="form-label">Proveedor</label>
+                                                    <input type="text" class="form-control" id="PROVEEDOR_ANTESDEL2024">
+                                                </div>
 
                                                 <div class="col-4 mt-2">
                                                     <div class="form-group">

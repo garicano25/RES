@@ -276,7 +276,7 @@
     <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
 
     <!-- Funciones generales -->
-    <script src="/assets/js_sitio/funciones.js?v=5.4"></script>
+    <script src="/assets/js_sitio/funciones.js?v=5.5"></script>
 
 
     <script>
@@ -301,7 +301,7 @@
 
 
     @if(request()->is('Inventario'))
-    <script src="/assets/js_sitio/inventario/inventario.js?v=1.10"></script>
+    <script src="/assets/js_sitio/inventario/inventario.js?v=1.11"></script>
     @endif
 
 

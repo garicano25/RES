@@ -2512,6 +2512,136 @@ for (var key in data) {
 
 
 
+function editarDatoTablainventario( data, form = 'OnlyForm', modalID = 'ModalID', formComplete = 0) {
+  
+    //Limpiamos el form en donde vamos a insertar nuestros datos
+  $('#'+ form).each(function(){
+      this.reset();
+  });
+
+  //La variable formComplete nos sirve para decir si es un formulario completo con select, radio, checkbox, textarea, y text, number
+if (formComplete == 0) {
+  //Recorremos e insertamos los datos en los campos
+  for (var key in data) {
+    if (data.hasOwnProperty(key)) {
+      if (!key.startsWith("btn") && key !== "created_at" && key !== "updated_at") {
+            
+        var input = $('#' + form).find(`input[name='${key}']`);
+        if (input.length) {
+          input.val(data[key]);
+        } else {
+          $('#' + form).find(`textarea[name='${key}']`).val(data[key]);
+        }
+      }
+    }
+  }
+
+ // === Lógica especial proveedor ===
+let fechaAdquisicion = data.FECHA_ADQUISICION || "";
+if (fechaAdquisicion === "2024-12-31") {
+    $("#ANTES_2024").show();
+    $("#DESPUES_2024").hide();
+    $("#PROVEEDOR_ANTESDEL2024").val(data.PROVEEDOR_EQUIPO || "");
+} else {
+    $("#ANTES_2024").hide();
+    $("#DESPUES_2024").show();
+    $("#PROVEEDOR_EQUIPO").val(data.PROVEEDOR_EQUIPO || "");
+}
+
+
+  //Abrimos el modal
+  $('#' + modalID).modal('show');
+
+
+} else {
+    
+    //RECOREMOS EL FOMULARIO PRINCIPAL
+for (var key in data) {
+  if (data.hasOwnProperty(key)) {
+
+
+    if (!key.startsWith("BTN") && key !== "created_at" && key !== "updated_at") {
+          
+      var input = $('#' + form).find(`input[name='${key}'][type='text'], input[name='${key}'][type='number']`);
+      var email = $('#' + form).find(`input[name='${key}'][type='email']`);
+      var password = $('#' + form).find(`input[name='${key}'][type='password']`);
+      var date = $('#' + form).find(`input[name='${key}'][type='date']`);
+      var time = $('#' + form).find(`input[name='${key}'][type='time']`);
+      var textarea = $('#' + form).find(`textarea[name='${key}']`).val(data[key]);
+      var select = $('#' + form).find(`select[name='${key}']`).val(data[key]);
+      var hidden = $('#' + form).find(`input[name='${key}'][type='hidden']`);
+
+      
+      if (input.length) {
+        input.val(data[key]);
+        
+      } else if (textarea.length) {
+        textarea.val(data[key]);
+        
+      }
+      else if (email.length) {
+        email.val(data[key]);
+        
+      }
+        else if (password.length) {
+        password.val(data[key]);
+    }
+
+      else if (select.length) {
+
+        select.val(data[key])
+
+      }  else if (date.length) {
+
+        date.val(data[key])
+
+      }else if (time.length) {
+
+        time.val(data[key])
+
+      }else if (hidden.length) {
+
+        hidden.val(data[key])
+
+      
+      }
+      else {
+
+        $('#' + form).find(`input[name='${key}'][value='${data[key]}'][type='radio']`).prop('checked', true)
+                
+        $('#' + form).find(`input[name='${key}'][value='${data[key]}'][type='checkbox']`).prop('checked', true)
+      }
+      
+    }
+  }
+}
+
+
+// === Lógica especial proveedor ===
+let fechaAdquisicion = data.FECHA_ADQUISICION || "";
+if (fechaAdquisicion === "2024-12-31") {
+    $("#ANTES_2024").show();
+    $("#DESPUES_2024").hide();
+    $("#PROVEEDOR_ANTESDEL2024").val(data.PROVEEDOR_EQUIPO || "");
+} else {
+    $("#ANTES_2024").hide();
+    $("#DESPUES_2024").show();
+    $("#PROVEEDOR_EQUIPO").val(data.PROVEEDOR_EQUIPO || "");
+}
+
+
+//Abrimos el modal
+$('#' + modalID).modal('show');
+
+    
+}
+
+    
+
+}
+
+
+
 
 function eliminarDatoTabla1(data, arregloTable, url) {
   alertMensajeConfirm({
