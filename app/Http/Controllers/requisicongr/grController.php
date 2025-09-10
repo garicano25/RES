@@ -1708,6 +1708,8 @@ class grController extends Controller
 
                     // Guardamos la fecha de adquisición desde la cabecera
                     $fechaAdquisicion = $request->FECHA_ENTREGA_GR;
+                    $proveedorkey = $request->PROVEEDOR_EQUIPO;
+
 
                     // Guardar los detalles que ya habían pasado a inventario antes de borrar
                     $detallesGuardados = DB::table('formulario_bitacoragr_detalle')
@@ -1791,6 +1793,7 @@ class grController extends Controller
                                         'UNITARIO_EQUIPO'    => $precioUnitario,
                                         'UNIDAD_MEDIDA'    => $unidaddetalles,
                                         'FECHA_ADQUISICION'  => $fechaAdquisicion,
+                                        'PROVEEDOR_EQUIPO'  => $proveedorkey,
                                         'created_at'         => now(),
                                         'updated_at'         => now(),
                                     ]);
@@ -1815,7 +1818,8 @@ class grController extends Controller
                                                 'UNITARIO_EQUIPO'   => $precioUnitario,
                                                 'UNIDAD_MEDIDA'   => $unidaddetalles,
                                                 'FECHA_ADQUISICION' => $fechaAdquisicion,
-                                                'updated_at'        => now(),
+                                                'PROVEEDOR_EQUIPO'  => $proveedorkey,
+                                            'updated_at'        => now(),
                                             ]);
 
                                         // Guardar historial de entrada
