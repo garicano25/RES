@@ -190,12 +190,30 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            
                                                 <div class="col-12 mt-2">
-                                                    <div class="form-group">
-                                                        <label> Nombre del proveedor </label>
-                                                        <input type="text" step="any" class="form-control" id="PROVEEDOR_EQUIPO" name="PROVEEDOR_EQUIPO">
-                                                    </div>
+                                                    <label class="form-label">Proveedor</label>
+                                                    <select class="form-select text-center" id="PROVEEDOR_EQUIPO" name="PROVEEDOR_EQUIPO">
+                                                        <option value="">Seleccionar proveedor</option>
+                                                        <optgroup label="Proveedor oficial">
+                                                            @foreach ($proveedoresOficiales as $proveedor)
+                                                            <option value="{{ $proveedor->RFC_ALTA }}">
+                                                                {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
+                                                            </option>
+                                                            @endforeach
+                                                        </optgroup>
+                                                        <optgroup label="Proveedores temporales">
+                                                            @foreach ($proveedoresTemporales as $proveedor)
+                                                            <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
+                                                                {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
+                                                            </option>
+                                                            @endforeach
+                                                        </optgroup>
+                                                    </select>
                                                 </div>
+
+
+
                                                 <div class="col-4 mt-2">
                                                     <div class="form-group">
                                                         <label> Precio Unitario (MXN)</label>

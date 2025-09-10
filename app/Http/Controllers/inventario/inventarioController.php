@@ -38,7 +38,7 @@ class inventarioController extends Controller
         $proveedoresOficiales = altaproveedorModel::select('RAZON_SOCIAL_ALTA', 'RFC_ALTA')->get();
         $proveedoresTemporales = proveedortempModel::select('RAZON_PROVEEDORTEMP', 'RFC_PROVEEDORTEMP', 'NOMBRE_PROVEEDORTEMP')->get();
 
-
+        
 
         return view('almacen.inventario.inventario', compact('tipoinventario', 'proveedoresOficiales', 'proveedoresTemporales'));
     }
