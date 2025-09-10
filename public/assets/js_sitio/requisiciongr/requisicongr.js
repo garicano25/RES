@@ -886,7 +886,7 @@ if (resp.existe) {
                             </div>
                             <div class="col-2 mt-2">
                                   <label class="form-label">U.M.</label>
-                                  <input type="text" class="form-control" name="UNIDAD[]" value="${unidad}" readonly>
+                                  <input type="text" class="form-control" name="UNIDAD[]" value="${unidad}" >
                                 </div>
                            
                             <div class="col-2 mt-2">
@@ -1271,7 +1271,7 @@ function crearBloqueDetalle(det, resp) {
                           </div>
                            <div class="col-2 mt-2">
                                 <label class="form-label">U.M.</label>
-                                <input type="text" class="form-control" name="UNIDAD[]" value="${det.UNIDAD}" readonly>
+                                <input type="text" class="form-control" name="UNIDAD[]" value="${det.UNIDAD}" >
                           </div>
                           <div class="col-2 mt-2">
                             <label class="form-label">Cantidad</label>
