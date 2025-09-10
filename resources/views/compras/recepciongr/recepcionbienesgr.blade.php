@@ -57,13 +57,14 @@
     }
 
 
+    .bg-amarillo-suave {
+        background-color: #fff3cd !important;
+    }
+
     .bg-verde-suave {
         background-color: #d1e7dd !important;
     }
 
-    .bg-rojo-suave {
-        background-color: #f8d7da !important;
-    }
 
     .color-vo {
         transition: background-color 0.3s ease;

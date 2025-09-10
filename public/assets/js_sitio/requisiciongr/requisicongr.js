@@ -73,7 +73,12 @@ var Tablabitacoragr = $("#Tablabitacoragr").DataTable({
         className: "text-center",
         defaultContent: '<button class="btn btn-sm btn-primary btn-gr">Ver GR</button>'
     }
-    ],
+  ],
+    rowCallback: function(row, data) {
+        if (data.ROW_CLASS) {
+            $(row).addClass(data.ROW_CLASS);
+        }
+    },
     createdRow: function (row, data, dataIndex) {
         $(row).css('background-color', data.COLOR);
     },

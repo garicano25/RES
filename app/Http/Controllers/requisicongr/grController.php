@@ -312,40 +312,10 @@ class grController extends Controller
                     }
                 }
 
-
-
-                // $bienes = '';
-                //     if (!empty($materialesArray)) {
-                //         $mostrar = array_slice($materialesArray, 0, 3);
-                //         $ocultos = array_slice($materialesArray, 3);
-
-                //         foreach ($mostrar as $m) {
-                //             $bienes .= "<div>{$m}</div>";
-                //         }
-
-                //         if (!empty($ocultos)) {
-                //             $bienes .= '<div class="extra-materiales" style="display:none">';
-                //             foreach ($ocultos as $m) {
-                //                 $bienes .= "<div>{$m}</div>";
-                //             }
-                //             $bienes .= '</div>';
-                //             $bienes .= '<button type="button" class="btn-ver-mas-materiales btn btn-link p-0">Ver más</button>';
-                //         }
-                //     } else {
-                //         $bienes = '-';
-                //     }
-
-                //     $first->BIEN_SERVICIO = $bienes;
-                //     unset($first->MATERIALES_JSON, $first->HT_DESCRIPCION, $first->MATERIALES_HOJA_JSON);
-
-                //     return $first;
-
-
                 $bienes = '';
                 $bienesCompleto = '';
 
                 if (!empty($materialesArray)) {
-                    // === Versión resumida (para la tabla) ===
                     $mostrar = array_slice($materialesArray, 0, 3);
                     $ocultos = array_slice($materialesArray, 3);
 
@@ -362,7 +332,6 @@ class grController extends Controller
                         $bienes .= '<button type="button" class="btn-ver-mas-materiales btn btn-link p-0">Ver más</button>';
                     }
 
-                    // === Versión completa (para el modal) ===
                     foreach ($materialesArray as $m) {
                         $bienesCompleto .= "<div>{$m}</div>";
                     }
@@ -371,11 +340,35 @@ class grController extends Controller
                     $bienesCompleto = '-';
                 }
 
-                $first->BIEN_SERVICIO = $bienes;               // Tabla
-                $first->BIEN_SERVICIO_COMPLETO = $bienesCompleto; // Modal
+                $first->BIEN_SERVICIO = $bienes;              
+                $first->BIEN_SERVICIO_COMPLETO = $bienesCompleto; 
 
                 unset($first->MATERIALES_JSON, $first->HT_DESCRIPCION, $first->MATERIALES_HOJA_JSON);
 
+
+                // === Definir color de fila según estado en formulario_bitacoragr ===
+                $existeGR = DB::table('formulario_bitacoragr')
+                    ->where('NO_MR', $first->NO_MR)
+                    ->when($first->NO_PO, function ($q) use ($first) {
+                        $q->where('NO_PO', $first->NO_PO);
+                    }, function ($q) use ($first) {
+                        $q->where('PROVEEDOR_KEY', $first->PROVEEDOR_KEY);
+                    })
+                    ->first();
+
+                if ($existeGR) {
+                    if ($existeGR->FINALIZAR_GR === 'Sí') {
+                        $first->ROW_CLASS = 'bg-verde-suave';
+                    } else {
+                        $first->ROW_CLASS = 'bg-amarillo-suave';
+                    }
+                } else {
+                    $first->ROW_CLASS = ''; // blanco por defecto
+                }
+
+
+
+                
                 return $first;
 
                 
