@@ -587,7 +587,7 @@
 
 
     @if(request()->is('Vo.Bo_GRusuario'))
-    <script src="/assets/js_sitio/requisiciongr/vobogrusuario.js?v=1.1"></script>
+    <script src="/assets/js_sitio/requisiciongr/vobogrusuario.js?v=1.2"></script>
     @endif
 
 
