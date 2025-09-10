@@ -147,10 +147,14 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
 
   $.post('/consultar-gr', requestData, function (resp) {
 
-   let contenedor = $("#formulariorecepciongr .modal-body");
-    contenedor.find(".nav-tabs, .tab-content").remove();
+  
+    // let contenedor = $("#modal_bien_servicio");
+    // contenedor.empty();
 
-      
+      let contenedor = $("#formulariorecepciongr .modal-body");
+// 🔹 Elimina únicamente tabs y panes previos
+contenedor.find(".nav-tabs, .tab-content").remove();
+
 
 if (resp.existe) {
     // ==========================
@@ -163,8 +167,7 @@ if (resp.existe) {
         let tabs = `<ul class="nav nav-tabs" id="tabsGR" role="tablist">`;
         let panes = `<div class="tab-content" id="tabsGRContent">`;
 
-
-  let idx = 0;
+        let idx = 0;
         for (let id in resp.grs) {
             let grupo   = resp.grs[id] || {};
             let cab     = grupo.cabecera || {};
