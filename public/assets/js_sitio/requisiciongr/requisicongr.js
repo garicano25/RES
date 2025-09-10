@@ -259,7 +259,7 @@ if (resp.existe) {
                   </div>
                   <div class="row mb-3">
                        <div class="col-md-6">
-                            <label>Fecha de entrega GR</label>
+                            <label class="form-label"> Fecha de entrega GR</label>
                            <div class="input-group">
                                 <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" value="${cab.FECHA_ENTREGA_GR ?? ''}"  name="FECHA_ENTREGA_GR" >
                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
@@ -302,7 +302,7 @@ if (resp.existe) {
                   <!-- Mandar a VoBo y Parcial -->
                   <div class="row mb-3">
                       <div class="col-md-6">
-                          <label>Estado Vo.Bo usuario</label>
+                          <label class="form-label"> Estado Vo.Bo usuario</label>
                           <select class="form-control" name="VO_BO_USUARIO">
                               <option value="">Seleccione</option>
                               <option value="Aprobada" ${cab.VO_BO_USUARIO === "Aprobada" ? "selected" : ""}>Aprobada</option>

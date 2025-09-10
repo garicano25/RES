@@ -1829,12 +1829,28 @@ class grController extends Controller
                     }
 
                     // ================= GR PARCIAL =================
+                    // if ($request->GR_PARCIAL === "Sí") {
+                    //     $yaTieneParcial = DB::table('formulario_bitacoragr')
+                    //         ->where('ID_GR', $idGR)
+                    //         ->value('TIENE_PARCIAL');
+
+                    //     if (!$yaTieneParcial) {
+                    //         $this->crearGRParcial($request, $usuarioId);
+
+                    //         DB::table('formulario_bitacoragr')
+                    //             ->where('ID_GR', $idGR)
+                    //             ->update(['TIENE_PARCIAL' => 1]);
+                    //     }
+                    // }
+
+
                     if ($request->GR_PARCIAL === "Sí") {
                         $yaTieneParcial = DB::table('formulario_bitacoragr')
                             ->where('ID_GR', $idGR)
                             ->value('TIENE_PARCIAL');
 
-                        if (!$yaTieneParcial) {
+                        // Solo ejecutar si aún no está marcado como parcial
+                        if (is_null($yaTieneParcial) || $yaTieneParcial == 0) {
                             $this->crearGRParcial($request, $usuarioId);
 
                             DB::table('formulario_bitacoragr')
