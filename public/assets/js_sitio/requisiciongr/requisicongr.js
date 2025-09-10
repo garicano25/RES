@@ -429,8 +429,8 @@ if (resp.existe) {
             $('#modal_fecha_entrega').val(data.FECHA_ENTREGA_PO ?? '');
             $('#modal_usuario_nombre').val(data.USUARIO_NOMBRE ?? '');
 
-            if (data.BIEN_SERVICIO) {
-              $(data.BIEN_SERVICIO).each(function (index) {
+            if (data.BIEN_SERVICIO_COMPLETO) {
+              $(data.BIEN_SERVICIO_COMPLETO).each(function (index) {
                   
             const texto = $(this).text().trim();
             let limpio = texto.replace(/^•\s*/, "");
