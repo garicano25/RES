@@ -1767,7 +1767,7 @@ class grController extends Controller
                         ]);
 
                         // =======================
-                        //  Lógica de inventario al finalizar GR
+                        //  Lógica de inventario al finalizar GRS
                         // =======================
                         if (
                             $request->FINALIZAR_GR === "Sí" &&
