@@ -1775,7 +1775,7 @@ class grController extends Controller
                             ($request->TIPO_BS[$i] ?? null) === "Bien"
                         ) {
                             $cantidadEntra  = $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? 0;
-                            $precioUnitario = $request->PRECIO_UNITARIO[$i] ?? null;
+                            $precioUnitario = $request->PRECIO_UNITARIO_GR[$i] ?? null;
 
                             // Verificar si ya se guardó en inventario
                             if ($guardoInventario == 0) {
