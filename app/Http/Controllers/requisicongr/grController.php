@@ -347,28 +347,27 @@ class grController extends Controller
 
 
                 // === Definir color de fila según estado en formulario_bitacoragr ===
-                $existeGR = DB::table('formulario_bitacoragr')
+                $registrosGR = DB::table('formulario_bitacoragr')
                     ->where('NO_MR', $first->NO_MR)
                     ->when($first->NO_PO, function ($q) use ($first) {
                         $q->where('NO_PO', $first->NO_PO);
                     }, function ($q) use ($first) {
                         $q->where('PROVEEDOR_KEY', $first->PROVEEDOR_KEY);
                     })
-                    ->first();
+                    ->pluck('FINALIZAR_GR');
 
-                if ($existeGR) {
-                    if ($existeGR->FINALIZAR_GR === 'Sí') {
-                        $first->ROW_CLASS = 'bg-verde-suave';
-                    } else {
-                        $first->ROW_CLASS = 'bg-amarillo-suave';
-                    }
+                if ($registrosGR->isEmpty()) {
+                    $first->ROW_CLASS = ''; // blanco (sin registros GR)
+                } elseif ($registrosGR->every(fn($v) => $v === 'Sí')) {
+                    $first->ROW_CLASS = 'bg-verde-suave'; // todos finalizados
                 } else {
-                    $first->ROW_CLASS = ''; // blanco por defecto
+                    $first->ROW_CLASS = 'bg-amarillo-suave'; // hay registros pero no todos finalizados
                 }
 
 
 
-                
+
+
                 return $first;
 
                 
