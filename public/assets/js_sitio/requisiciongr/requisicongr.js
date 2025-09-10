@@ -147,17 +147,8 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
 
   $.post('/consultar-gr', requestData, function (resp) {
 
-     // 🔹 Limpiar siempre lo dinámico ANTES de cargar lo nuevo
-    $("#tabsGR").remove();            // elimina tabs anteriores
-    $("#tabsGRContent").remove();     // elimina panes anteriores
-    $("#modal_bien_servicio").empty(); // limpia bloque de bienes/servicios
-    $("#formulariorecepciongr .modal-body").find(".nav-tabs, .tab-content").remove();
-
-
-
-    
-    let contenedor = $("#modal_bien_servicio");
-    contenedor.empty();
+   let contenedor = $("#formulariorecepciongr .modal-body");
+    contenedor.find(".nav-tabs, .tab-content").remove();
 
       
 
@@ -165,14 +156,22 @@ if (resp.existe) {
     // ==========================
     // VARIAS GR (Parciales)
     // ==========================
-    if (resp.grs && Object.keys(resp.grs).length > 1) {
+    // if (resp.grs && Object.keys(resp.grs).length > 1) {
+    //     let contenedor = $("#formulariorecepciongr .modal-body");
+    //     contenedor.empty(); 
+
+    //     let tabs = `<ul class="nav nav-tabs" id="tabsGR" role="tablist">`;
+    //     let panes = `<div class="tab-content" id="tabsGRContent">`;
+
+if (resp.grs && Object.keys(resp.grs).length > 1) {
         let contenedor = $("#formulariorecepciongr .modal-body");
-        contenedor.empty(); 
+        contenedor.find(".nav-tabs, .tab-content").remove();
 
         let tabs = `<ul class="nav nav-tabs" id="tabsGR" role="tablist">`;
         let panes = `<div class="tab-content" id="tabsGRContent">`;
+  
 
-        let idx = 0;
+  let idx = 0;
         for (let id in resp.grs) {
             let grupo   = resp.grs[id] || {};
             let cab     = grupo.cabecera || {};
