@@ -38,7 +38,7 @@
 
 
                         <div class="col-md-12">
-                            <label class="form-label">Fecha Vo.BoSSSSS</label>
+                            <label class="form-label">Fecha Vo.Bo</label>
                             <div class="input-group">
                                 <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VOUSUARIO" name="FECHA_VOUSUARIO" required>
                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
