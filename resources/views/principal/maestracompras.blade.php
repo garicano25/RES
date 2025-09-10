@@ -583,7 +583,7 @@
     @endif
 
     @if(request()->is('Bitácora-GR'))
-    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.36"></script>
+    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.37"></script>
     @endif
 
 

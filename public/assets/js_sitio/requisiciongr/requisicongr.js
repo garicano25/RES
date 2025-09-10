@@ -156,20 +156,13 @@ if (resp.existe) {
     // ==========================
     // VARIAS GR (Parciales)
     // ==========================
-    // if (resp.grs && Object.keys(resp.grs).length > 1) {
-    //     let contenedor = $("#formulariorecepciongr .modal-body");
-    //     contenedor.empty(); 
-
-    //     let tabs = `<ul class="nav nav-tabs" id="tabsGR" role="tablist">`;
-    //     let panes = `<div class="tab-content" id="tabsGRContent">`;
-
-if (resp.grs && Object.keys(resp.grs).length > 1) {
+    if (resp.grs && Object.keys(resp.grs).length > 1) {
         let contenedor = $("#formulariorecepciongr .modal-body");
-        contenedor.find(".nav-tabs, .tab-content").remove();
+        contenedor.empty(); 
 
         let tabs = `<ul class="nav nav-tabs" id="tabsGR" role="tablist">`;
         let panes = `<div class="tab-content" id="tabsGRContent">`;
-  
+
 
   let idx = 0;
         for (let id in resp.grs) {
