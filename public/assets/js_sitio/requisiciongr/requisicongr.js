@@ -3,18 +3,18 @@
 
 const modalgr = document.getElementById('modalGR');
 
+
 modalgr.addEventListener('hidden.bs.modal', event => {
-    document.getElementById('formulariorecepciongr').reset();
+    // Si tienes un form real dentro, resetea sus inputs
+    $("#formulariorecepciongr form")[0]?.reset();
 
+    // Limpiar dinámicos
     $('#ID_GR').val('');
-
     $('#modal_bien_servicio').empty();
-  
+    $('#tabsGR').remove();           // quita las tabs
+    $('#tabsGRContent').remove();    // quita el contenido de los tabs
     $('.comentario-diferencia').hide();
-
-  
 });
-
 
 
 
@@ -156,7 +156,6 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
     contenedor.empty();
 
       
-    $("#formulariorecepciongr .modal-body").empty();
 
 if (resp.existe) {
     // ==========================
