@@ -288,7 +288,7 @@ if (resp.existe) {
                       </div>
                       <div class="col-md-6">
                           <label class="form-label"> Mandar a Vo.Bo usuario</label>
-                              <select class="form-control" name="MANDAR_USUARIO_VOBO" disabled>
+                              <select class="form-control" name="MANDAR_USUARIO_VOBO" >
                                   <option value="">Seleccione</option>
                                       <option value="">Seleccione</option>
                                     <option value="Sí" ${cab.MANDAR_USUARIO_VOBO === "Sí" ? "selected" : ""}>Sí</option>
@@ -318,6 +318,16 @@ if (resp.existe) {
                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                             </div>
                         </div>
+
+
+                        <div class="col-md-12">
+                          <label class="form-label"> Finalizar GR</label>
+                          <select class="form-control" name="FINALIZAR_GR">
+                              <option value="">Seleccione</option>
+                              <option value="Sí" ${cab.FINALIZAR_GR === "Sí" ? "selected" : ""}>Sí</option>
+                              <option value="No" ${cab.FINALIZAR_GR === "No" ? "selected" : ""}>No</option>
+                          </select>
+                      </div>
 
 
                      

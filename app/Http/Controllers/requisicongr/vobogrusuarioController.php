@@ -74,11 +74,28 @@ class vobogrusuarioController extends Controller
         try {
             $usuarioId = auth()->id();
 
+            // $rows = DB::table('formulario_bitacoragr as gr')
+            //     ->join('formulario_bitacoragr_detalle as d', 'd.ID_GR', '=', 'gr.ID_GR')
+            //     ->where('gr.USUARIO_ID', $usuarioId)
+            //     ->where('gr.MANDAR_USUARIO_VOBO', 'Sí')
+            //     ->whereNull('gr.VO_BO_USUARIO') 
+            //     ->select(
+            //         'gr.ID_GR',
+            //         'gr.NO_RECEPCION',
+            //         DB::raw('COUNT(d.ID_DETALLE) as TOTAL_PRODUCTOS')
+            //     )
+            //     ->groupBy('gr.ID_GR', 'gr.NO_RECEPCION')
+            //     ->get();
+
             $rows = DB::table('formulario_bitacoragr as gr')
                 ->join('formulario_bitacoragr_detalle as d', 'd.ID_GR', '=', 'gr.ID_GR')
                 ->where('gr.USUARIO_ID', $usuarioId)
                 ->where('gr.MANDAR_USUARIO_VOBO', 'Sí')
-                ->whereNull('gr.VO_BO_USUARIO') 
+                ->whereNull('gr.VO_BO_USUARIO')
+                ->where(function ($q) {
+                    $q->whereNull('d.BIENS_PARCIAL')   // incluir nulos
+                        ->orWhere('d.BIENS_PARCIAL', '!=', 'Sí'); // incluir todo menos 'Sí'
+                })
                 ->select(
                     'gr.ID_GR',
                     'gr.NO_RECEPCION',
@@ -87,6 +104,7 @@ class vobogrusuarioController extends Controller
                 ->groupBy('gr.ID_GR', 'gr.NO_RECEPCION')
                 ->get();
 
+                
             foreach ($rows as $value) {
                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR" data-id="' . $value->ID_GR . '"><i class="bi bi-pencil-square"></i></button>';
             }
@@ -116,8 +134,27 @@ class vobogrusuarioController extends Controller
             }
 
             // Traer productos relacionados con la GR
+            // $detalle = DB::table('formulario_bitacoragr_detalle')
+            //     ->where('ID_GR', $idGR)
+            //     ->select(
+            //         'ID_DETALLE',
+            //         'DESCRIPCION',
+            //         'CANTIDAD_ACEPTADA',
+            //         'CANTIDAD_ACEPTADA_USUARIO',
+            //         'CUMPLE_ESPECIFICADO_USUARIO',
+            //         'COMENTARIO_CUMPLE_USUARIO',
+            //         'ESTADO_BS_USUARIO',
+            //         'COMENTARIO_ESTADO_USUARIO',
+            //         'VOBO_USUARIO_PRODUCTO'
+            //     )
+            //     ->get();
+
             $detalle = DB::table('formulario_bitacoragr_detalle')
                 ->where('ID_GR', $idGR)
+                ->where(function ($q) {
+                    $q->whereNull('BIENS_PARCIAL')   // incluir nulos
+                        ->orWhere('BIENS_PARCIAL', '!=', 'Sí'); // incluir todo menos 'Sí'
+                })
                 ->select(
                     'ID_DETALLE',
                     'DESCRIPCION',
