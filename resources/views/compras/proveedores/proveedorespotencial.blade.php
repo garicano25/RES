@@ -55,8 +55,7 @@
             <!-- TAB 1: Información del cliente -->
             <div class="tab-pane fade show active" id="contenido-info" role="tabpanel">
 
-
-
+            
               <input type="hidden" class="form-control" id="ID_FORMULARIO_DIRECTORIO" name="ID_FORMULARIO_DIRECTORIO" value="0">
 
 

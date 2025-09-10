@@ -604,23 +604,49 @@ columnDefs: [
 
 
 
-document.getElementById('btnRespaldarInventario').addEventListener('click', function () {
-    if (confirm("¿Seguro que deseas respaldar toda la información del inventario?")) {
-        fetch('/inventario/respaldar', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert("Ocurrió un error al respaldar el inventario.");
-        });
-    }
+// document.getElementById('btnRespaldarInventario').addEventListener('click', function () {
+//     if (confirm("¿Seguro que deseas respaldar toda la información del inventario?")) {
+//         fetch('/inventario/respaldar', {
+//             method: 'POST',
+//             headers: {
+//                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+//                 'Content-Type': 'application/json'
+//             }
+//         })
+//         .then(response => response.json())
+//         .then(data => {
+//             alert(data.message);
+//         })
+//         .catch(error => {
+//             console.error('Error:', error);
+//             alert("Ocurrió un error al respaldar el inventario.");
+//         });
+//     }
+// });
+
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  const guardarBtn = document.getElementById('guardarINVENTARIO');
+  const tabs = document.querySelectorAll('#tabsinventario button[data-bs-toggle="tab"]');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('shown.bs.tab', function (event) {
+      const target = event.target.getAttribute('data-bs-target');
+      if (target === '#contenido-info') {
+        guardarBtn.style.display = 'inline-block';
+      } else {
+        guardarBtn.style.display = 'none';
+      }
+    });
+  });
+
+  const activeTab = document.querySelector('#tabsinventario button.active');
+  if (activeTab && activeTab.getAttribute('data-bs-target') !== '#contenido-info') {
+    guardarBtn.style.display = 'none';
+  }
 });
+
+
 
