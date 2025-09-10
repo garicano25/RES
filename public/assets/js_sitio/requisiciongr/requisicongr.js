@@ -3,19 +3,13 @@
 
 const modalgr = document.getElementById('modalGR');
 
-
 modalgr.addEventListener('hidden.bs.modal', event => {
-    // Si tienes un form real dentro, resetea sus inputs
-    $("#formulariorecepciongr form")[0]?.reset();
-
-    // Limpiar dinámicos
     $('#ID_GR').val('');
     $('#modal_bien_servicio').empty();
-    $('#tabsGR').remove();           // quita las tabs
-    $('#tabsGRContent').remove();    // quita el contenido de los tabs
+    $("#tabsGR").remove();
+    $("#tabsGRContent").remove();
     $('.comentario-diferencia').hide();
 });
-
 
 
 
@@ -152,6 +146,16 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
   };
 
   $.post('/consultar-gr', requestData, function (resp) {
+
+     // 🔹 Limpiar siempre lo dinámico ANTES de cargar lo nuevo
+    $("#tabsGR").remove();            // elimina tabs anteriores
+    $("#tabsGRContent").remove();     // elimina panes anteriores
+    $("#modal_bien_servicio").empty(); // limpia bloque de bienes/servicios
+    $("#formulariorecepciongr .modal-body").find(".nav-tabs, .tab-content").remove();
+
+
+
+    
     let contenedor = $("#modal_bien_servicio");
     contenedor.empty();
 
