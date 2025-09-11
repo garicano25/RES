@@ -170,141 +170,147 @@
                 </div>
                 <div class="modal-body">
                     {!! csrf_field() !!}
+                    <div id="modal-body-base">
 
-                    <input type="hidden" id="ID_GR" name="ID_GR" value="0">
+                        <input type="hidden" id="ID_GR" name="ID_GR" value="0">
 
-                    <div class="row mb-3">
-                        <div class="col-md-3">
-                            <label class="form-label">No. MR</label>
-                            <input type="text" class="form-control" id="modal_no_mr" name="modal_no_mr" readonly>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Fecha aprobación MR</label>
-                            <input type="text" class="form-control" id="modal_fecha_mr" name="modal_fecha_mr" readonly>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">No. PO</label>
-                            <input type="text" class="form-control" id="modal_no_po" name="modal_no_po" readonly>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Fecha aprobación PO</label>
-                            <input type="text" class="form-control" id="modal_fecha_po" name="modal_fecha_po" readonly>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Proveedor</label>
-                            <select class="form-select text-center" id="PROVEEDOR_EQUIPO" name="PROVEEDOR_EQUIPO">
-                                <option value="">Seleccionar proveedor</option>
-                                <optgroup label="Proveedor oficial">
-                                    @foreach ($proveedoresOficiales as $proveedor)
-                                    <option value="{{ $proveedor->RFC_ALTA }}">
-                                        {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
-                                    </option>
-                                    @endforeach
-                                </optgroup>
-                                <optgroup label="Proveedores temporales">
-                                    @foreach ($proveedoresTemporales as $proveedor)
-                                    <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
-                                        {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
-                                    </option>
-                                    @endforeach
-                                </optgroup>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label">Fecha entrega PO</label>
-                            <input type="text" class="form-control" id="modal_fecha_entrega" name="modal_fecha_entrega" readonly>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">No. recepción de orden - GR</label>
-                            <input type="text" class="form-control" id="NO_RECEPCION" name="NO_RECEPCION">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Fecha de emisión</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_ACREDITACION" name="DESDE_ACREDITACION">
-                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        <div class="row mb-3">
+                            <div class="col-md-3">
+                                <label class="form-label">No. MR</label>
+                                <input type="text" class="form-control" id="modal_no_mr" name="modal_no_mr" readonly>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Fecha de entrega GR</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ENTREGA_GR" name="FECHA_ENTREGA_GR">
-                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                            <div class="col-md-3">
+                                <label class="form-label">Fecha aprobación MR</label>
+                                <input type="text" class="form-control" id="modal_fecha_mr" name="modal_fecha_mr" readonly>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">No. PO</label>
+                                <input type="text" class="form-control" id="modal_no_po" name="modal_no_po" readonly>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Fecha aprobación PO</label>
+                                <input type="text" class="form-control" id="modal_fecha_po" name="modal_fecha_po" readonly>
                             </div>
                         </div>
 
-                        <div class="col-md-6">
-                            <label class="form-label">La GR es parcial </label>
-                            <select class="form-control" id="GR_PARCIAL" name="GR_PARCIAL">
-                                <option value="" selected>Seleccione una opción</option>
-                                <option value="Sí">Sí</option>
-                                <option value="No">No</option>
-                            </select>
-
-                        </div>
-                    </div>
-                    <hr>
-                    <h5 class="mb-3 text-center">Bienes o Servicios (B o S)</h5>
-                    <div id="modal_bien_servicio"></div>
-                    <hr>
-
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label class="form-label">Usuario que solicito</label>
-                            <input type="text" class="form-control" id="modal_usuario_nombre" name="modal_usuario_nombre" readonly>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Mandar a Vo.Bo de usuario</label>
-                            <select class="form-control" id="MANDAR_USUARIO_VOBO" name="MANDAR_USUARIO_VOBO">
-                                <option value="" selected disabled>Seleccione una opción</option>
-                                <option value="Sí">Sí</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-
-                    </div>
-
-                    <div class="row mb-3" id="VISTOBOUSUARIO" style="display: none;">
-
-                        <div class="col-md-6">
-                            <label class="form-label">Fecha Vo.Bo usuario</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VOUSUARIO" name="FECHA_VOUSUARIO">
-                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label>Estado de Vo.Bo </label>
-                            <div id="estado-container" class="p-2 rounded">
-                                <select class="form-control" id="VO_BO_USUARIO" name="VO_BO_USUARIO">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="Aprobada">Aprobada</option>
-                                    <option value="Rechazada">Rechazada</option>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Proveedor</label>
+                                <select class="form-select text-center" id="PROVEEDOR_EQUIPO" name="PROVEEDOR_EQUIPO">
+                                    <option value="">Seleccionar proveedor</option>
+                                    <optgroup label="Proveedor oficial">
+                                        @foreach ($proveedoresOficiales as $proveedor)
+                                        <option value="{{ $proveedor->RFC_ALTA }}">
+                                            {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
+                                        </option>
+                                        @endforeach
+                                    </optgroup>
+                                    <optgroup label="Proveedores temporales">
+                                        @foreach ($proveedoresTemporales as $proveedor)
+                                        <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
+                                            {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
+                                        </option>
+                                        @endforeach
+                                    </optgroup>
                                 </select>
                             </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Fecha entrega PO</label>
+                                <input type="text" class="form-control" id="modal_fecha_entrega" name="modal_fecha_entrega" readonly>
+                            </div>
                         </div>
-                        <div class="col-md-12">
-                            <label class="form-label">Finalizar GR </label>
-                            <select class="form-control" id="FINALIZAR_GR" name="FINALIZAR_GR">
-                                <option value="" selected>Seleccione una opción</option>
-                                <option value="Sí">Sí</option>
-                                <option value="No">No</option>
-                            </select>
 
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">No. recepción de orden - GR</label>
+                                <input type="text" class="form-control" id="NO_RECEPCION" name="NO_RECEPCION">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Fecha de emisión</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_ACREDITACION" name="DESDE_ACREDITACION">
+                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Fecha de entrega GR</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ENTREGA_GR" name="FECHA_ENTREGA_GR">
+                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">La GR es parcial </label>
+                                <select class="form-control" id="GR_PARCIAL" name="GR_PARCIAL">
+                                    <option value="" selected>Seleccione una opción</option>
+                                    <option value="Sí">Sí</option>
+                                    <option value="No">No</option>
+                                </select>
+
+                            </div>
+                        </div>
+                        <hr>
+                        <h5 class="mb-3 text-center">Bienes o Servicios (B o S)</h5>
+                        <div id="modal_bien_servicio"></div>
+                        <hr>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Usuario que solicito</label>
+                                <input type="text" class="form-control" id="modal_usuario_nombre" name="modal_usuario_nombre" readonly>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label">Mandar a Vo.Bo de usuario</label>
+                                <select class="form-control" id="MANDAR_USUARIO_VOBO" name="MANDAR_USUARIO_VOBO">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="Sí">Sí</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="row mb-3" id="VISTOBOUSUARIO" style="display: none;">
+
+                            <div class="col-md-6">
+                                <label class="form-label">Fecha Vo.Bo usuario</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VOUSUARIO" name="FECHA_VOUSUARIO">
+                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Estado de Vo.Bo </label>
+                                <div id="estado-container" class="p-2 rounded">
+                                    <select class="form-control" id="VO_BO_USUARIO" name="VO_BO_USUARIO">
+                                        <option value="" selected disabled>Seleccione una opción</option>
+                                        <option value="Aprobada">Aprobada</option>
+                                        <option value="Rechazada">Rechazada</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">Finalizar GR </label>
+                                <select class="form-control" id="FINALIZAR_GR" name="FINALIZAR_GR">
+                                    <option value="" selected>Seleccione una opción</option>
+                                    <option value="Sí">Sí</option>
+                                    <option value="No">No</option>
+                                </select>
+
+                            </div>
                         </div>
                     </div>
 
-                    <div id="contenedorGR"></div>
+
+                    <div id="modal-body-parciales" style="display:none;"></div>
+
+
+                    
 
                 </div>
                 <div class="modal-footer">

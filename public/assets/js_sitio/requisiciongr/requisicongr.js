@@ -7,15 +7,11 @@ const modalgr = document.getElementById('modalGR');
 
 modalgr.addEventListener('hidden.bs.modal', event => {
     document.getElementById('formulariorecepciongr').reset();
-    $("#formulariorecepciongr form")[0]?.reset();
-
     $('#ID_GR').val('');
-
-  $('#modal_bien_servicio').empty();
-  // $('#contenedorGR').empty(); // <--- limpia tabs parciales
-
+    $('#modal_bien_servicio').empty();
+    $("#modal-body-parciales").empty().hide();
+    $("#modal-body-base").show();
 });
-
 
 
 
@@ -161,18 +157,22 @@ if (resp.existe) {
     // ==========================
     // VARIAS GR (Parciales)
     // ==========================
-  if (resp.grs && Object.keys(resp.grs).length > 1) {
-      
-        let contenedor = $("#formulariorecepciongr .modal-body");
-        contenedor.empty(); 
+    // if (resp.grs && Object.keys(resp.grs).length > 1) {
+    //     let contenedor = $("#formulariorecepciongr .modal-body");
+    //     contenedor.empty(); 
 
-        // let contenedor = $("#contenedorGR");
-        //   contenedor.empty();
+    //     let tabs = `<ul class="nav nav-tabs" id="tabsGR" role="tablist">`;
+    //     let panes = `<div class="tab-content" id="tabsGRContent">`;
 
-    
+    if (resp.grs && Object.keys(resp.grs).length > 1) {
+        $("#modal-body-base").hide();
+        let contenedor = $("#modal-body-parciales");
+        contenedor.show().empty();
+
         let tabs = `<ul class="nav nav-tabs" id="tabsGR" role="tablist">`;
         let panes = `<div class="tab-content" id="tabsGRContent">`;
 
+          
         let idx = 0;
         for (let id in resp.grs) {
             let grupo   = resp.grs[id] || {};
@@ -275,7 +275,7 @@ if (resp.existe) {
                       </div>
                        <div class="col-md-6">
                           <label class="form-label"> GR Parcial</label>
-                          <select class="form-control" name="GR_PARCIAL">
+                          <select class="form-control gr_parcialjs" name="GR_PARCIAL">
                               <option value="">Seleccione</option>
                               <option value="Sí" ${cab.GR_PARCIAL === "Sí" ? "selected" : ""}>Sí</option>
                               <option value="No" ${cab.GR_PARCIAL === "No" ? "selected" : ""}>No</option>
@@ -386,6 +386,10 @@ if (resp.existe) {
     // SOLO UNA GR
     // ==========================
     else {
+
+        $("#modal-body-parciales").hide().empty();
+      $("#modal-body-base").show();
+      
         let cab = resp.cabecera;
 
             $('#ID_GR').val(cab.ID_GR ?? '');
@@ -536,7 +540,8 @@ if (resp.existe) {
 
                             <div class="col-3 mt-2">
                               <label class="form-label">El B o S es parcial</label>
-                              <select class="form-control bs-esparcial" name="BIENS_PARCIAL[]" disabled>
+                              <select class="form-control bs-esparcial" name="BIENS_PARCIAL[]" style="pointer-events:none; background-color:#e9ecef;">
+
                                 <option value="">Seleccione</option>
                                 <option value="Sí">Sí</option>
                                 <option value="No">No</option>
@@ -743,7 +748,7 @@ function crearBloqueDetalle(det, resp) {
                           </div>
                            <div class="col-2 mt-2">
                                 <label class="form-label">U.M.</label>
-                                <input type="text" class="form-control" name="UNIDAD[]" value="${det.UNIDAD}" >
+                                <input type="text" class="form-control" name="UNIDAD[]" value="${det.UNIDAD ?? ''}">
                           </div>
                           <div class="col-2 mt-2">
                             <label class="form-label">Cantidad</label>
@@ -793,7 +798,7 @@ function crearBloqueDetalle(det, resp) {
                          <div class="row mb-2">
                             <div class="col-3 mt-2">
                               <label class="form-label">Cantidad que entra a almacén</label>
-                              <input type="number" class="form-control cantidad_entraalmacen" name="CANTIDAD_ENTRA_ALMACEN[]" value="${det.CANTIDAD_ENTRA_ALMACEN}">
+                              <input type="number" class="form-control cantidad_entraalmacen" name="CANTIDAD_ENTRA_ALMACEN[]"   value="${det.UNIDAD_MEDIDA_ALMACEN ?? ''}">
                           </div>
                        
 
@@ -815,11 +820,14 @@ function crearBloqueDetalle(det, resp) {
 
                                <div class="col-3 mt-2">
                               <label class="form-label">El B o S es parcial</label>
-                              <select class="form-control bs-esparcial" name="BIENS_PARCIAL[]" disabled>
-                                <option value="">Seleccione</option>
-                              <option value="Si" ${det.BIENS_PARCIAL=="Sí"?"selected":""}>Sí</option>
+                             
+
+                              <select class="form-control bs-esparcial" name="BIENS_PARCIAL[]" style="pointer-events:none; background-color:#e9ecef;">
+                              <option value="">Seleccione</option>
+                              <option value="Sí" ${det.BIENS_PARCIAL=="Sí"?"selected":""}>Sí</option>
                               <option value="No" ${det.BIENS_PARCIAL=="No"?"selected":""}>No</option>
-                              </select>
+                            </select>
+
                             </div>
 
                           </div>
@@ -990,10 +998,30 @@ function crearBloqueDetalle(det, resp) {
 
 $('#GR_PARCIAL').on('change', function () {
     if ($(this).val() === "Sí") {
-        $('.bs-esparcial').prop('disabled', false);
+        $('.bs-esparcial').css({
+            'pointer-events': 'auto',
+            'background-color': ''
+        });
     } else {
-        $('.bs-esparcial').prop('disabled', true).val("");
+        $('.bs-esparcial').val("").css({
+            'pointer-events': 'none',
+            'background-color': '#e9ecef'
+        });
     }
 });
 
 
+
+$(document).on('change', '.gr_parcialjs', function () {
+    if ($(this).val() === "Sí") {
+        $('.bs-esparcial').css({
+            'pointer-events': 'auto',
+            'background-color': ''
+        });
+    } else {
+        $('.bs-esparcial').val("").css({
+            'pointer-events': 'none',
+            'background-color': '#e9ecef'
+        });
+    }
+});
