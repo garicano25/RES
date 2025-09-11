@@ -6,6 +6,8 @@ ID_FORMULARIO_RECURSOS_EMPLEADOS = 0
 
 const Modalmr = document.getElementById('miModal_RECURSOSEMPLEADOS');
 Modalmr.addEventListener('hidden.bs.modal', event => {
+
+
     ID_FORMULARIO_RECURSOS_EMPLEADOS = 0;
     document.getElementById('formularioRECURSOSEMPLEADO').reset();
 
@@ -15,7 +17,7 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     $('#SOLIDA_ALMACEN').hide();
     $('#PERMISO_AUSENCIA').hide();
     $('#SOLICITUD_VACACIONES').hide();
-
+    $('#EXPLIQUE_PERMISO').hide();
     
     
 
@@ -27,6 +29,8 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
 
     $('#guardaRECEMPLEADOS').show();
 
+
+   
 
 
     
@@ -616,3 +620,26 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const selectConcepto = document.getElementById("CONCEPTO_PERMISO");
+    const divExplique = document.getElementById("EXPLIQUE_PERMISO");
+
+    selectConcepto.addEventListener("change", function () {
+        if (this.value === "9") {
+            divExplique.style.display = "block";
+            divExplique.querySelector("textarea").setAttribute("required", "required");
+        } else {
+            divExplique.style.display = "none";
+            const textarea = divExplique.querySelector("textarea");
+            textarea.value = "";
+            textarea.removeAttribute("required");
+        }
+    });
+});
+
+
+

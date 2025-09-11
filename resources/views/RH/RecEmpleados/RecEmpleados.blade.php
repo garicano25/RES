@@ -15,7 +15,7 @@
     </ol>
 
     <div class="card-body">
-        <table id="Tabladesvinculacion" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+        <table id="Tablarecempleados" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
 
         </table>
     </div>
@@ -55,12 +55,12 @@
                             <div class="col-12 mt-3">
                                 <div class="row">
                                     <div class="col-9">
-                                        <label>Solicitante </label>
+                                        <label class="form-label">Solicitante </label>
                                         <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" id="SOLICITANTE_SALIDA" name="SOLICITANTE_SALIDA" readonly>
                                     </div>
 
                                     <div class="col-3">
-                                        <label>Fecha de solicitud *</label>
+                                        <label class="form-label">Fecha de solicitud *</label>
                                         <div class="input-group">
                                             <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_SALIDA" name="FECHA_SALIDA" required>
                                             <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
@@ -96,7 +96,7 @@
                                 <label class="col-form-label me-2">Fecha estimada *</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd"
-                                        id="FECHA__ESTIMADA_SALIDA" name="FECHA__ESTIMADA_SALIDA">
+                                        id="FECHA_ESTIMADA_SALIDA" name="FECHA_ESTIMADA_SALIDA">
                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                 </div>
                             </div>
@@ -111,12 +111,12 @@
                         <div class="col-12 mt-3">
                             <div class="row">
                                 <div class="col-9">
-                                    <label>Solicitante </label>
+                                    <label class="form-label">Solicitante </label>
                                     <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" id="SOLICITANTE_PERMISO" name="SOLICITANTE_PERMISO" readonly>
                                 </div>
 
                                 <div class="col-3">
-                                    <label>Fecha de solicitud *</label>
+                                    <label class="form-label">Fecha de solicitud *</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_PERMISO" name="FECHA_PERMISO" required>
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
@@ -129,12 +129,12 @@
                         <div class="col-12 mt-3">
                             <div class="row">
                                 <div class="col-9">
-                                    <label>Cargo </label>
+                                    <label class="form-label">Cargo </label>
                                     <input type="text" class="form-control" id="CARGO_PERMISO" name="CARGO_PERMISO">
                                 </div>
 
                                 <div class="col-3">
-                                    <label>No. de empleado: </label>
+                                    <label class="form-label">No. de empleado: </label>
                                     <input type="text" class="form-control" id="NOEMPLEADO_PERMISO" name="NOEMPLEADO_PERMISO">
                                 </div>
                             </div>
@@ -165,13 +165,15 @@
 
                                 <div class="col-1">
                                     <label class="form-label">No. días </label>
-                                    <input type="number" class="form-control" id="NODIAS_PERMISO" name="NODIAS_PERMISO" >
+                                    <input type="number" class="form-control" id="NODIAS_PERMISO" name="NODIAS_PERMISO">
                                 </div>
 
                                 <div class="col-1">
                                     <label class="form-label">No. horas </label>
-                                    <input type="number" class="form-control" id="NOHORAS_PERMISO" name="NOHORAS_PERMISO" >
+                                    <input type="number" class="form-control" id="NOHORAS_PERMISO" name="NOHORAS_PERMISO">
                                 </div>
+
+
 
 
 
@@ -194,6 +196,13 @@
                                 </div>
 
 
+                                <div class="col-12 mt-3" id="EXPLIQUE_PERMISO" style="display: none;">
+                                    <label class="form-label">Exlique </label>
+                                    <textarea class="form-control" id="EXPLIQUE_PERMISO" name="EXPLIQUE_PERMISO" rows="2"></textarea>
+                                </div>
+
+
+
 
                             </div>
                         </div>
@@ -209,11 +218,6 @@
 
 
                     <div id="SOLICITUD_VACACIONES" style="display: none;">
-
-
-
-
-
                     </div>
 
 

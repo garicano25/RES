@@ -550,6 +550,14 @@ if (resp.existe) {
 
                           </div>
 
+                             <div class="row mb-2 comentario-diferencia-almacen" style="display:none;">
+                                <div class="col-12 mt-2">
+                                  <label class="form-label">Comentario por diferencia en cantidad que entra a almacén</label>
+                                  <textarea class="form-control" name="COMENTARIO_DIFERENCIA_ALMACEN[]" rows="2"></textarea>
+                                </div>
+                              </div>
+
+
 
                           <div class="row mb-2">
                            <div class="col-4 mt-2">
@@ -597,6 +605,15 @@ if (resp.existe) {
                         bloque.find(".comentario-diferencia").toggle(cant !== aceptada);
                     });
 
+                
+                 bloque.find(".cantidad_entraalmacen").on("input", function () {
+                      calcularTotales(bloque);
+                      let cant = parseFloat(bloque.find(".cantidad").val()) || 0;
+                      let almacen = parseFloat($(this).val()) || 0;
+                      bloque.find(".comentario-diferencia-almacen").toggle(cant !== almacen);
+                 });
+                
+                
                     bloque.find(".en_inventario").on("change", function () {
                         if ($(this).val() === "Sí") {
                             bloque.find(".bloque-inventario").show();
@@ -666,6 +683,13 @@ function calcularTotales(bloque) {
           bloque.find(".comentario-diferencia").show();
       } else {
           bloque.find(".comentario-diferencia").hide();
+  }
+  
+
+   if (cantidad !== almacen) {
+          bloque.find(".comentario-diferencia-almacen").show();
+      } else {
+          bloque.find(".comentario-diferencia-almacen").hide();
       }
 }
 
@@ -798,8 +822,8 @@ function crearBloqueDetalle(det, resp) {
                          <div class="row mb-2">
                             <div class="col-3 mt-2">
                               <label class="form-label">Cantidad que entra a almacén</label>
-                              <input type="number" class="form-control cantidad_entraalmacen" name="CANTIDAD_ENTRA_ALMACEN[]"   value="${det.UNIDAD_MEDIDA_ALMACEN ?? ''}">
-                          </div>
+                              <input type="number" class="form-control cantidad_entraalmacen" name="CANTIDAD_ENTRA_ALMACEN[]"   value="${det.CANTIDAD_ENTRA_ALMACEN ?? ''}">
+                            </div>
                        
 
                           <div class="col-3 mt-2">
@@ -820,8 +844,6 @@ function crearBloqueDetalle(det, resp) {
 
                                <div class="col-3 mt-2">
                               <label class="form-label">El B o S es parcial</label>
-                             
-
                               <select class="form-control bs-esparcial" name="BIENS_PARCIAL[]" style="pointer-events:none; background-color:#e9ecef;">
                               <option value="">Seleccione</option>
                               <option value="Sí" ${det.BIENS_PARCIAL=="Sí"?"selected":""}>Sí</option>
@@ -833,9 +855,16 @@ function crearBloqueDetalle(det, resp) {
                           </div>
 
 
+                        <div class="row mb-2 comentario-diferencia-almacen" style="display:${det.CANTIDAD != det.CANTIDAD_ENTRA_ALMACEN ? 'block' : 'none'};">
+                          <div class="col-12 mt-2">
+                                <label class="form-label">Comentario por diferencia en cantidad que entra a almacén</label>
+                            <textarea class="form-control" name="COMENTARIO_DIFERENCIA_ALMACEN[]" rows="2">${det.COMENTARIO_DIFERENCIA_ALMACEN ?? ""}</textarea>
+                          </div>
+                        </div>
 
 
-                        
+                
+
                            <div class="row mb-2">
                              <div class="col-4 mt-2">
                             <label class="form-label">¿Está en inventario?</label>
@@ -902,6 +931,8 @@ function crearBloqueDetalle(det, resp) {
                             </select>
                           </div>
 
+                              
+                     
                           <div class="col-3 mt-2">
                             <label class="form-label">Comentario estado usuario</label>
                             <textarea class="form-control" name="COMENTARIO_ESTADO_USUARIO[]" rows="2">${det.COMENTARIO_ESTADO_USUARIO??""}</textarea>
@@ -945,6 +976,18 @@ function crearBloqueDetalle(det, resp) {
         bloque.find(".comentario-diferencia").toggle(cant !== aceptada);
     });
 
+  
+  
+  
+    bloque.find(".cantidad_entraalmacen").on("input", function () {
+        calcularTotales(bloque);
+        let cant = parseFloat(bloque.find(".cantidad").val()) || 0;
+        let almacen = parseFloat($(this).val()) || 0;
+        bloque.find(".comentario-diferencia-almacen").toggle(cant !== almacen);
+    });
+  
+  
+  
     bloque.find(".en_inventario").on("change", function () {
         if ($(this).val() === "Sí") {
             bloque.find(".bloque-inventario").show();

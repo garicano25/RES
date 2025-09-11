@@ -800,7 +800,10 @@ class grController extends Controller
                             'GUARDO_INVENTARIO'           => $guardoInventario,
                             'COMENTARIO_VO_RECHAZO'       => $request->COMENTARIO_VO_RECHAZO[$i] ?? '',
                             'UNIDAD_MEDIDA_ALMACEN'       => $request->UNIDAD_MEDIDA_ALMACEN[$i] ?? '',
+                            'COMENTARIO_DIFERENCIA_ALMACEN'       => $request->COMENTARIO_DIFERENCIA_ALMACEN[$i] ?? '',
 
+
+                            
 
                         ]);
 
@@ -1092,6 +1095,10 @@ class grController extends Controller
                             'BIENS_PARCIAL'         => $request->BIENS_PARCIAL[$i] ?? '',
                             'CANTIDAD_ENTRA_ALMACEN' => $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? '',
                             'UNIDAD_MEDIDA_ALMACEN' => $request->UNIDAD_MEDIDA_ALMACEN[$i] ?? '',
+                            'COMENTARIO_DIFERENCIA_ALMACEN' => $request->COMENTARIO_DIFERENCIA_ALMACEN[$i] ?? '',
+
+
+                            
 
                         ]);
                     }
@@ -1216,7 +1223,9 @@ class grController extends Controller
                 'd.CANTIDAD_ENTRA_ALMACEN',
                 'd.BIENS_PARCIAL',
                 'd.COMENTARIO_VO_RECHAZO',
-                'd.UNIDAD_MEDIDA_ALMACEN'
+                'd.UNIDAD_MEDIDA_ALMACEN',
+                'd.COMENTARIO_DIFERENCIA_ALMACEN'
+
 
 
         )
@@ -1275,6 +1284,8 @@ class grController extends Controller
                     'BIENS_PARCIAL' => $row->BIENS_PARCIAL,
                     'COMENTARIO_VO_RECHAZO' => $row->COMENTARIO_VO_RECHAZO,
                     'UNIDAD_MEDIDA_ALMACEN' => $row->UNIDAD_MEDIDA_ALMACEN,
+                    'COMENTARIO_DIFERENCIA_ALMACEN' => $row->COMENTARIO_DIFERENCIA_ALMACEN,
+
 
 
 

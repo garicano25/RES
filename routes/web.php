@@ -561,6 +561,7 @@ Route::get('/Rec.Empleado', function () {return view('RH.RecEmpleados.RecEmplead
 
 Route::get('/obtenerDatosPermiso', [recempleadoController::class, 'obtenerDatosPermiso']);
 
+Route::get('/Tablarecempleados', [recempleadoController::class, 'Tablarecempleados']);
 
 
 //==============================================  CAPACITACION  ============================================== 
