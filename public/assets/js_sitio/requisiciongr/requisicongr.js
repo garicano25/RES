@@ -1,14 +1,17 @@
 
 
 
+
 const modalgr = document.getElementById('modalGR');
 
+
 modalgr.addEventListener('hidden.bs.modal', event => {
+    document.getElementById('formulariorecepciongr').reset();
+    $("#formulariorecepciongr form")[0]?.reset();
+
     $('#ID_GR').val('');
+
     $('#modal_bien_servicio').empty();
-    $("#tabsGR").remove();
-    $("#tabsGRContent").remove();
-    $('.comentario-diferencia').hide();
 });
 
 
@@ -148,12 +151,8 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
   $.post('/consultar-gr', requestData, function (resp) {
 
   
-    // let contenedor = $("#modal_bien_servicio");
-    // contenedor.empty();
-
-      let contenedor = $("#formulariorecepciongr .modal-body");
-// 🔹 Elimina únicamente tabs y panes previos
-contenedor.find(".nav-tabs, .tab-content").remove();
+    let contenedor = $("#modal_bien_servicio");
+    contenedor.empty();
 
 
 if (resp.existe) {
