@@ -775,31 +775,31 @@ class grController extends Controller
                             'CANTIDAD'                    => $request->CANTIDAD[$i] ?? 0,
                             'CANTIDAD_RECHAZADA'          => $request->CANTIDAD_RECHAZADA[$i] ?? 0,
                             'CANTIDAD_ACEPTADA'           => $request->CANTIDAD_ACEPTADA[$i] ?? 0,
-                            'PRECIO_UNITARIO'             => $request->PRECIO_UNITARIO[$i] ?? null,
-                            'CUMPLE'                      => $request->CUMPLE[$i] ?? null,
-                            'COMENTARIO_CUMPLE'           => $request->COMENTARIO_CUMPLE[$i] ?? null,
-                            'ESTADO_BS'                   => $request->ESTADO_BS[$i] ?? null,
-                            'COMENTARIO_ESTADO'           => $request->COMENTARIO_ESTADO[$i] ?? null,
-                            'COMENTARIO_DIFERENCIA'       => $request->COMENTARIO_DIFERENCIA[$i] ?? null,
-                            'PRECIO_TOTAL_MR'             => $request->PRECIO_TOTAL_MR[$i] ?? null,
-                            'PRECIO_UNITARIO_GR'          => $request->PRECIO_UNITARIO_GR[$i] ?? null,
-                            'PRECIO_TOTAL_GR'             => $request->PRECIO_TOTAL_GR[$i] ?? null,
-                            'TIPO_BS'                     => $request->TIPO_BS[$i] ?? null,
+                            'PRECIO_UNITARIO'             => $request->PRECIO_UNITARIO[$i] ?? '',
+                            'CUMPLE'                      => $request->CUMPLE[$i] ?? '',
+                            'COMENTARIO_CUMPLE'           => $request->COMENTARIO_CUMPLE[$i] ?? '',
+                            'ESTADO_BS'                   => $request->ESTADO_BS[$i] ?? '',
+                            'COMENTARIO_ESTADO'           => $request->COMENTARIO_ESTADO[$i] ?? '',
+                            'COMENTARIO_DIFERENCIA'       => $request->COMENTARIO_DIFERENCIA[$i] ?? '',
+                            'PRECIO_TOTAL_MR'             => $request->PRECIO_TOTAL_MR[$i] ?? '',
+                            'PRECIO_UNITARIO_GR'          => $request->PRECIO_UNITARIO_GR[$i] ?? '',
+                            'PRECIO_TOTAL_GR'             => $request->PRECIO_TOTAL_GR[$i] ?? '',
+                            'TIPO_BS'                     => $request->TIPO_BS[$i] ?? '',
                             'TIPO_EQUIPO'                 => $tipoEquipoDesc,
-                            'INVENTARIO_ID'               => $request->INVENTARIO[$i] ?? null,
-                            'EN_INVENTARIO'               => $request->EN_INVENTARIO[$i] ?? null,
-                            'CANTIDAD_ACEPTADA_USUARIO'   => $request->CANTIDAD_ACEPTADA_USUARIO[$i] ?? null,
-                            'CUMPLE_ESPECIFICADO_USUARIO' => $request->CUMPLE_ESPECIFICADO_USUARIO[$i] ?? null,
-                            'COMENTARIO_CUMPLE_USUARIO'   => $request->COMENTARIO_CUMPLE_USUARIO[$i] ?? null,
-                            'ESTADO_BS_USUARIO'           => $request->ESTADO_BS_USUARIO[$i] ?? null,
-                            'COMENTARIO_ESTADO_USUARIO'   => $request->COMENTARIO_ESTADO_USUARIO[$i] ?? null,
-                            'VOBO_USUARIO_PRODUCTO'       => $request->VOBO_USUARIO_PRODUCTO[$i] ?? null,
-                            'UNIDAD'                      => $request->UNIDAD[$i] ?? null,
-                            'CANTIDAD_ENTRA_ALMACEN'      => $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? null,
-                            'BIENS_PARCIAL'               => $request->BIENS_PARCIAL[$i] ?? null,
+                            'INVENTARIO_ID'               => $request->INVENTARIO[$i] ?? '',
+                            'EN_INVENTARIO'               => $request->EN_INVENTARIO[$i] ?? '',
+                            'CANTIDAD_ACEPTADA_USUARIO'   => $request->CANTIDAD_ACEPTADA_USUARIO[$i] ?? '',
+                            'CUMPLE_ESPECIFICADO_USUARIO' => $request->CUMPLE_ESPECIFICADO_USUARIO[$i] ?? '',
+                            'COMENTARIO_CUMPLE_USUARIO'   => $request->COMENTARIO_CUMPLE_USUARIO[$i] ?? '',
+                            'ESTADO_BS_USUARIO'           => $request->ESTADO_BS_USUARIO[$i] ?? '',
+                            'COMENTARIO_ESTADO_USUARIO'   => $request->COMENTARIO_ESTADO_USUARIO[$i] ?? '',
+                            'VOBO_USUARIO_PRODUCTO'       => $request->VOBO_USUARIO_PRODUCTO[$i] ?? '',
+                            'UNIDAD'                      => $request->UNIDAD[$i] ?? '',
+                            'CANTIDAD_ENTRA_ALMACEN'      => $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? '',
+                            'BIENS_PARCIAL'               => $request->BIENS_PARCIAL[$i] ?? '',
                             'GUARDO_INVENTARIO'           => $guardoInventario,
-                            'COMENTARIO_VO_RECHAZO'       => $request->COMENTARIO_VO_RECHAZO[$i] ?? null,
-                            'UNIDAD_MEDIDA_ALMACEN'       => $request->UNIDAD_MEDIDA_ALMACEN[$i] ?? null,
+                            'COMENTARIO_VO_RECHAZO'       => $request->COMENTARIO_VO_RECHAZO[$i] ?? '',
+                            'UNIDAD_MEDIDA_ALMACEN'       => $request->UNIDAD_MEDIDA_ALMACEN[$i] ?? '',
 
 
                         ]);
@@ -1075,23 +1075,23 @@ class grController extends Controller
                             'CANTIDAD'              => $request->CANTIDAD[$i] ?? 0,
                             'CANTIDAD_RECHAZADA'    => $request->CANTIDAD_RECHAZADA[$i] ?? 0,
                             'CANTIDAD_ACEPTADA'     => $request->CANTIDAD_ACEPTADA[$i] ?? 0,
-                            'PRECIO_UNITARIO'       => $request->PRECIO_UNITARIO[$i] ?? null,
-                            'CUMPLE'                => $request->CUMPLE[$i] ?? null,
-                            'COMENTARIO_CUMPLE'     => $request->COMENTARIO_CUMPLE[$i] ?? null,
-                            'ESTADO_BS'             => $request->ESTADO_BS[$i] ?? null,
-                            'COMENTARIO_ESTADO'     => $request->COMENTARIO_ESTADO[$i] ?? null,
-                            'COMENTARIO_DIFERENCIA' => $request->COMENTARIO_DIFERENCIA[$i] ?? null,
-                            'TIPO_BS'               => $request->TIPO_BS[$i] ?? null,
-                            'PRECIO_TOTAL_MR'       => $request->PRECIO_TOTAL_MR[$i] ?? null,
-                            'PRECIO_UNITARIO_GR'    => $request->PRECIO_UNITARIO_GR[$i] ?? null,
-                            'PRECIO_TOTAL_GR'       => $request->PRECIO_TOTAL_GR[$i] ?? null,
+                            'PRECIO_UNITARIO'       => $request->PRECIO_UNITARIO[$i] ?? '',
+                            'CUMPLE'                => $request->CUMPLE[$i] ?? '',
+                            'COMENTARIO_CUMPLE'     => $request->COMENTARIO_CUMPLE[$i] ?? '',
+                            'ESTADO_BS'             => $request->ESTADO_BS[$i] ?? '',
+                            'COMENTARIO_ESTADO'     => $request->COMENTARIO_ESTADO[$i] ?? '',
+                            'COMENTARIO_DIFERENCIA' => $request->COMENTARIO_DIFERENCIA[$i] ?? '',
+                            'TIPO_BS'               => $request->TIPO_BS[$i] ?? '',
+                            'PRECIO_TOTAL_MR'       => $request->PRECIO_TOTAL_MR[$i] ?? '',
+                            'PRECIO_UNITARIO_GR'    => $request->PRECIO_UNITARIO_GR[$i] ?? '',
+                            'PRECIO_TOTAL_GR'       => $request->PRECIO_TOTAL_GR[$i] ?? '',
                             'TIPO_EQUIPO'           => $tipoEquipoDesc,
-                            'INVENTARIO_ID'         => $request->INVENTARIO[$i] ?? null,
-                            'EN_INVENTARIO'         => $request->EN_INVENTARIO[$i] ?? null,
-                            'UNIDAD'                => $request->UNIDAD[$i] ?? null,
-                            'BIENS_PARCIAL'         => $request->BIENS_PARCIAL[$i] ?? null,
-                            'CANTIDAD_ENTRA_ALMACEN' => $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? null,
-                            'UNIDAD_MEDIDA_ALMACEN' => $request->UNIDAD_MEDIDA_ALMACEN[$i] ?? null,
+                            'INVENTARIO_ID'         => $request->INVENTARIO[$i] ?? '',
+                            'EN_INVENTARIO'         => $request->EN_INVENTARIO[$i] ?? '',
+                            'UNIDAD'                => $request->UNIDAD[$i] ?? '',
+                            'BIENS_PARCIAL'         => $request->BIENS_PARCIAL[$i] ?? '',
+                            'CANTIDAD_ENTRA_ALMACEN' => $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? '',
+                            'UNIDAD_MEDIDA_ALMACEN' => $request->UNIDAD_MEDIDA_ALMACEN[$i] ?? '',
 
                         ]);
                     }
@@ -1132,46 +1132,7 @@ class grController extends Controller
     /**
      * Crear GR Parcial con cantidades remanentes
      */
-    // private function crearGRParcial(Request $request, $usuarioId)
-    // {   
-    //     $noRecepcion = $this->generarNoRecepcion();
-
-    //     $idGRParcial = DB::table('formulario_bitacoragr')->insertGetId([
-    //         'NO_GR'              => null,
-    //         'NO_MR'              => $request->modal_no_mr,
-    //         'NO_PO'              => $request->modal_no_po,
-    //         'PROVEEDOR_KEY'      => $request->PROVEEDOR_EQUIPO,
-    //         'USUARIO_SOLICITO'   => $request->modal_usuario_nombre,
-    //         'USUARIO_ID'         => $usuarioId,
-    //         'NO_RECEPCION'       => $noRecepcion,
-    //         'CREATED_AT'         => now(),
-    //     ]);
-
-    //     foreach ($request->DESCRIPCION as $i => $desc) {
-    //         $aceptada = $request->CANTIDAD_ACEPTADA[$i] ?? 0;
-
-    //         if ($aceptada > 0) {
-    //             $tipoEquipoId   = $request->TIPO_INVENTARIO[$i] ?? null;
-    //             $tipoEquipoDesc = null;
-
-    //             if ($tipoEquipoId) {
-    //                 $tipoEquipoDesc = DB::table('catalogo_tipoinventario')
-    //                     ->where('ID_CATALOGO_TIPOINVENTARIO', $tipoEquipoId)
-    //                     ->value('DESCRIPCION_TIPO');
-    //             }
-
-    //             DB::table('formulario_bitacoragr_detalle')->insert([
-    //                 'ID_GR'                 => $idGRParcial,
-    //                 'DESCRIPCION'           => $desc,
-    //                 'CANTIDAD'              => $aceptada, 
-    //                 'PRECIO_UNITARIO'       => $request->PRECIO_UNITARIO[$i] ?? null,
-    //                 'PRECIO_TOTAL_MR'       => $request->PRECIO_TOTAL_MR[$i] ?? null,
-    //                 'UNIDAD'                => $request->UNIDAD[$i] ?? null,
-
-    //             ]);
-    //         }
-    //     }
-    // }
+   
 
 
 
@@ -1207,12 +1168,11 @@ class grController extends Controller
             DB::table('formulario_bitacoragr_detalle')->insert([
                 'ID_GR'                 => $idGRParcial,
                 'DESCRIPCION'           => $desc,
-                'CANTIDAD'              => $request->CANTIDAD[$i] ?? 0, // 👈 sigue usando la aceptada
-                'PRECIO_UNITARIO'       => $request->PRECIO_UNITARIO[$i] ?? null,
-                'PRECIO_TOTAL_MR'       => $request->PRECIO_TOTAL_MR[$i] ?? null,
-                'UNIDAD'                => $request->UNIDAD[$i] ?? null,
+                'CANTIDAD'              => $request->CANTIDAD[$i] ?? 0, // sigue usando la aceptada
+                'PRECIO_UNITARIO'       => $request->PRECIO_UNITARIO[$i] ?? '',
+                'PRECIO_TOTAL_MR'       => $request->PRECIO_TOTAL_MR[$i] ?? '',
+                'UNIDAD'                => $request->UNIDAD[$i] ?? '',
                 'TIPO_EQUIPO'           => $tipoEquipoDesc,
-                // 'BIENS_PARCIAL'         => "Sí", // 👈 marcar explícitamente en el duplicado
             ]);
         }
     }
