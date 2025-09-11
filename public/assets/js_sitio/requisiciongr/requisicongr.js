@@ -11,7 +11,9 @@ modalgr.addEventListener('hidden.bs.modal', event => {
 
     $('#ID_GR').val('');
 
-    $('#modal_bien_servicio').empty();
+  $('#modal_bien_servicio').empty();
+  // $('#contenedorGR').empty(); // <--- limpia tabs parciales
+
 });
 
 
@@ -159,10 +161,15 @@ if (resp.existe) {
     // ==========================
     // VARIAS GR (Parciales)
     // ==========================
-    if (resp.grs && Object.keys(resp.grs).length > 1) {
+  if (resp.grs && Object.keys(resp.grs).length > 1) {
+      
         let contenedor = $("#formulariorecepciongr .modal-body");
         contenedor.empty(); 
 
+        // let contenedor = $("#contenedorGR");
+        //   contenedor.empty();
+
+    
         let tabs = `<ul class="nav nav-tabs" id="tabsGR" role="tablist">`;
         let panes = `<div class="tab-content" id="tabsGRContent">`;
 
