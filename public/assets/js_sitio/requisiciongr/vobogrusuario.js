@@ -68,7 +68,7 @@ $(document).on('click', '.EDITAR', function () {
 
                         <div class="row mb-2">
                             <div class="col-6">
-                                <label>Cumple lo especificado</label>
+                                <label>Cumple lo especificado *</label>
                                 <select class="form-control" name="CUMPLE_ESPECIFICADO_USUARIO[${det.ID_DETALLE}]" required>
                                     <option value="">Seleccione</option>
                                     <option value="Sí" ${det.CUMPLE_ESPECIFICADO_USUARIO == "Sí" ? "selected" : ""}>Sí</option>
@@ -76,14 +76,14 @@ $(document).on('click', '.EDITAR', function () {
                                 </select>
                             </div>
                             <div class="col-6">
-                                <label>Comentario especificación</label>
+                                <label>Comentario especificación *</label>
                                 <textarea class="form-control" name="COMENTARIO_CUMPLE_USUARIO[${det.ID_DETALLE}]" required>${det.COMENTARIO_CUMPLE_USUARIO ?? ''}</textarea>
                             </div>
                         </div>
 
                         <div class="row mb-2">
                             <div class="col-6">
-                                <label>Estado del B o S</label>
+                                <label>Estado del bien o servicio *</label>
                                 <select class="form-control" name="ESTADO_BS_USUARIO[${det.ID_DETALLE}]" required>
                                     <option value="">Seleccione</option>
                                     <option value="BUEN_ESTADO" ${det.ESTADO_BS_USUARIO == "BUEN_ESTADO" ? "selected" : ""}>En buen estado</option>
@@ -91,13 +91,13 @@ $(document).on('click', '.EDITAR', function () {
                                 </select>
                             </div>
                             <div class="col-6">
-                                <label>Comentario Estado</label>
+                                <label>Comentario estado *</label>
                                 <textarea class="form-control" name="COMENTARIO_ESTADO_USUARIO[${det.ID_DETALLE}]" required>${det.COMENTARIO_ESTADO_USUARIO ?? ''}</textarea>
                             </div>
                         </div>
 
                         <div class="col-12">
-                            <label class="form-label">Vo. Bo</label>
+                            <label class="form-label">Vo. Bo *</label>
                             <select class="form-control" name="VOBO_USUARIO_PRODUCTO[${det.ID_DETALLE}]" required>
                                         <option value="">Seleccione</option>
                                 <option value="Sí" ${det.VOBO_USUARIO_PRODUCTO == "Sí" ? "selected" : ""}>Sí</option>
