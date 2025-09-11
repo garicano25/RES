@@ -94,6 +94,11 @@ Modalusuario.addEventListener('hidden.bs.modal', event => {
     $("#USUARIO_TIPO").val("1").trigger("change");
     $("#DIV_INFORMACION input, #DIV_FOTO input, #DIV_DIRRECCION input, #DIV_CARGO input, #DIV_TELEFONO input, #DIV_NACIMIENTO input, #DIV_PROVEDOR input").removeAttr("required");
 
+
+        $('#guardarFormUSUARIO').prop('disabled', false);
+
+    
+    
 });
 
 
@@ -101,7 +106,7 @@ Modalusuario.addEventListener('hidden.bs.modal', event => {
 $("#guardarFormUSUARIO").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioUSUARIO'))
+        formularioValido = validarFormulario3($('#formularioUSUARIO'))
 
     if (formularioValido) {
 
@@ -932,4 +937,37 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("PASSWORD").value = password;
         document.getElementById("PASSWORD_2").value = password;
     });
+});
+
+
+
+$(document).on('input', '#RFC_PROVEEDOR', function () {
+    let rfc = $(this).val().trim();
+
+    if (rfc.length > 0) {
+        $.ajax({
+            url: '/validarRFC',
+            method: 'POST',
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                RFC_PROVEEDOR: rfc
+            },
+            success: function (response) {
+                if (response.existe) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'RFC ya registrado',
+                        text: 'El RFC ingresado ya existe en la base de datos.',
+                        confirmButtonText: 'Entendido'
+                    });
+
+                    $('#guardarFormUSUARIO').prop('disabled', true); 
+                } else {
+                    $('#guardarFormUSUARIO').prop('disabled', false); 
+                }
+            }
+        });
+    } else {
+        $('#guardarFormUSUARIO').prop('disabled', false); 
+    }
 });

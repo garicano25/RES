@@ -128,9 +128,18 @@ public function mostrarFotoUsuario($usuario_id)
 }
 
 
+    public function validarRFC(Request $request)
+    {
+        $existe = DB::table('usuarios')
+            ->where('RFC_PROVEEDOR', $request->RFC_PROVEEDOR)
+            ->exists();
+
+        return response()->json(['existe' => $existe]);
+    }
 
 
-public function store(Request $request)
+
+    public function store(Request $request)
 {
     try {
         DB::beginTransaction(); 

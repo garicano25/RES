@@ -214,6 +214,7 @@ Route::get('/Tablaproveedores', [usuarioController::class, 'Tablaproveedores']);
 Route::get('/usuarioDelete', [usuarioController::class, 'store']);
 Route::get('/usuariofoto/{id}', [usuarioController::class, 'mostrarFotoUsuario'])->name('usuariofoto');
 
+Route::post('/validarRFC', [usuarioController::class, 'validarRFC']);
 
 //==============================================  EXTERNO  ============================================== 
 Route::get('/inicio', function () {return view('RH.externa.diseño');});
