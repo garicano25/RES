@@ -733,7 +733,7 @@
                         $user = auth()->user();
 
                         $tieneSoloRolIntendente = $user->roles->count() === 1 && $user->hasRole('Intendente');
-                        $tieneSoloRolSSTJunior = $user->roles->count() === 1 && $user->hasRole('Consultor-Instructor (Junior/Senior)');
+                        $tieneSoloRolSSTJunior = $user->roles->count() === 1 && $user->hasRole('Consultor-Instructor Junior');
                         $tieneSoloRolAsistentePlaneacion = $user->roles->count() === 1 && $user->hasRole('Asistente de planeación y logística');
                         $tieneSoloRolAlmacenista = $user->roles->count() === 1 && $user->hasRole('Almacenista');
                         $tieneSoloRolHSEQ = $user->roles->count() === 1 && $user->hasRole('Analista HSEQ');
