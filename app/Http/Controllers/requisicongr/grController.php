@@ -1177,7 +1177,7 @@ class grController extends Controller
                 'DESCRIPCION'           => $desc,
                 'CANTIDAD'              => $request->CANTIDAD[$i] ?? 0, 
                 'PRECIO_UNITARIO'       => $request->PRECIO_UNITARIO[$i] ?? '',
-                'PRECIO_TOTAL_MR'       => $request->PRECIO_TOTAL_MR[$i] ?? '',
+                // 'PRECIO_TOTAL_MR'       => $request->PRECIO_TOTAL_MR[$i] ?? '',
                 'UNIDAD'                => $request->UNIDAD[$i] ?? '',
                 'TIPO_EQUIPO'           => $tipoEquipoDesc,
             ]);
