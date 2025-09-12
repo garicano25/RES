@@ -36,7 +36,6 @@ class recempleadoController extends Controller
                 ->select('cc.NOMBRE_CATEGORIA')
                 ->first();
 
-            // Número de empleado
             $empleado = DB::table('formulario_contratacion')
                 ->where('CURP', $curp)
                 ->select('NUMERO_EMPLEADO')
@@ -63,6 +62,16 @@ class recempleadoController extends Controller
 
             foreach ($tabla as $value) {
 
+              
+              
+              
+                if ($value->TIPO_SOLICITUD == 1) {
+                    $value->TIPO_SOLICITUD_TEXTO = 'Aviso de ausencia y/o permiso';
+                } elseif ($value->TIPO_SOLICITUD == 2) {
+                    $value->TIPO_SOLICITUD_TEXTO = 'Salida de almacén de materiales y/o equipos';
+                } else {
+                    $value->TIPO_SOLICITUD_TEXTO = 'Solicitud de Vacaciones';
+                }
 
 
                 if ($value->DAR_BUENO == 1) {
@@ -108,5 +117,88 @@ class recempleadoController extends Controller
     }
 
 
+
+
+    public function store(Request $request)
+    {
+        try {
+            switch (intval($request->api)) {
+                case 1:
+                    if ($request->ID_FORMULARIO_RECURSOS_EMPLEADOS == 0) {
+                        DB::statement('ALTER TABLE formulario_recempleados AUTO_INCREMENT=1;');
+
+                    
+
+                       
+                        $materialesJson = is_string($request->MATERIALES_JSON)
+                            ? $request->MATERIALES_JSON
+                            : json_encode($request->MATERIALES_JSON, JSON_UNESCAPED_UNICODE);
+
+                        $mrs = recemplaedosModel::create(array_merge(
+                            $request->except(['MATERIALES_JSON']),
+                            [
+                               
+                                'USUARIO_ID' => auth()->user()->ID_USUARIO,
+                                'CURP' => auth()->user()->CURP,
+
+                                'MATERIALES_JSON' => $materialesJson
+                            ]
+                        ));
+
+                        return response()->json([
+                            'code' => 1,
+                            'mr' => $mrs
+                        ]);
+                    } else {
+                        if (isset($request->ELIMINAR)) {
+                            $estado = $request->ELIMINAR == 1 ? 0 : 1;
+                            recemplaedosModel::where('ID_FORMULARIO_RECURSOS_EMPLEADOS', $request->ID_FORMULARIO_RECURSOS_EMPLEADOS)
+                                ->update(['ACTIVO' => $estado]);
+
+                            return response()->json([
+                                'code' => 1,
+                                'mr' => $estado == 0 ? 'Desactivada' : 'Activada'
+                            ]);
+                        } else {
+                            $mrs = recemplaedosModel::find($request->ID_FORMULARIO_RECURSOS_EMPLEADOS);
+                            if ($mrs) {
+                                $datos = $request->except(['USUARIO_ID','CURP']);
+
+                                if (isset($datos['MATERIALES_JSON'])) {
+                                    $datos['MATERIALES_JSON'] = is_string($datos['MATERIALES_JSON'])
+                                        ? $datos['MATERIALES_JSON']
+                                        : json_encode($datos['MATERIALES_JSON'], JSON_UNESCAPED_UNICODE);
+                                }
+
+                                $mrs->update($datos);
+
+                                return response()->json([
+                                    'code' => 1,
+                                    'mr' => 'Actualizada'
+                                ]);
+                            }
+
+                            return response()->json([
+                                'code' => 0,
+                                'msj' => 'MR no encontrada'
+                            ], 404);
+                        }
+                    }
+                    break;
+
+                default:
+                    return response()->json([
+                        'code' => 1,
+                        'msj' => 'Api no encontrada'
+                    ]);
+            }
+        } catch (Exception $e) {
+            Log::error("Error al guardar  " . $e->getMessage());
+            return response()->json([
+                'code' => 0,
+                'error' => 'Error al guardar la MR'
+            ], 500);
+        }
+    }
 
 }

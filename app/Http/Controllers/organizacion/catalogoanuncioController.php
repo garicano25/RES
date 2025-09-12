@@ -106,48 +106,7 @@ class catalogoanuncioController extends Controller
 
 
 
-    // public function store(Request $request)
-    // {
-    //     try {
-    //         switch (intval($request->api)) {
-    //             case 1:
-    //                 if ($request->ID_CATALOGO_ANUNCIOS == 0) {
-    //                     DB::statement('ALTER TABLE catalogo_anuncios AUTO_INCREMENT=1;');
-    //                     $anuncios = catalgoanuncioModel::create($request->all());
-    //                 } else {
-
-    //                     if (isset($request->ELIMINAR)) {
-    //                         if ($request->ELIMINAR == 1) {
-
-    //                             $anuncios = catalgoanuncioModel::where('ID_CATALOGO_ANUNCIOS', $request['ID_CATALOGO_ANUNCIOS'])->update(['ACTIVO' => 0]);
-    //                             $response['code'] = 1;
-    //                             $response['anuncio'] = 'Desactivada';
-    //                         } else {
-    //                             $anuncios = catalgoanuncioModel::where('ID_CATALOGO_ANUNCIOS', $request['ID_CATALOGO_ANUNCIOS'])->update(['ACTIVO' => 1]);
-    //                             $response['code'] = 1;
-    //                             $response['anuncio'] = 'Activada';
-    //                         }
-    //                     } else {
-    //                         $anuncios = catalgoanuncioModel::find($request->ID_CATALOGO_ANUNCIOS);
-    //                         $anuncios->update($request->all());
-    //                         $response['code'] = 1;
-    //                         $response['anuncio'] = 'Actualizada';
-    //                     }
-    //                     return response()->json($response);
-    //                 }
-    //                 $response['code']  = 1;
-    //                 $response['anuncio']  = $anuncios;
-    //                 return response()->json($response);
-    //                 break;
-    //             default:
-    //                 $response['code']  = 1;
-    //                 $response['msj']  = 'Api no encontrada';
-    //                 return response()->json($response);
-    //         }
-    //     } catch (Exception $e) {
-    //         return response()->json('Error al guardar el anuncio');
-    //     }
-    // }
+   
 
 
 

@@ -338,6 +338,7 @@
             left: 28%;
         }
     </style>
+    
     <div id="modal-overlay">
         <img src="/assets/images/Colorancho.png" class="ld ld-bounce" alt="Cargando" style="max-width: 100%; max-height: 214px;" id="loading-image">
     </div>
@@ -366,14 +367,12 @@
 
 
     <!-- datepicker -->
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js"></script>
 
 
 
     <!-- Dropify -->
-
     <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
 
     <!-- Funciones generales -->
@@ -405,7 +404,6 @@
     <script src="/assets/js_sitio/organizacion/organigrama.js?v=4.0"> </script>
     <script src="/assets/js/GOJs/go.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
     @endif
 
     @if(request()->is('PPT'))
@@ -423,7 +421,6 @@
     @if(request()->is('Asesores'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoasesores.js?v=1.0"></script>
     @endif
-
 
     @if(request()->is('FuncionesCargo'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionescargo.js?v=1.0"></script>
@@ -453,16 +450,13 @@
     <script src="/assets/js_sitio/organizacion/catalogos/catalogogenero.js?v=1.0"></script>
     @endif
 
-
     @if(request()->is('Puesto-experiencia'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoexperiencia.js?v=1.0"></script>
     @endif
 
-
     @if(request()->is('Competencias-básicas'))
     <script src="/assets/js_sitio/organizacion/catalogos/catálogocompetenciabasica.js?v=1.0"></script>
     @endif
-
 
     @if(request()->is('Tipo-vacante'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogotipovacante.js?v=1.0"></script>
@@ -472,13 +466,9 @@
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoCompetenciasGerenciales.js?v=1.0"></script>
     @endif
 
-
-
     @if(request()->is('Anuncios'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoanuncion.js"></script>
     @endif
-
-
 
     @if(request()->is('Listavacantes'))
     <script src="/assets/js_sitio/reclutamiento/Listavacante.js"></script>
@@ -540,7 +530,7 @@
 
 
     @if(request()->is('Rec.Empleado'))
-    <script src="/assets/js_sitio/RecEmpleados/recursosempleado.js"></script>
+    <script src="/assets/js_sitio/RecEmpleados/recursosempleado.js?v=1.1"></script>
     @endif
 
 </body>

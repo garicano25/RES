@@ -48,26 +48,28 @@
                         </select>
                     </div>
 
+                    <div class="col-12 mt-3">
+                        <div class="row">
+                            <div class="col-9">
+                                <label class="form-label">Solicitante </label>
+                                <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" id="SOLICITANTE_SALIDA" name="SOLICITANTE_SALIDA" readonly>
+                            </div>
+
+                            <div class="col-3">
+                                <label class="form-label">Fecha de solicitud *</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_SALIDA" name="FECHA_SALIDA" required>
+                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div id="SOLIDA_ALMACEN" style="display: none;">
 
                         <div id="SOLICITUD_MR">
-                            <div class="col-12 mt-3">
-                                <div class="row">
-                                    <div class="col-9">
-                                        <label class="form-label">Solicitante </label>
-                                        <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" id="SOLICITANTE_SALIDA" name="SOLICITANTE_SALIDA" readonly>
-                                    </div>
 
-                                    <div class="col-3">
-                                        <label class="form-label">Fecha de solicitud *</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_SALIDA" name="FECHA_SALIDA" required>
-                                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="mt-3">
                                 <div class="row">
                                     <div class="col-6 mb-3">
@@ -107,23 +109,6 @@
 
 
                     <div id="PERMISO_AUSENCIA" style="display: none;">
-
-                        <div class="col-12 mt-3">
-                            <div class="row">
-                                <div class="col-9">
-                                    <label class="form-label">Solicitante </label>
-                                    <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" id="SOLICITANTE_PERMISO" name="SOLICITANTE_PERMISO" readonly>
-                                </div>
-
-                                <div class="col-3">
-                                    <label class="form-label">Fecha de solicitud *</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_PERMISO" name="FECHA_PERMISO" required>
-                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
 
                         <div class="col-12 mt-3">
@@ -226,6 +211,33 @@
                         <label>Observaciones *</label>
                         <textarea class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" rows="3" required></textarea>
                     </div>
+
+
+                    <!-- Botón de firma -->
+                    <div class="col-12 mt-3" id="DIV_FIRMAR" style="display:block; margin-top:10px;">
+                        <div class="row justify-content-center">
+                            <div class="col-6 text-center">
+                                <button type="button"
+                                    id="FIRMAR_SOLICITUD"
+                                    class="btn btn-info"
+                                    data-usuario="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
+                                    <i class="bi bi-pen-fill"></i> Firmar solicitud
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <input type="hidden" id="FIRMO_USUARIO" name="FIRMO_USUARIO" value="">
+
+                    <div class="mt-3">
+                        <label class="form-label">Firmado por</label>
+                        <input type="text" id="FIRMADO_POR" name="FIRMADO_POR" class="form-control" readonly required>
+                    </div>
+
+
+
 
 
                     <div id="APROBACION_DIRECCION" style="display: none;">

@@ -31,7 +31,10 @@ class recemplaedosModel extends Model
         'EXPLIQUE_PERMISO',
         'OBSERVACIONES_REC',
         'ACTIVO',
-        'DAR_BUENO'
+        'DAR_BUENO',
+        'CURP',
+        'FIRMO_USUARIO',
+        'FIRMADO_POR'
 
 
     ];

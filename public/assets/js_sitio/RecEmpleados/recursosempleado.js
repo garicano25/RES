@@ -18,6 +18,8 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     $('#PERMISO_AUSENCIA').hide();
     $('#SOLICITUD_VACACIONES').hide();
     $('#EXPLIQUE_PERMISO').hide();
+    $('#DIV_FIRMAR').show();
+
     
     
 
@@ -26,7 +28,6 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     $('#APROBACION_DIRECCION').hide();
     $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
     $('#BOTON_VISTO_BUENO').hide();
-
     $('#guardaRECEMPLEADOS').show();
 
 
@@ -172,12 +173,10 @@ $("#guardaRECEMPLEADOS").click(function (e) {
         var documentos = [];
         $(".material-item").each(function() {
             var documento = {
+
+
                 'DESCRIPCION': $(this).find("input[name='DESCRIPCION']").val(),
                 'CANTIDAD': $(this).find("input[name='CANTIDAD']").val(),
-                'UNIDAD_MEDIDA': $(this).find("input[name='UNIDAD_MEDIDA']").val(),
-                'CHECK_VO': $(this).find("select[name='CHECK_VO']").val(),
-                'CATEGORIA_MATERIAL': $(this).find("select[name='CATEGORIA_MATERIAL']").val(),
-                'CHECK_MATERIAL': $(this).find("select[name='CHECK_MATERIAL']").val()
 
 
             };
@@ -200,7 +199,7 @@ $("#guardaRECEMPLEADOS").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardaRECEMPLEADOS')
-            await ajaxAwaitFormData(requestData,'MrSave', 'formularioRECURSOSEMPLEADO', 'guardaRECEMPLEADOS', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData(requestData,'RecempleadoSave', 'formularioRECURSOSEMPLEADO', 'guardaRECEMPLEADOS', { callbackAfter: true, callbackBefore: true }, () => {
 
         
                
@@ -222,7 +221,7 @@ $("#guardaRECEMPLEADOS").click(function (e) {
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                      $('#miModal_RECURSOSEMPLEADOS').modal('hide')
                     document.getElementById('formularioRECURSOSEMPLEADO').reset();
-                    Tablamr.ajax.reload()
+                    Tablarecempleados.ajax.reload()
 
         
             })
@@ -239,7 +238,7 @@ $("#guardaRECEMPLEADOS").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardaRECEMPLEADOS')
-            await ajaxAwaitFormData(requestData,'MrSave', 'formularioRECURSOSEMPLEADO', 'guardaRECEMPLEADOS', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData(requestData,'RecempleadoSave', 'formularioRECURSOSEMPLEADO', 'guardaRECEMPLEADOS', { callbackAfter: true, callbackBefore: true }, () => {
         
                 Swal.fire({
                     icon: 'info',
@@ -260,7 +259,7 @@ $("#guardaRECEMPLEADOS").click(function (e) {
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                      $('#miModal_RECURSOSEMPLEADOS').modal('hide')
                     document.getElementById('formularioRECURSOSEMPLEADO').reset();
-                    Tablamr.ajax.reload()
+                    Tablarecempleados.ajax.reload()
 
 
                 }, 300);  
@@ -276,7 +275,7 @@ $("#guardaRECEMPLEADOS").click(function (e) {
 });
 
 
-var Tablamr = $("#Tablamr").DataTable({
+var Tablarecempleados = $("#Tablarecempleados").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
     lengthMenu: [
@@ -295,12 +294,12 @@ var Tablamr = $("#Tablamr").DataTable({
         data: {},
         method: 'GET',
         cache: false,
-        url: '/Tablamr',
+        url: '/Tablarecempleados',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablamr.columns.adjust().draw();
+            Tablarecempleados.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -316,9 +315,8 @@ var Tablamr = $("#Tablamr").DataTable({
             return meta.row + 1; 
         }
     },
-    { data: 'SOLICITANTE_MR' },
-    { data: 'NO_MR' },
-    { data: 'FECHA_SOLICITUD_MR' },
+    { data: 'TIPO_SOLICITUD_TEXTO' },
+    { data: 'SOLICITANTE_SALIDA' },    
     { data: 'ESTADO_REVISION' }, 
     { data: 'ESTATUS' },          
     { data: 'BTN_EDITAR' },
@@ -328,13 +326,12 @@ var Tablamr = $("#Tablamr").DataTable({
 
 columnDefs: [
     { targets: 0, title: '#', className: 'all text-center' },
-    { targets: 1, title: 'Nombre del solicitante', className: 'all text-center' },
-    { targets: 2, title: 'N° MR', className: 'all text-center' },
-    { targets: 3, title: 'Fecha solicitud', className: 'all text-center' },
-    { targets: 4, title: 'Vo. Bo ', className: 'all text-center' },
-    { targets: 5, title: 'Estatus', className: 'all text-center' }, 
-    { targets: 6, title: 'Editar', className: 'all text-center' },
-    { targets: 7, title: 'Visualizar', className: 'all text-center' },
+    { targets: 1, title: 'Tipo de solicitud', className: 'all text-center' },
+    { targets: 2, title: 'Nombre del solicitante', className: 'all text-center' },
+    { targets: 3, title: 'Vo. Bo ', className: 'all text-center' },
+    { targets: 4, title: 'Estatus', className: 'all text-center' }, 
+    { targets: 5, title: 'Editar', className: 'all text-center' },
+    { targets: 6, title: 'Visualizar', className: 'all text-center' },
 
 ]
 
@@ -344,10 +341,12 @@ columnDefs: [
 
 
 $(document).ready(function() {
-    $('#Tablamr tbody').on('click', 'td>button.VISUALIZAR', function () {
+    $('#Tablarecempleados tbody').on('click', 'td>button.VISUALIZAR', function () {
+
+
         var tr = $(this).closest('tr');
-        var row = Tablamr.row(tr);
-        
+        var row = Tablarecempleados.row(tr);
+    
         hacerSoloLectura(row.data(), '#miModal_RECURSOSEMPLEADOS');
 
         ID_FORMULARIO_RECURSOS_EMPLEADOS = row.data().ID_FORMULARIO_RECURSOS_EMPLEADOS;
@@ -359,44 +358,85 @@ $(document).ready(function() {
 
     
     
-    editarDatoTabla(row.data(), 'formularioRECURSOSEMPLEADO', 'miModal_RECURSOSEMPLEADOS', 1);
+        editarDatoTabla(row.data(), 'formularioRECURSOSEMPLEADO', 'miModal_RECURSOSEMPLEADOS', 1);
     
 
-     if (row.data().DAR_BUENO === "1") {
-        $('#VISTO_BUENO_JEFE').show();
-         $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-         $('#BOTON_VISTO_BUENO').hide();
-         $('#guardaRECEMPLEADOS').hide();
+        
+        
+        // === Para TIPO_SOLICITUD ===
+        if (row.data().TIPO_SOLICITUD === "1") {
+            $('#PERMISO_AUSENCIA').show();
+            $('#SOLIDA_ALMACEN').hide();
+            $('#SOLICITUD_VACACIONES').hide();
+        } else if (row.data().TIPO_SOLICITUD === "2") {
+            $('#SOLIDA_ALMACEN').show();
+            $('#PERMISO_AUSENCIA').hide();
+            $('#SOLICITUD_VACACIONES').hide();
+        } else if (row.data().TIPO_SOLICITUD === "3") {
+            $('#SOLICITUD_VACACIONES').show();
+            $('#PERMISO_AUSENCIA').hide();
+            $('#SOLIDA_ALMACEN').hide();
+        }
+
+        // === Para CONCEPTO_PERMISO ===
+        if (row.data().CONCEPTO_PERMISO === "9") {
+            $('#EXPLIQUE_PERMISO').show();
+        } else {
+            $('#EXPLIQUE_PERMISO').hide();
+        }
+
+        // === Para MATERIAL_RETORNA_SALIDA ===
+        if (row.data().MATERIAL_RETORNA_SALIDA === "Sí") {
+            $('#FECHA_ESTIMADA').css("display", "inline-flex");
+        } else {
+            $('#FECHA_ESTIMADA').hide();
+        }
+
+        // === Para ocultar la firma si ya esta firmado ===
+
+        if (row.data().FIRMO_USUARIO === "1") {
+            $('#DIV_FIRMAR').hide();
+        } else  {
+              $('#DIV_FIRMAR').show();
+            } 
+        
+        
+        
+//      if (row.data().DAR_BUENO === "1") {
+//         $('#VISTO_BUENO_JEFE').show();
+//          $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+//          $('#BOTON_VISTO_BUENO').hide();
+//          $('#guardaRECEMPLEADOS').hide();
 
       
-    } else if (row.data().DAR_BUENO === "2") {
-        $('#VISTO_BUENO_JEFE').show();
-         $('#MOTIVO_RECHAZO_JEFE_DIV').show();
-         $('#guardaRECEMPLEADOS').show();
+//     } else if (row.data().DAR_BUENO === "2") {
+//         $('#VISTO_BUENO_JEFE').show();
+//          $('#MOTIVO_RECHAZO_JEFE_DIV').show();
+//          $('#guardaRECEMPLEADOS').show();
          
         
-     } else {
-         $('#VISTO_BUENO_JEFE').hide();
-        $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+//      } else {
+//          $('#VISTO_BUENO_JEFE').hide();
+//         $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
        
           
-    }
+//     }
 
 
-   if (row.data().ESTADO_APROBACION === "Aprobada") {
-         $('#motivo-rechazo-container').hide();   
-         $('#APROBACION_DIRECCION').show();
-         $('#guardaRECEMPLEADOS').hide();
+//    if (row.data().ESTADO_APROBACION === "Aprobada") {
+//          $('#motivo-rechazo-container').hide();   
+//          $('#APROBACION_DIRECCION').show();
+//          $('#guardaRECEMPLEADOS').hide();
 
-    } else if (row.data().ESTADO_APROBACION === "Rechazada") {
-        $('#APROBACION_DIRECCION').show();
-        $('#motivo-rechazo-container').show();
-         $('#guardaRECEMPLEADOS').hide();
+//     } else if (row.data().ESTADO_APROBACION === "Rechazada") {
+//         $('#APROBACION_DIRECCION').show();
+//         $('#motivo-rechazo-container').show();
+//          $('#guardaRECEMPLEADOS').hide();
                  
-     } else {
+//      } else {
        
           
-    }
+//     }
 
     
 
@@ -411,54 +451,93 @@ $(document).ready(function() {
 
 
 
-$('#Tablamr tbody').on('click', 'td>button.EDITAR', function () {
+$('#Tablarecempleados tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablamr.row(tr);
+    var row = Tablarecempleados.row(tr);
     ID_FORMULARIO_RECURSOS_EMPLEADOS = row.data().ID_FORMULARIO_RECURSOS_EMPLEADOS;
 
 
-        // cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
+    cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
 
     
     
     editarDatoTabla(row.data(), 'formularioRECURSOSEMPLEADO', 'miModal_RECURSOSEMPLEADOS', 1);
     
 
-     if (row.data().DAR_BUENO === "1") {
-        $('#VISTO_BUENO_JEFE').show();
-         $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-         $('#BOTON_VISTO_BUENO').hide();
-         $('#guardaRECEMPLEADOS').hide();
+
+                // === Para TIPO_SOLICITUD ===
+    if (row.data().TIPO_SOLICITUD === "1") {
+        $('#PERMISO_AUSENCIA').show();
+        $('#SOLIDA_ALMACEN').hide();
+        $('#SOLICITUD_VACACIONES').hide();
+    } else if (row.data().TIPO_SOLICITUD === "2") {
+        $('#SOLIDA_ALMACEN').show();
+        $('#PERMISO_AUSENCIA').hide();
+        $('#SOLICITUD_VACACIONES').hide();
+    } else if (row.data().TIPO_SOLICITUD === "3") {
+        $('#SOLICITUD_VACACIONES').show();
+        $('#PERMISO_AUSENCIA').hide();
+        $('#SOLIDA_ALMACEN').hide();
+    }
+
+    // === Para CONCEPTO_PERMISO ===
+    if (row.data().CONCEPTO_PERMISO === "9") {
+        $('#EXPLIQUE_PERMISO').show();
+    } else {
+        $('#EXPLIQUE_PERMISO').hide();
+    }
+
+    // === Para MATERIAL_RETORNA_SALIDA ===
+    if (row.data().MATERIAL_RETORNA_SALIDA === "Sí") {
+        $('#FECHA_ESTIMADA').css("display", "inline-flex");
+    } else {
+        $('#FECHA_ESTIMADA').hide();
+    }
+
+    if (row.data().FIRMO_USUARIO === "1") {
+        $('#DIV_FIRMAR').hide();
+    } else  {
+        $('#DIV_FIRMAR').show();
+    } 
+        
+    
+
+
+//      if (row.data().DAR_BUENO === "1") {
+//         $('#VISTO_BUENO_JEFE').show();
+//          $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+//          $('#BOTON_VISTO_BUENO').hide();
+//          $('#guardaRECEMPLEADOS').hide();
 
       
-    } else if (row.data().DAR_BUENO === "2") {
-        $('#VISTO_BUENO_JEFE').show();
-         $('#MOTIVO_RECHAZO_JEFE_DIV').show();
-         $('#guardaRECEMPLEADOS').show();
+//     } else if (row.data().DAR_BUENO === "2") {
+//         $('#VISTO_BUENO_JEFE').show();
+//          $('#MOTIVO_RECHAZO_JEFE_DIV').show();
+//          $('#guardaRECEMPLEADOS').show();
          
         
-     } else {
-         $('#VISTO_BUENO_JEFE').hide();
-        $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+//      } else {
+//          $('#VISTO_BUENO_JEFE').hide();
+//         $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
        
           
-    }
+//     }
 
 
-   if (row.data().ESTADO_APROBACION === "Aprobada") {
-         $('#motivo-rechazo-container').hide();   
-         $('#APROBACION_DIRECCION').show();
-         $('#guardaRECEMPLEADOS').hide();
+//    if (row.data().ESTADO_APROBACION === "Aprobada") {
+//          $('#motivo-rechazo-container').hide();   
+//          $('#APROBACION_DIRECCION').show();
+//          $('#guardaRECEMPLEADOS').hide();
 
-    } else if (row.data().ESTADO_APROBACION === "Rechazada") {
-        $('#APROBACION_DIRECCION').show();
-        $('#motivo-rechazo-container').show();
-         $('#guardaRECEMPLEADOS').hide();
+//     } else if (row.data().ESTADO_APROBACION === "Rechazada") {
+//         $('#APROBACION_DIRECCION').show();
+//         $('#motivo-rechazo-container').show();
+//          $('#guardaRECEMPLEADOS').hide();
                  
-     } else {
+//      } else {
        
           
-    }
+//     }
   
 });
 
@@ -479,19 +558,12 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             divMaterial.innerHTML = `
                 <div class="row p-3 rounded">
 
-                    <div class="col-1">
-                        <label class="form-label">Aprobado</label>
-                        <select class="form-select" name="CHECK_MATERIAL" disabled>
-                            <option value=""></option>
-                            <option value="SI" ${material.CHECK_MATERIAL === 'SI' ? 'selected' : ''}>Sí</option>
-                            <option value="NO" ${material.CHECK_MATERIAL === 'NO' ? 'selected' : ''}>No</option>
-                        </select>
-                    </div>
+                 
                     <div class="col-1">
                         <label class="form-label">N°</label>
                         <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
                     </div>
-                    <div class="col-4">
+                    <div class="col-8">
                         <label class="form-label">Descripción</label>
                         <input type="text" class="form-control" name="DESCRIPCION" value="${escapeHtml(material.DESCRIPCION)}" required>
                     </div>
@@ -499,35 +571,14 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                         <label class="form-label">Cantidad</label>
                         <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" required>
                     </div>
-                    <div class="col-2">
-                        <label class="form-label">Unidad de Medida</label>
-                        <input type="text" class="form-control" name="UNIDAD_MEDIDA" value="${material.UNIDAD_MEDIDA}" required>
-                    </div>
-                    <div class="col-2">
-                        <label class="form-label">Línea de Negocios</label>
-                        <select class="form-select" name="CATEGORIA_MATERIAL" disabled>
-                            <option value="">Seleccionar</option>
-                            <option value="STE" ${material.CATEGORIA_MATERIAL === 'STE' ? 'selected' : ''}>STE</option>
-                            <option value="SST" ${material.CATEGORIA_MATERIAL === 'SST' ? 'selected' : ''}>SST</option>
-                            <option value="SCA" ${material.CATEGORIA_MATERIAL === 'SCA' ? 'selected' : ''}>SCA</option>
-                            <option value="SMA" ${material.CATEGORIA_MATERIAL === 'SMA' ? 'selected' : ''}>SMA</option>
-                            <option value="SLH" ${material.CATEGORIA_MATERIAL === 'SLH' ? 'selected' : ''}>SLH</option>
-                            <option value="ADM" ${material.CATEGORIA_MATERIAL === 'ADM' ? 'selected' : ''}>ADM</option>
-                        </select>
-                    </div>
-                    <div class="col-1">
-                        <label class="form-label">Vo. Bo</label>
-                        <select class="form-select" name="CHECK_VO" disabled>
-                            <option value=""></option>
-                            <option value="SI" ${material.CHECK_VO === 'SI' ? 'selected' : ''}>Sí</option>
-                            <option value="NO" ${material.CHECK_VO === 'NO' ? 'selected' : ''}>No</option>
-                        </select>
-                    </div>
-                    <div class="col-12 mt-2 text-end">
-                        <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
+
+                        <div class="col-2 mt-3">
+                            <br>
+                            <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    
                 </div>
             `;
 
@@ -556,7 +607,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
 document.addEventListener("DOMContentLoaded", function () {
     const radios = document.querySelectorAll('input[name="MATERIAL_RETORNA_SALIDA"]');
     const fechaDiv = document.getElementById("FECHA_ESTIMADA");
-    const fechaInput = document.getElementById("FECHA__ESTIMADA_SALIDA");
+    const fechaInput = document.getElementById("FECHA_ESTIMADA_SALIDA");
 
     radios.forEach(radio => {
         radio.addEventListener("change", function () {
@@ -640,6 +691,42 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const btnFirmar = document.getElementById("FIRMAR_SOLICITUD");
+    const inputFirmo = document.getElementById("FIRMO_USUARIO");
+    const inputFirmadoPor = document.getElementById("FIRMADO_POR");
+    const inputFechaSalida = document.getElementById("FECHA_SALIDA");
+
+    btnFirmar.addEventListener("click", function () {
+        let usuarioNombre = btnFirmar.getAttribute("data-usuario");
+        let fechaSalida = inputFechaSalida.value; // yyyy-mm-dd
+
+        // Obtener hora actual
+        let ahora = new Date();
+        let horas = ahora.getHours();
+        let minutos = String(ahora.getMinutes()).padStart(2, "0");
+        let segundos = String(ahora.getSeconds()).padStart(2, "0");
+
+        // Determinar AM o PM
+        let ampm = horas >= 12 ? "p.m." : "a.m.";
+
+        // Convertir a formato de 12 horas
+        horas = horas % 12;
+        horas = horas ? horas : 12; // El 0 se convierte en 12
+
+        let horaCompleta = horas + ":" + minutos + ":" + segundos + " " + ampm;
+
+        // Asignar valores
+        inputFirmo.value = "1";
+        inputFirmadoPor.value =  usuarioNombre + " el " + fechaSalida + " a las " + horaCompleta;
+    });
+});
+
+
 
 
 
