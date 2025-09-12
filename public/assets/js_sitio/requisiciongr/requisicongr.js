@@ -828,7 +828,7 @@ function crearBloqueDetalle(det, resp) {
 
                           <div class="col-3 mt-2">
                               <label class="form-label">U.M</label>
-                              <input type="text" class="form-control" name="UNIDAD_MEDIDA_ALMACEN[]" value="${det.UNIDAD_MEDIDA_ALMACEN}">
+                              <input type="text" class="form-control" name="UNIDAD_MEDIDA_ALMACEN[]"  value="${det.UNIDAD_MEDIDA_ALMACEN ?? ''}">
                             </div>
 
 

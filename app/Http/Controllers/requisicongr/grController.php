@@ -1103,7 +1103,7 @@ class grController extends Controller
                         ]);
                     }
 
-                    // 👉 Marcar SOLO este GR como que ya tiene parcial
+                    // Marcar SOLO este GR como que ya tiene parcial
                     if ($request->GR_PARCIAL === "Sí") {
                         DB::table('formulario_bitacoragr')
                             ->where('ID_GR', $idGRNuevo)
@@ -1175,7 +1175,7 @@ class grController extends Controller
             DB::table('formulario_bitacoragr_detalle')->insert([
                 'ID_GR'                 => $idGRParcial,
                 'DESCRIPCION'           => $desc,
-                'CANTIDAD'              => $request->CANTIDAD[$i] ?? 0, // sigue usando la aceptada
+                'CANTIDAD'              => $request->CANTIDAD[$i] ?? 0, 
                 'PRECIO_UNITARIO'       => $request->PRECIO_UNITARIO[$i] ?? '',
                 'PRECIO_TOTAL_MR'       => $request->PRECIO_TOTAL_MR[$i] ?? '',
                 'UNIDAD'                => $request->UNIDAD[$i] ?? '',
