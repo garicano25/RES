@@ -2799,7 +2799,7 @@ function validarFormulario3(form) {
   var campos = formulario.find('.validar');
   var formularioValido = true;
 
-  campos.each(function () {
+  campos.each(function () { 
     var tipoCampo = $(this).attr('type');
     var valorCampo = $(this).val();
 

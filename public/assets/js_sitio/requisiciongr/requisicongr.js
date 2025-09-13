@@ -53,7 +53,11 @@ var Tablabitacoragr = $("#Tablabitacoragr").DataTable({
         { targets: 3, width: '250px', className: 'text-center' },
         { targets: 4, width: '600px' },
         { targets: 5, width: '250px',className: 'text-center'  },
-        { targets: 6, width: '800px', className: 'col-bien-servicio' }
+        { targets: 6, width: '800px', className: 'col-bien-servicio' },
+        { targets: 7, width: '250px', className: 'text-center' },
+        { targets: 8, width: '250px',className: 'text-center'  },
+        
+        
     ],
     columns: [
         { data: 'NO_MR' },
@@ -67,7 +71,8 @@ var Tablabitacoragr = $("#Tablabitacoragr").DataTable({
         data: null,
         className: "text-center",
         defaultContent: '<button class="btn btn-sm btn-primary btn-gr">Ver GR</button>'
-    }
+      },
+      { data: 'NO_GR' }, 
   ],
     rowCallback: function(row, data) {
         if (data.ROW_CLASS) {

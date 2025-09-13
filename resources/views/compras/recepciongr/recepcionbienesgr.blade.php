@@ -142,6 +142,8 @@
                                 <th class="text-center">Fecha de entrega.PO</th>
                                 <th class="text-center">Bien o servicio</th>
                                 <th class="text-center">GR</th>
+                                <th class="text-center">No.GR</th>
+
 
                             </tr>
                         </thead>
@@ -310,7 +312,7 @@
                     <div id="modal-body-parciales" style="display:none;"></div>
 
 
-                    
+
 
                 </div>
                 <div class="modal-footer">

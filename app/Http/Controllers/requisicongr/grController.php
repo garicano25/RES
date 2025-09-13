@@ -347,6 +347,23 @@ class grController extends Controller
 
 
                 // === Definir color de fila según estado en formulario_bitacoragr ===
+                // $registrosGR = DB::table('formulario_bitacoragr')
+                //     ->where('NO_MR', $first->NO_MR)
+                //     ->when($first->NO_PO, function ($q) use ($first) {
+                //         $q->where('NO_PO', $first->NO_PO);
+                //     }, function ($q) use ($first) {
+                //         $q->where('PROVEEDOR_KEY', $first->PROVEEDOR_KEY);
+                //     })
+                //     ->pluck('FINALIZAR_GR');
+
+                // if ($registrosGR->isEmpty()) {
+                //     $first->ROW_CLASS = ''; // blanco (sin registros GR)
+                // } elseif ($registrosGR->every(fn($v) => $v === 'Sí')) {
+                //     $first->ROW_CLASS = 'bg-verde-suave'; // todos finalizados
+                // } else {
+                //     $first->ROW_CLASS = 'bg-amarillo-suave'; // hay registros pero no todos finalizados
+                // }
+
                 $registrosGR = DB::table('formulario_bitacoragr')
                     ->where('NO_MR', $first->NO_MR)
                     ->when($first->NO_PO, function ($q) use ($first) {
@@ -354,17 +371,22 @@ class grController extends Controller
                     }, function ($q) use ($first) {
                         $q->where('PROVEEDOR_KEY', $first->PROVEEDOR_KEY);
                     })
-                    ->pluck('FINALIZAR_GR');
+                    ->get(['FINALIZAR_GR', 'NO_RECEPCION']); 
 
                 if ($registrosGR->isEmpty()) {
-                    $first->ROW_CLASS = ''; // blanco (sin registros GR)
-                } elseif ($registrosGR->every(fn($v) => $v === 'Sí')) {
-                    $first->ROW_CLASS = 'bg-verde-suave'; // todos finalizados
+                    $first->ROW_CLASS = ''; 
+                    $first->NO_GR = null;
+                } elseif ($registrosGR->every(fn($v) => $v->FINALIZAR_GR === 'Sí')) {
+                    $first->ROW_CLASS = 'bg-verde-suave'; 
+                    $first->NO_GR = $registrosGR->pluck('NO_RECEPCION')
+                        ->map(fn($v) => "• {$v}") 
+                        ->implode('<br>');
                 } else {
-                    $first->ROW_CLASS = 'bg-amarillo-suave'; // hay registros pero no todos finalizados
+                    $first->ROW_CLASS = 'bg-amarillo-suave'; 
+                    $first->NO_GR = $registrosGR->pluck('NO_RECEPCION')
+                        ->map(fn($v) => "• {$v}") 
+                        ->implode('<br>');        
                 }
-
-
 
 
 

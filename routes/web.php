@@ -481,7 +481,10 @@ Route::post('/obtenerbajasalta', [contratacionController::class, 'obtenerbajasal
 Route::get('/Tablacontratacion', [contratacionController::class, 'Tablacontratacion']);
 Route::get('/Tablacontratacion1', [contratacionController::class, 'Tablacontratacion1']);
 Route::post('/activarColaborador/{id}', [contratacionController::class, 'activarColaborador']);
+
 Route::get('/usuariocolaborador/{id}', [contratacionController::class, 'mostrarfotocolaborador']);
+
+
 Route::post('/verificarestadobloqueo', [contratacionController::class, 'verificarestadobloqueo']);
 
 Route::post('/obtenerUltimoCargo', [contratacionController::class, 'obtenerUltimoCargo']);
