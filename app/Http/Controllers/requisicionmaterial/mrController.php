@@ -353,8 +353,6 @@ class mrController extends Controller
 
     /////////////////////////////////////////////////////////// BITACORA REQUISICION //////////////////////////////////////////////////////////////
 
-  
-
 
     public function Tablabitacora()
     {
@@ -429,10 +427,6 @@ class mrController extends Controller
             ]);
         }
     }
-
-
-
-
 
     public function guardarHOJAS(Request $request)
     {
@@ -1351,17 +1345,11 @@ class mrController extends Controller
         return response()->json(['success' => true]);
     }
 
-
-
-
-
     public function mostrarcotizacionq1($id)
     {
         $archivo = HojaTrabajo::findOrFail($id)->DOCUMENTO_Q1;
         return Storage::response($archivo);
     }
-
-
 
     public function mostrarcotizacionq2($id)
     {
@@ -1369,16 +1357,11 @@ class mrController extends Controller
         return Storage::response($archivo);
     }
 
-
-
-
     public function mostrarcotizacionq3($id)
     {
         $archivo = HojaTrabajo::findOrFail($id)->DOCUMENTO_Q3;
         return Storage::response($archivo);
     }
-
-
 
     public function obtenerPorMR($no_mr)
     {
@@ -1393,75 +1376,6 @@ class mrController extends Controller
             'data' => $hojas
         ]);
     }
-
-
-
-    // public function store(Request $request)
-    // {
-    //     try {
-    //         switch (intval($request->api)) {
-    //             case 1:
-    //                 if ($request->ID_FORMULARIO_MR == 0) {
-    //                     DB::statement('ALTER TABLE formulario_requisiconmaterial AUTO_INCREMENT=1;');
-
-    //                     $year = date('y'); 
-    //                     $lastMR = mrModel::where('NO_MR', 'like', "RES-MR$year-%")
-    //                     ->orderBy('NO_MR', 'desc')
-    //                         ->first();
-
-    //                     $nextNumber = $lastMR ? intval(substr($lastMR->NO_MR, -3)) + 1 : 1;
-    //                     $noMR = sprintf("RES-MR%s-%03d", $year, $nextNumber);
-
-    //                     $mrs = mrModel::create(array_merge($request->all(), [
-    //                         'NO_MR' => $noMR
-    //                     ]));
-
-    //                     return response()->json([
-    //                         'code' => 1,
-    //                         'mr' => $mrs
-    //                     ]);
-    //                 } else {
-    //                     if (isset($request->ELIMINAR)) {
-    //                         $estado = $request->ELIMINAR == 1 ? 0 : 1;
-    //                         mrModel::where('ID_FORMULARIO_MR', $request->ID_FORMULARIO_MR)
-    //                             ->update(['ACTIVO' => $estado]);
-
-    //                         return response()->json([
-    //                             'code' => 1,
-    //                             'mr' => $estado == 0 ? 'Desactivada' : 'Activada'
-    //                         ]);
-    //                     } else {
-    //                         $mrs = mrModel::find($request->ID_FORMULARIO_MR);
-    //                         if ($mrs) {
-    //                             $mrs->update($request->all());
-    //                             return response()->json([
-    //                                 'code' => 1,
-    //                                 'mr' => 'Actualizada'
-    //                             ]);
-    //                         }
-    //                         return response()->json([
-    //                             'code' => 0,
-    //                             'msj' => 'MR no encontrada'
-    //                         ], 404);
-    //                     }
-    //                 }
-    //                 break;
-    //             default:
-    //                 return response()->json([
-    //                     'code' => 1,
-    //                     'msj' => 'Api no encontrada'
-    //                 ]);
-    //         }
-    //     } catch (Exception $e) {
-    //         Log::error("Error al guardar MR: " . $e->getMessage());
-    //         return response()->json([
-    //             'code' => 0,
-    //             'error' => 'Error al guardar la MR'
-    //         ], 500);
-    //     }
-    // }
-
-
 
     public function store(Request $request)
     {
@@ -1547,4 +1461,5 @@ class mrController extends Controller
             ], 500);
         }
     }
+
 }

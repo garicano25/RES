@@ -194,6 +194,8 @@
 
                         @endif
 
+
+                        
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
 
                         <li class="nav-item dropdown" style="margin-left: 8px;">

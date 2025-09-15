@@ -19,12 +19,10 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     $('#SOLICITUD_VACACIONES').hide();
     $('#EXPLIQUE_PERMISO').hide();
     $('#DIV_FIRMAR').show();
-    $('#VISTO_BUENO_JEFE').hide();
+    $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+
+
     
-
-
-   
-
 
     
     document.querySelector('.materialesdiv').innerHTML = '';
@@ -37,103 +35,10 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
 
 
 
-$("#NUEVO_RECUROSEMPLEADO").click(function (e) {
-    e.preventDefault();
-
-
-       
-    $('#formularioRECURSOSEMPLEADO').each(function(){
-        this.reset();
-    });
-
-    $(".materialesdiv").empty();
-
-
-    $("#miModal_RECURSOSEMPLEADOS").modal("show");
-
-
-    $.get('/obtenerAreaSolicitante', function(response) {
-    if (response.area) {
-        $("#AREA_SOLICITANTE_MR").val(response.area);
-    } else {
-        $("#AREA_SOLICITANTE_MR").val("Área no encontrada");
-        }
-        
-        });
-
-    
-     $.get('/obtenerDatosPermiso', function (response) {
-        if (response.cargo) {
-            $("#CARGO_PERMISO").val(response.cargo);
-        }
-        if (response.numero_empleado) {
-            $("#NOEMPLEADO_PERMISO").val(response.numero_empleado);
-        }
-     });
-    
-    
-
-    
-
-   
-});
 
 
 
 let contadorMateriales = 1; 
-document.addEventListener("DOMContentLoaded", function () {
-    const botonMaterial = document.getElementById('botonmaterial');
-    const contenedorMateriales = document.querySelector('.materialesdiv');
-  
-
-    botonMaterial.addEventListener('click', function () {
-        agregarMaterial();
-    });
-
-    function agregarMaterial() {
-        const divMaterial = document.createElement('div');
-        divMaterial.classList.add('row', 'material-item', 'mt-1');
-        divMaterial.innerHTML = `
-    
-            <div class="col-1 mt-2">
-                <label class="form-label">N°</label>
-                <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
-            </div>
-            <div class="col-5 mt-2">
-                <label class="form-label">Descripción</label>
-                <input type="text" class="form-control" name="DESCRIPCION" required>
-            </div>
-            <div class="col-1 mt-2">
-                <label class="form-label">Cantidad</label>
-                <input type="number" class="form-control" name="CANTIDAD" required>
-            </div>
-            <div class="col-3 mt-2">
-                <label class="form-label">¿El material y/o equipo retorna? *</label>
-                <select class="form-control retorna_material"  name="RETORNA_EQUIPO"  required>
-                    <option value="0" disabled selected>Seleccione una opción</option>
-                    <option value="1">Sí</option>
-                    <option value="2">No</option>
-                </select>
-            </div>
-           
-            <div class="col-2 mt-3">
-                 <br>
-                 <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                </button>
-            </div>
-        `;
-
-        contenedorMateriales.appendChild(divMaterial);
-        contadorMateriales++;
-
-        const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
-        botonEliminar.addEventListener('click', function () {
-            contenedorMateriales.removeChild(divMaterial);
-            actualizarNumerosOrden(); 
-        });
-    }
-});
 
 
 
@@ -185,7 +90,7 @@ $("#guardaRECEMPLEADOS").click(function (e) {
         });
 
         const requestData = {
-            api: 1,
+            api: 2,
             ID_FORMULARIO_RECURSOS_EMPLEADOS: ID_FORMULARIO_RECURSOS_EMPLEADOS,
             MATERIALES_JSON: JSON.stringify(documentos)
 
@@ -222,7 +127,7 @@ $("#guardaRECEMPLEADOS").click(function (e) {
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                      $('#miModal_RECURSOSEMPLEADOS').modal('hide')
                     document.getElementById('formularioRECURSOSEMPLEADO').reset();
-                    Tablarecempleados.ajax.reload()
+                    Tablarecempleadovobo.ajax.reload()
 
         
             })
@@ -260,7 +165,7 @@ $("#guardaRECEMPLEADOS").click(function (e) {
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                      $('#miModal_RECURSOSEMPLEADOS').modal('hide')
                     document.getElementById('formularioRECURSOSEMPLEADO').reset();
-                    Tablarecempleados.ajax.reload()
+                    Tablarecempleadovobo.ajax.reload()
 
 
                 }, 300);  
@@ -276,7 +181,7 @@ $("#guardaRECEMPLEADOS").click(function (e) {
 });
 
 
-var Tablarecempleados = $("#Tablarecempleados").DataTable({
+var Tablarecempleadovobo = $("#Tablarecempleadovobo").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
     lengthMenu: [
@@ -295,12 +200,12 @@ var Tablarecempleados = $("#Tablarecempleados").DataTable({
         data: {},
         method: 'GET',
         cache: false,
-        url: '/Tablarecempleados',
+        url: '/Tablarecempleadovobo',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablarecempleados.columns.adjust().draw();
+            Tablarecempleadovobo.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -344,11 +249,11 @@ columnDefs: [
 
 
 $(document).ready(function() {
-    $('#Tablarecempleados tbody').on('click', 'td>button.VISUALIZAR', function () {
+    $('#Tablarecempleadovobo tbody').on('click', 'td>button.VISUALIZAR', function () {
 
 
         var tr = $(this).closest('tr');
-        var row = Tablarecempleados.row(tr);
+        var row = Tablarecempleadovobo.row(tr);
     
         hacerSoloLectura(row.data(), '#miModal_RECURSOSEMPLEADOS');
 
@@ -404,18 +309,42 @@ $(document).ready(function() {
             } 
         
         
-     if (row.data().DAR_BUENO == 1) { // == en lugar de ===
-            $('#VISTO_BUENO_JEFE').show();
-            $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+        
+//      if (row.data().DAR_BUENO === "1") {
+//         $('#VISTO_BUENO_JEFE').show();
+//          $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+//          $('#BOTON_VISTO_BUENO').hide();
+//          $('#guardaRECEMPLEADOS').hide();
 
-        } else if (row.data().DAR_BUENO == 2) {
-            $('#VISTO_BUENO_JEFE').show();
-            $('#MOTIVO_RECHAZO_JEFE_DIV').show();
+      
+//     } else if (row.data().DAR_BUENO === "2") {
+//         $('#VISTO_BUENO_JEFE').show();
+//          $('#MOTIVO_RECHAZO_JEFE_DIV').show();
+//          $('#guardaRECEMPLEADOS').show();
+         
+        
+//      } else {
+//          $('#VISTO_BUENO_JEFE').hide();
+//         $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+       
+          
+//     }
 
-        } else {
-            $('#VISTO_BUENO_JEFE').hide();
-            $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-        }
+
+//    if (row.data().ESTADO_APROBACION === "Aprobada") {
+//          $('#motivo-rechazo-container').hide();   
+//          $('#APROBACION_DIRECCION').show();
+//          $('#guardaRECEMPLEADOS').hide();
+
+//     } else if (row.data().ESTADO_APROBACION === "Rechazada") {
+//         $('#APROBACION_DIRECCION').show();
+//         $('#motivo-rechazo-container').show();
+//          $('#guardaRECEMPLEADOS').hide();
+                 
+//      } else {
+       
+          
+//     }
 
     
 
@@ -430,9 +359,9 @@ $(document).ready(function() {
 
 
 
-$('#Tablarecempleados tbody').on('click', 'td>button.EDITAR', function () {
+$('#Tablarecempleadovobo tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablarecempleados.row(tr);
+    var row = Tablarecempleadovobo.row(tr);
     ID_FORMULARIO_RECURSOS_EMPLEADOS = row.data().ID_FORMULARIO_RECURSOS_EMPLEADOS;
 
 
@@ -479,20 +408,9 @@ $('#Tablarecempleados tbody').on('click', 'td>button.EDITAR', function () {
         $('#DIV_FIRMAR').show();
     } 
         
-   if (row.data().DAR_BUENO == 1) { // == en lugar de ===
-    $('#VISTO_BUENO_JEFE').show();
-    $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+    
 
-} else if (row.data().DAR_BUENO == 2) {
-    $('#VISTO_BUENO_JEFE').show();
-    $('#MOTIVO_RECHAZO_JEFE_DIV').show();
-
-} else {
-    $('#VISTO_BUENO_JEFE').hide();
-    $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-}
-
-
+  
 });
 
 
@@ -566,93 +484,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    const radios = document.querySelectorAll('input[name="MATERIAL_RETORNA_SALIDA"]');
-    const fechaDiv = document.getElementById("FECHA_ESTIMADA");
-    const fechaInput = document.getElementById("FECHA_ESTIMADA_SALIDA");
 
-    radios.forEach(radio => {
-        radio.addEventListener("change", function () {
-            if (this.value === "Sí") {
-                fechaDiv.style.display = "inline-flex"; 
-                fechaInput.setAttribute("required", "required");
-            } else {
-                fechaDiv.style.display = "none"; 
-                fechaInput.removeAttribute("required");
-                fechaInput.value = "";
-            }
-        });
-    });
-});
-
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const select = document.getElementById("TIPO_SOLICITUD");
-
-    const divs = {
-        "1": document.getElementById("PERMISO_AUSENCIA"),
-        "2": document.getElementById("SOLIDA_ALMACEN"),
-        "3": document.getElementById("SOLICITUD_VACACIONES")
-    };
-
-    select.addEventListener("change", function () {
-        Object.values(divs).forEach(div => {
-            div.style.display = "none";
-
-            div.querySelectorAll("input, select, textarea").forEach(el => {
-                if (el.id === "SOLICITANTE_SALIDA" || el.id === "SOLICITANTE_PERMISO") {
-                    return; 
-                }
-
-                if (el.type === "radio" || el.type === "checkbox") {
-                    el.checked = false;
-                } else {
-                    el.value = "";
-                }
-            });
-        });
-
-
-        if (divs[this.value]) {
-            divs[this.value].style.display = "block";
-        }
-
-        
-
-        if (this.value === "1") {
-            $.get('/obtenerDatosPermiso', function (response) {
-                if (response.cargo) {
-                    $("#CARGO_PERMISO").val(response.cargo);
-                }
-                if (response.numero_empleado) {
-                    $("#NOEMPLEADO_PERMISO").val(response.numero_empleado);
-                }
-            });
-        }
-    });
-});
-
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const selectConcepto = document.getElementById("CONCEPTO_PERMISO");
-    const divExplique = document.getElementById("EXPLIQUE_PERMISO");
-
-    selectConcepto.addEventListener("change", function () {
-        if (this.value === "9") {
-            divExplique.style.display = "block";
-            divExplique.querySelector("textarea").setAttribute("required", "required");
-        } else {
-            divExplique.style.display = "none";
-            const textarea = divExplique.querySelector("textarea");
-            textarea.value = "";
-            textarea.removeAttribute("required");
-        }
-    });
-});
 
 
 
@@ -691,43 +523,60 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
-    const concepto = document.getElementById("CONCEPTO_PERMISO");
-    const inputDias = document.getElementById("NODIAS_PERMISO");
-    const inputHoras = document.getElementById("NOHORAS_PERMISO");
+    const selectConcepto = document.getElementById("DAR_BUENO");
+    const divExplique = document.getElementById("MOTIVO_RECHAZO_JEFE_DIV");
 
-    concepto.addEventListener("change", function () {
-        if (this.value === "6") { 
-            inputDias.value = 84;
-            inputHoras.value = "";
-            inputHoras.disabled = true;
-        } else if (this.value === "7") { 
-            inputDias.value = 5;
-            inputHoras.value = "";
-            inputHoras.disabled = true;
+    selectConcepto.addEventListener("change", function () {
+        if (this.value === "2") {
+            divExplique.style.display = "block";
+            divExplique.querySelector("textarea").setAttribute("required", "required");
         } else {
-            inputDias.value = "";
-            inputHoras.value = "";
-            inputHoras.disabled = false;
-        }
-    });
-
-    inputDias.addEventListener("input", function () {
-        if (this.value && parseInt(this.value) > 0) {
-            inputHoras.value = "";
-            inputHoras.disabled = true;
-        } else {
-            inputHoras.disabled = false;
-        }
-    });
-
-    // Bloquear días si se escribe horas
-    inputHoras.addEventListener("input", function () {
-        if (this.value && parseInt(this.value) > 0) {
-            inputDias.value = "";
-            inputDias.disabled = true;
-        } else {
-            inputDias.disabled = false;
+            divExplique.style.display = "none";
+            const textarea = divExplique.querySelector("textarea");
+            textarea.value = "";
+            textarea.removeAttribute("required");
         }
     });
 });
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const btnFirmar = document.getElementById("FIRMAR_SOLICITUD_JEFE");
+    const inputFirmo = document.getElementById("FIRMO_JEFE");
+    const inputFirmadoPor = document.getElementById("VISTO_BUENO");
+    const inputFechaSalida = document.getElementById("FECHA_VISTO_SOLICITUD");
+
+    btnFirmar.addEventListener("click", function () {
+        let usuarioNombre = btnFirmar.getAttribute("data-usuario");
+        let fechaSalida = inputFechaSalida.value; // yyyy-mm-dd
+
+        // Obtener hora actual
+        let ahora = new Date();
+        let horas = ahora.getHours();
+        let minutos = String(ahora.getMinutes()).padStart(2, "0");
+        let segundos = String(ahora.getSeconds()).padStart(2, "0");
+
+        // Determinar AM o PM
+        let ampm = horas >= 12 ? "p.m." : "a.m.";
+
+        // Convertir a formato de 12 horas
+        horas = horas % 12;
+        horas = horas ? horas : 12; // El 0 se convierte en 12
+
+        let horaCompleta = horas + ":" + minutos + ":" + segundos + " " + ampm;
+
+        // Asignar valores
+        inputFirmo.value = "1";
+        inputFirmadoPor.value = "Por" +" " + usuarioNombre + " el " + fechaSalida + " a las " + horaCompleta;
+    });
+});
+
+

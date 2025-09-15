@@ -5,17 +5,13 @@
 
 
 <div class="contenedor-contenido">
-    <ol class="breadcrumb mb-5">
-        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-briefcase-fill"></i>&nbsp;Rec.Empleados</h3>
+    <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
+        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-briefcase-fill"></i>&nbsp;Solicitudes para Vo.Bo</h3>
 
-
-        <button type="button" class="btn btn-light waves-effect waves-light " id="NUEVO_RECUROSEMPLEADO" style="margin-left: auto;">
-            Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
-        </button>
     </ol>
 
     <div class="card-body">
-        <table id="Tablarecempleados" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+        <table id="Tablarecempleadovobo" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
 
         </table>
     </div>
@@ -71,14 +67,14 @@
                         <div id="SOLICITUD_MR">
 
                             <div class="mt-3">
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-6 mb-3">
                                         <label>Agregar material</label>
                                         <button id="botonmaterial" id="botonmaterial" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
                                             <i class="bi bi-plus-circle-fill"></i>
                                         </button>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="materialesdiv mt-4"></div>
                             </div>
                         </div>
@@ -115,12 +111,12 @@
                             <div class="row">
                                 <div class="col-9">
                                     <label class="form-label">Cargo </label>
-                                    <input type="text" class="form-control" id="CARGO_PERMISO" name="CARGO_PERMISO" readonly>
+                                    <input type="text" class="form-control" id="CARGO_PERMISO" name="CARGO_PERMISO">
                                 </div>
 
                                 <div class="col-3">
                                     <label class="form-label">No. de empleado: </label>
-                                    <input type="text" class="form-control" id="NOEMPLEADO_PERMISO" name="NOEMPLEADO_PERMISO" readonly>
+                                    <input type="text" class="form-control" id="NOEMPLEADO_PERMISO" name="NOEMPLEADO_PERMISO">
                                 </div>
                             </div>
                         </div>
@@ -208,7 +204,7 @@
 
 
                     <div class="mt-3">
-                        <label>Observaciones *</label>
+                        <label class="form-label">Observaciones *</label>
                         <textarea class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" rows="3" required></textarea>
                     </div>
 
@@ -238,23 +234,18 @@
 
 
 
-                
 
 
 
-
-
-                    <div id="VISTO_BUENO_JEFE" style="display: none;">
+                    <div id="VISTO_BUENO_JEFE" style="display: block;">
 
                         <div class="col-12 mt-3 text-center">
                             <label class="form-label">Vo.Bo Jefe Inmediato</label>
-                            <div id="estado-container" class="p-2 rounded">
-                                <select class="form-control" id="DAR_BUENO" name="DAR_BUENO" required>
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="1">Aprobada</option>
-                                    <option value="2">Rechazada</option>
-                                </select>
-                            </div>
+                            <select class="form-control" id="DAR_BUENO" name="DAR_BUENO" required>
+                                <option value="0" selected disabled>Seleccione una opción</option>
+                                <option value="1">Aprobada</option>
+                                <option value="2">Rechazada</option>
+                            </select>
                         </div>
 
 
@@ -267,7 +258,7 @@
                                 </div>
 
                                 <div class="col-4">
-                                    <label class="form-label">Fecha *</label>
+                                    <label class="form-label">Fecha Vo.Bo*</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VISTO_SOLICITUD" name="FECHA_VISTO_SOLICITUD" required>
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
@@ -288,42 +279,25 @@
 
 
 
-                    <div id="APROBACION_DIRECCION" style="display: none;">
-                        <div class="col-12 mt-3">
-                            <label for="ESTADO_APROBACION">Estado de Aprobación</label>
-                            <div id="estado-container" class="p-2 rounded">
-                                <select class="form-control" id="ESTADO_APROBACION" name="ESTADO_APROBACION">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="Aprobada">Aprobada</option>
-                                    <option value="Rechazada">Rechazada</option>
-                                </select>
-                            </div>
-                        </div>
-
-
-                        <div class="col-12 mt-3" id="motivo-rechazo-container" style="display: none;">
-                            <label>Motivo del rechazo del que aprobo</label>
-                            <textarea class="form-control" id="MOTIVO_RECHAZO" name="MOTIVO_RECHAZO" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
-                        </div>
-
-
-                        <div class="col-12 mt-3">
-                            <div class="row">
-
-                                <div class="col-8">
-                                    <label for="APROBACION">Quien aprueba</label>
-                                    <input type="text" class="form-control" id="QUIEN_APROBACION" name="QUIEN_APROBACION">
-                                </div>
-                                <div class="col-4">
-                                    <label>Fecha *</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_APRUEBA_MR" name="FECHA_APRUEBA_MR">
-                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                    </div>
-                                </div>
+                    <!-- Botón de firma -->
+                    <div class="col-12 mt-3" id="DIV_FIRMAR" style="display:block; margin-top:10px;">
+                        <div class="row justify-content-center">
+                            <div class="col-6 text-center">
+                                <button type="button"
+                                    id="FIRMAR_SOLICITUD_JEFE"
+                                    class="btn btn-info"
+                                    data-usuario="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
+                                    <i class="bi bi-pen-fill"></i> Firmar solicitud
+                                </button>
                             </div>
                         </div>
                     </div>
+
+
+
+                    <input type="hidden" id="FIRMO_JEFE" name="FIRMO_JEFE" value="">
+
+
 
 
 
@@ -340,6 +314,13 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
 
 
 @endsection

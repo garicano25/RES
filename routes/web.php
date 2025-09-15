@@ -568,6 +568,11 @@ Route::get('/Tablarecempleados', [recempleadoController::class, 'Tablarecemplead
 Route::post('/RecempleadoSave', [recempleadoController::class, 'store']);
 
 
+
+Route::get('/Solicitudes_VoBo', function () { return view('RH.RecEmpleados.recempleadovobo');});
+Route::get('/Tablarecempleadovobo', [recempleadoController::class, 'Tablarecempleadovobo']);
+
+
 //==============================================  CAPACITACION  ============================================== 
 
 

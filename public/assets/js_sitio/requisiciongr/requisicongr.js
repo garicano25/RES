@@ -159,6 +159,7 @@ $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
 
 
 if (resp.existe) {
+
     // ==========================
     // VARIAS GR (Parciales)
     // ==========================

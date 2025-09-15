@@ -34,8 +34,14 @@ class recemplaedosModel extends Model
         'DAR_BUENO',
         'CURP',
         'FIRMO_USUARIO',
-        'FIRMADO_POR'
+        'FIRMADO_POR',
 
+        
+        'VISTO_BUENO',
+        'FECHA_VISTO_SOLICITUD',
+        'MOTIVO_RECHAZO_JEFE',
+        'FIRMO_JEFE',
+        'JEFE_ID'
 
     ];
 }

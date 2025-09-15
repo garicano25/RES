@@ -224,6 +224,47 @@
                         </a>
                     </li>
 
+
+
+                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones','Administrador']))
+
+                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <a class="nav-link dropdown-toggle BOTON" href="#"
+                            style="color: #fff; font-weight: bold; text-decoration: none;"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                            <span class="d-lg-none">Solicitudes para Vo.Bo y aprobación</span>
+                            <span class="d-none d-lg-inline">Solicitudes para Vo.Bo y aprobación</span>
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            {{-- Para líderes --}}
+                            @if(auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones']))
+                            <li>
+                                <a class="dropdown-item" href="{{ url('/Solicitudes_VoBo') }}">
+                                    Solicitudes por dar visto bueno
+                                </a>
+                            </li>
+                            @endif
+
+                            <hr class="dropdown-divider">
+
+                            {{-- Para administradores --}}
+                            @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
+                            <li>
+                                <a class="dropdown-item" href="{{ url('/Requisición_materiales_aprobación') }}">
+                                    Solicitudes por aprobar
+                                </a>
+                            </li>
+                            @endif
+                        </ul>
+                    </li>
+
+                    @endif
+
+
+
+
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
 
                     <li class="nav-item dropdown" style="margin-left: 8px;">
@@ -338,7 +379,7 @@
             left: 28%;
         }
     </style>
-    
+
     <div id="modal-overlay">
         <img src="/assets/images/Colorancho.png" class="ld ld-bounce" alt="Cargando" style="max-width: 100%; max-height: 214px;" id="loading-image">
     </div>
@@ -530,8 +571,17 @@
 
 
     @if(request()->is('Rec.Empleado'))
-    <script src="/assets/js_sitio/RecEmpleados/recursosempleado.js?v=1.1"></script>
+    <script src="/assets/js_sitio/RecEmpleados/recursosempleado.js?v=1.2"></script>
     @endif
+
+
+
+    @if(request()->is('Solicitudes_VoBo'))
+    <script src="/assets/js_sitio/RecEmpleados/recempleadovobo.js?v=1.0"></script>
+    @endif
+
+
+
 
 </body>
 
