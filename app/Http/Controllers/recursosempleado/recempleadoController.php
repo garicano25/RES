@@ -225,6 +225,7 @@ class recempleadoController extends Controller
     }
 
 
+    //////////////////////////// SOLICITUDES PARA aprobación  ////////////////////////////
 
     public function store(Request $request)
     {

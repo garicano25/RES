@@ -122,7 +122,7 @@
                         </ul>
                         @else
                         <script>
-                            window.location.href = "{{ route('login') }}"; // Redirige al login si no está autenticado
+                            window.location.href = "{{ route('login') }}"; 
                         </script>
                         @endauth
                     </li>

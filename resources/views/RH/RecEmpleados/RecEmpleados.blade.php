@@ -236,14 +236,6 @@
                         <input type="text" id="FIRMADO_POR" name="FIRMADO_POR" class="form-control" readonly required>
                     </div>
 
-
-
-                
-
-
-
-
-
                     <div id="VISTO_BUENO_JEFE" style="display: none;">
 
                         <div class="col-12 mt-3 text-center">

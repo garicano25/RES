@@ -354,18 +354,12 @@ $(document).ready(function() {
 
         ID_FORMULARIO_RECURSOS_EMPLEADOS = row.data().ID_FORMULARIO_RECURSOS_EMPLEADOS;
         
-
-
-        
         cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
 
-    
-    
+
         editarDatoTabla(row.data(), 'formularioRECURSOSEMPLEADO', 'miModal_RECURSOSEMPLEADOS', 1);
     
 
-        
-        
         // === Para TIPO_SOLICITUD ===
         if (row.data().TIPO_SOLICITUD === "1") {
             $('#PERMISO_AUSENCIA').show();

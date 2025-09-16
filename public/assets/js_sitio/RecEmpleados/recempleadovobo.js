@@ -227,7 +227,6 @@ var Tablarecempleadovobo = $("#Tablarecempleadovobo").DataTable({
     { data: 'ESTADO_REVISION' }, 
     { data: 'ESTATUS' },          
     { data: 'BTN_EDITAR' },
-    { data: 'BTN_VISUALIZAR' },
 
 ],
 
@@ -239,8 +238,6 @@ columnDefs: [
     { targets: 4, title: 'Vo. Bo ', className: 'all text-center' },
     { targets: 5, title: 'Estatus', className: 'all text-center' }, 
     { targets: 6, title: 'Editar', className: 'all text-center' },
-    { targets: 7, title: 'Visualizar', className: 'all text-center' },
-
 ]
 
 });
