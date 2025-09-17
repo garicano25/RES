@@ -64,31 +64,13 @@
 
                     <div id="SOLIDA_ALMACEN" style="display: none;">
 
-                        <div id="SOLICITUD_MR">
 
                             <div class="mt-3">
-                                <!-- <div class="row">
-                                    <div class="col-6 mb-3">
-                                        <label>Agregar material</label>
-                                        <button id="botonmaterial" id="botonmaterial" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
-                                            <i class="bi bi-plus-circle-fill"></i>
-                                        </button>
-                                    </div>
-                                </div> -->
                                 <div class="materialesdiv mt-4"></div>
                             </div>
-                        </div>
 
                         <div class="col-12 mt-3 d-flex align-items-center">
-                            <!-- <label class="col-form-label me-3">¿El material y/o equipo retorna? *</label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="MATERIAL_RETORNA_SALIDA" id="radio_si" value="Sí" required>
-                                <label class="form-check-label" for="radio_si">Sí</label>
-                            </div>
-                            <div class="form-check form-check-inline me-3">
-                                <input class="form-check-input" type="radio" name="MATERIAL_RETORNA_SALIDA" id="radio_no" value="No" required>
-                                <label class="form-check-label" for="radio_no">No</label>
-                            </div> -->
+                          
 
                             <div class="col-6" id="FECHA_ESTIMADA" style="display: none;">
                                 <label class="col-form-label me-2">Fecha estimada de retorno *</label>

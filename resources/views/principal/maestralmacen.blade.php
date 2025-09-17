@@ -178,7 +178,11 @@
                         @endif
 
 
-
+                        <li class="nav-item dropdown" style="margin-left: -2px;">
+                            <a class="nav-link BOTON" href="{{ url('/Salida_almacen') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                                <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Salida de almacén</span><span class="d-none d-lg-inline">Salida de almacén</span>
+                            </a>
+                        </li>
 
 
 
@@ -310,6 +314,11 @@
     <script src="/assets/js_sitio/inventario/catalogos/catalogotipos.js"></script>
     @endif
 
+
+
+    @if(request()->is('Salida_almacen'))
+    <script src="/assets/js_sitio/salidalmacen/salidalmacen.js"></script>
+    @endif
 </body>
 
 </body>

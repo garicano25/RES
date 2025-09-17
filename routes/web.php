@@ -159,6 +159,8 @@ use App\Http\Controllers\paginaweb\mensajespaginaController;
 
 use App\Http\Controllers\inventario\inventarioController;
 use App\Http\Controllers\inventario\catalogotipoinventarioController;
+use App\Http\Controllers\inventario\salidalmacenController;
+
 
 
 
@@ -560,18 +562,11 @@ Route::get('/mostrarrequisicon/{id}', [contratacionController::class, 'mostrarre
 //============================================== RECURSOS DE LOS EMPLEADOS ============================================== 
 
 Route::get('/Rec.Empleado', function () {return view('RH.RecEmpleados.RecEmpleados');});
-
-
 Route::get('/obtenerDatosPermiso', [recempleadoController::class, 'obtenerDatosPermiso']);
-
 Route::get('/Tablarecempleados', [recempleadoController::class, 'Tablarecempleados']);
 Route::post('/RecempleadoSave', [recempleadoController::class, 'store']);
-
-
-
 Route::get('/Solicitudes_VoBo', function () { return view('RH.RecEmpleados.recempleadovobo');});
 Route::get('/Tablarecempleadovobo', [recempleadoController::class, 'Tablarecempleadovobo']);
-
 Route::get('/Solicitudes_aprobaciones', function () {return view('RH.RecEmpleados.recempleadoaprobacion');});
 Route::get('/Tablarecempleadoaprobacion', [recempleadoController::class, 'Tablarecempleadoaprobacion']);
 
@@ -595,8 +590,6 @@ Route::get('/mostrardocumenadeudo/{id}', [desvinculacionController::class, 'most
 
 
 
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////VENTAS///////////////////////////////////////////////////////7
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -615,19 +608,20 @@ Route::get('/mostraractaclienteventas/{id}', [clientesController::class, 'mostra
 
 
 //==============================================  SOLICITUDES  ============================================== 
- Route::get('/Solicitudes', [solicitudesController::class, 'index']);
+
+
+Route::get('/Solicitudes', [solicitudesController::class, 'index']);
 Route::post('/solicitudSave', [solicitudesController::class, 'store']);
 Route::get('/Tablasolicitudes', [solicitudesController::class, 'Tablasolicitudes']);
 Route::get('/solicitudDelete', [solicitudesController::class, 'store']);
 Route::post('/actualizarEstatusSolicitud', [solicitudesController::class, 'actualizarEstatusSolicitud']);
 Route::get('/mostrarverificacioncliente/{id}', [solicitudesController::class, 'mostrarverificacioncliente']);
 Route::post('/actualizarSolicitud', [solicitudesController::class, 'actualizarSolicitud']);
-
-
 Route::get('/buscarCliente', [solicitudesController::class, 'buscarCliente']);
 
 
 //==============================================  OFERTAS/COTIZACION  ============================================== 
+
 Route::get('/Ofertas', [ofertasController::class, 'index']);
 Route::post('/ofertaSave', [ofertasController::class, 'store']);
 Route::get('/Tablaofertas', [ofertasController::class, 'Tablaofertas']);
@@ -638,6 +632,7 @@ Route::get('/mostrarterminos/{id}', [ofertasController::class, 'mostrarterminos'
 
 
 //==============================================   CONFIRMACION DEL SERVICIO  ============================================== 
+
 Route::get('/Confirmación', [confirmacionController::class, 'index']);
 Route::get('/Tablaconfirmacion', [confirmacionController::class, 'Tablaconfirmacion']);
 Route::post('/ContratacionSave', [confirmacionController::class, 'store']);
@@ -646,6 +641,7 @@ Route::get('/confirmacionDelete', [confirmacionController::class, 'store']);
 Route::get('/mostrarevidencias/{id}', [confirmacionController::class, 'mostrarevidencias']);
 
 //==============================================   ORDEN DE TRABAJO  ============================================== 
+
 Route::get('/Orden_trabajo', [otController::class, 'index']);
 Route::get('/Tablaordentrabajo', [otController::class, 'Tablaordentrabajo']);
 Route::post('/otSave', [otController::class, 'store']);
@@ -817,13 +813,8 @@ Route::post('/consultar-gr', [grController::class, 'consultarGR'])->name('consul
 
 
 Route::get('/Vo.Bo_GRusuario', [vobogrusuarioController::class, 'index']);
-
 Route::get('/TablaVoBoGRusuarios', [vobogrusuarioController::class, 'TablaVoBoGRusuarios']);
-
-
 Route::get('/ConsultarProductosVoBo/{idGR}', [vobogrusuarioController::class, 'ConsultarProductosVoBo']);
-
-
 Route::post('/guardarVoBoUsuario', [vobogrusuarioController::class, 'guardarVoBoUsuario']);
 
 //==============================================   CATALOGOS PROVEEDORES  ============================================== 
@@ -945,8 +936,6 @@ Route::get('/equipofoto/{id}', [inventarioController::class, 'mostrarFotoEquipo'
 /// Entrada inventario
 
 Route::get('/Tablaentradainventario', [inventarioController::class, 'Tablaentradainventario']);
-
-
 Route::post('/inventario/respaldar', [inventarioController::class, 'respaldarInventario'])->name('inventario.respaldar');
 
 //==============================================   CATALOGOS INVENTRARIO  ============================================== 
@@ -956,6 +945,13 @@ Route::post('/TipoinventarioSave', [catalogotipoinventarioController::class, 'st
 Route::get('/Tablatipoinventario', [catalogotipoinventarioController::class, 'Tablatipoinventario']);
 Route::get('/TipoinventarioDelete', [catalogotipoinventarioController::class, 'store']);
 
+
+//==============================================    SALIDA DE ALMACEN   ============================================== 
+Route::get('/Salida_almacen', [salidalmacenController::class, 'index']);
+
+Route::get('/Tablasalidalmacen', [salidalmacenController::class, 'Tablasalidalmacen']);
+
+Route::post('/SalidalmacenSave', [salidalmacenController::class, 'store']);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////PAGINA WEB///////////////////////////////////////////////////
