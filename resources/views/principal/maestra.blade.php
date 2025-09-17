@@ -122,7 +122,7 @@
                         </ul>
                         @else
                         <script>
-                            window.location.href = "{{ route('login') }}"; 
+                            window.location.href = "{{ route('login') }}";
                         </script>
                         @endauth
                     </li>
@@ -252,7 +252,7 @@
                             {{-- Para administradores --}}
                             @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
                             <li>
-                                <a class="dropdown-item" href="{{ url('/Requisición_materiales_aprobación') }}">
+                                <a class="dropdown-item" href="{{ url('/Solicitudes_aprobaciones') }}">
                                     Solicitudes por aprobar
                                 </a>
                             </li>
@@ -577,7 +577,11 @@
 
 
     @if(request()->is('Solicitudes_VoBo'))
-    <script src="/assets/js_sitio/RecEmpleados/recempleadovobo.js?v=1.0"></script>
+    <script src="/assets/js_sitio/RecEmpleados/recempleadovobo.js?v=1.1"></script>
+    @endif
+
+    @if(request()->is('Solicitudes_aprobaciones'))
+    <script src="/assets/js_sitio/RecEmpleados/recempleadoaprobacion.js?v=1.0"></script>
     @endif
 
 

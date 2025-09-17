@@ -41,7 +41,13 @@ class recemplaedosModel extends Model
         'FECHA_VISTO_SOLICITUD',
         'MOTIVO_RECHAZO_JEFE',
         'FIRMO_JEFE',
-        'JEFE_ID'
+        'JEFE_ID',
+
+        'FIRMO_APROBACION',
+        'ESTADO_APROBACION',
+        'MOTIVO_RECHAZO',
+        'QUIEN_APROBACION',
+        'FECHA_APRUEBA_SOLICITUD'
 
     ];
 }

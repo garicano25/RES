@@ -6,12 +6,12 @@
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
-        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-briefcase-fill"></i>&nbsp;Solicitudes para Vo.Bo</h3>
+        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-briefcase-fill"></i>&nbsp;Solicitudes aprobaciones</h3>
 
     </ol>
 
     <div class="card-body">
-        <table id="Tablarecempleadovobo" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+        <table id="Tablarecempleadoaprobacion" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
 
         </table>
     </div>
@@ -277,6 +277,42 @@
 
 
 
+                    <div id="APROBACION_DIRECCION" style="display: block;">
+                        <div class="col-12 mt-3">
+                            <label for="ESTADO_APROBACION">Estado de Aprobación</label>
+                            <div id="estado-container" class="p-2 rounded">
+                                <select class="form-control" id="ESTADO_APROBACION" name="ESTADO_APROBACION">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="Aprobada">Aprobada</option>
+                                    <option value="Rechazada">Rechazada</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 mt-3" id="motivo-rechazo-container" style="display: none;">
+                            <label>Motivo del rechazo del que aprobo</label>
+                            <textarea class="form-control" id="MOTIVO_RECHAZO" name="MOTIVO_RECHAZO" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
+                        </div>
+
+
+                        <div class="col-12 mt-3">
+                            <div class="row">
+
+                                <div class="col-8">
+                                    <label for="APROBACION">Quien aprueba</label>
+                                    <input type="text" class="form-control" id="QUIEN_APROBACION" name="QUIEN_APROBACION" readonly>
+                                </div>
+                                <div class="col-4">
+                                    <label>Fecha *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_APRUEBA_SOLICITUD" name="FECHA_APRUEBA_SOLICITUD">
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
                     <!-- Botón de firma -->
@@ -284,10 +320,10 @@
                         <div class="row justify-content-center">
                             <div class="col-6 text-center">
                                 <button type="button"
-                                    id="FIRMAR_SOLICITUD_JEFE"
+                                    id="FIRMAR_SOLICITUD_APROBACION"
                                     class="btn btn-info"
                                     data-usuario="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
-                                    <i class="bi bi-pen-fill"></i> Firmar Vo.Bo
+                                    <i class="bi bi-pen-fill"></i> Firmar aprobación
                                 </button>
                             </div>
                         </div>
@@ -295,7 +331,7 @@
 
 
 
-                    <input type="hidden" id="FIRMO_JEFE" name="FIRMO_JEFE" value="">
+                    <input type="hidden" id="FIRMO_APROBACION" name="FIRMO_APROBACION" value="">
 
 
 

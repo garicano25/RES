@@ -21,7 +21,6 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     $('#DIV_FIRMAR').show();
     $('#VISTO_BUENO_JEFE').hide();
     
-    $('#APROBACION_DIRECCION').hide();
 
 
    
@@ -82,59 +81,6 @@ $("#NUEVO_RECUROSEMPLEADO").click(function (e) {
 
 
 let contadorMateriales = 1; 
-document.addEventListener("DOMContentLoaded", function () {
-    const botonMaterial = document.getElementById('botonmaterial');
-    const contenedorMateriales = document.querySelector('.materialesdiv');
-  
-
-    botonMaterial.addEventListener('click', function () {
-        agregarMaterial();
-    });
-
-    function agregarMaterial() {
-        const divMaterial = document.createElement('div');
-        divMaterial.classList.add('row', 'material-item', 'mt-1');
-        divMaterial.innerHTML = `
-    
-            <div class="col-1 mt-2">
-                <label class="form-label">N°</label>
-                <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
-            </div>
-            <div class="col-5 mt-2">
-                <label class="form-label">Descripción</label>
-                <input type="text" class="form-control" name="DESCRIPCION" required>
-            </div>
-            <div class="col-1 mt-2">
-                <label class="form-label">Cantidad</label>
-                <input type="number" class="form-control" name="CANTIDAD" required>
-            </div>
-            <div class="col-3 mt-2">
-                <label class="form-label">¿El material y/o equipo retorna? *</label>
-                <select class="form-control retorna_material"  name="RETORNA_EQUIPO"  required>
-                    <option value="0" disabled selected>Seleccione una opción</option>
-                    <option value="1">Sí</option>
-                    <option value="2">No</option>
-                </select>
-            </div>
-           
-            <div class="col-2 mt-3">
-                 <br>
-                 <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
-                    <i class="bi bi-trash"></i>
-                </button>
-            </div>
-        `;
-
-        contenedorMateriales.appendChild(divMaterial);
-        contadorMateriales++;
-
-        const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
-        botonEliminar.addEventListener('click', function () {
-            contenedorMateriales.removeChild(divMaterial);
-            actualizarNumerosOrden(); 
-        });
-    }
-});
 
 
 
@@ -186,7 +132,7 @@ $("#guardaRECEMPLEADOS").click(function (e) {
         });
 
         const requestData = {
-            api: 1,
+            api: 3,
             ID_FORMULARIO_RECURSOS_EMPLEADOS: ID_FORMULARIO_RECURSOS_EMPLEADOS,
             MATERIALES_JSON: JSON.stringify(documentos)
 
@@ -223,7 +169,7 @@ $("#guardaRECEMPLEADOS").click(function (e) {
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                      $('#miModal_RECURSOSEMPLEADOS').modal('hide')
                     document.getElementById('formularioRECURSOSEMPLEADO').reset();
-                    Tablarecempleados.ajax.reload()
+                    Tablarecempleadoaprobacion.ajax.reload()
 
         
             })
@@ -261,7 +207,7 @@ $("#guardaRECEMPLEADOS").click(function (e) {
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                      $('#miModal_RECURSOSEMPLEADOS').modal('hide')
                     document.getElementById('formularioRECURSOSEMPLEADO').reset();
-                    Tablarecempleados.ajax.reload()
+                    Tablarecempleadoaprobacion.ajax.reload()
 
 
                 }, 300);  
@@ -277,7 +223,7 @@ $("#guardaRECEMPLEADOS").click(function (e) {
 });
 
 
-var Tablarecempleados = $("#Tablarecempleados").DataTable({
+var Tablarecempleadoaprobacion = $("#Tablarecempleadoaprobacion").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
     lengthMenu: [
@@ -296,12 +242,12 @@ var Tablarecempleados = $("#Tablarecempleados").DataTable({
         data: {},
         method: 'GET',
         cache: false,
-        url: '/Tablarecempleados',
+        url: '/Tablarecempleadoaprobacion',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablarecempleados.columns.adjust().draw();
+            Tablarecempleadoaprobacion.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -345,11 +291,11 @@ columnDefs: [
 
 
 $(document).ready(function() {
-    $('#Tablarecempleados tbody').on('click', 'td>button.VISUALIZAR', function () {
+    $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.VISUALIZAR', function () {
 
 
         var tr = $(this).closest('tr');
-        var row = Tablarecempleados.row(tr);
+        var row = Tablarecempleadoaprobacion.row(tr);
     
         hacerSoloLectura(row.data(), '#miModal_RECURSOSEMPLEADOS');
 
@@ -414,23 +360,6 @@ $(document).ready(function() {
 
     
 
-      if (row.data().ESTADO_APROBACION === "Aprobada") {
-         $('#motivo-rechazo-container').hide();   
-         $('#APROBACION_DIRECCION').show();
-      
-
-    } else if (row.data().ESTADO_APROBACION === "Rechazada") {
-        $('#APROBACION_DIRECCION').show();
-        $('#motivo-rechazo-container').show();
-                 
-      } else {
-          
-         $('#motivo-rechazo-container').hide();   
-         $('#APROBACION_DIRECCION').hide();
-      
-          
-    }
-
 
     });
 
@@ -442,9 +371,9 @@ $(document).ready(function() {
 
 
 
-$('#Tablarecempleados tbody').on('click', 'td>button.EDITAR', function () {
+$('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablarecempleados.row(tr);
+    var row = Tablarecempleadoaprobacion.row(tr);
     ID_FORMULARIO_RECURSOS_EMPLEADOS = row.data().ID_FORMULARIO_RECURSOS_EMPLEADOS;
 
 
@@ -503,23 +432,6 @@ $('#Tablarecempleados tbody').on('click', 'td>button.EDITAR', function () {
     $('#VISTO_BUENO_JEFE').hide();
     $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
 }
-
-
-    
-      if (row.data().ESTADO_APROBACION === "Aprobada") {
-         $('#motivo-rechazo-container').hide();   
-         $('#APROBACION_DIRECCION').show();
-      
-
-    } else if (row.data().ESTADO_APROBACION === "Rechazada") {
-        $('#APROBACION_DIRECCION').show();
-        $('#motivo-rechazo-container').show();
-                 
-     } else {
-       
-           $('#motivo-rechazo-container').hide();   
-         $('#APROBACION_DIRECCION').hide();
-    }
 
 
 });
@@ -687,10 +599,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    const btnFirmar = document.getElementById("FIRMAR_SOLICITUD");
-    const inputFirmo = document.getElementById("FIRMO_USUARIO");
-    const inputFirmadoPor = document.getElementById("FIRMADO_POR");
-    const inputFechaSalida = document.getElementById("FECHA_SALIDA");
+    const btnFirmar = document.getElementById("FIRMAR_SOLICITUD_APROBACION");
+    const inputFirmo = document.getElementById("FIRMO_APROBACION");
+    const inputFirmadoPor = document.getElementById("QUIEN_APROBACION");
+    const inputFechaSalida = document.getElementById("FECHA_APRUEBA_SOLICITUD");
 
     btnFirmar.addEventListener("click", function () {
         let usuarioNombre = btnFirmar.getAttribute("data-usuario");
@@ -759,4 +671,22 @@ document.addEventListener("DOMContentLoaded", function () {
             inputDias.disabled = false;
         }
     });
+});
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const selectEstado = document.getElementById("ESTADO_APROBACION");
+    const motivoDiv = document.getElementById("motivo-rechazo-container");
+
+    if (selectEstado) {
+        selectEstado.addEventListener("change", function () {
+            if (this.value === "Rechazada") {
+                motivoDiv.style.display = "block";
+            } else {
+                motivoDiv.style.display = "none";
+            }
+        });
+    }
 });

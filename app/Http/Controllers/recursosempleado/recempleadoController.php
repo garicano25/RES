@@ -60,11 +60,53 @@ class recempleadoController extends Controller
 
             $tabla = recemplaedosModel::where('USUARIO_ID', $userid)->get();
 
+            // foreach ($tabla as $value) {
+
+
+
+
+            //     if ($value->TIPO_SOLICITUD == 1) {
+            //         $value->TIPO_SOLICITUD_TEXTO = 'Aviso de ausencia y/o permiso';
+            //     } elseif ($value->TIPO_SOLICITUD == 2) {
+            //         $value->TIPO_SOLICITUD_TEXTO = 'Salida de almacén de materiales y/o equipos';
+            //     } else {
+            //         $value->TIPO_SOLICITUD_TEXTO = 'Solicitud de Vacaciones';
+            //     }
+
+
+            //     if ($value->DAR_BUENO == 1) {
+            //         $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+            //         $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"><span class="slider round"></span></label>';
+            //         $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+            //     } else {
+            //         $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" checked><span class="slider round"></span></label>';
+            //         $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+            //         $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+            //     }
+
+            //     if ($value->DAR_BUENO == 0) {
+            //         $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">En revisión</span>';
+            //     } elseif ($value->DAR_BUENO == 1) {
+            //         $value->ESTADO_REVISION = '<span class="badge bg-success">✔</span>';
+            //     } elseif ($value->DAR_BUENO == 2) {
+            //         $value->ESTADO_REVISION = '<span class="badge bg-danger">✖</span>';
+            //     } else {
+            //         $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
+            //     }
+
+            //     if ($value->ESTADO_APROBACION == 'Aprobada') {
+            //         $value->ESTATUS = '<span class="badge bg-success">Aprobado</span>';
+            //     } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
+            //         $value->ESTATUS = '<span class="badge bg-danger">Rechazado</span>';
+            //     } else {
+            //         $value->ESTATUS = '<span class="badge bg-secondary">Sin estatus</span>';
+            //     }
+            // }
+
+
             foreach ($tabla as $value) {
 
-              
-              
-              
+                // === Texto de tipo de solicitud ===
                 if ($value->TIPO_SOLICITUD == 1) {
                     $value->TIPO_SOLICITUD_TEXTO = 'Aviso de ausencia y/o permiso';
                 } elseif ($value->TIPO_SOLICITUD == 2) {
@@ -73,27 +115,51 @@ class recempleadoController extends Controller
                     $value->TIPO_SOLICITUD_TEXTO = 'Solicitud de Vacaciones';
                 }
 
-
-                if ($value->DAR_BUENO == 1) {
-                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"><span class="slider round"></span></label>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                // === Botones y estado de revisión ===
+                if ($value->TIPO_SOLICITUD == 2) {
+                    // Caso especial: salida de almacén -> depende de ESTADO_APROBACION
+                    if ($value->ESTADO_APROBACION == 'Aprobada') {
+                        $value->ESTADO_REVISION = '<span class="badge bg-success">✔</span>';
+                        $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                        $value->BTN_ELIMINAR   = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"><span class="slider round"></span></label>';
+                        $value->BTN_EDITAR     = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                    } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
+                        $value->ESTADO_REVISION = '<span class="badge bg-danger">✖</span>';
+                        $value->BTN_ELIMINAR   = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" checked><span class="slider round"></span></label>';
+                        $value->BTN_EDITAR     = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                        $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    } else {
+                        $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
+                        $value->BTN_ELIMINAR   = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" checked><span class="slider round"></span></label>';
+                        $value->BTN_EDITAR     = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                        $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    }
                 } else {
-                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" checked><span class="slider round"></span></label>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    // Lógica normal con DAR_BUENO
+                    if ($value->DAR_BUENO == 1) {
+                        $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                        $value->BTN_ELIMINAR   = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"><span class="slider round"></span></label>';
+                        $value->BTN_EDITAR     = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                        $value->ESTADO_REVISION = '<span class="badge bg-success">✔</span>';
+                    } elseif ($value->DAR_BUENO == 2) {
+                        $value->BTN_ELIMINAR   = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" checked><span class="slider round"></span></label>';
+                        $value->BTN_EDITAR     = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                        $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                        $value->ESTADO_REVISION = '<span class="badge bg-danger">✖</span>';
+                    } elseif ($value->DAR_BUENO == 0) {
+                        $value->BTN_ELIMINAR   = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" checked><span class="slider round"></span></label>';
+                        $value->BTN_EDITAR     = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                        $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                        $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">En revisión</span>';
+                    } else {
+                        $value->BTN_ELIMINAR   = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" checked><span class="slider round"></span></label>';
+                        $value->BTN_EDITAR     = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                        $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                        $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
+                    }
                 }
 
-                if ($value->DAR_BUENO == 0) {
-                    $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">En revisión</span>';
-                } elseif ($value->DAR_BUENO == 1) {
-                    $value->ESTADO_REVISION = '<span class="badge bg-success">✔</span>';
-                } elseif ($value->DAR_BUENO == 2) {
-                    $value->ESTADO_REVISION = '<span class="badge bg-danger">✖</span>';
-                } else {
-                    $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
-                }
-
+                // === Estatus ===
                 if ($value->ESTADO_APROBACION == 'Aprobada') {
                     $value->ESTATUS = '<span class="badge bg-success">Aprobado</span>';
                 } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
@@ -102,6 +168,9 @@ class recempleadoController extends Controller
                     $value->ESTATUS = '<span class="badge bg-secondary">Sin estatus</span>';
                 }
             }
+
+            
+
 
             // Respuesta
             return response()->json([
@@ -167,7 +236,8 @@ class recempleadoController extends Controller
 
             $tabla = recemplaedosModel::whereIn('USUARIO_ID', $usuariosACargo)
                 ->where('DAR_BUENO', 0)
-                ->whereIn('TIPO_SOLICITUD', [1, 3]) 
+                ->whereIn('TIPO_SOLICITUD', [1, 3])
+                ->orderBy('FECHA_SALIDA', 'asc') 
                 ->get();
 
 
@@ -226,6 +296,95 @@ class recempleadoController extends Controller
 
 
     //////////////////////////// SOLICITUDES PARA aprobación  ////////////////////////////
+
+
+    public function Tablarecempleadoaprobacion()
+    {
+        try {
+            // $tabla = recemplaedosModel::where('DAR_BUENO', 1)
+            //     ->where(function ($query) {
+            //         $query->whereNull('ESTADO_APROBACION')
+            //             ->orWhereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
+            //     })
+            //     ->where(function ($query) {
+            //         $query->whereNull('JEFE_ID')
+            //             ->orWhere('JEFE_ID', '!=', Auth::id());
+            //     })
+            //     ->get();
+
+            $tabla = recemplaedosModel::where(function ($query) {
+                $query->where('DAR_BUENO', 1)
+                    ->orWhere(function ($sub) {
+                        $sub->where('TIPO_SOLICITUD', 2)
+                            ->where('DAR_BUENO', 0);
+                    });
+            })
+                ->where(function ($query) {
+                    $query->whereNull('ESTADO_APROBACION')
+                        ->orWhereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
+                })
+                ->where(function ($query) {
+                    $query->whereNull('JEFE_ID')
+                        ->orWhere('JEFE_ID', '!=', Auth::id());
+                })
+                ->orderBy('FECHA_SALIDA', 'asc') 
+                ->get();
+
+
+
+                
+            foreach ($tabla as $value) {
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                }
+
+
+                if ($value->TIPO_SOLICITUD == 1) {
+                    $value->TIPO_SOLICITUD_TEXTO = 'Aviso de ausencia y/o permiso';
+                } elseif ($value->TIPO_SOLICITUD == 2) {
+                    $value->TIPO_SOLICITUD_TEXTO = 'Salida de almacén de materiales y/o equipos';
+                } else {
+                    $value->TIPO_SOLICITUD_TEXTO = 'Solicitud de Vacaciones';
+                }
+
+                if ($value->DAR_BUENO == 0) {
+                    $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">En revisión</span>';
+                } elseif ($value->DAR_BUENO == 1) {
+                    $value->ESTADO_REVISION = '<span class="badge bg-success">✔</span>';
+                } elseif ($value->DAR_BUENO == 2) {
+                    $value->ESTADO_REVISION = '<span class="badge bg-danger">✖</span>';
+                } else {
+                    $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
+                }
+
+                if ($value->ESTADO_APROBACION == 'Aprobada') {
+                    $value->ESTATUS = '<span class="badge bg-success">Aprobado</span>';
+                } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
+                    $value->ESTATUS = '<span class="badge bg-danger">Rechazado</span>';
+                } else {
+                    $value->ESTATUS = '<span class="badge bg-secondary">Aprobar</span>';
+                }
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
+
+
 
     public function store(Request $request)
     {
@@ -409,9 +568,6 @@ class recempleadoController extends Controller
                                         ? $datos['MATERIALES_JSON']
                                         : json_encode($datos['MATERIALES_JSON'], JSON_UNESCAPED_UNICODE);
                                 }
-
-                                $datos['JEFE_ID'] = auth()->user()->ID_USUARIO;
-
 
                                 $mrs->update($datos);
 
