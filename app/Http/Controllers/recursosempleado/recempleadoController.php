@@ -59,7 +59,7 @@ class recempleadoController extends Controller
             $userid = Auth::user()->ID_USUARIO;
 
             $tabla = recemplaedosModel::where('USUARIO_ID', $userid)
-                ->orderBy('FECHA_SALIDA', 'asc') // 👈 ordena desde la fecha más antigua hacia la más reciente
+                ->orderBy('FECHA_SALIDA', 'asc') 
                 ->get();
             // foreach ($tabla as $value) {
 
