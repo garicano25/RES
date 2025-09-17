@@ -411,83 +411,73 @@ $(document).ready(function() {
     $('#Tablarecempleados tbody').on('click', 'td>button.VISUALIZAR', function () {
 
 
-        var tr = $(this).closest('tr');
-        var row = Tablarecempleados.row(tr);
+    var tr = $(this).closest('tr');
+    var row = Tablarecempleados.row(tr);
     
-        hacerSoloLectura(row.data(), '#miModal_RECURSOSEMPLEADOS');
+    hacerSoloLectura(row.data(), '#miModal_RECURSOSEMPLEADOS');
 
-        ID_FORMULARIO_RECURSOS_EMPLEADOS = row.data().ID_FORMULARIO_RECURSOS_EMPLEADOS;
+    ID_FORMULARIO_RECURSOS_EMPLEADOS = row.data().ID_FORMULARIO_RECURSOS_EMPLEADOS;
         
-        cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
+    cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
 
 
-        editarDatoTabla(row.data(), 'formularioRECURSOSEMPLEADO', 'miModal_RECURSOSEMPLEADOS', 1);
+    editarDatoTabla(row.data(), 'formularioRECURSOSEMPLEADO', 'miModal_RECURSOSEMPLEADOS', 1);
     
 
-        // === Para TIPO_SOLICITUD ===
-        if (row.data().TIPO_SOLICITUD === "1") {
-            $('#PERMISO_AUSENCIA').show();
-            $('#SOLIDA_ALMACEN').hide();
-            $('#SOLICITUD_VACACIONES').hide();
-        } else if (row.data().TIPO_SOLICITUD === "2") {
-            $('#SOLIDA_ALMACEN').show();
-            $('#PERMISO_AUSENCIA').hide();
-            $('#SOLICITUD_VACACIONES').hide();
-        } else if (row.data().TIPO_SOLICITUD === "3") {
-            $('#SOLICITUD_VACACIONES').show();
-            $('#PERMISO_AUSENCIA').hide();
-            $('#SOLIDA_ALMACEN').hide();
-        }
+     
+    if (row.data().TIPO_SOLICITUD === "1") {
+        $('#PERMISO_AUSENCIA').show();
+        $('#SOLIDA_ALMACEN').hide();
+        $('#SOLICITUD_VACACIONES').hide();
+    } else if (row.data().TIPO_SOLICITUD === "2") {
+        $('#SOLIDA_ALMACEN').show();
+        $('#PERMISO_AUSENCIA').hide();
+        $('#SOLICITUD_VACACIONES').hide();
+    } else if (row.data().TIPO_SOLICITUD === "3") {
+        $('#SOLICITUD_VACACIONES').show();
+        $('#PERMISO_AUSENCIA').hide();
+        $('#SOLIDA_ALMACEN').hide();
+    }
 
-        // === Para CONCEPTO_PERMISO ===
-        if (row.data().CONCEPTO_PERMISO === "9") {
-            $('#EXPLIQUE_PERMISO').show();
-        } else {
-            $('#EXPLIQUE_PERMISO').hide();
-        }
+    if (row.data().CONCEPTO_PERMISO === "9") {
+        $('#EXPLIQUE_PERMISO').show();
+    } else {
+        $('#EXPLIQUE_PERMISO').hide();
+    }
 
-    
-
-        // === Para ocultar la firma si ya esta firmado ===
-
-        if (row.data().FIRMO_USUARIO === "1") {
-            $('#DIV_FIRMAR').hide();
-        } else  {
-              $('#DIV_FIRMAR').show();
-            } 
+    if (row.data().FIRMO_USUARIO === "1") {
+        $('#DIV_FIRMAR').hide();
+    } else  {
+        $('#DIV_FIRMAR').show();
+    } 
         
-        
-     if (row.data().DAR_BUENO == 1) { // == en lugar de ===
-            $('#VISTO_BUENO_JEFE').show();
-            $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+   if (row.data().DAR_BUENO == 1) { 
+        $('#VISTO_BUENO_JEFE').show();
+        $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
 
-        } else if (row.data().DAR_BUENO == 2) {
-            $('#VISTO_BUENO_JEFE').show();
-            $('#MOTIVO_RECHAZO_JEFE_DIV').show();
+    } else if (row.data().DAR_BUENO == 2) {
+        $('#VISTO_BUENO_JEFE').show();
+        $('#MOTIVO_RECHAZO_JEFE_DIV').show();
 
-        } else {
-            $('#VISTO_BUENO_JEFE').hide();
-            $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-        }
+    } else {
+        $('#VISTO_BUENO_JEFE').hide();
+        $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+    }
 
+    if (row.data().ESTADO_APROBACION === "Aprobada") {
+        $('#motivo-rechazo-container').hide();   
+        $('#APROBACION_DIRECCION').show();
     
-
-      if (row.data().ESTADO_APROBACION === "Aprobada") {
-         $('#motivo-rechazo-container').hide();   
-         $('#APROBACION_DIRECCION').show();
-      
-
     } else if (row.data().ESTADO_APROBACION === "Rechazada") {
         $('#APROBACION_DIRECCION').show();
         $('#motivo-rechazo-container').show();
-                 
-      } else {
-          
-         $('#motivo-rechazo-container').hide();   
-         $('#APROBACION_DIRECCION').hide();
-      
-          
+                    
+    } else {
+    
+        $('#motivo-rechazo-container').hide();   
+        $('#APROBACION_DIRECCION').hide();
     }
+
 
 
     });
@@ -514,7 +504,6 @@ $('#Tablarecempleados tbody').on('click', 'td>button.EDITAR', function () {
     
 
 
-                // === Para TIPO_SOLICITUD ===
     if (row.data().TIPO_SOLICITUD === "1") {
         $('#PERMISO_AUSENCIA').show();
         $('#SOLIDA_ALMACEN').hide();
@@ -529,14 +518,11 @@ $('#Tablarecempleados tbody').on('click', 'td>button.EDITAR', function () {
         $('#SOLIDA_ALMACEN').hide();
     }
 
-    // === Para CONCEPTO_PERMISO ===
     if (row.data().CONCEPTO_PERMISO === "9") {
         $('#EXPLIQUE_PERMISO').show();
     } else {
         $('#EXPLIQUE_PERMISO').hide();
     }
-
-
 
     if (row.data().FIRMO_USUARIO === "1") {
         $('#DIV_FIRMAR').hide();
@@ -544,34 +530,31 @@ $('#Tablarecempleados tbody').on('click', 'td>button.EDITAR', function () {
         $('#DIV_FIRMAR').show();
     } 
         
-   if (row.data().DAR_BUENO == 1) { // == en lugar de ===
-    $('#VISTO_BUENO_JEFE').show();
-    $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+   if (row.data().DAR_BUENO == 1) { 
+       $('#VISTO_BUENO_JEFE').show();
+       $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
 
-} else if (row.data().DAR_BUENO == 2) {
-    $('#VISTO_BUENO_JEFE').show();
-    $('#MOTIVO_RECHAZO_JEFE_DIV').show();
+    } else if (row.data().DAR_BUENO == 2) {
+        $('#VISTO_BUENO_JEFE').show();
+        $('#MOTIVO_RECHAZO_JEFE_DIV').show();
 
-} else {
-    $('#VISTO_BUENO_JEFE').hide();
-    $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-}
+    } else {
+        $('#VISTO_BUENO_JEFE').hide();
+        $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+    }
 
-
+    if (row.data().ESTADO_APROBACION === "Aprobada") {
+        $('#motivo-rechazo-container').hide();   
+        $('#APROBACION_DIRECCION').show();
     
-      if (row.data().ESTADO_APROBACION === "Aprobada") {
-         $('#motivo-rechazo-container').hide();   
-         $('#APROBACION_DIRECCION').show();
-      
-
     } else if (row.data().ESTADO_APROBACION === "Rechazada") {
         $('#APROBACION_DIRECCION').show();
         $('#motivo-rechazo-container').show();
-                 
-     } else {
+                    
+    } else {
        
-           $('#motivo-rechazo-container').hide();   
-         $('#APROBACION_DIRECCION').hide();
+        $('#motivo-rechazo-container').hide();   
+        $('#APROBACION_DIRECCION').hide();
     }
 
 

@@ -74,7 +74,12 @@ class DenyRoleGlobalMiddleware
         'Orden_compra_aprobación',
         'Bitácora-GR',
         'RequisiciónDePersonal',
-        'Inventario'
+        'Inventario',
+        'Catálogos_inventarios',
+        'Catálogo_tipo_inventario',
+        'Vo.Bo_GRusuario',
+        'Solicitudes_VoBo',
+        'Solicitudes_aprobaciones'
 
     ];
 

@@ -61,53 +61,10 @@ class recempleadoController extends Controller
             $tabla = recemplaedosModel::where('USUARIO_ID', $userid)
                 ->orderBy('FECHA_SALIDA', 'asc') 
                 ->get();
-            // foreach ($tabla as $value) {
-
-
-
-
-            //     if ($value->TIPO_SOLICITUD == 1) {
-            //         $value->TIPO_SOLICITUD_TEXTO = 'Aviso de ausencia y/o permiso';
-            //     } elseif ($value->TIPO_SOLICITUD == 2) {
-            //         $value->TIPO_SOLICITUD_TEXTO = 'Salida de almacén de materiales y/o equipos';
-            //     } else {
-            //         $value->TIPO_SOLICITUD_TEXTO = 'Solicitud de Vacaciones';
-            //     }
-
-
-            //     if ($value->DAR_BUENO == 1) {
-            //         $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-            //         $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"><span class="slider round"></span></label>';
-            //         $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-            //     } else {
-            //         $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" checked><span class="slider round"></span></label>';
-            //         $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-            //         $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-            //     }
-
-            //     if ($value->DAR_BUENO == 0) {
-            //         $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">En revisión</span>';
-            //     } elseif ($value->DAR_BUENO == 1) {
-            //         $value->ESTADO_REVISION = '<span class="badge bg-success">✔</span>';
-            //     } elseif ($value->DAR_BUENO == 2) {
-            //         $value->ESTADO_REVISION = '<span class="badge bg-danger">✖</span>';
-            //     } else {
-            //         $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
-            //     }
-
-            //     if ($value->ESTADO_APROBACION == 'Aprobada') {
-            //         $value->ESTATUS = '<span class="badge bg-success">Aprobado</span>';
-            //     } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
-            //         $value->ESTATUS = '<span class="badge bg-danger">Rechazado</span>';
-            //     } else {
-            //         $value->ESTATUS = '<span class="badge bg-secondary">Sin estatus</span>';
-            //     }
-            // }
-
+           
 
             foreach ($tabla as $value) {
 
-                // === Texto de tipo de solicitud ===
                 if ($value->TIPO_SOLICITUD == 1) {
                     $value->TIPO_SOLICITUD_TEXTO = 'Aviso de ausencia y/o permiso';
                 } elseif ($value->TIPO_SOLICITUD == 2) {
@@ -116,9 +73,7 @@ class recempleadoController extends Controller
                     $value->TIPO_SOLICITUD_TEXTO = 'Solicitud de Vacaciones';
                 }
 
-                // === Botones y estado de revisión ===
                 if ($value->TIPO_SOLICITUD == 2) {
-                    // Caso especial: salida de almacén -> depende de ESTADO_APROBACION
                     if ($value->ESTADO_APROBACION == 'Aprobada') {
                         $value->ESTADO_REVISION = '<span class="badge bg-success">✔</span>';
                         $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
@@ -136,7 +91,6 @@ class recempleadoController extends Controller
                         $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     }
                 } else {
-                    // Lógica normal con DAR_BUENO
                     if ($value->DAR_BUENO == 1) {
                         $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                         $value->BTN_ELIMINAR   = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"><span class="slider round"></span></label>';
@@ -160,7 +114,6 @@ class recempleadoController extends Controller
                     }
                 }
 
-                // === Estatus ===
                 if ($value->ESTADO_APROBACION == 'Aprobada') {
                     $value->ESTATUS = '<span class="badge bg-success">Aprobado</span>';
                 } elseif ($value->ESTADO_APROBACION == 'Rechazada') {

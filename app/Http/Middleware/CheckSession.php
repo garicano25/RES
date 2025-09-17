@@ -35,7 +35,7 @@ class CheckSession
         'enviar-codigo' ,
         'verificar-codigo',      
         'Proveedor' ,
-            'codigo-postal/*',  // Ahora sí excluye rutas como /codigo-postal/86000
+        'codigo-postal/*',  
 
 
         ];
