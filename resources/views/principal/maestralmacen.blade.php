@@ -138,7 +138,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
 
-                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                    <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="{{ url('/Módulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Inicio</span>
                         </a>
@@ -146,7 +146,7 @@
                     <ul class="navbar-nav">
 
 
-                        <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link BOTON" href="{{ url('/Inventario') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                                 <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Inventario</span><span class="d-none d-lg-inline">Inventario</span>
                             </a>
@@ -161,7 +161,7 @@
                         @if(auth()->check() && !auth()->user()->hasRoles(['Almacenista','Asistente de compras']))
 
                         <ul class="navbar-nav">
-                            <li class="nav-item dropdown" style="margin-left: 8px;">
+                            <li class="nav-item dropdown" style="margin-left: -2px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
                                     <span class="d-lg-none">Catálogos</span>

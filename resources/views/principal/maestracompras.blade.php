@@ -138,7 +138,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
 
-                    <li class="nav-item dropdown" style="margin-left: 8px;">
+                    <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="{{ url('/Módulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Inicio</span>
                         </a>
@@ -146,7 +146,7 @@
                     <ul class="navbar-nav">
 
                         @if(auth()->check() && !auth()->user()->hasRoles(['Almacenista','Asistente de compras']))
-                        <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link BOTON" href="{{ url('/Requisición_Materiales') }}"
                                 style="color: #fff; font-weight: bold; text-decoration: none;">
                                 <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
@@ -160,7 +160,7 @@
 
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones','Administrador']))
 
-                        <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link dropdown-toggle BOTON" href="#"
                                 style="color: #fff; font-weight: bold; text-decoration: none;"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -195,10 +195,10 @@
                         @endif
 
 
-                        
+
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
 
-                        <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link BOTON" href="{{ url('/Bitácora') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                                 <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Bitácora de consecutivos - MR</span><span class="d-none d-lg-inline">Bitácora de consecutivos - MR</span>
                             </a>
@@ -208,7 +208,7 @@
 
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de planeación y logística','Asistente de compras']))
 
-                        <li class="nav-item dropdown" style="margin-left: 8px;">
+                        <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link dropdown-toggle BOTON" href="#"
                                 style="color: #fff; font-weight: bold; text-decoration: none;"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -253,7 +253,7 @@
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
 
                         <ul class="navbar-nav">
-                            <li class="nav-item dropdown" style="margin-left: 8px;">
+                            <li class="nav-item dropdown" style="margin-left: -2px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#"
                                     style="color: #fff; font-weight: bold; text-decoration: none;"
                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -289,7 +289,7 @@
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
 
                         <ul class="navbar-nav">
-                            <li class="nav-item dropdown" style="margin-left: 8px;">
+                            <li class="nav-item dropdown" style="margin-left: -2px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#"
                                     style="color: #fff; font-weight: bold; text-decoration: none;"
                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -321,42 +321,8 @@
 
                         @endif
 
-                        <!-- @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Almacenista']))
-
                         <ul class="navbar-nav">
-                            <li class="nav-item dropdown" style="margin-left: 8px;">
-                                <a class="nav-link dropdown-toggle BOTON" href="#"
-                                    style="color: #fff; font-weight: bold; text-decoration: none;"
-                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
-                                    <span class="d-lg-none">Recepción de bienes y/o servicios - GR</span>
-                                    <span class="d-none d-lg-inline">Recepción de bienes y/o servicios - GR</span>
-                                </a>
-
-                                <ul class="dropdown-menu">
-                                    {{-- Solo Superusuario, Administrador y Almacenista --}}
-                                    <li>
-                                        <a class="dropdown-item" href="{{ url('/Bitácora-GR') }}">
-                                            Lista de recepción B.y.S
-                                        </a>
-                                    </li>
-
-                                    <hr class="dropdown-divider">
-
-                                    {{-- Opción visible para todos los que ven el menú --}}
-                                    <li>
-                                        <a class="dropdown-item" href="{{ url('/Vo.Bo_GRusuario') }}">
-                                            Vo.Bo. de usuario de B.y.S
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                        @endif -->
-
-                        <ul class="navbar-nav">
-                            <li class="nav-item dropdown" style="margin-left: 8px;">
+                            <li class="nav-item dropdown" style="margin-left: -2px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#"
                                     style="color: #fff; font-weight: bold; text-decoration: none;"
                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -390,7 +356,7 @@
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
 
                         <ul class="navbar-nav">
-                            <li class="nav-item dropdown" style="margin-left: 8px;">
+                            <li class="nav-item dropdown" style="margin-left: -2px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
                                     <span class="d-lg-none">Catálogos</span>
