@@ -44,7 +44,7 @@
                             <option value="" selected disabled>Seleccione una opción</option>
                             <option value="1">Aviso de ausencia y/o permiso</option>
                             <option value="2">Salida de almacén de materiales y/o equipos</option>
-                            <option value="3">Solicitud de Vacaciones</option>
+                            <!-- <option value="3">Solicitud de Vacaciones</option> -->
                         </select>
                     </div>
 
