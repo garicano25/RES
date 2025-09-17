@@ -48,7 +48,7 @@
                         <div class="row">
                             <div class="col-9">
                                 <label class="form-label">Solicitante </label>
-                                <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" id="SOLICITANTE_SALIDA" name="SOLICITANTE_SALIDA" readonly>
+                                <input type="text" class="form-control" id="SOLICITANTE_SALIDA" name="SOLICITANTE_SALIDA" readonly>
                             </div>
 
                             <div class="col-3">
@@ -111,12 +111,12 @@
                             <div class="row">
                                 <div class="col-9">
                                     <label class="form-label">Cargo </label>
-                                    <input type="text" class="form-control" id="CARGO_PERMISO" name="CARGO_PERMISO">
+                                    <input type="text" class="form-control" id="CARGO_PERMISO" name="CARGO_PERMISO" readonly>
                                 </div>
 
                                 <div class="col-3">
                                     <label class="form-label">No. de empleado: </label>
-                                    <input type="text" class="form-control" id="NOEMPLEADO_PERMISO" name="NOEMPLEADO_PERMISO">
+                                    <input type="text" class="form-control" id="NOEMPLEADO_PERMISO" name="NOEMPLEADO_PERMISO" readonly>
                                 </div>
                             </div>
                         </div>
