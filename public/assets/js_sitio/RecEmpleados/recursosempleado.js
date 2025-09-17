@@ -82,10 +82,66 @@ $("#NUEVO_RECUROSEMPLEADO").click(function (e) {
 
 
 let contadorMateriales = 1; 
+// document.addEventListener("DOMContentLoaded", function () {
+//     const botonMaterial = document.getElementById('botonmaterial');
+//     const contenedorMateriales = document.querySelector('.materialesdiv');
+  
+
+//     botonMaterial.addEventListener('click', function () {
+//         agregarMaterial();
+//     });
+
+//     function agregarMaterial() {
+//         const divMaterial = document.createElement('div');
+//         divMaterial.classList.add('row', 'material-item', 'mt-1');
+//         divMaterial.innerHTML = `
+    
+//             <div class="col-1 mt-2">
+//                 <label class="form-label">N°</label>
+//                 <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
+//             </div>
+//             <div class="col-5 mt-2">
+//                 <label class="form-label">Descripción</label>
+//                 <input type="text" class="form-control" name="DESCRIPCION" required>
+//             </div>
+//             <div class="col-1 mt-2">
+//                 <label class="form-label">Cantidad</label>
+//                 <input type="number" class="form-control" name="CANTIDAD" required>
+//             </div>
+//             <div class="col-3 mt-2">
+//                 <label class="form-label">¿El material y/o equipo retorna? *</label>
+//                 <select class="form-control retorna_material"  name="RETORNA_EQUIPO"  required>
+//                     <option value="0" disabled selected>Seleccione una opción</option>
+//                     <option value="1">Sí</option>
+//                     <option value="2">No</option>
+//                 </select>
+//             </div>
+           
+//             <div class="col-2 mt-3">
+//                  <br>
+//                  <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
+//                     <i class="bi bi-trash"></i>
+//                 </button>
+//             </div>
+//         `;
+
+//         contenedorMateriales.appendChild(divMaterial);
+//         contadorMateriales++;
+
+//         const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
+//         botonEliminar.addEventListener('click', function () {
+//             contenedorMateriales.removeChild(divMaterial);
+//             actualizarNumerosOrden();
+//         });
+//     }
+// });
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const botonMaterial = document.getElementById('botonmaterial');
     const contenedorMateriales = document.querySelector('.materialesdiv');
-  
+    const fechaEstimadoDiv = document.getElementById("FECHA_ESTIMADA"); // 👈 tu div
 
     botonMaterial.addEventListener('click', function () {
         agregarMaterial();
@@ -95,7 +151,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const divMaterial = document.createElement('div');
         divMaterial.classList.add('row', 'material-item', 'mt-1');
         divMaterial.innerHTML = `
-    
             <div class="col-1 mt-2">
                 <label class="form-label">N°</label>
                 <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
@@ -110,13 +165,12 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
             <div class="col-3 mt-2">
                 <label class="form-label">¿El material y/o equipo retorna? *</label>
-                <select class="form-control retorna_material"  name="RETORNA_EQUIPO"  required>
+                <select class="form-control retorna_material" name="RETORNA_EQUIPO" required>
                     <option value="0" disabled selected>Seleccione una opción</option>
                     <option value="1">Sí</option>
                     <option value="2">No</option>
                 </select>
             </div>
-           
             <div class="col-2 mt-3">
                  <br>
                  <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
@@ -132,9 +186,18 @@ document.addEventListener("DOMContentLoaded", function () {
         botonEliminar.addEventListener('click', function () {
             contenedorMateriales.removeChild(divMaterial);
             actualizarNumerosOrden(); 
+            revisarSelects(); 
+        });
+
+        const selectRetorna = divMaterial.querySelector('.retorna_material');
+        selectRetorna.addEventListener('change', function () {
+            revisarSelects();
         });
     }
+
+ 
 });
+
 
 
 
@@ -383,12 +446,7 @@ $(document).ready(function() {
             $('#EXPLIQUE_PERMISO').hide();
         }
 
-        // === Para MATERIAL_RETORNA_SALIDA ===
-        if (row.data().MATERIAL_RETORNA_SALIDA === "Sí") {
-            $('#FECHA_ESTIMADA').css("display", "inline-flex");
-        } else {
-            $('#FECHA_ESTIMADA').hide();
-        }
+    
 
         // === Para ocultar la firma si ya esta firmado ===
 
@@ -478,12 +536,7 @@ $('#Tablarecempleados tbody').on('click', 'td>button.EDITAR', function () {
         $('#EXPLIQUE_PERMISO').hide();
     }
 
-    // === Para MATERIAL_RETORNA_SALIDA ===
-    if (row.data().MATERIAL_RETORNA_SALIDA === "Sí") {
-        $('#FECHA_ESTIMADA').css("display", "inline-flex");
-    } else {
-        $('#FECHA_ESTIMADA').hide();
-    }
+
 
     if (row.data().FIRMO_USUARIO === "1") {
         $('#DIV_FIRMAR').hide();
@@ -526,6 +579,70 @@ $('#Tablarecempleados tbody').on('click', 'td>button.EDITAR', function () {
 
 
 
+// function cargarMaterialesDesdeJSON(materialesJson) {
+//     const contenedorMateriales = document.querySelector('.materialesdiv');
+//     contenedorMateriales.innerHTML = '';
+//     contadorMateriales = 1;
+
+//     try {
+//         const materiales = JSON.parse(materialesJson);
+
+//         materiales.forEach(material => {
+//             const divMaterial = document.createElement('div');
+//             divMaterial.classList.add('material-item', 'mt-2');
+
+//             divMaterial.innerHTML = `
+//                 <div class="row p-3 rounded">
+
+                 
+//                     <div class="col-1 mt-2">
+//                         <label class="form-label">N°</label>
+//                         <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
+//                     </div>
+//                     <div class="col-5 mt-2">
+//                         <label class="form-label">Descripción</label>
+//                         <input type="text" class="form-control" name="DESCRIPCION" value="${escapeHtml(material.DESCRIPCION)}" required>
+//                     </div>
+//                     <div class="col-1 mt-2">
+//                         <label class="form-label">Cantidad</label>
+//                         <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" required>
+//                     </div>
+//                      <div class="col-3 mt-2">
+//                         <label class="form-label">¿El material y/o equipo retorna? *</label>
+//                         <select class="form-control retorna_material" name="RETORNA_EQUIPO" required>
+//                             <option value="0" disabled>Seleccione una opción</option>
+//                             <option value="1" ${material.RETORNA_EQUIPO === "1" ? "selected" : ""}>Sí</option>
+//                             <option value="2" ${material.RETORNA_EQUIPO === "2" ? "selected" : ""}>No</option>
+//                         </select>
+//                     </div>
+
+//                         <div class="col-2 mt-3">
+//                             <br>
+//                             <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
+//                                 <i class="bi bi-trash"></i>
+//                             </button>
+//                         </div>
+                    
+//                 </div>
+//             `;
+
+//             contenedorMateriales.appendChild(divMaterial);
+//             contadorMateriales++;
+
+//             const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
+//             botonEliminar.addEventListener('click', function () {
+//                 contenedorMateriales.removeChild(divMaterial);
+//                 actualizarNumerosOrden();
+//             });
+//         });
+
+//     } catch (e) {
+//         console.error('Error al parsear MATERIALES_JSON:', e);
+//     }
+// }
+
+
+
 function cargarMaterialesDesdeJSON(materialesJson) {
     const contenedorMateriales = document.querySelector('.materialesdiv');
     contenedorMateriales.innerHTML = '';
@@ -540,8 +657,6 @@ function cargarMaterialesDesdeJSON(materialesJson) {
 
             divMaterial.innerHTML = `
                 <div class="row p-3 rounded">
-
-                 
                     <div class="col-1 mt-2">
                         <label class="form-label">N°</label>
                         <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
@@ -554,41 +669,57 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                         <label class="form-label">Cantidad</label>
                         <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" required>
                     </div>
-                     <div class="col-3 mt-2">
+                    <div class="col-3 mt-2">
                         <label class="form-label">¿El material y/o equipo retorna? *</label>
-                        <select class="form-control" name="RETORNA_EQUIPO" required>
+                        <select class="form-control retorna_material" name="RETORNA_EQUIPO" required>
                             <option value="0" disabled>Seleccione una opción</option>
                             <option value="1" ${material.RETORNA_EQUIPO === "1" ? "selected" : ""}>Sí</option>
                             <option value="2" ${material.RETORNA_EQUIPO === "2" ? "selected" : ""}>No</option>
                         </select>
                     </div>
-
-                        <div class="col-2 mt-3">
-                            <br>
-                            <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
-                                <i class="bi bi-trash"></i>
-                            </button>
-                        </div>
-                    
+                    <div class="col-2 mt-3">
+                        <br>
+                        <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
                 </div>
             `;
 
             contenedorMateriales.appendChild(divMaterial);
             contadorMateriales++;
 
+            // Evento eliminar
             const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
             botonEliminar.addEventListener('click', function () {
                 contenedorMateriales.removeChild(divMaterial);
                 actualizarNumerosOrden();
+                revisarSelects(); 
+            });
+
+            const selectRetorna = divMaterial.querySelector('.retorna_material');
+            selectRetorna.addEventListener('change', function () {
+                revisarSelects();
             });
         });
+
+        revisarSelects();
 
     } catch (e) {
         console.error('Error al parsear MATERIALES_JSON:', e);
     }
 }
 
-
+function revisarSelects() {
+    const selects = document.querySelectorAll('.retorna_material');
+    let mostrar = false;
+    selects.forEach(sel => {
+        if (sel.value === "1") { 
+            mostrar = true;
+        }
+    });
+    document.getElementById("FECHA_ESTIMADA").style.display = mostrar ? "block" : "none";
+}
 
 
 

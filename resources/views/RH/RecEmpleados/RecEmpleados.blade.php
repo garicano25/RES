@@ -94,8 +94,8 @@
                                 <label class="form-check-label" for="radio_no">No</label>
                             </div> -->
 
-                            <div class="ms-3 align-items-center" id="FECHA_ESTIMADA" style="display: none;">
-                                <label class="col-form-label me-2">Fecha estimada *</label>
+                            <div class="col-6" id="FECHA_ESTIMADA" style="display: none;">
+                                <label class="col-form-label me-2">Fecha estimada de retorno *</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd"
                                         id="FECHA_ESTIMADA_SALIDA" name="FECHA_ESTIMADA_SALIDA">
