@@ -510,7 +510,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                         <label class="form-label">N°</label>
                         <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
                     </div>
-                    <div class="col-4 mt-2">
+                    <div class="col-5 mt-2">
                         <label class="form-label">Descripción</label>
                         <input type="text" class="form-control" name="DESCRIPCION" value="${escapeHtml(material.DESCRIPCION)}" required>
                     </div>
@@ -518,8 +518,8 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                         <label class="form-label">Cantidad</label>
                         <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" required>
                     </div>
-                    <div class="col-4 mt-2">
-                        <label class="form-label">¿El material y/o equipo retorna? *</label>
+                    <div class="col-3 mt-2">
+                        <label class="form-label">¿El material o equipo retorna?*</label>
                         <select class="form-control retorna_material" name="RETORNA_EQUIPO" required>
                             <option value="0" disabled>Seleccione una opción</option>
                             <option value="1" ${material.RETORNA_EQUIPO === "1" ? "selected" : ""}>Sí</option>

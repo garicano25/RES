@@ -571,7 +571,7 @@
 
 
     @if(request()->is('Rec.Empleado'))
-    <script src="/assets/js_sitio/RecEmpleados/recursosempleado.js?v=1.4"></script>
+    <script src="/assets/js_sitio/RecEmpleados/recursosempleado.js?v=1.5"></script>
     @endif
 
 
@@ -581,7 +581,7 @@
     @endif
 
     @if(request()->is('Solicitudes_aprobaciones'))
-    <script src="/assets/js_sitio/RecEmpleados/recempleadoaprobacion.js?v=1.2"></script>
+    <script src="/assets/js_sitio/RecEmpleados/recempleadoaprobacion.js?v=1.3"></script>
     @endif
 
 
