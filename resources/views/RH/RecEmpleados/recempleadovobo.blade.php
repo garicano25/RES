@@ -36,7 +36,7 @@
 
                     <div class="col-12 mb-3">
                         <label class="form-label">Seleccione el tipo *</label>
-                        <select class="form-control" id="TIPO_SOLICITUD" name="TIPO_SOLICITUD" required>
+                        <select class="form-control" id="TIPO_SOLICITUD" name="TIPO_SOLICITUD" style="pointer-events:none; background-color:#e9ecef;">
                             <option value="" selected disabled>Seleccione una opción</option>
                             <option value="1">Aviso de ausencia y/o permiso</option>
                             <option value="2">Salida de almacén de materiales y/o equipos</option>
