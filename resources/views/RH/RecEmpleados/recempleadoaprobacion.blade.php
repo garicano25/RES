@@ -263,7 +263,7 @@
                         <div class="col-12 mt-3">
                             <label for="ESTADO_APROBACION">Estado de Aprobación</label>
                             <div id="estado-container" class="p-2 rounded">
-                                <select class="form-control" id="ESTADO_APROBACION" name="ESTADO_APROBACION">
+                                <select class="form-control" id="ESTADO_APROBACION" name="ESTADO_APROBACION" required>
                                     <option value="" selected disabled>Seleccione una opción</option>
                                     <option value="Aprobada">Aprobada</option>
                                     <option value="Rechazada">Rechazada</option>
