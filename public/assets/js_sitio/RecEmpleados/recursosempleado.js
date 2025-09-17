@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <input type="number" class="form-control" name="CANTIDAD" required>
             </div>
             <div class="col-3 mt-2">
-                <label class="form-label">¿El material y/o equipo retorna? *</label>
+                <label class="form-label">¿El material o equipo retorna?*</label>
                 <select class="form-control retorna_material" name="RETORNA_EQUIPO" required>
                     <option value="0" disabled selected>Seleccione una opción</option>
                     <option value="1">Sí</option>
