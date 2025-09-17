@@ -22,6 +22,8 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     $('#VISTO_BUENO_JEFE').hide();
     
     $('#APROBACION_DIRECCION').hide();
+    $('#DIV_FIRMA_ALMACENISTA').hide();
+
 
 
    
@@ -478,6 +480,13 @@ $(document).ready(function() {
         $('#APROBACION_DIRECCION').hide();
     }
 
+        
+        
+     if (row.data().FIRMO_ALMACENISTA === "1") {
+        $('#DIV_FIRMA_ALMACENISTA').show();
+    } else  {
+        $('#DIV_FIRMA_ALMACENISTA').hide();
+    } 
 
 
     });
@@ -557,6 +566,11 @@ $('#Tablarecempleados tbody').on('click', 'td>button.EDITAR', function () {
         $('#APROBACION_DIRECCION').hide();
     }
 
+   if (row.data().FIRMO_ALMACENISTA === "1") {
+        $('#DIV_FIRMA_ALMACENISTA').show();
+    } else  {
+        $('#DIV_FIRMA_ALMACENISTA').hide();
+    } 
 
 });
 

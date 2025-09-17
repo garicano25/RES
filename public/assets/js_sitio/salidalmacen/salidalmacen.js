@@ -22,6 +22,7 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     $('#VISTO_BUENO_JEFE').hide();
     
     $('#APROBACION_DIRECCION').hide();
+    $('#DIV_FIRMA_ALMACENISTA').hide();
 
 
    
@@ -362,7 +363,14 @@ $(document).ready(function() {
     }
 
 
+   if (row.data().FIRMO_ALMACENISTA === "1") {
+        $('#DIV_FIRMAR_ALMACEN').hide();
+    } else  {
+        $('#DIV_FIRMAR_ALMACEN').show();
+    } 
 
+        
+        
     });
 
     $('#miModal_RECURSOSEMPLEADOS').on('hidden.bs.modal', function () {
@@ -440,72 +448,19 @@ $('#Tablasalidalmacen tbody').on('click', 'td>button.EDITAR', function () {
         $('#APROBACION_DIRECCION').hide();
     }
 
+   
+  
+
+   if (row.data().FIRMO_ALMACENISTA === "1") {
+        $('#DIV_FIRMAR_ALMACEN').hide();
+    } else  {
+        $('#DIV_FIRMAR_ALMACEN').show();
+    } 
+
 
 });
 
 
-
-// function cargarMaterialesDesdeJSON(materialesJson) {
-//     const contenedorMateriales = document.querySelector('.materialesdiv');
-//     contenedorMateriales.innerHTML = '';
-//     contadorMateriales = 1;
-
-//     try {
-//         const materiales = JSON.parse(materialesJson);
-
-//         materiales.forEach(material => {
-//             const divMaterial = document.createElement('div');
-//             divMaterial.classList.add('material-item', 'mt-2');
-
-//             divMaterial.innerHTML = `
-//                 <div class="row p-3 rounded">
-
-                 
-//                     <div class="col-1 mt-2">
-//                         <label class="form-label">N°</label>
-//                         <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
-//                     </div>
-//                     <div class="col-5 mt-2">
-//                         <label class="form-label">Descripción</label>
-//                         <input type="text" class="form-control" name="DESCRIPCION" value="${escapeHtml(material.DESCRIPCION)}" required>
-//                     </div>
-//                     <div class="col-1 mt-2">
-//                         <label class="form-label">Cantidad</label>
-//                         <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" required>
-//                     </div>
-//                      <div class="col-3 mt-2">
-//                         <label class="form-label">¿El material y/o equipo retorna? *</label>
-//                         <select class="form-control retorna_material" name="RETORNA_EQUIPO" required>
-//                             <option value="0" disabled>Seleccione una opción</option>
-//                             <option value="1" ${material.RETORNA_EQUIPO === "1" ? "selected" : ""}>Sí</option>
-//                             <option value="2" ${material.RETORNA_EQUIPO === "2" ? "selected" : ""}>No</option>
-//                         </select>
-//                     </div>
-
-//                         <div class="col-2 mt-3">
-//                             <br>
-//                             <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
-//                                 <i class="bi bi-trash"></i>
-//                             </button>
-//                         </div>
-                    
-//                 </div>
-//             `;
-
-//             contenedorMateriales.appendChild(divMaterial);
-//             contadorMateriales++;
-
-//             const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
-//             botonEliminar.addEventListener('click', function () {
-//                 contenedorMateriales.removeChild(divMaterial);
-//                 actualizarNumerosOrden();
-//             });
-//         });
-
-//     } catch (e) {
-//         console.error('Error al parsear MATERIALES_JSON:', e);
-//     }
-// }
 
 
 
@@ -527,7 +482,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                         <label class="form-label">N°</label>
                         <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
                     </div>
-                    <div class="col-5 mt-2">
+                    <div class="col-7 mt-2">
                         <label class="form-label">Descripción</label>
                         <input type="text" class="form-control" name="DESCRIPCION" value="${escapeHtml(material.DESCRIPCION)}" required>
                     </div>
@@ -536,18 +491,12 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                         <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" required>
                     </div>
                     <div class="col-3 mt-2">
-                        <label class="form-label">¿El material y/o equipo retorna? *</label>
+                        <label class="form-label">¿El material o equipo retorna?*</label>
                         <select class="form-control retorna_material" name="RETORNA_EQUIPO" required>
                             <option value="0" disabled>Seleccione una opción</option>
                             <option value="1" ${material.RETORNA_EQUIPO === "1" ? "selected" : ""}>Sí</option>
                             <option value="2" ${material.RETORNA_EQUIPO === "2" ? "selected" : ""}>No</option>
                         </select>
-                    </div>
-                    <div class="col-2 mt-3">
-                        <br>
-                        <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
-                            <i class="bi bi-trash"></i>
-                        </button>
                     </div>
                 </div>
             `;
@@ -556,12 +505,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             contadorMateriales++;
 
             // Evento eliminar
-            const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
-            botonEliminar.addEventListener('click', function () {
-                contenedorMateriales.removeChild(divMaterial);
-                actualizarNumerosOrden();
-                revisarSelects(); 
-            });
+            
 
             const selectRetorna = divMaterial.querySelector('.retorna_material');
             selectRetorna.addEventListener('change', function () {
@@ -592,24 +536,6 @@ function revisarSelects() {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    const radios = document.querySelectorAll('input[name="MATERIAL_RETORNA_SALIDA"]');
-    const fechaDiv = document.getElementById("FECHA_ESTIMADA");
-    const fechaInput = document.getElementById("FECHA_ESTIMADA_SALIDA");
-
-    radios.forEach(radio => {
-        radio.addEventListener("change", function () {
-            if (this.value === "Sí") {
-                fechaDiv.style.display = "inline-flex"; 
-                fechaInput.setAttribute("required", "required");
-            } else {
-                fechaDiv.style.display = "none"; 
-                fechaInput.removeAttribute("required");
-                fechaInput.value = "";
-            }
-        });
-    });
-});
 
 
 
@@ -663,31 +589,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    const selectConcepto = document.getElementById("CONCEPTO_PERMISO");
-    const divExplique = document.getElementById("EXPLIQUE_PERMISO");
-
-    selectConcepto.addEventListener("change", function () {
-        if (this.value === "9") {
-            divExplique.style.display = "block";
-            divExplique.querySelector("textarea").setAttribute("required", "required");
-        } else {
-            divExplique.style.display = "none";
-            const textarea = divExplique.querySelector("textarea");
-            textarea.value = "";
-            textarea.removeAttribute("required");
-        }
-    });
-});
 
 
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    const btnFirmar = document.getElementById("FIRMAR_SOLICITUD");
-    const inputFirmo = document.getElementById("FIRMO_USUARIO");
-    const inputFirmadoPor = document.getElementById("FIRMADO_POR");
-    const inputFechaSalida = document.getElementById("FECHA_SALIDA");
+    const btnFirmar = document.getElementById("FIRMAR_SOLICITUD_ALMACEN");
+    const inputFirmo = document.getElementById("FIRMO_ALMACENISTA");
+    const inputFirmadoPor = document.getElementById("FIRMA_ALMACEN");
+    const inputFechaSalida = document.getElementById("FECHA_ALMACEN_SOLICITUD");
 
     btnFirmar.addEventListener("click", function () {
         let usuarioNombre = btnFirmar.getAttribute("data-usuario");
@@ -717,43 +627,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    const concepto = document.getElementById("CONCEPTO_PERMISO");
-    const inputDias = document.getElementById("NODIAS_PERMISO");
-    const inputHoras = document.getElementById("NOHORAS_PERMISO");
-
-    concepto.addEventListener("change", function () {
-        if (this.value === "6") { 
-            inputDias.value = 84;
-            inputHoras.value = "";
-            inputHoras.disabled = true;
-        } else if (this.value === "7") { 
-            inputDias.value = 5;
-            inputHoras.value = "";
-            inputHoras.disabled = true;
-        } else {
-            inputDias.value = "";
-            inputHoras.value = "";
-            inputHoras.disabled = false;
-        }
-    });
-
-    inputDias.addEventListener("input", function () {
-        if (this.value && parseInt(this.value) > 0) {
-            inputHoras.value = "";
-            inputHoras.disabled = true;
-        } else {
-            inputHoras.disabled = false;
-        }
-    });
-
-    // Bloquear días si se escribe horas
-    inputHoras.addEventListener("input", function () {
-        if (this.value && parseInt(this.value) > 0) {
-            inputDias.value = "";
-            inputDias.disabled = true;
-        } else {
-            inputDias.disabled = false;
-        }
-    });
-});

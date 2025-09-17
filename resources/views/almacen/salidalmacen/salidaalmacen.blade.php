@@ -123,7 +123,7 @@
 
                                 <div class="col-8">
                                     <label for="APROBACION">Quien aprueba</label>
-                                    <input type="text" class="form-control" id="QUIEN_APROBACION" name="QUIEN_APROBACION">
+                                    <input type="text" class="form-control" id="QUIEN_APROBACION" name="QUIEN_APROBACION" readonly>
                                 </div>
                                 <div class="col-4">
                                     <label>Fecha *</label>
@@ -138,6 +138,42 @@
 
 
 
+
+                    <div class="col-12 mt-3">
+                        <div class="row">
+
+                            <div class="col-8">
+                                <label for="APROBACION">Firma almacenista</label>
+                                <input type="text" class="form-control" id="FIRMA_ALMACEN" name="FIRMA_ALMACEN" readonly>
+                            </div>
+                            <div class="col-4">
+                                <label>Fecha *</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ALMACEN_SOLICITUD" name="FECHA_ALMACEN_SOLICITUD">
+                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-12 mt-3" id="DIV_FIRMAR_ALMACEN" style="display:none; margin-top:10px;">
+                        <div class="row justify-content-center">
+                            <div class="col-6 text-center">
+                                <button type="button"
+                                    id="FIRMAR_SOLICITUD_ALMACEN"
+                                    class="btn btn-info"
+                                    data-usuario="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
+                                    <i class="bi bi-pen-fill"></i> Firma almacenista
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <input type="hidden" id="FIRMO_ALMACENISTA" name="FIRMO_ALMACENISTA" value="">
 
 
                 </div>

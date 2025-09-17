@@ -47,7 +47,11 @@ class recemplaedosModel extends Model
         'ESTADO_APROBACION',
         'MOTIVO_RECHAZO',
         'QUIEN_APROBACION',
-        'FECHA_APRUEBA_SOLICITUD'
+        'FECHA_APRUEBA_SOLICITUD',
+
+        'FIRMA_ALMACEN',
+        'FECHA_ALMACEN_SOLICITUD',
+        'FIRMO_ALMACENISTA'
 
     ];
 }
