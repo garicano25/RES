@@ -58,8 +58,9 @@ class recempleadoController extends Controller
         try {
             $userid = Auth::user()->ID_USUARIO;
 
-            $tabla = recemplaedosModel::where('USUARIO_ID', $userid)->get();
-
+            $tabla = recemplaedosModel::where('USUARIO_ID', $userid)
+                ->orderBy('FECHA_SALIDA', 'asc') // 👈 ordena desde la fecha más antigua hacia la más reciente
+                ->get();
             // foreach ($tabla as $value) {
 
 
