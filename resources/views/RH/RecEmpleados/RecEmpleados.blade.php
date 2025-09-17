@@ -98,7 +98,7 @@
                                 <label class="col-form-label me-2">Fecha estimada de retorno *</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd"
-                                        id="FECHA_ESTIMADA_SALIDA" name="FECHA_ESTIMADA_SALIDA">
+                                        id="FECHA_ESTIMADA_SALIDA" name="FECHA_ESTIMADA_SALIDA" required>
                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                 </div>
                             </div>

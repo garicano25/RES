@@ -141,7 +141,7 @@ let contadorMateriales = 1;
 document.addEventListener("DOMContentLoaded", function () {
     const botonMaterial = document.getElementById('botonmaterial');
     const contenedorMateriales = document.querySelector('.materialesdiv');
-    const fechaEstimadoDiv = document.getElementById("FECHA_ESTIMADA"); // 👈 tu div
+    const fechaEstimadoDiv = document.getElementById("FECHA_ESTIMADA"); // 
 
     botonMaterial.addEventListener('click', function () {
         agregarMaterial();
