@@ -827,7 +827,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Asignar valores
         inputFirmo.value = "1";
-        inputFirmadoPor.value =  usuarioNombre + " el " + fechaSalida + " a las " + horaCompleta;
+        inputFirmadoPor.value =  usuarioNombre + " el " + fechaSalida ;
     });
 });
 

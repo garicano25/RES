@@ -123,7 +123,7 @@
 
                                 <div class="col-8">
                                     <label for="APROBACION">Quien aprueba</label>
-                                    <input type="text" class="form-control" id="QUIEN_APROBACION" name="QUIEN_APROBACION" >
+                                    <input type="text" class="form-control" id="QUIEN_APROBACION" name="QUIEN_APROBACION" readonly>
                                 </div>
                                 <div class="col-4">
                                     <label>Fecha *</label>
