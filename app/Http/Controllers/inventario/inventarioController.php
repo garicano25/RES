@@ -253,12 +253,34 @@ class inventarioController extends Controller
             switch (intval($request->api)) {
              
                 case 1:
+                    // if ($request->ID_FORMULARIO_INVENTARIO == 0) {
+                    //     DB::statement('ALTER TABLE formulario_inventario AUTO_INCREMENT=1;');
+
+                    //     $datos = $request->except('FOTO_EQUIPO');
+                    //     $inventarios = inventarioModel::create($datos);
+
+                    //     if ($request->hasFile('FOTO_EQUIPO')) {
+                    //         $file = $request->file('FOTO_EQUIPO');
+                    //         $folder = "Almacén/Inventario/{$inventarios->ID_FORMULARIO_INVENTARIO}";
+                    //         $filename = 'foto_equipo.' . $file->getClientOriginalExtension();
+                    //         $path = $file->storeAs($folder, $filename);
+
+                    //         $inventarios->FOTO_EQUIPO = $path;
+                    //         $inventarios->save();
+                    //     }
+
+                    //     $response['code']  = 1;
+                    //     $response['inventario']  = $inventarios;
+                    //     return response()->json($response);
+
+
                     if ($request->ID_FORMULARIO_INVENTARIO == 0) {
                         DB::statement('ALTER TABLE formulario_inventario AUTO_INCREMENT=1;');
 
                         $datos = $request->except('FOTO_EQUIPO');
                         $inventarios = inventarioModel::create($datos);
 
+                        // Guardar foto si existe
                         if ($request->hasFile('FOTO_EQUIPO')) {
                             $file = $request->file('FOTO_EQUIPO');
                             $folder = "Almacén/Inventario/{$inventarios->ID_FORMULARIO_INVENTARIO}";
@@ -269,10 +291,24 @@ class inventarioController extends Controller
                             $inventarios->save();
                         }
 
+                        // 🚀 Crear registro en entradas_inventario SOLO cuando es nuevo
+                        DB::table('entradas_inventario')->insert([
+                            'INVENTARIO_ID'    => $inventarios->ID_FORMULARIO_INVENTARIO,
+                            'FECHA_INGRESO'    => $inventarios->FECHA_ADQUISICION,
+                            'CANTIDAD_PRODUCTO' => $inventarios->CANTIDAD_EQUIPO,
+                            'VALOR_UNITARIO'   => $inventarios->UNITARIO_EQUIPO,
+                            'UNIDAD_MEDIDA'    => $inventarios->UNIDAD_MEDIDA,
+                            'created_at'       => now(),   // si tu tabla tiene timestamps
+                            'updated_at'       => now()
+                        ]);
+
                         $response['code']  = 1;
                         $response['inventario']  = $inventarios;
                         return response()->json($response);
-                    } else {
+                    
+
+
+                } else {
                         if (isset($request->ELIMINAR)) {
                             $estado = $request->ELIMINAR == 1 ? 0 : 1;
                             $accion = $estado == 1 ? 'Activada' : 'Desactivada';
