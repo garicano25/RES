@@ -128,6 +128,12 @@ $("#guardaRECEMPLEADOS").click(function (e) {
                 'DESCRIPCION': $(this).find("input[name='DESCRIPCION']").val(),
                 'CANTIDAD': $(this).find("input[name='CANTIDAD']").val(),
                 'RETORNA_EQUIPO': $(this).find("select[name='RETORNA_EQUIPO']").val(),
+                'EN_EXISTENCIA': $(this).find("select[name='EN_EXISTENCIA']").val(),
+                'TIPO_INVENTARIO': $(this).find("select[name='TIPO_INVENTARIO']").val(),
+                'INVENTARIO': $(this).find("select[name='INVENTARIO']").val(),
+
+                
+
 
 
             };
@@ -464,6 +470,124 @@ $('#Tablasalidalmacen tbody').on('click', 'td>button.EDITAR', function () {
 
 
 
+// function cargarMaterialesDesdeJSON(materialesJson) {
+//     const contenedorMateriales = document.querySelector('.materialesdiv');
+//     contenedorMateriales.innerHTML = '';
+//     contadorMateriales = 1;
+
+//     try {
+//         const materiales = JSON.parse(materialesJson);
+
+//         materiales.forEach(material => {
+//             const divMaterial = document.createElement('div');
+//             divMaterial.classList.add('material-item', 'mt-2');
+
+//             divMaterial.innerHTML = `
+//                 <div class="row p-3 rounded">
+//                     <div class="col-1 mt-2">
+//                         <label class="form-label">N°</label>
+//                         <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
+//                     </div>
+//                     <div class="col-7 mt-2">
+//                         <label class="form-label">Descripción</label>
+//                         <input type="text" class="form-control" name="DESCRIPCION" value="${escapeHtml(material.DESCRIPCION)}" required>
+//                     </div>
+//                     <div class="col-1 mt-2">
+//                         <label class="form-label">Cantidad</label>
+//                         <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" required>
+//                     </div>
+//                     <div class="col-3 mt-2">
+//                         <label class="form-label">¿El material o equipo retorna?*</label>
+//                         <select class="form-control retorna_material" name="RETORNA_EQUIPO" required>
+//                             <option value="0" disabled>Seleccione una opción</option>
+//                             <option value="1" ${material.RETORNA_EQUIPO === "1" ? "selected" : ""}>Sí</option>
+//                             <option value="2" ${material.RETORNA_EQUIPO === "2" ? "selected" : ""}>No</option>
+//                         </select>
+//                     </div>
+
+//                     <!-- Nuevo bloque -->
+//                     <div class="col-4 mt-2">
+//                         <label class="form-label">En existencia</label>
+//                         <select class="form-control en_existencia" name="EN_EXISTENCIA" required>
+//                             <option value="" ${!material.EN_EXISTENCIA ? "selected" : ""} disabled>Seleccione una opción</option>
+//                             <option value="1" ${material.EN_EXISTENCIA === "1" ? "selected" : ""}>Sí</option>
+//                             <option value="0" ${material.EN_EXISTENCIA === "0" ? "selected" : ""}>No</option>
+//                         </select>
+//                     </div>
+
+//                     <div class="col-4 mt-2">
+//                         <label class="form-label">Tipo inventario</label>
+//                         <select class="form-control tipo_inventario" name="TIPO_INVENTARIO" required>
+//                             <option value="" ${!material.TIPO_INVENTARIO ? "selected" : ""} disabled>Seleccione una opción</option>
+//                             ${window.tipoinventario.map(t => `
+//                                 <option value="${t.DESCRIPCION_TIPO}" ${material.TIPO_INVENTARIO === t.DESCRIPCION_TIPO ? "selected" : ""}>
+//                                     ${t.DESCRIPCION_TIPO}
+//                                 </option>
+//                             `).join('')}
+//                         </select>
+//                     </div>
+
+//                     <div class="col-4 mt-2">
+//                         <label class="form-label">Inventario</label>
+//                         <select class="form-control inventario" name="INVENTARIO" required>
+//                             <option value="" ${!material.INVENTARIO ? "selected" : ""} disabled>Seleccione inventario</option>
+//                         </select>
+//                     </div>
+//                 </div>
+//             `;
+
+//             contenedorMateriales.appendChild(divMaterial);
+//             contadorMateriales++;
+
+//             // Listener para retorna
+//             const selectRetorna = divMaterial.querySelector('.retorna_material');
+//             selectRetorna.addEventListener('change', function () {
+//                 revisarSelects();
+//             });
+
+//             // Selects dinámicos
+//             const selectTipo = divMaterial.querySelector('.tipo_inventario');
+//             const selectInv = divMaterial.querySelector('.inventario');
+
+//             // Inicializar inventario en base al tipo guardado
+//             if (material.TIPO_INVENTARIO) {
+//                 const opciones = window.inventario
+//                     .filter(inv => inv.TIPO_EQUIPO === material.TIPO_INVENTARIO)
+//                     .map(inv => `
+//                         <option value="${inv.ID_FORMULARIO_INVENTARIO}" 
+//                             ${material.INVENTARIO == inv.ID_FORMULARIO_INVENTARIO ? "selected" : ""}>
+//                             ${inv.DESCRIPCION_EQUIPO}
+//                         </option>
+//                     `).join('');
+
+//                 selectInv.innerHTML = `
+//                     <option value="" disabled ${!material.INVENTARIO ? "selected" : ""}>Seleccione inventario</option>
+//                     ${opciones}
+//                 `;
+//             }
+
+//             // Cambio dinámico al seleccionar tipo inventario
+//             selectTipo.addEventListener('change', function () {
+//                 const tipoSeleccionado = this.value;
+//                 const opciones = window.inventario
+//                     .filter(inv => inv.TIPO_EQUIPO === tipoSeleccionado)
+//                     .map(inv => `<option value="${inv.ID_FORMULARIO_INVENTARIO}">${inv.DESCRIPCION_EQUIPO}</option>`)
+//                     .join('');
+
+//                 selectInv.innerHTML = `
+//                     <option value="" disabled selected>Seleccione inventario</option>
+//                     ${opciones}
+//                 `;
+//             });
+//         });
+
+//         revisarSelects();
+
+//     } catch (e) {
+//         console.error('Error al parsear MATERIALES_JSON:', e);
+//     }
+// }
+
 function cargarMaterialesDesdeJSON(materialesJson) {
     const contenedorMateriales = document.querySelector('.materialesdiv');
     contenedorMateriales.innerHTML = '';
@@ -476,6 +600,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             const divMaterial = document.createElement('div');
             divMaterial.classList.add('material-item', 'mt-2');
 
+            // --- HTML principal ---
             divMaterial.innerHTML = `
                 <div class="row p-3 rounded">
                     <div class="col-1 mt-2">
@@ -498,19 +623,96 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                             <option value="2" ${material.RETORNA_EQUIPO === "2" ? "selected" : ""}>No</option>
                         </select>
                     </div>
+
+                    <!-- En existencia -->
+                    <div class="col-4 mt-2">
+                        <label class="form-label">En existencia</label>
+                        <select class="form-control en_existencia" name="EN_EXISTENCIA" required>
+                            <option value="" ${!material.EN_EXISTENCIA ? "selected" : ""} disabled>Seleccione una opción</option>
+                            <option value="1" ${material.EN_EXISTENCIA === "1" ? "selected" : ""}>Sí</option>
+                            <option value="0" ${material.EN_EXISTENCIA === "0" ? "selected" : ""}>No</option>
+                        </select>
+                    </div>
+
+                    <!-- Tipo inventario -->
+                    <div class="col-4 mt-2">
+                        <label class="form-label">Tipo inventario</label>
+                        <select class="form-control tipo_inventario" name="TIPO_INVENTARIO" required>
+                            <option value="" ${!material.TIPO_INVENTARIO ? "selected" : ""} disabled>Seleccione una opción</option>
+                            ${window.tipoinventario.map(t => `
+                                <option value="${t.DESCRIPCION_TIPO}" ${material.TIPO_INVENTARIO === t.DESCRIPCION_TIPO ? "selected" : ""}>
+                                    ${t.DESCRIPCION_TIPO}
+                                </option>
+                            `).join('')}
+                        </select>
+                    </div>
+
+                    <!-- Inventario -->
+                    <div class="col-4 mt-2">
+                        <label class="form-label">Inventario</label>
+                        <select class="form-control inventario" name="INVENTARIO" required>
+                            <option value="" ${!material.INVENTARIO ? "selected" : ""} disabled>Seleccione inventario</option>
+                        </select>
+                    </div>
                 </div>
             `;
 
             contenedorMateriales.appendChild(divMaterial);
             contadorMateriales++;
 
-            // Evento eliminar
-            
+            // === Selectores ===
+            const selectEnExistencia = divMaterial.querySelector('.en_existencia');
+            const selectTipo = divMaterial.querySelector('.tipo_inventario');
+            const selectInv = divMaterial.querySelector('.inventario');
 
-            const selectRetorna = divMaterial.querySelector('.retorna_material');
-            selectRetorna.addEventListener('change', function () {
-                revisarSelects();
+            // Función para cargar inventario en orden alfabético
+            function cargarInventario(tipoSeleccionado, valorGuardado = null) {
+                const opciones = window.inventario
+                    .filter(inv => inv.TIPO_EQUIPO === tipoSeleccionado)
+                    .sort((a, b) => a.DESCRIPCION_EQUIPO.localeCompare(b.DESCRIPCION_EQUIPO))
+                    .map(inv => `
+                        <option value="${inv.ID_FORMULARIO_INVENTARIO}" 
+                            ${valorGuardado == inv.ID_FORMULARIO_INVENTARIO ? "selected" : ""}>
+                            ${inv.DESCRIPCION_EQUIPO}
+                        </option>
+                    `).join('');
+
+                selectInv.innerHTML = `
+                    <option value="" disabled ${!valorGuardado ? "selected" : ""}>Seleccione inventario</option>
+                    ${opciones}
+                `;
+            }
+
+            // Inicializar inventario si ya hay datos guardados
+            if (material.TIPO_INVENTARIO) {
+                cargarInventario(material.TIPO_INVENTARIO, material.INVENTARIO);
+            }
+
+            // Evento cambio tipo inventario
+            selectTipo.addEventListener('change', function () {
+                cargarInventario(this.value);
             });
+
+            // Activar/desactivar inventario según "En existencia"
+            function actualizarEstadoInventario() {
+                if (selectEnExistencia.value === "0") { // No
+                    selectTipo.style.pointerEvents = "none";
+                    selectTipo.style.backgroundColor = "#e9ecef";
+                    selectInv.style.pointerEvents = "none";
+                    selectInv.style.backgroundColor = "#e9ecef";
+                } else { // Sí
+                    selectTipo.style.pointerEvents = "auto";
+                    selectTipo.style.backgroundColor = "";
+                    selectInv.style.pointerEvents = "auto";
+                    selectInv.style.backgroundColor = "";
+                }
+            }
+
+            // Inicializar estado
+            actualizarEstadoInventario();
+
+            // Listener en existencia
+            selectEnExistencia.addEventListener('change', actualizarEstadoInventario);
         });
 
         revisarSelects();
@@ -519,6 +721,11 @@ function cargarMaterialesDesdeJSON(materialesJson) {
         console.error('Error al parsear MATERIALES_JSON:', e);
     }
 }
+
+
+
+
+
 
 function revisarSelects() {
     const selects = document.querySelectorAll('.retorna_material');

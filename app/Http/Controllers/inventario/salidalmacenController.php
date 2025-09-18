@@ -29,15 +29,13 @@ class salidalmacenController extends Controller
 {
     public function index()
     {
+                    
         $tipoinventario = catalogotipoinventarioModel::where('ACTIVO', 1)->get();
-
-
         $proveedoresOficiales = altaproveedorModel::select('RAZON_SOCIAL_ALTA', 'RFC_ALTA')->get();
         $proveedoresTemporales = proveedortempModel::select('RAZON_PROVEEDORTEMP', 'RFC_PROVEEDORTEMP', 'NOMBRE_PROVEEDORTEMP')->get();
+        $inventario = inventarioModel::where('ACTIVO', 1)->get();
 
-
-
-        return view('almacen.salidalmacen.salidaalmacen', compact('tipoinventario', 'proveedoresOficiales', 'proveedoresTemporales'));
+        return view('almacen.salidalmacen.salidaalmacen', compact('tipoinventario', 'proveedoresOficiales', 'proveedoresTemporales', 'inventario'));
     }
 
 

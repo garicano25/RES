@@ -302,22 +302,16 @@
     </script>
 
 
-
-
     @if(request()->is('Inventario'))
     <script src="/assets/js_sitio/inventario/inventario.js?v=1.11"></script>
     @endif
-
-
 
     @if(request()->is('Catálogo_tipo_inventario'))
     <script src="/assets/js_sitio/inventario/catalogos/catalogotipos.js"></script>
     @endif
 
-
-
     @if(request()->is('Salida_almacen'))
-    <script src="/assets/js_sitio/salidalmacen/salidalmacen.js?v=1.0"></script>
+    <script src="/assets/js_sitio/salidalmacen/salidalmacen.js?v=1.1"></script>
     @endif
 </body>
 
