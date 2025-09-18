@@ -25,12 +25,21 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     $('#DIV_FIRMA_ALMACENISTA').hide();
 
 
-   
-
-
     
     document.querySelector('.materialesdiv').innerHTML = '';
     contadorMateriales = 1;
+
+
+
+
+const inputFecha = document.getElementById("FECHA_ALMACEN_SOLICITUD");
+    if (inputFecha) {
+        inputFecha.classList.remove("is-invalid"); 
+    }
+
+    if (typeof Swal !== "undefined") {
+        Swal.close();
+    }
 });
 
 
@@ -99,18 +108,6 @@ let contadorMateriales = 1;
     
     
 
-
-
-
-
-
-
-
-
-
-
-
-
 $("#guardaRECEMPLEADOS").click(function (e) {
     e.preventDefault();
 
@@ -132,8 +129,7 @@ $("#guardaRECEMPLEADOS").click(function (e) {
                 'TIPO_INVENTARIO': $(this).find("select[name='TIPO_INVENTARIO']").val(),
                 'INVENTARIO': $(this).find("select[name='INVENTARIO']").val(),
                 'CANTIDAD_SALIDA': $(this).find("input[name='CANTIDAD_SALIDA']").val(),
-
-                
+                'NOTA_CANTIDAD': $(this).find("textarea[name='NOTA_CANTIDAD']").val()
 
 
 
@@ -650,7 +646,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                             <option value="0" ${material.EN_EXISTENCIA === "0" ? "selected" : ""}>No</option>
                         </select>
                     </div>
-                    <div class="col-3 mt-2">
+                    <div class="col-2 mt-2">
                         <label class="form-label">Tipo inventario</label>
                         <select class="form-control tipo_inventario" name="TIPO_INVENTARIO" required>
                             <option value="" ${!material.TIPO_INVENTARIO ? "selected" : ""} disabled>Seleccione</option>
@@ -661,7 +657,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                             `).join('')}
                         </select>
                     </div>
-                    <div class="col-4 mt-2">
+                    <div class="col-5 mt-2">
                         <label class="form-label">Inventario</label>
                         <select class="form-control inventario" name="INVENTARIO" required>
                             <option value="" ${!material.INVENTARIO ? "selected" : ""} disabled>Seleccione</option>
@@ -690,16 +686,41 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             const divNota = divMaterial.querySelector('.nota_div');
             const textareaNota = divMaterial.querySelector('.nota_cantidad');
 
+            // function cargarInventario(tipoSeleccionado, valorGuardado = null) {
+            //     const opciones = window.inventario
+            //         .filter(inv => inv.TIPO_EQUIPO === tipoSeleccionado)
+            //         .sort((a, b) => a.DESCRIPCION_EQUIPO.localeCompare(b.DESCRIPCION_EQUIPO))
+            //         .map(inv => `
+            //             <option value="${inv.ID_FORMULARIO_INVENTARIO}" 
+            //                 ${valorGuardado == inv.ID_FORMULARIO_INVENTARIO ? "selected" : ""}>
+            //                 ${inv.DESCRIPCION_EQUIPO}
+            //             </option>
+            //         `).join('');
+
+            //     selectInv.innerHTML = `
+            //         <option value="" disabled ${!valorGuardado ? "selected" : ""}>Seleccione inventario</option>
+            //         ${opciones}
+            //     `;
+            // }
+
+            
             function cargarInventario(tipoSeleccionado, valorGuardado = null) {
                 const opciones = window.inventario
                     .filter(inv => inv.TIPO_EQUIPO === tipoSeleccionado)
                     .sort((a, b) => a.DESCRIPCION_EQUIPO.localeCompare(b.DESCRIPCION_EQUIPO))
-                    .map(inv => `
-                        <option value="${inv.ID_FORMULARIO_INVENTARIO}" 
-                            ${valorGuardado == inv.ID_FORMULARIO_INVENTARIO ? "selected" : ""}>
-                            ${inv.DESCRIPCION_EQUIPO}
-                        </option>
-                    `).join('');
+                    .map(inv => {
+                        // Si el tipo es AF o ANF -> mostrar con código
+                        const mostrarTexto = (tipoSeleccionado === "AF" || tipoSeleccionado === "ANF")
+                            ? `${inv.DESCRIPCION_EQUIPO} (${inv.CODIGO_EQUIPO || ""})`
+                            : inv.DESCRIPCION_EQUIPO;
+
+                        return `
+                            <option value="${inv.ID_FORMULARIO_INVENTARIO}" 
+                                ${valorGuardado == inv.ID_FORMULARIO_INVENTARIO ? "selected" : ""}>
+                                ${mostrarTexto}
+                            </option>
+                        `;
+                    }).join('');
 
                 selectInv.innerHTML = `
                     <option value="" disabled ${!valorGuardado ? "selected" : ""}>Seleccione inventario</option>
@@ -707,6 +728,8 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                 `;
             }
 
+            
+            
             if (material.TIPO_INVENTARIO) {
                 cargarInventario(material.TIPO_INVENTARIO, material.INVENTARIO);
             }
@@ -847,6 +870,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+// document.addEventListener("DOMContentLoaded", function () {
+//     const btnFirmar = document.getElementById("FIRMAR_SOLICITUD_ALMACEN");
+//     const inputFirmo = document.getElementById("FIRMO_ALMACENISTA");
+//     const inputFirmadoPor = document.getElementById("FIRMA_ALMACEN");
+//     const inputFechaSalida = document.getElementById("FECHA_ALMACEN_SOLICITUD");
+
+//     btnFirmar.addEventListener("click", function () {
+//         let usuarioNombre = btnFirmar.getAttribute("data-usuario");
+//         let fechaSalida = inputFechaSalida.value; // yyyy-mm-dd
+
+//         // Obtener hora actual
+//         let ahora = new Date();
+//         let horas = ahora.getHours();
+//         let minutos = String(ahora.getMinutes()).padStart(2, "0");
+//         let segundos = String(ahora.getSeconds()).padStart(2, "0");
+
+//         // Determinar AM o PM
+//         let ampm = horas >= 12 ? "p.m." : "a.m.";
+
+//         // Convertir a formato de 12 horas
+//         horas = horas % 12;
+//         horas = horas ? horas : 12; // El 0 se convierte en 12
+
+//         let horaCompleta = horas + ":" + minutos + ":" + segundos + " " + ampm;
+
+//         // Asignar valores
+//         inputFirmo.value = "1";
+//         inputFirmadoPor.value =  usuarioNombre + " el " + fechaSalida ;
+//     });
+// });
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const btnFirmar = document.getElementById("FIRMAR_SOLICITUD_ALMACEN");
     const inputFirmo = document.getElementById("FIRMO_ALMACENISTA");
@@ -856,6 +912,23 @@ document.addEventListener("DOMContentLoaded", function () {
     btnFirmar.addEventListener("click", function () {
         let usuarioNombre = btnFirmar.getAttribute("data-usuario");
         let fechaSalida = inputFechaSalida.value; // yyyy-mm-dd
+
+        // Validar que exista fecha
+        if (!fechaSalida) {
+            alert("Debe ingresar la fecha antes de firmar la solicitud.");
+
+            // Marcar el input en rojo
+            inputFechaSalida.classList.add("is-invalid");
+
+            // Quitar el rojo automáticamente cuando empiece a escribir
+            inputFechaSalida.addEventListener("input", function () {
+                if (this.value) {
+                    this.classList.remove("is-invalid");
+                }
+            });
+
+            return; // detener ejecución
+        }
 
         // Obtener hora actual
         let ahora = new Date();
@@ -874,10 +947,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Asignar valores
         inputFirmo.value = "1";
-        inputFirmadoPor.value =  usuarioNombre + " el " + fechaSalida ;
+        inputFirmadoPor.value = usuarioNombre + " el " + fechaSalida ;
     });
 });
-
 
 
 
