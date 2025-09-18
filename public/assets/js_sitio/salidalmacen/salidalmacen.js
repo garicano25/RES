@@ -669,7 +669,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     </div>
                     <div class="col-3 mt-2">
                         <label class="form-label">Cantidad que sale de almacén</label>
-                        <input type="number" class="form-control cantidad_salida" name="CANTIDAD_SALIDA" value="${material.CANTIDAD_SALIDA || ''}" required>
+                        <input type="number" class="form-control cantidad_salida" name="CANTIDAD_SALIDA" value="${material.CANTIDAD_SALIDA || ''}">
                     </div>
                     <div class="col-12 mt-2 nota_div" style="display: none;">
                         <label class="form-label">Nota (explique por qué no es la misma cantidad)</label>
@@ -707,36 +707,49 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                 `;
             }
 
-            // Inicializar inventario si hay datos guardados
             if (material.TIPO_INVENTARIO) {
                 cargarInventario(material.TIPO_INVENTARIO, material.INVENTARIO);
             }
 
-            // Evento tipo inventario
             selectTipo.addEventListener('change', function () {
                 cargarInventario(this.value);
             });
 
-            // Activar/desactivar inventario según existencia
+            // Activar/desactivar inventario y cantidad salida según existencia
             function actualizarEstadoInventario() {
                 if (selectEnExistencia.value === "0") { // No
                     selectTipo.style.pointerEvents = "none";
                     selectTipo.style.backgroundColor = "#e9ecef";
                     selectInv.style.pointerEvents = "none";
                     selectInv.style.backgroundColor = "#e9ecef";
+                    inputSalida.disabled = true;
+                    inputSalida.removeAttribute("required");
+
+                    // ocultar nota siempre si no hay existencia
+                    divNota.style.display = "none";
+                    textareaNota.required = false;
+
                 } else { // Sí
                     selectTipo.style.pointerEvents = "auto";
                     selectTipo.style.backgroundColor = "";
                     selectInv.style.pointerEvents = "auto";
                     selectInv.style.backgroundColor = "";
+                    inputSalida.disabled = false;
+                    inputSalida.setAttribute("required", true);
+
+                    revisarCantidadSalida(); // revisar diferencias al activar
                 }
             }
+
             actualizarEstadoInventario();
             selectEnExistencia.addEventListener('change', actualizarEstadoInventario);
 
-            // Mostrar textarea si la cantidad de salida difiere
+            // Mostrar textarea solo si hay existencia y cantidades diferentes
             function revisarCantidadSalida() {
-                if (parseInt(inputSalida.value || 0) !== parseInt(inputCantidad.value || 0)) {
+                if (
+                    selectEnExistencia.value === "1" && // Solo cuando hay existencia
+                    parseInt(inputSalida.value || 0) !== parseInt(inputCantidad.value || 0)
+                ) {
                     divNota.style.display = "block";
                     textareaNota.required = true;
                 } else {
@@ -755,6 +768,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
         console.error('Error al parsear MATERIALES_JSON:', e);
     }
 }
+
 
 
 
