@@ -51,7 +51,12 @@ class recemplaedosModel extends Model
 
         'FIRMA_ALMACEN',
         'FECHA_ALMACEN_SOLICITUD',
-        'FIRMO_ALMACENISTA'
+        'FIRMO_ALMACENISTA',
+
+        'FINALIZAR_SOLICITUD_ALMACEN',
+        'GUARDO_SALIDA_INVENTARIO',
+        'GUARDO_RETORNO_INVENTARIO'
+
 
     ];
 }

@@ -3,7 +3,15 @@
 @section('contenido')
 
 
+<style>
+    .bg-amarillo-suave {
+        background-color: #fff3cd !important;
+    }
 
+    .bg-verde-suave {
+        background-color: #d1e7dd !important;
+    }
+</style>
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
@@ -137,7 +145,15 @@
                     </div>
 
 
-
+                    <div class="col-12 mt-3">
+                        <label>Finalizar solicitud</label>
+                            <select class="form-control" id="FINALIZAR_SOLICITUD_ALMACEN" name="FINALIZAR_SOLICITUD_ALMACEN" required>
+                                <option value="" selected disabled>Seleccione una opción</option>
+                                <option value="1">Sí</option>
+                                <option value="2">No</option>
+                            </select>
+                        
+                    </div>
 
                     <div class="col-12 mt-3">
                         <div class="row">

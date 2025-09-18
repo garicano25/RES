@@ -29,7 +29,7 @@ class salidalmacenController extends Controller
 {
     public function index()
     {
-                    
+
         $tipoinventario = catalogotipoinventarioModel::where('ACTIVO', 1)->get();
         $proveedoresOficiales = altaproveedorModel::select('RAZON_SOCIAL_ALTA', 'RFC_ALTA')->get();
         $proveedoresTemporales = proveedortempModel::select('RAZON_PROVEEDORTEMP', 'RFC_PROVEEDORTEMP', 'NOMBRE_PROVEEDORTEMP')->get();
@@ -105,6 +105,9 @@ class salidalmacenController extends Controller
 
 
 
+
+
+
     public function store(Request $request)
     {
         try {
@@ -120,19 +123,18 @@ class salidalmacenController extends Controller
                         $mrs = recemplaedosModel::create(array_merge(
                             $request->except(['MATERIALES_JSON']),
                             [
-
-                                'USUARIO_ID' => auth()->user()->ID_USUARIO,
-                                'CURP' => auth()->user()->CURP,
-
+                                'USUARIO_ID'    => auth()->user()->ID_USUARIO,
+                                'CURP'          => auth()->user()->CURP,
                                 'MATERIALES_JSON' => $materialesJson
                             ]
                         ));
 
                         return response()->json([
                             'code' => 1,
-                            'mr' => $mrs
+                            'mr'   => $mrs
                         ]);
                     } else {
+                        // === Desactivar o activar ===
                         if (isset($request->ELIMINAR)) {
                             $estado = $request->ELIMINAR == 1 ? 0 : 1;
                             recemplaedosModel::where('ID_FORMULARIO_RECURSOS_EMPLEADOS', $request->ID_FORMULARIO_RECURSOS_EMPLEADOS)
@@ -140,10 +142,12 @@ class salidalmacenController extends Controller
 
                             return response()->json([
                                 'code' => 1,
-                                'mr' => $estado == 0 ? 'Desactivada' : 'Activada'
+                                'mr'   => $estado == 0 ? 'Desactivada' : 'Activada'
                             ]);
                         } else {
+                            // === Actualizar MR existente ===
                             $mrs = recemplaedosModel::find($request->ID_FORMULARIO_RECURSOS_EMPLEADOS);
+
                             if ($mrs) {
                                 $datos = $request->except(['USUARIO_ID', 'CURP']);
 
@@ -155,39 +159,85 @@ class salidalmacenController extends Controller
 
                                 $mrs->update($datos);
 
+                                // === Guardar salida en inventario solo si finaliza ===
+                                if (
+                                    $request->FINALIZAR_SOLICITUD_ALMACEN == 1 &&
+                                    $mrs->GUARDO_SALIDA_INVENTARIO != 1
+                                ) {
+                                    $materiales = json_decode($mrs->MATERIALES_JSON, true);
+
+                                    if (is_array($materiales)) {
+                                        foreach ($materiales as $mat) {
+                                            // 🔹 Varios artículos
+                                            if (!empty($mat['VARIOS_ARTICULOS']) && $mat['VARIOS_ARTICULOS'] == "1" && isset($mat['ARTICULOS'])) {
+                                                foreach ($mat['ARTICULOS'] as $art) {
+                                                    DB::table('salidas_inventario')->insert([
+                                                        'USUARIO_ID'      => $mrs->USUARIO_ID,
+                                                        'INVENTARIO_ID'   => $art['INVENTARIO'],
+                                                        'CANTIDAD_SALIDA' => $art['CANTIDAD_DETALLE'],
+                                                        'FECHA_SALIDA'    => $mrs->FECHA_ALMACEN_SOLICITUD,
+                                                        'created_at'      => now(),
+                                                        'updated_at'      => now()
+                                                    ]);
+
+                                                    // 🔹 Actualizar inventario
+                                                    $inventario = inventarioModel::find($art['INVENTARIO']);
+                                                    if ($inventario) {
+                                                        $inventario->CANTIDAD_EQUIPO = max(0, $inventario->CANTIDAD_EQUIPO - intval($art['CANTIDAD_DETALLE']));
+                                                        $inventario->save();
+                                                    }
+                                                }
+                                            }
+                                            // 🔹 Artículo único
+                                            else {
+                                                DB::table('salidas_inventario')->insert([
+                                                    'USUARIO_ID'      => $mrs->USUARIO_ID,
+                                                    'INVENTARIO_ID'   => $mat['INVENTARIO'],
+                                                    'CANTIDAD_SALIDA' => $mat['CANTIDAD_SALIDA'],
+                                                    'FECHA_SALIDA'    => $mrs->FECHA_ALMACEN_SOLICITUD,
+                                                    'created_at'      => now(),
+                                                    'updated_at'      => now()
+                                                ]);
+
+                                                // 🔹 Actualizar inventario
+                                                $inventario = inventarioModel::find($mat['INVENTARIO']);
+                                                if ($inventario) {
+                                                    $inventario->CANTIDAD_EQUIPO = max(0, $inventario->CANTIDAD_EQUIPO - intval($mat['CANTIDAD_SALIDA']));
+                                                    $inventario->save();
+                                                }
+                                            }
+                                        }
+
+                                        $mrs->update(['GUARDO_SALIDA_INVENTARIO' => 1]);
+                                    }
+                                }
+
                                 return response()->json([
                                     'code' => 1,
-                                    'mr' => 'Actualizada'
+                                    'mr'   => 'Actualizada'
                                 ]);
                             }
 
                             return response()->json([
                                 'code' => 0,
-                                'msj' => 'MR no encontrada'
+                                'msj'  => 'MR no encontrada'
                             ], 404);
                         }
                     }
                     break;
 
-
-
-        
                 default:
                     return response()->json([
                         'code' => 1,
-                        'msj' => 'Api no encontrada'
+                        'msj'  => 'Api no encontrada'
                     ]);
             }
         } catch (Exception $e) {
-            Log::error("Error al guardar  " . $e->getMessage());
+            Log::error("Error al guardar MR: " . $e->getMessage());
             return response()->json([
-                'code' => 0,
+                'code'  => 0,
                 'error' => 'Error al guardar la MR'
             ], 500);
         }
     }
-
-
-
-
 }
