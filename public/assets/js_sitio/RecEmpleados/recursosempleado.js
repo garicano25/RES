@@ -28,6 +28,9 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     contadorMateriales = 1;
 
 
+    document.getElementById("guardaRECEMPLEADOS").disabled = false;
+
+
      const inputFecha = document.getElementById("FECHA_SALIDA");
     if (inputFecha) {
         inputFecha.classList.remove("is-invalid"); 
@@ -88,59 +91,6 @@ $("#NUEVO_RECUROSEMPLEADO").click(function (e) {
 
 
 let contadorMateriales = 1; 
-// document.addEventListener("DOMContentLoaded", function () {
-//     const botonMaterial = document.getElementById('botonmaterial');
-//     const contenedorMateriales = document.querySelector('.materialesdiv');
-  
-
-//     botonMaterial.addEventListener('click', function () {
-//         agregarMaterial();
-//     });
-
-//     function agregarMaterial() {
-//         const divMaterial = document.createElement('div');
-//         divMaterial.classList.add('row', 'material-item', 'mt-1');
-//         divMaterial.innerHTML = `
-    
-//             <div class="col-1 mt-2">
-//                 <label class="form-label">N°</label>
-//                 <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
-//             </div>
-//             <div class="col-5 mt-2">
-//                 <label class="form-label">Descripción</label>
-//                 <input type="text" class="form-control" name="DESCRIPCION" required>
-//             </div>
-//             <div class="col-1 mt-2">
-//                 <label class="form-label">Cantidad</label>
-//                 <input type="number" class="form-control" name="CANTIDAD" required>
-//             </div>
-//             <div class="col-3 mt-2">
-//                 <label class="form-label">¿El material y/o equipo retorna? *</label>
-//                 <select class="form-control retorna_material"  name="RETORNA_EQUIPO"  required>
-//                     <option value="0" disabled selected>Seleccione una opción</option>
-//                     <option value="1">Sí</option>
-//                     <option value="2">No</option>
-//                 </select>
-//             </div>
-           
-//             <div class="col-2 mt-3">
-//                  <br>
-//                  <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
-//                     <i class="bi bi-trash"></i>
-//                 </button>
-//             </div>
-//         `;
-
-//         contenedorMateriales.appendChild(divMaterial);
-//         contadorMateriales++;
-
-//         const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
-//         botonEliminar.addEventListener('click', function () {
-//             contenedorMateriales.removeChild(divMaterial);
-//             actualizarNumerosOrden();
-//         });
-//     }
-// });
 
 
 
@@ -186,15 +136,30 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
 
         contenedorMateriales.appendChild(divMaterial);
+
+
         contadorMateriales++;
 
+        // const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
+        // botonEliminar.addEventListener('click', function () {
+        //     contenedorMateriales.removeChild(divMaterial);
+        //     actualizarNumerosOrden(); 
+        //     revisarSelects(); 
+        // });
+        
+        
+        document.getElementById("guardaRECEMPLEADOS").disabled = false;
+
+    
         const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
         botonEliminar.addEventListener('click', function () {
             contenedorMateriales.removeChild(divMaterial);
-            actualizarNumerosOrden(); 
-            revisarSelects(); 
-        });
 
+            if (contenedorMateriales.querySelectorAll('.material-item').length === 0) {
+                document.getElementById("guardaRECEMPLEADOS").disabled = true;
+            }
+        });
+        
         const selectRetorna = divMaterial.querySelector('.retorna_material');
         selectRetorna.addEventListener('change', function () {
             revisarSelects();
@@ -516,7 +481,9 @@ $('#Tablarecempleados tbody').on('click', 'td>button.EDITAR', function () {
     editarDatoTabla(row.data(), 'formularioRECURSOSEMPLEADO', 'miModal_RECURSOSEMPLEADOS', 1);
     
 
+    document.getElementById("guardaRECEMPLEADOS").disabled = false;
 
+    
     if (row.data().TIPO_SOLICITUD === "1") {
         $('#PERMISO_AUSENCIA').show();
         $('#SOLIDA_ALMACEN').hide();
@@ -751,6 +718,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("DOMContentLoaded", function () {
     const select = document.getElementById("TIPO_SOLICITUD");
+    const btnGuardar = document.getElementById("guardaRECEMPLEADOS");
+
 
     const divs = {
         "1": document.getElementById("PERMISO_AUSENCIA"),
@@ -779,7 +748,11 @@ document.addEventListener("DOMContentLoaded", function () {
         if (divs[this.value]) {
             divs[this.value].style.display = "block";
         }
-
+        if (this.value === "2") { 
+            btnGuardar.disabled = true;   // bloquea el botón
+        } else {
+            btnGuardar.disabled = false;  // habilita en las demás opciones
+        }
         
 
         if (this.value === "1") {
