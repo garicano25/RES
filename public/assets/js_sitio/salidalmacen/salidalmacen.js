@@ -620,14 +620,13 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             const divMaterial = document.createElement('div');
             divMaterial.classList.add('material-item', 'mt-2');
 
-            // --- HTML principal ---
             divMaterial.innerHTML = `
                 <div class="row p-3 rounded">
                     <div class="col-1 mt-2">
                         <label class="form-label">N°</label>
                         <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
                     </div>
-                    <div class="col-5 mt-2">
+                    <div class="col-7 mt-2">
                         <label class="form-label">Descripción</label>
                         <input type="text" class="form-control" name="DESCRIPCION" value="${escapeHtml(material.DESCRIPCION)}" required>
                     </div>
@@ -635,6 +634,14 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                         <label class="form-label">Cantidad</label>
                         <input type="number" class="form-control cantidad_original" name="CANTIDAD" value="${material.CANTIDAD}" required>
                     </div>
+                     <div class="col-3 mt-2">
+                         <label class="form-label">¿El material o equipo retorna?*</label>
+                         <select class="form-control retorna_material" name="RETORNA_EQUIPO" required>
+                             <option value="0" disabled>Seleccione una opción</option>
+                             <option value="1" ${material.RETORNA_EQUIPO === "1" ? "selected" : ""}>Sí</option>
+                             <option value="2" ${material.RETORNA_EQUIPO === "2" ? "selected" : ""}>No</option>
+                         </select>
+                   </div>
                     <div class="col-2 mt-2">
                         <label class="form-label">En existencia</label>
                         <select class="form-control en_existencia" name="EN_EXISTENCIA" required>
@@ -683,7 +690,6 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             const divNota = divMaterial.querySelector('.nota_div');
             const textareaNota = divMaterial.querySelector('.nota_cantidad');
 
-            // Función para cargar inventario ordenado
             function cargarInventario(tipoSeleccionado, valorGuardado = null) {
                 const opciones = window.inventario
                     .filter(inv => inv.TIPO_EQUIPO === tipoSeleccionado)
