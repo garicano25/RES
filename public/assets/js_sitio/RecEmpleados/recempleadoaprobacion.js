@@ -34,7 +34,7 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
 
      const inputFecha = document.getElementById("FECHA_APRUEBA_SOLICITUD");
     if (inputFecha) {
-        inputFecha.classList.remove("is-invalid"); // quitar borde rojo
+        inputFecha.classList.remove("is-invalid"); 
     }
 
     if (typeof Swal !== "undefined") {
@@ -350,7 +350,7 @@ $(document).ready(function() {
             } 
         
         
-     if (row.data().DAR_BUENO == 1) { // == en lugar de ===
+     if (row.data().DAR_BUENO == 1) { 
             $('#VISTO_BUENO_JEFE').show();
             $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
 
@@ -420,7 +420,7 @@ $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.EDITAR', function 
         $('#DIV_FIRMAR').show();
     } 
         
-   if (row.data().DAR_BUENO == 1) { // == en lugar de ===
+   if (row.data().DAR_BUENO == 1) { 
     $('#VISTO_BUENO_JEFE').show();
     $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
 

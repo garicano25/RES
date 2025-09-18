@@ -571,17 +571,17 @@
 
 
     @if(request()->is('Rec.Empleado'))
-    <script src="/assets/js_sitio/RecEmpleados/recursosempleado.js?v=1.8"></script>
+    <script src="/assets/js_sitio/RecEmpleados/recursosempleado.js?v=1.9"></script>
     @endif
 
 
 
     @if(request()->is('Solicitudes_VoBo'))
-    <script src="/assets/js_sitio/RecEmpleados/recempleadovobo.js?v=1.3"></script>
+    <script src="/assets/js_sitio/RecEmpleados/recempleadovobo.js?v=1.4"></script>
     @endif
 
     @if(request()->is('Solicitudes_aprobaciones'))
-    <script src="/assets/js_sitio/RecEmpleados/recempleadoaprobacion.js?v=1.5"></script>
+    <script src="/assets/js_sitio/RecEmpleados/recempleadoaprobacion.js?v=1.6"></script>
     @endif
 
 

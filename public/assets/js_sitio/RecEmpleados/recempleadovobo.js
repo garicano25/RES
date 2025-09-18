@@ -27,6 +27,16 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     
     document.querySelector('.materialesdiv').innerHTML = '';
     contadorMateriales = 1;
+
+
+     const inputFecha = document.getElementById("FECHA_VISTO_SOLICITUD");
+    if (inputFecha) {
+        inputFecha.classList.remove("is-invalid"); 
+    }
+
+    if (typeof Swal !== "undefined") {
+        Swal.close();
+    }
 });
 
 
@@ -476,53 +486,6 @@ function cargarMaterialesDesdeJSON(materialesJson) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    const btnFirmar = document.getElementById("FIRMAR_SOLICITUD");
-    const inputFirmo = document.getElementById("FIRMO_USUARIO");
-    const inputFirmadoPor = document.getElementById("FIRMADO_POR");
-    const inputFechaSalida = document.getElementById("FECHA_SALIDA");
-
-    btnFirmar.addEventListener("click", function () {
-        let usuarioNombre = btnFirmar.getAttribute("data-usuario");
-        let fechaSalida = inputFechaSalida.value; // yyyy-mm-dd
-
-        // Obtener hora actual
-        let ahora = new Date();
-        let horas = ahora.getHours();
-        let minutos = String(ahora.getMinutes()).padStart(2, "0");
-        let segundos = String(ahora.getSeconds()).padStart(2, "0");
-
-        // Determinar AM o PM
-        let ampm = horas >= 12 ? "p.m." : "a.m.";
-
-        // Convertir a formato de 12 horas
-        horas = horas % 12;
-        horas = horas ? horas : 12; // El 0 se convierte en 12
-
-        let horaCompleta = horas + ":" + minutos + ":" + segundos + " " + ampm;
-
-        // Asignar valores
-        inputFirmo.value = "1";
-        inputFirmadoPor.value =  usuarioNombre + " el " + fechaSalida ;
-    });
-});
-
-
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
     const selectConcepto = document.getElementById("DAR_BUENO");
     const divExplique = document.getElementById("MOTIVO_RECHAZO_JEFE_DIV");
@@ -545,6 +508,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+// document.addEventListener("DOMContentLoaded", function () {
+//     const btnFirmar = document.getElementById("FIRMAR_SOLICITUD_JEFE");
+//     const inputFirmo = document.getElementById("FIRMO_JEFE");
+//     const inputFirmadoPor = document.getElementById("VISTO_BUENO");
+//     const inputFechaSalida = document.getElementById("FECHA_VISTO_SOLICITUD");
+
+//     btnFirmar.addEventListener("click", function () {
+//         let usuarioNombre = btnFirmar.getAttribute("data-usuario");
+//         let fechaSalida = inputFechaSalida.value; // yyyy-mm-dd
+
+//         // Obtener hora actual
+//         let ahora = new Date();
+//         let horas = ahora.getHours();
+//         let minutos = String(ahora.getMinutes()).padStart(2, "0");
+//         let segundos = String(ahora.getSeconds()).padStart(2, "0");
+
+//         // Determinar AM o PM
+//         let ampm = horas >= 12 ? "p.m." : "a.m.";
+
+//         // Convertir a formato de 12 horas
+//         horas = horas % 12;
+//         horas = horas ? horas : 12; // El 0 se convierte en 12
+
+//         let horaCompleta = horas + ":" + minutos + ":" + segundos + " " + ampm;
+
+//         // Asignar valores
+//         inputFirmo.value = "1";
+//         inputFirmadoPor.value = "Por" +" " + usuarioNombre + " el " + fechaSalida + " a las " + horaCompleta;
+//     });
+// });
+
+
+
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const btnFirmar = document.getElementById("FIRMAR_SOLICITUD_JEFE");
     const inputFirmo = document.getElementById("FIRMO_JEFE");
@@ -554,6 +553,23 @@ document.addEventListener("DOMContentLoaded", function () {
     btnFirmar.addEventListener("click", function () {
         let usuarioNombre = btnFirmar.getAttribute("data-usuario");
         let fechaSalida = inputFechaSalida.value; // yyyy-mm-dd
+
+        // Validar que exista fecha
+        if (!fechaSalida) {
+            alert("Debe ingresar la fecha antes de firmar la solicitud.");
+
+            // Marcar el input en rojo
+            inputFechaSalida.classList.add("is-invalid");
+
+            // Quitar el rojo automáticamente cuando empiece a escribir
+            inputFechaSalida.addEventListener("input", function () {
+                if (this.value) {
+                    this.classList.remove("is-invalid");
+                }
+            });
+
+            return; // detener ejecución
+        }
 
         // Obtener hora actual
         let ahora = new Date();
@@ -572,8 +588,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Asignar valores
         inputFirmo.value = "1";
-        inputFirmadoPor.value = "Por" +" " + usuarioNombre + " el " + fechaSalida + " a las " + horaCompleta;
+        inputFirmadoPor.value = usuarioNombre + " el " + fechaSalida ;
     });
 });
-
-
