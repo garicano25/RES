@@ -627,7 +627,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     <!-- En existencia -->
                     <div class="col-4 mt-2">
                         <label class="form-label">En existencia</label>
-                        <select class="form-control en_existencia" name="EN_EXISTENCIA" required>
+                        <select class="form-control en_existencia" name="EN_EXISTENCIA" >
                             <option value="" ${!material.EN_EXISTENCIA ? "selected" : ""} disabled>Seleccione una opción</option>
                             <option value="1" ${material.EN_EXISTENCIA === "1" ? "selected" : ""}>Sí</option>
                             <option value="0" ${material.EN_EXISTENCIA === "0" ? "selected" : ""}>No</option>
@@ -637,7 +637,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     <!-- Tipo inventario -->
                     <div class="col-4 mt-2">
                         <label class="form-label">Tipo inventario</label>
-                        <select class="form-control tipo_inventario" name="TIPO_INVENTARIO" required>
+                        <select class="form-control tipo_inventario" name="TIPO_INVENTARIO" >
                             <option value="" ${!material.TIPO_INVENTARIO ? "selected" : ""} disabled>Seleccione una opción</option>
                             ${window.tipoinventario.map(t => `
                                 <option value="${t.DESCRIPCION_TIPO}" ${material.TIPO_INVENTARIO === t.DESCRIPCION_TIPO ? "selected" : ""}>
@@ -650,7 +650,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     <!-- Inventario -->
                     <div class="col-4 mt-2">
                         <label class="form-label">Inventario</label>
-                        <select class="form-control inventario" name="INVENTARIO" required>
+                        <select class="form-control inventario" name="INVENTARIO" >
                             <option value="" ${!material.INVENTARIO ? "selected" : ""} disabled>Seleccione inventario</option>
                         </select>
                     </div>
