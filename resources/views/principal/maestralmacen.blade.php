@@ -311,7 +311,7 @@
     @endif
 
     @if(request()->is('Salida_almacen'))
-    <script src="/assets/js_sitio/salidalmacen/salidalmacen.js?v=1.10"></script>
+    <script src="/assets/js_sitio/salidalmacen/salidalmacen.js?v=1.11"></script>
     @endif
 </body>
 

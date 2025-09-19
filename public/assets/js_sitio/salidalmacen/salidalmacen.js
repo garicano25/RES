@@ -155,6 +155,9 @@ $("#guardaRECEMPLEADOS").click(function (e) {
                 'FECHA_RETORNO': $(this).find("input[name='FECHA_RETORNO']").val(),
                 'CANTIDAD_RETORNO': $(this).find("input[name='CANTIDAD_RETORNO']").val(),
                 'VARIOS_ARTICULOS': $(this).find("select[name='VARIOS_ARTICULOS']").val(),
+                'UNIDAD_SALIDA': $(this).find("input[name='UNIDAD_SALIDA']").val(),
+
+                
                 'ARTICULOS': [] 
             };
 
@@ -166,7 +169,9 @@ $("#guardaRECEMPLEADOS").click(function (e) {
                         'CANTIDAD_DETALLE': $(this).find("input[name='CANTIDAD_DETALLE[]']").val(),
                         'RETORNA_DETALLE': $(this).find("select[name='RETORNA_DETALLE[]']").val(),
                         'FECHA_DETALLE': $(this).find("input[name='FECHA_DETALLE[]']").val(),
-                        'CANTIDAD_RETORNO_DETALLE': $(this).find("input[name='CANTIDAD_RETORNO_DETALLE[]']").val()
+                        'CANTIDAD_RETORNO_DETALLE': $(this).find("input[name='CANTIDAD_RETORNO_DETALLE[]']").val(),
+                        'UNIDAD_DETALLE': $(this).find("input[name='UNIDAD_DETALLE[]']").val(),
+
                     };
                     documento.ARTICULOS.push(articulo);
                 });
@@ -566,7 +571,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                             `).join('')}
                         </select>
                     </div>
-                    <div class="col-6 mt-2 campo_unico">
+                    <div class="col-4 mt-2 campo_unico">
                         <label class="form-label">Inventario</label>
                         <select class="form-control inventario" name="INVENTARIO" >
                             <option value="" ${!material.INVENTARIO ? "selected" : ""} disabled>Seleccione</option>
@@ -576,7 +581,10 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                         <label class="form-label">Cantidad sale de almacén</label>
                         <input type="number" class="form-control cantidad_salida" name="CANTIDAD_SALIDA" value="${material.CANTIDAD_SALIDA || ''}">
                     </div>
-
+                    <div class="col-2 mt-2 campo_unico">
+                        <label class="form-label">U.M.</label>
+                        <input type="text" class="form-control cantidad_salida" name="UNIDAD_SALIDA" value="${material.UNIDAD_SALIDA || ''}">
+                    </div>
                     <div class="col-4 mt-2 div_articulo_retorno campo_unico" style="display: none;">
                         <label class="form-label">Artículo ya retorno</label>
                         <select class="form-control articulo_retorno" name="ARTICULO_RETORNO">
@@ -639,7 +647,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                         `).join('')}
                     </select>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <label>Inventario</label>
                     <select class="form-control inventario_detalle" name="INVENTARIO_DETALLE[]">
                         <option value="" ${!valor.INVENTARIO ? "selected" : ""} disabled>Seleccione</option>
@@ -648,6 +656,10 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                 <div class="col-2">
                     <label>Cantidad salida</label>
                     <input type="number" class="form-control cantidad_detalle" name="CANTIDAD_DETALLE[]" value="${valor.CANTIDAD_DETALLE || ''}">
+                </div>
+                    <div class="col-2">
+                    <label>U.M.</label>
+                    <input type="text" class="form-control cantidad_detalle" name="UNIDAD_DETALLE[]" value="${valor.UNIDAD_DETALLE || ''}">
                 </div>
                 <div class="col-4 retorna_detalle_wrap">
                     <label>Artículo ya retorno</label>
