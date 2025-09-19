@@ -145,54 +145,56 @@
                     </li>
                     <ul class="navbar-nav">
 
-                        @if(auth()->check() && !auth()->user()->hasRoles(['Almacenista','Asistente de compras']))
-                        <li class="nav-item dropdown" style="margin-left: -2px;">
-                            <a class="nav-link BOTON" href="{{ url('/Requisición_Materiales') }}"
-                                style="color: #fff; font-weight: bold; text-decoration: none;">
-                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
-                                <span class="d-lg-none">Requisición de Materiales - MR</span>
-                                <span class="d-none d-lg-inline">Requisición de Materiales - MR</span>
-                            </a>
-                        </li>
-                        @endif
-
-
-
-                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones','Administrador']))
 
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link dropdown-toggle BOTON" href="#"
                                 style="color: #fff; font-weight: bold; text-decoration: none;"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
-                                <span class="d-lg-none">M.R para Vo.Bo y aprobación</span>
-                                <span class="d-none d-lg-inline">M.R para Vo.Bo y aprobación</span>
+                                <span class="d-lg-none">Requisición de Materiales - M.R</span>
+                                <span class="d-none d-lg-inline">Requisición de Materiales - M.R</span>
                             </a>
 
                             <ul class="dropdown-menu">
-                                {{-- Para líderes --}}
-                                @if(auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones']))
+                                @if(auth()->check() && !auth()->user()->hasRoles(['Almacenista','Asistente de compras']))
+
                                 <li>
-                                    <a class="dropdown-item" href="{{ url('/Requisición_materiales_líderes') }}">
-                                        Requisiciones de materiales por dar visto bueno
-                                    </a>
+                                    <a class="dropdown-item" href="{{ url('/Requisición_Materiales') }}">
+                                        Requisición de Materiales - M.R </a>
                                 </li>
                                 @endif
 
+
+                                {{-- Para líderes --}}
+                                @if(auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones']))
+
                                 <hr class="dropdown-divider">
+
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/Requisición_materiales_líderes') }}">
+                                        M.R por dar Vo.Bo
+                                    </a>
+                                </li>
+
+
+                                <hr class="dropdown-divider">
+
+                                @endif
+
 
                                 {{-- Para administradores --}}
                                 @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
                                 <li>
                                     <a class="dropdown-item" href="{{ url('/Requisición_materiales_aprobación') }}">
-                                        Requisiciones de materiales por aprobar
+                                        M.R por aprobar
                                     </a>
                                 </li>
                                 @endif
                             </ul>
                         </li>
 
-                        @endif
+
+
 
 
 
