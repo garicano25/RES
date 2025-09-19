@@ -530,10 +530,9 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                         <input type="number" class="form-control cantidad_original" name="CANTIDAD" value="${material.CANTIDAD}" required>
                     </div>
 
-                    <!-- 🔹 Nuevo select VARIOS_ARTICULOS -->
                     <div class="col-3 mt-2">
                         <label class="form-label">¿Son varios artículos?</label>
-                        <select class="form-control varios_articulos" name="VARIOS_ARTICULOS">
+                        <select class="form-control varios_articulos" name="VARIOS_ARTICULOS" required>
                             <option value="" ${!material.VARIOS_ARTICULOS ? "selected" : ""} disabled>Seleccione</option>
                             <option value="0" ${material.VARIOS_ARTICULOS === "0" ? "selected" : ""}>No</option>
                             <option value="1" ${material.VARIOS_ARTICULOS === "1" ? "selected" : ""}>Sí</option>
@@ -578,7 +577,6 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                         <input type="number" class="form-control cantidad_salida" name="CANTIDAD_SALIDA" value="${material.CANTIDAD_SALIDA || ''}">
                     </div>
 
-                    <!-- NUEVOS CAMPOS DE RETORNO -->
                     <div class="col-4 mt-2 div_articulo_retorno campo_unico" style="display: none;">
                         <label class="form-label">Artículo ya retorno</label>
                         <select class="form-control articulo_retorno" name="ARTICULO_RETORNO">
@@ -604,7 +602,6 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                                value="${material.CANTIDAD_RETORNO || ''}">
                     </div>
 
-                    <!-- 🔹 Contenedor dinámico para artículos múltiples -->
                     <div class="col-12 mt-2 contenedor_articulos" style="display: none;">
                     </div>
 
@@ -627,7 +624,6 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             const divNota = divMaterial.querySelector('.nota_div');
             const textareaNota = divMaterial.querySelector('.nota_cantidad');
 
-            // 🔹 Función para agregar un artículo dinámico
          function agregarArticulo(valor = {}) {
             const divArticulo = document.createElement('div');
             divArticulo.classList.add('row', 'g-2', 'mb-2', 'articulo-item');
@@ -653,7 +649,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     <label>Cantidad salida</label>
                     <input type="number" class="form-control cantidad_detalle" name="CANTIDAD_DETALLE[]" value="${valor.CANTIDAD_DETALLE || ''}">
                 </div>
-                <div class="col-4 retorna_detalle">
+                <div class="col-4 retorna_detalle_wrap">
                     <label>Artículo ya retorno</label>
                     <select class="form-control retorna_detalle" name="RETORNA_DETALLE[]">
                         <option value="" ${!valor.RETORNA_DETALLE ? "selected" : ""}>Seleccione</option>
@@ -676,26 +672,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             const selectTipoDetalle = divArticulo.querySelector('.tipo_inventario_detalle');
             const selectInvDetalle = divArticulo.querySelector('.inventario_detalle');
 
-            // function cargarInventarioDetalle(tipoSeleccionado, valorGuardado = null) {
-            //     const opciones = window.inventario
-            //         .filter(inv => inv.TIPO_EQUIPO === tipoSeleccionado)
-            //         .sort((a, b) => a.DESCRIPCION_EQUIPO.localeCompare(b.DESCRIPCION_EQUIPO))
-            //         .map(inv => {
-            //             const mostrarTexto = (tipoSeleccionado === "AF" || tipoSeleccionado === "ANF")
-            //                 ? `${inv.DESCRIPCION_EQUIPO} (${inv.CODIGO_EQUIPO || ""})`
-            //                 : inv.DESCRIPCION_EQUIPO;
-            //             return `
-            //                 <option value="${inv.ID_FORMULARIO_INVENTARIO}" 
-            //                     ${valorGuardado == inv.ID_FORMULARIO_INVENTARIO ? "selected" : ""}>
-            //                     ${mostrarTexto}
-            //                 </option>
-            //             `;
-            //         }).join('');
-            //     selectInvDetalle.innerHTML = `
-            //         <option value="" disabled ${!valorGuardado ? "selected" : ""}>Seleccione inventario</option>
-            //         ${opciones}
-            //     `;
-            // }
+         
 
          function cargarInventarioDetalle(tipoSeleccionado, valorGuardado = null) {
             const opciones = window.inventario
@@ -744,7 +721,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             }
             selectTipoDetalle.addEventListener('change', function () {
                 cargarInventarioDetalle(this.value);
-    });
+            });
 
                 // datepicker
                 $(divArticulo).find('.mydatepicker').datepicker({
@@ -754,47 +731,57 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     language: 'es'
                 });
 
-                // mostrar campos retorno
-                const selectRetorna = divArticulo.querySelector('.retorna_detalle');
-                const divFecha = divArticulo.querySelector('.fecha_detalle_div');
-             const divCantRet = divArticulo.querySelector('.cantidad_retorno_div');
              
+           
+              // === Mostrar/ocultar campos de retorno por artículo (DETALLE) ===
+                const wrapRetornaDetalle     = divArticulo.querySelector('.retorna_detalle_wrap'); // el contenedor
+                const selectRetornaDetalle   = divArticulo.querySelector('select.retorna_detalle'); // el SELECT real
+                const divFechaDetalle        = divArticulo.querySelector('.fecha_detalle_div');
+                const divCantRetDetalle      = divArticulo.querySelector('.cantidad_retorno_div');
 
-                 const selectPrincipalRetorna = divMaterial.querySelector('.retorna_material'); 
-            const articuloRetornoDiv = divArticulo.querySelector('.retorna_detalle').closest('.col-4'); // div de Artículo ya retorno
+                // Select principal (bloque padre)
+                const selectPrincipalRetorna = divMaterial.querySelector('.retorna_material');
 
-            function actualizarArticuloRetorno() {
-                if (selectPrincipalRetorna.value === "1") {
-                    articuloRetornoDiv.style.display = "block"; // mostrar si principal dice Sí
+                // Asegura valor inicial del select detalle (venga o no del JSON)
+                selectRetornaDetalle.value = (valor.RETORNA_DETALLE ?? "").toString();
+
+                // Función que actualiza TODO según principal y detalle
+                function actualizarRetornoDetalle() {
+                // Si el principal NO es "Sí", ocultamos todo lo de retorno del detalle
+                if (String(selectPrincipalRetorna.value) !== "1") {
+                    wrapRetornaDetalle.style.display = "none";
+                    divFechaDetalle.style.display = "none";
+                    divCantRetDetalle.style.display = "none";
+                    return;
+                }
+
+                // Si el principal es "Sí", mostramos el select de detalle
+                wrapRetornaDetalle.style.display = "block";
+
+                // Muestra/oculta fecha y cantidad según el valor del detalle
+                if (String(selectRetornaDetalle.value) === "1") {
+                    divFechaDetalle.style.display = "block";
+                    divCantRetDetalle.style.display = "block";
                 } else {
-                    articuloRetornoDiv.style.display = "none";  // ocultar si principal dice No
-                    divFecha.style.display = "none";            // también ocultar fecha
-                    divCantRet.style.display = "none";          // también ocultar cantidad
+                    divFechaDetalle.style.display = "none";
+                    divCantRetDetalle.style.display = "none";
                 }
-            }
-            actualizarArticuloRetorno();
-            selectPrincipalRetorna.addEventListener('change', actualizarArticuloRetorno);
-            
-             
-             
-                selectRetorna.addEventListener('change', () => {
-                    if (selectRetorna.value === "1") {
-                        divFecha.style.display = "block";
-                        divCantRet.style.display = "block";
-                    } else {
-                        divFecha.style.display = "none";
-                        divCantRet.style.display = "none";
-                    }
-                });
-                if (valor.RETORNA_DETALLE === "1") {
-                    divFecha.style.display = "block";
-                    divCantRet.style.display = "block";
                 }
+
+                // Listeners — funcionan en NUEVO y EDITADO
+                selectPrincipalRetorna.addEventListener('change', actualizarRetornoDetalle);
+                selectRetornaDetalle.addEventListener('change', actualizarRetornoDetalle);
+
+                // Ejecuta una vez después de montar el DOM (y de que el <option selected> se aplique)
+                setTimeout(actualizarRetornoDetalle, 0);
+
+                                            
+
+             
             }
 
             
 
-            // 🔹 Función para validar la suma de cantidades
             function validarCantidades() {
                 const cantidades = contenedorArticulos.querySelectorAll('.cantidad_detalle');
                 let suma = 0;
@@ -863,30 +850,11 @@ function cargarMaterialesDesdeJSON(materialesJson) {
         const divFechaRetorno = divMaterial.querySelector('.div_fecha_retorno');
         const divCantidadRetorno = divMaterial.querySelector('.div_cantidad_retorno');
 
+            
+        
         // === lógica solo si NO es VARIOS_ARTICULOS ===
         if (material.VARIOS_ARTICULOS !== "1") {
-            // mostrar/ocultar según RETORNA_EQUIPO
-            function actualizarRetorno() {
-                if (selectRetorna.value === "1") {
-                    divArticuloRetorno.style.display = "block";
-
-                    if (selectArticuloRetorno.value === "1") {
-                        divFechaRetorno.style.display = "block";
-                        divCantidadRetorno.style.display = "block";
-                    } else {
-                        divFechaRetorno.style.display = "none";
-                        divCantidadRetorno.style.display = "none";
-                    }
-                } else {
-                    divArticuloRetorno.style.display = "none";
-                    divFechaRetorno.style.display = "none";
-                    divCantidadRetorno.style.display = "none";
-                }
-            }
-            actualizarRetorno();
-            selectRetorna.addEventListener("change", actualizarRetorno);
-            selectArticuloRetorno.addEventListener("change", actualizarRetorno);
-
+        
             // inicializar datepicker
             $(divMaterial).find('.mydatepicker').datepicker({
                 format: 'yyyy-mm-dd',
@@ -898,29 +866,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                 $(this).datepicker('setDate', $(this).val());
             });
 
-            // cargar inventario normal
-            // function cargarInventario(tipoSeleccionado, valorGuardado = null) {
-            //     const opciones = window.inventario
-            //         .filter(inv => inv.TIPO_EQUIPO === tipoSeleccionado)
-            //         .sort((a, b) => a.DESCRIPCION_EQUIPO.localeCompare(b.DESCRIPCION_EQUIPO))
-            //         .map(inv => {
-            //             const mostrarTexto = (tipoSeleccionado === "AF" || tipoSeleccionado === "ANF")
-            //                 ? `${inv.DESCRIPCION_EQUIPO} (${inv.CODIGO_EQUIPO || ""})`
-            //                 : inv.DESCRIPCION_EQUIPO;
-
-            //             return `
-            //                 <option value="${inv.ID_FORMULARIO_INVENTARIO}" 
-            //                     ${valorGuardado == inv.ID_FORMULARIO_INVENTARIO ? "selected" : ""}>
-            //                     ${mostrarTexto}
-            //                 </option>
-            //             `;
-            //         }).join('');
-
-            //     selectInv.innerHTML = `
-            //         <option value="" disabled ${!valorGuardado ? "selected" : ""}>Seleccione inventario</option>
-            //         ${opciones}
-            //     `;
-            // }
+            
                function cargarInventario(tipoSeleccionado, valorGuardado = null) {
                     const opciones = window.inventario
                         .filter(inv => inv.TIPO_EQUIPO === tipoSeleccionado)
@@ -964,8 +910,37 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             });
 
             // Activar/desactivar inventario y cantidad salida según existencia
+            // function actualizarEstadoInventario() {
+            //     if (selectEnExistencia.value === "0") { // No
+            //         selectTipo.style.pointerEvents = "none";
+            //         selectTipo.style.backgroundColor = "#e9ecef";
+            //         selectInv.style.pointerEvents = "none";
+            //         selectInv.style.backgroundColor = "#e9ecef";
+            //         inputSalida.disabled = true;
+            //         inputSalida.removeAttribute("required");
+
+            //         divNota.style.display = "none";
+            //         textareaNota.required = false;
+
+            //     } else { // Sí
+            //         selectTipo.style.pointerEvents = "auto";
+            //         selectTipo.style.backgroundColor = "";
+            //         selectInv.style.pointerEvents = "auto";
+            //         selectInv.style.backgroundColor = "";
+            //         inputSalida.disabled = false;
+
+            //         revisarCantidadSalida();
+            //     }
+            // }
+
             function actualizarEstadoInventario() {
                 if (selectEnExistencia.value === "0") { // No
+                    // resetear valores
+                    selectTipo.value = "";
+                    selectInv.value = "";
+                    inputSalida.value = "";
+
+                    // bloquear
                     selectTipo.style.pointerEvents = "none";
                     selectTipo.style.backgroundColor = "#e9ecef";
                     selectInv.style.pointerEvents = "none";
@@ -973,10 +948,12 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     inputSalida.disabled = true;
                     inputSalida.removeAttribute("required");
 
+                    // ocultar nota
                     divNota.style.display = "none";
                     textareaNota.required = false;
 
                 } else { // Sí
+                    // habilitar
                     selectTipo.style.pointerEvents = "auto";
                     selectTipo.style.backgroundColor = "";
                     selectInv.style.pointerEvents = "auto";
@@ -987,6 +964,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                 }
             }
 
+            
             actualizarEstadoInventario();
             selectEnExistencia.addEventListener('change', actualizarEstadoInventario);
 
@@ -1008,6 +986,43 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             inputSalida.addEventListener('input', revisarCantidadSalida);
         }
 
+            function actualizarRetorno() {
+                    // si son varios artículos, nunca mostrar "Artículo ya retorno"
+                    if (selectVarios.value === "1") {
+                        divArticuloRetorno.style.display = "none";
+                        divFechaRetorno.style.display = "none";
+                        divCantidadRetorno.style.display = "none";
+                        return; // salimos aquí
+                    }
+
+                    // si NO son varios artículos, aplica la lógica normal
+                    if (selectRetorna.value === "1") {
+                        divArticuloRetorno.style.display = "block";
+
+                        if (selectArticuloRetorno.value === "1") {
+                            divFechaRetorno.style.display = "block";
+                            divCantidadRetorno.style.display = "block";
+                        } else {
+                            divFechaRetorno.style.display = "none";
+                            divCantidadRetorno.style.display = "none";
+                        }
+                    } else {
+                        divArticuloRetorno.style.display = "none";
+                        divFechaRetorno.style.display = "none";
+                        divCantidadRetorno.style.display = "none";
+                    }
+                }
+
+                // Ejecutar al cargar
+                actualizarRetorno();
+
+                // Eventos
+                selectRetorna.addEventListener("change", actualizarRetorno);
+                selectArticuloRetorno.addEventListener("change", actualizarRetorno);
+                selectVarios.addEventListener("change", actualizarRetorno); 
+
+            
+   
     
         });
 

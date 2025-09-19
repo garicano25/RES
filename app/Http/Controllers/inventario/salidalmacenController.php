@@ -161,6 +161,58 @@ class salidalmacenController extends Controller
                                 $mrs->update($datos);
 
                                 // === Guardar salida en inventario solo si finaliza ===
+                                // if (
+                                //     $request->FINALIZAR_SOLICITUD_ALMACEN == 1 &&
+                                //     $mrs->GUARDO_SALIDA_INVENTARIO != 1
+                                // ) {
+                                //     $materiales = json_decode($mrs->MATERIALES_JSON, true);
+
+                                //     if (is_array($materiales)) {
+                                //         foreach ($materiales as $mat) {
+                                //             // 🔹 Varios artículos
+                                //             if (!empty($mat['VARIOS_ARTICULOS']) && $mat['VARIOS_ARTICULOS'] == "1" && isset($mat['ARTICULOS'])) {
+                                //                 foreach ($mat['ARTICULOS'] as $art) {
+                                //                     DB::table('salidas_inventario')->insert([
+                                //                         'USUARIO_ID'      => $mrs->USUARIO_ID,
+                                //                         'INVENTARIO_ID'   => $art['INVENTARIO'],
+                                //                         'CANTIDAD_SALIDA' => $art['CANTIDAD_DETALLE'],
+                                //                         'FECHA_SALIDA'    => $mrs->FECHA_ALMACEN_SOLICITUD,
+                                //                         'created_at'      => now(),
+                                //                         'updated_at'      => now()
+                                //                     ]);
+
+                                //                     // 🔹 Actualizar inventario
+                                //                     $inventario = inventarioModel::find($art['INVENTARIO']);
+                                //                     if ($inventario) {
+                                //                         $inventario->CANTIDAD_EQUIPO = max(0, $inventario->CANTIDAD_EQUIPO - intval($art['CANTIDAD_DETALLE']));
+                                //                         $inventario->save();
+                                //                     }
+                                //                 }
+                                //             }
+                                //             // 🔹 Artículo único
+                                //             else {
+                                //                 DB::table('salidas_inventario')->insert([
+                                //                     'USUARIO_ID'      => $mrs->USUARIO_ID,
+                                //                     'INVENTARIO_ID'   => $mat['INVENTARIO'],
+                                //                     'CANTIDAD_SALIDA' => $mat['CANTIDAD_SALIDA'],
+                                //                     'FECHA_SALIDA'    => $mrs->FECHA_ALMACEN_SOLICITUD,
+                                //                     'created_at'      => now(),
+                                //                     'updated_at'      => now()
+                                //                 ]);
+
+                                //                 // 🔹 Actualizar inventario
+                                //                 $inventario = inventarioModel::find($mat['INVENTARIO']);
+                                //                 if ($inventario) {
+                                //                     $inventario->CANTIDAD_EQUIPO = max(0, $inventario->CANTIDAD_EQUIPO - intval($mat['CANTIDAD_SALIDA']));
+                                //                     $inventario->save();
+                                //                 }
+                                //             }
+                                //         }
+
+                                //         $mrs->update(['GUARDO_SALIDA_INVENTARIO' => 1]);
+                                //     }
+                                // }
+                                // === Guardar salida en inventario solo si finaliza ===
                                 if (
                                     $request->FINALIZAR_SOLICITUD_ALMACEN == 1 &&
                                     $mrs->GUARDO_SALIDA_INVENTARIO != 1
@@ -169,32 +221,41 @@ class salidalmacenController extends Controller
 
                                     if (is_array($materiales)) {
                                         foreach ($materiales as $mat) {
-                                            // 🔹 Varios artículos
                                             if (!empty($mat['VARIOS_ARTICULOS']) && $mat['VARIOS_ARTICULOS'] == "1" && isset($mat['ARTICULOS'])) {
                                                 foreach ($mat['ARTICULOS'] as $art) {
+                                                    $cantidad = intval($art['CANTIDAD_DETALLE'] ?? 0);
+
+                                                    if ($cantidad <= 0) {
+                                                        continue;
+                                                    }
+
                                                     DB::table('salidas_inventario')->insert([
                                                         'USUARIO_ID'      => $mrs->USUARIO_ID,
                                                         'INVENTARIO_ID'   => $art['INVENTARIO'],
-                                                        'CANTIDAD_SALIDA' => $art['CANTIDAD_DETALLE'],
+                                                        'CANTIDAD_SALIDA' => $cantidad,
                                                         'FECHA_SALIDA'    => $mrs->FECHA_ALMACEN_SOLICITUD,
                                                         'created_at'      => now(),
                                                         'updated_at'      => now()
                                                     ]);
 
-                                                    // 🔹 Actualizar inventario
                                                     $inventario = inventarioModel::find($art['INVENTARIO']);
                                                     if ($inventario) {
-                                                        $inventario->CANTIDAD_EQUIPO = max(0, $inventario->CANTIDAD_EQUIPO - intval($art['CANTIDAD_DETALLE']));
+                                                        $inventario->CANTIDAD_EQUIPO = max(0, $inventario->CANTIDAD_EQUIPO - $cantidad);
                                                         $inventario->save();
                                                     }
                                                 }
                                             }
-                                            // 🔹 Artículo único
                                             else {
+                                                $cantidad = intval($mat['CANTIDAD_SALIDA'] ?? 0);
+
+                                                if ($cantidad <= 0) {
+                                                    continue;
+                                                }
+
                                                 DB::table('salidas_inventario')->insert([
                                                     'USUARIO_ID'      => $mrs->USUARIO_ID,
                                                     'INVENTARIO_ID'   => $mat['INVENTARIO'],
-                                                    'CANTIDAD_SALIDA' => $mat['CANTIDAD_SALIDA'],
+                                                    'CANTIDAD_SALIDA' => $cantidad,
                                                     'FECHA_SALIDA'    => $mrs->FECHA_ALMACEN_SOLICITUD,
                                                     'created_at'      => now(),
                                                     'updated_at'      => now()
@@ -203,7 +264,7 @@ class salidalmacenController extends Controller
                                                 // 🔹 Actualizar inventario
                                                 $inventario = inventarioModel::find($mat['INVENTARIO']);
                                                 if ($inventario) {
-                                                    $inventario->CANTIDAD_EQUIPO = max(0, $inventario->CANTIDAD_EQUIPO - intval($mat['CANTIDAD_SALIDA']));
+                                                    $inventario->CANTIDAD_EQUIPO = max(0, $inventario->CANTIDAD_EQUIPO - $cantidad);
                                                     $inventario->save();
                                                 }
                                             }
@@ -212,6 +273,8 @@ class salidalmacenController extends Controller
                                         $mrs->update(['GUARDO_SALIDA_INVENTARIO' => 1]);
                                     }
                                 }
+
+
 
                                 return response()->json([
                                     'code' => 1,
