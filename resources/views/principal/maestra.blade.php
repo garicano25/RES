@@ -218,11 +218,6 @@
 
                     @endif
 
-                    <li class="nav-item dropdown" style="margin-left: -2px;">
-                        <a class="nav-link BOTON" href="{{ url('/Rec.Empleado') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-briefcase-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Rec.Empleados</span><span class="d-none d-lg-inline">Rec.Empleados</span>
-                        </a>
-                    </li>
 
 
 
@@ -233,11 +228,16 @@
                             style="color: #fff; font-weight: bold; text-decoration: none;"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
-                            <span class="d-lg-none">Solicitudes para Vo.Bo y aprobación</span>
-                            <span class="d-none d-lg-inline">Solicitudes para Vo.Bo y aprobación</span>
+                            <span class="d-lg-none">Rec.Empleados</span>
+                            <span class="d-none d-lg-inline">Rec.Empleados</span>
                         </a>
 
                         <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="{{ url('/Rec.Empleado') }}">
+                                    Rec.Empleados </a>
+                            </li>
+
                             {{-- Para líderes --}}
                             @if(auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones']))
                             <li>
