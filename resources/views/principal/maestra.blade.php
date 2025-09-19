@@ -244,7 +244,7 @@
 
                             <li>
                                 <a class="dropdown-item" href="{{ url('/Solicitudes_VoBo') }}">
-                                    Solicitudes por dar visto bueno
+                                    Solicitudes por dar Vo.Bo
                                 </a>
                             </li>
 
