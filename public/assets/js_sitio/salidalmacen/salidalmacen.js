@@ -558,7 +558,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     </div>
                     <div class="col-3 mt-2 campo_unico">
                         <label class="form-label">Tipo inventario</label>
-                        <select class="form-control tipo_inventario" name="TIPO_INVENTARIO" required>
+                        <select class="form-control tipo_inventario" name="TIPO_INVENTARIO" >
                             <option value="" ${!material.TIPO_INVENTARIO ? "selected" : ""} disabled>Seleccione</option>
                             ${window.tipoinventario.map(t => `
                                 <option value="${t.DESCRIPCION_TIPO}" ${material.TIPO_INVENTARIO === t.DESCRIPCION_TIPO ? "selected" : ""}>
@@ -569,7 +569,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     </div>
                     <div class="col-6 mt-2 campo_unico">
                         <label class="form-label">Inventario</label>
-                        <select class="form-control inventario" name="INVENTARIO" required>
+                        <select class="form-control inventario" name="INVENTARIO" >
                             <option value="" ${!material.INVENTARIO ? "selected" : ""} disabled>Seleccione</option>
                         </select>
                     </div>
@@ -982,7 +982,6 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     selectInv.style.pointerEvents = "auto";
                     selectInv.style.backgroundColor = "";
                     inputSalida.disabled = false;
-                    inputSalida.setAttribute("required", true);
 
                     revisarCantidadSalida();
                 }
