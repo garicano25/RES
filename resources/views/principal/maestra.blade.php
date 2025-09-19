@@ -239,6 +239,9 @@
 
                             {{-- Para líderes --}}
                             @if(auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones']))
+
+                            <hr class="dropdown-divider">
+
                             <li>
                                 <a class="dropdown-item" href="{{ url('/Solicitudes_VoBo') }}">
                                     Solicitudes por dar visto bueno
@@ -250,7 +253,7 @@
 
                             @endif
 
-                            
+
                             {{-- Para administradores --}}
                             @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
                             <li>
