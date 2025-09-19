@@ -567,6 +567,82 @@ document.addEventListener("DOMContentLoaded", function () {
 ///// ENTRADA INVENTARIO TAB 2
 
 
+// function cargartablaentradainventario() {
+//     if ($.fn.DataTable.isDataTable('#Tablaentradainventario')) {
+//         Tablaentradainventario.clear().destroy();
+//     }
+
+//     Tablaentradainventario = $("#Tablaentradainventario").DataTable({
+//         language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+//         lengthChange: true,
+//         lengthMenu: [
+//             [10, 25, 50, -1],
+//             [10, 25, 50, 'All']
+//         ],
+//         info: false,
+//         paging: true,
+//         searching: true,
+//         filtering: true,
+//         scrollY: '65vh',
+//         scrollCollapse: true,
+//         responsive: true,
+//         ajax: {
+//             dataType: 'json',
+//             data: { inventario: inventario_id },
+//             method: 'GET',
+//             cache: false,
+//             url: '/Tablaentradainventario',
+//             beforeSend: function () {
+//                 $('#loadingIcon').css('display', 'inline-block');
+//             },
+//             complete: function () {
+//                 $('#loadingIcon').css('display', 'none');
+//                 Tablaentradainventario.columns.adjust().draw();
+//             },
+//             error: function (jqXHR, textStatus, errorThrown) {
+//                 $('#loadingIcon').css('display', 'none');
+//                 alertErrorAJAX(jqXHR, textStatus, errorThrown);
+//             },
+//             dataSrc: 'data'
+//         },
+//         columns: [
+//      { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+//     { data: 'FECHA_INGRESO', className: 'text-center' },
+//     { data: 'CANTIDAD_PRODUCTO', className: 'text-center' },
+//     {
+//         data: 'VALOR_UNITARIO',
+//         className: 'text-center',
+//         render: function(data) {
+//             if (!data) return '';
+//             let numero = parseFloat(data);
+//             return isNaN(numero) ? data : '$ ' + numero.toFixed(2);
+//         }
+//     },
+//     {
+//         data: 'COSTO_TOTAL',
+//         className: 'text-center',
+//         render: function(data) {
+//             if (!data) return '';
+//             let numero = parseFloat(data);
+//             return isNaN(numero) ? data : '$ ' + numero.toFixed(2);
+//         }
+//     },
+//     { data: 'TIPO', className: 'text-center' },
+// ],
+// columnDefs: [
+//    { targets: 0, title: '#', className: 'all text-center' },
+//     { targets: 1, title: 'Fecha', className: 'all text-center' },
+//     { targets: 2, title: 'Cantidad', className: 'all text-center' },
+//     { targets: 3, title: 'Valor unitario de compras', className: 'all text-center' },
+//     { targets: 4, title: 'Total', className: 'all text-center' },
+//     { targets: 5, title: 'Tipo', className: 'all text-center' },
+// ],
+
+//     });
+// }
+
+
+
 function cargartablaentradainventario() {
     if ($.fn.DataTable.isDataTable('#Tablaentradainventario')) {
         Tablaentradainventario.clear().destroy();
@@ -591,13 +667,13 @@ function cargartablaentradainventario() {
             data: { inventario: inventario_id }, 
             method: 'GET',
             cache: false,
-            url: '/Tablaentradainventario',  
+            url: '/Tablaentradainventario',
             beforeSend: function () {
                 $('#loadingIcon').css('display', 'inline-block');
             },
             complete: function () {
                 $('#loadingIcon').css('display', 'none');
-                Tablaentradainventario.columns.adjust().draw(); 
+                Tablaentradainventario.columns.adjust().draw();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 $('#loadingIcon').css('display', 'none');
@@ -606,42 +682,43 @@ function cargartablaentradainventario() {
             dataSrc: 'data'
         },
         columns: [
-     { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
-    { data: 'FECHA_INGRESO', className: 'text-center' },
-    { data: 'CANTIDAD_PRODUCTO', className: 'text-center' },
-    { 
-        data: 'VALOR_UNITARIO', 
-        className: 'text-center',
-        render: function(data) {
-            if (!data) return '';
-            let numero = parseFloat(data);
-            return isNaN(numero) ? data : '$ ' + numero.toFixed(2);
-        }
-    },
-    { 
-        data: 'COSTO_TOTAL',
-        className: 'text-center',
-        render: function(data) {
-            if (!data) return '';
-            let numero = parseFloat(data);
-            return isNaN(numero) ? data : '$ ' + numero.toFixed(2);
-        }
-    },
-    { data: 'TIPO', className: 'text-center' }, 
-],
-columnDefs: [
-   { targets: 0, title: '#', className: 'all text-center' },
-    { targets: 1, title: 'Fecha', className: 'all text-center' },  
-    { targets: 2, title: 'Cantidad', className: 'all text-center' },  
-    { targets: 3, title: 'Valor unitario de compras', className: 'all text-center' },  
-    { targets: 4, title: 'Total', className: 'all text-center' },
-    { targets: 5, title: 'Tipo', className: 'all text-center' },  
-],
-
+            { data: null, render: function (data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+            { data: 'FECHA', className: 'text-center' },
+            { data: 'CANTIDAD', className: 'text-center' },
+            { 
+                data: 'VALOR_UNITARIO', 
+                className: 'text-center',
+                render: function (data) {
+                    if (!data) return '';
+                    let numero = parseFloat(data);
+                    return isNaN(numero) ? data : '$ ' + numero.toFixed(2);
+                }
+            },
+            { 
+                data: 'COSTO_TOTAL',
+                className: 'text-center',
+                render: function (data) {
+                    if (!data) return '';
+                    let numero = parseFloat(data);
+                    return isNaN(numero) ? data : '$ ' + numero.toFixed(2);
+                }
+            },
+            { data: 'TIPO', className: 'text-center' },
+            { data: 'USUARIO', className: 'text-center' },
+           
+        ],
+        columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'Fecha', className: 'all text-center' },  
+            { targets: 2, title: 'Cantidad', className: 'all text-center' },  
+            { targets: 3, title: 'Valor unitario de compras', className: 'all text-center' },  
+            { targets: 4, title: 'Total', className: 'all text-center' },
+            { targets: 5, title: 'Tipo', className: 'all text-center' },
+            { targets: 6, title: 'Usuario', className: 'all text-center' },
+           
+        ]
     });
 }
-
-
 
 
 

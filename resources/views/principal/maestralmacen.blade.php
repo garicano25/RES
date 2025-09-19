@@ -303,7 +303,7 @@
 
 
     @if(request()->is('Inventario'))
-    <script src="/assets/js_sitio/inventario/inventario.js?v=1.11"></script>
+    <script src="/assets/js_sitio/inventario/inventario.js?v=1.12"></script>
     @endif
 
     @if(request()->is('Catálogo_tipo_inventario'))
@@ -311,7 +311,7 @@
     @endif
 
     @if(request()->is('Salida_almacen'))
-    <script src="/assets/js_sitio/salidalmacen/salidalmacen.js?v=1.7"></script>
+    <script src="/assets/js_sitio/salidalmacen/salidalmacen.js?v=1.8"></script>
     @endif
 </body>
 
