@@ -392,7 +392,7 @@ class inventarioController extends Controller
             $primerEntradaId = null;
 
             // =========================
-            // 1. Buscar saldo inicial en inventario_respaldo
+            // 1. Buscar saldo inicial
             // =========================
             $saldoInicial = DB::table('inventario_respaldo')
                 ->where('INVENTARIO_ID', $inventarioId)
@@ -401,6 +401,7 @@ class inventarioController extends Controller
             if ($saldoInicial) {
                 $data[] = [
                     'FECHA'          => $saldoInicial->FECHA_ADQUISICION,
+                    'FECHA_ORDEN'    => $saldoInicial->FECHA_ADQUISICION,
                     'CANTIDAD'       => $saldoInicial->CANTIDAD_EQUIPO,
                     'VALOR_UNITARIO' => $saldoInicial->UNITARIO_EQUIPO,
                     'COSTO_TOTAL'    => $saldoInicial->CANTIDAD_EQUIPO * $saldoInicial->UNITARIO_EQUIPO,
@@ -410,9 +411,6 @@ class inventarioController extends Controller
                     'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
                 ];
             } else {
-                // =========================
-                // 2. Si no hay respaldo, usar primer registro de entradas_inventario
-                // =========================
                 $primerEntrada = DB::table('entradas_inventario')
                     ->where('INVENTARIO_ID', $inventarioId)
                     ->orderBy('FECHA_INGRESO', 'asc')
@@ -423,6 +421,7 @@ class inventarioController extends Controller
 
                     $data[] = [
                         'FECHA'          => $primerEntrada->FECHA_INGRESO,
+                        'FECHA_ORDEN'    => $primerEntrada->FECHA_INGRESO,
                         'CANTIDAD'       => $primerEntrada->CANTIDAD_PRODUCTO . ($primerEntrada->UNIDAD_MEDIDA ? " ({$primerEntrada->UNIDAD_MEDIDA})" : ""),
                         'VALOR_UNITARIO' => $primerEntrada->VALOR_UNITARIO,
                         'COSTO_TOTAL'    => $primerEntrada->CANTIDAD_PRODUCTO * $primerEntrada->VALOR_UNITARIO,
@@ -458,20 +457,28 @@ class inventarioController extends Controller
             ])->map(function ($entrada) {
                 $usuario = trim($entrada->EMPLEADO_NOMBRE . ' ' . $entrada->EMPLEADO_APELLIDOPATERNO . ' ' . $entrada->EMPLEADO_APELLIDOMATERNO);
 
+                // Tipo y Usuario según ENTRADA_SOLICITUD
+                if ($entrada->ENTRADA_SOLICITUD == 1) {
+                    $tipo   = '<span class="badge bg-success">Entrada</span>';
+                    $usuarioTxt = 'Retornado por: ' . e($usuario);
+                } else {
+                    $tipo   = '<span class="badge bg-success">Entrada por compra</span>';
+                    $usuarioTxt = '';
+                }
+
                 return [
-                    // usar created_at solo si fue retorno
-                    'FECHA'          => $entrada->ENTRADA_SOLICITUD == 1 ? $entrada->created_at : $entrada->FECHA_INGRESO,
+                    'FECHA'          => $entrada->FECHA_INGRESO,   // se muestra
+                    'FECHA_ORDEN'    => $entrada->created_at,      // se usa para ordenar
                     'CANTIDAD'       => $entrada->CANTIDAD_PRODUCTO . ($entrada->UNIDAD_MEDIDA ? " ({$entrada->UNIDAD_MEDIDA})" : ""),
                     'VALOR_UNITARIO' => $entrada->VALOR_UNITARIO,
                     'COSTO_TOTAL'    => $entrada->CANTIDAD_PRODUCTO * $entrada->VALOR_UNITARIO,
-                    'TIPO'           => '<span class="badge bg-success">Entrada</span>',
-                    'USUARIO'        => $entrada->ENTRADA_SOLICITUD == 1
-                        ? 'Retornado por: ' . e($usuario)
-                        : 'Entrada por compra',
+                    'TIPO'           => $tipo,
+                    'USUARIO'        => $usuarioTxt,
                     'BTN_EDITAR'     => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
                     'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
                 ];
             });
+
 
             // =========================
             // 4. Salidas
@@ -491,8 +498,8 @@ class inventarioController extends Controller
                     $usuario = trim($salida->EMPLEADO_NOMBRE . ' ' . $salida->EMPLEADO_APELLIDOPATERNO . ' ' . $salida->EMPLEADO_APELLIDOMATERNO);
 
                     return [
-                        // usar created_at en lugar de fecha_salida
-                        'FECHA'          => $salida->created_at,
+                        'FECHA'          => $salida->FECHA_SALIDA,  // se muestra
+                        'FECHA_ORDEN'    => $salida->created_at,    // se usa para ordenar
                         'CANTIDAD'       => $salida->CANTIDAD_SALIDA . ($salida->UNIDAD_MEDIDA ? " ({$salida->UNIDAD_MEDIDA})" : ""),
                         'VALOR_UNITARIO' => '',
                         'COSTO_TOTAL'    => '',
@@ -504,9 +511,9 @@ class inventarioController extends Controller
                 });
 
             // =========================
-            // 5. Unir todo y ordenar
+            // 5. Unir y ordenar por FECHA_ORDEN
             // =========================
-            $todos = collect($data)->merge($entradas)->merge($salidas)->sortBy('FECHA')->values();
+            $todos = collect($data)->merge($entradas)->merge($salidas)->sortBy('FECHA_ORDEN')->values();
 
             return response()->json([
                 'data' => $todos,
@@ -519,8 +526,6 @@ class inventarioController extends Controller
             ]);
         }
     }
-
-    
 
 
     public function  store(Request $request)
