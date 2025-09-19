@@ -583,7 +583,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     </div>
                     <div class="col-2 mt-2 campo_unico">
                         <label class="form-label">U.M.</label>
-                        <input type="text" class="form-control cantidad_salida" name="UNIDAD_SALIDA" value="${material.UNIDAD_SALIDA || ''}">
+                        <input type="text" class="form-control " name="UNIDAD_SALIDA" value="${material.UNIDAD_SALIDA || ''}">
                     </div>
                     <div class="col-4 mt-2 div_articulo_retorno campo_unico" style="display: none;">
                         <label class="form-label">Artículo ya retorno</label>
@@ -659,7 +659,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                 </div>
                     <div class="col-2">
                     <label>U.M.</label>
-                    <input type="text" class="form-control cantidad_detalle" name="UNIDAD_DETALLE[]" value="${valor.UNIDAD_DETALLE || ''}">
+                    <input type="text" class="form-control " name="UNIDAD_DETALLE[]" value="${valor.UNIDAD_DETALLE || ''}">
                 </div>
                 <div class="col-4 retorna_detalle_wrap">
                     <label>Artículo ya retorno</label>

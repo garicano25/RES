@@ -446,8 +446,9 @@ class salidalmacenController extends Controller
                                         if (!empty($mat['VARIOS_ARTICULOS']) && $mat['VARIOS_ARTICULOS'] == "1" && isset($mat['ARTICULOS'])) {
                                             foreach ($mat['ARTICULOS'] as $art) {
                                                 if (!empty($art['RETORNA_DETALLE']) && $art['RETORNA_DETALLE'] == "1") {
-                                                    $cantRetorno  = intval($art['CANTIDAD_RETORNO_DETALLE'] ?? 0);
-                                                    $fechaIngreso = $art['FECHA_DETALLE'] ?? $mrs->FECHA_ALMACEN_SOLICITUD;
+                                                    $cantRetorno   = intval($art['CANTIDAD_RETORNO_DETALLE'] ?? 0);
+                                                    $unidadRetorna = $art['UNIDAD_DETALLE'] ?? null;
+                                                    $fechaIngreso  = $art['FECHA_DETALLE'] ?? $mrs->FECHA_ALMACEN_SOLICITUD;
 
                                                     if ($cantRetorno > 0) {
                                                         $existe = DB::table('entradas_inventario')
@@ -462,7 +463,8 @@ class salidalmacenController extends Controller
                                                                 'INVENTARIO_ID'     => $art['INVENTARIO'],
                                                                 'USUARIO_ID'        => $mrs->USUARIO_ID,
                                                                 'FECHA_INGRESO'     => $fechaIngreso,
-                                                                'CANTIDAD_PRODUCTO' => $cantRetorno,
+                                                                'CANTIDAD_PRODUCTO' => $cantRetorno,   
+                                                                'UNIDAD_MEDIDA'     => $unidadRetorna, 
                                                                 'ENTRADA_SOLICITUD' => 1,
                                                                 'created_at'        => now(),
                                                                 'updated_at'        => now()
@@ -480,6 +482,7 @@ class salidalmacenController extends Controller
                                         } else {
                                             if (!empty($mat['ARTICULO_RETORNO']) && $mat['ARTICULO_RETORNO'] == "1") {
                                                 $cantRetorno  = intval($mat['CANTIDAD_RETORNO'] ?? 0);
+                                                $umretorna    = $mat['UNIDAD_SALIDA'] ?? null;
                                                 $fechaIngreso = $mat['FECHA_RETORNO'] ?? $mrs->FECHA_ALMACEN_SOLICITUD;
 
                                                 if ($cantRetorno > 0) {
@@ -496,6 +499,7 @@ class salidalmacenController extends Controller
                                                             'USUARIO_ID'        => $mrs->USUARIO_ID,
                                                             'FECHA_INGRESO'     => $fechaIngreso,
                                                             'CANTIDAD_PRODUCTO' => $cantRetorno,
+                                                            'UNIDAD_MEDIDA'     => $umretorna,
                                                             'ENTRADA_SOLICITUD' => 1,
                                                             'created_at'        => now(),
                                                             'updated_at'        => now()
