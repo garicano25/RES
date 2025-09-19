@@ -177,14 +177,14 @@
 
                         @endif
 
-                        @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
+                        <!-- @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
 
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link BOTON" href="{{ url('/') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                                 <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Aprobar salidas de almacén</span><span class="d-none d-lg-inline">Aprobar salidas de almacén</span>
                             </a>
                         </li>
-                        @endif
+                        @endif -->
 
 
                         <li class="nav-item dropdown" style="margin-left: -2px;">
