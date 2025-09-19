@@ -145,6 +145,7 @@
                     </li>
                     <ul class="navbar-nav">
 
+                        @if(auth()->check() && !auth()->user()->hasRoles(['Almacenista','Asistente de compras']))
 
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link dropdown-toggle BOTON" href="#"
@@ -156,7 +157,6 @@
                             </a>
 
                             <ul class="dropdown-menu">
-                                @if(auth()->check() && !auth()->user()->hasRoles(['Almacenista','Asistente de compras']))
 
                                 <li>
                                     <a class="dropdown-item" href="{{ url('/Requisición_Materiales') }}">
