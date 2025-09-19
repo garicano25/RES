@@ -327,7 +327,8 @@ class inventarioController extends Controller
                 ->get([
                     's.FECHA_SALIDA',
                     's.CANTIDAD_SALIDA',
-                    'u.EMPLEADO_NOMBRE',
+                    's.UNIDAD_MEDIDA',
+                'u.EMPLEADO_NOMBRE',
                     'u.EMPLEADO_APELLIDOPATERNO',
                     'u.EMPLEADO_APELLIDOMATERNO'
                 ])->map(function ($salida) {
@@ -335,7 +336,8 @@ class inventarioController extends Controller
 
                     return [
                         'FECHA'          => $salida->FECHA_SALIDA,
-                        'CANTIDAD'       => $salida->CANTIDAD_SALIDA,
+                        'CANTIDAD'       => $salida->CANTIDAD_SALIDA . ($salida->UNIDAD_MEDIDA ? " ({$salida->UNIDAD_MEDIDA})" : ""),
+
                         'VALOR_UNITARIO' => '',
                         'COSTO_TOTAL'    => '',
                         'TIPO'           => '<span class="badge bg-danger">Salida</span>',
