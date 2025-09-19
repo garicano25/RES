@@ -330,7 +330,12 @@ columnDefs: [
     { targets: 5, title: 'Editar', className: 'all text-center' },
     { targets: 6, title: 'Visualizar', className: 'all text-center' },
 
-]
+],createdRow: function (row, data, dataIndex) {
+    if (data.FINALIZAR_SOLICITUD_ALMACEN == 1) {
+        $(row).addClass('bg-verde-suave');
+    }
+},
+
 
 });
 
