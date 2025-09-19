@@ -177,6 +177,15 @@
 
                         @endif
 
+                        @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
+
+                        <li class="nav-item dropdown" style="margin-left: -2px;">
+                            <a class="nav-link BOTON" href="{{ url('/Inventario') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                                <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Aprobar solicitudes</span><span class="d-none d-lg-inline">Aprobar solicitudes</span>
+                            </a>
+                        </li>
+                        @endif
+
 
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link BOTON" href="{{ url('/Salida_almacen') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
