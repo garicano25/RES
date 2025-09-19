@@ -244,10 +244,13 @@
                                     Solicitudes por dar visto bueno
                                 </a>
                             </li>
-                            @endif
+
 
                             <hr class="dropdown-divider">
 
+                            @endif
+
+                            
                             {{-- Para administradores --}}
                             @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
                             <li>
@@ -259,7 +262,7 @@
                         </ul>
                     </li>
 
-                    
+
 
 
 
