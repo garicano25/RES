@@ -221,7 +221,6 @@
 
 
 
-                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones','Administrador']))
 
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#"
@@ -260,7 +259,7 @@
                         </ul>
                     </li>
 
-                    @endif
+                    
 
 
 
