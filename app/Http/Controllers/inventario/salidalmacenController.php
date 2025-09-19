@@ -394,6 +394,7 @@ class salidalmacenController extends Controller
                                                             'INVENTARIO_ID'   => $art['INVENTARIO'],
                                                             'CANTIDAD_SALIDA' => $cantidad,
                                                             'FECHA_SALIDA'    => $mrs->FECHA_ALMACEN_SOLICITUD,
+                                                            'UNIDAD_MEDIDA'   => $art['UNIDAD_DETALLE'],
                                                             'created_at'      => now(),
                                                             'updated_at'      => now()
                                                         ]);
@@ -414,6 +415,7 @@ class salidalmacenController extends Controller
                                                         'INVENTARIO_ID'   => $mat['INVENTARIO'],
                                                         'CANTIDAD_SALIDA' => $cantidad,
                                                         'FECHA_SALIDA'    => $mrs->FECHA_ALMACEN_SOLICITUD,
+                                                        'UNIDAD_MEDIDA'   => $mat['UNIDAD_SALIDA'],
                                                         'created_at'      => now(),
                                                         'updated_at'      => now()
                                                     ]);
