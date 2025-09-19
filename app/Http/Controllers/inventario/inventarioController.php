@@ -298,21 +298,63 @@ class inventarioController extends Controller
             // =========================
             // 3. Agregar las demás entradas
             // =========================
-            $entradasQuery = DB::table('entradas_inventario')
-                ->where('INVENTARIO_ID', $inventarioId);
+            // $entradasQuery = DB::table('entradas_inventario')
+            //     ->where('INVENTARIO_ID', $inventarioId);
+
+            // if ($primerEntradaId) {
+            //     $entradasQuery->where('ID_ENTRADA_FORMULARIO', '!=', $primerEntradaId);
+            // }
+
+            // $entradas = $entradasQuery->get()->map(function ($entrada) {
+            //     return [
+            //         'FECHA'          => $entrada->FECHA_INGRESO,
+            //         'CANTIDAD'       => $entrada->CANTIDAD_PRODUCTO . ($entrada->UNIDAD_MEDIDA ? " ({$entrada->UNIDAD_MEDIDA})" : ""),
+            //         'VALOR_UNITARIO' => $entrada->VALOR_UNITARIO,
+            //         'COSTO_TOTAL'    => $entrada->CANTIDAD_PRODUCTO * $entrada->VALOR_UNITARIO,
+            //         'TIPO'           => '<span class="badge bg-success">Entrada</span>',
+            //         'USUARIO'        => '',
+            //         'BTN_EDITAR'     => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
+            //         'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
+            //     ];
+            // });
+
+            // =========================
+            // 3. Agregar las demás entradas
+            // =========================
+            $entradasQuery = DB::table('entradas_inventario as e')
+                ->leftJoin('usuarios as u', 'u.ID_USUARIO', '=', 'e.USUARIO_ID')
+                ->where('e.INVENTARIO_ID', $inventarioId);
 
             if ($primerEntradaId) {
-                $entradasQuery->where('ID_ENTRADA_FORMULARIO', '!=', $primerEntradaId);
+                $entradasQuery->where('e.ID_ENTRADA_FORMULARIO', '!=', $primerEntradaId);
             }
 
-            $entradas = $entradasQuery->get()->map(function ($entrada) {
+            $entradas = $entradasQuery->get([
+                'e.FECHA_INGRESO',
+                'e.CANTIDAD_PRODUCTO',
+                'e.UNIDAD_MEDIDA',
+                'e.VALOR_UNITARIO',
+                'e.ENTRADA_SOLICITUD',
+                'u.EMPLEADO_NOMBRE',
+                'u.EMPLEADO_APELLIDOPATERNO',
+                'u.EMPLEADO_APELLIDOMATERNO'
+            ])->map(function ($entrada) {
+                $usuario = trim($entrada->EMPLEADO_NOMBRE . ' ' . $entrada->EMPLEADO_APELLIDOPATERNO . ' ' . $entrada->EMPLEADO_APELLIDOMATERNO);
+
+                // Condicionar tipo de entrada
+                if ($entrada->ENTRADA_SOLICITUD == 1) {
+                    $tipo = '<span class="badge bg-info">Retornado por: ' . e($usuario) . '</span>';
+                } else {
+                    $tipo = '<span class="badge bg-success">Entrada por compra</span>';
+                }
+
                 return [
                     'FECHA'          => $entrada->FECHA_INGRESO,
                     'CANTIDAD'       => $entrada->CANTIDAD_PRODUCTO . ($entrada->UNIDAD_MEDIDA ? " ({$entrada->UNIDAD_MEDIDA})" : ""),
                     'VALOR_UNITARIO' => $entrada->VALOR_UNITARIO,
                     'COSTO_TOTAL'    => $entrada->CANTIDAD_PRODUCTO * $entrada->VALOR_UNITARIO,
-                    'TIPO'           => '<span class="badge bg-success">Entrada</span>',
-                    'USUARIO'        => '',
+                    'TIPO'           => $tipo,
+                    'USUARIO'        => $usuario,
                     'BTN_EDITAR'     => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
                     'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
                 ];
