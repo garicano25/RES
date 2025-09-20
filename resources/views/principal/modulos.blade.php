@@ -585,8 +585,111 @@
                             </style>
 
 
-                            <div class="widget__area" id="DIV_MONEDA">
-                            </div>
+                            <div class="widget__area" id="DIV_MONEDA"></div>
+
+
+                            <script>
+                                async function cargarTipoCambio() {
+                                    const div = document.getElementById("DIV_MONEDA");
+                                    div.innerHTML = "⏳ Cargando tipo de cambio...";
+
+                                    try {
+                                        const response = await fetch("/tipo-cambio");
+                                        const data = await response.json();
+
+                                        if (data.error) {
+                                            div.innerHTML = "⚠️ Error: " + data.mensaje;
+                                            return;
+                                        }
+
+                                        div.innerHTML = `
+                                <div class="currency-widget">
+                                    <h3>💵 Tipo de Cambio</h3>
+                                    <p class="rate">USD → MXN</p>
+                                    <p class="value">$${data.dato} MXN</p>
+                                    <p class="date">📅 Fecha: ${data.fecha}</p>
+                                </div>
+                            `;
+
+                                        updateClock();
+                                        setInterval(updateClock, 1000);
+
+                                    } catch (error) {
+                                        div.innerHTML = "❌ No se pudo cargar el tipo de cambio.";
+                                        console.error(error);
+                                    }
+                                }
+
+                                function updateClock() {
+                                    const now = new Date();
+                                    const formattedTime = now.toLocaleTimeString("es-MX", {
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                        second: "2-digit"
+                                    });
+                                    const clockElement = document.getElementById("current-time");
+                                    if (clockElement) {
+                                        clockElement.innerText = formattedTime;
+                                    }
+                                }
+
+                                document.addEventListener("DOMContentLoaded", cargarTipoCambio);
+                            </script>
+
+                            <style>
+                                .widget__area {
+                                   
+                                    color: white;
+                                    text-align: center;
+                                    padding: 12px;
+                                    border-radius: 15px;
+                                    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+                                    font-family: 'Poppins', sans-serif;
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: center;
+                                    align-items: center;
+                                    overflow: hidden;
+                                }
+
+                                .currency-widget {
+                                    width: 100%;
+                                    height: 100%;
+                                }
+
+                                .currency-widget h3 {
+                                    margin: 5px 0;
+                                    font-size: 1.2vw;
+                                    font-weight: bold;
+                                }
+
+                                .rate {
+                                    font-size: 0.9vw;
+                                    margin: 3px 0;
+                                }
+
+                                .value {
+                                    font-size: 1.6vw;
+                                    font-weight: bold;
+                                    margin: 4px 0;
+                                }
+
+                                .date {
+                                    font-size: 0.8vw;
+                                    margin: 2px 0;
+                                }
+
+                                .updated-time {
+                                    font-size: 0.7vw;
+                                    opacity: 0.8;
+                                    margin-top: 3px;
+                                }
+
+                                p {
+                                    margin: 2px 0;
+                                    line-height: 1.1;
+                                }
+                            </style>
 
                         </div>
                         <!-- 
@@ -745,7 +848,7 @@
 
 
                         $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRolAsistentePlaneacion || $tieneSoloRolHSEQ || $tieneSoloRolSoftware || $tieneSoloRolAmadellaves ;
-                        
+
                         @endphp
 
                         <div class="modules">

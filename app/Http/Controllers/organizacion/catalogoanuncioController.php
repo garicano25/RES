@@ -106,7 +106,45 @@ class catalogoanuncioController extends Controller
 
 
 
-   
+
+
+
+    public function getTipoCambio()
+    {
+        try {
+            $url = "https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF43718/datos/oportuno";
+            $token = "27a9240ee1408c3c53ee5c1d6cde123db668f8ca5e5472a1cef9b63300feb4e1"; // 👈 tu token real
+
+            $client = new \GuzzleHttp\Client();
+            $response = $client->request('GET', $url, [
+                'headers' => [
+                    'Bmx-Token' => $token,
+                    'Accept'    => 'application/json'
+                ]
+            ]);
+
+            $data = json_decode($response->getBody(), true);
+
+            if (!isset($data['bmx']['series'][0]['datos'][0])) {
+                return response()->json([
+                    'error' => true,
+                    'mensaje' => 'No se encontraron datos en la respuesta de Banxico'
+                ], 500);
+            }
+
+            $serie = $data['bmx']['series'][0]['datos'][0];
+
+            return response()->json([
+                'fecha' => $serie['fecha'],
+                'dato'  => $serie['dato']
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => true,
+                'mensaje' => $e->getMessage()
+            ], 500);
+        }
+    }
 
 
 
