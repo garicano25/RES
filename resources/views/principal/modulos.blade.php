@@ -598,17 +598,17 @@
                                         const data = await response.json();
 
                                         if (data.error) {
-                                            div.innerHTML = "⚠️ Error: " + data.mensaje;
+                                            div.innerHTML = " Error: " + data.mensaje;
                                             return;
                                         }
 
                                         div.innerHTML = `
-                                <div class="currency-widget">
-                                    <h3>💵 Tipo de Cambio</h3>
-                                    <p class="rate">USD → MXN</p>
-                                    <p class="value">$${data.dato} MXN</p>
-                                    <p class="date">📅 Fecha: ${data.fecha}</p>
-                                </div>
+                                    <div class="currency-widget">
+                                        <h3>💵 Tipo de Cambio</h3>
+                                        <p class="rate">USD → MXN</p>
+                                        <p class="value">$${data.dato} MXN</p>
+                                        <p class="date">📅 Fecha: ${data.fecha}</p>
+                                    </div>
                             `;
 
                                         updateClock();

@@ -113,7 +113,7 @@ class catalogoanuncioController extends Controller
     {
         try {
             $url = "https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF43718/datos/oportuno";
-            $token = "27a9240ee1408c3c53ee5c1d6cde123db668f8ca5e5472a1cef9b63300feb4e1"; // 👈 tu token real
+            $token = "27a9240ee1408c3c53ee5c1d6cde123db668f8ca5e5472a1cef9b63300feb4e1"; 
 
             $client = new \GuzzleHttp\Client();
             $response = $client->request('GET', $url, [
