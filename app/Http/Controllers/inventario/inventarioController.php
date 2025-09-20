@@ -392,7 +392,7 @@ class inventarioController extends Controller
             $primerEntradaId = null;
 
             // =========================
-            // 1. Buscar saldo inicial
+            // 1. Saldo inicial
             // =========================
             $saldoInicial = DB::table('inventario_respaldo')
                 ->where('INVENTARIO_ID', $inventarioId)
@@ -434,7 +434,7 @@ class inventarioController extends Controller
             }
 
             // =========================
-            // 3. Entradas
+            // 2. Entradas
             // =========================
             $entradasQuery = DB::table('entradas_inventario as e')
                 ->leftJoin('usuarios as u', 'u.ID_USUARIO', '=', 'e.USUARIO_ID')
@@ -457,23 +457,31 @@ class inventarioController extends Controller
             ])->map(function ($entrada) {
                 $usuario = trim($entrada->EMPLEADO_NOMBRE . ' ' . $entrada->EMPLEADO_APELLIDOPATERNO . ' ' . $entrada->EMPLEADO_APELLIDOMATERNO);
 
+                if ($entrada->ENTRADA_SOLICITUD == 1) {
+                    $tipo       = '<span class="badge bg-success">Entrada</span>';
+                    $usuarioTxt = 'Retornado por: ' . e($usuario);
+                    $fechaOrden = $entrada->created_at; // para ordenar
+                } else {
+                    $tipo       = '<span class="badge bg-success">Entrada por compra</span>';
+                    $usuarioTxt = '';
+                    $fechaOrden = $entrada->FECHA_INGRESO;
+                }
+
                 return [
-                    'FECHA'          => $entrada->FECHA_INGRESO,   // se muestra
-                    'FECHA_ORDEN'    => $entrada->created_at,      // se usa para ordenar
+                    'FECHA'          => $entrada->FECHA_INGRESO,
+                    'FECHA_ORDEN'    => $fechaOrden,
                     'CANTIDAD'       => $entrada->CANTIDAD_PRODUCTO . ($entrada->UNIDAD_MEDIDA ? " ({$entrada->UNIDAD_MEDIDA})" : ""),
                     'VALOR_UNITARIO' => $entrada->VALOR_UNITARIO,
                     'COSTO_TOTAL'    => $entrada->CANTIDAD_PRODUCTO * $entrada->VALOR_UNITARIO,
-                    'TIPO'           => '<span class="badge bg-success">Entrada</span>',
-                    'USUARIO'        => $entrada->ENTRADA_SOLICITUD == 1
-                        ? 'Retornado por: ' . e($usuario)
-                        : 'Entrada por compra',
+                    'TIPO'           => $tipo,
+                    'USUARIO'        => $usuarioTxt,
                     'BTN_EDITAR'     => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
                     'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
                 ];
             });
 
             // =========================
-            // 4. Salidas
+            // 3. Salidas
             // =========================
             $salidas = DB::table('salidas_inventario as s')
                 ->join('usuarios as u', 'u.ID_USUARIO', '=', 's.USUARIO_ID')
@@ -490,8 +498,8 @@ class inventarioController extends Controller
                     $usuario = trim($salida->EMPLEADO_NOMBRE . ' ' . $salida->EMPLEADO_APELLIDOPATERNO . ' ' . $salida->EMPLEADO_APELLIDOMATERNO);
 
                     return [
-                        'FECHA'          => $salida->FECHA_SALIDA,  // se muestra
-                        'FECHA_ORDEN'    => $salida->created_at,    // se usa para ordenar
+                        'FECHA'          => $salida->FECHA_SALIDA,
+                        'FECHA_ORDEN'    => $salida->created_at, // siempre created_at
                         'CANTIDAD'       => $salida->CANTIDAD_SALIDA . ($salida->UNIDAD_MEDIDA ? " ({$salida->UNIDAD_MEDIDA})" : ""),
                         'VALOR_UNITARIO' => '',
                         'COSTO_TOTAL'    => '',
@@ -503,9 +511,13 @@ class inventarioController extends Controller
                 });
 
             // =========================
-            // 5. Unir y ordenar por FECHA_ORDEN
+            // 4. Unir todo y ordenar
             // =========================
-            $todos = collect($data)->merge($entradas)->merge($salidas)->sortBy('FECHA_ORDEN')->values();
+            $todos = collect($data)
+                ->merge($entradas)
+                ->merge($salidas)
+                ->sortBy('FECHA_ORDEN')
+                ->values();
 
             return response()->json([
                 'data' => $todos,
@@ -518,6 +530,7 @@ class inventarioController extends Controller
             ]);
         }
     }
+
 
 
     public function  store(Request $request)
