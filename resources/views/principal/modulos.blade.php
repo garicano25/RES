@@ -738,11 +738,14 @@
                         $tieneSoloRolAlmacenista = $user->roles->count() === 1 && $user->hasRole('Almacenista');
                         $tieneSoloRolHSEQ = $user->roles->count() === 1 && $user->hasRole('Analista HSEQ');
                         $tieneSoloRolSoftware = $user->roles->count() === 1 && $user->hasRole('Desarrollador de Software Junior');
+                        $tieneSoloRolAmadellaves = $user->roles->count() === 1 && $user->hasRole('Ama de llaves');
 
 
 
 
-                        $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRolAsistentePlaneacion || $tieneSoloRolHSEQ || $tieneSoloRolSoftware ;
+
+                        $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRolAsistentePlaneacion || $tieneSoloRolHSEQ || $tieneSoloRolSoftware || $tieneSoloRolAmadellaves ;
+                        
                         @endphp
 
                         <div class="modules">
