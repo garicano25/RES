@@ -154,6 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
         botonEliminar.addEventListener('click', function () {
             contenedorMateriales.removeChild(divMaterial);
+       actualizarNumerosOrden(); 
 
             if (contenedorMateriales.querySelectorAll('.material-item').length === 0) {
                 document.getElementById("guardaRECEMPLEADOS").disabled = true;
