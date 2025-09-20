@@ -457,28 +457,20 @@ class inventarioController extends Controller
             ])->map(function ($entrada) {
                 $usuario = trim($entrada->EMPLEADO_NOMBRE . ' ' . $entrada->EMPLEADO_APELLIDOPATERNO . ' ' . $entrada->EMPLEADO_APELLIDOMATERNO);
 
-                // Tipo y Usuario según ENTRADA_SOLICITUD
-                if ($entrada->ENTRADA_SOLICITUD == 1) {
-                    $tipo   = '<span class="badge bg-success">Entrada</span>';
-                    $usuarioTxt = 'Retornado por: ' . e($usuario);
-                } else {
-                    $tipo   = '<span class="badge bg-success">Entrada por compra</span>';
-                    $usuarioTxt = '';
-                }
-
                 return [
                     'FECHA'          => $entrada->FECHA_INGRESO,   // se muestra
                     'FECHA_ORDEN'    => $entrada->created_at,      // se usa para ordenar
                     'CANTIDAD'       => $entrada->CANTIDAD_PRODUCTO . ($entrada->UNIDAD_MEDIDA ? " ({$entrada->UNIDAD_MEDIDA})" : ""),
                     'VALOR_UNITARIO' => $entrada->VALOR_UNITARIO,
                     'COSTO_TOTAL'    => $entrada->CANTIDAD_PRODUCTO * $entrada->VALOR_UNITARIO,
-                    'TIPO'           => $tipo,
-                    'USUARIO'        => $usuarioTxt,
+                    'TIPO'           => '<span class="badge bg-success">Entrada</span>',
+                    'USUARIO'        => $entrada->ENTRADA_SOLICITUD == 1
+                        ? 'Retornado por: ' . e($usuario)
+                        : 'Entrada por compra',
                     'BTN_EDITAR'     => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
                     'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
                 ];
             });
-
 
             // =========================
             // 4. Salidas
