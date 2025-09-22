@@ -156,93 +156,6 @@ class inventarioController extends Controller
 
 
     /////////////////////////////////// ENTRADA INVENTARIO /////////////////////////////////// 
-    // public function Tablaentradainventario(Request $request)
-    // {
-    //     try {
-    //         $inventarioId = $request->get('inventario');
-    //         $data = [];
-    //         $primerEntradaId = null;
-
-    //         // =========================
-    //         // 1. Buscar saldo inicial en inventario_respaldo
-    //         // =========================
-    //         $saldoInicial = DB::table('inventario_respaldo')
-    //             ->where('INVENTARIO_ID', $inventarioId)
-    //             ->first(['CANTIDAD_EQUIPO', 'FECHA_ADQUISICION', 'UNITARIO_EQUIPO']);
-
-    //         if ($saldoInicial) {
-    //             // viene del respaldo
-    //             $data[] = [
-    //                 'FECHA_INGRESO'     => $saldoInicial->FECHA_ADQUISICION,
-    //                 'CANTIDAD_PRODUCTO' => $saldoInicial->CANTIDAD_EQUIPO, 
-    //                 'VALOR_UNITARIO'    => $saldoInicial->UNITARIO_EQUIPO,
-    //                 'COSTO_TOTAL'       => $saldoInicial->CANTIDAD_EQUIPO * $saldoInicial->UNITARIO_EQUIPO,
-    //                 'TIPO'              => '<span class="badge bg-warning text-dark">Saldo inicial</span>',
-    //                 'BTN_EDITAR'        => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
-    //                 'BTN_VISUALIZAR'    => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
-    //             ];
-    //         } else {
-    //             // =========================
-    //             // 2. Si no hay respaldo, usar primer registro de entradas_inventario
-    //             // =========================
-    //             $primerEntrada = DB::table('entradas_inventario')
-    //                 ->where('INVENTARIO_ID', $inventarioId)
-    //                 ->orderBy('FECHA_INGRESO', 'asc')
-    //                 ->first();
-
-    //             if ($primerEntrada) {
-    //                 $primerEntradaId = $primerEntrada->ID_ENTRADA_FORMULARIO; 
-
-    //                 $data[] = [
-    //                     'FECHA_INGRESO'     => $primerEntrada->FECHA_INGRESO,
-    //                     // 'CANTIDAD_PRODUCTO' => $primerEntrada->CANTIDAD_PRODUCTO, // saldo inicial → solo cantidad
-    //                     'CANTIDAD_PRODUCTO' => $primerEntrada->CANTIDAD_PRODUCTO . ($primerEntrada->UNIDAD_MEDIDA ? " ({$primerEntrada->UNIDAD_MEDIDA})" : ""),
-    //                     'VALOR_UNITARIO'    => $primerEntrada->VALOR_UNITARIO,
-    //                     'COSTO_TOTAL'       => $primerEntrada->CANTIDAD_PRODUCTO * $primerEntrada->VALOR_UNITARIO,
-    //                     'TIPO'              => '<span class="badge bg-warning text-dark">Saldo inicial</span>',
-    //                     'BTN_EDITAR'        => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
-    //                     'BTN_VISUALIZAR'    => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
-    //                 ];
-    //             }
-    //         }
-
-    //         // =========================
-    //         // 3. Agregar las demás entradas, excluyendo la primera si ya se usó como saldo inicial
-    //         // =========================
-    //         $entradasQuery = DB::table('entradas_inventario')
-    //             ->where('INVENTARIO_ID', $inventarioId);
-
-    //         if ($primerEntradaId) {
-    //             $entradasQuery->where('ID_ENTRADA_FORMULARIO', '!=', $primerEntradaId);
-    //         }
-
-    //         $entradas = $entradasQuery->get();
-
-    //         foreach ($entradas as $entrada) {
-    //             $data[] = [
-    //                 'FECHA_INGRESO'     => $entrada->FECHA_INGRESO,
-    //                 'CANTIDAD_PRODUCTO' => $entrada->CANTIDAD_PRODUCTO . ($entrada->UNIDAD_MEDIDA ? " ({$entrada->UNIDAD_MEDIDA})" : ""),
-    //                 'VALOR_UNITARIO'    => $entrada->VALOR_UNITARIO,
-    //                 'COSTO_TOTAL'       => $entrada->CANTIDAD_PRODUCTO * $entrada->VALOR_UNITARIO,
-    //                 'TIPO'              => '', 
-    //                 'BTN_EDITAR'        => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
-    //                 'BTN_VISUALIZAR'    => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
-    //             ];
-    //         }
-
-    //         return response()->json([
-    //             'data' => $data,
-    //             'msj'  => 'Información consultada correctamente'
-    //         ]);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'msj'  => 'Error ' . $e->getMessage(),
-    //             'data' => 0
-    //         ]);
-    //     }
-    // }
-
-
 
 
     // public function Tablaentradainventario(Request $request)
@@ -253,7 +166,7 @@ class inventarioController extends Controller
     //         $primerEntradaId = null;
 
     //         // =========================
-    //         // 1. Buscar saldo inicial en inventario_respaldo
+    //         // 1. Saldo inicial
     //         // =========================
     //         $saldoInicial = DB::table('inventario_respaldo')
     //             ->where('INVENTARIO_ID', $inventarioId)
@@ -261,19 +174,17 @@ class inventarioController extends Controller
 
     //         if ($saldoInicial) {
     //             $data[] = [
-    //                 'FECHA'             => $saldoInicial->FECHA_ADQUISICION,
-    //                 'CANTIDAD'          => $saldoInicial->CANTIDAD_EQUIPO,
-    //                 'VALOR_UNITARIO'    => $saldoInicial->UNITARIO_EQUIPO,
-    //                 'COSTO_TOTAL'       => $saldoInicial->CANTIDAD_EQUIPO * $saldoInicial->UNITARIO_EQUIPO,
-    //                 'TIPO'              => '<span class="badge bg-warning text-dark">Saldo inicial</span>',
-    //                 'USUARIO'           => '',
-    //                 'BTN_EDITAR'        => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
-    //                 'BTN_VISUALIZAR'    => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
+    //                 'FECHA'          => $saldoInicial->FECHA_ADQUISICION,
+    //                 'FECHA_ORDEN'    => $saldoInicial->FECHA_ADQUISICION,
+    //                 'CANTIDAD'       => $saldoInicial->CANTIDAD_EQUIPO,
+    //                 'VALOR_UNITARIO' => $saldoInicial->UNITARIO_EQUIPO,
+    //                 'COSTO_TOTAL'    => $saldoInicial->CANTIDAD_EQUIPO * $saldoInicial->UNITARIO_EQUIPO,
+    //                 'TIPO'           => '<span class="badge bg-warning text-dark">Saldo inicial</span>',
+    //                 'USUARIO'        => '',
+    //                 'BTN_EDITAR'     => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
+    //                 'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
     //             ];
     //         } else {
-    //             // =========================
-    //             // 2. Si no hay respaldo, usar primer registro de entradas_inventario
-    //             // =========================
     //             $primerEntrada = DB::table('entradas_inventario')
     //                 ->where('INVENTARIO_ID', $inventarioId)
     //                 ->orderBy('FECHA_INGRESO', 'asc')
@@ -283,19 +194,21 @@ class inventarioController extends Controller
     //                 $primerEntradaId = $primerEntrada->ID_ENTRADA_FORMULARIO;
 
     //                 $data[] = [
-    //                     'FECHA'             => $primerEntrada->FECHA_INGRESO,
-    //                     'CANTIDAD'          => $primerEntrada->CANTIDAD_PRODUCTO . ($primerEntrada->UNIDAD_MEDIDA ? " ({$primerEntrada->UNIDAD_MEDIDA})" : ""),
-    //                     'VALOR_UNITARIO'    => $primerEntrada->VALOR_UNITARIO,
-    //                     'COSTO_TOTAL'       => $primerEntrada->CANTIDAD_PRODUCTO * $primerEntrada->VALOR_UNITARIO,
-    //                     'TIPO'              => '<span class="badge bg-warning text-dark">Saldo inicial</span>',
-    //                     'USUARIO'           => '',
-    //                     'BTN_EDITAR'        => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
-    //                     'BTN_VISUALIZAR'    => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
+    //                     'FECHA'          => $primerEntrada->FECHA_INGRESO,
+    //                     'FECHA_ORDEN'    => $primerEntrada->FECHA_INGRESO,
+    //                     'CANTIDAD'       => $primerEntrada->CANTIDAD_PRODUCTO . ($primerEntrada->UNIDAD_MEDIDA ? " ({$primerEntrada->UNIDAD_MEDIDA})" : ""),
+    //                     'VALOR_UNITARIO' => $primerEntrada->VALOR_UNITARIO,
+    //                     'COSTO_TOTAL'    => $primerEntrada->CANTIDAD_PRODUCTO * $primerEntrada->VALOR_UNITARIO,
+    //                     'TIPO'           => '<span class="badge bg-warning text-dark">Saldo inicial</span>',
+    //                     'USUARIO'        => '',
+    //                     'BTN_EDITAR'     => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
+    //                     'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
     //                 ];
     //             }
     //         }
 
-
+    //         // =========================
+    //         // 2. Entradas
     //         // =========================
     //         $entradasQuery = DB::table('entradas_inventario as e')
     //             ->leftJoin('usuarios as u', 'u.ID_USUARIO', '=', 'e.USUARIO_ID')
@@ -311,33 +224,38 @@ class inventarioController extends Controller
     //             'e.UNIDAD_MEDIDA',
     //             'e.VALOR_UNITARIO',
     //             'e.ENTRADA_SOLICITUD',
+    //             'e.created_at',
     //             'u.EMPLEADO_NOMBRE',
     //             'u.EMPLEADO_APELLIDOPATERNO',
     //             'u.EMPLEADO_APELLIDOMATERNO'
     //         ])->map(function ($entrada) {
     //             $usuario = trim($entrada->EMPLEADO_NOMBRE . ' ' . $entrada->EMPLEADO_APELLIDOPATERNO . ' ' . $entrada->EMPLEADO_APELLIDOMATERNO);
 
-    //             // Condicionar tipo de entrada
     //             if ($entrada->ENTRADA_SOLICITUD == 1) {
-    //                 $tipo = '<span class="badge bg-info">Retornado por: ' . e($usuario) . '</span>';
+    //                 $tipo       = '<span class="badge bg-success">Entrada</span>';
+    //                 $usuarioTxt = 'Retornado por: ' . e($usuario);
+    //                 $fechaOrden = $entrada->created_at; // para ordenar
     //             } else {
-    //                 $tipo = '<span class="badge bg-success">Entrada por compra</span>';
+    //                 $tipo       = '<span class="badge bg-success">Entrada por compra</span>';
+    //                 $usuarioTxt = '';
+    //                 $fechaOrden = $entrada->FECHA_INGRESO;
     //             }
 
     //             return [
     //                 'FECHA'          => $entrada->FECHA_INGRESO,
+    //                 'FECHA_ORDEN'    => $fechaOrden,
     //                 'CANTIDAD'       => $entrada->CANTIDAD_PRODUCTO . ($entrada->UNIDAD_MEDIDA ? " ({$entrada->UNIDAD_MEDIDA})" : ""),
     //                 'VALOR_UNITARIO' => $entrada->VALOR_UNITARIO,
     //                 'COSTO_TOTAL'    => $entrada->CANTIDAD_PRODUCTO * $entrada->VALOR_UNITARIO,
     //                 'TIPO'           => $tipo,
-    //                 'USUARIO'        => $usuario,
+    //                 'USUARIO'        => $usuarioTxt,
     //                 'BTN_EDITAR'     => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
     //                 'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
     //             ];
     //         });
 
     //         // =========================
-    //         // 4. Agregar las salidas
+    //         // 3. Salidas
     //         // =========================
     //         $salidas = DB::table('salidas_inventario as s')
     //             ->join('usuarios as u', 'u.ID_USUARIO', '=', 's.USUARIO_ID')
@@ -346,7 +264,8 @@ class inventarioController extends Controller
     //                 's.FECHA_SALIDA',
     //                 's.CANTIDAD_SALIDA',
     //                 's.UNIDAD_MEDIDA',
-    //             'u.EMPLEADO_NOMBRE',
+    //                 's.created_at',
+    //                 'u.EMPLEADO_NOMBRE',
     //                 'u.EMPLEADO_APELLIDOPATERNO',
     //                 'u.EMPLEADO_APELLIDOMATERNO'
     //             ])->map(function ($salida) {
@@ -354,8 +273,8 @@ class inventarioController extends Controller
 
     //                 return [
     //                     'FECHA'          => $salida->FECHA_SALIDA,
+    //                     'FECHA_ORDEN'    => $salida->created_at, // siempre created_at
     //                     'CANTIDAD'       => $salida->CANTIDAD_SALIDA . ($salida->UNIDAD_MEDIDA ? " ({$salida->UNIDAD_MEDIDA})" : ""),
-
     //                     'VALOR_UNITARIO' => '',
     //                     'COSTO_TOTAL'    => '',
     //                     'TIPO'           => '<span class="badge bg-danger">Salida</span>',
@@ -366,9 +285,13 @@ class inventarioController extends Controller
     //             });
 
     //         // =========================
-    //         // 5. Unir entradas + salidas + saldo inicial y ordenar por FECHA
+    //         // 4. Unir todo y ordenar
     //         // =========================
-    //         $todos = collect($data)->merge($entradas)->merge($salidas)->sortBy('FECHA')->values();
+    //         $todos = collect($data)
+    //             ->merge($entradas)
+    //             ->merge($salidas)
+    //             ->sortBy('FECHA_ORDEN')
+    //             ->values();
 
     //         return response()->json([
     //             'data' => $todos,
@@ -381,7 +304,6 @@ class inventarioController extends Controller
     //         ]);
     //     }
     // }
-
 
 
     public function Tablaentradainventario(Request $request)
@@ -460,7 +382,8 @@ class inventarioController extends Controller
                 if ($entrada->ENTRADA_SOLICITUD == 1) {
                     $tipo       = '<span class="badge bg-success">Entrada</span>';
                     $usuarioTxt = 'Retornado por: ' . e($usuario);
-                    $fechaOrden = $entrada->created_at; // para ordenar
+                    // usar fecha_ingreso + hora del created_at
+                    $fechaOrden = date('Y-m-d', strtotime($entrada->FECHA_INGRESO)) . ' ' . date('H:i:s', strtotime($entrada->created_at));
                 } else {
                     $tipo       = '<span class="badge bg-success">Entrada por compra</span>';
                     $usuarioTxt = '';
@@ -497,9 +420,12 @@ class inventarioController extends Controller
                 ])->map(function ($salida) {
                     $usuario = trim($salida->EMPLEADO_NOMBRE . ' ' . $salida->EMPLEADO_APELLIDOPATERNO . ' ' . $salida->EMPLEADO_APELLIDOMATERNO);
 
+                    // usar fecha_salida + hora del created_at
+                    $fechaOrden = date('Y-m-d', strtotime($salida->FECHA_SALIDA)) . ' ' . date('H:i:s', strtotime($salida->created_at));
+
                     return [
                         'FECHA'          => $salida->FECHA_SALIDA,
-                        'FECHA_ORDEN'    => $salida->created_at, // siempre created_at
+                        'FECHA_ORDEN'    => $fechaOrden,
                         'CANTIDAD'       => $salida->CANTIDAD_SALIDA . ($salida->UNIDAD_MEDIDA ? " ({$salida->UNIDAD_MEDIDA})" : ""),
                         'VALOR_UNITARIO' => '',
                         'COSTO_TOTAL'    => '',
@@ -511,7 +437,7 @@ class inventarioController extends Controller
                 });
 
             // =========================
-            // 4. Unir todo y ordenar
+            // 4. Unir todo y ordenar por FECHA_ORDEN asc
             // =========================
             $todos = collect($data)
                 ->merge($entradas)
@@ -532,6 +458,7 @@ class inventarioController extends Controller
     }
 
 
+    
 
     public function  store(Request $request)
     {
