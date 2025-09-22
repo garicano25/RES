@@ -320,7 +320,7 @@
     @endif
 
     @if(request()->is('Salida_almacen'))
-    <script src="/assets/js_sitio/salidalmacen/salidalmacen.js?v=1.13"></script>
+    <script src="/assets/js_sitio/salidalmacen/salidalmacen.js?v=1.14"></script>
     @endif
 </body>
 

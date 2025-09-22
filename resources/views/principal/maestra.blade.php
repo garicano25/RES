@@ -528,11 +528,9 @@
     <script src="/assets/js_sitio/organizacion/catalogos/catalogomotivovacante.js?v=1.0"></script>
     @endif
 
-
     @if(request()->is('Área_interes'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoareainteres.js?v=1.0"></script>
     @endif
-
 
     @if(request()->is('Selección'))
     <script src="/assets/js_sitio/seleccion/seleccion.js?v=22.3"></script>
@@ -546,7 +544,6 @@
     <script src="/assets/js_sitio/organizacion/catalogos/catalogopruebas.js?v=1.0"></script>
     @endif
 
-
     @if(request()->is('usuario'))
     <script src="/assets/js_sitio/usuario/usuario.js?v=4.8"></script>
     @endif
@@ -557,29 +554,21 @@
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
-
     @if(request()->is('Pendiente-Contratar'))
     <script src="/assets/js_sitio/contratacion/pendientecontratar.js?v=1.0"></script>
     @endif
-
-
 
     @if(request()->is('Desvinculación'))
     <script src="/assets/js_sitio/desvinculacion/desvinculacion.js"></script>
     @endif
 
-
     @if(request()->is('Brecha_competencia'))
     <script src="/assets/js_sitio/capacitacion/brechacompetencia.js?v=1.5"></script>
     @endif
 
-
-
     @if(request()->is('Rec.Empleado'))
     <script src="/assets/js_sitio/RecEmpleados/recursosempleado.js?v=1.11"></script>
     @endif
-
-
 
     @if(request()->is('Solicitudes_VoBo'))
     <script src="/assets/js_sitio/RecEmpleados/recempleadovobo.js?v=1.4"></script>

@@ -51,7 +51,13 @@ class salidalmacenController extends Controller
                 ->get();
 
 
+
+
             foreach ($tabla as $value) {
+                // =============================
+                // 1. Revisión de botones y textos (igual que lo tienes)
+                // =============================
+
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"><span class="slider round"></span></label>';
@@ -62,7 +68,9 @@ class salidalmacenController extends Controller
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 }
 
-
+                // =============================
+                // 2. Tipo de solicitud
+                // =============================
                 if ($value->TIPO_SOLICITUD == 1) {
                     $value->TIPO_SOLICITUD_TEXTO = 'Aviso de ausencia y/o permiso';
                 } elseif ($value->TIPO_SOLICITUD == 2) {
@@ -71,6 +79,9 @@ class salidalmacenController extends Controller
                     $value->TIPO_SOLICITUD_TEXTO = 'Solicitud de Vacaciones';
                 }
 
+                // =============================
+                // 3. Estado revisión
+                // =============================
                 if ($value->DAR_BUENO == 0) {
                     $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">En revisión</span>';
                 } elseif ($value->DAR_BUENO == 1) {
@@ -81,6 +92,9 @@ class salidalmacenController extends Controller
                     $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
                 }
 
+                // =============================
+                // 4. Estado aprobación
+                // =============================
                 if ($value->ESTADO_APROBACION == 'Aprobada') {
                     $value->ESTATUS = '<span class="badge bg-success">Aprobado</span>';
                 } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
@@ -88,7 +102,67 @@ class salidalmacenController extends Controller
                 } else {
                     $value->ESTATUS = '<span class="badge bg-secondary">Aprobar</span>';
                 }
+
+                // =============================
+                // 5. Lógica de colores extra
+                // =============================
+                $color = '';
+                $faltan = 0;
+                $totalRetornables = 0;
+
+                if (!empty($value->MATERIALES_JSON)) {
+                    $materiales = json_decode($value->MATERIALES_JSON, true);
+
+                    if (is_array($materiales)) {
+                        foreach ($materiales as $mat) {
+                            // Solo contar los que deben retornar
+                            if (($mat['RETORNA_EQUIPO'] ?? '0') == '1') {
+                                $totalRetornables++;
+
+                                if (($mat['VARIOS_ARTICULOS'] ?? '0') == '0') {
+                                    // Caso único artículo
+                                    if (($mat['ARTICULO_RETORNO'] ?? '0') != '1') {
+                                        $faltan++;
+                                    }
+                                } else {
+                                    // Caso varios artículos
+                                    if (!empty($mat['ARTICULOS'])) {
+                                        foreach ($mat['ARTICULOS'] as $detalle) {
+                                            if (($detalle['RETORNA_DETALLE'] ?? '0') != '1') {
+                                                $faltan++;
+                                            }
+                                        }
+                                    } else {
+                                        $faltan++;
+                                    }
+                                }
+                            }
+                        }
+
+                        // =========================
+                        // Decidir el color
+                        // =========================
+                        if ($totalRetornables > 0) {
+                            // Hay materiales que sí deben retornar
+                            if ($faltan == 0) {
+                                $color = 'bg-verde-suave'; 
+                            } else {
+                                $color = 'bg-amarillo-suave'; 
+                            }
+                        } else {
+                            // Todos son RETORNA_EQUIPO = 2 (no retornan)
+                            if ($value->FINALIZAR_SOLICITUD_ALMACEN == 1) {
+                                $color = 'bg-verde-suave'; 
+                            }
+                        }
+                    }
+                }
+
+                $value->COLOR_FILA = $color;
+                $value->MATERIALES_PENDIENTES = $faltan;
+                $value->MATERIALES_TOTAL = $totalRetornables;
             }
+
 
             return response()->json([
                 'data' => $tabla,
