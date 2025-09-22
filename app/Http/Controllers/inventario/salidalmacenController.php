@@ -115,8 +115,8 @@ class salidalmacenController extends Controller
 
                     if (is_array($materiales)) {
                         foreach ($materiales as $mat) {
-                            // Solo contar los que deben retornar
-                            if (($mat['RETORNA_EQUIPO'] ?? '0') == '1') {
+                            // Solo contar si debe retornar Y realmente salió algo
+                            if (($mat['RETORNA_EQUIPO'] ?? '0') == '1' && intval($mat['EN_EXISTENCIA'] ?? 0) > 0) {
                                 $totalRetornables++;
 
                                 if (($mat['VARIOS_ARTICULOS'] ?? '0') == '0') {
@@ -143,14 +143,12 @@ class salidalmacenController extends Controller
                         // Decidir el color
                         // =========================
                         if ($totalRetornables > 0) {
-                            // Hay materiales que sí deben retornar
                             if ($faltan == 0) {
                                 $color = 'bg-verde-suave'; 
                             } else {
                                 $color = 'bg-amarillo-suave'; 
                             }
                         } else {
-                            // Todos son RETORNA_EQUIPO = 2 (no retornan)
                             if ($value->FINALIZAR_SOLICITUD_ALMACEN == 1) {
                                 $color = 'bg-verde-suave'; 
                             }
