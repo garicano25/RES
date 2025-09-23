@@ -580,14 +580,18 @@ class inventarioController extends Controller
                 // ================================
                 if ($entrada->ENTRADA_SOLICITUD == 1) {
                     if (date('Y-m-d', strtotime($entrada->FECHA_INGRESO)) === date('Y-m-d', strtotime($entrada->created_at))) {
+                        // misma fecha → usar la fecha oficial + hora real
                         $horaCreated = date('H:i:s', strtotime($entrada->created_at));
                         $fechaOrden  = $entrada->FECHA_INGRESO . ' ' . $horaCreated;
                     } else {
-                        $fechaOrden = date('Y-m-d H:i:s', strtotime($entrada->created_at));
+                        // diferente fecha → usar la fecha oficial pero con hora máxima del día
+                        $fechaOrden = $entrada->FECHA_INGRESO . ' 23:59:59';
                     }
                 } else {
-                    $fechaOrden = $entrada->FECHA_INGRESO; // normal
+                    // entradas normales
+                    $fechaOrden = $entrada->FECHA_INGRESO;
                 }
+
 
                 return [
                     'ORDEN_PRIORIDAD' => 1,
@@ -663,7 +667,7 @@ class inventarioController extends Controller
         }
     }
 
-    
+
 
     public function  store(Request $request)
     {
