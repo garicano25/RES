@@ -306,6 +306,7 @@ class inventarioController extends Controller
     // }
 
 
+
     // public function Tablaentradainventario(Request $request)
     // {
     //     try {
@@ -322,6 +323,7 @@ class inventarioController extends Controller
 
     //         if ($saldoInicial) {
     //             $data[] = [
+    //                 'ORDEN_PRIORIDAD' => 0,
     //                 'FECHA'          => $saldoInicial->FECHA_ADQUISICION,
     //                 'FECHA_ORDEN'    => $saldoInicial->FECHA_ADQUISICION,
     //                 'CANTIDAD'       => $saldoInicial->CANTIDAD_EQUIPO,
@@ -342,6 +344,7 @@ class inventarioController extends Controller
     //                 $primerEntradaId = $primerEntrada->ID_ENTRADA_FORMULARIO;
 
     //                 $data[] = [
+    //                     'ORDEN_PRIORIDAD' => 0,
     //                     'FECHA'          => $primerEntrada->FECHA_INGRESO,
     //                     'FECHA_ORDEN'    => $primerEntrada->FECHA_INGRESO,
     //                     'CANTIDAD'       => $primerEntrada->CANTIDAD_PRODUCTO . ($primerEntrada->UNIDAD_MEDIDA ? " ({$primerEntrada->UNIDAD_MEDIDA})" : ""),
@@ -391,16 +394,23 @@ class inventarioController extends Controller
     //             // ================================
     //             // ORDENAR: validar created_at
     //             // ================================
-    //             if (date('Y-m-d', strtotime($entrada->FECHA_INGRESO)) === date('Y-m-d', strtotime($entrada->created_at))) {
+    //             if (
+    //                 $entrada->ENTRADA_SOLICITUD == 1 &&
+    //                 date('Y-m-d', strtotime($entrada->FECHA_INGRESO)) === date('Y-m-d', strtotime($entrada->created_at))
+    //             ) {
     //                 // misma fecha -> usar la oficial + hora del created_at
     //                 $horaCreated = date('H:i:s', strtotime($entrada->created_at));
     //                 $fechaOrden  = $entrada->FECHA_INGRESO . ' ' . $horaCreated;
-    //             } else {
+    //             } elseif ($entrada->ENTRADA_SOLICITUD == 1) {
     //                 // diferente fecha -> usar created_at completo
     //                 $fechaOrden = date('Y-m-d H:i:s', strtotime($entrada->created_at));
+    //             } else {
+    //                 // entradas por compra usan solo la fecha oficial
+    //                 $fechaOrden = $entrada->FECHA_INGRESO;
     //             }
 
     //             return [
+    //                 'ORDEN_PRIORIDAD' => 1,
     //                 'FECHA'          => $fechaMostrar,
     //                 'FECHA_ORDEN'    => $fechaOrden,
     //                 'CANTIDAD'       => $entrada->CANTIDAD_PRODUCTO . ($entrada->UNIDAD_MEDIDA ? " ({$entrada->UNIDAD_MEDIDA})" : ""),
@@ -413,8 +423,9 @@ class inventarioController extends Controller
     //             ];
     //         });
 
-
-
+    //         // =========================
+    //         // 3. Salidas
+    //         // =========================
     //         $salidas = DB::table('salidas_inventario as s')
     //             ->join('usuarios as u', 'u.ID_USUARIO', '=', 's.USUARIO_ID')
     //             ->where('s.INVENTARIO_ID', $inventarioId)
@@ -442,6 +453,7 @@ class inventarioController extends Controller
     //                 }
 
     //                 return [
+    //                     'ORDEN_PRIORIDAD' => 1,
     //                     'FECHA'          => $fechaMostrar,
     //                     'FECHA_ORDEN'    => $fechaOrden,
     //                     'CANTIDAD'       => $salida->CANTIDAD_SALIDA . ($salida->UNIDAD_MEDIDA ? " ({$salida->UNIDAD_MEDIDA})" : ""),
@@ -454,15 +466,16 @@ class inventarioController extends Controller
     //                 ];
     //             });
 
-
-
     //         // =========================
-    //         // 4. Unir todo y ordenar por FECHA_ORDEN asc
+    //         // 4. Unir todo y ordenar
     //         // =========================
     //         $todos = collect($data)
     //             ->merge($entradas)
     //             ->merge($salidas)
-    //             ->sortBy('FECHA_ORDEN')
+    //             ->sortBy([
+    //                 ['ORDEN_PRIORIDAD', 'asc'],
+    //                 ['FECHA_ORDEN', 'asc']
+    //             ])
     //             ->values();
 
     //         return response()->json([
@@ -476,6 +489,7 @@ class inventarioController extends Controller
     //         ]);
     //     }
     // }
+
 
     public function Tablaentradainventario(Request $request)
     {
@@ -562,21 +576,17 @@ class inventarioController extends Controller
                 $fechaMostrar = $entrada->FECHA_INGRESO;
 
                 // ================================
-                // ORDENAR: validar created_at
+                // ORDENAR: solo validar created_at si ENTRADA_SOLICITUD = 1
                 // ================================
-                if (
-                    $entrada->ENTRADA_SOLICITUD == 1 &&
-                    date('Y-m-d', strtotime($entrada->FECHA_INGRESO)) === date('Y-m-d', strtotime($entrada->created_at))
-                ) {
-                    // misma fecha -> usar la oficial + hora del created_at
-                    $horaCreated = date('H:i:s', strtotime($entrada->created_at));
-                    $fechaOrden  = $entrada->FECHA_INGRESO . ' ' . $horaCreated;
-                } elseif ($entrada->ENTRADA_SOLICITUD == 1) {
-                    // diferente fecha -> usar created_at completo
-                    $fechaOrden = date('Y-m-d H:i:s', strtotime($entrada->created_at));
+                if ($entrada->ENTRADA_SOLICITUD == 1) {
+                    if (date('Y-m-d', strtotime($entrada->FECHA_INGRESO)) === date('Y-m-d', strtotime($entrada->created_at))) {
+                        $horaCreated = date('H:i:s', strtotime($entrada->created_at));
+                        $fechaOrden  = $entrada->FECHA_INGRESO . ' ' . $horaCreated;
+                    } else {
+                        $fechaOrden = date('Y-m-d H:i:s', strtotime($entrada->created_at));
+                    }
                 } else {
-                    // entradas por compra usan solo la fecha oficial
-                    $fechaOrden = $entrada->FECHA_INGRESO;
+                    $fechaOrden = $entrada->FECHA_INGRESO; // normal
                 }
 
                 return [
@@ -612,15 +622,8 @@ class inventarioController extends Controller
 
                     $fechaMostrar = $salida->FECHA_SALIDA;
 
-                    // ================================
-                    // ORDENAR: validar created_at
-                    // ================================
-                    if (date('Y-m-d', strtotime($salida->FECHA_SALIDA)) === date('Y-m-d', strtotime($salida->created_at))) {
-                        $horaCreated = date('H:i:s', strtotime($salida->created_at));
-                        $fechaOrden  = $salida->FECHA_SALIDA . ' ' . $horaCreated;
-                    } else {
-                        $fechaOrden = date('Y-m-d H:i:s', strtotime($salida->created_at));
-                    }
+                    // ✅ SOLO usar fecha oficial, nunca created_at
+                    $fechaOrden = $salida->FECHA_SALIDA;
 
                     return [
                         'ORDEN_PRIORIDAD' => 1,
@@ -660,7 +663,7 @@ class inventarioController extends Controller
         }
     }
 
-
+    
 
     public function  store(Request $request)
     {
