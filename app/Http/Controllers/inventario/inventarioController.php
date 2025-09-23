@@ -306,6 +306,177 @@ class inventarioController extends Controller
     // }
 
 
+    // public function Tablaentradainventario(Request $request)
+    // {
+    //     try {
+    //         $inventarioId = $request->get('inventario');
+    //         $data = [];
+    //         $primerEntradaId = null;
+
+    //         // =========================
+    //         // 1. Saldo inicial
+    //         // =========================
+    //         $saldoInicial = DB::table('inventario_respaldo')
+    //             ->where('INVENTARIO_ID', $inventarioId)
+    //             ->first(['CANTIDAD_EQUIPO', 'FECHA_ADQUISICION', 'UNITARIO_EQUIPO']);
+
+    //         if ($saldoInicial) {
+    //             $data[] = [
+    //                 'FECHA'          => $saldoInicial->FECHA_ADQUISICION,
+    //                 'FECHA_ORDEN'    => $saldoInicial->FECHA_ADQUISICION,
+    //                 'CANTIDAD'       => $saldoInicial->CANTIDAD_EQUIPO,
+    //                 'VALOR_UNITARIO' => $saldoInicial->UNITARIO_EQUIPO,
+    //                 'COSTO_TOTAL'    => $saldoInicial->CANTIDAD_EQUIPO * $saldoInicial->UNITARIO_EQUIPO,
+    //                 'TIPO'           => '<span class="badge bg-warning text-dark">Saldo inicial</span>',
+    //                 'USUARIO'        => '',
+    //                 'BTN_EDITAR'     => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
+    //                 'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
+    //             ];
+    //         } else {
+    //             $primerEntrada = DB::table('entradas_inventario')
+    //                 ->where('INVENTARIO_ID', $inventarioId)
+    //                 ->orderBy('FECHA_INGRESO', 'asc')
+    //                 ->first();
+
+    //             if ($primerEntrada) {
+    //                 $primerEntradaId = $primerEntrada->ID_ENTRADA_FORMULARIO;
+
+    //                 $data[] = [
+    //                     'FECHA'          => $primerEntrada->FECHA_INGRESO,
+    //                     'FECHA_ORDEN'    => $primerEntrada->FECHA_INGRESO,
+    //                     'CANTIDAD'       => $primerEntrada->CANTIDAD_PRODUCTO . ($primerEntrada->UNIDAD_MEDIDA ? " ({$primerEntrada->UNIDAD_MEDIDA})" : ""),
+    //                     'VALOR_UNITARIO' => $primerEntrada->VALOR_UNITARIO,
+    //                     'COSTO_TOTAL'    => $primerEntrada->CANTIDAD_PRODUCTO * $primerEntrada->VALOR_UNITARIO,
+    //                     'TIPO'           => '<span class="badge bg-warning text-dark">Saldo inicial</span>',
+    //                     'USUARIO'        => '',
+    //                     'BTN_EDITAR'     => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
+    //                     'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
+    //                 ];
+    //             }
+    //         }
+
+    //         // =========================
+    //         // 2. Entradas
+    //         // =========================
+    //         $entradasQuery = DB::table('entradas_inventario as e')
+    //             ->leftJoin('usuarios as u', 'u.ID_USUARIO', '=', 'e.USUARIO_ID')
+    //             ->where('e.INVENTARIO_ID', $inventarioId);
+
+    //         if ($primerEntradaId) {
+    //             $entradasQuery->where('e.ID_ENTRADA_FORMULARIO', '!=', $primerEntradaId);
+    //         }
+
+    //         $entradas = $entradasQuery->get([
+    //             'e.FECHA_INGRESO',
+    //             'e.CANTIDAD_PRODUCTO',
+    //             'e.UNIDAD_MEDIDA',
+    //             'e.VALOR_UNITARIO',
+    //             'e.ENTRADA_SOLICITUD',
+    //             'e.created_at',
+    //             'u.EMPLEADO_NOMBRE',
+    //             'u.EMPLEADO_APELLIDOPATERNO',
+    //             'u.EMPLEADO_APELLIDOMATERNO'
+    //         ])->map(function ($entrada) {
+    //             $usuario = trim($entrada->EMPLEADO_NOMBRE . ' ' . $entrada->EMPLEADO_APELLIDOPATERNO . ' ' . $entrada->EMPLEADO_APELLIDOMATERNO);
+
+    //             $tipo       = $entrada->ENTRADA_SOLICITUD == 1
+    //                 ? '<span class="badge bg-success">Entrada</span>'
+    //                 : '<span class="badge bg-success">Entrada por compra</span>';
+    //             $usuarioTxt = $entrada->ENTRADA_SOLICITUD == 1
+    //                 ? 'Retornado por: ' . e($usuario)
+    //                 : '';
+
+    //             $fechaMostrar = $entrada->FECHA_INGRESO;
+
+    //             // ================================
+    //             // ORDENAR: validar created_at
+    //             // ================================
+    //             if (date('Y-m-d', strtotime($entrada->FECHA_INGRESO)) === date('Y-m-d', strtotime($entrada->created_at))) {
+    //                 // misma fecha -> usar la oficial + hora del created_at
+    //                 $horaCreated = date('H:i:s', strtotime($entrada->created_at));
+    //                 $fechaOrden  = $entrada->FECHA_INGRESO . ' ' . $horaCreated;
+    //             } else {
+    //                 // diferente fecha -> usar created_at completo
+    //                 $fechaOrden = date('Y-m-d H:i:s', strtotime($entrada->created_at));
+    //             }
+
+    //             return [
+    //                 'FECHA'          => $fechaMostrar,
+    //                 'FECHA_ORDEN'    => $fechaOrden,
+    //                 'CANTIDAD'       => $entrada->CANTIDAD_PRODUCTO . ($entrada->UNIDAD_MEDIDA ? " ({$entrada->UNIDAD_MEDIDA})" : ""),
+    //                 'VALOR_UNITARIO' => $entrada->VALOR_UNITARIO,
+    //                 'COSTO_TOTAL'    => $entrada->CANTIDAD_PRODUCTO * $entrada->VALOR_UNITARIO,
+    //                 'TIPO'           => $tipo,
+    //                 'USUARIO'        => $usuarioTxt,
+    //                 'BTN_EDITAR'     => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
+    //                 'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
+    //             ];
+    //         });
+
+
+
+    //         $salidas = DB::table('salidas_inventario as s')
+    //             ->join('usuarios as u', 'u.ID_USUARIO', '=', 's.USUARIO_ID')
+    //             ->where('s.INVENTARIO_ID', $inventarioId)
+    //             ->get([
+    //                 's.FECHA_SALIDA',
+    //                 's.CANTIDAD_SALIDA',
+    //                 's.UNIDAD_MEDIDA',
+    //                 's.created_at',
+    //                 'u.EMPLEADO_NOMBRE',
+    //                 'u.EMPLEADO_APELLIDOPATERNO',
+    //                 'u.EMPLEADO_APELLIDOMATERNO'
+    //             ])->map(function ($salida) {
+    //                 $usuario = trim($salida->EMPLEADO_NOMBRE . ' ' . $salida->EMPLEADO_APELLIDOPATERNO . ' ' . $salida->EMPLEADO_APELLIDOMATERNO);
+
+    //                 $fechaMostrar = $salida->FECHA_SALIDA;
+
+    //                 // ================================
+    //                 // ORDENAR: validar created_at
+    //                 // ================================
+    //                 if (date('Y-m-d', strtotime($salida->FECHA_SALIDA)) === date('Y-m-d', strtotime($salida->created_at))) {
+    //                     $horaCreated = date('H:i:s', strtotime($salida->created_at));
+    //                     $fechaOrden  = $salida->FECHA_SALIDA . ' ' . $horaCreated;
+    //                 } else {
+    //                     $fechaOrden = date('Y-m-d H:i:s', strtotime($salida->created_at));
+    //                 }
+
+    //                 return [
+    //                     'FECHA'          => $fechaMostrar,
+    //                     'FECHA_ORDEN'    => $fechaOrden,
+    //                     'CANTIDAD'       => $salida->CANTIDAD_SALIDA . ($salida->UNIDAD_MEDIDA ? " ({$salida->UNIDAD_MEDIDA})" : ""),
+    //                     'VALOR_UNITARIO' => '',
+    //                     'COSTO_TOTAL'    => '',
+    //                     'TIPO'           => '<span class="badge bg-danger">Salida</span>',
+    //                     'USUARIO'        => $usuario,
+    //                     'BTN_EDITAR'     => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
+    //                     'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
+    //                 ];
+    //             });
+
+
+
+    //         // =========================
+    //         // 4. Unir todo y ordenar por FECHA_ORDEN asc
+    //         // =========================
+    //         $todos = collect($data)
+    //             ->merge($entradas)
+    //             ->merge($salidas)
+    //             ->sortBy('FECHA_ORDEN')
+    //             ->values();
+
+    //         return response()->json([
+    //             'data' => $todos,
+    //             'msj'  => 'Información consultada correctamente'
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'msj'  => 'Error ' . $e->getMessage(),
+    //             'data' => 0
+    //         ]);
+    //     }
+    // }
+
     public function Tablaentradainventario(Request $request)
     {
         try {
@@ -322,6 +493,7 @@ class inventarioController extends Controller
 
             if ($saldoInicial) {
                 $data[] = [
+                    'ORDEN_PRIORIDAD' => 0,
                     'FECHA'          => $saldoInicial->FECHA_ADQUISICION,
                     'FECHA_ORDEN'    => $saldoInicial->FECHA_ADQUISICION,
                     'CANTIDAD'       => $saldoInicial->CANTIDAD_EQUIPO,
@@ -342,6 +514,7 @@ class inventarioController extends Controller
                     $primerEntradaId = $primerEntrada->ID_ENTRADA_FORMULARIO;
 
                     $data[] = [
+                        'ORDEN_PRIORIDAD' => 0,
                         'FECHA'          => $primerEntrada->FECHA_INGRESO,
                         'FECHA_ORDEN'    => $primerEntrada->FECHA_INGRESO,
                         'CANTIDAD'       => $primerEntrada->CANTIDAD_PRODUCTO . ($primerEntrada->UNIDAD_MEDIDA ? " ({$primerEntrada->UNIDAD_MEDIDA})" : ""),
@@ -365,44 +538,6 @@ class inventarioController extends Controller
             if ($primerEntradaId) {
                 $entradasQuery->where('e.ID_ENTRADA_FORMULARIO', '!=', $primerEntradaId);
             }
-
-            // $entradas = $entradasQuery->get([
-            //     'e.FECHA_INGRESO',
-            //     'e.CANTIDAD_PRODUCTO',
-            //     'e.UNIDAD_MEDIDA',
-            //     'e.VALOR_UNITARIO',
-            //     'e.ENTRADA_SOLICITUD',
-            //     'e.created_at',
-            //     'u.EMPLEADO_NOMBRE',
-            //     'u.EMPLEADO_APELLIDOPATERNO',
-            //     'u.EMPLEADO_APELLIDOMATERNO'
-            // ])->map(function ($entrada) {
-            //     $usuario = trim($entrada->EMPLEADO_NOMBRE . ' ' . $entrada->EMPLEADO_APELLIDOPATERNO . ' ' . $entrada->EMPLEADO_APELLIDOMATERNO);
-
-            //     if ($entrada->ENTRADA_SOLICITUD == 1) {
-            //         $tipo       = '<span class="badge bg-success">Entrada</span>';
-            //         $usuarioTxt = 'Retornado por: ' . e($usuario);
-            //         // usar fecha_ingreso + hora del created_at
-            //         $fechaOrden = date('Y-m-d', strtotime($entrada->FECHA_INGRESO)) . ' ' . date('H:i:s', strtotime($entrada->created_at));
-            //     } else {
-            //         $tipo       = '<span class="badge bg-success">Entrada por compra</span>';
-            //         $usuarioTxt = '';
-            //         $fechaOrden = $entrada->FECHA_INGRESO;
-            //     }
-
-            //     return [
-            //         'FECHA'          => $entrada->FECHA_INGRESO,
-            //         'FECHA_ORDEN'    => $fechaOrden,
-            //         'CANTIDAD'       => $entrada->CANTIDAD_PRODUCTO . ($entrada->UNIDAD_MEDIDA ? " ({$entrada->UNIDAD_MEDIDA})" : ""),
-            //         'VALOR_UNITARIO' => $entrada->VALOR_UNITARIO,
-            //         'COSTO_TOTAL'    => $entrada->CANTIDAD_PRODUCTO * $entrada->VALOR_UNITARIO,
-            //         'TIPO'           => $tipo,
-            //         'USUARIO'        => $usuarioTxt,
-            //         'BTN_EDITAR'     => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
-            //         'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
-            //     ];
-            // });
-
 
             $entradas = $entradasQuery->get([
                 'e.FECHA_INGRESO',
@@ -429,16 +564,23 @@ class inventarioController extends Controller
                 // ================================
                 // ORDENAR: validar created_at
                 // ================================
-                if (date('Y-m-d', strtotime($entrada->FECHA_INGRESO)) === date('Y-m-d', strtotime($entrada->created_at))) {
+                if (
+                    $entrada->ENTRADA_SOLICITUD == 1 &&
+                    date('Y-m-d', strtotime($entrada->FECHA_INGRESO)) === date('Y-m-d', strtotime($entrada->created_at))
+                ) {
                     // misma fecha -> usar la oficial + hora del created_at
                     $horaCreated = date('H:i:s', strtotime($entrada->created_at));
                     $fechaOrden  = $entrada->FECHA_INGRESO . ' ' . $horaCreated;
-                } else {
+                } elseif ($entrada->ENTRADA_SOLICITUD == 1) {
                     // diferente fecha -> usar created_at completo
                     $fechaOrden = date('Y-m-d H:i:s', strtotime($entrada->created_at));
+                } else {
+                    // entradas por compra usan solo la fecha oficial
+                    $fechaOrden = $entrada->FECHA_INGRESO;
                 }
 
                 return [
+                    'ORDEN_PRIORIDAD' => 1,
                     'FECHA'          => $fechaMostrar,
                     'FECHA_ORDEN'    => $fechaOrden,
                     'CANTIDAD'       => $entrada->CANTIDAD_PRODUCTO . ($entrada->UNIDAD_MEDIDA ? " ({$entrada->UNIDAD_MEDIDA})" : ""),
@@ -451,41 +593,9 @@ class inventarioController extends Controller
                 ];
             });
 
-
             // =========================
             // 3. Salidas
             // =========================
-            // $salidas = DB::table('salidas_inventario as s')
-            //     ->join('usuarios as u', 'u.ID_USUARIO', '=', 's.USUARIO_ID')
-            //     ->where('s.INVENTARIO_ID', $inventarioId)
-            //     ->get([
-            //         's.FECHA_SALIDA',
-            //         's.CANTIDAD_SALIDA',
-            //         's.UNIDAD_MEDIDA',
-            //         's.created_at',
-            //         'u.EMPLEADO_NOMBRE',
-            //         'u.EMPLEADO_APELLIDOPATERNO',
-            //         'u.EMPLEADO_APELLIDOMATERNO'
-            //     ])->map(function ($salida) {
-            //         $usuario = trim($salida->EMPLEADO_NOMBRE . ' ' . $salida->EMPLEADO_APELLIDOPATERNO . ' ' . $salida->EMPLEADO_APELLIDOMATERNO);
-
-            //         // usar fecha_salida + hora del created_at
-            //         $fechaOrden = date('Y-m-d', strtotime($salida->FECHA_SALIDA)) . ' ' . date('H:i:s', strtotime($salida->created_at));
-
-            //         return [
-            //             'FECHA'          => $salida->FECHA_SALIDA,
-            //             'FECHA_ORDEN'    => $fechaOrden,
-            //             'CANTIDAD'       => $salida->CANTIDAD_SALIDA . ($salida->UNIDAD_MEDIDA ? " ({$salida->UNIDAD_MEDIDA})" : ""),
-            //             'VALOR_UNITARIO' => '',
-            //             'COSTO_TOTAL'    => '',
-            //             'TIPO'           => '<span class="badge bg-danger">Salida</span>',
-            //             'USUARIO'        => $usuario,
-            //             'BTN_EDITAR'     => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
-            //             'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
-            //         ];
-            //     });
-
-
             $salidas = DB::table('salidas_inventario as s')
                 ->join('usuarios as u', 'u.ID_USUARIO', '=', 's.USUARIO_ID')
                 ->where('s.INVENTARIO_ID', $inventarioId)
@@ -513,6 +623,7 @@ class inventarioController extends Controller
                     }
 
                     return [
+                        'ORDEN_PRIORIDAD' => 1,
                         'FECHA'          => $fechaMostrar,
                         'FECHA_ORDEN'    => $fechaOrden,
                         'CANTIDAD'       => $salida->CANTIDAD_SALIDA . ($salida->UNIDAD_MEDIDA ? " ({$salida->UNIDAD_MEDIDA})" : ""),
@@ -525,15 +636,16 @@ class inventarioController extends Controller
                     ];
                 });
 
-
-
             // =========================
-            // 4. Unir todo y ordenar por FECHA_ORDEN asc
+            // 4. Unir todo y ordenar
             // =========================
             $todos = collect($data)
                 ->merge($entradas)
                 ->merge($salidas)
-                ->sortBy('FECHA_ORDEN')
+                ->sortBy([
+                    ['ORDEN_PRIORIDAD', 'asc'],
+                    ['FECHA_ORDEN', 'asc']
+                ])
                 ->values();
 
             return response()->json([
@@ -549,7 +661,6 @@ class inventarioController extends Controller
     }
 
 
-    
 
     public function  store(Request $request)
     {
