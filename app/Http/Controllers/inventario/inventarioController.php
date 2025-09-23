@@ -417,20 +417,26 @@ class inventarioController extends Controller
             ])->map(function ($entrada) {
                 $usuario = trim($entrada->EMPLEADO_NOMBRE . ' ' . $entrada->EMPLEADO_APELLIDOPATERNO . ' ' . $entrada->EMPLEADO_APELLIDOMATERNO);
 
-                if ($entrada->ENTRADA_SOLICITUD == 1) {
-                    $tipo       = '<span class="badge bg-success">Entrada</span>';
-                    $usuarioTxt = 'Retornado por: ' . e($usuario);
-                } else {
-                    $tipo       = '<span class="badge bg-success">Entrada por compra</span>';
-                    $usuarioTxt = '';
-                }
+                $tipo       = $entrada->ENTRADA_SOLICITUD == 1
+                    ? '<span class="badge bg-success">Entrada</span>'
+                    : '<span class="badge bg-success">Entrada por compra</span>';
+                $usuarioTxt = $entrada->ENTRADA_SOLICITUD == 1
+                    ? 'Retornado por: ' . e($usuario)
+                    : '';
 
-                // ✅ FECHA para mostrar siempre la oficial
                 $fechaMostrar = $entrada->FECHA_INGRESO;
 
-                // ✅ FECHA_ORDEN = FECHA_INGRESO (oficial) + hora de created_at
-                $horaCreated = date('H:i:s', strtotime($entrada->created_at));
-                $fechaOrden  = date('Y-m-d', strtotime($entrada->FECHA_INGRESO)) . ' ' . $horaCreated;
+                // ================================
+                // ORDENAR: validar created_at
+                // ================================
+                if (date('Y-m-d', strtotime($entrada->FECHA_INGRESO)) === date('Y-m-d', strtotime($entrada->created_at))) {
+                    // misma fecha -> usar la oficial + hora del created_at
+                    $horaCreated = date('H:i:s', strtotime($entrada->created_at));
+                    $fechaOrden  = $entrada->FECHA_INGRESO . ' ' . $horaCreated;
+                } else {
+                    // diferente fecha -> usar created_at completo
+                    $fechaOrden = date('Y-m-d H:i:s', strtotime($entrada->created_at));
+                }
 
                 return [
                     'FECHA'          => $fechaMostrar,
@@ -494,12 +500,17 @@ class inventarioController extends Controller
                 ])->map(function ($salida) {
                     $usuario = trim($salida->EMPLEADO_NOMBRE . ' ' . $salida->EMPLEADO_APELLIDOPATERNO . ' ' . $salida->EMPLEADO_APELLIDOMATERNO);
 
-                    // ✅ FECHA oficial para mostrar
                     $fechaMostrar = $salida->FECHA_SALIDA;
 
-                    // ✅ FECHA_ORDEN = FECHA_SALIDA + hora de created_at
-                    $horaCreated = date('H:i:s', strtotime($salida->created_at));
-                    $fechaOrden  = date('Y-m-d', strtotime($salida->FECHA_SALIDA)) . ' ' . $horaCreated;
+                    // ================================
+                    // ORDENAR: validar created_at
+                    // ================================
+                    if (date('Y-m-d', strtotime($salida->FECHA_SALIDA)) === date('Y-m-d', strtotime($salida->created_at))) {
+                        $horaCreated = date('H:i:s', strtotime($salida->created_at));
+                        $fechaOrden  = $salida->FECHA_SALIDA . ' ' . $horaCreated;
+                    } else {
+                        $fechaOrden = date('Y-m-d H:i:s', strtotime($salida->created_at));
+                    }
 
                     return [
                         'FECHA'          => $fechaMostrar,
@@ -515,7 +526,7 @@ class inventarioController extends Controller
                 });
 
 
-                
+
             // =========================
             // 4. Unir todo y ordenar por FECHA_ORDEN asc
             // =========================
