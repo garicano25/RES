@@ -231,7 +231,7 @@
                             <div class="col-md-6">
                                 <label class="form-label">Fecha de emisión</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_ACREDITACION" name="DESDE_ACREDITACION">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_ACREDITACION" name="DESDE_ACREDITACION" required> 
                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                 </div>
                             </div>
@@ -240,14 +240,14 @@
                             <div class="col-md-6">
                                 <label class="form-label">Fecha de entrega GR</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ENTREGA_GR" name="FECHA_ENTREGA_GR">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ENTREGA_GR" name="FECHA_ENTREGA_GR" required>
                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">La GR es parcial </label>
-                                <select class="form-control" id="GR_PARCIAL" name="GR_PARCIAL">
+                                <select class="form-control" id="GR_PARCIAL" name="GR_PARCIAL" required>
                                     <option value="" selected>Seleccione una opción</option>
                                     <option value="Sí">Sí</option>
                                     <option value="No">No</option>

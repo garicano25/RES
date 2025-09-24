@@ -80,7 +80,7 @@ class DenyRoleGlobalMiddleware
         'Vo.Bo_GRusuario',
         'Solicitudes_VoBo',
         'Solicitudes_aprobaciones'
-
+        
     ];
 
     // public function handle($request, Closure $next)
