@@ -147,12 +147,12 @@
 
                     <div class="col-12 mt-3">
                         <label>Finalizar solicitud</label>
-                            <select class="form-control" id="FINALIZAR_SOLICITUD_ALMACEN" name="FINALIZAR_SOLICITUD_ALMACEN" required>
-                                <option value="" selected disabled>Seleccione una opción</option>
-                                <option value="1">Sí</option>
-                                <option value="2">No</option>
-                            </select>
-                        
+                        <select class="form-control" id="FINALIZAR_SOLICITUD_ALMACEN" name="FINALIZAR_SOLICITUD_ALMACEN" required>
+                            <option value="" selected disabled>Seleccione una opción</option>
+                            <option value="1">Sí</option>
+                            <option value="2">No</option>
+                        </select>
+
                     </div>
 
                     <div class="col-12 mt-3">
@@ -160,12 +160,12 @@
 
                             <div class="col-8">
                                 <label for="APROBACION">Firma almacenista</label>
-                                <input type="text" class="form-control" id="FIRMA_ALMACEN" name="FIRMA_ALMACEN" readonly>
+                                <input type="text" class="form-control" id="FIRMA_ALMACEN" name="FIRMA_ALMACEN" readonly required>
                             </div>
                             <div class="col-4">
                                 <label>Fecha *</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ALMACEN_SOLICITUD" name="FECHA_ALMACEN_SOLICITUD">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ALMACEN_SOLICITUD" name="FECHA_ALMACEN_SOLICITUD" required>
                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                 </div>
                             </div>
