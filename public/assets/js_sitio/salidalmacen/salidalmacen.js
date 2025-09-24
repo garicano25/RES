@@ -597,7 +597,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     </div>
                     <div class="col-4 mt-2 div_articulo_retorno campo_unico" style="display: none;">
                         <label class="form-label">Artículo ya retorno</label>
-                        <select class="form-control articulo_retorno" name="ARTICULO_RETORNO">
+                        <select class="form-control articulo_retorno" name="ARTICULO_RETORNO" required>
                             <option value="" ${!material.ARTICULO_RETORNO ? "selected" : ""} disabled>Seleccione</option>
                             <option value="1" ${material.ARTICULO_RETORNO === "1" ? "selected" : ""}>Sí</option>
                             <option value="0" ${material.ARTICULO_RETORNO === "0" ? "selected" : ""}>No</option>
@@ -606,18 +606,13 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     <div class="col-4 mt-2 div_fecha_retorno" style="display: none;">
                         <label class="form-label">Fecha que retorno</label>
                         <div class="input-group">
-                            <input type="text" class="form-control mydatepicker fecha_retorno" 
-                                   placeholder="aaaa-mm-dd" 
-                                   name="FECHA_RETORNO" 
-                                   value="${material.FECHA_RETORNO || ''}">
+                            <input type="text" class="form-control mydatepicker fecha_retorno"  placeholder="aaaa-mm-dd"  name="FECHA_RETORNO" value="${material.FECHA_RETORNO || ''}" required>
                             <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                         </div>
                     </div>
                     <div class="col-4 mt-2 div_cantidad_retorno" style="display: none;">
                         <label class="form-label">Cantidad que retorna a almacén</label>
-                        <input type="number" class="form-control cantidad_retorno" 
-                               name="CANTIDAD_RETORNO" 
-                               value="${material.CANTIDAD_RETORNO || ''}">
+                        <input type="number" class="form-control cantidad_retorno" name="CANTIDAD_RETORNO"  value="${material.CANTIDAD_RETORNO || ''}" required>
                     </div>
 
                     <div class="col-12 mt-2 contenedor_articulos" style="display: none;">
