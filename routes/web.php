@@ -686,12 +686,12 @@ Route::get('/Tablatiposervicio', [catalogotiposervicioController::class, 'Tablat
 
 
 //==============================================   CATALOGOS CONFIRMACION ============================================== 
-Route::get('/Catalogoconfirmacion', function () {return view('ventas.Catalogos.catalogos_confirmacion');});
+Route::get('/catalogoconfirmacion', function () {return view('ventas.Catalogos.catalogos_confirmacion');});
 
 
 // CATÁLOGO DE VERIFIACION DEL CLIENTE
 
-Route::get('/Catalogoverificacion', function () {return view('ventas.Catalogos.catalago_verificacioncliente');});
+Route::get('/catalogoverificacion', function () {return view('ventas.Catalogos.catalago_verificacioncliente');});
 Route::post('/InformacionSave', [catalagoverificacioninformacionController::class, 'store']);
 Route::get('/InformacionDelete', [catalagoverificacioninformacionController::class, 'store']);
 Route::get('/Tablaverificacioncliente', [catalagoverificacioninformacionController::class, 'Tablaverificacioncliente']);
