@@ -717,7 +717,7 @@ Route::post('/rechazar', [mrController::class, 'rechazar']);
 
 //==============================================  M.R APRUEBA LIDER  ============================================== 
 
-Route::get('/Requisicionmaterialeslideres', function () {return view('compras.requisicionesmaterial.requisicionlider');});
+Route::get('/requisicionmaterialeslideres', function () {return view('compras.requisicionesmaterial.requisicionlider');});
 Route::get('/Tablarequisicion', [mrController::class, 'Tablarequisicion']);
 
 //==============================================  M.R APRUEBA DIRECCION  ============================================== 
