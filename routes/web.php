@@ -773,7 +773,7 @@ Route::get('/mostrarequierecontrato/{id}', [proveedortempController::class, 'mos
 
 Route::get('/ordencompra', [poController::class, 'index']);
 Route::get('/Tablaordencompra', [poController::class, 'Tablaordencompra']);
-Route::get('/Orden_compra_aprobación', [poController::class, 'index1']);
+Route::get('/ordencompraaprobacion', [poController::class, 'index1']);
 Route::get('/Tablaordencompraprobacion', [poController::class, 'Tablaordencompraprobacion']);
 Route::post('/PoSave', [poController::class, 'store']);
 Route::get('/obtenerNombreUsuario/{id}', [poController::class, 'obtenerNombreUsuario']);
