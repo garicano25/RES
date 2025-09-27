@@ -452,95 +452,95 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     @endif
 
-    @if(request()->is('PPT'))
+    @if(request()->is('ppt'))
     <script src="/assets/js_sitio/organizacion/PPT.js?v=3.2"></script>
     @endif
 
-    @if(request()->is('DPT'))
+    @if(request()->is('dpt'))
     <script src="/assets/js_sitio/organizacion/DPT.js?v=6.0"></script>
     @endif
 
-    @if(request()->is('Jerárquico'))
+    @if(request()->is('jerarquico'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogos.js?v=1.0"></script>
     @endif
 
-    @if(request()->is('Asesores'))
+    @if(request()->is('asesores'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoasesores.js?v=1.0"></script>
     @endif
 
-    @if(request()->is('FuncionesCargo'))
+    @if(request()->is('funcionescargo'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionescargo.js?v=1.0"></script>
     @endif
 
-    @if(request()->is('Funcionesgestión'))
+    @if(request()->is('funcionesgestion'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogofuncionesgestion.js?v=3.0"></script>
     @endif
 
-    @if(request()->is('RelacionesExternas'))
+    @if(request()->is('relacionesexternas'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogosrelacionesxternas.js?v=1.0"></script>
     @endif
 
-    @if(request()->is('RequisiciónDePersonal'))
+    @if(request()->is('requisiciondepersonal'))
     <script src="/assets/js_sitio/organizacion/requerimiento.js?v=3.0"></script>
     @endif
 
-    @if(request()->is('CatálogoDeVacantes'))
+    @if(request()->is('catalogodevacantes'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogovacantes.js?v=1.0"></script>
     @endif
 
-    @if(request()->is('Categorías'))
+    @if(request()->is('categorias'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogocategoria.js?v=4.0"></script>
     @endif
 
-    @if(request()->is('Género'))
+    @if(request()->is('genero'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogogenero.js?v=1.0"></script>
     @endif
 
-    @if(request()->is('Puesto-experiencia'))
+    @if(request()->is('puestoexperiencia'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoexperiencia.js?v=1.0"></script>
     @endif
 
-    @if(request()->is('Competencias-básicas'))
+    @if(request()->is('competenciasbasicas'))
     <script src="/assets/js_sitio/organizacion/catalogos/catálogocompetenciabasica.js?v=1.0"></script>
     @endif
 
-    @if(request()->is('Tipo-vacante'))
+    @if(request()->is('tipovacante'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogotipovacante.js?v=1.0"></script>
     @endif
 
-    @if(request()->is('Competencias-gerenciales'))
+    @if(request()->is('competenciasgerenciales'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoCompetenciasGerenciales.js?v=1.0"></script>
     @endif
 
-    @if(request()->is('Anuncios'))
+    @if(request()->is('snuncios'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoanuncion.js"></script>
     @endif
 
-    @if(request()->is('Listavacantes'))
+    @if(request()->is('listavacantes'))
     <script src="/assets/js_sitio/reclutamiento/Listavacante.js"></script>
     @endif
 
-    @if(request()->is('Postulaciones'))
+    @if(request()->is('postulaciones'))
     <script src="/assets/js_sitio/reclutamiento/vacantesactivas.js?v=6.1"></script>
     @endif
 
-    @if(request()->is('Motivo-vacante'))
+    @if(request()->is('motivovacante'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogomotivovacante.js?v=1.0"></script>
     @endif
 
-    @if(request()->is('Área_interes'))
+    @if(request()->is('areainteres'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoareainteres.js?v=1.0"></script>
     @endif
 
-    @if(request()->is('Selección'))
+    @if(request()->is('seleccion'))
     <script src="/assets/js_sitio/seleccion/seleccion.js?v=22.3"></script>
     @endif
 
-    @if(request()->is('Visualizar_selección'))
+    @if(request()->is('visualizarseleccion'))
     <script src="/assets/js_sitio/seleccion/visualizarseleccion.js?v=1.0"></script>
     @endif
 
-    @if(request()->is('Pruebas-conocimientos'))
+    @if(request()->is('pruebasconocimientos'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogopruebas.js?v=1.0"></script>
     @endif
 
@@ -548,33 +548,33 @@
     <script src="/assets/js_sitio/usuario/usuario.js?v=4.8"></script>
     @endif
 
-    @if(request()->is('Contratación'))
+    @if(request()->is('contratacion'))
     <script src="/assets/js_sitio/contratacion/contratacion.js?v=11.17"></script>
     <!-- Form wizard -->
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
-    @if(request()->is('Pendiente-Contratar'))
+    @if(request()->is('pendientecontratar'))
     <script src="/assets/js_sitio/contratacion/pendientecontratar.js?v=1.0"></script>
     @endif
 
-    @if(request()->is('Desvinculación'))
+    @if(request()->is('desvinculacion'))
     <script src="/assets/js_sitio/desvinculacion/desvinculacion.js"></script>
     @endif
 
-    @if(request()->is('Brecha_competencia'))
+    @if(request()->is('brechacompetencia'))
     <script src="/assets/js_sitio/capacitacion/brechacompetencia.js?v=1.5"></script>
     @endif
 
-    @if(request()->is('Rec.Empleado'))
+    @if(request()->is('recempleado'))
     <script src="/assets/js_sitio/RecEmpleados/recursosempleado.js?v=1.13"></script>
     @endif
 
-    @if(request()->is('Solicitudes_VoBo'))
+    @if(request()->is('solicitudesvobo'))
     <script src="/assets/js_sitio/RecEmpleados/recempleadovobo.js?v=1.4"></script>
     @endif
 
-    @if(request()->is('Solicitudes_aprobaciones'))
+    @if(request()->is('solicitudesaprobaciones'))
     <script src="/assets/js_sitio/RecEmpleados/recempleadoaprobacion.js?v=1.6"></script>
     @endif
 

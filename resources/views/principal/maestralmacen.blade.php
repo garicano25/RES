@@ -311,15 +311,15 @@
     </script>
 
 
-    @if(request()->is('Inventario'))
+    @if(request()->is('inventario'))
     <script src="/assets/js_sitio/inventario/inventario.js?v=1.12"></script>
     @endif
 
-    @if(request()->is('Catálogo_tipo_inventario'))
+    @if(request()->is('catalogotipoinventario'))
     <script src="/assets/js_sitio/inventario/catalogos/catalogotipos.js"></script>
     @endif
 
-    @if(request()->is('Salida_almacen'))
+    @if(request()->is('salidaalmacen'))
     <script src="/assets/js_sitio/salidalmacen/salidalmacen.js?v=1.15"></script>
     @endif
 </body>

@@ -491,73 +491,73 @@
 
 
 
-    @if(request()->is('Requisición_Materiales'))
+    @if(request()->is('requisicionmateriales'))
     <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=4.5"></script>
     @endif
 
-    @if(request()->is('Requisición_materiales_líderes'))
+    @if(request()->is('requisicionmaterialeslideres'))
     <script src="/assets/js_sitio/requisiconmaterial/requisiconlider.js?v=2.11"></script>
     @endif
 
-    @if(request()->is('Requisición_materiales_aprobación'))
+    @if(request()->is('requisicionmaterialesaprobacion'))
     <script src="/assets/js_sitio/requisiconmaterial/requisiconaprobada.js?v=2.3"></script>
     @endif
 
-    @if(request()->is('Bitácora'))
+    @if(request()->is('bitacora'))
     <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.19++++++"></script>
     @endif
 
-    @if(request()->is('Banco_proveedores'))
+    @if(request()->is('bancoproveedores'))
     <script src="/assets/js_sitio/proveedor/proveedorespotenciales.js?v=1.10"></script>
     @endif
 
-    @if(request()->is('Catálogo_funciones'))
+    @if(request()->is('catalogofunciones'))
     <script src="/assets/js_sitio/proveedor/catalogos/catalogofunciones.js?v=1.0"></script>
     @endif
 
-    @if(request()->is('Catálogo_títulos'))
+    @if(request()->is('catalogotitulos'))
     <script src="/assets/js_sitio/proveedor/catalogos/catalogotitulos.js?v=1.0"></script>
     @endif
 
-    @if(request()->is('Catálogo_documento_soporte'))
+    @if(request()->is('catalogodocumentosoporte'))
     <script src="/assets/js_sitio/proveedor/catalogos/catalogodocumento.js?v=1.3"></script>
     @endif
 
-    @if(request()->is('Lista_proveedores'))
+    @if(request()->is('listaproveedores'))
     <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=1.14"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
-    @if(request()->is('Proveedores_temporales'))
+    @if(request()->is('proveedorestemporales'))
     <script src="/assets/js_sitio/proveedor/proveedorestemp.js?v=1.7"></script>
     @endif
 
-    @if(request()->is('Orden_compra'))
+    @if(request()->is('ordencompra'))
     <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.14"></script>
     @endif
 
-    @if(request()->is('Orden_compra_aprobación'))
+    @if(request()->is('ordencompraaprobacion'))
     <script src="/assets/js_sitio/orden_compra/aprobacioncompra.js?v=1.6"></script>
     @endif
 
-    @if(request()->is('Matriz_comparativa'))
+    @if(request()->is('matrizcomparativa'))
     <script src="/assets/js_sitio/matrizcomparativa/matrizcomparativa.js?v=1.3"></script>
     @endif
 
-    @if(request()->is('Matriz_aprobación'))
+    @if(request()->is('matrizaprobacion'))
     <script src="/assets/js_sitio/matrizcomparativa/aprobacionmatriz.js?v=1.3"></script>
     @endif
 
-    @if(request()->is('Catálogo_verificación_proveedor'))
+    @if(request()->is('catalogoverificacionproveedor'))
     <script src="/assets/js_sitio/proveedor/catalogos/catalogoverproveedor.js"></script>
     @endif
 
-    @if(request()->is('Bitácora-GR'))
+    @if(request()->is('bitacoragr'))
     <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.44"></script>
     @endif
 
 
-    @if(request()->is('Vo.Bo_GRusuario'))
+    @if(request()->is('vobogrusuario'))
     <script src="/assets/js_sitio/requisiciongr/vobogrusuario.js?v=1.3"></script>
     @endif
 

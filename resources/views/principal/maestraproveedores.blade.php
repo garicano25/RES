@@ -402,7 +402,7 @@
     </script>
 
 
-    @if(request()->is('Alta'))
+    @if(request()->is('alta'))
     <script src="/assets/js_sitio/proveedor/altaproveedores.js?v=1.5"></script>
     @endif
 
@@ -410,28 +410,28 @@
 
 
 
-    @if(request()->is('Proveedores_Cuentas'))
+    @if(request()->is('proveedorescuentas'))
     <script src="/assets/js_sitio/proveedor/altacuentas.js?v=1.3"></script>
     @endif
 
 
 
-    @if(request()->is('Proveedores_Contactos'))
+    @if(request()->is('proveedorescontactos'))
     <script src="/assets/js_sitio/proveedor/altacontactos.js?v=1.3"></script>
     @endif
 
 
-    @if(request()->is('Proveedores_Certificaciones'))
+    @if(request()->is('proveedorescertificaciones'))
     <script src="/assets/js_sitio/proveedor/altacertifiacion.js?v=1.0"></script>
     @endif
 
 
-    @if(request()->is('Proveedores_Referencias'))
+    @if(request()->is('proveedoresreferencias'))
     <script src="/assets/js_sitio/proveedor/altareferencias.js?v=1.0"></script>
     @endif
 
 
-    @if(request()->is('Proveedores_documentos'))
+    @if(request()->is('proveedoresdocumentos'))
     <script src="/assets/js_sitio/proveedor/altadocumentos.js?v=1.7"></script>
     @endif
 
