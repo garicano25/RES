@@ -567,7 +567,7 @@
     @endif
 
     @if(request()->is('Rec.Empleado'))
-    <script src="/assets/js_sitio/RecEmpleados/recursosempleado.js?v=1.11"></script>
+    <script src="/assets/js_sitio/RecEmpleados/recursosempleado.js?v=1.12"></script>
     @endif
 
     @if(request()->is('Solicitudes_VoBo'))

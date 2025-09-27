@@ -52,6 +52,31 @@ class recempleadoController extends Controller
         }
     }
 
+    public function obtenerDatosVacaciones()
+    {
+        try {
+            $curp = auth()->user()->CURP;
+
+            // Cargo
+          
+
+            $empleado = DB::table('formulario_contratacion')
+                ->where('CURP', $curp)
+                ->select('NUMERO_EMPLEADO','FECHA_INGRESO')
+                ->first();
+
+            return response()->json([
+                'numero_empleado' => $empleado ? $empleado->NUMERO_EMPLEADO : 'No disponible',
+                'fecha_ingreso' => $empleado ? $empleado->FECHA_INGRESO : ''
+
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error al obtener datos: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
 
     public function Tablarecempleados()
     {

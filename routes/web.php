@@ -567,6 +567,8 @@ Route::get('/mostrarrequisicon/{id}', [contratacionController::class, 'mostrarre
 
 Route::get('/Rec.Empleado', function () {return view('RH.RecEmpleados.RecEmpleados');});
 Route::get('/obtenerDatosPermiso', [recempleadoController::class, 'obtenerDatosPermiso']);
+Route::get('/obtenerDatosVacaciones', [recempleadoController::class, 'obtenerDatosVacaciones']);
+
 Route::get('/Tablarecempleados', [recempleadoController::class, 'Tablarecempleados']);
 Route::post('/RecempleadoSave', [recempleadoController::class, 'store']);
 Route::get('/Solicitudes_VoBo', function () { return view('RH.RecEmpleados.recempleadovobo');});
