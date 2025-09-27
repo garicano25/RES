@@ -784,7 +784,7 @@ Route::get('/generarPDFPO/{id}', [pdfpoController::class, 'generarPDFPO']);
 Route::get('/matrizcomparativa', [matrizController::class, 'index']);
 Route::get('/Tablamatrizcomparativa', [matrizController::class, 'Tablamatrizcomparativa']);
 Route::post('/MatrizSave', [matrizController::class, 'store']);
-Route::get('/Matriz_aprobación', [matrizController::class, 'index1']);
+Route::get('/matrizaprobacion', [matrizController::class, 'index1']);
 Route::get('/Tablamatirzaprobada', [matrizController::class, 'Tablamatirzaprobada']);
 
 //==============================================    Recepción de bienes y/o servicios - GR  ============================================== 
