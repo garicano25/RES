@@ -678,7 +678,7 @@ Route::get('/Tablalineanegocio', [catalogolineanegociosController::class, 'Tabla
 
 // CATÁLOGO DE TIPO DE SERVICIO
 
-Route::get('/Catalogotiposervicio', function () {return view('ventas.Catalogos.catalogo_tiposervicio');});
+Route::get('/catalogotiposervicio', function () {return view('ventas.Catalogos.catalogo_tiposervicio');});
 Route::post('/TiposSave', [catalogotiposervicioController::class, 'store']);
 Route::get('/TiposDelete', [catalogotiposervicioController::class, 'store']);
 Route::get('/Tablatiposervicio', [catalogotiposervicioController::class, 'Tablatiposervicio']);
