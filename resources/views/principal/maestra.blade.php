@@ -512,7 +512,7 @@
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoCompetenciasGerenciales.js?v=1.0"></script>
     @endif
 
-    @if(request()->is('snuncios'))
+    @if(request()->is('anuncios'))
     <script src="/assets/js_sitio/organizacion/catalogos/catalogoanuncion.js"></script>
     @endif
 
