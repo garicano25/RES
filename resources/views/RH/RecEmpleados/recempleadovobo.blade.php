@@ -48,7 +48,7 @@
                         <div class="row">
                             <div class="col-9">
                                 <label class="form-label">Solicitante </label>
-                                <input type="text" class="form-control"  id="SOLICITANTE_SALIDA" name="SOLICITANTE_SALIDA" readonly>
+                                <input type="text" class="form-control" id="SOLICITANTE_SALIDA" name="SOLICITANTE_SALIDA" readonly>
                             </div>
 
                             <div class="col-3">
@@ -64,10 +64,10 @@
 
                     <div id="SOLIDA_ALMACEN" style="display: none;">
 
-                            <div class="mt-3">
-                                <div class="materialesdiv mt-4"></div>
-                            </div>
-                    
+                        <div class="mt-3">
+                            <div class="materialesdiv mt-4"></div>
+                        </div>
+
                         <div class="col-12 mt-3 d-flex align-items-center">
                             <div class="ms-3 align-items-center" id="FECHA_ESTIMADA" style="display: none;">
                                 <label class="col-form-label me-2">Fecha estimada *</label>
@@ -176,7 +176,73 @@
 
 
 
+
                     <div id="SOLICITUD_VACACIONES" style="display: none;">
+
+                        <div class="col-12 mt-3">
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="form-label">No. de empleado: </label>
+                                    <input type="text" class="form-control" id="NOEMPLEADO_PERMISO_VACACIONES" name="NOEMPLEADO_PERMISO_VACACIONES" readonly>
+                                </div>
+
+
+                                <div class="col-6">
+                                    <label class="form-label">Fecha Ingreso: </label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INGRESO_VACACIONES" name="FECHA_INGRESO_VACACIONES" required readonly>
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-4 mt-3">
+                                    <label class="form-label">Año de servicio </label>
+                                    <input type="number" class="form-control" id="ANIO_SERVICIO_VACACIONES" name="ANIO_SERVICIO_VACACIONES">
+                                </div>
+
+
+                                <div class="col-4 mt-3">
+                                    <label class="form-label">Días que corresponden</label>
+                                    <input type="number" class="form-control" id="DIAS_CORRESPONDEN_VACACIONES" name="DIAS_CORRESPONDEN_VACACIONES">
+                                </div>
+
+
+                                <div class="col-4 mt-3">
+                                    <label class="form-label">Días a disfrutar</label>
+                                    <input type="text" class="form-control" id="DIAS_DISFRUTAR_VACACIONES" name="DIAS_DISFRUTAR_VACACIONES">
+                                </div>
+
+
+
+                                <div class="col-4 mt-3">
+                                    <label class="form-label">Fecha de inicio vacaciones: </label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INICIO_VACACIONES" name="FECHA_INICIO_VACACIONES" required>
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-4 mt-3">
+                                    <label class="form-label">Fecha de terminación vacaciones: </label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_TERMINACION_VACACIONES" name="FECHA_TERMINACION_VACACIONES" required>
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-4 mt-3">
+                                    <label class="form-label">Día que inicia labores: </label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INICIALABORES_VACACIONES" name="FECHA_INICIALABORES_VACACIONES" required>
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
                     </div>
 
 

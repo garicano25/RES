@@ -84,11 +84,12 @@ $("#NUEVO_RECUROSEMPLEADO").click(function (e) {
     
 
       $.get('/obtenerDatosVacaciones', function (response) {
-        if (response.fecha_ingreso) {
-            $("#FECHA_INGRESO_VACACIONES").val(response.fecha_ingreso);
-        }
+       
         if (response.numero_empleado) {
             $("#NOEMPLEADO_PERMISO").val(response.numero_empleado);
+        }
+        if (response.fecha_ingreso) {
+            $("#FECHA_INGRESO_VACACIONES").val(response.fecha_ingreso);
         }
      });
     
@@ -780,11 +781,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (this.value === "3") {
             $.get('/obtenerDatosVacaciones', function (response) {
-                if (response.fecha_ingreso) {
-                    $("#FECHA_INGRESO_VACACIONES").val(response.fecha_ingreso);
-                }
                 if (response.numero_empleado) {
                     $("#NOEMPLEADO_PERMISO_VACACIONES").val(response.numero_empleado);
+                }
+                if (response.fecha_ingreso) {
+                    $("#FECHA_INGRESO_VACACIONES").val(response.fecha_ingreso);
                 }
             });
         }

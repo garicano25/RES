@@ -28,7 +28,6 @@ class recempleadoController extends Controller
         try {
             $curp = auth()->user()->CURP;
 
-            // Cargo
             $cargo = DB::table('contratos_anexos_contratacion as cac')
                 ->join('catalogo_categorias as cc', 'cc.ID_CATALOGO_CATEGORIA', '=', 'cac.NOMBRE_CARGO')
                 ->where('cac.CURP', $curp)
@@ -56,10 +55,6 @@ class recempleadoController extends Controller
     {
         try {
             $curp = auth()->user()->CURP;
-
-            // Cargo
-          
-
             $empleado = DB::table('formulario_contratacion')
                 ->where('CURP', $curp)
                 ->select('NUMERO_EMPLEADO','FECHA_INGRESO')
