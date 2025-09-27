@@ -27,7 +27,7 @@
             <div class="card h-100 text-center">
                 <div class="card-body d-flex flex-column justify-content-center align-items-center">
                     <h5 class="card-title mb-4">Catálogo tipos</h5>
-                    <a class="btn btn-primary mt-3" href="{{ url('/Catálogo_tipo_inventario') }}">Ver Catálogo</a>
+                    <a class="btn btn-primary mt-3" href="{{ url('/Catalogotipoinventario') }}">Ver Catálogo</a>
                 </div>
             </div>
         </div>

@@ -855,7 +855,7 @@
 
                             {{-- RRHH --}}
                             @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista)
-                            <a href="{{ url('/Rec.Empleado') }}" class="modules__link">
+                            <a href="{{ url('/recempleado') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/RRHH.png" alt=""></div>
                                     <h2 class="modules__text">RRHH</h2>
@@ -872,14 +872,14 @@
 
                             {{-- Compras (SIEMPRE LIBRE, excepto Almacenista que va a Bitácora-GR) --}}
                             @if($tieneSoloRolAlmacenista)
-                            <a href="{{ url('/Bitácora-GR') }}" class="modules__link">
+                            <a href="{{ url('/bitacoragr') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/Compras.png" alt=""></div>
                                     <h2 class="modules__text">Compras</h2>
                                 </div>
                             </a>
                             @else
-                            <a href="{{ url('/Requisición_Materiales') }}" class="modules__link">
+                            <a href="{{ url('/requisicionmateriales') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/Compras.png" alt=""></div>
                                     <h2 class="modules__text">Compras</h2>
@@ -895,7 +895,7 @@
                                 <h2 class="modules__text">Ventas</h2>
                             </div>
                             @else
-                            <a href="{{ url('/Clientes') }}" class="modules__link">
+                            <a href="{{ url('/clientes') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/Ventas.png" alt=""></div>
                                     <h2 class="modules__text">Ventas</h2>
@@ -918,7 +918,7 @@
 
                             {{-- Almacén --}}
                             @if($tieneSoloRolAlmacenista)
-                            <a href="{{ url('/Inventario') }}" class="modules__link">
+                            <a href="{{ url('/inventario') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
                                     <h2 class="modules__text">Almacén</h2>
@@ -930,7 +930,7 @@
                                 <h2 class="modules__text">Almacén</h2>
                             </div>
                             @else
-                            <a href="{{ url('/Inventario') }}" class="modules__link">
+                            <a href="{{ url('/inventario') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
                                     <h2 class="modules__text">Almacén</h2>
@@ -984,7 +984,7 @@
                                 <h2 class="modules__text">Página web</h2>
                             </div>
                             @else
-                            <a href="{{ url('/Mensajes_paginaweb') }}" class="modules__link">
+                            <a href="{{ url('/mensajespaginaweb') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/sitoweb2.png" alt=""></div>
                                     <h2 class="modules__text">Página web</h2>

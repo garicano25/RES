@@ -32,7 +32,7 @@ class DenyRoleMiddleware
                 }
 
                 // Redirige a la ruta 'Alta' con mensaje flash
-                return redirect()->route('Alta')->with('error', 'No tienes permiso para acceder a esta sección.');
+                return redirect()->route('alta')->with('error', 'No tienes permiso para acceder a esta sección.');
             }
         }
 

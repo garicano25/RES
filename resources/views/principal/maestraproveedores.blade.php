@@ -200,37 +200,37 @@
                     <nav>
                         <ul class="menu-list">
                             <li>
-                                <a href="{{ url('/Alta') }}" class="d-flex flex-column align-items-center text-center">
+                                <a href="{{ url('/alta') }}" class="d-flex flex-column align-items-center text-center">
                                     <i class="bi bi-speedometer"></i>
                                     <span>Alta y actualización</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ url('/Proveedores_Cuentas') }}" class="d-flex flex-column align-items-center text-center">
+                                <a href="{{ url('/proveedorescuentas') }}" class="d-flex flex-column align-items-center text-center">
                                     <i class="bi bi-currency-dollar"></i>
                                     <span>Cuentas bancarias</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ url('/Proveedores_Contactos') }}" class="d-flex flex-column align-items-center text-center">
+                                <a href="{{ url('/proveedorescontactos') }}" class="d-flex flex-column align-items-center text-center">
                                     <i class="bi bi-person-lines-fill"></i>
                                     <span>Contactos</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ url('/Proveedores_Certificaciones') }}" class="d-flex flex-column align-items-center text-center">
+                                <a href="{{ url('/proveedorescertificaciones') }}" class="d-flex flex-column align-items-center text-center">
                                     <i class="bi bi-award-fill"></i>
                                     <span>Certificaciones, acreditaciones y membresías</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ url('/Proveedores_Referencias') }}" class="d-flex flex-column align-items-center text-center">
+                                <a href="{{ url('/proveedoresreferencias') }}" class="d-flex flex-column align-items-center text-center">
                                     <i class="bi bi-journal-text"></i>
                                     <span>Referencias comerciales</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ url('/Proveedores_documentos') }}" class="d-flex flex-column align-items-center text-center">
+                                <a href="{{ url('/proveedoresdocumentos') }}" class="d-flex flex-column align-items-center text-center">
                                     <i class="bi bi-file-earmark-pdf-fill"></i>
                                     <span>Documentos de soporte</span>
                                 </a>

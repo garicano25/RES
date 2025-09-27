@@ -29,7 +29,7 @@ class AuthController extends Controller
     {
         if (Auth::check()) {
             if (Auth::user()->hasAnyRole(['Superusuario', 'Administrador'])) {
-                return redirect('/Módulos');
+                return redirect('/modulos');
             } else {
                 return back()->with('error', 'No tienes acceso a esta sección.');
             }
@@ -72,7 +72,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'Inicio de sesión exitoso. Redirigiendo...',
-                'redirect' => ($user->USUARIO_TIPO == 1) ? '/Módulos' : '/Alta'
+                'redirect' => ($user->USUARIO_TIPO == 1) ? '/modulos' : '/alta'
             ]);
         }
 
@@ -135,7 +135,7 @@ class AuthController extends Controller
         return response()->json([
             'status' => 'verification_required',
             'correo' => $correo,
-            'redirect' => ($user->USUARIO_TIPO == 1) ? '/Módulos' : '/Alta'
+            'redirect' => ($user->USUARIO_TIPO == 1) ? '/modulos' : '/alta'
         ]);
     }
 

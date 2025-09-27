@@ -141,38 +141,38 @@
                 <ul class="navbar-nav">
 
                     <li class="nav-item dropdown" style="margin-left: -2px;">
-                        <a class="nav-link BOTON" href="{{ url('/Módulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                        <a class="nav-link BOTON" href="{{ url('/modulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Inicio</span>
                         </a>
                     </li>
 
                     <li class="nav-item dropdown" style="margin-left: -2px;">
-                        <a class="nav-link BOTON" href="{{ url('/Clientes') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                        <a class="nav-link BOTON" href="{{ url('/clientes') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Clientes</span><span class="d-none d-lg-inline">Clientes</span>
                         </a>
                     </li>
 
 
                     <li class="nav-item dropdown" style="margin-left: -2px;">
-                        <a class="nav-link BOTON" href="{{ url('/Solicitudes') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                        <a class="nav-link BOTON" href="{{ url('/solicitudes') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-pencil-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Solicitudes</span><span class="d-none d-lg-inline">Solicitudes</span>
                         </a>
                     </li>
 
                     <li class="nav-item dropdown" style="margin-left: -2px;">
-                        <a class="nav-link BOTON" href="{{ url('/Ofertas') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                        <a class="nav-link BOTON" href="{{ url('/ofertas') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-currency-dollar" style="margin-right: 5px;"></i> <span class="d-lg-none">Ofertas/Cotizaciones</span><span class="d-none d-lg-inline">Ofertas/Cotizaciones</span>
                         </a>
                     </li>
 
                     <li class="nav-item dropdown" style="margin-left: -2px;">
-                        <a class="nav-link BOTON" href="{{ url('/Confirmación') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                        <a class="nav-link BOTON" href="{{ url('/confirmacion') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-patch-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Confirmación del servicio </span><span class="d-none d-lg-inline">Confirmación del servicio </span>
                         </a>
                     </li>
 
                     <li class="nav-item dropdown" style="margin-left: -2px;">
-                        <a class="nav-link BOTON" href="{{ url('/Orden_trabajo') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                        <a class="nav-link BOTON" href="{{ url('/ordentrabajo') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-patch-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Orden de trabajo - OT</span><span class="d-none d-lg-inline">Orden de trabajo - OT</span>
                         </a>
                     </li>
@@ -198,10 +198,10 @@
                             </a>
                             <ul class="dropdown-menu">
 
-                                <li><a class="dropdown-item" href="{{url('/Catálogo_solicitudes')}}">Catálogos de solicitudes</a>
+                                <li><a class="dropdown-item" href="{{url('/catalogosolicitudes')}}">Catálogos de solicitudes</a>
                                 </li>
                                 <hr class="dropdown-divider">
-                                <li><a class="dropdown-item" href="{{url('/Catálogo_confirmación')}}">Catálogos de confirmación</a>
+                                <li><a class="dropdown-item" href="{{url('/catalogoconfirmacion')}}">Catálogos de confirmación</a>
                                 </li>
 
                             </ul>

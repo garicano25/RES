@@ -139,7 +139,7 @@
                 <ul class="navbar-nav">
 
                     <li class="nav-item dropdown" style="margin-left: -2px;">
-                        <a class="nav-link BOTON" href="{{ url('/Módulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                        <a class="nav-link BOTON" href="{{ url('/modulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Inicio</span>
                         </a>
                     </li>
@@ -147,7 +147,7 @@
 
 
                         <li class="nav-item dropdown" style="margin-left: -2px;">
-                            <a class="nav-link BOTON" href="{{ url('/Inventario') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <a class="nav-link BOTON" href="{{ url('/inventario') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                                 <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Inventario</span><span class="d-none d-lg-inline">Inventario</span>
                             </a>
                         </li>
@@ -168,7 +168,7 @@
                                     <span class="d-none d-lg-inline">Catálogos</span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{url('/Catálogos_inventarios')}}">Catálogo de inventario</a>
+                                    <li><a class="dropdown-item" href="{{url('/catalogosinventarios')}}">Catálogo de inventario</a>
                                     </li>
 
                                 </ul>
@@ -188,7 +188,7 @@
 
 
                         <li class="nav-item dropdown" style="margin-left: -2px;">
-                            <a class="nav-link BOTON" href="{{ url('/Salida_almacen') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <a class="nav-link BOTON" href="{{ url('/salidaalmacen') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                                 <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Salida de almacén</span><span class="d-none d-lg-inline">Salida de almacén</span>
                             </a>
                         </li>

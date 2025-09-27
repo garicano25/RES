@@ -139,7 +139,7 @@
                 <ul class="navbar-nav">
 
                     <li class="nav-item dropdown" style="margin-left: -2px;">
-                        <a class="nav-link BOTON" href="{{ url('/Módulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                        <a class="nav-link BOTON" href="{{ url('/modulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Inicio</span>
                         </a>
                     </li>
@@ -159,7 +159,7 @@
                             <ul class="dropdown-menu">
 
                                 <li>
-                                    <a class="dropdown-item" href="{{ url('/Requisición_Materiales') }}">
+                                    <a class="dropdown-item" href="{{ url('/requisicionmateriales') }}">
                                         Requisición de Materiales - M.R </a>
                                 </li>
                                 @endif
@@ -171,7 +171,7 @@
                                 <hr class="dropdown-divider">
 
                                 <li>
-                                    <a class="dropdown-item" href="{{ url('/Requisición_materiales_líderes') }}">
+                                    <a class="dropdown-item" href="{{ url('/requisicionmaterialeslideres') }}">
                                         M.R por dar Vo.Bo
                                     </a>
                                 </li>
@@ -185,7 +185,7 @@
                                 {{-- Para administradores --}}
                                 @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
                                 <li>
-                                    <a class="dropdown-item" href="{{ url('/Requisición_materiales_aprobación') }}">
+                                    <a class="dropdown-item" href="{{ url('/requisicionmaterialesaprobacion') }}">
                                         M.R por aprobar
                                     </a>
                                 </li>
@@ -201,7 +201,7 @@
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
 
                         <li class="nav-item dropdown" style="margin-left: -2px;">
-                            <a class="nav-link BOTON" href="{{ url('/Bitácora') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <a class="nav-link BOTON" href="{{ url('/bitacora') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                                 <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Bitácora de consecutivos - MR</span><span class="d-none d-lg-inline">Bitácora de consecutivos - MR</span>
                             </a>
                         </li>
@@ -222,7 +222,7 @@
                             <ul class="dropdown-menu">
                                 {{-- Todos los roles anteriores lo ven --}}
                                 <li>
-                                    <a class="dropdown-item" href="{{ url('/Banco_proveedores') }}">
+                                    <a class="dropdown-item" href="{{ url('/bancoproveedores') }}">
                                         Banco de proveedores
                                     </a>
                                 </li>
@@ -231,7 +231,7 @@
                                 @if(auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de compras']))
                                 <hr class="dropdown-divider">
                                 <li>
-                                    <a class="dropdown-item" href="{{ url('/Lista_proveedores') }}">
+                                    <a class="dropdown-item" href="{{ url('/listaproveedores') }}">
                                         Lista proveedores
                                     </a>
                                 </li>
@@ -241,7 +241,7 @@
                                 @if(auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de planeación y logística','Asistente de compras']))
                                 <hr class="dropdown-divider">
                                 <li>
-                                    <a class="dropdown-item" href="{{ url('/Proveedores_temporales') }}">
+                                    <a class="dropdown-item" href="{{ url('/proveedorestemporales') }}">
                                         Proveedores temporales
                                     </a>
                                 </li>
@@ -267,7 +267,7 @@
                                 <ul class="dropdown-menu">
                                     {{-- Visible para Superusuario, Administrador y Asistente de compras --}}
                                     <li>
-                                        <a class="dropdown-item" href="{{ url('/Matriz_comparativa') }}">
+                                        <a class="dropdown-item" href="{{ url('/matrizcomparativa') }}">
                                             Matriz comparativa de cotizaciones
                                         </a>
                                     </li>
@@ -276,7 +276,7 @@
                                     @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
                                     <hr class="dropdown-divider">
                                     <li>
-                                        <a class="dropdown-item" href="{{ url('/Matriz_aprobación') }}">
+                                        <a class="dropdown-item" href="{{ url('/matrizaprobacion') }}">
                                             Matriz comparativa por aprobar
                                         </a>
                                     </li>
@@ -303,7 +303,7 @@
                                 <ul class="dropdown-menu">
                                     {{-- Visible para Superusuario, Administrador y Asistente de compras --}}
                                     <li>
-                                        <a class="dropdown-item" href="{{ url('/Orden_compra') }}">
+                                        <a class="dropdown-item" href="{{ url('/ordencompra') }}">
                                             Orden de compra
                                         </a>
                                     </li>
@@ -312,7 +312,7 @@
                                     @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
                                     <hr class="dropdown-divider">
                                     <li>
-                                        <a class="dropdown-item" href="{{ url('/Orden_compra_aprobación') }}">
+                                        <a class="dropdown-item" href="{{ url('/ordencompraaprobacion') }}">
                                             Orden de compra por aprobar
                                         </a>
                                     </li>
@@ -337,7 +337,7 @@
                                     {{-- Solo Superusuario, Administrador y Almacenista --}}
                                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','Almacenista']))
                                     <li>
-                                        <a class="dropdown-item" href="{{ url('/Bitácora-GR') }}">
+                                        <a class="dropdown-item" href="{{ url('/bitacoragr') }}">
                                             Lista de recepción B.y.S
                                         </a>
                                     </li>
@@ -346,7 +346,7 @@
 
                                     {{-- Opción visible para todos los usuarios autenticados --}}
                                     <li>
-                                        <a class="dropdown-item" href="{{ url('/Vo.Bo_GRusuario') }}">
+                                        <a class="dropdown-item" href="{{ url('/vobogrusuario') }}">
                                             Vo.Bo. de usuario de B.y.S
                                         </a>
                                     </li>
@@ -365,7 +365,7 @@
                                     <span class="d-none d-lg-inline">Catálogos</span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{url('/Catálogos_proveedores')}}">Catálogos de proveedores</a>
+                                    <li><a class="dropdown-item" href="{{url('/catalogosproveedores')}}">Catálogos de proveedores</a>
                                     </li>
 
                                 </ul>

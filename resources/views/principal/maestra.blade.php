@@ -142,7 +142,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown" style="margin-left: -2px;">
-                        <a class="nav-link BOTON" href="{{ url('/Módulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                        <a class="nav-link BOTON" href="{{ url('/modulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Inicio</span>
                         </a>
                     </li>
@@ -160,11 +160,11 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url('/organigrama') }}">Organigrama</a></li>
                             <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/PPT')}}">PPT</a></li>
+                            <li><a class="dropdown-item" href="{{url('/ppt')}}">PPT</a></li>
                             <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/DPT')}}">DPT</a></li>
+                            <li><a class="dropdown-item" href="{{url('/dpt')}}">DPT</a></li>
                             <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/RequisiciónDePersonal')}}">Requisición de personal </a></li>
+                            <li><a class="dropdown-item" href="{{url('/requisiciondepersonal')}}">Requisición de personal </a></li>
 
 
                         </ul>
@@ -178,10 +178,10 @@
                             <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Reclutamiento</span><span class="d-none d-lg-inline">Reclutamiento</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url('/Listavacantes') }}">Banco de CV</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/listavacantes') }}">Banco de CV</a></li>
 
                             <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/Postulaciones')}}">Vacantes activas</a></li>
+                            <li><a class="dropdown-item" href="{{url('/postulaciones')}}">Vacantes activas</a></li>
 
                         </ul>
                     </li>
@@ -195,10 +195,10 @@
                             <i class="bi bi-person-badge-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Selección</span><span class="d-none d-lg-inline">Selección</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url('/Selección') }}">Selección</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/seleccion') }}">Selección</a></li>
                             <hr class="dropdown-divider">
 
-                            <li><a class="dropdown-item" href="{{url('/Visualizar_selección')}}">Visualizar </a></li>
+                            <li><a class="dropdown-item" href="{{url('/visualizarseleccion')}}">Visualizar </a></li>
                         </ul>
                     </li>
 
@@ -209,10 +209,10 @@
                             <i class="bi bi-person-badge-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Contratación</span><span Contrataciónclass="d-none d-lg-inline">Contratación</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url('/Pendiente-Contratar') }}">Pendientes por contratar</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/pendientecontratar') }}">Pendientes por contratar</a></li>
                             <hr class="dropdown-divider">
 
-                            <li><a class="dropdown-item" href="{{url('/Contratación')}}">Lista de colaboradores</a></li>
+                            <li><a class="dropdown-item" href="{{url('/contratacion')}}">Lista de colaboradores</a></li>
                         </ul>
                     </li>
 
@@ -233,7 +233,7 @@
 
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="{{ url('/Rec.Empleado') }}">
+                                <a class="dropdown-item" href="{{ url('/recempleado') }}">
                                     Rec.Empleados </a>
                             </li>
 
@@ -243,7 +243,7 @@
                             <hr class="dropdown-divider">
 
                             <li>
-                                <a class="dropdown-item" href="{{ url('/Solicitudes_VoBo') }}">
+                                <a class="dropdown-item" href="{{ url('/solicitudesvobo') }}">
                                     Solicitudes por dar Vo.Bo
                                 </a>
                             </li>
@@ -257,7 +257,7 @@
                             {{-- Para administradores --}}
                             @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
                             <li>
-                                <a class="dropdown-item" href="{{ url('/Solicitudes_aprobaciones') }}">
+                                <a class="dropdown-item" href="{{ url('/solicitudesaprobaciones') }}">
                                     Solicitudes por aprobar
                                 </a>
                             </li>
@@ -277,7 +277,7 @@
                             <i class="bi bi-person-bounding-box" style="margin-right: 5px;"></i> <span class="d-lg-none">Capacitación</span><span Contrataciónclass="d-none d-lg-inline">Capacitación</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url('/Brecha_competencia') }}">Brecha de competencia</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/brechacompetencia') }}">Brecha de competencia</a></li>
                             <hr class="dropdown-divider">
 
                             <li><a class="dropdown-item" href="{{url('/#')}}">Capacitación</a></li>
@@ -297,7 +297,7 @@
 
 
                     <li class="nav-item dropdown" style="margin-left: -2px;">
-                        <a class="nav-link BOTON" href="{{ url('/Desvinculación') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                        <a class="nav-link BOTON" href="{{ url('/desvinculacion') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-person-dash-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Desvinculación</span><span class="d-none d-lg-inline">Desvinculación</span>
                         </a>
                     </li>
@@ -310,16 +310,16 @@
                             </a>
                             <ul class="dropdown-menu">
 
-                                <li><a class="dropdown-item" href="{{url('/Catálogo_ppt')}}">Catálogos de PPT</a>
+                                <li><a class="dropdown-item" href="{{url('/catalogoppt')}}">Catálogos de PPT</a>
                                 </li>
                                 <hr class="dropdown-divider">
-                                <li><a class="dropdown-item" href="{{url('/Catálogo_dpt')}}">Catálogos de DPT</a>
+                                <li><a class="dropdown-item" href="{{url('/catalogodpt')}}">Catálogos de DPT</a>
                                 </li>
                                 <hr class="dropdown-divider">
-                                <li><a class="dropdown-item" href="{{url('/Catálogo_requisición')}}">Catálogos de Requisición</a>
+                                <li><a class="dropdown-item" href="{{url('/catalogorequisicion')}}">Catálogos de Requisición</a>
                                 </li>
                                 <hr class="dropdown-divider">
-                                <li><a class="dropdown-item" href="{{url('/Catálogo_generales')}}">Catálogos generales</a>
+                                <li><a class="dropdown-item" href="{{url('/catalogogenerales')}}">Catálogos generales</a>
                                 </li>
 
                             </ul>
