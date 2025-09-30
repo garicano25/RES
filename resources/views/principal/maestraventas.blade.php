@@ -41,17 +41,7 @@
 
 
 
-    @if(request()->is('DPT'))
-    <link rel="stylesheet" href="assets/css/dpt.css">
-    @endif
-
-    @if(request()->is('Contratación'))
-    <!-- form_wizard_steps -->
-    <link href="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_style.css" rel="stylesheet">
-    </link>
-    @endif
-
-
+   
 
 
     <style>
