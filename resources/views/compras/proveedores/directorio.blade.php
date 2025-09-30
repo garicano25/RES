@@ -348,7 +348,7 @@
           </div>
 
 
-     
+
 
           <div class="row">
             <div class="mb-3">
@@ -496,8 +496,17 @@
 
 
       document.addEventListener('input', function(event) {
-        if ((event.target.tagName === 'INPUT' && event.target.type === 'text') || event.target.tagName === 'TEXTAREA') {
-          const palabras = event.target.value.split(' ').map(palabra => {
+        const target = event.target;
+
+        // Caso especial: RFC_PROVEEDOR siempre en mayúsculas
+        if (target.id === 'RFC_PROVEEDOR') {
+          target.value = target.value.toUpperCase();
+          return; // salimos aquí para que no entre al capitalizador
+        }
+
+        // Para inputs text y textareas -> capitalización normal
+        if ((target.tagName === 'INPUT' && target.type === 'text') || target.tagName === 'TEXTAREA') {
+          const palabras = target.value.split(' ').map(palabra => {
             if (palabra.length === 0) return '';
 
             const primeraMayuscula = palabra[0].toUpperCase() + palabra.substring(1).toLowerCase();
@@ -509,7 +518,7 @@
             }
           });
 
-          event.target.value = palabras.join(' ');
+          target.value = palabras.join(' ');
         }
       });
     </script>
