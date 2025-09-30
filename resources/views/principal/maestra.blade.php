@@ -43,11 +43,11 @@
 
 
 
-    @if(request()->is('DPT'))
+    @if(request()->is('dpt'))
     <link rel="stylesheet" href="assets/css/dpt.css">
     @endif
 
-    @if(request()->is('Contratación'))
+    @if(request()->is('contratacion'))
     <!-- form_wizard_steps -->
     <link href="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_style.css" rel="stylesheet">
     </link>
