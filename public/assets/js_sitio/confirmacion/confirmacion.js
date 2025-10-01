@@ -151,29 +151,6 @@ $("#guardarCONFIRMACION").click(function (e) {
 
 
 
-// $(document).ready(function () {
-//     var selectizeInstance = $('#OFERTA_ID').selectize({
-//         placeholder: 'Seleccione una oferta',
-//         allowEmptyOption: true,
-//         closeAfterSelect: true,
-//     });
-
-//     $("#NUEVA_CONFIRMACION").click(function (e) {
-//         e.preventDefault();
-
-//         $("#miModal_CONFIRMACION").modal("show");
-
-//         document.getElementById('formularioCONFIRMACION').reset();
-
-//             $(".verifiacionesdiv").empty();
-
-//         var selectize = selectizeInstance[0].selectize;
-//         selectize.clear();
-//         selectize.setValue("");
-//     });
-// });
-
-
 $(document).ready(function () {
     var selectizeInstance = $('#OFERTA_ID').selectize({
         placeholder: 'Seleccione una oferta',
@@ -184,9 +161,6 @@ $(document).ready(function () {
     var selectize = selectizeInstance[0].selectize;
 
     var idsOriginales = Object.keys(selectize.options);
-
- 
-
 
     $("#NUEVA_CONFIRMACION").click(function (e) {
         e.preventDefault();
@@ -479,14 +453,14 @@ function toggleInput(inputId, activar) {
 }
 
  function seleccionarTodos(valor) {
-        const radios = document.querySelectorAll(`input[type="radio"][value="${valor}"]`);
-        radios.forEach(radio => {
-            radio.checked = true;
-            const inputName = radio.name;
-            const id = 'motivo_' + inputName.split('_')[1];
-            toggleInput(id, valor === 'No');
-        });
-    }
+    const radios = document.querySelectorAll(`input[type="radio"][value="${valor}"]`);
+    radios.forEach(radio => {
+        radio.checked = true;
+        const inputName = radio.name;
+        const id = 'motivo_' + inputName.split('_')[1];
+        toggleInput(id, valor === 'No');
+    });
+}
 
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".botonEliminarArchivo").forEach(boton => {

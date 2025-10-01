@@ -73,11 +73,8 @@ $("#guardarCLIENTE").click(function (e) {
     formularioValido = validarFormularioV1('formularioCLIENTES');
 
     if (formularioValido) {
-        
-      
-            
-            
-                            var contactos = [];
+    
+                    var contactos = [];
                     $(".generarcontacto").each(function() {
                         var contacto = {
                             'TITULO_CONTACTO_SOLICITUD': $(this).find("select[name='TITULO_CONTACTO_SOLICITUD']").val()?.trim() || '',
@@ -90,9 +87,6 @@ $("#guardarCLIENTE").click(function (e) {
                         };
                         contactos.push(contacto);
                     });
-
-                 
-
 
                     var direcciones = [];
 
@@ -738,13 +732,11 @@ document.addEventListener("DOMContentLoaded", function () {
         const contenedor = document.querySelector('.direcciondiv');
         contenedor.appendChild(divDomicilio);
 
-        // Botón eliminar domicilio
         const botonEliminar = divDomicilio.querySelector('.botonEliminarDomicilio');
         botonEliminar.addEventListener('click', function () {
             contenedor.removeChild(divDomicilio);
         });
 
-        // Cambiar tipo nacional/extranjero
         const tipoSelect = divDomicilio.querySelector('.tipoDomicilioSelect');
         const nacionalDiv = divDomicilio.querySelector('.contenedorNacional');
         const extranjeroDiv = divDomicilio.querySelector('.contenedorExtranjero');
@@ -948,7 +940,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-//  VERIFICACION DEL CLIENTE 
+//////////////////////////  VERIFICACION DEL CLIENTE ////////////////////////// 
 
 
 const Modalverificacion = document.getElementById('miModal_VERIFICACIONES');
@@ -1141,7 +1133,7 @@ $('#Tablaverificacionusuario').on('click', '.ver-archivo-verificacion', function
     abrirModal(url, nombreDocumento);
 });
 
-/// ACTA CONSTITUTIVA
+////////////////////////// ACTA CONSTITUTIVA //////////////////////////
 
 
 

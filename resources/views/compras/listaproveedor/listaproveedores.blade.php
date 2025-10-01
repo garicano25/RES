@@ -252,7 +252,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div class="text-center">
+                                    <div class="text-center" style="display: none;">
                                         <button id="VALIDAR_INFORMACION_PROVEEDOR" class="btn btn-success">
                                             Mandar a verificación
                                         </button>
@@ -907,7 +907,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Tipo de banco *</label>
+                                    <label class="form-label">Nombre del banco *</label>
                                     <input type="text" class="form-control" name="TIPO_BANCO" id="TIPO_BANCO" required>
                                 </div>
 

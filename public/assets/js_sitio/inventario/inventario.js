@@ -404,18 +404,13 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
 
        let fechaAdquisicion = row.data().FECHA_ADQUISICION || "";
     if (fechaAdquisicion === "2024-12-31") {
-        // Mostrar campo ANTES_2024
         $("#ANTES_2024").show();
         $("#DESPUES_2024").hide();
 
-        // Poner el valor de PROVEEDOR_EQUIPO en el input especial
         $("#PROVEEDOR_ANTESDEL2024").val(row.data().PROVEEDOR_EQUIPO || "");
     } else {
-        // Mostrar campo DESPUES_2024
         $("#ANTES_2024").hide();
         $("#DESPUES_2024").show();
-
-        // Seleccionar en el <select> normal
         $("#PROVEEDOR_EQUIPO").val(row.data().PROVEEDOR_EQUIPO || "");
     }
 

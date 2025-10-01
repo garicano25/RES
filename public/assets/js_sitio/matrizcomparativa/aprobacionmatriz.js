@@ -564,8 +564,7 @@ $('#Tablamatirzaprobada tbody').on('click', 'td>button.EDITAR', function () {
             $select.on('change', actualizarMontoFinal);
             actualizarMontoFinal();
 
-                
-    
+            
 });
 
 
@@ -805,19 +804,8 @@ $(document).ready(function() {
         });
     
     
-
-
-    
-    
         $('#miModal_MATRIZ').modal('show');
         
-        
-
-        
-        
-
-
-
     });
 
     $('#miModal_MATRIZ').on('hidden.bs.modal', function () {

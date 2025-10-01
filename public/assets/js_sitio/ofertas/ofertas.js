@@ -85,9 +85,6 @@ $("#guardarOFERTA").click(function (e) {
             };
             observacion.push(observaciones);
         });
-
-        
-
     
         const requestData = {
             api: 1,
