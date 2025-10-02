@@ -250,6 +250,7 @@
               </div>
               <div id="errorMsg" class="text-danger ms-2" style="display: none;">Solo se permiten archivos PDF.</div>
               
+              <br><br>
 
               <div style="text-align: center;" id="PROVEEDORES_VALIDACION">
                 <button class="btn btn-success btn-verificar-proveedor" style="width: 70%;">
