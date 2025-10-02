@@ -902,34 +902,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
- document.getElementById("CONSTANCIA_DOCUMENTO").addEventListener("change", function(event) {
-        let fileInput = event.target;
-        let removeBtn = document.getElementById("removeFileBtn");
-        let errorMsg = document.getElementById("errorMsg");
+document.getElementById("CONSTANCIA_DOCUMENTO").addEventListener("change", function(event) {
+    let fileInput = event.target;
+    let removeBtn = document.getElementById("removeFileBtn");
+    let errorMsg = document.getElementById("errorMsg");
+    
+    if (fileInput.files.length > 0) {
+        let file = fileInput.files[0];
         
-        if (fileInput.files.length > 0) {
-            let file = fileInput.files[0];
-            
-            if (file.type !== "application/pdf") {
-                errorMsg.style.display = "block";
-                fileInput.value = "";
-                removeBtn.style.display = "none";
-            } else {
-                errorMsg.style.display = "none";
-                removeBtn.style.display = "inline-block";
-            }
-        } else {
+        if (file.type !== "application/pdf") {
             errorMsg.style.display = "block";
+            fileInput.value = "";
             removeBtn.style.display = "none";
+        } else {
+            errorMsg.style.display = "none";
+            removeBtn.style.display = "inline-block";
         }
-    });
-
-    document.getElementById("removeFileBtn").addEventListener("click", function() {
-        let fileInput = document.getElementById("CONSTANCIA_DOCUMENTO");
-        let removeBtn = document.getElementById("removeFileBtn");
-        let errorMsg = document.getElementById("errorMsg");
-        
-        fileInput.value = "";
+    } else {
+        errorMsg.style.display = "block";
         removeBtn.style.display = "none";
-        errorMsg.style.display = "none";
-    });
+    }
+});
+
+
+
+
+document.getElementById("removeFileBtn").addEventListener("click", function () {
+    
+
+    let fileInput = document.getElementById("CONSTANCIA_DOCUMENTO");
+    let removeBtn = document.getElementById("removeFileBtn");
+    let errorMsg = document.getElementById("errorMsg");
+    
+    fileInput.value = "";
+    removeBtn.style.display = "none";
+    errorMsg.style.display = "none";
+});

@@ -508,7 +508,7 @@
     @endif
 
     @if(request()->is('bancoproveedores'))
-    <script src="/assets/js_sitio/proveedor/proveedorespotenciales.js?v=1.11"></script>
+    <script src="/assets/js_sitio/proveedor/proveedorespotenciales.js?v=1.12"></script>
     @endif
 
     @if(request()->is('catalogofunciones'))

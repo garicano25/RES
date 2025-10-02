@@ -368,7 +368,7 @@
 
           <div class="mt-3 d-flex align-items-center">
             <input type="file" class="form-control" id="CONSTANCIA_DOCUMENTO" name="CONSTANCIA_DOCUMENTO" accept=".pdf" style="width: auto; flex: 1;" required>
-            <button id="removeFileBtn" class="btn btn-danger ms-2" style="display: none;">Eliminar</button>
+            <button id="removeFileBtn" type="button" class="btn btn-danger ms-2" style="display: none;">Eliminar</button>
           </div>
           <div id="errorMsg" class="text-danger ms-2" style="display: none;">Solo se permiten archivos PDF.</div>
 
