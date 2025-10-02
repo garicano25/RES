@@ -9,7 +9,6 @@ class altaproveedorModel extends Model
 {
     use HasFactory;
 
-
     protected $table = 'formulario_altaproveedor';
     protected $primaryKey = 'ID_FORMULARIO_ALTA';
     protected $fillable = [
@@ -53,5 +52,7 @@ class altaproveedorModel extends Model
         'NOMBRE_PERSONA',
         'TIPO_PERSONA_OPCION',
         'VERIFICACION_SOLCITADA'
+
     ];
+    
 }

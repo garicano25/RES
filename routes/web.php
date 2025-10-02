@@ -37,7 +37,6 @@ use App\Http\Controllers\organizacion\catalogoCompotenciasGerencialesController;
 use App\Http\Controllers\organizacion\catalogomotivovacanteControlller;
 use App\Http\Controllers\organizacion\catalogoanuncioController;
 
-
 // CONTROLADORES DE RECLUTAMIENO 
 use App\Http\Controllers\reclutamiento\catalogovacantesController;
 use App\Http\Controllers\reclutamiento\PuestoController;
@@ -47,12 +46,10 @@ use App\Http\Controllers\organizacion\catalogoareainteresController;
 use App\Http\Controllers\organizacion\catalogogeneroControlller;
 use App\Http\Controllers\reclutamiento\formCVController;
 
-
 // CONTROLADORES DE SELECCION
 use App\Http\Controllers\seleccion\seleccionController;
 use App\Http\Controllers\seleccion\catalogopruebasController;
 use App\Http\Controllers\TestController;
-
 
 // CONTROLADORES DE CONTRATACION 
 use App\Http\Controllers\contratacion\contratacionController;
@@ -60,24 +57,16 @@ use App\Http\Controllers\contratacion\PowerPointController;
 use App\Http\Controllers\contratacion\pendientecontratarController;
 use App\Http\Controllers\contratacion\CvController;
 
-
 // CONTROLADORES DE REC.EMPLEADOS
-
-
 use App\Http\Controllers\recursosempleado\recempleadoController;
-
-
 
 // CONTROLADORES DE CAPACITACION 
 use App\Http\Controllers\capacitacion\brechaController;
 
-
 // CONTROLADORES DE DESVINCULACION
 use App\Http\Controllers\desvinculacion\desvinculacionController;
 
-
 // CONTROLADORES DE CLIENTES
-
 use App\Http\Controllers\clientes\clientesController;
 
 // CONTROLADORES DE SOLICITUDES
@@ -88,28 +77,20 @@ use App\Http\Controllers\solicitudes\catalogonecesidadController;
 use App\Http\Controllers\solicitudes\catalogolineanegociosController;
 use App\Http\Controllers\solicitudes\catalogotiposervicioController;
 
-
 // CONTROLADORES DE OFERTAS 
 use App\Http\Controllers\ofertas\ofertasController;
-
 
 // CONTROLADORES DE CONFIRMACION 
 use App\Http\Controllers\confirmacion\confirmacionController;
 use App\Http\Controllers\confirmacion\catalagoverificacioninformacionController;
 
-
 // CONTROLADORES DE ORDEN DE TRABAJO
-
 use App\Http\Controllers\ordentrabajo\otController;
 
-
 // CONTROLADORES DE MR
-
 use App\Http\Controllers\requisicionmaterial\mrController;
 
-
 // CONTROLADORES DE PROVEEDORES
-
 use App\Http\Controllers\proveedor\directorioController;
 use App\Http\Controllers\proveedor\altaproveedorController;
 use App\Http\Controllers\proveedor\altacuentaController;
@@ -117,46 +98,31 @@ use App\Http\Controllers\proveedor\altacontactoController;
 use App\Http\Controllers\proveedor\altacerticacionController;
 use App\Http\Controllers\proveedor\altareferenciasController;
 use App\Http\Controllers\proveedor\altadocumentosController;
-
 use App\Http\Controllers\proveedor\listaproveedorController;
-
 use App\Http\Controllers\proveedor\proveedortempController;
-
-
 use App\Http\Controllers\proveedor\catalagofuncionesproveedorController;
 use App\Http\Controllers\proveedor\catalagotituloproveedorController;
 use App\Http\Controllers\proveedor\catalagodocumentosproveedorController;
 use App\Http\Controllers\proveedor\catalogoverificacionproveedorController;
 
-
 // CONTROLADORES DE PO 
-
 use App\Http\Controllers\ordencompra\poController;
 use App\Http\Controllers\ordencompra\pdfpoController;
 
-
-// CONTROLADORES DE MATRIX COMPARATIVA
-
+// CONTROLADORES DE MATRIZ COMPARATIVA
 use App\Http\Controllers\matrizcomparativa\matrizController;
 
-
 // GENERAR PDF
-
 use App\Http\Controllers\pdf\pdfController;
 
 // CONTROLADORES GR  
-
 use App\Http\Controllers\requisicongr\grController;
 use App\Http\Controllers\requisicongr\vobogrusuarioController;
 
-
-
 // CONTROLADORES DE LA PAGINA WEB
-
 use App\Http\Controllers\paginaweb\mensajespaginaController;
 
 // CONTROLADORES DE INVENTARIO
-
 use App\Http\Controllers\inventario\inventarioController;
 use App\Http\Controllers\inventario\catalogotipoinventarioController;
 use App\Http\Controllers\inventario\salidalmacenController;
@@ -347,8 +313,8 @@ Route::get('/Tablamotivovacante', [catalogomotivovacanteControlller::class, 'Tab
 // CATÁLOGO DE ANUNCIO
 Route::get('/anuncios', function () { return view('RH.Catalogos.catalogo_anucios');});
 Route::post('/AnuncioSave', [catalogoanuncioController::class, 'store']);
- Route::get('/Tablanuncios', [catalogoanuncioController::class, 'Tablanuncios']);
- Route::get('/AnuncioDelete', [catalogoanuncioController::class, 'store']);
+Route::get('/Tablanuncios', [catalogoanuncioController::class, 'Tablanuncios']);
+Route::get('/AnuncioDelete', [catalogoanuncioController::class, 'store']);
 Route::get('/anunciofoto/{id}', [catalogoanuncioController::class, 'mostrarfotoanuncio'])->name('anunciofoto');
 
 // CATALOGOS
@@ -362,7 +328,6 @@ Route::get('/catalogogenerales', function () {return view('RH.Catalogos.catalogo
 
 
 //==============================================  RECLUTAMIENTO  ============================================== 
-
 
 
 Route::post('/BancoSave', [bancocvController::class, 'store']);
