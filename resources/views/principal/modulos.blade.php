@@ -203,7 +203,6 @@
             height: 100%;
             object-fit: cover;
             border-radius: 50%;
-            /* 👈 mantiene el círculo en la imagen */
         }
 
 
@@ -638,7 +637,7 @@
 
                             <style>
                                 .widget__area {
-                                   
+
                                     color: white;
                                     text-align: center;
                                     padding: 12px;
@@ -1059,6 +1058,8 @@
 
 
 
+
+
     <!-- Modal -->
     <div id="modalAnuncio" style="display: none;" class="modal-anuncio">
         <div class="modal-contenido" onclick="event.stopPropagation()">
@@ -1105,8 +1106,6 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
 
     <script src="/assets/js_sitio/modulos.js?v=1.0"></script>
 
