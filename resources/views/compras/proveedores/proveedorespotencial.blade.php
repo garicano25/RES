@@ -244,6 +244,13 @@
               </div>
 
 
+              <div class="mt-3 d-flex align-items-center">
+                <input type="file" class="form-control" id="CONSTANCIA_DOCUMENTO" name="CONSTANCIA_DOCUMENTO" accept=".pdf" style="width: auto; flex: 1;" required>
+                <button id="removeFileBtn" class="btn btn-danger ms-2" style="display: none;">Eliminar</button>
+              </div>
+              <div id="errorMsg" class="text-danger ms-2" style="display: none;">Solo se permiten archivos PDF.</div>
+              
+
               <div style="text-align: center;" id="PROVEEDORES_VALIDACION">
                 <button class="btn btn-success btn-verificar-proveedor" style="width: 70%;">
                   Verificar proveedor <i class="fa fa-check-circle"></i>
@@ -251,11 +258,6 @@
               </div>
 
 
-              <div class="mt-3 d-flex align-items-center">
-                <input type="file" class="form-control" id="CONSTANCIA_DOCUMENTO" name="CONSTANCIA_DOCUMENTO" accept=".pdf" style="width: auto; flex: 1;" required>
-                <button id="removeFileBtn" class="btn btn-danger ms-2" style="display: none;">Eliminar</button>
-              </div>
-              <div id="errorMsg" class="text-danger ms-2" style="display: none;">Solo se permiten archivos PDF.</div>
 
 
             </div>
