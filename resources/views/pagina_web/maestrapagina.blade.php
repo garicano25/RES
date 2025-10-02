@@ -270,7 +270,7 @@
 
 
 
-    @if(request()->is('Mensajes_paginaweb'))
+    @if(request()->is('mensajespaginaweb'))
     <script src="/assets/js_sitio/pagina_web/mensajes.js"></script>
     @endif
 
