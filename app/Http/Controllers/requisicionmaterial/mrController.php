@@ -665,21 +665,48 @@ class mrController extends Controller
                 $proveedores_set = array_values(array_filter($proveedores_detectados));
                 sort($proveedores_set, SORT_STRING);
 
+                // $registroExistente = DB::table('formulario_matrizcomparativa')
+                //     ->where('NO_MR', $no_mr)
+                //     ->get()
+                //     ->filter(function ($registro) use ($proveedores_set, $id) {
+                //         $existentes = array_filter([
+                //             $registro->PROVEEDOR1 ?? null,
+                //             $registro->PROVEEDOR2 ?? null,
+                //             $registro->PROVEEDOR3 ?? null,
+                //         ]);
+                //         sort($existentes, SORT_STRING);
+
+                //         if ($existentes !== $proveedores_set) {
+                //             return false;
+                //         }
+
+                //         $hoja_ids = json_decode($registro->HOJA_ID ?? '[]', true);
+                //         return in_array((string) $id, $hoja_ids);
+                //     })
+                //     ->values()
+                //     ->first();
+
+                // if ($registroExistente) {
+                //     DB::table('formulario_matrizcomparativa')
+                //         ->where('ID_FORMULARIO_MATRIZ', $registroExistente->ID_FORMULARIO_MATRIZ)
+                //         ->update(array_merge([
+                //             'HOJA_ID'    => json_encode([(string) $id], JSON_UNESCAPED_UNICODE),
+                //             'updated_at' => now(),
+                //         ], $proveedores_detectados, $materiales_detectados));
+                // } else {
+                //     HojaTrabajo::where('id', $id)->update(['REQUIERE_MATRIZ' => 'Sí']);
+
+                //     DB::table('formulario_matrizcomparativa')->insert(array_merge([
+                //         'HOJA_ID'    => json_encode([(string) $id], JSON_UNESCAPED_UNICODE),
+                //         'NO_MR'      => $no_mr,
+                //         'created_at' => now(),
+                //         'updated_at' => now(),
+                //     ], $proveedores_detectados, $materiales_detectados));
+                // }
                 $registroExistente = DB::table('formulario_matrizcomparativa')
                     ->where('NO_MR', $no_mr)
                     ->get()
-                    ->filter(function ($registro) use ($proveedores_set, $id) {
-                        $existentes = array_filter([
-                            $registro->PROVEEDOR1 ?? null,
-                            $registro->PROVEEDOR2 ?? null,
-                            $registro->PROVEEDOR3 ?? null,
-                        ]);
-                        sort($existentes, SORT_STRING);
-
-                        if ($existentes !== $proveedores_set) {
-                            return false;
-                        }
-
+                    ->filter(function ($registro) use ($id) {
                         $hoja_ids = json_decode($registro->HOJA_ID ?? '[]', true);
                         return in_array((string) $id, $hoja_ids);
                     })
@@ -687,12 +714,28 @@ class mrController extends Controller
                     ->first();
 
                 if ($registroExistente) {
+                    // Decodificamos proveedores y materiales existentes
+                    $proveedores_actuales = [
+                        'PROVEEDOR1' => $registroExistente->PROVEEDOR1 ?? null,
+                        'PROVEEDOR2' => $registroExistente->PROVEEDOR2 ?? null,
+                        'PROVEEDOR3' => $registroExistente->PROVEEDOR3 ?? null,
+                    ];
+
+                    $materiales_actuales = [
+                        'MATERIALES_JSON_PROVEEDOR1' => $registroExistente->MATERIALES_JSON_PROVEEDOR1 ?? null,
+                        'MATERIALES_JSON_PROVEEDOR2' => $registroExistente->MATERIALES_JSON_PROVEEDOR2 ?? null,
+                        'MATERIALES_JSON_PROVEEDOR3' => $registroExistente->MATERIALES_JSON_PROVEEDOR3 ?? null,
+                    ];
+
+                    // Mezclamos los nuevos datos con los existentes (solo reemplaza los detectados)
+                    $proveedores_finales = array_replace($proveedores_actuales, $proveedores_detectados);
+                    $materiales_finales = array_replace($materiales_actuales, $materiales_detectados);
+
                     DB::table('formulario_matrizcomparativa')
                         ->where('ID_FORMULARIO_MATRIZ', $registroExistente->ID_FORMULARIO_MATRIZ)
                         ->update(array_merge([
-                            'HOJA_ID'    => json_encode([(string) $id], JSON_UNESCAPED_UNICODE),
                             'updated_at' => now(),
-                        ], $proveedores_detectados, $materiales_detectados));
+                        ], $proveedores_finales, $materiales_finales));
                 } else {
                     HojaTrabajo::where('id', $id)->update(['REQUIERE_MATRIZ' => 'Sí']);
 
