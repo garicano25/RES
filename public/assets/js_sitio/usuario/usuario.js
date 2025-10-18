@@ -343,27 +343,7 @@ function cargarTablaProveedores() {
             alertErrorAJAX(jqXHR, textStatus, errorThrown);
         },
         dataSrc: 'data'
-    },
-        columns: [
-            { 
-                data: null,
-                render: function(data, type, row, meta) {
-                    return meta.row + 1; 
-                }
-            },
-            {
-                data: null,  render: function (data, type, row)
-                 {
-                    return row.NOMBRE_COLABORADOR + ' ' + row.PRIMER_APELLIDO + ' ' + row.SEGUNDO_APELLIDO;
-                }
-            }
-            ,
-            { data: 'CURP' },
-            { data: 'BTN_EDITAR' },
-            { data: 'BTN_ACTIVAR' }
-
-        ],
-       
+    },      
             columns: [
                 { 
                     data: null,
@@ -404,6 +384,26 @@ function cargarTablaProveedores() {
         ]
     });
 }
+
+
+$(document).on('change', '#Tablaproveedores .ELIMINAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablaproveedores.row(tr);
+
+    if (!row.data()) return; 
+
+    const estado = $(this).is(':checked') ? 1 : 0;
+    const data = {
+        api: 1,
+        ELIMINAR: estado == 0 ? 1 : 0,
+        ID_USUARIO: row.data().ID_USUARIO
+    };
+
+    eliminarDatoTabla(data, [Tablaproveedores], 'usuarioDelete');
+});
+
+
+
 
 
 // var Tablausuarios = $("#Tablausuarios").DataTable({
