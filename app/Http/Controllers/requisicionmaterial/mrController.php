@@ -430,6 +430,8 @@ class mrController extends Controller
 
 
 
+
+
     public function Tablabitacora()
     {
         try {
@@ -438,17 +440,22 @@ class mrController extends Controller
             foreach ($tabla as $value) {
                 $no_mr = $value->NO_MR;
 
-                // 🔹 Consulta en formulario_bitacoragr
-                $bitacora = DB::table('formulario_bitacoragr')
+                // 🔹 Obtener todas las GR relacionadas con este NO_MR
+                $bitacoras = DB::table('formulario_bitacoragr')
                     ->where('NO_MR', $no_mr)
                     ->select('NO_RECEPCION', 'FECHA_ENTREGA_GR')
-                    ->first();
+                    ->get();
 
-                // 🔹 Asignar valores a las nuevas columnas
-                $value->FECHA_GR = $bitacora->FECHA_ENTREGA_GR ?? null;
-                $value->NO_GR = $bitacora->NO_RECEPCION ?? null;
+                // 🔹 Si hay varias, concatenarlas separadas por salto de línea o coma
+                if ($bitacoras->count() > 0) {
+                    $value->FECHA_GR = $bitacoras->pluck('FECHA_ENTREGA_GR')->implode('<br>'); // salto de línea HTML
+                    $value->NO_GR = $bitacoras->pluck('NO_RECEPCION')->implode('<br>');
+                } else {
+                    $value->FECHA_GR = null;
+                    $value->NO_GR = null;
+                }
 
-                // 🔹 Lógica existente para las hojas
+                // 🔹 Lógica existente de hoja_trabajo
                 $hojas = DB::table('hoja_trabajo')->where('NO_MR', $no_mr)->get();
                 $total = $hojas->count();
 
@@ -511,8 +518,10 @@ class mrController extends Controller
         }
     }
 
-
     
+
+
+
     public function guardarHOJAS(Request $request)
     {
         $esUnico = $request->input('ES_UNICO');
