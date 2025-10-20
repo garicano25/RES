@@ -6,7 +6,7 @@
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
-        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-briefcase-fill"></i>&nbsp;Solicitudes por aprobar</h3>
+        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-briefcase-fill"></i>&nbsp;Salidas por aprobar</h3>
 
     </ol>
 
