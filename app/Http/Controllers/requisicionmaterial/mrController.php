@@ -451,13 +451,12 @@ class mrController extends Controller
                         ->implode('<br>');
 
                     $value->FECHA_GR = $bitacoras
-                        ->map(fn($item) => '• ' . \Carbon\Carbon::parse($item->FECHA_ENTREGA_GR)->format('d/m/Y'))
+                        ->map(fn($item) => '• ' . $item->FECHA_ENTREGA_GR)
                         ->implode('<br>');
                 } else {
                     $value->NO_GR = '—';
                     $value->FECHA_GR = '—';
                 }
-
                 $hojas = DB::table('hoja_trabajo')->where('NO_MR', $no_mr)->get();
                 $total = $hojas->count();
 
@@ -520,7 +519,7 @@ class mrController extends Controller
         }
     }
 
-
+    
 
 
 
