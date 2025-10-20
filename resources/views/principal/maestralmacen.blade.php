@@ -43,7 +43,7 @@
     <link rel="stylesheet" href="assets/css/estilos.css">
 
 
-  
+
 
 
 
@@ -149,8 +149,21 @@
                         </li>
 
 
+                        @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
+
+                        <li class="nav-item dropdown" style="margin-left: -2px;">
+                            <a class="nav-link BOTON" href="{{ url('/aprobacionalmacen') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                                <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Aprobar salidas de almacén</span><span class="d-none d-lg-inline">Aprobar salida de almacén</span>
+                            </a>
+                        </li>
+                        @endif
 
 
+                        <li class="nav-item dropdown" style="margin-left: -2px;">
+                            <a class="nav-link BOTON" href="{{ url('/salidaalmacen') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                                <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Salida de almacén</span><span class="d-none d-lg-inline">Salida de almacén</span>
+                            </a>
+                        </li>
 
 
 
@@ -172,24 +185,6 @@
                         </ul>
 
                         @endif
-
-                        <!-- @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
-
-                        <li class="nav-item dropdown" style="margin-left: -2px;">
-                            <a class="nav-link BOTON" href="{{ url('/') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                                <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Aprobar salidas de almacén</span><span class="d-none d-lg-inline">Aprobar salidas de almacén</span>
-                            </a>
-                        </li>
-                        @endif -->
-
-
-                        <li class="nav-item dropdown" style="margin-left: -2px;">
-                            <a class="nav-link BOTON" href="{{ url('/salidaalmacen') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                                <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Salida de almacén</span><span class="d-none d-lg-inline">Salida de almacén</span>
-                            </a>
-                        </li>
-
-
 
 
 
@@ -317,6 +312,11 @@
 
     @if(request()->is('salidaalmacen'))
     <script src="/assets/js_sitio/salidalmacen/salidalmacen.js?v=1.15"></script>
+    @endif
+
+
+    @if(request()->is('aprobacionalmacen'))
+    <script src="/assets/js_sitio/aprobacionsalidalmacen/aprobacionsalidalmacen.js"></script>
     @endif
 </body>
 

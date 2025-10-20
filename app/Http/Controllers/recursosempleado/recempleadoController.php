@@ -275,24 +275,7 @@ class recempleadoController extends Controller
     public function Tablarecempleadoaprobacion()
     {
         try {
-            // $tabla = recemplaedosModel::where('DAR_BUENO', 1)
-            //     ->where(function ($query) {
-            //         $query->whereNull('ESTADO_APROBACION')
-            //             ->orWhereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
-            //     })
-            //     ->where(function ($query) {
-            //         $query->whereNull('JEFE_ID')
-            //             ->orWhere('JEFE_ID', '!=', Auth::id());
-            //     })
-            //     ->get();
-
-            $tabla = recemplaedosModel::where(function ($query) {
-                $query->where('DAR_BUENO', 1)
-                    ->orWhere(function ($sub) {
-                        $sub->where('TIPO_SOLICITUD', 2)
-                            ->where('DAR_BUENO', 0);
-                    });
-            })
+            $tabla = recemplaedosModel::where('DAR_BUENO', 1)
                 ->where(function ($query) {
                     $query->whereNull('ESTADO_APROBACION')
                         ->orWhereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
@@ -301,12 +284,13 @@ class recempleadoController extends Controller
                     $query->whereNull('JEFE_ID')
                         ->orWhere('JEFE_ID', '!=', Auth::id());
                 })
-                ->orderBy('FECHA_SALIDA', 'asc') 
                 ->get();
 
+          
 
 
-                
+
+          
             foreach ($tabla as $value) {
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';

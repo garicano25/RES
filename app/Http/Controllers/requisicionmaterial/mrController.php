@@ -714,7 +714,6 @@ class mrController extends Controller
                     ->first();
 
                 if ($registroExistente) {
-                    // Decodificamos proveedores y materiales existentes
                     $proveedores_actuales = [
                         'PROVEEDOR1' => $registroExistente->PROVEEDOR1 ?? null,
                         'PROVEEDOR2' => $registroExistente->PROVEEDOR2 ?? null,
@@ -727,7 +726,6 @@ class mrController extends Controller
                         'MATERIALES_JSON_PROVEEDOR3' => $registroExistente->MATERIALES_JSON_PROVEEDOR3 ?? null,
                     ];
 
-                    // Mezclamos los nuevos datos con los existentes (solo reemplaza los detectados)
                     $proveedores_finales = array_replace($proveedores_actuales, $proveedores_detectados);
                     $materiales_finales = array_replace($materiales_actuales, $materiales_detectados);
 

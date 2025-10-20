@@ -127,6 +127,9 @@ use App\Http\Controllers\inventario\inventarioController;
 use App\Http\Controllers\inventario\catalogotipoinventarioController;
 use App\Http\Controllers\inventario\salidalmacenController;
 
+use App\Http\Controllers\aprobacionsalidalmacen\aprobacionsalidalmacenController;
+
+
 
 
 
@@ -894,6 +897,11 @@ Route::post('/TipoinventarioSave', [catalogotipoinventarioController::class, 'st
 Route::get('/Tablatipoinventario', [catalogotipoinventarioController::class, 'Tablatipoinventario']);
 Route::get('/TipoinventarioDelete', [catalogotipoinventarioController::class, 'store']);
 
+//==============================================   APROBACION DE SOLICITUDES  ============================================== 
+
+Route::get('/aprobacionalmacen', function () {return view('almacen.aprobarsolicitudes.aprobarsolicitudes');});
+
+Route::get('/Tablaaprobacionalmacen', [aprobacionsalidalmacenController::class, 'Tablaaprobacionalmacen']);
 
 //==============================================    SALIDA DE ALMACEN   ============================================== 
 Route::get('/salidaalmacen', [salidalmacenController::class, 'index']);
