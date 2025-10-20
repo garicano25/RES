@@ -440,22 +440,24 @@ class mrController extends Controller
             foreach ($tabla as $value) {
                 $no_mr = $value->NO_MR;
 
-                // 🔹 Obtener todas las GR relacionadas con este NO_MR
                 $bitacoras = DB::table('formulario_bitacoragr')
                     ->where('NO_MR', $no_mr)
                     ->select('NO_RECEPCION', 'FECHA_ENTREGA_GR')
                     ->get();
 
-                // 🔹 Si hay varias, concatenarlas separadas por salto de línea o coma
                 if ($bitacoras->count() > 0) {
-                    $value->FECHA_GR = $bitacoras->pluck('FECHA_ENTREGA_GR')->implode('<br>'); // salto de línea HTML
-                    $value->NO_GR = $bitacoras->pluck('NO_RECEPCION')->implode('<br>');
+                    $value->NO_GR = $bitacoras
+                        ->map(fn($item) => '• ' . $item->NO_RECEPCION)
+                        ->implode('<br>');
+
+                    $value->FECHA_GR = $bitacoras
+                        ->map(fn($item) => '• ' . \Carbon\Carbon::parse($item->FECHA_ENTREGA_GR)->format('d/m/Y'))
+                        ->implode('<br>');
                 } else {
-                    $value->FECHA_GR = null;
-                    $value->NO_GR = null;
+                    $value->NO_GR = '—';
+                    $value->FECHA_GR = '—';
                 }
 
-                // 🔹 Lógica existente de hoja_trabajo
                 $hojas = DB::table('hoja_trabajo')->where('NO_MR', $no_mr)->get();
                 $total = $hojas->count();
 
@@ -518,7 +520,7 @@ class mrController extends Controller
         }
     }
 
-    
+
 
 
 
