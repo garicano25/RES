@@ -71,6 +71,7 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
         { targets: 12, width: '300px' },
       { targets: 13, width: '300px' },
       { targets: 14, width: '300px' },
+
         
 
     ],
@@ -114,18 +115,9 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
                   </select>`;
           }
       },
-      
-      
-      
-        {
-            data: null,
-            render: () => `<textarea type="text" class="form-control" style="width: 100%" rowas="5"></textarea>`
-        },
-        {
-            data: null,
-            render: () => `<input type="text" class="form-control mydatepicker " placeholder="aaaa-mm-dd">
-`
-        },
+         { data: 'FECHA_GR' },
+        { data: 'NO_GR' },
+        
           { data: 'MATERIALES_JSON', visible: false }, 
     { data: 'ESTADO_APROBACION', visible: false } 
         

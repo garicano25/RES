@@ -161,8 +161,8 @@
                                 <th>Aprobación</th>
                                 <th>Prioridad</th>
                                 <th>Estatus</th>
-                                <th>Comentario</th>
                                 <th>Fecha de Adquisición</th>
+                                <th>No.GR</th>
                             </tr>
                         </thead>
                         <tbody></tbody>

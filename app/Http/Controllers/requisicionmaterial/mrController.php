@@ -354,6 +354,82 @@ class mrController extends Controller
     /////////////////////////////////////////////////////////// BITACORA REQUISICION //////////////////////////////////////////////////////////////
 
 
+    // public function Tablabitacora()
+    // {
+    //     try {
+    //         $tabla = mrModel::where('ESTADO_APROBACION', 'Aprobada')->get();
+
+    //         foreach ($tabla as $value) {
+    //             $no_mr = $value->NO_MR;
+
+    //             $hojas = DB::table('hoja_trabajo')->where('NO_MR', $no_mr)->get();
+
+    //             $total = $hojas->count();
+
+    //             if ($total === 0) {
+    //                 $value->ESTADO_FINAL = 'Sin datos';
+    //                 $value->COLOR = null;
+    //                 $value->DISABLED_SELECT = true;
+    //             } else {
+    //                 $aprobadas = $hojas->whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])->count();
+
+    //                 $requiere_po = $hojas->where('REQUIERE_PO', 'Sí')->count();
+
+    //                 $po_aprobada_o_rechazada = false;
+
+    //                 foreach ($hojas as $hoja) {
+    //                     $hoja_id = $hoja->id;
+
+    //                     $po_relacionadas = DB::table('formulario_ordencompra')
+    //                         ->whereJsonContains('HOJA_ID', (string)$hoja_id)
+    //                         ->whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])
+    //                         ->count();
+
+    //                     if ($po_relacionadas > 0) {
+    //                         $po_aprobada_o_rechazada = true;
+    //                         break; 
+    //                     }
+    //                 }
+
+    //                 if ($aprobadas === $total && ($requiere_po === 0 || $po_aprobada_o_rechazada)) {
+    //                     $value->ESTADO_FINAL = 'Finalizada';
+    //                     $value->COLOR = '#d4edda';
+    //                     $value->DISABLED_SELECT = false;
+    //                 } else {
+    //                     $value->ESTADO_FINAL = 'En proceso';
+    //                     $value->COLOR = '#fff3cd';
+    //                     $value->DISABLED_SELECT = false;
+    //                 }
+    //             }
+
+    //             // BOTONES
+    //             if ($value->ACTIVO == 0) {
+    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '"><span class="slider round"></span></label>';
+    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-eye"></i></button>';
+    //             } else {
+    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '" checked><span class="slider round"></span></label>';
+    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //             }
+
+    //             $value->BTN_NO_MR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //         }
+
+    //         return response()->json([
+    //             'data' => $tabla,
+    //             'msj' => 'Información consultada correctamente'
+    //         ]);
+    //     } catch (Exception $e) {
+    //         return response()->json([
+    //             'msj' => 'Error ' . $e->getMessage(),
+    //             'data' => 0
+    //         ]);
+    //     }
+    // }
+
+
+
     public function Tablabitacora()
     {
         try {
@@ -362,8 +438,18 @@ class mrController extends Controller
             foreach ($tabla as $value) {
                 $no_mr = $value->NO_MR;
 
-                $hojas = DB::table('hoja_trabajo')->where('NO_MR', $no_mr)->get();
+                // 🔹 Consulta en formulario_bitacoragr
+                $bitacora = DB::table('formulario_bitacoragr')
+                    ->where('NO_MR', $no_mr)
+                    ->select('NO_RECEPCION', 'FECHA_ENTREGA_GR')
+                    ->first();
 
+                // 🔹 Asignar valores a las nuevas columnas
+                $value->FECHA_GR = $bitacora->FECHA_ENTREGA_GR ?? null;
+                $value->NO_GR = $bitacora->NO_RECEPCION ?? null;
+
+                // 🔹 Lógica existente para las hojas
+                $hojas = DB::table('hoja_trabajo')->where('NO_MR', $no_mr)->get();
                 $total = $hojas->count();
 
                 if ($total === 0) {
@@ -372,14 +458,11 @@ class mrController extends Controller
                     $value->DISABLED_SELECT = true;
                 } else {
                     $aprobadas = $hojas->whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])->count();
-
                     $requiere_po = $hojas->where('REQUIERE_PO', 'Sí')->count();
-
                     $po_aprobada_o_rechazada = false;
 
                     foreach ($hojas as $hoja) {
                         $hoja_id = $hoja->id;
-
                         $po_relacionadas = DB::table('formulario_ordencompra')
                             ->whereJsonContains('HOJA_ID', (string)$hoja_id)
                             ->whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])
@@ -387,7 +470,7 @@ class mrController extends Controller
 
                         if ($po_relacionadas > 0) {
                             $po_aprobada_o_rechazada = true;
-                            break; 
+                            break;
                         }
                     }
 
@@ -402,7 +485,7 @@ class mrController extends Controller
                     }
                 }
 
-                // BOTONES
+                // 🔹 Botones (sin cambios)
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '"><span class="slider round"></span></label>';
@@ -428,6 +511,8 @@ class mrController extends Controller
         }
     }
 
+
+    
     public function guardarHOJAS(Request $request)
     {
         $esUnico = $request->input('ES_UNICO');
