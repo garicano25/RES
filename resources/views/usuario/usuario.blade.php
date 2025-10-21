@@ -157,7 +157,7 @@
                                         <div class="col-12 campo_dato_empleado">
                                             <div class="form-group">
                                                 <label>Curp *</label>
-                                                <input type="text" class="form-control" id="CURP" name="CURP" required>
+                                                <input type="text" class="form-control" id="CURP" name="CURP" >
                                             </div>
                                         </div>
                                     </div>
@@ -199,7 +199,7 @@
                                 <div class="col-6 campo_dato_empleado" id="DIV_TELEFONO" style="display: block;">
                                     <div class="form-group">
                                         <label>Teléfono *</label>
-                                        <input type="text" class="form-control" id="EMPLEADO_TELEFONO" name="EMPLEADO_TELEFONO" required>
+                                        <input type="text" class="form-control" id="EMPLEADO_TELEFONO" name="EMPLEADO_TELEFONO" >
                                     </div>
                                 </div>
                                 <div class="col-6 campo_dato_empleado" id="DIV_NACIMIENTO" style="display: block;">
