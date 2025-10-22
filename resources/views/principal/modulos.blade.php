@@ -1009,7 +1009,7 @@
                                     </a>
 
                                 </div>
-                                <div class="softwares__greyCard" onclick="window.open('https://wclearningexperience.results-in-performance.com/', '_blank')" style="cursor: pointer;">
+                                <div class="softwares__greyCard" onclick="window.open('https://wcle.results-in-performance.com/', '_blank')" style="cursor: pointer;">
                                     <h3 class="content__paragraph">WELL CONTROL</h3>
                                 </div>
 
