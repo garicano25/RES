@@ -136,31 +136,29 @@ class inventarioController extends Controller
     }
 
 
-
     public function generarCodigoANF()
     {
         try {
+            // Buscar el último código AFN/A más alto, ordenando numéricamente
             $ultimo = DB::table('formulario_inventario')
-                ->where('CODIGO_EQUIPO', 'like', 'AFN/%')
-                ->orderBy('CODIGO_EQUIPO', 'desc')
+                ->where('CODIGO_EQUIPO', 'like', 'AFN/A%')
+                ->orderByRaw("CAST(SUBSTRING(CODIGO_EQUIPO, 7) AS UNSIGNED) DESC")
                 ->first();
 
             if ($ultimo) {
-                if (preg_match('/AFN\/A?(\d+)/', $ultimo->CODIGO_EQUIPO, $matches)) {
-                    $consecutivo = intval($matches[1]) + 1;
-                } else {
-                    $consecutivo = 1;
-                }
+                // Extraer número
+                preg_match('/AFN\/A(\d+)/', $ultimo->CODIGO_EQUIPO, $matches);
+                $consecutivo = isset($matches[1]) ? intval($matches[1]) + 1 : 1;
             } else {
                 $consecutivo = 1;
             }
 
-            $prefijo = (strpos($ultimo->CODIGO_EQUIPO ?? '', 'AFN/A') !== false) ? 'AFN/A' : 'AFN/';
-
-            $codigo_nuevo = $prefijo . str_pad($consecutivo, 4, '0', STR_PAD_LEFT);
+            // Generar nuevo código
+            // Se mantiene el formato con ceros hasta 4 dígitos: A0001, A0242, etc.
+            $codigoNuevo = 'AFN/A' . str_pad($consecutivo, 4, '0', STR_PAD_LEFT);
 
             return response()->json([
-                'codigo' => $codigo_nuevo,
+                'codigo' => $codigoNuevo,
                 'msj' => 'Código ANF generado correctamente'
             ]);
         } catch (Exception $e) {
@@ -170,6 +168,7 @@ class inventarioController extends Controller
             ]);
         }
     }
+
 
 
 
