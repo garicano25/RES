@@ -106,7 +106,6 @@ use App\Http\Controllers\proveedor\catalagodocumentosproveedorController;
 use App\Http\Controllers\proveedor\catalogoverificacionproveedorController;
 use App\Http\Controllers\proveedor\listaproveedorescriticosController;
 
-
 // CONTROLADORES DE PO 
 use App\Http\Controllers\ordencompra\poController;
 use App\Http\Controllers\ordencompra\pdfpoController;
@@ -151,11 +150,7 @@ Route::get('/', function () {
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
-
-
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-
 Route::post('/verify-code', [AuthController::class, 'verifyCode']);
 
 
@@ -173,9 +168,6 @@ Route::post('/verificar-codigo', [VerificationController::class, 'verificarCodig
 //==============================================  Módulos  ============================================== 
 
 Route::get('/modulos', [catalogoanuncioController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Desarrollador de Software Junior,Consultor-Instructor Junior,Ama de llaves');
-
-
-
 Route::get('/tipo-cambio', [catalogoanuncioController::class, 'getTipoCambio']);
 
 
@@ -886,7 +878,6 @@ Route::get('/Tablainventario', [inventarioController::class, 'Tablainventario'])
 Route::post('/InventarioSave', [inventarioController::class, 'store']);
 Route::get('/equipofoto/{id}', [inventarioController::class, 'mostrarFotoEquipo'])->name('equipofoto');
 Route::get('/inventarioDelete', [inventarioController::class, 'store']);
-
 Route::get('/generarCodigoAF', [inventarioController::class, 'generarCodigoAF']);
 Route::get('/generarCodigoANF', [inventarioController::class, 'generarCodigoANF']);
 
@@ -905,7 +896,6 @@ Route::get('/TipoinventarioDelete', [catalogotipoinventarioController::class, 's
 //==============================================   APROBACION DE SOLICITUDES  ============================================== 
 
 Route::get('/aprobacionalmacen', function () {return view('almacen.aprobarsolicitudes.aprobarsolicitudes');});
-
 Route::get('/Tablaaprobacionalmacen', [aprobacionsalidalmacenController::class, 'Tablaaprobacionalmacen']);
 
 //==============================================    SALIDA DE ALMACEN   ============================================== 
