@@ -139,22 +139,19 @@ class inventarioController extends Controller
     public function generarCodigoANF()
     {
         try {
-            // Buscar el último código AFN/A más alto, ordenando numéricamente
             $ultimo = DB::table('formulario_inventario')
                 ->where('CODIGO_EQUIPO', 'like', 'AFN/A%')
                 ->orderByRaw("CAST(SUBSTRING(CODIGO_EQUIPO, 7) AS UNSIGNED) DESC")
                 ->first();
 
             if ($ultimo) {
-                // Extraer número
                 preg_match('/AFN\/A(\d+)/', $ultimo->CODIGO_EQUIPO, $matches);
                 $consecutivo = isset($matches[1]) ? intval($matches[1]) + 1 : 1;
             } else {
                 $consecutivo = 1;
             }
 
-            // Generar nuevo código
-            // Se mantiene el formato con ceros hasta 4 dígitos: A0001, A0242, etc.
+          
             $codigoNuevo = 'AFN/A' . str_pad($consecutivo, 4, '0', STR_PAD_LEFT);
 
             return response()->json([
