@@ -572,7 +572,51 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-///// ENTRADA INVENTARIO TAB 2
+$('#TIPO_EQUIPO').on('change', function () {
+    const tipo = $(this).val();
+
+    if (tipo === 'AF') {
+        $.ajax({
+            url: '/generarCodigoAF',
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                if (response.codigo) {
+                    $('#CODIGO_EQUIPO').val(response.codigo);
+                } else {
+                    $('#CODIGO_EQUIPO').val('');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: response.msj || 'No se pudo generar el código AF.'
+                    });
+                }
+            }
+        });
+    } else if (tipo === 'ANF') {
+        $.ajax({
+            url: '/generarCodigoANF',
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                if (response.codigo) {
+                    $('#CODIGO_EQUIPO').val(response.codigo);
+                } else {
+                    $('#CODIGO_EQUIPO').val('');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: response.msj || 'No se pudo generar el código ANF.'
+                    });
+                }
+            }
+        });
+    } else {
+        $('#CODIGO_EQUIPO').val('');
+    }
+});
+
+////////////////////////  ENTRADA INVENTARIO TAB 2 ////////////////////////
 
 
 // function cargartablaentradainventario() {

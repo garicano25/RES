@@ -104,7 +104,74 @@ class inventarioController extends Controller
     }
 
 
-    
+    public function generarCodigoAF()
+    {
+        try {
+            $anio_actual = date('y'); 
+
+            $ultimo = DB::table('formulario_inventario')
+                ->where('CODIGO_EQUIPO', 'like', 'AFR%' . $anio_actual)
+                ->orderBy('CODIGO_EQUIPO', 'desc')
+                ->first();
+
+            if ($ultimo) {
+                preg_match('/AFR(\d+)' . $anio_actual . '/', $ultimo->CODIGO_EQUIPO, $matches);
+                $consecutivo = isset($matches[1]) ? intval($matches[1]) + 1 : 1;
+            } else {
+                $consecutivo = 1;
+            }
+
+            $codigo_nuevo = 'AFR' . str_pad($consecutivo, 5, '0', STR_PAD_LEFT) . $anio_actual;
+
+            return response()->json([
+                'codigo' => $codigo_nuevo,
+                'msj' => 'Código generado correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'codigo' => null,
+                'msj' => 'Error: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+
+
+    public function generarCodigoANF()
+    {
+        try {
+            $ultimo = DB::table('formulario_inventario')
+                ->where('CODIGO_EQUIPO', 'like', 'AFN/%')
+                ->orderBy('CODIGO_EQUIPO', 'desc')
+                ->first();
+
+            if ($ultimo) {
+                if (preg_match('/AFN\/A?(\d+)/', $ultimo->CODIGO_EQUIPO, $matches)) {
+                    $consecutivo = intval($matches[1]) + 1;
+                } else {
+                    $consecutivo = 1;
+                }
+            } else {
+                $consecutivo = 1;
+            }
+
+            $prefijo = (strpos($ultimo->CODIGO_EQUIPO ?? '', 'AFN/A') !== false) ? 'AFN/A' : 'AFN/';
+
+            $codigo_nuevo = $prefijo . str_pad($consecutivo, 4, '0', STR_PAD_LEFT);
+
+            return response()->json([
+                'codigo' => $codigo_nuevo,
+                'msj' => 'Código ANF generado correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'codigo' => null,
+                'msj' => 'Error: ' . $e->getMessage()
+            ]);
+        }
+    }
+
+
 
 
 

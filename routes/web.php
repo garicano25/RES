@@ -887,6 +887,9 @@ Route::post('/InventarioSave', [inventarioController::class, 'store']);
 Route::get('/equipofoto/{id}', [inventarioController::class, 'mostrarFotoEquipo'])->name('equipofoto');
 Route::get('/inventarioDelete', [inventarioController::class, 'store']);
 
+Route::get('/generarCodigoAF', [inventarioController::class, 'generarCodigoAF']);
+Route::get('/generarCodigoANF', [inventarioController::class, 'generarCodigoANF']);
+
 /// Entrada inventario
 
 Route::get('/Tablaentradainventario', [inventarioController::class, 'Tablaentradainventario']);
