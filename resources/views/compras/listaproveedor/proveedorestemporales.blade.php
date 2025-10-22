@@ -97,13 +97,51 @@
 
                     <div class="mb-3" id="DOCUMENTO_CONTRATO" style="display: none;">
                         <div class="col-md-12 mb-3">
-                            <label class="form-label">Cargar contrato (PDF) *</label>
-                            <div class="d-flex align-items-center">
-                                <input type="file" class="form-control me-2" name="DOCUMENTO_SOPORTE" accept=".pdf">
-                                <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                            <div class="row">
+                                <label class="form-label">Cargar contrato (PDF) *</label>
+                                <div class="d-flex align-items-center">
+                                    <input type="file" class="form-control me-2" name="DOCUMENTO_SOPORTE" accept=".pdf">
+                                    <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+
+
+
+                                <div class="col-4 mt-3">
+                                    <label>Fecha Inicio *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_CONTRATO" name="FECHAI_CONTRATO" required>
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mt-3 text-center">
+                                    <h5 class="form-label"><b>Contrato indeterminado</b></h5>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="INDETERMINADO_CONTRATO" id="indeterminadosi" value="1" required>
+                                        <label class="form-check-label" for="indeterminadosi">Sí</label>
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="INDETERMINADO_CONTRATO" id="indeterminadono" value="2">
+                                        <label class="form-check-label" for="indeterminadono">No</label>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-4 mt-3">
+                                    <label>Fecha Fin *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_CONTRATO" name="FECHAF_CONTRATO" required>
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
+                                </div>
+
+
                             </div>
+
                         </div>
                     </div>
 

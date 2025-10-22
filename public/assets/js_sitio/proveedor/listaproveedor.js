@@ -1339,7 +1339,7 @@ function resetSection(divId) {
 $("#guardarCertificaciones").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioCertificaciones'))
+    formularioValido = validarFormulario3($('#formularioCertificaciones'))
 
     if (formularioValido) {
 

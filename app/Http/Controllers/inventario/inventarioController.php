@@ -76,7 +76,6 @@ class inventarioController extends Controller
                     'UNITARIO_EQUIPO',
                     'TOTAL_EQUIPO',
                     'TIPO_EQUIPO',
-                    'ACTIVO',
                     'OBSERVACION_EQUIPO'
                 ];
 
@@ -580,15 +579,12 @@ class inventarioController extends Controller
                 // ================================
                 if ($entrada->ENTRADA_SOLICITUD == 1) {
                     if (date('Y-m-d', strtotime($entrada->FECHA_INGRESO)) === date('Y-m-d', strtotime($entrada->created_at))) {
-                        // misma fecha → usar la fecha oficial + hora real
                         $horaCreated = date('H:i:s', strtotime($entrada->created_at));
                         $fechaOrden  = $entrada->FECHA_INGRESO . ' ' . $horaCreated;
                     } else {
-                        // diferente fecha → usar la fecha oficial pero con hora máxima del día
                         $fechaOrden = $entrada->FECHA_INGRESO . ' 23:59:59';
                     }
                 } else {
-                    // entradas normales
                     $fechaOrden = $entrada->FECHA_INGRESO;
                 }
 
@@ -626,7 +622,6 @@ class inventarioController extends Controller
 
                     $fechaMostrar = $salida->FECHA_SALIDA;
 
-                    // ✅ SOLO usar fecha oficial, nunca created_at
                     $fechaOrden = $salida->FECHA_SALIDA;
 
                     return [

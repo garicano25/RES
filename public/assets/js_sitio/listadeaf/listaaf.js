@@ -18,39 +18,8 @@ Modalinventario.addEventListener('hidden.bs.modal', event => {
 
 })
 
-$(document).ready(function() {
-    $('#NUEVO_EQUIPO').on('click', function() {
-        limpiarFormularioUsuario(); 
-
-        $('#FOTO_EQUIPO').dropify({
-            messages: {
-                'default': 'Arrastre la imagen aquí o haga clic',
-                'replace': 'Arrastre la imagen aquí o haga clic para reemplazar',
-                'remove':  'Quitar',
-                'error':   'Ooops, ha ocurrido un error.'
-            },
-            error: {
-                'fileSize': 'El archivo es demasiado grande (máx. {{ value }}).',
-                'minWidth': 'El ancho de la imagen es demasiado pequeño (mín. {{ value }}px).',
-                'maxWidth': 'El ancho de la imagen es demasiado grande (máx. {{ value }}px).',
-                'minHeight': 'La altura de la imagen es demasiado pequeña (mín. {{ value }}px).',
-                'maxHeight': 'La altura de la imagen es demasiado grande (máx. {{ value }}px).',
-                'imageFormat': 'Formato no permitido, sólo se aceptan: ({{ value }}).'
-            }
-        });
-
-        $('#Modal_inventario').modal('show');
 
 
-        $("#tab1-info").click();
-        $("#tab2-entrada").prop("disabled", true);
-  
-         $("#ANTES_2024").hide();
-            $("#DESPUES_2024").show();
-
-    });
-
-});
 
 
 
@@ -104,7 +73,7 @@ $("#guardarINVENTARIO").click(function (e) {
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                      $('#Modal_inventario').modal('hide')
                     document.getElementById('formularioINVENTARIO').reset();
-                    Tablainventario.ajax.reload()
+                    Tablalistadeaf.ajax.reload()
 
         
             })
@@ -142,7 +111,7 @@ $("#guardarINVENTARIO").click(function (e) {
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                      $('#Modal_inventario').modal('hide')
                     document.getElementById('formularioINVENTARIO').reset();
-                    Tablainventario.ajax.reload()
+                    Tablalistadeaf.ajax.reload()
 
 
                 }, 300);  
@@ -161,7 +130,7 @@ $("#guardarINVENTARIO").click(function (e) {
 
 
 
-var Tablainventario = $("#Tablainventario").DataTable({
+var Tablalistadeaf = $("#Tablalistadeaf").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
     lengthMenu: [
@@ -180,12 +149,12 @@ var Tablainventario = $("#Tablainventario").DataTable({
         data: {},
         method: 'GET',
         cache: false,
-        url: '/Tablainventario',
+        url: '/Tablalistadeaf',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablainventario.columns.adjust().draw();
+            Tablalistadeaf.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -236,103 +205,12 @@ var Tablainventario = $("#Tablainventario").DataTable({
 
 
 
-$(document).ready(function () {
-
-    $('#boton_cargarExcelEquipos').on('click', function (e) {
-        e.preventDefault();
-
-        $('#divCargaEquipos').css('display', 'none');
-        $('#alertaVerificacion').css('display', 'none');
-
-        $('#formExcelEquipos')[0].reset();
-
-        $('#modal_excel_equipo').modal({
-            backdrop: false,
-            keyboard: true
-        }).modal('show');
-    });
-
-    $('#modal_excel_equipo').on('hidden.bs.modal', function () {
-        $('#formExcelEquipos')[0].reset();
-        $('#divCargaEquipos').css('display', 'none');
-        $('#alertaVerificacion').css('display', 'none');
-    });
-
- $("#botonCargarExcelEquipos").click(function (e) {
-    e.preventDefault();
-
-    let form = $('#formExcelEquipos')[0];
-    let formData = new FormData(form);
-    formData.append("api", 2);
-
-    $.ajax({
-        url: "/InventarioSave",
-        type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
-        headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-        beforeSend: function () {
-            $('#botonCargarExcelEquipos').prop('disabled', true);
-            $('#divCargaEquipos').css('display', 'block');
-        },
-        success: function (dato) {
-            $('#botonCargarExcelEquipos').prop('disabled', false);
-            $('#divCargaEquipos').css('display', 'none');
-
-            if (dato.code == 200) {
-                Tablainventario.ajax.reload();
-                $('#modal_excel_equipo').modal('hide');
-
-                swal({
-                    title: "Equipos cargados",
-                    text: dato.msj,
-                    type: "success",
-                    showConfirmButton: true
-                });
-            } else {
-                swal({
-                    title: "Error",
-                    text: dato.msj,
-                    type: "error",
-                    showConfirmButton: true
-                });
-            }
-        },
-        error: function (xhr) {
-            $('#botonCargarExcelEquipos').prop('disabled', false);
-            $('#divCargaEquipos').css('display', 'none');
-
-            swal({
-                title: "Error",
-                text: xhr.responseText,
-                type: "error"
-            });
-        }
-    });
-});
-
-
-  $('#excelEquipos').change(function() {
-        if ($(this).val()) {
-            
-            $('#alertaVerificacion').css('display', 'block');
-
-        } else {
-            $('#alertaVerificacion').css('display', 'none');
-            
-        }
-    });
-
-});
 
 
 
-
-
-$('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
+$('#Tablalistadeaf tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablainventario.row(tr);
+    var row = Tablalistadeaf.row(tr);
     ID_FORMULARIO_INVENTARIO = row.data().ID_FORMULARIO_INVENTARIO;
 
 
@@ -421,9 +299,9 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
 
 
 $(document).ready(function() {
-    $('#Tablainventario tbody').on('click', 'td>button.VISUALIZAR', function () {
+    $('#Tablalistadeaf tbody').on('click', 'td>button.VISUALIZAR', function () {
         var tr = $(this).closest('tr');
-        var row = Tablainventario.row(tr);
+        var row = Tablalistadeaf.row(tr);
         
         hacerSoloLecturainventario(row.data(), '#Modal_inventario');
 
@@ -537,9 +415,9 @@ $(document).ready(function() {
 
 
 
-$('#Tablainventario tbody').on('change', 'td>label>input.ELIMINAR', function () {
+$('#Tablalistadeaf tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablainventario.row(tr);
+    var row = Tablalistadeaf.row(tr);
 
     var estado = $(this).is(':checked') ? 1 : 0;
 
@@ -549,7 +427,7 @@ $('#Tablainventario tbody').on('change', 'td>label>input.ELIMINAR', function () 
         ID_FORMULARIO_INVENTARIO: row.data().ID_FORMULARIO_INVENTARIO
     };
 
-    eliminarDatoTabla(data, [Tablainventario], 'inventarioDelete');
+    eliminarDatoTabla(data, [Tablalistadeaf], 'inventarioDelete');
 });
 
 
@@ -572,187 +450,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-///// ENTRADA INVENTARIO TAB 2
-
-
-// function cargartablaentradainventario() {
-//     if ($.fn.DataTable.isDataTable('#Tablaentradainventario')) {
-//         Tablaentradainventario.clear().destroy();
-//     }
-
-//     Tablaentradainventario = $("#Tablaentradainventario").DataTable({
-//         language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-//         lengthChange: true,
-//         lengthMenu: [
-//             [10, 25, 50, -1],
-//             [10, 25, 50, 'All']
-//         ],
-//         info: false,
-//         paging: true,
-//         searching: true,
-//         filtering: true,
-//         scrollY: '65vh',
-//         scrollCollapse: true,
-//         responsive: true,
-//         ajax: {
-//             dataType: 'json',
-//             data: { inventario: inventario_id },
-//             method: 'GET',
-//             cache: false,
-//             url: '/Tablaentradainventario',
-//             beforeSend: function () {
-//                 $('#loadingIcon').css('display', 'inline-block');
-//             },
-//             complete: function () {
-//                 $('#loadingIcon').css('display', 'none');
-//                 Tablaentradainventario.columns.adjust().draw();
-//             },
-//             error: function (jqXHR, textStatus, errorThrown) {
-//                 $('#loadingIcon').css('display', 'none');
-//                 alertErrorAJAX(jqXHR, textStatus, errorThrown);
-//             },
-//             dataSrc: 'data'
-//         },
-//         columns: [
-//      { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
-//     { data: 'FECHA_INGRESO', className: 'text-center' },
-//     { data: 'CANTIDAD_PRODUCTO', className: 'text-center' },
-//     {
-//         data: 'VALOR_UNITARIO',
-//         className: 'text-center',
-//         render: function(data) {
-//             if (!data) return '';
-//             let numero = parseFloat(data);
-//             return isNaN(numero) ? data : '$ ' + numero.toFixed(2);
-//         }
-//     },
-//     {
-//         data: 'COSTO_TOTAL',
-//         className: 'text-center',
-//         render: function(data) {
-//             if (!data) return '';
-//             let numero = parseFloat(data);
-//             return isNaN(numero) ? data : '$ ' + numero.toFixed(2);
-//         }
-//     },
-//     { data: 'TIPO', className: 'text-center' },
-// ],
-// columnDefs: [
-//    { targets: 0, title: '#', className: 'all text-center' },
-//     { targets: 1, title: 'Fecha', className: 'all text-center' },
-//     { targets: 2, title: 'Cantidad', className: 'all text-center' },
-//     { targets: 3, title: 'Valor unitario de compras', className: 'all text-center' },
-//     { targets: 4, title: 'Total', className: 'all text-center' },
-//     { targets: 5, title: 'Tipo', className: 'all text-center' },
-// ],
-
-//     });
-// }
-
-
-
-function cargartablaentradainventario() {
-    if ($.fn.DataTable.isDataTable('#Tablaentradainventario')) {
-        Tablaentradainventario.clear().destroy();
-    }
-
-    Tablaentradainventario = $("#Tablaentradainventario").DataTable({
-        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-        lengthChange: true,
-        lengthMenu: [
-            [10, 25, 50, -1],
-            [10, 25, 50, 'All']
-        ],
-        info: false,
-        paging: true,
-        searching: true,
-        filtering: true,
-        scrollY: '65vh',
-        scrollCollapse: true,
-        responsive: true,
-        ajax: {
-            dataType: 'json',
-            data: { inventario: inventario_id }, 
-            method: 'GET',
-            cache: false,
-            url: '/Tablaentradainventario',
-            beforeSend: function () {
-                $('#loadingIcon').css('display', 'inline-block');
-            },
-            complete: function () {
-                $('#loadingIcon').css('display', 'none');
-                Tablaentradainventario.columns.adjust().draw();
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                $('#loadingIcon').css('display', 'none');
-                alertErrorAJAX(jqXHR, textStatus, errorThrown);
-            },
-            dataSrc: 'data'
-        },
-        columns: [
-            { data: null, render: function (data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
-            { data: 'FECHA', className: 'text-center' },
-            { data: 'CANTIDAD', className: 'text-center' },
-            { 
-                data: 'VALOR_UNITARIO', 
-                className: 'text-center',
-                render: function (data) {
-                    if (!data) return '';
-                    let numero = parseFloat(data);
-                    return isNaN(numero) ? data : '$ ' + numero.toFixed(2);
-                }
-            },
-            { 
-                data: 'COSTO_TOTAL',
-                className: 'text-center',
-                render: function (data) {
-                    if (!data) return '';
-                    let numero = parseFloat(data);
-                    return isNaN(numero) ? data : '$ ' + numero.toFixed(2);
-                }
-            },
-            { data: 'TIPO', className: 'text-center' },
-            { data: 'USUARIO', className: 'text-center' },
-           
-        ],
-        columnDefs: [
-            { targets: 0, title: '#', className: 'all text-center' },
-            { targets: 1, title: 'Fecha', className: 'all text-center' },  
-            { targets: 2, title: 'Cantidad', className: 'all text-center' },  
-            { targets: 3, title: 'Valor unitario de compras', className: 'all text-center' },  
-            { targets: 4, title: 'Total', className: 'all text-center' },
-            { targets: 5, title: 'Tipo', className: 'all text-center' },
-            { targets: 6, title: 'Usuario', className: 'all text-center' },
-           
-        ]
-    });
-}
-
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-  const guardarBtn = document.getElementById('guardarINVENTARIO');
-  const tabs = document.querySelectorAll('#tabsinventario button[data-bs-toggle="tab"]');
-
-  tabs.forEach(tab => {
-    tab.addEventListener('shown.bs.tab', function (event) {
-      const target = event.target.getAttribute('data-bs-target');
-      if (target === '#contenido-info') {
-        guardarBtn.style.display = 'inline-block';
-      } else {
-        guardarBtn.style.display = 'none';
-      }
-    });
-  });
-
-  const activeTab = document.querySelector('#tabsinventario button.active');
-  if (activeTab && activeTab.getAttribute('data-bs-target') !== '#contenido-info') {
-    guardarBtn.style.display = 'none';
-  }
-});
 
 
 

@@ -18,6 +18,9 @@ class proveedortempModel extends Model
         'ACTIVO',
         'DIRECCIONES_JSON',
         'REQUIERE_CONTRATO',
-        'DOCUMENTO_SOPORTE'
+        'DOCUMENTO_SOPORTE',
+        'FECHAI_CONTRATO',
+        'INDETERMINADO_CONTRATO',
+        'FECHAF_CONTRATO'
     ];
 }

@@ -46,8 +46,8 @@ class directorioModel extends Model
         'ESTADO_EXTRANJERO',
         'PAIS_EXTRANJERO',
         'DEPARTAMENTO_EXTRANJERO',
-
-        'PROVEEDOR_VERIFICADO'
+        'PROVEEDOR_VERIFICADO',
+        'PROVEEDOR_CRITICO'
         
     ];
 }

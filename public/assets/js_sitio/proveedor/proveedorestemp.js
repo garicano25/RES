@@ -20,8 +20,8 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 
     document.getElementById('DOCUMENTO_CONTRATO').style.display = 'none';
 
-
-
+ const fechaFin = document.getElementById('FECHAF_CONTRATO');
+    fechaFin.disabled = false;
 
 })
 
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
 $("#guardarPROVEEDORTEMP").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioPROVEEDORTEMP'))
+    formularioValido = validarFormulario3($('#formularioPROVEEDORTEMP'))
 
     if (formularioValido) {
 
@@ -271,10 +271,10 @@ var Tablaproveedortemporal = $("#Tablaproveedortemporal").DataTable({
             data: 'BTN_DOCUMENTO',
             className: 'text-center',
             render: function (data, type, row) {
-                return row.DOCUMENTO_SOPORTE ? data : 'NA';
+                return row.DOCUMENTO_SOPORTE ? data : 'N/A';
             }
         },
-    
+        { data: 'FECHA_CONTRATO' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
@@ -285,26 +285,49 @@ var Tablaproveedortemporal = $("#Tablaproveedortemporal").DataTable({
         { targets: 4, title: 'Editar', className: 'all text-center' },
         { targets: 5, title: 'Visualizar', className: 'all text-center' },
         { targets: 6, title: 'Contrato', className: 'all text-center' },
-        { targets: 7, title: 'Activo', className: 'all text-center' }
+        { targets: 7, title: 'Fecha contrato', className: 'all text-center' },
+        { targets: 8, title: 'Activo', className: 'all text-center' }
     ]
 });
 
 
 $('#Tablaproveedortemporal').on('click', '.ver-archivo-requierecontrato', function () {
     var tr = $(this).closest('tr');
-    var row = Tablaproveedortemporal.row(tr);
+    var row = Tablaproveedortemporal.row(tr).data();
     var id = $(this).data('id');
 
-    if (!id) {
-        alert('ARCHIVO NO ENCONTRADO.');
+    // Verifica que el campo del archivo exista
+    if (!id || !row.DOCUMENTO_SOPORTE || row.DOCUMENTO_SOPORTE.trim() === "") {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Sin documento',
+            text: 'Este registro no tiene documento.',
+        });
         return;
     }
 
-    var nombreDocumento = row.data().RAZON_PROVEEDORTEMP;
     var url = '/mostrarequierecontrato/' + id;
-    
-    abrirModal(url, nombreDocumento);
+    window.open(url, '_blank');
 });
+
+
+
+
+// $('#Tablaproveedortemporal').on('click', '.ver-archivo-requierecontrato', function () {
+//     var tr = $(this).closest('tr');
+//     var row = Tablaproveedortemporal.row(tr);
+//     var id = $(this).data('id');
+
+//     if (!id) {
+//         alert('ARCHIVO NO ENCONTRADO.');
+//         return;
+//     }
+
+//     var nombreDocumento = row.data().RAZON_PROVEEDORTEMP;
+//     var url = '/mostrarequierecontrato/' + id;
+    
+//     abrirModal(url, nombreDocumento);
+// });
 
 
 $('#Tablaproveedortemporal tbody').on('change', 'td>label>input.ELIMINAR', function () {
@@ -345,6 +368,18 @@ $('#Tablaproveedortemporal tbody').on('click', 'td>button.EDITAR', function () {
         $('#contratono').prop('checked', true);
     }
 
+
+    if (row.data().INDETERMINADO_CONTRATO == 1) {
+        $('#indeterminadosi').prop('checked', true);
+        $('#FECHAF_CONTRATO').prop('disabled', true).val('');
+    } else if (row.data().INDETERMINADO_CONTRATO == 2) {
+        $('#indeterminadono').prop('checked', true);
+        $('#FECHAF_CONTRATO').prop('disabled', false);
+    } else {
+        $('#FECHAF_CONTRATO').prop('disabled', false);
+    }
+
+
 });
 
 
@@ -356,13 +391,10 @@ $(document).ready(function() {
         
         hacerSoloLectura2(row.data(), '#miModal_proveedortemporal');
 
-        
         ID_FORMULARIO_PROVEEDORTEMP = row.data().ID_FORMULARIO_PROVEEDORTEMP;
 
         $(".direcciondiv").empty();
         obtenerDirecciones(row);
-
-            
             
         editarDatoTabla(row.data(), 'formularioPROVEEDORTEMP', 'miModal_proveedortemporal', 1);
         $('#miModal_proveedortemporal .modal-title').html(row.data().RAZON_PROVEEDORTEMP);
@@ -375,6 +407,17 @@ $(document).ready(function() {
             $('#DOCUMENTO_CONTRATO').hide();
             $('#contratono').prop('checked', true);
         }
+
+        if (row.data().INDETERMINADO_CONTRATO == 1) {
+            $('#indeterminadosi').prop('checked', true);
+            $('#FECHAF_CONTRATO').prop('disabled', true).val('');
+        } else if (row.data().INDETERMINADO_CONTRATO == 2) {
+            $('#indeterminadono').prop('checked', true);
+            $('#FECHAF_CONTRATO').prop('disabled', false);
+        } else {
+            $('#FECHAF_CONTRATO').prop('disabled', false);
+        }
+        
     });
 
     $('#miModal_proveedortemporal').on('hidden.bs.modal', function () {
@@ -751,3 +794,13 @@ function obtenerDirecciones(data) {
 }
 
 
+
+$(document).ready(function() {
+    $('input[name="INDETERMINADO_CONTRATO"]').on('change', function() {
+        if ($(this).val() === '1') { 
+            $('#FECHAF_CONTRATO').prop('disabled', true).val('');
+        } else {
+            $('#FECHAF_CONTRATO').prop('disabled', false);
+        }
+    });
+});

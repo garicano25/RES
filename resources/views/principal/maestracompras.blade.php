@@ -245,6 +245,12 @@
                                         Proveedores temporales
                                     </a>
                                 </li>
+                                <hr class="dropdown-divider">
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/listaproveedorescriticos') }}">
+                                        Proveedores críticos
+                                    </a>
+                                </li>
                                 @endif
                             </ul>
                         </li>
@@ -529,7 +535,7 @@
     @endif
 
     @if(request()->is('proveedorestemporales'))
-    <script src="/assets/js_sitio/proveedor/proveedorestemp.js?v=1.7"></script>
+    <script src="/assets/js_sitio/proveedor/proveedorestemp.js?v=1.8"></script>
     @endif
 
     @if(request()->is('ordencompra'))
@@ -561,6 +567,9 @@
     <script src="/assets/js_sitio/requisiciongr/vobogrusuario.js?v=1.3"></script>
     @endif
 
+    @if(request()->is('listaproveedorescriticos'))
+    <script src="/assets/js_sitio/proveedor/listaproveedorescriticos.js"></script>
+    @endif
 
 
 </body>

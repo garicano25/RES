@@ -104,6 +104,8 @@ use App\Http\Controllers\proveedor\catalagofuncionesproveedorController;
 use App\Http\Controllers\proveedor\catalagotituloproveedorController;
 use App\Http\Controllers\proveedor\catalagodocumentosproveedorController;
 use App\Http\Controllers\proveedor\catalogoverificacionproveedorController;
+use App\Http\Controllers\proveedor\listaproveedorescriticosController;
+
 
 // CONTROLADORES DE PO 
 use App\Http\Controllers\ordencompra\poController;
@@ -126,9 +128,8 @@ use App\Http\Controllers\paginaweb\mensajespaginaController;
 use App\Http\Controllers\inventario\inventarioController;
 use App\Http\Controllers\inventario\catalogotipoinventarioController;
 use App\Http\Controllers\inventario\salidalmacenController;
-
 use App\Http\Controllers\aprobacionsalidalmacen\aprobacionsalidalmacenController;
-
+use App\Http\Controllers\listaaf\listaafController;
 
 
 
@@ -713,6 +714,8 @@ Route::get('/ServicioDelete', [directorioController::class, 'store']);
 Route::get('/Tablaverificacionproveedor', [directorioController::class, 'Tablaverificacionproveedor']);
 Route::get('/mostrarverificacionproveedor/{id}', [directorioController::class, 'mostrarverificacionproveedor']);
 
+Route::get('/listaproveedorescriticos', function () {return view('compras.proveedores.listaproveedorescriticos');});
+Route::get('/Tablaproveedorescriticos', [listaproveedorescriticosController::class, 'Tablaproveedorescriticos']);
 
 //==============================================    LISTA DE PROVEEDORES  ============================================== 
 
@@ -879,11 +882,10 @@ Route::get('/mostrarcaratula/{id}', [altacuentaController::class, 'mostrarcaratu
 
 Route::get('/inventario', [inventarioController::class, 'index']);
 
-// Route::get('/Inventario', function () { return view('almacen.inventario.inventario');});
 Route::get('/Tablainventario', [inventarioController::class, 'Tablainventario']);
 Route::post('/InventarioSave', [inventarioController::class, 'store']);
 Route::get('/equipofoto/{id}', [inventarioController::class, 'mostrarFotoEquipo'])->name('equipofoto');
-
+Route::get('/inventarioDelete', [inventarioController::class, 'store']);
 
 /// Entrada inventario
 
@@ -905,10 +907,14 @@ Route::get('/Tablaaprobacionalmacen', [aprobacionsalidalmacenController::class, 
 
 //==============================================    SALIDA DE ALMACEN   ============================================== 
 Route::get('/salidaalmacen', [salidalmacenController::class, 'index']);
-
 Route::get('/Tablasalidalmacen', [salidalmacenController::class, 'Tablasalidalmacen']);
-
 Route::post('/SalidalmacenSave', [salidalmacenController::class, 'store']);
+
+//==============================================    LISTA DE AF   ============================================== 
+
+Route::get('/listadeaf', [listaafController::class, 'index']);
+Route::get('/Tablalistadeaf', [listaafController::class, 'Tablalistadeaf']);
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////PAGINA WEB///////////////////////////////////////////////////

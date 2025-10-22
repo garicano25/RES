@@ -148,12 +148,18 @@
                             </a>
                         </li>
 
+                        <li class="nav-item dropdown" style="margin-left: -2px;">
+                            <a class="nav-link BOTON" href="{{ url('/listadeaf') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                                <i class="bi bi-list-task" style="margin-right: 5px;"></i> <span class="d-lg-none">Lista AF</span><span class="d-none d-lg-inline">Lista AF</span>
+                            </a>
+                        </li>
+
 
                         @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
 
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link BOTON" href="{{ url('/aprobacionalmacen') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                                <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Autorizar salidas de almacén</span><span class="d-none d-lg-inline">Autorizar salida de almacén</span>
+                                <i class="bi bi-patch-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Autorizar salidas de almacén</span><span class="d-none d-lg-inline">Autorizar salida de almacén</span>
                             </a>
                         </li>
                         @endif
@@ -303,7 +309,7 @@
 
 
     @if(request()->is('inventario'))
-    <script src="/assets/js_sitio/inventario/inventario.js?v=1.12"></script>
+    <script src="/assets/js_sitio/inventario/inventario.js?v=1.13"></script>
     @endif
 
     @if(request()->is('catalogotipoinventario'))
@@ -314,9 +320,12 @@
     <script src="/assets/js_sitio/salidalmacen/salidalmacen.js?v=1.15"></script>
     @endif
 
-
     @if(request()->is('aprobacionalmacen'))
     <script src="/assets/js_sitio/aprobacionsalidalmacen/aprobacionsalidalmacen.js"></script>
+    @endif
+
+    @if(request()->is('listadeaf'))
+    <script src="/assets/js_sitio/listadeaf/listaaf.js"></script>
     @endif
 </body>
 

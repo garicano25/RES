@@ -79,7 +79,9 @@ class DenyRoleGlobalMiddleware
         'catalogotipoinventario',
         'vobogrusuario',
         'solicitudesvobo',
-        'solicitudesaprobaciones'
+        'solicitudesaprobaciones',
+        'aprobacionalmacen',
+        'listadeaf'
         
     ];
 
@@ -145,6 +147,12 @@ class DenyRoleGlobalMiddleware
 
     //     return $next($request);
     // }
+
+
+
+
+
+    
 }
 
 
