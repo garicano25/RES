@@ -33,7 +33,6 @@ class pdfController extends Controller
 
         $pdf = Pdf::loadView('pdf.requisicion_materiales_pdf', $data)
             ->setPaper('letter', 'portrait');
-             // o 'A4' si usas tamaño internacional
 
         return $pdf->download("MR_{$requisicion->NO_MR}.pdf");
     }

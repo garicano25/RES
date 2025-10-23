@@ -174,11 +174,7 @@
 
 
 
-
-
                     </div>
-
-
 
 
                     <div id="SOLICITUD_VACACIONES" style="display: none;">
@@ -199,21 +195,48 @@
                                     </div>
                                 </div>
 
-                                <div class="col-4 mt-3">
+                                <div class="col-3 mt-3">
                                     <label class="form-label">Año de servicio </label>
-                                    <input type="number" class="form-control" id="ANIO_SERVICIO_VACACIONES" name="ANIO_SERVICIO_VACACIONES">
+                                    <input type="number" class="form-control" id="ANIO_SERVICIO_VACACIONES" name="ANIO_SERVICIO_VACACIONES" required readonly>
                                 </div>
 
 
-                                <div class="col-4 mt-3">
+                                <div class="col-3 mt-3">
                                     <label class="form-label">Días que corresponden</label>
-                                    <input type="number" class="form-control" id="DIAS_CORRESPONDEN_VACACIONES" name="DIAS_CORRESPONDEN_VACACIONES">
+                                    <input type="number" class="form-control" id="DIAS_CORRESPONDEN_VACACIONES" name="DIAS_CORRESPONDEN_VACACIONES" required readonly>
                                 </div>
 
 
-                                <div class="col-4 mt-3">
+                                <div class="col-3 mt-3">
                                     <label class="form-label">Días a disfrutar</label>
-                                    <input type="text" class="form-control" id="DIAS_DISFRUTAR_VACACIONES" name="DIAS_DISFRUTAR_VACACIONES">
+                                    <input type="number" class="form-control" id="DIAS_DISFRUTAR_VACACIONES" name="DIAS_DISFRUTAR_VACACIONES" required>
+                                </div>
+
+                                <div class="col-3 mt-3">
+                                    <label class="form-label">Días Pendientes</label>
+                                    <input type="number" class="form-control" id="DIAS_PENDIENTES_VACACIONES" name="DIAS_PENDIENTES_VACACIONES" required readonly>
+                                </div>
+
+
+                                <div class="col-12 mt-3">
+                                    <h5 class="text-center">Período a Disfrutar:</h5>
+                                </div>
+
+
+                                <div class="col-6 mt-3">
+                                    <label class="form-label">Desde Año: </label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_ANIO_VACACIONES" name="DESDE_ANIO_VACACIONES" required readonly>
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 mt-3">
+                                    <label class="form-label">Hasta el Año: </label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="HASTA_ANIO_VACACIONES" name="HASTA_ANIO_VACACIONES" required readonly>
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
                                 </div>
 
 

@@ -51,19 +51,90 @@ class recempleadoController extends Controller
         }
     }
 
+    // public function obtenerDatosVacaciones()
+    // {
+    //     try {
+    //         $curp = auth()->user()->CURP;
+    //         $empleado = DB::table('formulario_contratacion')
+    //             ->where('CURP', $curp)
+    //             ->select('NUMERO_EMPLEADO','FECHA_INGRESO')
+    //             ->first();
+
+    //         return response()->json([
+    //             'numero_empleado' => $empleado ? $empleado->NUMERO_EMPLEADO : 'No disponible',
+    //             'fecha_ingreso' => $empleado ? $empleado->FECHA_INGRESO : ''
+
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'error' => 'Error al obtener datos: ' . $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
+
+
+
     public function obtenerDatosVacaciones()
     {
         try {
             $curp = auth()->user()->CURP;
+
+            // Obtener datos del empleado
             $empleado = DB::table('formulario_contratacion')
                 ->where('CURP', $curp)
-                ->select('NUMERO_EMPLEADO','FECHA_INGRESO')
+                ->select('NUMERO_EMPLEADO', 'FECHA_INGRESO')
                 ->first();
 
-            return response()->json([
-                'numero_empleado' => $empleado ? $empleado->NUMERO_EMPLEADO : 'No disponible',
-                'fecha_ingreso' => $empleado ? $empleado->FECHA_INGRESO : ''
+            if (!$empleado) {
+                return response()->json([
+                    'error' => 'No se encontró información del empleado.'
+                ], 404);
+            }
 
+            $fechaIngreso = new \DateTime($empleado->FECHA_INGRESO);
+            $fechaActual = new \DateTime();
+
+            $aniosServicio = $fechaIngreso->diff($fechaActual)->y;
+
+            if ($aniosServicio == 0) {
+                $aniosServicio = 1;
+            }
+
+            if ($aniosServicio == 1) {
+                $diasCorresponden = 12;
+            } elseif ($aniosServicio == 2) {
+                $diasCorresponden = 14;
+            } elseif ($aniosServicio == 3) {
+                $diasCorresponden = 16;
+            } elseif ($aniosServicio == 4) {
+                $diasCorresponden = 18;
+            } elseif ($aniosServicio == 5) {
+                $diasCorresponden = 20;
+            } elseif ($aniosServicio >= 6 && $aniosServicio <= 10) {
+                $diasCorresponden = 22;
+            } elseif ($aniosServicio >= 11 && $aniosServicio <= 15) {
+                $diasCorresponden = 24;
+            } elseif ($aniosServicio >= 16 && $aniosServicio <= 20) {
+                $diasCorresponden = 26;
+            } elseif ($aniosServicio >= 21 && $aniosServicio <= 25) {
+                $diasCorresponden = 28;
+            } else {
+                $diasCorresponden = 30;
+            }
+
+            $fechaDesde = (clone $fechaIngreso)->modify('+' . ($aniosServicio - 1) . ' years');
+            $fechaHasta = (clone $fechaIngreso)->modify('+' . $aniosServicio . ' years -1 day');
+
+            $anioServicioFormateado = str_pad($aniosServicio, 2, '0', STR_PAD_LEFT);
+
+            return response()->json([
+                
+                'numero_empleado' => $empleado->NUMERO_EMPLEADO,
+                'fecha_ingreso' => $empleado->FECHA_INGRESO,
+                'anios_servicio' => $anioServicioFormateado,
+                'dias_corresponden' => $diasCorresponden,
+                'desde_anio_vacaciones' => $fechaDesde->format('Y-m-d'),
+                'hasta_anio_vacaciones' => $fechaHasta->format('Y-m-d'),
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -71,6 +142,8 @@ class recempleadoController extends Controller
             ], 500);
         }
     }
+
+
 
 
     public function Tablarecempleados()
@@ -287,9 +360,6 @@ class recempleadoController extends Controller
                 ->get();
 
           
-
-
-
           
             foreach ($tabla as $value) {
                 if ($value->ACTIVO == 0) {
@@ -328,6 +398,11 @@ class recempleadoController extends Controller
                 } else {
                     $value->ESTATUS = '<span class="badge bg-secondary">Aprobar</span>';
                 }
+
+
+                $value->DESCARGAR_FORMATOS = '<button class="btn btn-danger btn-custom rounded-pill pdf-button " data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" title="Descargar"><i class="bi bi-filetype-pdf"></i></button>';
+
+
             }
 
             return response()->json([
@@ -352,9 +427,7 @@ class recempleadoController extends Controller
                     if ($request->ID_FORMULARIO_RECURSOS_EMPLEADOS == 0) {
                         DB::statement('ALTER TABLE formulario_recempleados AUTO_INCREMENT=1;');
 
-                    
 
-                       
                         $materialesJson = is_string($request->MATERIALES_JSON)
                             ? $request->MATERIALES_JSON
                             : json_encode($request->MATERIALES_JSON, JSON_UNESCAPED_UNICODE);
@@ -526,6 +599,9 @@ class recempleadoController extends Controller
                                         ? $datos['MATERIALES_JSON']
                                         : json_encode($datos['MATERIALES_JSON'], JSON_UNESCAPED_UNICODE);
                                 }
+
+                                $datos['AUTORIZO_ID'] = auth()->user()->ID_USUARIO;
+
 
                                 $mrs->update($datos);
 

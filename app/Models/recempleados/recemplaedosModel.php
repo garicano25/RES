@@ -36,7 +36,6 @@ class recemplaedosModel extends Model
         'FIRMO_USUARIO',
         'FIRMADO_POR',
 
-        
         'VISTO_BUENO',
         'FECHA_VISTO_SOLICITUD',
         'MOTIVO_RECHAZO_JEFE',
@@ -48,6 +47,7 @@ class recemplaedosModel extends Model
         'MOTIVO_RECHAZO',
         'QUIEN_APROBACION',
         'FECHA_APRUEBA_SOLICITUD',
+        'AUTORIZO_ID',
 
         'FIRMA_ALMACEN',
         'FECHA_ALMACEN_SOLICITUD',
@@ -57,7 +57,6 @@ class recemplaedosModel extends Model
         'GUARDO_SALIDA_INVENTARIO',
         'GUARDO_RETORNO_INVENTARIO',
 
-
         'NOEMPLEADO_PERMISO_VACACIONES',
         'FECHA_INGRESO_VACACIONES',
         'ANIO_SERVICIO_VACACIONES',
@@ -66,7 +65,9 @@ class recemplaedosModel extends Model
         'FECHA_INICIO_VACACIONES',
         'FECHA_TERMINACION_VACACIONES',
         'FECHA_INICIALABORES_VACACIONES',
-
+        'DIAS_PENDIENTES_VACACIONES',
+        'DESDE_ANIO_VACACIONES',
+        'HASTA_ANIO_VACACIONES'
 
     ];
 }

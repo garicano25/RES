@@ -59,6 +59,8 @@ use App\Http\Controllers\contratacion\CvController;
 
 // CONTROLADORES DE REC.EMPLEADOS
 use App\Http\Controllers\recursosempleado\recempleadoController;
+use App\Http\Controllers\recursosempleado\pdfrecempleadoController;
+
 
 // CONTROLADORES DE CAPACITACION 
 use App\Http\Controllers\capacitacion\brechaController;
@@ -521,6 +523,11 @@ Route::get('/solicitudesvobo', function () { return view('RH.RecEmpleados.recemp
 Route::get('/Tablarecempleadovobo', [recempleadoController::class, 'Tablarecempleadovobo']);
 Route::get('/solicitudesaprobaciones', function () {return view('RH.RecEmpleados.recempleadoaprobacion');});
 Route::get('/Tablarecempleadoaprobacion', [recempleadoController::class, 'Tablarecempleadoaprobacion']);
+//// DESCARGA DOCUMENTOS PDF 
+
+
+Route::get('/generarPDFPO/{id}', [pdfrecempleadoController::class, 'generarPDFPO']);
+
 
 //==============================================  CAPACITACION  ============================================== 
 

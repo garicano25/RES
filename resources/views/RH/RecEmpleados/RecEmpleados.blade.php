@@ -125,11 +125,6 @@
                             </div>
                         </div>
 
-
-
-
-
-
                         <div class="col-12 mt-3">
                             <div class="row">
                                 <div class="col-4">
@@ -186,21 +181,10 @@
                                     <textarea class="form-control" id="EXPLIQUE_PERMISO" name="EXPLIQUE_PERMISO" rows="2"></textarea>
                                 </div>
 
-
-
-
                             </div>
                         </div>
 
-
-
-
-
-
-
                     </div>
-
-
 
                     <div id="SOLICITUD_VACACIONES" style="display: none;">
 
@@ -220,21 +204,49 @@
                                     </div>
                                 </div>
 
-                                <div class="col-4 mt-3">
+                                <div class="col-3 mt-3">
                                     <label class="form-label">Año de servicio </label>
-                                    <input type="number" class="form-control" id="ANIO_SERVICIO_VACACIONES" name="ANIO_SERVICIO_VACACIONES">
+                                    <input type="number" class="form-control" id="ANIO_SERVICIO_VACACIONES" name="ANIO_SERVICIO_VACACIONES" required readonly>
                                 </div>
 
 
-                                <div class="col-4 mt-3">
+                                <div class="col-3 mt-3">
                                     <label class="form-label">Días que corresponden</label>
-                                    <input type="number" class="form-control" id="DIAS_CORRESPONDEN_VACACIONES" name="DIAS_CORRESPONDEN_VACACIONES">
+                                    <input type="number" class="form-control" id="DIAS_CORRESPONDEN_VACACIONES" name="DIAS_CORRESPONDEN_VACACIONES" required readonly>
                                 </div>
 
 
-                                <div class="col-4 mt-3">
+                                <div class="col-3 mt-3">
                                     <label class="form-label">Días a disfrutar</label>
-                                    <input type="text" class="form-control" id="DIAS_DISFRUTAR_VACACIONES" name="DIAS_DISFRUTAR_VACACIONES">
+                                    <input type="number" class="form-control" id="DIAS_DISFRUTAR_VACACIONES" name="DIAS_DISFRUTAR_VACACIONES" required>
+                                </div>
+
+                                <div class="col-3 mt-3">
+                                    <label class="form-label">Días Pendientes</label>
+                                    <input type="number" class="form-control" id="DIAS_PENDIENTES_VACACIONES" name="DIAS_PENDIENTES_VACACIONES" required readonly>
+                                </div>
+
+                                <input type="hidden" id="DIAS_TOMADOS_ANTERIORES" name="DIAS_TOMADOS_ANTERIORES">
+
+                                <div class="col-12 mt-3">
+                                    <h5 class="text-center">Período a Disfrutar:</h5>
+                                </div>
+
+
+                                <div class="col-6 mt-3">
+                                    <label class="form-label">Desde Año: </label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_ANIO_VACACIONES" name="DESDE_ANIO_VACACIONES" required readonly>
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 mt-3">
+                                    <label class="form-label">Hasta el Año: </label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="HASTA_ANIO_VACACIONES" name="HASTA_ANIO_VACACIONES" required readonly>
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
                                 </div>
 
 
@@ -269,8 +281,6 @@
                         </div>
 
                     </div>
-
-
 
                     <div class="mt-3">
                         <label>Observaciones *</label>
@@ -415,6 +425,35 @@
                     <button type="submit" class="btn btn-success" id="guardaRECEMPLEADOS" style="display: block;">Guardar</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<div class="modal fade" id="modalDiasTomados" tabindex="-1" aria-labelledby="modalDiasTomadosLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDiasTomadosLabel">Días ya tomados</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body">
+                <label for="inputDiasTomados" class="form-label">Ingrese cuántos días ha tomado anteriormente:</label>
+                <input type="number" id="inputDiasTomados" class="form-control" placeholder="Ejemplo: 6" min="0" step="1">
+                <div id="mensajeErrorDias" class="text-danger mt-2" style="display:none;">
+                    No puede superar los días que corresponden.
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnGuardarDiasTomados">Aceptar</button>
+            </div>
         </div>
     </div>
 </div>

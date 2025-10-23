@@ -7,11 +7,8 @@ ID_FORMULARIO_RECURSOS_EMPLEADOS = 0
 const Modalmr = document.getElementById('miModal_RECURSOSEMPLEADOS');
 Modalmr.addEventListener('hidden.bs.modal', event => {
 
-
     ID_FORMULARIO_RECURSOS_EMPLEADOS = 0;
     document.getElementById('formularioRECURSOSEMPLEADO').reset();
-
-
 
     $('#FECHA_ESTIMADA').hide();
     $('#SOLIDA_ALMACEN').hide();
@@ -20,16 +17,9 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     $('#EXPLIQUE_PERMISO').hide();
     $('#DIV_FIRMAR').show();
     $('#VISTO_BUENO_JEFE').hide();
-    
 
-
-   
-
-
-    
     document.querySelector('.materialesdiv').innerHTML = '';
     contadorMateriales = 1;
-
 
 
      const inputFecha = document.getElementById("FECHA_APRUEBA_SOLICITUD");
@@ -84,9 +74,6 @@ $("#NUEVO_RECUROSEMPLEADO").click(function (e) {
     
     
 
-    
-
-   
 });
 
 
@@ -105,19 +92,6 @@ let contadorMateriales = 1;
         contadorMateriales = nuevoContador;
 }
     
-    
-
-
-
-
-
-
-
-
-
-
-
-
 
 $("#guardaRECEMPLEADOS").click(function (e) {
     e.preventDefault();
@@ -278,7 +252,8 @@ var Tablarecempleadoaprobacion = $("#Tablarecempleadoaprobacion").DataTable({
     { data: 'SOLICITANTE_SALIDA' },    
     { data: 'FECHA_SALIDA' },    
     { data: 'ESTADO_REVISION' }, 
-    { data: 'ESTATUS' },          
+    { data: 'ESTATUS' },     
+    { data: 'DESCARGAR_FORMATOS' },
     { data: 'BTN_EDITAR' },
     { data: 'BTN_VISUALIZAR' },
 
@@ -290,9 +265,10 @@ columnDefs: [
     { targets: 2, title: 'Nombre del solicitante', className: 'all text-center' }, 
     { targets: 3, title: 'Fecha de solicitud', className: 'all text-center' },
     { targets: 4, title: 'Vo. Bo ', className: 'all text-center' },
-    { targets: 5, title: 'Estatus', className: 'all text-center' }, 
-    { targets: 6, title: 'Editar', className: 'all text-center' },
-    { targets: 7, title: 'Visualizar', className: 'all text-center' },
+    { targets: 5, title: 'Estatus', className: 'all text-center' },
+    { targets: 6, title: 'Descargar formato', className: 'all text-center' }, 
+    { targets: 7, title: 'Editar', className: 'all text-center' },
+    { targets: 8, title: 'Visualizar', className: 'all text-center' },
 
 ]
 
@@ -817,5 +793,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 motivoDiv.style.display = "none";
             }
         });
+    }
+});
+
+/////// DESCARGAR DOCUMENTOS
+
+
+//// DESCARGAR PFD PO
+
+$(document).on('click', '.pdf-button', function () {
+    const id = $(this).data('id');
+    if (id) {
+        window.open(`/generarPDFPO/${id}`, '_blank');
     }
 });

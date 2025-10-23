@@ -83,15 +83,34 @@ $("#NUEVO_RECUROSEMPLEADO").click(function (e) {
     
     
 
-      $.get('/obtenerDatosVacaciones', function (response) {
-       
+    $.get('/obtenerDatosVacaciones', function (response) {
         if (response.numero_empleado) {
-            $("#NOEMPLEADO_PERMISO").val(response.numero_empleado);
+            $("#NOEMPLEADO_PERMISO_VACACIONES").val(response.numero_empleado);
         }
         if (response.fecha_ingreso) {
             $("#FECHA_INGRESO_VACACIONES").val(response.fecha_ingreso);
         }
-     });
+        if (response.anios_servicio) {
+            $("#ANIO_SERVICIO_VACACIONES").val(response.anios_servicio);
+        }
+        if (response.dias_corresponden) {
+            $("#DIAS_CORRESPONDEN_VACACIONES").val(response.dias_corresponden);
+        }
+        if (response.desde_anio_vacaciones) {
+            $("#DESDE_ANIO_VACACIONES").val(response.desde_anio_vacaciones);
+        }
+        if (response.hasta_anio_vacaciones) {
+            $("#HASTA_ANIO_VACACIONES").val(response.hasta_anio_vacaciones);
+        }
+    }).fail(function (xhr) {
+        console.error("Error al obtener los datos:", xhr.responseText);
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "No fue posible obtener los datos de vacaciones. Intente nuevamente."
+        });
+    });
+
     
     
 
@@ -780,14 +799,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
         if (this.value === "3") {
-            $.get('/obtenerDatosVacaciones', function (response) {
-                if (response.numero_empleado) {
-                    $("#NOEMPLEADO_PERMISO_VACACIONES").val(response.numero_empleado);
-                }
-                if (response.fecha_ingreso) {
-                    $("#FECHA_INGRESO_VACACIONES").val(response.fecha_ingreso);
-                }
-            });
+        
+             $.get('/obtenerDatosVacaciones', function (response) {
+                    if (response.numero_empleado) {
+                        $("#NOEMPLEADO_PERMISO_VACACIONES").val(response.numero_empleado);
+                    }
+                    if (response.fecha_ingreso) {
+                        $("#FECHA_INGRESO_VACACIONES").val(response.fecha_ingreso);
+                    }
+                    if (response.anios_servicio) {
+                        $("#ANIO_SERVICIO_VACACIONES").val(response.anios_servicio);
+                    }
+                    if (response.dias_corresponden) {
+                        $("#DIAS_CORRESPONDEN_VACACIONES").val(response.dias_corresponden);
+                    }
+                    if (response.desde_anio_vacaciones) {
+                        $("#DESDE_ANIO_VACACIONES").val(response.desde_anio_vacaciones);
+                    }
+                    if (response.hasta_anio_vacaciones) {
+                        $("#HASTA_ANIO_VACACIONES").val(response.hasta_anio_vacaciones);
+                    }
+                }).fail(function (xhr) {
+                    console.error("Error al obtener los datos:", xhr.responseText);
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: "No fue posible obtener los datos de vacaciones. Intente nuevamente."
+                    });
+                });
+
         }
     });
 });
@@ -811,40 +851,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
-
-
-
-// document.addEventListener("DOMContentLoaded", function () {
-//     const btnFirmar = document.getElementById("FIRMAR_SOLICITUD");
-//     const inputFirmo = document.getElementById("FIRMO_USUARIO");
-//     const inputFirmadoPor = document.getElementById("FIRMADO_POR");
-//     const inputFechaSalida = document.getElementById("FECHA_SALIDA");
-
-//     btnFirmar.addEventListener("click", function () {
-//         let usuarioNombre = btnFirmar.getAttribute("data-usuario");
-//         let fechaSalida = inputFechaSalida.value; // yyyy-mm-dd
-
-//         // Obtener hora actual
-//         let ahora = new Date();
-//         let horas = ahora.getHours();
-//         let minutos = String(ahora.getMinutes()).padStart(2, "0");
-//         let segundos = String(ahora.getSeconds()).padStart(2, "0");
-
-//         // Determinar AM o PM
-//         let ampm = horas >= 12 ? "p.m." : "a.m.";
-
-//         // Convertir a formato de 12 horas
-//         horas = horas % 12;
-//         horas = horas ? horas : 12; // El 0 se convierte en 12
-
-//         let horaCompleta = horas + ":" + minutos + ":" + segundos + " " + ampm;
-
-//         // Asignar valores
-//         inputFirmo.value = "1";
-//         inputFirmadoPor.value =  usuarioNombre + " el " + fechaSalida + " a las " + horaCompleta;
-//     });
-// });
 
 
 
@@ -929,7 +935,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Bloquear días si se escribe horas
     inputHoras.addEventListener("input", function () {
         if (this.value && parseInt(this.value) > 0) {
             inputDias.value = "";
@@ -939,3 +944,130 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const inputDisfrutar = document.getElementById("DIAS_DISFRUTAR_VACACIONES");
+    const inputCorresponden = document.getElementById("DIAS_CORRESPONDEN_VACACIONES");
+    const inputPendientes = document.getElementById("DIAS_PENDIENTES_VACACIONES");
+    const inputTomados = document.getElementById("DIAS_TOMADOS_ANTERIORES");
+    const modalElement = document.getElementById("modalDiasTomados");
+    const modal = new bootstrap.Modal(modalElement);
+    const inputModal = document.getElementById("inputDiasTomados");
+    const btnGuardar = document.getElementById("btnGuardarDiasTomados");
+    const mensajeError = document.getElementById("mensajeErrorDias");
+
+    inputDisfrutar.addEventListener("blur", function () {
+        const diasCorresponden = parseInt(inputCorresponden.value) || 0;
+        const diasDisfrutar = parseInt(inputDisfrutar.value) || 0;
+
+        if (diasCorresponden === 0) {
+            Swal.fire({
+                icon: "info",
+                title: "Información",
+                text: "Primero deben calcularse los días que corresponden antes de ingresar los días a disfrutar.",
+                timer: 3000,
+                showConfirmButton: false
+            });
+            inputDisfrutar.value = "";
+            return;
+        }
+
+        if (diasDisfrutar <= 0) return;
+
+        if (diasDisfrutar > diasCorresponden) {
+            Swal.fire({
+                icon: "warning",
+                title: "Valor no válido",
+                text: "No puede solicitar más días de los que le corresponden.",
+                timer: 3000,
+                showConfirmButton: false
+            });
+            inputDisfrutar.value = "";
+            inputPendientes.value = "";
+            inputTomados.value = "";
+            return;
+        }
+
+        Swal.fire({
+            title: "¿Ya ha tomado vacaciones antes?",
+            text: "Si ya ha disfrutado algunos días, puede indicarlos para recalcular los días pendientes.",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Sí, ya tomé días",
+            cancelButtonText: "No, es la primera vez",
+            allowOutsideClick: false,
+            allowEscapeKey: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                inputModal.value = "";
+                mensajeError.style.display = "none";
+                modal.show();
+            } else {
+                // 🚫 Si responde que no → calcular directo
+                inputTomados.value = 0;
+                let diasPendientes = diasCorresponden - diasDisfrutar;
+                if (diasPendientes < 0) diasPendientes = 0;
+                inputPendientes.value = diasPendientes;
+            }
+        });
+    });
+
+    btnGuardar.addEventListener("click", function () {
+        const diasCorresponden = parseInt(inputCorresponden.value) || 0;
+        const diasDisfrutar = parseInt(inputDisfrutar.value) || 0;
+        const diasTomados = parseInt(inputModal.value) || 0;
+
+        if (diasTomados < 0) {
+            mensajeError.style.display = "block";
+            mensajeError.textContent = "El número no puede ser negativo.";
+            return;
+        }
+
+        if (diasTomados > diasCorresponden) {
+            mensajeError.style.display = "block";
+            mensajeError.textContent = "No puede superar los días que corresponden.";
+            return;
+        }
+
+        mensajeError.style.display = "none";
+
+        // Calcular pendientes
+        const totalTomados = diasTomados + diasDisfrutar;
+        let diasPendientes = diasCorresponden - totalTomados;
+        if (diasPendientes < 0) diasPendientes = 0;
+
+        inputTomados.value = diasTomados;
+        inputPendientes.value = diasPendientes;
+
+        modal.hide();
+    });
+
+    modalElement.addEventListener("hidden.bs.modal", function () {
+        inputModal.value = "";
+        mensajeError.style.display = "none";
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
