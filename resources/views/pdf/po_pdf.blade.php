@@ -127,7 +127,6 @@
         .tabla-observaciones th,
         .tabla-observaciones td {
             border: 2px solid black;
-            padding: 6px;
             text-align: left;
             vertical-align: top;
         }
