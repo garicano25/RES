@@ -7,18 +7,37 @@
 
 
     <style>
+        @font-face {
+            font-family: 'Poppins';
+            font-weight: 400;
+            src: url("{{ public_path('fonts/poppins/Poppins-Regular.ttf') }}") format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Poppins';
+            font-weight: 500;
+            src: url("{{ public_path('fonts/poppins/Poppins-Medium.ttf') }}") format('truetype');
+        }
+
+        @font-face {
+            font-family: 'Poppins';
+            font-weight: 600;
+            src: url("{{ public_path('fonts/poppins/Poppins-SemiBold.ttf') }}") format('truetype');
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-size: 11px;
+
+        }
+
         @page {
             margin: 140px 40px 40px 40px;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            font-size: 12px;
-        }
-
         header {
             position: fixed;
-            top: -120px;
+            top: -115px;
             left: 0;
             right: 0;
             height: 130px;
@@ -29,8 +48,6 @@
         table th {
             border: 2px solid black;
         }
-
-
 
         .logo {
             display: block;
@@ -46,7 +63,7 @@
 
         .tabla-encabezado td {
             border: 1px solid black;
-            padding: 1px;
+            /* padding: 1px; */
         }
 
         .tabla-info {
@@ -57,7 +74,6 @@
         .tabla-info td,
         .tabla-info th {
             border: 1px solid black;
-            padding: 2px;
         }
 
         .tabla-info_2 {
@@ -69,7 +85,7 @@
         .tabla-info_2 td,
         .tabla-info_2 th {
             border: 1px solid black;
-            padding: 2px;
+
         }
 
         .bg-gray {
@@ -111,7 +127,7 @@
         .tabla-observaciones th,
         .tabla-observaciones td {
             border: 2px solid black;
-            padding: 8px;
+            padding: 6px;
             text-align: left;
             vertical-align: top;
         }
@@ -155,7 +171,7 @@
                 <td class="text-center">Página {{ $currentPage }} de {{ $totalPages }}</td>
             </tr>
             <tr>
-                <td colspan="3" class="text-right bold mt-3">
+                <td colspan="3" class="text-right bold mt-4">
                     No. de orden de compra - PO:
                     <span style="color: blue;">{{ $orden->NO_PO }}</span>
                 </td>
@@ -182,7 +198,7 @@
             </tr>
             <tr>
                 <td class="bg-gray bold">Dirección</td>
-                <td colspan="3">Carmen Cadena de Buendía No. 128, Col. Nueva Villahermosa</td>
+                <td colspan="3">Prol. De Avenida Los Ríos, 203. C.P. 86100, Col. Atasta de Serra, Villahermosa, Centro.</td>
             </tr>
             <tr>
                 <td class="bg-gray bold">Teléfono</td>
@@ -333,17 +349,12 @@
         </tr>
         <tr>
             <td colspan="2" class="contenido-observaciones">
-                <strong>De acuerdo con la nueva disposición fiscal del SAT para la facturación versión 4.0 considerar lo siguientes:</strong><br><br>
-
-                <u>Forma de pago</u>: <strong>"99" por definir</strong> posteriormente debe emitirse el Recibo Electrónico de Pago - (REP): <strong>"03" transferencia electrónica de fondos</strong><br><br>
-
-                <u>Método de pago</u>: <strong>"PPD" pago en parcialidades o diferido</strong><br><br>
-
-                <strong>Uso de CFDI: G03 gastos en general</strong><br><br>
-
-                Debe incluir el número de la Orden de compra-PO y el número de Recepción del bien y/o servicio-GR en la factura<br><br>
-
-                <strong>Recepción de facturas: Martes y jueves en horario de 9:00 - 13:00 horas</strong>
+                <strong>De acuerdo con la nueva disposición fiscal del SAT para la facturación versión 4.0 considerar lo siguientes:</strong><br>
+                <u>Forma de pago</u>: <strong>"99" por definir</strong> posteriormente debe emitirse el Recibo Electrónico de Pago - (REP): <strong>"03" transferencia electrónica de fondos</strong><br>
+                <u>Método de pago</u>: <strong>"PPD" pago en parcialidades o diferido</strong><br>
+                <strong>Uso de CFDI: G03 gastos en general</strong><br>
+                Debe incluir el número de la Orden de compra-PO y el número de Recepción del bien y/o servicio-GR en la factura<br>
+                <strong>Recepción de facturas: Martes y Jueves en horario de 9:00 - 13:00 horas</strong>
             </td>
         </tr>
     </table>
