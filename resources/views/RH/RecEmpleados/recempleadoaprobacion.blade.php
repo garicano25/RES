@@ -290,7 +290,7 @@
                             <div class="col-md-12 mb-3 text-center">
                                 <h5 class="form-label"><b>Goce de sueldo </b></h5>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="GOCE_PERMISO" id="gocesi" value="1">
+                                    <input class="form-check-input" type="radio" name="GOCE_PERMISO" id="gocesi" value="1" required>
                                     <label class="form-check-label" for="gocesi">Sí</label>
                                 </div>
 
