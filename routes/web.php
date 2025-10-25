@@ -526,7 +526,9 @@ Route::get('/Tablarecempleadoaprobacion', [recempleadoController::class, 'Tablar
 //// DESCARGA DOCUMENTOS PDF 
 
 
-Route::get('/generarPDFPO/{id}', [pdfrecempleadoController::class, 'generarPDFPO']);
+Route::get('/generarPermisoausencia/{id}', [pdfrecempleadoController::class, 'generarPermisoausencia']);
+Route::get('/generarVacaciones/{id}', [pdfrecempleadoController::class, 'generarVacaciones']);
+
 
 
 //==============================================  CAPACITACION  ============================================== 

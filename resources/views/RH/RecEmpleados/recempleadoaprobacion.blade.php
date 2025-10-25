@@ -181,13 +181,17 @@
 
                         <div class="col-12 mt-3">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-4">
+                                    <label class="form-label">Área o Departamento: </label>
+                                    <input type="text" class="form-control" id="AREA_VACACIONES" name="AREA_VACACIONES" readonly>
+                                </div>
+                                <div class="col-4">
                                     <label class="form-label">No. de empleado: </label>
                                     <input type="text" class="form-control" id="NOEMPLEADO_PERMISO_VACACIONES" name="NOEMPLEADO_PERMISO_VACACIONES" readonly>
                                 </div>
 
 
-                                <div class="col-6">
+                                <div class="col-4">
                                     <label class="form-label">Fecha Ingreso: </label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INGRESO_VACACIONES" name="FECHA_INGRESO_VACACIONES" required readonly>
@@ -217,6 +221,7 @@
                                     <input type="number" class="form-control" id="DIAS_PENDIENTES_VACACIONES" name="DIAS_PENDIENTES_VACACIONES" required readonly>
                                 </div>
 
+                                <input type="hidden" id="DIAS_TOMADOS_ANTERIORES" name="DIAS_TOMADOS_ANTERIORES">
 
                                 <div class="col-12 mt-3">
                                     <h5 class="text-center">Período a Disfrutar:</h5>
@@ -279,6 +284,24 @@
                         <textarea class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" rows="3" required></textarea>
                     </div>
 
+
+                    <div class="col-12 mt-4" id="GOCE_SUELDO" style="display: none;">
+                        <div class="row">
+                            <div class="col-md-12 mb-3 text-center">
+                                <h5 class="form-label"><b>Goce de sueldo </b></h5>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="GOCE_PERMISO" id="gocesi" value="1">
+                                    <label class="form-check-label" for="gocesi">Sí</label>
+                                </div>
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="GOCE_PERMISO" id="goceno" value="2">
+                                    <label class="form-check-label" for="goceno">No</label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Botón de firma -->
                     <div class="col-12 mt-3" id="DIV_FIRMAR" style="display:block; margin-top:10px;">

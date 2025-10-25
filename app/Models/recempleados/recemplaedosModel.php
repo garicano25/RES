@@ -35,6 +35,7 @@ class recemplaedosModel extends Model
         'CURP',
         'FIRMO_USUARIO',
         'FIRMADO_POR',
+        'GOCE_PERMISO',
 
         'VISTO_BUENO',
         'FECHA_VISTO_SOLICITUD',
@@ -67,7 +68,8 @@ class recemplaedosModel extends Model
         'FECHA_INICIALABORES_VACACIONES',
         'DIAS_PENDIENTES_VACACIONES',
         'DESDE_ANIO_VACACIONES',
-        'HASTA_ANIO_VACACIONES'
+        'HASTA_ANIO_VACACIONES',
+        'AREA_VACACIONES'
 
     ];
 }

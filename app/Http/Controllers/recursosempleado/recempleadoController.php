@@ -16,6 +16,7 @@ use DB;
 
 
 use App\Models\recempleados\recemplaedosModel;
+use App\Models\organizacion\catalogocategoriaModel;
 
 
 class recempleadoController extends Controller
@@ -144,6 +145,39 @@ class recempleadoController extends Controller
     }
 
 
+
+    public function obtenerAreaSolicitante()
+    {
+        $usuario = auth()->user();
+
+        $rol = $usuario->roles()
+            ->whereNotIn('NOMBRE_ROL', ['Superusuario', 'Administrador'])
+            ->first();
+
+        if (!$rol) {
+            return response()->json(['area' => null]);
+        }
+
+        $categoria = CatalogocategoriaModel::where('NOMBRE_CATEGORIA', $rol->NOMBRE_ROL)->first();
+        if (!$categoria) {
+            return response()->json(['area' => null]);
+        }
+
+        $area = DB::table('areas as a')
+            ->leftJoin('lideres_categorias as lc', 'lc.AREA_ID', '=', 'a.ID_AREA')
+            ->leftJoin('areas_lideres as al', 'al.AREA_ID', '=', 'a.ID_AREA')
+            ->where(function ($query) use ($categoria) {
+                $query->where('lc.CATEGORIA_ID', $categoria->ID_CATALOGO_CATEGORIA)
+                    ->orWhere('al.LIDER_ID', $categoria->ID_CATALOGO_CATEGORIA);
+            })
+            ->select('a.NOMBRE')
+            ->first();
+
+        return response()->json([
+            'area' => $area ? $area->NOMBRE : null
+        ]);
+    }
+    
 
 
     public function Tablarecempleados()
@@ -400,10 +434,14 @@ class recempleadoController extends Controller
                 }
 
 
-                $value->DESCARGAR_FORMATOS = '<button class="btn btn-danger btn-custom rounded-pill pdf-button " data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" title="Descargar"><i class="bi bi-filetype-pdf"></i></button>';
+                // $value->DESCARGAR_FORMATOS = '<button class="btn btn-danger btn-custom rounded-pill pdf-button " data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" title="Descargar"><i class="bi bi-filetype-pdf"></i></button>';
 
+                $value->DESCARGAR_FORMATOS = '<button class="btn btn-danger btn-custom rounded-pill pdf-button" 
+                data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
+                data-tipo="' . $value->TIPO_SOLICITUD . '" 
+                title="Descargar"><i class="bi bi-filetype-pdf"></i></button>';
 
-            }
+}
 
             return response()->json([
                 'data' => $tabla,

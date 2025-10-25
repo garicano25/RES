@@ -112,7 +112,13 @@ $("#NUEVO_RECUROSEMPLEADO").click(function (e) {
     });
 
     
-    
+    $.get('/obtenerAreaSolicitante', function(response) {
+    if (response.area) {
+        $("#AREA_VACACIONES").val(response.area);
+    } else {
+        $("#AREA_VACACIONES").val("Área no encontrada");
+        }
+      });
 
    
 });
@@ -750,7 +756,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const select = document.getElementById("TIPO_SOLICITUD");
     const btnGuardar = document.getElementById("guardaRECEMPLEADOS");
 
-
     const divs = {
         "1": document.getElementById("PERMISO_AUSENCIA"),
         "2": document.getElementById("SOLIDA_ALMACEN"),
@@ -758,12 +763,13 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     select.addEventListener("change", function () {
+        // Oculta todos los divs
         Object.values(divs).forEach(div => {
             div.style.display = "none";
 
             div.querySelectorAll("input, select, textarea").forEach(el => {
                 if (el.id === "SOLICITANTE_SALIDA" || el.id === "SOLICITANTE_PERMISO") {
-                    return; 
+                    return;
                 }
 
                 if (el.type === "radio" || el.type === "checkbox") {
@@ -774,17 +780,19 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
 
-
+        // Muestra solo el div correspondiente
         if (divs[this.value]) {
             divs[this.value].style.display = "block";
         }
-        if (this.value === "2") { 
-            btnGuardar.disabled = true;   // bloquea el botón
-        } else {
-            btnGuardar.disabled = false;  // habilita en las demás opciones
-        }
-        
 
+        // Deshabilita o habilita botón según tipo
+        if (this.value === "2") {
+            btnGuardar.disabled = true;
+        } else {
+            btnGuardar.disabled = false;
+        }
+
+        // Caso 1: Permiso/Ausencia
         if (this.value === "1") {
             $.get('/obtenerDatosPermiso', function (response) {
                 if (response.cargo) {
@@ -793,44 +801,69 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (response.numero_empleado) {
                     $("#NOEMPLEADO_PERMISO").val(response.numero_empleado);
                 }
+            }).fail(function (xhr) {
+                console.error("Error al obtener los datos de permiso:", xhr.responseText);
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "No fue posible obtener los datos del permiso."
+                });
             });
         }
 
-
-
+        // Caso 3: Vacaciones
         if (this.value === "3") {
-        
-             $.get('/obtenerDatosVacaciones', function (response) {
-                    if (response.numero_empleado) {
-                        $("#NOEMPLEADO_PERMISO_VACACIONES").val(response.numero_empleado);
-                    }
-                    if (response.fecha_ingreso) {
-                        $("#FECHA_INGRESO_VACACIONES").val(response.fecha_ingreso);
-                    }
-                    if (response.anios_servicio) {
-                        $("#ANIO_SERVICIO_VACACIONES").val(response.anios_servicio);
-                    }
-                    if (response.dias_corresponden) {
-                        $("#DIAS_CORRESPONDEN_VACACIONES").val(response.dias_corresponden);
-                    }
-                    if (response.desde_anio_vacaciones) {
-                        $("#DESDE_ANIO_VACACIONES").val(response.desde_anio_vacaciones);
-                    }
-                    if (response.hasta_anio_vacaciones) {
-                        $("#HASTA_ANIO_VACACIONES").val(response.hasta_anio_vacaciones);
-                    }
-                }).fail(function (xhr) {
-                    console.error("Error al obtener los datos:", xhr.responseText);
-                    Swal.fire({
-                        icon: "error",
-                        title: "Error",
-                        text: "No fue posible obtener los datos de vacaciones. Intente nuevamente."
-                    });
-                });
 
+            // Primer GET: obtener datos de vacaciones
+            $.get('/obtenerDatosVacaciones', function (response) {
+                if (response.numero_empleado) {
+                    $("#NOEMPLEADO_PERMISO_VACACIONES").val(response.numero_empleado);
+                }
+                if (response.fecha_ingreso) {
+                    $("#FECHA_INGRESO_VACACIONES").val(response.fecha_ingreso);
+                }
+                if (response.anios_servicio) {
+                    $("#ANIO_SERVICIO_VACACIONES").val(response.anios_servicio);
+                }
+                if (response.dias_corresponden) {
+                    $("#DIAS_CORRESPONDEN_VACACIONES").val(response.dias_corresponden);
+                }
+                if (response.desde_anio_vacaciones) {
+                    $("#DESDE_ANIO_VACACIONES").val(response.desde_anio_vacaciones);
+                }
+                if (response.hasta_anio_vacaciones) {
+                    $("#HASTA_ANIO_VACACIONES").val(response.hasta_anio_vacaciones);
+                }
+            }).fail(function (xhr) {
+                console.error("Error al obtener los datos:", xhr.responseText);
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "No fue posible obtener los datos de vacaciones. Intente nuevamente."
+                });
+            });
+
+            // Segundo GET: obtener área del solicitante
+            $.get('/obtenerAreaSolicitante', function (response) {
+                if (response.area) {
+                    $("#AREA_VACACIONES").val(response.area);
+                } else {
+                    $("#AREA_VACACIONES").val("Área no encontrada");
+                }
+            }).fail(function (xhr) {
+                console.error("Error al obtener el área:", xhr.responseText);
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "No fue posible obtener el área del solicitante."
+                });
+            });
         }
+
     });
-});
+
+}); 
+
 
 
 

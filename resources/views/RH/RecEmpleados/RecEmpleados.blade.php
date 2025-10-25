@@ -190,13 +190,17 @@
 
                         <div class="col-12 mt-3">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-4">
+                                    <label class="form-label">Área o Departamento: </label>
+                                    <input type="text" class="form-control" id="AREA_VACACIONES" name="AREA_VACACIONES" readonly>
+                                </div>
+                                <div class="col-4">
                                     <label class="form-label">No. de empleado: </label>
                                     <input type="text" class="form-control" id="NOEMPLEADO_PERMISO_VACACIONES" name="NOEMPLEADO_PERMISO_VACACIONES" readonly>
                                 </div>
 
 
-                                <div class="col-6">
+                                <div class="col-4">
                                     <label class="form-label">Fecha Ingreso: </label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INGRESO_VACACIONES" name="FECHA_INGRESO_VACACIONES" required readonly>

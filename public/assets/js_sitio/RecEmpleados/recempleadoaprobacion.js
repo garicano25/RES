@@ -18,6 +18,8 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     $('#DIV_FIRMAR').show();
     $('#VISTO_BUENO_JEFE').hide();
 
+    $('#GOCE_SUELDO').hide();
+
     document.querySelector('.materialesdiv').innerHTML = '';
     contadorMateriales = 1;
 
@@ -297,15 +299,18 @@ $(document).ready(function() {
         // === Para TIPO_SOLICITUD ===
         if (row.data().TIPO_SOLICITUD === "1") {
             $('#PERMISO_AUSENCIA').show();
+            $('#GOCE_SUELDO').show();
             $('#SOLIDA_ALMACEN').hide();
             $('#SOLICITUD_VACACIONES').hide();
         } else if (row.data().TIPO_SOLICITUD === "2") {
             $('#SOLIDA_ALMACEN').show();
             $('#PERMISO_AUSENCIA').hide();
+            $('#GOCE_SUELDO').hide();
             $('#SOLICITUD_VACACIONES').hide();
         } else if (row.data().TIPO_SOLICITUD === "3") {
             $('#SOLICITUD_VACACIONES').show();
             $('#PERMISO_AUSENCIA').hide();
+            $('#GOCE_SUELDO').hide();
             $('#SOLIDA_ALMACEN').hide();
         }
 
@@ -369,15 +374,18 @@ $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.EDITAR', function 
                 // === Para TIPO_SOLICITUD ===
     if (row.data().TIPO_SOLICITUD === "1") {
         $('#PERMISO_AUSENCIA').show();
+        $('#GOCE_SUELDO').show();
         $('#SOLIDA_ALMACEN').hide();
         $('#SOLICITUD_VACACIONES').hide();
     } else if (row.data().TIPO_SOLICITUD === "2") {
         $('#SOLIDA_ALMACEN').show();
         $('#PERMISO_AUSENCIA').hide();
+        $('#GOCE_SUELDO').hide();
         $('#SOLICITUD_VACACIONES').hide();
     } else if (row.data().TIPO_SOLICITUD === "3") {
         $('#SOLICITUD_VACACIONES').show();
         $('#PERMISO_AUSENCIA').hide();
+        $('#GOCE_SUELDO').hide();
         $('#SOLIDA_ALMACEN').hide();
     }
 
@@ -803,7 +811,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 $(document).on('click', '.pdf-button', function () {
     const id = $(this).data('id');
-    if (id) {
-        window.open(`/generarPDFPO/${id}`, '_blank');
+    const tipo = $(this).data('tipo');
+
+    if (tipo === 1) {
+        window.open(`/generarPermisoausencia/${id}`, '_blank');
+    } else if (tipo === 3) {
+        window.open(`/generarVacaciones/${id}`, '_blank');
+
     }
 });
