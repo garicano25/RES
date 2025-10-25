@@ -88,24 +88,39 @@ class pdfrecempleadoController extends Controller
         // ======================
         // 🔹 Nombres de JEFE y AUTORIZÓ (tabla usuarios)
         // ======================
+
+        $solicito = DB::table('usuarios')
+            ->select('EMPLEADO_NOMBRE', 'EMPLEADO_APELLIDOPATERNO', 'EMPLEADO_APELLIDOMATERNO')
+            ->where('ID_USUARIO', $registro->USUARIO_ID)
+            ->first();
+
+
+
         $jefe = DB::table('usuarios')
             ->select('EMPLEADO_NOMBRE', 'EMPLEADO_APELLIDOPATERNO', 'EMPLEADO_APELLIDOMATERNO')
             ->where('ID_USUARIO', $registro->JEFE_ID)
             ->first();
 
-        $autorizo = \DB::table('usuarios')
+        $autorizo = DB::table('usuarios')
             ->select('EMPLEADO_NOMBRE', 'EMPLEADO_APELLIDOPATERNO', 'EMPLEADO_APELLIDOMATERNO')
             ->where('ID_USUARIO', $registro->AUTORIZO_ID)
             ->first();
 
-        // Construcción del nombre completo
-        $nombre_jefe = $jefe
-            ? trim("{$jefe->EMPLEADO_NOMBRE} {$jefe->EMPLEADO_APELLIDOPATERNO} {$jefe->EMPLEADO_APELLIDOMATERNO}")
+
+        $nombre_solicito = $solicito
+            ? trim("{$solicito->EMPLEADO_NOMBRE} {$solicito->EMPLEADO_APELLIDOPATERNO} {$solicito->EMPLEADO_APELLIDOMATERNO}")
             : '';
+
+
+        $nombre_jefe = $jefe
+        ? trim("{$jefe->EMPLEADO_NOMBRE} {$jefe->EMPLEADO_APELLIDOPATERNO} {$jefe->EMPLEADO_APELLIDOMATERNO}")
+        : '';
 
         $nombre_autorizo = $autorizo
             ? trim("{$autorizo->EMPLEADO_NOMBRE} {$autorizo->EMPLEADO_APELLIDOPATERNO} {$autorizo->EMPLEADO_APELLIDOMATERNO}")
             : '';
+
+            
 
         // ======================
         // 🔹 Datos del PDF
@@ -126,6 +141,8 @@ class pdfrecempleadoController extends Controller
             'goce_permiso' => $registro->GOCE_PERMISO,
             'nombre_jefe' => $nombre_jefe,
             'nombre_autorizo' => $nombre_autorizo,
+            'nombre_solicito' => $nombre_solicito,
+
         ];
 
         return Pdf::loadView('pdf.permisopdf', $data)

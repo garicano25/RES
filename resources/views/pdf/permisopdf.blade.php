@@ -485,7 +485,9 @@
             <tr class="text-center" style="height: 55px;">
                 <td style="border: 1px solid black; vertical-align: bottom; padding-bottom: 2px;">
                     <div>________________________</div>
-                    <div style="font-size: 10px; margin-top: 2px;"></div>
+                    <div style="font-size: 10px; margin-top: 0px;">
+                        {{ $nombre_solicito }}
+                    </div>
                 </td>
                 <td style="border: 1px solid black; vertical-align: bottom; padding-bottom: 2px;">
                     <div style=" margin-top: 30px;">________________________</div>
