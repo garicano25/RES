@@ -69,7 +69,9 @@ class recemplaedosModel extends Model
         'DIAS_PENDIENTES_VACACIONES',
         'DESDE_ANIO_VACACIONES',
         'HASTA_ANIO_VACACIONES',
-        'AREA_VACACIONES'
+        'AREA_VACACIONES',
+        'DOCUMENTO_SOLICITUD',
+        'SUBIR_DOCUMENTO'
 
     ];
 }

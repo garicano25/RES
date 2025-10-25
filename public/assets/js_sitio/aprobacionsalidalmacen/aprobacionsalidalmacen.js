@@ -143,7 +143,7 @@ $("#guardaRECEMPLEADOS").click(function (e) {
         });
 
         const requestData = {
-            api: 3,
+            api: 4,
             ID_FORMULARIO_RECURSOS_EMPLEADOS: ID_FORMULARIO_RECURSOS_EMPLEADOS,
             MATERIALES_JSON: JSON.stringify(documentos)
 

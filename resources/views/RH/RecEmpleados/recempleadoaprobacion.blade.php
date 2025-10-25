@@ -423,11 +423,30 @@
                         </div>
                     </div>
 
-
-
                     <input type="hidden" id="FIRMO_APROBACION" name="FIRMO_APROBACION" value="">
 
 
+                    <div class="col-12 mt-3">
+                        <label>Subir documento </label>
+                        <div id="estado-container" class="p-2 rounded">
+                            <select class="form-control" id="SUBIR_DOCUMENTO" name="SUBIR_DOCUMENTO" >
+                                <option value="" selected disabled>Seleccione una opción</option>
+                                <option value="Sí">Sí</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+
+                    <div class="mb-3" id="SUBIR_DOCUMENTOS_SOLICITUDES" style="display: none;">
+                        <label>Subir documento</label>
+                        <div class="input-group">
+                            <input type="file" class="form-control" id="DOCUMENTO_SOLICITUD" name="DOCUMENTO_SOLICITUD" accept=".pdf" style="width: auto; flex: 1;" required>
+                            <button type="button" class="btn btn-light btn-sm ms-2" id="quitar_recibo" style="display:none;">Quitar archivo</button>
+                        </div>
+                    </div>
+                    <div id="RECIBO_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
 
 
 

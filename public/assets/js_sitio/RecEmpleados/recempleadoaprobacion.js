@@ -18,10 +18,18 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     $('#DIV_FIRMAR').show();
     $('#VISTO_BUENO_JEFE').hide();
 
+
+    $('#SUBIR_DOCUMENTOS_SOLICITUDES').hide();
+
+
     $('#GOCE_SUELDO').hide();
 
     document.querySelector('.materialesdiv').innerHTML = '';
     contadorMateriales = 1;
+
+
+    document.getElementById('RECIBO_ERROR').style.display = 'none';
+
 
 
      const inputFecha = document.getElementById("FECHA_APRUEBA_SOLICITUD");
@@ -803,6 +811,52 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+/// SUBIR DOCUMENTO
+
+document.addEventListener('DOMContentLoaded', function() {
+    var archivorecibo = document.getElementById('DOCUMENTO_SOLICITUD');
+    var quitarecibo = document.getElementById('quitar_recibo');
+    var errorecibo = document.getElementById('RECIBO_ERROR');
+
+    if (archivorecibo) {
+        archivorecibo.addEventListener('change', function() {
+            var archivo = this.files[0];
+            if (archivo && archivo.type === 'application/pdf') {
+                if (errorecibo) errorecibo.style.display = 'none';
+                if (quitarecibo) quitarecibo.style.display = 'block';
+            } else {
+                if (errorecibo) errorecibo.style.display = 'block';
+                this.value = '';
+                if (quitarecibo) quitarecibo.style.display = 'none';
+            }
+        });
+        quitarecibo.addEventListener('click', function() {
+            archivorecibo.value = ''; 
+            quitarecibo.style.display = 'none'; 
+            if (errorecibo) errorecibo.style.display = 'none'; 
+        });
+    }
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const selectSubir = document.getElementById('SUBIR_DOCUMENTO');
+    const divDocumento = document.getElementById('SUBIR_DOCUMENTOS_SOLICITUDES');
+
+    selectSubir.addEventListener('change', function () {
+        if (this.value === 'Sí') {
+            divDocumento.style.display = 'block';
+        } else {
+            divDocumento.style.display = 'none';
+        }
+    });
+});
+
+
+
+
 
 /////// DESCARGAR DOCUMENTOS
 
