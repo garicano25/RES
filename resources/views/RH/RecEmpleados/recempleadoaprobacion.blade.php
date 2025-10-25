@@ -303,23 +303,7 @@
                         </div>
                     </div>
 
-                    <!-- Botón de firma -->
-                    <div class="col-12 mt-3" id="DIV_FIRMAR" style="display:block; margin-top:10px;">
-                        <div class="row justify-content-center">
-                            <div class="col-6 text-center">
-                                <button type="button"
-                                    id="FIRMAR_SOLICITUD"
-                                    class="btn btn-info"
-                                    data-usuario="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
-                                    <i class="bi bi-pen-fill"></i> Firmar solicitud
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <input type="hidden" id="FIRMO_USUARIO" name="FIRMO_USUARIO" value="">
+                
 
                     <div class="mt-3">
                         <label class="form-label">Firmado por</label>
@@ -410,7 +394,7 @@
 
 
                     <!-- Botón de firma -->
-                    <div class="col-12 mt-3" id="DIV_FIRMAR" style="display:block; margin-top:10px;">
+                    <div class="col-12 mt-3" id="DIV_FIRMAR" style="display:none; margin-top:10px;">
                         <div class="row justify-content-center">
                             <div class="col-6 text-center">
                                 <button type="button"

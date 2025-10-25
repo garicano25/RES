@@ -17,13 +17,12 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     $('#EXPLIQUE_PERMISO').hide();
     $('#DIV_FIRMAR').show();
     $('#VISTO_BUENO_JEFE').hide();
-
-
     $('#SUBIR_DOCUMENTOS_SOLICITUDES').hide();
-
-
     $('#GOCE_SUELDO').hide();
 
+
+
+    
     document.querySelector('.materialesdiv').innerHTML = '';
     contadorMateriales = 1;
 
@@ -330,13 +329,8 @@ $(document).ready(function() {
         }
 
    
-        // === Para ocultar la firma si ya esta firmado ===
 
-        if (row.data().FIRMO_USUARIO === "1") {
-            $('#DIV_FIRMAR').hide();
-        } else  {
-              $('#DIV_FIRMAR').show();
-            } 
+       
         
         
      if (row.data().DAR_BUENO == 1) { 
@@ -350,9 +344,7 @@ $(document).ready(function() {
         } else {
             $('#VISTO_BUENO_JEFE').hide();
             $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-        }
-
-    
+        }  
 
 
     });
@@ -406,11 +398,7 @@ $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.EDITAR', function 
 
  
 
-    if (row.data().FIRMO_USUARIO === "1") {
-        $('#DIV_FIRMAR').hide();
-    } else  {
-        $('#DIV_FIRMAR').show();
-    } 
+    
         
    if (row.data().DAR_BUENO == 1) { 
     $('#VISTO_BUENO_JEFE').show();
@@ -425,6 +413,12 @@ $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.EDITAR', function 
     $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
 }
 
+    
+ if (row.data().FIRMO_APROBACION === "1") {
+            $('#DIV_FIRMAR').hide();
+        } else  {
+              $('#DIV_FIRMAR').show();
+            } 
 
 });
 
