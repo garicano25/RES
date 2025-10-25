@@ -85,9 +85,7 @@ class pdfrecempleadoController extends Controller
             9 => 'Otros (explique)',
         ];
 
-        // ======================
-        // 🔹 Nombres de JEFE y AUTORIZÓ (tabla usuarios)
-        // ======================
+       
 
         $solicito = DB::table('usuarios')
             ->select('EMPLEADO_NOMBRE', 'EMPLEADO_APELLIDOPATERNO', 'EMPLEADO_APELLIDOMATERNO')
@@ -164,6 +162,43 @@ class pdfrecempleadoController extends Controller
                 ? Carbon::parse($empleado->FECHA_INGRESO_VACACIONES)->format('Y/m/d')
                 : '';
 
+            // ======================
+            // 🔹 Nombres de JEFE y AUTORIZÓ (tabla usuarios)
+            // ======================
+
+            $solicito = DB::table('usuarios')
+                ->select('EMPLEADO_NOMBRE', 'EMPLEADO_APELLIDOPATERNO', 'EMPLEADO_APELLIDOMATERNO')
+                ->where('ID_USUARIO', $empleado->USUARIO_ID)
+                ->first();
+
+
+
+            $jefe = DB::table('usuarios')
+                ->select('EMPLEADO_NOMBRE', 'EMPLEADO_APELLIDOPATERNO', 'EMPLEADO_APELLIDOMATERNO')
+                ->where('ID_USUARIO', $empleado->JEFE_ID)
+                ->first();
+
+            $autorizo = DB::table('usuarios')
+                ->select('EMPLEADO_NOMBRE', 'EMPLEADO_APELLIDOPATERNO', 'EMPLEADO_APELLIDOMATERNO')
+                ->where('ID_USUARIO', $empleado->AUTORIZO_ID)
+                ->first();
+
+
+            $nombre_solicito = $solicito
+                ? trim("{$solicito->EMPLEADO_NOMBRE} {$solicito->EMPLEADO_APELLIDOPATERNO} {$solicito->EMPLEADO_APELLIDOMATERNO}")
+                : '';
+
+
+            $nombre_jefe = $jefe
+                ? trim("{$jefe->EMPLEADO_NOMBRE} {$jefe->EMPLEADO_APELLIDOPATERNO} {$jefe->EMPLEADO_APELLIDOMATERNO}")
+                : '';
+
+            $nombre_autorizo = $autorizo
+                ? trim("{$autorizo->EMPLEADO_NOMBRE} {$autorizo->EMPLEADO_APELLIDOPATERNO} {$autorizo->EMPLEADO_APELLIDOMATERNO}")
+                : '';
+
+
+
             $fecha_inicio = Carbon::parse($empleado->FECHA_INICIO_VACACIONES);
             $fecha_termino = Carbon::parse($empleado->FECHA_TERMINACION_VACACIONES);
             $fecha_labores = Carbon::parse($empleado->FECHA_INICIALABORES_VACACIONES);
@@ -185,9 +220,12 @@ class pdfrecempleadoController extends Controller
                 'dia_salida' => $dia_salida,
                 'mes_salida' => $mes_salida,
                 'anio_salida' => $anio_salida,
-            ])->setPaper('letter', 'landscape'); 
+                'nombre_jefe' => $nombre_jefe,
+                'nombre_autorizo' => $nombre_autorizo,
+                'nombre_solicito' => $nombre_solicito,
+            ])->setPaper('letter', 'landscape');
 
-            return $pdf->stream('Solicitud_Vacaciones_' . $empleado->NOEMPLEADO_PERMISO_VACACIONES . '.pdf');
+            return $pdf->download('PS-RH-FO-23 Solicitud de Vacaciones.pdf');
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error al generar el PDF: ' . $e->getMessage()], 500);
         }
