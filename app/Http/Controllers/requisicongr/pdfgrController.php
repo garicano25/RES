@@ -37,13 +37,34 @@ class pdfgrController extends Controller
                 ], 400);
             }
 
-
             $proveedor = null;
+
             if (!empty($orden->PROVEEDOR_KEY)) {
                 $proveedor = directorioModel::where('RFC_PROVEEDOR', $orden->PROVEEDOR_KEY)->first();
             }
 
-         
+            if (!$proveedor) {
+                $proveedor = (object)[
+                    'TIPO_PERSONA' => '1',
+                    'RAZON_SOCIAL' => 'N/A',
+                    'RFC_PROVEEDOR' => 'N/A',
+                    'NOMBRE_DIRECTORIO' => 'N/A',
+                    'TIPO_VIALIDAD_EMPRESA' => 'N/A',
+                    'NOMBRE_VIALIDAD_EMPRESA' => 'N/A',
+                    'NUMERO_EXTERIOR_EMPRESA' => 'N/A',
+                    'NUMERO_INTERIOR_EMPRESA' => 'N/A',
+                    'NOMBRE_COLONIA_EMPRESA' => 'N/A',
+                    'CODIGO_POSTAL' => 'N/A',
+                    'NOMBRE_LOCALIDAD_EMPRESA' => 'N/A',
+                    'NOMBRE_ENTIDAD_EMPRESA' => 'N/A',
+                    'PAIS_EMPRESA' => 'México',
+                    'TELEFONO_DIRECOTORIO' => 'N/A',
+                    'CELULAR_DIRECTORIO' => 'N/A',
+                    'CORREO_DIRECTORIO' => 'N/A'
+                ];
+            }
+
+
             $usuarioSolicito = DB::table('usuarios')
                 ->select('EMPLEADO_NOMBRE', 'EMPLEADO_APELLIDOPATERNO', 'EMPLEADO_APELLIDOMATERNO')
                 ->where('ID_USUARIO', $orden->USUARIO_ID)
@@ -55,7 +76,7 @@ class pdfgrController extends Controller
             //     ->select('DESCRIPCION', 'CANTIDAD', 'CANTIDAD_RECHAZADA', 'CANTIDAD_ACEPTADA', 'VOBO_USUARIO_PRODUCTO')
             //     ->get();
 
-            
+
             $detalles = DB::table('formulario_bitacoragr_detalle')
                 ->where('ID_GR', $id)
                 ->where(function ($query) {
