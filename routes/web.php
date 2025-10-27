@@ -121,6 +121,8 @@ use App\Http\Controllers\pdf\pdfController;
 // CONTROLADORES GR  
 use App\Http\Controllers\requisicongr\grController;
 use App\Http\Controllers\requisicongr\vobogrusuarioController;
+use App\Http\Controllers\requisicongr\pdfgrController;
+
 
 // CONTROLADORES DE LA PAGINA WEB
 use App\Http\Controllers\paginaweb\mensajespaginaController;
@@ -766,6 +768,7 @@ Route::get('/bitacoragr', [grController::class, 'index']);
 Route::get('/Tablabitacoragr', [grController::class, 'Tablabitacoragr']);
 Route::post('/guardarGR', [grController::class, 'guardarGR']);
 Route::post('/consultar-gr', [grController::class, 'consultarGR'])->name('consultar.gr');
+Route::get('/generarGRpdf/{id}', [pdfgrController::class, 'generarGRpdf']);
 
 
 

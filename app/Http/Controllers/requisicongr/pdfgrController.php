@@ -1,0 +1,80 @@
+<?php
+
+namespace App\Http\Controllers\requisicongr;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+
+
+use Barryvdh\DomPDF\Facade\Pdf;
+
+use Carbon\Carbon;
+use DB;
+
+use App\Models\proveedor\directorioModel;
+
+
+class pdfgrController extends Controller
+{
+    
+    public function generarGRpdf($id)
+    {
+        try {
+            // ===============================
+            // 🔹 1. Obtener la GR principal
+            // ===============================
+            $orden = DB::table('formulario_bitacoragr')->where('ID_GR', $id)->first();
+
+            if (!$orden) {
+                return response()->json(['error' => 'No se encontró la GR con ese ID.'], 404);
+            }
+
+      
+            if (trim($orden->FINALIZAR_GR ?? '') !== 'Sí') {
+                return response()->json([
+                    'error' => 'La GR no está finalizada aún. Solo se puede descargar cuando esta finalizada.'
+                ], 400);
+            }
+
+
+            $proveedor = null;
+            if (!empty($orden->PROVEEDOR_KEY)) {
+                $proveedor = directorioModel::where('RFC_PROVEEDOR', $orden->PROVEEDOR_KEY)->first();
+            }
+
+         
+            $usuarioSolicito = DB::table('usuarios')
+                ->select('EMPLEADO_NOMBRE', 'EMPLEADO_APELLIDOPATERNO', 'EMPLEADO_APELLIDOMATERNO')
+                ->where('ID_USUARIO', $orden->USUARIO_ID)
+                ->first();
+
+  
+            $detalles = DB::table('formulario_bitacoragr_detalle')
+                ->where('ID_GR', $id)
+                ->select('DESCRIPCION', 'CANTIDAD', 'CANTIDAD_RECHAZADA', 'CANTIDAD_ACEPTADA', 'VOBO_USUARIO_PRODUCTO')
+                ->get();
+
+           
+            $pdf = Pdf::loadView('pdf.gr_pdf', [
+                'orden' => $orden,
+                'proveedor' => $proveedor,
+                'usuarioSolicito' => $usuarioSolicito,
+                'detalles' => $detalles,
+            ])->setPaper('letter', 'portrait');
+
+              $noRecepcion = $orden->NO_RECEPCION ?? 'SIN_NUMERO';
+            $fileName = $noRecepcion . '.pdf';
+            return $pdf->download($fileName);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'error' => 'Error al generar el PDF: ' . $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ], 500);
+        }
+    }
+}
+
+
+
+

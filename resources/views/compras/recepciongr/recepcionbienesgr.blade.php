@@ -231,7 +231,7 @@
                             <div class="col-md-6">
                                 <label class="form-label">Fecha de emisión</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_ACREDITACION" name="DESDE_ACREDITACION" required> 
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_ACREDITACION" name="DESDE_ACREDITACION" required>
                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                 </div>
                             </div>
@@ -316,6 +316,7 @@
 
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-info" id="DescargarGR">Descarga GR</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-success" id="btnGuardarGR">Guardar</button>
                 </div>

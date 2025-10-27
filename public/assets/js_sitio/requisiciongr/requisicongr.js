@@ -1074,3 +1074,137 @@ $(document).on('change', '.gr_parcialjs', function () {
         });
     }
 });
+
+
+
+
+
+
+
+
+// $('#DescargarGR').on('click', function () {
+//     let idsGR = [];
+
+//     if ($(".form-gr").length > 0) {
+//         $(".form-gr").each(function () {
+//             const id = $(this).find('input[name="ID_GR[]"]').val();
+//             if (id && id !== "0") {
+//                 idsGR.push(id);
+//             }
+//         });
+//     }
+//     else {
+//         const id = $('#ID_GR').val();
+//         if (id && id !== "0") {
+//             idsGR.push(id);
+//         }
+//     }
+
+//     if (idsGR.length === 0) {
+//         Swal.fire('Atención', 'No hay GR generadas para descargar.', 'warning');
+//         return;
+//     }
+
+//     Swal.fire({
+//         title: 'Descargar PDF de Recepción (GR)',
+//         text: idsGR.length > 1
+//             ? 'Se descargarán varios archivos (uno por cada GR parcial).'
+//             : 'Se descargará el PDF de la GR actual.',
+//         icon: 'question',
+//         showCancelButton: true,
+//         confirmButtonText: 'Sí, descargar',
+//         cancelButtonText: 'Cancelar'
+//     }).then((result) => {
+//         if (result.isConfirmed) {
+//             Swal.fire({
+//                 title: 'Generando PDF...',
+//                 text: 'Por favor espere unos segundos',
+//                 allowOutsideClick: false,
+//                 allowEscapeKey: false,
+//                 didOpen: () => Swal.showLoading()
+//             });
+
+//             let delay = 700;
+//             idsGR.forEach((id, i) => {
+//                 setTimeout(() => {
+//                     const url = `/generarGRpdf/${id}`;
+//                     window.open(url, '_blank');
+//                 }, i * delay);
+//             });
+
+//             Swal.close();
+//         }
+//     });
+// });
+
+
+
+
+
+
+$('#DescargarGR').on('click', function () {
+    let idsGR = [];
+
+    if ($(".form-gr").length > 0) {
+        $(".form-gr").each(function () {
+            const id = $(this).find('input[name="ID_GR[]"]').val();
+            if (id && id !== "0") {
+                idsGR.push(id);
+            }
+        });
+    } else {
+        const id = $('#ID_GR').val();
+        if (id && id !== "0") {
+            idsGR.push(id);
+        }
+    }
+
+    if (idsGR.length === 0) {
+        Swal.fire('Atención', 'No hay GR generadas para descargar.', 'warning');
+        return;
+    }
+
+    Swal.fire({
+        title: 'Descargar PDF de Recepción (GR)',
+        text: idsGR.length > 1
+            ? 'Se descargarán varios archivos (uno por cada GR parcial).'
+            : 'Se descargará el PDF de la GR actual.',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, descargar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Generando PDF...',
+                text: 'Por favor espere unos segundos',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => Swal.showLoading()
+            });
+
+            let delay = 700;
+            idsGR.forEach((id, i) => {
+                setTimeout(() => {
+                    // 🟢 Validamos antes de abrir la descarga
+                    $.ajax({
+                        url: `/generarGRpdf/${id}`,
+                        method: 'GET',
+                        success: function () {
+                            // ✅ Si el backend devuelve el PDF correctamente
+                            const url = `/generarGRpdf/${id}`;
+                            window.open(url, '_blank');
+                        },
+                        error: function (xhr) {
+                            // ⚠️ Si FINALIZAR_GR != "Sí" u otro error
+                            let msg = xhr.responseJSON?.error || 'No se pudo generar el PDF.';
+                            Swal.fire('Atención', msg, 'warning');
+                        }
+                    });
+                }, i * delay);
+            });
+
+            Swal.close();
+        }
+    });
+});
