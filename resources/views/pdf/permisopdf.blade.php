@@ -131,7 +131,6 @@
 
 <body>
 
-    {{-- HEADER --}}
     <header>
         <table class="tabla-superior tabla-borde tabla-encabezado">
             <tr>
@@ -152,10 +151,8 @@
         </table>
     </header>
 
-    {{-- CONTENIDO --}}
     <main>
 
-        {{-- DATOS EMPLEADO --}}
         <table class="tabla-borde tabla-datos" style="border-top: none; width: 100%; border-collapse: collapse;">
             <tr>
                 <td colspan="3" style="border: none; padding: 0; height: 18px;">
@@ -200,11 +197,6 @@
         </table>
 
 
-
-
-
-
-        {{-- CONCEPTOS --}}
         <style>
             .tabla-conceptos {
                 border-collapse: collapse;
@@ -277,26 +269,22 @@
                 $mostrarHoras = $esSeleccionado && !empty($no_horas);
                 @endphp
 
-                {{-- FILAS NORMALES --}}
                 @if ($key != 9)
                 <tr>
                     <td>{{ $concepto }}</td>
 
-                    {{-- No. de días --}}
                     @if ($mostrarDias)
                     <td class="text-center">{{ $no_dias }}</td>
                     @else
                     <td class="celda-diagonal"></td>
                     @endif
 
-                    {{-- No. de horas --}}
                     @if ($mostrarHoras)
                     <td class="text-center">{{ $no_horas }}</td>
                     @else
                     <td class="celda-diagonal"></td>
                     @endif
 
-                    {{-- Fechas --}}
                     @if ($esSeleccionado)
                     <td class="text-center">{{ $fecha_inicial ?? '' }}</td>
                     <td class="text-center">{{ $fecha_final ?? '' }}</td>
@@ -306,7 +294,6 @@
                     @endif
                 </tr>
 
-                {{-- FILA DE OTROS (EXPLIQUE) --}}
                 @else
                 <tr>
                     <td style="text-align: left; padding: 0; width: 28%;">
@@ -360,8 +347,6 @@
             </tbody>
         </table>
 
-
-        {{-- OBSERVACIONES --}}
         <table class="tabla-borde tabla-observaciones" style="width: 100%; border-collapse: collapse;">
             <tr>
                 <td style="
@@ -386,8 +371,6 @@
             </tr>
         </table>
 
-
-        {{-- NOTAS --}}
         <table class="tabla-borde tabla-notas">
             <tr>
                 <td>1. Anexar acta de defunción (cónyuge, hijos, padres o hermanos) <br> 2. Anexar acta de matrimonio <br> 3. Anexar acta de nacimiento o adopción</td>
@@ -395,7 +378,6 @@
 
         </table>
 
-        {{-- USO EXCLUSIVO --}}
         <table class="tabla-borde tabla-uso" style="width: 100%; border-collapse: collapse;  border: none; ">
             <tr>
                 <td colspan="2" class="bg-gray" style="
@@ -409,7 +391,6 @@
             </tr>
 
             <tr>
-                {{-- CON GOCE DE SUELDO --}}
                 <td style="padding: 0;">
                     <table style="width: 100%; border-collapse: collapse; border: none;">
                         <tr>
@@ -437,7 +418,6 @@
                     </table>
                 </td>
 
-                {{-- SIN GOCE DE SUELDO --}}
                 <td style="padding: 0; ">
                     <table style="width: 100%; border-collapse: collapse; border: none;">
                         <tr>
@@ -467,11 +447,6 @@
             </tr>
         </table>
 
-
-
-
-
-        {{-- AUTORIZACIONES --}}
         <table class="tabla-borde tabla-inferior tabla-autorizaciones" style="width: 100%; border-collapse: collapse;">
             <tr>
                 <td colspan="3" class="text-center bg-gray" style="
@@ -518,7 +493,6 @@
                 </td>
             </tr>
         </table>
-
 
 
     </main>

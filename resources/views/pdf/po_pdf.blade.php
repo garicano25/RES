@@ -116,7 +116,6 @@
             padding-right: 20px;
         }
 
-
         .tabla-observaciones {
             width: 100%;
             border: 2px solid black;

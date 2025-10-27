@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>PS-RH-FO-23 Solicitud de Vacaciones</title>
     <style>
-        /* === FUENTES === */
         @font-face {
             font-family: 'Poppins';
             font-weight: 400;
@@ -196,7 +195,6 @@
 
 <body>
 
-    {{-- HEADER --}}
     <header>
         <table class="header-tabla">
             <tr>
@@ -215,10 +213,8 @@
         </table>
     </header>
 
-    {{-- CONTENIDO --}}
     <main>
 
-        {{-- DATOS DEL EMPLEADO --}}
         <table class="datos-empleado">
             <tr>
                 <td class="celda-label">
@@ -292,7 +288,6 @@
 
         <div class="espacio"></div>
 
-        {{-- DÍAS DE VACACIONES --}}
 
 
         <style>
@@ -358,10 +353,6 @@
             </tr>
         </table>
 
-
-
-
-        {{-- OBSERVACIONES --}}
         <table class="tabla-borde tabla-observaciones" style="border-top: none;">
             <tr>
                 <td class="titulo-observaciones">OBSERVACIONES</td>
@@ -371,13 +362,10 @@
             </tr>
         </table>
 
-
-        {{-- TEXTO LEGAL --}}
         <p style="margin-top: 10px; text-align: justify;">
             Por el presente expreso mi conformidad de solicitar y gozar mis vacaciones de acuerdo con lo que establece el artículo 76 de la Ley Federal del Trabajo vigente, considerando los datos antes mencionados.
         </p>
 
-        {{-- FECHA DE FIRMA --}}
         <table style="width: 100%; text-align: center;">
             <tr>
                 <td>Villahermosa, Tabasco.</td>
@@ -389,7 +377,6 @@
             </tr>
         </table>
 
-        {{-- AUTORIZACIONES --}}
         <div class="espacio"></div>
 
 

@@ -63,7 +63,6 @@
 
         .tabla-encabezado td {
             border: 1px solid black;
-            /* padding: 1px; */
         }
 
         .tabla-info {
@@ -311,10 +310,6 @@
                     –
                     @endif
                 </td>
-
-
-
-
                 <td class="text-center">{{ $detalle->CANTIDAD ?? 0 }}</td>
                 <td class="text-center">{{ $detalle->CANTIDAD_RECHAZADA ?? 0 }}</td>
                 <td class="text-center">{{ $detalle->CANTIDAD_ACEPTADA ?? 0 }}</td>
