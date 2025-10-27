@@ -108,26 +108,22 @@ class pdfgrController extends Controller
     public function generarGRpdf($id)
     {
         try {
-            // 🔹 1. Buscar la GR directamente (normal o parcial)
             $orden = DB::table('formulario_bitacoragr')->where('ID_GR', $id)->first();
 
             if (!$orden) {
                 return response()->json(['error' => 'No se encontró la GR con ese ID.'], 404);
             }
 
-            // 🔹 2. Validar estado
             if (trim($orden->FINALIZAR_GR ?? '') !== 'Sí') {
                 return response()->json([
                     'error' => 'La GR no está finalizada aún. Solo se puede descargar cuando está finalizada.'
                 ], 400);
             }
 
-            // 🔹 3. Obtener proveedor
             $proveedor = !empty($orden->PROVEEDOR_KEY)
                 ? directorioModel::where('RFC_PROVEEDOR', $orden->PROVEEDOR_KEY)->first()
                 : null;
 
-            // Si no existe, generar objeto "N/A"
             if (!$proveedor) {
                 $proveedor = (object)[
                     'TIPO_PERSONA' => '1',
@@ -149,18 +145,38 @@ class pdfgrController extends Controller
                 ];
             }
 
-            // 🔹 4. Usuario solicitante
             $usuarioSolicito = DB::table('usuarios')
                 ->select('EMPLEADO_NOMBRE', 'EMPLEADO_APELLIDOPATERNO', 'EMPLEADO_APELLIDOMATERNO')
                 ->where('ID_USUARIO', $orden->USUARIO_ID)
                 ->first();
 
-            // 🔹 5. Detalles (solo los no parciales)
+            // $detalles = DB::table('formulario_bitacoragr_detalle')
+            //     ->where('ID_GR', $id)
+            //     ->where(function ($query) {
+            //         $query->whereNull('BIENS_PARCIAL')
+            //             ->orWhere('BIENS_PARCIAL', 'No');
+            //     })
+            //     ->select(
+            //         'DESCRIPCION',
+            //         'CANTIDAD',
+            //         'CANTIDAD_RECHAZADA',
+            //         'CANTIDAD_ACEPTADA',
+            //         'VOBO_USUARIO_PRODUCTO',
+            //         'BIENS_PARCIAL'
+            //     )
+            //     ->get();
+
+
             $detalles = DB::table('formulario_bitacoragr_detalle')
                 ->where('ID_GR', $id)
                 ->where(function ($query) {
                     $query->whereNull('BIENS_PARCIAL')
-                        ->orWhere('BIENS_PARCIAL', 'No');
+                        ->orWhere('BIENS_PARCIAL', 'No')
+                        ->orWhere(function ($q) {
+                            $q->where('BIENS_PARCIAL', 'Sí')
+                                ->whereNotNull('CANTIDAD_ACEPTADA')
+                                ->where('CANTIDAD_ACEPTADA', '>', 0);
+                        });
                 })
                 ->select(
                     'DESCRIPCION',
@@ -172,7 +188,9 @@ class pdfgrController extends Controller
                 )
                 ->get();
 
-            // 🔹 6. Generar PDF
+
+
+                
             $pdf = Pdf::loadView('pdf.gr_pdf', [
                 'orden' => $orden,
                 'proveedor' => $proveedor,

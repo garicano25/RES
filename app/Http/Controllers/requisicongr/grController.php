@@ -470,6 +470,276 @@ class grController extends Controller
             foreach ($idsGR as $idGR) {
 
 
+                ///// GUARDA EN EL INVENTARIO Y CREAR Y ACTUALIZA
+
+                // if ($idGR && $idGR > 0) {
+                //     // ======================== EDITAR ========================
+                //     DB::table('formulario_bitacoragr')
+                //         ->where('ID_GR', $idGR)
+                //         ->update([
+                //             'NO_GR'               => null,
+                //             'NO_MR'               => $request->modal_no_mr,
+                //             'NO_PO'               => $request->modal_no_po,
+                //             'PROVEEDOR_KEY'       => $request->PROVEEDOR_EQUIPO,
+                //             'USUARIO_SOLICITO'    => $request->modal_usuario_nombre,
+                //             'USUARIO_ID'          => $usuarioId,
+                //             'FECHA_EMISION'       => $request->DESDE_ACREDITACION,
+                //             'NO_RECEPCION'        => $request->NO_RECEPCION,
+                //             'MANDAR_USUARIO_VOBO' => $request->MANDAR_USUARIO_VOBO,
+                //             'VO_BO_USUARIO'       => $request->VO_BO_USUARIO,
+                //             'FECHA_VOUSUARIO'     => $request->FECHA_VOUSUARIO,
+                //             'GR_PARCIAL'          => $request->GR_PARCIAL,
+                //             'FECHA_ENTREGA_GR'    => $request->FECHA_ENTREGA_GR,
+                //             'FINALIZAR_GR'        => $request->FINALIZAR_GR,
+                //             'UPDATED_AT'          => now(),
+                //         ]);
+
+                //     // Eliminar detalles anteriores
+                //     DB::table('formulario_bitacoragr_detalle')
+                //         ->where('ID_GR', $idGR)
+                //         ->delete();
+
+                //     foreach ($request->DESCRIPCION as $i => $desc) {
+                //         $tipoEquipoId   = $request->TIPO_INVENTARIO[$i] ?? null;
+                //         $tipoEquipoDesc = $tipoEquipoId
+                //             ? DB::table('catalogo_tipoinventario')
+                //             ->where('ID_CATALOGO_TIPOINVENTARIO', $tipoEquipoId)
+                //             ->value('DESCRIPCION_TIPO')
+                //             : null;
+
+                //         // Insertar detalle GR y obtener ID
+                //         $idDetalle = DB::table('formulario_bitacoragr_detalle')->insertGetId([
+                //             'ID_GR'                     => $idGR,
+                //             'DESCRIPCION'               => $desc,
+                //             'CANTIDAD'                  => $request->CANTIDAD[$i] ?? 0,
+                //             'CANTIDAD_RECHAZADA'        => $request->CANTIDAD_RECHAZADA[$i] ?? 0,
+                //             'CANTIDAD_ACEPTADA'         => $request->CANTIDAD_ACEPTADA[$i] ?? 0,
+                //             'PRECIO_UNITARIO'           => $request->PRECIO_UNITARIO[$i] ?? null,
+                //             'CUMPLE'                    => $request->CUMPLE[$i] ?? null,
+                //             'COMENTARIO_CUMPLE'         => $request->COMENTARIO_CUMPLE[$i] ?? null,
+                //             'ESTADO_BS'                 => $request->ESTADO_BS[$i] ?? null,
+                //             'COMENTARIO_ESTADO'         => $request->COMENTARIO_ESTADO[$i] ?? null,
+                //             'COMENTARIO_DIFERENCIA'     => $request->COMENTARIO_DIFERENCIA[$i] ?? null,
+                //             'PRECIO_TOTAL_MR'           => $request->PRECIO_TOTAL_MR[$i] ?? null,
+                //             'PRECIO_UNITARIO_GR'        => $request->PRECIO_UNITARIO_GR[$i] ?? null,
+                //             'PRECIO_TOTAL_GR'           => $request->PRECIO_TOTAL_GR[$i] ?? null,
+                //             'TIPO_BS'                   => $request->TIPO_BS[$i] ?? null,
+                //             'TIPO_EQUIPO'               => $tipoEquipoDesc,
+                //             'INVENTARIO_ID'             => $request->INVENTARIO[$i] ?? null,
+                //             'EN_INVENTARIO'             => $request->EN_INVENTARIO[$i] ?? null,
+                //             'CANTIDAD_ACEPTADA_USUARIO' => $request->CANTIDAD_ACEPTADA_USUARIO[$i] ?? null,
+                //             'CUMPLE_ESPECIFICADO_USUARIO' => $request->CUMPLE_ESPECIFICADO_USUARIO[$i] ?? null,
+                //             'COMENTARIO_CUMPLE_USUARIO' => $request->COMENTARIO_CUMPLE_USUARIO[$i] ?? null,
+                //             'ESTADO_BS_USUARIO'         => $request->ESTADO_BS_USUARIO[$i] ?? null,
+                //             'COMENTARIO_ESTADO_USUARIO' => $request->COMENTARIO_ESTADO_USUARIO[$i] ?? null,
+                //             'VOBO_USUARIO_PRODUCTO'     => $request->VOBO_USUARIO_PRODUCTO[$i] ?? null,
+                //             'UNIDAD'                    => $request->UNIDAD[$i] ?? null,
+                //             'CANTIDAD_ENTRA_ALMACEN'    => $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? null,
+                //             'BIENS_PARCIAL'             => $request->BIENS_PARCIAL[$i] ?? null,
+                //             'GUARDO_INVENTARIO'         => $request->GUARDO_INVENTARIO[$i] ?? 0, // default 0
+                //         ]);
+
+                //         // =======================
+                //         // Lógica de inventario al finalizar GR
+                //         // =======================
+                //         if ($request->FINALIZAR_GR === "Sí" && ($request->VOBO_USUARIO_PRODUCTO[$i] ?? null) === "Sí") {
+                //             $cantidadEntra  = $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? 0;
+                //             $precioUnitario = $request->PRECIO_UNITARIO[$i] ?? null;
+
+                //             // Verificar si ya se guardó en inventario
+                //             $yaGuardado = DB::table('formulario_bitacoragr_detalle')
+                //                 ->where('ID_DETALLE', $idDetalle)
+                //                 ->value('GUARDO_INVENTARIO');
+
+                //             if (!$yaGuardado || $yaGuardado == 0) {
+                //                 if (($request->EN_INVENTARIO[$i] ?? "No") === "No") {
+                //                     // Crear nuevo registro en inventario
+                //                     DB::table('formulario_inventario')->insert([
+                //                         'DESCRIPCION_EQUIPO' => $desc,
+                //                         'CANTIDAD_EQUIPO'    => $cantidadEntra,
+                //                         'UNITARIO_EQUIPO'    => $precioUnitario,
+                //                         'created_at'         => now(),
+                //                         'updated_at'         => now(),
+                //                     ]);
+                //                 } else {
+                //                     // Ya existe en inventario → actualizar
+                //                     $inventarioId = $request->INVENTARIO[$i] ?? null;
+                //                     if ($inventarioId) {
+                //                         DB::table('formulario_inventario')
+                //                             ->where('ID_FORMULARIO_INVENTARIO', $inventarioId)
+                //                             ->update([
+                //                                 'CANTIDAD_EQUIPO' => DB::raw("CANTIDAD_EQUIPO + {$cantidadEntra}"),
+                //                                 'UNITARIO_EQUIPO' => $precioUnitario,
+                //                                 'updated_at'      => now(),
+                //                             ]);
+                //                     }
+                //                 }
+
+                //                 // Marcar detalle como guardado en inventario
+                //                 DB::table('formulario_bitacoragr_detalle')
+                //                     ->where('ID_DETALLE', $idDetalle)
+                //                     ->update(['GUARDO_INVENTARIO' => 1]);
+                //             }
+                //         }
+                //     }
+
+                //     // ================= GR PARCIAL =================
+                //     if ($request->GR_PARCIAL === "Sí") {
+                //         $yaTieneParcial = DB::table('formulario_bitacoragr')
+                //             ->where('ID_GR', $idGR)
+                //             ->value('TIENE_PARCIAL');
+
+                //         if (!$yaTieneParcial) {
+                //             $this->crearGRParcial($request, $usuarioId);
+
+                //             DB::table('formulario_bitacoragr')
+                //                 ->where('ID_GR', $idGR)
+                //                 ->update(['TIENE_PARCIAL' => 1]);
+                //         }
+                //     }
+
+                //// funciona sirve
+                // if ($idGR && $idGR > 0) {
+                //     // ======================== EDITAR ========================
+                //     DB::table('formulario_bitacoragr')
+                //         ->where('ID_GR', $idGR)
+                //         ->update([
+                //             'NO_GR'               => null,
+                //             'NO_MR'               => $request->modal_no_mr,
+                //             'NO_PO'               => $request->modal_no_po,
+                //             'PROVEEDOR_KEY'       => $request->PROVEEDOR_EQUIPO,
+                //             'USUARIO_SOLICITO'    => $request->modal_usuario_nombre,
+                //             'USUARIO_ID'          => $usuarioId,
+                //             'FECHA_EMISION'       => $request->DESDE_ACREDITACION,
+                //             'NO_RECEPCION'        => $request->NO_RECEPCION,
+                //             'MANDAR_USUARIO_VOBO' => $request->MANDAR_USUARIO_VOBO,
+                //             'VO_BO_USUARIO'       => $request->VO_BO_USUARIO,
+                //             'FECHA_VOUSUARIO'     => $request->FECHA_VOUSUARIO,
+                //             'GR_PARCIAL'          => $request->GR_PARCIAL,
+                //             'FECHA_ENTREGA_GR'    => $request->FECHA_ENTREGA_GR,
+                //             'FINALIZAR_GR'        => $request->FINALIZAR_GR,
+                //             'UPDATED_AT'          => now(),
+                //         ]);
+
+                //     // Guardamos la fecha de adquisición desde la cabecera
+                //     $fechaAdquisicion = $request->FECHA_ENTREGA_GR;
+
+                //     // Guardar los detalles que ya habían pasado a inventario antes de borrar
+                //     $detallesGuardados = DB::table('formulario_bitacoragr_detalle')
+                //         ->where('ID_GR', $idGR)
+                //         ->where('GUARDO_INVENTARIO', 1)
+                //         ->pluck('DESCRIPCION')
+                //         ->toArray();
+
+                //     // Eliminar detalles anteriores
+                //     DB::table('formulario_bitacoragr_detalle')
+                //         ->where('ID_GR', $idGR)
+                //         ->delete();
+
+                //     foreach ($request->DESCRIPCION as $i => $desc) {
+                //         $tipoEquipoId   = $request->TIPO_INVENTARIO[$i] ?? null;
+                //         $tipoEquipoDesc = $tipoEquipoId
+                //             ? DB::table('catalogo_tipoinventario')
+                //             ->where('ID_CATALOGO_TIPOINVENTARIO', $tipoEquipoId)
+                //             ->value('DESCRIPCION_TIPO')
+                //             : null;
+
+                //         // Si ya existía guardado en inventario, mantenerlo
+                //         $guardoInventario = in_array($desc, $detallesGuardados) ? 1 : 0;
+
+                //         // Insertar detalle GR y obtener ID
+                //         $idDetalle = DB::table('formulario_bitacoragr_detalle')->insertGetId([
+                //             'ID_GR'                     => $idGR,
+                //             'DESCRIPCION'               => $desc,
+                //             'CANTIDAD'                  => $request->CANTIDAD[$i] ?? 0,
+                //             'CANTIDAD_RECHAZADA'        => $request->CANTIDAD_RECHAZADA[$i] ?? 0,
+                //             'CANTIDAD_ACEPTADA'         => $request->CANTIDAD_ACEPTADA[$i] ?? 0,
+                //             'PRECIO_UNITARIO'           => $request->PRECIO_UNITARIO[$i] ?? null,
+                //             'CUMPLE'                    => $request->CUMPLE[$i] ?? null,
+                //             'COMENTARIO_CUMPLE'         => $request->COMENTARIO_CUMPLE[$i] ?? null,
+                //             'ESTADO_BS'                 => $request->ESTADO_BS[$i] ?? null,
+                //             'COMENTARIO_ESTADO'         => $request->COMENTARIO_ESTADO[$i] ?? null,
+                //             'COMENTARIO_DIFERENCIA'     => $request->COMENTARIO_DIFERENCIA[$i] ?? null,
+                //             'PRECIO_TOTAL_MR'           => $request->PRECIO_TOTAL_MR[$i] ?? null,
+                //             'PRECIO_UNITARIO_GR'        => $request->PRECIO_UNITARIO_GR[$i] ?? null,
+                //             'PRECIO_TOTAL_GR'           => $request->PRECIO_TOTAL_GR[$i] ?? null,
+                //             'TIPO_BS'                   => $request->TIPO_BS[$i] ?? null,
+                //             'TIPO_EQUIPO'               => $tipoEquipoDesc,
+                //             'INVENTARIO_ID'             => $request->INVENTARIO[$i] ?? null,
+                //             'EN_INVENTARIO'             => $request->EN_INVENTARIO[$i] ?? null,
+                //             'CANTIDAD_ACEPTADA_USUARIO' => $request->CANTIDAD_ACEPTADA_USUARIO[$i] ?? null,
+                //             'CUMPLE_ESPECIFICADO_USUARIO' => $request->CUMPLE_ESPECIFICADO_USUARIO[$i] ?? null,
+                //             'COMENTARIO_CUMPLE_USUARIO' => $request->COMENTARIO_CUMPLE_USUARIO[$i] ?? null,
+                //             'ESTADO_BS_USUARIO'         => $request->ESTADO_BS_USUARIO[$i] ?? null,
+                //             'COMENTARIO_ESTADO_USUARIO' => $request->COMENTARIO_ESTADO_USUARIO[$i] ?? null,
+                //             'VOBO_USUARIO_PRODUCTO'     => $request->VOBO_USUARIO_PRODUCTO[$i] ?? null,
+                //             'UNIDAD'                    => $request->UNIDAD[$i] ?? null,
+                //             'CANTIDAD_ENTRA_ALMACEN'    => $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? null,
+                //             'BIENS_PARCIAL'             => $request->BIENS_PARCIAL[$i] ?? null,
+                //             'GUARDO_INVENTARIO'         => $guardoInventario, 
+                //         ]);
+
+                //         // =======================
+                //         //  Lógica de inventario al finalizar GR
+                //         // =======================
+                //         if (
+                //             $request->FINALIZAR_GR === "Sí" &&
+                //             ($request->VOBO_USUARIO_PRODUCTO[$i] ?? null) === "Sí" &&
+                //             ($request->TIPO_BS[$i] ?? null) === "Bien"
+                //         ) {
+                //             $cantidadEntra  = $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? 0;
+                //             $precioUnitario = $request->PRECIO_UNITARIO[$i] ?? null;
+
+                //             // Verificar si ya se guardó en inventario
+                //             if ($guardoInventario == 0) {
+                //                 if (($request->EN_INVENTARIO[$i] ?? "No") === "No") {
+                //                     // Crear nuevo registro en inventario
+                //                     DB::table('formulario_inventario')->insert([
+                //                         'DESCRIPCION_EQUIPO' => $desc,
+                //                         'CANTIDAD_EQUIPO'    => $cantidadEntra,
+                //                         'UNITARIO_EQUIPO'    => $precioUnitario,
+                //                         'FECHA_ADQUISICION'  => $fechaAdquisicion,
+                //                         'created_at'         => now(),
+                //                         'updated_at'         => now(),
+                //                     ]);
+                //                 } else {
+                //                     // Ya existe en inventario → actualizar
+                //                     $inventarioId = $request->INVENTARIO[$i] ?? null;
+                //                     if ($inventarioId) {
+                //                         DB::table('formulario_inventario')
+                //                             ->where('ID_FORMULARIO_INVENTARIO', $inventarioId)
+                //                             ->update([
+                //                                 'CANTIDAD_EQUIPO'   => DB::raw("CANTIDAD_EQUIPO + {$cantidadEntra}"),
+                //                                 'UNITARIO_EQUIPO'   => $precioUnitario,
+                //                                 'FECHA_ADQUISICION' => $fechaAdquisicion,
+                //                                 'updated_at'        => now(),
+                //                             ]);
+                //                     }
+                //                 }
+
+                //                 // Marcar detalle como guardado en inventario
+                //                 DB::table('formulario_bitacoragr_detalle')
+                //                     ->where('ID_DETALLE', $idDetalle)
+                //                     ->update(['GUARDO_INVENTARIO' => 1]);
+                //             }
+                //         }
+                //     }
+
+                //     // ================= GR PARCIAL =================
+                //     if ($request->GR_PARCIAL === "Sí") {
+                //         $yaTieneParcial = DB::table('formulario_bitacoragr')
+                //             ->where('ID_GR', $idGR)
+                //             ->value('TIENE_PARCIAL');
+
+                //         if (!$yaTieneParcial) {
+                //             $this->crearGRParcial($request, $usuarioId);
+
+                //             DB::table('formulario_bitacoragr')
+                //                 ->where('ID_GR', $idGR)
+                //                 ->update(['TIENE_PARCIAL' => 1]);
+                //         }
+                //     }
+
                 if ($idGR && $idGR > 0) {
                     // ======================== EDITAR ========================
                     DB::table('formulario_bitacoragr')
@@ -559,7 +829,76 @@ class grController extends Controller
 
                         ]);
 
-                      
+                        // =======================
+                        //  Lógica de inventario al finalizar GR
+                        // =======================
+                        // if (
+                        //     $request->FINALIZAR_GR === "Sí" &&
+                        //     ($request->VOBO_USUARIO_PRODUCTO[$i] ?? null) === "Sí" &&
+                        //     ($request->TIPO_BS[$i] ?? null) === "Bien"
+                        // ) {
+                        //     $cantidadEntra  = $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? 0;
+                        //     $precioUnitario = $request->PRECIO_UNITARIO_GR[$i] ?? null;
+                        //     $unidaddetalles = $request->UNIDAD_MEDIDA_ALMACEN[$i] ?? null;
+
+
+                        //     // Verificar si ya se guardó en inventario
+                        //     if ($guardoInventario == 0) {
+                        //         if (($request->EN_INVENTARIO[$i] ?? "No") === "No") {
+                        //             // Crear nuevo registro en inventario
+                        //             $inventarioId = DB::table('formulario_inventario')->insertGetId([
+                        //                 'DESCRIPCION_EQUIPO' => $desc,
+                        //                 'CANTIDAD_EQUIPO'    => $cantidadEntra,
+                        //                 'UNITARIO_EQUIPO'    => $precioUnitario,
+                        //                 'UNIDAD_MEDIDA'    => $unidaddetalles,
+                        //                 'FECHA_ADQUISICION'  => $fechaAdquisicion,
+                        //                 'PROVEEDOR_EQUIPO'  => $proveedorkey,
+                        //                 'created_at'         => now(),
+                        //                 'updated_at'         => now(),
+                        //             ]);
+
+                        //             // Guardar historial de entrada
+                        //             DB::table('entradas_inventario')->insert([
+                        //                 'INVENTARIO_ID'   => $inventarioId,
+                        //                 'FECHA_INGRESO'   => $fechaAdquisicion,
+                        //                 'CANTIDAD_PRODUCTO' => $cantidadEntra,
+                        //                 'VALOR_UNITARIO'  => $precioUnitario,
+                        //                 'UNIDAD_MEDIDA'  => $unidaddetalles,
+
+                        //             ]);
+                        //         } else {
+                        //             // Ya existe en inventario → actualizar
+                        //             $inventarioId = $request->INVENTARIO[$i] ?? null;
+                        //             if ($inventarioId) {
+                        //                 DB::table('formulario_inventario')
+                        //                     ->where('ID_FORMULARIO_INVENTARIO', $inventarioId)
+                        //                     ->update([
+                        //                         'CANTIDAD_EQUIPO'   => DB::raw("CANTIDAD_EQUIPO + {$cantidadEntra}"),
+                        //                         'UNITARIO_EQUIPO'   => $precioUnitario,
+                        //                         'UNIDAD_MEDIDA'   => $unidaddetalles,
+                        //                         'FECHA_ADQUISICION' => $fechaAdquisicion,
+                        //                         'PROVEEDOR_EQUIPO'  => $proveedorkey,
+                        //                     'updated_at'        => now(),
+                        //                     ]);
+
+                        //                 // Guardar historial de entrada
+                        //                 DB::table('entradas_inventario')->insert([
+                        //                     'INVENTARIO_ID'     => $inventarioId,
+                        //                     'FECHA_INGRESO'     => $fechaAdquisicion,
+                        //                     'CANTIDAD_PRODUCTO' => $cantidadEntra,
+                        //                     'VALOR_UNITARIO'    => $precioUnitario,
+                        //                     'UNIDAD_MEDIDA'  => $unidaddetalles,
+
+                        //                 ]);
+                        //             }
+                        //         }
+
+                        //         // Marcar detalle como guardado en inventario
+                        //         DB::table('formulario_bitacoragr_detalle')
+                        //             ->where('ID_DETALLE', $idDetalle)
+                        //             ->update(['GUARDO_INVENTARIO' => 1]);
+                        //     }
+                        // }
 
                         if (
                             $request->FINALIZAR_GR === "Sí" &&
@@ -636,7 +975,21 @@ class grController extends Controller
 
                     }
 
-                  
+                    // ================= GR PARCIAL =================
+                    // if ($request->GR_PARCIAL === "Sí") {
+                    //     $yaTieneParcial = DB::table('formulario_bitacoragr')
+                    //         ->where('ID_GR', $idGR)
+                    //         ->value('TIENE_PARCIAL');
+
+                    //     if (!$yaTieneParcial) {
+                    //         $this->crearGRParcial($request, $usuarioId);
+
+                    //         DB::table('formulario_bitacoragr')
+                    //             ->where('ID_GR', $idGR)
+                    //             ->update(['TIENE_PARCIAL' => 1]);
+                    //     }
+                    // }
+
 
                     if ($request->GR_PARCIAL === "Sí") {
                         $yaTieneParcial = DB::table('formulario_bitacoragr')
@@ -655,7 +1008,66 @@ class grController extends Controller
                 }
 
              else {
-                    
+                    // ======================== CREAR ========================
+                    // $noRecepcion = $this->generarNoRecepcion();
+
+                    // $idGRNuevo = DB::table('formulario_bitacoragr')->insertGetId([
+                    //     'NO_GR'            => null,
+                    //     'NO_MR'            => $request->modal_no_mr,
+                    //     'NO_PO'            => $request->modal_no_po,
+                    //     'PROVEEDOR_KEY'    => $request->PROVEEDOR_EQUIPO,
+                    //     'USUARIO_SOLICITO' => $request->modal_usuario_nombre,
+                    //     'USUARIO_ID'       => $usuarioId,
+                    //     'FECHA_EMISION'    => $request->DESDE_ACREDITACION,
+                    //     'NO_RECEPCION'     => $noRecepcion,
+                    //     'MANDAR_USUARIO_VOBO' => $request->MANDAR_USUARIO_VOBO,
+                    //     'GR_PARCIAL'       => $request->GR_PARCIAL,
+                    //     'FECHA_ENTREGA_GR'       => $request->FECHA_ENTREGA_GR,
+
+                    //     'CREATED_AT'       => now(),
+                    // ]);
+
+                    // foreach ($request->DESCRIPCION as $i => $desc) {
+                    //     $tipoEquipoId   = $request->TIPO_INVENTARIO[$i] ?? null;
+                    //     $tipoEquipoDesc = $tipoEquipoId
+                    //         ? DB::table('catalogo_tipoinventario')
+                    //         ->where('ID_CATALOGO_TIPOINVENTARIO', $tipoEquipoId)
+                    //         ->value('DESCRIPCION_TIPO')
+                    //         : null;
+
+                    //     DB::table('formulario_bitacoragr_detalle')->insert([
+                    //         'ID_GR'                 => $idGRNuevo,
+                    //         'DESCRIPCION'           => $desc,
+                    //         'CANTIDAD'              => $request->CANTIDAD[$i] ?? 0,
+                    //         'CANTIDAD_RECHAZADA'    => $request->CANTIDAD_RECHAZADA[$i] ?? 0,
+                    //         'CANTIDAD_ACEPTADA'     => $request->CANTIDAD_ACEPTADA[$i] ?? 0,
+                    //         'PRECIO_UNITARIO'       => $request->PRECIO_UNITARIO[$i] ?? null,
+                    //         'CUMPLE'                => $request->CUMPLE[$i] ?? null,
+                    //         'COMENTARIO_CUMPLE'     => $request->COMENTARIO_CUMPLE[$i] ?? null,
+                    //         'ESTADO_BS'             => $request->ESTADO_BS[$i] ?? null,
+                    //         'COMENTARIO_ESTADO'     => $request->COMENTARIO_ESTADO[$i] ?? null,
+                    //         'COMENTARIO_DIFERENCIA' => $request->COMENTARIO_DIFERENCIA[$i] ?? null,
+                    //         'TIPO_BS'               => $request->TIPO_BS[$i] ?? null,
+                    //         'PRECIO_TOTAL_MR'       => $request->PRECIO_TOTAL_MR[$i] ?? null,
+                    //         'PRECIO_UNITARIO_GR'    => $request->PRECIO_UNITARIO_GR[$i] ?? null,
+                    //         'PRECIO_TOTAL_GR'       => $request->PRECIO_TOTAL_GR[$i] ?? null,
+                    //         'TIPO_EQUIPO'           => $tipoEquipoDesc,
+                    //         'INVENTARIO_ID'         => $request->INVENTARIO[$i] ?? null,
+                    //         'EN_INVENTARIO'         => $request->EN_INVENTARIO[$i] ?? null,
+                    //         'UNIDAD'                => $request->UNIDAD[$i] ?? null,
+                    //         'BIENS_PARCIAL'             => $request->BIENS_PARCIAL[$i] ?? null,
+                    //         'CANTIDAD_ENTRA_ALMACEN'         => $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? null,
+
+
+
+                    //     ]);
+                    // }
+
+                    // if ($request->GR_PARCIAL === "Sí") {
+                    //     $this->crearGRParcial($request, $usuarioId);
+                    // }
+
+                    // ======================== CREAR PRINCIPAL ========================
                     $noRecepcion = $this->generarNoRecepcion();
 
                     $idGRNuevo = DB::table('formulario_bitacoragr')->insertGetId([
