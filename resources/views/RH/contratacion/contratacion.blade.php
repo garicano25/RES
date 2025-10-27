@@ -1802,7 +1802,7 @@
                         <label>Sanción disciplinaria *</label>
                         <select class="form-select" id="SANCION_DISCIPLINARIA" name="SANCION_DISCIPLINARIA" required>
                             <option value="0" disabled selected>Seleccione una opción</option>
-                            <option value="1">Amonestación verba</option>
+                            <option value="1">Amonestación verbal</option>
                             <option value="2">Amonestación por escrito a través de acta administrativa</option>
                             <option value="3">Suspensión misma que no puede exceder de ocho días y además el colaborador
                                 tiene el derecho a ser oído antes de que se aplique cualquier sanción.</option>
