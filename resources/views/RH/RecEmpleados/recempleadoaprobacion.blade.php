@@ -33,7 +33,6 @@
                     {!! csrf_field() !!}
 
 
-
                     <div class="col-12 mb-3">
                         <label class="form-label">Seleccione el tipo *</label>
                         <select class="form-control" id="TIPO_SOLICITUD" name="TIPO_SOLICITUD" style="pointer-events:none; background-color:#e9ecef;">
@@ -61,16 +60,12 @@
                         </div>
                     </div>
 
-
                     <div id="SOLIDA_ALMACEN" style="display: none;">
-
 
                         <div class="mt-3">
                             <div class="materialesdiv mt-4"></div>
                         </div>
-
                         <div class="col-12 mt-3 d-flex align-items-center">
-
 
                             <div class="col-6" id="FECHA_ESTIMADA" style="display: none;">
                                 <label class="col-form-label me-2">Fecha estimada de retorno *</label>
@@ -81,13 +76,9 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
 
-
                     <div id="PERMISO_AUSENCIA" style="display: none;">
-
 
                         <div class="col-12 mt-3">
                             <div class="row">
@@ -102,11 +93,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-
-
 
                         <div class="col-12 mt-3">
                             <div class="row">
@@ -136,10 +122,6 @@
                                     <input type="number" class="form-control" id="NOHORAS_PERMISO" name="NOHORAS_PERMISO">
                                 </div>
 
-
-
-
-
                                 <div class="col-3">
                                     <label class="form-label">Fecha inicial *</label>
                                     <div class="input-group">
@@ -147,8 +129,6 @@
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                     </div>
                                 </div>
-
-
 
                                 <div class="col-3">
                                     <label class="form-label">Fecha Final *</label>
@@ -158,27 +138,15 @@
                                     </div>
                                 </div>
 
-
                                 <div class="col-12 mt-3" id="EXPLIQUE_PERMISO" style="display: none;">
                                     <label class="form-label">Exlique </label>
                                     <textarea class="form-control" id="EXPLIQUE_PERMISO" name="EXPLIQUE_PERMISO" rows="2"></textarea>
                                 </div>
-
-
-
-
                             </div>
                         </div>
-
-
-
-
-
                     </div>
 
-
                     <div id="SOLICITUD_VACACIONES" style="display: none;">
-
                         <div class="col-12 mt-3">
                             <div class="row">
                                 <div class="col-4">
@@ -189,7 +157,6 @@
                                     <label class="form-label">No. de empleado: </label>
                                     <input type="text" class="form-control" id="NOEMPLEADO_PERMISO_VACACIONES" name="NOEMPLEADO_PERMISO_VACACIONES" readonly>
                                 </div>
-
 
                                 <div class="col-4">
                                     <label class="form-label">Fecha Ingreso: </label>
@@ -204,12 +171,10 @@
                                     <input type="number" class="form-control" id="ANIO_SERVICIO_VACACIONES" name="ANIO_SERVICIO_VACACIONES" required readonly>
                                 </div>
 
-
                                 <div class="col-3 mt-3">
                                     <label class="form-label">Días que corresponden</label>
                                     <input type="number" class="form-control" id="DIAS_CORRESPONDEN_VACACIONES" name="DIAS_CORRESPONDEN_VACACIONES" required readonly>
                                 </div>
-
 
                                 <div class="col-3 mt-3">
                                     <label class="form-label">Días a disfrutar</label>
@@ -227,7 +192,6 @@
                                     <h5 class="text-center">Período a Disfrutar:</h5>
                                 </div>
 
-
                                 <div class="col-6 mt-3">
                                     <label class="form-label">Desde Año: </label>
                                     <div class="input-group">
@@ -244,8 +208,6 @@
                                     </div>
                                 </div>
 
-
-
                                 <div class="col-4 mt-3">
                                     <label class="form-label">Fecha de inicio vacaciones: </label>
                                     <div class="input-group">
@@ -253,7 +215,6 @@
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                     </div>
                                 </div>
-
 
                                 <div class="col-4 mt-3">
                                     <label class="form-label">Fecha de terminación vacaciones: </label>
@@ -270,20 +231,14 @@
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
-
                     </div>
-
-
 
                     <div class="mt-3">
                         <label class="form-label">Observaciones *</label>
                         <textarea class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" rows="3" required></textarea>
                     </div>
-
 
                     <div class="col-12 mt-4" id="GOCE_SUELDO" style="display: none;">
                         <div class="row">
@@ -303,20 +258,12 @@
                         </div>
                     </div>
 
-                
-
                     <div class="mt-3">
                         <label class="form-label">Firmado por</label>
                         <input type="text" id="FIRMADO_POR" name="FIRMADO_POR" class="form-control" readonly required>
                     </div>
 
-
-
-
-
-
                     <div id="VISTO_BUENO_JEFE" style="display: block;">
-
                         <div class="col-12 mt-3 text-center">
                             <label class="form-label">Vo.Bo Jefe Inmediato</label>
                             <select class="form-control" id="DAR_BUENO" name="DAR_BUENO" required>
@@ -326,7 +273,6 @@
                             </select>
                         </div>
 
-
                         <div class="col-12 mt-3">
                             <div class="row">
                                 <div class="col-8">
@@ -334,7 +280,6 @@
 
                                     <input type="text" class="form-control" id="VISTO_BUENO" name="VISTO_BUENO" readonly>
                                 </div>
-
                                 <div class="col-4">
                                     <label class="form-label">Fecha Vo.Bo*</label>
                                     <div class="input-group">
@@ -345,15 +290,12 @@
                             </div>
                         </div>
 
-
                         <div class="col-12 mt-3" id="MOTIVO_RECHAZO_JEFE_DIV" style="display: none;">
                             <label class="form-label">Motivo del rechazo del jefe inmediato</label>
                             <textarea class="form-control" id="MOTIVO_RECHAZO_JEFE" name="MOTIVO_RECHAZO_JEFE" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
                         </div>
 
                     </div>
-
-
 
                     <div id="APROBACION_DIRECCION" style="display: block;">
                         <div class="col-12 mt-3">
@@ -367,16 +309,13 @@
                             </div>
                         </div>
 
-
                         <div class="col-12 mt-3" id="motivo-rechazo-container" style="display: none;">
                             <label>Motivo del rechazo del que aprobo</label>
                             <textarea class="form-control" id="MOTIVO_RECHAZO" name="MOTIVO_RECHAZO" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
                         </div>
 
-
                         <div class="col-12 mt-3">
                             <div class="row">
-
                                 <div class="col-8">
                                     <label for="APROBACION">Quien aprueba</label>
                                     <input type="text" class="form-control" id="QUIEN_APROBACION" name="QUIEN_APROBACION" readonly required>
@@ -392,8 +331,6 @@
                         </div>
                     </div>
 
-
-                    <!-- Botón de firma -->
                     <div class="col-12 mt-3" id="DIV_FIRMAR" style="display:none; margin-top:10px;">
                         <div class="row justify-content-center">
                             <div class="col-6 text-center">
@@ -409,11 +346,19 @@
 
                     <input type="hidden" id="FIRMO_APROBACION" name="FIRMO_APROBACION" value="">
 
+                    <div class="col-12 mt-3">
+                        <label>Seleccionar contrato </label>
+                        <div id="estado-container" class="p-2 rounded">
+                            <select class="form-control" id="CONTRATO_ID" name="CONTRATO_ID" required>
+                                <option value="" selected disabled>Seleccione una opción</option>
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="col-12 mt-3">
                         <label>Subir documento </label>
                         <div id="estado-container" class="p-2 rounded">
-                            <select class="form-control" id="SUBIR_DOCUMENTO" name="SUBIR_DOCUMENTO" >
+                            <select class="form-control" id="SUBIR_DOCUMENTO" name="SUBIR_DOCUMENTO">
                                 <option value="" selected disabled>Seleccione una opción</option>
                                 <option value="Sí">Sí</option>
                                 <option value="No">No</option>
@@ -421,21 +366,14 @@
                         </div>
                     </div>
 
-
-
                     <div class="mb-3" id="SUBIR_DOCUMENTOS_SOLICITUDES" style="display: none;">
-                        <label>Subir documento</label>
+                        <label>Subir documento *</label>
                         <div class="input-group">
                             <input type="file" class="form-control" id="DOCUMENTO_SOLICITUD" name="DOCUMENTO_SOLICITUD" accept=".pdf" style="width: auto; flex: 1;" required>
                             <button type="button" class="btn btn-light btn-sm ms-2" id="quitar_recibo" style="display:none;">Quitar archivo</button>
                         </div>
                     </div>
                     <div id="RECIBO_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
-
-
-
-
-
                 </div>
 
 

@@ -71,7 +71,8 @@ class recemplaedosModel extends Model
         'HASTA_ANIO_VACACIONES',
         'AREA_VACACIONES',
         'DOCUMENTO_SOLICITUD',
-        'SUBIR_DOCUMENTO'
+        'SUBIR_DOCUMENTO',
 
+        'CONTRATO_ID'
     ];
 }

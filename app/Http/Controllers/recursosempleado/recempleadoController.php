@@ -52,28 +52,6 @@ class recempleadoController extends Controller
         }
     }
 
-    // public function obtenerDatosVacaciones()
-    // {
-    //     try {
-    //         $curp = auth()->user()->CURP;
-    //         $empleado = DB::table('formulario_contratacion')
-    //             ->where('CURP', $curp)
-    //             ->select('NUMERO_EMPLEADO','FECHA_INGRESO')
-    //             ->first();
-
-    //         return response()->json([
-    //             'numero_empleado' => $empleado ? $empleado->NUMERO_EMPLEADO : 'No disponible',
-    //             'fecha_ingreso' => $empleado ? $empleado->FECHA_INGRESO : ''
-
-    //         ]);
-    //     } catch (\Exception $e) {
-    //         return response()->json([
-    //             'error' => 'Error al obtener datos: ' . $e->getMessage()
-    //         ], 500);
-    //     }
-    // }
-
-
 
     public function obtenerDatosVacaciones()
     {
@@ -177,7 +155,54 @@ class recempleadoController extends Controller
             'area' => $area ? $area->NOMBRE : null
         ]);
     }
-    
+
+
+    public function obtenerUltimoContrato($curp)
+    {
+        try {
+            $contrato = DB::table('contratos_anexos_contratacion')
+                ->where('CURP', $curp)
+                ->orderBy('FECHAI_CONTRATO', 'desc') 
+                ->select('ID_CONTRATOS_ANEXOS', 'NOMBRE_DOCUMENTO_CONTRATO', 'FECHAI_CONTRATO', 'VIGENCIA_CONTRATO')
+                ->first();
+
+            if ($contrato) {
+                return response()->json([
+                    'success' => true,
+                    'contrato' => $contrato
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'mensaje' => 'No se encontraron contratos para esta CURP.'
+                ]);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+    public function obtenerContratoPorId($id)
+    {
+        try {
+            $contrato = DB::table('contratos_anexos_contratacion')
+                ->where('ID_CONTRATOS_ANEXOS', $id)
+                ->select('ID_CONTRATOS_ANEXOS', 'NOMBRE_DOCUMENTO_CONTRATO', 'FECHAI_CONTRATO', 'VIGENCIA_CONTRATO')
+                ->first();
+
+            if ($contrato) {
+                return response()->json(['success' => true, 'contrato' => $contrato]);
+            } else {
+                return response()->json(['success' => false, 'mensaje' => 'Contrato no encontrado.']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
+        }
+    }
 
 
     public function Tablarecempleados()

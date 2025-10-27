@@ -290,61 +290,74 @@ $(document).ready(function() {
     $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.VISUALIZAR', function () {
 
 
-        var tr = $(this).closest('tr');
-        var row = Tablarecempleadoaprobacion.row(tr);
+    var tr = $(this).closest('tr');
+    var row = Tablarecempleadoaprobacion.row(tr);
+
+    hacerSoloLectura(row.data(), '#miModal_RECURSOSEMPLEADOS');
+
+    ID_FORMULARIO_RECURSOS_EMPLEADOS = row.data().ID_FORMULARIO_RECURSOS_EMPLEADOS;
     
-        hacerSoloLectura(row.data(), '#miModal_RECURSOSEMPLEADOS');
+    CURP = row.data().CURP;
 
-        ID_FORMULARIO_RECURSOS_EMPLEADOS = row.data().ID_FORMULARIO_RECURSOS_EMPLEADOS;
-        
-        cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
+    $.get('/obtenerUltimoContrato/' + CURP, function (response) {
+        var selectContrato = $('#CONTRATO_ID');
+        selectContrato.empty(); 
+        selectContrato.append('<option value="" selected disabled>Seleccione una opción</option>');
 
+        if (response.success && response.contrato) {
+            var c = response.contrato;
+            var texto = c.NOMBRE_DOCUMENTO_CONTRATO + ' — ' +
+                        'Inicio: ' + (c.FECHAI_CONTRATO ?? 'Sin fecha') +
+                        ' — Fin: ' + (c.VIGENCIA_CONTRATO ?? 'Sin fecha');
 
-        editarDatoTabla(row.data(), 'formularioRECURSOSEMPLEADO', 'miModal_RECURSOSEMPLEADOS', 1);
-    
-
-        // === Para TIPO_SOLICITUD ===
-        if (row.data().TIPO_SOLICITUD === "1") {
-            $('#PERMISO_AUSENCIA').show();
-            $('#GOCE_SUELDO').show();
-            $('#SOLIDA_ALMACEN').hide();
-            $('#SOLICITUD_VACACIONES').hide();
-        } else if (row.data().TIPO_SOLICITUD === "2") {
-            $('#SOLIDA_ALMACEN').show();
-            $('#PERMISO_AUSENCIA').hide();
-            $('#GOCE_SUELDO').hide();
-            $('#SOLICITUD_VACACIONES').hide();
-        } else if (row.data().TIPO_SOLICITUD === "3") {
-            $('#SOLICITUD_VACACIONES').show();
-            $('#PERMISO_AUSENCIA').hide();
-            $('#GOCE_SUELDO').hide();
-            $('#SOLIDA_ALMACEN').hide();
-        }
-
-        // === Para CONCEPTO_PERMISO ===
-        if (row.data().CONCEPTO_PERMISO === "9") {
-            $('#EXPLIQUE_PERMISO').show();
+            selectContrato.append('<option value="' + c.ID_CONTRATOS_ANEXOS + '">' + texto + '</option>');
         } else {
-            $('#EXPLIQUE_PERMISO').hide();
+            selectContrato.append('<option value="" disabled>No hay contratos registrados</option>');
         }
+    });
+    
+    
+    cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
 
-   
 
-       
-        
-        
+    editarDatoTabla(row.data(), 'formularioRECURSOSEMPLEADO', 'miModal_RECURSOSEMPLEADOS', 1);
+
+
+    if (row.data().TIPO_SOLICITUD === "1") {
+        $('#PERMISO_AUSENCIA').show();
+        $('#GOCE_SUELDO').show();
+        $('#SOLIDA_ALMACEN').hide();
+        $('#SOLICITUD_VACACIONES').hide();
+    } else if (row.data().TIPO_SOLICITUD === "2") {
+        $('#SOLIDA_ALMACEN').show();
+        $('#PERMISO_AUSENCIA').hide();
+        $('#GOCE_SUELDO').hide();
+        $('#SOLICITUD_VACACIONES').hide();
+    } else if (row.data().TIPO_SOLICITUD === "3") {
+        $('#SOLICITUD_VACACIONES').show();
+        $('#PERMISO_AUSENCIA').hide();
+        $('#GOCE_SUELDO').hide();
+        $('#SOLIDA_ALMACEN').hide();
+    }
+
+    if (row.data().CONCEPTO_PERMISO === "9") {
+        $('#EXPLIQUE_PERMISO').show();
+    } else {
+        $('#EXPLIQUE_PERMISO').hide();
+    }
+
      if (row.data().DAR_BUENO == 1) { 
-            $('#VISTO_BUENO_JEFE').show();
-            $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+        $('#VISTO_BUENO_JEFE').show();
+        $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
 
-        } else if (row.data().DAR_BUENO == 2) {
-            $('#VISTO_BUENO_JEFE').show();
-            $('#MOTIVO_RECHAZO_JEFE_DIV').show();
+    } else if (row.data().DAR_BUENO == 2) {
+        $('#VISTO_BUENO_JEFE').show();
+        $('#MOTIVO_RECHAZO_JEFE_DIV').show();
 
-        } else {
-            $('#VISTO_BUENO_JEFE').hide();
-            $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-        }  
+    } else {
+        $('#VISTO_BUENO_JEFE').hide();
+        $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+    }  
 
 
     });
@@ -365,13 +378,45 @@ $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.EDITAR', function 
 
     cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
 
+  
     
+     var CURP = row.data().CURP;
+    var contratoExistente = row.data().CONTRATO_ID;
+
+    var selectContrato = $('#CONTRATO_ID');
+    selectContrato.empty();
+    selectContrato.append('<option value="" selected disabled>Seleccione una opción</option>');
+
+    if (contratoExistente && contratoExistente !== "") {
+        $.get('/obtenerContratoPorId/' + contratoExistente, function (response) {
+            if (response.success && response.contrato) {
+                var c = response.contrato;
+                var texto = `${c.NOMBRE_DOCUMENTO_CONTRATO} — Inicio: ${c.FECHAI_CONTRATO ?? 'Sin fecha'} — Fin: ${c.VIGENCIA_CONTRATO ?? 'Sin fecha'}`;
+                selectContrato.append(`<option value="${c.ID_CONTRATOS_ANEXOS}" selected>${texto}</option>`);
+            } else {
+                selectContrato.append('<option value="" disabled>Contrato no encontrado</option>');
+            }
+        });
+    } 
+    else {
+        $.get('/obtenerUltimoContrato/' + CURP, function (response) {
+            if (response.success && response.contrato) {
+                var c = response.contrato;
+                var texto = `${c.NOMBRE_DOCUMENTO_CONTRATO} — Inicio: ${c.FECHAI_CONTRATO ?? 'Sin fecha'} — Fin: ${c.VIGENCIA_CONTRATO ?? 'Sin fecha'}`;
+                selectContrato.append(`<option value="${c.ID_CONTRATOS_ANEXOS}">${texto}</option>`);
+            } else {
+                selectContrato.append('<option value="" disabled>No hay contratos registrados</option>');
+            }
+        });
+    }
+
+
+
     
     editarDatoTabla(row.data(), 'formularioRECURSOSEMPLEADO', 'miModal_RECURSOSEMPLEADOS', 1);
     
 
 
-                // === Para TIPO_SOLICITUD ===
     if (row.data().TIPO_SOLICITUD === "1") {
         $('#PERMISO_AUSENCIA').show();
         $('#GOCE_SUELDO').show();
@@ -389,102 +434,36 @@ $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.EDITAR', function 
         $('#SOLIDA_ALMACEN').hide();
     }
 
-    // === Para CONCEPTO_PERMISO ===
     if (row.data().CONCEPTO_PERMISO === "9") {
         $('#EXPLIQUE_PERMISO').show();
     } else {
         $('#EXPLIQUE_PERMISO').hide();
     }
-
- 
-
-    
         
    if (row.data().DAR_BUENO == 1) { 
     $('#VISTO_BUENO_JEFE').show();
     $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
 
-} else if (row.data().DAR_BUENO == 2) {
-    $('#VISTO_BUENO_JEFE').show();
-    $('#MOTIVO_RECHAZO_JEFE_DIV').show();
+    } else if (row.data().DAR_BUENO == 2) {
+        $('#VISTO_BUENO_JEFE').show();
+        $('#MOTIVO_RECHAZO_JEFE_DIV').show();
 
-} else {
-    $('#VISTO_BUENO_JEFE').hide();
-    $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-}
+    } else {
+        $('#VISTO_BUENO_JEFE').hide();
+        $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+    }
 
     
- if (row.data().FIRMO_APROBACION === "1") {
-            $('#DIV_FIRMAR').hide();
-        } else  {
-              $('#DIV_FIRMAR').show();
-            } 
+    if (row.data().FIRMO_APROBACION === "1") {
+        $('#DIV_FIRMAR').hide();
+    } else  {
+        $('#DIV_FIRMAR').show();
+    } 
 
 });
 
 
 
-// function cargarMaterialesDesdeJSON(materialesJson) {
-//     const contenedorMateriales = document.querySelector('.materialesdiv');
-//     contenedorMateriales.innerHTML = '';
-//     contadorMateriales = 1;
-
-//     try {
-//         const materiales = JSON.parse(materialesJson);
-
-//         materiales.forEach(material => {
-//             const divMaterial = document.createElement('div');
-//             divMaterial.classList.add('material-item', 'mt-2');
-
-//             divMaterial.innerHTML = `
-//                 <div class="row p-3 rounded">
-
-                 
-//                     <div class="col-1 mt-2">
-//                         <label class="form-label">N°</label>
-//                         <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
-//                     </div>
-//                     <div class="col-5 mt-2">
-//                         <label class="form-label">Descripción</label>
-//                         <input type="text" class="form-control" name="DESCRIPCION" value="${escapeHtml(material.DESCRIPCION)}" required>
-//                     </div>
-//                     <div class="col-1 mt-2">
-//                         <label class="form-label">Cantidad</label>
-//                         <input type="number" class="form-control" name="CANTIDAD" value="${material.CANTIDAD}" required>
-//                     </div>
-//                      <div class="col-3 mt-2">
-//                         <label class="form-label">¿El material y/o equipo retorna? *</label>
-//                         <select class="form-control" name="RETORNA_EQUIPO" required>
-//                             <option value="0" disabled>Seleccione una opción</option>
-//                             <option value="1" ${material.RETORNA_EQUIPO === "1" ? "selected" : ""}>Sí</option>
-//                             <option value="2" ${material.RETORNA_EQUIPO === "2" ? "selected" : ""}>No</option>
-//                         </select>
-//                     </div>
-
-//                         <div class="col-2 mt-3">
-//                             <br>
-//                             <button type="button" class="btn btn-danger botonEliminarMaterial" title="Eliminar">
-//                                 <i class="bi bi-trash"></i>
-//                             </button>
-//                         </div>
-                    
-//                 </div>
-//             `;
-
-//             contenedorMateriales.appendChild(divMaterial);
-//             contadorMateriales++;
-
-//             const botonEliminar = divMaterial.querySelector('.botonEliminarMaterial');
-//             botonEliminar.addEventListener('click', function () {
-//                 contenedorMateriales.removeChild(divMaterial);
-//                 actualizarNumerosOrden();
-//             });
-//         });
-
-//     } catch (e) {
-//         console.error('Error al parsear MATERIALES_JSON:', e);
-//     }
-// }
 
 
 

@@ -523,8 +523,10 @@ Route::get('/solicitudesvobo', function () { return view('RH.RecEmpleados.recemp
 Route::get('/Tablarecempleadovobo', [recempleadoController::class, 'Tablarecempleadovobo']);
 Route::get('/solicitudesaprobaciones', function () {return view('RH.RecEmpleados.recempleadoaprobacion');});
 Route::get('/Tablarecempleadoaprobacion', [recempleadoController::class, 'Tablarecempleadoaprobacion']);
-//// DESCARGA DOCUMENTOS PDF 
+Route::get('/obtenerUltimoContrato/{curp}', [recempleadoController::class, 'obtenerUltimoContrato']);
+Route::get('/obtenerContratoPorId/{id}', [recempleadoController::class, 'obtenerContratoPorId']);
 
+//// DESCARGA DOCUMENTOS PDF 
 
 Route::get('/generarPermisoausencia/{id}', [pdfrecempleadoController::class, 'generarPermisoausencia']);
 Route::get('/generarVacaciones/{id}', [pdfrecempleadoController::class, 'generarVacaciones']);
