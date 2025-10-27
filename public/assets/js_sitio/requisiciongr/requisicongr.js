@@ -129,18 +129,6 @@ $(document).on('click', '.btn-ver-mas-materiales', function() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 $('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
   var data = Tablabitacoragr.row($(this).parents('tr')).data();
 
@@ -163,13 +151,7 @@ if (resp.existe) {
     // ==========================
     // VARIAS GR (Parciales)
     // ==========================
-    // if (resp.grs && Object.keys(resp.grs).length > 1) {
-    //     let contenedor = $("#formulariorecepciongr .modal-body");
-    //     contenedor.empty(); 
-
-    //     let tabs = `<ul class="nav nav-tabs" id="tabsGR" role="tablist">`;
-    //     let panes = `<div class="tab-content" id="tabsGRContent">`;
-
+   
     if (resp.grs && Object.keys(resp.grs).length > 1) {
         $("#modal-body-base").hide();
         let contenedor = $("#modal-body-parciales");
@@ -1082,6 +1064,8 @@ $(document).on('change', '.gr_parcialjs', function () {
 
 
 
+
+
 // $('#DescargarGR').on('click', function () {
 //     let idsGR = [];
 
@@ -1092,8 +1076,7 @@ $(document).on('change', '.gr_parcialjs', function () {
 //                 idsGR.push(id);
 //             }
 //         });
-//     }
-//     else {
+//     } else {
 //         const id = $('#ID_GR').val();
 //         if (id && id !== "0") {
 //             idsGR.push(id);
@@ -1127,8 +1110,18 @@ $(document).on('change', '.gr_parcialjs', function () {
 //             let delay = 700;
 //             idsGR.forEach((id, i) => {
 //                 setTimeout(() => {
-//                     const url = `/generarGRpdf/${id}`;
-//                     window.open(url, '_blank');
+//                     $.ajax({
+//                         url: `/generarGRpdf/${id}`,
+//                         method: 'GET',
+//                         success: function () {
+//                             const url = `/generarGRpdf/${id}`;
+//                             window.open(url, '_blank');
+//                         },
+//                         error: function (xhr) {
+//                             let msg = xhr.responseJSON?.error || 'No se pudo generar el PDF.';
+//                             Swal.fire('Atención', msg, 'warning');
+//                         }
+//                     });
 //                 }, i * delay);
 //             });
 
@@ -1141,24 +1134,31 @@ $(document).on('change', '.gr_parcialjs', function () {
 
 
 
-
 $('#DescargarGR').on('click', function () {
     let idsGR = [];
 
+    // 🟦 CASO 1: Múltiples GR (Tabs activos)
     if ($(".form-gr").length > 0) {
-        $(".form-gr").each(function () {
-            const id = $(this).find('input[name="ID_GR[]"]').val();
-            if (id && id !== "0") {
-                idsGR.push(id);
-            }
-        });
-    } else {
-        const id = $('#ID_GR').val();
-        if (id && id !== "0") {
-            idsGR.push(id);
+        // Solo la pestaña activa
+        let activeTab = $(".tab-pane.show.active");
+        if (activeTab.length > 0) {
+            const id = activeTab.find('input[name="ID_GR[]"]').val();
+            if (id && id !== "0") idsGR.push(id);
+        } else {
+            // Si no hay tab activo, tomar todas (por seguridad)
+            $(".form-gr").each(function () {
+                const id = $(this).find('input[name="ID_GR[]"]').val();
+                if (id && id !== "0") idsGR.push(id);
+            });
         }
+    } 
+    // 🟦 CASO 2: GR normal (sin tabs)
+    else {
+        const id = $('#ID_GR').val();
+        if (id && id !== "0") idsGR.push(id);
     }
 
+    // 🟥 Validación
     if (idsGR.length === 0) {
         Swal.fire('Atención', 'No hay GR generadas para descargar.', 'warning');
         return;
@@ -1186,21 +1186,8 @@ $('#DescargarGR').on('click', function () {
             let delay = 700;
             idsGR.forEach((id, i) => {
                 setTimeout(() => {
-                    // 🟢 Validamos antes de abrir la descarga
-                    $.ajax({
-                        url: `/generarGRpdf/${id}`,
-                        method: 'GET',
-                        success: function () {
-                            // ✅ Si el backend devuelve el PDF correctamente
-                            const url = `/generarGRpdf/${id}`;
-                            window.open(url, '_blank');
-                        },
-                        error: function (xhr) {
-                            // ⚠️ Si FINALIZAR_GR != "Sí" u otro error
-                            let msg = xhr.responseJSON?.error || 'No se pudo generar el PDF.';
-                            Swal.fire('Atención', msg, 'warning');
-                        }
-                    });
+                    const url = `/generarGRpdf/${id}`;
+                    window.open(url, '_blank');
                 }, i * delay);
             });
 
