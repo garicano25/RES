@@ -170,12 +170,17 @@ class pdfgrController extends Controller
             $detalles = DB::table('formulario_bitacoragr_detalle')
                 ->where('ID_GR', $id)
                 ->where(function ($query) {
-                    $query->whereNull('BIENS_PARCIAL')
-                        ->orWhere('BIENS_PARCIAL', 'No')
-                        ->orWhere(function ($q) {
-                            $q->where('BIENS_PARCIAL', 'Sí')
-                                ->whereNotNull('CANTIDAD_ACEPTADA')
-                                ->where('CANTIDAD_ACEPTADA', '>', 0);
+                    $query->where(function ($q1) {
+                        $q1->whereNull('BIENS_PARCIAL')
+                            ->orWhere('BIENS_PARCIAL', '')
+                            ->orWhere('BIENS_PARCIAL', 'No');
+                    })
+                        ->orWhere(function ($q2) {
+                            $q2->where('BIENS_PARCIAL', 'Sí')
+                                ->where(function ($q3) {
+                                    $q3->whereNotNull('CANTIDAD_ACEPTADA')
+                                        ->where('CANTIDAD_ACEPTADA', '>', 0);
+                                });
                         });
                 })
                 ->select(
@@ -190,7 +195,8 @@ class pdfgrController extends Controller
 
 
 
-                
+
+
             $pdf = Pdf::loadView('pdf.gr_pdf', [
                 'orden' => $orden,
                 'proveedor' => $proveedor,
