@@ -49,13 +49,30 @@ class pdfgrController extends Controller
                 ->where('ID_USUARIO', $orden->USUARIO_ID)
                 ->first();
 
-  
+
+            // $detalles = DB::table('formulario_bitacoragr_detalle')
+            //     ->where('ID_GR', $id)
+            //     ->select('DESCRIPCION', 'CANTIDAD', 'CANTIDAD_RECHAZADA', 'CANTIDAD_ACEPTADA', 'VOBO_USUARIO_PRODUCTO')
+            //     ->get();
+
+            
             $detalles = DB::table('formulario_bitacoragr_detalle')
                 ->where('ID_GR', $id)
-                ->select('DESCRIPCION', 'CANTIDAD', 'CANTIDAD_RECHAZADA', 'CANTIDAD_ACEPTADA', 'VOBO_USUARIO_PRODUCTO')
+                ->where(function ($query) {
+                    $query->whereNull('BIENS_PARCIAL')
+                        ->orWhere('BIENS_PARCIAL', 'No');
+                })
+                ->select(
+                    'DESCRIPCION',
+                    'CANTIDAD',
+                    'CANTIDAD_RECHAZADA',
+                    'CANTIDAD_ACEPTADA',
+                    'VOBO_USUARIO_PRODUCTO',
+                    'BIENS_PARCIAL'
+                )
                 ->get();
 
-           
+
             $pdf = Pdf::loadView('pdf.gr_pdf', [
                 'orden' => $orden,
                 'proveedor' => $proveedor,
