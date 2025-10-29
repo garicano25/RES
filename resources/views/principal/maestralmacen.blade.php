@@ -309,7 +309,7 @@
 
 
     @if(request()->is('inventario'))
-    <script src="/assets/js_sitio/inventario/inventario.js?v=1.14"></script>
+    <script src="/assets/js_sitio/inventario/inventario.js?v=1.15"></script>
     @endif
 
     @if(request()->is('catalogotipoinventario'))
