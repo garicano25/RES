@@ -256,9 +256,29 @@
             <td class="bg-gray bold">Ciudad / País</td>
             <td>
                 @if ($proveedor->TIPO_PERSONA == '1')
-                {{ $proveedor->NOMBRE_LOCALIDAD_EMPRESA ?? '' }}, {{ $proveedor->PAIS_EMPRESA ?? '' }}
+                @php
+                $localidad = trim($proveedor->NOMBRE_LOCALIDAD_EMPRESA ?? '');
+                $pais = trim($proveedor->PAIS_EMPRESA ?? '');
+                @endphp
+                @if ($localidad && $pais)
+                {{ $localidad }}, {{ $pais }}
+                @elseif ($localidad)
+                {{ $localidad }}
+                @elseif ($pais)
+                {{ $pais }}
+                @endif
                 @else
-                {{ $proveedor->CIUDAD_EXTRANJERO ?? '' }}, {{ $proveedor->PAIS_EXTRANJERO ?? '' }}
+                @php
+                $ciudad = trim($proveedor->CIUDAD_EXTRANJERO ?? '');
+                $paisExt = trim($proveedor->PAIS_EXTRANJERO ?? '');
+                @endphp
+                @if ($ciudad && $paisExt)
+                {{ $ciudad }}, {{ $paisExt }}
+                @elseif ($ciudad)
+                {{ $ciudad }}
+                @elseif ($paisExt)
+                {{ $paisExt }}
+                @endif
                 @endif
             </td>
             <td class="bg-gray bold">Fecha de entrega<br>(aaaa/mm/dd)</td>

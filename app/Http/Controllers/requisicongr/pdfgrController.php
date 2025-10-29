@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use DB;
 
 use App\Models\proveedor\directorioModel;
+use App\Models\proveedor\proveedortempModel;
 
 
 class pdfgrController extends Controller
@@ -118,30 +119,71 @@ class pdfgrController extends Controller
                 return response()->json([
                     'error' => 'La GR no está finalizada aún. Solo se puede descargar cuando está finalizada.'
                 ], 400);
+            
             }
 
-            $proveedor = !empty($orden->PROVEEDOR_KEY)
-                ? directorioModel::where('RFC_PROVEEDOR', $orden->PROVEEDOR_KEY)->first()
-                : null;
+            $proveedor = null;
 
+            if (!empty($orden->PROVEEDOR_KEY)) {
+                $proveedor = directorioModel::where('RFC_PROVEEDOR', $orden->PROVEEDOR_KEY)->first();
+            }
+
+            if (!$proveedor && !empty($orden->PROVEEDOR_KEY)) {
+                $temp = proveedortempModel::where('RAZON_PROVEEDORTEMP', $orden->PROVEEDOR_KEY)->first();
+
+                if ($temp) {
+                    $proveedor = (object)[
+                        'TIPO_PERSONA' => 'TEMP',
+                        'RAZON_SOCIAL' => $temp->RAZON_PROVEEDORTEMP ?: 'N/P',
+                        'RFC_PROVEEDOR' => $temp->RFC_PROVEEDORTEMP ?: 'N/P',
+                        'NOMBRE_DIRECTORIO' => '',
+                        'TIPO_VIALIDAD_EMPRESA' => '',
+                        'NOMBRE_VIALIDAD_EMPRESA' => '',
+                        'NUMERO_EXTERIOR_EMPRESA' => '',
+                        'NUMERO_INTERIOR_EMPRESA' => '',
+                        'NOMBRE_COLONIA_EMPRESA' => '',
+                        'CODIGO_POSTAL' => '',
+                        'NOMBRE_LOCALIDAD_EMPRESA' => '',
+                        'NOMBRE_ENTIDAD_EMPRESA' => '',
+                        'PAIS_EMPRESA' => '',
+                        'TELEFONO_DIRECOTORIO' =>  '',
+                        'CELULAR_DIRECTORIO' =>  '',
+                        'CORREO_DIRECTORIO' =>  '',
+                        'DOMICILIO_EXTRANJERO' => '',
+                        'DEPARTAMENTO_EXTRANJERO' => '',
+                        'CODIGO_EXTRANJERO' => '',
+                        'ESTADO_EXTRANJERO' => '',
+                        'CIUDAD_EXTRANJERO' => '',
+                        'PAIS_EXTRANJERO' => ''
+                    ];
+                }
+            }
+
+            // 🔹 3. Si no se encontró en ningún lado → asignar valores por defecto
             if (!$proveedor) {
                 $proveedor = (object)[
                     'TIPO_PERSONA' => '1',
-                    'RAZON_SOCIAL' => 'N/A',
-                    'RFC_PROVEEDOR' => 'N/A',
-                    'NOMBRE_DIRECTORIO' => 'N/A',
-                    'TIPO_VIALIDAD_EMPRESA' => 'N/A',
-                    'NOMBRE_VIALIDAD_EMPRESA' => 'N/A',
-                    'NUMERO_EXTERIOR_EMPRESA' => 'N/A',
-                    'NUMERO_INTERIOR_EMPRESA' => 'N/A',
-                    'NOMBRE_COLONIA_EMPRESA' => 'N/A',
-                    'CODIGO_POSTAL' => 'N/A',
-                    'NOMBRE_LOCALIDAD_EMPRESA' => 'N/A',
-                    'NOMBRE_ENTIDAD_EMPRESA' => 'N/A',
-                    'PAIS_EMPRESA' => 'México',
-                    'TELEFONO_DIRECOTORIO' => 'N/A',
-                    'CELULAR_DIRECTORIO' => 'N/A',
-                    'CORREO_DIRECTORIO' => 'N/A'
+                    'RAZON_SOCIAL' => 'N/P',
+                    'RFC_PROVEEDOR' => 'N/P',
+                    'NOMBRE_DIRECTORIO' => '',
+                    'TIPO_VIALIDAD_EMPRESA' => '',
+                    'NOMBRE_VIALIDAD_EMPRESA' => '',
+                    'NUMERO_EXTERIOR_EMPRESA' => '',
+                    'NUMERO_INTERIOR_EMPRESA' => '',
+                    'NOMBRE_COLONIA_EMPRESA' => '',
+                    'CODIGO_POSTAL' => '',
+                    'NOMBRE_LOCALIDAD_EMPRESA' => '',
+                    'NOMBRE_ENTIDAD_EMPRESA' => '',
+                    'PAIS_EMPRESA' => '',
+                    'TELEFONO_DIRECOTORIO' => '',
+                    'CELULAR_DIRECTORIO' => '',
+                    'CORREO_DIRECTORIO' => '',
+                    'DOMICILIO_EXTRANJERO' => '',
+                    'DEPARTAMENTO_EXTRANJERO' => '',
+                    'CODIGO_EXTRANJERO' => '',
+                    'ESTADO_EXTRANJERO' => '',
+                    'CIUDAD_EXTRANJERO' => '',
+                    'PAIS_EXTRANJERO' => ''
                 ];
             }
 
