@@ -38,30 +38,6 @@ class AuthController extends Controller
     }
 
 
-
-
-    // public function login(Request $request)
-    // {
-    //     $credentials = $request->only('email', 'password');
-
-    //     // Intentar autenticación con EMPLEADO_CORREO
-    //     if (
-    //         Auth::attempt(['EMPLEADO_CORREO' => $credentials['email'], 'password' => $credentials['password'], 'ACTIVO' => 1]) ||
-    //         Auth::attempt(['RFC_PROVEEDOR' => $credentials['email'], 'password' => $credentials['password'], 'ACTIVO' => 1])
-    //     ) {
-
-    //         $user = Auth::user();
-
-    //         // Redirección según tipo de usuario
-    //         return ($user->USUARIO_TIPO == 1) ? redirect('/Módulos') : redirect('/Alta');
-    //     }
-
-    //     return redirect()->back()->withErrors([
-    //         'login_error' => 'Estas credenciales no coinciden con nuestros registros.',
-    //     ]);
-    // }
-
-
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
@@ -75,20 +51,6 @@ class AuthController extends Controller
                 'redirect' => ($user->USUARIO_TIPO == 1) ? '/modulos' : '/alta'
             ]);
         }
-
-        // if (Auth::attempt(['RFC_PROVEEDOR' => $credentials['email'], 'password' => $credentials['password'], 'ACTIVO' => 1])) {
-        //     $user = Auth::user();
-        //     $directorio = directorioModel::where('RFC_PROVEEDOR', $credentials['email'])->first();
-
-        //     if ($directorio && $directorio->CORREO_DIRECTORIO) {
-        //         return $this->sendVerificationCode($directorio->CORREO_DIRECTORIO, $user);
-        //     }
-
-        //     return response()->json([
-        //         'status' => 'error',
-        //         'message' => 'No se encontró un correo asociado a este RFC.'
-        //     ]);
-        // }
 
         if (Auth::attempt(['RFC_PROVEEDOR' => $credentials['email'], 'password' => $credentials['password'], 'ACTIVO' => 1])) {
             $user = Auth::user();
@@ -138,40 +100,6 @@ class AuthController extends Controller
             'redirect' => ($user->USUARIO_TIPO == 1) ? '/modulos' : '/alta'
         ]);
     }
-
-
-    // public function verifyCode(Request $request)
-    // {
-    //     $verification = VerificationCode::where('correo', $request->correo)
-    //         ->where('codigo', $request->codigo)
-    //         ->where('expires_at', '>', now())
-    //         ->first();
-
-    //     if (!$verification) {
-    //         Auth::logout();
-    //         session()->invalidate();
-    //         session()->regenerateToken();
-
-    //         return response()->json(['status' => 'error', 'message' => 'Código incorrecto o expirado']);
-    //     }
-
-    //     $directorio = directorioModel::where('CORREO_DIRECTORIO', $request->correo)->first();
-
-    //     if (!$directorio) {
-    //         return response()->json(['status' => 'error', 'message' => 'No se encontró el correo en formulario_directorio.']);
-    //     }
-
-    //     $user = usuarioModel::where('RFC_PROVEEDOR', $directorio->RFC_PROVEEDOR)->first();
-
-    //     if (!$user) {
-    //         return response()->json(['status' => 'error', 'message' => 'No se encontró un usuario con este RFC.']);
-    //     }
-
-    //     $verification->delete();
-    //     Auth::login($user);
-
-    //     return response()->json(['status' => 'success']);
-    // }
 
 
 

@@ -1059,30 +1059,31 @@ $(document).on('change', '.gr_parcialjs', function () {
 
 
 
-
-
-
-
-
-
-
 // $('#DescargarGR').on('click', function () {
 //     let idsGR = [];
 
+//     // 🟦 CASO 1: Múltiples GR (Tabs activos)
 //     if ($(".form-gr").length > 0) {
-//         $(".form-gr").each(function () {
-//             const id = $(this).find('input[name="ID_GR[]"]').val();
-//             if (id && id !== "0") {
-//                 idsGR.push(id);
-//             }
-//         });
-//     } else {
-//         const id = $('#ID_GR').val();
-//         if (id && id !== "0") {
-//             idsGR.push(id);
+//         // Solo la pestaña activa
+//         let activeTab = $(".tab-pane.show.active");
+//         if (activeTab.length > 0) {
+//             const id = activeTab.find('input[name="ID_GR[]"]').val();
+//             if (id && id !== "0") idsGR.push(id);
+//         } else {
+//             // Si no hay tab activo, tomar todas (por seguridad)
+//             $(".form-gr").each(function () {
+//                 const id = $(this).find('input[name="ID_GR[]"]').val();
+//                 if (id && id !== "0") idsGR.push(id);
+//             });
 //         }
 //     }
+//     // 🟦 CASO 2: GR normal (sin tabs)
+//     else {
+//         const id = $('#ID_GR').val();
+//         if (id && id !== "0") idsGR.push(id);
+//     }
 
+//     // 🟥 Validación
 //     if (idsGR.length === 0) {
 //         Swal.fire('Atención', 'No hay GR generadas para descargar.', 'warning');
 //         return;
@@ -1110,18 +1111,8 @@ $(document).on('change', '.gr_parcialjs', function () {
 //             let delay = 700;
 //             idsGR.forEach((id, i) => {
 //                 setTimeout(() => {
-//                     $.ajax({
-//                         url: `/generarGRpdf/${id}`,
-//                         method: 'GET',
-//                         success: function () {
-//                             const url = `/generarGRpdf/${id}`;
-//                             window.open(url, '_blank');
-//                         },
-//                         error: function (xhr) {
-//                             let msg = xhr.responseJSON?.error || 'No se pudo generar el PDF.';
-//                             Swal.fire('Atención', msg, 'warning');
-//                         }
-//                     });
+//                     const url = `/generarGRpdf/${id}`;
+//                     window.open(url, '_blank');
 //                 }, i * delay);
 //             });
 
@@ -1134,31 +1125,26 @@ $(document).on('change', '.gr_parcialjs', function () {
 
 
 
+
 $('#DescargarGR').on('click', function () {
     let idsGR = [];
 
-    // 🟦 CASO 1: Múltiples GR (Tabs activos)
     if ($(".form-gr").length > 0) {
-        // Solo la pestaña activa
         let activeTab = $(".tab-pane.show.active");
         if (activeTab.length > 0) {
             const id = activeTab.find('input[name="ID_GR[]"]').val();
             if (id && id !== "0") idsGR.push(id);
         } else {
-            // Si no hay tab activo, tomar todas (por seguridad)
             $(".form-gr").each(function () {
                 const id = $(this).find('input[name="ID_GR[]"]').val();
                 if (id && id !== "0") idsGR.push(id);
             });
         }
-    } 
-    // 🟦 CASO 2: GR normal (sin tabs)
-    else {
+    } else {
         const id = $('#ID_GR').val();
         if (id && id !== "0") idsGR.push(id);
     }
 
-    // 🟥 Validación
     if (idsGR.length === 0) {
         Swal.fire('Atención', 'No hay GR generadas para descargar.', 'warning');
         return;
@@ -1176,7 +1162,7 @@ $('#DescargarGR').on('click', function () {
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire({
-                title: 'Generando PDF...',
+                title: 'Verificando GR...',
                 text: 'Por favor espere unos segundos',
                 allowOutsideClick: false,
                 allowEscapeKey: false,
@@ -1184,14 +1170,36 @@ $('#DescargarGR').on('click', function () {
             });
 
             let delay = 700;
+
             idsGR.forEach((id, i) => {
                 setTimeout(() => {
-                    const url = `/generarGRpdf/${id}`;
-                    window.open(url, '_blank');
+                    fetch(`/generarGRpdf/${id}`)
+                        .then(async response => {
+                            const contentType = response.headers.get('Content-Type') || '';
+
+                            if (contentType.includes('application/json')) {
+                                const data = await response.json();
+                                Swal.fire('Atención', data.error || 'No se pudo generar el PDF.', 'warning');
+                                return;
+                            }
+                            if (response.ok) {
+                                const url = `/generarGRpdf/${id}`;
+                                window.open(url, '_blank');
+                            } else {
+                                Swal.fire('Error', 'No se pudo generar el PDF (estado inválido).', 'error');
+                            }
+                        })
+                        .catch(() => {
+                            Swal.fire('Error', 'No se pudo conectar con el servidor.', 'error');
+                        });
                 }, i * delay);
             });
 
-            Swal.close();
+            setTimeout(() => Swal.close(), idsGR.length * delay + 1000);
         }
     });
 });
+
+
+
+
