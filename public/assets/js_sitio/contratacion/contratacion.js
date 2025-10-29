@@ -4286,11 +4286,11 @@ function cargarTablaSolicitudvacaciones() {
                 $('#loadingIcon14').css('display', 'inline-block');
             },
             complete: function () {
-                $('#loadingIcon4').css('display', 'none');
+                $('#loadingIcon14').css('display', 'none');
                 Tablasolicitudvacaciones.columns.adjust().draw();
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                $('#loadingIcon4').css('display', 'none');
+                $('#loadingIcon14').css('display', 'none');
                 alertErrorAJAX(jqXHR, textStatus, errorThrown);
             },
             dataSrc: 'data'
