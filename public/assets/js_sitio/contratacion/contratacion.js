@@ -2822,7 +2822,8 @@ $('#Tablacontratosyanexos').on('click', 'button.informacion', function () {
     cargarTablaDocumentosSoporteContrato();
     cargarTablaRenovacionContrato ();
     cargarTablaInformacionMedica ();
-    cargarTablaIncidencias ();  
+    cargarTablaIncidencias();  
+    cargarTablaSolicitudvacaciones();
     cargarTablaAccionesDisciplinarias ();
     cargarTablaRecibosNomina();
 
@@ -3405,7 +3406,6 @@ function agregarevidencia() {
 });
 
 
-
 function cargarTablaRenovacionContrato() {
     if ($.fn.DataTable.isDataTable('#Tablarenovacioncontrato')) {
         Tablarenovacioncontrato.clear().destroy();
@@ -3557,9 +3557,6 @@ columns: [
 }
 
 
-
-
-
 $('#Tablarenovacioncontrato').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablarenovacioncontrato.row(tr);
@@ -3679,25 +3676,6 @@ $('#Tablarenovacioncontrato').on('click', '.ver-archivo-informacionrenovacion', 
     
     abrirModal(url, nombreDocumento);
 });
-
-
-
-// $('#Tablarenovacioncontrato').on('click', '.ver-archivo-informacionadenda', function () {
-//     var tr = $(this).closest('tr');
-//     var row = Tablarenovacioncontrato.row(tr);
-//     var id = $(this).data('id');
-
-//     if (!id) {
-//         alert('ARCHIVO NO ENCONTRADO.');
-//         return;
-//     }
-
-//     var nombreDocumento = row.data().COMENTARIO_ADENDA;
-//     var url = '/mostraradenda/' + id;
-    
-//     abrirModal(url, nombreDocumento);
-// });
-
 
 
 
@@ -4273,6 +4251,128 @@ $('#Tablaincidencias').on('click', '.ver-archivo-incidencias', function () {
     
     abrirModal(url, nombreDocumento);
 });
+
+// <!-- ============================================================== -->
+// <!-- SOLICITUD VACACIONES-->
+// <!-- ============================================================== -->
+
+
+function cargarTablaSolicitudvacaciones() {
+    if ($.fn.DataTable.isDataTable('#Tablasolicitudvacaciones')) {
+        Tablasolicitudvacaciones.clear().destroy();
+    }
+
+    Tablasolicitudvacaciones = $("#Tablasolicitudvacaciones").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        ajax: {
+            dataType: 'json',
+            data: { contrato: contrato_id },
+            method: 'GET',
+            cache: false,
+            url: '/Tablasolicitudvacaciones',
+            beforeSend: function () {
+                $('#loadingIcon14').css('display', 'inline-block');
+            },
+            complete: function () {
+                $('#loadingIcon4').css('display', 'none');
+                Tablasolicitudvacaciones.columns.adjust().draw();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#loadingIcon4').css('display', 'none');
+                alertErrorAJAX(jqXHR, textStatus, errorThrown);
+            },
+            dataSrc: 'data'
+        },
+        columns: [
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                }
+            },
+            { data: 'FECHA_SALIDA' },
+            { data: 'ANIO_SERVICIO_VACACIONES' },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return `
+                        <div>
+                            <span><strong>Desde:</strong> ${row.DESDE_ANIO_VACACIONES || '-'}</span><br>
+                            <span><strong>Hasta:</strong> ${row.HASTA_ANIO_VACACIONES || '-'}</span>
+                        </div>`;
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return `
+                        <div>
+                            <span><strong>Inicio:</strong> ${row.FECHA_INICIO_VACACIONES || '-'}</span><br>
+                            <span><strong>Fin:</strong> ${row.FECHA_TERMINACION_VACACIONES || '-'}</span>
+                        </div>`;
+                }
+            },
+            {
+                data: 'BTN_DOCUMENTO',
+                className: 'text-center',
+                render: function (data, type, row) {
+                    return row.DOCUMENTO_SOLICITUD ? data : '-';
+                }
+            },
+            { data: 'BTN_EDITAR' },
+        ],
+
+        columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'Fecha de solicitud', className: 'all text-center' },
+            { targets: 2, title: 'Año de servicio', className: 'all text-center' },
+            { targets: 3, title: 'Período a disfrutar', className: 'all text-center' },
+            { targets: 4, title: 'Fecha inicio/terminación', className: 'all text-center' },
+            { targets: 5, title: 'Visualizar documento', className: 'all text-center' },
+            { targets: 6, title: 'Visualizar', className: 'all text-center' },
+        ],
+    });
+}
+
+
+$('#Tablasolicitudvacaciones').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablasolicitudvacaciones.row(tr);
+
+    ID_FORMULARIO_RECURSOS_EMPLEADOS = row.data().ID_FORMULARIO_RECURSOS_EMPLEADOS;
+
+    editarDatoTabla(row.data(), 'formularioRECURSOSEMPLEADO', 'miModal_RECURSOSEMPLEADOS', 1);
+
+
+
+});
+
+$('#Tablasolicitudvacaciones').on('click', '.ver-archivo-recempleado', function () {
+    var tr = $(this).closest('tr');
+    var id = $(this).data('id');
+
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+
+    var url = '/mostrardocumentosrecempleados/' + id;
+    
+    abrirModal(url, 'Documento');
+});
+
 
 
 // <!-- ============================================================== -->
