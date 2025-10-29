@@ -246,8 +246,8 @@
                 {{ $proveedor->DOMICILIO_EXTRANJERO ?? '' }},
                 {{ $proveedor->DEPARTAMENTO_EXTRANJERO ?? '' }},
                 {{ $proveedor->CODIGO_EXTRANJERO ?? '' }},
-                {{ $proveedor->CIUDAD_EXTRANJERO ?? '' }},
                 {{ $proveedor->ESTADO_EXTRANJERO ?? '' }},
+                {{ $proveedor->CIUDAD_EXTRANJERO ?? '' }},
                 {{ $proveedor->PAIS_EXTRANJERO ?? '' }}
                 @endif
             </td>
