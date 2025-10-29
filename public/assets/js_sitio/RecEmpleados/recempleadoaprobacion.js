@@ -20,6 +20,9 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     $('#SUBIR_DOCUMENTOS_SOLICITUDES').hide();
     $('#GOCE_SUELDO').hide();
 
+    $('#SELECCIONAR_SUBIRDOCUMENTO').hide();
+
+
 
 
     
@@ -263,6 +266,13 @@ var Tablarecempleadoaprobacion = $("#Tablarecempleadoaprobacion").DataTable({
     { data: 'ESTADO_REVISION' }, 
     { data: 'ESTATUS' },     
     { data: 'DESCARGAR_FORMATOS' },
+    {
+        data: 'BTN_DOCUMENTO',
+        className: 'text-center',
+        render: function (data, type, row) {
+            return row.DOCUMENTO_SOLICITUD ? data : '-';
+        }
+    },
     { data: 'BTN_EDITAR' },
     { data: 'BTN_VISUALIZAR' },
 
@@ -276,13 +286,32 @@ columnDefs: [
     { targets: 4, title: 'Vo. Bo ', className: 'all text-center' },
     { targets: 5, title: 'Estatus', className: 'all text-center' },
     { targets: 6, title: 'Descargar formato', className: 'all text-center' }, 
-    { targets: 7, title: 'Editar', className: 'all text-center' },
-    { targets: 8, title: 'Visualizar', className: 'all text-center' },
+    { targets: 7, title: 'Visualizar documento', className: 'all text-center' }, 
+    { targets: 8, title: 'Editar', className: 'all text-center' },
+    { targets: 9, title: 'Visualizar', className: 'all text-center' },
 
 ]
 
 });
 
+
+
+
+
+
+$('#Tablarecempleadoaprobacion').on('click', '.ver-archivo-recempleado', function () {
+    var tr = $(this).closest('tr');
+    var id = $(this).data('id');
+
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+
+    var url = '/mostrardocumentosrecempleados/' + id;
+    
+    abrirModal(url, 'Documento');
+});
 
 
 
@@ -359,6 +388,20 @@ $(document).ready(function() {
         $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
     }  
 
+        
+
+    
+    if (row.data().ESTADO_APROBACION === "Aprobada") {
+     $('#SELECCIONAR_SUBIRDOCUMENTO').show();
+    } else if (row.data().ESTADO_APROBACION === "Rechazada") {
+     $('#SELECCIONAR_SUBIRDOCUMENTO').show();            
+    } else {
+     $('#SELECCIONAR_SUBIRDOCUMENTO').hide();
+
+    }
+
+        
+        
 
     });
 
@@ -460,6 +503,17 @@ $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.EDITAR', function 
         $('#DIV_FIRMAR').show();
     } 
 
+     
+    if (row.data().ESTADO_APROBACION === "Aprobada") {
+     $('#SELECCIONAR_SUBIRDOCUMENTO').show();
+    } else if (row.data().ESTADO_APROBACION === "Rechazada") {
+     $('#SELECCIONAR_SUBIRDOCUMENTO').show();            
+    } else {
+     $('#SELECCIONAR_SUBIRDOCUMENTO').hide();
+
+    }
+
+    
 });
 
 

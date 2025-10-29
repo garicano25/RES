@@ -404,6 +404,12 @@ class recempleadoController extends Controller
     //////////////////////////// SOLICITUDES PARA aprobación  ////////////////////////////
 
 
+    public function mostrardocumentosrecempleados($id)
+    {
+        $archivo = recemplaedosModel::findOrFail($id)->DOCUMENTO_SOLICITUD;
+        return Storage::response($archivo);
+    }
+
     public function Tablarecempleadoaprobacion()
     {
         try {
@@ -429,6 +435,7 @@ class recempleadoController extends Controller
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" checked><span class="slider round"></span></label>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-recempleado" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
                 }
 
 

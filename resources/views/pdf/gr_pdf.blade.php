@@ -280,7 +280,7 @@
                 {{ $paisExt }}
                 @endif
                 @endif
-            </td>
+            </td>   
             <td class="bg-gray bold">Fecha de entrega<br>(aaaa/mm/dd)</td>
             <td>{{ $orden->FECHA_ENTREGA_GR ?? '' }}</td>
         </tr>

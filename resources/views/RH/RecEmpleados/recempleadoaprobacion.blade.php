@@ -355,7 +355,7 @@
                         </div>
                     </div>
 
-                    <div class="col-12 mt-3">
+                    <div class="col-12 mt-3" id="SELECCIONAR_SUBIRDOCUMENTO" style="display: none;">
                         <label>Subir documento </label>
                         <div id="estado-container" class="p-2 rounded">
                             <select class="form-control" id="SUBIR_DOCUMENTO" name="SUBIR_DOCUMENTO">

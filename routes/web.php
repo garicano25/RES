@@ -481,6 +481,9 @@ Route::get('/mostrarinformacionmedica/{id}', [contratacionController::class, 'mo
 Route::get('/Tablaincidencias', [contratacionController::class, 'Tablaincidencias']);
 Route::get('/mostrarincidencias/{id}', [contratacionController::class, 'mostrarincidencias']);
 
+// SOLICITUD DE VACACIONES 
+Route::get('/Tablasolicitudvacaciones', [contratacionController::class, 'Tablasolicitudvacaciones']);
+
 // ACCIONES DISCIPLINARIAS 
 Route::get('/Tablaccionesdisciplinarias', [contratacionController::class, 'Tablaccionesdisciplinarias']);
 Route::get('/mostraracciones/{id}', [contratacionController::class, 'mostraracciones']);
@@ -527,6 +530,7 @@ Route::get('/solicitudesaprobaciones', function () {return view('RH.RecEmpleados
 Route::get('/Tablarecempleadoaprobacion', [recempleadoController::class, 'Tablarecempleadoaprobacion']);
 Route::get('/obtenerUltimoContrato/{curp}', [recempleadoController::class, 'obtenerUltimoContrato']);
 Route::get('/obtenerContratoPorId/{id}', [recempleadoController::class, 'obtenerContratoPorId']);
+Route::get('/mostrardocumentosrecempleados/{id}', [recempleadoController::class, 'mostrardocumentosrecempleados']);
 
 //// DESCARGA DOCUMENTOS PDF 
 
