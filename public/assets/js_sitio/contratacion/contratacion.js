@@ -2823,6 +2823,7 @@ $('#Tablacontratosyanexos').on('click', 'button.informacion', function () {
     cargarTablaRenovacionContrato ();
     cargarTablaInformacionMedica ();
     cargarTablaIncidencias();  
+    cargarTablaAusenciaEmpleado();
     cargarTablaSolicitudvacaciones();
     cargarTablaAccionesDisciplinarias ();
     cargarTablaRecibosNomina();
@@ -4251,6 +4252,162 @@ $('#Tablaincidencias').on('click', '.ver-archivo-incidencias', function () {
     
     abrirModal(url, nombreDocumento);
 });
+
+
+
+////// PERMISO DE AUSENCIA
+
+
+function cargarTablaAusenciaEmpleado() {
+    if ($.fn.DataTable.isDataTable('#Tablaspermisosrecempleados')) {
+        Tablaspermisosrecempleados.clear().destroy();
+    }
+
+    Tablaspermisosrecempleados = $("#Tablaspermisosrecempleados").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+
+        ajax: {
+            dataType: 'json',
+            data: { contrato: contrato_id },
+            method: 'GET',
+            cache: false,
+            url: '/Tablaspermisosrecempleados',
+            beforeSend: function () {
+                $('#loadingIcon15').css('display', 'inline-block');
+            },
+            complete: function () {
+                $('#loadingIcon15').css('display', 'none');
+                Tablaspermisosrecempleados.columns.adjust().draw();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#loadingIcon15').css('display', 'none');
+                alertErrorAJAX(jqXHR, textStatus, errorThrown);
+            },
+            dataSrc: 'data'
+        },
+
+        columns: [
+            {
+                data: 'CONCEPTO_PERMISO',
+                render: function (data, type, row) {
+                    const tipos = {
+                        1: 'Permiso',
+                        2: 'Incapacidad',
+                        3: 'Omitir registro en el checador',
+                        4: 'Fallecimiento',
+                        5: 'Matrimonio',
+                        6: 'Permiso de maternidad',
+                        7: 'Permiso de paternidad',
+                        8: 'Compensatorio',
+                        9: 'Otros'
+                    };
+                    return tipos[data] || '-';
+                }
+            },
+            {
+                data: 'FECHA_SALIDA',
+            },
+
+            {
+                data: null,
+                render: function (data, type, row) {
+                    return `
+                        <div>
+                            <span><strong>Inicial:</strong> ${row.FECHA_INICIAL_PERMISO || '-'}</span><br>
+                            <span><strong>Final:</strong> ${row.FECHA_FINAL_PERMISO || '-'}</span>
+                        </div>`;
+                }
+            },
+            {
+                data: 'BTN_DOCUMENTO',
+                className: 'text-center',
+                render: function (data, type, row) {
+                    return row.DOCUMENTO_SOLICITUD ? data : '-';
+                }
+            },
+            { data: 'BTN_EDITAR' },
+
+        ],
+
+        columnDefs: [
+            { targets: 0, title: 'Tipo de ausencia', className: 'all text-center' },
+            { targets: 1, title: 'Fecha de solicitud', className: 'all text-center' },
+            { targets: 2, title: 'Fecha inicial / final', className: 'all text-center' },
+            { targets: 3, title: 'Visualizar documento', className: 'all text-center' },
+            { targets: 4, title: 'Editar', className: 'all text-center' },
+        ],
+    });
+}
+
+
+const Modalmr = document.getElementById('miModal_PERMISORECEMPLEADO');
+Modalmr.addEventListener('hidden.bs.modal', event => {
+
+    ID_FORMULARIO_RECURSOS_EMPLEADOS = 0;
+    document.getElementById('formularioPERMISORECEMPLEADO').reset();
+
+    $('#EXPLIQUE_PERMISO').hide();
+    
+});
+
+
+$('#Tablaspermisosrecempleados').on('click', 'button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablaspermisosrecempleados.row(tr);
+
+
+    ID_FORMULARIO_RECURSOS_EMPLEADOS = row.data().ID_FORMULARIO_RECURSOS_EMPLEADOS;
+
+    editarDatoTabla(row.data(), 'formularioPERMISORECEMPLEADO', 'miModal_PERMISORECEMPLEADO', 1);
+    
+    if (row.data().TIPO_SOLICITUD === "1") {
+        $('#PERMISO_AUSENCIA').show();
+    } else if (row.data().TIPO_SOLICITUD === "2") {
+    } else if (row.data().TIPO_SOLICITUD === "3") {
+    }
+
+    if (row.data().CONCEPTO_PERMISO === "9") {
+        $('#EXPLIQUE_PERMISO').show();
+    } else {
+        $('#EXPLIQUE_PERMISO').hide();
+    }
+
+  
+});
+
+
+
+
+
+$('#Tablaspermisosrecempleados').on('click', '.ver-archivo-recempleado', function () {
+    var tr = $(this).closest('tr');
+    var id = $(this).data('id');
+
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+
+    var url = '/mostrardocumentosrecempleados/' + id;
+    
+    abrirModal(url, 'Documento');
+});
+
+
+
+
 
 // <!-- ============================================================== -->
 // <!-- SOLICITUD VACACIONES-->

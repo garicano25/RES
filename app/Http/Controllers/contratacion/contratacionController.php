@@ -832,6 +832,42 @@ public function Tablaincidencias(Request $request)
     }
 }
 
+
+
+    public function Tablaspermisosrecempleados(Request $request)
+    {
+        try {
+            $contrato = $request->get('contrato');
+
+            $tabla = recemplaedosModel::where('CONTRATO_ID', $contrato)
+                ->where('TIPO_SOLICITUD', 1)
+                ->where('ESTADO_APROBACION', 'Aprobada')
+                ->get();
+
+            foreach ($tabla as $value) {
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                } else {
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-recempleado" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
+                }
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
+
+
+
 public function mostrarincidencias($id)
 {
     $archivo = incidenciasModel::findOrFail($id)->DOCUMENTO_INCIDENCIAS;
