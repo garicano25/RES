@@ -210,13 +210,13 @@
 
                                 <div class="col-3 mt-3">
                                     <label class="form-label">Año de servicio </label>
-                                    <input type="number" class="form-control" id="ANIO_SERVICIO_VACACIONES" name="ANIO_SERVICIO_VACACIONES" required readonly>
+                                    <input type="number" class="form-control" id="ANIO_SERVICIO_VACACIONES" name="ANIO_SERVICIO_VACACIONES" required >
                                 </div>
 
 
                                 <div class="col-3 mt-3">
                                     <label class="form-label">Días que corresponden</label>
-                                    <input type="number" class="form-control" id="DIAS_CORRESPONDEN_VACACIONES" name="DIAS_CORRESPONDEN_VACACIONES" required readonly>
+                                    <input type="number" class="form-control" id="DIAS_CORRESPONDEN_VACACIONES" name="DIAS_CORRESPONDEN_VACACIONES" required >
                                 </div>
 
 
