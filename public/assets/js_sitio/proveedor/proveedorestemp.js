@@ -313,23 +313,6 @@ $('#Tablaproveedortemporal').on('click', '.ver-archivo-requierecontrato', functi
 
 
 
-// $('#Tablaproveedortemporal').on('click', '.ver-archivo-requierecontrato', function () {
-//     var tr = $(this).closest('tr');
-//     var row = Tablaproveedortemporal.row(tr);
-//     var id = $(this).data('id');
-
-//     if (!id) {
-//         alert('ARCHIVO NO ENCONTRADO.');
-//         return;
-//     }
-
-//     var nombreDocumento = row.data().RAZON_PROVEEDORTEMP;
-//     var url = '/mostrarequierecontrato/' + id;
-    
-//     abrirModal(url, nombreDocumento);
-// });
-
-
 $('#Tablaproveedortemporal tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablaproveedortemporal.row(tr);

@@ -529,8 +529,13 @@ Route::get('/solicitudesvobo', function () { return view('RH.RecEmpleados.recemp
 Route::get('/Tablarecempleadovobo', [recempleadoController::class, 'Tablarecempleadovobo']);
 Route::get('/solicitudesaprobaciones', function () {return view('RH.RecEmpleados.recempleadoaprobacion');});
 Route::get('/Tablarecempleadoaprobacion', [recempleadoController::class, 'Tablarecempleadoaprobacion']);
-Route::get('/obtenerUltimoContrato/{curp}', [recempleadoController::class, 'obtenerUltimoContrato']);
-Route::get('/obtenerContratoPorId/{id}', [recempleadoController::class, 'obtenerContratoPorId']);
+
+
+Route::get('/obtenerContratoPorFechaPermiso/{curp}', [recempleadoController::class, 'obtenerContratoPorFechaPermiso']);
+Route::get('/obtenerContratoPorFechaVacaciones/{curp}', [recempleadoController::class, 'obtenerContratoPorFechaVacaciones']);
+
+
+
 Route::get('/mostrardocumentosrecempleados/{id}', [recempleadoController::class, 'mostrardocumentosrecempleados']);
 
 //// DESCARGA DOCUMENTOS PDF 

@@ -398,23 +398,19 @@ $('#Tabladirectorio tbody').on('click', 'td>button.EDITAR', function () {
 
     editarDatoTabla(row.data(), 'formularioDIRECTORIO', 'miModal_POTENCIALES', 1);
     
-
-
     
     $("#tab1-info").click();
 
- 
-    
     $("#tab2-verif").off("click").on("click", function () {
         cargarTablaverificacion();
     });
 
 
-            if (row.data().PROVEEDOR_VERIFICADO == 1) {
-                $('#PROVEEDORES_VALIDACION').hide(); 
-            } else {
-                $('#PROVEEDORES_VALIDACION').show(); 
-            }
+    if (row.data().PROVEEDOR_VERIFICADO == 1) {
+        $('#PROVEEDORES_VALIDACION').hide(); 
+    } else {
+        $('#PROVEEDORES_VALIDACION').show(); 
+    }
 
 
     
@@ -587,21 +583,21 @@ function obtenerservicios(data) {
 
 
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const tipoPersona = document.getElementById("TIPO_PERSONA");
-        const domicilioNacional = document.getElementById("DOMICILIO_NACIONAL");
-        const domicilioExtranjero = document.getElementById("DOMICILIO_ERXTRANJERO");
+document.addEventListener("DOMContentLoaded", function () {
+    const tipoPersona = document.getElementById("TIPO_PERSONA");
+    const domicilioNacional = document.getElementById("DOMICILIO_NACIONAL");
+    const domicilioExtranjero = document.getElementById("DOMICILIO_ERXTRANJERO");
 
-        tipoPersona.addEventListener("change", function () {
-            if (this.value === "1") {
-                domicilioNacional.style.display = "block";
-                domicilioExtranjero.style.display = "none";
-            } else if (this.value === "2") {
-                domicilioNacional.style.display = "none";
-                domicilioExtranjero.style.display = "block";
-            }
-        });
+    tipoPersona.addEventListener("change", function () {
+        if (this.value === "1") {
+            domicilioNacional.style.display = "block";
+            domicilioExtranjero.style.display = "none";
+        } else if (this.value === "2") {
+            domicilioNacional.style.display = "none";
+            domicilioExtranjero.style.display = "block";
+        }
     });
+});
 
 
     

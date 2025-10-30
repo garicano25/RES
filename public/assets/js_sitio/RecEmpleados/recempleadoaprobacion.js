@@ -424,38 +424,7 @@ $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.EDITAR', function 
   
     
      var CURP = row.data().CURP;
-    var contratoExistente = row.data().CONTRATO_ID;
 
-    var selectContrato = $('#CONTRATO_ID');
-    selectContrato.empty();
-    selectContrato.append('<option value="" selected disabled>Seleccione una opción</option>');
-
-    if (contratoExistente && contratoExistente !== "") {
-        $.get('/obtenerContratoPorId/' + contratoExistente, function (response) {
-            if (response.success && response.contrato) {
-                var c = response.contrato;
-                var texto = `${c.NOMBRE_DOCUMENTO_CONTRATO} — Inicio: ${c.FECHAI_CONTRATO ?? 'Sin fecha'} — Fin: ${c.VIGENCIA_CONTRATO ?? 'Sin fecha'}`;
-                selectContrato.append(`<option value="${c.ID_CONTRATOS_ANEXOS}" selected>${texto}</option>`);
-            } else {
-                selectContrato.append('<option value="" disabled>Contrato no encontrado</option>');
-            }
-        });
-    } 
-    else {
-        $.get('/obtenerUltimoContrato/' + CURP, function (response) {
-            if (response.success && response.contrato) {
-                var c = response.contrato;
-                var texto = `${c.NOMBRE_DOCUMENTO_CONTRATO} — Inicio: ${c.FECHAI_CONTRATO ?? 'Sin fecha'} — Fin: ${c.VIGENCIA_CONTRATO ?? 'Sin fecha'}`;
-                selectContrato.append(`<option value="${c.ID_CONTRATOS_ANEXOS}">${texto}</option>`);
-            } else {
-                selectContrato.append('<option value="" disabled>No hay contratos registrados</option>');
-            }
-        });
-    }
-
-
-
-    
     editarDatoTabla(row.data(), 'formularioRECURSOSEMPLEADO', 'miModal_RECURSOSEMPLEADOS', 1);
     
 
@@ -465,6 +434,16 @@ $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.EDITAR', function 
         $('#GOCE_SUELDO').show();
         $('#SOLIDA_ALMACEN').hide();
         $('#SOLICITUD_VACACIONES').hide();
+
+        $.get('/obtenerContratoPorFechaPermiso/' + CURP, {
+        fecha_inicial: $('#FECHA_INICIAL_PERMISO').val(),
+        fecha_final: $('#FECHA_FINAL_PERMISO').val()
+    }, function (response) {
+        mostrarContrato(response);
+    });
+
+        
+        
     } else if (row.data().TIPO_SOLICITUD === "2") {
         $('#SOLIDA_ALMACEN').show();
         $('#PERMISO_AUSENCIA').hide();
@@ -475,6 +454,15 @@ $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.EDITAR', function 
         $('#PERMISO_AUSENCIA').hide();
         $('#GOCE_SUELDO').hide();
         $('#SOLIDA_ALMACEN').hide();
+
+        $.get('/obtenerContratoPorFechaVacaciones/' + CURP, {
+        fecha_inicio_vacaciones: $('#FECHA_INICIO_VACACIONES').val(),
+        fecha_terminacion_vacaciones: $('#FECHA_TERMINACION_VACACIONES').val()
+    }, function (response) {
+        mostrarContrato(response);
+    });
+            
+
     }
 
     if (row.data().CONCEPTO_PERMISO === "9") {
@@ -519,6 +507,18 @@ $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.EDITAR', function 
 
 
 
+function mostrarContrato(response) {
+    var selectContrato = $('#CONTRATO_ID');
+    selectContrato.empty();
+
+    if (response.success && response.contrato) {
+        var c = response.contrato;
+        var texto = `${c.NOMBRE_DOCUMENTO_CONTRATO} — Inicio: ${c.FECHAI_CONTRATO ?? 'Sin fecha'} — Fin: ${c.VIGENCIA_CONTRATO ?? 'Sin fecha'}`;
+        selectContrato.append(`<option value="${c.ID_CONTRATOS_ANEXOS}">${texto}</option>`);
+    } else {
+        selectContrato.append('<option value="" disabled selected>No hay contratos dentro de las fechas seleccionadas</option>');
+    }
+}
 
 
 
