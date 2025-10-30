@@ -2565,6 +2565,7 @@ function cargarTablaContratosyanexos() {
                     return data ? data : 'N/A';
                 }
             },
+            { data: 'FECHAI_CONTRATO', className: 'text-center' },
             {
                 data: null,
                 render: function (data, type, row) {
@@ -2620,11 +2621,12 @@ function cargarTablaContratosyanexos() {
             { targets: 0, title: '#', className: 'all text-center' },
             { targets: 1, title: 'Tipo de contrato / Adendas', className: 'all text-center' },
             { targets: 2, title: 'Nombre del Cargo', className: 'all text-center' },
-            { targets: 3, title: 'Fechas y Estado', className: 'all text-center' },
-            { targets: 4, title: 'Documentos', className: 'all text-center' },
-            { targets: 5, title: 'Editar', className: 'all text-center' },
-            { targets: 6, title: 'Credencial', className: 'all text-center' },
-            { targets: 7, title: 'Contrato', className: 'all text-center' }
+            { targets: 3, title: 'Fecha de Ingreso', className: 'all text-center' },
+            { targets: 4, title: 'Fechas y Estado', className: 'all text-center' },
+            { targets: 5, title: 'Documentos', className: 'all text-center' },
+            { targets: 6, title: 'Editar', className: 'all text-center' },
+            { targets: 7, title: 'Credencial', className: 'all text-center' },
+            { targets: 8, title: 'Contrato', className: 'all text-center' }
         ],
     });
 }
