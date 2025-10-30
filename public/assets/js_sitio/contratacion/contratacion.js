@@ -4346,7 +4346,7 @@ function cargarTablaAusenciaEmpleado() {
             { targets: 1, title: 'Fecha de solicitud', className: 'all text-center' },
             { targets: 2, title: 'Fecha inicial / final', className: 'all text-center' },
             { targets: 3, title: 'Visualizar documento', className: 'all text-center' },
-            { targets: 4, title: 'Editar', className: 'all text-center' },
+            { targets: 4, title: 'Visualizar', className: 'all text-center' },
         ],
     });
 }
@@ -4366,7 +4366,6 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
 $('#Tablaspermisosrecempleados').on('click', 'button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablaspermisosrecempleados.row(tr);
-
 
     ID_FORMULARIO_RECURSOS_EMPLEADOS = row.data().ID_FORMULARIO_RECURSOS_EMPLEADOS;
 

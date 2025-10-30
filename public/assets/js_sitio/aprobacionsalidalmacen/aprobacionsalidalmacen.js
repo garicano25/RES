@@ -2,16 +2,11 @@
 ID_FORMULARIO_RECURSOS_EMPLEADOS = 0
 
 
-
-
 const Modalmr = document.getElementById('miModal_RECURSOSEMPLEADOS');
 Modalmr.addEventListener('hidden.bs.modal', event => {
 
-
     ID_FORMULARIO_RECURSOS_EMPLEADOS = 0;
     document.getElementById('formularioRECURSOSEMPLEADO').reset();
-
-
 
     $('#FECHA_ESTIMADA').hide();
     $('#SOLIDA_ALMACEN').hide();
@@ -21,16 +16,8 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     $('#DIV_FIRMAR').show();
     $('#VISTO_BUENO_JEFE').hide();
     
-
-
-   
-
-
-    
     document.querySelector('.materialesdiv').innerHTML = '';
     contadorMateriales = 1;
-
-
 
      const inputFecha = document.getElementById("FECHA_APRUEBA_SOLICITUD");
     if (inputFecha) {
@@ -51,8 +38,6 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
 $("#NUEVO_RECUROSEMPLEADO").click(function (e) {
     e.preventDefault();
 
-
-       
     $('#formularioRECURSOSEMPLEADO').each(function(){
         this.reset();
     });
@@ -71,7 +56,6 @@ $("#NUEVO_RECUROSEMPLEADO").click(function (e) {
         }
         
         });
-
     
      $.get('/obtenerDatosPermiso', function (response) {
         if (response.cargo) {
@@ -81,12 +65,7 @@ $("#NUEVO_RECUROSEMPLEADO").click(function (e) {
             $("#NOEMPLEADO_PERMISO").val(response.numero_empleado);
         }
      });
-    
-    
-
-    
-
-   
+       
 });
 
 
@@ -106,16 +85,6 @@ let contadorMateriales = 1;
 }
     
     
-
-
-
-
-
-
-
-
-
-
 
 
 
