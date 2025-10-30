@@ -480,6 +480,7 @@ Route::get('/mostrarinformacionmedica/{id}', [contratacionController::class, 'mo
 // INCIDENCIAS 
 Route::get('/Tablaincidencias', [contratacionController::class, 'Tablaincidencias']);
 Route::get('/mostrarincidencias/{id}', [contratacionController::class, 'mostrarincidencias']);
+Route::get('/Tablaspermisosrecempleados', [contratacionController::class, 'Tablaspermisosrecempleados']);
 
 // SOLICITUD DE VACACIONES 
 Route::get('/Tablasolicitudvacaciones', [contratacionController::class, 'Tablasolicitudvacaciones']);

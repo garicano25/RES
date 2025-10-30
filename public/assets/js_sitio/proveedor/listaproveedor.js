@@ -2306,15 +2306,76 @@ document.addEventListener("DOMContentLoaded", function () {
     const selectTipoDocumento = document.getElementById("TIPO_DOCUMENTO_PROVEEDOR");
     const inputNombreDocumento = document.getElementById("NOMBRE_DOCUMENTO_PROVEEEDOR");
 
+    if (!selectTipoDocumento || !inputNombreDocumento) return;
+
     selectTipoDocumento.addEventListener("change", function () {
         const selectedOption = this.options[this.selectedIndex];
-        if (selectedOption && selectedOption.value) {
-            inputNombreDocumento.value = selectedOption.text.trim();
-        } else {
+
+        if (!selectedOption || !selectedOption.value) {
             inputNombreDocumento.value = "";
+            inputNombreDocumento.readOnly = true;
+            return;
+        }
+
+        if (selectedOption.value === "0") {
+            // 🔹 Si selecciona "Otro": dejar vacío y editable
+            inputNombreDocumento.value = "";
+            inputNombreDocumento.readOnly = false;
+            inputNombreDocumento.focus();
+        } else {
+            // 🔹 Si selecciona un documento existente: autocompletar y bloquear
+            inputNombreDocumento.value = selectedOption.text.trim();
+            inputNombreDocumento.readOnly = true;
         }
     });
 });
+
+
+
+
+// function cargarSelectDocumentosPorProveedor(rfcSeleccionada) {
+//     if (!rfcSeleccionada) return;
+
+//     const select = document.getElementById('TIPO_DOCUMENTO_PROVEEDOR');
+//     if (!select) return;
+
+//     select.innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
+
+//     fetch(`/documentosProveedorAdmin/${rfcSeleccionada}`)
+//         .then(response => response.json())
+//         .then(data => {
+//             const obligatorios = data.catalogo.filter(doc => doc.TIPO_DOCUMENTO === "1");
+//             const opcionales = data.catalogo.filter(doc => doc.TIPO_DOCUMENTO === "2");
+
+//             const crearGrupo = (label, documentos) => {
+//                 const group = document.createElement('optgroup');
+//                 group.label = label;
+
+//                 documentos.forEach(doc => {
+//                     const option = document.createElement('option');
+//                     option.value = doc.ID_CATALOGO_DOCUMENTOSPROVEEDOR;
+//                     option.textContent = doc.NOMBRE_DOCUMENTO;
+
+//                     if (data.registrados.includes(String(doc.ID_CATALOGO_DOCUMENTOSPROVEEDOR))) {
+//                         option.disabled = true;
+//                         option.style.color = 'green';
+//                         option.style.fontWeight = 'bold';
+//                     }
+
+//                     group.appendChild(option);
+//                 });
+
+//                 return group;
+//             };
+
+//             select.appendChild(crearGrupo('Documentos obligatorios', obligatorios));
+//             select.appendChild(crearGrupo('Documentos opcionales', opcionales));
+//         })
+//         .catch(err => {
+//             console.error('Error al cargar documentos:', err);
+//         });
+// }
+
 
 
 
@@ -2322,8 +2383,12 @@ function cargarSelectDocumentosPorProveedor(rfcSeleccionada) {
     if (!rfcSeleccionada) return;
 
     const select = document.getElementById('TIPO_DOCUMENTO_PROVEEDOR');
+    const inputNombre = document.getElementById('NOMBRE_DOCUMENTO');
+
+    // 🔹 Solo valida el select; no bloquea si el input no existe todavía
     if (!select) return;
 
+    // Limpia el select
     select.innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
 
     fetch(`/documentosProveedorAdmin/${rfcSeleccionada}`)
@@ -2341,11 +2406,15 @@ function cargarSelectDocumentosPorProveedor(rfcSeleccionada) {
                     option.value = doc.ID_CATALOGO_DOCUMENTOSPROVEEDOR;
                     option.textContent = doc.NOMBRE_DOCUMENTO;
 
+                    // Si ya está registrado, lo deshabilita
                     if (data.registrados.includes(String(doc.ID_CATALOGO_DOCUMENTOSPROVEEDOR))) {
                         option.disabled = true;
                         option.style.color = 'green';
                         option.style.fontWeight = 'bold';
                     }
+
+                    // Guarda el nombre del documento como atributo
+                    option.dataset.nombre = doc.NOMBRE_DOCUMENTO;
 
                     group.appendChild(option);
                 });
@@ -2353,14 +2422,41 @@ function cargarSelectDocumentosPorProveedor(rfcSeleccionada) {
                 return group;
             };
 
+            // Agrega los grupos
             select.appendChild(crearGrupo('Documentos obligatorios', obligatorios));
             select.appendChild(crearGrupo('Documentos opcionales', opcionales));
+
+            // 🔹 Agregar opción "Otro"
+            const optionOtro = document.createElement('option');
+            optionOtro.value = "0";
+            optionOtro.textContent = "Otro";
+            optionOtro.style.color = 'blue';
+            optionOtro.style.fontWeight = 'bold';
+            select.appendChild(optionOtro);
+
+            // 🔹 Solo si el input existe, agrega el listener
+            if (inputNombre) {
+                select.addEventListener('change', function () {
+                    const selectedOption = this.options[this.selectedIndex];
+
+                    if (selectedOption.value === "0") {
+                        // Si selecciona "Otro"
+                        inputNombre.readOnly = false;
+                        inputNombre.value = "";
+                        inputNombre.focus();
+                    } else {
+                        // Si selecciona un documento existente
+                        inputNombre.readOnly = true;
+                        inputNombre.value = selectedOption.dataset.nombre || "";
+                    }
+                });
+            }
         })
         .catch(err => {
             console.error('Error al cargar documentos:', err);
         });
 }
-
+    
 
 
 // <!-- ============================================================================================================================ -->
