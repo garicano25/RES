@@ -7,10 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class documentosarticulosModel extends Model
 {
-    protected $primaryKey = 'ID_CATALOGO_TIPOINVENTARIO';
-    protected $table = 'catalogo_tipoinventario';
+    protected $primaryKey = 'ID_DOCUMENTO_ARTICULO';
+    protected $table = 'documentos_articulosalmacen';
     protected $fillable = [
-        'DESCRIPCION_TIPO',
+        'INVENTARIO_ID',
+        'NOMBRE_DOCUMENTO',
+        'REQUIERE_FECHA',
+        'INDETERMINADO_DOCUMENTO',
+        'FECHAI_DOCUMENTO',
+        'FECHAF_DOCUMENTO',
+        'DOCUMENTO_ARTICULO',
         'ACTIVO'
     ];
 

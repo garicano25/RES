@@ -16,7 +16,9 @@ class CreateVerificacionProveedor extends Migration
         Schema::create('verificacion_proveedor', function (Blueprint $table) {
             $table->increments('ID_VERIFICACION_PROVEEDOR');
             $table->integer('PROVEEDOR_ID')->nullable();
-            $table->text('VERIFICADO_EN')->nullable();
+            $table->text('REQUIERE_FECHA')->nullable();
+            $table->text('REQUIERE_FECHA')->nullable();
+
             $table->text('EVIDENCIA_VERIFICACION')->nullable();
             $table->timestamps();
         });

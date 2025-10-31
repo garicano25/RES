@@ -155,6 +155,35 @@
                         </li>
 
 
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown" style="margin-left: -2px;">
+                                <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-card-list" style="margin-right: 5px;"></i>
+                                    <span class="d-lg-none">Bitácoras</span>
+                                    <span class="d-none d-lg-inline">Bitácoras</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{url('/#')}}">Consumibles</a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="{{url('/#')}}">Retornables</a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="{{url('/#')}}">Vehículos</a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="{{url('/#')}}">Comercial</a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="{{url('/#')}}">Asignación</a>
+                                    </li>
+
+
+                                </ul>
+                            </li>
+                        </ul>
+
+
                         @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
 
                         <li class="nav-item dropdown" style="margin-left: -2px;">
@@ -286,7 +315,7 @@
     <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
 
     <!-- Funciones generales -->
-    <script src="/assets/js_sitio/funciones.js?v=5.5"></script>
+    <script src="/assets/js_sitio/funciones.js?v=5.6"></script>
 
 
     <script>
@@ -309,7 +338,7 @@
 
 
     @if(request()->is('inventario'))
-    <script src="/assets/js_sitio/inventario/inventario.js?v=1.15"></script>
+    <script src="/assets/js_sitio/inventario/inventario.js?v=1.16"></script>
     @endif
 
     @if(request()->is('catalogotipoinventario'))

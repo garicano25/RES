@@ -88,7 +88,10 @@
                             <button class="nav-link active" id="tab1-info" data-bs-toggle="tab" data-bs-target="#contenido-info" type="button" role="tab">Información del producto</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="tab2-entrada" data-bs-toggle="tab" data-bs-target="#contenido-entrada" type="button" role="tab">Bitácora</button>
+                            <button class="nav-link" id="tab3-documentos" data-bs-toggle="tab" data-bs-target="#contenido-documentos" type="button" role="tab" style="display: none;">Documentación</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab2-entrada" data-bs-toggle="tab" data-bs-target="#contenido-entrada" type="button" role="tab" style="display: none;">Bitácora</button>
                         </li>
 
                     </ul>
@@ -194,7 +197,7 @@
                                                 <div class="col-12 mt-2" id="DESPUES_2024" style="display: block;">
                                                     <label class="form-label">Proveedor</label>
 
-                                                 
+
 
                                                     <select class="form-select text-center" id="PROVEEDOR_EQUIPO" name="PROVEEDOR_EQUIPO">
                                                         <option value="">Seleccionar proveedor</option>
@@ -221,13 +224,13 @@
                                                     <input type="text" class="form-control" id="PROVEEDOR_ANTESDEL2024">
                                                 </div>
 
-                                                <div class="col-4 mt-2">
+                                                <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label> Precio Unitario (MXN)</label>
                                                         <input type="text" step="any" class="form-control" id="UNITARIO_EQUIPO" name="UNITARIO_EQUIPO">
                                                     </div>
                                                 </div>
-                                                <div class="col-4 mt-2">
+                                                <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label> Precio Total</label>
                                                         <input type="text" class="form-control" id="TOTAL_EQUIPO" name="TOTAL_EQUIPO">
@@ -235,7 +238,7 @@
                                                 </div>
 
 
-                                                <div class="col-4 mt-2">
+                                                <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label>Tipo </label>
                                                         <select class="form-select" id="TIPO_EQUIPO" name="TIPO_EQUIPO" required>
@@ -247,6 +250,17 @@
 
                                                         </select>
                                                     </div>
+                                                </div>
+
+                                                <div class="col-3 mt-2">
+                                                    <label>Marcar si el art. requiere *</label>
+                                                    <select class="form-control" id="REQUIERE_ARTICULO" name="REQUIERE_ARTICULO">
+                                                        <option value="" selected disabled>Seleccione una opción</option>
+                                                        <option value="1">Documentación</option>
+                                                        <option value="2">Mantenimiento</option>
+                                                        <option value="3">N/A</option>
+
+                                                    </select>
                                                 </div>
 
 
@@ -266,7 +280,23 @@
                         </div> <!--   Fin del tab información del producto -->
 
 
-                        <!-- TAB 2: Entrada del producto -->
+                        <!-- TAB 2: Documentación del producto -->
+                        <div class="tab-pane fade" id="contenido-documentos" role="tabpanel">
+                            <ol class="breadcrumb mb-5">
+                                <h3 style="color: #ffffff; margin: 0;">&nbsp;Documentos del producto</h3>
+                                <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVA_DOCUMENTACION" style="margin-left: auto;">
+                                    Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                                </button>
+                            </ol>
+
+                            <div class="card-body">
+                                <div class="card-body position-relative" id="tabla_activo" style="display: block;">
+                                    <i id="loadingIcon1" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                                    <table id="Tabladocumentosinventario" class="table table-hover bg-white table-bordered text-center w-100 TableCustom"></table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- TAB 3: Entrada del producto -->
                         <div class="tab-pane fade" id="contenido-entrada" role="tabpanel">
                             <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
                                 <h3 style="color: #ffffff; margin: 0;">&nbsp;Bitácora</h3>
@@ -279,8 +309,6 @@
                                 </div>
                             </div>
                         </div>
-
-
 
                     </div>
                 </div>
@@ -295,7 +323,9 @@
 
 
 
-
+<!-- ============================================================== -->
+<!-- MODAL CARGAR EXCEL  -->
+<!-- ============================================================== -->
 
 <div id="modal_excel_equipo" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-lg">
@@ -373,6 +403,112 @@
         </div>
     </div>
 </div>
+
+
+<!-- ============================================================== -->
+<!-- MODAL DOCUMENTACION  -->
+<!-- ============================================================== -->
+
+
+
+<div class="modal fade" id="miModal_DOCUMENTOS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post" enctype="multipart/form-data" id="formularioDOCUMENTOS" style="background-color: #ffffff;">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo documento</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {!! csrf_field() !!}
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Nombre del documento *</label>
+                                <input type="text" class="form-control" name="NOMBRE_DOCUMENTO" id="NOMBRE_DOCUMENTO" required>
+                            </div>
+
+                            <div class="col-12 mt-4">
+                                <div class="row">
+                                    <div class="col-md-12 mb-3 text-center">
+                                        <h5 class="form-label"><b>Requiere fecha </b></h5>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="REQUIERE_FECHA" id="fechasi" value="1" required>
+                                            <label class="form-check-label" for="fechasi">Sí</label>
+                                        </div>
+
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="REQUIERE_FECHA" id="fechano" value="2">
+                                            <label class="form-check-label" for="fechano">No</label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3" id="FECHA_DOCUMENTO" style="display: none;">
+                                <div class="col-md-12 mb-3">
+                                    <div class="row">
+                                        <div class="col-4 mt-3">
+                                            <label>Fecha Inicio *</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_DOCUMENTO" name="FECHAI_DOCUMENTO" required>
+                                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 mt-3 text-center">
+                                            <h5 class="form-label"><b>Indeterminado</b></h5>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="INDETERMINADO_DOCUMENTO" id="indeterminadosi" value="1" required>
+                                                <label class="form-check-label" for="indeterminadosi">Sí</label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="INDETERMINADO_DOCUMENTO" id="indeterminadono" value="2">
+                                                <label class="form-check-label" for="indeterminadono">No</label>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-4 mt-3">
+                                            <label>Fecha Fin *</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_DOCUMENTO" name="FECHAF_DOCUMENTO" required>
+                                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Subir Evidencia (PDF) *</label>
+                                <div class="d-flex align-items-center">
+                                    <input type="file" class="form-control me-2" name="DOCUMENTO_ARTICULO" id="DOCUMENTO_ARTICULO" accept=".pdf">
+                                    <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" id="guardarDOCUMENTACION">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 
 
 @endsection

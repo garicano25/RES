@@ -126,6 +126,7 @@ class proveedortempController extends Controller
                 else {
                     $value->FECHA_CONTRATO = '<span class="badge bg-secondary">N/A</span>';
                 }
+                
             }
 
             return response()->json([

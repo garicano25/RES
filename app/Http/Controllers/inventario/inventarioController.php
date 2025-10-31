@@ -17,6 +17,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
 use App\Models\inventario\catalogotipoinventarioModel;
+use App\Models\inventario\documentosarticulosModel;
 
 use App\Models\inventario\entradasinventarioModel;
 
@@ -725,6 +726,103 @@ class inventarioController extends Controller
         }
     }
 
+    ///// DOCUMENTOS DEL EQUIPO 
+
+    public function Tabladocumentosinventario(Request $request)
+    {
+        try {
+            $equipo = $request->get('equipo');
+
+            $tabla = documentosarticulosModel::where('INVENTARIO_ID', $equipo)->get();
+            $fecha_actual = date('Y-m-d');
+
+
+
+
+            foreach ($tabla as $value) {
+                if ($value->ACTIVO == 0) {
+
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-verificacionproveedor" data-id="' . $value->ID_DOCUMENTO_ARTICULO . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                } else {
+
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentosequipo" data-id="' . $value->ID_DOCUMENTO_ARTICULO . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                }
+
+
+
+                if ($value->REQUIERE_FECHA == 1) {
+
+                    if ($value->INDETERMINADO_DOCUMENTO == 1) {
+                        $value->FECHAS_DOCUMENTOS = '
+                        <div>
+                            <strong>' . $value->FECHAI_DOCUMENTO . '</strong><br>
+                            <span class="badge bg-success text-light">Indeterminado</span>
+                        </div>';
+                    } elseif (!empty($value->FECHAI_DOCUMENTO) && !empty($value->FECHAF_DOCUMENTO)) {
+
+                        $fechaInicio = strtotime($value->FECHAI_DOCUMENTO);
+                        $fechaFin = strtotime($value->FECHAF_DOCUMENTO);
+                        $hoy = strtotime($fecha_actual);
+
+                        $total_dias = ($fechaFin - $fechaInicio) / 86400;
+                        $restantes = ($fechaFin - $hoy) / 86400;
+
+                        if ($hoy > $fechaFin) {
+                            $restantes = 0;
+                        }
+
+                        $transcurrido = $total_dias > 0 ? (($total_dias - $restantes) / $total_dias) * 100 : 100;
+
+                        if ($hoy > $fechaFin) {
+                            $color = 'danger';
+                            $texto = 'Vencido';
+                        } elseif ($transcurrido < 60) {
+                            $color = 'success';
+                            $texto = 'Vigente';
+                        } elseif ($transcurrido < 80) {
+                            $color = 'warning';
+                            $texto = 'Revisar';
+                        } else {
+                            $color = 'danger';
+                            $texto = 'Próximo a vencer';
+                        }
+
+                        $dias_restantes = max(0, floor($restantes));
+
+                        $value->FECHAS_DOCUMENTOS = '
+                        <div>
+                            <strong>' . $value->FECHAI_DOCUMENTO . ' - ' . $value->FECHAF_DOCUMENTO . '</strong><br>
+                            <span class="badge bg-' . $color . ' text-light">' . $texto . ' (' . $dias_restantes . ' días restantes)</span>
+                        </div>';
+                    } else {
+                        $value->FECHAS_DOCUMENTOS = 'Sin fecha';
+                    }
+                } else {
+                    $value->FECHAS_DOCUMENTOS = 'N/A';
+                }
+
+
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
+
+    public function mostrardocumentoquipo($id)
+    {
+        $archivo = documentosarticulosModel::findOrFail($id)->DOCUMENTO_ARTICULO;
+        return Storage::response($archivo);
+    }
 
 
     public function  store(Request $request)
@@ -827,8 +925,75 @@ class inventarioController extends Controller
                         }
                     }
                     break;
+                case 3:
+                    if ($request->ID_DOCUMENTO_ARTICULO == 0) {
+                        DB::statement('ALTER TABLE documentos_articulosalmacen AUTO_INCREMENT=1;');
+                        $cliente = documentosarticulosModel::create($request->all());
 
-                 case 2:
+                        if ($request->hasFile('DOCUMENTO_ARTICULO')) {
+                            $documento = $request->file('DOCUMENTO_ARTICULO');
+                            $articuloId = $cliente->INVENTARIO_ID;
+                            $registroId = $cliente->ID_DOCUMENTO_ARTICULO;
+
+                            $extension = $documento->getClientOriginalExtension();
+                            $nombreBase = pathinfo($documento->getClientOriginalName(), PATHINFO_FILENAME);
+                            $nombreLimpio = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $nombreBase);
+                            $nombreArchivo = $nombreLimpio . '.' . $extension;
+
+                            $ruta = "Almacén/Inventario/{$articuloId}/Documento del equipo/{$registroId}";
+                            $rutaCompleta = $documento->storeAs($ruta, $nombreArchivo);
+
+                            $cliente->DOCUMENTO_ARTICULO = $rutaCompleta;
+                            $cliente->save();
+                        }
+                    } else {
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $cliente = documentosarticulosModel::where('ID_DOCUMENTO_ARTICULO', $request['ID_DOCUMENTO_ARTICULO'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['cliente'] = 'Desactivada';
+                            } else {
+                                $cliente = documentosarticulosModel::where('ID_DOCUMENTO_ARTICULO', $request['ID_DOCUMENTO_ARTICULO'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['cliente'] = 'Activada';
+                            }
+                        } else {
+                            $cliente = documentosarticulosModel::find($request->ID_DOCUMENTO_ARTICULO);
+                            $cliente->update($request->all());
+
+                            if ($request->hasFile('DOCUMENTO_ARTICULO')) {
+                                $documento = $request->file('DOCUMENTO_ARTICULO');
+                                $articuloId = $cliente->INVENTARIO_ID;
+                                $registroId = $cliente->ID_DOCUMENTO_ARTICULO;
+
+                                $extension = $documento->getClientOriginalExtension();
+                                $nombreBase = pathinfo($documento->getClientOriginalName(), PATHINFO_FILENAME);
+                                $nombreLimpio = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $nombreBase);
+                                $nombreArchivo = $nombreLimpio . '.' . $extension;
+
+                                $ruta = "compras/{$articuloId}/verificacion del proveedor/{$registroId}";
+                                $rutaCompleta = $documento->storeAs($ruta, $nombreArchivo);
+
+                                $cliente->DOCUMENTO_ARTICULO = $rutaCompleta;
+                                $cliente->save();
+                            }
+
+
+                            $response['code'] = 1;
+                            $response['cliente'] = 'Actualizada';
+                        }
+
+                        return response()->json($response);
+                    }
+
+                    $response['code'] = 1;
+                    $response['cliente'] = $cliente;
+                    return response()->json($response);
+                    break;
+
+
+
+                case 2:
                     try {
                         if ($request->hasFile('excelEquipos')) {
                             $excel = $request->file('excelEquipos');

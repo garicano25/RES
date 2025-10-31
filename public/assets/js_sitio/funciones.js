@@ -3081,7 +3081,7 @@ function hacerSoloLecturainventario(data, modalSelector) {
       var fieldName = input.attr('name');
 
       if (input.attr('type') === 'file') {
-          input.prop('disabled', true);
+          input.prop('disabled', false);
       } else if (input.is(':radio') || input.is(':checkbox')) {
           input.prop('checked', data[fieldName] == input.val());
       } else {
@@ -3089,7 +3089,7 @@ function hacerSoloLecturainventario(data, modalSelector) {
       }
   });
 
-  modal.find('button').not('.btn-close, .btn-danger, .nav-tabs button, .nav-link, .EDITAR, .ver-archivo-verificacion').hide();
+  modal.find('button').not('.btn-close, .btn-danger, .nav-tabs button, .nav-link, .EDITAR, .ver-archivo-documentosequipo').hide();
   
   modal.find('.btn-close, .btn-danger, .nav-tabs button, .nav-link, .EDITAR, .ver-archivo-verificacion').prop('disabled', false);
 }

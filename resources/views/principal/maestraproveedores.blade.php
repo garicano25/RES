@@ -328,7 +328,7 @@
     <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
 
     <!-- Funciones generales -->
-    <script src="/assets/js_sitio/funciones.js?v=5.5"></script>
+    <script src="/assets/js_sitio/funciones.js?v=5.6"></script>
 
 
     <script src="/assets/js_sitio/proveedor/funciongeneralesproveedores.js"></script>
@@ -381,7 +381,7 @@
                 const idsExcluidos = ['TIPO_BANCO', 'OTRO_ID'];
 
                 if (idsExcluidos.includes(event.target.id)) {
-                    return; 
+                    return;
                 }
 
                 const palabras = event.target.value.split(' ').map(palabra => {

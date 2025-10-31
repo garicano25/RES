@@ -881,7 +881,6 @@ Route::get('/mostrarcaratula/{id}', [altacuentaController::class, 'mostrarcaratu
 
 //==============================================    INVENTRARIO  ============================================== 
 
-
 Route::get('/inventario', [inventarioController::class, 'index']);
 Route::get('/Tablainventario', [inventarioController::class, 'Tablainventario']);
 Route::post('/InventarioSave', [inventarioController::class, 'store']);
@@ -893,6 +892,11 @@ Route::get('/generarCodigoANF', [inventarioController::class, 'generarCodigoANF'
 /// ENTRADA INVENTARIO
 Route::get('/Tablaentradainventario', [inventarioController::class, 'Tablaentradainventario']);
 Route::post('/inventario/respaldar', [inventarioController::class, 'respaldarInventario'])->name('inventario.respaldar');
+
+/// DOCUMENTOS DEL EQUIPO
+Route::get('/Tabladocumentosinventario', [inventarioController::class, 'Tabladocumentosinventario']);
+Route::get('/mostrardocumentoquipo/{id}', [inventarioController::class, 'mostrardocumentoquipo']);
+
 
 //==============================================   CATALOGOS INVENTRARIO  ============================================== 
 Route::get('/catalogosinventarios', function () { return view('almacen.Catalogos.catalogo_inventarios');});
