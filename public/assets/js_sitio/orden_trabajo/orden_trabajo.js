@@ -20,15 +20,11 @@ Modalorden.addEventListener('hidden.bs.modal', event => {
     contadorMateriales = 1;    
 })
 
-
-
 const Modallinea = document.getElementById('modalMotivoRevision') 
 Modallinea.addEventListener('hidden.bs.modal', event => {
-    
-    
+        
     ID_FORMULARIO_ORDEN = 0
     document.getElementById('motivoRevisionInput').value = '';
-   
 
 })
 
