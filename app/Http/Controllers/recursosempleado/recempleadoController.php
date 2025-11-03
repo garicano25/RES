@@ -490,29 +490,32 @@ class recempleadoController extends Controller
     // }
 
 
+
     public function Tablarecempleadovobo()
     {
         try {
             $usuario = Auth::user();
             $idUsuario = $usuario->ID_USUARIO;
 
-            // Si el usuario autenticado es el ID 5, mostrar todos los registros sin filtros de roles
+            // --- Excepción para el usuario con ID 5 ---
             if ($idUsuario == 5) {
-                $tabla = recemplaedosModel::orderBy('FECHA_SALIDA', 'asc')->get();
+                $tabla = recemplaedosModel::where('DAR_BUENO', 0)
+                    ->orderBy('FECHA_SALIDA', 'asc')
+                    ->get();
 
                 foreach ($tabla as $value) {
-                    // Botones solo para visualizar, edición deshabilitada
+                    // Solo visualizar, editar deshabilitado
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
 
-                    // Mantiene el switch de eliminación pero no editable (puede ajustarse si deseas ocultarlo)
+                    // Switch deshabilitado (solo lectura)
                     if ($value->ACTIVO == 0) {
-                        $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" disabled><span class="slider round"></span></label>';
+                        $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" disabled class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"><span class="slider round"></span></label>';
                     } else {
-                        $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" checked disabled><span class="slider round"></span></label>';
+                        $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" disabled checked class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"><span class="slider round"></span></label>';
                     }
 
-                    // Traducción del tipo de solicitud
+                    // Tipo de solicitud
                     if ($value->TIPO_SOLICITUD == 1) {
                         $value->TIPO_SOLICITUD_TEXTO = 'Aviso de ausencia y/o permiso';
                     } elseif ($value->TIPO_SOLICITUD == 2) {
@@ -521,7 +524,7 @@ class recempleadoController extends Controller
                         $value->TIPO_SOLICITUD_TEXTO = 'Solicitud de Vacaciones';
                     }
 
-                    // Estado de revisión
+                    // Estado revisión
                     if ($value->DAR_BUENO == 0) {
                         $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">Revisar</span>';
                     } elseif ($value->DAR_BUENO == 1) {
@@ -532,7 +535,7 @@ class recempleadoController extends Controller
                         $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
                     }
 
-                    // Estatus de aprobación
+                    // Estatus aprobación
                     if ($value->ESTADO_APROBACION == 'Aprobada') {
                         $value->ESTATUS = '<span class="badge bg-success">Aprobado</span>';
                     } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
@@ -544,10 +547,11 @@ class recempleadoController extends Controller
 
                 return response()->json([
                     'data' => $tabla,
-                    'msj' => 'Información consultada correctamente (modo administrador ID 5)'
+                    'msj' => 'Información consultada correctamente (modo especial ID 5)'
                 ]);
             }
 
+            // --- Lógica original para los demás usuarios ---
             $roles = $usuario->roles()->pluck('NOMBRE_ROL')->toArray();
             $esDirector = in_array('Director', $roles);
 
@@ -641,6 +645,7 @@ class recempleadoController extends Controller
             ]);
         }
     }
+
 
 
     //////////////////////////// SOLICITUDES PARA aprobación  ////////////////////////////
