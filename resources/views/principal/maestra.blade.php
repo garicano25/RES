@@ -571,7 +571,7 @@
     @endif
 
     @if(request()->is('solicitudesvobo'))
-    <script src="/assets/js_sitio/RecEmpleados/recempleadovobo.js?v=1.6"></script>
+    <script src="/assets/js_sitio/RecEmpleados/recempleadovobo.js?v=1.7"></script>
     @endif
 
     @if(request()->is('solicitudesaprobaciones'))
