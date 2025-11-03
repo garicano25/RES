@@ -340,7 +340,7 @@
     @endif
 
     @if(request()->is('ordentrabajo'))
-    <script src="/assets/js_sitio/orden_trabajo/orden_trabajo.js?v=1.2"></script>
+    <script src="/assets/js_sitio/orden_trabajo/orden_trabajo.js?v=1.3"></script>
     @endif
 
     @if(request()->is('catalogolineanegocio'))

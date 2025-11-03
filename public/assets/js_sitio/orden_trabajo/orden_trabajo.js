@@ -385,26 +385,20 @@ $('#Tablaordentrabajo tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablaordentrabajo.row(tr);
 
     var data;
-    // 🔹 Si la fila tiene data (es principal)
     if (row.data()) {
         data = row.data();
 
-        // Mostrar botones principales (solo para edición normal)
         document.getElementById('crearREVISION').style.display = 'block';
         document.getElementById('guardarOT').style.display = 'block';
     } 
-    // 🔹 Si viene desde una revisión expandida
     else {
         data = JSON.parse($(this).attr('data-revision'));
 
-        // Ocultar botones de creación/guardado de revisión
         document.getElementById('crearREVISION').style.display = 'none';
         document.getElementById('guardarOT').style.display = 'none';
     }
 
-    // ========================
-    // 🔸 Tu lógica original intacta
-    // ========================
+  
 
     ID_FORMULARIO_ORDEN = data.ID_FORMULARIO_ORDEN;
 
@@ -453,10 +447,8 @@ $('#Tablaordentrabajo tbody').on('click', 'td>button.EDITAR', function () {
     $(".materialesdiv").empty();
     cargarMaterialesDesdeJSON(data.SERVICIOS_JSON);
 
-    // Actualiza el título del modal
     $('#miModal_OT .modal-title').html(data.NO_ORDEN_CONFIRMACION);
 
-    // Mostrar el modal
     $("#miModal_OT").modal("show");
 });
 
@@ -615,15 +607,31 @@ $(document).ready(function () {
                         $('#DIRECCION_CONFIRMACION').val('');
                     }
 
-                    const selectorSolicita = $('#SELECTOR_SOLICITA');
-                    selectorSolicita.empty().append('<option value="" disabled selected>Seleccione una opción</option>');
-                    data.contactos.forEach(function (nombre) {
-                        selectorSolicita.append('<option value="' + nombre + '">' + nombre + '</option>');
-                    });
-                    if (!modoEdicion) {
-                        $('#PERSONA_SOLICITA_CONFIRMACION').val('');
-                    }
+                    // const selectorSolicita = $('#SELECTOR_SOLICITA');
+                    // selectorSolicita.empty().append('<option value="" disabled selected>Seleccione una opción</option>');
+                    // data.contactos.forEach(function (nombre) {
+                    //     selectorSolicita.append('<option value="' + nombre + '">' + nombre + '</option>');
+                    // });
+                    // if (!modoEdicion) {
+                    //     $('#PERSONA_SOLICITA_CONFIRMACION').val('');
+                    // }
 
+
+                 const selectorSolicita = $('#SELECTOR_SOLICITA');
+                selectorSolicita.empty().append('<option value="" disabled selected>Seleccione una opción</option>');
+
+                data.contactos_completos.forEach(function (contacto) {
+                    const titulo = contacto.titulo ? contacto.titulo + '. ' : '';
+                    const textoCompleto = titulo + contacto.nombre;
+                    selectorSolicita.append('<option value="' + textoCompleto + '">' + textoCompleto + '</option>');
+                });
+
+                if (!modoEdicion) {
+                    $('#PERSONA_SOLICITA_CONFIRMACION').val('');
+                }
+
+
+                    
                     const selectorContacto = $('#SELECTOR_CONTACTO');
                     selectorContacto.empty().append('<option value="" disabled selected>Seleccione una opción</option>');
                     window.contactosMap = {};
