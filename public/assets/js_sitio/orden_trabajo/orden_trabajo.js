@@ -255,8 +255,6 @@ var Tablaordentrabajo = $("#Tablaordentrabajo").DataTable({
     ]
 });
 
-
-
 $("#Tablaordentrabajo tbody").on("click", ".ver-revisiones", function () {
     let btn = $(this);
     let tr = btn.closest("tr");
@@ -311,8 +309,6 @@ $("#Tablaordentrabajo tbody").on("click", ".ver-revisiones", function () {
         tr.addClass("shown");
     }
 });
-
-
 
 
 // $('#Tablaordentrabajo tbody').on('click', 'td>button.EDITAR', function () {
@@ -374,7 +370,6 @@ $("#Tablaordentrabajo tbody").on("click", ".ver-revisiones", function () {
 
 
 // });
-
 
 $('#Tablaordentrabajo tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
