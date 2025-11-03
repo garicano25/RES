@@ -123,7 +123,6 @@ use App\Http\Controllers\requisicongr\grController;
 use App\Http\Controllers\requisicongr\vobogrusuarioController;
 use App\Http\Controllers\requisicongr\pdfgrController;
 
-
 // CONTROLADORES DE LA PAGINA WEB
 use App\Http\Controllers\paginaweb\mensajespaginaController;
 
@@ -157,15 +156,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/verify-code', [AuthController::class, 'verifyCode']);
 
-
-// Route::middleware(['auth'])->group(function () {
-//     Route::get('/Módulos', function () {
-//         return view('principal.modulos');
-//     })->name('dashboard');
-// });
-
 //==============================================  ENVIAR CORREO  ============================================== 
-
 
 Route::post('/enviar-codigo', [VerificationController::class, 'enviarCodigo']);
 Route::post('/verificar-codigo', [VerificationController::class, 'verificarCodigo']);
@@ -173,7 +164,6 @@ Route::post('/verificar-codigo', [VerificationController::class, 'verificarCodig
 
 Route::get('/modulos', [catalogoanuncioController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Desarrollador de Software Junior,Consultor-Instructor Junior,Ama de llaves');
 Route::get('/tipo-cambio', [catalogoanuncioController::class, 'getTipoCambio']);
-
 
 //==============================================  USUARIO  ============================================== 
 
@@ -896,7 +886,6 @@ Route::post('/inventario/respaldar', [inventarioController::class, 'respaldarInv
 /// DOCUMENTOS DEL EQUIPO
 Route::get('/Tabladocumentosinventario', [inventarioController::class, 'Tabladocumentosinventario']);
 Route::get('/mostrardocumentoquipo/{id}', [inventarioController::class, 'mostrardocumentoquipo']);
-
 
 //==============================================   CATALOGOS INVENTRARIO  ============================================== 
 Route::get('/catalogosinventarios', function () { return view('almacen.Catalogos.catalogo_inventarios');});

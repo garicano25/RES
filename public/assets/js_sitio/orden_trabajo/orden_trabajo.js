@@ -1,12 +1,8 @@
-
-
 //VARIABLES
 ID_FORMULARIO_ORDEN = 0
 
 let modoEdicion = false;
 let datosEditados = {}; 
-
-
 
 
 const Modalorden = document.getElementById('miModal_OT')
@@ -26,6 +22,15 @@ Modalorden.addEventListener('hidden.bs.modal', event => {
 
 
 
+const Modallinea = document.getElementById('modalMotivoRevision') 
+Modallinea.addEventListener('hidden.bs.modal', event => {
+    
+    
+    ID_FORMULARIO_ORDEN = 0
+    document.getElementById('motivoRevisionInput').value = '';
+   
+
+})
 
 $(document).ready(function () {
     var selectizeInstance = $('#OFERTA_ID').selectize({
@@ -42,35 +47,30 @@ $(document).ready(function () {
                 modoEdicion = false;
 
 
-        $("#NUEVA_OT").click(function (e) {
-            e.preventDefault();
+    $("#NUEVA_OT").click(function (e) {
+        e.preventDefault();
 
-            $("#miModal_OT").modal("show");
-            document.getElementById('formularioOT').reset();
+        $("#miModal_OT").modal("show");
+        document.getElementById('formularioOT').reset();
 
-            Object.keys(selectize.options).forEach(function (id) {
-                if (!idsOriginales.includes(id)) {
-                    selectize.removeOption(id);
-                }
-            });
-
-            selectize.clear();
-            selectize.setValue([]);
-
-            const quienValidaInput = document.getElementById("VERIFICADO_POR");
-            const usuarioAutenticado = quienValidaInput.getAttribute("data-usuario");
-            quienValidaInput.value = usuarioAutenticado;
-
-            
+        Object.keys(selectize.options).forEach(function (id) {
+            if (!idsOriginales.includes(id)) {
+                selectize.removeOption(id);
+            }
         });
+
+        selectize.clear();
+        selectize.setValue([]);
+
+        const quienValidaInput = document.getElementById("VERIFICADO_POR");
+        const usuarioAutenticado = quienValidaInput.getAttribute("data-usuario");
+        quienValidaInput.value = usuarioAutenticado;
+
+        
+    document.getElementById('crearREVISION').style.display = 'none';
+
+    });
 });
-
-
-
-
-
-
-
 
 $("#guardarOT").click(function (e) {
     e.preventDefault();
@@ -190,10 +190,6 @@ $("#guardarOT").click(function (e) {
     
 });
 
-
-
-
-
 var Tablaordentrabajo = $("#Tablaordentrabajo").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
@@ -234,22 +230,91 @@ var Tablaordentrabajo = $("#Tablaordentrabajo").DataTable({
                 return meta.row + 1; 
             }
         },
+        { data: 'REVISION_ORDENCOMPRA' },
         { data: 'NO_OFERTA_HTML' },
-        { data: 'NO_ORDEN_CONFIRMACION' },
+        { 
+            data: 'NO_ORDEN_CONFIRMACION',
+            render: function(data, type, row) {
+                return `<button class="btn btn-link ver-revisiones" data-revisiones='${JSON.stringify(row.REVISIONES || [])}'>
+                            ${data}
+                        </button>`;
+            }
+        },
+        { data: 'FECHA_EMISION' },
+        { data: 'MOTIVO_REVISION_ORDENCOMPRA' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
-        { targets: 1, title: 'N° de cotización', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'N° de OT', className: 'all text-center nombre-column' },
-        { targets: 3, title: 'Editar', className: 'all text-center' },
-        { targets: 4, title: 'Visualizar', className: 'all text-center' },
-        { targets: 5, title: 'Activo', className: 'all text-center' }
+        { targets: 1, title: 'Versión', className: 'text-center' },
+        { targets: 2, title: 'N° de cotización', className: 'all text-center nombre-column' },
+        { targets: 3, title: 'N° de OT', className: 'all text-center nombre-column' },
+        { targets: 4, title: 'Fecha OT', className: 'all text-center nombre-column' },
+        { targets: 5, title: 'Motivo de la revisión', className: 'text-center' },
+        { targets: 6, title: 'Editar', className: 'all text-center' },
+        { targets: 7, title: 'Visualizar', className: 'all text-center' },
+        { targets: 8, title: 'Activo', className: 'all text-center' }
     ]
 });
 
+
+
+$("#Tablaordentrabajo tbody").on("click", ".ver-revisiones", function () {
+    let btn = $(this);
+    let tr = btn.closest("tr");
+    let row = Tablaordentrabajo.row(tr);
+    let revisiones = btn.data("revisiones");
+
+    if (!revisiones.length) {
+        alertToast("No hay revisiones anteriores para esta orden.", "warning", 3000);
+        return;
+    }
+
+    if (row.child.isShown()) {
+        row.child.hide();
+        tr.removeClass("shown");
+        btn.removeClass("opened");
+    } else {
+        btn.addClass("opened");
+
+        let revisionesHtml = `<table class="table table-sm table-bordered w-100">
+                                <thead>
+                                    <tr>
+                                        <th>Versión</th>
+                                        <th>N° de cotización</th>
+                                        <th>N° de OT</th>
+                                        <th>Fecha OT</th>
+                                        <th>Motivo de la revisión</th>
+                                        <th>Visualizar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+
+        revisiones.forEach((rev) => {
+            revisionesHtml += `<tr class="bg-light">
+                                    <td>${rev.REVISION_ORDENCOMPRA ?? ''}</td>
+                                    <td>${rev.NO_OFERTA_HTML ?? 'Sin oferta'}</td>
+                                    <td>${rev.NO_ORDEN_CONFIRMACION ?? ''}</td>
+                                    <td>${rev.FECHA_EMISION ?? ''}</td>
+                                    <td>${rev.MOTIVO_REVISION_ORDENCOMPRA ?? ''}</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm EDITAR" 
+                                            data-id="${rev.ID_FORMULARIO_ORDEN}"
+                                            data-revision='${JSON.stringify(rev)}'>
+                                            <i class="bi bi-pencil-square"></i> Visualizar
+                                        </button>
+                                    </td>
+                                </tr>`;
+        });
+
+        revisionesHtml += `</tbody></table>`;
+
+        row.child(revisionesHtml).show();
+        tr.addClass("shown");
+    }
+});
 
 
 
@@ -257,39 +322,60 @@ var Tablaordentrabajo = $("#Tablaordentrabajo").DataTable({
 // $('#Tablaordentrabajo tbody').on('click', 'td>button.EDITAR', function () {
 //     var tr = $(this).closest('tr');
 //     var row = Tablaordentrabajo.row(tr);
-//     ID_FORMULARIO_ORDEN = row.data().ID_FORMULARIO_ORDEN;
+//     var data = row.data();
 
-//     editarDatoTabla(row.data(), 'formularioOT', 'miModal_OT', 1);
+//     ID_FORMULARIO_ORDEN = data.ID_FORMULARIO_ORDEN;
 
+//     editarDatoTabla(data, 'formularioOT', 'miModal_OT', 1);
 
+//         modoEdicion = true;
 
-//   var selectize = $('#OFERTA_ID')[0].selectize;
-//         selectize.clear();
-//             selectize.setValue([]);
-            
-//             if (row.data().OFERTA_ID) {
-//                 try {
-//                     let ofertaArray = JSON.parse(row.data().OFERTA_ID);
-//                     let nombres = row.data().NO_OFERTA.split(',').map(e => e.trim()); 
-
-//                     if (Array.isArray(ofertaArray)) {
-//                         ofertaArray.forEach((id, index) => {
-//                             if (!selectize.options[id]) {
-//                                 selectize.addOption({ value: id, text: nombres[index] || id });
-//                             }
-//                         });
-
-//                         selectize.setValue(ofertaArray);
-//                     }
-//                 } catch (error) {
-//                     console.error("Error al parsear OFERTA_ID:", error);
-//                     selectize.clear();
-//                 }
+//         datosEditados = {
+//             direccion: data.DIRECCION_SERVICIO,
+//             solicita: data.PERSONA_SOLICITA,
+//             contacto: {
+//                 nombre: data.CONTACTO,
+//                 telefono: data.TELEFONO_CONTACTO,
+//                 celular: data.CELULAR_CONTACTO,
+//                 correo: data.EMAIL_CONTACTO
 //             }
+//         };
 
-//     if (row.data().VERIFICADO_POR) {
-//         $("#VERIFICADO_POR").val(row.data().VERIFICADO_POR);
+//         var selectize = $('#OFERTA_ID')[0].selectize;
+//         selectize.clear();
+//         selectize.setValue([]);
+
+//         if (data.OFERTA_ID) {
+//             try {
+//                 let ofertaArray = JSON.parse(data.OFERTA_ID);
+//                 let nombres = data.NO_OFERTA.split(',').map(e => e.trim());
+
+//                 if (Array.isArray(ofertaArray)) {
+//                     ofertaArray.forEach((id, index) => {
+//                         if (!selectize.options[id]) {
+//                             selectize.addOption({ value: id, text: nombres[index] || id });
+//                         }
+//                     });
+
+//                     selectize.setValue(ofertaArray); 
+//                 }
+//             } catch (error) {
+//                 console.error("Error al parsear OFERTA_ID:", error);
+//             }
+//         }
+
+//         if (data.VERIFICADO_POR) {
+//             $("#VERIFICADO_POR").val(data.VERIFICADO_POR);
 //     }
+    
+
+//     $(".materialesdiv").empty();
+
+//         cargarMaterialesDesdeJSON(row.data().SERVICIOS_JSON);
+
+    
+   
+
 
 // });
 
@@ -297,114 +383,134 @@ var Tablaordentrabajo = $("#Tablaordentrabajo").DataTable({
 $('#Tablaordentrabajo tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablaordentrabajo.row(tr);
-    var data = row.data();
+
+    var data;
+    // 🔹 Si la fila tiene data (es principal)
+    if (row.data()) {
+        data = row.data();
+
+        // Mostrar botones principales (solo para edición normal)
+        document.getElementById('crearREVISION').style.display = 'block';
+        document.getElementById('guardarOT').style.display = 'block';
+    } 
+    // 🔹 Si viene desde una revisión expandida
+    else {
+        data = JSON.parse($(this).attr('data-revision'));
+
+        // Ocultar botones de creación/guardado de revisión
+        document.getElementById('crearREVISION').style.display = 'none';
+        document.getElementById('guardarOT').style.display = 'none';
+    }
+
+    // ========================
+    // 🔸 Tu lógica original intacta
+    // ========================
 
     ID_FORMULARIO_ORDEN = data.ID_FORMULARIO_ORDEN;
 
     editarDatoTabla(data, 'formularioOT', 'miModal_OT', 1);
 
-        modoEdicion = true;
+    modoEdicion = true;
 
-        datosEditados = {
-            direccion: data.DIRECCION_SERVICIO,
-            solicita: data.PERSONA_SOLICITA,
-            contacto: {
-                nombre: data.CONTACTO,
-                telefono: data.TELEFONO_CONTACTO,
-                celular: data.CELULAR_CONTACTO,
-                correo: data.EMAIL_CONTACTO
-            }
-        };
-
-        var selectize = $('#OFERTA_ID')[0].selectize;
-        selectize.clear();
-        selectize.setValue([]);
-
-        if (data.OFERTA_ID) {
-            try {
-                let ofertaArray = JSON.parse(data.OFERTA_ID);
-                let nombres = data.NO_OFERTA.split(',').map(e => e.trim());
-
-                if (Array.isArray(ofertaArray)) {
-                    ofertaArray.forEach((id, index) => {
-                        if (!selectize.options[id]) {
-                            selectize.addOption({ value: id, text: nombres[index] || id });
-                        }
-                    });
-
-                    selectize.setValue(ofertaArray); 
-                }
-            } catch (error) {
-                console.error("Error al parsear OFERTA_ID:", error);
-            }
+    datosEditados = {
+        direccion: data.DIRECCION_SERVICIO,
+        solicita: data.PERSONA_SOLICITA,
+        contacto: {
+            nombre: data.CONTACTO,
+            telefono: data.TELEFONO_CONTACTO,
+            celular: data.CELULAR_CONTACTO,
+            correo: data.EMAIL_CONTACTO
         }
+    };
 
-        if (data.VERIFICADO_POR) {
-            $("#VERIFICADO_POR").val(data.VERIFICADO_POR);
+    var selectize = $('#OFERTA_ID')[0].selectize;
+    selectize.clear();
+    selectize.setValue([]);
+
+    if (data.OFERTA_ID) {
+        try {
+            let ofertaArray = JSON.parse(data.OFERTA_ID);
+            let nombres = data.NO_OFERTA.split(',').map(e => e.trim());
+
+            if (Array.isArray(ofertaArray)) {
+                ofertaArray.forEach((id, index) => {
+                    if (!selectize.options[id]) {
+                        selectize.addOption({ value: id, text: nombres[index] || id });
+                    }
+                });
+
+                selectize.setValue(ofertaArray);
+            }
+        } catch (error) {
+            console.error("Error al parsear OFERTA_ID:", error);
+        }
     }
-    
+
+    if (data.VERIFICADO_POR) {
+        $("#VERIFICADO_POR").val(data.VERIFICADO_POR);
+    }
 
     $(".materialesdiv").empty();
+    cargarMaterialesDesdeJSON(data.SERVICIOS_JSON);
 
-        cargarMaterialesDesdeJSON(row.data().SERVICIOS_JSON);
+    // Actualiza el título del modal
+    $('#miModal_OT .modal-title').html(data.NO_ORDEN_CONFIRMACION);
 
-    
-   
-
-
+    // Mostrar el modal
+    $("#miModal_OT").modal("show");
 });
-
-
 
 $(document).ready(function() {
     $('#Tablaordentrabajo tbody').on('click', 'td>button.VISUALIZAR', function () {
         var tr = $(this).closest('tr');
         var row = Tablaordentrabajo.row(tr);
-        
+        var data = row.data();
+            
         hacerSoloLectura(row.data(), '#miModal_OT');
 
         ID_FORMULARIO_ORDEN = row.data().ID_FORMULARIO_ORDEN;
-        editarDatoTabla(row.data(), 'formularioOT', 'miModal_OT', 1);
- modoEdicion = true;
 
-                datosEditados = {
-                    direccion: data.DIRECCION_SERVICIO,
-                    solicita: data.PERSONA_SOLICITA,
-                    contacto: {
-                        nombre: data.CONTACTO,
-                        telefono: data.TELEFONO_CONTACTO,
-                        celular: data.CELULAR_CONTACTO,
-                        correo: data.EMAIL_CONTACTO
-                    }
-                };
+         editarDatoTabla(data, 'formularioOT', 'miModal_OT', 1);
 
-                var selectize = $('#OFERTA_ID')[0].selectize;
-                selectize.clear();
-                selectize.setValue([]);
+            modoEdicion = true;
 
-                if (data.OFERTA_ID) {
-                    try {
-                        let ofertaArray = JSON.parse(data.OFERTA_ID);
-                        let nombres = data.NO_OFERTA.split(',').map(e => e.trim());
-
-                        if (Array.isArray(ofertaArray)) {
-                            ofertaArray.forEach((id, index) => {
-                                if (!selectize.options[id]) {
-                                    selectize.addOption({ value: id, text: nombres[index] || id });
-                                }
-                            });
-
-                            selectize.setValue(ofertaArray); 
-                        }
-                    } catch (error) {
-                        console.error("Error al parsear OFERTA_ID:", error);
-                    }
+            datosEditados = {
+                direccion: data.DIRECCION_SERVICIO,
+                solicita: data.PERSONA_SOLICITA,
+                contacto: {
+                    nombre: data.CONTACTO,
+                    telefono: data.TELEFONO_CONTACTO,
+                    celular: data.CELULAR_CONTACTO,
+                    correo: data.EMAIL_CONTACTO
                 }
+            };
 
-                if (data.VERIFICADO_POR) {
-                    $("#VERIFICADO_POR").val(data.VERIFICADO_POR);
+            var selectize = $('#OFERTA_ID')[0].selectize;
+            selectize.clear();
+            selectize.setValue([]);
+
+            if (data.OFERTA_ID) {
+                try {
+                    let ofertaArray = JSON.parse(data.OFERTA_ID);
+                    let nombres = data.NO_OFERTA.split(',').map(e => e.trim());
+
+                    if (Array.isArray(ofertaArray)) {
+                        ofertaArray.forEach((id, index) => {
+                            if (!selectize.options[id]) {
+                                selectize.addOption({ value: id, text: nombres[index] || id });
+                            }
+                        });
+
+                        selectize.setValue(ofertaArray); 
+                    }
+                } catch (error) {
+                    console.error("Error al parsear OFERTA_ID:", error);
                 }
+            }
 
+            if (data.VERIFICADO_POR) {
+                $("#VERIFICADO_POR").val(data.VERIFICADO_POR);
+        }
 
     });
 
@@ -413,15 +519,11 @@ $(document).ready(function() {
     });
 });
 
-
-
 document.addEventListener("DOMContentLoaded", function () {
     const quienValidaInput = document.getElementById("VERIFICADO_POR");
     const usuarioAutenticado = quienValidaInput.getAttribute("data-usuario");
     quienValidaInput.value = usuarioAutenticado;
 });
-
-
 
 let contadorMateriales = 1; 
 document.addEventListener("DOMContentLoaded", function () {
@@ -474,8 +576,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-
-
  function actualizarNumerosOrden() {
         const materiales = document.querySelectorAll('.material-item');
         let nuevoContador = 1;
@@ -485,73 +585,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         contadorMateriales = nuevoContador;
 }
-
-
-// $(document).ready(function () {
-//    $('#OFERTA_ID').change(function () {
-//     var selectedIds = $(this).val();
-
-//     if (selectedIds.length > 0) {
-//         $.ajax({
-//             url: '/obtenerDatosOferta',
-//             method: 'POST',
-//             headers: {
-//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//             },
-//             data: {
-//                 oferta_ids: selectedIds
-//             },
-//             success: function (data) {
-//                 $('#RAZON_CONFIRMACION').val(data.razones.join(', '));
-//                 $('#COMERCIAL_CONFIRMACION').val(data.comerciales.join(', '));
-//                 $('#RFC_CONFIRMACION').val(data.rfcs.join(', '));
-//                 $('#GIRO_CONFIRMACION').val(data.giros.join(', '));
-
-//                 const selectorDir = $('#SELECTOR_DIRECCION');
-//                 selectorDir.empty().append('<option value="" disabled selected>Seleccione una opción</option>');
-//                 data.direcciones.forEach(function (direccion) {
-//                     selectorDir.append('<option value="' + direccion + '">' + direccion + '</option>');
-//                 });
-//                 if (!modoEdicion) {
-//                     $('#DIRECCION_CONFIRMACION').val('');
-//                 }
-
-//                 const selectorSolicita = $('#SELECTOR_SOLICITA');
-//                 selectorSolicita.empty().append('<option value="" disabled selected>Seleccione una opción</option>');
-//                 data.contactos.forEach(function (nombre) {
-//                     selectorSolicita.append('<option value="' + nombre + '">' + nombre + '</option>');
-//                 });
-//                 if (!modoEdicion) {
-//                     $('#PERSONA_SOLICITA_CONFIRMACION').val('');
-//                 }
-
-//                 const selectorContacto = $('#SELECTOR_CONTACTO');
-//                 selectorContacto.empty().append('<option value="" disabled selected>Seleccione una opción</option>');
-//                 window.contactosMap = {};
-//                 data.contactos_completos.forEach(function (contacto) {
-//                     selectorContacto.append('<option value="' + contacto.nombre + '">' + contacto.nombre + '</option>');
-//                     window.contactosMap[contacto.nombre] = contacto;
-//                 });
-
-//                 if (!modoEdicion) {
-//                     $('#CONTACTO_CONFIRMACION').val('');
-//                     $('#CONTACTO_TELEFONO_CONFIRMACION').val('');
-//                     $('#CONTACTO_CELULAR_CONFIRMACION').val('');
-//                     $('#CONTACTO_EMAIL_CONFIRMACION').val('');
-//                 }
-
-//                 modoEdicion = false;
-//             },
-//             error: function (xhr) {
-//                 console.error(xhr.responseText);
-//                 alert('Hubo un error al obtener los datos.');
-//             }
-//         });
-//     }
-// });
-
-// });
-
 
 $(document).ready(function () {
     $('#OFERTA_ID').change(function () {
@@ -600,6 +633,7 @@ $(document).ready(function () {
                     });
 
                     if (!modoEdicion) {
+                        $('#TITULO_CONFIRMACION').val('');
                         $('#CONTACTO_CONFIRMACION').val('');
                         $('#CONTACTO_TELEFONO_CONFIRMACION').val('');
                         $('#CONTACTO_CELULAR_CONFIRMACION').val('');
@@ -632,10 +666,12 @@ $(document).ready(function () {
 
         if (datos) {
             $('#CONTACTO_CONFIRMACION').val(datos.nombre);
+            $('#TITULO_CONFIRMACION').val(datos.titulo);
             $('#CONTACTO_TELEFONO_CONFIRMACION').val(datos.telefono);
             $('#CONTACTO_CELULAR_CONFIRMACION').val(datos.celular);
             $('#CONTACTO_EMAIL_CONFIRMACION').val(datos.correo);
         } else {
+            $('#TITULO_CONFIRMACION').val('');
             $('#CONTACTO_CONFIRMACION').val('');
             $('#CONTACTO_TELEFONO_CONFIRMACION').val('');
             $('#CONTACTO_CELULAR_CONFIRMACION').val('');
@@ -643,8 +679,6 @@ $(document).ready(function () {
         }
     });
 });
-
-
 
 function cargarMaterialesDesdeJSON(serviciosJson) {
     const contenedorMateriales = document.querySelector('.materialesdiv');
@@ -695,3 +729,75 @@ function cargarMaterialesDesdeJSON(serviciosJson) {
         console.error('Error al parsear SERVICIOS_JSON:', e);
     }
 }
+
+
+////// CREAR REVISION
+
+
+$("#crearREVISION").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormularioV1('formularioOFERTAS');
+
+    if (formularioValido) {
+        $("#modalMotivoRevision").modal("show");
+    } else {
+        Swal.fire("Error", "Por favor, complete todos los campos del formulario.", "error");
+    }
+});
+
+$("#confirmarMotivoRevision").click(function () {
+    let motivoRevision = $("#motivoRevisionInput").val().trim();
+
+    if (motivoRevision === "") {
+        Swal.fire("Error", "El motivo de la revisión es obligatorio.", "error");
+        return;
+    }
+
+    let csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+    $.ajax({
+        url: 'otSave', 
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken
+        },
+        data: {
+            api: 2, 
+            ID_FORMULARIO_ORDEN: ID_FORMULARIO_ORDEN,
+            MOTIVO_REVISION_ORDENCOMPRA: motivoRevision,
+            _token: csrfToken 
+        },
+        beforeSend: function () {
+            Swal.fire({
+                icon: 'info',
+                title: 'Espere un momento',
+                text: 'Estamos creando la revisión...',
+                showConfirmButton: false,
+                allowOutsideClick: false
+            });
+        },
+        success: function (response) {
+            if (response.code === 1) {
+                ID_FORMULARIO_ORDEN = response.oferta.ID_FORMULARIO_ORDEN;
+
+                $("#modalMotivoRevision").modal("hide");
+                $("#miModal_OT").modal("hide");
+
+                Swal.fire(
+                    "Revisión Creada",
+                    "Se ha generado una nueva versión de la oferta.",
+                    "success"
+                ).then(() => {
+                    Tablaordentrabajo.ajax.reload(); 
+                });
+
+            } else {
+                Swal.fire("Error", "Error al crear la revisión.", "error");
+            }
+        },
+        error: function () {
+            Swal.fire("Error", "Ocurrió un error en la petición AJAX.", "error");
+        }
+    });
+});

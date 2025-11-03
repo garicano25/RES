@@ -106,9 +106,13 @@ class ofertasController extends Controller
     
                 foreach ($revisiones as $rev) {
                     $rev->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $rev->ID_FORMULARIO_OFERTAS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
+
                     $value->BTN_TERMINOS = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-terminos" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
+
                     $rev->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR" data-id="' . $rev->ID_FORMULARIO_OFERTAS . '"><i class="bi bi-pencil-square"></i></button>';
+
                     $rev->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    
                     $rev->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $rev->ID_FORMULARIO_OFERTAS . '" checked><span class="slider round"></span></label>';
                 }
     
@@ -184,64 +188,6 @@ class ofertasController extends Controller
         }
     }
 
-
-
-
-
-
-
-    // public function store(Request $request)
-    // {
-    //     try {
-    //         switch (intval($request->api)) {
-    //             case 1:
-    //                 if ($request->ID_FORMULARIO_OFERTAS == 0) {
-    //                     $ultimoRegistro = ofertasModel::orderBy('ID_FORMULARIO_OFERTAS', 'desc')->first();
-    //                     $numeroIncremental = $ultimoRegistro ? intval(substr($ultimoRegistro->NO_OFERTA, -3)) + 1 : 1;
-    //                     $anioActual = date('Y');
-    //                     $ultimoDigitoAnio = substr($anioActual, -2);
-
-
-    //                     $noOferta = 'RES-COT-' . $ultimoDigitoAnio . '-' . str_pad($numeroIncremental, 3, '0', STR_PAD_LEFT);
-    //                     $request->merge(['NO_OFERTA' => $noOferta]);
-
-    //                     DB::statement('ALTER TABLE formulario_ofertas AUTO_INCREMENT=1;');
-    //                     $ofertas = ofertasModel::create($request->all());
-
-    //                     $response['code'] = 1;
-    //                     $response['oferta'] = $ofertas;
-    //                     return response()->json($response);
-    //                 } else {
-    //                     if (isset($request->ELIMINAR)) {
-    //                         if ($request->ELIMINAR == 1) {
-    //                             ofertasModel::where('ID_FORMULARIO_OFERTAS', $request['ID_FORMULARIO_OFERTAS'])
-    //                                 ->update(['ACTIVO' => 0]);
-    //                             $response['code'] = 1;
-    //                             $response['oferta'] = 'Desactivada';
-    //                         } else {
-    //                             ofertasModel::where('ID_FORMULARIO_OFERTAS', $request['ID_FORMULARIO_OFERTAS'])
-    //                                 ->update(['ACTIVO' => 1]);
-    //                             $response['code'] = 1;
-    //                             $response['oferta'] = 'Activada';
-    //                         }
-    //                     } else {
-    //                         $ofertas = ofertasModel::find($request->ID_FORMULARIO_OFERTAS);
-    //                         $ofertas->update($request->all());
-    //                         $response['code'] = 1;
-    //                         $response['oferta'] = 'Actualizada';
-    //                     }
-    //                     return response()->json($response);
-    //                 }
-    //                 break;
-    //             default:
-    //                 $response['code'] = 1;
-    //                 $response['msj'] = 'Api no encontrada';
-    //                 return response()->json($response);
-    //         }
-    //     } catch (Exception $e) {
-    //         return response()->json(['error' => 'Error al guardar la oferta', 'message' => $e->getMessage()]);
-    //     }
-    // }
     public function store(Request $request)
     {
         try {
@@ -375,6 +321,8 @@ class ofertasController extends Controller
 
                 default:
                     return response()->json(['code' => 1, 'msj' => 'API no encontrada']);
+
+
             }
         } catch (Exception $e) {
             return response()->json(['error' => 'Error al guardar la oferta', 'message' => $e->getMessage()]);

@@ -147,15 +147,23 @@
                                 </div>
 
 
-                                <div class="col-6  mt-3">
+                                <div class="col-4  mt-3">
                                     <label>Seleccione contacto </label>
                                     <select class="form-control" id="SELECTOR_CONTACTO" name="SELECTOR_CONTACTO">
                                         <option value="" disabled selected>Seleccione una opción</option>
                                     </select>
                                 </div>
+                                <div class="col-md-4 mt-3">
+                                    <label class="form-label">Título</label>
+                                    <select class="form-select" name="TITULO_CONFIRMACION" id="TITULO_CONFIRMACION">
+                                        <option value="0" disabled selected>Seleccione una opción</option>
+                                        @foreach ($titulosCuenta as $linea)
+                                        <option value="{{ $linea->ABREVIATURA_TITULO }}">{{ $linea->NOMBRE_TITULO }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
-
-                                <div class="col-6  mt-3">
+                                <div class="col-4  mt-3">
                                     <label>Contacto *</label>
                                     <input type="text" class="form-control" id="CONTACTO_CONFIRMACION" name="CONTACTO_CONFIRMACION">
                                 </div>
@@ -248,11 +256,20 @@
                         </div>
 
 
-
-
                     </div>
                 </div>
 
+                <div class="col-12 text-center">
+                    <div class="col-md-6 mx-auto">
+                        <button type="button" id="crearREVISION" class="btn btn-warning w-100">
+                            Crear Revisión
+                        </button>
+                    </div>
+                </div>
+
+                <br>
+
+                
                 <div class="modal-footer mx-5">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-success" id="guardarOT">
@@ -267,6 +284,26 @@
 
 
 
+
+<div class="modal fade" id="modalMotivoRevision" tabindex="-1" aria-labelledby="modalMotivoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalMotivoLabel">Motivo de la Revisión</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea id="motivoRevisionInput" class="form-control" rows="4" placeholder="Escriba el motivo de la revisión..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="confirmarMotivoRevision" class="btn btn-primary">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

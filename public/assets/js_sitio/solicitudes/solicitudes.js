@@ -37,6 +37,7 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     $('#miModal_SOLICITUDES .modal-title').html('Solicitudes');
 
     const fields = [
+        'TITULO_OFERTA',
         'CONTACTO_OFERTA',
         'CARGO_OFERTA',
         'TELEFONO_OFERTA',
@@ -65,147 +66,180 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 });
 
 
+function handleRadioChange() {
+  const mismoContacto = document.getElementById('mismoContacto').checked;
+
+  const tituloSolicitud = document.getElementById('TITULO_CONTACTO_SOLICITUD');
+  const contactoSolicitud = document.getElementById('CONTACTO_SOLICITUD');
+  const cargoSolicitud = document.getElementById('CARGO_SOLICITUD');
+  const telefonoSolicitud = document.getElementById('TELEFONO_SOLICITUD');
+  const extensionSolicitud = document.getElementById('EXTENSION_SOLICITUD');
+  const celularSolicitud = document.getElementById('CELULAR_SOLICITUD');
+  const correoSolicitud = document.getElementById('CORREO_SOLICITUD');
+
+  const tituloOferta = document.getElementById('TITULO_OFERTA');
+  const contactoOferta = document.getElementById('CONTACTO_OFERTA');
+  const cargoOferta = document.getElementById('CARGO_OFERTA');
+  const telefonoOferta = document.getElementById('TELEFONO_OFERTA');
+  const extensionOferta = document.getElementById('EXTENSION_OFERTA');
+  const celularOferta = document.getElementById('CELULAR_OFERTA');
+  const correoOferta = document.getElementById('CORREO_OFERTA');
+
+  const camposOferta = [
+    tituloOferta, contactoOferta, cargoOferta,
+    telefonoOferta, extensionOferta, celularOferta, correoOferta
+  ];
+
+  if (mismoContacto) {
+    tituloOferta.value = tituloSolicitud.value;
+    contactoOferta.value = contactoSolicitud.value;
+    cargoOferta.value = cargoSolicitud.value;
+    telefonoOferta.value = telefonoSolicitud.value;
+    extensionOferta.value = extensionSolicitud.value;
+    celularOferta.value = celularSolicitud.value;
+    correoOferta.value = correoSolicitud.value;
+
+    camposOferta.forEach(campo => campo.disabled = false);
+  } else {
+    camposOferta.forEach(campo => {
+      campo.value = '';
+      campo.disabled = true;
+    });
+  }
+}
 
 
+$("#guardarSOLICITUD").click(function (e) {
+    e.preventDefault();
 
-    $("#guardarSOLICITUD").click(function (e) {
-        e.preventDefault();
+    formularioValido = validarFormularioV1('formularioSOLICITUDES');
 
-        formularioValido = validarFormularioV1('formularioSOLICITUDES');
+    if (formularioValido) {
+        
 
-        if (formularioValido) {
-            
+        var observacion = [];
+        $(".generarobervaciones").each(function() {
+            var observaciones = {
+                'OBSERVACIONES': $(this).find("textarea[name='OBSERVACIONES']").val()
+            };
+            observacion.push(observaciones);
+        });
 
-            var observacion = [];
-            $(".generarobervaciones").each(function() {
-                var observaciones = {
-                    'OBSERVACIONES': $(this).find("textarea[name='OBSERVACIONES']").val()
+        var contactos = [];
+            $(".generarcontacto").each(function() {
+                var contacto = {
+                    'CONTACTO_SOLICITUD': $(this).find("input[name='CONTACTO_SOLICITUD']").val(),
+                    'CARGO_SOLICITUD': $(this).find("input[name='CARGO_SOLICITUD").val(),
+                    'TELEFONO_SOLICITUD': $(this).find("input[name='TELEFONO_SOLICITUD']").val(),
+                    'CELULAR_SOLICITUD': $(this).find("input[name='CELULAR_SOLICITUD']").val(),
+                    'CORREO_SOLICITUD': $(this).find("input[name='CORREO_SOLICITUD']").val(),
+                    'EXTENSION_SOLICITUD': $(this).find("input[name='EXTENSION_SOLICITUD']").val()
+
+                    
                 };
-                observacion.push(observaciones);
+                contactos.push(contacto);
             });
 
-            var contactos = [];
-                $(".generarcontacto").each(function() {
-                    var contacto = {
-                        'CONTACTO_SOLICITUD': $(this).find("input[name='CONTACTO_SOLICITUD']").val(),
-                        'CARGO_SOLICITUD': $(this).find("input[name='CARGO_SOLICITUD").val(),
-                        'TELEFONO_SOLICITUD': $(this).find("input[name='TELEFONO_SOLICITUD']").val(),
-                        'CELULAR_SOLICITUD': $(this).find("input[name='CELULAR_SOLICITUD']").val(),
-                        'CORREO_SOLICITUD': $(this).find("input[name='CORREO_SOLICITUD']").val(),
-                        'EXTENSION_SOLICITUD': $(this).find("input[name='EXTENSION_SOLICITUD']").val()
-
-                        
+        var direcciones = [];
+                $(".generardireccion").each(function() {
+                    var direccion = {
+                        'TIPO_DOMICILIO': $(this).find("input[name='TIPO_DOMICILIO']").val(),
+                        'CODIGO_POSTAL_DOMICILIO': $(this).find("input[name='CODIGO_POSTAL_DOMICILIO']").val(),
+                        'TIPO_VIALIDAD_DOMICILIO': $(this).find("input[name='TIPO_VIALIDAD_DOMICILIO']").val(),
+                        'NOMBRE_VIALIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_VIALIDAD_DOMICILIO']").val(),
+                        'NUMERO_EXTERIOR_DOMICILIO': $(this).find("input[name='NUMERO_EXTERIOR_DOMICILIO']").val(),
+                        'NUMERO_INTERIOR_DOMICILIO': $(this).find("input[name='NUMERO_INTERIOR_DOMICILIO']").val(),
+                        'NOMBRE_COLONIA_DOMICILIO': $(this).find("select[name='NOMBRE_COLONIA_DOMICILIO']").val(),
+                        'NOMBRE_LOCALIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_LOCALIDAD_DOMICILIO']").val(),
+                        'NOMBRE_MUNICIPIO_DOMICILIO': $(this).find("input[name='NOMBRE_MUNICIPIO_DOMICILIO']").val(),
+                        'NOMBRE_ENTIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_ENTIDAD_DOMICILIO']").val(),
+                        'PAIS_CONTRATACION_DOMICILIO': $(this).find("input[name='PAIS_CONTRATACION_DOMICILIO']").val(),
+                        'ENTRE_CALLE_DOMICILIO': $(this).find("input[name='ENTRE_CALLE_DOMICILIO']").val(),
+                        'ENTRE_CALLE_2_DOMICILIO': $(this).find("input[name='ENTRE_CALLE_2_DOMICILIO']").val()
                     };
-                    contactos.push(contacto);
+                    direcciones.push(direccion);
                 });
 
-            var direcciones = [];
-                    $(".generardireccion").each(function() {
-                        var direccion = {
-                            'TIPO_DOMICILIO': $(this).find("input[name='TIPO_DOMICILIO']").val(),
-                            'CODIGO_POSTAL_DOMICILIO': $(this).find("input[name='CODIGO_POSTAL_DOMICILIO']").val(),
-                            'TIPO_VIALIDAD_DOMICILIO': $(this).find("input[name='TIPO_VIALIDAD_DOMICILIO']").val(),
-                            'NOMBRE_VIALIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_VIALIDAD_DOMICILIO']").val(),
-                            'NUMERO_EXTERIOR_DOMICILIO': $(this).find("input[name='NUMERO_EXTERIOR_DOMICILIO']").val(),
-                            'NUMERO_INTERIOR_DOMICILIO': $(this).find("input[name='NUMERO_INTERIOR_DOMICILIO']").val(),
-                            'NOMBRE_COLONIA_DOMICILIO': $(this).find("select[name='NOMBRE_COLONIA_DOMICILIO']").val(),
-                            'NOMBRE_LOCALIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_LOCALIDAD_DOMICILIO']").val(),
-                            'NOMBRE_MUNICIPIO_DOMICILIO': $(this).find("input[name='NOMBRE_MUNICIPIO_DOMICILIO']").val(),
-                            'NOMBRE_ENTIDAD_DOMICILIO': $(this).find("input[name='NOMBRE_ENTIDAD_DOMICILIO']").val(),
-                            'PAIS_CONTRATACION_DOMICILIO': $(this).find("input[name='PAIS_CONTRATACION_DOMICILIO']").val(),
-                            'ENTRE_CALLE_DOMICILIO': $(this).find("input[name='ENTRE_CALLE_DOMICILIO']").val(),
-                            'ENTRE_CALLE_2_DOMICILIO': $(this).find("input[name='ENTRE_CALLE_2_DOMICILIO']").val()
-                        };
-                        direcciones.push(direccion);
+
+    
+        const requestData = {
+            api: 1,
+            ID_FORMULARIO_SOLICITUDES: ID_FORMULARIO_SOLICITUDES,
+            OBSERVACIONES_SOLICITUD: JSON.stringify(observacion),
+            CONTACTOS_JSON: JSON.stringify(contactos),
+            DIRECCIONES_JSON: JSON.stringify(direcciones) 
+
+
+        };
+
+        if (ID_FORMULARIO_SOLICITUDES == 0) {
+            alertMensajeConfirm({
+                title: "¿Desea guardar la información?",
+                text: "Al guardarla, se podrá usar",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarSOLICITUD');
+                await ajaxAwaitFormData(requestData, 'solicitudSave', 'formularioSOLICITUDES', 'guardarSOLICITUD', { callbackAfter: true, callbackBefore: true }, () => {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
                     });
 
-
-        
-            const requestData = {
-                api: 1,
-                ID_FORMULARIO_SOLICITUDES: ID_FORMULARIO_SOLICITUDES,
-                OBSERVACIONES_SOLICITUD: JSON.stringify(observacion),
-                CONTACTOS_JSON: JSON.stringify(contactos),
-                DIRECCIONES_JSON: JSON.stringify(direcciones) 
-
-
-            };
-
-            if (ID_FORMULARIO_SOLICITUDES == 0) {
-                alertMensajeConfirm({
-                    title: "¿Desea guardar la información?",
-                    text: "Al guardarla, se podrá usar",
-                    icon: "question",
-                }, async function () {
-
-                    await loaderbtn('guardarSOLICITUD');
-                    await ajaxAwaitFormData(requestData, 'solicitudSave', 'formularioSOLICITUDES', 'guardarSOLICITUD', { callbackAfter: true, callbackBefore: true }, () => {
-                        Swal.fire({
-                            icon: 'info',
-                            title: 'Espere un momento',
-                            text: 'Estamos guardando la información',
-                            showConfirmButton: false
-                        });
-
-                        $('.swal2-popup').addClass('ld ld-breath');
-                        
-                    }, function (data) {
-                        
-                        ID_FORMULARIO_SOLICITUDES = data.solicitud.ID_FORMULARIO_SOLICITUDES
-                        alertMensaje('success', 'Información guardada correctamente', 'Esta información esta lista para usarse', null, null, 1500)
-                          $('#miModal_SOLICITUDES').modal('hide')
-                            document.getElementById('formularioSOLICITUDES').reset();
-                            Tablasolicitudes.ajax.reload()
-        
-        
-                    })
+                    $('.swal2-popup').addClass('ld ld-breath');
                     
-                }, 1);
+                }, function (data) {
+                    
+                    ID_FORMULARIO_SOLICITUDES = data.solicitud.ID_FORMULARIO_SOLICITUDES
+                    alertMensaje('success', 'Información guardada correctamente', 'Esta información esta lista para usarse', null, null, 1500)
+                        $('#miModal_SOLICITUDES').modal('hide')
+                        document.getElementById('formularioSOLICITUDES').reset();
+                        Tablasolicitudes.ajax.reload()
+    
+    
+                })
                 
-            } else {
-                alertMensajeConfirm({
-                    title: "¿Desea editar la información de este formulario?",
-                    text: "Al guardarla, se podrá usar",
-                    icon: "question",
-                }, async function () {
-
-                    await loaderbtn('guardarSOLICITUD');
-                    await ajaxAwaitFormData(requestData, 'solicitudSave', 'formularioSOLICITUDES', 'guardarSOLICITUD', { callbackAfter: true, callbackBefore: true }, () => {
-                        Swal.fire({
-                            icon: 'info',
-                            title: 'Espere un momento',
-                            text: 'Estamos guardando la información',
-                            showConfirmButton: false
-                        });
-
-                        $('.swal2-popup').addClass('ld ld-breath');
-
-                    }, function (data) {
-                        
-                        setTimeout(() => {
-        
-                            ID_FORMULARIO_SOLICITUDES = data.solicitud.ID_FORMULARIO_SOLICITUDES
-                            alertMensaje('success', 'Información editada correctamente', 'Información guardada')
-                            $('#miModal_SOLICITUDES').modal('hide')
-                            document.getElementById('formularioSOLICITUDES').reset();
-                            Tablasolicitudes.ajax.reload()
-        
-        
-                        }, 300);  
-                    })
-                }, 1);
-            }
+            }, 1);
+            
         } else {
-            alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+            alertMensajeConfirm({
+                title: "¿Desea editar la información de este formulario?",
+                text: "Al guardarla, se podrá usar",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardarSOLICITUD');
+                await ajaxAwaitFormData(requestData, 'solicitudSave', 'formularioSOLICITUDES', 'guardarSOLICITUD', { callbackAfter: true, callbackBefore: true }, () => {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Espere un momento',
+                        text: 'Estamos guardando la información',
+                        showConfirmButton: false
+                    });
+
+                    $('.swal2-popup').addClass('ld ld-breath');
+
+                }, function (data) {
+                    
+                    setTimeout(() => {
+    
+                        ID_FORMULARIO_SOLICITUDES = data.solicitud.ID_FORMULARIO_SOLICITUDES
+                        alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                        $('#miModal_SOLICITUDES').modal('hide')
+                        document.getElementById('formularioSOLICITUDES').reset();
+                        Tablasolicitudes.ajax.reload()
+    
+    
+                    }, 300);  
+                })
+            }, 1);
         }
-    });
-
-
-
-
-
-
-
+    } else {
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
+    }
+});
 
 var Tablasolicitudes = $("#Tablasolicitudes").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
@@ -336,10 +370,6 @@ var Tablasolicitudes = $("#Tablasolicitudes").DataTable({
     ]
 });
 
-
-
-
-
 $('#Tablasolicitudes tbody').on('change', '.ESTATUS_SOLICITUD', function () {
     const selectedValue = $(this).val(); 
     const solicitudId = $(this).data('id'); 
@@ -440,8 +470,6 @@ $('#Tablasolicitudes tbody').on('change', '.ESTATUS_SOLICITUD', function () {
 });
 
 
-
-
 $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablasolicitudes.row(tr);
@@ -452,6 +480,44 @@ $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
 
     $(".observacionesdiv").empty();
     obtenerObservaciones(row);
+
+
+
+    const dirigeOferta = Number(row.data().DIRIGE_OFERTA);
+
+    const camposOferta = [
+    'TITULO_OFERTA', 'CONTACTO_OFERTA', 'CARGO_OFERTA',
+    'TELEFONO_OFERTA', 'EXTENSION_OFERTA',
+    'CELULAR_OFERTA', 'CORREO_OFERTA'
+    ];
+
+    if (dirigeOferta === 0) {
+    document.getElementById('aQuienCorresponda').checked = true;
+
+    camposOferta.forEach(id => {
+        const campo = document.getElementById(id);
+        if (campo) {
+        campo.value = '';
+        campo.disabled = true;
+        }
+    });
+    } else if (dirigeOferta === 1) {
+    document.getElementById('mismoContacto').checked = true;
+
+    document.getElementById('TITULO_OFERTA').value = document.getElementById('TITULO_CONTACTO_SOLICITUD').value;
+    document.getElementById('CONTACTO_OFERTA').value = document.getElementById('CONTACTO_SOLICITUD').value;
+    document.getElementById('CARGO_OFERTA').value = document.getElementById('CARGO_SOLICITUD').value;
+    document.getElementById('TELEFONO_OFERTA').value = document.getElementById('TELEFONO_SOLICITUD').value;
+    document.getElementById('EXTENSION_OFERTA').value = document.getElementById('EXTENSION_SOLICITUD').value;
+    document.getElementById('CELULAR_OFERTA').value = document.getElementById('CELULAR_SOLICITUD').value;
+    document.getElementById('CORREO_OFERTA').value = document.getElementById('CORREO_SOLICITUD').value;
+
+    camposOferta.forEach(id => {
+        const campo = document.getElementById(id);
+        if (campo) campo.disabled = false;
+    });
+    }
+
 
     editarDatoTabla(row.data(), 'formularioSOLICITUDES', 'miModal_SOLICITUDES', 1);
     $('#miModal_SOLICITUDES .modal-title').html(row.data().NOMBRE_COMERCIAL_SOLICITUD);
@@ -470,21 +536,19 @@ $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
 
     const rfcEditado = row.data().RFC_SOLICITUD || '';
 
-        // Limpiar antes de cargar nuevos datos
         const selectorDireccion = document.getElementById('SELECTOR_DIRECCION');
         selectorDireccion.innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
 
         const selectorContacto = document.getElementById('SELECTOR_CONTACTO');
         selectorContacto.innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
 
-        window.contactosGuardados = []; // Limpiar contactos previos
+        window.contactosGuardados = []; 
 
         if (rfcEditado !== '') {
             fetch(`/buscarCliente?rfc=${encodeURIComponent(rfcEditado)}`)
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Llenar selector de direcciones
                         if (data.data.DIRECCIONES && data.data.DIRECCIONES.length > 0) {
                             data.data.DIRECCIONES.forEach((direccion) => {
                                 const option = document.createElement('option');
@@ -494,7 +558,6 @@ $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
                             });
                         }
 
-                        // Llenar selector de contactos
                         if (data.data.CONTACTOS && data.data.CONTACTOS.length > 0) {
                             data.data.CONTACTOS.forEach((contacto, index) => {
                                 const option = document.createElement('option');
@@ -506,7 +569,6 @@ $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
                             window.contactosGuardados = data.data.CONTACTOS;
                         }
                     } else {
-                        // Si no encontró, ya están vacíos desde antes
                         console.warn('Cliente no encontrado al editar');
                     }
                 })
@@ -675,18 +737,6 @@ $('#Tablasolicitudes tbody').on('change', 'td>label>input.ELIMINAR', function ()
 
 
 
-function limpiarCamposOferta() {
-    const fields = [
-        'CONTACTO_OFERTA', 'CARGO_OFERTA', 'TELEFONO_OFERTA',
-        'EXTENSION_OFERTA', 'CELULAR_OFERTA', 'CORREO_OFERTA'
-    ];
-
-    fields.forEach((fieldId) => {
-        const field = document.getElementById(fieldId);
-        field.value = '';
-        field.disabled = true;
-    });
-}
 
 
 
