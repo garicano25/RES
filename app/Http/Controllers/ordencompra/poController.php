@@ -66,7 +66,6 @@ class poController extends Controller
                 ->get();
 
 
-
             foreach ($tabla as $value) {
                 if ($value->ESTADO_APROBACION == 'Aprobada') {
                     $value->ESTADO_BADGE = '<span class="badge bg-success">Aprobado</span>';
@@ -124,7 +123,6 @@ class poController extends Controller
         try {
             
 
-
             $ultimasPO = DB::table('formulario_ordencompra')
                 ->select(DB::raw('MAX(ID_FORMULARIO_PO) as ID_FORMULARIO_PO'))
                 ->groupBy(DB::raw("SUBSTRING_INDEX(NO_PO, '-Rev', 1)"));
@@ -146,7 +144,6 @@ class poController extends Controller
 
                 
             foreach ($tabla as $value) {
-                // Botones
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
@@ -155,7 +152,6 @@ class poController extends Controller
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 }
 
-              
                 if ($value->SOLICITAR_AUTORIZACION == 'Sí') {
                     $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">En revisión</span>';
                 } elseif ($value->DAR_BUENO == 1) {
@@ -233,16 +229,13 @@ class poController extends Controller
 
                 case 1:
                     if ($request->ID_FORMULARIO_PO == 0) {
-                        // NUEVO REGISTRO
                         DB::statement('ALTER TABLE formulario_ordencompra AUTO_INCREMENT=1;');
 
                         if ($request->SOLICITAR_AUTORIZACION === 'Sí') {
                             $request->merge(['USUARIO_ID' => auth()->user()->ID_USUARIO]);
                         }
 
-
                         $data = $request->except(['servicios']);
-
 
                         $compras = poModel::create($data);
                         $response['code']  = 1;
@@ -276,18 +269,13 @@ class poController extends Controller
 
                     break;
 
-
-
-
                 case 2:
                     if ($request->ID_FORMULARIO_PO == 0) {
                         DB::statement('ALTER TABLE formulario_ordencompra AUTO_INCREMENT=1;');
 
                         $data = $request->except(['servicios']);
 
-
                         $compras = poModel::create($data);
-
 
                         $response['code']  = 1;
                         $response['compra']  = $compras;
@@ -323,7 +311,6 @@ class poController extends Controller
                     }
 
                     break;
-
 
 
                 case 3:

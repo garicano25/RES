@@ -53,61 +53,13 @@ class altacuentaController extends Controller
         }
     }
 
-
     public function mostrarcaratula($id)
     {
         $archivo = altacuentaModel::findOrFail($id)->CARATULA_BANCARIA;
         return Storage::response($archivo);
     }
 
-    // public function store(Request $request)
-    // {
-    //     try {
-    //         switch (intval($request->api)) {
-    //             case 1:
-    //                 if ($request->ID_FORMULARIO_CUENTAPROVEEDOR == 0) {
-    //                     DB::statement('ALTER TABLE formulario_altacuentaproveedor AUTO_INCREMENT=1;');
-
-    //                     $requestData = $request->all();
-    //                     $requestData['RFC_PROVEEDOR'] = Auth::user()->RFC_PROVEEDOR;
-
-    //                     $cuentas = altacuentaModel::create($requestData);
-    //                 } else {
-    //                     if (isset($request->ELIMINAR)) {
-    //                         if ($request->ELIMINAR == 1) {
-    //                             $cuentas = altacuentaModel::where('ID_FORMULARIO_CUENTAPROVEEDOR', $request['ID_FORMULARIO_CUENTAPROVEEDOR'])
-    //                                 ->update(['ACTIVO' => 0]);
-    //                             $response['code'] = 1;
-    //                             $response['cuenta'] = 'Desactivada';
-    //                         } else {
-    //                             $cuentas = altacuentaModel::where('ID_FORMULARIO_CUENTAPROVEEDOR', $request['ID_FORMULARIO_CUENTAPROVEEDOR'])
-    //                                 ->update(['ACTIVO' => 1]);
-    //                             $response['code'] = 1;
-    //                             $response['cuenta'] = 'Activada';
-    //                         }
-    //                     } else {
-    //                         $cuentas = altacuentaModel::find($request->ID_FORMULARIO_CUENTAPROVEEDOR);
-    //                         $cuentas->update($request->except('RFC_PROVEEDOR')); 
-    //                         $response['code'] = 1;
-    //                         $response['cuenta'] = 'Actualizada';
-    //                     }
-    //                     return response()->json($response);
-    //                 }
-    //                 $response['code']  = 1;
-    //                 $response['cuenta']  = $cuentas;
-    //                 return response()->json($response);
-    //                 break;
-    //             default:
-    //                 $response['code']  = 1;
-    //                 $response['msj']  = 'API no encontrada';
-    //                 return response()->json($response);
-    //         }
-    //     } catch (Exception $e) {
-    //         return response()->json(['error' => 'Error al guardar'], 500);
-    //     }
-    // }
-
-    
+  
 
     public function store(Request $request)
 {

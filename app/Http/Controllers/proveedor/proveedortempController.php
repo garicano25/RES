@@ -17,39 +17,7 @@ use DB;
 
 class proveedortempController extends Controller
 {
-    // public function Tablaproveedortemporal()
-    // {
-    //     try {
-    //         $tabla = proveedortempModel::get();
-
-    //         foreach ($tabla as $value) {
-    //             if ($value->ACTIVO == 0) {
-    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_PROVEEDORTEMP . '"><span class="slider round"></span></label>';
-    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-    //                 $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-requierecontrato" data-id="' . $value->ID_FORMULARIO_PROVEEDORTEMP . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
-    //             } else {
-    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_PROVEEDORTEMP . '" checked><span class="slider round"></span></label>';
-    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-    //                 $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-requierecontrato" data-id="' . $value->ID_FORMULARIO_PROVEEDORTEMP . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
-    //             }
-    //         }
-
-    //         // Respuesta
-    //         return response()->json([
-    //             'data' => $tabla,
-    //             'msj' => 'Información consultada correctamente'
-    //         ]);
-    //     } catch (Exception $e) {
-    //         return response()->json([
-    //             'msj' => 'Error ' . $e->getMessage(),
-    //             'data' => 0
-    //         ]);
-    //     }
-    // }
-
-
+ 
 
     public function Tablaproveedortemporal()
     {
@@ -184,49 +152,6 @@ class proveedortempController extends Controller
                     break;
 
 
-                // case 2 :
-
-                // if ($request->ID_FORMULARIO_PROVEEDORTEMP == 0) {
-                //     DB::statement('ALTER TABLE formulario_proveedortemp AUTO_INCREMENT=1;');
-
-                //     $data = $request->except(['direcciones']);
-                //     $data['DIRECCIONES_JSON'] = is_string($request->DIRECCIONES_JSON) ? $request->DIRECCIONES_JSON : json_encode($request->DIRECCIONES_JSON ?? []);
-
-                //     $temporales = proveedortempModel::create($data);
-
-
-                //     $response['code'] = 1;
-                //     $response['temporal'] = $temporales;
-                //     return response()->json($response);
-                // } else {
-                //     if (isset($request->ELIMINAR)) {
-                //         if ($request->ELIMINAR == 1) {
-                //             proveedortempModel::where('ID_FORMULARIO_PROVEEDORTEMP', $request->ID_FORMULARIO_PROVEEDORTEMP)
-                //                 ->update(['ACTIVO' => 0]);
-                //             $response['code'] = 1;
-                //             $response['temporal'] = 'Desactivada';
-                //         } else {
-                //             proveedortempModel::where('ID_FORMULARIO_PROVEEDORTEMP', $request->ID_FORMULARIO_PROVEEDORTEMP)
-                //                 ->update(['ACTIVO' => 1]);
-                //             $response['code'] = 1;
-                //             $response['temporal'] = 'Activada';
-                //         }
-                //     } else {
-                //         $temporales = proveedortempModel::find($request->ID_FORMULARIO_PROVEEDORTEMP);
-
-                //         $data = $request->except(['direcciones']);
-                //         $data['DIRECCIONES_JSON'] = is_string($request->DIRECCIONES_JSON) ? $request->DIRECCIONES_JSON : json_encode($request->DIRECCIONES_JSON ?? []);
-
-                //         $temporales->update($data);
-
-
-                //         $response['code'] = 1;
-                //         $response['temporal'] = 'Actualizada';
-                //     }
-
-                //     return response()->json($response);
-                // }
-
 
                 case 2:
                     if ($request->ID_FORMULARIO_PROVEEDORTEMP == 0) {
@@ -237,7 +162,6 @@ class proveedortempController extends Controller
 
                         $temporales = proveedortempModel::create($data);
 
-                        // Guardar documento si viene en la petición
                         if ($request->hasFile('DOCUMENTO_SOPORTE')) {
                             $documento = $request->file('DOCUMENTO_SOPORTE');
                             $idTemporal = $temporales->ID_FORMULARIO_PROVEEDORTEMP;
@@ -274,9 +198,7 @@ class proveedortempController extends Controller
 
                             $temporales->update($data);
 
-                            // Actualizar documento si se proporciona uno nuevo
                             if ($request->hasFile('DOCUMENTO_SOPORTE')) {
-                                // Eliminar documento anterior si existe
                                 if ($temporales->DOCUMENTO_SOPORTE && Storage::exists($temporales->DOCUMENTO_SOPORTE)) {
                                     Storage::delete($temporales->DOCUMENTO_SOPORTE);
                                 }

@@ -81,7 +81,6 @@ class altacontactoController extends Controller
 
                     $requestData['RFC_PROVEEDOR'] = Auth::user()->RFC_PROVEEDOR;
 
-                    // CREAR NUEVO REGISTRO
                     if ($request->ID_FORMULARIO_CONTACTOPROVEEDOR == 0) {
 
                         DB::statement('ALTER TABLE formulario_altacuentaproveedor AUTO_INCREMENT = 1;');
@@ -93,7 +92,6 @@ class altacontactoController extends Controller
                             'cuenta' => $cuentas
                         ]);
                     } else {
-                        // ACTIVAR / DESACTIVAR
                         if (isset($request->ELIMINAR)) {
                             $estado = $request->ELIMINAR == 1 ? 0 : 1;
 
@@ -106,7 +104,6 @@ class altacontactoController extends Controller
                             ]);
                         }
 
-                        // ACTUALIZAR REGISTRO
                         $cuentas = altacontactos::find($request->ID_FORMULARIO_CONTACTOPROVEEDOR);
 
                         if (!$cuentas) {

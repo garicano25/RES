@@ -66,50 +66,6 @@ class catalogocategoriaControlller extends Controller
         }
     }
 
-    
-    // public function store(Request $request)
-    
-    // {
-    //     try {
-    //         switch (intval($request->api)) {
-    //             case 1:
-    //                 if ($request->ID_CATALOGO_CATEGORIA == 0) {
-    //                     DB::statement('ALTER TABLE catalogo_categorias AUTO_INCREMENT=1;');
-    //                     $categorias = catalogocategoriaModel::create($request->all());
-    //                 } else { 
-
-    //                     if (isset($request->ELIMINAR)) {
-    //                         if ($request->ELIMINAR == 1) {
-    //                             $categorias = catalogocategoriaModel::where('ID_CATALOGO_CATEGORIA', $request['ID_CATALOGO_CATEGORIA'])->update(['ACTIVO' => 0]);
-    //                             $response['code'] = 1;
-    //                             $response['categoria'] = 'Desactivada';
-    //                         } else {
-    //                             $categorias = catalogocategoriaModel::where('ID_CATALOGO_CATEGORIA', $request['ID_CATALOGO_CATEGORIA'])->update(['ACTIVO' => 1]);
-    //                             $response['code'] = 1;
-    //                             $response['categoria'] = 'Activada';
-    //                         }
-    //                     } else {
-    //                         $categorias = catalogocategoriaModel::find($request->ID_CATALOGO_CATEGORIA);
-    //                         $categorias->update($request->all());
-    //                         $response['code'] = 1;
-    //                         $response['categoria'] = 'Actualizada';
-    //                     }
-    //                     return response()->json($response);
-    //                 }
-    //                 $response['code']  = 1;
-    //                 $response['categoria']  = $categorias;
-    //                 return response()->json($response);
-    //                 break;
-    //             default:
-    //                 $response['code']  = 1;
-    //                 $response['msj']  = 'Api no encontrada';
-    //                 return response()->json($response);
-    //         }
-    //     } catch (Exception $e) {
-    //         return response()->json('Error al guardar la nueva categoría');
-    //     }
-    // }
-
 
 
     public function store(Request $request)

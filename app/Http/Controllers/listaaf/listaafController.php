@@ -31,11 +31,8 @@ class listaafController extends Controller
     public function index()
     {
         $tipoinventario = catalogotipoinventarioModel::where('ACTIVO', 1)->get();
-
-
         $proveedoresOficiales = altaproveedorModel::select('RAZON_SOCIAL_ALTA', 'RFC_ALTA')->get();
         $proveedoresTemporales = proveedortempModel::select('RAZON_PROVEEDORTEMP', 'RFC_PROVEEDORTEMP', 'NOMBRE_PROVEEDORTEMP')->get();
-
 
 
         return view('almacen.listadeaf.listaaf', compact('tipoinventario', 'proveedoresOficiales', 'proveedoresTemporales'));
@@ -44,7 +41,6 @@ class listaafController extends Controller
     public function Tablalistadeaf()
     {
         try {
-            // $tabla = inventarioModel::get();
 
             $tabla = inventarioModel::where('TIPO_EQUIPO', 'AF')->get();
 

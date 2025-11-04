@@ -104,7 +104,6 @@ class seleccionController extends Controller
                 $vacante->POSTULADOS = $listaPostulados;
             }
 
-            // Respuesta JSON para DataTable
             return response()->json([
                 'data' => $vacantes,
                 'msj' => 'Información consultada correctamente'
@@ -149,7 +148,6 @@ class seleccionController extends Controller
                 $vacante->POSTULADOS = $listaPostulados;
             }
 
-            // Respuesta JSON para DataTable
             return response()->json([
                     'data' => $vacantes,
                     'msj' => 'Información consultada correctamente'
@@ -430,60 +428,6 @@ public function mostrarburo($id)
 
 
 
-
-
-// public function Tablareferencia(Request $request)
-// {
-//     try {
-//         $curp = $request->get('curp');
-
-//         // Obtener las referencias de selección
-//         $tabla = referenciaseleccionModel::where('CURP', $curp)->get();
-
-//         // Variable para almacenar las filas que se enviarán al DataTable
-//         $rows = [];
-
-//         // Recorrer cada fila de la tabla principal
-//         foreach ($tabla as $value) {
-//             // Obtener las referencias relacionadas
-//             $referencias = referenciasempresasModel::where('SELECCION_REFERENCIA_ID', $value->ID_REFERENCIAS_SELECCION)->get();
-
-//             // Preparar la información agrupada
-//             $referenciasAgrupadas = [];
-//             foreach ($referencias as $referencia) {
-//                 $referenciasAgrupadas[] = [
-//                     'NOMBRE_EMPRESA' => $referencia->NOMBRE_EMPRESA,
-//                     'COMENTARIO' => $referencia->COMENTARIO,
-//                     'CUMPLE' => $referencia->CUMPLE,
-//                     'ARCHIVO_RESULTADO' => $referencia->ARCHIVO_RESULTADO
-//                 ];
-//             }
-
-//             // Crear una fila para cada referencia de selección con sus referencias agrupadas
-//             $rows[] = [
-//                 'ID_REFERENCIAS_SELECCION' => $value->ID_REFERENCIAS_SELECCION,
-//                 'EXPERIENCIA_LABORAL' => $value->EXPERIENCIA_LABORAL,
-//                 'PORCENTAJE_TOTAL_REFERENCIAS' => $value->PORCENTAJE_TOTAL_REFERENCIAS,
-//                 'REFERENCIAS' => $referenciasAgrupadas, // Incluye todas las referencias agrupadas
-//                 'BTN_EDITAR' => ($value->ACTIVO == 0) ? 
-//                     '<button type="button" class="btn btn-secundary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>' :
-//                     '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
-//             ];
-//         }
-
-//         return response()->json([
-//             'data' => $rows,
-//             'msj' => 'Información consultada correctamente'
-//         ]);
-//     } catch (Exception $e) {
-//         return response()->json([
-//             'msj' => 'Error ' . $e->getMessage(),
-//             'data' => 0
-//         ]);
-//     }
-// }
-
-
 public function Tablareferencia(Request $request)
 {
     try {
@@ -531,17 +475,11 @@ public function Tablareferencia(Request $request)
 }
 
 
-
 public function mostrareferencias($id)
 {
     $archivo = referenciasempresasModel::findOrFail($id)->ARCHIVO_RESULTADO;
     return Storage::response($archivo);
 }
-
-
-
-
-
 
 
 public function Tablapruebaconocimientoseleccion(Request $request)
@@ -596,32 +534,6 @@ public function mostrarprueba($id)
     $archivo = referenciaspruebaseleccionModel::findOrFail($id)->ARCHIVO_RESULTADO;
     return Storage::response($archivo);
 }
-
-
-
-
-
-
-// public function consultarSeleccion($categoriaVacanteId)
-// {
-//     $consultar = DB::table('formulario_seleccion')
-//         ->where('CATEGORIA_VACANTE', $categoriaVacanteId)
-//         ->where('ACTIVO', 1)  
-//         ->get();
-        
-//     if ($consultar->isEmpty()) {
-//         return response()->json([
-//             'data' => [],
-//             'message' => 'No hay información relacionada para esta categoría.'
-//         ]);
-//     }
-    
-//     return response()->json([
-//         'data' => $consultar
-//     ]);
-// }
-
-
 
 
 
@@ -866,73 +778,7 @@ public function store(Request $request)
     try {
         switch (intval($request->api)) {
 
-                //     case 1:
-
-                // if ($request->ID_PPT_SELECCION == 0) {
-
-                //     DB::statement('ALTER TABLE seleccion_ppt AUTO_INCREMENT=1;');
-                //     $PPT = seleccionpptModel::create($request->all());
-
-                //     // GUARDAR LOS CURSOS
-
-                //     if ($request->CURSO_PPT) {
-                //         foreach ($request->CURSO_PPT as $key => $value) {
-
-                //             $num = $key + 1;
-
-                //             if ((!empty($request->CURSO_PPT[$key]))) {
-
-                //                 $guardar_curso = cursospptseleccionModel::create([
-                //                     'SELECCION_PPT_ID' => $PPT->ID_PPT_SELECCION,
-                //                     'CURSO_PPT' => $value,
-                //                     'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
-                //                     'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
-                //                     'CURSO_CUMPLE_PPT' =>  isset($request->CURSO_CUMPLE_PPT[$num]) ? $request->CURSO_CUMPLE_PPT[$num] : null,
-                //                 ]);
-                //             }
-                //         }
-                //     }
-
-                //     $response['code']  = 1;
-                //     $response['PPT']  = $PPT;
-                //     return response()->json($response);
-                // } else { //Editamos el ppt y eliminar ppt
-
-
-
-                //     $eliminar_ppt = seleccionpptModel::where('ID_PPT_SELECCION', $request->ID_PPT_SELECCION)->delete();
-
-                //     $PPT = seleccionpptModel::create($request->all());
-
-                //     //ELIMINAMOS LOS CURSOS ANTERIORES
-                //     $eliminar_cursos = cursospptseleccionModel::where('SELECCION_PPT_ID', $request["ID_PPT_SELECCION"])->delete();
-
-
-                //     // GUARDAR LOS CURSOS
-                //     if ($request->CURSO_PPT) {
-                //         foreach ($request->CURSO_PPT as $key => $value) {
-
-                //             $num = $key + 1;
-
-                //             if ((!empty($request->CURSO_PPT[$key]))) {
-
-                //                 $guardar_curso = cursospptseleccionModel::create([
-                //                     'SELECCION_PPT_ID' => $PPT->ID_PPT_SELECCION,
-                //                     'CURSO_PPT' => $value,
-                //                     'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
-                //                     'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
-                //                     'CURSO_CUMPLE_PPT' =>  isset($request->CURSO_CUMPLE_PPT[$num]) ? $request->CURSO_CUMPLE_PPT[$num] : null,
-                //                 ]);
-                //             }
-                //         }
-                //     }
-
-                //     $response['code']  = 1;
-                //     $response['PPT']  = $PPT;
-                //     return response()->json($response);
-                // }
-
-                // break;
+           
                 case 1:
 
             if ($request->ID_PPT_SELECCION == 0) {
@@ -940,7 +786,6 @@ public function store(Request $request)
                 DB::statement('ALTER TABLE seleccion_ppt AUTO_INCREMENT=1;');
                 $PPT = seleccionpptModel::create($request->all());
 
-                // GUARDAR LOS CURSOS
                 if ($request->CURSO_PPT) {
                     foreach ($request->CURSO_PPT as $key => $value) {
                         $num = $key + 1;
@@ -958,7 +803,6 @@ public function store(Request $request)
                     }
                 }
 
-                // GUARDAR BRECHA
                 if ($request->has('NOMBRE_BRECHA') && $request->has('BRECHA_JSON')) {
                     brechacompeModel::where('CURP', $request->CURP)->delete();
                     brechacompeModel::create([
@@ -978,10 +822,8 @@ public function store(Request $request)
                 $eliminar_ppt = seleccionpptModel::where('ID_PPT_SELECCION', $request->ID_PPT_SELECCION)->delete();
                 $PPT = seleccionpptModel::create($request->all());
 
-                // ELIMINAMOS LOS CURSOS ANTERIORES
                 $eliminar_cursos = cursospptseleccionModel::where('SELECCION_PPT_ID', $request["ID_PPT_SELECCION"])->delete();
 
-                // GUARDAR LOS CURSOS
                 if ($request->CURSO_PPT) {
                     foreach ($request->CURSO_PPT as $key => $value) {
                         $num = $key + 1;
@@ -999,7 +841,6 @@ public function store(Request $request)
                     }
                 }
 
-                // GUARDAR BRECHA EDITADA
                 if ($request->has('NOMBRE_BRECHA') && $request->has('BRECHA_JSON')) {
                     brechacompeModel::where('CURP', $request->CURP)->delete();
                     brechacompeModel::create([
@@ -1167,54 +1008,7 @@ case 3:
 
         break;
 
-                // case 5:
-
-                //     if ($request->ID_BURO_SELECCION == 0) {
-                //         DB::statement('ALTER TABLE seleccion_buro_laboral AUTO_INCREMENT=1;');
-                //         $autorizaciones = buroseleccionModel::create($request->all());
-                //     } else {
-                //         if (!isset($request->ELIMINAR)) {
-                //             $autorizaciones = buroseleccionModel::find($request->ID_BURO_SELECCION);
-
-                //             if ($request->hasFile('ARCHIVO_RESULTADO') && $autorizaciones->ID_BURO_SELECCION) {
-                //                 Storage::delete($autorizaciones->ARCHIVO_RESULTADO);
-                //             }
-
-                //             $autorizaciones->update($request->all());
-                //         } else {
-                //             $autorizaciones = buroseleccionModel::where('ID_BURO_SELECCION', $request['ID_BURO_SELECCION'])->update(['ACTIVO' => 0]);
-                //             $response['code'] = 1;
-                //             $response['autorizacion'] = 'Desactivada';
-                //             return response()->json($response);
-                //         }
-                //     }
-
-                //     if ($request->hasFile('ARCHIVO_RESULTADO')) {
-                //         $curpFolder = 'reclutamiento/' . $request->CURP;
-                //         $autorizacionFolder = $curpFolder . '/Buro Laboral/';
-
-                //         if (!Storage::exists($curpFolder)) {
-                //             Storage::makeDirectory($curpFolder);
-                //         }
-
-                //         if (!Storage::exists($autorizacionFolder)) {
-                //             Storage::makeDirectory($autorizacionFolder);
-                //         }
-
-                //         $autorizacionFile = $request->file('ARCHIVO_RESULTADO');
-                //         $autorizacionFileName = 'BURO_LABORAL_' . $request->CURP . '.' . $autorizacionFile->getClientOriginalExtension();
-                //         $autorizacionFile->storeAs($autorizacionFolder, $autorizacionFileName);
-
-                //         $autorizaciones->ARCHIVO_RESULTADO = $autorizacionFolder . $autorizacionFileName;
-                //         $autorizaciones->save();
-                //     }
-
-                //     $response['code'] = 1;
-                //     $response['autorizacion'] = $autorizaciones;
-                //     return response()->json($response);
-
-                //     break;
-
+               
 
 
                 case 5:
@@ -1254,7 +1048,6 @@ case 3:
                         }
                     }
 
-                    // Guardar archivo si lo hay
                     if ($request->hasFile('ARCHIVO_RESULTADO')) {
                         $curpFolder = 'reclutamiento/' . $request->CURP;
                         $autorizacionFolder = $curpFolder . '/Buro Laboral/';
@@ -1275,7 +1068,6 @@ case 3:
                         $autorizaciones->save();
                     }
 
-                    // Guardar observación si viene
                     if ($request->filled('observacion')) {
                         buroseleccionModel::where('ID_BURO_SELECCION', $buroId)
                             ->update(['OBSERVACIONES_BURO' => $request->observacion]);
@@ -1478,19 +1270,6 @@ case 3:
                     DB::commit();
                     return response()->json($response);
                     break;
-
-
-
-
-        
-                        
-                        
-
-                            
-
-
-
-
 
 
             default:

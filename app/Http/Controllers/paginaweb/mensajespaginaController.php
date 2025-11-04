@@ -25,7 +25,6 @@ class mensajespaginaController extends Controller
                 
             }
 
-            // Respuesta
             return response()->json([
                 'data' => $tabla,
                 'msj' => 'Información consultada correctamente'

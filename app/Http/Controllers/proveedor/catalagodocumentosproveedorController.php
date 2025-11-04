@@ -25,8 +25,7 @@ class catalagodocumentosproveedorController extends Controller
 
             foreach ($tabla as $value) {
 
-               
-
+            
                 if ($value->TIPO_PERSONA == 1) {
                     $value->TIPO_PERSONA_TEXTO = 'Nacional';
                 } elseif ($value->TIPO_PERSONA == 2) {
@@ -35,10 +34,6 @@ class catalagodocumentosproveedorController extends Controller
                     $value->TIPO_PERSONA_TEXTO = 'Nacional y extranjero';
                 }
 
-
-
-
-
                 if ($value->TIPO_PERSONA_OPCION == 1) {
                     $value->TIPO_PERSONA_OPCION_TEXTO = 'Moral';
                 } elseif ($value->TIPO_PERSONA_OPCION == 2) {
@@ -46,8 +41,6 @@ class catalagodocumentosproveedorController extends Controller
                 } else {
                     $value->TIPO_PERSONA_OPCION_TEXTO = 'Moral y física';
                 }
-
-
 
 
                 if ($value->ACTIVO == 0) {

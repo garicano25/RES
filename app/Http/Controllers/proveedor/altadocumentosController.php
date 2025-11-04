@@ -26,26 +26,6 @@ class altadocumentosController extends Controller
 
 
 
-
-
-    // public function index(Request $request)
-    // {
-    //     $rfcProveedor = auth()->user()->RFC_PROVEEDOR;
-
-    //     $proveedor = altaproveedorModel::where('RFC_ALTA', $rfcProveedor)->first();
-
-    //     $tipoProveedor = $proveedor ? $proveedor->TIPO_PERSONA_ALTA : null;
-    //     $tipoPersonaOpcion = $proveedor ? $proveedor->TIPO_PERSONA_OPCION : null;
-
-    //     $documetoscatalogo = catalogodocumentoproveedorModel::where('TIPO_PERSONA', $tipoProveedor)
-    //         ->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)  
-    //         ->where('ACTIVO', 1) 
-    //         ->get();
-
-    //     return view('compras.proveedores.altadocumentosoporte', compact('documetoscatalogo', 'tipoProveedor', 'tipoPersonaOpcion'));
-    // }
-
-
     public function index(Request $request)
     {
         $rfcProveedor = auth()->user()->RFC_PROVEEDOR;
@@ -67,11 +47,8 @@ class altadocumentosController extends Controller
             ->get();
 
             
-
         return view('compras.proveedores.altadocumentosoporte', compact('documetoscatalogo', 'tipoProveedor', 'tipoPersonaOpcion'));
     }
-
-
 
 
 
@@ -120,54 +97,6 @@ class altadocumentosController extends Controller
             ]);
         }
     }
-
-
-    // public function store(Request $request)
-    // {
-    //     try {
-    //         switch (intval($request->api)) {
-    //             case 1:
-    //                 if ($request->ID_FORMULARIO_DOCUMENTOSPROVEEDOR == 0) {
-    //                     DB::statement('ALTER TABLE formulario_altadocumentoproveedores AUTO_INCREMENT=1;');
-
-    //                     $requestData = $request->all();
-    //                     $requestData['RFC_PROVEEDOR'] = Auth::user()->RFC_PROVEEDOR;
-
-    //                     $cuentas = altadocumentosModel::create($requestData);
-    //                 } else {
-    //                     if (isset($request->ELIMINAR)) {
-    //                         if ($request->ELIMINAR == 1) {
-    //                             $cuentas = altadocumentosModel::where('ID_FORMULARIO_DOCUMENTOSPROVEEDOR', $request['ID_FORMULARIO_DOCUMENTOSPROVEEDOR'])
-    //                                 ->update(['ACTIVO' => 0]);
-    //                             $response['code'] = 1;
-    //                             $response['cuenta'] = 'Desactivada';
-    //                         } else {
-    //                             $cuentas = altadocumentosModel::where('ID_FORMULARIO_DOCUMENTOSPROVEEDOR', $request['ID_FORMULARIO_DOCUMENTOSPROVEEDOR'])
-    //                                 ->update(['ACTIVO' => 1]);
-    //                             $response['code'] = 1;
-    //                             $response['cuenta'] = 'Activada';
-    //                         }
-    //                     } else {
-    //                         $cuentas = altadocumentosModel::find($request->ID_FORMULARIO_DOCUMENTOSPROVEEDOR);
-    //                         $cuentas->update($request->except('RFC_PROVEEDOR')); 
-    //                         $response['code'] = 1;
-    //                         $response['cuenta'] = 'Actualizada';
-    //                     }
-    //                     return response()->json($response);
-    //                 }
-    //                 $response['code']  = 1;
-    //                 $response['cuenta']  = $cuentas;
-    //                 return response()->json($response);
-    //                 break;
-    //             default:
-    //                 $response['code']  = 1;
-    //                 $response['msj']  = 'API no encontrada';
-    //                 return response()->json($response);
-    //         }
-    //     } catch (Exception $e) {
-    //         return response()->json(['error' => 'Error al guardar'], 500);
-    //     }
-    // }
 
 
     public function mostrardocumentosoporteproveedor($id)

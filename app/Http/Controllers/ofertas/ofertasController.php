@@ -134,7 +134,6 @@ class ofertasController extends Controller
                 }
             }
     
-            // Respuesta JSON
             return response()->json([
                 'data' => $tabla,
                 'msj' => 'Última revisión consultada correctamente'

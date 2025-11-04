@@ -32,7 +32,6 @@ class matrizController extends Controller
 
         return view('compras.ordencompra.matrizcomparativa', compact('proveedoresOficiales', 'proveedoresTemporales'));
 
-
     }
 
 
@@ -52,7 +51,6 @@ class matrizController extends Controller
             $tabla = matrizModel::get();
 
             foreach ($tabla as $value) {
-                // BOTONES
                 if ($value->ESTADO_APROBACION == 'Aprobada') {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
@@ -61,7 +59,6 @@ class matrizController extends Controller
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 }
 
-                // BADGE DE ESTADO
                 if ($value->ESTADO_APROBACION == 'Aprobada') {
                     $value->ESTADO_BADGE = '<span class="badge bg-success">Aprobado</span>';
                 } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
@@ -86,8 +83,7 @@ class matrizController extends Controller
     }
 
 
-    //// APROBACION DE MATRIS
-
+    //// APROBACION DE MATRIz
 
     public function Tablamatirzaprobada()
     {
@@ -174,9 +170,6 @@ class matrizController extends Controller
                     $response['matriz']  = $matrizes;
                     return response()->json($response);
                     break;
-
-
-
 
                 case 2:
                     if ($request->ID_FORMULARIO_MATRIZ == 0) {
@@ -275,8 +268,6 @@ class matrizController extends Controller
                         'matriz' => $matrizes
                     ]);
                     break;
-
-
 
 
                 default:

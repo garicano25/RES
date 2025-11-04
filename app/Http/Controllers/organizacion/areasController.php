@@ -32,153 +32,6 @@ class areasController extends Controller
         return view('RH.organizacion.organigrama', compact('categorias', 'lideres'));
     }
 
-    // public function TablaAreas()
-    // {
-    //     try {
-
-    //         $tabla = areasModel::where('ACTIVO', 1)->get();
-
-    //         foreach ($tabla as $key => $value) {
-
-
-    //             //Obtenemos el area afectada
-    //             $departamentos = DB::select('SELECT NOMBRE, ID_DEPARTAMENTO_AREA FROM departamentos_areas da  WHERE da.AREA_ID = ? ', [$value->ID_AREA]);
-    //             $encargados = DB::select('SELECT NOMBRE_CARGO FROM encargados_areas da  WHERE da.AREA_ID = ? ', [$value->ID_AREA]);
-
-
-    //             $cadena = "";
-    //             foreach ($departamentos  as $key => $val) {
-
-    //                 $ppt = DB::select("SELECT IF(COUNT(ppt.ID_FORMULARIO_PPT) > 0, 1, 0) AS TIENE_PPT,  
-    //                                     IF(COUNT(dpt.ID_FORMULARIO_DPT) > 0, 1, 0) AS TIENE_DPT
-    //                                     FROM departamentos_areas d
-    //                                     LEFT JOIN formulario_ppt ppt ON ppt.DEPARTAMENTO_AREA_ID = d.ID_DEPARTAMENTO_AREA 
-    //                                     LEFT JOIN formulario_dpt dpt ON dpt.DEPARTAMENTOS_AREAS_ID = d.ID_DEPARTAMENTO_AREA
-    //                                     WHERE d.ID_DEPARTAMENTO_AREA = ?", [$val->ID_DEPARTAMENTO_AREA]);
-
-
-    //                 //TIENE PPT Y DPT
-    //                 if($ppt[0]->TIENE_PPT == 1 && $ppt[0]->TIENE_DPT == 1){
-
-    //                     $cadena .= "
-
-
-    //                     <div class='row'>
-    //                         <div class='col-8'>
-    //                             <li class='mb-2'>" . $val->NOMBRE . " </li>
-    //                         </div>
-    //                         <div class='col-4 justify-content-end d-flex'>
-    //                             <lu>
-    //                                 <span class='badge text-bg-success' ><i class='bi bi-check-lg'></i> PPT </span>
-    //                                 <span class='badge text-bg-success' style='margin-left: 10px'><i class='bi bi-check-lg'></i> DPT </span>
-    //                             </lu>
-    //                         </div>
-    //                     </div>
-
-    //                     ";
-
-    //                 //NO TIENEN PPT NI DPT
-    //                 }else if ($ppt[0]->TIENE_PPT == 0 && $ppt[0]->TIENE_DPT == 0){
-
-
-
-    //                     $cadena .= "
-
-
-    //                     <div class='row'>
-    //                         <div class='col-8'>
-    //                             <li class='mb-2'>" . $val->NOMBRE . " </li>
-    //                         </div>
-    //                         <div class='col-4 justify-content-end d-flex'>
-    //                             <lu>
-    //                                 <span class='badge text-bg-danger' ><i class='bi bi-x'></i> PPT </span> 
-    //                                 <span class='badge text-bg-danger' style='margin-left: 10px'><i class='bi bi-x'></i> DPT </span> 
-    //                             </lu>
-    //                         </div>
-    //                     </div>
-
-    //                     ";
-
-    //                     //TIEN PPT Y NO TIENE DPT
-    //                 } else if ($ppt[0]->TIENE_PPT == 1 && $ppt[0]->TIENE_DPT == 0) {
-
-
-    //                     $cadena .= "
-    //                     <div class='row'>
-    //                         <div class='col-8'>
-    //                             <li class='mb-2'>" . $val->NOMBRE . " </li>
-    //                         </div>
-    //                         <div class='col-4 justify-content-end d-flex'>
-    //                             <lu>
-    //                                 <span class='badge text-bg-success' ><i class='bi bi-check-lg'></i> PPT </span> 
-    //                                 <span class='badge text-bg-danger' style='margin-left: 10px'><i class='bi bi-x'></i> DPT </span> 
-    //                             </lu>
-    //                         </div>
-    //                     </div>
-
-    //                     ";
-
-    //                     //NO TIENE PPT Y TIENE DPT
-    //                 } else if ($ppt[0]->TIENE_PPT == 0 && $ppt[0]->TIENE_DPT == 1) {
-
-    //                     $cadena .= "
-
-    //                     <div class='row'>
-    //                         <div class='col-8'>
-    //                             <li class='mb-2'>" . $val->NOMBRE . " </li>
-    //                         </div>
-    //                         <div class='col-4 justify-content-end d-flex'>
-    //                             <lu>
-    //                                 <span class='badge text-bg-danger' ><i class='bi bi-x'></i> PPT </span>
-    //                                 <span class='badge text-bg-success' style='margin-left: 10px'><i class='bi bi-check-lg'></i> DPT </span>
-    //                             </lu>
-    //                         </div>
-    //                     </div>
-
-    //                     ";
-
-    //                 }
-
-
-    //             }
-
-    //             $encargados_list = "";
-    //             foreach ($encargados  as $key => $val1) {
-    //                 $encargados_list .= "<li>" .  $val1->NOMBRE_CARGO . "</li>";
-    //             }
-
-    //             $value['DEPARTAMENTOS'] = $cadena;
-    //             $value['ENCARGADOS'] = $encargados_list === "" ? '<span class="badge text-bg-warning ">Sin encargados</span>' : $encargados_list;
-
-
-    //             // // Botones
-    //             // if (auth()->user()->hasRoles(['Superusuario', 'Administrador', 'Reconocimiento', 'CoordinadorHI'])  && ($recsensorial->recsensorial_bloqueado + 0) == 0) {
-
-    //             $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-circle ELIMINAR"><i class="bi bi-power"></i></button>';
-    //             $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-circle EDITAR"><i class="bi bi-pencil-square"></i></button>';
-    //             $value->BTN_ORGANIGRAMA = '<button type="button" class="btn btn-success btn-circle ORGANIGRAMA"><i class="bi bi-diagram-3-fill"></i></button>';
-
-
-    //             // } else {
-
-    //             //     $value->boton_eliminar = '<button type="button" class="btn btn-secondary btn-circle"><i class="fa fa-ban"></i></button>';
-    //             // }
-    //         }
-
-    //         // respuesta
-    //         $dato['data'] = $tabla;
-    //         $dato["msj"] = 'Información consultada correctamente';
-    //         return response()->json($dato);
-    //     } catch (Exception $e) {
-
-    //         $dato["msj"] = 'Error ' . $e->getMessage();
-    //         $dato['data'] = 0;
-    //         return response()->json($dato);
-    //     }
-    // }
-
-
-
 
     public function TablaAreas()
     {
@@ -199,7 +52,6 @@ class areasController extends Controller
 
             }
 
-            // respuesta
             $dato['data'] = $tabla;
             $dato["msj"] = 'Información consultada correctamente';
             return response()->json($dato);
@@ -217,7 +69,6 @@ class areasController extends Controller
         return Storage::response($archivo);
     }
     
-
 
     public function TablaEncargados($area_id)
     {
@@ -257,10 +108,7 @@ class areasController extends Controller
                     $value->ES_LIDER = '<span class="badge rounded-pill text-bg-danger"><i class="bi bi-x-lg"></i></span>';
                 }
 
-                // // Botones
-                // if (auth()->user()->hasRoles(['Superusuario', 'Administrador', 'Reconocimiento', 'CoordinadorHI'])  && ($recsensorial->recsensorial_bloqueado + 0) == 0) {
-
-
+              
                 if ($value->ACTIVO == 1) {
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill " ><i class="bi bi-pencil-square EDITAR"></i></button>';
 
@@ -332,7 +180,6 @@ class areasController extends Controller
 
         try {
             switch (intval($request->api)) {
-                    //Guardar Area
 
 
 
@@ -422,13 +269,11 @@ class areasController extends Controller
 
                     //GUARDAR CATEGORIAS
                 case 2:
-                    //Verificamos si es un nuevo registro para ver en donde lo guardamos
                     if ($request->NUEVO == 1) {
 
                         if ($request->ES_LIDER == 1) {
 
                             DB::statement('ALTER TABLE areas_lideres AUTO_INCREMENT=1;');
-                            // ASIGNAMOS VALORES PARA ALMACENAR EN LA BASE DE DATOS
                             $request['AREA_ID'] = $request->AREA_ID;
                             $request['LIDER_ID'] = $request->CATEGORIA;
 
@@ -440,7 +285,6 @@ class areasController extends Controller
                         } else {
 
                             DB::statement('ALTER TABLE lideres_categorias AUTO_INCREMENT=1;');
-                            // ASIGNAMOS VALORES PARA ALMACENAR EN LA BASE DE DATOS
                             $request['AREA_ID'] = $request->AREA_ID;
                             $request['CATEGORIA_ID'] = $request->CATEGORIA;
                             $request['LIDER_ID'] = $request->LIDER;
@@ -452,7 +296,7 @@ class areasController extends Controller
                             $response['categoria']  = $categoria;
                             return response()->json($response);
                         }
-                    } else { //Eliminar encargado del area
+                    } else { 
 
                         $encargados = encargadosAreasModel::where('ID_ENCARGADO_AREA', $request['ID_ENCARGADO_AREA'])->delete();
 

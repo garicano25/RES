@@ -45,51 +45,6 @@ public function Tablajerarquia()
     
 
     
-// public function store(Request $request)
-// {
-
-//     try {
-//         switch (intval($request->api)) {
-//             case 1:
-
-                
-//                 if ($request->ID_CATALOGO_JERARQUIA == 0) {
-
-//                     DB::statement('ALTER TABLE catalogo_jerarquias AUTO_INCREMENT=1;');
-//                     $jerarquias = catalogojerarquiaModel::create($request->all());
-//                 } else { 
-
-//                     if (!isset($request->ELIMINAR)) {
-//                         $jerarquias = catalogojerarquiaModel::find($request->ID_CATALOGO_JERARQUIA);
-//                         $jerarquias->update($request->all());
-//                     } else {
-//                         $jerarquias = catalogojerarquiaModel::where('ID_CATALOGO_JERARQUIA', $request['ID_CATALOGO_JERARQUIA'])->update(['ACTIVO' => 0]);
-//                         $response['code']  = 1;
-//                         $response['jerarquia']  = 'Desactivada';
-//                         return response()->json($response);
-//                     }
-//                 }
-
-//                 $response['code']  = 1;
-//                 $response['jerarquia']  = $jerarquias;
-//                 return response()->json($response);
-
-//                 break;
-
-//             default:
-
-//                 $response['code']  = 1;
-//                 $response['msj']  = 'Api no encontrada';
-//                 return response()->json($response);
-//         }
-//     } catch (Exception $e) {
-
-//         return response()->json('Error al guardar la jerarquía');
-//     }
-// }
-
-
-
 
 public function store(Request $request)
 {
@@ -97,7 +52,6 @@ public function store(Request $request)
         switch (intval($request->api)) {
             case 1:
                 if ($request->ID_CATALOGO_JERARQUIA == 0) {
-                    // Crear nueva jerarquía
                     DB::statement('ALTER TABLE catalogo_jerarquias AUTO_INCREMENT=1;');
                     $jerarquias = catalogojerarquiaModel::create($request->all());
                 } else {

@@ -63,52 +63,6 @@ class CvController extends Controller
     }
 
 
-    // public function store(Request $request)
-    // {
-    //     try {
-    //         switch (intval($request->api)) {
-    //             case 1:
-    //                 if ($request->ID_CV_CONTRATACION == 0) {
-    //                     DB::statement('ALTER TABLE cv_contratacion AUTO_INCREMENT=1;');
-    //                     $cvs = cvModel::create($request->all());
-    //                 } else { 
-
-    //                     if (isset($request->ELIMINAR)) {
-    //                         if ($request->ELIMINAR == 1) {
-    //                             $cvs = cvModel::where('ID_CV_CONTRATACION', $request['ID_CV_CONTRATACION'])->update(['ACTIVO' => 0]);
-    //                             $response['code'] = 1;
-    //                             $response['cv'] = 'Desactivada';
-    //                         } else {
-    //                             $cvs = cvModel::where('ID_CV_CONTRATACION', $request['ID_CV_CONTRATACION'])->update(['ACTIVO' => 1]);
-    //                             $response['code'] = 1;
-    //                             $response['cv'] = 'Activada';
-    //                         }
-    //                     } else {
-    //                         $cvs = cvModel::find($request->ID_CV_CONTRATACION);
-    //                         $cvs->update($request->all());
-    //                         $response['code'] = 1;
-    //                         $response['cv'] = 'Actualizada';
-    //                     }
-    //                     return response()->json($response);
-
-    //                 }
-    //                 $response['code']  = 1;
-    //                 $response['cv']  = $cvs;
-    //                 return response()->json($response);
-    //                 break;
-    //             default:
-    //                 $response['code']  = 1;
-    //                 $response['msj']  = 'Api no encontrada';
-    //                 return response()->json($response);
-    //         }
-    //     } catch (Exception $e) {
-    //         return response()->json('Error al guardar el cv');
-    //     }
-    // }
-
-
-
-
 
 
 
@@ -122,12 +76,10 @@ class CvController extends Controller
             switch (intval($request->api)) {
                 case 1:
                     if ($request->ID_CV_CONTRATACION == 0) {
-                        // Restablecer el auto_increment si es necesario
                         DB::statement('ALTER TABLE cv_contratacion AUTO_INCREMENT=1;');
                         $data = $request->except(['FOTO_CV', 'DOCUMENTO_CEDULA_CV', 'DOCUMENTO_VALCEDULA_CV', 'formacion','documento','experiencia','continua']);
                         $cv = cvModel::create($data);
 
-                        // Procesar foto
                         if ($request->hasFile('FOTO_CV')) {
                             $imagen = $request->file('FOTO_CV');
                             $rutaCarpeta = "reclutamiento/$curp/documentos CV/foto_usuario";
@@ -137,7 +89,6 @@ class CvController extends Controller
                             $cv->save();
                         }
 
-                        // Procesar documento de cédula
                         if ($request->hasFile('DOCUMENTO_CEDULA_CV')) {
                             $documentoCedula = $request->file('DOCUMENTO_CEDULA_CV');
                             $rutaCarpeta = "reclutamiento/$curp/documentos CV/Documentos Cedula/Cedula";
@@ -147,7 +98,6 @@ class CvController extends Controller
                             $cv->save();
                         }
 
-                        // Procesar validación de cédula
                         if ($request->hasFile('DOCUMENTO_VALCEDULA_CV')) {
                             $documentoValCedula = $request->file('DOCUMENTO_VALCEDULA_CV');
                             $rutaCarpeta = "reclutamiento/$curp/documentos CV/Documentos Cedula/Validacion Cedula";
@@ -165,11 +115,9 @@ class CvController extends Controller
                             return response()->json(['code' => 1, 'cv' => $mensaje]);
                         }
 
-                        // Editar un registro existente
                         $cv = cvModel::find($request->ID_CV_CONTRATACION);
                         $cv->update($request->except(['FOTO_CV', 'DOCUMENTO_CEDULA_CV', 'DOCUMENTO_VALCEDULA_CV','formacion','documento','experiencia','continua']));
 
-                        // Procesar foto
                         if ($request->hasFile('FOTO_CV')) {
                             if ($cv->FOTO_CV && Storage::exists($cv->FOTO_CV)) {
                                 Storage::delete($cv->FOTO_CV);
@@ -182,7 +130,6 @@ class CvController extends Controller
                             $cv->save();
                         }
 
-                        // Procesar documento de cédula
                         if ($request->hasFile('DOCUMENTO_CEDULA_CV')) {
                             if ($cv->DOCUMENTO_CEDULA_CV && Storage::exists($cv->DOCUMENTO_CEDULA_CV)) {
                                 Storage::delete($cv->DOCUMENTO_CEDULA_CV);
@@ -195,7 +142,6 @@ class CvController extends Controller
                             $cv->save();
                         }
 
-                        // Procesar validación de cédula
                         if ($request->hasFile('DOCUMENTO_VALCEDULA_CV')) {
                             if ($cv->DOCUMENTO_VALCEDULA_CV && Storage::exists($cv->DOCUMENTO_VALCEDULA_CV)) {
                                 Storage::delete($cv->DOCUMENTO_VALCEDULA_CV);

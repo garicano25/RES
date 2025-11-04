@@ -38,19 +38,14 @@ class clientesController extends Controller
     public function index()
     {
 
-
         $medios = catalogomediocontactoModel::where('ACTIVO', 1)->get();
         $necesidades = catalonecesidadModel::where('ACTIVO', 1)->get();
         $giros = catalogiroempresaModel::where('ACTIVO', 1)->get();
-
         $lineas = catalogolineanegociosModel::where('ACTIVO', 1)->get();
         $tipos = catalogotiposervicioModel::where('ACTIVO', 1)->get();
-
         $titulosCuenta = catalogotituloproveedorModel::where('ACTIVO', 1)->get();
 
         return view('ventas.clientes.clientes', compact('medios', 'necesidades','giros', 'lineas', 'tipos','titulosCuenta'));
-
-
     }
 
 
@@ -59,9 +54,7 @@ class clientesController extends Controller
 {
     try {
         
-
          $tabla = clienteModel::get();
-
 
         foreach ($tabla as $value) {
             if ($value->ACTIVO == 0) {
@@ -111,10 +104,6 @@ public function Tablaverificacionusuario(Request $request)
 
         $tabla = verificacionclienteModel::where('CLIENTE_ID', $cliente)->get();
 
-
-        // $tabla = documentosoporteModel::get();
-
-
         foreach ($tabla as $value) {
             if ($value->ACTIVO == 0) {
 
@@ -156,10 +145,6 @@ public function Tablactaconstitutivausuario(Request $request)
 
         $tabla = actaclienteModel::where('CLIENTE_ID', $cliente)->get();
 
-
-        // $tabla = documentosoporteModel::get();
-
-
         foreach ($tabla as $value) {
             if ($value->ACTIVO == 0) {
 
@@ -200,82 +185,7 @@ public function mostraractaclienteventas($id)
         try {
             switch (intval($request->api)) {
                 case 1:
-                    // if ($request->ID_FORMULARIO_CLIENTES == 0) {
-                    //     DB::statement('ALTER TABLE formulario_clientes AUTO_INCREMENT=1;');
-
-                    //     // Excluir arrays puros y agregar los JSON
-                    //     $data = $request->except(['contactos', 'direcciones', 'CONSTANCIA_DOCUMENTO']);
-                    //     $data['CONTACTOS_JSON'] = is_string($request->CONTACTOS_JSON) ? $request->CONTACTOS_JSON : json_encode([]);
-                    //     $data['DIRECCIONES_JSON'] = is_string($request->DIRECCIONES_JSON) ? $request->DIRECCIONES_JSON : json_encode([]);
-
-
-
-
-                    //     $cliente = clienteModel::create($data);
-
-                    //     // Guardar documento si viene
-                    //     if ($request->hasFile('CONSTANCIA_DOCUMENTO')) {
-                    //         $documento = $request->file('CONSTANCIA_DOCUMENTO');
-                    //         $idCliente = $cliente->ID_FORMULARIO_CLIENTES;
-
-                    //         $nombreArchivo = 'constancia.' . $documento->getClientOriginalExtension();
-                    //         $rutaCarpeta = 'cliente/' . $idCliente . '/Constancia';
-                    //         $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
-
-                    //         $cliente->CONSTANCIA_DOCUMENTO = $rutaCompleta;
-                    //         $cliente->save();
-                    //     }
-
-                    //     $response['code'] = 1;
-                    //     $response['cliente'] = $cliente;
-                    //     return response()->json($response);
-                    // } else {
-                    //     if (isset($request->ELIMINAR)) {
-                    //         if ($request->ELIMINAR == 1) {
-                    //             clienteModel::where('ID_FORMULARIO_CLIENTES', $request->ID_FORMULARIO_CLIENTES)
-                    //                 ->update(['ACTIVO' => 0]);
-                    //             $response['code'] = 1;
-                    //             $response['cliente'] = 'Desactivada';
-                    //         } else {
-                    //             clienteModel::where('ID_FORMULARIO_CLIENTES', $request->ID_FORMULARIO_CLIENTES)
-                    //                 ->update(['ACTIVO' => 1]);
-                    //             $response['code'] = 1;
-                    //             $response['cliente'] = 'Activada';
-                    //         }
-                    //     } else {
-                    //         $cliente = clienteModel::find($request->ID_FORMULARIO_CLIENTES);
-
-                    //         $data = $request->except(['contactos', 'direcciones', 'CONSTANCIA_DOCUMENTO']);
-                    //         $data['CONTACTOS_JSON'] = json_encode($request->contactos);
-                    //         $data['DIRECCIONES_JSON'] = json_encode($request->direcciones);
-
-                    //         $cliente->update($data);
-
-                    //         if ($request->hasFile('CONSTANCIA_DOCUMENTO')) {
-                    //             if ($cliente->CONSTANCIA_DOCUMENTO && Storage::exists($cliente->CONSTANCIA_DOCUMENTO)) {
-                    //                 Storage::delete($cliente->CONSTANCIA_DOCUMENTO);
-                    //             }
-
-                    //             $documento = $request->file('CONSTANCIA_DOCUMENTO');
-                    //             $idCliente = $cliente->ID_FORMULARIO_CLIENTES;
-
-                    //             $nombreArchivo = 'constancia.' . $documento->getClientOriginalExtension();
-                    //             $rutaCarpeta = 'cliente/' . $idCliente . '/Constancia';
-                    //             $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
-
-                    //             $cliente->CONSTANCIA_DOCUMENTO = $rutaCompleta;
-                    //             $cliente->save();
-                    //         }
-
-                    //         $response['code'] = 1;
-                    //         $response['cliente'] = 'Actualizada';
-                    //     }
-
-                    //     return response()->json($response);
-                    // }
-                    // break;
-
-
+                
                     if ($request->ID_FORMULARIO_CLIENTES == 0) {
                         DB::statement('ALTER TABLE formulario_clientes AUTO_INCREMENT=1;');
 

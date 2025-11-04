@@ -16,57 +16,7 @@ use DB;
 
 class pdfrecempleadoController extends Controller
 {
-    // public function generarPermisoausencia($id)
-    // {
-    //     $registro = recemplaedosModel::findOrFail($id);
-
-    //     $data = [
-    //         'fecha' => $registro->FECHA_SALIDA,
-    //         'nombre_empleado' => $registro->SOLICITANTE_SALIDA,
-    //         'cargo' => $registro->CARGO_PERMISO,
-    //         'no_empleado' => $registro->NOEMPLEADO_PERMISO,
-    //         'observaciones' => $registro->OBSERVACIONES_REC,
-    //     ];
-
-    //     return Pdf::loadView('pdf.permisopdf', $data)
-    //         ->download('PS-RH-FO-22 Aviso de ausencia y-o permiso.pdf');
-    // }
-
-    // public function generarPermisoausencia($id)
-    // {
-    //     $registro = recemplaedosModel::findOrFail($id);
-
-    //     $conceptos = [
-    //         1 => 'Permiso',
-    //         2 => 'Incapacidad',
-    //         3 => 'Omitir registro en el checador',
-    //         4 => 'Fallecimiento¹',
-    //         5 => 'Matrimonio²',
-    //         6 => 'Permiso de maternidad³',
-    //         7 => 'Permiso de paternidad³',
-    //         8 => 'Compensatorio',
-    //         9 => 'Otros (explique)',
-    //     ];
-
-    //     $data = [
-    //         'fecha' => $registro->FECHA_SALIDA,
-    //         'nombre_empleado' => $registro->SOLICITANTE_SALIDA,
-    //         'cargo' => $registro->CARGO_PERMISO,
-    //         'no_empleado' => $registro->NOEMPLEADO_PERMISO,
-    //         'observaciones' => $registro->OBSERVACIONES_REC,
-    //         'conceptos' => $conceptos,
-    //         'conceptoSeleccionado' => $registro->CONCEPTO_PERMISO,
-    //         'no_dias' => $registro->NODIAS_PERMISO,
-    //         'no_horas' => $registro->NOHORAS_PERMISO,
-    //         'fecha_inicial' => $registro->FECHA_INICIAL_PERMISO,
-    //         'fecha_final' => $registro->FECHA_FINAL_PERMISO,
-    //         'explique' => $registro->EXPLIQUE_PERMISO,
-    //         'goce_permiso' => $registro->GOCE_PERMISO, 
-    //     ];
-
-    //     return Pdf::loadView('pdf.permisopdf', $data)
-    //         ->download('PS-RH-FO-22 Aviso de ausencia y-o permiso.pdf');
-    // }
+  
 
     public function generarPermisoausencia($id)
     {
@@ -120,9 +70,6 @@ class pdfrecempleadoController extends Controller
 
             
 
-        // ======================
-        // 🔹 Datos del PDF
-        // ======================
         $data = [
             'fecha' => $registro->FECHA_SALIDA,
             'nombre_empleado' => $registro->SOLICITANTE_SALIDA,
@@ -162,10 +109,7 @@ class pdfrecempleadoController extends Controller
                 ? Carbon::parse($empleado->FECHA_INGRESO_VACACIONES)->format('Y/m/d')
                 : '';
 
-            // ======================
-            // 🔹 Nombres de JEFE y AUTORIZÓ (tabla usuarios)
-            // ======================
-
+          
             $solicito = DB::table('usuarios')
                 ->select('EMPLEADO_NOMBRE', 'EMPLEADO_APELLIDOPATERNO', 'EMPLEADO_APELLIDOMATERNO')
                 ->where('ID_USUARIO', $empleado->USUARIO_ID)

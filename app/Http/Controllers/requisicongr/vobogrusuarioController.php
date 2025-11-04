@@ -37,64 +37,21 @@ class vobogrusuarioController extends Controller
     }
 
 
-    // public function TablaVoBoGRusuarios()
-    // {
-    //     try {
-    //         $usuarioId = auth()->id();
-
-    //         $rows = DB::table('formulario_bitacoragr as gr')
-    //             ->where('gr.USUARIO_ID', $usuarioId)
-    //             ->where('gr.MANDAR_USUARIO_VOBO', 'Sí')
-    //             ->select(
-    //                 'gr.ID_GR',
-    //                 'gr.NO_RECEPCION',
-    //                 DB::raw('COUNT(d.ID_DETALLE) as TOTAL_PRODUCTOS')
-    //             )
-    //             ->join('formulario_bitacoragr_detalle as d', 'd.ID_GR', '=', 'gr.ID_GR')
-    //             ->groupBy('gr.ID_GR', 'gr.NO_RECEPCION')
-    //             ->get();
-
-    //         foreach ($rows as $value) {
-    //             $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR" data-id="' . $value->ID_GR . '"><i class="bi bi-pencil-square"></i></button>';
-    //         }
-
-    //         return response()->json(['data' => $rows]);
-    //     } catch (\Throwable $e) {
-    //         return response()->json([
-    //             'data' => [],
-    //             'error' => true,
-    //             'message' => $e->getMessage(),
-    //         ], 500);
-    //     }
-    // }
-
 
     public function TablaVoBoGRusuarios()
     {
         try {
             $usuarioId = auth()->id();
 
-            // $rows = DB::table('formulario_bitacoragr as gr')
-            //     ->join('formulario_bitacoragr_detalle as d', 'd.ID_GR', '=', 'gr.ID_GR')
-            //     ->where('gr.USUARIO_ID', $usuarioId)
-            //     ->where('gr.MANDAR_USUARIO_VOBO', 'Sí')
-            //     ->whereNull('gr.VO_BO_USUARIO') 
-            //     ->select(
-            //         'gr.ID_GR',
-            //         'gr.NO_RECEPCION',
-            //         DB::raw('COUNT(d.ID_DETALLE) as TOTAL_PRODUCTOS')
-            //     )
-            //     ->groupBy('gr.ID_GR', 'gr.NO_RECEPCION')
-            //     ->get();
-
+          
             $rows = DB::table('formulario_bitacoragr as gr')
                 ->join('formulario_bitacoragr_detalle as d', 'd.ID_GR', '=', 'gr.ID_GR')
                 ->where('gr.USUARIO_ID', $usuarioId)
                 ->where('gr.MANDAR_USUARIO_VOBO', 'Sí')
                 ->whereNull('gr.VO_BO_USUARIO')
                 ->where(function ($q) {
-                    $q->whereNull('d.BIENS_PARCIAL')   // incluir nulos
-                        ->orWhere('d.BIENS_PARCIAL', '!=', 'Sí'); // incluir todo menos 'Sí'
+                    $q->whereNull('d.BIENS_PARCIAL')   
+                        ->orWhere('d.BIENS_PARCIAL', '!=', 'Sí'); 
                 })
                 ->select(
                     'gr.ID_GR',
@@ -123,7 +80,6 @@ class vobogrusuarioController extends Controller
     public function ConsultarProductosVoBo($idGR)
     {
         try {
-            // Traer cabecera (para NO_RECEPCION y ID_GR)
             $cabecera = DB::table('formulario_bitacoragr')
                 ->where('ID_GR', $idGR)
                 ->select('ID_GR', 'NO_RECEPCION')
@@ -133,27 +89,11 @@ class vobogrusuarioController extends Controller
                 return response()->json(['ok' => false, 'msg' => 'No se encontró la recepción']);
             }
 
-            // Traer productos relacionados con la GR
-            // $detalle = DB::table('formulario_bitacoragr_detalle')
-            //     ->where('ID_GR', $idGR)
-            //     ->select(
-            //         'ID_DETALLE',
-            //         'DESCRIPCION',
-            //         'CANTIDAD_ACEPTADA',
-            //         'CANTIDAD_ACEPTADA_USUARIO',
-            //         'CUMPLE_ESPECIFICADO_USUARIO',
-            //         'COMENTARIO_CUMPLE_USUARIO',
-            //         'ESTADO_BS_USUARIO',
-            //         'COMENTARIO_ESTADO_USUARIO',
-            //         'VOBO_USUARIO_PRODUCTO'
-            //     )
-            //     ->get();
-
             $detalle = DB::table('formulario_bitacoragr_detalle')
                 ->where('ID_GR', $idGR)
                 ->where(function ($q) {
-                    $q->whereNull('BIENS_PARCIAL')   // incluir nulos
-                        ->orWhere('BIENS_PARCIAL', '!=', 'Sí'); // incluir todo menos 'Sí'
+                    $q->whereNull('BIENS_PARCIAL')   
+                        ->orWhere('BIENS_PARCIAL', '!=', 'Sí'); 
                 })
                 ->select(
                     'ID_DETALLE',
@@ -189,7 +129,6 @@ class vobogrusuarioController extends Controller
         try {
             $idGR = $request->ID_GR;
 
-            // 1. Actualizar datos globales en formulario_bitacoragr
             DB::table('formulario_bitacoragr')
                 ->where('ID_GR', $idGR)
                 ->update([
@@ -198,7 +137,6 @@ class vobogrusuarioController extends Controller
                     'UPDATED_AT'      => now(),
                 ]);
 
-            // 2. Actualizar cada producto (detalle)
             if ($request->has('CUMPLE_ESPECIFICADO_USUARIO')) {
                 foreach ($request->CUMPLE_ESPECIFICADO_USUARIO as $idDetalle => $cumpleUsuario) {
                     DB::table('formulario_bitacoragr_detalle')

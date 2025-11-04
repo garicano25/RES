@@ -42,7 +42,6 @@ class pptController extends Controller
 
             foreach ($tabla as $key => $value) {
 
-                //OBTENEMOS LOS CURSOS DEL FORMULARIO
                 $cursos = cursospptModel::where('FORMULARIO_PPT_ID', $value->ID_FORMULARIO_PPT)->get();
                 $value->CURSOS = $cursos;
 
@@ -80,7 +79,6 @@ class pptController extends Controller
 
 
                 if ($value->ACTIVO == 0) {
-                    // Botones  
                     $value->BTN_PPT = '<button type="button" class="btn btn-success btn-custom rounded-pill DPT"disabled><i class="bi bi-ban"></i></button>';   
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_PPT . '"><span class="slider round"></span></label>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
@@ -97,7 +95,6 @@ class pptController extends Controller
 
             }
 
-            // respuesta
             $dato['data'] = $tabla;
             $dato["msj"] = 'Información consultada correctamente';
             return response()->json($dato);
@@ -190,8 +187,6 @@ public function store(Request $request)
                                     'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
                                     'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
                                     'PORCENTAJE_CURSO' => isset($request->PORCENTAJE_CURSO[$num]) ? $request->PORCENTAJE_CURSO[$num] : null,
-
-                                        // 'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num]
                                     ]);
                             }
                         }
@@ -200,7 +195,7 @@ public function store(Request $request)
                     $response['code']  = 1;
                     $response['PPT']  = $PPT;
                     return response()->json($response);
-                } else { //Editamos el ppt y eliminar ppt
+                } else { 
 
 
 
@@ -208,11 +203,9 @@ public function store(Request $request)
 
                     $PPT = formulariopptModel::create($request->all());
 
-                    //ELIMINAMOS LOS CURSOS ANTERIORES
                     $eliminar_cursos = cursospptModel::where('FORMULARIO_PPT_ID', $request["ID_FORMULARIO_PPT"])->delete();
 
 
-                    // GUARDAR LOS CURSOS
                     if ($request->CURSO_PPT) {
                         foreach ($request->CURSO_PPT as $key => $value) {
 
@@ -226,8 +219,6 @@ public function store(Request $request)
                                     'CURSO_REQUERIDO' => isset($request->CURSO_REQUERIDO_PPT[$num]) ? $request->CURSO_REQUERIDO_PPT[$num] : null,
                                     'CURSO_DESEABLE' => isset($request->CURSO_DESEABLE_PPT[$num]) ? $request->CURSO_DESEABLE_PPT[$num] : null,
                                     'PORCENTAJE_CURSO' => isset($request->PORCENTAJE_CURSO[$num]) ? $request->PORCENTAJE_CURSO[$num] : null,
-
-                                        // 'CURSO_CUMPLE_PPT' => $request->CURSO_CUMPLE_PPT[$num]
                                     ]);
                             }
                         }

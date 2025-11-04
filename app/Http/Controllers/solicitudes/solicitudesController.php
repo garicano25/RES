@@ -32,9 +32,6 @@ class solicitudesController extends Controller
 
 
 
-
-  
-
     public function index()
     {
 
@@ -54,7 +51,6 @@ class solicitudesController extends Controller
     }
 
 
-
     public function buscarCliente(Request $request)
     {
         $rfc = $request->query('rfc');
@@ -62,13 +58,11 @@ class solicitudesController extends Controller
         $cliente = clienteModel::where('RFC_CLIENTE', $rfc)->first();
 
         if ($cliente) {
-            // Direcciones
             $direcciones = [];
             if (!empty($cliente->DIRECCIONES_JSON)) {
                 $direccionesArray = json_decode($cliente->DIRECCIONES_JSON, true);
                 foreach ($direccionesArray as $dir) {
                     if (($dir['TIPODEDOMICILIOFISCAL'] ?? '') === 'nacional') {
-                        // Dirección nacional
                         $direccionFormateada =
                             ($dir['NOMBRE_VIALIDAD_DOMICILIO'] ?? '') . ' ' .
                             (empty($dir['NUMERO_EXTERIOR_DOMICILIO']) ? '' : 'No. ' . $dir['NUMERO_EXTERIOR_DOMICILIO']) .
@@ -85,7 +79,6 @@ class solicitudesController extends Controller
                             'direccion' => $direccionFormateada,
                         ];
                     } elseif (($dir['TIPODEDOMICILIOFISCAL'] ?? '') === 'extranjero') {
-                        // Dirección extranjera
                         $direccionFormateada =
                             ($dir['DOMICILIO_EXTRANJERO'] ?? '') .
                             (empty($dir['CIUDAD_EXTRANJERO']) ? '' : ', ' . $dir['CIUDAD_EXTRANJERO']) .
@@ -101,7 +94,6 @@ class solicitudesController extends Controller
                 }
             }
 
-            // Contactos
             $contactos = [];
             if (!empty($cliente->CONTACTOS_JSON)) {
                 $contactosArray = json_decode($cliente->CONTACTOS_JSON, true);
@@ -212,10 +204,8 @@ class solicitudesController extends Controller
                 'MOTIVO_RECHAZO' => 'nullable|string|max:255'
             ]);
 
-            // Buscar la solicitud
             $solicitud = solicitudesModel::find($request->ID_FORMULARIO_SOLICITUDES);
 
-            // Actualizar los datos
             $solicitud->ESTATUS_SOLICITUD = $request->ESTATUS_SOLICITUD;
             $solicitud->MOTIVO_RECHAZO = $request->ESTATUS_SOLICITUD === 'Rechazada' ? $request->MOTIVO_RECHAZO : null;
             $solicitud->save();
@@ -231,68 +221,6 @@ class solicitudesController extends Controller
             ], 500);
         }
     }
-
-
-
-    // public function store(Request $request)
-    // {
-    //     try {
-    //         switch (intval($request->api)) {
-
-    //             case 1:
-    //                 if ($request->ID_FORMULARIO_SOLICITUDES == 0) {
-    //                     $ultimoRegistro = solicitudesModel::orderBy('ID_FORMULARIO_SOLICITUDES', 'desc')->first();
-    //                     $numeroIncremental = $ultimoRegistro ? intval(substr($ultimoRegistro->NO_SOLICITUD, 0, 3)) + 1 : 1;
-    //                     $anioActual = date('Y');
-    //                     $ultimoDigitoAnio = substr($anioActual, -2);
-    //                     $noSolicitud = str_pad($numeroIncremental, 3, '0', STR_PAD_LEFT) . '-' . $ultimoDigitoAnio;
-
-    //                     $request->merge(['NO_SOLICITUD' => $noSolicitud]);
-
-    //                     DB::statement('ALTER TABLE formulario_solicitudes AUTO_INCREMENT=1;');
-
-    //                     $data = $request->except(['observacion','contactos','direcciones']);
-    //                     $solicitudes = solicitudesModel::create($data);
-
-    //                     $response['code'] = 1;
-    //                     $response['solicitud'] = $solicitudes;
-    //                     return response()->json($response);
-    //                 } else {
-    //                     if (isset($request->ELIMINAR)) {
-    //                         if ($request->ELIMINAR == 1) {
-    //                             solicitudesModel::where('ID_FORMULARIO_SOLICITUDES', $request['ID_FORMULARIO_SOLICITUDES'])
-    //                                 ->update(['ACTIVO' => 0]);
-    //                             $response['code'] = 1;
-    //                             $response['solicitud'] = 'Desactivada';
-    //                         } else {
-    //                             solicitudesModel::where('ID_FORMULARIO_SOLICITUDES', $request['ID_FORMULARIO_SOLICITUDES'])
-    //                                 ->update(['ACTIVO' => 1]);
-    //                             $response['code'] = 1;
-    //                             $response['solicitud'] = 'Activada';
-    //                         }
-    //                     } else {
-    //                         $solicitudes = solicitudesModel::find($request->ID_FORMULARIO_SOLICITUDES);
-    //                         $solicitudes->update($request->except('FOTO_USUARIO'));
-
-    //                         $response['code'] = 1;
-    //                         $response['solicitud'] = 'Actualizada';
-    //                     }
-    //                     return response()->json($response);
-    //                 }
-    //                 break;
-
-
-    //             default:
-    //                 $response['code'] = 1;
-    //                 $response['msj'] = 'Api no encontrada';
-    //                 return response()->json($response);
-    //         }
-    //     } catch (Exception $e) {
-    //         return response()->json(['error' => 'Error al guardar la solicitud', 'message' => $e->getMessage()]);
-    //     }
-    // }
-
-
 
 
 

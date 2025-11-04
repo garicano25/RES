@@ -373,11 +373,11 @@ class otController extends Controller
                         $ultimoDigitoAnio = substr($anioActual, -2);
 
                         $ultimoRegistro = otModel::whereRaw("
-            NO_ORDEN_CONFIRMACION REGEXP ?
-        ", ["^RESOT-$ultimoDigitoAnio-[0-9]{3}(-Rev[0-9]+)?$"])
-                            ->orderByRaw("
-            CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(NO_ORDEN_CONFIRMACION, '-Rev', 1), '-', -1) AS UNSIGNED) DESC
-        ")
+                            NO_ORDEN_CONFIRMACION REGEXP ?
+                        ", ["^RESOT-$ultimoDigitoAnio-[0-9]{3}(-Rev[0-9]+)?$"])
+                                            ->orderByRaw("
+                            CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(NO_ORDEN_CONFIRMACION, '-Rev', 1), '-', -1) AS UNSIGNED) DESC
+                        ")
                             ->first();
 
                         if ($ultimoRegistro) {
@@ -474,8 +474,6 @@ class otController extends Controller
                         $nuevaOrden->PERSONA_SOLICITA_CONFIRMACION = null;
                         $nuevaOrden->DIRECCION_CONFIRMACION = null;
 
-
-
                         $nuevaOrden->RAZON_CONFIRMACION = $request->RAZON_CONFIRMACION;
                         $nuevaOrden->COMERCIAL_CONFIRMACION = $request->COMERCIAL_CONFIRMACION  ;
                         $nuevaOrden->RFC_CONFIRMACION = $request->RFC_CONFIRMACION;
@@ -494,13 +492,8 @@ class otController extends Controller
 
                     break;
 
-
                 default:
                     return response()->json(['code' => 1, 'msj' => 'API no encontrada']);
-
-
-
-
 
                 }
         } catch (Exception $e) {

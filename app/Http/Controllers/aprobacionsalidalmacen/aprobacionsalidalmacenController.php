@@ -37,10 +37,8 @@ class aprobacionsalidalmacenController extends Controller
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 }
 
-                // Descripción del tipo
                 $value->TIPO_SOLICITUD_TEXTO = 'Salida de almacén de materiales y/o equipos';
 
-                // Estado de revisión
                 if ($value->DAR_BUENO == 0) {
                     $value->ESTADO_REVISION = '<span class="badge bg-warning text-dark">En revisión</span>';
                 } elseif ($value->DAR_BUENO == 1) {
@@ -51,7 +49,6 @@ class aprobacionsalidalmacenController extends Controller
                     $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
                 }
 
-                // Estado de aprobación
                 if ($value->ESTADO_APROBACION == 'Aprobada') {
                     $value->ESTATUS = '<span class="badge bg-success">Aprobado</span>';
                 } elseif ($value->ESTADO_APROBACION == 'Rechazada') {

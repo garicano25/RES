@@ -23,7 +23,6 @@ class altaproveedorController extends Controller
     {
         $rfcProveedor = Auth::user()->RFC_PROVEEDOR;
 
-        // Intentar primero con formulario_altaproveedor
         $formulario = altaproveedorModel::where('RFC_ALTA', $rfcProveedor)->first();
 
         if ($formulario) {
@@ -78,7 +77,6 @@ class altaproveedorController extends Controller
             ]);
         }
 
-        // Si no se encontraron datos en formulario_altaproveedor, usar directorioModel
         $proveedor = directorioModel::where('RFC_PROVEEDOR', $rfcProveedor)->first();
 
         if (!$proveedor) {

@@ -42,78 +42,6 @@ class listaproveedorController extends Controller
 
 
 
-
-
-
-    // public function Tablalistaproveedores()
-    // {
-    //     try {
-    //         $tabla = altaproveedorModel::get();
-
-    //         foreach ($tabla as $value) {
-    //             $mensajes = [];
-
-    //             $rfc = $value->RFC_ALTA;
-    //             $tipoPersona = $value->TIPO_PERSONA_ALTA;
-    //             $tipoPersonaOpcion = $value->TIPO_PERSONA_OPCION;
-
-    //             if (!DB::table('formulario_altacontactoproveedor')->where('RFC_PROVEEDOR', $rfc)->exists()) {
-    //                 $mensajes[] = 'Falta agregar contactos.';
-    //             }
-
-    //             if (!DB::table('formulario_altacuentaproveedor')->where('RFC_PROVEEDOR', $rfc)->exists()) {
-    //                 $mensajes[] = 'Falta agregar cuentas bancarias.';
-    //             }
-
-    //             if (!DB::table('formulario_altareferenciasproveedor')->where('RFC_PROVEEDOR', $rfc)->exists()) {
-    //                 $mensajes[] = 'Faltan agregar referencias comerciales.';
-    //             }
-
-    //             $documentosObligatorios = DB::table('catalogo_documentosproveedor')
-    //                 ->where('ACTIVO', 1)
-    //                 ->where('TIPO_DOCUMENTO', 1)
-    //                 ->where(function ($q) use ($tipoPersona) {
-    //                     $q->where('TIPO_PERSONA', $tipoPersona)->orWhere('TIPO_PERSONA', 3);
-    //                 })
-    //                 ->where(function ($q) use ($tipoPersonaOpcion) {
-    //                     $q->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)->orWhere('TIPO_PERSONA_OPCION', 3);
-    //                 })
-    //                 ->get();
-
-    //             $documentosSubidos = DB::table('formulario_altadocumentoproveedores')
-    //                 ->where('RFC_PROVEEDOR', $rfc)
-    //                 ->pluck('TIPO_DOCUMENTO_PROVEEDOR')
-    //                 ->toArray();
-
-    //             foreach ($documentosObligatorios as $doc) {
-    //                 if (!in_array($doc->ID_CATALOGO_DOCUMENTOSPROVEEDOR, $documentosSubidos)) {
-    //                     $mensajes[] = 'Falta el documento: ' . $doc->NOMBRE_DOCUMENTO;
-    //                 }
-    //             }
-
-    //             $value->ESTATUS_DATOS = empty($mensajes)
-    //                 ? '<span class="badge bg-success">Completo</span>'
-    //                 : implode('<br>', array_map(fn($msg) => "<span class='text-danger'>$msg</span>", $mensajes));
-
-    //             $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
-
-    //             $value->BTN_CORREO = empty($mensajes)
-    //                 ? ''
-    //                 : '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO" data-id="' . $value->ID_FORMULARIO_ALTA . '"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
-    //         }
-
-    //         return response()->json([
-    //             'data' => $tabla,
-    //             'msj' => 'Información consultada correctamente'
-    //         ]);
-    //     } catch (Exception $e) {
-    //         return response()->json([
-    //             'msj' => 'Error ' . $e->getMessage(),
-    //             'data' => 0
-    //         ]);
-    //     }
-    // }
-
     public function Tablalistaproveedores()
     {
         try {
@@ -475,7 +403,6 @@ public function Tablacertificaciones(Request $request)
                     ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-membresia" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver membresía"><i class="bi bi-filetype-pdf"></i></button>'
                     : '';
 
-                // Armar botón de documentos según tipo
                 switch ($value->TIPO_DOCUMENTO) {
                     case 'Certificación':
                         $value->BTN_DOCUMENTO = $btnCertificacion ?: 'N/A';
@@ -499,7 +426,6 @@ public function Tablacertificaciones(Request $request)
                         break;
                 }
 
-                // Botones generales según estado
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = $btnVisualizar;
                     $value->BTN_ELIMINAR = $btnEliminarUnchecked;
@@ -644,7 +570,6 @@ public function Tablareferencias(Request $request)
                     $requestData = $request->all();
                     $rfc = $requestData['RFC_PROVEEDOR'] ?? null; 
 
-                    // CREACIÓN DE REGISTRO NUEVO
                     if ($request->ID_FORMULARIO_CUENTAPROVEEDOR == 0) {
                         DB::statement('ALTER TABLE formulario_altacuentaproveedor AUTO_INCREMENT=1;');
 
@@ -702,18 +627,15 @@ public function Tablareferencias(Request $request)
 
                     $requestData = $request->all();
 
-                    // Convertir FUNCIONES_CUENTA a JSON si es un array
                     if ($request->has('FUNCIONES_CUENTA') && is_array($request->FUNCIONES_CUENTA)) {
                         $requestData['FUNCIONES_CUENTA'] = json_encode($request->FUNCIONES_CUENTA);
                     } else {
                         $requestData['FUNCIONES_CUENTA'] = null;
                     }
 
-                    // Obtener RFC desde el request (no autenticado)
                     $rfc = $request->RFC_PROVEEDOR ?? null;
                     $requestData['RFC_PROVEEDOR'] = $rfc;
 
-                    // CREAR NUEVO REGISTRO
                     if ($request->ID_FORMULARIO_CONTACTOPROVEEDOR == 0) {
 
                         DB::statement('ALTER TABLE formulario_altacontactoproveedor AUTO_INCREMENT = 1;');
@@ -725,7 +647,6 @@ public function Tablareferencias(Request $request)
                             'cuenta' => $cuentas
                         ]);
                     } else {
-                        // ACTIVAR / DESACTIVAR
                         if (isset($request->ELIMINAR)) {
                             $estado = $request->ELIMINAR == 1 ? 0 : 1;
 
@@ -738,7 +659,6 @@ public function Tablareferencias(Request $request)
                             ]);
                         }
 
-                        // EDITAR REGISTRO
                         $cuentas = altacontactos::find($request->ID_FORMULARIO_CONTACTOPROVEEDOR);
 
                         if (!$cuentas) {
@@ -850,7 +770,6 @@ public function Tablareferencias(Request $request)
 
                         $rfc = $requestData['RFC_PROVEEDOR'] ?? null;
 
-                        // Validación opcional
                         if (!$rfc) {
                             return response()->json([
                                 'code' => 0,
@@ -880,7 +799,6 @@ public function Tablareferencias(Request $request)
                                 ], 404);
                             }
 
-                            // No sobrescribas el RFC al editar
                             $cuentas->update($request->except('RFC_PROVEEDOR'));
 
                             $response['code'] = 1;
@@ -1007,7 +925,6 @@ public function Tablareferencias(Request $request)
 
         foreach ($documentos as $input => $carpeta) {
             if ($request->hasFile($input)) {
-                // Eliminar archivo anterior si existe
                 if ($cuentas->$input && Storage::exists($cuentas->$input)) {
                     Storage::delete($cuentas->$input);
                 }

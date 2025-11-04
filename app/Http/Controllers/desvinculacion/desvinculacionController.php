@@ -20,12 +20,7 @@ class desvinculacionController extends Controller
 {
     public function index()
     {
-
-
-
-
         $contratacion = contratacionModel::orderBy('CURP', 'ASC')->get();
-
 
         return view('RH.desvinculacion.desvinculacion', compact('contratacion'));
     }
@@ -89,7 +84,6 @@ public function mostrardocumenconvenio($id)
     $archivo = desvinculacioModel::findOrFail($id)->DOCUMENTO_CONVENIO;
     return Storage::response($archivo);
 }
-
 
 
 public function mostrardocumenadeudo($id)
@@ -173,7 +167,6 @@ public function store(Request $request)
                         $basicos->save();
                     }
 
-                    // Respuesta
                     $response['code']  = 1;
                     $response['basico']  = $basicos;
                     return response()->json($response);
