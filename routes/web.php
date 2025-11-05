@@ -893,7 +893,7 @@ Route::get('/mostrardocumentoquipo/{id}', [inventarioController::class, 'mostrar
 
 /// VISUALIZAR FECHAS DE DOCUMENTOS 
 
-Route::get('/documentos/inventario/{inventario_id}', [inventarioController::class, 'obtenerDocumentosPorInventario']);
+Route::get('/obtenerDocumentosPorInventario/{inventario_id}', [inventarioController::class, 'obtenerDocumentosPorInventario']);
 
 //==============================================   CATALOGOS INVENTRARIO  ============================================== 
 Route::get('/catalogosinventarios', function () { return view('almacen.Catalogos.catalogo_inventarios');});

@@ -3,9 +3,7 @@ ID_ENTRADA_FORMULARIO = 0
 ID_DOCUMENTO_ARTICULO = 0
 
 
-
 var inventario_id = null; 
-
 
 
 const Modalinventario = document.getElementById('Modal_inventario')
@@ -15,7 +13,6 @@ Modalinventario.addEventListener('hidden.bs.modal', event => {
     document.getElementById('formularioINVENTARIO').reset();
    
     $('#Modal_inventario .modal-title').html('Equipo');
-
 
 })
 
@@ -47,12 +44,12 @@ $(document).ready(function() {
         $("#tab3-documentos").hide();
         $("#ANTES_2024").hide();
         $("#DESPUES_2024").show();
+        $("#MOSTRAR_ALERTA_DOCUMENTOS").hide();
+
 
     });
 
 });
-
-
 
 function limpiarFormularioUsuario() {
     $('#formularioINVENTARIO')[0].reset(); 
@@ -63,9 +60,6 @@ function limpiarFormularioUsuario() {
         drEvent.clearElement();
     }
 }
-
-
-
 
 $("#guardarINVENTARIO").click(function (e) {
     e.preventDefault();
@@ -158,9 +152,6 @@ $("#guardarINVENTARIO").click(function (e) {
     
 });
 
-
-
-
 var Tablainventario = $("#Tablainventario").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
@@ -232,10 +223,6 @@ var Tablainventario = $("#Tablainventario").DataTable({
         $(row).addClass(data.ROW_CLASS);
     }
 });
-
-
-
-
 
 $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
@@ -325,12 +312,22 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
     
    if (row.data().REQUIERE_ARTICULO === "1") {
        $("#tab3-documentos").show();
+       $("#MOSTRAR_ALERTA_DOCUMENTOS").show();
+       cargarDocumentos(inventario_id);
+
+
     } else if (row.data().REQUIERE_ARTICULO === "2") {
-        $("#tab3-documentos").hide();
+       $("#tab3-documentos").hide();
+        $("#MOSTRAR_ALERTA_DOCUMENTOS").hide();
+       
     } else if (row.data().REQUIERE_ARTICULO === "3") {
        $("#tab3-documentos").hide();
+        $("#MOSTRAR_ALERTA_DOCUMENTOS").hide();
+
     } else {
        $("#tab3-documentos").hide();
+       $("#MOSTRAR_ALERTA_DOCUMENTOS").hide();
+
     }
     
     
@@ -340,8 +337,6 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
 
 
 });
-
-
 
 $(document).ready(function() {
     $('#Tablainventario tbody').on('click', 'td>button.VISUALIZAR', function () {
@@ -442,16 +437,29 @@ $(document).ready(function() {
         
             
          
-        if (row.data().REQUIERE_ARTICULO === "1") {
-        $("#tab3-documentos").show();
-        } else if (row.data().REQUIERE_ARTICULO === "2") {
-            $("#tab3-documentos").hide();
-        } else if (row.data().REQUIERE_ARTICULO === "3") {
-        $("#tab3-documentos").hide();
-        } else {
-        $("#tab3-documentos").hide();
-        }
+    if (row.data().REQUIERE_ARTICULO === "1") {
+       $("#tab3-documentos").show();
+        $("#MOSTRAR_ALERTA_DOCUMENTOS").show();
+        cargarDocumentos(inventario_id);
+
+
+    } else if (row.data().REQUIERE_ARTICULO === "2") {
+    $("#tab3-documentos").hide();
+        $("#MOSTRAR_ALERTA_DOCUMENTOS").hide();
     
+    } else if (row.data().REQUIERE_ARTICULO === "3") {
+    $("#tab3-documentos").hide();
+        $("#MOSTRAR_ALERTA_DOCUMENTOS").hide();
+
+    } else {
+    $("#tab3-documentos").hide();
+    $("#MOSTRAR_ALERTA_DOCUMENTOS").hide();
+
+    }
+    
+
+
+
         $("#tab3-documentos").off("click").on("click", function () {
             cargarTablaDocumentosEquipo();
         });
@@ -463,9 +471,6 @@ $(document).ready(function() {
         resetFormulario('#Modal_inventario');
     });
 });
-
-
-
 
 $('#Tablainventario tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
@@ -481,7 +486,6 @@ $('#Tablainventario tbody').on('change', 'td>label>input.ELIMINAR', function () 
 
     eliminarDatoTabla(data, [Tablainventario], 'inventarioDelete');
 });
-
 
 document.addEventListener("DOMContentLoaded", function () {
     const cantidad = document.getElementById("CANTIDAD_EQUIPO");
@@ -499,8 +503,6 @@ document.addEventListener("DOMContentLoaded", function () {
     cantidad.addEventListener("input", calcularTotal);
     unitario.addEventListener("input", calcularTotal);
 });
-
-
 
 $('#TIPO_EQUIPO').on('change', function () {
     const tipo = $(this).val();
@@ -547,8 +549,6 @@ $('#TIPO_EQUIPO').on('change', function () {
 });
 
 ////////////////////////  ENTRADA INVENTARIO TAB 2 ////////////////////////
-
-
 
 function cargartablaentradainventario() {
     if ($.fn.DataTable.isDataTable('#Tablaentradainventario')) {
@@ -627,11 +627,6 @@ function cargartablaentradainventario() {
     });
 }
 
-
-
-
-
-
 document.addEventListener('DOMContentLoaded', function () {
   const guardarBtn = document.getElementById('guardarINVENTARIO');
   const tabs = document.querySelectorAll('#tabsinventario button[data-bs-toggle="tab"]');
@@ -654,9 +649,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
-
-/// SUBIR EXCEL
+////////////////////////////////// SUBIR EXCEL //////////////////////////////////
 
 $(document).ready(function () {
 
@@ -750,7 +743,6 @@ $(document).ready(function () {
 
 ////////////////////////////////// DOCUMENTOS ARTICULO //////////////////////////////////
 
-
 const Modaldocumento = document.getElementById('miModal_DOCUMENTOS')
 Modaldocumento.addEventListener('hidden.bs.modal', event => {
      
@@ -765,7 +757,6 @@ Modaldocumento.addEventListener('hidden.bs.modal', event => {
 
 })
 
-
 $("#NUEVA_DOCUMENTACION").click(function (e) {
     e.preventDefault();
 
@@ -779,7 +770,6 @@ $("#NUEVA_DOCUMENTACION").click(function (e) {
             $('#FECHAF_DOCUMENTO').prop('required', false).removeClass('validar');
 
 });
-
 
 document.addEventListener('DOMContentLoaded', function () {
     const contratoSi = document.getElementById('fechasi');
@@ -798,9 +788,6 @@ document.addEventListener('DOMContentLoaded', function () {
     contratoNo.addEventListener('change', toggleDocumentoContrato);
 });
 
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".botonEliminarArchivo").forEach(boton => {
         boton.addEventListener("click", function () {
@@ -811,7 +798,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-
 
 $(document).ready(function() {
     $('input[name="INDETERMINADO_DOCUMENTO"]').on('change', function() {
@@ -825,9 +811,6 @@ $(document).ready(function() {
         }
     });
 });
-
-
-
 
 $("#guardarDOCUMENTACION").click(function (e) {
     e.preventDefault();
@@ -943,14 +926,14 @@ function cargarTablaDocumentosEquipo() {
             cache: false,
             url: '/Tabladocumentosinventario',  
             beforeSend: function () {
-                $('#loadingIcon').css('display', 'inline-block');
+                $('#loadingIcon1').css('display', 'inline-block');
             },
             complete: function () {
-                $('#loadingIcon').css('display', 'none');
+                $('#loadingIcon1').css('display', 'none');
                 Tabladocumentosinventario.columns.adjust().draw(); 
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                $('#loadingIcon').css('display', 'none');
+                $('#loadingIcon1').css('display', 'none');
                 alertErrorAJAX(jqXHR, textStatus, errorThrown);
             },
             dataSrc: 'data'
@@ -973,7 +956,6 @@ function cargarTablaDocumentosEquipo() {
        
     });
 }
-
 
 $('#Tabladocumentosinventario').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
@@ -1014,9 +996,6 @@ $('#Tabladocumentosinventario').on('click', 'td>button.EDITAR', function () {
 
 });
 
-
-
-
 $('#Tabladocumentosinventario').on('click', '.ver-archivo-documentosequipo', function (e) {
     e.preventDefault(); 
     e.stopPropagation(); 
@@ -1038,3 +1017,61 @@ $('#Tabladocumentosinventario').on('click', '.ver-archivo-documentosequipo', fun
 
     window.open(url, '_blank');
 });
+
+////////////////////////////////// FECHAS DOCUMENTOS //////////////////////////////////
+
+function cargarDocumentos(inventario_id) {
+    $.ajax({
+        url: `/obtenerDocumentosPorInventario/${inventario_id}`,
+        type: 'GET',
+        dataType: 'json',
+        success: function (data) {
+            const tbody = $('#tablaDocumentos tbody');
+            tbody.empty();
+
+            if (data.length > 0) {
+                $('#MOSTRAR_ALERTA_DOCUMENTOS').show();
+
+                data.forEach(doc => {
+                    const fechaInicio = new Date(doc.FECHAI_DOCUMENTO);
+                    const fechaFin = new Date(doc.FECHAF_DOCUMENTO);
+                    const hoy = new Date();
+
+                    let diasTotales = Math.ceil((fechaFin - fechaInicio) / (1000 * 60 * 60 * 24));
+                    let diasRestantes = Math.ceil((fechaFin - hoy) / (1000 * 60 * 60 * 24));
+
+                    if (diasTotales < 0) diasTotales = 0;
+                    if (diasRestantes < 0) diasRestantes = 0;
+
+                    const porcentaje = diasTotales > 0 
+                        ? ((diasTotales - diasRestantes) / diasTotales) * 100 
+                        : 100;
+
+                    let color = 'success'; 
+                    if (porcentaje >= 80) color = 'danger'; 
+                    else if (porcentaje >= 60) color = 'warning'; 
+
+                    const textoBadge = diasRestantes > 0
+                        ? `${diasRestantes} días restantes`
+                        : 'Vencido';
+
+                    tbody.append(`
+                        <tr>
+                            <td class="text-center">${doc.NOMBRE_DOCUMENTO}</td>
+                            <td class="text-center">
+                                ${doc.FECHAI_DOCUMENTO} - ${doc.FECHAF_DOCUMENTO}<br>
+                                <span class="badge bg-${color}">${textoBadge}</span>
+                            </td>
+                        </tr>
+                    `);
+                });
+            } else {
+                $('#MOSTRAR_ALERTA_DOCUMENTOS').hide();
+            }
+        },
+        error: function () {
+            console.error('Error al cargar los documentos.');
+        }
+    });
+}
+

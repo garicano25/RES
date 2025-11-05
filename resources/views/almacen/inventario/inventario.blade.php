@@ -112,6 +112,22 @@
                                                         <label> Foto del equipo </label>
                                                         <input type="file" accept="image/jpeg,image/x-png,image/gif" id="FOTO_EQUIPO" name="FOTO_EQUIPO" data-allowed-file-extensions="jpg png JPG PNG" data-height="240" data-default-file="" />
                                                     </div>
+
+
+                                                    <div class="form-group mt-5 text-center" id="MOSTRAR_ALERTA_DOCUMENTOS" style="display: none;">
+                                                        <div class="table-responsive mt-3">
+                                                            <table class="table table-bordered table-striped" id="tablaDocumentos">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th class="text-center">Documento</th>
+                                                                        <th class="text-center">Fecha documento</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>

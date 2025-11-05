@@ -30,23 +30,11 @@
 
     <!-- Select opcion selectize -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" />
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/css/dropify.min.css">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css"> <!--Archivo css -->
-
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
-
-
     <link rel="stylesheet" href="assets/css/estilos.css">
-
-
-
-
-
-
 
     <style>
         .dropdown-menu {
@@ -193,14 +181,11 @@
                         </li>
                         @endif
 
-
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link BOTON" href="{{ url('/salidaalmacen') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                                 <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Salida de almacén</span><span class="d-none d-lg-inline">Salida de almacén</span>
                             </a>
                         </li>
-
-
 
                         @if(auth()->check() && !auth()->user()->hasRoles(['Almacenista','Asistente de compras']))
 
@@ -221,12 +206,7 @@
 
                         @endif
 
-
-
-
                     </ul>
-
-
                 </ul>
             </div>
         </div>
@@ -338,7 +318,7 @@
 
 
     @if(request()->is('inventario'))
-    <script src="/assets/js_sitio/inventario/inventario.js?v=1.16"></script>
+    <script src="/assets/js_sitio/inventario/inventario.js?v=1.17"></script>
     @endif
 
     @if(request()->is('catalogotipoinventario'))
@@ -354,7 +334,7 @@
     @endif
 
     @if(request()->is('listadeaf'))
-    <script src="/assets/js_sitio/listadeaf/listaaf.js"></script>
+    <script src="/assets/js_sitio/listadeaf/listaaf.js?v=1.0"></script>
     @endif
 </body>
 

@@ -492,6 +492,18 @@ class inventarioController extends Controller
     }
 
 
+    public function obtenerDocumentosPorInventario($inventario_id)
+    {
+        $documentos = documentosarticulosModel::where('INVENTARIO_ID', $inventario_id)
+            ->where('REQUIERE_FECHA', 1)
+            ->where('INDETERMINADO_DOCUMENTO', 2)
+            ->select('NOMBRE_DOCUMENTO', 'FECHAI_DOCUMENTO', 'FECHAF_DOCUMENTO')
+            ->get();
+
+        return response()->json($documentos);
+    }
+
+
     public function  store(Request $request)
     {
         try {
