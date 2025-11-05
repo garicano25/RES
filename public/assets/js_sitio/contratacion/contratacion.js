@@ -4482,6 +4482,7 @@ function cargarTablaSolicitudvacaciones() {
                         </div>`;
                 }
             },
+            { data: 'DIAS_DISFRUTAR_VACACIONES' },
             {
                 data: 'BTN_DOCUMENTO',
                 className: 'text-center',
@@ -4498,8 +4499,9 @@ function cargarTablaSolicitudvacaciones() {
             { targets: 2, title: 'Año de servicio', className: 'all text-center' },
             { targets: 3, title: 'Período a disfrutar', className: 'all text-center' },
             { targets: 4, title: 'Fecha inicio/terminación', className: 'all text-center' },
-            { targets: 5, title: 'Visualizar documento', className: 'all text-center' },
-            { targets: 6, title: 'Visualizar', className: 'all text-center' },
+            { targets: 5, title: 'Días a disfrutar', className: 'all text-center' },
+            { targets: 6, title: 'Visualizar documento', className: 'all text-center' },
+            { targets: 7, title: 'Visualizar', className: 'all text-center' },
         ],
     });
 }
