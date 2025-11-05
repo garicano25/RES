@@ -249,13 +249,14 @@
                             </li>
 
 
-                            <hr class="dropdown-divider">
 
                             @endif
 
 
                             {{-- Para administradores --}}
                             @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
+                            <hr class="dropdown-divider">
+
                             <li>
                                 <a class="dropdown-item" href="{{ url('/solicitudesaprobaciones') }}">
                                     Solicitudes por aprobar
