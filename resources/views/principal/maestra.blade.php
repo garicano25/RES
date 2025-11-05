@@ -238,7 +238,7 @@
                             </li>
 
                             {{-- Para líderes --}}
-                            @if(auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Coordinador de operaciones', 'Administrador']))
+                            @if(auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Líder de Operaciones', 'Administrador']))
 
                             <hr class="dropdown-divider">
 
