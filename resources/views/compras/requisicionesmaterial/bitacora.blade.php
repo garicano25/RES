@@ -289,6 +289,10 @@
                                                                 </option>
                                                                 @endforeach
                                                             </optgroup>
+
+                                                            <optgroup label="Extra">
+                                                                <option value="Nota de remisión">Nota de remisión</option>
+                                                            </optgroup>
                                                         </select>
                                                     </td>
                                                     <td class="text-center td-cotizacionq1-cantidadmr">
@@ -350,6 +354,7 @@
                                                     <td class="text-center">
                                                         <select class="form-select proveedor-cotizacionq2 text-center" name="PROVEEDOR_Q2[]">
                                                             <option value="">Seleccionar proveedor</option>
+
                                                             <optgroup label="Proveedor oficial">
                                                                 @foreach ($proveedoresOficiales as $proveedor)
                                                                 <option value="{{ $proveedor->RFC_ALTA }}">
@@ -357,12 +362,17 @@
                                                                 </option>
                                                                 @endforeach
                                                             </optgroup>
+
                                                             <optgroup label="Proveedores temporales">
                                                                 @foreach ($proveedoresTemporales as $proveedor)
                                                                 <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
                                                                     {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
                                                                 </option>
                                                                 @endforeach
+                                                            </optgroup>
+
+                                                            <optgroup label="Extra">
+                                                                <option value="Nota de remisión">Nota de remisión</option>
                                                             </optgroup>
                                                         </select>
                                                     </td>
@@ -423,6 +433,7 @@
                                                     <td class="text-center">
                                                         <select class="form-select proveedor-cotizacionq3 text-center" name="PROVEEDOR_Q3[]">
                                                             <option value="">Seleccionar proveedor</option>
+
                                                             <optgroup label="Proveedor oficial">
                                                                 @foreach ($proveedoresOficiales as $proveedor)
                                                                 <option value="{{ $proveedor->RFC_ALTA }}">
@@ -430,12 +441,17 @@
                                                                 </option>
                                                                 @endforeach
                                                             </optgroup>
+
                                                             <optgroup label="Proveedores temporales">
                                                                 @foreach ($proveedoresTemporales as $proveedor)
                                                                 <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
                                                                     {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
                                                                 </option>
                                                                 @endforeach
+                                                            </optgroup>
+
+                                                            <optgroup label="Extra">
+                                                                <option value="Nota de remisión">Nota de remisión</option>
                                                             </optgroup>
                                                         </select>
                                                     </td>
