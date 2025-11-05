@@ -854,7 +854,7 @@
                         <div class="modules">
 
                             {{-- RRHH --}}
-                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista)
+                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones)
                             <a href="{{ url('/recempleado') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/RRHH.png" alt=""></div>
