@@ -435,9 +435,8 @@ $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.EDITAR', function 
         $('#SOLIDA_ALMACEN').hide();
         $('#SOLICITUD_VACACIONES').hide();
 
-        $.get('/obtenerContratoPorFechaPermiso/' + CURP, {
-        fecha_inicial: $('#FECHA_INICIAL_PERMISO').val(),
-        fecha_final: $('#FECHA_FINAL_PERMISO').val()
+       $.get('/obtenerContratoPorFechaPermiso/' + CURP, {
+        fecha_inicial: $('#FECHA_INICIAL_PERMISO').val()
     }, function (response) {
         mostrarContrato(response);
     });
@@ -455,13 +454,12 @@ $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.EDITAR', function 
         $('#GOCE_SUELDO').hide();
         $('#SOLIDA_ALMACEN').hide();
 
-        $.get('/obtenerContratoPorFechaVacaciones/' + CURP, {
-        fecha_inicio_vacaciones: $('#FECHA_INICIO_VACACIONES').val(),
-        fecha_terminacion_vacaciones: $('#FECHA_TERMINACION_VACACIONES').val()
+       $.get('/obtenerContratoPorFechaVacaciones/' + CURP, {
+    fecha_inicio_vacaciones: $('#FECHA_INICIO_VACACIONES').val()
     }, function (response) {
         mostrarContrato(response);
     });
-            
+                
 
     }
 

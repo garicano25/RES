@@ -157,14 +157,82 @@ class recempleadoController extends Controller
     }
 
 
+    // public function obtenerContratoPorFechaPermiso($curp, Request $request)
+    // {
+    //     try {
+    //         $fechaInicial = $request->input('fecha_inicial');
+    //         $fechaFinal = $request->input('fecha_final');
+
+    //         Log::info("Permiso: Buscando contrato para CURP {$curp} entre {$fechaInicial} y {$fechaFinal}");
+
+    //         $contrato = DB::table('contratos_anexos_contratacion')
+    //             ->where('CURP', $curp)
+    //             ->orderBy('FECHAI_CONTRATO', 'desc')
+    //             ->first();
+
+    //         if (!$contrato) {
+    //             return response()->json(['success' => false, 'mensaje' => 'No se encontró contrato para esta CURP.']);
+    //         }
+
+    //         $renovacion = DB::table('renovacion_contrato')
+    //             ->where('CONTRATO_ID', $contrato->ID_CONTRATOS_ANEXOS)
+    //             ->where(function ($query) use ($fechaInicial, $fechaFinal) {
+    //                 $query->where(function ($q) use ($fechaInicial, $fechaFinal) {
+    //                     $q->where('FECHAI_RENOVACION', '<=', $fechaFinal)
+    //                         ->where('FECHAF_RENOVACION', '>=', $fechaInicial);
+    //                 });
+    //             })
+    //             ->orderBy('FECHAI_RENOVACION', 'desc')
+    //             ->first();
+
+    //         Log::info("Permiso: Resultado renovación:", (array) $renovacion);
+
+    //         if ($renovacion) {
+    //             return response()->json([
+    //                 'success' => true,
+    //                 'contrato' => [
+    //                     'ID_CONTRATOS_ANEXOS' => $contrato->ID_CONTRATOS_ANEXOS,
+    //                     'NOMBRE_DOCUMENTO_CONTRATO' =>  $contrato->NOMBRE_DOCUMENTO_CONTRATO,
+    //                     'FECHAI_CONTRATO' => $renovacion->FECHAI_RENOVACION,
+    //                     'VIGENCIA_CONTRATO' => $renovacion->FECHAF_RENOVACION,
+    //                 ]
+    //             ]);
+    //         }
+
+    //         if (
+    //             $contrato->FECHAI_CONTRATO <= $fechaFinal &&
+    //             $contrato->VIGENCIA_CONTRATO >= $fechaInicial
+    //         ) {
+    //             return response()->json([
+    //                 'success' => true,
+    //                 'contrato' => [
+    //                     'ID_CONTRATOS_ANEXOS' => $contrato->ID_CONTRATOS_ANEXOS,
+    //                     'NOMBRE_DOCUMENTO_CONTRATO' => $contrato->NOMBRE_DOCUMENTO_CONTRATO,
+    //                     'FECHAI_CONTRATO' => $contrato->FECHAI_CONTRATO,
+    //                     'VIGENCIA_CONTRATO' => $contrato->VIGENCIA_CONTRATO,
+    //                 ]
+    //             ]);
+    //         }
+
+    //         return response()->json([
+    //             'success' => false,
+    //             'mensaje' => 'No hay contrato dentro de las fechas seleccionadas.'
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         Log::error("Error en obtenerContratoPorFechaPermiso: " . $e->getMessage());
+    //         return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
+    //     }
+    // }
+
+
     public function obtenerContratoPorFechaPermiso($curp, Request $request)
     {
         try {
             $fechaInicial = $request->input('fecha_inicial');
-            $fechaFinal = $request->input('fecha_final');
 
-            Log::info("Permiso: Buscando contrato para CURP {$curp} entre {$fechaInicial} y {$fechaFinal}");
+            Log::info("Permiso: Buscando contrato para CURP {$curp} con fecha inicial {$fechaInicial}");
 
+            // Buscar el contrato más reciente del empleado
             $contrato = DB::table('contratos_anexos_contratacion')
                 ->where('CURP', $curp)
                 ->orderBy('FECHAI_CONTRATO', 'desc')
@@ -174,14 +242,11 @@ class recempleadoController extends Controller
                 return response()->json(['success' => false, 'mensaje' => 'No se encontró contrato para esta CURP.']);
             }
 
+            // Buscar si existe una renovación vigente para la fecha inicial del permiso
             $renovacion = DB::table('renovacion_contrato')
                 ->where('CONTRATO_ID', $contrato->ID_CONTRATOS_ANEXOS)
-                ->where(function ($query) use ($fechaInicial, $fechaFinal) {
-                    $query->where(function ($q) use ($fechaInicial, $fechaFinal) {
-                        $q->where('FECHAI_RENOVACION', '<=', $fechaFinal)
-                            ->where('FECHAF_RENOVACION', '>=', $fechaInicial);
-                    });
-                })
+                ->where('FECHAI_RENOVACION', '<=', $fechaInicial)
+                ->where('FECHAF_RENOVACION', '>=', $fechaInicial)
                 ->orderBy('FECHAI_RENOVACION', 'desc')
                 ->first();
 
@@ -192,15 +257,16 @@ class recempleadoController extends Controller
                     'success' => true,
                     'contrato' => [
                         'ID_CONTRATOS_ANEXOS' => $contrato->ID_CONTRATOS_ANEXOS,
-                        'NOMBRE_DOCUMENTO_CONTRATO' =>  $contrato->NOMBRE_DOCUMENTO_CONTRATO,
+                        'NOMBRE_DOCUMENTO_CONTRATO' => $contrato->NOMBRE_DOCUMENTO_CONTRATO,
                         'FECHAI_CONTRATO' => $renovacion->FECHAI_RENOVACION,
                         'VIGENCIA_CONTRATO' => $renovacion->FECHAF_RENOVACION,
                     ]
                 ]);
             }
 
+            // Si no hay renovación, validar si el contrato original cubre la fecha
             if (
-                $contrato->FECHAI_CONTRATO <= $fechaFinal &&
+                $contrato->FECHAI_CONTRATO <= $fechaInicial &&
                 $contrato->VIGENCIA_CONTRATO >= $fechaInicial
             ) {
                 return response()->json([
@@ -216,7 +282,7 @@ class recempleadoController extends Controller
 
             return response()->json([
                 'success' => false,
-                'mensaje' => 'No hay contrato dentro de las fechas seleccionadas.'
+                'mensaje' => 'No hay contrato vigente para la fecha seleccionada.'
             ]);
         } catch (\Exception $e) {
             Log::error("Error en obtenerContratoPorFechaPermiso: " . $e->getMessage());
@@ -225,14 +291,85 @@ class recempleadoController extends Controller
     }
 
 
+    
+
+    // public function obtenerContratoPorFechaVacaciones($curp, Request $request)
+    // {
+    //     try {
+    //         $fechaInicio = $request->input('fecha_inicio_vacaciones');
+    //         $fechaFin = $request->input('fecha_terminacion_vacaciones');
+
+    //         Log::info("Vacaciones: Buscando contrato para CURP {$curp} entre {$fechaInicio} y {$fechaFin}");
+
+    //         $contrato = DB::table('contratos_anexos_contratacion')
+    //             ->where('CURP', $curp)
+    //             ->orderBy('FECHAI_CONTRATO', 'desc')
+    //             ->first();
+
+    //         if (!$contrato) {
+    //             return response()->json(['success' => false, 'mensaje' => 'No se encontró contrato para esta CURP.']);
+    //         }
+
+    //         $renovacion = DB::table('renovacion_contrato')
+    //             ->where('CONTRATO_ID', $contrato->ID_CONTRATOS_ANEXOS)
+    //             ->where(function ($query) use ($fechaInicio, $fechaFin) {
+    //                 $query->where(function ($q) use ($fechaInicio, $fechaFin) {
+    //                     $q->where('FECHAI_RENOVACION', '<=', $fechaFin)
+    //                         ->where('FECHAF_RENOVACION', '>=', $fechaInicio);
+    //                 });
+    //             })
+    //             ->orderBy('FECHAI_RENOVACION', 'desc')
+    //             ->first();
+
+    //         Log::info("Vacaciones: Resultado renovación:", (array) $renovacion);
+
+    //         if ($renovacion) {
+    //             return response()->json([
+    //                 'success' => true,
+    //                 'contrato' => [
+    //                     'ID_CONTRATOS_ANEXOS' => $contrato->ID_CONTRATOS_ANEXOS,
+    //                     'NOMBRE_DOCUMENTO_CONTRATO' =>  $contrato->NOMBRE_DOCUMENTO_CONTRATO,
+    //                     'FECHAI_CONTRATO' => $renovacion->FECHAI_RENOVACION,
+    //                     'VIGENCIA_CONTRATO' => $renovacion->FECHAF_RENOVACION,
+    //                 ]
+    //             ]);
+    //         }
+
+    //         if (
+    //             $contrato->FECHAI_CONTRATO <= $fechaFin &&
+    //             $contrato->VIGENCIA_CONTRATO >= $fechaInicio
+    //         ) {
+    //             return response()->json([
+    //                 'success' => true,
+    //                 'contrato' => [
+    //                     'ID_CONTRATOS_ANEXOS' => $contrato->ID_CONTRATOS_ANEXOS,
+    //                     'NOMBRE_DOCUMENTO_CONTRATO' => $contrato->NOMBRE_DOCUMENTO_CONTRATO,
+    //                     'FECHAI_CONTRATO' => $contrato->FECHAI_CONTRATO,
+    //                     'VIGENCIA_CONTRATO' => $contrato->VIGENCIA_CONTRATO,
+    //                 ]
+    //             ]);
+    //         }
+
+    //         return response()->json([
+    //             'success' => false,
+    //             'mensaje' => 'No hay contrato dentro de las fechas seleccionadas.'
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         Log::error("Error en obtenerContratoPorFechaVacaciones: " . $e->getMessage());
+    //         return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
+    //     }
+    // }
+
+
+
     public function obtenerContratoPorFechaVacaciones($curp, Request $request)
     {
         try {
             $fechaInicio = $request->input('fecha_inicio_vacaciones');
-            $fechaFin = $request->input('fecha_terminacion_vacaciones');
 
-            Log::info("Vacaciones: Buscando contrato para CURP {$curp} entre {$fechaInicio} y {$fechaFin}");
+            Log::info("Vacaciones: Buscando contrato para CURP {$curp} con fecha de inicio {$fechaInicio}");
 
+            // Buscar el último contrato del empleado
             $contrato = DB::table('contratos_anexos_contratacion')
                 ->where('CURP', $curp)
                 ->orderBy('FECHAI_CONTRATO', 'desc')
@@ -242,14 +379,11 @@ class recempleadoController extends Controller
                 return response()->json(['success' => false, 'mensaje' => 'No se encontró contrato para esta CURP.']);
             }
 
+            // Buscar si existe una renovación que cubra la fecha de inicio de vacaciones
             $renovacion = DB::table('renovacion_contrato')
                 ->where('CONTRATO_ID', $contrato->ID_CONTRATOS_ANEXOS)
-                ->where(function ($query) use ($fechaInicio, $fechaFin) {
-                    $query->where(function ($q) use ($fechaInicio, $fechaFin) {
-                        $q->where('FECHAI_RENOVACION', '<=', $fechaFin)
-                            ->where('FECHAF_RENOVACION', '>=', $fechaInicio);
-                    });
-                })
+                ->where('FECHAI_RENOVACION', '<=', $fechaInicio)
+                ->where('FECHAF_RENOVACION', '>=', $fechaInicio)
                 ->orderBy('FECHAI_RENOVACION', 'desc')
                 ->first();
 
@@ -260,15 +394,16 @@ class recempleadoController extends Controller
                     'success' => true,
                     'contrato' => [
                         'ID_CONTRATOS_ANEXOS' => $contrato->ID_CONTRATOS_ANEXOS,
-                        'NOMBRE_DOCUMENTO_CONTRATO' =>  $contrato->NOMBRE_DOCUMENTO_CONTRATO,
+                        'NOMBRE_DOCUMENTO_CONTRATO' => $contrato->NOMBRE_DOCUMENTO_CONTRATO,
                         'FECHAI_CONTRATO' => $renovacion->FECHAI_RENOVACION,
                         'VIGENCIA_CONTRATO' => $renovacion->FECHAF_RENOVACION,
                     ]
                 ]);
             }
 
+            // Si no hay renovación, validar que el contrato cubra la fecha de inicio
             if (
-                $contrato->FECHAI_CONTRATO <= $fechaFin &&
+                $contrato->FECHAI_CONTRATO <= $fechaInicio &&
                 $contrato->VIGENCIA_CONTRATO >= $fechaInicio
             ) {
                 return response()->json([
@@ -284,13 +419,15 @@ class recempleadoController extends Controller
 
             return response()->json([
                 'success' => false,
-                'mensaje' => 'No hay contrato dentro de las fechas seleccionadas.'
+                'mensaje' => 'No hay contrato vigente para la fecha seleccionada.'
             ]);
         } catch (\Exception $e) {
             Log::error("Error en obtenerContratoPorFechaVacaciones: " . $e->getMessage());
             return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
         }
     }
+
+
 
 
 
