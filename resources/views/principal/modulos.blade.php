@@ -841,6 +841,7 @@
                         $tieneSoloRolHSEQ = $user->roles->count() === 1 && $user->hasRole('Analista HSEQ');
                         $tieneSoloRolSoftware = $user->roles->count() === 1 && $user->hasRole('Desarrollador de Software Junior');
                         $tieneSoloRolAmadellaves = $user->roles->count() === 1 && $user->hasRole('Ama de llaves');
+                        $tieneSoloRolLideOperaciones = $user->roles->count() === 1 && $user->hasRole('Líder de Operaciones');
 
 
 
@@ -888,7 +889,7 @@
 
 
                             {{-- Ventas --}}
-                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista)
+                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones)
                             <div class="modules__card" onclick="noPermiso('Ventas')">
                                 <div class="modules__circle"><img src="assets/Modulos/img/Ventas.png" alt=""></div>
                                 <h2 class="modules__text">Ventas</h2>
@@ -903,7 +904,7 @@
                             @endif
 
                             {{-- Admón --}}
-                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista)
+                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones)
                             <div class="modules__card" onclick="noPermiso('Admón')">
                                 <div class="modules__circle"><img src="assets/Modulos/img/Admon.png" alt=""></div>
                                 <h2 class="modules__text">Admón</h2>
@@ -923,7 +924,7 @@
                                     <h2 class="modules__text">Almacén</h2>
                                 </div>
                             </a>
-                            @elseif($tieneRolRestringidoUnico)
+                            @elseif($tieneRolRestringidoUnico || $tieneSoloRolLideOperaciones )
                             <div class="modules__card" onclick="noPermiso('Almacén')">
                                 <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
                                 <h2 class="modules__text">Almacén</h2>
@@ -938,7 +939,7 @@
                             @endif
 
                             {{-- Mantenimiento --}}
-                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista)
+                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones)
                             <div class="modules__card" onclick="noPermiso('Mantenimiento')">
                                 <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
                                 <h2 class="modules__text">Mantenimiento</h2>
@@ -951,7 +952,7 @@
                             @endif
 
                             {{-- HSE --}}
-                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista)
+                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones)
                             <div class="modules__card" onclick="noPermiso('HSE')">
                                 <div class="modules__circle"><img src="assets/Modulos/img/RRHH.png" alt=""></div>
                                 <h2 class="modules__text">HSE</h2>
@@ -964,7 +965,7 @@
                             @endif
 
                             {{-- Calidad --}}
-                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista)
+                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones)
                             <div class="modules__card" onclick="noPermiso('Calidad')">
                                 <div class="modules__circle"><img src="assets/Modulos/img/Calidad.png" alt=""></div>
                                 <h2 class="modules__text">Calidad</h2>
@@ -977,7 +978,7 @@
                             @endif
 
                             {{-- Página web --}}
-                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista)
+                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones)
                             <div class="modules__card" onclick="noPermiso('Página web')">
                                 <div class="modules__circle"><img src="assets/Modulos/img/sitoweb.png" alt=""></div>
                                 <h2 class="modules__text">Página web</h2>
