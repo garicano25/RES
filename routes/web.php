@@ -162,7 +162,11 @@ Route::post('/enviar-codigo', [VerificationController::class, 'enviarCodigo']);
 Route::post('/verificar-codigo', [VerificationController::class, 'verificarCodigo']);
 //==============================================  Módulos  ============================================== 
 
-Route::get('/modulos', [catalogoanuncioController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Desarrollador de Software Junior,Consultor-Instructor Junior,Ama de llaves');
+// Route::get('/modulos', [catalogoanuncioController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Desarrollador de Software Junior,Consultor-Instructor Junior,Ama de llaves');
+
+
+Route::get('/modulos', [catalogoanuncioController::class, 'index']);
+
 Route::get('/tipo-cambio', [catalogoanuncioController::class, 'getTipoCambio']);
 
 //==============================================  USUARIO  ============================================== 
@@ -886,6 +890,10 @@ Route::post('/inventario/respaldar', [inventarioController::class, 'respaldarInv
 /// DOCUMENTOS DEL EQUIPO
 Route::get('/Tabladocumentosinventario', [inventarioController::class, 'Tabladocumentosinventario']);
 Route::get('/mostrardocumentoquipo/{id}', [inventarioController::class, 'mostrardocumentoquipo']);
+
+/// VISUALIZAR FECHAS DE DOCUMENTOS 
+
+Route::get('/documentos/inventario/{inventario_id}', [inventarioController::class, 'obtenerDocumentosPorInventario']);
 
 //==============================================   CATALOGOS INVENTRARIO  ============================================== 
 Route::get('/catalogosinventarios', function () { return view('almacen.Catalogos.catalogo_inventarios');});
