@@ -25,7 +25,7 @@
 
 
     /* ========== TABLA BITÁCORA GENERAL ========== */
-    #Tablabitacora {
+    /* #Tablabitacora {
         table-layout: fixed !important;
         width: 100% !important;
     }
@@ -35,9 +35,8 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        text-align: center;
         vertical-align: middle;
-    }
+    } */
 
     /* ========== EXCEPCIÓN: COLUMNA JUSTIFICACIÓN ========== */
     #Tablabitacora td.col-justificacion {
@@ -136,19 +135,16 @@
 
     <div class="card-body">
 
-
-
-
         <div class="tabla-scroll-wrapper">
             <div class="tabla-scroll-top">
                 <div class="scroll-inner"></div>
             </div>
             <div class="tabla-scroll-bottom">
                 <div class="table-responsive">
-                    <table id="Tablabitacora" class="table table-hover table-bordered text-center w-100" style="min-width: 3000px; table-layout: fixed;">
+                    <table id="Tablabitacora" class="table table-hover table-bordered  w-100" style="min-width: 1000px; table-layout: fixed;">
                         <thead class="thead-dark">
                             <tr>
-                                <th>Visualizar</th>
+                                <th class="text-center">Visualizar</th>
                                 <th>Hoja</th>
                                 <th>Requisición No.</th>
                                 <th>Fecha de Solicitud</th>

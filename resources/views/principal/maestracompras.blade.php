@@ -510,7 +510,7 @@
     @endif
 
     @if(request()->is('bitacora'))
-    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.21"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.22"></script>
     @endif
 
     @if(request()->is('bancoproveedores'))
