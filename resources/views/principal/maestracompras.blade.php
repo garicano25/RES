@@ -498,7 +498,7 @@
 
 
     @if(request()->is('requisicionmateriales'))
-    <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=4.5"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=4.6"></script>
     @endif
 
     @if(request()->is('requisicionmaterialeslideres'))
@@ -510,7 +510,7 @@
     @endif
 
     @if(request()->is('bitacora'))
-    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.22"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.23"></script>
     @endif
 
     @if(request()->is('bancoproveedores'))

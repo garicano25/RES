@@ -10,7 +10,7 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     document.getElementById('formularioMR').reset();
 
 
-        document.getElementById('DAR_BUENO').value = "0"; 
+    document.getElementById('DAR_BUENO').value = "0"; 
 
     
     
@@ -376,16 +376,13 @@ $(document).ready(function() {
         var tr = $(this).closest('tr');
         var row = Tablamr.row(tr);
         
-        hacerSoloLectura(row.data(), '#miModal_MR');
+    hacerSoloLectura(row.data(), '#miModal_MR');
 
-        ID_FORMULARIO_MR = row.data().ID_FORMULARIO_MR;
-        
-
-
-        
-        cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
-
+    ID_FORMULARIO_MR = row.data().ID_FORMULARIO_MR;
     
+
+    cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
+
     
     editarDatoTabla(row.data(), 'formularioMR', 'miModal_MR', 1);
     

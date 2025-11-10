@@ -8,14 +8,12 @@
         border-radius: 5px;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         text-align: center;
-
     }
 
     .dropify-message p {
         font-size: 14px;
         margin: 0;
     }
-
 
     .bg-verde-suave {
         background-color: #d1e7dd !important;
@@ -44,13 +42,8 @@
                 Importar <i class="bi bi-file-earmark-excel-fill"></i>
             </button>
 
-            <!-- <button id="btnRespaldarInventario" class="btn btn-primary">
-                <i class="bi bi-copy"></i> Respaldar Inventario
-            </button> -->
-
-
+        
             @endif
-
             <button type="button"
                 class="btn btn-light waves-effect waves-light"
                 id="NUEVO_EQUIPO">
@@ -64,11 +57,6 @@
         </table>
     </div>
 </div>
-
-
-
-
-
 
 
 <div id="Modal_inventario" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -337,8 +325,6 @@
     </div>
 </div>
 
-
-
 <!-- ============================================================== -->
 <!-- MODAL CARGAR EXCEL  -->
 <!-- ============================================================== -->
@@ -420,12 +406,9 @@
     </div>
 </div>
 
-
 <!-- ============================================================== -->
 <!-- MODAL DOCUMENTACION  -->
 <!-- ============================================================== -->
-
-
 
 <div class="modal fade" id="miModal_DOCUMENTOS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

@@ -55,25 +55,22 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
         dataSrc: 'data'
     },
   columnDefs: [
-    { targets: '_all', className: 'text-center' }, 
-        { targets: 0, width: '70px'    },                                                                       
-        { targets: 1, width: '70px'    },                                 
-        { targets: 2, width: '100px'   },                                
-        { targets: 3, width: '100px'   },                                 
-        { targets: 4, width: '150px'   },                                 
-        { targets: 5, width: '250px'   },       
-        { targets: 6, width: '100px'    },                                 
-        { targets: 7, width: '100px'   },                                  
-        { targets: 8, width: '150px'   },                                 
-        { targets: 9, width: '100px'   },                                 
-        { targets: 10, width: '150px'  },                                   
-        { targets: 11, width: '100px'  },                                   
-        { targets: 12, width: '110px'  },                                 
-        { targets: 13, width: '100px'  },                                  
-        { targets: 14, width: '110px'  },                                  
-
-        
-
+        { targets: '_all', className: 'text-center' }, 
+        { targets: 0,  width:  '70px'   },                                                                       
+        { targets: 1,  width:  '70px'   },                                 
+        { targets: 2,  width:  '100px'  },                                
+        { targets: 3,  width:  '100px'  },                                 
+        { targets: 4,  width:  '150px'  },                                 
+        { targets: 5,  width:  '250px'  },       
+        { targets: 6,  width:  '100px'  },                                 
+        { targets: 7,  width:  '100px'  },                                  
+        { targets: 8,  width:  '150px'  },                                 
+        { targets: 9,  width:  '100px'  },                                 
+        { targets: 10, width:  '150px'  },                                   
+        { targets: 11, width:  '100px'  },                                   
+        { targets: 12, width:  '110px'  },                                 
+        { targets: 13, width:  '100px'  },                                  
+        { targets: 14, width:  '110px'  },                                  
     ],
     columns: [
         { data: 'BTN_EDITAR' },
@@ -81,17 +78,13 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
         { data: 'NO_MR' },
         { data: 'FECHA_SOLICITUD_MR' },
         { data: 'SOLICITANTE_MR' },
-        {
-          data: 'JUSTIFICACION_MR',
-          className: 'col-justificacion', 
-        },
+        { data: 'JUSTIFICACION_MR',className: 'col-justificacion',},
         { data: 'AREA_SOLICITANTE_MR' },
         { data: 'FECHA_VISTO_MR' },
         { data: 'VISTO_BUENO' },
         { data: 'FECHA_APRUEBA_MR' },
         { data: 'QUIEN_APROBACION' },
         { data: 'PRIORIDAD_MR' },
-
         {
           data: null,
           render: function (data) {
@@ -116,10 +109,9 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
           }
       },
          { data: 'FECHA_GR' },
-        { data: 'NO_GR' },
-        
-          { data: 'MATERIALES_JSON', visible: false }, 
-    { data: 'ESTADO_APROBACION', visible: false } 
+         { data: 'NO_GR' },
+         { data: 'MATERIALES_JSON', visible: false }, 
+         { data: 'ESTADO_APROBACION', visible: false } 
         
        
   ],
@@ -135,13 +127,10 @@ drawCallback: function () {
 
     if (!topScroll || !scrollInner || !table || !scrollBody) return;
 
-    // ✅ Usa el ancho real de la tabla
     const tableWidth = table.scrollWidth;
 
-    // Establecer ancho al scroll superior (exacto)
     scrollInner.style.width = tableWidth + 'px';
 
-    // Sincronizar scroll
     let syncingTop = false;
     let syncingBottom = false;
 
@@ -178,8 +167,6 @@ $('#Tablabitacora tbody').on('click', 'td>button.EDITAR', function () {
 
     cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
 
-
-
     editarDatoTabla(row.data(), 'formularioMR', 'miModal_MR', 1);
 
     var nombreAutenticado = $('meta[name="usuario-autenticado"]').attr('content');
@@ -190,30 +177,24 @@ $('#Tablabitacora tbody').on('click', 'td>button.EDITAR', function () {
     }
 
 
-       if (row.data().ESTADO_APROBACION === "Aprobada") {
-         $('#motivo-rechazo-container').hide();
-        $('#APROBACION_DIRECCION').show();
-    
-           
-           
-      } else {
-          
-        $('#motivo-rechazo-container').show();
-        $('#APROBACION_DIRECCION').show();
-           
-      
+    if (row.data().ESTADO_APROBACION === "Aprobada") {
+      $('#motivo-rechazo-container').hide();
+      $('#APROBACION_DIRECCION').show();
+        
+    } else {
+        
+      $('#motivo-rechazo-container').show();
+      $('#APROBACION_DIRECCION').show();
+        
     }
 
     if (row.data().DAR_BUENO === "1") {
         $('#BOTON_VISTO_BUENO').hide();
 
- 
     } else if (row.data().DAR_BUENO === "2") {
          $('#BOTON_VISTO_BUENO').hide();
-         
-    
         
-     } else {
+    } else {
          $('#BOTON_VISTO_BUENO').show();
        
           
@@ -362,7 +343,6 @@ function inicializarDatepickers() {
 
 const ModalArea = document.getElementById('modalMateriales')
 ModalArea.addEventListener('hidden.bs.modal', event => {
-    
     
     document.getElementById('formularioBITACORA').reset();
    
