@@ -133,6 +133,11 @@ use App\Http\Controllers\inventario\salidalmacenController;
 use App\Http\Controllers\aprobacionsalidalmacen\aprobacionsalidalmacenController;
 use App\Http\Controllers\listaaf\listaafController;
 
+//// BITACORAS INVENTARIO
+
+use App\Http\Controllers\bitacorasinventario\bitacoraconsumiblesController;
+use App\Http\Controllers\bitacorasinventario\bitacoraretornableController;
+use App\Http\Controllers\bitacorasinventario\bitacoravehiculosController;
 
 
 
@@ -917,6 +922,31 @@ Route::post('/SalidalmacenSave', [salidalmacenController::class, 'store']);
 Route::get('/listadeaf', [listaafController::class, 'index']);
 Route::get('/Tablalistadeaf', [listaafController::class, 'Tablalistadeaf']);
 
+//==============================================    BITACORAS   ============================================== 
+
+
+/// CONSUMIBLES
+
+Route::get('/bitacoraconsumibles', [bitacoraconsumiblesController::class, 'index']);
+
+
+
+
+
+/// RETORNABLES
+
+Route::get('/bitacoraretornables', [bitacoraretornableController::class, 'index']);
+
+
+/// VEHICULOS
+
+Route::get('/bitacoravehiculos', [bitacoravehiculosController::class, 'index']);
+
+
+
+
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////PAGINA WEB///////////////////////////////////////////////////
@@ -935,6 +965,9 @@ Route::get('/Formulario-vacantes', [bancocvController::class, 'index1']);
 Route::get('/Vacantes', [PuestoController::class, 'index']); 
 Route::get('/Proveedor', function () { return view('compras.externa.diseño'); });
 Route::get('/Directorio', function () { return view('compras.proveedores.directorio');});
+
+
+
 //============================================== ENCRIPTAR TURAS ============================================== 
 // Route::get('/{encryptedRoute}', function ($encryptedRoute) {
 //     try {
@@ -974,32 +1007,11 @@ Route::get('/Directorio', function () { return view('compras.proveedores.directo
 //         abort(404);
 //     }
 // })->name('route.encrypted');
+
 //============================================== C.P ============================================== 
 
 
-
-
-// Route::get('codigo-postal/{cp}', function ($cp) {
-//     $token = "a5ba768d-eeac-4c0f-b0be-202ef91df93c";
-//     $url = "https://api.copomex.com/query/info_cp/{$cp}?type=simplified&token={$token}";
-
-//     $response = Http::get($url);
-
-//     if ($response->successful()) {
-//         return response()->json($response->json()); 
-//     }
-
-//     return response()->json([
-//         'error' => true,
-//         'mensaje' => 'No se pudo obtener información de Copomex',
-//         'status' => $response->status(),
-//         'detalle' => $response->body()
-//     ], 400);
-// });
-
-
 Route::get('codigo-postal/{cp}', function ($cp) {
-    // Registrar información de la petición
     Log::info('Consulta CP desde: ' . request()->ip() . ', User-Agent: ' . request()->header('User-Agent'));
 
     $token = "a5ba768d-eeac-4c0f-b0be-202ef91df93c";

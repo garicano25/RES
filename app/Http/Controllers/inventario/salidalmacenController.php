@@ -95,7 +95,56 @@ class salidalmacenController extends Controller
                     $value->ESTATUS = '<span class="badge bg-secondary">Aprobar</span>';
                 }
 
-               
+
+                // $color = '';
+                // $faltan = 0;
+                // $totalRetornables = 0;
+
+                // if (!empty($value->MATERIALES_JSON)) {
+                //     $materiales = json_decode($value->MATERIALES_JSON, true);
+
+                //     if (is_array($materiales)) {
+                //         foreach ($materiales as $mat) {
+                //             if (($mat['RETORNA_EQUIPO'] ?? '0') == '1' && intval($mat['EN_EXISTENCIA'] ?? 0) > 0) {
+                //                 $totalRetornables++;
+
+                //                 if (($mat['VARIOS_ARTICULOS'] ?? '0') == '0') {
+                //                     if (($mat['ARTICULO_RETORNO'] ?? '0') != '1') {
+                //                         $faltan++;
+                //                     }
+                //                 } else {
+                //                     if (!empty($mat['ARTICULOS'])) {
+                //                         foreach ($mat['ARTICULOS'] as $detalle) {
+                //                             if (($detalle['RETORNA_DETALLE'] ?? '0') != '1') {
+                //                                 $faltan++;
+                //                             }
+                //                         }
+                //                     } else {
+                //                         $faltan++;
+                //                     }
+                //                 }
+                //             }
+                //         }
+
+
+                //         if ($totalRetornables > 0) {
+                //             if ($faltan == 0) {
+                //                 $color = 'bg-verde-suave'; 
+                //             } else {
+                //                 $color = 'bg-amarillo-suave'; 
+                //             }
+                //         } else {
+                //             if ($value->FINALIZAR_SOLICITUD_ALMACEN == 1) {
+                //                 $color = 'bg-verde-suave'; 
+                //             }
+                //         }
+                //     }
+                // }
+
+                // $value->COLOR_FILA = $color;
+                // $value->MATERIALES_PENDIENTES = $faltan;
+                // $value->MATERIALES_TOTAL = $totalRetornables;
+
                 $color = '';
                 $faltan = 0;
                 $totalRetornables = 0;
@@ -105,45 +154,80 @@ class salidalmacenController extends Controller
 
                     if (is_array($materiales)) {
                         foreach ($materiales as $mat) {
-                            if (($mat['RETORNA_EQUIPO'] ?? '0') == '1' && intval($mat['EN_EXISTENCIA'] ?? 0) > 0) {
-                                $totalRetornables++;
 
-                                if (($mat['VARIOS_ARTICULOS'] ?? '0') == '0') {
-                                    if (($mat['ARTICULO_RETORNO'] ?? '0') != '1') {
-                                        $faltan++;
-                                    }
-                                } else {
-                                    if (!empty($mat['ARTICULOS'])) {
+                            // Solo procesar materiales que deben retornarse
+                            if (($mat['RETORNA_EQUIPO'] ?? '0') == '1') {
+
+                                // 🔹 CASO 1: VARIOS ARTÍCULOS
+                                if (($mat['VARIOS_ARTICULOS'] ?? '0') == '1') {
+
+                                    if (!empty($mat['ARTICULOS']) && is_array($mat['ARTICULOS'])) {
                                         foreach ($mat['ARTICULOS'] as $detalle) {
-                                            if (($detalle['RETORNA_DETALLE'] ?? '0') != '1') {
-                                                $faltan++;
+
+                                            // 🔍 Verificar si el subartículo tiene datos reales (no vacío)
+                                            $tieneDatos = (
+                                                !empty($detalle['INVENTARIO']) ||
+                                                !empty($detalle['TIPO_INVENTARIO']) ||
+                                                (!empty($detalle['CANTIDAD_DETALLE']) && $detalle['CANTIDAD_DETALLE'] != '0')
+                                            );
+
+                                            if ($tieneDatos) {
+                                                // Cuenta solo los subartículos válidos
+                                                $totalRetornables++;
+
+                                                // Si no ha sido retornado (RETORNA_DETALLE = 0, 2 o vacío)
+                                                if (!isset($detalle['RETORNA_DETALLE']) || in_array($detalle['RETORNA_DETALLE'], ['0', '2', ''])) {
+                                                    $faltan++;
+                                                }
                                             }
                                         }
                                     } else {
+                                        // Si no hay detalles reales, se considera un pendiente
+                                        $totalRetornables++;
                                         $faltan++;
+                                    }
+                                }
+
+                                // 🔹 CASO 2: UN SOLO ARTÍCULO
+                                else {
+                                    $existencia = intval($mat['EN_EXISTENCIA'] ?? 0);
+
+                                    // Solo cuenta si el artículo realmente existe (>0)
+                                    if ($existencia > 0) {
+                                        $totalRetornables++;
+
+                                        // Si no ha sido retornado (ARTICULO_RETORNO = 0, 2 o vacío)
+                                        if (!isset($mat['ARTICULO_RETORNO']) || in_array($mat['ARTICULO_RETORNO'], ['0', '2', ''])) {
+                                            $faltan++;
+                                        }
                                     }
                                 }
                             }
                         }
 
-                      
+                        // 🔹 Determinar color de fila según estado
                         if ($totalRetornables > 0) {
                             if ($faltan == 0) {
-                                $color = 'bg-verde-suave'; 
+                                $color = 'bg-verde-suave'; // Todo retornado
                             } else {
-                                $color = 'bg-amarillo-suave'; 
+                                $color = 'bg-amarillo-suave'; // Faltan retornos
                             }
                         } else {
                             if ($value->FINALIZAR_SOLICITUD_ALMACEN == 1) {
-                                $color = 'bg-verde-suave'; 
+                                $color = 'bg-verde-suave';
                             }
                         }
                     }
                 }
 
+                // 🔹 Campos finales para DataTable o JSON
                 $value->COLOR_FILA = $color;
                 $value->MATERIALES_PENDIENTES = $faltan;
                 $value->MATERIALES_TOTAL = $totalRetornables;
+                $value->MATERIALES_RETORNADOS = $totalRetornables - $faltan;
+                $value->ESTADO_RETORNO = ($faltan > 0)
+                    ? '<span class="badge bg-warning text-dark">Pendiente retorno (' . ($totalRetornables - $faltan) . '/' . $totalRetornables . ')</span>'
+                    : '<span class="badge bg-success">Todo retornado (' . $totalRetornables . '/' . $totalRetornables . ')</span>';
             }
 
 

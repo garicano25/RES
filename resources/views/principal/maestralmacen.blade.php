@@ -151,13 +151,13 @@
                                     <span class="d-none d-lg-inline">Bitácoras</span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{url('/#')}}">Consumibles</a>
+                                    <li><a class="dropdown-item" href="{{url('/bitacoraconsumibles')}}">Consumibles</a>
                                     </li>
                                     <hr class="dropdown-divider">
-                                    <li><a class="dropdown-item" href="{{url('/#')}}">Retornables</a>
+                                    <li><a class="dropdown-item" href="{{url('/bitacoraretornables')}}">Retornables</a>
                                     </li>
                                     <hr class="dropdown-divider">
-                                    <li><a class="dropdown-item" href="{{url('/#')}}">Vehículos</a>
+                                    <li><a class="dropdown-item" href="{{url('/bitacoravehiculos')}}">Vehículos</a>
                                     </li>
                                     <hr class="dropdown-divider">
                                     <li><a class="dropdown-item" href="{{url('/#')}}">Comercial</a>
