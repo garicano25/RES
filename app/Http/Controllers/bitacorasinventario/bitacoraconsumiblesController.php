@@ -36,4 +36,108 @@ class bitacoraconsumiblesController extends Controller
         return view('almacen.bitacoras.bitacora_consumible', compact('tipoinventario', 'proveedoresOficiales', 'proveedoresTemporales', 'inventario'));
     }
 
+
+    public function Tablabitacoraconsumibles()
+    {
+        try {
+            $tabla = recemplaedosModel::where('TIPO_SOLICITUD', 2)
+                ->where('ESTADO_APROBACION', 'Aprobada')
+                ->where('FINALIZAR_SOLICITUD_ALMACEN', 1)
+                ->orderBy('FECHA_SALIDA', 'asc')
+                ->get();
+
+            $data = [];
+            $tiposPermitidos = ['Consumible', 'Material para curso', 'Papelería'];
+
+            foreach ($tabla as $value) {
+                $materiales = json_decode($value->MATERIALES_JSON, true);
+
+                if (is_array($materiales)) {
+                    foreach ($materiales as $articulo) {
+                        if (
+                            isset($articulo['EN_EXISTENCIA']) &&
+                            $articulo['EN_EXISTENCIA'] != 0 &&
+                            isset($articulo['TIPO_INVENTARIO']) &&
+                            in_array($articulo['TIPO_INVENTARIO'], $tiposPermitidos)
+                        ) {
+                            $producto = DB::table('formulario_inventario')
+                                ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO')
+                                ->where('ID_FORMULARIO_INVENTARIO', $articulo['INVENTARIO'])
+                                ->first();
+
+                            $data[] = [
+                                'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
+                                'DESCRIPCION' => $articulo['DESCRIPCION'] ?? '',
+                                'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
+                                'FECHA_SALIDA' => $value->FECHA_SALIDA ?? 'N/A',
+                                'CANTIDAD' => $articulo['CANTIDAD'] ?? '',
+                                'CANTIDAD_SALIDA' => $articulo['CANTIDAD_SALIDA'] ?? '',
+                                'PRODUCTO_NOMBRE' => $producto->DESCRIPCION_EQUIPO ?? 'N/A',
+                                'MARCA_EQUIPO' => $producto->MARCA_EQUIPO ?? 'N/A',
+                                'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
+                                'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
+                                'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial" 
+                                                data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
+                                                data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
+                                                <i class="bi bi-pencil-square"></i>
+                                             </button>',
+                                'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial" 
+                                                data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
+                                                data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
+                                                <i class="bi bi-eye"></i> 
+                                             </button>',
+                            ];
+                        }
+                    }
+                }
+            }
+
+            return response()->json(['data' => $data], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+
+
+    public function obtenerMaterialIndividual(Request $request)
+    {
+        try {
+            $idFormulario = $request->get('id');
+            $idInventario = $request->get('inventario');
+
+            $registro = recemplaedosModel::where('ID_FORMULARIO_RECURSOS_EMPLEADOS', $idFormulario)->first();
+
+            if (!$registro) {
+                return response()->json(['success' => false, 'message' => 'Registro no encontrado']);
+            }
+
+            $materiales = json_decode($registro->MATERIALES_JSON, true);
+            $materialEncontrado = null;
+
+            if (is_array($materiales)) {
+                foreach ($materiales as $item) {
+                    if (isset($item['INVENTARIO']) && $item['INVENTARIO'] == $idInventario) {
+                        $materialEncontrado = $item;
+                        break;
+                    }
+                }
+            }
+
+            if (!$materialEncontrado) {
+                return response()->json(['success' => false, 'message' => 'Artículo no encontrado']);
+            }
+
+            $materialEncontrado['SOLICITANTE_SALIDA'] = $registro->SOLICITANTE_SALIDA;
+            $materialEncontrado['FECHA_SALIDA'] = $registro->FECHA_SALIDA;
+
+            return response()->json(['success' => true, 'material' => $materialEncontrado]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
 }

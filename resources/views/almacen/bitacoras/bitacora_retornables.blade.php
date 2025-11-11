@@ -20,13 +20,12 @@
     </ol>
 
     <div class="card-body">
-        <table id="Tablasalidalmacen" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+        <table id="Tablabitacoraretornable" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
 
         </table>
     </div>
 
 </div>
-
 
 
 
@@ -57,7 +56,7 @@
                         <div class="row">
                             <div class="col-9">
                                 <label class="form-label">Solicitante </label>
-                                <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" id="SOLICITANTE_SALIDA" name="SOLICITANTE_SALIDA" readonly>
+                                <input type="text" class="form-control" id="SOLICITANTE_SALIDA" name="SOLICITANTE_SALIDA" readonly>
                             </div>
 
                             <div class="col-3">
@@ -66,6 +65,15 @@
                                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_SALIDA" name="FECHA_SALIDA" required>
                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mt-3">
+                        <div class="row">
+                            <div class="col-12">
+                                <label class="form-label">Descripción del Artículo </label>
+                                <input type="text" class="form-control" id="DESCRIPCION" name="DESCRIPCION" readonly>
                             </div>
                         </div>
                     </div>

@@ -336,6 +336,20 @@
     @if(request()->is('listadeaf'))
     <script src="/assets/js_sitio/listadeaf/listaaf.js?v=1.0"></script>
     @endif
+
+
+    @if(request()->is('bitacoraconsumibles'))
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraconsumible.js"></script>
+    @endif
+
+
+    @if(request()->is('bitacoraretornables'))
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraretornable.js"></script>
+    @endif
+
+    @if(request()->is('bitacoravehiculos'))
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoravehiculo.js"></script>
+    @endif
 </body>
 
 </body>

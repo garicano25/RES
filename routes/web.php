@@ -928,7 +928,8 @@ Route::get('/Tablalistadeaf', [listaafController::class, 'Tablalistadeaf']);
 /// CONSUMIBLES
 
 Route::get('/bitacoraconsumibles', [bitacoraconsumiblesController::class, 'index']);
-
+Route::get('/Tablabitacoraconsumibles', [bitacoraconsumiblesController::class, 'Tablabitacoraconsumibles']);
+Route::get('/obtenerMaterialIndividual', [bitacoraconsumiblesController::class, 'obtenerMaterialIndividual']);
 
 
 
@@ -936,12 +937,13 @@ Route::get('/bitacoraconsumibles', [bitacoraconsumiblesController::class, 'index
 /// RETORNABLES
 
 Route::get('/bitacoraretornables', [bitacoraretornableController::class, 'index']);
+Route::get('/Tablabitacoraretornable', [bitacoraretornableController::class, 'Tablabitacoraretornable']);
 
 
 /// VEHICULOS
 
 Route::get('/bitacoravehiculos', [bitacoravehiculosController::class, 'index']);
-
+Route::get('/Tablabitacoravehiculos', [bitacoravehiculosController::class, 'Tablabitacoravehiculos']);
 
 
 

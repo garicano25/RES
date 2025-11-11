@@ -20,7 +20,7 @@
     </ol>
 
     <div class="card-body">
-        <table id="Tablasalidalmacen" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+        <table id="Tablabitacoravehiculos" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
 
         </table>
     </div>
