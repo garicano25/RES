@@ -75,7 +75,7 @@
                             </div>
                             <div class="col-3 mt-2">
                                 <label class="form-label">Artículo que sale del inventario </label>
-                                <input type="text" class="form-control" id="CANTIDAD_SALIDA" name="CANTIDAD_SALIDA" readonly>
+                                <input type="text" class="form-control" id="INVENTARIO" name="INVENTARIO" readonly>
                             </div>
 
                         </div>

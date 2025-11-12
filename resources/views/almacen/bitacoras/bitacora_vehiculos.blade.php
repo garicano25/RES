@@ -41,17 +41,6 @@
                     {!! csrf_field() !!}
 
 
-
-                    <div class="col-12 mb-3">
-                        <label class="form-label">Seleccione el tipo *</label>
-                        <select class="form-control" id="TIPO_SOLICITUD" name="TIPO_SOLICITUD" required style="pointer-events:none; background-color:#e9ecef;">
-                            <option value="" selected disabled>Seleccione una opción</option>
-                            <option value="1">Aviso de ausencia y/o permiso</option>
-                            <option value="2">Salida de almacén de materiales y/o equipos</option>
-                            <!-- <option value="3">Solicitud de Vacaciones</option> -->
-                        </select>
-                    </div>
-
                     <div class="col-12 mt-3">
                         <div class="row">
                             <div class="col-9">
@@ -85,7 +74,7 @@
                             </div>
                             <div class="col-3 mt-2">
                                 <label class="form-label">Artículo que sale del inventario </label>
-                                <input type="text" class="form-control" id="CANTIDAD_SALIDA" name="CANTIDAD_SALIDA" readonly>
+                                <input type="text" class="form-control" id="INVENTARIO" name="INVENTARIO" readonly>
                             </div>
 
                         </div>
@@ -106,20 +95,36 @@
                                 <input type="text" class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" readonly>
                             </div>
 
-
                             <div class="col-12 mt-2">
                                 <label class="form-label">Recibido por </label>
                                 <input type="text" class="form-control" id="RECIBIDO_POR" name="RECIBIDO_POR" readonly>
                             </div>
 
+                            <div class="col-12 mt-2">
+                                <label class="form-label">Firma </label>
+                                <input type="text" class="form-control" id="FIRMA_POR" name="FIRMA_POR">
+                            </div>
+
+
+                            <div class="col-12 mt-2">
+                                <label class="form-label">Entregado por </label>
+                                <input type="text" class="form-control" id="ENTREGADO_POR" name="ENTREGADO_POR">
+                            </div>
+
+                            <div class="col-12 mt-2">
+                                <label class="form-label">Firma </label>
+                                <input type="text" class="form-control" id="ENTREGADO_POR" name="ENTREGADO_POR">
+                            </div>
+
+
+                            <div class="col-12 mt-2">
+                                <label class="form-label">Observación </label>
+                                <textarea class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" rows="3" required></textarea>
+                            </div>
+
+
                         </div>
                     </div>
-
-
-
-
-
-
 
 
 
