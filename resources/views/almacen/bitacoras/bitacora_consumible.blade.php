@@ -75,7 +75,14 @@
                             </div>
                             <div class="col-3 mt-2">
                                 <label class="form-label">Artículo que sale del inventario </label>
-                                <input type="text" class="form-control" id="INVENTARIO" name="INVENTARIO" readonly>
+                                <select class="form-select " id="INVENTARIO" name="INVENTARIO" >
+                                    <option value="">Seleccione un artículo</option>
+                                    @foreach($inventario as $item)
+                                    <option value="{{ $item->ID_FORMULARIO_INVENTARIO }}">
+                                        {{ $item->DESCRIPCION_EQUIPO }}
+                                    </option>
+                                    @endforeach
+                                </select>
                             </div>
 
                         </div>
