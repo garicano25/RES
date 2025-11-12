@@ -190,7 +190,7 @@
                             </li>
                         </ul>
 
-                        
+
                         @if(auth()->check() && !auth()->user()->hasRoles(['Almacenista','Asistente de compras']))
 
                         <ul class="navbar-nav">
@@ -343,7 +343,7 @@
 
 
     @if(request()->is('bitacoraconsumibles'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraconsumible.js"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraconsumible.js?v=1.0"></script>
     @endif
 
 

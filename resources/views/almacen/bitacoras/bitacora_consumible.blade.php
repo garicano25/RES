@@ -123,24 +123,6 @@
                   
 
 
-                    <div class="col-12 mt-3" id="DIV_FIRMAR_ALMACEN" style="display:none; margin-top:10px;">
-                        <div class="row justify-content-center">
-                            <div class="col-6 text-center">
-                                <button type="button"
-                                    id="FIRMAR_SOLICITUD_ALMACEN"
-                                    class="btn btn-info"
-                                    data-usuario="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
-                                    <i class="bi bi-pen-fill"></i> Firma almacenista
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <input type="hidden" id="FIRMO_ALMACENISTA" name="FIRMO_ALMACENISTA" value="">
-
-
                 </div>
 
 

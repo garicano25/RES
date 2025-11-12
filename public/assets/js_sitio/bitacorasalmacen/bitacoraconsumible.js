@@ -91,6 +91,7 @@ $(document).on('click', '.editarMaterial', function () {
                 $("#CANTIDAD").val(material.CANTIDAD);
                 $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
                 $("#INVENTARIO").val(material.INVENTARIO);
+                $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
 
                 $("#miModal_RECURSOSEMPLEADOS").modal("show");
             } else {
