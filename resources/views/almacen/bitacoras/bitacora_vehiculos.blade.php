@@ -64,15 +64,15 @@
                                 <label class="form-label">Descripción del Artículo </label>
                                 <input type="text" class="form-control" id="DESCRIPCION" name="DESCRIPCION" readonly>
                             </div>
-                            <div class="col-3 mt-2">
+                            <div class="col-2 mt-2">
                                 <label class="form-label">Cantidad solicitada </label>
                                 <input type="text" class="form-control" id="CANTIDAD" name="CANTIDAD" readonly>
                             </div>
-                            <div class="col-3 mt-2">
+                            <div class="col-2 mt-2">
                                 <label class="form-label">Cantidad que sale del inventario </label>
                                 <input type="text" class="form-control" id="CANTIDAD_SALIDA" name="CANTIDAD_SALIDA" readonly>
                             </div>
-                            <div class="col-3 mt-2">
+                            <div class="col-5 mt-2">
                                 <label class="form-label">Artículo que sale del inventario </label>
                                 <select class="form-select " id="INVENTARIO" name="INVENTARIO" style="pointer-events:none; background-color:#e9ecef;">
                                     <option value="">Seleccione un artículo</option>
