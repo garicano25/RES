@@ -106,6 +106,12 @@
                                 <input type="text" class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" readonly>
                             </div>
 
+
+                            <div class="col-12 mt-2">
+                                <label class="form-label">Recibido por </label>
+                                <input type="text" class="form-control" id="RECIBIDO_POR" name="RECIBIDO_POR" readonly>
+                            </div>
+
                         </div>
                     </div>
 
