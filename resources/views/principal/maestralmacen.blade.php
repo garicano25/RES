@@ -343,7 +343,7 @@
 
 
     @if(request()->is('bitacoraconsumibles'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraconsumible.js?v=1.0"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraconsumible.js?v=1.1"></script>
     @endif
 
 
