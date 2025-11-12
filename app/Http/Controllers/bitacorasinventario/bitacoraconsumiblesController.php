@@ -134,6 +134,8 @@ class bitacoraconsumiblesController extends Controller
 
             $materialEncontrado['SOLICITANTE_SALIDA'] = $registro->SOLICITANTE_SALIDA;
             $materialEncontrado['FECHA_SALIDA'] = $registro->FECHA_SALIDA;
+            $materialEncontrado['OBSERVACIONES_REC'] = $registro->OBSERVACIONES_REC;
+
 
             return response()->json(['success' => true, 'material' => $materialEncontrado]);
         } catch (\Exception $e) {

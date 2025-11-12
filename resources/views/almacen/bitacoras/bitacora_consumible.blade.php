@@ -72,12 +72,53 @@
 
                     <div class="col-12 mt-3">
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-4 mt-2">
                                 <label class="form-label">Descripción del Artículo </label>
                                 <input type="text" class="form-control" id="DESCRIPCION" name="DESCRIPCION" readonly>
                             </div>
+                            <div class="col-4 mt-2">
+                                <label class="form-label">Cantidad solicitada </label>
+                                <input type="text" class="form-control" id="CANTIDAD" name="CANTIDAD" readonly>
+                            </div>
+                            <div class="col-4 mt-2">
+                                <label class="form-label">Cantidad que sale del inventario </label>
+                                <input type="text" class="form-control" id="CANTIDAD_SALIDA" name="CANTIDAD_SALIDA" readonly>
+                            </div>
+                            <div class="col-4 mt-2">
+                                <label class="form-label">Artículo que sale del inventario </label>
+                                <input type="text" class="form-control" id="CANTIDAD_SALIDA" name="CANTIDAD_SALIDA" readonly>
+                            </div>
+
                         </div>
                     </div>
+
+                    <div class="col-12 mt-3">
+                        <div class="row">
+                            <div class="col-4">
+                                <label class="form-label">Funcionamiento </label>
+                                <select class="form-control" id="ESTADO_APROBACION" name="ESTADO_APROBACION">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="1">Buen estado</option>
+                                    <option value="2">Mal estado</option>
+                                </select>
+                            </div>
+                            <div class="col-8">
+                                <label class="form-label">Motivo </label>
+                                <input type="text" class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" readonly>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label">Cantidad que sale del inventario </label>
+                                <input type="text" class="form-control" id="CANTIDAD_SALIDA" name="CANTIDAD_SALIDA" readonly>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label">Artículo que sale del inventario </label>
+                                <input type="text" class="form-control" id="CANTIDAD_SALIDA" name="CANTIDAD_SALIDA" readonly>
+                            </div>
+
+                        </div>
+                    </div>
+
+
 
 
                     <div id="SOLIDA_ALMACEN" style="display: none;">
