@@ -29,7 +29,6 @@
 
 
 
-
 <div class="modal fade" id="miModal_RECURSOSEMPLEADOS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -57,7 +56,7 @@
                         <div class="row">
                             <div class="col-9">
                                 <label class="form-label">Solicitante </label>
-                                <input type="text" class="form-control" value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}" id="SOLICITANTE_SALIDA" name="SOLICITANTE_SALIDA" readonly>
+                                <input type="text" class="form-control" id="SOLICITANTE_SALIDA" name="SOLICITANTE_SALIDA" readonly>
                             </div>
 
                             <div class="col-3">
@@ -70,126 +69,57 @@
                         </div>
                     </div>
 
-
-                    <div id="SOLIDA_ALMACEN" style="display: none;">
-
-
-                        <div class="mt-3">
-                            <div class="materialesdiv mt-4"></div>
-                        </div>
-
-
-                        <div class="col-12 mt-3 d-flex align-items-center">
-                            <div class="col-6" id="FECHA_ESTIMADA" style="display: none;">
-                                <label class="col-form-label me-2">Fecha estimada de retorno *</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd"
-                                        id="FECHA_ESTIMADA_SALIDA" name="FECHA_ESTIMADA_SALIDA">
-                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-
-
-                    <div class="mt-3">
-                        <label>Observaciones *</label>
-                        <textarea class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" rows="3" required></textarea>
-                    </div>
-
-
-                    <div class="mt-3">
-                        <label class="form-label">Firmado por</label>
-                        <input type="text" id="FIRMADO_POR" name="FIRMADO_POR" class="form-control" readonly required>
-                    </div>
-
-
-
-                    <div id="APROBACION_DIRECCION" style="display: block;">
-                        <div class="col-12 mt-3">
-                            <label for="ESTADO_APROBACION">Estado de Aprobación</label>
-                            <div id="estado-container" class="p-2 rounded">
-                                <select class="form-control" id="ESTADO_APROBACION" name="ESTADO_APROBACION">
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="Aprobada">Aprobada</option>
-                                    <option value="Rechazada">Rechazada</option>
-                                </select>
-                            </div>
-                        </div>
-
-
-                        <div class="col-12 mt-3" id="motivo-rechazo-container" style="display: none;">
-                            <label>Motivo del rechazo del que aprobo</label>
-                            <textarea class="form-control" id="MOTIVO_RECHAZO" name="MOTIVO_RECHAZO" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
-                        </div>
-
-
-                        <div class="col-12 mt-3">
-                            <div class="row">
-
-                                <div class="col-8">
-                                    <label for="APROBACION">Quien aprueba</label>
-                                    <input type="text" class="form-control" id="QUIEN_APROBACION" name="QUIEN_APROBACION" readonly>
-                                </div>
-                                <div class="col-4">
-                                    <label>Fecha *</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_APRUEBA_SOLICITUD" name="FECHA_APRUEBA_SOLICITUD">
-                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
                     <div class="col-12 mt-3">
-                        <label>Finalizar solicitud</label>
-                        <select class="form-control" id="FINALIZAR_SOLICITUD_ALMACEN" name="FINALIZAR_SOLICITUD_ALMACEN" required>
-                            <option value="" selected disabled>Seleccione una opción</option>
-                            <option value="1">Sí</option>
-                            <option value="2">No</option>
-                        </select>
+                        <div class="row">
+                            <div class="col-3 mt-2">
+                                <label class="form-label">Descripción del Artículo </label>
+                                <input type="text" class="form-control" id="DESCRIPCION" name="DESCRIPCION" readonly>
+                            </div>
+                            <div class="col-3 mt-2">
+                                <label class="form-label">Cantidad solicitada </label>
+                                <input type="text" class="form-control" id="CANTIDAD" name="CANTIDAD" readonly>
+                            </div>
+                            <div class="col-3 mt-2">
+                                <label class="form-label">Cantidad que sale del inventario </label>
+                                <input type="text" class="form-control" id="CANTIDAD_SALIDA" name="CANTIDAD_SALIDA" readonly>
+                            </div>
+                            <div class="col-3 mt-2">
+                                <label class="form-label">Artículo que sale del inventario </label>
+                                <input type="text" class="form-control" id="CANTIDAD_SALIDA" name="CANTIDAD_SALIDA" readonly>
+                            </div>
 
+                        </div>
                     </div>
 
                     <div class="col-12 mt-3">
                         <div class="row">
+                            <div class="col-4 mt-2">
+                                <label class="form-label">Funcionamiento </label>
+                                <select class="form-control" id="ESTADO_APROBACION" name="ESTADO_APROBACION">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="1">Buen estado</option>
+                                    <option value="2">Mal estado</option>
+                                </select>
+                            </div>
+                            <div class="col-8 mt-2">
+                                <label class="form-label">Motivo </label>
+                                <input type="text" class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" readonly>
+                            </div>
 
-                            <div class="col-8">
-                                <label for="APROBACION">Firma almacenista</label>
-                                <input type="text" class="form-control" id="FIRMA_ALMACEN" name="FIRMA_ALMACEN" readonly required>
-                            </div>
-                            <div class="col-4">
-                                <label>Fecha *</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ALMACEN_SOLICITUD" name="FECHA_ALMACEN_SOLICITUD" required>
-                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
 
 
-                    <div class="col-12 mt-3" id="DIV_FIRMAR_ALMACEN" style="display:none; margin-top:10px;">
-                        <div class="row justify-content-center">
-                            <div class="col-6 text-center">
-                                <button type="button"
-                                    id="FIRMAR_SOLICITUD_ALMACEN"
-                                    class="btn btn-info"
-                                    data-usuario="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
-                                    <i class="bi bi-pen-fill"></i> Firma almacenista
-                                </button>
-                            </div>
-                        </div>
-                    </div>
 
 
 
-                    <input type="hidden" id="FIRMO_ALMACENISTA" name="FIRMO_ALMACENISTA" value="">
+
+
+
+
+
+
 
 
                 </div>

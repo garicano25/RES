@@ -71,6 +71,7 @@ class bitacoravehiculosController extends Controller
                                 'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
                                 'DESCRIPCION' => $articulo['DESCRIPCION'] ?? '',
                                 'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
+                                'OBSERVACIONES_REC' => $value->OBSERVACIONES_REC ?? 'N/A',
                                 'FECHA_SALIDA' => $value->FECHA_SALIDA ?? 'N/A',
                                 'CANTIDAD' => $articulo['CANTIDAD'] ?? '',
                                 'CANTIDAD_SALIDA' => $articulo['CANTIDAD_SALIDA'] ?? '',
