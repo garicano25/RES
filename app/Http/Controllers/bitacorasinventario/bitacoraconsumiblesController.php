@@ -70,6 +70,7 @@ class bitacoraconsumiblesController extends Controller
                                 'DESCRIPCION' => $articulo['DESCRIPCION'] ?? '',
                                 'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
                                 'FECHA_SALIDA' => $value->FECHA_SALIDA ?? 'N/A',
+                                'OBSERVACIONES_REC' => $value->OBSERVACIONES_REC ?? 'N/A',
                                 'CANTIDAD' => $articulo['CANTIDAD'] ?? '',
                                 'CANTIDAD_SALIDA' => $articulo['CANTIDAD_SALIDA'] ?? '',
                                 'PRODUCTO_NOMBRE' => $producto->DESCRIPCION_EQUIPO ?? 'N/A',
