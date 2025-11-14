@@ -1060,3 +1060,7 @@ Route::get('/clear-cache', function () {
 
 
 
+
+Route::get('/pruebasww', function () {
+    return view('welprueba');
+});
