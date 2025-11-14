@@ -54,20 +54,17 @@ $(document).ready(function () {
                     '#SOLICITAR_VERIFICACION'
                 ];
 
-                // Ocultar botones manuales
                 botones.forEach(id => {
                     $(id).hide();
                 });
 
-                // Reemplazar todos los botones .EDITAR por deshabilitados
                 const btnDeshabilitado = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
 
-                // Esperar a que los datatables hayan cargado (por si no están aún en DOM)
                 setTimeout(() => {
                     $('.EDITAR').each(function () {
                         $(this).replaceWith(btnDeshabilitado);
                     });
-                }, 1000); // espera 1 segundo (ajusta si tus tablas tardan más)
+                }, 1000); 
             }
         },
         error: function () {
