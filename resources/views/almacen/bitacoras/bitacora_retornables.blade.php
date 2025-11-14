@@ -80,7 +80,7 @@
                                     <option value="">Seleccione un artículo</option>
                                     @foreach($inventario as $item)
                                     <option value="{{ $item->ID_FORMULARIO_INVENTARIO }}">
-                                        {{ $item->DESCRIPCION_EQUIPO }}
+                                        {{ $item->DESCRIPCION_EQUIPO }} - ({{ $item->CODIGO_EQUIPO }})
                                     </option>
                                     @endforeach
                                 </select>

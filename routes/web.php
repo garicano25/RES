@@ -1061,6 +1061,9 @@ Route::get('/clear-cache', function () {
 
 
 
-Route::get('/pruebasww', function () {
-    return view('welprueba');
-});
+
+
+//////////////////// VISTA DE PRUEBA //////////////////// 
+
+
+Route::get('/pruebasww', function () {return view('welprueba');});

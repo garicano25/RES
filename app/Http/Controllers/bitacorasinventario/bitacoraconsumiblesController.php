@@ -37,6 +37,9 @@ class bitacoraconsumiblesController extends Controller
     }
 
 
+
+
+
     public function Tablabitacoraconsumibles()
     {
         try {
@@ -52,22 +55,74 @@ class bitacoraconsumiblesController extends Controller
             foreach ($tabla as $value) {
                 $materiales = json_decode($value->MATERIALES_JSON, true);
 
-                if (is_array($materiales)) {
-                    foreach ($materiales as $articulo) {
+                if (!is_array($materiales)) continue;
+
+                foreach ($materiales as $articulo) {
+                    if (!empty($articulo['VARIOS_ARTICULOS']) && $articulo['VARIOS_ARTICULOS'] == "1") {
+
+                        if (!empty($articulo['ARTICULOS']) && is_array($articulo['ARTICULOS'])) {
+
+                            foreach ($articulo['ARTICULOS'] as $detalle) {
+
+                                if (
+                                    empty($detalle['INVENTARIO']) ||
+                                    empty($detalle['TIPO_INVENTARIO']) ||
+                                    !in_array($detalle['TIPO_INVENTARIO'], $tiposPermitidos)
+                                ) continue;
+
+                                $producto = DB::table('formulario_inventario')
+                                    ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
+                                    ->where('ID_FORMULARIO_INVENTARIO', $detalle['INVENTARIO'])
+                                    ->first();
+
+                                $data[] = [
+                                    'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
+                                    'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
+                                    'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
+                                    'FECHA_SALIDA' => $value->FECHA_SALIDA ?? 'N/A',
+                                    'OBSERVACIONES_REC' => $value->OBSERVACIONES_REC ?? 'N/A',
+
+                                    'CANTIDAD' => $detalle['CANTIDAD_DETALLE'] ?? '',
+                                    'CANTIDAD_SALIDA' => $detalle['CANTIDAD_DETALLE'] ?? '',
+
+                                    'PRODUCTO_NOMBRE' => $producto->DESCRIPCION_EQUIPO ?? 'N/A',
+                                    'MARCA_EQUIPO' => $producto->MARCA_EQUIPO ?? 'N/A',
+                                    'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
+                                    'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
+                                    'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
+                                    'UNIDAD' => $detalle['UNIDAD_DETALLE'] ?? '',
+
+                                    'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial" 
+                                                    data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
+                                                    data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>',
+
+                                    'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial" 
+                                                    data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
+                                                    data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>',
+                                ];
+                            }
+                        }
+                    }
+
+                    else {
                         if (
-                            isset($articulo['EN_EXISTENCIA']) &&
+                            !empty($articulo['EN_EXISTENCIA']) &&
                             $articulo['EN_EXISTENCIA'] != 0 &&
-                            isset($articulo['TIPO_INVENTARIO']) &&
+                            !empty($articulo['TIPO_INVENTARIO']) &&
                             in_array($articulo['TIPO_INVENTARIO'], $tiposPermitidos)
                         ) {
                             $producto = DB::table('formulario_inventario')
-                                ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO')
+                                ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
                                 ->where('ID_FORMULARIO_INVENTARIO', $articulo['INVENTARIO'])
                                 ->first();
 
                             $data[] = [
                                 'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
-                                'DESCRIPCION' => $articulo['DESCRIPCION'] ?? '',
+                                'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
                                 'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
                                 'FECHA_SALIDA' => $value->FECHA_SALIDA ?? 'N/A',
                                 'OBSERVACIONES_REC' => $value->OBSERVACIONES_REC ?? 'N/A',
@@ -77,16 +132,18 @@ class bitacoraconsumiblesController extends Controller
                                 'MARCA_EQUIPO' => $producto->MARCA_EQUIPO ?? 'N/A',
                                 'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
                                 'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
+                                'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
+                                'UNIDAD' => $articulo['UNIDAD_SALIDA'] ?? '',
                                 'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial" 
                                                 data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
                                                 data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
                                                 <i class="bi bi-pencil-square"></i>
-                                             </button>',
+                                            </button>',
                                 'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial" 
                                                 data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
                                                 data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
-                                                <i class="bi bi-eye"></i> 
-                                             </button>',
+                                                <i class="bi bi-eye"></i>
+                                            </button>',
                             ];
                         }
                     }
@@ -101,6 +158,9 @@ class bitacoraconsumiblesController extends Controller
             ], 500);
         }
     }
+
+
+
 
 
 
@@ -122,9 +182,25 @@ class bitacoraconsumiblesController extends Controller
 
             if (is_array($materiales)) {
                 foreach ($materiales as $item) {
+                    // ✅ Caso 1: Artículo individual
                     if (isset($item['INVENTARIO']) && $item['INVENTARIO'] == $idInventario) {
                         $materialEncontrado = $item;
                         break;
+                    }
+
+                    if (isset($item['VARIOS_ARTICULOS']) && $item['VARIOS_ARTICULOS'] == "1" && !empty($item['ARTICULOS'])) {
+                        foreach ($item['ARTICULOS'] as $detalle) {
+                            if (isset($detalle['INVENTARIO']) && $detalle['INVENTARIO'] == $idInventario) {
+                                $materialEncontrado = array_merge($item, $detalle);
+
+                                // ✅ Adaptar campos para mantener compatibilidad con el frontend
+                                $materialEncontrado['CANTIDAD'] = $detalle['CANTIDAD_DETALLE'] ?? $item['CANTIDAD'] ?? '';
+                                $materialEncontrado['CANTIDAD_SALIDA'] = $detalle['CANTIDAD_DETALLE'] ?? '';
+                                $materialEncontrado['UNIDAD_SALIDA'] = $detalle['UNIDAD_DETALLE'] ?? '';
+                                $materialEncontrado['FECHA_RETORNO'] = $detalle['FECHA_DETALLE'] ?? '';
+                                break 2;
+                            }
+                        }
                     }
                 }
             }
@@ -133,10 +209,10 @@ class bitacoraconsumiblesController extends Controller
                 return response()->json(['success' => false, 'message' => 'Artículo no encontrado']);
             }
 
+            // Agregar campos del formulario
             $materialEncontrado['SOLICITANTE_SALIDA'] = $registro->SOLICITANTE_SALIDA;
             $materialEncontrado['FECHA_SALIDA'] = $registro->FECHA_SALIDA;
             $materialEncontrado['OBSERVACIONES_REC'] = $registro->OBSERVACIONES_REC;
-
 
             return response()->json(['success' => true, 'material' => $materialEncontrado]);
         } catch (\Exception $e) {
