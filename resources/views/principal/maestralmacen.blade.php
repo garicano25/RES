@@ -302,6 +302,10 @@
     <script src="/assets/js_sitio/funciones.js?v=5.6"></script>
 
 
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+
+
+    
     <script>
         $(document).ready(function() {
             // Inicializar campos datepicker con opciones en español
