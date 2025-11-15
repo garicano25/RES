@@ -1059,11 +1059,3 @@ Route::get('/clear-cache', function () {
 });
 
 
-
-
-
-
-//////////////////// VISTA DE PRUEBA //////////////////// 
-
-
-Route::get('/pruebasww', function () {return view('welprueba');});
