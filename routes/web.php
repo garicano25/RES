@@ -628,25 +628,21 @@ Route::post('/obtenerDatosOferta', [otController::class, 'obtenerDatosOferta']);
 Route::get('/catalogosolicitudes', function () {return view('ventas.Catalogos.catalogos_solicitud');});
 
 // CATÁLOGO TITULOS CLIENTEs
-
 Route::get('/catalogoclientestitulos', function () { return view('ventas.Catalogos.catalogo_titulosclientes');});
 
 // CATÁLOGO DE MEDIO DE CONTACTO 
-
 Route::get('/catalogomediocontacto', function () {return view('ventas.Catalogos.catalogo_mediocontacto');});
 Route::post('/MedioSave', [catalogomediocontactoController::class, 'store']);
 Route::get('/MedioDelete', [catalogomediocontactoController::class, 'store']);
 Route::get('/Tablamediocontacto', [catalogomediocontactoController::class, 'Tablamediocontacto']);
 
 // CATÁLOGO DE  GIRO DE EMPRESA
-
 Route::get('/catalogogiroempresa', function () {return view('ventas.Catalogos.catalogo_giroempresa');});
 Route::post('/GiroSave', [catalogogiroempresaController::class, 'store']);
 Route::get('/GiroDelete', [catalogogiroempresaController::class, 'store']);
 Route::get('/Tablagiroempresa', [catalogogiroempresaController::class, 'Tablagiroempresa']);
 
 // CATÁLOGO DE  NECESIDAD SERVICIO
-
 Route::get('/catalogonecesidadservicio', function () {return view('ventas.Catalogos.catalogo_necesidadservicio');});
 Route::post('/NecesidadSave', [catalogonecesidadController::class, 'store']);
 Route::get('/NecesidadDelete', [catalogonecesidadController::class, 'store']);
@@ -660,7 +656,6 @@ Route::get('/Tablalineanegocio', [catalogolineanegociosController::class, 'Tabla
 
 
 // CATÁLOGO DE TIPO DE SERVICIO
-
 Route::get('/catalogotiposervicio', function () {return view('ventas.Catalogos.catalogo_tiposervicio');});
 Route::post('/TiposSave', [catalogotiposervicioController::class, 'store']);
 Route::get('/TiposDelete', [catalogotiposervicioController::class, 'store']);
@@ -669,11 +664,10 @@ Route::get('/Tablatiposervicio', [catalogotiposervicioController::class, 'Tablat
 
 
 //==============================================   CATALOGOS CONFIRMACION ============================================== 
+
 Route::get('/catalogoconfirmacion', function () {return view('ventas.Catalogos.catalogos_confirmacion');});
 
-
 // CATÁLOGO DE VERIFIACION DEL CLIENTE
-
 Route::get('/catalogoverificacion', function () {return view('ventas.Catalogos.catalago_verificacioncliente');});
 Route::post('/InformacionSave', [catalagoverificacioninformacionController::class, 'store']);
 Route::get('/InformacionDelete', [catalagoverificacioninformacionController::class, 'store']);
@@ -688,7 +682,6 @@ Route::get('/Tablaverificacioncliente', [catalagoverificacioninformacionControll
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //==============================================  M.R  ============================================== 
-
 
 Route::get('/requisicionmateriales', function () {return view('compras.requisicionesmaterial.requisicion_material');});
 Route::post('/MrSave', [mrController::class, 'store']);
@@ -709,7 +702,6 @@ Route::get('/requisicionmaterialesaprobacion', function () {return view('compras
 
 //==============================================  BITACORA M.R  ============================================== 
 
-
 Route::get('/bitacora', [mrController::class, 'index']);
 Route::get('/Tablabitacora', [mrController::class, 'Tablabitacora']);
 Route::post('/guardarHOJAS', [mrController::class, 'guardarHOJAS']);
@@ -726,7 +718,6 @@ Route::get('/Tabladirectorio', [directorioController::class, 'Tabladirectorio'])
 Route::get('/ServicioDelete', [directorioController::class, 'store']);
 Route::get('/Tablaverificacionproveedor', [directorioController::class, 'Tablaverificacionproveedor']);
 Route::get('/mostrarverificacionproveedor/{id}', [directorioController::class, 'mostrarverificacionproveedor']);
-
 Route::get('/listaproveedorescriticos', function () {return view('compras.proveedores.listaproveedorescriticos');});
 Route::get('/Tablaproveedorescriticos', [listaproveedorescriticosController::class, 'Tablaproveedorescriticos']);
 
@@ -778,7 +769,6 @@ Route::get('/Tablabitacoragr', [grController::class, 'Tablabitacoragr']);
 Route::post('/guardarGR', [grController::class, 'guardarGR']);
 Route::post('/consultar-gr', [grController::class, 'consultarGR'])->name('consultar.gr');
 Route::get('/generarGRpdf/{id}', [pdfgrController::class, 'generarGRpdf']);
-
 
 
 /// VO.BO USUARIO EN GR 
@@ -897,7 +887,6 @@ Route::get('/Tabladocumentosinventario', [inventarioController::class, 'Tabladoc
 Route::get('/mostrardocumentoquipo/{id}', [inventarioController::class, 'mostrardocumentoquipo']);
 
 /// VISUALIZAR FECHAS DE DOCUMENTOS 
-
 Route::get('/obtenerDocumentosPorInventario/{inventario_id}', [inventarioController::class, 'obtenerDocumentosPorInventario']);
 
 //==============================================   CATALOGOS INVENTRARIO  ============================================== 
@@ -913,6 +902,7 @@ Route::get('/aprobacionalmacen', function () {return view('almacen.aprobarsolici
 Route::get('/Tablaaprobacionalmacen', [aprobacionsalidalmacenController::class, 'Tablaaprobacionalmacen']);
 
 //==============================================    SALIDA DE ALMACEN   ============================================== 
+
 Route::get('/salidaalmacen', [salidalmacenController::class, 'index']);
 Route::get('/Tablasalidalmacen', [salidalmacenController::class, 'Tablasalidalmacen']);
 Route::post('/SalidalmacenSave', [salidalmacenController::class, 'store']);
@@ -930,8 +920,6 @@ Route::get('/Tablalistadeaf', [listaafController::class, 'Tablalistadeaf']);
 Route::get('/bitacoraconsumibles', [bitacoraconsumiblesController::class, 'index']);
 Route::get('/Tablabitacoraconsumibles', [bitacoraconsumiblesController::class, 'Tablabitacoraconsumibles']);
 Route::get('/obtenerMaterialIndividual', [bitacoraconsumiblesController::class, 'obtenerMaterialIndividual']);
-
-
 
 
 /// RETORNABLES
@@ -971,6 +959,7 @@ Route::get('/Directorio', function () { return view('compras.proveedores.directo
 
 
 //============================================== ENCRIPTAR TURAS ============================================== 
+
 // Route::get('/{encryptedRoute}', function ($encryptedRoute) {
 //     try {
 //         $decryptedRoute = Crypt::decryptString($encryptedRoute);
@@ -1010,8 +999,8 @@ Route::get('/Directorio', function () { return view('compras.proveedores.directo
 //     }
 // })->name('route.encrypted');
 
-//============================================== C.P ============================================== 
 
+//============================================== C.P ============================================== 
 
 Route::get('codigo-postal/{cp}', function ($cp) {
     Log::info('Consulta CP desde: ' . request()->ip() . ', User-Agent: ' . request()->header('User-Agent'));
