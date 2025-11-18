@@ -1047,4 +1047,6 @@ Route::get('/clear-cache', function () {
     return 'Application cache cleared';
 });
 
-
+Route::get('/pruebasww', function () {
+    return view('welprueba');
+});
