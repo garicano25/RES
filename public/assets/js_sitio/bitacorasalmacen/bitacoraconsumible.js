@@ -95,6 +95,8 @@ $(document).on('click', '.editarMaterial', function () {
                 $("#RECIBIDO_POR").val(material.SOLICITANTE_SALIDA);
 
                 $("#miModal_RECURSOSEMPLEADOS").modal("show");
+                $('#miModal_RECURSOSEMPLEADOS .modal-title').html(material.DESCRIPCION);
+
             } else {
                 alert(res.message || "No se pudo obtener el material.");
             }
