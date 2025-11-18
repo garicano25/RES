@@ -258,7 +258,7 @@
 
                                                 <div class="col-3 mt-2">
                                                     <label>Marcar si el art. requiere *</label>
-                                                    <select class="form-control" id="REQUIERE_ARTICULO" name="REQUIERE_ARTICULO">
+                                                    <select class="form-control" id="REQUIERE_ARTICULO" name="REQUIERE_ARTICULO" required>
                                                         <option value="" selected disabled>Seleccione una opción</option>
                                                         <option value="1">Documentación</option>
                                                         <option value="2">Mantenimiento</option>
