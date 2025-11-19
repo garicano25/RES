@@ -132,6 +132,8 @@ $(document).on('click', '.editarMaterial', function () {
                 $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
                 $("#ENTREGADO_POR").val(material.ENTREGADO_POR);
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
+                $("#FUNCIONAMIENTO_BITACORA").val(material.FUNCIONAMIENTO_BITACORA);
+
 
                 if (material.FIRMA_RECIBIDO_POR) {
                     cargarFirmaEnCanvas(
@@ -190,6 +192,7 @@ $(document).on('click', '.visualizarMaterial', function () {
 
             let material = res.material;
 
+           
             let canvas1 = document.getElementById("firmaCanvas");
             let canvas2 = document.getElementById("firmaCanvas2");
 
@@ -208,14 +211,15 @@ $(document).on('click', '.visualizarMaterial', function () {
             $("#INVENTARIO").val(material.INVENTARIO);
             $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
 
-          
             if (material.YA_GUARDADO) {
 
+                $("#ID_BITACORAS_ALMACEN").val(material.ID_BITACORAS_ALMACEN);
                 $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
                 $("#ENTREGADO_POR").val(material.ENTREGADO_POR);
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
                 $("#FUNCIONAMIENTO_BITACORA").val(material.FUNCIONAMIENTO_BITACORA);
 
+                
                 if (material.FIRMA_RECIBIDO_POR) {
                     cargarFirmaEnCanvas(
                         canvas1,
@@ -242,7 +246,7 @@ $(document).on('click', '.visualizarMaterial', function () {
                 canvas2.width = canvas2.width; 
             }
 
-            
+          
             $("#miModal_BITACORA").modal("show");
             $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
         },

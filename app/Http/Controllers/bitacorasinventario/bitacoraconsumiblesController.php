@@ -232,21 +232,20 @@ class bitacoraconsumiblesController extends Controller
                 return response()->json([
                     'success' => true,
                     'material' => [
-                        'ID_BITACORAS_ALMACEN' => $bitacora->ID_BITACORAS_ALMACEN,  
-                        'SOLICITANTE_SALIDA' => $bitacora->SOLICITANTE_SALIDA,
-                        'FECHA_SALIDA'       => $bitacora->FECHA_SALIDA,
-                        'DESCRIPCION'        => $bitacora->DESCRIPCION,
-                        'CANTIDAD'           => $bitacora->CANTIDAD,
-                        'CANTIDAD_SALIDA'    => $bitacora->CANTIDAD_SALIDA,
-                        'INVENTARIO'         => $bitacora->INVENTARIO,
-                        'OBSERVACIONES_REC'  => $bitacora->OBSERVACIONES_REC,
-                        'RECIBIDO_POR'       => $bitacora->RECIBIDO_POR,
-                        'ENTREGADO_POR'      => $bitacora->ENTREGADO_POR,
-                        'FIRMA_RECIBIDO_POR' => $bitacora->FIRMA_RECIBIDO_POR,
-                        'FIRMA_ENTREGADO_POR' => $bitacora->FIRMA_ENTREGADO_POR,
+                        'ID_BITACORAS_ALMACEN'  => $bitacora->ID_BITACORAS_ALMACEN,  
+                        'SOLICITANTE_SALIDA'    => $bitacora->SOLICITANTE_SALIDA,
+                        'FECHA_SALIDA'          => $bitacora->FECHA_SALIDA,
+                        'DESCRIPCION'           => $bitacora->DESCRIPCION,
+                        'CANTIDAD'              => $bitacora->CANTIDAD,
+                        'CANTIDAD_SALIDA'       => $bitacora->CANTIDAD_SALIDA,
+                        'INVENTARIO'            => $bitacora->INVENTARIO,
+                        'OBSERVACIONES_REC'     => $bitacora->OBSERVACIONES_REC,
+                        'RECIBIDO_POR'          => $bitacora->RECIBIDO_POR,
+                        'ENTREGADO_POR'         => $bitacora->ENTREGADO_POR,
+                        'FIRMA_RECIBIDO_POR'    => $bitacora->FIRMA_RECIBIDO_POR,
+                        'FIRMA_ENTREGADO_POR'   => $bitacora->FIRMA_ENTREGADO_POR,
                         'OBSERVACIONES_BITACORA' => $bitacora->OBSERVACIONES_BITACORA,
-                        'FUNCIONAMIENTO_BITACORA' => $bitacora->FUNCIONAMIENTO_BITACORA,
-
+                        'FUNCIONAMIENTO_BITACORA' => $bitacora->FUNCIONAMIENTO_BITACORA,  
                         'YA_GUARDADO'        => true
                     ]
                 ]);
