@@ -23,7 +23,8 @@ class bitacoraModel extends Model
         'ENTREGADO_POR',
         'FIRMA_RECIBIDO_POR',
         'FIRMA_ENTREGADO_POR',
-        'OBSERVACIONES_BITACORA'
+        'OBSERVACIONES_BITACORA',
+        'ACTIVO'
 
     ];
 }
