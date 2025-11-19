@@ -88,48 +88,10 @@ var Tablabitacoraconsumibles = $("#Tablabitacoraconsumibles").DataTable({
 
 
 
-// $(document).on('click', '.editarMaterial', function () {
-
-
-//     ID_FORM_GLOBAL = $(this).data('id');
-//     ID_INVENTARIO_GLOBAL = $(this).data('inventario');
-
-//     $.ajax({
-//         url: '/obtenerMaterialIndividual',
-//         method: 'GET',
-//         data: { id: ID_FORM_GLOBAL, inventario: ID_INVENTARIO_GLOBAL },
-//         success: function (res) {
-//             if (res.success) {
-//                 let material = res.material;
-
-//                 $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
-//                 $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
-//                 $("#DESCRIPCION").val(material.DESCRIPCION);
-//                 $("#CANTIDAD").val(material.CANTIDAD);
-//                 $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
-//                 $("#INVENTARIO").val(material.INVENTARIO);
-//                 $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
-                
-//                 $("#miModal_BITACORA").modal("show");
-//                 $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
-
-//             } else {
-//                 alert(res.message || "No se pudo obtener el material.");
-//             }
-//         },
-//         error: function () {
-//             alert("Error al obtener el material individual.");
-//         }
-//     });
-// });
-
-
-
 
 
 $(document).on('click', '.editarMaterial', function () {
 
-    // Guardar como variables globales
     ID_FORM_GLOBAL = $(this).data('id');
     ID_INVENTARIO_GLOBAL = $(this).data('inventario');
 
@@ -147,35 +109,49 @@ $(document).on('click', '.editarMaterial', function () {
 
             let material = res.material;
 
-
             $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
             $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
             $("#DESCRIPCION").val(material.DESCRIPCION);
             $("#CANTIDAD").val(material.CANTIDAD);
             $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
             $("#INVENTARIO").val(material.INVENTARIO);
-
             $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
 
-          
             if (material.YA_GUARDADO) {
 
                 $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
                 $("#ENTREGADO_POR").val(material.ENTREGADO_POR);
-
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
 
-                $("#FIRMA_POR").val("");
-                $("#FIRMA_ENTREGADO_POR").val("");
+              
+                if (material.FIRMA_RECIBIDO_POR) {
+                    cargarFirmaEnCanvas(
+                        document.getElementById("firmaCanvas"),
+                        document.getElementById("firmaCanvas").getContext("2d"),
+                        material.FIRMA_RECIBIDO_POR
+                    );
+                }
+
+              
+                if (material.FIRMA_ENTREGADO_POR) {
+                    cargarFirmaEnCanvas(
+                        document.getElementById("firmaCanvas2"),
+                        document.getElementById("firmaCanvas2").getContext("2d"),
+                        material.FIRMA_ENTREGADO_POR
+                    );
+                }
+
             } else {
+
                 $("#RECIBIDO_POR").val("");
                 $("#ENTREGADO_POR").val("");
                 $("#OBSERVACIONES_BITACORA").val("");
-                $("#FIRMA_POR").val("");
-                $("#FIRMA_ENTREGADO_POR").val("");
+
+                // Limpiar canvas
+                document.getElementById("firmaCanvas").getContext("2d").clearRect(0, 0, 300, 150);
+                document.getElementById("firmaCanvas2").getContext("2d").clearRect(0, 0, 300, 150);
             }
 
-           
             $("#miModal_BITACORA").modal("show");
             $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
         },
@@ -186,6 +162,7 @@ $(document).on('click', '.editarMaterial', function () {
     });
 });
 
+
 $(document).on('click', '.visualizarMaterial', function () {
 
     ID_FORM_GLOBAL = $(this).data('id');
@@ -195,31 +172,78 @@ $(document).on('click', '.visualizarMaterial', function () {
         url: '/obtenerMaterialIndividual',
         method: 'GET',
         data: { id: ID_FORM_GLOBAL, inventario: ID_INVENTARIO_GLOBAL },
-        success: function (res) {
-            if (res.success) {
-                let material = res.material;
 
-                $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
-                $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
-                $("#DESCRIPCION").val(material.DESCRIPCION);
-                $("#CANTIDAD").val(material.CANTIDAD);
-                $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
-                $("#INVENTARIO").val(material.INVENTARIO);
-                $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
-                
-                $("#miModal_BITACORA").modal("show");
-                $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
+        success: function (res) {
+
+            if (!res.success) {
+                alert(res.message || "No se pudo obtener el material.");
+                return;
+            }
+
+            let material = res.material;
+
+            $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
+            $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
+            $("#DESCRIPCION").val(material.DESCRIPCION);
+            $("#CANTIDAD").val(material.CANTIDAD);
+            $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
+            $("#INVENTARIO").val(material.INVENTARIO);
+            $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
+
+            if (material.YA_GUARDADO) {
+
+                $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
+                $("#ENTREGADO_POR").val(material.ENTREGADO_POR);
+                $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
+
+              
+                if (material.FIRMA_RECIBIDO_POR) {
+                    cargarFirmaEnCanvas(
+                        document.getElementById("firmaCanvas"),
+                        document.getElementById("firmaCanvas").getContext("2d"),
+                        material.FIRMA_RECIBIDO_POR
+                    );
+                }
+
+              
+                if (material.FIRMA_ENTREGADO_POR) {
+                    cargarFirmaEnCanvas(
+                        document.getElementById("firmaCanvas2"),
+                        document.getElementById("firmaCanvas2").getContext("2d"),
+                        material.FIRMA_ENTREGADO_POR
+                    );
+                }
 
             } else {
-                alert(res.message || "No se pudo obtener el material.");
+
+                $("#RECIBIDO_POR").val("");
+                $("#ENTREGADO_POR").val("");
+                $("#OBSERVACIONES_BITACORA").val("");
+
+                // Limpiar canvas
+                document.getElementById("firmaCanvas").getContext("2d").clearRect(0, 0, 300, 150);
+                document.getElementById("firmaCanvas2").getContext("2d").clearRect(0, 0, 300, 150);
             }
+
+            $("#miModal_BITACORA").modal("show");
+            $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
         },
+
         error: function () {
             alert("Error al obtener el material individual.");
         }
     });
 });
 
+
+function cargarFirmaEnCanvas(canvas, ctx, base64) {
+    let img = new Image();
+    img.onload = function () {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    };
+    img.src = base64;
+}
 
 
 
@@ -311,3 +335,5 @@ $("#guardaBITACORA").click(function (e) {
 }
     
 });
+
+
