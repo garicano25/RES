@@ -11,9 +11,6 @@ Modalbitacora.addEventListener('hidden.bs.modal', event => {
    
 })
 
-
-
-
 var Tablabitacoraconsumibles = $("#Tablabitacoraconsumibles").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
@@ -82,11 +79,6 @@ var Tablabitacoraconsumibles = $("#Tablabitacoraconsumibles").DataTable({
     ]
 
 });
-
-
-
-
-
 
 $(document).on('click', '.editarMaterial', function () {
 

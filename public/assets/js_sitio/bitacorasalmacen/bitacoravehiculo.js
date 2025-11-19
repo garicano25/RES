@@ -2,6 +2,8 @@ ID_BITACORAS_ALMACEN = 0
 let ID_FORM_GLOBAL = null;
 let ID_INVENTARIO_GLOBAL = null;
 
+
+
 const Modalbitacora = document.getElementById('miModal_BITACORA')
 Modalbitacora.addEventListener('hidden.bs.modal', event => {
     
@@ -9,7 +11,6 @@ Modalbitacora.addEventListener('hidden.bs.modal', event => {
     document.getElementById('formularioBITACORA').reset();
    
 })
-
 
 
 var Tablabitacoravehiculos = $("#Tablabitacoravehiculos").DataTable({
@@ -83,9 +84,7 @@ var Tablabitacoravehiculos = $("#Tablabitacoravehiculos").DataTable({
 
 });
 
-
 $(document).on('click', '.editarMaterial', function () {
-
 
     ID_FORM_GLOBAL = $(this).data('id');
     ID_INVENTARIO_GLOBAL = $(this).data('inventario');
@@ -94,25 +93,81 @@ $(document).on('click', '.editarMaterial', function () {
         url: '/obtenerMaterialIndividual',
         method: 'GET',
         data: { id: ID_FORM_GLOBAL, inventario: ID_INVENTARIO_GLOBAL },
-        success: function (res) {
-            if (res.success) {
-                let material = res.material;
 
-                $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
-                $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
-                $("#DESCRIPCION").val(material.DESCRIPCION);
-                $("#CANTIDAD").val(material.CANTIDAD);
-                $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
-                $("#INVENTARIO").val(material.INVENTARIO);
-                $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
+        success: function (res) {
+
+            if (!res.success) {
+                alert(res.message || "No se pudo obtener el material.");
+                return;
+            }
+
+            let material = res.material;
+
+            let canvas1 = document.getElementById("firmaCanvas");
+            let canvas2 = document.getElementById("firmaCanvas2");
+
+            let ctx1 = canvas1.getContext("2d");
+            let ctx2 = canvas2.getContext("2d");
+
+           
+            if (!material.YA_GUARDADO) {
+                canvas1.width = canvas1.width;
+                canvas2.width = canvas2.width;
+
+                $("#FIRMA_RECIBIDO_POR").val("");
+                $("#FIRMA_ENTREGADO_POR").val("");
+            }
+
+           
+            $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
+            $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
+            $("#DESCRIPCION").val(material.DESCRIPCION);
+            $("#CANTIDAD").val(material.CANTIDAD);
+            $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
+            $("#INVENTARIO").val(material.INVENTARIO);
+            $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
+
+            if (material.YA_GUARDADO) {
+
+                $("#ID_BITACORAS_ALMACEN").val(material.ID_BITACORAS_ALMACEN);
+                $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
+                $("#ENTREGADO_POR").val(material.ENTREGADO_POR);
+                $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
+                $("#FUNCIONAMIENTO_BITACORA").val(material.FUNCIONAMIENTO_BITACORA);
+
                 
-                $("#miModal_BITACORA").modal("show");
-                $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
+                if (material.FIRMA_RECIBIDO_POR) {
+                    let img1 = new Image();
+                    img1.onload = function () {
+                        ctx1.drawImage(img1, 0, 0, canvas1.width, canvas1.height);
+                    };
+                    img1.src = material.FIRMA_RECIBIDO_POR;
+
+                    $("#FIRMA_RECIBIDO_POR").val(material.FIRMA_RECIBIDO_POR);
+                }
+
+             
+                if (material.FIRMA_ENTREGADO_POR) {
+                    let img2 = new Image();
+                    img2.onload = function () {
+                        ctx2.drawImage(img2, 0, 0, canvas2.width, canvas2.height);
+                    };
+                    img2.src = material.FIRMA_ENTREGADO_POR;
+
+                    $("#FIRMA_ENTREGADO_POR").val(material.FIRMA_ENTREGADO_POR);
+                }
 
             } else {
-                alert(res.message || "No se pudo obtener el material.");
+                $("#ID_BITACORAS_ALMACEN").val(0);
+                $("#RECIBIDO_POR").val("");
+                $("#ENTREGADO_POR").val("");
+                $("#OBSERVACIONES_BITACORA").val("");
             }
+
+            $("#miModal_BITACORA").modal("show");
+            $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
         },
+
         error: function () {
             alert("Error al obtener el material individual.");
         }
@@ -128,31 +183,95 @@ $(document).on('click', '.visualizarMaterial', function () {
         url: '/obtenerMaterialIndividual',
         method: 'GET',
         data: { id: ID_FORM_GLOBAL, inventario: ID_INVENTARIO_GLOBAL },
-        success: function (res) {
-            if (res.success) {
-                let material = res.material;
 
-                $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
-                $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
-                $("#DESCRIPCION").val(material.DESCRIPCION);
-                $("#CANTIDAD").val(material.CANTIDAD);
-                $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
-                $("#INVENTARIO").val(material.INVENTARIO);
-                $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
+        success: function (res) {
+
+            if (!res.success) {
+                alert(res.message || "No se pudo obtener el material.");
+                return;
+            }
+
+            let material = res.material;
+
+            let canvas1 = document.getElementById("firmaCanvas");
+            let canvas2 = document.getElementById("firmaCanvas2");
+
+            let ctx1 = canvas1.getContext("2d");
+            let ctx2 = canvas2.getContext("2d");
+
+           
+            if (!material.YA_GUARDADO) {
+                canvas1.width = canvas1.width;
+                canvas2.width = canvas2.width;
+
+                $("#FIRMA_RECIBIDO_POR").val("");
+                $("#FIRMA_ENTREGADO_POR").val("");
+            }
+
+           
+            $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
+            $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
+            $("#DESCRIPCION").val(material.DESCRIPCION);
+            $("#CANTIDAD").val(material.CANTIDAD);
+            $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
+            $("#INVENTARIO").val(material.INVENTARIO);
+            $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
+
+            if (material.YA_GUARDADO) {
+
+                $("#ID_BITACORAS_ALMACEN").val(material.ID_BITACORAS_ALMACEN);
+                $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
+                $("#ENTREGADO_POR").val(material.ENTREGADO_POR);
+                $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
+                $("#FUNCIONAMIENTO_BITACORA").val(material.FUNCIONAMIENTO_BITACORA);
+
                 
-                $("#miModal_BITACORA").modal("show");
-                $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
+                if (material.FIRMA_RECIBIDO_POR) {
+                    let img1 = new Image();
+                    img1.onload = function () {
+                        ctx1.drawImage(img1, 0, 0, canvas1.width, canvas1.height);
+                    };
+                    img1.src = material.FIRMA_RECIBIDO_POR;
+
+                    $("#FIRMA_RECIBIDO_POR").val(material.FIRMA_RECIBIDO_POR);
+                }
+
+             
+                if (material.FIRMA_ENTREGADO_POR) {
+                    let img2 = new Image();
+                    img2.onload = function () {
+                        ctx2.drawImage(img2, 0, 0, canvas2.width, canvas2.height);
+                    };
+                    img2.src = material.FIRMA_ENTREGADO_POR;
+
+                    $("#FIRMA_ENTREGADO_POR").val(material.FIRMA_ENTREGADO_POR);
+                }
 
             } else {
-                alert(res.message || "No se pudo obtener el material.");
+                $("#ID_BITACORAS_ALMACEN").val(0);
+                $("#RECIBIDO_POR").val("");
+                $("#ENTREGADO_POR").val("");
+                $("#OBSERVACIONES_BITACORA").val("");
             }
+
+            $("#miModal_BITACORA").modal("show");
+            $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
         },
+
         error: function () {
             alert("Error al obtener el material individual.");
         }
     });
 });
 
+function cargarFirmaEnCanvas(canvas, ctx, base64) {
+    let img = new Image();
+    img.onload = function () {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    };
+    img.src = base64;
+}
 
 $("#guardaBITACORA").click(function (e) {
     e.preventDefault();
@@ -191,7 +310,7 @@ $("#guardaBITACORA").click(function (e) {
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                      $('#miModal_BITACORA').modal('hide')
                     document.getElementById('formularioBITACORA').reset();
-                    Tablabitacoraconsumibles.ajax.reload()
+                    Tablabitacoravehiculos.ajax.reload()
                 
             })
             
@@ -207,8 +326,7 @@ $("#guardaBITACORA").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardaBITACORA')
-            await ajaxAwaitFormData({ api: 1, ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN }, 'BitacoraSave', 'formularioBITACORA', 'guardaBITACORA', { callbackAfter: true, callbackBefore: true }, () => {
-        
+                 await ajaxAwaitFormData({ api: 1, ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN,RECEMPLEADO_ID:ID_FORM_GLOBAL,INVENTARIO_ID: ID_INVENTARIO_GLOBAL}, 'BitacoraSave', 'formularioBITACORA', 'guardaBITACORA', { callbackAfter: true, callbackBefore: true }, () => {        
                 Swal.fire({
                     icon: 'info',
                     title: 'Espere un momento',
@@ -228,7 +346,7 @@ $("#guardaBITACORA").click(function (e) {
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                     $('#miModal_BITACORA').modal('hide')
                     document.getElementById('formularioBITACORA').reset();
-                    Tablabitacoraconsumibles.ajax.reload()
+                    Tablabitacoravehiculos.ajax.reload()
 
 
                 }, 300);  
