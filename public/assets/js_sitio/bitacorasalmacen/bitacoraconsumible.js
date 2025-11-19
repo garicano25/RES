@@ -1,6 +1,15 @@
 ID_BITACORAS_ALMACEN = 0
 
 
+const Modalbitacora = document.getElementById('miModal_BITACORA')
+Modalbitacora.addEventListener('hidden.bs.modal', event => {
+    
+    ID_BITACORAS_ALMACEN = 0
+    document.getElementById('formularioBITACORA').reset();
+   
+})
+
+
 
 
 var Tablabitacoraconsumibles = $("#Tablabitacoraconsumibles").DataTable({
