@@ -176,7 +176,7 @@ $("#guardaBITACORA").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardaBITACORA')
-            await ajaxAwaitFormData({ api: 1, ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN,RECEMPLEADO_ID:id_formulario,INVENTARIO_ID: id_inventario}, 'BitacoraSave', 'formularioBITACORA', 'guardaBITACORA', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 1, ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN,RECEMPLEADO_ID:ID_FORM_GLOBAL,INVENTARIO_ID: ID_INVENTARIO_GLOBAL}, 'BitacoraSave', 'formularioBITACORA', 'guardaBITACORA', { callbackAfter: true, callbackBefore: true }, () => {
         
                
 
