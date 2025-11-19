@@ -11,6 +11,9 @@ class bitacoraModel extends Model
     protected $table = 'bitacorasalmacen';
     protected $fillable = [
 
+
+        'RECEMPLEADO_ID',
+        'INVENTARIO_ID',
         'SOLICITANTE_SALIDA',
         'FECHA_SALIDA',
         'DESCRIPCION',

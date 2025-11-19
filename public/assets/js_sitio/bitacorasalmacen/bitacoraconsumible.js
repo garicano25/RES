@@ -1,4 +1,6 @@
 ID_BITACORAS_ALMACEN = 0
+let ID_FORM_GLOBAL = null;
+let ID_INVENTARIO_GLOBAL = null;
 
 
 const Modalbitacora = document.getElementById('miModal_BITACORA')
@@ -87,13 +89,15 @@ var Tablabitacoraconsumibles = $("#Tablabitacoraconsumibles").DataTable({
 
 
 $(document).on('click', '.editarMaterial', function () {
-    let idFormulario = $(this).data('id');
-    let idInventario = $(this).data('inventario');
+
+
+    ID_FORM_GLOBAL = $(this).data('id');
+    ID_INVENTARIO_GLOBAL = $(this).data('inventario');
 
     $.ajax({
         url: '/obtenerMaterialIndividual',
         method: 'GET',
-        data: { id: idFormulario, inventario: idInventario },
+        data: { id: ID_FORM_GLOBAL, inventario: ID_INVENTARIO_GLOBAL },
         success: function (res) {
             if (res.success) {
                 let material = res.material;
@@ -105,6 +109,7 @@ $(document).on('click', '.editarMaterial', function () {
                 $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
                 $("#INVENTARIO").val(material.INVENTARIO);
                 $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
+                
                 $("#miModal_BITACORA").modal("show");
                 $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
 
@@ -119,13 +124,14 @@ $(document).on('click', '.editarMaterial', function () {
 });
 
 $(document).on('click', '.visualizarMaterial', function () {
-    let idFormulario = $(this).data('id');
-    let idInventario = $(this).data('inventario');
+
+    ID_FORM_GLOBAL = $(this).data('id');
+    ID_INVENTARIO_GLOBAL = $(this).data('inventario');
 
     $.ajax({
         url: '/obtenerMaterialIndividual',
         method: 'GET',
-        data: { id: idFormulario, inventario: idInventario },
+        data: { id: ID_FORM_GLOBAL, inventario: ID_INVENTARIO_GLOBAL },
         success: function (res) {
             if (res.success) {
                 let material = res.material;
@@ -137,8 +143,7 @@ $(document).on('click', '.visualizarMaterial', function () {
                 $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
                 $("#INVENTARIO").val(material.INVENTARIO);
                 $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
-
-
+                
                 $("#miModal_BITACORA").modal("show");
                 $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
 
@@ -151,6 +156,9 @@ $(document).on('click', '.visualizarMaterial', function () {
         }
     });
 });
+
+
+
 
 $("#guardaBITACORA").click(function (e) {
     e.preventDefault();
@@ -168,7 +176,7 @@ $("#guardaBITACORA").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardaBITACORA')
-            await ajaxAwaitFormData({ api: 1, ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN }, 'BitacoraSave', 'formularioBITACORA', 'guardaBITACORA', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 1, ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN,RECEMPLEADO_ID:id_formulario,INVENTARIO_ID: id_inventario}, 'BitacoraSave', 'formularioBITACORA', 'guardaBITACORA', { callbackAfter: true, callbackBefore: true }, () => {
         
                
 
