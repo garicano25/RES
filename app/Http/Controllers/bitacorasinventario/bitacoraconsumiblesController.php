@@ -245,6 +245,8 @@ class bitacoraconsumiblesController extends Controller
                         'FIRMA_RECIBIDO_POR' => $bitacora->FIRMA_RECIBIDO_POR,
                         'FIRMA_ENTREGADO_POR' => $bitacora->FIRMA_ENTREGADO_POR,
                         'OBSERVACIONES_BITACORA' => $bitacora->OBSERVACIONES_BITACORA,
+                        'FUNCIONAMIENTO_BITACORA' => $bitacora->FUNCIONAMIENTO_BITACORA,
+
                         'YA_GUARDADO'        => true
                     ]
                 ]);
@@ -286,7 +288,6 @@ class bitacoraconsumiblesController extends Controller
                 return response()->json(['success' => false, 'message' => 'Artículo no encontrado']);
             }
 
-            // Agregar datos del formulario original
             $materialEncontrado['SOLICITANTE_SALIDA'] = $registro->SOLICITANTE_SALIDA;
             $materialEncontrado['FECHA_SALIDA'] = $registro->FECHA_SALIDA;
             $materialEncontrado['OBSERVACIONES_REC'] = $registro->OBSERVACIONES_REC;

@@ -214,6 +214,7 @@ $(document).on('click', '.visualizarMaterial', function () {
                 $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
                 $("#ENTREGADO_POR").val(material.ENTREGADO_POR);
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
+                $("#FUNCIONAMIENTO_BITACORA").val(material.FUNCIONAMIENTO_BITACORA);
 
                 if (material.FIRMA_RECIBIDO_POR) {
                     cargarFirmaEnCanvas(
