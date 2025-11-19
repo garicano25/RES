@@ -107,17 +107,22 @@ $(document).on('click', '.editarMaterial', function () {
 
             let material = res.material;
 
-           
             let canvas1 = document.getElementById("firmaCanvas");
             let canvas2 = document.getElementById("firmaCanvas2");
 
-            canvas1.width = canvas1.width; 
-            canvas2.width = canvas2.width;
+            let ctx1 = canvas1.getContext("2d");
+            let ctx2 = canvas2.getContext("2d");
 
-            $("#FIRMA_RECIBIDO_POR").val("");
-            $("#FIRMA_ENTREGADO_POR").val("");
+           
+            if (!material.YA_GUARDADO) {
+                canvas1.width = canvas1.width;
+                canvas2.width = canvas2.width;
 
-          
+                $("#FIRMA_RECIBIDO_POR").val("");
+                $("#FIRMA_ENTREGADO_POR").val("");
+            }
+
+           
             $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
             $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
             $("#DESCRIPCION").val(material.DESCRIPCION);
@@ -134,34 +139,35 @@ $(document).on('click', '.editarMaterial', function () {
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
                 $("#FUNCIONAMIENTO_BITACORA").val(material.FUNCIONAMIENTO_BITACORA);
 
-
+                
                 if (material.FIRMA_RECIBIDO_POR) {
-                    cargarFirmaEnCanvas(
-                        canvas1,
-                        canvas1.getContext("2d"),
-                        material.FIRMA_RECIBIDO_POR
-                    );
+                    let img1 = new Image();
+                    img1.onload = function () {
+                        ctx1.drawImage(img1, 0, 0, canvas1.width, canvas1.height);
+                    };
+                    img1.src = material.FIRMA_RECIBIDO_POR;
+
+                    $("#FIRMA_RECIBIDO_POR").val(material.FIRMA_RECIBIDO_POR);
                 }
 
+             
                 if (material.FIRMA_ENTREGADO_POR) {
-                    cargarFirmaEnCanvas(
-                        canvas2,
-                        canvas2.getContext("2d"),
-                        material.FIRMA_ENTREGADO_POR
-                    );
+                    let img2 = new Image();
+                    img2.onload = function () {
+                        ctx2.drawImage(img2, 0, 0, canvas2.width, canvas2.height);
+                    };
+                    img2.src = material.FIRMA_ENTREGADO_POR;
+
+                    $("#FIRMA_ENTREGADO_POR").val(material.FIRMA_ENTREGADO_POR);
                 }
 
             } else {
-
+                $("#ID_BITACORAS_ALMACEN").val(0);
                 $("#RECIBIDO_POR").val("");
                 $("#ENTREGADO_POR").val("");
                 $("#OBSERVACIONES_BITACORA").val("");
-
-                canvas1.width = canvas1.width; 
-                canvas2.width = canvas2.width; 
             }
 
-          
             $("#miModal_BITACORA").modal("show");
             $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
         },
@@ -171,7 +177,6 @@ $(document).on('click', '.editarMaterial', function () {
         }
     });
 });
-
 
 $(document).on('click', '.visualizarMaterial', function () {
 
@@ -192,17 +197,22 @@ $(document).on('click', '.visualizarMaterial', function () {
 
             let material = res.material;
 
-           
             let canvas1 = document.getElementById("firmaCanvas");
             let canvas2 = document.getElementById("firmaCanvas2");
 
-            canvas1.width = canvas1.width; 
-            canvas2.width = canvas2.width;
+            let ctx1 = canvas1.getContext("2d");
+            let ctx2 = canvas2.getContext("2d");
 
-            $("#FIRMA_RECIBIDO_POR").val("");
-            $("#FIRMA_ENTREGADO_POR").val("");
+           
+            if (!material.YA_GUARDADO) {
+                canvas1.width = canvas1.width;
+                canvas2.width = canvas2.width;
 
-          
+                $("#FIRMA_RECIBIDO_POR").val("");
+                $("#FIRMA_ENTREGADO_POR").val("");
+            }
+
+           
             $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
             $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
             $("#DESCRIPCION").val(material.DESCRIPCION);
@@ -221,32 +231,33 @@ $(document).on('click', '.visualizarMaterial', function () {
 
                 
                 if (material.FIRMA_RECIBIDO_POR) {
-                    cargarFirmaEnCanvas(
-                        canvas1,
-                        canvas1.getContext("2d"),
-                        material.FIRMA_RECIBIDO_POR
-                    );
+                    let img1 = new Image();
+                    img1.onload = function () {
+                        ctx1.drawImage(img1, 0, 0, canvas1.width, canvas1.height);
+                    };
+                    img1.src = material.FIRMA_RECIBIDO_POR;
+
+                    $("#FIRMA_RECIBIDO_POR").val(material.FIRMA_RECIBIDO_POR);
                 }
 
+             
                 if (material.FIRMA_ENTREGADO_POR) {
-                    cargarFirmaEnCanvas(
-                        canvas2,
-                        canvas2.getContext("2d"),
-                        material.FIRMA_ENTREGADO_POR
-                    );
+                    let img2 = new Image();
+                    img2.onload = function () {
+                        ctx2.drawImage(img2, 0, 0, canvas2.width, canvas2.height);
+                    };
+                    img2.src = material.FIRMA_ENTREGADO_POR;
+
+                    $("#FIRMA_ENTREGADO_POR").val(material.FIRMA_ENTREGADO_POR);
                 }
 
             } else {
-
+                $("#ID_BITACORAS_ALMACEN").val(0);
                 $("#RECIBIDO_POR").val("");
                 $("#ENTREGADO_POR").val("");
                 $("#OBSERVACIONES_BITACORA").val("");
-
-                canvas1.width = canvas1.width; 
-                canvas2.width = canvas2.width; 
             }
 
-          
             $("#miModal_BITACORA").modal("show");
             $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
         },
@@ -256,10 +267,6 @@ $(document).on('click', '.visualizarMaterial', function () {
         }
     });
 });
-
-
-
-
 
 function cargarFirmaEnCanvas(canvas, ctx, base64) {
     let img = new Image();
