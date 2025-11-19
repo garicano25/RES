@@ -44,6 +44,9 @@
                     {!! csrf_field() !!}
 
 
+                    <input type="hidden" id="ID_BITACORAS_ALMACEN" name="ID_BITACORAS_ALMACEN" value="0">
+
+                    
                     <div class="col-12 mt-3">
                         <div class="row">
                             <div class="col-9">
@@ -94,7 +97,7 @@
                         <div class="row">
                             <div class="col-4 mt-2">
                                 <label class="form-label">Funcionamiento </label>
-                                <select class="form-control" id="FUNCIONAMIENTO_BITACORA" name="FUNCIONAMIENTO_BITACORA">
+                                <select class="form-control" id="FUNCIONAMIENTO_BITACORA" name="FUNCIONAMIENTO_BITACORA" required>
                                     <option value="" selected disabled>Seleccione una opción</option>
                                     <option value="1">Buen estado</option>
                                     <option value="2">Mal estado</option>
@@ -164,7 +167,7 @@
 
                             <div class="col-12 mt-2">
                                 <label class="form-label">Observación </label>
-                                <textarea class="form-control" id="OBSERVACIONES_BITACORA" name="OBSERVACIONES_BITACORA" rows="3" required></textarea>
+                                <textarea class="form-control" id="OBSERVACIONES_BITACORA" name="OBSERVACIONES_BITACORA" rows="3"></textarea>
                             </div>
 
 

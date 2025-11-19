@@ -107,21 +107,17 @@ $(document).on('click', '.editarMaterial', function () {
 
             let material = res.material;
 
-            // -------------------------------------------------------
-            // 🔥 LIMPIAR CANVAS SIEMPRE ANTES DE CARGAR DATOS
-            // -------------------------------------------------------
+           
             let canvas1 = document.getElementById("firmaCanvas");
             let canvas2 = document.getElementById("firmaCanvas2");
 
-            canvas1.width = canvas1.width; // reset total real
+            canvas1.width = canvas1.width; 
             canvas2.width = canvas2.width;
 
             $("#FIRMA_RECIBIDO_POR").val("");
             $("#FIRMA_ENTREGADO_POR").val("");
 
-            // -------------------------------------------------------
-            // 🟢 LLENAR CAMPOS DEL MODAL
-            // -------------------------------------------------------
+          
             $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
             $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
             $("#DESCRIPCION").val(material.DESCRIPCION);
@@ -130,16 +126,13 @@ $(document).on('click', '.editarMaterial', function () {
             $("#INVENTARIO").val(material.INVENTARIO);
             $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
 
-            // -------------------------------------------------------
-            // 🟢 SI YA EXISTE BITÁCORA → CARGAR TODO
-            // -------------------------------------------------------
             if (material.YA_GUARDADO) {
 
+                $("#ID_BITACORAS_ALMACEN").val(material.ID_BITACORAS_ALMACEN);
                 $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
                 $("#ENTREGADO_POR").val(material.ENTREGADO_POR);
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
 
-                // Cargar firma (Recibido por)
                 if (material.FIRMA_RECIBIDO_POR) {
                     cargarFirmaEnCanvas(
                         canvas1,
@@ -148,7 +141,6 @@ $(document).on('click', '.editarMaterial', function () {
                     );
                 }
 
-                // Cargar firma (Entregado por)
                 if (material.FIRMA_ENTREGADO_POR) {
                     cargarFirmaEnCanvas(
                         canvas2,
@@ -159,18 +151,15 @@ $(document).on('click', '.editarMaterial', function () {
 
             } else {
 
-                // Material nuevo → campos vacíos
                 $("#RECIBIDO_POR").val("");
                 $("#ENTREGADO_POR").val("");
                 $("#OBSERVACIONES_BITACORA").val("");
 
-                canvas1.width = canvas1.width; // limpiar canvas 1
-                canvas2.width = canvas2.width; // limpiar canvas 2
+                canvas1.width = canvas1.width; 
+                canvas2.width = canvas2.width; 
             }
 
-            // -------------------------------------------------------
-            // MOSTRAR MODAL
-            // -------------------------------------------------------
+          
             $("#miModal_BITACORA").modal("show");
             $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
         },
@@ -201,21 +190,16 @@ $(document).on('click', '.visualizarMaterial', function () {
 
             let material = res.material;
 
-            // -------------------------------------------------------
-            // 🔥 LIMPIAR CANVAS SIEMPRE ANTES DE CARGAR DATOS
-            // -------------------------------------------------------
             let canvas1 = document.getElementById("firmaCanvas");
             let canvas2 = document.getElementById("firmaCanvas2");
 
-            canvas1.width = canvas1.width; // reset total real
+            canvas1.width = canvas1.width; 
             canvas2.width = canvas2.width;
 
             $("#FIRMA_RECIBIDO_POR").val("");
             $("#FIRMA_ENTREGADO_POR").val("");
 
-            // -------------------------------------------------------
-            // 🟢 LLENAR CAMPOS DEL MODAL
-            // -------------------------------------------------------
+          
             $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
             $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
             $("#DESCRIPCION").val(material.DESCRIPCION);
@@ -224,16 +208,13 @@ $(document).on('click', '.visualizarMaterial', function () {
             $("#INVENTARIO").val(material.INVENTARIO);
             $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
 
-            // -------------------------------------------------------
-            // 🟢 SI YA EXISTE BITÁCORA → CARGAR TODO
-            // -------------------------------------------------------
+          
             if (material.YA_GUARDADO) {
 
                 $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
                 $("#ENTREGADO_POR").val(material.ENTREGADO_POR);
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
 
-                // Cargar firma (Recibido por)
                 if (material.FIRMA_RECIBIDO_POR) {
                     cargarFirmaEnCanvas(
                         canvas1,
@@ -242,7 +223,6 @@ $(document).on('click', '.visualizarMaterial', function () {
                     );
                 }
 
-                // Cargar firma (Entregado por)
                 if (material.FIRMA_ENTREGADO_POR) {
                     cargarFirmaEnCanvas(
                         canvas2,
@@ -253,18 +233,15 @@ $(document).on('click', '.visualizarMaterial', function () {
 
             } else {
 
-                // Material nuevo → campos vacíos
                 $("#RECIBIDO_POR").val("");
                 $("#ENTREGADO_POR").val("");
                 $("#OBSERVACIONES_BITACORA").val("");
 
-                canvas1.width = canvas1.width; // limpiar canvas 1
-                canvas2.width = canvas2.width; // limpiar canvas 2
+                canvas1.width = canvas1.width; 
+                canvas2.width = canvas2.width; 
             }
 
-            // -------------------------------------------------------
-            // MOSTRAR MODAL
-            // -------------------------------------------------------
+            
             $("#miModal_BITACORA").modal("show");
             $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
         },

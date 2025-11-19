@@ -232,6 +232,7 @@ class bitacoraconsumiblesController extends Controller
                 return response()->json([
                     'success' => true,
                     'material' => [
+                        'ID_BITACORAS_ALMACEN' => $bitacora->ID_BITACORAS_ALMACEN,  
                         'SOLICITANTE_SALIDA' => $bitacora->SOLICITANTE_SALIDA,
                         'FECHA_SALIDA'       => $bitacora->FECHA_SALIDA,
                         'DESCRIPCION'        => $bitacora->DESCRIPCION,
@@ -289,6 +290,7 @@ class bitacoraconsumiblesController extends Controller
             $materialEncontrado['SOLICITANTE_SALIDA'] = $registro->SOLICITANTE_SALIDA;
             $materialEncontrado['FECHA_SALIDA'] = $registro->FECHA_SALIDA;
             $materialEncontrado['OBSERVACIONES_REC'] = $registro->OBSERVACIONES_REC;
+            $materialEncontrado['ID_BITACORAS_ALMACEN'] = 0;
             $materialEncontrado['YA_GUARDADO'] = false;
 
             return response()->json(['success' => true, 'material' => $materialEncontrado]);
