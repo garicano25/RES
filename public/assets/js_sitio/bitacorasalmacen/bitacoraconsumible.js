@@ -92,8 +92,8 @@ $(document).on('click', '.editarMaterial', function () {
                 $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
                 $("#INVENTARIO").val(material.INVENTARIO);
                 $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
-                $("#miModal_RECURSOSEMPLEADOS").modal("show");
-                $('#miModal_RECURSOSEMPLEADOS .modal-title').html(material.DESCRIPCION);
+                $("#miModal_BITACORA").modal("show");
+                $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
 
             } else {
                 alert(res.message || "No se pudo obtener el material.");
@@ -104,7 +104,6 @@ $(document).on('click', '.editarMaterial', function () {
         }
     });
 });
-
 
 $(document).on('click', '.visualizarMaterial', function () {
     let idFormulario = $(this).data('id');
@@ -125,8 +124,10 @@ $(document).on('click', '.visualizarMaterial', function () {
                 $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
                 $("#INVENTARIO").val(material.INVENTARIO);
                 $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
-                $("#miModal_RECURSOSEMPLEADOS").modal("show");
-                $('#miModal_RECURSOSEMPLEADOS .modal-title').html(material.DESCRIPCION);
+
+
+                $("#miModal_BITACORA").modal("show");
+                $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
 
             } else {
                 alert(res.message || "No se pudo obtener el material.");
@@ -137,7 +138,6 @@ $(document).on('click', '.visualizarMaterial', function () {
         }
     });
 });
-
 
 $("#guardaBITACORA").click(function (e) {
     e.preventDefault();

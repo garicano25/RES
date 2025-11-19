@@ -175,7 +175,7 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-success" id="guardaRECEMPLEADOS" style="display: block;">Guardar</button>
+                    <button type="submit" class="btn btn-success" id="guardaBITACORA" style="display: block;">Guardar</button>
                 </div>
             </form>
         </div>
