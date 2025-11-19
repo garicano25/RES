@@ -9,20 +9,15 @@ use Artisan;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
-
 use DB;
-
-
 
 use App\Models\proveedor\altaproveedorModel;
 use App\Models\proveedor\proveedortempModel;
 use App\Models\inventario\inventarioModel;
 use App\Models\inventario\catalogotipoinventarioModel;
-
-
 use App\Models\recempleados\recemplaedosModel;
-
 use App\Models\usuario\usuarioModel;
+use App\Models\bitacorasalmacen\bitacoraModel;
 
 class bitacoravehiculosController extends Controller
 {

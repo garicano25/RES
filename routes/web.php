@@ -920,6 +920,7 @@ Route::get('/Tablalistadeaf', [listaafController::class, 'Tablalistadeaf']);
 Route::get('/bitacoraconsumibles', [bitacoraconsumiblesController::class, 'index']);
 Route::get('/Tablabitacoraconsumibles', [bitacoraconsumiblesController::class, 'Tablabitacoraconsumibles']);
 Route::get('/obtenerMaterialIndividual', [bitacoraconsumiblesController::class, 'obtenerMaterialIndividual']);
+Route::post('/BitacoraSave', [bitacoraconsumiblesController::class, 'store']);
 
 
 /// RETORNABLES

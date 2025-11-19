@@ -27,7 +27,7 @@ class CreateBitacorasalmacen extends Migration
             $table->text('ENTREGADO_POR')->nullable();
             $table->text('FIRMA_RECIBIDO_POR')->nullable();
             $table->text('FIRMA_ENTREGADO_POR')->nullable();
-            $table->text('OBSERVACIONES_REC')->nullable();
+            $table->text('OBSERVACIONES_BITACORA')->nullable();
             $table->timestamps();
         });
     }

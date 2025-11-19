@@ -32,10 +32,10 @@
 
 
 
-<div class="modal fade" id="miModal_RECURSOSEMPLEADOS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="miModal_BITACORA" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <form method="post" enctype="multipart/form-data" id="formularioRECURSOSEMPLEADO" style="background-color: #ffffff;">
+            <form method="post" enctype="multipart/form-data" id="formularioBITACORA" style="background-color: #ffffff;">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Salida de almacén de materiales y/o equipos</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -158,15 +158,13 @@
                                     </button>
                                 </div>
 
-                                <!-- Base64 que se enviará al backend -->
                                 <input type="hidden" id="FIRMA_ENTREGADO_POR" name="FIRMA_ENTREGADO_POR">
                             </div>
 
 
-
                             <div class="col-12 mt-2">
                                 <label class="form-label">Observación </label>
-                                <textarea class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" rows="3" required></textarea>
+                                <textarea class="form-control" id="OBSERVACIONES_BITACORA" name="OBSERVACIONES_BITACORA" rows="3" required></textarea>
                             </div>
 
 

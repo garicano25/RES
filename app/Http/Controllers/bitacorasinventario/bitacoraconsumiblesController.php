@@ -9,20 +9,17 @@ use Artisan;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
-
 use DB;
-
 
 
 use App\Models\proveedor\altaproveedorModel;
 use App\Models\proveedor\proveedortempModel;
 use App\Models\inventario\inventarioModel;
 use App\Models\inventario\catalogotipoinventarioModel;
-
-
 use App\Models\recempleados\recemplaedosModel;
-
 use App\Models\usuario\usuarioModel;
+use App\Models\bitacorasalmacen\bitacoraModel;
+
 
 
 class bitacoraconsumiblesController extends Controller
@@ -30,7 +27,7 @@ class bitacoraconsumiblesController extends Controller
     public function index()
     {
 
-        $tipoinventario = catalogotipoinventarioModel::where('ACTIVO', 1)->get();
+        $tipoinventario = bitacoraModel::where('ACTIVO', 1)->get();
         $proveedoresOficiales = altaproveedorModel::select('RAZON_SOCIAL_ALTA', 'RFC_ALTA')->get();
         $proveedoresTemporales = proveedortempModel::select('RAZON_PROVEEDORTEMP', 'RFC_PROVEEDORTEMP', 'NOMBRE_PROVEEDORTEMP')->get();
         $inventario = inventarioModel::where('ACTIVO', 1)->get();
@@ -182,7 +179,6 @@ class bitacoraconsumiblesController extends Controller
 
             if (is_array($materiales)) {
                 foreach ($materiales as $item) {
-                    // ✅ Caso 1: Artículo individual
                     if (isset($item['INVENTARIO']) && $item['INVENTARIO'] == $idInventario) {
                         $materialEncontrado = $item;
                         break;
@@ -193,7 +189,6 @@ class bitacoraconsumiblesController extends Controller
                             if (isset($detalle['INVENTARIO']) && $detalle['INVENTARIO'] == $idInventario) {
                                 $materialEncontrado = array_merge($item, $detalle);
 
-                                // ✅ Adaptar campos para mantener compatibilidad con el frontend
                                 $materialEncontrado['CANTIDAD'] = $detalle['CANTIDAD_DETALLE'] ?? $item['CANTIDAD'] ?? '';
                                 $materialEncontrado['CANTIDAD_SALIDA'] = $detalle['CANTIDAD_DETALLE'] ?? '';
                                 $materialEncontrado['UNIDAD_SALIDA'] = $detalle['UNIDAD_DETALLE'] ?? '';
@@ -209,7 +204,6 @@ class bitacoraconsumiblesController extends Controller
                 return response()->json(['success' => false, 'message' => 'Artículo no encontrado']);
             }
 
-            // Agregar campos del formulario
             $materialEncontrado['SOLICITANTE_SALIDA'] = $registro->SOLICITANTE_SALIDA;
             $materialEncontrado['FECHA_SALIDA'] = $registro->FECHA_SALIDA;
             $materialEncontrado['OBSERVACIONES_REC'] = $registro->OBSERVACIONES_REC;
@@ -217,6 +211,51 @@ class bitacoraconsumiblesController extends Controller
             return response()->json(['success' => true, 'material' => $materialEncontrado]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+
+
+
+    public function store(Request $request)
+    {
+        try {
+            switch (intval($request->api)) {
+                case 1:
+                    if ($request->ID_BITACORAS_ALMACEN == 0) {
+                        DB::statement('ALTER TABLE bitacorasalmacen AUTO_INCREMENT=1;');
+                        $bitacoras = bitacoraModel::create($request->all());
+                    } else {
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $bitacoras = bitacoraModel::where('ID_BITACORAS_ALMACEN', $request['ID_BITACORAS_ALMACEN'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['bitacora'] = 'Desactivada';
+                            } else {
+                                $bitacoras = bitacoraModel::where('ID_BITACORAS_ALMACEN', $request['ID_BITACORAS_ALMACEN'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['bitacora'] = 'Activada';
+                            }
+                        } else {
+                            $bitacoras = bitacoraModel::find($request->ID_BITACORAS_ALMACEN);
+                            $bitacoras->update($request->all());
+                            $response['code'] = 1;
+                            $response['bitacora'] = 'Actualizada';
+                        }
+                        return response()->json($response);
+                    }
+                    $response['code']  = 1;
+                    $response['bitacora']  = $bitacoras;
+                    return response()->json($response);
+                    break;
+                default:
+                    $response['code']  = 1;
+                    $response['msj']  = 'Api no encontrada';
+                    return response()->json($response);
+            }
+        } catch (Exception $e) {
+            return response()->json('Error al guardar ');
         }
     }
 }
