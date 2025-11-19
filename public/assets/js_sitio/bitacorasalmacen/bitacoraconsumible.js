@@ -88,9 +88,48 @@ var Tablabitacoraconsumibles = $("#Tablabitacoraconsumibles").DataTable({
 
 
 
+// $(document).on('click', '.editarMaterial', function () {
+
+
+//     ID_FORM_GLOBAL = $(this).data('id');
+//     ID_INVENTARIO_GLOBAL = $(this).data('inventario');
+
+//     $.ajax({
+//         url: '/obtenerMaterialIndividual',
+//         method: 'GET',
+//         data: { id: ID_FORM_GLOBAL, inventario: ID_INVENTARIO_GLOBAL },
+//         success: function (res) {
+//             if (res.success) {
+//                 let material = res.material;
+
+//                 $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
+//                 $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
+//                 $("#DESCRIPCION").val(material.DESCRIPCION);
+//                 $("#CANTIDAD").val(material.CANTIDAD);
+//                 $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
+//                 $("#INVENTARIO").val(material.INVENTARIO);
+//                 $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
+                
+//                 $("#miModal_BITACORA").modal("show");
+//                 $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
+
+//             } else {
+//                 alert(res.message || "No se pudo obtener el material.");
+//             }
+//         },
+//         error: function () {
+//             alert("Error al obtener el material individual.");
+//         }
+//     });
+// });
+
+
+
+
+
 $(document).on('click', '.editarMaterial', function () {
 
-
+    // Guardar como variables globales
     ID_FORM_GLOBAL = $(this).data('id');
     ID_INVENTARIO_GLOBAL = $(this).data('inventario');
 
@@ -98,25 +137,49 @@ $(document).on('click', '.editarMaterial', function () {
         url: '/obtenerMaterialIndividual',
         method: 'GET',
         data: { id: ID_FORM_GLOBAL, inventario: ID_INVENTARIO_GLOBAL },
+
         success: function (res) {
-            if (res.success) {
-                let material = res.material;
 
-                $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
-                $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
-                $("#DESCRIPCION").val(material.DESCRIPCION);
-                $("#CANTIDAD").val(material.CANTIDAD);
-                $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
-                $("#INVENTARIO").val(material.INVENTARIO);
-                $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
-                
-                $("#miModal_BITACORA").modal("show");
-                $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
-
-            } else {
+            if (!res.success) {
                 alert(res.message || "No se pudo obtener el material.");
+                return;
             }
+
+            let material = res.material;
+
+
+            $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
+            $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
+            $("#DESCRIPCION").val(material.DESCRIPCION);
+            $("#CANTIDAD").val(material.CANTIDAD);
+            $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
+            $("#INVENTARIO").val(material.INVENTARIO);
+
+            $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
+
+          
+            if (material.YA_GUARDADO) {
+
+                $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
+                $("#ENTREGADO_POR").val(material.ENTREGADO_POR);
+
+                $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
+
+                $("#FIRMA_POR").val("");
+                $("#FIRMA_ENTREGADO_POR").val("");
+            } else {
+                $("#RECIBIDO_POR").val("");
+                $("#ENTREGADO_POR").val("");
+                $("#OBSERVACIONES_BITACORA").val("");
+                $("#FIRMA_POR").val("");
+                $("#FIRMA_ENTREGADO_POR").val("");
+            }
+
+           
+            $("#miModal_BITACORA").modal("show");
+            $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
         },
+
         error: function () {
             alert("Error al obtener el material individual.");
         }
