@@ -109,14 +109,12 @@ $(document).on('click', '.editarMaterial', function () {
             let ctx1 = canvas1.getContext("2d");
             let ctx2 = canvas2.getContext("2d");
 
-           
-            if (!material.YA_GUARDADO) {
-                canvas1.width = canvas1.width;
-                canvas2.width = canvas2.width;
+          
+            canvas1.width = canvas1.width; 
+            canvas2.width = canvas2.width;
 
-                $("#FIRMA_RECIBIDO_POR").val("");
-                $("#FIRMA_ENTREGADO_POR").val("");
-            }
+            $("#FIRMA_RECIBIDO_POR").val("");
+            $("#FIRMA_ENTREGADO_POR").val("");
 
            
             $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
@@ -135,7 +133,7 @@ $(document).on('click', '.editarMaterial', function () {
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
                 $("#FUNCIONAMIENTO_BITACORA").val(material.FUNCIONAMIENTO_BITACORA);
 
-                
+               
                 if (material.FIRMA_RECIBIDO_POR) {
                     let img1 = new Image();
                     img1.onload = function () {
@@ -146,7 +144,6 @@ $(document).on('click', '.editarMaterial', function () {
                     $("#FIRMA_RECIBIDO_POR").val(material.FIRMA_RECIBIDO_POR);
                 }
 
-             
                 if (material.FIRMA_ENTREGADO_POR) {
                     let img2 = new Image();
                     img2.onload = function () {
@@ -199,14 +196,12 @@ $(document).on('click', '.visualizarMaterial', function () {
             let ctx1 = canvas1.getContext("2d");
             let ctx2 = canvas2.getContext("2d");
 
-           
-            if (!material.YA_GUARDADO) {
-                canvas1.width = canvas1.width;
-                canvas2.width = canvas2.width;
+          
+            canvas1.width = canvas1.width; 
+            canvas2.width = canvas2.width;
 
-                $("#FIRMA_RECIBIDO_POR").val("");
-                $("#FIRMA_ENTREGADO_POR").val("");
-            }
+            $("#FIRMA_RECIBIDO_POR").val("");
+            $("#FIRMA_ENTREGADO_POR").val("");
 
            
             $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
@@ -225,7 +220,7 @@ $(document).on('click', '.visualizarMaterial', function () {
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
                 $("#FUNCIONAMIENTO_BITACORA").val(material.FUNCIONAMIENTO_BITACORA);
 
-                
+               
                 if (material.FIRMA_RECIBIDO_POR) {
                     let img1 = new Image();
                     img1.onload = function () {
@@ -236,7 +231,6 @@ $(document).on('click', '.visualizarMaterial', function () {
                     $("#FIRMA_RECIBIDO_POR").val(material.FIRMA_RECIBIDO_POR);
                 }
 
-             
                 if (material.FIRMA_ENTREGADO_POR) {
                     let img2 = new Image();
                     img2.onload = function () {
