@@ -20,6 +20,8 @@ use App\Models\inventario\catalogotipoinventarioModel;
 
 
 use App\Models\recempleados\recemplaedosModel;
+use App\Models\usuario\usuarioModel;
+
 
 
 class bitacoraretornableController extends Controller
@@ -31,8 +33,9 @@ class bitacoraretornableController extends Controller
         $proveedoresOficiales = altaproveedorModel::select('RAZON_SOCIAL_ALTA', 'RFC_ALTA')->get();
         $proveedoresTemporales = proveedortempModel::select('RAZON_PROVEEDORTEMP', 'RFC_PROVEEDORTEMP', 'NOMBRE_PROVEEDORTEMP')->get();
         $inventario = inventarioModel::where('ACTIVO', 1)->get();
+        $usuarios = usuarioModel::where('ACTIVO', 1) ->where('USUARIO_TIPO', 1)->get();
 
-        return view('almacen.bitacoras.bitacora_retornables', compact('tipoinventario', 'proveedoresOficiales', 'proveedoresTemporales', 'inventario'));
+        return view('almacen.bitacoras.bitacora_retornables', compact('tipoinventario', 'proveedoresOficiales', 'proveedoresTemporales', 'inventario', 'usuarios'));
     }
 
 
@@ -50,7 +53,7 @@ class bitacoraretornableController extends Controller
                 ->get();
 
             $data = [];
-            $tiposPermitidos = ['AF', 'ANF']; // ✅ Activos Fijos o No Fijos
+            $tiposPermitidos = ['AF', 'ANF']; 
 
             foreach ($tabla as $value) {
                 $materiales = json_decode($value->MATERIALES_JSON, true);
@@ -58,27 +61,23 @@ class bitacoraretornableController extends Controller
                 if (!is_array($materiales)) continue;
 
                 foreach ($materiales as $articulo) {
-                    // ✅ CASO 1: VARIOS_ARTICULOS = 1
                     if (!empty($articulo['VARIOS_ARTICULOS']) && $articulo['VARIOS_ARTICULOS'] == "1") {
 
                         if (!empty($articulo['ARTICULOS']) && is_array($articulo['ARTICULOS'])) {
 
                             foreach ($articulo['ARTICULOS'] as $detalle) {
 
-                                // ⚙️ VALIDAR DETALLE VÁLIDO
                                 if (
                                     empty($detalle['INVENTARIO']) ||
                                     empty($detalle['TIPO_INVENTARIO']) ||
                                     !in_array($detalle['TIPO_INVENTARIO'], $tiposPermitidos)
                                 ) continue;
 
-                                // ⚙️ OBTENER PRODUCTO
                                 $producto = DB::table('formulario_inventario')
                                     ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
                                     ->where('ID_FORMULARIO_INVENTARIO', $detalle['INVENTARIO'])
                                     ->first();
 
-                                // ⚙️ AGREGAR AL RESULTADO
                                 $data[] = [
                                     'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
                                     'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
@@ -86,7 +85,6 @@ class bitacoraretornableController extends Controller
                                     'FECHA_SALIDA' => $value->FECHA_SALIDA ?? 'N/A',
                                     'OBSERVACIONES_REC' => $value->OBSERVACIONES_REC ?? 'N/A',
 
-                                    // ✅ Cantidad y salida vienen del detalle
                                     'CANTIDAD' => $detalle['CANTIDAD_DETALLE'] ?? '',
                                     'CANTIDAD_SALIDA' => $detalle['CANTIDAD_DETALLE'] ?? '',
 
@@ -113,7 +111,6 @@ class bitacoraretornableController extends Controller
                         }
                     }
 
-                    // ✅ CASO 2: ARTÍCULO INDIVIDUAL
                     else {
                         if (
                             !empty($articulo['EN_EXISTENCIA']) &&

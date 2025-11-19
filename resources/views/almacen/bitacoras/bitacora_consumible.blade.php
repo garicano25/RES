@@ -63,7 +63,7 @@
 
                     <div class="col-12 mt-3">
                         <div class="row">
-                            <div class="col-12 mt-2">
+                            <div class="col-9 mt-2">
                                 <label class="form-label">Descripción del Artículo </label>
                                 <input type="text" class="form-control" id="DESCRIPCION" name="DESCRIPCION" readonly>
                             </div>
@@ -75,7 +75,7 @@
                                 <label class="form-label">Cantidad que sale del inventario </label>
                                 <input type="text" class="form-control" id="CANTIDAD_SALIDA" name="CANTIDAD_SALIDA" readonly>
                             </div>
-                            <div class="col-6 mt-2">
+                            <div class="col-9 mt-2">
                                 <label class="form-label">Artículo que sale del inventario </label>
                                 <select class="form-select " id="INVENTARIO" name="INVENTARIO" style="pointer-events:none; background-color:#e9ecef;">
                                     <option value="">Seleccione un artículo</option>
@@ -94,7 +94,7 @@
                         <div class="row">
                             <div class="col-4 mt-2">
                                 <label class="form-label">Funcionamiento </label>
-                                <select class="form-control" id="ESTADO_APROBACION" name="ESTADO_APROBACION">
+                                <select class="form-control" id="FUNCIONAMIENTO_BITACORA" name="FUNCIONAMIENTO_BITACORA">
                                     <option value="" selected disabled>Seleccione una opción</option>
                                     <option value="1">Buen estado</option>
                                     <option value="2">Mal estado</option>
@@ -105,26 +105,63 @@
                                 <input type="text" class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" readonly>
                             </div>
 
-                            <div class="col-12 mt-2">
-                                <label class="form-label">Recibido por </label>
-                                <input type="text" class="form-control" id="RECIBIDO_POR" name="RECIBIDO_POR" readonly>
+                            <div class="col-6 mt-3">
+                                <label class="form-label">Recibido por</label>
+                                <select class="form-control" id="RECIBIDO_POR" name="RECIBIDO_POR" required>
+                                    <option value="">Seleccione una opción</option>
+
+                                    @foreach ($usuarios as $u)
+                                    <option value="{{ $u->ID_USUARIO }}">
+                                        {{ $u->EMPLEADO_NOMBRE }} {{ $u->EMPLEADO_APELLIDOPATERNO }} {{ $u->EMPLEADO_APELLIDOMATERNO }}
+                                    </option>
+                                    @endforeach
+                                </select>
                             </div>
-
-                            <div class="col-12 mt-2">
-                                <label class="form-label">Firma </label>
-                                <input type="text" class="form-control" id="FIRMA_POR" name="FIRMA_POR">
-                            </div>
-
-
-                            <div class="col-12 mt-2">
+                            <div class="col-6 mt-3 ">
                                 <label class="form-label">Entregado por </label>
                                 <input type="text" class="form-control" id="ENTREGADO_POR" name="ENTREGADO_POR">
                             </div>
 
-                            <div class="col-12 mt-2">
-                                <label class="form-label">Firma </label>
-                                <input type="text" class="form-control" id="ENTREGADO_POR" name="ENTREGADO_POR">
+
+                            <div class="col-6 mt-3 text-center">
+                                <label class="form-label">Firma (Recibido por)</label>
+
+                                <div style="border: 1px dashed #ffffffff; border-radius: 5px; padding: 10px; text-align:center;">
+                                    <canvas id="firmaCanvas" width="400" height="200" style="border:1px solid #ccc; cursor: crosshair;">
+                                        Tu navegador no soporta canvas.
+                                    </canvas>
+
+                                    <br>
+
+                                    <button type="button" class="btn btn-danger btn-sm mt-2" id="btnLimpiarFirma">
+                                        Borrar firma
+                                    </button>
+                                </div>
+
+                                <input type="hidden" id="FIRMA_RECIBIDO_POR" name="FIRMA_RECIBIDO_POR">
                             </div>
+
+
+
+                            <div class="col-6 mt-3 text-center">
+                                <label class="form-label">Firma (Entregado por)</label>
+
+                                <div style="border: 1px dashed #ffffffff; border-radius: 5px; padding: 10px; text-align:center;">
+                                    <canvas id="firmaCanvas2" width="400" height="200" style="border:1px solid #ccc; cursor: crosshair;">
+                                        Tu navegador no soporta canvas.
+                                    </canvas>
+
+                                    <br>
+
+                                    <button type="button" class="btn btn-danger btn-sm mt-2" id="btnLimpiarFirma2">
+                                        Borrar firma
+                                    </button>
+                                </div>
+
+                                <!-- Base64 que se enviará al backend -->
+                                <input type="hidden" id="FIRMA_ENTREGADO_POR" name="FIRMA_ENTREGADO_POR">
+                            </div>
+
 
 
                             <div class="col-12 mt-2">
@@ -162,6 +199,172 @@
     window.inventario = @json($inventario);
 </script>
 
+<script>
+    (function() {
+
+        const canvas = document.getElementById("firmaCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let dibujando = false;
+        let pos = {
+            x: 0,
+            y: 0
+        };
+        let posAnterior = pos;
+
+        function obtenerPosCanvas(evt) {
+            var rect = canvas.getBoundingClientRect();
+            return {
+                x: evt.clientX - rect.left,
+                y: evt.clientY - rect.top
+            };
+        }
+
+        canvas.addEventListener("mousedown", function(e) {
+            dibujando = true;
+            posAnterior = obtenerPosCanvas(e);
+        });
+
+        canvas.addEventListener("mouseup", function() {
+            dibujando = false;
+        });
+
+        canvas.addEventListener("mousemove", function(e) {
+            pos = obtenerPosCanvas(e);
+        });
+
+        canvas.addEventListener("touchstart", function(e) {
+            e.preventDefault();
+            let t = e.touches[0];
+            posAnterior = obtenerPosCanvas(t);
+            dibujando = true;
+        });
+
+        canvas.addEventListener("touchend", function(e) {
+            e.preventDefault();
+            dibujando = false;
+        });
+
+        canvas.addEventListener("touchmove", function(e) {
+            e.preventDefault();
+            let t = e.touches[0];
+            pos = obtenerPosCanvas(t);
+        });
+
+        // Render loop
+        function dibujar() {
+            if (dibujando) {
+                ctx.strokeStyle = "#000";
+                ctx.lineWidth = 2;
+
+                ctx.beginPath();
+                ctx.moveTo(posAnterior.x, posAnterior.y);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+                ctx.closePath();
+
+                posAnterior = pos;
+
+                document.getElementById("FIRMA_RECIBIDO_POR").value = canvas.toDataURL("image/png");
+            }
+
+            requestAnimationFrame(dibujar);
+        }
+
+        dibujar();
+
+        // Botón para limpiar
+        document.getElementById("btnLimpiarFirma").addEventListener("click", function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById("FIRMA_RECIBIDO_POR").value = "";
+        });
+
+    })();
+
+    (function() {
+
+        const canvas = document.getElementById("firmaCanvas2");
+        const ctx = canvas.getContext("2d");
+
+        let dibujando = false;
+        let pos = {
+            x: 0,
+            y: 0
+        };
+        let posAnterior = pos;
+
+        function obtenerPosCanvas(evt) {
+            var rect = canvas.getBoundingClientRect();
+            return {
+                x: evt.clientX - rect.left,
+                y: evt.clientY - rect.top
+            };
+        }
+
+        // Mouse
+        canvas.addEventListener("mousedown", function(e) {
+            dibujando = true;
+            posAnterior = obtenerPosCanvas(e);
+        });
+
+        canvas.addEventListener("mouseup", function() {
+            dibujando = false;
+        });
+
+        canvas.addEventListener("mousemove", function(e) {
+            pos = obtenerPosCanvas(e);
+        });
+
+        // Touch
+        canvas.addEventListener("touchstart", function(e) {
+            e.preventDefault();
+            let t = e.touches[0];
+            posAnterior = obtenerPosCanvas(t);
+            dibujando = true;
+        });
+
+        canvas.addEventListener("touchend", function(e) {
+            e.preventDefault();
+            dibujando = false;
+        });
+
+        canvas.addEventListener("touchmove", function(e) {
+            e.preventDefault();
+            let t = e.touches[0];
+            pos = obtenerPosCanvas(t);
+        });
+
+        // Render loop
+        function dibujar() {
+            if (dibujando) {
+                ctx.strokeStyle = "#000";
+                ctx.lineWidth = 2;
+
+                ctx.beginPath();
+                ctx.moveTo(posAnterior.x, posAnterior.y);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+                ctx.closePath();
+
+                posAnterior = pos;
+
+                // Guardar Base64 en input hidden
+                document.getElementById("FIRMA_ENTREGADO_POR").value = canvas.toDataURL("image/png");
+            }
+
+            requestAnimationFrame(dibujar);
+        }
+
+        dibujar();
+
+        // Botón borrar
+        document.getElementById("btnLimpiarFirma2").addEventListener("click", function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById("FIRMA_ENTREGADO_POR").value = "";
+        });
+
+    })();
+</script>
 
 
 

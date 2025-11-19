@@ -92,8 +92,6 @@ $(document).on('click', '.editarMaterial', function () {
                 $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
                 $("#INVENTARIO").val(material.INVENTARIO);
                 $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
-                $("#RECIBIDO_POR").val(material.SOLICITANTE_SALIDA);
-
                 $("#miModal_RECURSOSEMPLEADOS").modal("show");
                 $('#miModal_RECURSOSEMPLEADOS .modal-title').html(material.DESCRIPCION);
 
