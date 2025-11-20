@@ -42,7 +42,7 @@
                 Importar <i class="bi bi-file-earmark-excel-fill"></i>
             </button>
 
-        
+
             @endif
             <button type="button"
                 class="btn btn-light waves-effect waves-light"
@@ -128,32 +128,32 @@
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label> Descripción del equipo*</label>
-                                                        <textarea class="form-control" id="DESCRIPCION_EQUIPO" name="DESCRIPCION_EQUIPO" rows="5" required re></textarea>
+                                                        <textarea class="form-control" id="DESCRIPCION_EQUIPO" name="DESCRIPCION_EQUIPO" rows="5" required></textarea>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label> Marca </label>
-                                                        <input type="text" class="form-control" id="MARCA_EQUIPO" name="MARCA_EQUIPO">
+                                                        <input type="text" class="form-control" id="MARCA_EQUIPO" name="MARCA_EQUIPO" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label> Modelo </label>
-                                                        <input type="text" class="form-control" id="MODELO_EQUIPO" name="MODELO_EQUIPO">
+                                                        <input type="text" class="form-control" id="MODELO_EQUIPO" name="MODELO_EQUIPO" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label> Serie </label>
-                                                        <input type="text" class="form-control" id="SERIE_EQUIPO" name="SERIE_EQUIPO">
+                                                        <input type="text" class="form-control" id="SERIE_EQUIPO" name="SERIE_EQUIPO" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label>Código de Identificación </label>
-                                                        <input type="text" class="form-control" id="CODIGO_EQUIPO" name="CODIGO_EQUIPO">
+                                                        <input type="text" class="form-control" id="CODIGO_EQUIPO" name="CODIGO_EQUIPO" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-2 mt-2">
@@ -167,7 +167,7 @@
                                                 <div class="col-2 mt-2">
                                                     <div class="form-group">
                                                         <label> U.M. </label>
-                                                        <input type="text" step="any" class="form-control" id="UNIDAD_MEDIDA" name="UNIDAD_MEDIDA">
+                                                        <input type="text" step="any" class="form-control" id="UNIDAD_MEDIDA" name="UNIDAD_MEDIDA" required>
                                                     </div>
                                                 </div>
 
@@ -176,7 +176,7 @@
                                                 <div class="col-8 mt-2">
                                                     <div class="form-group">
                                                         <label> Ubicación </label>
-                                                        <input type="text" step="any" class="form-control" id="UBICACION_EQUIPO" name="UBICACION_EQUIPO">
+                                                        <input type="text" step="any" class="form-control" id="UBICACION_EQUIPO" name="UBICACION_EQUIPO" required>
                                                     </div>
                                                 </div>
 
@@ -184,7 +184,7 @@
                                                 <div class="col-6 mt-2">
                                                     <div class="form-group">
                                                         <label> Estado </label>
-                                                        <input type="text" step="any" class="form-control" id="ESTADO_EQUIPO" name="ESTADO_EQUIPO">
+                                                        <input type="text" step="any" class="form-control" id="ESTADO_EQUIPO" name="ESTADO_EQUIPO" required>
                                                     </div>
                                                 </div>
 
