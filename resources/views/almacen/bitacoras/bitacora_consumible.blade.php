@@ -46,7 +46,7 @@
 
                     <input type="hidden" id="ID_BITACORAS_ALMACEN" name="ID_BITACORAS_ALMACEN" value="0">
 
-                    
+
                     <div class="col-12 mt-3">
                         <div class="row">
                             <div class="col-9">
@@ -207,6 +207,7 @@
         const ctx = canvas.getContext("2d");
 
         let dibujando = false;
+        let movimiento = false; 
         let pos = {
             x: 0,
             y: 0
@@ -223,6 +224,7 @@
 
         canvas.addEventListener("mousedown", function(e) {
             dibujando = true;
+            movimiento = false; 
             posAnterior = obtenerPosCanvas(e);
         });
 
@@ -231,14 +233,17 @@
         });
 
         canvas.addEventListener("mousemove", function(e) {
+            movimiento = true; 
             pos = obtenerPosCanvas(e);
         });
 
+       
         canvas.addEventListener("touchstart", function(e) {
             e.preventDefault();
             let t = e.touches[0];
-            posAnterior = obtenerPosCanvas(t);
             dibujando = true;
+            movimiento = false; 
+            posAnterior = obtenerPosCanvas(t);
         });
 
         canvas.addEventListener("touchend", function(e) {
@@ -249,12 +254,12 @@
         canvas.addEventListener("touchmove", function(e) {
             e.preventDefault();
             let t = e.touches[0];
+            movimiento = true; 
             pos = obtenerPosCanvas(t);
         });
 
-        // Render loop
         function dibujar() {
-            if (dibujando) {
+            if (dibujando && movimiento) { 
                 ctx.strokeStyle = "#000";
                 ctx.lineWidth = 2;
 
@@ -266,7 +271,8 @@
 
                 posAnterior = pos;
 
-                document.getElementById("FIRMA_RECIBIDO_POR").value = canvas.toDataURL("image/png");
+                document.getElementById("FIRMA_RECIBIDO_POR").value =
+                    canvas.toDataURL("image/png");
             }
 
             requestAnimationFrame(dibujar);
@@ -274,7 +280,6 @@
 
         dibujar();
 
-        // Botón para limpiar
         document.getElementById("btnLimpiarFirma").addEventListener("click", function() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             document.getElementById("FIRMA_RECIBIDO_POR").value = "";
@@ -282,12 +287,18 @@
 
     })();
 
+
+
+
+
+
     (function() {
 
         const canvas = document.getElementById("firmaCanvas2");
         const ctx = canvas.getContext("2d");
 
         let dibujando = false;
+        let movimiento = false;
         let pos = {
             x: 0,
             y: 0
@@ -302,9 +313,9 @@
             };
         }
 
-        // Mouse
         canvas.addEventListener("mousedown", function(e) {
             dibujando = true;
+            movimiento = false;
             posAnterior = obtenerPosCanvas(e);
         });
 
@@ -313,15 +324,16 @@
         });
 
         canvas.addEventListener("mousemove", function(e) {
+            movimiento = true;
             pos = obtenerPosCanvas(e);
         });
 
-        // Touch
         canvas.addEventListener("touchstart", function(e) {
             e.preventDefault();
             let t = e.touches[0];
-            posAnterior = obtenerPosCanvas(t);
             dibujando = true;
+            movimiento = false;
+            posAnterior = obtenerPosCanvas(t);
         });
 
         canvas.addEventListener("touchend", function(e) {
@@ -332,12 +344,12 @@
         canvas.addEventListener("touchmove", function(e) {
             e.preventDefault();
             let t = e.touches[0];
+            movimiento = true;
             pos = obtenerPosCanvas(t);
         });
 
-        // Render loop
         function dibujar() {
-            if (dibujando) {
+            if (dibujando && movimiento) {
                 ctx.strokeStyle = "#000";
                 ctx.lineWidth = 2;
 
@@ -349,8 +361,8 @@
 
                 posAnterior = pos;
 
-                // Guardar Base64 en input hidden
-                document.getElementById("FIRMA_ENTREGADO_POR").value = canvas.toDataURL("image/png");
+                document.getElementById("FIRMA_ENTREGADO_POR").value =
+                    canvas.toDataURL("image/png");
             }
 
             requestAnimationFrame(dibujar);
@@ -358,7 +370,6 @@
 
         dibujar();
 
-        // Botón borrar
         document.getElementById("btnLimpiarFirma2").addEventListener("click", function() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             document.getElementById("FIRMA_ENTREGADO_POR").value = "";
