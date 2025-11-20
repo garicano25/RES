@@ -957,7 +957,7 @@ $(document).on('input', '#RFC_PROVEEDOR', function () {
                     Swal.fire({
                         icon: 'error',
                         title: 'RFC ya registrado',
-                        text: 'El RFC ingresado ya existe en la base de datos.',
+                        text: 'El RFC ingresado ya esta registrado.',
                         confirmButtonText: 'Entendido'
                     });
 
