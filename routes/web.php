@@ -133,6 +133,9 @@ use App\Http\Controllers\inventario\salidalmacenController;
 use App\Http\Controllers\aprobacionsalidalmacen\aprobacionsalidalmacenController;
 use App\Http\Controllers\listaaf\listaafController;
 
+use App\Http\Controllers\listacomercializacion\listacomercializacionController;
+
+
 //// BITACORAS INVENTARIO
 
 use App\Http\Controllers\bitacorasinventario\bitacoraconsumiblesController;
@@ -911,6 +914,12 @@ Route::post('/SalidalmacenSave', [salidalmacenController::class, 'store']);
 
 Route::get('/listadeaf', [listaafController::class, 'index']);
 Route::get('/Tablalistadeaf', [listaafController::class, 'Tablalistadeaf']);
+
+//==============================================    LISTA DE COMERCIALIZACION   ==============================================
+
+
+Route::get('/listacomercializacion', [listacomercializacionController::class, 'index']);
+Route::get('/Tablalistacomercializacion', [listacomercializacionController::class, 'Tablalistacomercializacion']);
 
 //==============================================    BITACORAS   ============================================== 
 

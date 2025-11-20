@@ -136,14 +136,24 @@
                             </a>
                         </li>
 
-                        <li class="nav-item dropdown" style="margin-left: -2px;">
-                            <a class="nav-link BOTON" href="{{ url('/listadeaf') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                                <i class="bi bi-list-task" style="margin-right: 5px;"></i> <span class="d-lg-none">Lista AF</span><span class="d-none d-lg-inline">Lista AF</span>
-                            </a>
-                        </li>
 
 
-
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown" style="margin-left: -2px;">
+                                <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-list-task" style="margin-right: 5px;"></i>
+                                    <span class="d-lg-none">Listas</span>
+                                    <span class="d-none d-lg-inline">Listas</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{url('/listadeaf')}}">AF</a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="{{url('/listacomercializacion')}}">Comercialización</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
 
 
                         @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
@@ -305,7 +315,7 @@
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 
 
-    
+
     <script>
         $(document).ready(function() {
             // Inicializar campos datepicker con opciones en español
@@ -345,6 +355,9 @@
     <script src="/assets/js_sitio/listadeaf/listaaf.js?v=1.0"></script>
     @endif
 
+    @if(request()->is('listacomercializacion'))
+    <script src="/assets/js_sitio/listacomercializacion/listacomercializacion.js"></script>
+    @endif
 
     @if(request()->is('bitacoraconsumibles'))
     <script src="/assets/js_sitio/bitacorasalmacen/bitacoraconsumible.js?v=1.19"></script>
