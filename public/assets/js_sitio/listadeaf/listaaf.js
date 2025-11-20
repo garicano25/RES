@@ -179,6 +179,7 @@ var Tablalistadeaf = $("#Tablalistadeaf").DataTable({
         { data: 'MARCA_EQUIPO' },
         { data: 'MODELO_EQUIPO' },
         { data: 'SERIE_EQUIPO' },
+        { data: 'UBICACION_EQUIPO' },
         { data: 'CODIGO_EQUIPO' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
@@ -191,10 +192,11 @@ var Tablalistadeaf = $("#Tablalistadeaf").DataTable({
         { targets: 3, title: 'Marca', className: 'all text-center nombre-column' },
         { targets: 4, title: 'Modelo', className: 'all text-center nombre-column' },
         { targets: 5, title: 'Serie', className: 'all text-center nombre-column' },
-        { targets: 6, title: 'Código de Identificación ', className: 'all text-center nombre-column' },
-        { targets: 7, title: 'Editar', className: 'all text-center' },
-        { targets: 8, title: 'Visualizar', className: 'all text-center' },
-        { targets: 9, title: 'Activo', className: 'all text-center' }
+        { targets: 6, title: 'Ubicación', className: 'all text-center nombre-column' },
+        { targets: 7, title: 'Código de Identificación ', className: 'all text-center nombre-column' },
+        { targets: 8, title: 'Editar', className: 'all text-center' },
+        { targets: 9, title: 'Visualizar', className: 'all text-center' },
+        { targets: 10, title: 'Activo', className: 'all text-center' }
     ],
     createdRow: function (row, data) {
         $(row).addClass(data.ROW_CLASS);
