@@ -186,62 +186,90 @@
 </script>
 
 
-
 <script>
+    //////////////////////////// FIRMA 1 //////////////
+
     (function() {
 
         const canvas = document.getElementById("firmaCanvas");
         const ctx = canvas.getContext("2d");
 
         let dibujando = false;
+        let movimiento = false;
         let pos = {
             x: 0,
             y: 0
         };
-        let posAnterior = pos;
+        let posAnterior = {
+            x: 0,
+            y: 0
+        };
 
         function obtenerPosCanvas(evt) {
-            var rect = canvas.getBoundingClientRect();
+            let rect = canvas.getBoundingClientRect();
             return {
                 x: evt.clientX - rect.left,
                 y: evt.clientY - rect.top
             };
         }
 
+        function dibujarPunto(x, y) {
+            ctx.beginPath();
+            ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = "#000";
+            ctx.fill();
+            ctx.closePath();
+
+            document.getElementById("FIRMA_RECIBIDO_POR").value = canvas.toDataURL("image/png");
+        }
+
         canvas.addEventListener("mousedown", function(e) {
             dibujando = true;
+            movimiento = false;
             posAnterior = obtenerPosCanvas(e);
         });
 
         canvas.addEventListener("mouseup", function() {
+            if (dibujando && !movimiento) {
+                dibujarPunto(posAnterior.x, posAnterior.y);
+            }
             dibujando = false;
         });
 
         canvas.addEventListener("mousemove", function(e) {
+            if (dibujando) movimiento = true;
             pos = obtenerPosCanvas(e);
         });
 
         canvas.addEventListener("touchstart", function(e) {
             e.preventDefault();
+            dibujando = true;
+            movimiento = false;
+
             let t = e.touches[0];
             posAnterior = obtenerPosCanvas(t);
-            dibujando = true;
         });
 
         canvas.addEventListener("touchend", function(e) {
             e.preventDefault();
+
+            if (dibujando && !movimiento) {
+                dibujarPunto(posAnterior.x, posAnterior.y);
+            }
+
             dibujando = false;
         });
 
         canvas.addEventListener("touchmove", function(e) {
             e.preventDefault();
+            movimiento = true;
+
             let t = e.touches[0];
             pos = obtenerPosCanvas(t);
         });
 
-        // Render loop
-        function dibujar() {
-            if (dibujando) {
+        function render() {
+            if (dibujando && movimiento) {
                 ctx.strokeStyle = "#000";
                 ctx.lineWidth = 2;
 
@@ -253,15 +281,15 @@
 
                 posAnterior = pos;
 
-                document.getElementById("FIRMA_RECIBIDO_POR").value = canvas.toDataURL("image/png");
+                document.getElementById("FIRMA_RECIBIDO_POR").value =
+                    canvas.toDataURL("image/png");
             }
 
-            requestAnimationFrame(dibujar);
+            requestAnimationFrame(render);
         }
 
-        dibujar();
+        render();
 
-        // Botón para limpiar
         document.getElementById("btnLimpiarFirma").addEventListener("click", function() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             document.getElementById("FIRMA_RECIBIDO_POR").value = "";
@@ -269,62 +297,89 @@
 
     })();
 
+    //////////////////////////// FIRMA 2 //////////////
+
     (function() {
 
         const canvas = document.getElementById("firmaCanvas2");
         const ctx = canvas.getContext("2d");
 
         let dibujando = false;
+        let movimiento = false;
         let pos = {
             x: 0,
             y: 0
         };
-        let posAnterior = pos;
+        let posAnterior = {
+            x: 0,
+            y: 0
+        };
 
         function obtenerPosCanvas(evt) {
-            var rect = canvas.getBoundingClientRect();
+            let rect = canvas.getBoundingClientRect();
             return {
                 x: evt.clientX - rect.left,
                 y: evt.clientY - rect.top
             };
         }
 
-        // Mouse
+        function dibujarPunto(x, y) {
+            ctx.beginPath();
+            ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = "#000";
+            ctx.fill();
+            ctx.closePath();
+
+            document.getElementById("FIRMA_ENTREGADO_POR").value = canvas.toDataURL("image/png");
+        }
+
         canvas.addEventListener("mousedown", function(e) {
             dibujando = true;
+            movimiento = false;
             posAnterior = obtenerPosCanvas(e);
         });
 
         canvas.addEventListener("mouseup", function() {
+            if (dibujando && !movimiento) {
+                dibujarPunto(posAnterior.x, posAnterior.y);
+            }
             dibujando = false;
         });
 
         canvas.addEventListener("mousemove", function(e) {
+            if (dibujando) movimiento = true;
             pos = obtenerPosCanvas(e);
         });
 
-        // Touch
         canvas.addEventListener("touchstart", function(e) {
             e.preventDefault();
+            dibujando = true;
+            movimiento = false;
+
             let t = e.touches[0];
             posAnterior = obtenerPosCanvas(t);
-            dibujando = true;
         });
 
         canvas.addEventListener("touchend", function(e) {
             e.preventDefault();
+
+            if (dibujando && !movimiento) {
+                dibujarPunto(posAnterior.x, posAnterior.y);
+            }
+
             dibujando = false;
         });
 
         canvas.addEventListener("touchmove", function(e) {
             e.preventDefault();
+            movimiento = true;
+
             let t = e.touches[0];
             pos = obtenerPosCanvas(t);
         });
 
-        // Render loop
-        function dibujar() {
-            if (dibujando) {
+        function render() {
+            if (dibujando && movimiento) {
                 ctx.strokeStyle = "#000";
                 ctx.lineWidth = 2;
 
@@ -336,16 +391,15 @@
 
                 posAnterior = pos;
 
-                // Guardar Base64 en input hidden
-                document.getElementById("FIRMA_ENTREGADO_POR").value = canvas.toDataURL("image/png");
+                document.getElementById("FIRMA_ENTREGADO_POR").value =
+                    canvas.toDataURL("image/png");
             }
 
-            requestAnimationFrame(dibujar);
+            requestAnimationFrame(render);
         }
 
-        dibujar();
+        render();
 
-        // Botón borrar
         document.getElementById("btnLimpiarFirma2").addEventListener("click", function() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             document.getElementById("FIRMA_ENTREGADO_POR").value = "";
@@ -353,5 +407,7 @@
 
     })();
 </script>
+
+
 
 @endsection

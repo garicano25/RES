@@ -200,7 +200,10 @@
     window.inventario = @json($inventario);
 </script>
 
+
 <script>
+    //////////////////////////// FIRMA 1 //////////////
+
     (function() {
 
         const canvas = document.getElementById("firmaCanvas");
@@ -243,7 +246,7 @@
 
         canvas.addEventListener("mouseup", function() {
             if (dibujando && !movimiento) {
-                dibujarPunto(posAnterior.x, posAnterior.y); 
+                dibujarPunto(posAnterior.x, posAnterior.y);
             }
             dibujando = false;
         });
@@ -266,7 +269,7 @@
             e.preventDefault();
 
             if (dibujando && !movimiento) {
-                dibujarPunto(posAnterior.x, posAnterior.y); 
+                dibujarPunto(posAnterior.x, posAnterior.y);
             }
 
             dibujando = false;
@@ -309,12 +312,7 @@
 
     })();
 
-
-
-
-
-
-
+    //////////////////////////// FIRMA 2 //////////////
 
     (function() {
 
@@ -423,11 +421,7 @@
         });
 
     })();
-
-
-
 </script>
-
 
 
 
