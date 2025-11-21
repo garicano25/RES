@@ -355,6 +355,96 @@ class mrController extends Controller
 
 
 
+    // public function Tablabitacora()
+    // {
+    //     try {
+    //         $tabla = mrModel::where('ESTADO_APROBACION', 'Aprobada')->get();
+
+    //         foreach ($tabla as $value) {
+    //             $no_mr = $value->NO_MR;
+
+    //             $bitacoras = DB::table('formulario_bitacoragr')
+    //                 ->where('NO_MR', $no_mr)
+    //                 ->select('NO_RECEPCION', 'FECHA_ENTREGA_GR')
+    //                 ->get();
+
+    //             if ($bitacoras->count() > 0) {
+    //                 $value->NO_GR = $bitacoras
+    //                     ->map(fn($item) => '• ' . $item->NO_RECEPCION)
+    //                     ->implode('<br>');
+
+    //                 $value->FECHA_GR = $bitacoras
+    //                     ->map(fn($item) => '• ' . $item->FECHA_ENTREGA_GR)
+    //                     ->implode('<br>');
+    //             } else {
+    //                 $value->NO_GR = '—';
+    //                 $value->FECHA_GR = '—';
+    //             }
+    //             $hojas = DB::table('hoja_trabajo')->where('NO_MR', $no_mr)->get();
+    //             $total = $hojas->count();
+
+    //             if ($total === 0) {
+    //                 $value->ESTADO_FINAL = 'Sin datos';
+    //                 $value->COLOR = null;
+    //                 $value->DISABLED_SELECT = true;
+    //             } else {
+    //                 $aprobadas = $hojas->whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])->count();
+    //                 $requiere_po = $hojas->where('REQUIERE_PO', 'Sí')->count();
+    //                 $po_aprobada_o_rechazada = false;
+
+    //                 foreach ($hojas as $hoja) {
+    //                     $hoja_id = $hoja->id;
+    //                     $po_relacionadas = DB::table('formulario_ordencompra')
+    //                         ->whereJsonContains('HOJA_ID', (string)$hoja_id)
+    //                         ->whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])
+    //                         ->count();
+
+    //                     if ($po_relacionadas > 0) {
+    //                         $po_aprobada_o_rechazada = true;
+    //                         break;
+    //                     }
+    //                 }
+
+    //                 if ($aprobadas === $total && ($requiere_po === 0 || $po_aprobada_o_rechazada)) {
+    //                     $value->ESTADO_FINAL = 'Finalizada';
+    //                     $value->COLOR = '#d4edda';
+    //                     $value->DISABLED_SELECT = false;
+    //                 } else {
+    //                     $value->ESTADO_FINAL = 'En proceso';
+    //                     $value->COLOR = '#fff3cd';
+    //                     $value->DISABLED_SELECT = false;
+    //                 }
+    //             }
+
+
+    //             if ($value->ACTIVO == 0) {
+    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '"><span class="slider round"></span></label>';
+    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-eye"></i></button>';
+    //             } else {
+    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_MR . '" checked><span class="slider round"></span></label>';
+    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //             }
+
+    //             $value->BTN_NO_MR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //         }
+
+    //         return response()->json([
+    //             'data' => $tabla,
+    //             'msj' => 'Información consultada correctamente'
+    //         ]);
+    //     } catch (Exception $e) {
+    //         return response()->json([
+    //             'msj' => 'Error ' . $e->getMessage(),
+    //             'data' => 0
+    //         ]);
+    //     }
+    // }
+
+
+
+
     public function Tablabitacora()
     {
         try {
@@ -380,6 +470,11 @@ class mrController extends Controller
                     $value->NO_GR = '—';
                     $value->FECHA_GR = '—';
                 }
+
+                // =============================
+                //      HOJAS DE TRABAJO
+                // =============================
+
                 $hojas = DB::table('hoja_trabajo')->where('NO_MR', $no_mr)->get();
                 $total = $hojas->count();
 
@@ -388,6 +483,20 @@ class mrController extends Controller
                     $value->COLOR = null;
                     $value->DISABLED_SELECT = true;
                 } else {
+
+                    // -------------------------------
+                    // ESTADOS DE HOJAS
+                    // -------------------------------
+
+                    $estados = $hojas->pluck('ESTADO_APROBACION');
+
+                    // 👇 CORRECTO: filtrar por valor directo
+                    $aprobados = $estados->filter(fn($e) => $e === 'Aprobada')->count();
+                    $rechazados = $estados->filter(fn($e) => $e === 'Rechazada')->count();
+
+                    // =============================
+                    //      LÓGICA PO ORIGINAL
+                    // =============================
                     $aprobadas = $hojas->whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])->count();
                     $requiere_po = $hojas->where('REQUIERE_PO', 'Sí')->count();
                     $po_aprobada_o_rechazada = false;
@@ -405,17 +514,51 @@ class mrController extends Controller
                         }
                     }
 
-                    if ($aprobadas === $total && ($requiere_po === 0 || $po_aprobada_o_rechazada)) {
+                    // =============================
+                    //       NUEVA LÓGICA ESTADO_FINAL
+                    // =============================
+
+                    // ✔ Si todas están RECHAZADAS → FINALIZADA
+                    if ($rechazados == $total) {
                         $value->ESTADO_FINAL = 'Finalizada';
-                        $value->COLOR = '#d4edda';
-                        $value->DISABLED_SELECT = false;
-                    } else {
-                        $value->ESTADO_FINAL = 'En proceso';
-                        $value->COLOR = '#fff3cd';
-                        $value->DISABLED_SELECT = false;
                     }
+                    // Si TODAS aprobadas → FINALIZADA
+                    elseif ($aprobados == $total) {
+                        $value->ESTADO_FINAL = 'Finalizada';
+                    } else {
+                        // Lógica original de PO
+                        if ($aprobadas === $total && ($requiere_po === 0 || $po_aprobada_o_rechazada)) {
+                            $value->ESTADO_FINAL = 'Finalizada';
+                        } else {
+                            $value->ESTADO_FINAL = 'En proceso';
+                        }
+                    }
+
+
+                    // =============================
+                    //   NUEVA LÓGICA DE COLORES
+                    // =============================
+
+                    if ($rechazados == $total) {
+                        // Todos rechazados → Rojo
+                        $value->COLOR = '#f8d7da';
+                    } elseif ($aprobados == $total) {
+                        // Todos aprobados → Verde
+                        $value->COLOR = '#d4edda';
+                    } elseif ($aprobados > 0 && $rechazados > 0) {
+                        // Mezcla Aprobado + Rechazado → Verde
+                        $value->COLOR = '#d4edda';
+                    } else {
+                        // Hay estados vacíos, pendientes o diferentes → Amarillo
+                        $value->COLOR = '#fff3cd';
+                    }
+
+                    $value->DISABLED_SELECT = false;
                 }
 
+                // =============================
+                //          BOTONES
+                // =============================
 
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
@@ -441,8 +584,6 @@ class mrController extends Controller
             ]);
         }
     }
-
-    
 
 
 

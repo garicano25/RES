@@ -81,7 +81,12 @@ class DenyRoleGlobalMiddleware
         'solicitudesvobo',
         'solicitudesaprobaciones',
         'aprobacionalmacen',
-        'listadeaf'
+        'listadeaf',
+        'listacomercializacion',
+        'salidaalmacen',
+        'bitacoraconsumibles',
+        'bitacoraretornables',
+        'bitacoravehiculos'
         
     ];
 
