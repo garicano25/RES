@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Artisan;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 use DB;
 
