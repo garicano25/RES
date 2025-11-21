@@ -28,8 +28,6 @@
 </div>
 
 
-
-
 <div class="modal fade" id="miModal_BITACORA" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -89,7 +87,7 @@
                             </div>
                             <div class="col-2 mt-2">
                                 <label class="form-label">U.M. </label>
-                                <input type="text" class="form-control" id="UNIDAD" name="UNIDAD" readonly>
+                                <input type="text" class="form-control" id="UNIDAD_SALIDA" name="UNIDAD_SALIDA" readonly>
                             </div>
 
                         </div>
@@ -166,19 +164,13 @@
                                 <input type="hidden" id="FIRMA_ENTREGADO_POR" name="FIRMA_ENTREGADO_POR">
                             </div>
 
-
                             <div class="col-12 mt-2">
                                 <label class="form-label">Observación </label>
                                 <textarea class="form-control" id="OBSERVACIONES_BITACORA" name="OBSERVACIONES_BITACORA" rows="3"></textarea>
                             </div>
-
-
                         </div>
                     </div>
-
                 </div>
-
-
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-success" id="guardaBITACORA" style="display: block;">Guardar</button>

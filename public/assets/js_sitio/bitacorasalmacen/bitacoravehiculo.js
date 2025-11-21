@@ -122,7 +122,7 @@ $(document).on('click', '.editarMaterial', function () {
             $("#DESCRIPCION").val(material.DESCRIPCION);
             $("#CANTIDAD").val(material.CANTIDAD);
             $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
-            $("#UNIDAD").val(material.UNIDAD_SALIDA);
+            $("#UNIDAD_SALIDA").val(material.UNIDAD_SALIDA);
             $("#INVENTARIO").val(material.INVENTARIO);
             $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
 
@@ -210,7 +210,7 @@ $(document).on('click', '.visualizarMaterial', function () {
             $("#DESCRIPCION").val(material.DESCRIPCION);
             $("#CANTIDAD").val(material.CANTIDAD);
             $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
-            $("#UNIDAD").val(material.UNIDAD_SALIDA);
+            $("#UNIDAD_SALIDA").val(material.UNIDAD_SALIDA);
             $("#INVENTARIO").val(material.INVENTARIO);
             $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
 
@@ -259,7 +259,6 @@ $(document).on('click', '.visualizarMaterial', function () {
         }
     });
 });
-
 
 function cargarFirmaEnCanvas(canvas, ctx, base64) {
     let img = new Image();

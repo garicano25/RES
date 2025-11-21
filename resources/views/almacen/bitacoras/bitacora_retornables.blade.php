@@ -89,7 +89,7 @@
                             </div>
                             <div class="col-2 mt-2">
                                 <label class="form-label">U.M. </label>
-                                <input type="text" class="form-control" id="UNIDAD" name="UNIDAD" readonly>
+                                <input type="text" class="form-control" id="UNIDAD_SALIDA" name="UNIDAD_SALIDA" readonly>
                             </div>
 
                         </div>
@@ -187,6 +187,7 @@
         </div>
     </div>
 </div>
+
 
 <script>
     window.tipoinventario = @json($tipoinventario);
