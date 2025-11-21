@@ -121,12 +121,12 @@ $(document).on('click', '.editarMaterial', function () {
             $("#UNIDAD_SALIDA").val(material.UNIDAD_SALIDA);
             $("#INVENTARIO").val(material.INVENTARIO);
             $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
+            $("#ENTREGADO_POR").val(material.ENTREGADO_POR);
 
             if (material.YA_GUARDADO) {
 
                 $("#ID_BITACORAS_ALMACEN").val(material.ID_BITACORAS_ALMACEN);
                 $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
-                $("#ENTREGADO_POR").val(material.ENTREGADO_POR);
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
                 $("#FUNCIONAMIENTO_BITACORA").val(material.FUNCIONAMIENTO_BITACORA);
 
@@ -154,7 +154,6 @@ $(document).on('click', '.editarMaterial', function () {
             } else {
                 $("#ID_BITACORAS_ALMACEN").val(0);
                 $("#RECIBIDO_POR").val("");
-                $("#ENTREGADO_POR").val("");
                 $("#OBSERVACIONES_BITACORA").val("");
             }
 
@@ -167,6 +166,7 @@ $(document).on('click', '.editarMaterial', function () {
         }
     });
 });
+
 
 $(document).on('click', '.visualizarMaterial', function () {
 
@@ -200,7 +200,7 @@ $(document).on('click', '.visualizarMaterial', function () {
             $("#FIRMA_RECIBIDO_POR").val("");
             $("#FIRMA_ENTREGADO_POR").val("");
 
-        
+           
             $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
             $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
             $("#DESCRIPCION").val(material.DESCRIPCION);
@@ -242,7 +242,6 @@ $(document).on('click', '.visualizarMaterial', function () {
             } else {
                 $("#ID_BITACORAS_ALMACEN").val(0);
                 $("#RECIBIDO_POR").val("");
-                $("#ENTREGADO_POR").val("");
                 $("#OBSERVACIONES_BITACORA").val("");
             }
 
@@ -255,6 +254,7 @@ $(document).on('click', '.visualizarMaterial', function () {
         }
     });
 });
+
 
 
 function cargarFirmaEnCanvas(canvas, ctx, base64) {

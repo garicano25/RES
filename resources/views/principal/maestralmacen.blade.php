@@ -360,16 +360,16 @@
     @endif
 
     @if(request()->is('bitacoraconsumibles'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraconsumible.js?v=1.23"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraconsumible.js?v=1.24"></script>
     @endif
 
 
     @if(request()->is('bitacoraretornables'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraretornable.js?v=1.13"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraretornable.js?v=1.14"></script>
     @endif
 
     @if(request()->is('bitacoravehiculos'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoravehiculo.js?v=1.13"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoravehiculo.js?v=1.14"></script>
     @endif
 </body>
 
