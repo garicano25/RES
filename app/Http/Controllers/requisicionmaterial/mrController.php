@@ -536,15 +536,27 @@ class mrController extends Controller
                     //   COLORES
                     // =============================
 
-                    if ($rechazados == $total) {
-                        $value->COLOR = '#f8d7da'; // rojo
-                    } elseif ($aprobados == $total) {
-                        $value->COLOR = '#d4edda'; // verde
-                    } elseif ($aprobados > 0 && $rechazados > 0) {
-                        $value->COLOR = '#d4edda'; // verde
-                    } else {
+                    // SI EL ESTADO FINAL ES EN PROCESO → AMARILLO SIEMPRE
+                    if ($value->ESTADO_FINAL === 'En proceso') {
                         $value->COLOR = '#fff3cd'; // amarillo
                     }
+                    // SI TODAS RECHAZADAS
+                    elseif ($rechazados == $total) {
+                        $value->COLOR = '#f8d7da'; // rojo
+                    }
+                    // SI TODAS APROBADAS Y PO LISTA
+                    elseif ($aprobados == $total) {
+                        $value->COLOR = '#d4edda'; // verde
+                    }
+                    // SI APROB + RECHAZ → VERDE
+                    elseif ($aprobados > 0 && $rechazados > 0) {
+                        $value->COLOR = '#d4edda';
+                    }
+                    // CUALQUIER OTRO CASO
+                    else {
+                        $value->COLOR = '#fff3cd'; // amarillo
+                    }
+
 
                     $value->DISABLED_SELECT = false;
                 }
