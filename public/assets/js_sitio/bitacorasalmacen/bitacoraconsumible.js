@@ -58,7 +58,7 @@ var Tablabitacoraconsumibles = $("#Tablabitacoraconsumibles").DataTable({
         {
             data: null,
             render: function (data) {
-                return `${data.CANTIDAD_SALIDA} ${data.UNIDAD_SALIDA ?? ''}`;
+                return `${data.CANTIDAD_SALIDA} (${data.UNIDAD_SALIDA ?? ''})`;
             }
         },
         { data: 'PRODUCTO_NOMBRE' },
