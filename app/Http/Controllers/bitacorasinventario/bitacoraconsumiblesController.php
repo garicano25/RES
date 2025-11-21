@@ -89,7 +89,7 @@ class bitacoraconsumiblesController extends Controller
                                     'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
                                     'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
                                     'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
-                                    'UNIDAD' => $detalle['UNIDAD_DETALLE'] ?? '',
+                                    'UNIDAD_SALIDA' => $detalle['UNIDAD_DETALLE'] ?? '',
                                     'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial" 
                                                     data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
                                                     data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
@@ -130,7 +130,7 @@ class bitacoraconsumiblesController extends Controller
                                 'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
                                 'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
                                 'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
-                                'UNIDAD' => $articulo['UNIDAD_SALIDA'] ?? '',
+                                'UNIDAD_SALIDA' => $articulo['UNIDAD_SALIDA'] ?? '',
                                 'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial" 
                                                 data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
                                                 data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">

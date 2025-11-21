@@ -77,17 +77,14 @@ class bitacoravehiculosController extends Controller
                                     'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
                                     'FECHA_SALIDA' => $value->FECHA_SALIDA ?? 'N/A',
                                     'OBSERVACIONES_REC' => $value->OBSERVACIONES_REC ?? 'N/A',
-
                                     'CANTIDAD' => $detalle['CANTIDAD_DETALLE'] ?? '',
                                     'CANTIDAD_SALIDA' => $detalle['CANTIDAD_DETALLE'] ?? '',
-
                                     'PRODUCTO_NOMBRE' => $producto->DESCRIPCION_EQUIPO ?? 'N/A',
                                     'MARCA_EQUIPO' => $producto->MARCA_EQUIPO ?? 'N/A',
                                     'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
                                     'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
                                     'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
-                                    'UNIDAD' => $detalle['UNIDAD_DETALLE'] ?? '',
-
+                                    'UNIDAD_SALIDA' => $detalle['UNIDAD_DETALLE'] ?? '',
                                     'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial" 
                                                     data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
                                                     data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
@@ -127,7 +124,7 @@ class bitacoravehiculosController extends Controller
                                 'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
                                 'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
                                 'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
-                                'UNIDAD' => $articulo['UNIDAD_SALIDA'] ?? '',
+                                'UNIDAD_SALIDA' => $articulo['UNIDAD_SALIDA'] ?? '',
                                 'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial" 
                                                 data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
                                                 data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">

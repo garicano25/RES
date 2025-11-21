@@ -72,11 +72,11 @@
                                 <label class="form-label">Cantidad solicitada </label>
                                 <input type="text" class="form-control" id="CANTIDAD" name="CANTIDAD" readonly>
                             </div>
-                            <div class="col-3 mt-2">
+                            <div class="col-2 mt-2">
                                 <label class="form-label">Cantidad que sale del inventario </label>
                                 <input type="text" class="form-control" id="CANTIDAD_SALIDA" name="CANTIDAD_SALIDA" readonly>
                             </div>
-                            <div class="col-9 mt-2">
+                            <div class="col-8 mt-2">
                                 <label class="form-label">Artículo que sale del inventario </label>
                                 <select class="form-select " id="INVENTARIO" name="INVENTARIO" style="pointer-events:none; background-color:#e9ecef;">
                                     <option value="">Seleccione un artículo</option>
@@ -86,6 +86,10 @@
                                     </option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <div class="col-2 mt-2">
+                                <label class="form-label">U.M. </label>
+                                <input type="text" class="form-control" id="UNIDAD" name="UNIDAD" readonly>
                             </div>
 
                         </div>
@@ -142,6 +146,8 @@
                                 <input type="hidden" id="FIRMA_RECIBIDO_POR" name="FIRMA_RECIBIDO_POR">
                             </div>
 
+
+
                             <div class="col-6 mt-3 text-center">
                                 <label class="form-label">Firma (Entregado por)</label>
 
@@ -165,8 +171,11 @@
                                 <label class="form-label">Observación </label>
                                 <textarea class="form-control" id="OBSERVACIONES_BITACORA" name="OBSERVACIONES_BITACORA" rows="3"></textarea>
                             </div>
+
+
                         </div>
                     </div>
+
                 </div>
 
 
