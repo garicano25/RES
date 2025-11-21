@@ -28,7 +28,7 @@ class bitacoraModel extends Model
         'FIRMA_ENTREGADO_POR',
         'OBSERVACIONES_BITACORA',
         'ACTIVO',
-        'UNIDAD'
+        'UNIDAD_SALIDA'
 
     ];
 }
