@@ -162,11 +162,45 @@ class bitacoraconsumiblesController extends Controller
 
 
 
+
+
+
+
     // public function obtenerMaterialIndividual(Request $request)
     // {
     //     try {
-    //         $idFormulario = $request->get('id');
-    //         $idInventario = $request->get('inventario');
+    //         $idFormulario = $request->get('id');          
+    //         $idInventario = $request->get('inventario'); 
+
+    //         $bitacora = bitacoraModel::where('RECEMPLEADO_ID', $idFormulario)
+    //             ->where('INVENTARIO_ID', $idInventario)
+    //             ->where('ACTIVO', 1)
+    //             ->first();
+
+    //         if ($bitacora) {
+
+    //             return response()->json([
+    //                 'success' => true,
+    //                 'material' => [
+    //                     'ID_BITACORAS_ALMACEN'  => $bitacora->ID_BITACORAS_ALMACEN,  
+    //                     'SOLICITANTE_SALIDA'    => $bitacora->SOLICITANTE_SALIDA,
+    //                     'FECHA_SALIDA'          => $bitacora->FECHA_SALIDA,
+    //                     'DESCRIPCION'           => $bitacora->DESCRIPCION,
+    //                     'CANTIDAD'              => $bitacora->CANTIDAD,
+    //                     'CANTIDAD_SALIDA'       => $bitacora->CANTIDAD_SALIDA,
+    //                     'UNIDAD_SALIDA'       => $bitacora->UNIDAD_SALIDA,
+    //                     'INVENTARIO'            => $bitacora->INVENTARIO,
+    //                     'OBSERVACIONES_REC'     => $bitacora->OBSERVACIONES_REC,
+    //                     'RECIBIDO_POR'          => $bitacora->RECIBIDO_POR,
+    //                     'ENTREGADO_POR'         => $bitacora->ENTREGADO_POR,
+    //                     'FIRMA_RECIBIDO_POR'    => $bitacora->FIRMA_RECIBIDO_POR,
+    //                     'FIRMA_ENTREGADO_POR'   => $bitacora->FIRMA_ENTREGADO_POR,
+    //                     'OBSERVACIONES_BITACORA' => $bitacora->OBSERVACIONES_BITACORA,
+    //                     'FUNCIONAMIENTO_BITACORA' => $bitacora->FUNCIONAMIENTO_BITACORA,  
+    //                     'YA_GUARDADO'        => true
+    //                 ]
+    //             ]);
+    //         }
 
     //         $registro = recemplaedosModel::where('ID_FORMULARIO_RECURSOS_EMPLEADOS', $idFormulario)->first();
 
@@ -179,6 +213,7 @@ class bitacoraconsumiblesController extends Controller
 
     //         if (is_array($materiales)) {
     //             foreach ($materiales as $item) {
+
     //                 if (isset($item['INVENTARIO']) && $item['INVENTARIO'] == $idInventario) {
     //                     $materialEncontrado = $item;
     //                     break;
@@ -188,11 +223,10 @@ class bitacoraconsumiblesController extends Controller
     //                     foreach ($item['ARTICULOS'] as $detalle) {
     //                         if (isset($detalle['INVENTARIO']) && $detalle['INVENTARIO'] == $idInventario) {
     //                             $materialEncontrado = array_merge($item, $detalle);
-
-    //                             $materialEncontrado['CANTIDAD'] = $detalle['CANTIDAD_DETALLE'] ?? $item['CANTIDAD'] ?? '';
-    //                             $materialEncontrado['CANTIDAD_SALIDA'] = $detalle['CANTIDAD_DETALLE'] ?? '';
-    //                             $materialEncontrado['UNIDAD_SALIDA'] = $detalle['UNIDAD_DETALLE'] ?? '';
-    //                             $materialEncontrado['FECHA_RETORNO'] = $detalle['FECHA_DETALLE'] ?? '';
+    //                             $materialEncontrado['CANTIDAD']         = $detalle['CANTIDAD_DETALLE'] ?? '';
+    //                             $materialEncontrado['CANTIDAD_SALIDA']  = $detalle['CANTIDAD_DETALLE'] ?? '';
+    //                             $materialEncontrado['UNIDAD_SALIDA']    = $detalle['UNIDAD_DETALLE'] ?? '';
+    //                             $materialEncontrado['FECHA_RETORNO']    = $detalle['FECHA_DETALLE'] ?? '';
     //                             break 2;
     //                         }
     //                     }
@@ -207,6 +241,8 @@ class bitacoraconsumiblesController extends Controller
     //         $materialEncontrado['SOLICITANTE_SALIDA'] = $registro->SOLICITANTE_SALIDA;
     //         $materialEncontrado['FECHA_SALIDA'] = $registro->FECHA_SALIDA;
     //         $materialEncontrado['OBSERVACIONES_REC'] = $registro->OBSERVACIONES_REC;
+    //         $materialEncontrado['ID_BITACORAS_ALMACEN'] = 0;
+    //         $materialEncontrado['YA_GUARDADO'] = false;
 
     //         return response()->json(['success' => true, 'material' => $materialEncontrado]);
     //     } catch (\Exception $e) {
@@ -215,12 +251,11 @@ class bitacoraconsumiblesController extends Controller
     // }
 
 
-
     public function obtenerMaterialIndividual(Request $request)
     {
         try {
-            $idFormulario = $request->get('id');          
-            $idInventario = $request->get('inventario'); 
+            $idFormulario = $request->get('id');
+            $idInventario = $request->get('inventario');
 
             $bitacora = bitacoraModel::where('RECEMPLEADO_ID', $idFormulario)
                 ->where('INVENTARIO_ID', $idInventario)
@@ -232,26 +267,27 @@ class bitacoraconsumiblesController extends Controller
                 return response()->json([
                     'success' => true,
                     'material' => [
-                        'ID_BITACORAS_ALMACEN'  => $bitacora->ID_BITACORAS_ALMACEN,  
-                        'SOLICITANTE_SALIDA'    => $bitacora->SOLICITANTE_SALIDA,
-                        'FECHA_SALIDA'          => $bitacora->FECHA_SALIDA,
-                        'DESCRIPCION'           => $bitacora->DESCRIPCION,
-                        'CANTIDAD'              => $bitacora->CANTIDAD,
-                        'CANTIDAD_SALIDA'       => $bitacora->CANTIDAD_SALIDA,
-                        'UNIDAD_SALIDA'       => $bitacora->UNIDAD_SALIDA,
-                        'INVENTARIO'            => $bitacora->INVENTARIO,
-                        'OBSERVACIONES_REC'     => $bitacora->OBSERVACIONES_REC,
-                        'RECIBIDO_POR'          => $bitacora->RECIBIDO_POR,
-                        'ENTREGADO_POR'         => $bitacora->ENTREGADO_POR,
-                        'FIRMA_RECIBIDO_POR'    => $bitacora->FIRMA_RECIBIDO_POR,
-                        'FIRMA_ENTREGADO_POR'   => $bitacora->FIRMA_ENTREGADO_POR,
-                        'OBSERVACIONES_BITACORA' => $bitacora->OBSERVACIONES_BITACORA,
-                        'FUNCIONAMIENTO_BITACORA' => $bitacora->FUNCIONAMIENTO_BITACORA,  
-                        'YA_GUARDADO'        => true
+                        'ID_BITACORAS_ALMACEN'      => $bitacora->ID_BITACORAS_ALMACEN,
+                        'SOLICITANTE_SALIDA'        => $bitacora->SOLICITANTE_SALIDA,
+                        'FECHA_SALIDA'              => $bitacora->FECHA_SALIDA,
+                        'DESCRIPCION'               => $bitacora->DESCRIPCION,
+                        'CANTIDAD'                  => $bitacora->CANTIDAD,
+                        'CANTIDAD_SALIDA'           => $bitacora->CANTIDAD_SALIDA,
+                        'UNIDAD_SALIDA'             => $bitacora->UNIDAD_SALIDA,
+                        'INVENTARIO'                => $bitacora->INVENTARIO,
+                        'OBSERVACIONES_REC'         => $bitacora->OBSERVACIONES_REC,
+                        'RECIBIDO_POR'              => $bitacora->RECIBIDO_POR,
+                        'ENTREGADO_POR'             => $bitacora->ENTREGADO_POR,
+                        'FIRMA_RECIBIDO_POR'        => $bitacora->FIRMA_RECIBIDO_POR,
+                        'FIRMA_ENTREGADO_POR'       => $bitacora->FIRMA_ENTREGADO_POR,
+                        'OBSERVACIONES_BITACORA'    => $bitacora->OBSERVACIONES_BITACORA,
+                        'FUNCIONAMIENTO_BITACORA'   => $bitacora->FUNCIONAMIENTO_BITACORA,
+                        'YA_GUARDADO'               => true
                     ]
                 ]);
             }
 
+            
             $registro = recemplaedosModel::where('ID_FORMULARIO_RECURSOS_EMPLEADOS', $idFormulario)->first();
 
             if (!$registro) {
@@ -261,7 +297,9 @@ class bitacoraconsumiblesController extends Controller
             $materiales = json_decode($registro->MATERIALES_JSON, true);
             $materialEncontrado = null;
 
+            
             if (is_array($materiales)) {
+
                 foreach ($materiales as $item) {
 
                     if (isset($item['INVENTARIO']) && $item['INVENTARIO'] == $idInventario) {
@@ -270,13 +308,18 @@ class bitacoraconsumiblesController extends Controller
                     }
 
                     if (isset($item['VARIOS_ARTICULOS']) && $item['VARIOS_ARTICULOS'] == "1" && !empty($item['ARTICULOS'])) {
+
                         foreach ($item['ARTICULOS'] as $detalle) {
+
                             if (isset($detalle['INVENTARIO']) && $detalle['INVENTARIO'] == $idInventario) {
+
                                 $materialEncontrado = array_merge($item, $detalle);
+
                                 $materialEncontrado['CANTIDAD']         = $detalle['CANTIDAD_DETALLE'] ?? '';
                                 $materialEncontrado['CANTIDAD_SALIDA']  = $detalle['CANTIDAD_DETALLE'] ?? '';
                                 $materialEncontrado['UNIDAD_SALIDA']    = $detalle['UNIDAD_DETALLE'] ?? '';
                                 $materialEncontrado['FECHA_RETORNO']    = $detalle['FECHA_DETALLE'] ?? '';
+
                                 break 2;
                             }
                         }
@@ -289,16 +332,26 @@ class bitacoraconsumiblesController extends Controller
             }
 
             $materialEncontrado['SOLICITANTE_SALIDA'] = $registro->SOLICITANTE_SALIDA;
-            $materialEncontrado['FECHA_SALIDA'] = $registro->FECHA_SALIDA;
-            $materialEncontrado['OBSERVACIONES_REC'] = $registro->OBSERVACIONES_REC;
+            $materialEncontrado['FECHA_SALIDA']       = $registro->FECHA_SALIDA;
+            $materialEncontrado['OBSERVACIONES_REC']  = $registro->OBSERVACIONES_REC;
+
             $materialEncontrado['ID_BITACORAS_ALMACEN'] = 0;
-            $materialEncontrado['YA_GUARDADO'] = false;
+            $materialEncontrado['YA_GUARDADO']          = false;
+
+    
+            $usuario = auth()->user();
+
+            $materialEncontrado['ENTREGADO_POR'] =
+                ($usuario->EMPLEADO_NOMBRE ?? '') . ' ' .
+                ($usuario->EMPLEADO_APELLIDOPATERNO ?? '') . ' ' .
+                ($usuario->EMPLEADO_APELLIDOMATERNO ?? '');
 
             return response()->json(['success' => true, 'material' => $materialEncontrado]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
+
 
 
 
