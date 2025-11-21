@@ -445,6 +445,7 @@ class mrController extends Controller
 
 
 
+
     public function Tablabitacora()
     {
         try {
@@ -484,20 +485,12 @@ class mrController extends Controller
                     $value->DISABLED_SELECT = true;
                 } else {
 
-                    // -------------------------------
-                    // ESTADOS DE HOJAS
-                    // -------------------------------
-
+                    // ESTADOS
                     $estados = $hojas->pluck('ESTADO_APROBACION');
-
-                    // 👇 CORRECTO: filtrar por valor directo
                     $aprobados = $estados->filter(fn($e) => $e === 'Aprobada')->count();
                     $rechazados = $estados->filter(fn($e) => $e === 'Rechazada')->count();
 
-                    // =============================
-                    //      LÓGICA PO ORIGINAL
-                    // =============================
-                    $aprobadas = $hojas->whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])->count();
+                    // DATOS PO
                     $requiere_po = $hojas->where('REQUIERE_PO', 'Sí')->count();
                     $po_aprobada_o_rechazada = false;
 
@@ -515,42 +508,42 @@ class mrController extends Controller
                     }
 
                     // =============================
-                    //       NUEVA LÓGICA ESTADO_FINAL
+                    //     LÓGICA EXACTA PEDIDA
                     // =============================
 
-                    // ✔ Si todas están RECHAZADAS → FINALIZADA
                     if ($rechazados == $total) {
-                        $value->ESTADO_FINAL = 'Finalizada';
-                    }
-                    // Si TODAS aprobadas → FINALIZADA
-                    elseif ($aprobados == $total) {
+
+                        // TODAS RECHAZADAS → FINALIZADA SIEMPRE
                         $value->ESTADO_FINAL = 'Finalizada';
                     } else {
-                        // Lógica original de PO
-                        if ($aprobadas === $total && ($requiere_po === 0 || $po_aprobada_o_rechazada)) {
-                            $value->ESTADO_FINAL = 'Finalizada';
+
+                        // SI TODAS O ALGUNAS ESTÁN APROBADAS
+                        if ($aprobados > 0 && $rechazados <= $total) {
+
+                            // Si requiere PO → debe estar aprobada/rechazada
+                            if ($requiere_po > 0 && !$po_aprobada_o_rechazada) {
+                                $value->ESTADO_FINAL = 'En proceso';
+                            } else {
+                                $value->ESTADO_FINAL = 'Finalizada';
+                            }
                         } else {
+                            // AÚN HAY PENDIENTES
                             $value->ESTADO_FINAL = 'En proceso';
                         }
                     }
 
-
                     // =============================
-                    //   NUEVA LÓGICA DE COLORES
+                    //   COLORES
                     // =============================
 
                     if ($rechazados == $total) {
-                        // Todos rechazados → Rojo
-                        $value->COLOR = '#f8d7da';
+                        $value->COLOR = '#f8d7da'; // rojo
                     } elseif ($aprobados == $total) {
-                        // Todos aprobados → Verde
-                        $value->COLOR = '#d4edda';
+                        $value->COLOR = '#d4edda'; // verde
                     } elseif ($aprobados > 0 && $rechazados > 0) {
-                        // Mezcla Aprobado + Rechazado → Verde
-                        $value->COLOR = '#d4edda';
+                        $value->COLOR = '#d4edda'; // verde
                     } else {
-                        // Hay estados vacíos, pendientes o diferentes → Amarillo
-                        $value->COLOR = '#fff3cd';
+                        $value->COLOR = '#fff3cd'; // amarillo
                     }
 
                     $value->DISABLED_SELECT = false;
@@ -584,6 +577,7 @@ class mrController extends Controller
             ]);
         }
     }
+
 
 
 
