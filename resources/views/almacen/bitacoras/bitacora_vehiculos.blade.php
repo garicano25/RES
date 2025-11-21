@@ -28,6 +28,7 @@
 </div>
 
 
+
 <div class="modal fade" id="miModal_BITACORA" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -39,9 +40,7 @@
                 <div class="modal-body">
                     {!! csrf_field() !!}
 
-
                     <input type="hidden" id="ID_BITACORAS_ALMACEN" name="ID_BITACORAS_ALMACEN" value="0">
-
 
                     <div class="col-12 mt-3">
                         <div class="row">
@@ -59,7 +58,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-12 mt-3">
                         <div class="row">
                             <div class="col-9 mt-2">
@@ -71,7 +69,7 @@
                                 <input type="text" class="form-control" id="CANTIDAD" name="CANTIDAD" readonly>
                             </div>
                             <div class="col-2 mt-2">
-                                <label class="form-label">Cantidad que sale del inventario </label>
+                                <label class="form-label">Cantidad inventario </label>
                                 <input type="text" class="form-control" id="CANTIDAD_SALIDA" name="CANTIDAD_SALIDA" readonly>
                             </div>
                             <div class="col-8 mt-2">
@@ -92,7 +90,6 @@
 
                         </div>
                     </div>
-
                     <div class="col-12 mt-3">
                         <div class="row">
                             <div class="col-4 mt-2">
@@ -107,7 +104,6 @@
                                 <label class="form-label">Motivo </label>
                                 <input type="text" class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" readonly>
                             </div>
-
                             <div class="col-6 mt-3">
                                 <label class="form-label">Recibido por</label>
                                 <select class="form-control" id="RECIBIDO_POR" name="RECIBIDO_POR" required>
@@ -124,46 +120,32 @@
                                 <label class="form-label">Entregado por </label>
                                 <input type="text" class="form-control" id="ENTREGADO_POR" name="ENTREGADO_POR">
                             </div>
-
-
                             <div class="col-6 mt-3 text-center">
                                 <label class="form-label">Firma (Recibido por)</label>
-
                                 <div style="border: 1px dashed #ffffffff; border-radius: 5px; padding: 10px; text-align:center;">
                                     <canvas id="firmaCanvas" width="400" height="200" style="border:1px solid #ccc; cursor: crosshair;">
                                         Tu navegador no soporta canvas.
                                     </canvas>
-
                                     <br>
-
                                     <button type="button" class="btn btn-danger btn-sm mt-2" id="btnLimpiarFirma">
                                         Borrar firma
                                     </button>
                                 </div>
-
                                 <input type="hidden" id="FIRMA_RECIBIDO_POR" name="FIRMA_RECIBIDO_POR">
                             </div>
-
-
-
                             <div class="col-6 mt-3 text-center">
                                 <label class="form-label">Firma (Entregado por)</label>
-
                                 <div style="border: 1px dashed #ffffffff; border-radius: 5px; padding: 10px; text-align:center;">
                                     <canvas id="firmaCanvas2" width="400" height="200" style="border:1px solid #ccc; cursor: crosshair;">
                                         Tu navegador no soporta canvas.
                                     </canvas>
-
                                     <br>
-
                                     <button type="button" class="btn btn-danger btn-sm mt-2" id="btnLimpiarFirma2">
                                         Borrar firma
                                     </button>
                                 </div>
-
                                 <input type="hidden" id="FIRMA_ENTREGADO_POR" name="FIRMA_ENTREGADO_POR">
                             </div>
-
                             <div class="col-12 mt-2">
                                 <label class="form-label">Observación </label>
                                 <textarea class="form-control" id="OBSERVACIONES_BITACORA" name="OBSERVACIONES_BITACORA" rows="3"></textarea>
