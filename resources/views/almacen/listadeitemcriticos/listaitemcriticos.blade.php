@@ -49,7 +49,7 @@
 
 
 
-    #Tablalistadeaf td.col-justificacion {
+    #Tablalistaitemcriticos td.col-justificacion {
         white-space: normal !important;
         overflow: visible !important;
         text-overflow: unset !important;
@@ -61,7 +61,7 @@
     }
 
 
-    #Tablalistadeaf td {
+    #Tablalistaitemcriticos td {
         word-wrap: break-word;
         white-space: normal !important;
     }
@@ -72,7 +72,7 @@
     <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
 
         <h3 class="mb-0 text-white">
-            <i class="bi bi-list-task"></i> Lista de activo fijo
+            <i class="bi bi-list-task"></i> Lista de ítems críticos
         </h3>
     </ol>
 
@@ -84,7 +84,7 @@
             </div>
             <div class="tabla-scroll-bottom">
                 <div class="table-responsive">
-                    <table id="Tablalistadeaf" class="table table-hover table-bordered  w-100" style="min-width: 1000px; table-layout: fixed;">
+                    <table id="Tablalistaitemcriticos" class="table table-hover table-bordered  w-100" style="min-width: 1000px; table-layout: fixed;">
                         <thead class="thead-dark">
                             <tr>
                                 <th class="text-center">#</th>
@@ -397,6 +397,7 @@
 </div>
 
 
+
 <!-- ============================================================== -->
 <!-- MODAL DOCUMENTACION  -->
 <!-- ============================================================== -->
@@ -474,9 +475,6 @@
 
                                 </div>
                             </div>
-
-
-
                             <div class="col-12 mb-3">
                                 <label class="form-label">Subir Evidencia (PDF) *</label>
                                 <div class="d-flex align-items-center">

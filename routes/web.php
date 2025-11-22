@@ -133,8 +133,8 @@ use App\Http\Controllers\inventario\salidalmacenController;
 use App\Http\Controllers\aprobacionsalidalmacen\aprobacionsalidalmacenController;
 use App\Http\Controllers\listaaf\listaafController;
 use App\Http\Controllers\listaafn\listaafnController;
-
 use App\Http\Controllers\listacomercializacion\listacomercializacionController;
+use App\Http\Controllers\listaitemcritico\listaitemcriticoController;
 
 
 //// BITACORAS INVENTARIO
@@ -926,6 +926,10 @@ Route::get('/Tablalistadeafn', [listaafnController::class, 'Tablalistadeafn']);
 Route::get('/listadecomercializacion', [listacomercializacionController::class, 'index']);
 Route::get('/Tablalistacomercializacion', [listacomercializacionController::class, 'Tablalistacomercializacion']);
 
+//==============================================    LISTA DE ITEMS CRITICOS   ==============================================
+
+Route::get('/listadeitemcriticos', [listaitemcriticoController::class, 'index']);
+Route::get('/Tablalistaitemcriticos', [listaitemcriticoController::class, 'Tablalistaitemcriticos']);
 //==============================================    BITACORAS   ============================================== 
 
 

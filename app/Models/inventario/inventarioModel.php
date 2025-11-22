@@ -30,7 +30,9 @@ class inventarioModel extends Model
         'ACTIVO',
         'OBSERVACION_EQUIPO',
         'UNIDAD_MEDIDA',
-        'REQUIERE_ARTICULO'
+        'REQUIERE_ARTICULO',
+        'LIMITEMINIMO_EQUIPO',
+        'ITEM_CRITICO'
 
 
 

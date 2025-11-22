@@ -140,7 +140,7 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs mb-3" id="tabsinventario" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="tab1-info" data-bs-toggle="tab" data-bs-target="#contenido-info" type="button" role="tab">Información del producto</button>
+                            <button class="nav-link active" id="tab1-info" data-bs-toggle="tab" data-bs-target="#contenido-info" type="button" role="tab">Información del ítem</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="tab3-documentos" data-bs-toggle="tab" data-bs-target="#contenido-documentos" type="button" role="tab" style="display: none;">Documentación</button>
@@ -164,7 +164,7 @@
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group">
-                                                        <label> Foto del equipo </label>
+                                                        <label> Foto del ítem </label>
                                                         <input type="file" accept="image/jpeg,image/x-png,image/gif" id="FOTO_EQUIPO" name="FOTO_EQUIPO" data-allowed-file-extensions="jpg png JPG PNG" data-height="240" data-default-file="" />
                                                     </div>
 
@@ -194,72 +194,90 @@
 
                                                 <div class="col-12">
                                                     <div class="form-group">
-                                                        <label> Descripción del equipo*</label>
+                                                        <label> Descripción del ítem*</label>
                                                         <textarea class="form-control" id="DESCRIPCION_EQUIPO" name="DESCRIPCION_EQUIPO" rows="5" required></textarea>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
-                                                        <label> Marca </label>
+                                                        <label> Marca *</label>
                                                         <input type="text" class="form-control" id="MARCA_EQUIPO" name="MARCA_EQUIPO" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
-                                                        <label> Modelo </label>
+                                                        <label> Modelo *</label>
                                                         <input type="text" class="form-control" id="MODELO_EQUIPO" name="MODELO_EQUIPO" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
-                                                        <label> Serie </label>
+                                                        <label> Serie *</label>
                                                         <input type="text" class="form-control" id="SERIE_EQUIPO" name="SERIE_EQUIPO" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
-                                                        <label>Código de Identificación </label>
+                                                        <label>Código de Identificación *</label>
                                                         <input type="text" class="form-control" id="CODIGO_EQUIPO" name="CODIGO_EQUIPO" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-2 mt-2">
                                                     <div class="form-group">
-                                                        <label> Cantidad </label>
-                                                        <input type="Number" step="any" class="form-control" id="CANTIDAD_EQUIPO" name="CANTIDAD_EQUIPO">
+                                                        <label> Cantidad *</label>
+                                                        <input type="Number" step="any" class="form-control" id="CANTIDAD_EQUIPO" name="CANTIDAD_EQUIPO" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-2 mt-2">
+                                                    <div class="form-group">
+                                                        <label>Límite mínimo </label>
+                                                        <input type="Number" step="any" class="form-control" id="LIMITEMINIMO_EQUIPO" name="LIMITEMINIMO_EQUIPO">
                                                     </div>
                                                 </div>
 
 
+
                                                 <div class="col-2 mt-2">
                                                     <div class="form-group">
-                                                        <label> U.M. </label>
+                                                        <label> U.M. *</label>
                                                         <input type="text" step="any" class="form-control" id="UNIDAD_MEDIDA" name="UNIDAD_MEDIDA" required>
                                                     </div>
                                                 </div>
 
 
 
-                                                <div class="col-8 mt-2">
+                                                <div class="col-6 mt-2">
                                                     <div class="form-group">
-                                                        <label> Ubicación </label>
+                                                        <label> Ubicación *</label>
                                                         <input type="text" step="any" class="form-control" id="UBICACION_EQUIPO" name="UBICACION_EQUIPO" required>
                                                     </div>
                                                 </div>
 
 
-                                                <div class="col-6 mt-2">
+                                                <div class="col-4 mt-2">
                                                     <div class="form-group">
-                                                        <label> Estado </label>
+                                                        <label> Estado *</label>
                                                         <input type="text" step="any" class="form-control" id="ESTADO_EQUIPO" name="ESTADO_EQUIPO" required>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-6 mt-2">
+                                                <div class="col-4 mt-2">
+                                                    <label>¿El ítem es crítico? </label>
+                                                    <select class="form-control" name="ITEM_CRITICO" id="ITEM_CRITICO" >
+                                                        <option value="" selected disabled>Seleccione una opción</option>
+                                                        <option value="1">Sí</option>
+                                                        <option value="2">No</option>
+                                                    </select>
+                                                </div>
+
+
+                                                <div class="col-4 mt-2">
                                                     <div class="form-group">
-                                                        <label>Fecha de adquisición </label>
+                                                        <label>Fecha de adquisición *</label>
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ADQUISICION" name="FECHA_ADQUISICION">
+                                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ADQUISICION" name="FECHA_ADQUISICION" required>
                                                             <span class="input-group-addon"><i class="icon-calender"></i></span>
                                                         </div>
                                                     </div>
@@ -311,7 +329,7 @@
 
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
-                                                        <label>Tipo </label>
+                                                        <label>Tipo *</label>
                                                         <select class="form-select" id="TIPO_EQUIPO" name="TIPO_EQUIPO" required>
                                                             <option value="0" disabled selected>Seleccione una opción</option>
                                                             @foreach ($tipoinventario as $tipos)
@@ -324,7 +342,7 @@
                                                 </div>
 
                                                 <div class="col-3 mt-2">
-                                                    <label>Marcar si el art. requiere *</label>
+                                                    <label>Marcar si el ítem. requiere *</label>
                                                     <select class="form-control" id="REQUIERE_ARTICULO" name="REQUIERE_ARTICULO" required>
                                                         <option value="" selected disabled>Seleccione una opción</option>
                                                         <option value="1">Documentación</option>
