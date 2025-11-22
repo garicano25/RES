@@ -128,26 +128,21 @@ $("#guardarINVENTARIO").click(function (e) {
 
 
 
-
 var Tablalistadeaf = $("#Tablalistadeaf").DataTable({
-    language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-    lengthChange: true,
-    lengthMenu: [
-        [10, 25, 50, -1],
-        [10, 25, 50, 'All']
-    ],
-    info: false,
+    language: {
+        url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+    },
+    scrollX: true,
+    autoWidth: false,
+    responsive: false,
     paging: true,
     searching: true,
-    filtering: true,
-    scrollY: '65vh',
-    scrollCollapse: true,
-    responsive: true,
+    info: false,
+    lengthChange: true,
+    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
     ajax: {
         dataType: 'json',
-        data: {},
         method: 'GET',
-        cache: false,
         url: '/Tablalistadeaf',
         beforeSend: function () {
             mostrarCarga();
@@ -161,7 +156,21 @@ var Tablalistadeaf = $("#Tablalistadeaf").DataTable({
         },
         dataSrc: 'data'
     },
-    order: [[0, 'asc']], 
+    columnDefs: [
+        { targets: '_all', className: 'text-center' }, 
+        { targets: 0,  width:  '50px' },
+        { targets: 1,  width:  '120px'  },
+        { targets: 2,  width:  '250px' },
+        { targets: 3,  width:  '120px'},
+        { targets: 4,  width:  '120px'},
+        { targets: 5,  width:  '120px'},
+        { targets: 6,  width:  '120px'},
+        { targets: 7,  width:  '250px'},
+        { targets: 8,  width:  '120px'},
+        { targets: 9,  width:  '70px' },
+        { targets: 10, width:  '70px' },
+        { targets: 11, width:  '70px' }                                 
+    ],
     columns: [
         { 
             data: null,
@@ -176,6 +185,7 @@ var Tablalistadeaf = $("#Tablalistadeaf").DataTable({
             className: 'text-center'
         },
         { data: 'DESCRIPCION_EQUIPO' },
+        { data: 'CANTIDAD_EQUIPO' },
         { data: 'MARCA_EQUIPO' },
         { data: 'MODELO_EQUIPO' },
         { data: 'SERIE_EQUIPO' },
@@ -184,26 +194,45 @@ var Tablalistadeaf = $("#Tablalistadeaf").DataTable({
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
-    ],
-    columnDefs: [
-        { targets: 0, title: '#', className: 'all  text-center' },
-        { targets: 1, title: 'Foto', className: 'all text-center',width: '250px' },
-        { targets: 2, title: 'Descripción', className: 'all text-center nombre-column' },
-        { targets: 3, title: 'Marca', className: 'all text-center nombre-column' },
-        { targets: 4, title: 'Modelo', className: 'all text-center nombre-column' },
-        { targets: 5, title: 'Serie', className: 'all text-center nombre-column' },
-        { targets: 6, title: 'Ubicación', className: 'all text-center nombre-column' },
-        { targets: 7, title: 'Código de Identificación ', className: 'all text-center nombre-column' },
-        { targets: 8, title: 'Editar', className: 'all text-center' },
-        { targets: 9, title: 'Visualizar', className: 'all text-center' },
-        { targets: 10, title: 'Activo', className: 'all text-center' }
-    ],
-    createdRow: function (row, data) {
+        
+       
+  ],
+     createdRow: function (row, data) {
         $(row).addClass(data.ROW_CLASS);
-    }
+    },
+
+drawCallback: function () {
+    const topScroll = document.querySelector('.tabla-scroll-top');
+    const scrollInner = document.querySelector('.tabla-scroll-top .scroll-inner');
+    const table = document.querySelector('#Tablalistadeaf');
+    const scrollBody = document.querySelector('.dataTables_scrollBody');
+
+    if (!topScroll || !scrollInner || !table || !scrollBody) return;
+
+    const tableWidth = table.scrollWidth;
+
+    scrollInner.style.width = tableWidth + 'px';
+
+    let syncingTop = false;
+    let syncingBottom = false;
+
+    topScroll.addEventListener('scroll', function () {
+        if (syncingTop) return;
+        syncingBottom = true;
+        scrollBody.scrollLeft = topScroll.scrollLeft;
+        syncingBottom = false;
+    });
+
+    scrollBody.addEventListener('scroll', function () {
+        if (syncingBottom) return;
+        syncingTop = true;
+        topScroll.scrollLeft = scrollBody.scrollLeft;
+        syncingTop = false;
+    });
+}
+
+
 });
-
-
 
 
 
@@ -214,9 +243,6 @@ $('#Tablalistadeaf tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablalistadeaf.row(tr);
     ID_FORMULARIO_INVENTARIO = row.data().ID_FORMULARIO_INVENTARIO;
 
-
-
-  
 
     inventario_id = row.data().ID_FORMULARIO_INVENTARIO;
 

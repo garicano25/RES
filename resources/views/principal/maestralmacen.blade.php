@@ -149,7 +149,10 @@
                                     <li><a class="dropdown-item" href="{{url('/listadeaf')}}">AF</a>
                                     </li>
                                     <hr class="dropdown-divider">
-                                    <li><a class="dropdown-item" href="{{url('/listacomercializacion')}}">Comercialización</a>
+                                    <li><a class="dropdown-item" href="{{url('/listadeafn')}}">AFN</a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="{{url('/listadecomercializacion')}}">Comercialización</a>
                                     </li>
                                 </ul>
                             </li>
@@ -336,7 +339,7 @@
 
 
     @if(request()->is('inventario'))
-    <script src="/assets/js_sitio/inventario/inventario.js?v=1.20"></script>
+    <script src="/assets/js_sitio/inventario/inventario.js?v=1.21"></script>
     @endif
 
     @if(request()->is('catalogotipoinventario'))
@@ -352,10 +355,14 @@
     @endif
 
     @if(request()->is('listadeaf'))
-    <script src="/assets/js_sitio/listadeaf/listaaf.js?v=1.1"></script>
+    <script src="/assets/js_sitio/listadeaf/listaaf.js?v=1.2"></script>
     @endif
 
-    @if(request()->is('listacomercializacion'))
+    @if(request()->is('listadeafn'))
+    <script src="/assets/js_sitio/listadeafn/listaafn.js"></script>
+    @endif
+
+    @if(request()->is('listadecomercializacion'))
     <script src="/assets/js_sitio/listacomercializacion/listacomercializacion.js"></script>
     @endif
 

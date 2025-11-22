@@ -24,6 +24,47 @@
     .bg-rojo-suave {
         background-color: #f8d7da !important;
     }
+
+
+
+    .tabla-scroll-wrapper {
+        width: 100%;
+    }
+
+    .tabla-scroll-top {
+        overflow-x: auto;
+        height: 20px;
+        background: #f8f9fa;
+    }
+
+    .tabla-scroll-top .scroll-inner {
+        height: 1px;
+        background: transparent;
+    }
+
+    .tabla-scroll-bottom {
+        overflow-x: auto;
+        margin-top: 5px;
+    }
+
+
+
+    #Tablalistadeaf td.col-justificacion {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: unset !important;
+        word-wrap: break-word !important;
+        text-align: center !important;
+        vertical-align: middle !important;
+        height: auto !important;
+        line-height: 1.3em;
+    }
+
+
+    #Tablalistadeaf td {
+        word-wrap: break-word;
+        white-space: normal !important;
+    }
 </style>
 
 
@@ -35,10 +76,39 @@
         </h3>
     </ol>
 
+
     <div class="card-body">
-        <table id="Tablalistadeaf" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
-        </table>
+        <div class="tabla-scroll-wrapper">
+            <div class="tabla-scroll-top">
+                <div class="scroll-inner"></div>
+            </div>
+            <div class="tabla-scroll-bottom">
+                <div class="table-responsive">
+                    <table id="Tablalistadeaf" class="table table-hover table-bordered  w-100" style="min-width: 1000px; table-layout: fixed;">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th class="text-center">Foto</th>
+                                <th class="text-center">Descripción</th>
+                                <th class="text-center">Cantidad</th>
+                                <th class="text-center">Marca</th>
+                                <th class="text-center">Modelo</th>
+                                <th class="text-center">Serie</th>
+                                <th class="text-center">Ubicación</th>
+                                <th class="text-center">Código de Identificación</th>
+                                <th class="text-center">Editar</th>
+                                <th class="text-center">Visualizar</th>
+                                <th class="text-center">Activo</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
+
+
 </div>
 
 
@@ -100,7 +170,7 @@
                                                         </div>
                                                     </div>
 
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>

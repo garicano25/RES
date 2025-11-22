@@ -56,7 +56,7 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
     },
   columnDefs: [
         { targets: '_all', className: 'text-center' }, 
-        { targets: 0,  width:  '70px'   },                                                                       
+        { targets: 0,  width:   '70px'  },                                                                       
         { targets: 1,  width:  '70px'   },                                 
         { targets: 2,  width:  '100px'  },                                
         { targets: 3,  width:  '100px'  },                                 

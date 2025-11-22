@@ -132,6 +132,7 @@ use App\Http\Controllers\inventario\catalogotipoinventarioController;
 use App\Http\Controllers\inventario\salidalmacenController;
 use App\Http\Controllers\aprobacionsalidalmacen\aprobacionsalidalmacenController;
 use App\Http\Controllers\listaaf\listaafController;
+use App\Http\Controllers\listaafn\listaafnController;
 
 use App\Http\Controllers\listacomercializacion\listacomercializacionController;
 
@@ -915,10 +916,14 @@ Route::post('/SalidalmacenSave', [salidalmacenController::class, 'store']);
 Route::get('/listadeaf', [listaafController::class, 'index']);
 Route::get('/Tablalistadeaf', [listaafController::class, 'Tablalistadeaf']);
 
+//==============================================    LISTA DE AFN   ============================================== 
+Route::get('/listadeafn', [listaafnController::class, 'index']);
+Route::get('/Tablalistadeafn', [listaafnController::class, 'Tablalistadeafn']);
+
+
 //==============================================    LISTA DE COMERCIALIZACION   ==============================================
 
-
-Route::get('/listacomercializacion', [listacomercializacionController::class, 'index']);
+Route::get('/listadecomercializacion', [listacomercializacionController::class, 'index']);
 Route::get('/Tablalistacomercializacion', [listacomercializacionController::class, 'Tablalistacomercializacion']);
 
 //==============================================    BITACORAS   ============================================== 

@@ -8,12 +8,14 @@
         border-radius: 5px;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         text-align: center;
+
     }
 
     .dropify-message p {
         font-size: 14px;
         margin: 0;
     }
+
 
     .bg-verde-suave {
         background-color: #d1e7dd !important;
@@ -22,6 +24,8 @@
     .bg-rojo-suave {
         background-color: #f8d7da !important;
     }
+
+
 
     .tabla-scroll-wrapper {
         width: 100%;
@@ -45,7 +49,7 @@
 
 
 
-    #Tablainventario td.col-justificacion {
+    #Tablalistadeafn td.col-justificacion {
         white-space: normal !important;
         overflow: visible !important;
         text-overflow: unset !important;
@@ -57,7 +61,7 @@
     }
 
 
-    #Tablainventario td {
+    #Tablalistadeafn td {
         word-wrap: break-word;
         white-space: normal !important;
     }
@@ -65,30 +69,11 @@
 
 
 <div class="contenedor-contenido">
-    <ol class="breadcrumb mb-5 d-flex justify-content-between align-items-center" style="background:#a7d46f; border-radius:10px; padding:10px;">
+    <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
 
         <h3 class="mb-0 text-white">
-            <i class="bi bi-card-list me-2"></i> Inventario
+            <i class="bi bi-list-task"></i> Lista de activo no fijo
         </h3>
-
-        <div class="d-flex gap-2">
-            @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
-            <button type="button"
-                class="btn btn-secondary waves-effect waves-light"
-                data-toggle="tooltip"
-                title="Cargar equipos por medio de un archivo Excel"
-                id="boton_cargarExcelEquipos">
-                Importar <i class="bi bi-file-earmark-excel-fill"></i>
-            </button>
-
-
-            @endif
-            <button type="button"
-                class="btn btn-light waves-effect waves-light"
-                id="NUEVO_EQUIPO">
-                Nuevo <i class="bi bi-plus-circle"></i>
-            </button>
-        </div>
     </ol>
 
 
@@ -99,7 +84,7 @@
             </div>
             <div class="tabla-scroll-bottom">
                 <div class="table-responsive">
-                    <table id="Tablainventario" class="table table-hover table-bordered  w-100" style="min-width: 1000px; table-layout: fixed;">
+                    <table id="Tablalistadeafn" class="table table-hover table-bordered  w-100" style="min-width: 1000px; table-layout: fixed;">
                         <thead class="thead-dark">
                             <tr>
                                 <th class="text-center">#</th>
@@ -122,6 +107,7 @@
             </div>
         </div>
     </div>
+
 
 </div>
 
@@ -169,6 +155,7 @@
                                                     </div>
 
 
+
                                                     <div class="form-group mt-5 text-center" id="MOSTRAR_ALERTA_DOCUMENTOS" style="display: none;">
                                                         <div class="table-responsive mt-3">
                                                             <table class="table table-bordered table-striped" id="tablaDocumentos">
@@ -183,6 +170,7 @@
                                                         </div>
                                                     </div>
 
+
                                                 </div>
                                             </div>
                                         </div>
@@ -195,32 +183,32 @@
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label> Descripción del equipo*</label>
-                                                        <textarea class="form-control" id="DESCRIPCION_EQUIPO" name="DESCRIPCION_EQUIPO" rows="5" required></textarea>
+                                                        <textarea class="form-control" id="DESCRIPCION_EQUIPO" name="DESCRIPCION_EQUIPO" rows="5" required re></textarea>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label> Marca </label>
-                                                        <input type="text" class="form-control" id="MARCA_EQUIPO" name="MARCA_EQUIPO" required>
+                                                        <input type="text" class="form-control" id="MARCA_EQUIPO" name="MARCA_EQUIPO">
                                                     </div>
                                                 </div>
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label> Modelo </label>
-                                                        <input type="text" class="form-control" id="MODELO_EQUIPO" name="MODELO_EQUIPO" required>
+                                                        <input type="text" class="form-control" id="MODELO_EQUIPO" name="MODELO_EQUIPO">
                                                     </div>
                                                 </div>
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label> Serie </label>
-                                                        <input type="text" class="form-control" id="SERIE_EQUIPO" name="SERIE_EQUIPO" required>
+                                                        <input type="text" class="form-control" id="SERIE_EQUIPO" name="SERIE_EQUIPO">
                                                     </div>
                                                 </div>
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label>Código de Identificación </label>
-                                                        <input type="text" class="form-control" id="CODIGO_EQUIPO" name="CODIGO_EQUIPO" required>
+                                                        <input type="text" class="form-control" id="CODIGO_EQUIPO" name="CODIGO_EQUIPO">
                                                     </div>
                                                 </div>
                                                 <div class="col-2 mt-2">
@@ -234,7 +222,7 @@
                                                 <div class="col-2 mt-2">
                                                     <div class="form-group">
                                                         <label> U.M. </label>
-                                                        <input type="text" step="any" class="form-control" id="UNIDAD_MEDIDA" name="UNIDAD_MEDIDA" required>
+                                                        <input type="text" step="any" class="form-control" id="UNIDAD_MEDIDA" name="UNIDAD_MEDIDA">
                                                     </div>
                                                 </div>
 
@@ -243,7 +231,7 @@
                                                 <div class="col-8 mt-2">
                                                     <div class="form-group">
                                                         <label> Ubicación </label>
-                                                        <input type="text" step="any" class="form-control" id="UBICACION_EQUIPO" name="UBICACION_EQUIPO" required>
+                                                        <input type="text" step="any" class="form-control" id="UBICACION_EQUIPO" name="UBICACION_EQUIPO">
                                                     </div>
                                                 </div>
 
@@ -251,7 +239,7 @@
                                                 <div class="col-6 mt-2">
                                                     <div class="form-group">
                                                         <label> Estado </label>
-                                                        <input type="text" step="any" class="form-control" id="ESTADO_EQUIPO" name="ESTADO_EQUIPO" required>
+                                                        <input type="text" step="any" class="form-control" id="ESTADO_EQUIPO" name="ESTADO_EQUIPO">
                                                     </div>
                                                 </div>
 
@@ -325,7 +313,7 @@
 
                                                 <div class="col-3 mt-2">
                                                     <label>Marcar si el art. requiere *</label>
-                                                    <select class="form-control" id="REQUIERE_ARTICULO" name="REQUIERE_ARTICULO" required>
+                                                    <select class="form-control" id="REQUIERE_ARTICULO" name="REQUIERE_ARTICULO">
                                                         <option value="" selected disabled>Seleccione una opción</option>
                                                         <option value="1">Documentación</option>
                                                         <option value="2">Mantenimiento</option>
@@ -392,86 +380,7 @@
     </div>
 </div>
 
-<!-- ============================================================== -->
-<!-- MODAL CARGAR EXCEL  -->
-<!-- ============================================================== -->
 
-<div id="modal_excel_equipo" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form enctype="multipart/form-data" method="post" name="formExcelEquipos" id="formExcelEquipos">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Carga de Equipos por medio de un Excel</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        {!! csrf_field() !!}
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label> Documento Excel *</label>
-                                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
-                                    <div class="form-control" data-trigger="fileinput" id="input_file_excel_documento_equipo">
-                                        <i class="fa fa-file fileinput-exists"></i>
-                                        <span class="fileinput-filename"></span>
-                                    </div>
-                                    <span class="input-group-addon btn btn-secondary btn-file">
-                                        <span class="fileinput-new">Seleccione</span>
-                                        <span class="fileinput-exists">Cambiar</span>
-                                        <input type="file" accept=".xls,.xlsx" name="excelEquipos" id="excelEquipos" required>
-                                    </span>
-                                    <a href="#" class="input-group-addon btn btn-secondary fileinput-exists" data-dismiss="fileinput">Quitar</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <div class="row mx-2" id="alertaVerificacion" style="display:none">
-                        <p class="text-danger">
-                            <i class="fa fa-info-circle" aria-hidden="true"></i>
-                            Por favor, asegúrese de que el archivo Excel contenga la fecha en el formato válido:
-                            <b>'2024-01-01'</b> (no se admiten fechas con texto) y también que el campo
-                            <b>tipo</b> contenga únicamente uno de los siguientes valores, escritos <b>tal y como están</b>:
-                            <u>Consumible</u>, <u>AF</u>, <u>ANF</u>, <u>Comercialización</u>,
-                            <u>Material para curso</u>, <u>EPP</u>, <u>Vehículos</u>, <u>Donación</u>.
-                        </p>
-                    </div> -->
-
-                    <div class="row mx-2" id="alertaVerificacion" style="display:none">
-                        <p class="text-danger">
-                            <i class="fa fa-info-circle" aria-hidden="true"></i>
-                            Por favor, asegúrese de que el archivo Excel contenga la fecha en el formato válido:
-                            <b>'2024-01-01'</b> (no se admiten fechas con texto) y también que el campo
-                            <b>tipo</b> contenga únicamente uno de los siguientes valores, escritos <b>tal y como están</b>:
-                            @foreach($tipoinventario as $tipo)
-                            <u>{{ $tipo->DESCRIPCION_TIPO }}</u>@if(!$loop->last),@endif
-                            @endforeach
-                            .
-                        </p>
-                    </div>
-
-                    <div class="row mt-3" id="divCargaEquipos" style="display: none;">
-
-                        <div class="col-12 text-center">
-                            <h2>Cargando equipos espere un momento...</h2>
-                        </div>
-                        <div class="col-12 text-center">
-                            <i class='fa fa-spin fa-spinner fa-5x'></i>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-
-
-                    <button type="submit" class="btn btn-success" id="botonCargarExcelEquipos">Guardar</button>
-
-
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 <!-- ============================================================== -->
 <!-- MODAL DOCUMENTACION  -->
@@ -550,9 +459,6 @@
 
                                 </div>
                             </div>
-
-
-
                             <div class="col-12 mb-3">
                                 <label class="form-label">Subir Evidencia (PDF) *</label>
                                 <div class="d-flex align-items-center">
@@ -573,8 +479,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 @endsection
