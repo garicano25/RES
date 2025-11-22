@@ -363,7 +363,7 @@
     @endif
 
     @if(request()->is('listadecomercializacion'))
-    <script src="/assets/js_sitio/listacomercializacion/listacomercializacion.js"></script>
+    <script src="/assets/js_sitio/listacomercializacion/listacomercializacion.js?v=1.0"></script>
     @endif
 
     @if(request()->is('bitacoraconsumibles'))

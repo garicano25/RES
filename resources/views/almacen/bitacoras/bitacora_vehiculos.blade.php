@@ -68,11 +68,11 @@
                                 <label class="form-label">Cantidad solicitada </label>
                                 <input type="text" class="form-control" id="CANTIDAD" name="CANTIDAD" readonly>
                             </div>
-                            <div class="col-2 mt-2">
-                                <label class="form-label">Cantidad inventario </label>
+                            <div class="col-2 mt-3">
+                                <label class="form-label">Cantidad entregada</label>
                                 <input type="text" class="form-control" id="CANTIDAD_SALIDA" name="CANTIDAD_SALIDA" readonly>
                             </div>
-                            <div class="col-8 mt-2">
+                            <div class="col-8 mt-3">
                                 <label class="form-label">Artículo que sale del inventario </label>
                                 <select class="form-select " id="INVENTARIO" name="INVENTARIO" style="pointer-events:none; background-color:#e9ecef;">
                                     <option value="">Seleccione un artículo</option>
@@ -92,7 +92,7 @@
                     </div>
                     <div class="col-12 mt-3">
                         <div class="row">
-                            <div class="col-4 mt-2">
+                            <div class="col-4">
                                 <label class="form-label">Funcionamiento </label>
                                 <select class="form-control" id="FUNCIONAMIENTO_BITACORA" name="FUNCIONAMIENTO_BITACORA" required>
                                     <option value="" selected disabled>Seleccione una opción</option>
@@ -100,7 +100,7 @@
                                     <option value="2">Mal estado</option>
                                 </select>
                             </div>
-                            <div class="col-8 mt-2">
+                            <div class="col-8">
                                 <label class="form-label">Motivo </label>
                                 <input type="text" class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" readonly>
                             </div>
