@@ -380,7 +380,6 @@ class notificacionController extends Controller
 
                 $notiTipo2 = recemplaedosModel::where('TIPO_SOLICITUD', 2)
 
-                    // ❗ No mostrar si ya está aprobada o rechazada
                     ->where(function ($query) {
                         $query->whereNull('ESTADO_APROBACION')
                             ->orWhereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
@@ -394,7 +393,7 @@ class notificacionController extends Controller
                             'detalle'       => $n->SOLICITANTE_SALIDA ?? 'Sin nombre',
                             'fecha'         => 'Fecha solicitud: ' . $n->FECHA_SALIDA,
                             'estatus_badge' => $badgeSalida,
-                            'link'          => url('/solicitudesaprobaciones')
+                            'link'          => url('/aprobacionalmacen')
                         ];
                     });
             }
