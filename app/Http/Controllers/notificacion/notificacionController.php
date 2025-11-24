@@ -390,7 +390,7 @@ class notificacionController extends Controller
                     ->get()
                     ->map(function ($n) use ($badgeSalida) {
                         return [
-                            'titulo'        => 'Salida de almacén',
+                            'titulo'        => 'Autorizar salida de almacén de materiales y/o equipos',
                             'detalle'       => $n->SOLICITANTE_SALIDA ?? 'Sin nombre',
                             'fecha'         => 'Fecha solicitud: ' . $n->FECHA_SALIDA,
                             'estatus_badge' => $badgeSalida,
@@ -422,7 +422,6 @@ class notificacionController extends Controller
     {
         if ($tipo == 1) return 'Aviso de ausencia y/o permiso';
         if ($tipo == 3) return 'Solicitud de Vacaciones';
-        if ($tipo == 2) return 'Autorizar salida de almacén de materiales y/o equipos';
         return 'Solicitud';
     }
 
