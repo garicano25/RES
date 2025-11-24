@@ -23,6 +23,9 @@
         background-color: #f8d7da !important;
     }
 
+    .bg-amarrillo-suave {
+        background-color: #fff3cd !important;
+    }
 
     .tabla-scroll-wrapper {
         width: 100%;

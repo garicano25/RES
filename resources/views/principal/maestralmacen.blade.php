@@ -155,6 +155,9 @@
                                     <li><a class="dropdown-item" href="{{url('/listadecomercializacion')}}">Comercialización</a>
                                     </li>
                                     <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="{{url('/listadealertas')}}">Alertas inventario</a>
+                                    </li>
+                                    <hr class="dropdown-divider">
                                     <li><a class="dropdown-item" href="{{url('/listadeitemcriticos')}}">Ítems críticos</a>
                                     </li>
                                 </ul>
@@ -371,6 +374,10 @@
 
     @if(request()->is('listadeitemcriticos'))
     <script src="/assets/js_sitio/listadeitemcritico/listaitemcritico.js"></script>
+    @endif
+
+    @if(request()->is('listadealertas'))
+    <script src="/assets/js_sitio/listadealerta/listaalerta.js"></script>
     @endif
 
     @if(request()->is('bitacoraconsumibles'))

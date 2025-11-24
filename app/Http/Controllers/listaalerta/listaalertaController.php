@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\listaaf;
+namespace App\Http\Controllers\listaalerta;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -17,6 +17,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
 use App\Models\inventario\catalogotipoinventarioModel;
+use App\Models\inventario\documentosarticulosModel;
 
 use App\Models\inventario\entradasinventarioModel;
 
@@ -24,26 +25,35 @@ use App\Models\inventario\entradasinventarioModel;
 use App\Models\proveedor\altaproveedorModel;
 use App\Models\proveedor\proveedortempModel;
 
-class listaafController extends Controller
+use DB;
+
+class listaalertaController extends Controller
 {
-
-
     public function index()
     {
         $tipoinventario = catalogotipoinventarioModel::where('ACTIVO', 1)->get();
+
+
         $proveedoresOficiales = altaproveedorModel::select('RAZON_SOCIAL_ALTA', 'RFC_ALTA')->get();
         $proveedoresTemporales = proveedortempModel::select('RAZON_PROVEEDORTEMP', 'RFC_PROVEEDORTEMP', 'NOMBRE_PROVEEDORTEMP')->get();
 
 
-        return view('almacen.listadeaf.listaaf', compact('tipoinventario', 'proveedoresOficiales', 'proveedoresTemporales'));
+
+        return view('almacen.listadealertas.listaalerta', compact('tipoinventario', 'proveedoresOficiales', 'proveedoresTemporales'));
     }
 
-    public function Tablalistadeaf()
+
+
+
+
+    public function Tablalistadealertas()
     {
         try {
+            $tabla = inventarioModel::whereNotNull('LIMITEMINIMO_EQUIPO')
+                ->whereRaw("CAST(CANTIDAD_EQUIPO AS UNSIGNED) <= CAST(LIMITEMINIMO_EQUIPO AS UNSIGNED)")
+                ->get();
 
-            $tabla = inventarioModel::where('TIPO_EQUIPO', 'AF')->get();
-
+                
             foreach ($tabla as $value) {
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
@@ -57,44 +67,7 @@ class listaafController extends Controller
 
                 $value->FOTO_EQUIPO_HTML = '<img src="/equipofoto/' . $value->ID_FORMULARIO_INVENTARIO . '" alt="Foto" class="img-fluid" width="50" height="60">';
 
-                $campos = [
-                    'DESCRIPCION_EQUIPO',
-                    'MARCA_EQUIPO',
-                    'MODELO_EQUIPO',
-                    'SERIE_EQUIPO',
-                    'CODIGO_EQUIPO',
-                    'CANTIDAD_EQUIPO',
-                    'UBICACION_EQUIPO',
-                    'ESTADO_EQUIPO',
-                    'FECHA_ADQUISICION',
-                    'PROVEEDOR_EQUIPO',
-                    'UNITARIO_EQUIPO',
-                    'TOTAL_EQUIPO',
-                    'TIPO_EQUIPO',
-                    'OBSERVACION_EQUIPO'
-                ];
-
-
-                $completo = true;
-                foreach ($campos as $campo) {
-                    if (empty($value->$campo)) {
-                        $completo = false;
-                        break;
-                    }
-                }
-
-                if (!is_null($value->LIMITEMINIMO_EQUIPO) && $value->LIMITEMINIMO_EQUIPO !== '') {
-                    $cantidad = (float)$value->CANTIDAD_EQUIPO;
-                    $minimo = (float)$value->LIMITEMINIMO_EQUIPO;
-
-                    if ($cantidad <= $minimo) {
-                        $value->ROW_CLASS = 'bg-amarrillo-suave';
-                    } else {
-                        $value->ROW_CLASS = $completo ? 'bg-verde-suave' : 'bg-rojo-suave';
-                    }
-                } else {
-                    $value->ROW_CLASS = $completo ? 'bg-verde-suave' : 'bg-rojo-suave';
-                }
+                $value->ROW_CLASS = 'bg-amarrillo-suave';
             }
 
             // Respuesta

@@ -88,7 +88,18 @@ class inventarioController extends Controller
                     }
                 }
 
-                $value->ROW_CLASS = $completo ? 'bg-verde-suave' : 'bg-rojo-suave';
+                if (!is_null($value->LIMITEMINIMO_EQUIPO) && $value->LIMITEMINIMO_EQUIPO !== '') {
+                    $cantidad = (float)$value->CANTIDAD_EQUIPO;
+                    $minimo = (float)$value->LIMITEMINIMO_EQUIPO;
+
+                    if ($cantidad <= $minimo) {
+                        $value->ROW_CLASS = 'bg-amarrillo-suave';
+                    } else {
+                        $value->ROW_CLASS = $completo ? 'bg-verde-suave' : 'bg-rojo-suave';
+                    }
+                } else {
+                    $value->ROW_CLASS = $completo ? 'bg-verde-suave' : 'bg-rojo-suave';
+                }
             }
 
             // Respuesta

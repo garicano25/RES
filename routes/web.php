@@ -135,6 +135,7 @@ use App\Http\Controllers\listaaf\listaafController;
 use App\Http\Controllers\listaafn\listaafnController;
 use App\Http\Controllers\listacomercializacion\listacomercializacionController;
 use App\Http\Controllers\listaitemcritico\listaitemcriticoController;
+use App\Http\Controllers\listaalerta\listaalertaController;
 
 
 //// BITACORAS INVENTARIO
@@ -901,18 +902,15 @@ Route::get('/Tablatipoinventario', [catalogotipoinventarioController::class, 'Ta
 Route::get('/TipoinventarioDelete', [catalogotipoinventarioController::class, 'store']);
 
 //==============================================   APROBACION DE SOLICITUDES  ============================================== 
-
 Route::get('/aprobacionalmacen', function () {return view('almacen.aprobarsolicitudes.aprobarsolicitudes');});
 Route::get('/Tablaaprobacionalmacen', [aprobacionsalidalmacenController::class, 'Tablaaprobacionalmacen']);
 
 //==============================================    SALIDA DE ALMACEN   ============================================== 
-
 Route::get('/salidaalmacen', [salidalmacenController::class, 'index']);
 Route::get('/Tablasalidalmacen', [salidalmacenController::class, 'Tablasalidalmacen']);
 Route::post('/SalidalmacenSave', [salidalmacenController::class, 'store']);
 
 //==============================================    LISTA DE AF   ============================================== 
-
 Route::get('/listadeaf', [listaafController::class, 'index']);
 Route::get('/Tablalistadeaf', [listaafController::class, 'Tablalistadeaf']);
 
@@ -920,16 +918,21 @@ Route::get('/Tablalistadeaf', [listaafController::class, 'Tablalistadeaf']);
 Route::get('/listadeafn', [listaafnController::class, 'index']);
 Route::get('/Tablalistadeafn', [listaafnController::class, 'Tablalistadeafn']);
 
-
 //==============================================    LISTA DE COMERCIALIZACION   ==============================================
-
 Route::get('/listadecomercializacion', [listacomercializacionController::class, 'index']);
 Route::get('/Tablalistacomercializacion', [listacomercializacionController::class, 'Tablalistacomercializacion']);
 
 //==============================================    LISTA DE ITEMS CRITICOS   ==============================================
-
 Route::get('/listadeitemcriticos', [listaitemcriticoController::class, 'index']);
 Route::get('/Tablalistaitemcriticos', [listaitemcriticoController::class, 'Tablalistaitemcriticos']);
+
+//==============================================    LISTA DE ALERTAS INVENTARIO  ==============================================
+Route::get('/listadealertas', [listaalertaController::class, 'index']);
+Route::get('/Tablalistadealertas', [listaalertaController::class, 'Tablalistadealertas']);
+
+
+
+
 //==============================================    BITACORAS   ============================================== 
 
 
