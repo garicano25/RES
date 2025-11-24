@@ -232,7 +232,6 @@ class recempleadoController extends Controller
 
             Log::info("Permiso: Buscando contrato para CURP {$curp} con fecha inicial {$fechaInicial}");
 
-            // Buscar el contrato más reciente del empleado
             $contrato = DB::table('contratos_anexos_contratacion')
                 ->where('CURP', $curp)
                 ->orderBy('FECHAI_CONTRATO', 'desc')
@@ -242,7 +241,6 @@ class recempleadoController extends Controller
                 return response()->json(['success' => false, 'mensaje' => 'No se encontró contrato para esta CURP.']);
             }
 
-            // Buscar si existe una renovación vigente para la fecha inicial del permiso
             $renovacion = DB::table('renovacion_contrato')
                 ->where('CONTRATO_ID', $contrato->ID_CONTRATOS_ANEXOS)
                 ->where('FECHAI_RENOVACION', '<=', $fechaInicial)
@@ -264,7 +262,6 @@ class recempleadoController extends Controller
                 ]);
             }
 
-            // Si no hay renovación, validar si el contrato original cubre la fecha
             if (
                 $contrato->FECHAI_CONTRATO <= $fechaInicial &&
                 $contrato->VIGENCIA_CONTRATO >= $fechaInicial
@@ -369,7 +366,6 @@ class recempleadoController extends Controller
 
             Log::info("Vacaciones: Buscando contrato para CURP {$curp} con fecha de inicio {$fechaInicio}");
 
-            // Buscar el último contrato del empleado
             $contrato = DB::table('contratos_anexos_contratacion')
                 ->where('CURP', $curp)
                 ->orderBy('FECHAI_CONTRATO', 'desc')
@@ -379,7 +375,6 @@ class recempleadoController extends Controller
                 return response()->json(['success' => false, 'mensaje' => 'No se encontró contrato para esta CURP.']);
             }
 
-            // Buscar si existe una renovación que cubra la fecha de inicio de vacaciones
             $renovacion = DB::table('renovacion_contrato')
                 ->where('CONTRATO_ID', $contrato->ID_CONTRATOS_ANEXOS)
                 ->where('FECHAI_RENOVACION', '<=', $fechaInicio)
@@ -401,7 +396,6 @@ class recempleadoController extends Controller
                 ]);
             }
 
-            // Si no hay renovación, validar que el contrato cubra la fecha de inicio
             if (
                 $contrato->FECHAI_CONTRATO <= $fechaInicio &&
                 $contrato->VIGENCIA_CONTRATO >= $fechaInicio
@@ -677,7 +671,7 @@ class recempleadoController extends Controller
 
 
 
-    //////////////////////////// SOLICITUDES PARA aprobación  ////////////////////////////
+    //////////////////////////// SOLICITUDES PARA APROBACION  ////////////////////////////
 
 
     public function mostrardocumentosrecempleados($id)
@@ -698,10 +692,12 @@ class recempleadoController extends Controller
                     $query->whereNull('JEFE_ID')
                         ->orWhere('JEFE_ID', '!=', Auth::id());
                 })
+                ->orderBy('FECHA_SALIDA', 'asc')
                 ->get();
 
-          
-          
+
+
+
             foreach ($tabla as $value) {
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
