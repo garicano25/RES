@@ -145,6 +145,10 @@ use App\Http\Controllers\bitacorasinventario\bitacoraretornableController;
 use App\Http\Controllers\bitacorasinventario\bitacoravehiculosController;
 
 
+/// NOTIFICACIONES 
+
+use App\Http\Controllers\notificacion\notificacionController;
+
 
 //==============================================  login  ============================================== 
 Route::get('/', function () {
@@ -979,6 +983,10 @@ Route::get('/Proveedor', function () { return view('compras.externa.diseño'); }
 Route::get('/Directorio', function () { return view('compras.proveedores.directorio');});
 
 
+
+//==============================================  NOTIFICACIONES  ============================================== 
+
+Route::get('/notificaciones', [notificacionController::class, 'notificaciones']);
 
 //============================================== ENCRIPTAR TURAS ============================================== 
 

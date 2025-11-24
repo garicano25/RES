@@ -377,12 +377,73 @@
                             <span class="tooltipText">Correo electrónico</span>
                         </div>
 
-                        <div class="tooltip">
-                            <button class="nav__circularButton">
-                                <img src="assets/Modulos/img/notificacion.png" alt="">
-                            </button>
-                            <span class="tooltipText">Notificaciones</span>
+                        <div class="notification-wrapper">
+                            <div class="tooltip">
+                                <button class="nav__circularButton" id="btnNotificaciones">
+                                    <img src="assets/Modulos/img/notificacion.png" alt="">
+                                </button>
+
+                            </div>
+
+                            <div class="notification-panel" id="panelNotificaciones">
+                                <div class="notification-header">
+                                    <h4>Notificaciones</h4>
+                                </div>
+
+                                <div class="notification-body">
+                                    <p class="notification-item">📌 No tienes notificaciones por el momento.</p>
+                                </div>
+                            </div>
+
+                            <style>
+                                .notification-wrapper {
+                                    position: relative;
+                                    display: inline-block;
+                                }
+
+                                .notification-panel {
+                                    position: absolute;
+                                    top: 85px;
+                                    right: 0;
+                                    width: 350px;
+                                    background: #ffffff;
+                                    border-radius: 10px;
+                                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                                    display: none;
+                                    /* Oculto por defecto */
+                                    z-index: 999;
+                                    overflow: hidden;
+                                }
+
+                                .notification-header {
+                                    background: #f5f5f5;
+                                    padding: 10px;
+                                    font-weight: bold;
+                                    border-bottom: 1px solid #ddd;
+                                }
+
+                                .notification-body {
+                                    max-height: 250px;
+                                    overflow-y: auto;
+                                }
+
+                                .notification-item {
+                                    padding: 12px;
+                                    border-bottom: 1px solid #eee;
+                                    font-size: 14px;
+                                }
+
+                                .notification-item:last-child {
+                                    border-bottom: none;
+                                }
+
+                                .notification-item:hover {
+                                    background: #f0f0f0;
+                                    cursor: pointer;
+                                }
+                            </style>
                         </div>
+
                     </div>
                 </div>
 
@@ -1108,9 +1169,16 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script src="/assets/js_sitio/modulos.js?v=1.0"></script>
+    <script src="/assets/js_sitio/modulos.js?v=1.1"></script>
+
+    <!-- Funciones generales -->
+    <script src="/assets/js_sitio/funciones.js?v=5.6"></script>
 
 
+
+    <!-- Jquery 3.6.4-->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+   
 </body>
 
 </html>
