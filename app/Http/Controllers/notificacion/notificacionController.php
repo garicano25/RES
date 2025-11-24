@@ -403,10 +403,11 @@ class notificacionController extends Controller
             /**
              * 5️⃣ UNIR TODAS LAS NOTIFICACIONES
              */
-            $resultado = $notiVoBo
-                ->merge($notiAutorizar)
-                ->merge($notiTipo2)
+            $resultado = collect($notiVoBo)
+                ->merge(collect($notiAutorizar))
+                ->merge(collect($notiTipo2))
                 ->values();
+
 
             return response()->json([
                 'total' => $resultado->count(),
