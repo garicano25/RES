@@ -440,7 +440,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 10  NOTIFIACACIONES DE MATRIZ COMPARATIVA 
+             * 10  NOTIFICACIONES DE MATRIZ COMPARATIVA 
              */
 
           
@@ -547,6 +547,58 @@ class notificacionController extends Controller
                 });
             }
 
+            /**
+             * 12 NOTIFICACIONES – PARA ORDEN DE COMPRA
+             * 
+             */
+
+
+
+            $notiOrdencompra = collect([]);
+
+            $usuariosPO = [1, 3];
+
+            if (in_array($idUsuario, $usuariosPO)) {
+
+                $badgePO = "<span style='
+                    background-color:#ff9800;
+                    color:white;
+                    padding:3px 8px;
+                    border-radius:6px;
+                    font-size:11px;
+                    font-weight:bold;
+                    display:inline-block;
+                    '>Pendiente</span>";
+
+                $registros = DB::table('formulario_ordencompra')
+                    ->select('NO_PO', 'SOLICITAR_AUTORIZACION', 'created_at')
+                    ->orderBy('created_at', 'desc')
+                    ->get()
+                    ->groupBy('NO_PO');
+
+                $notiOrdencompra = collect($registros)->filter(function ($group) {
+
+                    $yaSolicitadapo = collect($group)->contains(function ($item) {
+                        return $item->SOLICITAR_AUTORIZACION === "Sí";
+                    });
+
+                    return !$yaSolicitadapo;
+                })->map(function ($group) use ($badgePO) {
+
+                    $mr = $group->first();
+
+                    return [
+                        'titulo'        => 'Orden de compra:' . $mr->NO_PO,
+                        'detalle'       => 'Pendiente',
+                        'fecha'         => date('Y-m-d', strtotime($mr->created_at)),
+                        'fecha_sort'    => date('Y-m-d H:i:s', strtotime($mr->created_at)),
+                        'estatus_badge' => $badgePO,
+                        'link'          => url('/ordencompra')
+                    ];
+                });
+            }
+
+
 
 
 
@@ -560,6 +612,8 @@ class notificacionController extends Controller
                 ->merge(collect($notiVerificacionMR))
                 ->merge(collect($notiMatrizComparativa))
                 ->merge(collect($notiAprobarMatriz))
+                ->merge(collect($notiOrdencompra))
+
 
                 ->sortByDesc(function ($item) {
 
