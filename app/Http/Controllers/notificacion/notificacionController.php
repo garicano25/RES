@@ -104,6 +104,7 @@ class notificacionController extends Controller
             /**
              * 3 NOTIFICACIONES AUTORIZAR (TIPOS 1 y 3)
              */
+
             $autorizadores = [1,2, 3];
             $notiAutorizar = collect([]);
 
@@ -310,10 +311,6 @@ class notificacionController extends Controller
             }
 
 
-
-
-
-
             /**
              * 8 NOTIFICACIONES – MR PENDIENTE EN BITÁCORA (solo usuarios 1 y 3)
              */
@@ -442,6 +439,58 @@ class notificacionController extends Controller
 
 
 
+            /**
+             * 10  uarios permitidos: 1 y 3
+             */
+            
+            $notiMatrizComparativa = collect([]);
+
+            $usuariosMatriz = [1, 3];
+
+            if (in_array($idUsuario, $usuariosMatriz)) {
+
+                $badgeMatriz = "<span style='
+                background-color:#ff9800;
+                color:white;
+                padding:3px 8px;
+                border-radius:6px;
+                font-size:11px;
+                font-weight:bold;
+                display:inline-block;
+            '>Pendiente</span>";
+
+                $registros = DB::table('formulario_matrizcomparativa')
+                    ->select('NO_MR', 'SOLICITAR_VERIFICACION')
+                    ->get()
+                    ->groupBy('NO_MR'); 
+
+                $notiMatrizComparativa = collect($registros)->filter(function ($group) {
+
+                    $tieneVerificacion = collect($group)->contains(function ($item) {
+                        return $item->SOLICITAR_VERIFICACION === "Sí";
+                    });
+
+                    return !$tieneVerificacion; 
+                })
+
+                    ->map(function ($group) use ($badgeMatriz) {
+
+                        $mr = $group->first(); 
+
+                        return [
+                            'titulo'        => 'Matriz comparativa: ' . $mr->NO_MR,
+                            'detalle'       => 'Pendiente',
+                            'fecha'         => '',  // SIN FECHA
+                            'estatus_badge' => $badgeMatriz,
+                            'link'          => url('/matrizcomparativa')
+                        ];
+                    });
+            }
+
+
+
+
+
 
             $resultado = collect($notiVoBo)
                 ->merge(collect($notiAutorizar))
@@ -451,6 +500,7 @@ class notificacionController extends Controller
                 ->merge(collect($notiAutorizarMR))
                 ->merge(collect($notiBitacoraMR))
                 ->merge(collect($notiVerificacionMR))
+                ->merge(collect($notiMatrizComparativa))
 
                 ->sortByDesc(function ($item) {
 
