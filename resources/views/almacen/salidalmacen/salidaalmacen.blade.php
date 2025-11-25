@@ -57,13 +57,13 @@
                         <div class="row">
                             <div class="col-9">
                                 <label class="form-label">Solicitante </label>
-                                <input type="text" class="form-control" " id="SOLICITANTE_SALIDA" name="SOLICITANTE_SALIDA" readonly>
+                                <input type="text" class="form-control" " id=" SOLICITANTE_SALIDA" name="SOLICITANTE_SALIDA" readonly style="pointer-events:none; background-color:#e9ecef;">
                             </div>
 
                             <div class="col-3">
                                 <label class="form-label">Fecha de solicitud *</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_SALIDA" name="FECHA_SALIDA" required>
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_SALIDA" name="FECHA_SALIDA" required style="pointer-events:none; background-color:#e9ecef;">
                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                 </div>
                             </div>
@@ -84,7 +84,7 @@
                                 <label class="col-form-label me-2">Fecha estimada de retorno *</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd"
-                                        id="FECHA_ESTIMADA_SALIDA" name="FECHA_ESTIMADA_SALIDA">
+                                        id="FECHA_ESTIMADA_SALIDA" name="FECHA_ESTIMADA_SALIDA" style="pointer-events:none; background-color:#e9ecef;">
                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                 </div>
                             </div>
@@ -96,13 +96,13 @@
 
                     <div class="mt-3">
                         <label>Observaciones *</label>
-                        <textarea class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" rows="3" required></textarea>
+                        <textarea class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" rows="3" required style="pointer-events:none; background-color:#e9ecef;"></textarea>
                     </div>
 
 
                     <div class="mt-3">
                         <label class="form-label">Firmado por</label>
-                        <input type="text" id="FIRMADO_POR" name="FIRMADO_POR" class="form-control" readonly required>
+                        <input type="text" id="FIRMADO_POR" name="FIRMADO_POR" class="form-control" readonly required style="pointer-events:none; background-color:#e9ecef;">
                     </div>
 
 
@@ -111,7 +111,7 @@
                         <div class="col-12 mt-3">
                             <label for="ESTADO_APROBACION">Estado de Aprobación</label>
                             <div id="estado-container" class="p-2 rounded">
-                                <select class="form-control" id="ESTADO_APROBACION" name="ESTADO_APROBACION">
+                                <select class="form-control" id="ESTADO_APROBACION" name="ESTADO_APROBACION" style="pointer-events:none; background-color:#e9ecef;">
                                     <option value="" selected disabled>Seleccione una opción</option>
                                     <option value="Aprobada">Aprobada</option>
                                     <option value="Rechazada">Rechazada</option>
@@ -131,12 +131,12 @@
 
                                 <div class="col-8">
                                     <label for="APROBACION">Quien aprueba</label>
-                                    <input type="text" class="form-control" id="QUIEN_APROBACION" name="QUIEN_APROBACION" readonly>
+                                    <input type="text" class="form-control" id="QUIEN_APROBACION" name="QUIEN_APROBACION" readonly style="pointer-events:none; background-color:#e9ecef;">
                                 </div>
                                 <div class="col-4">
                                     <label>Fecha *</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_APRUEBA_SOLICITUD" name="FECHA_APRUEBA_SOLICITUD">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_APRUEBA_SOLICITUD" name="FECHA_APRUEBA_SOLICITUD" style="pointer-events:none; background-color:#e9ecef;">
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                     </div>
                                 </div>
