@@ -251,7 +251,7 @@ class notificacionController extends Controller
             $roles = $usuario->roles()->pluck('NOMBRE_ROL')->toArray();
 
             /**
-             * 1️⃣ USUARIOS A CARGO (para Vo.Bo)
+             * 1 USUARIOS A CARGO (para Vo.Bo)
              */
             $categoriasLideradas = DB::table('lideres_categorias as lc')
                 ->join('catalogo_categorias as cc', 'cc.ID_CATALOGO_CATEGORIA', '=', 'lc.LIDER_ID')
@@ -284,8 +284,9 @@ class notificacionController extends Controller
 
 
             /**
-             * 2️⃣ NOTIFICACIONES DE Vo.Bo  (DAR_BUENO = 0)
+             * 2 NOTIFICACIONES DE Vo.Bo RECURSOS EMPLEADOS (DAR_BUENO = 0)
              */
+
             $badgeVoBo = "<span style='
             background-color:#f4c542;
             color:black;
@@ -294,7 +295,7 @@ class notificacionController extends Controller
             font-size:11px;
             font-weight:bold;
             display:inline-block;
-        '>Vo.Bo</span>";
+            '>Vo.Bo</span>";
 
             $notiVoBo = recemplaedosModel::whereIn('USUARIO_ID', $usuariosACargo)
                 ->where('DAR_BUENO', 0)
@@ -313,7 +314,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 3️⃣ NOTIFICACIONES AUTORIZAR (TIPOS 1 y 3)
+             * 3 NOTIFICACIONES AUTORIZAR (TIPOS 1 y 3)
              */
             $autorizadores = [1, 2, 3];
             $notiAutorizar = collect([]);
@@ -328,7 +329,7 @@ class notificacionController extends Controller
                 font-size:11px;
                 font-weight:bold;
                 display:inline-block;
-            '>Autorizar</span>";
+                '>Aprobar</span>";
 
                 $notiAutorizar = recemplaedosModel::where('DAR_BUENO', 1)
                     ->whereIn('TIPO_SOLICITUD', [1, 3])
@@ -360,7 +361,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 4️⃣ NOTIFICACIONES AUTORIZAR (TIPO 2 – SALIDA DE ALMACÉN)
+             * 4 NOTIFICACIONES AUTORIZAR (TIPO 2 – SALIDA DE ALMACÉN)
              */
             $notiTipo2 = collect([]);
 
@@ -374,7 +375,7 @@ class notificacionController extends Controller
                 font-size:11px;
                 font-weight:bold;
                 display:inline-block;
-            '>Autorizar</span>";
+            '>Aprobar</span>";
 
                 $notiTipo2 = recemplaedosModel::where('TIPO_SOLICITUD', 2)
 
@@ -398,7 +399,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 5️⃣ NOTIFICACIONES – ENTREGA (Solo cuando solicitud tipo 2 aprobada)
+             * 5 NOTIFICACIONES – ENTREGA (Solo cuando solicitud tipo 2 aprobada)
              */
            
 
@@ -442,12 +443,100 @@ class notificacionController extends Controller
             }
 
 
+            /**
+             * 6 NOTIFICACIONES DE Vo.Bo MR  (DAR_BUENO = 0)
+             */
 
-          
+            $badgeVoBoMR = "<span style='
+            background-color:#f4c542;
+            color:black;
+            padding:3px 8px;
+            border-radius:6px;
+            font-size:11px;
+            font-weight:bold;
+            display:inline-block;
+            '>Vo.Bo</span>";
+
+            $notiVoBoMR = mrModel::whereIn('USUARIO_ID', $usuariosACargo)
+                ->where('DAR_BUENO', 0)
+                ->orderBy('FECHA_SOLICITUD_MR', 'desc')
+                ->get()
+                ->map(function ($n) use ($badgeVoBoMR) {
+                    return [
+                        'titulo' => 'Vo.Bo MR: ' . $n->NO_MR,
+                        'detalle'       => $n->SOLICITANTE_MR ?? 'Sin nombre',
+                        'fecha'         => 'Fecha solicitud: ' . $n->FECHA_SOLICITUD_MR,
+                        'estatus_badge' => $badgeVoBoMR,
+                        'link'          => url('/requisicionmaterialeslideres')
+                    ];
+                });
+
+
+
+
+
+            /**
+             * 7 NOTIFICACIONES DE AUTORIZAR MR  (DAR_BUENO = 0)
+             */
+
+
+            $autorizadores = [1, 2, 3];
+            $notiAutorizarMR = collect([]);
+
+            if (in_array($idUsuario, $autorizadores)) {
+
+                $badgeAutorizarMR = "<span style='
+                background-color:#3a87ad;
+                color:white;
+                padding:3px 8px;
+                border-radius:6px;
+                font-size:11px;
+                font-weight:bold;
+                display:inline-block;
+                '>Aprobar</span>";
+
+                $notiAutorizarMR = mrModel::where('DAR_BUENO', 1)
+                    ->where(function ($q) {
+                        $q->whereNull('ESTADO_APROBACION')
+                            ->orWhereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
+                    })
+
+                    ->where(function ($q) use ($idUsuario, $autorizadores) {
+                        $q->whereNull('JEFEINMEDIATO_ID')
+                            ->orWhereNotIn('JEFEINMEDIATO_ID', $autorizadores)
+                            ->orWhere('JEFEINMEDIATO_ID', '!=', $idUsuario);
+                    })
+
+                    ->orderBy('FECHA_SOLICITUD_MR', 'desc')
+                    ->get()
+                    ->map(function ($n) use ($badgeAutorizarMR) {
+
+                        return [
+                            'titulo' => 'Aprobar MR: ' . $n->NO_MR,
+                            'detalle'       => $n->SOLICITANTE_MR ?? 'Sin nombre',
+                            'fecha'         => 'Fecha solicitud: ' . $n->FECHA_SOLICITUD_MR,
+                            'estatus_badge' => $badgeAutorizarMR,
+                            'link'          => url('/requisicionmaterialesaprobacion')
+                        ];
+                    });
+            }
+
+
+
+
+
+
+
+
+
+
+
             $resultado = collect($notiVoBo)
                 ->merge(collect($notiAutorizar))
                 ->merge(collect($notiTipo2))
                 ->merge(collect($notiEntrega))
+                ->merge(collect($notiVoBoMR))
+                ->merge(collect($notiAutorizarMR))
                 ->sortByDesc(function ($item) {
 
                     $fechaLimpia = trim(str_replace('Fecha solicitud:', '', $item['fecha']));
@@ -455,6 +544,8 @@ class notificacionController extends Controller
                     return strtotime($fechaLimpia); 
                 })
                 ->values();
+
+         
 
 
 
