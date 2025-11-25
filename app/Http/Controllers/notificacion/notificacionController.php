@@ -480,7 +480,8 @@ class notificacionController extends Controller
                     return [
                         'titulo'        => 'Matriz comparativa: ' . $mr->NO_MR,
                         'detalle'       => 'Pendiente',
-                        'fecha'         => 'Fecha: ' . date('Y-m-d', strtotime($mr->created_at)),
+                        'fecha'         => date('Y-m-d', strtotime($mr->created_at)),
+                        'fecha_sort'    => date('Y-m-d H:i:s', strtotime($mr->created_at)),
                         'estatus_badge' => $badgeMatriz,
                         'link'          => url('/matrizcomparativa')
                     ];
@@ -505,9 +506,12 @@ class notificacionController extends Controller
 
                 ->sortByDesc(function ($item) {
 
-                    $fechaLimpia = trim(str_replace('Fecha solicitud:', '', $item['fecha']));
+                if (isset($item['fecha_sort'])) {
+                    return strtotime($item['fecha_sort']);
+                }
 
-                    return strtotime($fechaLimpia); 
+                $fechaLimpia = trim(str_replace('Fecha solicitud:', '', $item['fecha']));
+                return strtotime($fechaLimpia);
                 })
                 ->values();
 
