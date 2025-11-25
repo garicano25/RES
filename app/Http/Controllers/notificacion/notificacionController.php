@@ -534,7 +534,7 @@ class notificacionController extends Controller
                     return [
                         'titulo'        => 'Aprobación de matriz comparativa:<br> ' . $mr->NO_MR,
                         'detalle'       => 'Solicitud de aprobación',
-                        'fecha'         => 'Fecha solicitud: ' . ($r->FECHA_SOLICITUD ?? ''),
+                        'fecha'         => 'Fecha solicitud: ' . ($r->FECHA_SOLCITIUD ?? ''),
                         'estatus_badge' => $badgeVerificacion,
                         'link'          => url('/matrizaprobacion')
                     ];
