@@ -442,7 +442,8 @@ class notificacionController extends Controller
             /**
              * 10  uarios permitidos: 1 y 3
              */
-            
+
+          
             $notiMatrizComparativa = collect([]);
 
             $usuariosMatriz = [1, 3];
@@ -450,42 +451,42 @@ class notificacionController extends Controller
             if (in_array($idUsuario, $usuariosMatriz)) {
 
                 $badgeMatriz = "<span style='
-                background-color:#ff9800;
-                color:white;
-                padding:3px 8px;
-                border-radius:6px;
-                font-size:11px;
-                font-weight:bold;
-                display:inline-block;
-            '>Pendiente</span>";
+                    background-color:#ff9800;
+                    color:white;
+                    padding:3px 8px;
+                    border-radius:6px;
+                    font-size:11px;
+                    font-weight:bold;
+                    display:inline-block;
+                '>Pendiente</span>";
 
                 $registros = DB::table('formulario_matrizcomparativa')
-                    ->select('NO_MR', 'SOLICITAR_VERIFICACION')
+                    ->select('NO_MR', 'SOLICITAR_VERIFICACION', 'created_at')
+                    ->orderBy('created_at', 'desc')
                     ->get()
                     ->groupBy('NO_MR'); 
 
                 $notiMatrizComparativa = collect($registros)->filter(function ($group) {
 
-                    $tieneVerificacion = collect($group)->contains(function ($item) {
+                    $yaSolicitada = collect($group)->contains(function ($item) {
                         return $item->SOLICITAR_VERIFICACION === "Sí";
                     });
 
-                    return !$tieneVerificacion; 
-                })
+                    return !$yaSolicitada;
+                })->map(function ($group) use ($badgeMatriz) {
 
-                    ->map(function ($group) use ($badgeMatriz) {
+                    $mr = $group->first();
 
-                        $mr = $group->first(); 
-
-                        return [
-                            'titulo'        => 'Matriz comparativa: ' . $mr->NO_MR,
-                            'detalle'       => 'Pendiente',
-                            'fecha'         => 'Fecha ' . ($registros->created_at ?? ''),
-                            'estatus_badge' => $badgeMatriz,
-                            'link'          => url('/matrizcomparativa')
-                        ];
-                    });
+                    return [
+                        'titulo'        => 'Matriz comparativa: ' . $mr->NO_MR,
+                        'detalle'       => 'Pendiente',
+                        'fecha'         => 'Fecha: ' . date('Y-m-d', strtotime($mr->created_at)),
+                        'estatus_badge' => $badgeMatriz,
+                        'link'          => url('/matrizcomparativa')
+                    ];
+                });
             }
+
 
 
 
