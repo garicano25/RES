@@ -495,6 +495,7 @@ class notificacionController extends Controller
              * 11 NOTIFICACIONES – PARA APROBAR MATRIZ
              * 
              */
+          
             $notiAprobarMatriz = collect([]);
 
             $usuariosAprobadoresVerif = [1, 2];
@@ -509,38 +510,43 @@ class notificacionController extends Controller
                     font-size:11px;
                     font-weight:bold;
                     display:inline-block;
-                    '>Aprobar</span>";
+                '>Aprobar</span>";
 
-                $listaMR = HojaTrabajo::select('NO_MR')
-                    ->where('SOLICITAR_VERIFICACION', 'Sí')
-                    ->groupBy('NO_MR')
-                    ->get();
+                $registros = DB::table('formulario_matrizcomparativa')
+                    ->select('NO_MR', 'SOLICITAR_VERIFICACION', 'ESTADO_APROBACION', 'FECHA_SOLCITIUD')
+                    ->orderBy('FECHA_SOLCITIUD', 'desc')
+                    ->get()
+                    ->groupBy('NO_MR');
 
-                $notiAprobarMatriz = $listaMR->filter(function ($mr) {
+                $notiAprobarMatriz = collect($registros)->filter(function ($group) {
 
-                    $registros = HojaTrabajo::where('NO_MR', $mr->NO_MR)->get();
+                    $solicitoVerificacion = collect($group)->contains(function ($item) {
+                        return $item->SOLICITAR_VERIFICACION === "Sí";
+                    });
 
-                    $finalizados = $registros->every(function ($r) {
-                        return in_array($r->ESTADO_APROBACION, ['Aprobada', 'Rechazada']);
+                    if (!$solicitoVerificacion) return false;
+
+                    $finalizados = collect($group)->every(function ($item) {
+                        return in_array($item->ESTADO_APROBACION, ['Aprobada', 'Rechazada']);
                     });
 
                     if ($finalizados) return false;
 
                     return true;
-                })->map(function ($mr) use ($badgeVerificacion) {
+                })->map(function ($group) use ($badgeVerificacion) {
 
-                    $r = HojaTrabajo::where('NO_MR', $mr->NO_MR)->first();
+                    $mr = $group->first();
 
                     return [
-                        'titulo'        => 'Aprobación de matriz comparativa:<br> ' . $mr->NO_MR,
+                        'titulo'        => 'Aprobación de matriz comparativa:<br>' . $mr->NO_MR,
                         'detalle'       => 'Solicitud de aprobación',
-                        'fecha'         => 'Fecha solicitud: ' . ($r->FECHA_SOLCITIUD ?? ''),
+                        'fecha'         => 'Fecha solicitud: ' . ($mr->FECHA_SOLCITIUD ?? ''),
+                        'fecha_sort'    => date('Y-m-d H:i:s', strtotime($mr->FECHA_SOLCITIUD ?? now())),
                         'estatus_badge' => $badgeVerificacion,
                         'link'          => url('/matrizaprobacion')
                     ];
                 });
             }
-
 
 
 
