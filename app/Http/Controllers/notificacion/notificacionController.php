@@ -104,7 +104,7 @@ class notificacionController extends Controller
             /**
              * 3 NOTIFICACIONES AUTORIZAR (TIPOS 1 y 3)
              */
-            $autorizadores = [2, 3];
+            $autorizadores = [1,2, 3];
             $notiAutorizar = collect([]);
 
             if (in_array($idUsuario, $autorizadores)) {
@@ -193,7 +193,7 @@ class notificacionController extends Controller
 
             $notiEntrega = collect([]);
 
-            $usuariosQuePuedenEntregar = [3, 52];
+            $usuariosQuePuedenEntregar = [1,3, 52];
 
             if (in_array($idUsuario, $usuariosQuePuedenEntregar)) {
 
@@ -268,7 +268,7 @@ class notificacionController extends Controller
              */
 
 
-            $autorizadores = [2, 3];
+            $autorizadores = [1,2, 3];
             $notiAutorizarMR = collect([]);
 
             if (in_array($idUsuario, $autorizadores)) {
@@ -320,7 +320,7 @@ class notificacionController extends Controller
 
             $notiBitacoraMR = collect([]);
 
-            $usuariosMR = [3];
+            $usuariosMR = [1,3];
 
             if (in_array($idUsuario, $usuariosMR)) {
 
@@ -363,7 +363,7 @@ class notificacionController extends Controller
         
             $notiVerificacionMR = collect([]);
 
-            $usuariosVerificacion = [2];
+            $usuariosVerificacion = [1,2];
 
             if (in_array($idUsuario, $usuariosVerificacion)) {
 
