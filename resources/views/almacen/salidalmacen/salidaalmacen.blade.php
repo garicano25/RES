@@ -101,7 +101,7 @@
 
 
                     <div class="mt-3">
-                        <label class="form-label">Firmado por</label>
+                        <label class="form-label">Solicitado por:</label>
                         <input type="text" id="FIRMADO_POR" name="FIRMADO_POR" class="form-control" readonly required style="pointer-events:none; background-color:#e9ecef;">
                     </div>
 
@@ -130,7 +130,7 @@
                             <div class="row">
 
                                 <div class="col-8">
-                                    <label for="APROBACION">Quien aprueba</label>
+                                    <label for="APROBACION">Aprobado por:</label>
                                     <input type="text" class="form-control" id="QUIEN_APROBACION" name="QUIEN_APROBACION" readonly style="pointer-events:none; background-color:#e9ecef;">
                                 </div>
                                 <div class="col-4">
