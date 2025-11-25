@@ -632,6 +632,110 @@ class notificacionController extends Controller
             }
 
 
+
+            /**
+             * 9 NOTIFICACIONES – VERIFICACIÓN DE MR (HojaTrabajo) – Usuarios 1 y 2
+             */
+            $notiVerificacionMR = collect([]);
+
+            $usuariosVerificacion = [1, 2];
+
+            if (in_array($idUsuario, $usuariosVerificacion)) {
+
+                $badgeVerif = "<span style='
+                    background-color:#3a87ad;
+                    color:white;
+                    padding:3px 8px;
+                    border-radius:6px;
+                    font-size:11px;
+                    font-weight:bold;
+                    display:inline-block;
+                '>Aprobar bitácora </span>";
+
+                $listaMR = HojaTrabajo::select('NO_MR')
+                    ->where('SOLICITAR_VERIFICACION', 'Sí')
+                    ->groupBy('NO_MR')
+                    ->get();
+
+                $notiVerificacionMR = $listaMR->filter(function ($mr) {
+
+                    $registros = HojaTrabajo::where('NO_MR', $mr->NO_MR)->get();
+
+                    /** ----------------------------------------------------------------
+                     * ❌ Regla 1:
+                     * Si TODOS los registros tienen REQUIERE_MATRIZ = "Sí"
+                     * entonces NO se debe mostrar la notificación.
+                     * ----------------------------------------------------------------*/
+                    $todosRequierenMatriz = $registros->every(function ($item) {
+                        return $item->REQUIERE_MATRIZ === "Sí";
+                    });
+                    if ($todosRequierenMatriz) return false;
+
+                    /** ----------------------------------------------------------------
+                     * Regla 2:
+                     * Si TODOS los registros están aprobados o rechazados
+                     * NO se debe mostrar la notificación.
+                     * ----------------------------------------------------------------*/
+                    $todosFinalizados = $registros->every(function ($item) {
+                        return in_array($item->ESTADO_APROBACION, ['Aprobada', 'Rechazada']);
+                    });
+                    if ($todosFinalizados) return false;
+
+                    /** ----------------------------------------------------------------
+                     *  Regla 3 (principal):
+                     * Debe haber AL MENOS UN registro que:
+                     *   - NO requiera matriz (o sea null o distinto de "Sí")
+                     *   - tenga solicitar verificación = "Sí"
+                     *   - NO esté aprobado ni rechazado
+                     * ----------------------------------------------------------------*/
+                    $pendienteSinMatriz = $registros->contains(function ($item) {
+                        return
+                            $item->SOLICITAR_VERIFICACION === "Sí" &&
+                            ($item->REQUIERE_MATRIZ !== "Sí" || $item->REQUIERE_MATRIZ === null) &&
+                            !in_array($item->ESTADO_APROBACION, ['Aprobada', 'Rechazada']);
+                    });
+
+                    if ($pendienteSinMatriz) {
+                        return true;
+                    }
+
+                    /** ----------------------------------------------------------------
+                     *  Regla 4:
+                     * Si todos los registros que NO requieren matriz ya están aprobados
+                     * NO debe aparecer la notificación aunque existan otros con REQUIERE_MATRIZ="Sí"
+                     * ----------------------------------------------------------------*/
+                    $regSinMatriz = $registros->filter(function ($item) {
+                        return $item->REQUIERE_MATRIZ !== "Sí" || $item->REQUIERE_MATRIZ === null;
+                    });
+
+                    if ($regSinMatriz->count() > 0) {
+                        $sinMatrizFinalizados = $regSinMatriz->every(function ($item) {
+                            return in_array($item->ESTADO_APROBACION, ['Aprobada', 'Rechazada']);
+                        });
+
+                        if ($sinMatrizFinalizados) return false;
+                    }
+
+                    return false; 
+                })
+
+                    ->map(function ($mr) use ($badgeVerif) {
+
+                        $registro = HojaTrabajo::where('NO_MR', $mr->NO_MR)->first();
+
+                        return [
+                            'titulo'        => 'Aprobar bitácora MR: ' . $mr->NO_MR,
+                            'detalle'       => 'Solicitud de verificación',
+                            'fecha'         => 'Fecha solicitud: ' . ($registro->FECHA_VERIFICACION ?? ''),
+                            'estatus_badge' => $badgeVerif,
+                            'link'          => url('/bitacora')
+                        ];
+                    });
+            }
+
+
+
+
             $resultado = collect($notiVoBo)
                 ->merge(collect($notiAutorizar))
                 ->merge(collect($notiTipo2))
