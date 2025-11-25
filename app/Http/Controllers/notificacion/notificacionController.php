@@ -30,218 +30,6 @@ class notificacionController extends Controller
 {
 
 
-    // public function notificaciones()
-    // {
-    //     try {
-    //         $usuario = Auth::user();
-    //         $roles = $usuario->roles()->pluck('NOMBRE_ROL')->toArray();
-    //         $idUsuario = $usuario->ID_USUARIO;
-
-    //         /** 1️⃣ CATEGORÍAS LIDERADAS POR LOS ROLES DEL USUARIO */
-    //         $categoriasLideradas = DB::table('lideres_categorias as lc')
-    //             ->join('catalogo_categorias as cc', 'cc.ID_CATALOGO_CATEGORIA', '=', 'lc.LIDER_ID')
-    //             ->whereIn('cc.NOMBRE_CATEGORIA', $roles)
-    //             ->pluck('lc.CATEGORIA_ID')
-    //             ->toArray();
-
-    //         /** 2️⃣ OBTENER TODOS LOS USUARIOS A CARGO SEGÚN ROLES */
-    //         $usuariosACargo = DB::table('asignar_rol')
-    //             ->whereIn('NOMBRE_ROL', function ($q) use ($categoriasLideradas) {
-    //                 $q->select('NOMBRE_CATEGORIA')
-    //                     ->from('catalogo_categorias')
-    //                     ->whereIn('ID_CATALOGO_CATEGORIA', $categoriasLideradas);
-    //             })
-    //             ->pluck('USUARIO_ID')
-    //             ->toArray();
-
-    //         /** 3️⃣ SI ES DIRECTOR → INCLUIR EMPLEADOS SIN LÍDER DIRECTO */
-    //         if (in_array('Director', $roles)) {
-    //             $usuariosSinLider = DB::table('asignar_rol as ar')
-    //                 ->leftJoin('catalogo_categorias as cc', 'cc.NOMBRE_CATEGORIA', '=', 'ar.NOMBRE_ROL')
-    //                 ->leftJoin('lideres_categorias as lc', 'lc.CATEGORIA_ID', '=', 'cc.ID_CATALOGO_CATEGORIA')
-    //                 ->whereNull('lc.LIDER_ID')
-    //                 ->pluck('ar.USUARIO_ID')
-    //                 ->toArray();
-
-    //             $usuariosACargo = array_merge($usuariosACargo, $usuariosSinLider);
-    //         }
-
-    //         /** 4️⃣ ELIMINAR DUPLICADOS */
-    //         $usuariosACargo = array_unique($usuariosACargo);
-
-    //         if (empty($usuariosACargo)) {
-    //             return response()->json(['notificaciones' => [], 'total' => 0]);
-    //         }
-
-    //         /** 🔥 5️⃣ CONSULTA DE NOTIFICACIONES */
-    //         $notis = recemplaedosModel::whereIn('USUARIO_ID', $usuariosACargo)
-    //             ->where('DAR_BUENO', 0)              // 🔥 Solo pendientes
-    //             ->whereIn('TIPO_SOLICITUD', [1, 3])  // 🔥 Solo tipo 1 y 3
-    //             ->orderBy('FECHA_SALIDA', 'desc')
-    //             ->get();
-
-    //         /** 6️⃣ FORMATEAR NOTIFICACIONES */
-    //         $data = $notis->map(function ($n) {
-
-    //             // 🔥 BADGE 100% ESTILIZADO DESDE EL CONTROLADOR
-    //             $badge = "<span style='
-    //                     background-color: #f4c542; 
-    //                     color: black; 
-    //                     padding: 3px 8px; 
-    //                     border-radius: 6px; 
-    //                     font-size: 11px; 
-    //                     font-weight: bold;
-    //                     display: inline-block;
-    //                 '>Vo.Bo</span>";
-
-    //             return [
-    //                 'id' => $n->ID_FORMULARIO_RECURSOS_EMPLEADOS,
-    //                 'titulo' => $this->textoTipoSolicitud($n->TIPO_SOLICITUD),
-    //                 'detalle' => $n->SOLICITANTE_SALIDA ?? 'Sin nombre',
-    //                 'fecha' => 'Fecha solicitud: ' . ($n->FECHA_SALIDA ?? ''),
-    //                 'estatus_badge' => $badge,   
-    //                 'link' => url('/solicitudesvobo')
-    //             ];
-    //         });
-
-    //         return response()->json([
-    //             'notificaciones' => $data,
-    //             'total' => count($data)
-    //         ]);
-    //     } catch (Exception $e) {
-    //         return response()->json(['error' => $e->getMessage()], 500);
-    //     }
-    // }
-
-
-    // public function notificaciones()
-    // {
-    //     try {
-    //         $usuario = Auth::user();
-    //         $idUsuario = $usuario->ID_USUARIO;
-    //         $roles = $usuario->roles()->pluck('NOMBRE_ROL')->toArray();
-
-
-    //         $categoriasLideradas = DB::table('lideres_categorias as lc')
-    //             ->join('catalogo_categorias as cc', 'cc.ID_CATALOGO_CATEGORIA', '=', 'lc.LIDER_ID')
-    //             ->whereIn('cc.NOMBRE_CATEGORIA', $roles)
-    //             ->pluck('lc.CATEGORIA_ID')
-    //             ->toArray();
-
-    //         $usuariosACargo = DB::table('asignar_rol')
-    //             ->whereIn('NOMBRE_ROL', function ($query) use ($categoriasLideradas) {
-    //                 $query->select('NOMBRE_CATEGORIA')
-    //                     ->from('catalogo_categorias')
-    //                     ->whereIn('ID_CATALOGO_CATEGORIA', $categoriasLideradas);
-    //             })
-    //             ->pluck('USUARIO_ID')
-    //             ->toArray();
-
-    //         if (in_array('Director', $roles)) {
-    //             $usuariosSinLider = DB::table('asignar_rol as ar')
-    //                 ->leftJoin('catalogo_categorias as cc', 'cc.NOMBRE_CATEGORIA', '=', 'ar.NOMBRE_ROL')
-    //                 ->leftJoin('lideres_categorias as lc', 'lc.CATEGORIA_ID', '=', 'cc.ID_CATALOGO_CATEGORIA')
-    //                 ->whereNull('lc.LIDER_ID')
-    //                 ->pluck('ar.USUARIO_ID')
-    //                 ->toArray();
-
-    //             $usuariosACargo = array_merge($usuariosACargo, $usuariosSinLider);
-    //         }
-
-    //         $usuariosACargo = array_unique($usuariosACargo);
-
-
-
-    //         $badgeVoBo = "<span style='
-    //         background-color:#f4c542;
-    //         color:black;
-    //         padding:3px 8px;
-    //         border-radius:6px;
-    //         font-size:11px;
-    //         font-weight:bold;
-    //         display:inline-block;
-    //     '>Vo.Bo</span>";
-
-    //         $notiVoBo = recemplaedosModel::whereIn('USUARIO_ID', $usuariosACargo)
-    //             ->where('DAR_BUENO', 0)
-    //             ->whereIn('TIPO_SOLICITUD', [1, 3])
-    //             ->orderBy('FECHA_SALIDA', 'desc')
-    //             ->get()
-    //             ->map(function ($n) use ($badgeVoBo) {
-    //                 return [
-    //                     'titulo'        => $this->textoTipoSolicitud($n->TIPO_SOLICITUD),
-    //                     'detalle'       => $n->SOLICITANTE_SALIDA ?? 'Sin nombre',
-    //                     'fecha'         => 'Fecha solicitud: ' . $n->FECHA_SALIDA,
-    //                     'estatus_badge' => $badgeVoBo,
-    //                     'link'          => url('/solicitudesvobo')
-    //                 ];
-    //             });
-
-
-    //         /**
-    //          * 3️⃣ NOTIFICACIONES DE AUTORIZAR
-    //          * Solo IDs 1,2,3
-    //          */
-    //         $autorizadores = [1, 2, 3];
-    //         $notiAutorizar = collect([]);
-
-    //         if (in_array($idUsuario, $autorizadores)) {
-
-    //             $badgeAutorizar = "<span style='
-    //             background-color:#3a87ad;
-    //             color:white;
-    //             padding:3px 8px;
-    //             border-radius:6px;
-    //             font-size:11px;
-    //             font-weight:bold;
-    //             display:inline-block;
-    //         '>Aprobar</span>";
-
-    //             $notiAutorizar = recemplaedosModel::where('DAR_BUENO', 1)
-    //                 ->whereIn('TIPO_SOLICITUD', [1, 3])
-
-    //                 ->where(function ($q) {
-    //                     $q->whereNull('ESTADO_APROBACION')
-    //                         ->orWhereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
-    //                 })
-
-    //                 ->where(function ($q) use ($idUsuario, $autorizadores) {
-
-    //                     $q->whereNull('JEFE_ID') 
-
-    //                         ->orWhereNotIn('JEFE_ID', $autorizadores) 
-
-    //                         ->orWhere('JEFE_ID', '!=', $idUsuario); 
-    //                 })
-    //                 ->orderBy('FECHA_SALIDA', 'desc')
-    //                 ->get()
-    //                 ->map(function ($n) use ($badgeAutorizar) {
-    //                     return [
-    //                         'titulo'        => $this->textoTipoSolicitud($n->TIPO_SOLICITUD),
-    //                         'detalle'       => $n->SOLICITANTE_SALIDA ?? 'Sin nombre',
-    //                         'fecha'         => 'Fecha solicitud: ' . $n->FECHA_SALIDA,
-    //                         'estatus_badge' => $badgeAutorizar,
-    //                         'link'          => url('/solicitudesaprobaciones')
-    //                     ];
-    //                 });
-    //         }
-
-
-    //         /**
-    //          * 4️⃣ UNIR NOTIFICACIONES
-    //          */
-    //         $resultado = $notiVoBo->merge($notiAutorizar)->values();
-
-    //         return response()->json([
-    //             'total' => $resultado->count(),
-    //             'notificaciones' => $resultado
-    //         ]);
-    //     } catch (Exception $e) {
-    //         return response()->json(['error' => $e->getMessage()]);
-    //     }
-    // }
-
-
 
     public function notificaciones()
     {
@@ -532,7 +320,7 @@ class notificacionController extends Controller
 
             $notiBitacoraMR = collect([]);
 
-            $usuariosMR = [1, 3];
+            $usuariosMR = [3];
 
             if (in_array($idUsuario, $usuariosMR)) {
 
@@ -575,7 +363,7 @@ class notificacionController extends Controller
         
             $notiVerificacionMR = collect([]);
 
-            $usuariosVerificacion = [1];
+            $usuariosVerificacion = [2];
 
             if (in_array($idUsuario, $usuariosVerificacion)) {
 
@@ -598,33 +386,19 @@ class notificacionController extends Controller
 
                     $registros = HojaTrabajo::where('NO_MR', $mr->NO_MR)->get();
 
-                    /** ----------------------------------------------------------------
-                     * ❌ Regla 1:
-                     * Si TODOS los registros tienen REQUIERE_MATRIZ = "Sí"
-                     * entonces NO se debe mostrar la notificación.
-                     * ----------------------------------------------------------------*/
+                 
                     $todosRequierenMatriz = $registros->every(function ($item) {
                         return $item->REQUIERE_MATRIZ === "Sí";
                     });
                     if ($todosRequierenMatriz) return false;
 
-                    /** ----------------------------------------------------------------
-                     * Regla 2:
-                     * Si TODOS los registros están aprobados o rechazados
-                     * NO se debe mostrar la notificación.
-                     * ----------------------------------------------------------------*/
+                  
                     $todosFinalizados = $registros->every(function ($item) {
                         return in_array($item->ESTADO_APROBACION, ['Aprobada', 'Rechazada']);
                     });
                     if ($todosFinalizados) return false;
 
-                    /** ----------------------------------------------------------------
-                     *  Regla 3 (principal):
-                     * Debe haber AL MENOS UN registro que:
-                     *   - NO requiera matriz (o sea null o distinto de "Sí")
-                     *   - tenga solicitar verificación = "Sí"
-                     *   - NO esté aprobado ni rechazado
-                     * ----------------------------------------------------------------*/
+
                     $pendienteSinMatriz = $registros->contains(function ($item) {
                         return
                             $item->SOLICITAR_VERIFICACION === "Sí" &&
@@ -636,11 +410,7 @@ class notificacionController extends Controller
                         return true;
                     }
 
-                    /** ----------------------------------------------------------------
-                     *  Regla 4:
-                     * Si todos los registros que NO requieren matriz ya están aprobados
-                     * NO debe aparecer la notificación aunque existan otros con REQUIERE_MATRIZ="Sí"
-                     * ----------------------------------------------------------------*/
+                
                     $regSinMatriz = $registros->filter(function ($item) {
                         return $item->REQUIERE_MATRIZ !== "Sí" || $item->REQUIERE_MATRIZ === null;
                     });
@@ -662,7 +432,7 @@ class notificacionController extends Controller
 
                         return [
                             'titulo'        => 'Aprobar bitácora MR: ' . $mr->NO_MR,
-                            'detalle'       => 'Solicitud de verificación',
+                            'detalle'       => 'Solicitud de aprobación',
                             'fecha'         => 'Fecha solicitud: ' . ($registro->FECHA_VERIFICACION ?? ''),
                             'estatus_badge' => $badgeVerif,
                             'link'          => url('/bitacora')
