@@ -381,7 +381,9 @@
                             <div class="tooltip">
                                 <button class="nav__circularButton" id="btnNotificaciones">
                                     <img src="assets/Modulos/img/notificacion.png" alt="">
+                                    <span id="contadorNotificaciones" class="notification-count">0</span>
                                 </button>
+
 
                             </div>
 
@@ -396,6 +398,22 @@
                             </div>
 
                             <style>
+                                .notification-count {
+                                    position: absolute;
+                                    top: -5px;
+                                    right: -5px;
+                                    background: red;
+                                    color: white;
+                                    font-size: 12px;
+                                    font-weight: bold;
+                                    padding: 3px 6px;
+                                    border-radius: 50%;
+                                    display: none;
+                                    /* Oculto si no hay notificaciones */
+                                    z-index: 9999;
+                                }
+
+
                                 .notification-wrapper {
                                     position: relative;
                                     display: inline-block;
@@ -416,7 +434,7 @@
                                 }
 
                                 .notification-header {
-                                    background: #f5f5f5;
+                                    background: #a2a2a2;
                                     padding: 10px;
                                     font-weight: bold;
                                     border-bottom: 1px solid #ddd;
@@ -1169,16 +1187,15 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script src="/assets/js_sitio/modulos.js?v=1.1"></script>
+    <script src="/assets/js_sitio/modulos.js?v=1.2"></script>
 
-    <!-- Funciones generales -->
-    <script src="/assets/js_sitio/funciones.js?v=5.6"></script>
+    <script src="/assets/js_sitio/notificaciones.js"></script>
 
 
 
     <!-- Jquery 3.6.4-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-   
+
 </body>
 
 </html>

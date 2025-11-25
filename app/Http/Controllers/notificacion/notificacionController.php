@@ -77,7 +77,7 @@ class notificacionController extends Controller
     //         $notis = recemplaedosModel::whereIn('USUARIO_ID', $usuariosACargo)
     //             ->where('DAR_BUENO', 0)              // 🔥 Solo pendientes
     //             ->whereIn('TIPO_SOLICITUD', [1, 3])  // 🔥 Solo tipo 1 y 3
-    //             ->orderBy('FECHA_SALIDA', 'asc')
+    //             ->orderBy('FECHA_SALIDA', 'desc')
     //             ->get();
 
     //         /** 6️⃣ FORMATEAR NOTIFICACIONES */
@@ -165,7 +165,7 @@ class notificacionController extends Controller
     //         $notiVoBo = recemplaedosModel::whereIn('USUARIO_ID', $usuariosACargo)
     //             ->where('DAR_BUENO', 0)
     //             ->whereIn('TIPO_SOLICITUD', [1, 3])
-    //             ->orderBy('FECHA_SALIDA', 'asc')
+    //             ->orderBy('FECHA_SALIDA', 'desc')
     //             ->get()
     //             ->map(function ($n) use ($badgeVoBo) {
     //                 return [
@@ -299,7 +299,7 @@ class notificacionController extends Controller
             $notiVoBo = recemplaedosModel::whereIn('USUARIO_ID', $usuariosACargo)
                 ->where('DAR_BUENO', 0)
                 ->whereIn('TIPO_SOLICITUD', [1, 3])
-                ->orderBy('FECHA_SALIDA', 'asc')
+                ->orderBy('FECHA_SALIDA', 'desc')
                 ->get()
                 ->map(function ($n) use ($badgeVoBo) {
                     return [
@@ -333,20 +333,18 @@ class notificacionController extends Controller
                 $notiAutorizar = recemplaedosModel::where('DAR_BUENO', 1)
                     ->whereIn('TIPO_SOLICITUD', [1, 3])
 
-                    // ❗ No mostrar si ya está aprobada o rechazada
                     ->where(function ($q) {
                         $q->whereNull('ESTADO_APROBACION')
                             ->orWhereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
                     })
 
-                    // Lógica JEFE_ID
                     ->where(function ($q) use ($idUsuario, $autorizadores) {
                         $q->whereNull('JEFE_ID')
                             ->orWhereNotIn('JEFE_ID', $autorizadores)
                             ->orWhere('JEFE_ID', '!=', $idUsuario);
                     })
 
-                    ->orderBy('FECHA_SALIDA', 'asc')
+                    ->orderBy('FECHA_SALIDA', 'desc')
                     ->get()
                     ->map(function ($n) use ($badgeAutorizar) {
 
@@ -385,11 +383,11 @@ class notificacionController extends Controller
                             ->orWhereNotIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
                     })
 
-                    ->orderBy('FECHA_SALIDA', 'asc')
+                    ->orderBy('FECHA_SALIDA', 'desc')
                     ->get()
                     ->map(function ($n) use ($badgeSalida) {
                         return [
-                            'titulo'        => 'Autorizar salida de almacén de materiales y/o equipos',
+                            'titulo'        => 'Autorizar salida de almacén',
                             'detalle'       => $n->SOLICITANTE_SALIDA ?? 'Sin nombre',
                             'fecha'         => 'Fecha solicitud: ' . $n->FECHA_SALIDA,
                             'estatus_badge' => $badgeSalida,
@@ -400,12 +398,64 @@ class notificacionController extends Controller
 
 
             /**
-             * 5️⃣ UNIR TODAS LAS NOTIFICACIONES
+             * 5️⃣ NOTIFICACIONES – ENTREGA (Solo cuando solicitud tipo 2 aprobada)
              */
+           
+
+            $notiEntrega = collect([]);
+
+            $usuariosQuePuedenEntregar = [1, 3, 52];
+
+            if (in_array($idUsuario, $usuariosQuePuedenEntregar)) {
+
+                $badgeEntrega = "<span style='
+                    background-color:#ff9800;
+                    color:white;
+                    padding:3px 8px;
+                    border-radius:6px;
+                    font-size:11px;
+                    font-weight:bold;
+                    display:inline-block;
+                '>Entregar</span>";
+
+                $notiEntrega = recemplaedosModel::where('TIPO_SOLICITUD', 2)
+                    ->where('ESTADO_APROBACION', 'Aprobada')
+
+                    ->where(function ($q) {
+                        $q->whereNull('FINALIZAR_SOLICITUD_ALMACEN')
+                            ->orWhere('FINALIZAR_SOLICITUD_ALMACEN', '!=', 1);
+                    })
+
+                    ->where('USUARIO_ID', '!=', $idUsuario)
+
+                    ->orderBy('FECHA_SALIDA', 'desc')
+                    ->get()
+                    ->map(function ($n) use ($badgeEntrega) {
+                        return [
+                            'titulo'        => 'Salida de almacén',
+                            'detalle'       => $n->SOLICITANTE_SALIDA ?? 'Sin nombre',
+                            'fecha'         => 'Fecha solicitud: ' . $n->FECHA_SALIDA,
+                            'estatus_badge' => $badgeEntrega,
+                            'link'          => url('/salidaalmacen')
+                        ];
+                    });
+            }
+
+
+
+          
             $resultado = collect($notiVoBo)
                 ->merge(collect($notiAutorizar))
                 ->merge(collect($notiTipo2))
+                ->merge(collect($notiEntrega))
+                ->sortByDesc(function ($item) {
+
+                    $fechaLimpia = trim(str_replace('Fecha solicitud:', '', $item['fecha']));
+
+                    return strtotime($fechaLimpia); 
+                })
                 ->values();
+
 
 
             return response()->json([

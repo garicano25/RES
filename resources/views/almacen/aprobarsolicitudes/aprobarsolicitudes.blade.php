@@ -253,7 +253,7 @@
 
                     <div class="mt-3">
                         <label class="form-label">Observaciones *</label>
-                        <textarea class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" rows="3" required></textarea>
+                        <textarea class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" rows="3" ></textarea>
                     </div>
 
 
