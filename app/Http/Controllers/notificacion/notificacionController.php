@@ -538,7 +538,7 @@ class notificacionController extends Controller
                     $mr = $group->first();
 
                     return [
-                        'titulo'        => 'Aprobación de matriz comparativa:<br>' . $mr->NO_MR,
+                        'titulo'        => 'Aprobación de matriz comparativa:' . $mr->NO_MR,
                         'detalle'       => 'Solicitud de aprobación',
                         'fecha'         => 'Fecha solicitud: ' . ($mr->FECHA_SOLCITIUD ?? ''),
                         'fecha_sort'    => date('Y-m-d H:i:s', strtotime($mr->FECHA_SOLCITIUD ?? now())),
