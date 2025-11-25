@@ -478,7 +478,7 @@ class notificacionController extends Controller
                     $mr = $group->first();
 
                     return [
-                        'titulo'        => 'Matriz comparativa: ' . $mr->NO_MR,
+                        'titulo'        => 'Matriz comparativa: <br>' . $mr->NO_MR,
                         'detalle'       => 'Pendiente',
                         'fecha'         => date('Y-m-d', strtotime($mr->created_at)),
                         'fecha_sort'    => date('Y-m-d H:i:s', strtotime($mr->created_at)),
