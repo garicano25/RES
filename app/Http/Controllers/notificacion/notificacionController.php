@@ -301,7 +301,7 @@ class notificacionController extends Controller
                     ->map(function ($n) use ($badgeAutorizarMR) {
 
                         return [
-                            'titulo' => 'Aprobar MR: ' . $n->NO_MR,
+                            'titulo' => 'Aprobar MR:<br> ' . $n->NO_MR,
                             'detalle'       => $n->SOLICITANTE_MR ?? 'Sin nombre',
                             'fecha'         => 'Fecha solicitud: ' . $n->FECHA_SOLICITUD_MR,
                             'estatus_badge' => $badgeAutorizarMR,
@@ -342,7 +342,7 @@ class notificacionController extends Controller
                     ->map(function ($n) use ($badgeMR) {
 
                         return [
-                            'titulo'        => 'Tienes una MR en la Bitácora: ' . $n->NO_MR,
+                            'titulo'        => 'Tienes una MR en la Bitácora:' . $n->NO_MR,
                             'detalle'       => $n->SOLICITANTE_MR ?? 'Sin nombre',
                             'fecha'         => 'Fecha solicitud: ' . $n->FECHA_SOLICITUD_MR,
                             'estatus_badge' => $badgeMR,
@@ -428,7 +428,7 @@ class notificacionController extends Controller
                         $registro = HojaTrabajo::where('NO_MR', $mr->NO_MR)->first();
 
                         return [
-                            'titulo'        => 'Aprobar bitácora MR: ' . $mr->NO_MR,
+                            'titulo'        => 'Aprobar bitácora MR:<br> ' . $mr->NO_MR,
                             'detalle'       => 'Solicitud de aprobación',
                             'fecha'         => 'Fecha solicitud: ' . ($registro->FECHA_VERIFICACION ?? ''),
                             'estatus_badge' => $badgeVerif,
