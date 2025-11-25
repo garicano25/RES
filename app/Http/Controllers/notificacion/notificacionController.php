@@ -639,7 +639,7 @@ class notificacionController extends Controller
                     $mr = $group->first();
 
                     return [
-                        'titulo'        => 'Aprobar PO:' . $mr->NO_PO,
+                        'titulo'        => 'Aprobar PO:<br>' . $mr->NO_PO,
                         'detalle'       => 'Solicitud de aprobación',
                         'fecha'         => 'Fecha solicitud: ' . ($mr->FECHA_SOLCITIUD ?? ''),
                         'estatus_badge' => $badgeVerificacionPo,
