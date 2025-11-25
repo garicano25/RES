@@ -28,11 +28,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+
 // function consultaotificaciones() {
 
 //     fetch('/notificaciones')
 //         .then(response => response.json())
 //         .then(data => {
+
+//             const contador = document.getElementById('contadorNotificaciones');
+
+//             if (data && data.total > 0) {
+//                 contador.textContent = data.total;
+//                 contador.style.display = "inline-block";
+//             } else {
+//                 contador.style.display = "none";
+//             }
 
 //             const cuerpo = document.querySelector('#panelNotificaciones .notification-body');
 //             cuerpo.innerHTML = "";
@@ -44,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function() {
 //                 return;
 //             }
 
-//           data.notificaciones.forEach(n => {
+//             data.notificaciones.forEach(n => {
 //                 cuerpo.innerHTML += `
 //                     <div class="notification-item"
 //                         style="cursor:pointer; position:relative;"
@@ -52,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 //                         <div style="display:flex; justify-content:space-between; align-items:center;">
 //                             <strong>${n.titulo}</strong>
-//                             ${n.estatus_badge} <!-- 🔥 badge directo del backend -->
+//                             ${n.estatus_badge}
 //                         </div>
 
 //                         <small>${n.detalle}</small><br>
@@ -74,17 +84,12 @@ function consultaotificaciones() {
         .then(response => response.json())
         .then(data => {
 
-            // 🔥 CONTADOR
             const contador = document.getElementById('contadorNotificaciones');
 
-            if (data && data.total > 0) {
-                contador.textContent = data.total;
-                contador.style.display = "inline-block";
-            } else {
-                contador.style.display = "none";
-            }
+            // 🔥 MOSTRAR SIEMPRE EL NÚMERO (incluso 0)
+            contador.textContent = data && data.total ? data.total : 0;
+            contador.style.display = "inline-block";
 
-            // 🔥 PANEL
             const cuerpo = document.querySelector('#panelNotificaciones .notification-body');
             cuerpo.innerHTML = "";
 
@@ -117,4 +122,3 @@ function consultaotificaciones() {
             console.error("Error cargando notificaciones:", error);
         });
 }
-

@@ -1189,7 +1189,7 @@
 
     <script src="/assets/js_sitio/modulos.js?v=1.2"></script>
 
-    <script src="/assets/js_sitio/notificaciones.js"></script>
+    <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
 
 
 
