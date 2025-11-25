@@ -480,7 +480,7 @@ class notificacionController extends Controller
                         return [
                             'titulo'        => 'Matriz comparativa: ' . $mr->NO_MR,
                             'detalle'       => 'Pendiente',
-                            'fecha'         => '',  // SIN FECHA
+                            'fecha'         => 'Fecha ' . ($registros->created_at ?? ''),
                             'estatus_badge' => $badgeMatriz,
                             'link'          => url('/matrizcomparativa')
                         ];
