@@ -177,7 +177,7 @@ class notificacionController extends Controller
                     ->get()
                     ->map(function ($n) use ($badgeSalida) {
                         return [
-                            'titulo'        => 'Autorizar salida de almacén',
+                            'titulo'        => 'Aprobar salida de almacén',
                             'detalle'       => $n->SOLICITANTE_SALIDA ?? 'Sin nombre',
                             'fecha'         => 'Fecha solicitud: ' . $n->FECHA_SALIDA,
                             'estatus_badge' => $badgeSalida,
@@ -372,7 +372,7 @@ class notificacionController extends Controller
                     font-size:11px;
                     font-weight:bold;
                     display:inline-block;
-                '>Aprobar bitácora </span>";
+                '>Aprobar</span>";
 
                 $listaMR = HojaTrabajo::select('NO_MR')
                     ->where('SOLICITAR_VERIFICACION', 'Sí')
@@ -510,7 +510,7 @@ class notificacionController extends Controller
                     font-size:11px;
                     font-weight:bold;
                     display:inline-block;
-                '>Aprobar matriz</span>";
+                '>Aprobar</span>";
 
                 $registros = DB::table('formulario_matrizcomparativa')
                     ->select('NO_MR', 'SOLICITAR_VERIFICACION', 'ESTADO_APROBACION', 'FECHA_SOLCITIUD')
@@ -541,7 +541,6 @@ class notificacionController extends Controller
                         'titulo'        => 'Aprobar de matriz comparativa:' . $mr->NO_MR,
                         'detalle'       => 'Solicitud de aprobación',
                         'fecha'         => 'Fecha solicitud: ' . ($mr->FECHA_SOLCITIUD ?? ''),
-                        'fecha_sort'    => date('Y-m-d H:i:s', strtotime($mr->FECHA_SOLCITIUD ?? now())),
                         'estatus_badge' => $badgeVerificacion,
                         'link'          => url('/matrizaprobacion')
                     ];
