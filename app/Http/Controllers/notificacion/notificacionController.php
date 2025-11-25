@@ -105,7 +105,7 @@ class notificacionController extends Controller
              * 3 NOTIFICACIONES AUTORIZAR (TIPOS 1 y 3)
              */
 
-            $autorizadores = [1,2, 3];
+            $autorizadores = [1,2,3];
             $notiAutorizar = collect([]);
 
             if (in_array($idUsuario, $autorizadores)) {
@@ -194,7 +194,7 @@ class notificacionController extends Controller
 
             $notiEntrega = collect([]);
 
-            $usuariosQuePuedenEntregar = [1,3, 52];
+            $usuariosQuePuedenEntregar = [1,3,52];
 
             if (in_array($idUsuario, $usuariosQuePuedenEntregar)) {
 
@@ -262,12 +262,9 @@ class notificacionController extends Controller
 
 
 
-
-
             /**
              * 7 NOTIFICACIONES DE AUTORIZAR MR  (DAR_BUENO = 0)
              */
-
 
             $autorizadores = [1,2, 3];
             $notiAutorizarMR = collect([]);
@@ -350,7 +347,6 @@ class notificacionController extends Controller
                         ];
                     });
             }
-
 
 
 
@@ -438,11 +434,9 @@ class notificacionController extends Controller
             }
 
 
-
             /**
              * 10  NOTIFICACIONES DE MATRIZ COMPARATIVA 
              */
-
           
             $notiMatrizComparativa = collect([]);
 
@@ -487,9 +481,6 @@ class notificacionController extends Controller
                     ];
                 });
             }
-
-
-
 
             /**
              * 11 NOTIFICACIONES – PARA APROBAR MATRIZ
@@ -547,12 +538,11 @@ class notificacionController extends Controller
                 });
             }
 
+
             /**
              * 12 NOTIFICACIONES – PARA ORDEN DE COMPRA
              * 
              */
-
-
 
             $notiOrdencompra = collect([]);
 
