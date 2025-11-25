@@ -440,7 +440,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 10  uarios permitidos: 1 y 3
+             * 10  NOTIFIACACIONES DE MATRIZ COMPARATIVA 
              */
 
           
@@ -491,6 +491,57 @@ class notificacionController extends Controller
 
 
 
+            /**
+             * 11 NOTIFICACIONES – PARA APROBAR MATRIZ
+             * 
+             */
+            $notiAprobarMatriz = collect([]);
+
+            $usuariosAprobadoresVerif = [1, 2];
+
+            if (in_array($idUsuario, $usuariosAprobadoresVerif)) {
+
+                $badgeVerificacion = "<span style='
+                    background-color:#3a87ad;
+                    color:white;
+                    padding:3px 8px;
+                    border-radius:6px;
+                    font-size:11px;
+                    font-weight:bold;
+                    display:inline-block;
+                    '>Aprobar</span>";
+
+                $listaMR = HojaTrabajo::select('NO_MR')
+                    ->where('SOLICITAR_VERIFICACION', 'Sí')
+                    ->groupBy('NO_MR')
+                    ->get();
+
+                $notiAprobarMatriz = $listaMR->filter(function ($mr) {
+
+                    $registros = HojaTrabajo::where('NO_MR', $mr->NO_MR)->get();
+
+                    $finalizados = $registros->every(function ($r) {
+                        return in_array($r->ESTADO_APROBACION, ['Aprobada', 'Rechazada']);
+                    });
+
+                    if ($finalizados) return false;
+
+                    return true;
+                })->map(function ($mr) use ($badgeVerificacion) {
+
+                    $r = HojaTrabajo::where('NO_MR', $mr->NO_MR)->first();
+
+                    return [
+                        'titulo'        => 'Aprobación de matriz comparativa:<br> ' . $mr->NO_MR,
+                        'detalle'       => 'Solicitud de aprobación',
+                        'fecha'         => 'Fecha solicitud: ' . ($r->FECHA_SOLICITUD ?? ''),
+                        'estatus_badge' => $badgeVerificacion,
+                        'link'          => url('/matrizaprobacion')
+                    ];
+                });
+            }
+
+
 
 
 
@@ -503,6 +554,7 @@ class notificacionController extends Controller
                 ->merge(collect($notiBitacoraMR))
                 ->merge(collect($notiVerificacionMR))
                 ->merge(collect($notiMatrizComparativa))
+                ->merge(collect($notiAprobarMatriz))
 
                 ->sortByDesc(function ($item) {
 
