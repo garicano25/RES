@@ -592,6 +592,64 @@ class notificacionController extends Controller
 
 
 
+            /**
+             * 13 NOTIFICACIONES – PARA APROBAR PO
+             * 
+             */
+
+            $notiAprobarPO = collect([]);
+
+            $usuariosAprobadoresPO = [1, 2];
+
+            if (in_array($idUsuario, $usuariosAprobadoresPO)) {
+
+                $badgeVerificacionPo = "<span style='
+                    background-color:#3a87ad;
+                    color:white;
+                    padding:3px 8px;
+                    border-radius:6px;
+                    font-size:11px;
+                    font-weight:bold;
+                    display:inline-block;
+                    '>Aprobar</span>";
+
+                $registros = DB::table('formulario_ordencompra')
+                    ->select('NO_PO', 'SOLICITAR_AUTORIZACION', 'ESTADO_APROBACION', 'FECHA_SOLCITIUD')
+                    ->orderBy('FECHA_SOLCITIUD', 'desc')
+                    ->get()
+                    ->groupBy('NO_PO');
+
+                $notiAprobarPO = collect($registros)->filter(function ($group) {
+
+                    $solicitoVerificacionPo = collect($group)->contains(function ($item) {
+                        return $item->SOLICITAR_AUTORIZACION === "Sí";
+                    });
+
+                    if (!$solicitoVerificacionPo) return false;
+
+                    $finalizados = collect($group)->every(function ($item) {
+                        return in_array($item->ESTADO_APROBACION, ['Aprobada', 'Rechazada']);
+                    });
+
+                    if ($finalizados) return false;
+
+                    return true;
+                })->map(function ($group) use ($badgeVerificacionPo) {
+
+                    $mr = $group->first();
+
+                    return [
+                        'titulo'        => 'Aprobar PO:' . $mr->NO_PO,
+                        'detalle'       => 'Solicitud de aprobación',
+                        'fecha'         => 'Fecha solicitud: ' . ($mr->FECHA_SOLCITIUD ?? ''),
+                        'estatus_badge' => $badgeVerificacionPo,
+                        'link'          => url('/ordencompraaprobacion')
+                    ];
+                });
+            }
+
+
+
             $resultado = collect($notiVoBo)
                 ->merge(collect($notiAutorizar))
                 ->merge(collect($notiTipo2))
@@ -603,6 +661,8 @@ class notificacionController extends Controller
                 ->merge(collect($notiMatrizComparativa))
                 ->merge(collect($notiAprobarMatriz))
                 ->merge(collect($notiOrdencompra))
+                ->merge(collect($notiAprobarPO))
+
 
 
                 ->sortByDesc(function ($item) {
