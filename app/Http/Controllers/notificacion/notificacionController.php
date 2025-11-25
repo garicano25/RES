@@ -322,14 +322,14 @@ class notificacionController extends Controller
             if (in_array($idUsuario, $usuariosMR)) {
 
                 $badgeMR = "<span style='
-                    background-color:#3a87ad;
+                    background-color:#ff9800;
                     color:white;
                     padding:3px 8px;
                     border-radius:6px;
                     font-size:11px;
                     font-weight:bold;
                     display:inline-block;
-                    '>Bitácora pendiente</span>";
+                    '>Pendiente</span>";
 
                 $notiBitacoraMR = mrModel::where('ESTADO_APROBACION', 'Aprobada')
 
