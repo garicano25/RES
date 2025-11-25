@@ -526,7 +526,45 @@ class notificacionController extends Controller
 
 
 
+            /**
+             * 8 NOTIFICACIONES – MR PENDIENTE EN BITÁCORA (solo usuarios 1 y 3)
+             */
 
+            $notiBitacoraMR = collect([]);
+
+            $usuariosMR = [1, 3];
+
+            if (in_array($idUsuario, $usuariosMR)) {
+
+                $badgeMR = "<span style='
+                    background-color:#3a87ad;
+                    color:white;
+                    padding:3px 8px;
+                    border-radius:6px;
+                    font-size:11px;
+                    font-weight:bold;
+                    display:inline-block;
+                '>Bitácora pendiente</span>";
+
+                $notiBitacoraMR = mrModel::where('ESTADO_APROBACION', 'Aprobada')
+
+                    ->whereNotIn('NO_MR', function ($q) {
+                        $q->select('NO_MR')->from('hoja_trabajo');
+                    })
+
+                    ->orderBy('FECHA_SOLICITUD_MR', 'desc')
+                    ->get()
+                    ->map(function ($n) use ($badgeMR) {
+
+                        return [
+                            'titulo'        => 'Tienes una MR en la Bitácora: ' . $n->NO_MR,
+                            'detalle'       => $n->SOLICITANTE_MR ?? 'Sin nombre',
+                            'fecha'         => 'Fecha solicitud: ' . $n->FECHA_SOLICITUD_MR,
+                            'estatus_badge' => $badgeMR,
+                            'link'          => url('/bitacora')
+                        ];
+                    });
+            }
 
 
 
@@ -537,6 +575,7 @@ class notificacionController extends Controller
                 ->merge(collect($notiEntrega))
                 ->merge(collect($notiVoBoMR))
                 ->merge(collect($notiAutorizarMR))
+                ->merge(collect($notiBitacoraMR))
                 ->sortByDesc(function ($item) {
 
                     $fechaLimpia = trim(str_replace('Fecha solicitud:', '', $item['fecha']));
