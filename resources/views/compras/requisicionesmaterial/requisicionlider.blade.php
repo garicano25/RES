@@ -20,11 +20,9 @@
 
 
 <div class="contenedor-contenido">
-    <ol class="breadcrumb mb-5">
-        <h3 style="color: #ffffff; margin: 0;">&nbsp; Requisición de Materiales - MR
+    <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
+        <h3 style="color: #ffffff; margin: 0;">&nbsp; Vo.Bo - MR
         </h3>
-
-
 
     </ol>
 
@@ -82,7 +80,7 @@
                             </div>
                         </div>
 
-                    
+
 
 
                         <div class="mt-3">

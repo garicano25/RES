@@ -38,9 +38,6 @@ class notificacionController extends Controller
             $idUsuario = $usuario->ID_USUARIO;
             $roles = $usuario->roles()->pluck('NOMBRE_ROL')->toArray();
 
-            /**
-             * 1 USUARIOS A CARGO (para Vo.Bo)
-             */
             $categoriasLideradas = DB::table('lideres_categorias as lc')
                 ->join('catalogo_categorias as cc', 'cc.ID_CATALOGO_CATEGORIA', '=', 'lc.LIDER_ID')
                 ->whereIn('cc.NOMBRE_CATEGORIA', $roles)
@@ -72,7 +69,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 2 NOTIFICACIONES DE Vo.Bo RECURSOS EMPLEADOS (DAR_BUENO = 0)
+             * 1 NOTIFICACIONES DE Vo.Bo RECURSOS EMPLEADOS (DAR_BUENO = 0)
              */
 
             $badgeVoBo = "<span style='
@@ -102,7 +99,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 3 NOTIFICACIONES AUTORIZAR (TIPOS 1 y 3)
+             * 2 NOTIFICACIONES AUTORIZAR RECURSOS EMPLEADOS (TIPOS 1 y 3)
              */
 
             $autorizadores = [1,2,3];
@@ -150,7 +147,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 4 NOTIFICACIONES AUTORIZAR (TIPO 2 – SALIDA DE ALMACÉN)
+             * 3 NOTIFICACIONES AUTORIZAR (TIPO 2 – SALIDA DE ALMACÉN)
              */
             $notiTipo2 = collect([]);
 
@@ -188,7 +185,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 5 NOTIFICACIONES – ENTREGA (Solo cuando solicitud tipo 2 aprobada)
+             * 4 NOTIFICACIONES – ENTREGA (Solo cuando solicitud tipo 2 aprobada)
              */
            
 
@@ -233,7 +230,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 6 NOTIFICACIONES DE Vo.Bo MR  (DAR_BUENO = 0)
+             * 5 NOTIFICACIONES DE Vo.Bo MR  (DAR_BUENO = 0)
              */
 
             $badgeVoBoMR = "<span style='
@@ -263,7 +260,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 7 NOTIFICACIONES DE AUTORIZAR MR  (DAR_BUENO = 0)
+             * 6 NOTIFICACIONES DE AUTORIZAR MR  (DAR_BUENO = 0)
              */
 
             $autorizadores = [1,2, 3];
@@ -309,7 +306,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 8 NOTIFICACIONES – MR PENDIENTE EN BITÁCORA (solo usuarios 1 y 3)
+             * 7 NOTIFICACIONES – MR PENDIENTE EN BITÁCORA (solo usuarios 1 y 3)
              */
 
             $notiBitacoraMR = collect([]);
@@ -351,7 +348,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 9 NOTIFICACIONES – VERIFICACIÓN DE MR (HojaTrabajo) – Usuarios  y 2
+             * 8 NOTIFICACIONES – VERIFICACIÓN DE MR (HojaTrabajo) – Usuarios  y 2
              */
         
             $notiVerificacionMR = collect([]);
@@ -435,7 +432,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 10  NOTIFICACIONES DE MATRIZ COMPARATIVA 
+             * 9  NOTIFICACIONES DE MATRIZ COMPARATIVA 
              */
           
             $notiMatrizComparativa = collect([]);
@@ -483,7 +480,7 @@ class notificacionController extends Controller
             }
 
             /**
-             * 11 NOTIFICACIONES – PARA APROBAR MATRIZ
+             * 10 NOTIFICACIONES – PARA APROBAR MATRIZ
              * 
              */
           
@@ -540,7 +537,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 12 NOTIFICACIONES – PARA ORDEN DE COMPRA
+             * 11 NOTIFICACIONES – PARA ORDEN DE COMPRA
              * 
              */
 
@@ -593,7 +590,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 13 NOTIFICACIONES – PARA APROBAR PO
+             * 12 NOTIFICACIONES – PARA APROBAR PO
              * 
              */
 
