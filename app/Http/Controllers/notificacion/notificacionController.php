@@ -570,75 +570,12 @@ class notificacionController extends Controller
 
 
             /**
-             * 9 NOTIFICACIONES – VERIFICACIÓN DE MR (HojaTrabajo) – Usuarios 1 y 2
+             * 9 NOTIFICACIONES – VERIFICACIÓN DE MR (HojaTrabajo) – Usuarios  y 2
              */
+        
             $notiVerificacionMR = collect([]);
 
-            $usuariosVerificacion = [1, 2];
-
-            if (in_array($idUsuario, $usuariosVerificacion)) {
-
-                $badgeVerif = "<span style='
-                background-color:#8e44ad;
-                color:white;
-                padding:3px 8px;
-                border-radius:6px;
-                font-size:11px;
-                font-weight:bold;
-                display:inline-block;
-                '>Aprobar</span>";
-
-                $listaMR = HojaTrabajo::select('NO_MR')
-                    ->where('SOLICITAR_VERIFICACION', 'Sí')
-                    ->groupBy('NO_MR')
-                    ->get();
-
-                $notiVerificacionMR = $listaMR->filter(function ($mr) {
-
-                    $registros = HojaTrabajo::where('NO_MR', $mr->NO_MR)->get();
-
-                    $todosRequierenMatriz = $registros->every(function ($item) {
-                        return $item->REQUIERE_MATRIZ === "Sí";
-                    });
-                    if ($todosRequierenMatriz) return false;
-
-                    $todosFinalizados = $registros->every(function ($item) {
-                        return in_array($item->ESTADO_APROBACION, ['Aprobada', 'Rechazada']);
-                    });
-                    if ($todosFinalizados) return false;
-
-                    $pendienteValido = $registros->contains(function ($item) {
-                        return
-                            $item->SOLICITAR_VERIFICACION === "Sí" &&
-                            ($item->REQUIERE_MATRIZ !== "Sí" || $item->REQUIERE_MATRIZ === null) &&
-                            !in_array($item->ESTADO_APROBACION, ['Aprobada', 'Rechazada']);
-                    });
-
-                    return $pendienteValido;
-                })
-
-                    ->map(function ($mr) use ($badgeVerif) {
-
-                        $registro = HojaTrabajo::where('NO_MR', $mr->NO_MR)->first();
-
-                        return [
-                            'titulo'        => 'Aprobar bitácora MR: ' . $mr->NO_MR,
-                            'detalle'       => 'Aprobar bitácora ',
-                            'fecha'         => 'Fecha solicitud: ' . ($registro->FECHA_VERIFICACION ?? ''),
-                            'estatus_badge' => $badgeVerif,
-                            'link'          => url('/bitacora')
-                        ];
-                    });
-            }
-
-
-
-            /**
-             * 9 NOTIFICACIONES – VERIFICACIÓN DE MR (HojaTrabajo) – Usuarios 1 y 2
-             */
-            $notiVerificacionMR = collect([]);
-
-            $usuariosVerificacion = [1, 2];
+            $usuariosVerificacion = [1];
 
             if (in_array($idUsuario, $usuariosVerificacion)) {
 
