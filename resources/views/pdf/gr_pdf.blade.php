@@ -280,7 +280,7 @@
                 {{ $paisExt }}
                 @endif
                 @endif
-            </td>   
+            </td>
             <td class="bg-gray bold">Fecha de entrega<br>(aaaa/mm/dd)</td>
             <td>{{ $orden->FECHA_ENTREGA_GR ?? '' }}</td>
         </tr>
@@ -363,15 +363,25 @@
         </tr>
         <tr>
             <td style="height: 50px; text-align: center; vertical-align: bottom; border: 2px solid black;">
+                @if($usuarioRealizo)
                 <div style="font-size: 14px; font-weight: bold;">
-                    José Francisco Acosta López
+                    {{ $usuarioRealizo->EMPLEADO_NOMBRE }}
+                    {{ $usuarioRealizo->EMPLEADO_APELLIDOPATERNO }}
+                    {{ $usuarioRealizo->EMPLEADO_APELLIDOMATERNO }}
                 </div>
                 <div style="font-size: 10px;">
-                    Firmado Digitalmente por José Francisco Acosta López <br>
+                    Firmado Digitalmente por {{ $usuarioRealizo->EMPLEADO_NOMBRE }}
+                    {{ $usuarioRealizo->EMPLEADO_APELLIDOPATERNO }}
+                    {{ $usuarioRealizo->EMPLEADO_APELLIDOMATERNO }} <br>
                     mediante el software Synaptix
                 </div>
                 <div style="font-size: 10px;">Fecha: {{ $orden->FECHA_EMISION ?? '' }}</div>
+                @else
+                <div>No disponible</div>
+                @endif
             </td>
+
+
 
             <td style="height: 50px; text-align: center; vertical-align: bottom; border: 2px solid black;">
                 @if($usuarioSolicito)

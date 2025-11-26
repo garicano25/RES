@@ -710,7 +710,7 @@
     @endif
 
     @if(request()->is('bitacoragr'))
-    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.47"></script>
+    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.48"></script>
     @endif
 
 

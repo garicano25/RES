@@ -105,7 +105,14 @@ class pdfgrController extends Controller
                 ->where('ID_USUARIO', $orden->USUARIO_ID)
                 ->first();
 
-   
+            $usuarioRealizo = DB::table('usuarios')
+                ->select('EMPLEADO_NOMBRE', 'EMPLEADO_APELLIDOPATERNO', 'EMPLEADO_APELLIDOMATERNO')
+                ->where('ID_USUARIO', $orden->GENEROGR_ID)
+                ->first();
+
+
+
+
             $detalles = DB::table('formulario_bitacoragr_detalle')
                 ->where('ID_GR', $id)
                 ->where(function ($query) {
@@ -138,6 +145,7 @@ class pdfgrController extends Controller
                 'orden' => $orden,
                 'proveedor' => $proveedor,
                 'usuarioSolicito' => $usuarioSolicito,
+                'usuarioRealizo' => $usuarioRealizo,
                 'detalles' => $detalles,
             ])->setPaper('letter', 'portrait');
 

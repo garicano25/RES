@@ -189,6 +189,9 @@ if (resp.existe) {
                  <input type="hidden" name="ID_GR[]" value="${cab.ID_GR}">
 
 
+
+              <input type="hidden" class="form-control" value="${cab.GENEROGR_ID ?? ''}"  name="GENEROGR_ID">
+
                   <!-- Cabecera -->
                   <div class="row mb-3">
                       <div class="col-md-3 mt-2">
@@ -390,6 +393,7 @@ if (resp.existe) {
             $('#modal_usuario_nombre').val(cab.USUARIO_SOLICITO ?? '');
             $('#DESDE_ACREDITACION').val(cab.FECHA_EMISION ?? '');
             $('#NO_RECEPCION').val(cab.NO_RECEPCION ?? '');
+            $('#GENEROGR_ID').val(cab.GENEROGR_ID ?? '');
             $('#MANDAR_USUARIO_VOBO').val(cab.MANDAR_USUARIO_VOBO ?? '');
             $('#FECHA_VOUSUARIO').val(cab.FECHA_VOUSUARIO ?? '');
             $('#VO_BO_USUARIO').val(cab.VO_BO_USUARIO ?? '');

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 use DB;
 
@@ -348,7 +349,7 @@ class grController extends Controller
 
                 // === Definir color de fila según estado en formulario_bitacoragr ===
                
-                
+
                 $registrosGR = DB::table('formulario_bitacoragr')
                     ->where('NO_MR', $first->NO_MR)
                     ->when($first->NO_PO, function ($q) use ($first) {
@@ -446,6 +447,10 @@ class grController extends Controller
     {
         DB::beginTransaction();
         try {
+            $usuario = Auth::user();
+            $idUsuario = $usuario->ID_USUARIO;
+
+
             $usuarioId = DB::table('formulario_requisiconmaterial')
                 ->where('NO_MR', $request->modal_no_mr)
                 ->value('USUARIO_ID');
@@ -469,6 +474,7 @@ class grController extends Controller
                             'PROVEEDOR_KEY'       => $request->PROVEEDOR_EQUIPO,
                             'USUARIO_SOLICITO'    => $request->modal_usuario_nombre,
                             'USUARIO_ID'          => $usuarioId,
+                            'GENEROGR_ID'         => $request->GENEROGR_ID,
                             'FECHA_EMISION'       => $request->DESDE_ACREDITACION,
                             'NO_RECEPCION'        => $request->NO_RECEPCION,
                             'MANDAR_USUARIO_VOBO' => $request->MANDAR_USUARIO_VOBO,
@@ -480,19 +486,16 @@ class grController extends Controller
                             'UPDATED_AT'          => now(),
                         ]);
 
-                    // Guardamos la fecha de adquisición desde la cabecera
                     $fechaAdquisicion = $request->FECHA_ENTREGA_GR;
                     $proveedorkey = $request->PROVEEDOR_EQUIPO;
 
 
-                    // Guardar los detalles que ya habían pasado a inventario antes de borrar
                     $detallesGuardados = DB::table('formulario_bitacoragr_detalle')
                         ->where('ID_GR', $idGR)
                         ->where('GUARDO_INVENTARIO', 1)
                         ->pluck('DESCRIPCION')
                         ->toArray();
 
-                    // Eliminar detalles anteriores
                     DB::table('formulario_bitacoragr_detalle')
                         ->where('ID_GR', $idGR)
                         ->delete();
@@ -505,10 +508,8 @@ class grController extends Controller
                             ->value('DESCRIPCION_TIPO')
                             : null;
 
-                        // Si ya existía guardado en inventario, mantenerlo
                         $guardoInventario = in_array($desc, $detallesGuardados) ? 1 : 0;
 
-                        // Insertar detalle GR y obtener ID
                         $idDetalle = DB::table('formulario_bitacoragr_detalle')->insertGetId([
                             'ID_GR'                       => $idGR,
                             'DESCRIPCION'                 => $desc,
@@ -558,15 +559,12 @@ class grController extends Controller
                             $precioUnitario = $request->PRECIO_UNITARIO_GR[$i] ?? null;
                             $unidaddetalles = $request->UNIDAD_MEDIDA_ALMACEN[$i] ?? null;
 
-                            //  Evitar guardar si no hay cantidad válida
                             if ($cantidadEntra <= 0) {
                                 continue;
                             }
 
-                            // Verificar si ya se guardó en inventario
                             if ($guardoInventario == 0) {
                                 if (($request->EN_INVENTARIO[$i] ?? "No") === "No") {
-                                    // Crear nuevo registro en inventario
                                     $inventarioId = DB::table('formulario_inventario')->insertGetId([
                                         'DESCRIPCION_EQUIPO' => $desc,
                                         'CANTIDAD_EQUIPO'    => $cantidadEntra,
@@ -578,7 +576,6 @@ class grController extends Controller
                                         'updated_at'         => now(),
                                     ]);
 
-                                    // Guardar historial de entrada
                                     DB::table('entradas_inventario')->insert([
                                         'INVENTARIO_ID'     => $inventarioId,
                                         'FECHA_INGRESO'     => $fechaAdquisicion,
@@ -587,7 +584,6 @@ class grController extends Controller
                                         'UNIDAD_MEDIDA'     => $unidaddetalles,
                                     ]);
                                 } else {
-                                    // Ya existe en inventario → actualizar
                                     $inventarioId = $request->INVENTARIO[$i] ?? null;
                                     if ($inventarioId) {
                                         DB::table('formulario_inventario')
@@ -601,7 +597,6 @@ class grController extends Controller
                                                 'updated_at'        => now(),
                                             ]);
 
-                                        // Guardar historial de entrada
                                         DB::table('entradas_inventario')->insert([
                                             'INVENTARIO_ID'     => $inventarioId,
                                             'FECHA_INGRESO'     => $fechaAdquisicion,
@@ -612,7 +607,6 @@ class grController extends Controller
                                     }
                                 }
 
-                                // Marcar detalle como guardado en inventario
                                 DB::table('formulario_bitacoragr_detalle')
                                     ->where('ID_DETALLE', $idDetalle)
                                     ->update(['GUARDO_INVENTARIO' => 1]);
@@ -632,7 +626,6 @@ class grController extends Controller
                             ->where('ID_GR', $idGR)
                             ->value('TIENE_PARCIAL');
 
-                        // Solo ejecutar si aún no está marcado como parcial
                         if (is_null($yaTieneParcial) || $yaTieneParcial == 0) {
                             $this->crearGRParcial($request, $usuarioId);
 
@@ -644,66 +637,8 @@ class grController extends Controller
                 }
 
              else {
-                    // ======================== CREAR ========================
-                    // $noRecepcion = $this->generarNoRecepcion();
+                   
 
-                    // $idGRNuevo = DB::table('formulario_bitacoragr')->insertGetId([
-                    //     'NO_GR'            => null,
-                    //     'NO_MR'            => $request->modal_no_mr,
-                    //     'NO_PO'            => $request->modal_no_po,
-                    //     'PROVEEDOR_KEY'    => $request->PROVEEDOR_EQUIPO,
-                    //     'USUARIO_SOLICITO' => $request->modal_usuario_nombre,
-                    //     'USUARIO_ID'       => $usuarioId,
-                    //     'FECHA_EMISION'    => $request->DESDE_ACREDITACION,
-                    //     'NO_RECEPCION'     => $noRecepcion,
-                    //     'MANDAR_USUARIO_VOBO' => $request->MANDAR_USUARIO_VOBO,
-                    //     'GR_PARCIAL'       => $request->GR_PARCIAL,
-                    //     'FECHA_ENTREGA_GR'       => $request->FECHA_ENTREGA_GR,
-
-                    //     'CREATED_AT'       => now(),
-                    // ]);
-
-                    // foreach ($request->DESCRIPCION as $i => $desc) {
-                    //     $tipoEquipoId   = $request->TIPO_INVENTARIO[$i] ?? null;
-                    //     $tipoEquipoDesc = $tipoEquipoId
-                    //         ? DB::table('catalogo_tipoinventario')
-                    //         ->where('ID_CATALOGO_TIPOINVENTARIO', $tipoEquipoId)
-                    //         ->value('DESCRIPCION_TIPO')
-                    //         : null;
-
-                    //     DB::table('formulario_bitacoragr_detalle')->insert([
-                    //         'ID_GR'                 => $idGRNuevo,
-                    //         'DESCRIPCION'           => $desc,
-                    //         'CANTIDAD'              => $request->CANTIDAD[$i] ?? 0,
-                    //         'CANTIDAD_RECHAZADA'    => $request->CANTIDAD_RECHAZADA[$i] ?? 0,
-                    //         'CANTIDAD_ACEPTADA'     => $request->CANTIDAD_ACEPTADA[$i] ?? 0,
-                    //         'PRECIO_UNITARIO'       => $request->PRECIO_UNITARIO[$i] ?? null,
-                    //         'CUMPLE'                => $request->CUMPLE[$i] ?? null,
-                    //         'COMENTARIO_CUMPLE'     => $request->COMENTARIO_CUMPLE[$i] ?? null,
-                    //         'ESTADO_BS'             => $request->ESTADO_BS[$i] ?? null,
-                    //         'COMENTARIO_ESTADO'     => $request->COMENTARIO_ESTADO[$i] ?? null,
-                    //         'COMENTARIO_DIFERENCIA' => $request->COMENTARIO_DIFERENCIA[$i] ?? null,
-                    //         'TIPO_BS'               => $request->TIPO_BS[$i] ?? null,
-                    //         'PRECIO_TOTAL_MR'       => $request->PRECIO_TOTAL_MR[$i] ?? null,
-                    //         'PRECIO_UNITARIO_GR'    => $request->PRECIO_UNITARIO_GR[$i] ?? null,
-                    //         'PRECIO_TOTAL_GR'       => $request->PRECIO_TOTAL_GR[$i] ?? null,
-                    //         'TIPO_EQUIPO'           => $tipoEquipoDesc,
-                    //         'INVENTARIO_ID'         => $request->INVENTARIO[$i] ?? null,
-                    //         'EN_INVENTARIO'         => $request->EN_INVENTARIO[$i] ?? null,
-                    //         'UNIDAD'                => $request->UNIDAD[$i] ?? null,
-                    //         'BIENS_PARCIAL'             => $request->BIENS_PARCIAL[$i] ?? null,
-                    //         'CANTIDAD_ENTRA_ALMACEN'         => $request->CANTIDAD_ENTRA_ALMACEN[$i] ?? null,
-
-
-
-                    //     ]);
-                    // }
-
-                    // if ($request->GR_PARCIAL === "Sí") {
-                    //     $this->crearGRParcial($request, $usuarioId);
-                    // }
-
-                    // ======================== CREAR PRINCIPAL ========================
                     $noRecepcion = $this->generarNoRecepcion();
 
                     $idGRNuevo = DB::table('formulario_bitacoragr')->insertGetId([
@@ -712,6 +647,7 @@ class grController extends Controller
                         'NO_PO'               => $request->modal_no_po,
                         'PROVEEDOR_KEY'       => $request->PROVEEDOR_EQUIPO,
                         'USUARIO_SOLICITO'    => $request->modal_usuario_nombre,
+                        'GENEROGR_ID'         => $idUsuario,
                         'USUARIO_ID'          => $usuarioId,
                         'FECHA_EMISION'       => $request->DESDE_ACREDITACION,
                         'NO_RECEPCION'        => $noRecepcion,
@@ -721,7 +657,6 @@ class grController extends Controller
                         'CREATED_AT'          => now(),
                     ]);
 
-                    // Insertar TODOS los detalles en el GR principal
                     foreach ($request->DESCRIPCION as $i => $desc) {
                         $tipoEquipoId   = $request->TIPO_INVENTARIO[$i] ?? null;
                         $tipoEquipoDesc = $tipoEquipoId
@@ -761,13 +696,11 @@ class grController extends Controller
                         ]);
                     }
 
-                    // Marcar SOLO este GR como que ya tiene parcial
                     if ($request->GR_PARCIAL === "Sí") {
                         DB::table('formulario_bitacoragr')
                             ->where('ID_GR', $idGRNuevo)
                             ->update(['TIENE_PARCIAL' => 1]);
 
-                        // Y crear el duplicado parcial
                         $this->crearGRParcial($request, $usuarioId);
                     }
 
@@ -804,6 +737,9 @@ class grController extends Controller
     private function crearGRParcial(Request $request, $usuarioId)
     {
         $noRecepcion = $this->generarNoRecepcion();
+        $usuario = Auth::user();
+        $idUsuario = $usuario->ID_USUARIO;
+
 
         $idGRParcial = DB::table('formulario_bitacoragr')->insertGetId([
             'NO_GR'            => null,
@@ -812,6 +748,7 @@ class grController extends Controller
             'PROVEEDOR_KEY'    => $request->PROVEEDOR_EQUIPO,
             'USUARIO_SOLICITO' => $request->modal_usuario_nombre,
             'USUARIO_ID'       => $usuarioId,
+            'GENEROGR_ID'      => $idUsuario,
             'NO_RECEPCION'     => $noRecepcion,
             'CREATED_AT'       => now(),
         ]);

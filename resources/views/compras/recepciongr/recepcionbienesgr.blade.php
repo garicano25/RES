@@ -175,6 +175,7 @@
                     <div id="modal-body-base">
 
                         <input type="hidden" id="ID_GR" name="ID_GR" value="0">
+                        <input type="hidden" id="GENEROGR_ID" name="GENEROGR_ID" value="0">
 
                         <div class="row mb-3">
                             <div class="col-md-3">
