@@ -228,7 +228,7 @@
                                 </div>
 
 
-                                <div class="col-6 mt-3">
+                                <div class="col-4 mt-3">
                                     <label class="form-label">Desde Año: </label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="DESDE_ANIO_VACACIONES" name="DESDE_ANIO_VACACIONES" required readonly>
@@ -236,7 +236,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-6 mt-3">
+                                <div class="col-4 mt-3">
                                     <label class="form-label">Hasta el Año: </label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="HASTA_ANIO_VACACIONES" name="HASTA_ANIO_VACACIONES" required readonly>
@@ -253,24 +253,6 @@
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                     </div>
                                 </div>
-
-
-                                <div class="col-4 mt-3">
-                                    <label class="form-label">Fecha de terminación vacaciones: </label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_TERMINACION_VACACIONES" name="FECHA_TERMINACION_VACACIONES" required>
-                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                    </div>
-                                </div>
-
-                                <div class="col-4 mt-3">
-                                    <label class="form-label">Día que inicia labores: </label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INICIALABORES_VACACIONES" name="FECHA_INICIALABORES_VACACIONES" required>
-                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                    </div>
-                                </div>
-
 
                             </div>
                         </div>

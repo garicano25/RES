@@ -428,6 +428,26 @@ $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.EDITAR', function 
     editarDatoTabla(row.data(), 'formularioRECURSOSEMPLEADO', 'miModal_RECURSOSEMPLEADOS', 1);
     
 
+        const dias = document.getElementById("NODIAS_PERMISO");
+        const horas = document.getElementById("NOHORAS_PERMISO");
+
+        if (row.data().NODIAS_PERMISO && parseInt(row.data().NODIAS_PERMISO) > 0) {
+            dias.disabled = false;
+            horas.value = "";
+            horas.disabled = true;
+        }
+
+        else if (row.data().NOHORAS_PERMISO && parseInt(row.data().NOHORAS_PERMISO) > 0) {
+            horas.disabled = false;
+            dias.value = "";
+            dias.disabled = true;
+        }
+
+        else {
+            dias.disabled = false;
+            horas.disabled = false;
+    }
+    
 
     if (row.data().TIPO_SOLICITUD === "1") {
         $('#PERMISO_AUSENCIA').show();
@@ -898,4 +918,50 @@ $(document).on('click', '.pdf-button', function () {
         window.open(`/generarVacaciones/${id}`, '_blank');
 
     }
+});
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const concepto = document.getElementById("CONCEPTO_PERMISO");
+    const inputDias = document.getElementById("NODIAS_PERMISO");
+    const inputHoras = document.getElementById("NOHORAS_PERMISO");
+
+    concepto.addEventListener("change", function () {
+        if (this.value === "6") { 
+            inputDias.value = 84;
+            inputHoras.value = "";
+            inputHoras.disabled = true;
+        } else if (this.value === "7") { 
+            inputDias.value = 5;
+            inputHoras.value = "";
+            inputHoras.disabled = true;
+        } else {
+            inputDias.value = "";
+            inputHoras.value = "";
+            inputHoras.disabled = false;
+        }
+    });
+
+    inputDias.addEventListener("input", function () {
+        if (this.value && parseInt(this.value) > 0) {
+            inputHoras.value = "";
+            inputHoras.disabled = true;
+        } else {
+            inputHoras.disabled = false;
+        }
+    });
+
+    inputHoras.addEventListener("input", function () {
+        if (this.value && parseInt(this.value) > 0) {
+            inputDias.value = "";
+            inputDias.disabled = true;
+        } else {
+            inputDias.disabled = false;
+        }
+    });
 });

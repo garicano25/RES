@@ -217,6 +217,16 @@
                                 </div>
 
                                 <div class="col-4 mt-3">
+                                    <label class="form-label">Número de días de descanso y/o séptimos</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="NO_DIAS_VACACIONES" name="NO_DIAS_VACACIONES" required>
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-4 mt-3">
                                     <label class="form-label">Fecha de terminación vacaciones: </label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_TERMINACION_VACACIONES" name="FECHA_TERMINACION_VACACIONES" required>
@@ -231,13 +241,15 @@
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
                     </div>
 
                     <div class="mt-3">
                         <label class="form-label">Observaciones </label>
-                        <textarea class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" rows="3" ></textarea>
+                        <textarea class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" rows="3"></textarea>
                     </div>
 
                     <div class="col-12 mt-4" id="GOCE_SUELDO" style="display: none;">

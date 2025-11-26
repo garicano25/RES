@@ -520,6 +520,28 @@ $('#Tablarecempleados tbody').on('click', 'td>button.EDITAR', function () {
     document.getElementById("guardaRECEMPLEADOS").disabled = false;
 
     
+        const dias = document.getElementById("NODIAS_PERMISO");
+        const horas = document.getElementById("NOHORAS_PERMISO");
+
+        if (row.data().NODIAS_PERMISO && parseInt(row.data().NODIAS_PERMISO) > 0) {
+            dias.disabled = false;
+            horas.value = "";
+            horas.disabled = true;
+        }
+
+        else if (row.data().NOHORAS_PERMISO && parseInt(row.data().NOHORAS_PERMISO) > 0) {
+            horas.disabled = false;
+            dias.value = "";
+            dias.disabled = true;
+        }
+
+        else {
+            dias.disabled = false;
+            horas.disabled = false;
+        }
+
+    
+    
     if (row.data().TIPO_SOLICITUD === "1") {
         $('#PERMISO_AUSENCIA').show();
         $('#SOLIDA_ALMACEN').hide();
@@ -664,11 +686,6 @@ function revisarSelects() {
     document.getElementById("FECHA_ESTIMADA").style.display = mostrar ? "block" : "none";
 }
 
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
     const radios = document.querySelectorAll('input[name="MATERIAL_RETORNA_SALIDA"]');
     const fechaDiv = document.getElementById("FECHA_ESTIMADA");
@@ -687,9 +704,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
     const select = document.getElementById("TIPO_SOLICITUD");
@@ -803,10 +817,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 }); 
 
-
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
     const selectConcepto = document.getElementById("CONCEPTO_PERMISO");
     const divExplique = document.getElementById("EXPLIQUE_PERMISO");
@@ -823,10 +833,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
-
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
      const btnFirmar = document.getElementById("FIRMAR_SOLICITUD");
@@ -916,8 +922,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
-
 
 
 
