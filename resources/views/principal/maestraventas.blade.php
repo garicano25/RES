@@ -439,6 +439,7 @@
 
     <!-- Funciones generales -->
     <script src="/assets/js_sitio/funciones.js?v=5.6"></script>
+    <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
 
 
     <script>
