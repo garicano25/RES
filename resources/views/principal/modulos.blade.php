@@ -377,91 +377,91 @@
                             <span class="tooltipText">Correo electrónico</span>
                         </div>
 
-                            <div class="notification-wrapper">
-                                <div class="tooltip">
-                                    <button class="nav__circularButton" id="btnNotificaciones">
-                                        <img src="assets/Modulos/img/notificacion.png" alt="">
-                                        <span id="contadorNotificaciones" class="notification-count">0</span>
-                                    </button>
+                    <div class="notification-wrapper">
+                        <div class="tooltip">
+                            <button class="nav__circularButton" id="btnNotificaciones">
+                                <img src="assets/Modulos/img/notificacion.png" alt="">
+                                <span id="contadorNotificaciones" class="notification-count">0</span>
+                            </button>
 
-                                </div>
+                        </div>
 
-                                <div class="notification-panel" id="panelNotificaciones">
-                                    <div class="notification-header">
-                                        <h4>Notificaciones</h4>
-                                    </div>
-
-                                    <div class="notification-body">
-                                        <p class="notification-item">📌 No tienes notificaciones por el momento.</p>
-                                    </div>
-                                </div>
-
-                                <style>
-                                    .notification-count {
-                                        position: absolute;
-                                        top: -5px;
-                                        right: -5px;
-                                        background: red;
-                                        color: white;
-                                        font-size: 12px;
-                                        font-weight: bold;
-                                        padding: 3px 6px;
-                                        border-radius: 50%;
-                                        display: none;
-                                        z-index: 9999;
-                                    }
-
-
-                                    .notification-wrapper {
-                                        position: relative;
-                                        display: inline-block;
-                                    }
-
-                                    .notification-panel {
-                                        position: absolute;
-                                        top: 85px;
-                                        right: 0;
-                                        width: 350px;
-                                        background: #ffffff;
-                                        border-radius: 10px;
-                                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-                                        display: none;
-                                        /* Oculto por defecto */
-                                        z-index: 999;
-                                        overflow: hidden;
-                                    }
-
-                                    .notification-header {
-                                        background: #a2a2a2;
-                                        padding: 10px;
-                                        font-weight: bold;
-                                        border-bottom: 1px solid #ddd;
-                                    }
-
-                                    .notification-body {
-                                        max-height: 250px;
-                                        overflow-y: auto;
-                                    }
-
-                                    .notification-item {
-                                        padding: 12px;
-                                        border-bottom: 1px solid #eee;
-                                        font-size: 14px;
-                                    }
-
-                                    .notification-item:last-child {
-                                        border-bottom: none;
-                                    }
-
-                                    .notification-item:hover {
-                                        background: #f0f0f0;
-                                        cursor: pointer;
-                                    }
-                                </style>
+                        <div class="notification-panel" id="panelNotificaciones">
+                            <div class="notification-header">
+                                <h4>Notificaciones</h4>
                             </div>
 
+                            <div class="notification-body">
+                                <p class="notification-item">📌 No tienes notificaciones por el momento.</p>
+                            </div>
+                        </div>
+
+                        <style>
+                            .notification-count {
+                                position: absolute;
+                                top: -5px;
+                                right: -5px;
+                                background: red;
+                                color: white;
+                                font-size: 12px;
+                                font-weight: bold;
+                                padding: 3px 6px;
+                                border-radius: 50%;
+                                display: none;
+                                z-index: 9999;
+                            }
+
+
+                            .notification-wrapper {
+                                position: relative;
+                                display: inline-block;
+                            }
+
+                            .notification-panel {
+                                position: absolute;
+                                top: 85px;
+                                right: 0;
+                                width: 350px;
+                                background: #ffffff;
+                                border-radius: 10px;
+                                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                                display: none;
+                                /* Oculto por defecto */
+                                z-index: 999;
+                                overflow: hidden;
+                            }
+
+                            .notification-header {
+                                background: #a2a2a2;
+                                padding: 10px;
+                                font-weight: bold;
+                                border-bottom: 1px solid #ddd;
+                            }
+
+                            .notification-body {
+                                max-height: 250px;
+                                overflow-y: auto;
+                            }
+
+                            .notification-item {
+                                padding: 12px;
+                                border-bottom: 1px solid #eee;
+                                font-size: 14px;
+                            }
+
+                            .notification-item:last-child {
+                                border-bottom: none;
+                            }
+
+                            .notification-item:hover {
+                                background: #f0f0f0;
+                                cursor: pointer;
+                            }
+                        </style>
                     </div>
+
                 </div>
+            </div>
 
                 <div class="content">
 
@@ -1184,11 +1184,8 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <script src="/assets/js_sitio/modulos.js?v=1.2"></script>
-
     <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
-
 
 
     <!-- Jquery 3.6.4-->

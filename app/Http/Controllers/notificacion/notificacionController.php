@@ -646,6 +646,47 @@ class notificacionController extends Controller
             }
 
 
+            /**
+             * 13 NOTIFICACIONES – Vo.Bo Bitácora GR (formulario_bitacoragr)
+             * Solo para el usuario dueño de la GR (USUARIO_ID = usuario autenticado)
+             */
+            $notiVoboGR = collect([]);
+
+            $badgeVoBoGR = "<span style='
+                background-color:#f4c542;
+                color:black;
+                padding:3px 8px;
+                border-radius:6px;
+                font-size:11px;
+                font-weight:bold;
+                display:inline-block;
+            '>Vo.Bo</span>";
+
+            $notiVoboGR = DB::table('formulario_bitacoragr')
+                ->where('USUARIO_ID', $idUsuario)
+
+                ->where('MANDAR_USUARIO_VOBO', 'Sí')
+
+                ->where(function ($q) {
+                    $q->whereNull('VO_BO_USUARIO')
+                        ->orWhereNotIn('VO_BO_USUARIO', ['Aprobada', 'Rechazada']);
+                })
+
+                ->orderBy('CREATED_AT', 'desc')
+                ->get()
+                ->map(function ($gr) use ($badgeVoBoGR) {
+
+                    return [
+                        'titulo'        => 'Vo.Bo GR: ' . $gr->NO_RECEPCION,
+                        'detalle'       => 'Pendiente de Vo.Bo del usuario',
+                        'fecha'         => 'Fecha: ' . date('Y-m-d', strtotime($gr->CREATED_AT)),
+                        'fecha_sort'    => date('Y-m-d H:i:s', strtotime($gr->CREATED_AT)),
+                        'estatus_badge' => $badgeVoBoGR,
+                        'link'          => url('/vobogrusuario')
+                    ];
+                });
+
+
 
             $resultado = collect($notiVoBo)
                 ->merge(collect($notiAutorizar))
@@ -659,6 +700,7 @@ class notificacionController extends Controller
                 ->merge(collect($notiAprobarMatriz))
                 ->merge(collect($notiOrdencompra))
                 ->merge(collect($notiAprobarPO))
+                ->merge(collect($notiVoboGR))
 
 
 

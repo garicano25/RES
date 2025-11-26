@@ -348,6 +348,7 @@ class grController extends Controller
 
                 // === Definir color de fila según estado en formulario_bitacoragr ===
                
+                
                 $registrosGR = DB::table('formulario_bitacoragr')
                     ->where('NO_MR', $first->NO_MR)
                     ->when($first->NO_PO, function ($q) use ($first) {

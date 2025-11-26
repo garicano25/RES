@@ -67,30 +67,58 @@
 
 <body class="body">
 
+
+
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #A4D65E; height: 100px;">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
                 <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
             </a>
-            <!-- Contenedor para centrar el título -->
             <div class="d-flex justify-content-center align-items-center w-100" style="position: absolute; top: 0; left: 0; height: 100px;">
                 <h1 class="text-white m-0" style="color:#ffff;font-weight: bold;">Almacén</h1>
             </div>
-            <!-- Menú lateral derecho -->
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav1">
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown" style="margin-right: 45px;">
+                <ul class="navbar-nav d-flex align-items-center" style="gap: 10px;">
+                    <li class="nav-item d-flex align-items-center">
+                        <div class="notification-wrapper">
+
+                            <button class="nav__iconButton" id="btnNotificaciones">
+                                <img src="assets/Modulos/img/notificacion.png" alt="Notificación">
+                                <span id="contadorNotificaciones" class="notification-count">0</span>
+                            </button>
+
+                            <div class="notification-panel" id="panelNotificaciones">
+                                <div class="notification-header">
+                                    <h4>Notificaciones</h4>
+                                </div>
+                                <div class="notification-body">
+                                    <p class="notification-item">📌 No tienes notificaciones por el momento.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown d-flex align-items-center">
+
                         @auth
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-fill text-white" style="font-size: 24px;"></i>
+                        <a class="nav__iconButton dropdown-toggle" href="#" id="navbarDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+                            <i class="bi bi-person-fill" style="font-size: 22px; color:#555;"></i>
+
                         </a>
+
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 250px;">
                             <li class="dropdown-item text-center">
-                                <strong>{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}</strong>
+                                <strong>{{ Auth::user()->EMPLEADO_NOMBRE }}
+                                    {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }}
+                                    {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}</strong>
                                 <br>
                                 <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
                             </li>
+
                             <li class="dropdown-divider"></li>
+
                             <li>
                                 <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                                     @csrf
@@ -100,16 +128,142 @@
                                 </form>
                             </li>
                         </ul>
-                        @else
-                        <script>
-                            window.location.href = "{{ route('login') }}";
-                        </script>
+
                         @endauth
+
                     </li>
+
                 </ul>
             </div>
+
+
+            <style>
+                .nav__iconButton {
+                    width: 40px;
+                    height: 40px;
+                    background: white;
+                    border-radius: 50%;
+                    border: none;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 0;
+                    cursor: pointer;
+                    position: relative;
+                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+                }
+
+                .nav__iconButton img {
+                    width: 22px;
+                    height: 22px;
+                    object-fit: contain;
+                    opacity: .7;
+                }
+
+                .dropdown-toggle::after {
+                    display: none !important;
+                }
+
+                .navbar-nav {
+                    gap: 10px !important;
+                }
+
+
+                .notification-wrapper {
+                    position: relative;
+                    display: inline-block;
+                }
+
+                .notification-panel {
+                    position: absolute;
+                    top: 85px;
+                    right: 0;
+                    width: 350px;
+                    background: #ffffff;
+                    border-radius: 10px;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                    display: none;
+                    z-index: 999;
+                    overflow: hidden;
+                }
+
+                .notification-count {
+                    position: absolute;
+                    top: -5px;
+                    right: -5px;
+                    background: red;
+                    color: white;
+                    font-size: 12px;
+                    font-weight: bold;
+                    padding: 3px 6px;
+                    border-radius: 50%;
+                    display: none;
+                    z-index: 9999;
+                }
+
+
+
+                .notification-header {
+                    background: #a2a2a2 !important;
+                    padding: 8px 12px !important;
+                    border-bottom: 1px solid #ddd !important;
+                    height: 42px;
+                    display: flex;
+                    align-items: center;
+                }
+
+                .notification-header h4 {
+                    font-size: 16px !important;
+                    font-weight: 800 !important;
+                    /* más grueso */
+                    color: #333 !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    line-height: 1 !important;
+                }
+
+
+
+                .notification-body {
+                    max-height: 250px;
+                    overflow-y: auto;
+                }
+
+                .notification-item {
+                    padding: 12px;
+                    border-bottom: 1px solid #eee;
+                    font-size: 13px;
+                    color: #444;
+                    line-height: 1.2;
+                }
+
+                .notification-item:last-child {
+                    border-bottom: none;
+                }
+
+                .notification-item:hover {
+                    background: #f0f0f0;
+                    cursor: pointer;
+                }
+
+
+                .notification-item strong,
+                .notification-item b {
+                    font-size: 14px !important;
+                    font-weight: 800 !important;
+                    color: #111 !important;
+                    line-height: 1.1 !important;
+                    display: block;
+                    margin-bottom: 3px;
+                }
+            </style>
+
+
+
         </div>
     </nav>
+
+
 
 
 
