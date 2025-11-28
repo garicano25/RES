@@ -429,6 +429,8 @@ $('#Tablalistaproveedores tbody').on('click', 'td>button.EDITAR', function () {
     $("#ESTADO_EXTRANJERO").val(row.data().ESTADO_EXTRANJERO);
     $("#PAIS_EXTRANJERO").val(row.data().PAIS_EXTRANJERO);
     $("#DEPARTAMENTO_EXTRANJERO").val(row.data().DEPARTAMENTO_EXTRANJERO);
+    $("#TIENE_ASIGNACION").val(row.data().TIENE_ASIGNACION);
+
     
 
     var verificacionSolicitada = row.data().VERIFICACION_SOLICITADA || 0;

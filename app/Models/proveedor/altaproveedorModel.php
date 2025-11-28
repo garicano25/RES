@@ -51,7 +51,8 @@ class altaproveedorModel extends Model
         'BENEFICIOS_PERSONA',
         'NOMBRE_PERSONA',
         'TIPO_PERSONA_OPCION',
-        'VERIFICACION_SOLCITADA'
+        'VERIFICACION_SOLCITADA',
+        'TIENE_ASIGNACION'
 
     ];
     

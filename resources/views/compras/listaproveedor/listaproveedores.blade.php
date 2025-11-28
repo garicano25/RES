@@ -371,6 +371,7 @@
                                         <label for="RFC_LABEL">R.F.C *</label>
                                         <input type="text" class="form-control" name="RFC_ALTA" id="RFC_ALTA" required readonly>
                                     </div>
+
                                     <div class="col-4 mb-3">
                                         <label>Régimen </label>
                                         <select class="form-control" name="REGIMEN_ALTA" id="REGIMEN_ALTA">
@@ -398,8 +399,6 @@
                                             <option value="21">Régimen de los ingresos por obtención de premios </option>
                                             <option value="23">Régimen simplificado de confianza </option>
                                             <option value="22">Otro </option>
-
-
                                         </select>
                                     </div>
 
@@ -655,6 +654,21 @@
                                     </div>
 
                                 </div>
+
+
+                                <div class="mb-3 text-center">
+                                    <h4><b>Asignación proveedor</b></label>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label>¡ El proveedor tendrá asignaciones !</label>
+                                    <select class="form-control" name="TIENE_ASIGNACION" id="TIENE_ASIGNACION">
+                                        <option value="" selected disabled>Seleccione una opción</option>
+                                        <option value="1">Sí</option>
+                                        <option value="2">No</option>
+                                    </select>
+                                </div>
+
+
                             </div>
 
 

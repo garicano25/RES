@@ -27,7 +27,11 @@
         background-color: #fff3cd !important;
     }
 
-    
+    .bg-naranja-suave {
+        background-color: #efd8b9 !important;
+    }
+
+
     .tabla-scroll-wrapper {
         width: 100%;
     }

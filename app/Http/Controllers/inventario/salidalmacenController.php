@@ -23,6 +23,7 @@ use App\Models\inventario\catalogotipoinventarioModel;
 
 
 use App\Models\recempleados\recemplaedosModel;
+use App\Models\contratacion\contratacionModel;
 
 
 
@@ -36,7 +37,23 @@ class salidalmacenController extends Controller
         $proveedoresTemporales = proveedortempModel::select('RAZON_PROVEEDORTEMP', 'RFC_PROVEEDORTEMP', 'NOMBRE_PROVEEDORTEMP')->get();
         $inventario = inventarioModel::where('ACTIVO', 1)->get();
 
-        return view('almacen.salidalmacen.salidaalmacen', compact('tipoinventario', 'proveedoresOficiales', 'proveedoresTemporales', 'inventario'));
+
+        $colaboradores = contratacionModel::where('ACTIVO', 1)->get();
+
+
+        $proveedores = DB::table('formulario_altaproveedor as ap')
+            ->leftJoin('formulario_directorio as d', 'd.RFC_PROVEEDOR', '=', 'ap.RFC_ALTA')
+            ->where('ap.TIENE_ASIGNACION', 1)
+            ->select(
+                'ap.ID_FORMULARIO_ALTA',
+                'ap.RFC_ALTA',
+                'ap.TIENE_ASIGNACION',
+                'd.NOMBRE_DIRECTORIO'
+            )
+            ->get();
+
+
+        return view('almacen.salidalmacen.salidaalmacen', compact('tipoinventario', 'proveedoresOficiales', 'proveedoresTemporales', 'inventario', 'colaboradores', 'proveedores'));
     }
 
 
@@ -243,49 +260,163 @@ class salidalmacenController extends Controller
                                 ) {
                                     $materiales = json_decode($mrs->MATERIALES_JSON, true);
 
-                                    if (is_array($materiales)) {
+                                    // if (is_array($materiales)) {
+                                    //     foreach ($materiales as $mat) {
+                                    //         if (!empty($mat['VARIOS_ARTICULOS']) && $mat['VARIOS_ARTICULOS'] == "1" && isset($mat['ARTICULOS'])) {
+                                    //             foreach ($mat['ARTICULOS'] as $art) {
+                                    //                 $cantidad = intval($art['CANTIDAD_DETALLE'] ?? 0);
+
+                                    //                 if ($cantidad > 0) {
+                                    //                     DB::table('salidas_inventario')->insert([
+                                    //                         'USUARIO_ID'      => $mrs->USUARIO_ID,
+                                    //                         'INVENTARIO_ID'   => $art['INVENTARIO'],
+                                    //                         'CANTIDAD_SALIDA' => $cantidad,
+                                    //                         'FECHA_SALIDA'    => $mrs->FECHA_ALMACEN_SOLICITUD,
+                                    //                         'UNIDAD_MEDIDA'   => $art['UNIDAD_DETALLE'],
+                                    //                         'created_at'      => now(),
+                                    //                         'updated_at'      => now()
+                                    //                     ]);
+
+                                    //                     $inventario = inventarioModel::find($art['INVENTARIO']);
+                                    //                     if ($inventario) {
+                                    //                         $inventario->CANTIDAD_EQUIPO = max(0, $inventario->CANTIDAD_EQUIPO - $cantidad);
+                                    //                         $inventario->save();
+                                    //                     }
+                                    //                 }
+                                    //             }
+                                    //         } else {
+                                    //             $cantidad = intval($mat['CANTIDAD_SALIDA'] ?? 0);
+
+                                    //             if ($cantidad > 0) {
+                                    //                 DB::table('salidas_inventario')->insert([
+                                    //                     'USUARIO_ID'      => $mrs->USUARIO_ID,
+                                    //                     'INVENTARIO_ID'   => $mat['INVENTARIO'],
+                                    //                     'CANTIDAD_SALIDA' => $cantidad,
+                                    //                     'FECHA_SALIDA'    => $mrs->FECHA_ALMACEN_SOLICITUD,
+                                    //                     'UNIDAD_MEDIDA'   => $mat['UNIDAD_SALIDA'],
+                                    //                     'created_at'      => now(),
+                                    //                     'updated_at'      => now()
+                                    //                 ]);
+
+                                    //                 $inventario = inventarioModel::find($mat['INVENTARIO']);
+                                    //                 if ($inventario) {
+                                    //                     $inventario->CANTIDAD_EQUIPO = max(0, $inventario->CANTIDAD_EQUIPO - $cantidad);
+                                    //                     $inventario->save();
+                                    //                 }
+                                    //             }
+                                    //         }
+                                    //     }
+
+                                    //     $mrs->update([
+                                    //         'GUARDO_SALIDA_INVENTARIO' => 1
+                                    //     ]);
+                                    // }
+
+
+                                    if (is_array($materiales) && $mrs->GUARDO_SALIDA_INVENTARIO != 1) {
+
                                         foreach ($materiales as $mat) {
+
+                                            $esAsignacionUnico = isset($mat['ES_ASIGNACION']) && $mat['ES_ASIGNACION'] == "1";
+                                            $nombreAsignacionUnico = $mat['NOMBRE_ASIGNACION'] ?? null;
+
                                             if (!empty($mat['VARIOS_ARTICULOS']) && $mat['VARIOS_ARTICULOS'] == "1" && isset($mat['ARTICULOS'])) {
+
                                                 foreach ($mat['ARTICULOS'] as $art) {
+
                                                     $cantidad = intval($art['CANTIDAD_DETALLE'] ?? 0);
+                                                    if ($cantidad <= 0) continue;
 
-                                                    if ($cantidad > 0) {
-                                                        DB::table('salidas_inventario')->insert([
-                                                            'USUARIO_ID'      => $mrs->USUARIO_ID,
-                                                            'INVENTARIO_ID'   => $art['INVENTARIO'],
-                                                            'CANTIDAD_SALIDA' => $cantidad,
-                                                            'FECHA_SALIDA'    => $mrs->FECHA_ALMACEN_SOLICITUD,
-                                                            'UNIDAD_MEDIDA'   => $art['UNIDAD_DETALLE'],
-                                                            'created_at'      => now(),
-                                                            'updated_at'      => now()
+                                                    $esAsignacionDet = isset($art['ES_ASIGNACION_DETALLE']) && $art['ES_ASIGNACION_DETALLE'] == "1";
+                                                    $nombreAsignacionDet = $art['NOMBRE_ASIGNACION_DETALLE'] ?? null;
+
+                                                    if ($esAsignacionDet) {
+                                                        $usuarioId = null;
+                                                        $usuarioAsignacion = $nombreAsignacionDet;
+                                                        $salidaAsignacion = 1;
+                                                    } else {
+                                                        $usuarioId = $mrs->USUARIO_ID;
+                                                        $usuarioAsignacion = null;
+                                                        $salidaAsignacion = null;
+                                                    }
+
+                                                    DB::table('salidas_inventario')->insert([
+                                                        'USUARIO_ID'        => $usuarioId,
+                                                        'USUARIO_ASIGNACION' => $usuarioAsignacion,
+                                                        'SALIDA_ASIGNACIONES' => $salidaAsignacion,
+                                                        'INVENTARIO_ID'     => $art['INVENTARIO'],
+                                                        'CANTIDAD_SALIDA'   => $cantidad,
+                                                        'FECHA_SALIDA'      => $mrs->FECHA_ALMACEN_SOLICITUD,
+                                                        'UNIDAD_MEDIDA'     => $art['UNIDAD_DETALLE'],
+                                                        'created_at'        => now(),
+                                                        'updated_at'        => now()
+                                                    ]);
+
+                                                    $inventario = inventarioModel::find($art['INVENTARIO']);
+                                                    if ($inventario) {
+                                                        $inventario->CANTIDAD_EQUIPO = max(0, $inventario->CANTIDAD_EQUIPO - $cantidad);
+
+                                                        if ($esAsignacionDet)
+                                                            $inventario->ASIGNADO = 1;
+
+                                                        $inventario->save();
+                                                    }
+
+                                                    if ($esAsignacionDet) {
+                                                        DB::table('asignaciones_inventario')->insert([
+                                                            'ASIGNADO_ID'      => $nombreAsignacionDet,
+                                                            'INVENTARIO_ID'    => $art['INVENTARIO'],
+                                                            'FECHA_ASIGNACION' => $mrs->FECHA_ALMACEN_SOLICITUD,
+                                                            'created_at'       => now(),
+                                                            'updated_at'       => now()
                                                         ]);
-
-                                                        $inventario = inventarioModel::find($art['INVENTARIO']);
-                                                        if ($inventario) {
-                                                            $inventario->CANTIDAD_EQUIPO = max(0, $inventario->CANTIDAD_EQUIPO - $cantidad);
-                                                            $inventario->save();
-                                                        }
                                                     }
                                                 }
                                             } else {
+
                                                 $cantidad = intval($mat['CANTIDAD_SALIDA'] ?? 0);
+                                                if ($cantidad <= 0) continue;
 
-                                                if ($cantidad > 0) {
-                                                    DB::table('salidas_inventario')->insert([
-                                                        'USUARIO_ID'      => $mrs->USUARIO_ID,
-                                                        'INVENTARIO_ID'   => $mat['INVENTARIO'],
-                                                        'CANTIDAD_SALIDA' => $cantidad,
-                                                        'FECHA_SALIDA'    => $mrs->FECHA_ALMACEN_SOLICITUD,
-                                                        'UNIDAD_MEDIDA'   => $mat['UNIDAD_SALIDA'],
-                                                        'created_at'      => now(),
-                                                        'updated_at'      => now()
+                                                if ($esAsignacionUnico) {
+                                                    $usuarioId = null;
+                                                    $usuarioAsignacion = $nombreAsignacionUnico;
+                                                    $salidaAsignacion = 1;
+                                                } else {
+                                                    $usuarioId = $mrs->USUARIO_ID;
+                                                    $usuarioAsignacion = null;
+                                                    $salidaAsignacion = null;
+                                                }
+
+                                                DB::table('salidas_inventario')->insert([
+                                                    'USUARIO_ID'        => $usuarioId,
+                                                    'USUARIO_ASIGNACION' => $usuarioAsignacion,
+                                                    'SALIDA_ASIGNACIONES' => $salidaAsignacion,
+                                                    'INVENTARIO_ID'     => $mat['INVENTARIO'],
+                                                    'CANTIDAD_SALIDA'   => $cantidad,
+                                                    'FECHA_SALIDA'      => $mrs->FECHA_ALMACEN_SOLICITUD,
+                                                    'UNIDAD_MEDIDA'     => $mat['UNIDAD_SALIDA'],
+                                                    'created_at'        => now(),
+                                                    'updated_at'        => now()
+                                                ]);
+
+                                                $inventario = inventarioModel::find($mat['INVENTARIO']);
+                                                if ($inventario) {
+                                                    $inventario->CANTIDAD_EQUIPO = max(0, $inventario->CANTIDAD_EQUIPO - $cantidad);
+
+                                                    if ($esAsignacionUnico)
+                                                        $inventario->ASIGNADO = 1;
+
+                                                    $inventario->save();
+                                                }
+
+                                                if ($esAsignacionUnico) {
+                                                    DB::table('asignaciones_inventario')->insert([
+                                                        'ASIGNADO_ID'      => $nombreAsignacionUnico,
+                                                        'INVENTARIO_ID'    => $mat['INVENTARIO'],
+                                                        'FECHA_ASIGNACION' => $mrs->FECHA_ALMACEN_SOLICITUD,
+                                                        'created_at'       => now(),
+                                                        'updated_at'       => now()
                                                     ]);
-
-                                                    $inventario = inventarioModel::find($mat['INVENTARIO']);
-                                                    if ($inventario) {
-                                                        $inventario->CANTIDAD_EQUIPO = max(0, $inventario->CANTIDAD_EQUIPO - $cantidad);
-                                                        $inventario->save();
-                                                    }
                                                 }
                                             }
                                         }
@@ -294,6 +425,7 @@ class salidalmacenController extends Controller
                                             'GUARDO_SALIDA_INVENTARIO' => 1
                                         ]);
                                     }
+
                                 }
 
                                 $materiales = json_decode($mrs->MATERIALES_JSON, true);

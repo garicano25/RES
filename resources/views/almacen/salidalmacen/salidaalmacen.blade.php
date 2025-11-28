@@ -11,6 +11,18 @@
     .bg-verde-suave {
         background-color: #d1e7dd !important;
     }
+
+    .select2-dropdown-fixed {
+        position: absolute !important;
+        top: unset !important;
+        bottom: unset !important;
+    }
+
+
+    .select2-results__option.opcion-asignada {
+        color: #fcba6fff !important;
+        font-style: italic;
+    }
 </style>
 
 <div class="contenedor-contenido">
@@ -209,6 +221,9 @@
 <script>
     window.tipoinventario = @json($tipoinventario);
     window.inventario = @json($inventario);
+
+    window.colaboradores = @json($colaboradores);
+    window.proveedores = @json($proveedores);
 </script>
 
 

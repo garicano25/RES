@@ -43,6 +43,7 @@
 
 
 
+
     @if(request()->is('dpt'))
     <link rel="stylesheet" href="assets/css/dpt.css">
     @endif
@@ -156,7 +157,6 @@
 
 
             <style>
-               
                 .nav__iconButton {
                     width: 40px;
                     height: 40px;
@@ -187,7 +187,7 @@
                     gap: 10px !important;
                 }
 
-            
+
                 .notification-wrapper {
                     position: relative;
                     display: inline-block;
@@ -597,6 +597,7 @@
     </script>
 
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 
 
     @if(request()->is('organigrama'))
@@ -728,7 +729,7 @@
     @endif
 
     @if(request()->is('solicitudesaprobaciones'))
-    <script src="/assets/js_sitio/RecEmpleados/recempleadoaprobacion.js?v=1.15"></script>
+    <script src="/assets/js_sitio/RecEmpleados/recempleadoaprobacion.js?v=1.17"></script>
     @endif
 
 

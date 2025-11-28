@@ -51,6 +51,9 @@ class inventarioController extends Controller
             $tabla = inventarioModel::get();
 
             foreach ($tabla as $value) {
+
+
+                
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_INVENTARIO . '"><span class="slider round"></span></label>';
@@ -100,6 +103,13 @@ class inventarioController extends Controller
                 } else {
                     $value->ROW_CLASS = $completo ? 'bg-verde-suave' : 'bg-rojo-suave';
                 }
+
+
+                if ($value->ASIGNADO == 1) {
+                    $value->ROW_CLASS = 'bg-naranja-suave';
+                }
+
+                
             }
 
             // Respuesta
@@ -194,12 +204,11 @@ class inventarioController extends Controller
     public function respaldarInventario()
     {
         try {
-            // Obtener todos los registros de formulario_inventario
             $inventarios = DB::table('formulario_inventario')->get();
 
             foreach ($inventarios as $inv) {
                 DB::table('inventario_respaldo')->insert([
-                    'INVENTARIO_ID'       => $inv->ID_FORMULARIO_INVENTARIO, // ID original
+                    'INVENTARIO_ID'       => $inv->ID_FORMULARIO_INVENTARIO, 
                     'FOTO_EQUIPO'         => $inv->FOTO_EQUIPO,
                     'DESCRIPCION_EQUIPO'  => $inv->DESCRIPCION_EQUIPO,
                     'MARCA_EQUIPO'        => $inv->MARCA_EQUIPO,
@@ -348,37 +357,75 @@ class inventarioController extends Controller
             // =========================
             // 3. Salidas
             // =========================
+          
             $salidas = DB::table('salidas_inventario as s')
-                ->join('usuarios as u', 'u.ID_USUARIO', '=', 's.USUARIO_ID')
+                ->leftJoin('usuarios as u', 'u.ID_USUARIO', '=', 's.USUARIO_ID')
                 ->where('s.INVENTARIO_ID', $inventarioId)
                 ->get([
                     's.FECHA_SALIDA',
                     's.CANTIDAD_SALIDA',
                     's.UNIDAD_MEDIDA',
                     's.created_at',
+                    's.SALIDA_ASIGNACIONES',
+                    's.USUARIO_ASIGNACION',
                     'u.EMPLEADO_NOMBRE',
                     'u.EMPLEADO_APELLIDOPATERNO',
                     'u.EMPLEADO_APELLIDOMATERNO'
-                ])->map(function ($salida) {
-                    $usuario = trim($salida->EMPLEADO_NOMBRE . ' ' . $salida->EMPLEADO_APELLIDOPATERNO . ' ' . $salida->EMPLEADO_APELLIDOMATERNO);
+                ])
+                ->map(function ($salida) {
 
-                    $fechaMostrar = $salida->FECHA_SALIDA;
+                    if ($salida->SALIDA_ASIGNACIONES == 1) {
 
-                    $fechaOrden = $salida->FECHA_SALIDA;
+                        $asignado = $salida->USUARIO_ASIGNACION;
+
+                        $colaborador = DB::table('formulario_contratacion')
+                            ->where('CURP', $asignado)
+                            ->first();
+
+                        $proveedor = DB::table('formulario_directorio')
+                            ->where('RFC_PROVEEDOR', $asignado)
+                            ->first();
+
+                        if ($colaborador) {
+                            $usuario = trim($colaborador->NOMBRE_COLABORADOR . ' ' .
+                                $colaborador->PRIMER_APELLIDO . ' ' .
+                                $colaborador->SEGUNDO_APELLIDO);
+
+                            $tipoBadge = '<span class="badge text-bg-warning">Asignado colaborador</span>';
+                        } elseif ($proveedor) {
+                            $usuario = $proveedor->NOMBRE_DIRECTORIO;
+
+                            $tipoBadge = '<span class="badge text-bg-warning">Asignado proveedor</span>';
+                        } else {
+                            $usuario = $asignado;
+                            $tipoBadge = '<span class="badge text-bg-warning">Asignado</span>';
+                        }
+                    } else {
+
+                      
+                        $usuario = trim(
+                            ($salida->EMPLEADO_NOMBRE ?? '') . ' ' .
+                                ($salida->EMPLEADO_APELLIDOPATERNO ?? '') . ' ' .
+                                ($salida->EMPLEADO_APELLIDOMATERNO ?? '')
+                        );
+
+                        $tipoBadge = '<span class="badge bg-danger">Salida</span>';
+                    }
 
                     return [
                         'ORDEN_PRIORIDAD' => 1,
-                        'FECHA'          => $fechaMostrar,
-                        'FECHA_ORDEN'    => $fechaOrden,
+                        'FECHA'          => $salida->FECHA_SALIDA,
+                        'FECHA_ORDEN'    => $salida->FECHA_SALIDA,
                         'CANTIDAD'       => $salida->CANTIDAD_SALIDA . ($salida->UNIDAD_MEDIDA ? " ({$salida->UNIDAD_MEDIDA})" : ""),
                         'VALOR_UNITARIO' => '',
                         'COSTO_TOTAL'    => '',
-                        'TIPO'           => '<span class="badge bg-danger">Salida</span>',
+                        'TIPO'           => $tipoBadge,
                         'USUARIO'        => $usuario,
                         'BTN_EDITAR'     => '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>',
                         'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>'
                     ];
                 });
+
 
             // =========================
             // 4. Unir todo y ordenar

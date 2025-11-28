@@ -12,7 +12,6 @@ class inventarioModel extends Model
     protected $table = 'formulario_inventario';
     protected $fillable = [
 
-
         'FOTO_EQUIPO',
         'DESCRIPCION_EQUIPO',
         'MARCA_EQUIPO',
@@ -32,8 +31,8 @@ class inventarioModel extends Model
         'UNIDAD_MEDIDA',
         'REQUIERE_ARTICULO',
         'LIMITEMINIMO_EQUIPO',
-        'ITEM_CRITICO'
-
+        'ITEM_CRITICO',
+        'ASIGNADO'
 
 
     ];

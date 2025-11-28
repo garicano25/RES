@@ -23,16 +23,11 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     $('#SELECCIONAR_SUBIRDOCUMENTO').hide();
 
 
-
-
-    
     document.querySelector('.materialesdiv').innerHTML = '';
     contadorMateriales = 1;
 
 
     document.getElementById('RECIBO_ERROR').style.display = 'none';
-
-
 
      const inputFecha = document.getElementById("FECHA_APRUEBA_SOLICITUD");
     if (inputFecha) {
@@ -42,6 +37,18 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     if (typeof Swal !== "undefined") {
         Swal.close();
     }
+
+
+
+     diasNoLaborales.clear();
+
+    $("#NO_DIAS_VACACIONES").val("");
+    $("#FECHA_TERMINACION_VACACIONES").val("");
+    $("#FECHA_INICIALABORES_VACACIONES").val("");
+
+    $("#NO_DIAS_VACACIONES").datepicker("setDate", null);
+    $("#NO_DIAS_VACACIONES").datepicker("update");
+
 });
 
 
@@ -603,7 +610,6 @@ function cargarMaterialesDesdeJSON(materialesJson) {
         revisarSelects();
 
     } catch (e) {
-        console.error('Error al parsear MATERIALES_JSON:', e);
     }
 }
 
@@ -965,3 +971,318 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+
+
+
+
+
+
+
+
+
+function crearFechaLocal(ymd) {
+    let p = ymd.split("-");
+    return new Date(p[0], p[1] - 1, p[2]);
+}
+
+function formatearLocal(d) {
+    let y = d.getFullYear();
+    let m = (d.getMonth() + 1).toString().padStart(2, "0");
+    let da = d.getDate().toString().padStart(2, "0");
+    return `${y}-${m}-${da}`;
+}
+
+let diasNoLaborales = new Set();  
+                                  
+$(document).ready(() => {
+
+
+    $("#NO_DIAS_VACACIONES").datepicker({
+        format: "yyyy-mm-dd",
+        autoclose: false,
+        language: "es"
+    }).on("changeDate", function (e) {
+
+        let fecha = formatearLocal(e.date);
+
+
+        let dow = e.date.getDay();
+
+        if (dow === 0) {
+        } else {
+            // Alternar selección
+            if (diasNoLaborales.has(fecha)) {
+                diasNoLaborales.delete(fecha);
+            } else {
+                diasNoLaborales.add(fecha);
+            }
+        }
+
+        // Mostrar lista de festivos seleccionados
+        $("#NO_DIAS_VACACIONES").val([...diasNoLaborales].join(", "));
+
+        calcularVacaciones();
+    });
+
+
+    // Activar otros calendarios
+    $("#FECHA_INICIO_VACACIONES, #FECHA_TERMINACION_VACACIONES, #FECHA_INICIALABORES_VACACIONES")
+        .datepicker({
+            format: "yyyy-mm-dd",
+            autoclose: true,
+            language: "es"
+        });
+});
+
+
+
+function calcularVacaciones() {
+
+    let dias = parseInt($("#DIAS_DISFRUTAR_VACACIONES").val());
+    let inicio = $("#FECHA_INICIO_VACACIONES").val();
+    if (!dias || !inicio) return;
+
+
+    let fecha = crearFechaLocal(inicio);
+    let usados = 1;
+
+
+    while (usados < dias) {
+
+        fecha.setDate(fecha.getDate() + 1);
+
+        let ymd = formatearLocal(fecha);
+        let dow = fecha.getDay();
+
+
+        if (dow === 0) {
+            continue;
+        }
+
+        if (diasNoLaborales.has(ymd)) {
+            continue;
+        }
+
+        usados++;
+    }
+
+    let fin = formatearLocal(fecha);
+
+    $("#FECHA_TERMINACION_VACACIONES").val(fin);
+
+    calcularRegreso(fin);
+}
+
+
+function calcularRegreso(fin) {
+
+
+    let d = crearFechaLocal(fin);
+
+    while (true) {
+
+        d.setDate(d.getDate() + 1);
+
+        let ymd = formatearLocal(d);
+        let dow = d.getDay();
+
+
+        if (dow === 0) {
+            continue;
+        }
+
+        if (diasNoLaborales.has(ymd)) {
+            continue;
+        }
+
+        $("#FECHA_INICIALABORES_VACACIONES").val(ymd);
+        break;
+    }
+}
+
+
+
+$("#DIAS_DISFRUTAR_VACACIONES").on("input", calcularVacaciones);
+$("#FECHA_INICIO_VACACIONES").on("change", calcularVacaciones);
+
+
+
+
+
+
+
+
+
+
+// /* ============================================================
+//    FUNCIONES FECHA LOCAL
+// ============================================================ */
+// function crearFechaLocal(ymd) {
+//     let p = ymd.split("-");
+//     return new Date(p[0], p[1] - 1, p[2]);
+// }
+
+// function formatearLocal(d) {
+//     let y = d.getFullYear();
+//     let m = (d.getMonth() + 1).toString().padStart(2, "0");
+//     let da = d.getDate().toString().padStart(2, "0");
+//     return `${y}-${m}-${da}`;
+// }
+
+// /* ============================================================
+//    VARIABLES
+// ============================================================ */
+// let diasNoLaborales = new Set();  // ← AQUÍ SE GUARDAN SÓLO FESTIVOS SELECCIONADOS
+//                                   // LOS DOMINGOS NO SE GUARDAN AQUÍ
+
+
+// /* ============================================================
+//    DATEPICKER PARA MARCAR FESTIVOS Y DOMINGOS
+// ============================================================ */
+// $(document).ready(() => {
+
+//     console.log("=== Datepicker CARGADO ===");
+
+//     $("#NO_DIAS_VACACIONES").datepicker({
+//         format: "yyyy-mm-dd",
+//         autoclose: false,
+//         language: "es"
+//     }).on("changeDate", function (e) {
+
+//         let fecha = formatearLocal(e.date);
+
+//         console.log("Click fecha:", fecha);
+
+//         let dow = e.date.getDay();
+
+//         // si es domingo NO se guarda como festivo, solo afecta regreso
+//         if (dow === 0) {
+//             console.log("Domingo → NO se agrega a festivos");
+//         } else {
+//             // Alternar selección
+//             if (diasNoLaborales.has(fecha)) {
+//                 diasNoLaborales.delete(fecha);
+//                 console.log("❌ Quitado festivo:", fecha);
+//             } else {
+//                 diasNoLaborales.add(fecha);
+//                 console.log("✔ Festivo agregado:", fecha);
+//             }
+//         }
+
+//         // Mostrar lista de festivos seleccionados
+//         $("#NO_DIAS_VACACIONES").val([...diasNoLaborales].join(", "));
+
+//         calcularVacaciones();
+//     });
+
+
+//     // Activar otros calendarios
+//     $("#FECHA_INICIO_VACACIONES, #FECHA_TERMINACION_VACACIONES, #FECHA_INICIALABORES_VACACIONES")
+//         .datepicker({
+//             format: "yyyy-mm-dd",
+//             autoclose: true,
+//             language: "es"
+//         });
+// });
+
+
+// /* ============================================================
+//    CALCULAR FECHA DE VACACIONES
+// ============================================================ */
+// function calcularVacaciones() {
+
+//     let dias = parseInt($("#DIAS_DISFRUTAR_VACACIONES").val());
+//     let inicio = $("#FECHA_INICIO_VACACIONES").val();
+//     if (!dias || !inicio) return;
+
+//     console.log("---- CALCULANDO VACACIONES ----");
+
+//     let fecha = crearFechaLocal(inicio);
+//     let usados = 1;
+
+//     console.log("Día #1 contado:", formatearLocal(fecha));
+
+//     while (usados < dias) {
+
+//         fecha.setDate(fecha.getDate() + 1);
+
+//         let ymd = formatearLocal(fecha);
+//         let dow = fecha.getDay();
+
+//         console.log("Evaluando:", ymd, " dow:", dow);
+
+//         // NO cuentan domingos
+//         if (dow === 0) {
+//             console.log("⛔ Domingo → NO cuenta");
+//             continue;
+//         }
+
+//         // NO cuentan festivos seleccionados
+//         if (diasNoLaborales.has(ymd)) {
+//             console.log("⛔ Festivo → NO cuenta");
+//             continue;
+//         }
+
+//         usados++;
+//         console.log("✔ Día contado #" + usados, ymd);
+//     }
+
+//     let fin = formatearLocal(fecha);
+//     console.log(">>> FECHA FINAL =", fin);
+
+//     $("#FECHA_TERMINACION_VACACIONES").val(fin);
+
+//     calcularRegreso(fin);
+// }
+
+
+// /* ============================================================
+//    CALCULAR FECHA DE REGRESO
+// ============================================================ */
+// function calcularRegreso(fin) {
+
+//     console.log("---- CALCULANDO REGRESO ----");
+
+//     let d = crearFechaLocal(fin);
+
+//     while (true) {
+
+//         d.setDate(d.getDate() + 1);
+
+//         let ymd = formatearLocal(d);
+//         let dow = d.getDay();
+
+//         console.log("Regreso eval:", ymd, "→", dow);
+
+//         // Domingo NO laboral
+//         if (dow === 0) {
+//             console.log("⛔ Domingo → NO laboral");
+//             continue;
+//         }
+
+//         // Festivo seleccionado = NO laboral
+//         if (diasNoLaborales.has(ymd)) {
+//             console.log("⛔ Festivo seleccionado → NO laboral");
+//             continue;
+//         }
+
+//         console.log("✔ Regresa a labores:", ymd);
+//         $("#FECHA_INICIALABORES_VACACIONES").val(ymd);
+//         break;
+//     }
+// }
+
+
+
+
+
+// /* ============================================================
+//    EVENTOS
+// ============================================================ */
+// $("#DIAS_DISFRUTAR_VACACIONES").on("input", calcularVacaciones);
+// $("#FECHA_INICIO_VACACIONES").on("change", calcularVacaciones);
+
+
+
+

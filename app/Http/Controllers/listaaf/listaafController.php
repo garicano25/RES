@@ -95,6 +95,10 @@ class listaafController extends Controller
                 } else {
                     $value->ROW_CLASS = $completo ? 'bg-verde-suave' : 'bg-rojo-suave';
                 }
+
+                if ($value->ASIGNADO == 1) {
+                    $value->ROW_CLASS = 'bg-naranja-suave';
+                }
             }
 
             // Respuesta

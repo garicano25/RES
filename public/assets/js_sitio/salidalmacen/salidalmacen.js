@@ -125,6 +125,8 @@ $("#guardaRECEMPLEADOS").click(function (e) {
                 'CANTIDAD_RETORNO': $(this).find("input[name='CANTIDAD_RETORNO']").val(),
                 'VARIOS_ARTICULOS': $(this).find("select[name='VARIOS_ARTICULOS']").val(),
                 'UNIDAD_SALIDA': $(this).find("input[name='UNIDAD_SALIDA']").val(),
+                'ES_ASIGNACION': $(this).find("select[name='ES_ASIGNACION']").val(),
+                'NOMBRE_ASIGNACION': $(this).find("select[name='NOMBRE_ASIGNACION']").val(),
 
                 'ARTICULOS': [] 
             };
@@ -139,6 +141,11 @@ $("#guardaRECEMPLEADOS").click(function (e) {
                         'FECHA_DETALLE': $(this).find("input[name='FECHA_DETALLE[]']").val(),
                         'CANTIDAD_RETORNO_DETALLE': $(this).find("input[name='CANTIDAD_RETORNO_DETALLE[]']").val(),
                         'UNIDAD_DETALLE': $(this).find("input[name='UNIDAD_DETALLE[]']").val(),
+                        'ES_ASIGNACION_DETALLE': $(this).find("select[name='ES_ASIGNACION_DETALLE[]']").val(),
+                        'NOMBRE_ASIGNACION_DETALLE': $(this).find("select[name='NOMBRE_ASIGNACION_DETALLE[]']").val(),
+
+
+                        
 
                     };
                     documento.ARTICULOS.push(articulo);
@@ -477,6 +484,23 @@ $('#Tablasalidalmacen tbody').on('click', 'td>button.EDITAR', function () {
 
 
 
+
+function obtenerModalPadre(elemento) {
+    const modalBody = $(elemento).closest(".modal-body");
+
+    if (modalBody.length > 0) {
+        return modalBody; 
+    }
+
+    const modal = $(elemento).closest(".modal");
+
+    if (modal.length > 0) {
+        return modal;
+    }
+
+    return $("body");
+}
+
 function cargarMaterialesDesdeJSON(materialesJson) {
     const contenedorMateriales = document.querySelector('.materialesdiv');
     contenedorMateriales.innerHTML = '';
@@ -495,7 +519,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                         <label class="form-label">N°</label>
                         <input type="text" class="form-control" name="NUMERO_ORDEN" value="${contadorMateriales}" readonly>
                     </div>
-                    <div class="col-7 mt-2">
+                    <div class="col-4 mt-2">
                         <label class="form-label">Descripción</label>
                         <input type="text" class="form-control" name="DESCRIPCION" value="${escapeHtml(material.DESCRIPCION)}" required>
                     </div>
@@ -504,8 +528,8 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                         <input type="number" class="form-control cantidad_original" name="CANTIDAD" value="${material.CANTIDAD}" required>
                     </div>
 
-                    <div class="col-3 mt-2">
-                        <label class="form-label">¿Son varios artículos?</label>
+                    <div class="col-2 mt-2">
+                        <label class="form-label">Varios ítem</label>
                         <select class="form-control varios_articulos" name="VARIOS_ARTICULOS" required>
                             <option value="" ${!material.VARIOS_ARTICULOS ? "selected" : ""} disabled>Seleccione</option>
                             <option value="0" ${material.VARIOS_ARTICULOS === "0" ? "selected" : ""}>No</option>
@@ -513,15 +537,15 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                         </select>
                     </div>
 
-                    <div class="col-6 mt-2 campo_unico retorna_wrap">
-                        <label class="form-label">¿El material o equipo retorna?*</label>
+                    <div class="col-2 mt-2  retorna_wrap">
+                        <label class="form-label">¿El ítem retorna?*</label>
                         <select class="form-control retorna_material" name="RETORNA_EQUIPO" required>
                             <option value="0" disabled>Seleccione una opción</option>
                             <option value="1" ${material.RETORNA_EQUIPO === "1" ? "selected" : ""}>Sí</option>
                             <option value="2" ${material.RETORNA_EQUIPO === "2" ? "selected" : ""}>No</option>
                         </select>
                     </div>
-                    <div class="col-6 mt-2 campo_unico">
+                    <div class="col-2 mt-2 campo_unico">
                         <label class="form-label">En existencia</label>
                         <select class="form-control en_existencia" name="EN_EXISTENCIA" required>
                             <option value="" ${!material.EN_EXISTENCIA ? "selected" : ""} disabled>Seleccione</option>
@@ -529,7 +553,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                             <option value="0" ${material.EN_EXISTENCIA === "0" ? "selected" : ""}>No</option>
                         </select>
                     </div>
-                    <div class="col-3 mt-2 campo_unico">
+                    <div class="col-2 mt-2 campo_unico">
                         <label class="form-label">Tipo inventario</label>
                         <select class="form-control tipo_inventario" name="TIPO_INVENTARIO" >
                             <option value="" ${!material.TIPO_INVENTARIO ? "selected" : ""} disabled>Seleccione</option>
@@ -540,20 +564,60 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                             `).join('')}
                         </select>
                     </div>
-                    <div class="col-4 mt-2 campo_unico">
+
+                    <div class="col-5 mt-2 campo_unico">
                         <label class="form-label">Inventario</label>
-                        <select class="form-control inventario" name="INVENTARIO" >
-                            <option value="" ${!material.INVENTARIO ? "selected" : ""} disabled>Seleccione</option>
-                        </select>
-                    </div>
+                        <select class="form-control inventario select2-inventario" name="INVENTARIO">
+                             <option value="" ${!material.INVENTARIO ? "selected" : ""} disabled>Seleccione</option>
+                         </select>
+                     </div>
+
                     <div class="col-3 mt-2 campo_unico">
                         <label class="form-label">Cantidad sale de almacén</label>
                         <input type="number" class="form-control cantidad_salida" name="CANTIDAD_SALIDA" value="${material.CANTIDAD_SALIDA || ''}">
                     </div>
                     <div class="col-2 mt-2 campo_unico">
                         <label class="form-label">U.M.</label>
-                        <input type="text" class="form-control " name="UNIDAD_SALIDA" value="${material.UNIDAD_SALIDA || ''}">
+                        <input type="text" class="form-control unidad_salida" name="UNIDAD_SALIDA" value="${material.UNIDAD_SALIDA || ''}">
                     </div>
+
+                    <div class="col-6 mt-2 campo_unico">
+                        <label class="form-label">Es asignación</label>
+                        <select class="form-control asignacion_articulos" name="ES_ASIGNACION" required>
+                            <option value="" ${!material.ES_ASIGNACION ? "selected" : ""} disabled>Seleccione</option>
+                            <option value="1" ${material.ES_ASIGNACION === "1" ? "selected" : ""}>Sí</option>
+                            <option value="0" ${material.ES_ASIGNACION === "0" ? "selected" : ""}>No</option>
+                        </select>
+                    </div>
+
+                  <div class="col-6 mt-2 div_nombreasignacion text-center"  style="display: none;">
+                        <label class="form-label">Nombre colaborador/proveedor</label>
+                        <select class="form-control nombre_asignacion text-center" name="NOMBRE_ASIGNACION" required>
+
+                            <option value="">Seleccione</option>
+
+                            <optgroup label="Colaboradores">
+                                ${window.colaboradores.map(c => `
+                                    <option value="${c.CURP}"
+                                        ${material.NOMBRE_ASIGNACION === c.CURP ? "selected" : ""}>
+                                        ${c.NOMBRE_COLABORADOR} ${c.PRIMER_APELLIDO} ${c.SEGUNDO_APELLIDO}
+                                    </option>
+                                `).join('')}
+                            </optgroup>
+
+                            <optgroup label="Proveedores">
+                                ${window.proveedores.map(p => `
+                                    <option value="${p.RFC_ALTA}"
+                                        ${material.NOMBRE_ASIGNACION === p.RFC_ALTA ? "selected" : ""}>
+                                        ${p.NOMBRE_DIRECTORIO ?? "SIN NOMBRE"} (${p.RFC_ALTA})
+                                    </option>
+                                `).join('')}
+                            </optgroup>
+
+                        </select>
+                    </div>
+
+
                     <div class="col-4 mt-2 div_articulo_retorno campo_unico" style="display: none;">
                         <label class="form-label">Artículo ya retorno</label>
                         <select class="form-control articulo_retorno" name="ARTICULO_RETORNO" required>
@@ -585,11 +649,13 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             `;
 
             contenedorMateriales.appendChild(divMaterial);
+
+           
+            
             contadorMateriales++;
 
          
 
-             // === Selectores ===
             const selectVarios = divMaterial.querySelector('.varios_articulos');
             const contenedorArticulos = divMaterial.querySelector('.contenedor_articulos');
             const inputCantidadTotal = divMaterial.querySelector('.cantidad_original');
@@ -600,9 +666,9 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             const divArticulo = document.createElement('div');
             divArticulo.classList.add('row', 'g-2', 'mb-2', 'articulo-item');
             divArticulo.innerHTML = `
-                <div class="col-4">
-                    <label>Tipo inventario</label>
-                    <select class="form-control tipo_inventario_detalle" name="TIPO_INVENTARIO_DETALLE[]">
+                <div class="col-2">
+                    <label class="form-label">Tipo inventario</label>
+                    <select class="form-control tipo_inventario_detalle" name="TIPO_INVENTARIO_DETALLE[]" required>
                         <option value="" ${!valor.TIPO_INVENTARIO ? "selected" : ""} disabled>Seleccione</option>
                         ${window.tipoinventario.map(t => `
                             <option value="${t.DESCRIPCION_TIPO}" ${valor.TIPO_INVENTARIO === t.DESCRIPCION_TIPO ? "selected" : ""}>
@@ -611,34 +677,70 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                         `).join('')}
                     </select>
                 </div>
-                <div class="col-4">
-                    <label>Inventario</label>
-                    <select class="form-control inventario_detalle" name="INVENTARIO_DETALLE[]">
+                <div class="col-5">
+                    <label class="form-label">Inventario</label>
+                    <select class="form-control inventario_detalle select2-inventario-detalee" name="INVENTARIO_DETALLE[]">
                         <option value="" ${!valor.INVENTARIO ? "selected" : ""} disabled>Seleccione</option>
                     </select>
                 </div>
+                <div class="col-3">
+                    <label class="form-label">Cantidad salida</label>
+                    <input type="number" class="form-control cantidad_detalle" name="CANTIDAD_DETALLE[]" value="${valor.CANTIDAD_DETALLE || ''}" required>
+                </div>
                 <div class="col-2">
-                    <label>Cantidad salida</label>
-                    <input type="number" class="form-control cantidad_detalle" name="CANTIDAD_DETALLE[]" value="${valor.CANTIDAD_DETALLE || ''}">
+                    <label class="form-label">U.M.</label>
+                    <input type="text" class="form-control " name="UNIDAD_DETALLE[]" value="${valor.UNIDAD_DETALLE || ''}" required>
                 </div>
-                    <div class="col-2">
-                    <label>U.M.</label>
-                    <input type="text" class="form-control " name="UNIDAD_DETALLE[]" value="${valor.UNIDAD_DETALLE || ''}">
-                </div>
-                <div class="col-4 retorna_detalle_wrap">
-                    <label>Artículo ya retorno</label>
-                    <select class="form-control retorna_detalle" name="RETORNA_DETALLE[]">
+                  <div class="col-6 mt-2">
+                        <label class="form-label">Es asignación</label>
+                        <select class="form-control asignacion_detalle" name="ES_ASIGNACION_DETALLE[]" required>
+                            <option value="" ${!valor.ES_ASIGNACION_DETALLE ? "selected" : ""} disabled>Seleccione</option>
+                            <option value="1" ${valor.ES_ASIGNACION_DETALLE === "1" ? "selected" : ""}>Sí</option>
+                            <option value="0" ${valor.ES_ASIGNACION_DETALLE === "0" ? "selected" : ""}>No</option>
+                        </select>
+                    </div>
+
+                  <div class="col-6 mt-2 detalle_asignacion_div text-center" style="display:none;">
+                        <label class="form-label">Nombre colaborador/proveedor</label>
+                        <select class="form-control nombreasignacion_detalle text-center" name="NOMBRE_ASIGNACION_DETALLE[]" required>
+
+                            <option value="">Seleccione</option>
+
+                            <optgroup label="Colaboradores">
+                                ${window.colaboradores.map(c => `
+                                    <option value="${c.CURP}"
+                                        ${valor.NOMBRE_ASIGNACION_DETALLE === c.CURP ? "selected" : ""}>
+                                        ${c.NOMBRE_COLABORADOR} ${c.PRIMER_APELLIDO} ${c.SEGUNDO_APELLIDO}
+                                    </option>
+                                `).join('')}
+                            </optgroup>
+
+                            <optgroup label="Proveedores">
+                                ${window.proveedores.map(p => `
+                                    <option value="${p.RFC_ALTA}"
+                                        ${valor.NOMBRE_ASIGNACION_DETALLE === p.RFC_ALTA ? "selected" : ""}>
+                                        ${p.NOMBRE_DIRECTORIO ?? "SIN NOMBRE"} (${p.RFC_ALTA})
+                                    </option>
+                                `).join('')}
+                            </optgroup>
+
+                        </select>
+                    </div>
+
+                <div class="col-4 mt-2 retorna_detalle_wrap">
+                    <label class="form-label">Artículo ya retorno</label>
+                    <select class="form-control retorna_detalle" name="RETORNA_DETALLE[]" required>
                         <option value="" ${!valor.RETORNA_DETALLE ? "selected" : ""}>Seleccione</option>
                         <option value="1" ${valor.RETORNA_DETALLE === "1" ? "selected" : ""}>Sí</option>
                         <option value="2" ${valor.RETORNA_DETALLE === "2" ? "selected" : ""}>No</option>
                     </select>
                 </div>
-                <div class="col-4 fecha_detalle_div" style="display:none;">
-                    <label>Fecha retorno</label>
+                <div class="col-4 mt-2 fecha_detalle_div" style="display:none;">
+                    <label class="form-label">Fecha retorno</label>
                     <input type="text" class="form-control mydatepicker fecha_detalle" placeholder="aaaa-mm-dd" name="FECHA_DETALLE[]" value="${valor.FECHA_DETALLE || ''}">
                 </div>
-                <div class="col-4 cantidad_retorno_div" style="display:none;">
-                    <label>Cantidad retorno</label>
+                <div class="col-4 mt-2 cantidad_retorno_div" style="display:none;">
+                    <label class="form-label">Cantidad retorno</label>
                     <input type="number" class="form-control cantidad_retorno_detalle" name="CANTIDAD_RETORNO_DETALLE[]" value="${valor.CANTIDAD_RETORNO_DETALLE || ''}">
                 </div>
             `;
@@ -648,48 +750,75 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             const selectInvDetalle = divArticulo.querySelector('.inventario_detalle');
 
          
+          function cargarInventarioDetalle(tipoSeleccionado, valorGuardado = null) {
 
-         function cargarInventarioDetalle(tipoSeleccionado, valorGuardado = null) {
-            const opciones = window.inventario
-                .filter(inv => inv.TIPO_EQUIPO === tipoSeleccionado)
-                .sort((a, b) => a.DESCRIPCION_EQUIPO.localeCompare(b.DESCRIPCION_EQUIPO))
-                .map(inv => {
-                    const mostrarTexto = (tipoSeleccionado === "AF" || tipoSeleccionado === "ANF")
-                        ? `${inv.DESCRIPCION_EQUIPO} (${inv.CODIGO_EQUIPO || ""})`
-                        : inv.DESCRIPCION_EQUIPO;
+                    if (!tipoSeleccionado) return;
 
-                    return `
-                        <option value="${inv.ID_FORMULARIO_INVENTARIO}" 
-                            data-stock="${inv.CANTIDAD_EQUIPO || 0}"
-                            ${valorGuardado == inv.ID_FORMULARIO_INVENTARIO ? "selected" : ""}>
-                            ${mostrarTexto}
-                        </option>
+                    const opciones = window.inventario
+                        .filter(inv => inv.TIPO_EQUIPO === tipoSeleccionado)
+                        .sort((a, b) => a.DESCRIPCION_EQUIPO.localeCompare(b.DESCRIPCION_EQUIPO))
+                        .map(inv => {
+
+                            const mostrarTexto = (tipoSeleccionado === "AF" || tipoSeleccionado === "ANF")
+                                ? `${inv.DESCRIPCION_EQUIPO} (${inv.CODIGO_EQUIPO || ""})`
+                                : inv.DESCRIPCION_EQUIPO;
+
+                            const estaAsignado = inv.ASIGNADO == 1;
+                            const esElGuardado = valorGuardado == inv.ID_FORMULARIO_INVENTARIO;
+
+                            const textoFinal = estaAsignado
+                                ? `${mostrarTexto} - Asignado`
+                                : mostrarTexto;
+
+                            const disabledAttr = (estaAsignado && !esElGuardado)
+                                ? "disabled class='opcion-asignada'"
+                                : "";
+
+                            return `
+                                <option value="${inv.ID_FORMULARIO_INVENTARIO}"
+                                    data-stock="${inv.CANTIDAD_EQUIPO || 0}"
+                                    ${esElGuardado ? "selected" : ""}
+                                    ${disabledAttr}>
+                                    ${textoFinal}
+                                </option>
+                            `;
+                        })
+                        .join('');
+
+                    selectInvDetalle.innerHTML = `
+                        <option value="" disabled ${!valorGuardado ? "selected" : ""}>Seleccione inventario</option>
+                        ${opciones}
                     `;
-                }).join('');
 
-            selectInvDetalle.innerHTML = `
-                <option value="" disabled ${!valorGuardado ? "selected" : ""}>Seleccione inventario</option>
-                ${opciones}
-            `;
+                    if ($(selectInvDetalle).hasClass("select2-hidden-accessible")) {
+                        $(selectInvDetalle).select2('destroy');
+                    }
 
-            const inputCantDetalle = divArticulo.querySelector('.cantidad_detalle');
+                    $(selectInvDetalle).select2({
+                        width: "100%",
+                        placeholder: "Seleccione inventario",
+                        allowClear: true,
+                        dropdownParent: obtenerModalPadre(selectInvDetalle),
+                        dropdownPosition: 'below'
+                    });
 
-            selectInvDetalle.addEventListener('change', function () {
-                const stock = parseInt(this.options[this.selectedIndex]?.dataset.stock || 0);
-                inputCantDetalle.setAttribute('max', stock);
-            });
+                    const inputCantDetalle = divArticulo.querySelector('.cantidad_detalle');
 
-            inputCantDetalle.addEventListener('input', function () {
-                const stock = parseInt(selectInvDetalle.options[selectInvDetalle.selectedIndex]?.dataset.stock || 0);
-                if (parseInt(this.value || 0) > stock) {
-                    alert(`Solo hay ${stock} unidades disponibles en inventario.`);
-                    this.value = stock; 
+                    selectInvDetalle.addEventListener('change', function () {
+                        const stock = parseInt(this.options[this.selectedIndex]?.dataset.stock || 0);
+                        inputCantDetalle.setAttribute('max', stock);
+                    });
+
+                    inputCantDetalle.addEventListener('input', function () {
+                        const stock = parseInt(selectInvDetalle.options[selectInvDetalle.selectedIndex]?.dataset.stock || 0);
+                        if (parseInt(this.value || 0) > stock) {
+                            alert(`Solo hay ${stock} unidades disponibles en inventario.`);
+                            this.value = stock;
+                        }
+                    });
                 }
-            });
-        }
 
 
-             
              
             if (valor.TIPO_INVENTARIO) {
                 cargarInventarioDetalle(valor.TIPO_INVENTARIO, valor.INVENTARIO);
@@ -698,7 +827,6 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                 cargarInventarioDetalle(this.value);
             });
 
-                // datepicker
                 $(divArticulo).find('.mydatepicker').datepicker({
                     format: 'yyyy-mm-dd',
                     autoclose: true,
@@ -708,21 +836,16 @@ function cargarMaterialesDesdeJSON(materialesJson) {
 
              
            
-              // === Mostrar/ocultar campos de retorno por artículo (DETALLE) ===
-                const wrapRetornaDetalle     = divArticulo.querySelector('.retorna_detalle_wrap'); // el contenedor
-                const selectRetornaDetalle   = divArticulo.querySelector('select.retorna_detalle'); // el SELECT real
+                const wrapRetornaDetalle     = divArticulo.querySelector('.retorna_detalle_wrap'); 
+                const selectRetornaDetalle   = divArticulo.querySelector('select.retorna_detalle'); 
                 const divFechaDetalle        = divArticulo.querySelector('.fecha_detalle_div');
                 const divCantRetDetalle      = divArticulo.querySelector('.cantidad_retorno_div');
 
-                // Select principal (bloque padre)
                 const selectPrincipalRetorna = divMaterial.querySelector('.retorna_material');
 
-                // Asegura valor inicial del select detalle (venga o no del JSON)
                 selectRetornaDetalle.value = (valor.RETORNA_DETALLE ?? "").toString();
 
-                // Función que actualiza TODO según principal y detalle
                 function actualizarRetornoDetalle() {
-                // Si el principal NO es "Sí", ocultamos todo lo de retorno del detalle
                 if (String(selectPrincipalRetorna.value) !== "1") {
                     wrapRetornaDetalle.style.display = "none";
                     divFechaDetalle.style.display = "none";
@@ -730,10 +853,8 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     return;
                 }
 
-                // Si el principal es "Sí", mostramos el select de detalle
                 wrapRetornaDetalle.style.display = "block";
 
-                // Muestra/oculta fecha y cantidad según el valor del detalle
                 if (String(selectRetornaDetalle.value) === "1") {
                     divFechaDetalle.style.display = "block";
                     divCantRetDetalle.style.display = "block";
@@ -743,19 +864,38 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                 }
                 }
 
-                // Listeners — funcionan en NUEVO y EDITADO
                 selectPrincipalRetorna.addEventListener('change', actualizarRetornoDetalle);
                 selectRetornaDetalle.addEventListener('change', actualizarRetornoDetalle);
 
                 setTimeout(actualizarRetornoDetalle, 0);
 
-                                            
+              
+            
+                const divnombreasignaciondetalle = divArticulo.querySelector('.detalle_asignacion_div');
+                const selectAsignacionarticulosdetalle = divArticulo.querySelector('.asignacion_detalle');
+                const selectNombredetalle = divArticulo.querySelector('.nombreasignacion_detalle');
+
+        
+                function actualizarNombreAsignacionDetalle() {
+                    if (selectAsignacionarticulosdetalle.value === "1") {
+                        divnombreasignaciondetalle.style.display = "block";
+                    } else {
+                        divnombreasignaciondetalle.style.display = "none";
+                    }
+                    }
+
+                selectAsignacionarticulosdetalle.value = (valor.ES_ASIGNACION_DETALLE ?? "").toString();
+                selectNombredetalle.value = (valor.NOMBRE_ASIGNACION_DETALLE ?? "").toString();
+
+            actualizarNombreAsignacionDetalle();
+
+            selectAsignacionarticulosdetalle.addEventListener("change", actualizarNombreAsignacionDetalle);
+               
 
              
             }
 
-            
-
+        
             function validarCantidades() {
                 const cantidades = contenedorArticulos.querySelectorAll('.cantidad_detalle');
                 let suma = 0;
@@ -770,7 +910,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             }
 
             if (material.VARIOS_ARTICULOS === "1") {
-                // ocultar campos únicos
+
                 divMaterial.querySelectorAll('.campo_unico').forEach(el => el.style.display = "none");
                 contenedorArticulos.style.display = "block";
 
@@ -785,10 +925,8 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                 contenedorArticulos.addEventListener('input', validarCantidades);
             }
 
-            // evento al cambiar select
             selectVarios.addEventListener('change', function () {
                 if (this.value === "1") {
-                    // ocultar campos únicos
                     divMaterial.querySelectorAll('.campo_unico').forEach(el => el.style.display = "none");
                     contenedorArticulos.style.display = "block";
                     contenedorArticulos.innerHTML = '';
@@ -809,15 +947,13 @@ function cargarMaterialesDesdeJSON(materialesJson) {
 
         
 
-           // === Selectores ===
         const selectEnExistencia = divMaterial.querySelector('.en_existencia');
         const selectTipo = divMaterial.querySelector('.tipo_inventario');
         const selectInv = divMaterial.querySelector('.inventario');
         const inputCantidad = divMaterial.querySelector('.cantidad_original');
         const inputSalida = divMaterial.querySelector('.cantidad_salida');
+        const inputunidad = divMaterial.querySelector('.unidad_salida');
         
-
-        // nuevos campos de retorno (solo para artículo único)
         const selectRetorna = divMaterial.querySelector('.retorna_material');
         const divArticuloRetorno = divMaterial.querySelector('.div_articulo_retorno');
         const selectArticuloRetorno = divMaterial.querySelector('.articulo_retorno');
@@ -825,11 +961,25 @@ function cargarMaterialesDesdeJSON(materialesJson) {
         const divCantidadRetorno = divMaterial.querySelector('.div_cantidad_retorno');
 
             
-        
-        // === lógica solo si NO es VARIOS_ARTICULOS ===
+        const divnombreasignacion = divMaterial.querySelector('.div_nombreasignacion');
+        const selectAsignacionarticulos = divMaterial.querySelector('.asignacion_articulos');
+
+        function actualizarNombreAsignacion() {
+            if (selectAsignacionarticulos.value === "1") {
+                divnombreasignacion.style.display = "block";
+            } else {
+                divnombreasignacion.style.display = "none";
+            }
+        }
+
+        actualizarNombreAsignacion();
+        selectAsignacionarticulos.addEventListener("change", actualizarNombreAsignacion);
+
+
+                        
+
         if (material.VARIOS_ARTICULOS !== "1") {
         
-            // inicializar datepicker
             $(divMaterial).find('.mydatepicker').datepicker({
                 format: 'yyyy-mm-dd',
                 weekStart: 1,
@@ -841,40 +991,70 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             });
 
             
-               function cargarInventario(tipoSeleccionado, valorGuardado = null) {
-                    const opciones = window.inventario
-                        .filter(inv => inv.TIPO_EQUIPO === tipoSeleccionado)
-                        .sort((a, b) => a.DESCRIPCION_EQUIPO.localeCompare(b.DESCRIPCION_EQUIPO))
+          
+            function cargarInventario(tipoSeleccionado, valorGuardado = null) {
+
+                if (!tipoSeleccionado) return;
+
+                const opciones = window.inventario
+                    .filter(inv => inv.TIPO_EQUIPO === tipoSeleccionado)
+                    .sort((a, b) => a.DESCRIPCION_EQUIPO.localeCompare(b.DESCRIPCION_EQUIPO))
                         .map(inv => {
-                            const mostrarTexto = (tipoSeleccionado === "AF" || tipoSeleccionado === "ANF")
-                                ? `${inv.DESCRIPCION_EQUIPO} (${inv.CODIGO_EQUIPO || ""})`
-                                : inv.DESCRIPCION_EQUIPO;
 
-                            return `
-                                <option value="${inv.ID_FORMULARIO_INVENTARIO}" 
-                                    data-stock="${inv.CANTIDAD_EQUIPO || 0}"
-                                    ${valorGuardado == inv.ID_FORMULARIO_INVENTARIO ? "selected" : ""}>
-                                    ${mostrarTexto}
-                                </option>
-                            `;
-                        }).join('');
+                        const mostrarTexto = (tipoSeleccionado === "AF" || tipoSeleccionado === "ANF")
+                            ? `${inv.DESCRIPCION_EQUIPO} (${inv.CODIGO_EQUIPO || ""})`
+                            : inv.DESCRIPCION_EQUIPO;
 
-                    selectInv.innerHTML = `
-                        <option value="" disabled ${!valorGuardado ? "selected" : ""}>Seleccione inventario</option>
-                        ${opciones}
-                    `;
+                        const estaAsignado = inv.ASIGNADO == 1;
 
-                    inputSalida.addEventListener('input', function () {
-                        const stock = parseInt(selectInv.options[selectInv.selectedIndex]?.dataset.stock || 0);
-                        if (parseInt(this.value || 0) > stock) {
-                            alert(` Solo hay ${stock} unidades disponibles en inventario.`);
-                            this.value = stock; 
-                        }
-                    });
+                        const esElGuardado = valorGuardado == inv.ID_FORMULARIO_INVENTARIO;
+
+                        const textoFinal = estaAsignado
+                            ? `${mostrarTexto} - Asignado`
+                            : mostrarTexto;
+
+                        const disabledAttr = (estaAsignado && !esElGuardado)
+                            ? "disabled class='opcion-asignada'"
+                            : "";
+
+                        return `
+                            <option value="${inv.ID_FORMULARIO_INVENTARIO}"
+                                data-stock="${inv.CANTIDAD_EQUIPO || 0}"
+                                ${esElGuardado ? "selected" : ""}
+                                ${disabledAttr}>
+                                ${textoFinal}
+                            </option>
+                        `;
+                            }).join('');
+
+                selectInv.innerHTML = `
+                    <option value="" disabled ${!valorGuardado ? "selected" : ""}>Seleccione inventario</option>
+                    ${opciones}
+                `;
+
+                if ($(selectInv).hasClass("select2-hidden-accessible")) {
+                    $(selectInv).select2('destroy');
                 }
 
+                $(selectInv).select2({
+                    width: "100%",
+                    placeholder: "Seleccione inventario",
+                    allowClear: true,
+                    dropdownParent: obtenerModalPadre(selectInv),
+                    dropdownPosition: 'below'
+                });
+
+                inputSalida.addEventListener("input", function () {
+                    const stock = parseInt(selectInv.options[selectInv.selectedIndex]?.dataset.stock || 0);
+                    if (parseInt(this.value || 0) > stock) {
+                        alert(`Solo hay ${stock} unidades disponibles.`);
+                        this.value = stock;
+                    }
+                });
+            }
 
             
+        
             if (material.TIPO_INVENTARIO) {
                 cargarInventario(material.TIPO_INVENTARIO, material.INVENTARIO);
             }
@@ -884,55 +1064,33 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             });
 
             // Activar/desactivar inventario y cantidad salida según existencia
-            // function actualizarEstadoInventario() {
-            //     if (selectEnExistencia.value === "0") { // No
-            //         selectTipo.style.pointerEvents = "none";
-            //         selectTipo.style.backgroundColor = "#e9ecef";
-            //         selectInv.style.pointerEvents = "none";
-            //         selectInv.style.backgroundColor = "#e9ecef";
-            //         inputSalida.disabled = true;
-            //         inputSalida.removeAttribute("required");
-
-            //         divNota.style.display = "none";
-            //         textareaNota.required = false;
-
-            //     } else { // Sí
-            //         selectTipo.style.pointerEvents = "auto";
-            //         selectTipo.style.backgroundColor = "";
-            //         selectInv.style.pointerEvents = "auto";
-            //         selectInv.style.backgroundColor = "";
-            //         inputSalida.disabled = false;
-
-            //         revisarCantidadSalida();
-            //     }
-            // }
-
+           
             function actualizarEstadoInventario() {
-                if (selectEnExistencia.value === "0") { // No
-                    // resetear valores
+                if (selectEnExistencia.value === "0") { 
                     selectTipo.value = "";
                     selectInv.value = "";
                     inputSalida.value = "";
+                    inputunidad.value = "";
 
-                    // bloquear
                     selectTipo.style.pointerEvents = "none";
                     selectTipo.style.backgroundColor = "#e9ecef";
                     selectInv.style.pointerEvents = "none";
                     selectInv.style.backgroundColor = "#e9ecef";
                     inputSalida.disabled = true;
+                    inputunidad.disabled = true;
                     inputSalida.removeAttribute("required");
 
-                    // ocultar nota
                     divNota.style.display = "none";
                     textareaNota.required = false;
 
-                } else { // Sí
-                    // habilitar
+                } else { 
+
                     selectTipo.style.pointerEvents = "auto";
                     selectTipo.style.backgroundColor = "";
                     selectInv.style.pointerEvents = "auto";
                     selectInv.style.backgroundColor = "";
                     inputSalida.disabled = false;
+                    inputunidad.disabled = false;
 
                     revisarCantidadSalida();
                 }
@@ -942,10 +1100,9 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             actualizarEstadoInventario();
             selectEnExistencia.addEventListener('change', actualizarEstadoInventario);
 
-            // Mostrar textarea solo si hay existencia y cantidades diferentes
             function revisarCantidadSalida() {
                 if (
-                    selectEnExistencia.value === "1" && 
+                    selectEnExistencia.value === "1" &&
                     parseInt(inputSalida.value || 0) !== parseInt(inputCantidad.value || 0)
                 ) {
                     divNota.style.display = "block";
@@ -961,15 +1118,14 @@ function cargarMaterialesDesdeJSON(materialesJson) {
         }
 
             function actualizarRetorno() {
-                    // si son varios artículos, nunca mostrar "Artículo ya retorno"
-                    if (selectVarios.value === "1") {
+
+                if (selectVarios.value === "1") {
                         divArticuloRetorno.style.display = "none";
                         divFechaRetorno.style.display = "none";
                         divCantidadRetorno.style.display = "none";
-                        return; // salimos aquí
+                        return;
                     }
 
-                    // si NO son varios artículos, aplica la lógica normal
                     if (selectRetorna.value === "1") {
                         divArticuloRetorno.style.display = "block";
 
@@ -984,16 +1140,38 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                         divArticuloRetorno.style.display = "none";
                         divFechaRetorno.style.display = "none";
                         divCantidadRetorno.style.display = "none";
-                    }
+                }
+                
+
+
+                 if (selectRetorna.value === "1") {
+                        divArticuloRetorno.style.display = "block";
+
+                        if (selectArticuloRetorno.value === "1") {
+                            divFechaRetorno.style.display = "block";
+                            divCantidadRetorno.style.display = "block";
+                        } else {
+                            divFechaRetorno.style.display = "none";
+                            divCantidadRetorno.style.display = "none";
+                        }
+                    } else {
+                        divArticuloRetorno.style.display = "none";
+                        divFechaRetorno.style.display = "none";
+                        divCantidadRetorno.style.display = "none";
+                }
+                
+                
                 }
 
-                // Ejecutar al cargar
                 actualizarRetorno();
 
-                // Eventos
+            
+            
+
+            // Eventos
                 selectRetorna.addEventListener("change", actualizarRetorno);
                 selectArticuloRetorno.addEventListener("change", actualizarRetorno);
-                selectVarios.addEventListener("change", actualizarRetorno); 
+                selectVarios.addEventListener("change", actualizarRetorno);
 
             
    
@@ -1009,6 +1187,12 @@ function cargarMaterialesDesdeJSON(materialesJson) {
         console.error('Error al parsear MATERIALES_JSON:', e);
     }
 }
+
+
+
+
+
+
 
 
 

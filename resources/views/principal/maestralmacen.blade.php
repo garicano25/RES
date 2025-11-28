@@ -34,6 +34,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css"> <!--Archivo css -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
+
+    <!-- Select 2 -->
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     <link rel="stylesheet" href="assets/css/estilos.css">
 
     <style>
@@ -458,28 +463,19 @@
     <script src="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.js"></script>
     <!-- Select opcion selectize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
-
-
     <!-- datepicker -->
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js"></script>
-
-
-
     <!-- Dropify -->
-
     <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
-
     <!-- Funciones generales -->
     <script src="/assets/js_sitio/funciones.js?v=5.6"></script>
     <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
-
-
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <!-- Select 2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-
-
+    
     <script>
         $(document).ready(function() {
             // Inicializar campos datepicker con opciones en español
@@ -508,7 +504,7 @@
     @endif
 
     @if(request()->is('salidaalmacen'))
-    <script src="/assets/js_sitio/salidalmacen/salidalmacen.js?v=1.16"></script>
+    <script src="/assets/js_sitio/salidalmacen/salidalmacen.js?v=1.17"></script>
     @endif
 
     @if(request()->is('aprobacionalmacen'))

@@ -3,6 +3,13 @@
 @section('contenido')
 
 
+<style>
+    .dia-nolaboral {
+        background-color: #ff4d4d !important;
+        color: white !important;
+        border-radius: 50% !important;
+    }
+</style>
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
@@ -208,7 +215,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-4 mt-3">
+                                <div class="col-3 mt-3">
                                     <label class="form-label">Fecha de inicio vacaciones: </label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INICIO_VACACIONES" name="FECHA_INICIO_VACACIONES" required>
@@ -216,17 +223,20 @@
                                     </div>
                                 </div>
 
-                                <div class="col-4 mt-3">
+                                <div class="col-3 mt-3">
                                     <label class="form-label">Número de días de descanso y/o séptimos</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="NO_DIAS_VACACIONES" name="NO_DIAS_VACACIONES" required>
-                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                        <input type="text"
+                                            class="form-control"
+                                            id="NO_DIAS_VACACIONES"
+                                            name="NO_DIAS_VACACIONES"
+                                            placeholder="Selecciona días no laborales">
+
                                     </div>
+                                    <div id="contenedorCalendarioFix"></div>
                                 </div>
 
-
-
-                                <div class="col-4 mt-3">
+                                <div class="col-3 mt-3">
                                     <label class="form-label">Fecha de terminación vacaciones: </label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_TERMINACION_VACACIONES" name="FECHA_TERMINACION_VACACIONES" required>
@@ -234,7 +244,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-4 mt-3">
+                                <div class="col-3 mt-3">
                                     <label class="form-label">Día que inicia labores: </label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INICIALABORES_VACACIONES" name="FECHA_INICIALABORES_VACACIONES" required>
