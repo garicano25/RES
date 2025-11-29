@@ -319,6 +319,9 @@
                                     <hr class="dropdown-divider">
                                     <li><a class="dropdown-item" href="{{url('/listadeitemcriticos')}}">Ítems críticos</a>
                                     </li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="{{url('/listadeasignacion')}}">Asignación</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -475,7 +478,7 @@
     <!-- Select 2 -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    
+
     <script>
         $(document).ready(function() {
             // Inicializar campos datepicker con opciones en español
@@ -529,6 +532,11 @@
 
     @if(request()->is('listadealertas'))
     <script src="/assets/js_sitio/listadealerta/listaalerta.js"></script>
+    @endif
+
+
+    @if(request()->is('listadeasignacion'))
+    <script src="/assets/js_sitio/listadeasignacion/listadeasignacion.js"></script>
     @endif
 
     @if(request()->is('bitacoraconsumibles'))

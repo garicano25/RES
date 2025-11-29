@@ -34,7 +34,7 @@
         background-color: #efd8b9 !important;
     }
 
-    
+
     .tabla-scroll-wrapper {
         width: 100%;
     }
@@ -80,7 +80,7 @@
     <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
 
         <h3 class="mb-0 text-white">
-            <i class="bi bi-list-task"></i> Lista de ítems críticos
+            <i class="bi bi-list-task"></i> Lista de asignación
         </h3>
     </ol>
 
@@ -92,7 +92,7 @@
             </div>
             <div class="tabla-scroll-bottom">
                 <div class="table-responsive">
-                    <table id="Tablalistaitemcriticos" class="table table-hover table-bordered  w-100" style="min-width: 1000px; table-layout: fixed;">
+                    <table id="Tablalistadeasignacion" class="table table-hover table-bordered  w-100" style="min-width: 1000px; table-layout: fixed;">
                         <thead class="thead-dark">
                             <tr>
                                 <th class="text-center">#</th>
@@ -104,6 +104,7 @@
                                 <th class="text-center">Serie</th>
                                 <th class="text-center">Ubicación</th>
                                 <th class="text-center">Código de Identificación</th>
+                                <th class="text-center">Asignado a</th>
                                 <th class="text-center">Editar</th>
                                 <th class="text-center">Visualizar</th>
                                 <th class="text-center">Activo</th>

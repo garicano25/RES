@@ -136,6 +136,7 @@ use App\Http\Controllers\listaafn\listaafnController;
 use App\Http\Controllers\listacomercializacion\listacomercializacionController;
 use App\Http\Controllers\listaitemcritico\listaitemcriticoController;
 use App\Http\Controllers\listaalerta\listaalertaController;
+use App\Http\Controllers\listaasignacion\listaasignacionController;
 
 
 //// BITACORAS INVENTARIO
@@ -934,7 +935,9 @@ Route::get('/Tablalistaitemcriticos', [listaitemcriticoController::class, 'Tabla
 Route::get('/listadealertas', [listaalertaController::class, 'index']);
 Route::get('/Tablalistadealertas', [listaalertaController::class, 'Tablalistadealertas']);
 
-
+//==============================================    LISTA DE ASIGNACION  ==============================================
+Route::get('/listadeasignacion', [listaasignacionController::class, 'index']);
+Route::get('/Tablalistadeasignacion', [listaasignacionController::class, 'Tablalistadeasignacion']);
 
 
 //==============================================    BITACORAS   ============================================== 

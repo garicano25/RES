@@ -69,7 +69,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 1 NOTIFICACIONES DE Vo.Bo RECURSOS EMPLEADOS (DAR_BUENO = 0)
+             * 1 NOTIFICACIONES DE Vo.Bo RECURSOS EMPLEADOS 
              */
 
             $badgeVoBo = "<span style='
@@ -230,7 +230,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 5 NOTIFICACIONES DE Vo.Bo MR  (DAR_BUENO = 0)
+             * 5 NOTIFICACIONES DE Vo.Bo MR 
              */
 
             $badgeVoBoMR = "<span style='
@@ -260,7 +260,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 6 NOTIFICACIONES DE AUTORIZAR MR  (DAR_BUENO = 0)
+             * 6 NOTIFICACIONES DE AUTORIZAR MR  
              */
 
             $autorizadores = [1,2, 3];
@@ -306,7 +306,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 7 NOTIFICACIONES – MR PENDIENTE EN BITÁCORA (solo usuarios 1 y 3)
+             * 7 NOTIFICACIONES – MR PENDIENTE EN BITÁCORA 
              */
 
             $notiBitacoraMR = collect([]);
@@ -348,7 +348,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 8 NOTIFICACIONES – VERIFICACIÓN DE MR (HojaTrabajo) – Usuarios  y 2
+             * 8 NOTIFICACIONES – VERIFICACIÓN DE MR (BITACORA) – Usuarios  y 2
              */
         
             $notiVerificacionMR = collect([]);
@@ -590,8 +590,7 @@ class notificacionController extends Controller
 
 
             /**
-             * 12 NOTIFICACIONES – PARA APROBAR PO
-             * 
+             * 12 NOTIFICACIONES – PARA APROBAR ORDEN DE COMPRA
              */
 
             $notiAprobarPO = collect([]);
@@ -647,8 +646,8 @@ class notificacionController extends Controller
 
 
             /**
-             * 13 NOTIFICACIONES – Vo.Bo Bitácora GR (formulario_bitacoragr)
-             * Solo para el usuario dueño de la GR (USUARIO_ID = usuario autenticado)
+             * 13 NOTIFICACIONES – Vo.Bo USUARIO BITACORA GR
+             * 
              */
             $notiVoboGR = collect([]);
 
