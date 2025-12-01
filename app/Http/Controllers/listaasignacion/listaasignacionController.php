@@ -124,7 +124,7 @@ class listaasignacionController extends Controller
                             ->first();
 
                         if ($proveedor) {
-                            $textoAsignado = "Proveedor: {$proveedor->NOMBRE_DIRECTORIO}";
+                            $textoAsignado = "Proveedor: {$proveedor->NOMBRE_DIRECTORIO} ({$proveedor->RFC_PROVEEDOR})";
                         } else {
                             $textoAsignado = "No encontrado";
                         }

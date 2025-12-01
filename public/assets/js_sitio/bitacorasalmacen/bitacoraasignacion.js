@@ -3,7 +3,6 @@ let ID_FORM_GLOBAL = null;
 let ID_INVENTARIO_GLOBAL = null;
 
 
-
 const Modalbitacora = document.getElementById('miModal_BITACORA')
 Modalbitacora.addEventListener('hidden.bs.modal', event => {
     
@@ -12,8 +11,7 @@ Modalbitacora.addEventListener('hidden.bs.modal', event => {
    
 })
 
-
-var Tablabitacoravehiculos = $("#Tablabitacoravehiculos").DataTable({
+var Tablabitacoraasignacion = $("#Tablabitacoraasignacion").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
     lengthMenu: [
@@ -32,12 +30,12 @@ var Tablabitacoravehiculos = $("#Tablabitacoravehiculos").DataTable({
         data: {},
         method: 'GET',
         cache: false,
-        url: '/Tablabitacoravehiculos',
+        url: '/Tablabitacoraasignacion',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablabitacoravehiculos.columns.adjust().draw();
+            Tablabitacoraasignacion.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -63,26 +61,26 @@ var Tablabitacoravehiculos = $("#Tablabitacoravehiculos").DataTable({
                 return `${data.CANTIDAD_SALIDA} (${data.UNIDAD_SALIDA ?? ''})`;
             }
         },
-       { data: 'PRODUCTO_NOMBRE' },
+        { data: 'PRODUCTO_NOMBRE' },
         { data: 'MARCA_EQUIPO' },
         { data: 'MODELO_EQUIPO' },
-        { data: 'SERIE_EQUIPO' },
-        { data: 'CODIGO_EQUIPO' },
+       { data: 'SERIE_EQUIPO' },
+        { data: 'ASIGNADO_USUARIO' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all text-center' },
-        { targets: 1, title: 'Descripción del vehículo', className: 'all text-center' },
+        { targets: 1, title: 'Descripción del artículo', className: 'all text-center' },
         { targets: 2, title: 'Nombre del solicitante', className: 'all text-center' },
         { targets: 3, title: 'Fecha de solicitud', className: 'all text-center' },
         { targets: 4, title: 'Cantidad solicitada', className: 'all text-center' },
         { targets: 5, title: 'Cantidad entregada', className: 'all text-center' },
-        { targets: 6, title: 'Vehículo entregado', className: 'all text-center' },
+        { targets: 6, title: 'Artículo entregado', className: 'all text-center' },
         { targets: 7, title: 'Marca', className: 'all text-center' },
         { targets: 8, title: 'Modelo', className: 'all text-center' },
         { targets: 9, title: 'No. Serie', className: 'all text-center' },
-        { targets: 10, title: 'Código de Identificación', className: 'all text-center' },
+        { targets: 10, title: 'Asignado a', className: 'all text-center' },
         { targets: 11, title: 'Editar', className: 'all text-center' },
         { targets: 12, title: 'Visualizar', className: 'all text-center' }
     ]
@@ -95,7 +93,7 @@ $(document).on('click', '.editarMaterial', function () {
     ID_INVENTARIO_GLOBAL = $(this).data('inventario');
 
     $.ajax({
-        url: '/obtenerMaterialVehiculos',
+        url: '/obtenerMaterialAsingnacion',
         method: 'GET',
         data: { id: ID_FORM_GLOBAL, inventario: ID_INVENTARIO_GLOBAL },
 
@@ -183,7 +181,7 @@ $(document).on('click', '.visualizarMaterial', function () {
     ID_INVENTARIO_GLOBAL = $(this).data('inventario');
 
     $.ajax({
-        url: '/obtenerMaterialVehiculos',
+        url: '/obtenerMaterialAsingnacion',
         method: 'GET',
         data: { id: ID_FORM_GLOBAL, inventario: ID_INVENTARIO_GLOBAL },
 
@@ -275,6 +273,7 @@ function cargarFirmaEnCanvas(canvas, ctx, base64) {
     img.src = base64;
 }
 
+
 $("#guardaBITACORA").click(function (e) {
     e.preventDefault();
 
@@ -291,9 +290,10 @@ $("#guardaBITACORA").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardaBITACORA')
-            await ajaxAwaitFormData({ api: 1, ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN,RECEMPLEADO_ID:ID_FORM_GLOBAL,INVENTARIO_ID: ID_INVENTARIO_GLOBAL}, 'BitacoraVehiculoSave', 'formularioBITACORA', 'guardaBITACORA', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 1, ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN,RECEMPLEADO_ID:ID_FORM_GLOBAL,INVENTARIO_ID: ID_INVENTARIO_GLOBAL}, 'BitacoraAsignacionSave', 'formularioBITACORA', 'guardaBITACORA', { callbackAfter: true, callbackBefore: true }, () => {
         
                
+
                 Swal.fire({
                     icon: 'info',
                     title: 'Espere un momento',
@@ -311,11 +311,12 @@ $("#guardaBITACORA").click(function (e) {
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                      $('#miModal_BITACORA').modal('hide')
                     document.getElementById('formularioBITACORA').reset();
-                    Tablabitacoravehiculos.ajax.reload()
-             
+                    Tablabitacoraasignacion.ajax.reload()
+                
             })
             
-    
+            
+            
         }, 1)
         
     } else {
@@ -326,7 +327,7 @@ $("#guardaBITACORA").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardaBITACORA')
-                 await ajaxAwaitFormData({ api: 1, ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN,RECEMPLEADO_ID:ID_FORM_GLOBAL,INVENTARIO_ID: ID_INVENTARIO_GLOBAL}, 'BitacoraVehiculoSave', 'formularioBITACORA', 'guardaBITACORA', { callbackAfter: true, callbackBefore: true }, () => {        
+                 await ajaxAwaitFormData({ api: 1, ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN,RECEMPLEADO_ID:ID_FORM_GLOBAL,INVENTARIO_ID: ID_INVENTARIO_GLOBAL}, 'BitacoraAsignacionSave', 'formularioBITACORA', 'guardaBITACORA', { callbackAfter: true, callbackBefore: true }, () => {        
                 Swal.fire({
                     icon: 'info',
                     title: 'Espere un momento',
@@ -346,7 +347,7 @@ $("#guardaBITACORA").click(function (e) {
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                     $('#miModal_BITACORA').modal('hide')
                     document.getElementById('formularioBITACORA').reset();
-                    Tablabitacoravehiculos.ajax.reload()
+                    Tablabitacoraasignacion.ajax.reload()
 
 
                 }, 300);  
@@ -360,3 +361,5 @@ $("#guardaBITACORA").click(function (e) {
 }
     
 });
+
+

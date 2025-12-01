@@ -15,12 +15,12 @@
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
-        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-card-list"></i>&nbsp;Bitácora de consumibles</h3>
+        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-card-list"></i>&nbsp;Bitácora de asignación</h3>
 
     </ol>
 
     <div class="card-body">
-        <table id="Tablabitacoraconsumibles" class="table table-hover table-bordered text-center w-100 TableCustom">
+        <table id="Tablabitacoraasignacion" class="table table-hover table-bordered text-center w-100 TableCustom">
 
         </table>
     </div>
@@ -109,12 +109,20 @@
                                 <label class="form-label">Recibido por</label>
                                 <select class="form-control" id="RECIBIDO_POR" name="RECIBIDO_POR" required>
                                     <option value="">Seleccione una opción</option>
-
-                                    @foreach ($usuarios as $u)
-                                    <option value="{{ $u->ID_USUARIO }}">
-                                        {{ $u->EMPLEADO_NOMBRE }} {{ $u->EMPLEADO_APELLIDOPATERNO }} {{ $u->EMPLEADO_APELLIDOMATERNO }}
-                                    </option>
-                                    @endforeach
+                                    <optgroup label="Colaboradores">
+                                        @foreach ($colaboradores as $recibido)
+                                        <option value="{{ $recibido->CURP }}">
+                                            {{ $recibido->NOMBRE_COLABORADOR }} {{ $recibido->PRIMER_APELLIDO }} {{ $recibido->SEGUNDO_APELLIDO }}
+                                        </option>
+                                        @endforeach
+                                    </optgroup>
+                                    <optgroup label="Proveedores">
+                                        @foreach ($proveedores as $recibido)
+                                        <option value="{{ $recibido->RFC_ALTA }}">
+                                            {{ $recibido->NOMBRE_DIRECTORIO }}
+                                        </option>
+                                        @endforeach
+                                    </optgroup>
                                 </select>
                             </div>
                             <div class="col-6 mt-3 ">

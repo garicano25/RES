@@ -668,7 +668,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             divArticulo.innerHTML = `
                 <div class="col-2">
                     <label class="form-label">Tipo inventario</label>
-                    <select class="form-control tipo_inventario_detalle" name="TIPO_INVENTARIO_DETALLE[]" required>
+                    <select class="form-control tipo_inventario_detalle" name="TIPO_INVENTARIO_DETALLE[]" >
                         <option value="" ${!valor.TIPO_INVENTARIO ? "selected" : ""} disabled>Seleccione</option>
                         ${window.tipoinventario.map(t => `
                             <option value="${t.DESCRIPCION_TIPO}" ${valor.TIPO_INVENTARIO === t.DESCRIPCION_TIPO ? "selected" : ""}>
@@ -685,11 +685,11 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                 </div>
                 <div class="col-3">
                     <label class="form-label">Cantidad salida</label>
-                    <input type="number" class="form-control cantidad_detalle" name="CANTIDAD_DETALLE[]" value="${valor.CANTIDAD_DETALLE || ''}" required>
+                    <input type="number" class="form-control cantidad_detalle" name="CANTIDAD_DETALLE[]" value="${valor.CANTIDAD_DETALLE || ''}" >
                 </div>
                 <div class="col-2">
                     <label class="form-label">U.M.</label>
-                    <input type="text" class="form-control " name="UNIDAD_DETALLE[]" value="${valor.UNIDAD_DETALLE || ''}" required>
+                    <input type="text" class="form-control " name="UNIDAD_DETALLE[]" value="${valor.UNIDAD_DETALLE || ''}" >
                 </div>
                   <div class="col-6 mt-2">
                         <label class="form-label">Es asignación</label>
@@ -737,11 +737,11 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                 </div>
                 <div class="col-4 mt-2 fecha_detalle_div" style="display:none;">
                     <label class="form-label">Fecha retorno</label>
-                    <input type="text" class="form-control mydatepicker fecha_detalle" placeholder="aaaa-mm-dd" name="FECHA_DETALLE[]" value="${valor.FECHA_DETALLE || ''}">
+                    <input type="text" class="form-control mydatepicker fecha_detalle" placeholder="aaaa-mm-dd" name="FECHA_DETALLE[]" value="${valor.FECHA_DETALLE || ''}" required>
                 </div>
                 <div class="col-4 mt-2 cantidad_retorno_div" style="display:none;">
                     <label class="form-label">Cantidad retorno</label>
-                    <input type="number" class="form-control cantidad_retorno_detalle" name="CANTIDAD_RETORNO_DETALLE[]" value="${valor.CANTIDAD_RETORNO_DETALLE || ''}">
+                    <input type="number" class="form-control cantidad_retorno_detalle" name="CANTIDAD_RETORNO_DETALLE[]" value="${valor.CANTIDAD_RETORNO_DETALLE || ''}" required>
                 </div>
             `;
             contenedorArticulos.appendChild(divArticulo);

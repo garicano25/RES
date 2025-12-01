@@ -392,10 +392,12 @@ class inventarioController extends Controller
                                 $colaborador->SEGUNDO_APELLIDO);
 
                             $tipoBadge = '<span class="badge text-bg-warning">Asignado colaborador</span>';
-                        } elseif ($proveedor) {
-                            $usuario = $proveedor->NOMBRE_DIRECTORIO;
+                        } 
+                        elseif ($proveedor) {
+                        $usuario = $proveedor->NOMBRE_DIRECTORIO . ' (' . $proveedor->RFC_PROVEEDOR . ')';
 
-                            $tipoBadge = '<span class="badge text-bg-warning">Asignado proveedor</span>';
+                        $tipoBadge = '<span class="badge text-bg-warning">Asignado proveedor</span>';
+                            
                         } else {
                             $usuario = $asignado;
                             $tipoBadge = '<span class="badge text-bg-warning">Asignado</span>';

@@ -144,6 +144,7 @@ use App\Http\Controllers\listaasignacion\listaasignacionController;
 use App\Http\Controllers\bitacorasinventario\bitacoraconsumiblesController;
 use App\Http\Controllers\bitacorasinventario\bitacoraretornableController;
 use App\Http\Controllers\bitacorasinventario\bitacoravehiculosController;
+use App\Http\Controllers\bitacorasinventario\bitacoraasignacionController;
 
 
 /// NOTIFICACIONES 
@@ -961,8 +962,18 @@ Route::get('/Tablabitacoraretornable', [bitacoraretornableController::class, 'Ta
 
 Route::get('/bitacoravehiculos', [bitacoravehiculosController::class, 'index']);
 Route::get('/Tablabitacoravehiculos', [bitacoravehiculosController::class, 'Tablabitacoravehiculos']);
+Route::get('/obtenerMaterialVehiculos', [bitacoravehiculosController::class, 'obtenerMaterialVehiculos']);
+Route::post('/BitacoraVehiculoSave', [bitacoravehiculosController::class, 'store']);
 
 
+
+
+/// ASIGNACION
+
+Route::get('/bitacoraasignacion', [bitacoraasignacionController::class, 'index']);
+Route::get('/Tablabitacoraasignacion', [bitacoraasignacionController::class, 'Tablabitacoraasignacion']);
+Route::get('/obtenerMaterialAsingnacion', [bitacoraasignacionController::class, 'obtenerMaterialAsingnacion']);
+Route::post('/BitacoraAsignacionSave', [bitacoraasignacionController::class, 'store']);
 
 
 

@@ -360,12 +360,11 @@
                                     <li><a class="dropdown-item" href="{{url('/bitacoravehiculos')}}">Vehículos</a>
                                     </li>
                                     <hr class="dropdown-divider">
-                                    <li><a class="dropdown-item" href="{{url('/#')}}">Comercial</a>
+                                    <li><a class="dropdown-item" href="{{url('/bitacoraasignacion')}}">Asignación</a>
                                     </li>
                                     <hr class="dropdown-divider">
-                                    <li><a class="dropdown-item" href="{{url('/#')}}">Asignación</a>
+                                    <li><a class="dropdown-item" href="{{url('/#')}}">Comercial</a>
                                     </li>
-
 
                                 </ul>
                             </li>
@@ -507,7 +506,7 @@
     @endif
 
     @if(request()->is('salidaalmacen'))
-    <script src="/assets/js_sitio/salidalmacen/salidalmacen.js?v=1.17"></script>
+    <script src="/assets/js_sitio/salidalmacen/salidalmacen.js?v=1.19"></script>
     @endif
 
     @if(request()->is('aprobacionalmacen'))
@@ -540,17 +539,24 @@
     @endif
 
     @if(request()->is('bitacoraconsumibles'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraconsumible.js?v=1.26"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraconsumible.js?v=1.27"></script>
     @endif
 
 
     @if(request()->is('bitacoraretornables'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraretornable.js?v=1.15"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraretornable.js?v=1.16"></script>
     @endif
 
     @if(request()->is('bitacoravehiculos'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoravehiculo.js?v=1.15"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoravehiculo.js?v=1.16"></script>
     @endif
+
+    @if(request()->is('bitacoraasignacion'))
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraasignacion.js"></script>
+    @endif
+
+
+
 </body>
 
 </body>

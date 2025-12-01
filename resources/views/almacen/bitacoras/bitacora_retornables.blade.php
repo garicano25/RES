@@ -74,7 +74,7 @@
                                 <input type="text" class="form-control" id="CANTIDAD_SALIDA" name="CANTIDAD_SALIDA" readonly>
                             </div>
                             <div class="col-8 mt-3">
-                                <label class="form-label">Artículo que sale del inventario </label>
+                                <label class="form-label">Artículo entregado </label>
                                 <select class="form-select " id="INVENTARIO" name="INVENTARIO" style="pointer-events:none; background-color:#e9ecef;">
                                     <option value="">Seleccione un artículo</option>
                                     @foreach($inventario as $item)
