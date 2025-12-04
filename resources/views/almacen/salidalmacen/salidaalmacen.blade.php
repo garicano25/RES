@@ -9,7 +9,7 @@
     }
 
     .bg-verde-suave {
-        background-color: #d1e7dd !important;
+        background-color: #d4edda !important;
     }
 
     .select2-dropdown-fixed {
