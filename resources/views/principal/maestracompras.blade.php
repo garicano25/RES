@@ -661,7 +661,7 @@
     @endif
 
     @if(request()->is('bitacora'))
-    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.23"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.24"></script>
     @endif
 
     @if(request()->is('bancoproveedores'))
@@ -710,7 +710,7 @@
     @endif
 
     @if(request()->is('bitacoragr'))
-    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.48"></script>
+    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.49"></script>
     @endif
 
 

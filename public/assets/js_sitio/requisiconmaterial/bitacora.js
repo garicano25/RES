@@ -55,24 +55,31 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
         dataSrc: 'data'
     },
   columnDefs: [
-        { targets: '_all', className: 'text-center' }, 
+    { targets: '_all', className: 'text-center' }, 
         { targets: 0,  width:   '70px'  },                                                                       
-        { targets: 1,  width:  '70px'   },                                 
-        { targets: 2,  width:  '100px'  },                                
-        { targets: 3,  width:  '100px'  },                                 
-        { targets: 4,  width:  '150px'  },                                 
-        { targets: 5,  width:  '250px'  },       
-        { targets: 6,  width:  '100px'  },                                 
-        { targets: 7,  width:  '100px'  },                                  
-        { targets: 8,  width:  '150px'  },                                 
-        { targets: 9,  width:  '100px'  },                                 
-        { targets: 10, width:  '150px'  },                                   
-        { targets: 11, width:  '100px'  },                                   
-        { targets: 12, width:  '110px'  },                                 
-        { targets: 13, width:  '100px'  },                                  
-        { targets: 14, width:  '110px'  },                                  
+        { targets: 1,  width:   '70px'  },                                                                       
+        { targets: 2,  width:  '70px'   },                                 
+        { targets: 3,  width:  '100px'  },                                
+        { targets: 4,  width:  '100px'  },                                 
+        { targets: 5,  width:  '150px'  },                                 
+        { targets: 6,  width:  '250px'  },       
+        { targets: 7,  width:  '100px'  },                                 
+        { targets: 8,  width:  '100px'  },                                  
+        { targets: 9,  width:  '150px'  },                                 
+        { targets: 10,  width:  '100px'  },                                 
+        { targets: 11, width:  '150px'  },                                   
+        { targets: 12, width:  '100px'  },                                   
+        { targets: 13, width:  '110px'  },                                 
+        { targets: 14, width:  '100px'  },                                  
+        { targets: 15, width:  '110px'  },                                  
     ],
-    columns: [
+  columns: [
+        { 
+            data: null,
+            render: function(data, type, row, meta) {
+                return meta.row + 1; 
+            }
+        },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_NO_MR' },
         { data: 'NO_MR' },

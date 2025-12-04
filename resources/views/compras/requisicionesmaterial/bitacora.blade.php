@@ -144,6 +144,7 @@
                     <table id="Tablabitacora" class="table table-hover table-bordered  w-100" style="min-width: 1000px; table-layout: fixed;">
                         <thead class="thead-dark">
                             <tr>
+                                <th>#</th>
                                 <th class="text-center">Visualizar</th>
                                 <th>Hoja</th>
                                 <th>Requisición No.</th>

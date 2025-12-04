@@ -46,20 +46,27 @@ var Tablabitacoragr = $("#Tablabitacoragr").DataTable({
         dataSrc: 'data'
     },
     columnDefs: [
-        { targets: '_all', defaultContent: 'N/A' },
-        { targets: 0, width: '250px', className: 'text-center'  },
-        { targets: 1, width: '250px',className: 'text-center'  },
-        { targets: 2, width: '200px',className: 'text-center'  },
-        { targets: 3, width: '250px', className: 'text-center' },
-        { targets: 4, width: '600px' },
-        { targets: 5, width: '250px',className: 'text-center'  },
-        { targets: 6, width: '800px', className: 'col-bien-servicio' },
-        { targets: 7, width: '250px', className: 'text-center' },
-        { targets: 8, width: '250px',className: 'text-center'  },
+      { targets: '_all', defaultContent: 'N/A' },
+        { targets: 0, width: '70px', className: 'text-center'  },
+        { targets: 1, width: '250px', className: 'text-center'  },
+        { targets: 2, width: '250px',className: 'text-center'  },
+        { targets: 3, width: '200px',className: 'text-center'  },
+        { targets: 4, width: '250px', className: 'text-center' },
+        { targets: 5, width: '600px' },
+        { targets: 6, width: '250px',className: 'text-center'  },
+        { targets: 7, width: '800px', className: 'col-bien-servicio' },
+        { targets: 8, width: '250px', className: 'text-center' },
+        { targets: 9, width: '250px',className: 'text-center'  },
         
         
     ],
-    columns: [
+  columns: [
+        { 
+            data: null,
+            render: function(data, type, row, meta) {
+                return meta.row + 1; 
+            }
+        },
         { data: 'NO_MR' },
         { data: 'FECHA_APRUEBA_MR' },
         { data: 'NO_PO' },

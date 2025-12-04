@@ -134,6 +134,7 @@
                     <table id="Tablabitacoragr" class="table table-hover table-bordered text-center w-100" style="min-width: 3000px; table-layout: fixed;">
                         <thead class="thead-dark">
                             <tr>
+                                <th class="text-center">#</th>
                                 <th class="text-center">No.MR</th>
                                 <th class="text-center">Fecha de aprobación.MR</th>
                                 <th class="text-center">No.PO</th>
