@@ -214,7 +214,7 @@ class grController extends Controller
             // === AGRUPACIÓN FINAL ===
             $rows = DB::query()
                 ->fromSub($union, 't')
-                ->orderBy('t.NO_MR', 'desc')
+                ->orderBy('t.NO_MR', 'asc')
                 ->get()
                 ->groupBy('AGRUPADOR')
                 ->map(function ($group) {
