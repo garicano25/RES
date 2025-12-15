@@ -961,7 +961,8 @@ Route::post('/BitacoraSave', [bitacoraconsumiblesController::class, 'store']);
 
 Route::get('/bitacoraretornables', [bitacoraretornableController::class, 'index']);
 Route::get('/Tablabitacoraretornable', [bitacoraretornableController::class, 'Tablabitacoraretornable']);
-
+Route::get('/obtenerMaterialRetornable', [bitacoraretornableController::class, 'obtenerMaterialRetornable']);
+Route::post('/BitacoraRetornableSave', [bitacoraretornableController::class, 'store']);
 
 /// VEHICULOS
 

@@ -53,7 +53,7 @@ var Tablabitacoraconsumibles = $("#Tablabitacoraconsumibles").DataTable({
         },
         { data: 'DESCRIPCION' },
         { data: 'SOLICITANTE_SALIDA' },
-        { data: 'FECHA_SALIDA' },
+        { data: 'FECHA_ALMACEN_SOLICITUD' },
         { data: 'CANTIDAD' },
         {
             data: null,
@@ -119,7 +119,7 @@ $(document).on('click', '.editarMaterial', function () {
 
            
             $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
-            $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
+            $("#FECHA_ALMACEN_SOLICITUD").val(material.FECHA_ALMACEN_SOLICITUD);
             $("#DESCRIPCION").val(material.DESCRIPCION);
             $("#CANTIDAD").val(material.CANTIDAD);
             $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
@@ -207,7 +207,7 @@ $(document).on('click', '.visualizarMaterial', function () {
 
            
             $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
-            $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
+            $("#FECHA_ALMACEN_SOLICITUD").val(material.FECHA_ALMACEN_SOLICITUD);
             $("#DESCRIPCION").val(material.DESCRIPCION);
             $("#CANTIDAD").val(material.CANTIDAD);
             $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);

@@ -15,7 +15,7 @@ class bitacoraModel extends Model
         'RECEMPLEADO_ID',
         'INVENTARIO_ID',
         'SOLICITANTE_SALIDA',
-        'FECHA_SALIDA',
+        'FECHA_ALMACEN_SOLICITUD',
         'DESCRIPCION',
         'CANTIDAD',
         'CANTIDAD_SALIDA',

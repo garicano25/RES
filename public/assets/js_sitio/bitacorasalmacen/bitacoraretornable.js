@@ -55,7 +55,7 @@ var Tablabitacoraretornable = $("#Tablabitacoraretornable").DataTable({
         },
         { data: 'DESCRIPCION' },
         { data: 'SOLICITANTE_SALIDA' },
-        { data: 'FECHA_SALIDA' },
+        { data: 'FECHA_ALMACEN_SOLICITUD' },
         { data: 'CANTIDAD' },
         {
             data: null,
@@ -94,7 +94,7 @@ $(document).on('click', '.editarMaterial', function () {
     ID_INVENTARIO_GLOBAL = $(this).data('inventario');
 
     $.ajax({
-        url: '/obtenerMaterialIndividual',
+        url: '/obtenerMaterialRetornable',
         method: 'GET',
         data: { id: ID_FORM_GLOBAL, inventario: ID_INVENTARIO_GLOBAL },
 
@@ -119,10 +119,8 @@ $(document).on('click', '.editarMaterial', function () {
 
             $("#FIRMA_RECIBIDO_POR").val("");
             $("#FIRMA_ENTREGADO_POR").val("");
-
-           
             $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
-            $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
+            $("#FECHA_ALMACEN_SOLICITUD").val(material.FECHA_ALMACEN_SOLICITUD);
             $("#DESCRIPCION").val(material.DESCRIPCION);
             $("#CANTIDAD").val(material.CANTIDAD);
             $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
@@ -182,7 +180,7 @@ $(document).on('click', '.visualizarMaterial', function () {
     ID_INVENTARIO_GLOBAL = $(this).data('inventario');
 
     $.ajax({
-        url: '/obtenerMaterialIndividual',
+        url: '/obtenerMaterialRetornable',
         method: 'GET',
         data: { id: ID_FORM_GLOBAL, inventario: ID_INVENTARIO_GLOBAL },
 
@@ -210,7 +208,7 @@ $(document).on('click', '.visualizarMaterial', function () {
 
            
             $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
-            $("#FECHA_SALIDA").val(material.FECHA_SALIDA);
+            $("#FECHA_ALMACEN_SOLICITUD").val(material.FECHA_ALMACEN_SOLICITUD);
             $("#DESCRIPCION").val(material.DESCRIPCION);
             $("#CANTIDAD").val(material.CANTIDAD);
             $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
@@ -289,7 +287,7 @@ $("#guardaBITACORA").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardaBITACORA')
-            await ajaxAwaitFormData({ api: 1, ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN,RECEMPLEADO_ID:ID_FORM_GLOBAL,INVENTARIO_ID: ID_INVENTARIO_GLOBAL}, 'BitacoraSave', 'formularioBITACORA', 'guardaBITACORA', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 1, ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN,RECEMPLEADO_ID:ID_FORM_GLOBAL,INVENTARIO_ID: ID_INVENTARIO_GLOBAL}, 'BitacoraRetornableSave', 'formularioBITACORA', 'guardaBITACORA', { callbackAfter: true, callbackBefore: true }, () => {
         
                
 
@@ -326,7 +324,7 @@ $("#guardaBITACORA").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardaBITACORA')
-                 await ajaxAwaitFormData({ api: 1, ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN,RECEMPLEADO_ID:ID_FORM_GLOBAL,INVENTARIO_ID: ID_INVENTARIO_GLOBAL}, 'BitacoraSave', 'formularioBITACORA', 'guardaBITACORA', { callbackAfter: true, callbackBefore: true }, () => {        
+                 await ajaxAwaitFormData({ api: 1, ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN,RECEMPLEADO_ID:ID_FORM_GLOBAL,INVENTARIO_ID: ID_INVENTARIO_GLOBAL}, 'BitacoraRetornableSave', 'formularioBITACORA', 'guardaBITACORA', { callbackAfter: true, callbackBefore: true }, () => {        
                 Swal.fire({
                     icon: 'info',
                     title: 'Espere un momento',

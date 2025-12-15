@@ -474,7 +474,7 @@
     <script src="/assets/js_sitio/funciones.js?v=5.6"></script>
     <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
-    
+
     <!-- Select 2 -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
@@ -540,20 +540,20 @@
     @endif
 
     @if(request()->is('bitacoraconsumibles'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraconsumible.js?v=1.27"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraconsumible.js?v=1.28"></script>
     @endif
 
 
     @if(request()->is('bitacoraretornables'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraretornable.js?v=1.16"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraretornable.js?v=1.17"></script>
     @endif
 
     @if(request()->is('bitacoravehiculos'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoravehiculo.js?v=1.16"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoravehiculo.js?v=1.17"></script>
     @endif
 
     @if(request()->is('bitacoraasignacion'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraasignacion.js"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraasignacion.js?v=1.0"></script>
     @endif
 
 

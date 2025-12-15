@@ -45,7 +45,7 @@ class bitacoraretornableController extends Controller
             $tabla = recemplaedosModel::where('TIPO_SOLICITUD', 2)
                 ->where('ESTADO_APROBACION', 'Aprobada')
                 ->where('FINALIZAR_SOLICITUD_ALMACEN', 1)
-                ->orderBy('FECHA_SALIDA', 'asc')
+                ->orderBy('FECHA_ALMACEN_SOLICITUD', 'asc')
                 ->get();
 
             $data = [];
@@ -84,7 +84,7 @@ class bitacoraretornableController extends Controller
                                     'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
                                     'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
                                     'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
-                                    'FECHA_SALIDA' => $value->FECHA_SALIDA ?? 'N/A',
+                                    'FECHA_ALMACEN_SOLICITUD' => $value->FECHA_ALMACEN_SOLICITUD ?? 'N/A',
                                     'OBSERVACIONES_REC' => $value->OBSERVACIONES_REC ?? 'N/A',
                                     'CANTIDAD' => $detalle['CANTIDAD_DETALLE'] ?? '',
                                     'CANTIDAD_SALIDA' => $detalle['CANTIDAD_DETALLE'] ?? '',
@@ -130,7 +130,7 @@ class bitacoraretornableController extends Controller
                             'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
                             'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
                             'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
-                            'FECHA_SALIDA' => $value->FECHA_SALIDA ?? 'N/A',
+                            'FECHA_ALMACEN_SOLICITUD' => $value->FECHA_ALMACEN_SOLICITUD ?? 'N/A',
                             'OBSERVACIONES_REC' => $value->OBSERVACIONES_REC ?? 'N/A',
                             'CANTIDAD' => $articulo['CANTIDAD'] ?? '',
                             'CANTIDAD_SALIDA' => $articulo['CANTIDAD_SALIDA'] ?? '',
@@ -164,5 +164,154 @@ class bitacoraretornableController extends Controller
         }
     }
 
+
+
+    public function obtenerMaterialRetornable(Request $request)
+    {
+        try {
+            $idFormulario = $request->get('id');
+            $idInventario = $request->get('inventario');
+
+            $bitacora = bitacoraModel::where('RECEMPLEADO_ID', $idFormulario)
+                ->where('INVENTARIO_ID', $idInventario)
+                ->where('ACTIVO', 1)
+                ->first();
+
+            if ($bitacora) {
+
+                return response()->json([
+                    'success' => true,
+                    'material' => [
+                        'ID_BITACORAS_ALMACEN'      => $bitacora->ID_BITACORAS_ALMACEN,
+                        'SOLICITANTE_SALIDA'        => $bitacora->SOLICITANTE_SALIDA,
+                        'FECHA_ALMACEN_SOLICITUD'              => $bitacora->FECHA_ALMACEN_SOLICITUD,
+                        'DESCRIPCION'               => $bitacora->DESCRIPCION,
+                        'CANTIDAD'                  => $bitacora->CANTIDAD,
+                        'CANTIDAD_SALIDA'           => $bitacora->CANTIDAD_SALIDA,
+                        'UNIDAD_SALIDA'             => $bitacora->UNIDAD_SALIDA,
+                        'INVENTARIO'                => $bitacora->INVENTARIO,
+                        'OBSERVACIONES_REC'         => $bitacora->OBSERVACIONES_REC,
+                        'RECIBIDO_POR'              => $bitacora->RECIBIDO_POR,
+                        'ENTREGADO_POR'             => $bitacora->ENTREGADO_POR,
+                        'FIRMA_RECIBIDO_POR'        => $bitacora->FIRMA_RECIBIDO_POR,
+                        'FIRMA_ENTREGADO_POR'       => $bitacora->FIRMA_ENTREGADO_POR,
+                        'OBSERVACIONES_BITACORA'    => $bitacora->OBSERVACIONES_BITACORA,
+                        'FUNCIONAMIENTO_BITACORA'   => $bitacora->FUNCIONAMIENTO_BITACORA,
+                        'YA_GUARDADO'               => true
+                    ]
+                ]);
+            }
+
+
+            $registro = recemplaedosModel::where('ID_FORMULARIO_RECURSOS_EMPLEADOS', $idFormulario)->first();
+
+            if (!$registro) {
+                return response()->json(['success' => false, 'message' => 'Registro no encontrado']);
+            }
+
+            $materiales = json_decode($registro->MATERIALES_JSON, true);
+            $materialEncontrado = null;
+
+
+            if (is_array($materiales)) {
+
+                foreach ($materiales as $item) {
+
+                    if (isset($item['INVENTARIO']) && $item['INVENTARIO'] == $idInventario) {
+                        $materialEncontrado = $item;
+                        break;
+                    }
+
+                    if (isset($item['VARIOS_ARTICULOS']) && $item['VARIOS_ARTICULOS'] == "1" && !empty($item['ARTICULOS'])) {
+
+                        foreach ($item['ARTICULOS'] as $detalle) {
+
+                            if (isset($detalle['INVENTARIO']) && $detalle['INVENTARIO'] == $idInventario) {
+
+                                $materialEncontrado = array_merge($item, $detalle);
+
+                                $materialEncontrado['CANTIDAD']         = $detalle['CANTIDAD_DETALLE'] ?? '';
+                                $materialEncontrado['CANTIDAD_SALIDA']  = $detalle['CANTIDAD_DETALLE'] ?? '';
+                                $materialEncontrado['UNIDAD_SALIDA']    = $detalle['UNIDAD_DETALLE'] ?? '';
+                                $materialEncontrado['FECHA_RETORNO']    = $detalle['FECHA_DETALLE'] ?? '';
+
+                                break 2;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!$materialEncontrado) {
+                return response()->json(['success' => false, 'message' => 'Artículo no encontrado']);
+            }
+
+            $materialEncontrado['SOLICITANTE_SALIDA'] = $registro->SOLICITANTE_SALIDA;
+            $materialEncontrado['FECHA_ALMACEN_SOLICITUD']       = $registro->FECHA_ALMACEN_SOLICITUD;
+            $materialEncontrado['OBSERVACIONES_REC']  = $registro->OBSERVACIONES_REC;
+
+            $materialEncontrado['ID_BITACORAS_ALMACEN'] = 0;
+            $materialEncontrado['YA_GUARDADO']          = false;
+
+
+            $usuario = auth()->user();
+
+            $materialEncontrado['ENTREGADO_POR'] =
+                ($usuario->EMPLEADO_NOMBRE ?? '') . ' ' .
+                ($usuario->EMPLEADO_APELLIDOPATERNO ?? '') . ' ' .
+                ($usuario->EMPLEADO_APELLIDOMATERNO ?? '');
+
+            return response()->json(['success' => true, 'material' => $materialEncontrado]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+
+
+
+    public function store(Request $request)
+    {
+        try {
+            switch (intval($request->api)) {
+                case 1:
+                    if ($request->ID_BITACORAS_ALMACEN == 0) {
+                        DB::statement('ALTER TABLE bitacorasalmacen AUTO_INCREMENT=1;');
+                        $bitacoras = bitacoraModel::create($request->all());
+                    } else {
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $bitacoras = bitacoraModel::where('ID_BITACORAS_ALMACEN', $request['ID_BITACORAS_ALMACEN'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['bitacora'] = 'Desactivada';
+                            } else {
+                                $bitacoras = bitacoraModel::where('ID_BITACORAS_ALMACEN', $request['ID_BITACORAS_ALMACEN'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['bitacora'] = 'Activada';
+                            }
+                        } else {
+                            $bitacoras = bitacoraModel::find($request->ID_BITACORAS_ALMACEN);
+                            $bitacoras->update($request->all());
+                            $response['code'] = 1;
+                            $response['bitacora'] = 'Actualizada';
+                        }
+                        return response()->json($response);
+                    }
+                    $response['code']  = 1;
+                    $response['bitacora']  = $bitacoras;
+                    return response()->json($response);
+                    break;
+                default:
+                    $response['code']  = 1;
+                    $response['msj']  = 'Api no encontrada';
+                    return response()->json($response);
+            }
+        } catch (Exception $e) {
+            return response()->json('Error al guardar ');
+        }
+    }
+
+    
 
 }
