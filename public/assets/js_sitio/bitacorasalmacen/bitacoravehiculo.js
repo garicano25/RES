@@ -55,7 +55,6 @@ var Tablabitacoravehiculos = $("#Tablabitacoravehiculos").DataTable({
         },
         { data: 'DESCRIPCION' },
         { data: 'SOLICITANTE_SALIDA' },
-        { data: 'FECHA_ALMACEN_SOLICITUD' },
         { data: 'CANTIDAD' },
         {
             data: null,
@@ -63,11 +62,12 @@ var Tablabitacoravehiculos = $("#Tablabitacoravehiculos").DataTable({
                 return `${data.CANTIDAD_SALIDA} (${data.UNIDAD_SALIDA ?? ''})`;
             }
         },
-       { data: 'PRODUCTO_NOMBRE' },
+        { data: 'PRODUCTO_NOMBRE' },
         { data: 'MARCA_EQUIPO' },
         { data: 'MODELO_EQUIPO' },
         { data: 'SERIE_EQUIPO' },
         { data: 'CODIGO_EQUIPO' },
+        { data: 'FECHA_ALMACEN_SOLICITUD' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' }
     ],
@@ -75,14 +75,14 @@ var Tablabitacoravehiculos = $("#Tablabitacoravehiculos").DataTable({
         { targets: 0, title: '#', className: 'all text-center' },
         { targets: 1, title: 'Descripción del vehículo', className: 'all text-center' },
         { targets: 2, title: 'Nombre del solicitante', className: 'all text-center' },
-        { targets: 3, title: 'Fecha de entrega', className: 'all text-center' },
-        { targets: 4, title: 'Cantidad solicitada', className: 'all text-center' },
-        { targets: 5, title: 'Cantidad entregada', className: 'all text-center' },
-        { targets: 6, title: 'Vehículo entregado', className: 'all text-center' },
-        { targets: 7, title: 'Marca', className: 'all text-center' },
-        { targets: 8, title: 'Modelo', className: 'all text-center' },
-        { targets: 9, title: 'No. Serie', className: 'all text-center' },
-        { targets: 10, title: 'Código de Identificación', className: 'all text-center' },
+        { targets: 3, title: 'Cantidad solicitada', className: 'all text-center' },
+        { targets: 4, title: 'Cantidad entregada', className: 'all text-center' },
+        { targets: 5, title: 'Vehículo entregado', className: 'all text-center' },
+        { targets: 6, title: 'Marca', className: 'all text-center' },
+        { targets: 7, title: 'Modelo', className: 'all text-center' },
+        { targets: 8, title: 'No. Serie', className: 'all text-center' },
+        { targets: 9, title: 'Código de Identificación', className: 'all text-center' },
+        { targets: 10, title: 'Fecha de entrega', className: 'all text-center' },
         { targets: 11, title: 'Editar', className: 'all text-center' },
         { targets: 12, title: 'Visualizar', className: 'all text-center' }
     ]
