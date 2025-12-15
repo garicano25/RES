@@ -75,7 +75,7 @@ var Tablabitacoravehiculos = $("#Tablabitacoravehiculos").DataTable({
         { targets: 0, title: '#', className: 'all text-center' },
         { targets: 1, title: 'Descripción del vehículo', className: 'all text-center' },
         { targets: 2, title: 'Nombre del solicitante', className: 'all text-center' },
-        { targets: 3, title: 'Fecha de solicitud', className: 'all text-center' },
+        { targets: 3, title: 'Fecha de entrega', className: 'all text-center' },
         { targets: 4, title: 'Cantidad solicitada', className: 'all text-center' },
         { targets: 5, title: 'Cantidad entregada', className: 'all text-center' },
         { targets: 6, title: 'Vehículo entregado', className: 'all text-center' },
