@@ -458,6 +458,8 @@ class inventarioController extends Controller
     public function Tabladocumentosinventario(Request $request)
     {
         try {
+
+            
             $equipo = $request->get('equipo');
 
             $tabla = documentosarticulosModel::where('INVENTARIO_ID', $equipo)->get();

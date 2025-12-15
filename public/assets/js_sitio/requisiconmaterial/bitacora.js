@@ -123,7 +123,9 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
        
   ],
   createdRow: function (row, data, dataIndex) {
-    $(row).css('background-color', data.COLOR);
+    if (data.COLOR) {
+        $(row).css('background-color', data.COLOR);
+    }
   },
 
 drawCallback: function () {
@@ -337,11 +339,11 @@ function cargarMaterialesDesdeJSON(materialesJson) {
 
 function inicializarDatepickers() {
   $('.mydatepicker').datepicker({
-    format: 'yyyy-mm-dd', // Formato de fecha
-                weekStart: 1, // Día que inicia la semana, 1 = Lunes
-                autoclose: true, // Cierra automáticamente el calendario
-                todayHighlight: true, // Marca el día de hoy en el calendario
-                language: 'es' // Configura el idioma en español
+    format: 'yyyy-mm-dd', 
+    weekStart: 1, 
+    autoclose: true, 
+    todayHighlight: true,
+    language: 'es' 
   });
 }
 
@@ -349,11 +351,8 @@ function inicializarDatepickers() {
 
 
 const ModalArea = document.getElementById('modalMateriales')
-ModalArea.addEventListener('hidden.bs.modal', event => {
-    
+ModalArea.addEventListener('hidden.bs.modal', event => { 
     document.getElementById('formularioBITACORA').reset();
-   
-
 })
 
 
@@ -689,13 +688,23 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
     
     
         
-            $('#contenedorProductos').append(clon);
+            // $('#contenedorProductos').append(clon);
+            // inicializarSelectProveedores(clon);
     
     
-            
-            inicializarSelectizeEnClon(clon);
+            const nodo = $(clon).appendTo('#contenedorProductos');
+
+            // último nodo real
+            const ultimoProducto = $('#contenedorProductos').children().last();
+
+            aplicarSelect2(ultimoProducto);
+
+            console.log(
+              "BD → Selects encontrados:",
+              ultimoProducto.find('.proveedor-cotizacionq1, .proveedor-cotizacionq2, .proveedor-cotizacionq3').length
+            );
+
           
-    
           });
     
           inicializarDatepickers();
@@ -708,158 +717,157 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
     
 
 
-  
+  /////// CUANDO NOSE HA GUARDADO NADA EN LOS BD
     
 
 
     let materiales = [];
-    if (Array.isArray(row.MATERIALES_JSON)) {
-      materiales = row.MATERIALES_JSON;
-    } else if (typeof row.MATERIALES_JSON === 'string') {
-      materiales = JSON.parse(row.MATERIALES_JSON);
-    }
+          if (Array.isArray(row.MATERIALES_JSON)) {
+            materiales = row.MATERIALES_JSON;
+          } else if (typeof row.MATERIALES_JSON === 'string') {
+            materiales = JSON.parse(row.MATERIALES_JSON);
+          }
 
-    const listaFiltrada = materiales.filter(m => m.CHECK_VO === 'SI' && m.CHECK_MATERIAL === 'SI');
+          const listaFiltrada = materiales.filter(m => m.CHECK_VO === 'SI' && m.CHECK_MATERIAL === 'SI');
 
-    if (listaFiltrada.length === 0) {
-      $('#contenedorProductos')
-        .html('<div class="alert alert-info">No hay materiales aprobados disponibles.</div>')
-        .show();
-      $('#preguntaProveedorUnico').addClass('d-none');
-      return;
-    }
+          if (listaFiltrada.length === 0) {
+            $('#contenedorProductos')
+              .html('<div class="alert alert-info">No hay materiales aprobados disponibles.</div>')
+              .show();
+            $('#preguntaProveedorUnico').addClass('d-none');
+            return;
+          }
 
-    $('#preguntaProveedorUnico').removeClass('d-none');
-    $('#contenedorProductos').hide();
- 
+          $('#preguntaProveedorUnico').removeClass('d-none');
+          $('#contenedorProductos').hide();
+      
 
-  $('#respuestaProveedorUnicoSi').on('click', function () {
-  $('#esProveedorUnico').val('SI');
+        $('#respuestaProveedorUnicoSi').on('click', function () {
+        $('#esProveedorUnico').val('SI');
 
-  $('#preguntaProveedorUnico').addClass('d-none');
-  $('#contenedorProductos').show();
+        $('#preguntaProveedorUnico').addClass('d-none');
+        $('#contenedorProductos').show();
 
-  const template = document.querySelector('#templateProducto');
-  const clon = document.importNode(template.content, true);
+        const template = document.querySelector('#templateProducto');
+        const clon = document.importNode(template.content, true);
 
-  // Quita encabezado visual
-  const header = clon.querySelector('.card-header');
-  if (header) header.remove();
+        // Quita encabezado visual
+        const header = clon.querySelector('.card-header');
+        if (header) header.remove();
 
-  // Elimina inputs ocultos si existen
-  if (clon.querySelector('.descripcion-input')) clon.querySelector('.descripcion-input').remove();
-  if (clon.querySelector('.cantidad-input')) clon.querySelector('.cantidad-input').remove();
-  if (clon.querySelector('.unidad-input')) clon.querySelector('.unidad-input').remove();
+        // Elimina inputs ocultos si existen
+        if (clon.querySelector('.descripcion-input')) clon.querySelector('.descripcion-input').remove();
+        if (clon.querySelector('.cantidad-input')) clon.querySelector('.cantidad-input').remove();
+        if (clon.querySelector('.unidad-input')) clon.querySelector('.unidad-input').remove();
 
-  // Agrega inputs visibles por material
-  const descripcionDiv = clon.querySelector('.descripcion-materiales');
-  if (descripcionDiv) {
-    const inputsHtml = listaFiltrada.map(m => {
-      return `
-        <div class="row mb-2">
-          <div class="col-3">
-            <label class="form-label">Descripción</label>
+        // Agrega inputs visibles por material
+        const descripcionDiv = clon.querySelector('.descripcion-materiales');
+        if (descripcionDiv) {
+          const inputsHtml = listaFiltrada.map(m => {
+            return `
+              <div class="row mb-2">
+                <div class="col-3">
+                  <label class="form-label">Descripción</label>
 
-             
-
-            <input type="text" class="form-control" name="DESCRIPCION[]" value="${escapeHtml(m.DESCRIPCION)}" readonly>
-          </div>
-          <div class="col-1">
-            <label class="form-label">Cantidad</label>
-            <input type="number" class="form-control" name="CANTIDAD[]" value="${m.CANTIDAD}" readonly>
-          </div>
-          <div class="col-1">
-            <label class="form-label">Unidad</label>
-            <input type="text" class="form-control" name="UNIDAD_MEDIDA[]" value="${m.UNIDAD_MEDIDA}" readonly>
-          </div>
-          <div class="col-1">
-            <label class="form-label">Cantidad Real </label>
-            <input type="number" class="form-control" name="CANTIDAD_REAL[]" min="0" step="any" required>
-          </div>
-          <div class="col-2">
-            <label class="form-label">Precio Unitario Q1</label>
-            <input type="number" class="form-control" name="PRECIO_UNITARIO[]" min="0" step="0.01" required>
-          </div>
-
-
-        
-          <div class="col-2">
-            <label class="form-label">Precio Unitario Q2</label>
-            <input type="number" class="form-control" name="PRECIO_UNITARIO_Q2[]" min="0" step="0.01" required>
-          </div>
-
-       
-        
-
-          <div class="col-2">
-            <label class="form-label">Precio Unitario Q3</label>
-            <input type="number" class="form-control" name="PRECIO_UNITARIO_Q3[]" min="0" step="0.01" required>
-          </div>
+                  <input type="text" class="form-control" name="DESCRIPCION[]" value="${escapeHtml(m.DESCRIPCION)}" readonly>
+                </div>
+                <div class="col-1">
+                  <label class="form-label">Cantidad</label>
+                  <input type="number" class="form-control" name="CANTIDAD[]" value="${m.CANTIDAD}" readonly>
+                </div>
+                <div class="col-1">
+                  <label class="form-label">Unidad</label>
+                  <input type="text" class="form-control" name="UNIDAD_MEDIDA[]" value="${m.UNIDAD_MEDIDA}" readonly>
+                </div>
+                <div class="col-1">
+                  <label class="form-label">Cantidad Real </label>
+                  <input type="number" class="form-control" name="CANTIDAD_REAL[]" min="0" step="any" required>
+                </div>
+                <div class="col-2">
+                  <label class="form-label">Precio Unitario Q1</label>
+                  <input type="number" class="form-control" name="PRECIO_UNITARIO[]" min="0" step="0.01" required>
+                </div>
+                <div class="col-2">
+                  <label class="form-label">Precio Unitario Q2</label>
+                  <input type="number" class="form-control" name="PRECIO_UNITARIO_Q2[]" min="0" step="0.01" required>
+                </div>
+                <div class="col-2">
+                  <label class="form-label">Precio Unitario Q3</label>
+                  <input type="number" class="form-control" name="PRECIO_UNITARIO_Q3[]" min="0" step="0.01" required>
+                </div>
 
 
-        </div>
-      `;
-    }).join('');
-    descripcionDiv.innerHTML = inputsHtml;
-  }
+              </div>
+            `;
+          }).join('');
+          descripcionDiv.innerHTML = inputsHtml;
+        }
 
-  const form = document.getElementById('formularioBITACORA');
-  if (form) {
-    let existingJsonInput = form.querySelector('input[name="MATERIALES_HOJA_JSON[]"]');
-    if (existingJsonInput) existingJsonInput.remove(); 
+        const form = document.getElementById('formularioBITACORA');
+        if (form) {
+          let existingJsonInput = form.querySelector('input[name="MATERIALES_HOJA_JSON[]"]');
+          if (existingJsonInput) existingJsonInput.remove(); 
 
-    const nuevasDescripciones = Array.from(document.querySelectorAll('input[name="DESCRIPCION[]"]')).map(input => input.value);
-    const nuevasCantidades = Array.from(document.querySelectorAll('input[name="CANTIDAD[]"]')).map(input => input.value);
-    const nuevasUnidades = Array.from(document.querySelectorAll('input[name="UNIDAD_MEDIDA[]"]')).map(input => input.value);
-    const nuevasCantidadesReales = Array.from(document.querySelectorAll('input[name="CANTIDAD_REAL[]"]')).map(input => input.value);
-    const nuevosPreciosUnitarios = Array.from(document.querySelectorAll('input[name="PRECIO_UNITARIO[]"]')).map(input => input.value);
-
-
-
-
-    const nuevosPreciosUnitariosQ2 = Array.from(document.querySelectorAll('input[name="PRECIO_UNITARIO_Q2[]"]')).map(input => input.value);
+          const nuevasDescripciones = Array.from(document.querySelectorAll('input[name="DESCRIPCION[]"]')).map(input => input.value);
+          const nuevasCantidades = Array.from(document.querySelectorAll('input[name="CANTIDAD[]"]')).map(input => input.value);
+          const nuevasUnidades = Array.from(document.querySelectorAll('input[name="UNIDAD_MEDIDA[]"]')).map(input => input.value);
+          const nuevasCantidadesReales = Array.from(document.querySelectorAll('input[name="CANTIDAD_REAL[]"]')).map(input => input.value);
+          const nuevosPreciosUnitarios = Array.from(document.querySelectorAll('input[name="PRECIO_UNITARIO[]"]')).map(input => input.value);
+          const nuevosPreciosUnitariosQ2 = Array.from(document.querySelectorAll('input[name="PRECIO_UNITARIO_Q2[]"]')).map(input => input.value);
+          const nuevosPreciosUnitariosQ3 = Array.from(document.querySelectorAll('input[name="PRECIO_UNITARIO_Q3[]"]')).map(input => input.value);
 
 
-    const nuevosPreciosUnitariosQ3 = Array.from(document.querySelectorAll('input[name="PRECIO_UNITARIO_Q3[]"]')).map(input => input.value);
-
-    
-
-    const materialesCompletos = nuevasDescripciones.map((_, i) => ({
-      DESCRIPCION: nuevasDescripciones[i],
-      CANTIDAD: nuevasCantidades[i],
-      UNIDAD_MEDIDA: nuevasUnidades[i],
-      CANTIDAD_REAL: nuevasCantidadesReales[i],
-      PRECIO_UNITARIO: nuevosPreciosUnitarios[i],
-      PRECIO_UNITARIO_Q2: nuevosPreciosUnitariosQ2[i],
-      PRECIO_UNITARIO_Q3: nuevosPreciosUnitariosQ3[i]
+          const materialesCompletos = nuevasDescripciones.map((_, i) => ({
+            DESCRIPCION: nuevasDescripciones[i],
+            CANTIDAD: nuevasCantidades[i],
+            UNIDAD_MEDIDA: nuevasUnidades[i],
+            CANTIDAD_REAL: nuevasCantidadesReales[i],
+            PRECIO_UNITARIO: nuevosPreciosUnitarios[i],
+            PRECIO_UNITARIO_Q2: nuevosPreciosUnitariosQ2[i],
+            PRECIO_UNITARIO_Q3: nuevosPreciosUnitariosQ3[i]
 
 
-    }));
+          }));
 
-    const inputHidden = document.createElement('input');
-    inputHidden.type = 'hidden';
-    inputHidden.name = 'MATERIALES_HOJA_JSON[]';
-    inputHidden.value = JSON.stringify(materialesCompletos);
-    form.appendChild(inputHidden);
-  }
+          const inputHidden = document.createElement('input');
+          inputHidden.type = 'hidden';
+          inputHidden.name = 'MATERIALES_HOJA_JSON[]';
+          inputHidden.value = JSON.stringify(materialesCompletos);
+          form.appendChild(inputHidden);
+        }
 
-  const $clon = $(clon);
-  $clon.find('.th-cantidadmr, .th-cantidadreal, .th-preciounitario').hide();
-  $clon.find('.td-cotizacionq1-cantidadmr, .td-cotizacionq1-cantidadreal, .td-cotizacionq1-preciounitario').hide();
-  $clon.find('.td-cotizacionq2-cantidadmr, .td-cotizacionq2-cantidadreal, .td-cotizacionq2-preciounitario').hide();
-  $clon.find('.td-cotizacionq3-cantidadmr, .td-cotizacionq3-cantidadreal, .td-cotizacionq3-preciounitario').hide();
+        const $clon = $(clon);
+        $clon.find('.th-cantidadmr, .th-cantidadreal, .th-preciounitario').hide();
+        $clon.find('.td-cotizacionq1-cantidadmr, .td-cotizacionq1-cantidadreal, .td-cotizacionq1-preciounitario').hide();
+        $clon.find('.td-cotizacionq2-cantidadmr, .td-cotizacionq2-cantidadreal, .td-cotizacionq2-preciounitario').hide();
+        $clon.find('.td-cotizacionq3-cantidadmr, .td-cotizacionq3-cantidadreal, .td-cotizacionq3-preciounitario').hide();
 
-    $('#contenedorProductos').append($clon);
-    
+        // $('#contenedorProductos').append($clon);
+        // inicializarSelectProveedores($clon);
+          
 
-  inicializarSelectizeEnClon($clon[0]);
-  actualizarProveedoresSugeridos($clon[0]);
-  actualizarProveedoresseleccionado($clon[0]);
-  inicializarDatepickers();
-  inicializarSumaImportes();
-});
+      const nodo = $clon.appendTo('#contenedorProductos');
+
+      // último nodo real insertado
+      const ultimoProducto = $('#contenedorProductos').children().last();
+
+      aplicarSelect2(ultimoProducto);
+
+      console.log(
+        "Proveedor único → Selects encontrados:",
+        ultimoProducto.find('.proveedor-cotizacionq1, .proveedor-cotizacionq2, .proveedor-cotizacionq3').length
+      );
 
 
+        actualizarProveedoresSugeridos($clon[0]);
+        actualizarProveedoresseleccionado($clon[0]);
+        inicializarDatepickers();
+        inicializarSumaImportes();
+
+          
+      });
+
+///// CUANDO EL PROVEEDOR ES DIFERENTE
 
     $('#respuestaProveedorUnicoNo').on('click', function () {
       $('#esProveedorUnico').val('NO'); 
@@ -891,8 +899,23 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
 
         
 
-        $('#contenedorProductos').append(clon);
-        inicializarSelectizeEnClon(clon);
+        // $('#contenedorProductos').append(clon);
+        // inicializarSelectProveedores(clon);
+
+       const nodo = $(clon).appendTo('#contenedorProductos');
+
+          // último nodo real insertado
+          const ultimoProducto = $('#contenedorProductos').children().last();
+
+          aplicarSelect2(ultimoProducto);
+
+          console.log(
+            "Proveedor diferente → Selects encontrados:",
+            ultimoProducto.find('.proveedor-cotizacionq1, .proveedor-cotizacionq2, .proveedor-cotizacionq3').length
+          );
+
+
+        
         actualizarProveedoresSugeridos(clon);
         actualizarProveedoresseleccionado(clon);
 
@@ -906,11 +929,78 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
 
     });
 
+
+
+
+
+
   } catch (err) {
     console.error('Error al cargar hoja de trabajo:', err);
     alertToast('Error al cargar la hoja de trabajo', 'error');
   }
 });
+
+
+function aplicarSelect2(nodo) {
+
+    setTimeout(() => {
+        nodo.find('.proveedor-cotizacionq1, .proveedor-cotizacionq2, .proveedor-cotizacionq3')
+            .each(function () {
+
+                if ($(this).hasClass("select2-hidden-accessible")) {
+                    $(this).select2("destroy");
+                }
+
+                $(this).select2({
+                    width: "100%",
+                    allowClear: true,
+                    placeholder: "Seleccione proveedor",
+                    dropdownParent: obtenerModalPadre(this),
+                    dropdownPosition: 'below'   
+                });
+            });
+    }, 50);
+}
+
+function obtenerModalPadre(elemento) {
+    const modalBody = $(elemento).closest(".modal-body");
+
+    if (modalBody.length > 0) {
+        return modalBody; 
+    }
+
+    const modal = $(elemento).closest(".modal");
+
+    if (modal.length > 0) {
+        return modal;
+    }
+
+    return $("body");
+}
+
+
+function inicializarSelectProveedores(contexto = document) {
+
+    const selects = $(contexto).find('.proveedor-cotizacionq1, .proveedor-cotizacionq2, .proveedor-cotizacionq3');
+
+    selects.each(function () {
+
+        const $select = $(this);
+
+        if ($select.hasClass("select2-hidden-accessible")) {
+            $select.select2('destroy');
+        }
+
+        $select.select2({
+            width: "100%",
+            placeholder: "Seleccionar proveedor",
+            allowClear: true,
+            dropdownParent: $('#modalMateriales'),
+        });
+
+    });
+}
+
 
 
 
@@ -1015,35 +1105,6 @@ function actualizarProveedoresSugeridos(grupo, valorSeleccionado = null) {
 
 
 
-
-function inicializarSelectizeEnClon(clon) {
-  if (!clon) return;
-
-  const clases = [
-    '.proveedor-cotizacionq1',
-    '.proveedor-cotizacionq2',
-    '.proveedor-cotizacionq3'
-  ];
-
-  clases.forEach((clase) => {
-    const select = clon.querySelector(clase);
-
-    if (select) {
-      if ($(select)[0].selectize) {
-        $(select)[0].selectize.destroy();
-      }
-
-      const selectize = $(select).selectize({
-        allowEmptyOption: true,
-        dropdownParent: 'body',
-        sortField: 'text'
-      })[0].selectize;
-
-      const valorActual = select.value;
-      if (valorActual) selectize.setValue(valorActual);
-    }
-  });
-}
 
 
 function actualizarProveedoresseleccionado(grupo, valorSeleccionado = null) {

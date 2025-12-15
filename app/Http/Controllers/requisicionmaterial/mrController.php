@@ -449,7 +449,7 @@ class mrController extends Controller
     public function Tablabitacora()
     {
         try {
-            $tabla = mrModel::where('ESTADO_APROBACION', 'Aprobada')->get();
+            $tabla = mrModel::whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])->get();
 
             foreach ($tabla as $value) {
                 $no_mr = $value->NO_MR;
@@ -472,9 +472,7 @@ class mrController extends Controller
                     $value->FECHA_GR = '—';
                 }
 
-                // =============================
-                //      HOJAS DE TRABAJO
-                // =============================
+               
 
                 $hojas = DB::table('hoja_trabajo')->where('NO_MR', $no_mr)->get();
                 $total = $hojas->count();
@@ -485,85 +483,68 @@ class mrController extends Controller
                     $value->DISABLED_SELECT = true;
                 } else {
 
-                    // ESTADOS
-                    $estados = $hojas->pluck('ESTADO_APROBACION');
-                    $aprobados = $estados->filter(fn($e) => $e === 'Aprobada')->count();
-                    $rechazados = $estados->filter(fn($e) => $e === 'Rechazada')->count();
+                $estados = $hojas->pluck('ESTADO_APROBACION');
+                $aprobados = $estados->filter(fn($e) => $e === 'Aprobada')->count();
+                $rechazados = $estados->filter(fn($e) => $e === 'Rechazada')->count();
 
-                    // DATOS PO
-                    $requiere_po = $hojas->where('REQUIERE_PO', 'Sí')->count();
-                    $po_aprobada_o_rechazada = false;
+                $requiere_po = $hojas->where('REQUIERE_PO', 'Sí')->count();
+                $po_aprobada_o_rechazada = false;
 
-                    foreach ($hojas as $hoja) {
-                        $hoja_id = $hoja->id;
-                        $po_relacionadas = DB::table('formulario_ordencompra')
-                            ->whereJsonContains('HOJA_ID', (string)$hoja_id)
-                            ->whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])
-                            ->count();
+                foreach ($hojas as $hoja) {
+                    $hoja_id = $hoja->id;
+                    $po_relacionadas = DB::table('formulario_ordencompra')
+                        ->whereJsonContains('HOJA_ID', (string)$hoja_id)
+                        ->whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])
+                        ->count();
 
-                        if ($po_relacionadas > 0) {
-                            $po_aprobada_o_rechazada = true;
-                            break;
-                        }
+                    if ($po_relacionadas > 0) {
+                        $po_aprobada_o_rechazada = true;
+                        break;
                     }
+                }
 
-                    // =============================
-                    //     LÓGICA EXACTA PEDIDA
-                    // =============================
+                if ($rechazados == $total) {
 
-                    if ($rechazados == $total) {
+                    $value->ESTADO_FINAL = 'Finalizada';
+                } else {
 
-                        // TODAS RECHAZADAS → FINALIZADA SIEMPRE
-                        $value->ESTADO_FINAL = 'Finalizada';
-                    } else {
+                    if ($aprobados > 0 && $rechazados <= $total) {
 
-                        // SI TODAS O ALGUNAS ESTÁN APROBADAS
-                        if ($aprobados > 0 && $rechazados <= $total) {
-
-                            // Si requiere PO → debe estar aprobada/rechazada
-                            if ($requiere_po > 0 && !$po_aprobada_o_rechazada) {
-                                $value->ESTADO_FINAL = 'En proceso';
-                            } else {
-                                $value->ESTADO_FINAL = 'Finalizada';
-                            }
-                        } else {
-                            // AÚN HAY PENDIENTES
+                        if ($requiere_po > 0 && !$po_aprobada_o_rechazada) {
                             $value->ESTADO_FINAL = 'En proceso';
+                        } else {
+                            $value->ESTADO_FINAL = 'Finalizada';
                         }
+                    } else {
+                        $value->ESTADO_FINAL = 'En proceso';
                     }
+                }
 
-                    // =============================
-                    //   COLORES
-                    // =============================
+                
 
-                    // SI EL ESTADO FINAL ES EN PROCESO → AMARILLO SIEMPRE
-                    if ($value->ESTADO_FINAL === 'En proceso') {
-                        $value->COLOR = '#fff3cd'; // amarillo
-                    }
-                    // SI TODAS RECHAZADAS
-                    elseif ($rechazados == $total) {
-                        $value->COLOR = '#f8d7da'; // rojo
-                    }
-                    // SI TODAS APROBADAS Y PO LISTA
-                    elseif ($aprobados == $total) {
-                        $value->COLOR = '#d4edda'; // verde
-                    }
-                    // SI APROB + RECHAZ → VERDE
-                    elseif ($aprobados > 0 && $rechazados > 0) {
-                        $value->COLOR = '#d4edda';
-                    }
-                    // CUALQUIER OTRO CASO
-                    else {
-                        $value->COLOR = '#fff3cd'; // amarillo
-                    }
+                if ($value->ESTADO_FINAL === 'En proceso') {
+                    $value->COLOR = '#fff3cd'; 
+                }
+                elseif ($rechazados == $total) {
+                    $value->COLOR = '#f8d7da'; 
+                }
+                elseif ($aprobados == $total) {
+                    $value->COLOR = '#d4edda'; 
+                }
+                elseif ($aprobados > 0 && $rechazados > 0) {
+                    $value->COLOR = '#d4edda';
+                }
+                else {
+                    $value->COLOR = '#fff3cd'; 
+                }
+
+                
 
 
                     $value->DISABLED_SELECT = false;
                 }
 
-                // =============================
-                //          BOTONES
-                // =============================
+                
 
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
@@ -575,7 +556,26 @@ class mrController extends Controller
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 }
 
-                $value->BTN_NO_MR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                if ($value->ESTADO_APROBACION === 'Rechazada') {
+                    $value->BTN_NO_MR = '
+                        <button type="button" class="btn btn-secondary btn-custom rounded-pill" disabled>
+                            <i class="bi bi-ban"></i>
+                        </button>
+                    ';
+                } else {
+
+                    $value->BTN_NO_MR = '
+                        <button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    ';
+                }
+
+             
+                if ($value->ESTADO_APROBACION === 'Rechazada') {
+                    $value->COLOR = '#f8d7da'; 
+                }
+
             }
 
             return response()->json([

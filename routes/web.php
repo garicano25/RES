@@ -737,6 +737,11 @@ Route::get('/Tablaproveedorescriticos', [listaproveedorescriticosController::cla
 Route::get('/listaproveedores', [listaproveedorController::class, 'index']);
 Route::get('/Tablalistaproveedores', [listaproveedorController::class, 'Tablalistaproveedores']);
 Route::post('/AltaSave1', [listaproveedorController::class, 'store']);
+
+Route::get('/listaproveedorDelete', [listaproveedorController::class, 'store']);
+
+
+
 Route::get('/Tablacuentas', [listaproveedorController::class, 'Tablacuentas']);
 Route::get('/Tablacontactos', [listaproveedorController::class, 'Tablacontactos']);
 Route::get('/Tablacertificaciones', [listaproveedorController::class, 'Tablacertificaciones']);
@@ -847,7 +852,7 @@ Route::get('/mostrarmembresia/{id}', [altacerticacionController::class, 'mostrar
 Route::get('/proveedoresreferencias', function () {return view('compras.proveedores.altareferencias');});
 Route::post('/AltareferenciaSave', [altareferenciasController::class, 'store']);
 Route::get('/Tablareferenciasproveedor', [altareferenciasController::class, 'Tablareferenciasproveedor']);
-Route::get('/ReferenciasDelete', [altacontactoController::class, 'store']);
+Route::get('/ReferenciasDelete', [altareferenciasController::class, 'store']);
 
 //ALTA DE CONTACTOS
 // Route::get('/Proveedores_Contactos', function () {return view('compras.proveedores.altacontactos');});

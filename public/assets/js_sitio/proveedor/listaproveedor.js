@@ -135,8 +135,7 @@ var Tablalistaproveedores = $("#Tablalistaproveedores").DataTable({
         { data: 'ESTATUS_DATOS' }, 
         { data: 'BTN_CORREO' },
         { data: 'BTN_EDITAR' },
-
-
+        { data: 'BTN_ELIMINAR' }
     ],
     createdRow: function(row, data) {
         if (data.VERIFICACION_SOLICITADA == 1) {
@@ -158,6 +157,8 @@ var Tablalistaproveedores = $("#Tablalistaproveedores").DataTable({
         { targets: 3, title: 'Información faltante', className: 'all text-center' },
         { targets: 4, title: 'Correo', className: 'all text-center' },
         { targets: 5, title: 'Mostrar', className: 'all text-center' },
+        { targets: 6, title: 'Activo', className: 'all text-center' },
+
 
     ]
 });
@@ -543,6 +544,24 @@ if (row.data().TIPO_PERSONA_ALTA == "1") {
 
     $("#step1").click();
 });
+
+
+$('#Tablalistaproveedores tbody').on('change', 'td>label>input.ELIMINAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablalistaproveedores.row(tr);
+
+    var estado = $(this).is(':checked') ? 1 : 0;
+
+    data = {
+        api: 1,
+        ELIMINAR: estado == 0 ? 1 : 0, 
+        ID_FORMULARIO_ALTA: row.data().ID_FORMULARIO_ALTA
+    };
+
+    eliminarDatoTabla(data, [Tablalistaproveedores], 'listaproveedorDelete');
+});
+
+
 
 function cualdescuentos() {
     var otrosCheckbox = document.getElementById('OTROS_DESCUENTO');
@@ -2197,14 +2216,6 @@ $('#Tabladocumentosoporteproveedores').on('click', '.ver-archivo-documentosoport
 });
 
 
-
-
-
-
-
-
-
-
 $('#Tabladocumentosoporteproveedores').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tabladocumentosoporteproveedores.row(tr);
@@ -2465,122 +2476,122 @@ function cargarSelectDocumentosPorProveedor(rfcSeleccionada) {
 // <!--                                                          STEP 7                                                              -->
 // <!-- ============================================================================================================================ -->
 
-function activarStepsHasta(stepId) {
-    const pasos = ['step1','step2','step3','step4','step5','step6','step7'];
+// function activarStepsHasta(stepId) {
+//     const pasos = ['step1','step2','step3','step4','step5','step6','step7'];
 
-    const indexActual = pasos.indexOf(stepId);
-    if (indexActual === -1) return; 
+//     const indexActual = pasos.indexOf(stepId);
+//     if (indexActual === -1) return; 
 
-    for (let i = 0; i <= indexActual; i++) {
-        const step = document.getElementById(pasos[i]);
-        if (step && !step.classList.contains('js-active')) {
-            step.classList.add('js-active');
-        }
-    }
-}
+//     for (let i = 0; i <= indexActual; i++) {
+//         const step = document.getElementById(pasos[i]);
+//         if (step && !step.classList.contains('js-active')) {
+//             step.classList.add('js-active');
+//         }
+//     }
+// }
 
-activarStepsHasta('step7');
-
-
-document.getElementById('step7').addEventListener('click', function(event) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-
-    if (!rfcSeleccionada) {
-        Swal.fire({
-            icon: 'warning',
-            title: '¡Atención!',
-            text: 'No se ha seleccionado ningún RFC.'
-        });
-        return;
-    }
-
-    const stepClicked = this;
-
-    $.ajax({
-        url: '/verificarEstadoVerificacion',
-        method: 'POST',
-        data: { rfc: rfcSeleccionada },
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function(response) {
-            if (response.success) {
-                activarStepsHasta('step7');
-
-                document.querySelectorAll('[id$="-content"]').forEach(c => c.style.display = 'none');
-                const contenido = document.getElementById(stepClicked.id + '-content');
-                if (contenido) contenido.style.display = 'block';
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Acceso denegado',
-                    text: response.message || 'No puedes acceder a este paso porque no está solicitada la verificación.'
-                });
-            }
-        },
-        error: function(xhr) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Ocurrió un error al verificar el estado de la verificación.'
-            });
-            console.error(xhr.responseText);
-        }
-    });
-});
+// activarStepsHasta('step7');
 
 
+// document.getElementById('step7').addEventListener('click', function(event) {
+//     event.preventDefault();
+//     event.stopImmediatePropagation();
+
+//     if (!rfcSeleccionada) {
+//         Swal.fire({
+//             icon: 'warning',
+//             title: '¡Atención!',
+//             text: 'No se ha seleccionado ningún RFC.'
+//         });
+//         return;
+//     }
+
+//     const stepClicked = this;
+
+//     $.ajax({
+//         url: '/verificarEstadoVerificacion',
+//         method: 'POST',
+//         data: { rfc: rfcSeleccionada },
+//         headers: {
+//             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//         },
+//         success: function(response) {
+//             if (response.success) {
+//                 activarStepsHasta('step7');
+
+//                 document.querySelectorAll('[id$="-content"]').forEach(c => c.style.display = 'none');
+//                 const contenido = document.getElementById(stepClicked.id + '-content');
+//                 if (contenido) contenido.style.display = 'block';
+//             } else {
+//                 Swal.fire({
+//                     icon: 'error',
+//                     title: 'Acceso denegado',
+//                     text: response.message || 'No puedes acceder a este paso porque no está solicitada la verificación.'
+//                 });
+//             }
+//         },
+//         error: function(xhr) {
+//             Swal.fire({
+//                 icon: 'error',
+//                 title: 'Error',
+//                 text: 'Ocurrió un error al verificar el estado de la verificación.'
+//             });
+//             console.error(xhr.responseText);
+//         }
+//     });
+// });
 
 
- (function(){
-    function setBadge(elStatus, value){
-      // Limpia clases previas
-      elStatus.innerHTML = "";
-      const span = document.createElement('span');
-      if(value === "1"){
-        span.className = "badge badge-success";
-        span.textContent = "Cumple";
-      }else if(value === "0"){
-        span.className = "badge badge-danger";
-        span.textContent = "No cumple";
-      }else{
-        span.className = "badge badge-neutral";
-        span.textContent = "Sin seleccionar";
-      }
-      elStatus.appendChild(span);
-    }
 
-    function initBadges(){
-      document.querySelectorAll(".verif-status").forEach(s => {
-        const v = s.getAttribute("data-value") || "";
-        setBadge(s, v);
-      });
-    }
 
-    function bindChanges(){
-      // Delegación en el contenedor del step 7
-      const container = document.getElementById("step7-content");
-      if(!container) return;
+//  (function(){
+//     function setBadge(elStatus, value){
+//       // Limpia clases previas
+//       elStatus.innerHTML = "";
+//       const span = document.createElement('span');
+//       if(value === "1"){
+//         span.className = "badge badge-success";
+//         span.textContent = "Cumple";
+//       }else if(value === "0"){
+//         span.className = "badge badge-danger";
+//         span.textContent = "No cumple";
+//       }else{
+//         span.className = "badge badge-neutral";
+//         span.textContent = "Sin seleccionar";
+//       }
+//       elStatus.appendChild(span);
+//     }
 
-      container.addEventListener("change", function(e){
-        const input = e.target;
-        if(input && input.type === "radio" && input.name.startsWith("VERIFICACIONES[")){
-          const li = input.closest(".verif-item");
-          if(!li) return;
-          const id = li.getAttribute("data-id");
-          const status = document.getElementById("status_" + id);
-          const value = input.value; // "1" ó "0"
-          setBadge(status, value);
-          status.setAttribute("data-value", value);
-        }
-      });
-    }
+//     function initBadges(){
+//       document.querySelectorAll(".verif-status").forEach(s => {
+//         const v = s.getAttribute("data-value") || "";
+//         setBadge(s, v);
+//       });
+//     }
 
-    document.addEventListener("DOMContentLoaded", function(){
-      initBadges();
-      bindChanges();
-    });
+//     function bindChanges(){
+//       // Delegación en el contenedor del step 7
+//       const container = document.getElementById("step7-content");
+//       if(!container) return;
+
+//       container.addEventListener("change", function(e){
+//         const input = e.target;
+//         if(input && input.type === "radio" && input.name.startsWith("VERIFICACIONES[")){
+//           const li = input.closest(".verif-item");
+//           if(!li) return;
+//           const id = li.getAttribute("data-id");
+//           const status = document.getElementById("status_" + id);
+//           const value = input.value; // "1" ó "0"
+//           setBadge(status, value);
+//           status.setAttribute("data-value", value);
+//         }
+//       });
+//     }
+
+//     document.addEventListener("DOMContentLoaded", function(){
+//       initBadges();
+//       bindChanges();
+//     });
 
    
-  })();
+//   })();

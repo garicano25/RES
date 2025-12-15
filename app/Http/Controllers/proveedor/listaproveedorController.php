@@ -49,12 +49,23 @@ class listaproveedorController extends Controller
 
             foreach ($tabla as $value) {
 
+
+                if ($value->ACTIVO == 0) {
+
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_ALTA . '"><span class="slider round"></span></label>';
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_ALTA . '" checked><span class="slider round"></span></label>';
+                }
+
+
+                
                 if ((int) $value->VERIFICACION_SOLICITADA === 1) {
                     $value->ESTATUS_DATOS = '<span class="badge bg-success">Completo</span>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_CORREO = ''; 
                     continue;
                 }
+
 
                 $mensajes = [];
                 $rfc = $value->RFC_ALTA;
@@ -106,6 +117,11 @@ class listaproveedorController extends Controller
                 $value->BTN_CORREO = empty($mensajes)
                     ? ''
                     : '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO" data-id="' . $value->ID_FORMULARIO_ALTA . '"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
+
+
+
+
+
             }
 
             return response()->json([
