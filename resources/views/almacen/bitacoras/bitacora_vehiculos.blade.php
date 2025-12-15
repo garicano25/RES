@@ -68,10 +68,6 @@
                                 <label class="form-label">Cantidad solicitada </label>
                                 <input type="text" class="form-control" id="CANTIDAD" name="CANTIDAD" readonly>
                             </div>
-                            <div class="col-2 mt-3">
-                                <label class="form-label">Cantidad entregada</label>
-                                <input type="text" class="form-control" id="CANTIDAD_SALIDA" name="CANTIDAD_SALIDA" readonly>
-                            </div>
                             <div class="col-8 mt-3">
                                 <label class="form-label">Artículo entregado </label>
                                 <select class="form-select " id="INVENTARIO" name="INVENTARIO" style="pointer-events:none; background-color:#e9ecef;">
@@ -82,6 +78,10 @@
                                     </option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <div class="col-2 mt-3">
+                                <label class="form-label">Cantidad entregada</label>
+                                <input type="text" class="form-control" id="CANTIDAD_SALIDA" name="CANTIDAD_SALIDA" readonly>
                             </div>
                             <div class="col-2 mt-2">
                                 <label class="form-label">U.M. </label>

@@ -60,6 +60,117 @@ class bitacoraasignacionController extends Controller
 
 
 
+    // public function Tablabitacoraasignacion()
+    // {
+    //     try {
+    //         $tabla = recemplaedosModel::where('TIPO_SOLICITUD', 2)
+    //             ->where('ESTADO_APROBACION', 'Aprobada')
+    //             ->where('FINALIZAR_SOLICITUD_ALMACEN', 1)
+    //             ->orderBy('FECHA_ALMACEN_SOLICITUD', 'asc')
+    //             ->get();
+
+    //         $data = [];
+
+    //         foreach ($tabla as $value) {
+
+    //             $materiales = json_decode($value->MATERIALES_JSON, true);
+    //             if (!is_array($materiales)) continue;
+
+    //             foreach ($materiales as $articulo) {
+
+
+
+    //                 if (!empty($articulo['VARIOS_ARTICULOS']) && $articulo['VARIOS_ARTICULOS'] == "1") {
+
+    //                     if (!empty($articulo['ARTICULOS']) && is_array($articulo['ARTICULOS'])) {
+
+    //                         foreach ($articulo['ARTICULOS'] as $detalle) {
+
+    //                             if (empty($detalle['ES_ASIGNACION_DETALLE']) || $detalle['ES_ASIGNACION_DETALLE'] != 1) {
+    //                                 continue;
+    //                             }
+
+    //                             $producto = DB::table('formulario_inventario')
+    //                                 ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
+    //                                 ->where('ID_FORMULARIO_INVENTARIO', $detalle['INVENTARIO'])
+    //                                 ->first();
+
+    //                             $data[] = [
+    //                                 'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
+    //                                 'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
+    //                                 'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
+    //                                 'FECHA_ALMACEN_SOLICITUD' => $value->FECHA_ALMACEN_SOLICITUD ?? 'N/A',
+    //                                 'OBSERVACIONES_REC' => $value->OBSERVACIONES_REC ?? 'N/A',
+    //                                 'CANTIDAD' => $detalle['CANTIDAD_DETALLE'] ?? '',
+    //                                 'CANTIDAD_SALIDA' => $detalle['CANTIDAD_DETALLE'] ?? '',
+    //                                 'PRODUCTO_NOMBRE' => $producto->DESCRIPCION_EQUIPO ?? 'N/A',
+    //                                 'MARCA_EQUIPO' => $producto->MARCA_EQUIPO ?? 'N/A',
+    //                                 'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
+    //                                 'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
+    //                                 'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
+    //                                 'ASIGNADO_USUARIO' => $detalle['NOMBRE_ASIGNACION_DETALLE'] ?? 'N/A',
+    //                                 'UNIDAD_SALIDA' => $detalle['UNIDAD_DETALLE'] ?? '',
+    //                                 'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial" 
+    //                                             data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
+    //                                             data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
+    //                                             <i class="bi bi-pencil-square"></i></button>',
+    //                                 'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial" 
+    //                                             data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
+    //                                             data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
+    //                                             <i class="bi bi-eye"></i></button>',
+    //                             ];
+    //                         }
+    //                     }
+
+    //                 } else {
+
+    //                     if (empty($articulo['ES_ASIGNACION']) || $articulo['ES_ASIGNACION'] != 1) {
+    //                         continue;
+    //                     }
+
+    //                     $producto = DB::table('formulario_inventario')
+    //                         ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
+    //                         ->where('ID_FORMULARIO_INVENTARIO', $articulo['INVENTARIO'])
+    //                         ->first();
+
+    //                     $data[] = [
+    //                         'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
+    //                         'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
+    //                         'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
+    //                         'FECHA_ALMACEN_SOLICITUD' => $value->FECHA_ALMACEN_SOLICITUD ?? 'N/A',
+    //                         'OBSERVACIONES_REC' => $value->OBSERVACIONES_REC ?? 'N/A',
+    //                         'CANTIDAD' => $articulo['CANTIDAD'] ?? '',
+    //                         'CANTIDAD_SALIDA' => $articulo['CANTIDAD_SALIDA'] ?? '',
+    //                         'PRODUCTO_NOMBRE' => $producto->DESCRIPCION_EQUIPO ?? 'N/A',
+    //                         'MARCA_EQUIPO' => $producto->MARCA_EQUIPO ?? 'N/A',
+    //                         'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
+    //                         'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
+    //                         'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
+    //                         'ASIGNADO_USUARIO' => $articulo['NOMBRE_ASIGNACION'] ?? 'N/A',
+    //                         'UNIDAD_SALIDA' => $articulo['UNIDAD_SALIDA'] ?? '',
+    //                         'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial" 
+    //                                     data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
+    //                                     data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
+    //                                     <i class="bi bi-pencil-square"></i></button>',
+    //                         'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial" 
+    //                                     data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
+    //                                     data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
+    //                                     <i class="bi bi-eye"></i></button>',
+    //                     ];
+    //                 }
+    //             }
+    //         }
+
+    //         return response()->json(['data' => $data], 200);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'error' => true,
+    //             'message' => $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
+
+
     public function Tablabitacoraasignacion()
     {
         try {
@@ -78,8 +189,6 @@ class bitacoraasignacionController extends Controller
 
                 foreach ($materiales as $articulo) {
 
-
-    
                     if (!empty($articulo['VARIOS_ARTICULOS']) && $articulo['VARIOS_ARTICULOS'] == "1") {
 
                         if (!empty($articulo['ARTICULOS']) && is_array($articulo['ARTICULOS'])) {
@@ -91,9 +200,42 @@ class bitacoraasignacionController extends Controller
                                 }
 
                                 $producto = DB::table('formulario_inventario')
-                                    ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
+                                    ->select(
+                                        'DESCRIPCION_EQUIPO',
+                                        'MARCA_EQUIPO',
+                                        'MODELO_EQUIPO',
+                                        'SERIE_EQUIPO',
+                                        'CODIGO_EQUIPO'
+                                    )
                                     ->where('ID_FORMULARIO_INVENTARIO', $detalle['INVENTARIO'])
                                     ->first();
+
+                                $asignado = $detalle['NOMBRE_ASIGNACION_DETALLE'] ?? null;
+                                $usuarioAsignado = 'N/A';
+
+                                if ($asignado) {
+
+                                    $colaborador = DB::table('formulario_contratacion')
+                                        ->where('CURP', $asignado)
+                                        ->first();
+
+                                    if ($colaborador) {
+                                        $usuarioAsignado = trim(
+                                            $colaborador->NOMBRE_COLABORADOR . ' ' .
+                                                $colaborador->PRIMER_APELLIDO . ' ' .
+                                                $colaborador->SEGUNDO_APELLIDO
+                                        );
+                                    } else {
+
+                                        $proveedor = DB::table('formulario_directorio')
+                                            ->where('RFC_PROVEEDOR', $asignado)
+                                            ->first();
+
+                                        if ($proveedor) {
+                                            $usuarioAsignado = $proveedor->NOMBRE_DIRECTORIO . ' (' . $proveedor->RFC_PROVEEDOR . ')';
+                                        }
+                                    }
+                                }
 
                                 $data[] = [
                                     'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
@@ -108,20 +250,19 @@ class bitacoraasignacionController extends Controller
                                     'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
                                     'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
                                     'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
-                                    'ASIGNADO_USUARIO' => $detalle['NOMBRE_ASIGNACION_DETALLE'] ?? 'N/A',
+                                    'ASIGNADO_USUARIO' => $usuarioAsignado,
                                     'UNIDAD_SALIDA' => $detalle['UNIDAD_DETALLE'] ?? '',
                                     'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial" 
-                                                data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
-                                                data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
-                                                <i class="bi bi-pencil-square"></i></button>',
+                                    data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
+                                    data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
+                                    <i class="bi bi-pencil-square"></i></button>',
                                     'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial" 
-                                                data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
-                                                data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
-                                                <i class="bi bi-eye"></i></button>',
+                                    data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
+                                    data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
+                                    <i class="bi bi-eye"></i></button>',
                                 ];
                             }
                         }
-
                     } else {
 
                         if (empty($articulo['ES_ASIGNACION']) || $articulo['ES_ASIGNACION'] != 1) {
@@ -129,9 +270,42 @@ class bitacoraasignacionController extends Controller
                         }
 
                         $producto = DB::table('formulario_inventario')
-                            ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
+                            ->select(
+                                'DESCRIPCION_EQUIPO',
+                                'MARCA_EQUIPO',
+                                'MODELO_EQUIPO',
+                                'SERIE_EQUIPO',
+                                'CODIGO_EQUIPO'
+                            )
                             ->where('ID_FORMULARIO_INVENTARIO', $articulo['INVENTARIO'])
                             ->first();
+
+                        $asignado = $articulo['NOMBRE_ASIGNACION'] ?? null;
+                        $usuarioAsignado = 'N/A';
+
+                        if ($asignado) {
+
+                            $colaborador = DB::table('formulario_contratacion')
+                                ->where('CURP', $asignado)
+                                ->first();
+
+                            if ($colaborador) {
+                                $usuarioAsignado = trim(
+                                    $colaborador->NOMBRE_COLABORADOR . ' ' .
+                                        $colaborador->PRIMER_APELLIDO . ' ' .
+                                        $colaborador->SEGUNDO_APELLIDO
+                                );
+                            } else {
+
+                                $proveedor = DB::table('formulario_directorio')
+                                    ->where('RFC_PROVEEDOR', $asignado)
+                                    ->first();
+
+                                if ($proveedor) {
+                                    $usuarioAsignado = $proveedor->NOMBRE_DIRECTORIO . ' (' . $proveedor->RFC_PROVEEDOR . ')';
+                                }
+                            }
+                        }
 
                         $data[] = [
                             'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
@@ -146,16 +320,16 @@ class bitacoraasignacionController extends Controller
                             'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
                             'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
                             'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
-                            'ASIGNADO_USUARIO' => $articulo['NOMBRE_ASIGNACION'] ?? 'N/A',
+                            'ASIGNADO_USUARIO' => $usuarioAsignado,
                             'UNIDAD_SALIDA' => $articulo['UNIDAD_SALIDA'] ?? '',
                             'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial" 
-                                        data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
-                                        data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
-                                        <i class="bi bi-pencil-square"></i></button>',
+                            data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
+                            data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
+                            <i class="bi bi-pencil-square"></i></button>',
                             'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial" 
-                                        data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
-                                        data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
-                                        <i class="bi bi-eye"></i></button>',
+                            data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
+                            data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
+                            <i class="bi bi-eye"></i></button>',
                         ];
                     }
                 }
@@ -169,6 +343,7 @@ class bitacoraasignacionController extends Controller
             ], 500);
         }
     }
+
 
 
 
