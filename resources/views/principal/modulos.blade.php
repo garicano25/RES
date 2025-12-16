@@ -336,6 +336,19 @@
                     <span class="tooltipText">SOLUCIONES EN SST</span>
                 </div>
 
+                <!-- <div class="tooltip">
+                    <img class="lineasDeNegocio__iconsm" src="assets/Modulos/img/informacionempresa.png" alt="">
+                    <span class="tooltipText">Información de la empresa</span>
+                </div> -->
+
+                <div class="tooltip" id="btnInfoEmpresa">
+                    <img class="lineasDeNegocio__iconsm"
+                        src="assets/Modulos/img/informacionempresa.png"
+                        alt="">
+                    <span class="tooltipText">Información de la empresa</span>
+                </div>
+
+
                 <div class="lineasDeNegocio__servicios"></div>
 
                 <div class="tooltip lineasDeNegocio__button">
@@ -377,91 +390,91 @@
                             <span class="tooltipText">Correo electrónico</span>
                         </div>
 
-                    <div class="notification-wrapper">
-                        <div class="tooltip">
-                            <button class="nav__circularButton" id="btnNotificaciones">
-                                <img src="assets/Modulos/img/notificacion.png" alt="">
-                                <span id="contadorNotificaciones" class="notification-count">0</span>
-                            </button>
+                        <div class="notification-wrapper">
+                            <div class="tooltip">
+                                <button class="nav__circularButton" id="btnNotificaciones">
+                                    <img src="assets/Modulos/img/notificacion.png" alt="">
+                                    <span id="contadorNotificaciones" class="notification-count">0</span>
+                                </button>
 
-                        </div>
-
-                        <div class="notification-panel" id="panelNotificaciones">
-                            <div class="notification-header">
-                                <h4>Notificaciones</h4>
                             </div>
 
-                            <div class="notification-body">
-                                <p class="notification-item">📌 No tienes notificaciones por el momento.</p>
+                            <div class="notification-panel" id="panelNotificaciones">
+                                <div class="notification-header">
+                                    <h4>Notificaciones</h4>
+                                </div>
+
+                                <div class="notification-body">
+                                    <p class="notification-item">📌 No tienes notificaciones por el momento.</p>
+                                </div>
                             </div>
+
+                            <style>
+                                .notification-count {
+                                    position: absolute;
+                                    top: -5px;
+                                    right: -5px;
+                                    background: red;
+                                    color: white;
+                                    font-size: 12px;
+                                    font-weight: bold;
+                                    padding: 3px 6px;
+                                    border-radius: 50%;
+                                    display: none;
+                                    z-index: 9999;
+                                }
+
+
+                                .notification-wrapper {
+                                    position: relative;
+                                    display: inline-block;
+                                }
+
+                                .notification-panel {
+                                    position: absolute;
+                                    top: 85px;
+                                    right: 0;
+                                    width: 350px;
+                                    background: #ffffff;
+                                    border-radius: 10px;
+                                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                                    display: none;
+                                    /* Oculto por defecto */
+                                    z-index: 999;
+                                    overflow: hidden;
+                                }
+
+                                .notification-header {
+                                    background: #a2a2a2;
+                                    padding: 10px;
+                                    font-weight: bold;
+                                    border-bottom: 1px solid #ddd;
+                                }
+
+                                .notification-body {
+                                    max-height: 250px;
+                                    overflow-y: auto;
+                                }
+
+                                .notification-item {
+                                    padding: 12px;
+                                    border-bottom: 1px solid #eee;
+                                    font-size: 14px;
+                                }
+
+                                .notification-item:last-child {
+                                    border-bottom: none;
+                                }
+
+                                .notification-item:hover {
+                                    background: #f0f0f0;
+                                    cursor: pointer;
+                                }
+                            </style>
                         </div>
 
-                        <style>
-                            .notification-count {
-                                position: absolute;
-                                top: -5px;
-                                right: -5px;
-                                background: red;
-                                color: white;
-                                font-size: 12px;
-                                font-weight: bold;
-                                padding: 3px 6px;
-                                border-radius: 50%;
-                                display: none;
-                                z-index: 9999;
-                            }
-
-
-                            .notification-wrapper {
-                                position: relative;
-                                display: inline-block;
-                            }
-
-                            .notification-panel {
-                                position: absolute;
-                                top: 85px;
-                                right: 0;
-                                width: 350px;
-                                background: #ffffff;
-                                border-radius: 10px;
-                                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-                                display: none;
-                                /* Oculto por defecto */
-                                z-index: 999;
-                                overflow: hidden;
-                            }
-
-                            .notification-header {
-                                background: #a2a2a2;
-                                padding: 10px;
-                                font-weight: bold;
-                                border-bottom: 1px solid #ddd;
-                            }
-
-                            .notification-body {
-                                max-height: 250px;
-                                overflow-y: auto;
-                            }
-
-                            .notification-item {
-                                padding: 12px;
-                                border-bottom: 1px solid #eee;
-                                font-size: 14px;
-                            }
-
-                            .notification-item:last-child {
-                                border-bottom: none;
-                            }
-
-                            .notification-item:hover {
-                                background: #f0f0f0;
-                                cursor: pointer;
-                            }
-                        </style>
                     </div>
-
                 </div>
-            </div>
 
                 <div class="content">
 
@@ -1071,9 +1084,6 @@
 
                         </div>
 
-
-
-
                     </div>
 
                     <div class="content__right">
@@ -1095,7 +1105,6 @@
 
                             <div class="softwares__bottom">
 
-
                                 <div class="softwares__greyCard">
                                     <!-- <img class="softwares__image" src="assets/Modulos/img/sehilab.png" alt=""> -->
                                     <h3 class="content__paragraph">TRAIN+</h3>
@@ -1116,11 +1125,8 @@
                                 </div>
                             </div>
 
-
                         </div>
                     </div>
-
-
 
                 </div>
 
@@ -1128,8 +1134,6 @@
             <img class="content__logo" src="assets/Modulos/img/logo.png" alt="">
 
         </div>
-
-
 
 
     </section>
@@ -1147,6 +1151,218 @@
             <p id="modalDescripcion"></p>
         </div>
     </div>
+
+
+    <div id="modalInfoEmpresa" class="modal-overlay">
+        <div class="modal-xl">
+
+            <div class="modal-header">
+                <h2>Información de la Empresa</h2>
+                <span class="modal-close" id="cerrarModal">&times;</span>
+            </div>
+
+            <div class="modal-body">
+
+                <section class="info-section">
+                    <h3>Datos Generales</h3>
+                    <div class="info-grid">
+                        <div><span>RFC:</span> RIP1706223K9</div>
+                        <div><span>Razón Social:</span> RESULTS IN PERFORMANCE</div>
+                        <div><span>Nombre Comercial:</span> RIP</div>
+                    </div>
+                </section>
+
+                <section class="info-section">
+                    <h3>Representante Legal</h3>
+                    <div class="info-grid">
+                        <div><span>Nombre:</span> Leonardo Cuella Chala</div>
+                        <div><span>Cargo:</span> Director</div>
+                        <div><span>Teléfono Oficina:</span> +52 993 688 3782</div>
+                        <div><span>Teléfono Celular:</span> +52 999 357 8332</div>
+                    </div>
+                </section>
+
+                <section class="info-section">
+                    <h3>Domicilio Fiscal</h3>
+                    <div class="info-grid">
+                        <div><span>Código Postal:</span> 86100</div>
+                        <div><span>Tipo de Vialidad:</span> Calle</div>
+                        <div><span>Vialidad:</span> Prolongación de Avenida Los Ríos</div>
+                        <div><span>Número Exterior:</span> 203</div>
+                        <div><span>Número Interior:</span>  </div>
+                        <div><span>Colonia:</span> Atasta de Serra</div>
+                        <div><span>Localidad:</span> Villahermosa</div>
+                        <div><span>Municipio:</span> Centro</div>
+                        <div><span>Entidad:</span> Tabasco</div>
+                        <div><span>Entre Calle:</span> Calle Cerrada del Viento</div>
+                        <div><span>Y Calle:</span> Calle Cerrada Niebla</div>
+                    </div>
+                </section>
+
+                <section class="info-section">
+                    <h3>Permisos del Sistema</h3>
+                    <div class="roles">
+                        <span class="role super">Superusuario</span>
+                        <span class="role admin">Administrador</span>
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <style>
+      
+        :root {
+            --pantone-rojo: #FF585D;
+            --pantone-verde: #A4D65E;
+            --pantone-azul: #007DBA;
+            --pantone-azul-oscuro: #236192;
+            --pantone-negro: #2C2A29;
+            --pantone-blanco: #FFFFFF;
+            --borde-suave: #e1e4e8;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .modal-xl {
+            width: 90%;
+            max-width: 1200px;
+            max-height: 90vh;
+            background: var(--pantone-blanco);
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            animation: modalFadeIn 0.25s ease-in-out;
+        }
+
+        .modal-header {
+            background: var(--pantone-azul-oscuro);
+            color: var(--pantone-blanco);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--pantone-blanco);
+        }
+
+        .modal-close {
+            font-size: 26px;
+            cursor: pointer;
+            color: var(--pantone-blanco);
+            line-height: 1;
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            background: #f6f8fa;
+        }
+        .info-section {
+            margin-bottom: 20px;
+            border: 1px solid var(--borde-suave);
+            border-radius: 8px;
+            padding: 15px;
+            background: var(--pantone-blanco);
+        }
+
+        .info-section h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: var(--pantone-azul);
+            border-bottom: 2px solid var(--pantone-azul);
+            padding-bottom: 4px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+            font-size: 14px;
+            color: var(--pantone-negro);
+        }
+
+        .info-grid span {
+            font-weight: 600;
+            color: #000;
+        }
+
+        .roles {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .role {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .role.super {
+            background: var(--pantone-rojo);
+        }
+
+        .role.admin {
+            background: var(--pantone-verde);
+            color: #000;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+
+
+
+    <script>
+        const btn = document.getElementById("btnInfoEmpresa");
+        const modal = document.getElementById("modalInfoEmpresa");
+        const cerrar = document.getElementById("cerrarModal");
+
+        btn.addEventListener("click", () => {
+            modal.style.display = "flex";
+        });
+
+        cerrar.addEventListener("click", () => {
+            modal.style.display = "none";
+        });
+
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script>
 
 
 
