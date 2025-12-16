@@ -163,7 +163,6 @@ class bitacoraconsumiblesController extends Controller
     //     }
     // }
 
-
     public function Tablabitacoraconsumibles()
     {
         try {
@@ -183,12 +182,11 @@ class bitacoraconsumiblesController extends Controller
 
                 foreach ($materiales as $articulo) {
 
-                    // 🔴 NUEVA CONDICIÓN (EL PADRE MANDA)
-                    if (!empty($articulo['RETORNA_EQUIPO']) && $articulo['RETORNA_EQUIPO'] == 1) {
-                        continue;
-                    }
-
                     if (!empty($articulo['VARIOS_ARTICULOS']) && $articulo['VARIOS_ARTICULOS'] == "1") {
+
+                        if (!empty($articulo['RETORNA_EQUIPO']) && $articulo['RETORNA_EQUIPO'] == 1) {
+                            continue;
+                        }
 
                         if (!empty($articulo['ARTICULOS']) && is_array($articulo['ARTICULOS'])) {
 
@@ -236,6 +234,8 @@ class bitacoraconsumiblesController extends Controller
                                 ];
                             }
                         }
+
+                      
                     } else {
 
                         if (!empty($articulo['ES_ASIGNACION']) && $articulo['ES_ASIGNACION'] == 1) {

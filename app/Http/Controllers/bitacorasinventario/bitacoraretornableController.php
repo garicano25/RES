@@ -181,12 +181,12 @@ class bitacoraretornableController extends Controller
 
                 foreach ($materiales as $articulo) {
 
-                    // 🔴 NUEVA CONDICIÓN (EL PADRE MANDA)
-                    if (empty($articulo['RETORNA_EQUIPO']) || $articulo['RETORNA_EQUIPO'] != 1) {
-                        continue;
-                    }
-
+                
                     if (!empty($articulo['VARIOS_ARTICULOS']) && $articulo['VARIOS_ARTICULOS'] == "1") {
+
+                        if (empty($articulo['RETORNA_EQUIPO']) || $articulo['RETORNA_EQUIPO'] != 1) {
+                            continue;
+                        }
 
                         if (!empty($articulo['ARTICULOS']) && is_array($articulo['ARTICULOS'])) {
 
@@ -203,7 +203,13 @@ class bitacoraretornableController extends Controller
                                 ) continue;
 
                                 $producto = DB::table('formulario_inventario')
-                                    ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
+                                    ->select(
+                                        'DESCRIPCION_EQUIPO',
+                                        'MARCA_EQUIPO',
+                                        'MODELO_EQUIPO',
+                                        'SERIE_EQUIPO',
+                                        'CODIGO_EQUIPO'
+                                    )
                                     ->where('ID_FORMULARIO_INVENTARIO', $detalle['INVENTARIO'])
                                     ->first();
 
@@ -234,6 +240,7 @@ class bitacoraretornableController extends Controller
                                 ];
                             }
                         }
+
                     } else {
 
                         if (!empty($articulo['ES_ASIGNACION']) && $articulo['ES_ASIGNACION'] == 1) {
@@ -241,12 +248,21 @@ class bitacoraretornableController extends Controller
                         }
 
                         if (
-                            empty($articulo['TIPO_INVENTARIO']) ||
-                            !in_array($articulo['TIPO_INVENTARIO'], $tiposPermitidos)
+                            (
+                                empty($articulo['TIPO_INVENTARIO']) ||
+                                !in_array($articulo['TIPO_INVENTARIO'], $tiposPermitidos)
+                            )
+                            && empty($articulo['RETORNA_EQUIPO'])
                         ) continue;
 
                         $producto = DB::table('formulario_inventario')
-                            ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
+                            ->select(
+                                'DESCRIPCION_EQUIPO',
+                                'MARCA_EQUIPO',
+                                'MODELO_EQUIPO',
+                                'SERIE_EQUIPO',
+                                'CODIGO_EQUIPO'
+                            )
                             ->where('ID_FORMULARIO_INVENTARIO', $articulo['INVENTARIO'])
                             ->first();
 
@@ -281,7 +297,10 @@ class bitacoraretornableController extends Controller
 
             return response()->json(['data' => $data], 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => true, 'message' => $e->getMessage()], 500);
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage()
+            ], 500);
         }
     }
 
