@@ -183,17 +183,12 @@ class bitacoraconsumiblesController extends Controller
 
                 foreach ($materiales as $articulo) {
 
-                   
+                    // 🔴 NUEVA CONDICIÓN (EL PADRE MANDA)
                     if (!empty($articulo['RETORNA_EQUIPO']) && $articulo['RETORNA_EQUIPO'] == 1) {
                         continue;
                     }
 
                     if (!empty($articulo['VARIOS_ARTICULOS']) && $articulo['VARIOS_ARTICULOS'] == "1") {
-
-                        if (
-                            empty($articulo['TIPO_INVENTARIO']) ||
-                            !in_array($articulo['TIPO_INVENTARIO'], $tiposPermitidos)
-                        ) continue;
 
                         if (!empty($articulo['ARTICULOS']) && is_array($articulo['ARTICULOS'])) {
 
@@ -203,7 +198,11 @@ class bitacoraconsumiblesController extends Controller
                                     continue;
                                 }
 
-                                if (empty($detalle['INVENTARIO'])) continue;
+                                if (
+                                    empty($detalle['INVENTARIO']) ||
+                                    empty($detalle['TIPO_INVENTARIO']) ||
+                                    !in_array($detalle['TIPO_INVENTARIO'], $tiposPermitidos)
+                                ) continue;
 
                                 $producto = DB::table('formulario_inventario')
                                     ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
@@ -224,19 +223,29 @@ class bitacoraconsumiblesController extends Controller
                                     'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
                                     'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
                                     'UNIDAD_SALIDA' => $detalle['UNIDAD_DETALLE'] ?? '',
+                                    'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial"
+                                    data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+                                    data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>',
+                                    'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial"
+                                    data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+                                    data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
+                                    <i class="bi bi-eye"></i>
+                                </button>',
                                 ];
                             }
                         }
-
-                    
                     } else {
+
+                        if (!empty($articulo['ES_ASIGNACION']) && $articulo['ES_ASIGNACION'] == 1) {
+                            continue;
+                        }
 
                         if (
                             empty($articulo['TIPO_INVENTARIO']) ||
                             !in_array($articulo['TIPO_INVENTARIO'], $tiposPermitidos)
                         ) continue;
-
-                        if (empty($articulo['INVENTARIO'])) continue;
 
                         $producto = DB::table('formulario_inventario')
                             ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
@@ -257,6 +266,16 @@ class bitacoraconsumiblesController extends Controller
                             'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
                             'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
                             'UNIDAD_SALIDA' => $articulo['UNIDAD_SALIDA'] ?? '',
+                            'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial"
+                            data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+                            data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>',
+                            'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial"
+                            data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+                            data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
+                            <i class="bi bi-eye"></i>
+                        </button>',
                         ];
                     }
                 }
