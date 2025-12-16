@@ -36,132 +36,6 @@ class bitacoraretornableController extends Controller
 
 
 
-    public function Tablabitacoraretornable()
-    {
-        try {
-            $tabla = recemplaedosModel::where('TIPO_SOLICITUD', 2)
-                ->where('ESTADO_APROBACION', 'Aprobada')
-                ->where('FINALIZAR_SOLICITUD_ALMACEN', 1)
-                ->orderBy('FECHA_ALMACEN_SOLICITUD', 'asc')
-                ->get();
-
-            $data = [];
-            $tiposPermitidos = ['AF', 'ANF'];
-
-            foreach ($tabla as $value) {
-
-                $materiales = json_decode($value->MATERIALES_JSON, true);
-                if (!is_array($materiales)) continue;
-
-                foreach ($materiales as $articulo) {
-
-
-                    if (!empty($articulo['VARIOS_ARTICULOS']) && $articulo['VARIOS_ARTICULOS'] == "1") {
-
-                        if (!empty($articulo['ARTICULOS']) && is_array($articulo['ARTICULOS'])) {
-
-                            foreach ($articulo['ARTICULOS'] as $detalle) {
-
-                                if (!empty($detalle['ES_ASIGNACION_DETALLE']) && $detalle['ES_ASIGNACION_DETALLE'] == 1) {
-                                    continue;
-                                }
-
-                                if (
-                                    empty($detalle['INVENTARIO']) ||
-                                    empty($detalle['TIPO_INVENTARIO']) ||
-                                    !in_array($detalle['TIPO_INVENTARIO'], $tiposPermitidos)
-                                ) continue;
-
-                                $producto = DB::table('formulario_inventario')
-                                    ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
-                                    ->where('ID_FORMULARIO_INVENTARIO', $detalle['INVENTARIO'])
-                                    ->first();
-
-                                $data[] = [
-                                    'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
-                                    'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
-                                    'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
-                                    'FECHA_ALMACEN_SOLICITUD' => $value->FECHA_ALMACEN_SOLICITUD ?? 'N/A',
-                                    'OBSERVACIONES_REC' => $value->OBSERVACIONES_REC ?? 'N/A',
-                                    'CANTIDAD' => $detalle['CANTIDAD_DETALLE'] ?? '',
-                                    'CANTIDAD_SALIDA' => $detalle['CANTIDAD_DETALLE'] ?? '',
-                                    'PRODUCTO_NOMBRE' => $producto->DESCRIPCION_EQUIPO ?? 'N/A',
-                                    'MARCA_EQUIPO' => $producto->MARCA_EQUIPO ?? 'N/A',
-                                    'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
-                                    'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
-                                    'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
-                                    'UNIDAD_SALIDA' => $detalle['UNIDAD_DETALLE'] ?? '',
-                                    'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial"
-                                                    data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
-                                                    data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                 </button>',
-                                    'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial"
-                                                    data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
-                                                    data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
-                                                    <i class="bi bi-eye"></i>
-                                                </button>',
-                                ];
-                            }
-                        }
-
-
-
-                    } else {
-
-                        if (!empty($articulo['ES_ASIGNACION']) && $articulo['ES_ASIGNACION'] == 1) {
-                            continue;
-                        }
-
-                        if (
-                            empty($articulo['TIPO_INVENTARIO']) ||
-                            !in_array($articulo['TIPO_INVENTARIO'], $tiposPermitidos)
-                        ) continue;
-
-                        $producto = DB::table('formulario_inventario')
-                            ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
-                            ->where('ID_FORMULARIO_INVENTARIO', $articulo['INVENTARIO'])
-                            ->first();
-
-                        $data[] = [
-                            'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
-                            'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
-                            'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
-                            'FECHA_ALMACEN_SOLICITUD' => $value->FECHA_ALMACEN_SOLICITUD ?? 'N/A',
-                            'OBSERVACIONES_REC' => $value->OBSERVACIONES_REC ?? 'N/A',
-                            'CANTIDAD' => $articulo['CANTIDAD'] ?? '',
-                            'CANTIDAD_SALIDA' => $articulo['CANTIDAD_SALIDA'] ?? '',
-                            'PRODUCTO_NOMBRE' => $producto->DESCRIPCION_EQUIPO ?? 'N/A',
-                            'MARCA_EQUIPO' => $producto->MARCA_EQUIPO ?? 'N/A',
-                            'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
-                            'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
-                            'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
-                            'UNIDAD_SALIDA' => $articulo['UNIDAD_SALIDA'] ?? '',
-                            'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial"
-                                        data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
-                                        data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
-                                        <i class="bi bi-pencil-square"></i>
-                                     </button>',
-                            'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial"
-                                        data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
-                                        data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
-                                        <i class="bi bi-eye"></i>
-                                    </button>',
-                        ];
-                    }
-                }
-            }
-
-            return response()->json(['data' => $data], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => true,
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-
     // public function Tablabitacoraretornable()
     // {
     //     try {
@@ -181,12 +55,8 @@ class bitacoraretornableController extends Controller
 
     //             foreach ($materiales as $articulo) {
 
-                
-    //                 if (!empty($articulo['VARIOS_ARTICULOS']) && $articulo['VARIOS_ARTICULOS'] == "1") {
 
-    //                     if (empty($articulo['RETORNA_EQUIPO']) || $articulo['RETORNA_EQUIPO'] != 1) {
-    //                         continue;
-    //                     }
+    //                 if (!empty($articulo['VARIOS_ARTICULOS']) && $articulo['VARIOS_ARTICULOS'] == "1") {
 
     //                     if (!empty($articulo['ARTICULOS']) && is_array($articulo['ARTICULOS'])) {
 
@@ -203,13 +73,7 @@ class bitacoraretornableController extends Controller
     //                             ) continue;
 
     //                             $producto = DB::table('formulario_inventario')
-    //                                 ->select(
-    //                                     'DESCRIPCION_EQUIPO',
-    //                                     'MARCA_EQUIPO',
-    //                                     'MODELO_EQUIPO',
-    //                                     'SERIE_EQUIPO',
-    //                                     'CODIGO_EQUIPO'
-    //                                 )
+    //                                 ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
     //                                 ->where('ID_FORMULARIO_INVENTARIO', $detalle['INVENTARIO'])
     //                                 ->first();
 
@@ -228,18 +92,20 @@ class bitacoraretornableController extends Controller
     //                                 'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
     //                                 'UNIDAD_SALIDA' => $detalle['UNIDAD_DETALLE'] ?? '',
     //                                 'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial"
-    //                                 data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
-    //                                 data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
-    //                                 <i class="bi bi-pencil-square"></i>
-    //                             </button>',
+    //                                                 data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+    //                                                 data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
+    //                                                 <i class="bi bi-pencil-square"></i>
+    //                                              </button>',
     //                                 'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial"
-    //                                 data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
-    //                                 data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
-    //                                 <i class="bi bi-eye"></i>
-    //                             </button>',
+    //                                                 data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+    //                                                 data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
+    //                                                 <i class="bi bi-eye"></i>
+    //                                             </button>',
     //                             ];
     //                         }
     //                     }
+
+
 
     //                 } else {
 
@@ -248,21 +114,12 @@ class bitacoraretornableController extends Controller
     //                     }
 
     //                     if (
-    //                         (
-    //                             empty($articulo['TIPO_INVENTARIO']) ||
-    //                             !in_array($articulo['TIPO_INVENTARIO'], $tiposPermitidos)
-    //                         )
-    //                         && empty($articulo['RETORNA_EQUIPO'])
+    //                         empty($articulo['TIPO_INVENTARIO']) ||
+    //                         !in_array($articulo['TIPO_INVENTARIO'], $tiposPermitidos)
     //                     ) continue;
 
     //                     $producto = DB::table('formulario_inventario')
-    //                         ->select(
-    //                             'DESCRIPCION_EQUIPO',
-    //                             'MARCA_EQUIPO',
-    //                             'MODELO_EQUIPO',
-    //                             'SERIE_EQUIPO',
-    //                             'CODIGO_EQUIPO'
-    //                         )
+    //                         ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
     //                         ->where('ID_FORMULARIO_INVENTARIO', $articulo['INVENTARIO'])
     //                         ->first();
 
@@ -281,15 +138,15 @@ class bitacoraretornableController extends Controller
     //                         'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
     //                         'UNIDAD_SALIDA' => $articulo['UNIDAD_SALIDA'] ?? '',
     //                         'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial"
-    //                         data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
-    //                         data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
-    //                         <i class="bi bi-pencil-square"></i>
-    //                     </button>',
+    //                                     data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+    //                                     data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
+    //                                     <i class="bi bi-pencil-square"></i>
+    //                                  </button>',
     //                         'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial"
-    //                         data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
-    //                         data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
-    //                         <i class="bi bi-eye"></i>
-    //                     </button>',
+    //                                     data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+    //                                     data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
+    //                                     <i class="bi bi-eye"></i>
+    //                                 </button>',
     //                     ];
     //                 }
     //             }
@@ -305,6 +162,142 @@ class bitacoraretornableController extends Controller
     // }
 
 
+    public function Tablabitacoraretornable()
+    {
+        try {
+            $tabla = recemplaedosModel::where('TIPO_SOLICITUD', 2)
+                ->where('ESTADO_APROBACION', 'Aprobada')
+                ->where('FINALIZAR_SOLICITUD_ALMACEN', 1)
+                ->orderBy('FECHA_ALMACEN_SOLICITUD', 'asc')
+                ->get();
+
+            $data = [];
+            $tiposPermitidos = ['AF', 'ANF'];
+
+            foreach ($tabla as $value) {
+
+                $materiales = json_decode($value->MATERIALES_JSON, true);
+                if (!is_array($materiales)) continue;
+
+                foreach ($materiales as $articulo) {
+
+                  
+                    if (!empty($articulo['VARIOS_ARTICULOS']) && $articulo['VARIOS_ARTICULOS'] == "1") {
+
+                        if (empty($articulo['RETORNA_EQUIPO']) || $articulo['RETORNA_EQUIPO'] != 1) {
+                            continue;
+                        }
+
+                        if (!empty($articulo['ARTICULOS']) && is_array($articulo['ARTICULOS'])) {
+
+                            foreach ($articulo['ARTICULOS'] as $detalle) {
+
+                                if (!empty($detalle['ES_ASIGNACION_DETALLE']) && $detalle['ES_ASIGNACION_DETALLE'] == 1) {
+                                    continue;
+                                }
+
+                                if (
+                                    empty($detalle['INVENTARIO']) ||
+                                    empty($detalle['TIPO_INVENTARIO']) ||
+                                    !in_array($detalle['TIPO_INVENTARIO'], $tiposPermitidos)
+                                ) continue;
+
+                                $producto = DB::table('formulario_inventario')
+                                    ->select(
+                                        'DESCRIPCION_EQUIPO',
+                                        'MARCA_EQUIPO',
+                                        'MODELO_EQUIPO',
+                                        'SERIE_EQUIPO',
+                                        'CODIGO_EQUIPO'
+                                    )
+                                    ->where('ID_FORMULARIO_INVENTARIO', $detalle['INVENTARIO'])
+                                    ->first();
+
+                                $data[] = [
+                                    'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
+                                    'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
+                                    'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
+                                    'FECHA_ALMACEN_SOLICITUD' => $value->FECHA_ALMACEN_SOLICITUD ?? 'N/A',
+                                    'OBSERVACIONES_REC' => $value->OBSERVACIONES_REC ?? 'N/A',
+                                    'CANTIDAD' => $detalle['CANTIDAD_DETALLE'] ?? '',
+                                    'CANTIDAD_SALIDA' => $detalle['CANTIDAD_DETALLE'] ?? '',
+                                    'PRODUCTO_NOMBRE' => $producto->DESCRIPCION_EQUIPO ?? 'N/A',
+                                    'MARCA_EQUIPO' => $producto->MARCA_EQUIPO ?? 'N/A',
+                                    'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
+                                    'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
+                                    'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
+                                    'UNIDAD_SALIDA' => $detalle['UNIDAD_DETALLE'] ?? '',
+                                    'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial"
+                                    data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+                                    data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>',
+                                    'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial"
+                                    data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+                                    data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
+                                    <i class="bi bi-eye"></i>
+                                </button>',
+                                ];
+                            }
+                        }
+
+                     
+                    } else {
+
+                        if (!empty($articulo['ES_ASIGNACION']) && $articulo['ES_ASIGNACION'] == 1) {
+                            continue;
+                        }
+
+                        if (
+                            empty($articulo['TIPO_INVENTARIO']) ||
+                            !in_array($articulo['TIPO_INVENTARIO'], $tiposPermitidos)
+                        ) continue;
+
+                        $producto = DB::table('formulario_inventario')
+                            ->select(
+                                'DESCRIPCION_EQUIPO',
+                                'MARCA_EQUIPO',
+                                'MODELO_EQUIPO',
+                                'SERIE_EQUIPO',
+                                'CODIGO_EQUIPO'
+                            )
+                            ->where('ID_FORMULARIO_INVENTARIO', $articulo['INVENTARIO'])
+                            ->first();
+
+                        $data[] = [
+                            'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
+                            'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
+                            'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
+                            'FECHA_ALMACEN_SOLICITUD' => $value->FECHA_ALMACEN_SOLICITUD ?? 'N/A',
+                            'OBSERVACIONES_REC' => $value->OBSERVACIONES_REC ?? 'N/A',
+                            'CANTIDAD' => $articulo['CANTIDAD'] ?? '',
+                            'CANTIDAD_SALIDA' => $articulo['CANTIDAD_SALIDA'] ?? '',
+                            'PRODUCTO_NOMBRE' => $producto->DESCRIPCION_EQUIPO ?? 'N/A',
+                            'MARCA_EQUIPO' => $producto->MARCA_EQUIPO ?? 'N/A',
+                            'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
+                            'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
+                            'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
+                            'UNIDAD_SALIDA' => $articulo['UNIDAD_SALIDA'] ?? '',
+                            'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial"
+                            data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+                            data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>',
+                            'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial"
+                            data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+                            data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
+                            <i class="bi bi-eye"></i>
+                        </button>',
+                        ];
+                    }
+                }
+            }
+
+            return response()->json(['data' => $data], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => true, 'message' => $e->getMessage()], 500);
+        }
+    }
 
 
     public function obtenerMaterialRetornable(Request $request)
