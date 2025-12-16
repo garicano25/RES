@@ -18,7 +18,7 @@ Modalinventario.addEventListener('hidden.bs.modal', event => {
 
 $(document).ready(function() {
     $('#NUEVO_EQUIPO').on('click', function() {
-        limpiarFormularioUsuario(); 
+        limpiarFormularioInventario(); 
 
         $('#FOTO_EQUIPO').dropify({
             messages: {
@@ -51,7 +51,7 @@ $(document).ready(function() {
 
 });
 
-function limpiarFormularioUsuario() {
+function limpiarFormularioInventario() {
     $('#formularioINVENTARIO')[0].reset(); 
 
     var drEvent = $('#FOTO_EQUIPO').data('dropify');
