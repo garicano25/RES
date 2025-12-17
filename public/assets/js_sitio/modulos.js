@@ -115,7 +115,6 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
                     if (tieneDatos(c)) {
                         contenedorContactos.innerHTML += `
                             <div class="contacto-item">
-                                <span class="contacto-bullet"></span>
                                 <div class="info-grid info-grid-4">
                                     <div><span>Nombre:</span> ${c.CONTACTO_SOLICITUD}</div>
                                     <div><span>Cargo:</span> ${c.CARGO_SOLICITUD}</div>

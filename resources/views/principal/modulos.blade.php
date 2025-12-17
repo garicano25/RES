@@ -1204,7 +1204,7 @@
 
                     <!-- NOTA -->
                     <p class="nota-usuarios">
-                        📝 Para crear o administrar usuarios del sistema,
+                        📝 Para crear o administrar usuarios iniciales del sistema,
                         <a href="/usuario" class="link-usuarios">presione aquí</a>.
                     </p>
 
@@ -1286,6 +1286,214 @@
             overflow-y: auto;
             background: #f6f8fa;
         }
+
+
+        /* ===============================
+   REPRESENTANTES LEGALES – ALINEACIÓN PERFECTA
+   =============================== */
+        /* ===============================
+   REPRESENTANTES LEGALES - CAMPOS
+   =============================== */
+
+        /* Cada bloque de contacto */
+        .contacto-item {
+            background: #f9fafb;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 16px;
+        }
+
+        /* Grid alineado */
+        .contacto-item .info-grid {
+            align-items: flex-start;
+        }
+
+        /* TÍTULOS: Nombre, Cargo, Teléfono, etc */
+        .contacto-item .info-grid>div span {
+            display: block;
+            /* 👈 título arriba */
+            color: var(--pantone-azul);
+            /* 👈 azul */
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        /* VALORES */
+        .contacto-item .info-grid>div {
+            font-size: 15px;
+            color: var(--pantone-negro);
+            line-height: 1.4;
+        }
+
+        /* Mantener columnas alineadas aunque el texto sea largo */
+        .contacto-item .info-grid>div {
+            min-height: 58px;
+            /* 👈 ajusta si quieres más aire */
+        }
+
+        /* ===============================
+   REPRESENTANTES LEGALES - TÍTULOS
+   =============================== */
+
+        #contenedorContactos .info-grid>div span {
+            display: block;
+            /* título arriba */
+            color: var(--pantone-azul);
+            /* azul correcto */
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        /* Texto del valor */
+        #contenedorContactos .info-grid>div {
+            font-size: 15px;
+            color: var(--pantone-negro);
+            line-height: 1.4;
+        }
+
+        /* Alineación perfecta aunque el texto sea largo */
+        #contenedorContactos .info-grid>div {
+            min-height: 60px;
+        }
+
+
+        /* ===============================
+   TÍTULOS DE SECCIÓN (AZUL + BORDE)
+   =============================== */
+        .info-section h3 {
+            color: var(--pantone-azul);
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0 0 12px;
+            padding-left: 10px;
+            border-left: 4px solid var(--pantone-azul);
+            /* 👈 MISMO AZUL */
+        }
+
+        /* Título azul igual a Datos Generales */
+        .info-section h3 {
+            color: var(--pantone-azul);
+        }
+
+        /* Cada representante */
+        .contacto-item {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            border-left: 4px solid var(--pantone-azul);
+            display: flex;
+            align-items: flex-start;
+        }
+
+        /* Bullet */
+        .contacto-bullet {
+            width: 10px;
+            height: 10px;
+            background: var(--pantone-azul);
+            border-radius: 50%;
+            margin: 6px 14px 0 0;
+            flex-shrink: 0;
+        }
+
+        /* Grid fijo para que NO se descuadre */
+        .contacto-item .info-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        /* Cada campo */
+        .contacto-item .info-grid-4>div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Label */
+        .contacto-item .info-grid-4 span:first-child {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--pantone-azul-oscuro);
+            margin-bottom: 4px;
+        }
+
+        /* Valor */
+        .contacto-item .info-grid-4 span:last-child {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--pantone-negro);
+            line-height: 1.4;
+            word-break: break-word;
+            /* ← evita desalineación */
+        }
+
+        /* ===============================
+   RESPONSIVE
+   =============================== */
+        @media (max-width: 992px) {
+            .contacto-item .info-grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .contacto-item .info-grid-4 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===============================
+   DATOS GENERALES – ESTILO TIPO DOMICILIO
+   =============================== */
+
+        /* Contenedor especial solo para Datos Generales */
+        .info-section .info-grid.info-grid-4 {
+            gap: 25px;
+        }
+
+        /* Cada campo */
+        .info-section .info-grid.info-grid-4>div {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 12px 14px;
+            border-left: 4px solid var(--pantone-azul);
+        }
+
+        /* Label (RFC, Razón Social, etc.) */
+        .info-section .info-grid.info-grid-4>div>span:first-child {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--pantone-azul-oscuro);
+            margin-bottom: 4px;
+        }
+
+        /* Valor (lo que viene de BD) */
+        .info-section .info-grid.info-grid-4>div>span:last-child {
+            display: block;
+            font-size: 14px;
+            font-weight: 400;
+            /* ← NO negrita */
+            color: var(--pantone-negro);
+            line-height: 1.4;
+        }
+
+        /* Responsive: que no se vea apretado */
+        @media (max-width: 992px) {
+            .info-grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .info-grid-4 {
+                grid-template-columns: 1fr;
+            }
+        }
+
 
         .info-section {
             background: #fff;
@@ -1528,7 +1736,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/assets/js_sitio/modulos.js?v=1.6"></script>
+    <script src="/assets/js_sitio/modulos.js?v=1.7"></script>
     <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
 
 
