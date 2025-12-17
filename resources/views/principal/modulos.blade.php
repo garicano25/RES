@@ -1164,6 +1164,11 @@
 
             <div class="modal-body">
 
+
+                <div id="mensajeGeneralEmpresa" class="mensaje-general" style="display:none;"></div>
+
+
+
                 <!-- DATOS GENERALES -->
                 <section class="info-section">
                     <h3>Datos Generales</h3>
@@ -1243,7 +1248,6 @@
             --borde-suave: #e1e4e8;
         }
 
-        /* MODAL */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -1283,7 +1287,6 @@
             background: #f6f8fa;
         }
 
-        /* SECCIONES */
         .info-section {
             background: #fff;
             border: 1px solid var(--borde-suave);
@@ -1299,7 +1302,6 @@
             padding-bottom: 4px;
         }
 
-        /* GRIDS */
         .info-grid {
             display: grid;
             gap: 20px;
@@ -1318,7 +1320,6 @@
             grid-template-columns: repeat(3, 1fr);
         }
 
-        /* CONTACTOS */
         .contacto-item {
             display: flex;
             align-items: flex-start;
@@ -1333,7 +1334,6 @@
             margin: 6px 12px 0 0;
         }
 
-        /* DIRECCIONES */
         .direccion-box {
             background: #f9fafb;
             padding: 12px;
@@ -1353,7 +1353,6 @@
             margin: 0 0 10px;
         }
 
-        /* SUCURSALES */
         .sucursal-box {
             border: 1px dashed var(--pantone-azul);
             padding: 15px;
@@ -1368,7 +1367,6 @@
             margin-bottom: 10px;
         }
 
-        /* ROLES */
         .roles {
             display: flex;
             gap: 10px;
@@ -1395,8 +1393,6 @@
             white-space: nowrap;
         }
 
-
-        /* ===== BLOQUES DE DIRECCIÓN ===== */
         .bloque-direccion {
             background: #f9fafb;
             border-radius: 8px;
@@ -1418,7 +1414,6 @@
             font-weight: 600;
         }
 
-        /* ===== SUCURSALES ===== */
         .bloque-sucursal {
             border: 1px dashed var(--pantone-azul);
             border-radius: 8px;
@@ -1438,7 +1433,6 @@
             padding: 10px;
         }
 
-        /* ===== NOTA USUARIOS ===== */
         .nota-usuarios {
             font-size: 14px;
             background: #f9fafb;
@@ -1459,7 +1453,6 @@
             text-decoration: underline;
         }
 
-        /* ===== ROLES DETALLE ===== */
         .roles-detalle {
             display: flex;
             gap: 20px;
@@ -1478,6 +1471,18 @@
             margin-top: 8px;
             font-size: 13px;
             color: #555;
+        }
+
+        .mensaje-general {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
         }
     </style>
 
@@ -1519,7 +1524,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/assets/js_sitio/modulos.js?v=1.3"></script>
+    <script src="/assets/js_sitio/modulos.js?v=1.4"></script>
     <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
 
 

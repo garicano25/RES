@@ -63,8 +63,9 @@ function mostrarModalDesdeData(element) {
 
 
 
+
 function tieneDatos(obj) {
-    return Object.values(obj).some(v => v && v.toString().trim() !== "");
+    return obj && Object.values(obj).some(v => v && v.toString().trim() !== "");
 }
 
 document.getElementById("btnInfoEmpresa").onclick = () => {
@@ -72,6 +73,40 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
     fetch('/obtenerInfoEmpresa')
         .then(r => r.json())
         .then(data => {
+
+            /* ======================
+               MENSAJE GENERAL (NUEVO)
+               ====================== */
+            const mensajeGeneral = document.getElementById("mensajeGeneralEmpresa");
+            mensajeGeneral.style.display = "none";
+            mensajeGeneral.innerHTML = "";
+
+            /* ======================
+               CASO: NO HAY NADA EN BD (NUEVO)
+               ====================== */
+            if (data.error) {
+
+                mensajeGeneral.innerHTML =
+                    "⚠️ No existe información de la empresa guardada en el sistema.";
+
+                mensajeGeneral.style.display = "block";
+
+                // Limpiar datos generales
+                rfcEmpresa.textContent = '—';
+                razonSocial.textContent = '—';
+                nombreComercial.textContent = '—';
+                regimenCapital.textContent = '—';
+
+                // Limpiar secciones (SIN MENSAJES POR SECCIÓN)
+                contenedorContactos.innerHTML = "";
+                contenedorDomicilio.innerHTML = "";
+                contenedorSucursales.innerHTML = "";
+                seccionSucursales.style.display = "none";
+
+                // Abrir modal
+                modalInfoEmpresa.style.display = "flex";
+                return;
+            }
 
             /* ======================
                DATOS GENERALES
@@ -121,7 +156,6 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
             if (Array.isArray(data.domicilios)) {
                 data.domicilios.forEach(d => {
 
-                    // ---- NACIONAL
                     if (d.TIPODEDOMICILIOFISCAL === "nacional" && tieneDatos(d)) {
                         hayDomicilio = true;
                         contenedorDomicilio.innerHTML += `
@@ -148,7 +182,6 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
                         `;
                     }
 
-                    // ---- EXTRANJERO
                     if (d.TIPODEDOMICILIOFISCAL === "extranjero" && tieneDatos(d)) {
                         hayDomicilio = true;
                         contenedorDomicilio.innerHTML += `
@@ -158,7 +191,6 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
                                     <div><span>Domicilio:</span> ${d.DOMICILIO_EXTRANJERO}</div>
                                     <div><span>CP:</span> ${d.CP_EXTRANJERO}</div>
                                     <div><span>Ciudad:</span> ${d.CIUDAD_EXTRANJERO}</div>
-
                                     <div><span>Estado:</span> ${d.ESTADO_EXTRANJERO}</div>
                                     <div><span>País:</span> ${d.PAIS_EXTRANJERO}</div>
                                 </div>
@@ -185,7 +217,6 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
 
                 data.sucursales.forEach(s => {
 
-                    // ---- NACIONAL
                     if (s.TIPODEDOMICILIOFISCAL === "nacional" && tieneDatos(s)) {
                         haySucursal = true;
                         contenedorSucursales.innerHTML += `
@@ -211,7 +242,6 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
                         `;
                     }
 
-                    // ---- EXTRANJERO
                     if (s.TIPODEDOMICILIOFISCAL === "extranjero" && tieneDatos(s)) {
                         haySucursal = true;
                         contenedorSucursales.innerHTML += `
@@ -221,7 +251,6 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
                                     <div><span>Domicilio:</span> ${s.DOMICILIO_EXTRANJERO}</div>
                                     <div><span>CP:</span> ${s.CP_EXTRANJERO}</div>
                                     <div><span>Ciudad:</span> ${s.CIUDAD_EXTRANJERO}</div>
-
                                     <div><span>Estado:</span> ${s.ESTADO_EXTRANJERO}</div>
                                     <div><span>País:</span> ${s.PAIS_EXTRANJERO}</div>
                                 </div>
@@ -244,6 +273,7 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
 };
 
 cerrarModal.onclick = () => modalInfoEmpresa.style.display = "none";
+
 
 
 
