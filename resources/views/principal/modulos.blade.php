@@ -1140,9 +1140,8 @@
 
 
 
-
-
     <!-- Modal -->
+
     <div id="modalAnuncio" style="display: none;" class="modal-anuncio">
         <div class="modal-contenido" onclick="event.stopPropagation()">
             <span class="cerrar" onclick="cerrarModal()">×</span>
@@ -1151,6 +1150,8 @@
             <p id="modalDescripcion"></p>
         </div>
     </div>
+
+
 
 
     <div id="modalInfoEmpresa" class="modal-overlay">
@@ -1163,58 +1164,75 @@
 
             <div class="modal-body">
 
+                <!-- DATOS GENERALES -->
                 <section class="info-section">
                     <h3>Datos Generales</h3>
-                    <div class="info-grid">
-                        <div><span>RFC:</span> RIP1706223K9</div>
-                        <div><span>Razón Social:</span> RESULTS IN PERFORMANCE</div>
-                        <div><span>Nombre Comercial:</span> RIP</div>
+                    <div class="info-grid info-grid-4">
+                        <div><span>RFC:</span> <span id="rfcEmpresa"></span></div>
+                        <div><span>Razón Social:</span> <span id="razonSocial"></span></div>
+                        <div><span>Régimen Capital:</span> <span id="regimenCapital"></span></div>
+                        <div><span>Nombre Comercial:</span> <span id="nombreComercial"></span></div>
                     </div>
                 </section>
 
+                <!-- REPRESENTANTES -->
                 <section class="info-section">
-                    <h3>Representante Legal</h3>
-                    <div class="info-grid">
-                        <div><span>Nombre:</span> Leonardo Cuella Chala</div>
-                        <div><span>Cargo:</span> Director</div>
-                        <div><span>Teléfono Oficina:</span> +52 993 688 3782</div>
-                        <div><span>Teléfono Celular:</span> +52 999 357 8332</div>
-                    </div>
+                    <h3>Representantes Legales</h3>
+                    <div id="contenedorContactos"></div>
                 </section>
 
+                <!-- DOMICILIO -->
                 <section class="info-section">
                     <h3>Domicilio Fiscal</h3>
-                    <div class="info-grid">
-                        <div><span>Código Postal:</span> 86100</div>
-                        <div><span>Tipo de Vialidad:</span> Calle</div>
-                        <div><span>Vialidad:</span> Prolongación de Avenida Los Ríos</div>
-                        <div><span>Número Exterior:</span> 203</div>
-                        <div><span>Número Interior:</span>  </div>
-                        <div><span>Colonia:</span> Atasta de Serra</div>
-                        <div><span>Localidad:</span> Villahermosa</div>
-                        <div><span>Municipio:</span> Centro</div>
-                        <div><span>Entidad:</span> Tabasco</div>
-                        <div><span>Entre Calle:</span> Calle Cerrada del Viento</div>
-                        <div><span>Y Calle:</span> Calle Cerrada Niebla</div>
+                    <div id="contenedorDomicilio"></div>
+                </section>
+
+                <!-- SUCURSALES -->
+                <section class="info-section" id="seccionSucursales" style="display:none;">
+                    <h3>Sucursales</h3>
+                    <div id="contenedorSucursales"></div>
+                </section>
+
+                <!-- USUARIO -->
+                <section class="info-section">
+                    <h3>Usuario del Sistema</h3>
+
+                    <!-- NOTA -->
+                    <p class="nota-usuarios">
+                        📝 Para crear o administrar usuarios del sistema,
+                        <a href="/usuario" class="link-usuarios">presione aquí</a>.
+                    </p>
+
+                    <!-- ROLES -->
+                    <div class="roles roles-detalle">
+
+                        <div class="rol-item">
+                            <span class="role super">Superusuario</span>
+                            <p class="rol-descripcion">
+                                Tiene todos los permisos del sistema sin restricciones.
+                            </p>
+                        </div>
+
+                        <div class="rol-item">
+                            <span class="role admin">Administrador</span>
+                            <p class="rol-descripcion">
+                                Tiene todos los permisos del sistema, excepto eliminar usuarios con rol Superusuario.
+                            </p>
+                        </div>
+
                     </div>
                 </section>
 
-                <section class="info-section">
-                    <h3>Permisos del Sistema</h3>
-                    <div class="roles">
-                        <span class="role super">Superusuario</span>
-                        <span class="role admin">Administrador</span>
-                    </div>
-                </section>
 
             </div>
-
         </div>
     </div>
 
 
+
+
+
     <style>
-      
         :root {
             --pantone-rojo: #FF585D;
             --pantone-verde: #A4D65E;
@@ -1225,10 +1243,11 @@
             --borde-suave: #e1e4e8;
         }
 
+        /* MODAL */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.55);
+            background: rgba(0, 0, 0, .55);
             display: none;
             align-items: center;
             justify-content: center;
@@ -1239,35 +1258,23 @@
             width: 90%;
             max-width: 1200px;
             max-height: 90vh;
-            background: var(--pantone-blanco);
+            background: #fff;
             border-radius: 10px;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
-            animation: modalFadeIn 0.25s ease-in-out;
         }
 
         .modal-header {
             background: var(--pantone-azul-oscuro);
-            color: var(--pantone-blanco);
-            padding: 16px 20px;
+            color: #fff;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h2 {
-            margin: 0;
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--pantone-blanco);
         }
 
         .modal-close {
-            font-size: 26px;
+            font-size: 24px;
             cursor: pointer;
-            color: var(--pantone-blanco);
-            line-height: 1;
         }
 
         .modal-body {
@@ -1275,41 +1282,96 @@
             overflow-y: auto;
             background: #f6f8fa;
         }
+
+        /* SECCIONES */
         .info-section {
-            margin-bottom: 20px;
+            background: #fff;
             border: 1px solid var(--borde-suave);
             border-radius: 8px;
             padding: 15px;
-            background: var(--pantone-blanco);
+            margin-bottom: 20px;
         }
 
         .info-section h3 {
-            margin-top: 0;
-            margin-bottom: 10px;
+            margin: 0 0 10px;
             color: var(--pantone-azul);
             border-bottom: 2px solid var(--pantone-azul);
             padding-bottom: 4px;
-            font-size: 15px;
-            font-weight: 600;
         }
 
+        /* GRIDS */
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 30px;
+            gap: 20px;
             font-size: 14px;
-            color: var(--pantone-negro);
         }
 
         .info-grid span {
             font-weight: 600;
-            color: #000;
         }
 
+        .info-grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .info-grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* CONTACTOS */
+        .contacto-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .contacto-bullet {
+            width: 10px;
+            height: 10px;
+            background: var(--pantone-azul);
+            border-radius: 50%;
+            margin: 6px 12px 0 0;
+        }
+
+        /* DIRECCIONES */
+        .direccion-box {
+            background: #f9fafb;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+
+        .direccion-box.nacional {
+            border-left: 4px solid var(--pantone-azul);
+        }
+
+        .direccion-box.extranjero {
+            border-left: 4px solid var(--pantone-verde);
+        }
+
+        .direccion-box h4 {
+            margin: 0 0 10px;
+        }
+
+        /* SUCURSALES */
+        .sucursal-box {
+            border: 1px dashed var(--pantone-azul);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .sucursal-title {
+            text-align: center;
+            font-weight: 700;
+            color: var(--pantone-azul-oscuro);
+            margin-bottom: 10px;
+        }
+
+        /* ROLES */
         .roles {
             display: flex;
             gap: 10px;
-            flex-wrap: wrap;
         }
 
         .role {
@@ -1329,40 +1391,97 @@
             color: #000;
         }
 
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.96);
-            }
+        .no-wrap {
+            white-space: nowrap;
+        }
 
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+
+        /* ===== BLOQUES DE DIRECCIÓN ===== */
+        .bloque-direccion {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .bloque-direccion.nacional {
+            border-left: 4px solid var(--pantone-azul);
+        }
+
+        .bloque-direccion.extranjero {
+            border-left: 4px solid var(--pantone-verde);
+        }
+
+        .bloque-direccion h4 {
+            margin: 0 0 12px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* ===== SUCURSALES ===== */
+        .bloque-sucursal {
+            border: 1px dashed var(--pantone-azul);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .bloque-sucursal h4 {
+            text-align: center;
+            margin: 0 0 12px;
+            font-weight: 700;
+            color: var(--pantone-azul-oscuro);
+        }
+
+        .sin-info {
+            color: #6c757d;
+            padding: 10px;
+        }
+
+        /* ===== NOTA USUARIOS ===== */
+        .nota-usuarios {
+            font-size: 14px;
+            background: #f9fafb;
+            border-left: 4px solid var(--pantone-azul);
+            padding: 10px 12px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            color: var(--pantone-negro);
+        }
+
+        .link-usuarios {
+            color: var(--pantone-azul);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .link-usuarios:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== ROLES DETALLE ===== */
+        .roles-detalle {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .rol-item {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 12px 15px;
+            flex: 1;
+            min-width: 260px;
+        }
+
+        .rol-descripcion {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #555;
         }
     </style>
 
 
-
-    <script>
-        const btn = document.getElementById("btnInfoEmpresa");
-        const modal = document.getElementById("modalInfoEmpresa");
-        const cerrar = document.getElementById("cerrarModal");
-
-        btn.addEventListener("click", () => {
-            modal.style.display = "flex";
-        });
-
-        cerrar.addEventListener("click", () => {
-            modal.style.display = "none";
-        });
-
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) {
-                modal.style.display = "none";
-            }
-        });
-    </script>
 
 
 
@@ -1400,7 +1519,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/assets/js_sitio/modulos.js?v=1.2"></script>
+    <script src="/assets/js_sitio/modulos.js?v=1.3"></script>
     <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
 
 

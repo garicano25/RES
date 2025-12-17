@@ -61,3 +61,189 @@ function mostrarModalDesdeData(element) {
         });
    
 
+
+
+function tieneDatos(obj) {
+    return Object.values(obj).some(v => v && v.toString().trim() !== "");
+}
+
+document.getElementById("btnInfoEmpresa").onclick = () => {
+
+    fetch('/obtenerInfoEmpresa')
+        .then(r => r.json())
+        .then(data => {
+
+            /* ======================
+               DATOS GENERALES
+               ====================== */
+            rfcEmpresa.textContent = data.datos_generales.RFC_EMPRESA || '—';
+            razonSocial.textContent = data.datos_generales.RAZON_SOCIAL || '—';
+            nombreComercial.textContent = data.datos_generales.NOMBRE_COMERCIAL || '—';
+            regimenCapital.textContent = data.datos_generales.REGIMEN_CAPITAL || '—';
+
+            /* ======================
+               CONTACTOS
+               ====================== */
+            contenedorContactos.innerHTML = "";
+
+            if (Array.isArray(data.contactos) && data.contactos.length > 0) {
+                data.contactos.forEach(c => {
+                    if (tieneDatos(c)) {
+                        contenedorContactos.innerHTML += `
+                            <div class="contacto-item">
+                                <span class="contacto-bullet"></span>
+                                <div class="info-grid info-grid-4">
+                                    <div><span>Nombre:</span> ${c.CONTACTO_SOLICITUD}</div>
+                                    <div><span>Cargo:</span> ${c.CARGO_SOLICITUD}</div>
+                                    <div><span>Tel. Oficina:</span> ${c.TELEFONO_SOLICITUD}</div>
+                                    <div><span>Celular:</span> ${c.CELULAR_SOLICITUD}</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+
+                if (contenedorContactos.innerHTML.trim() === "") {
+                    contenedorContactos.innerHTML =
+                        `<p class="sin-info">No tiene información de representantes guardada.</p>`;
+                }
+            } else {
+                contenedorContactos.innerHTML =
+                    `<p class="sin-info">No tiene información de representantes guardada.</p>`;
+            }
+
+            /* ======================
+               DOMICILIO FISCAL
+               ====================== */
+            contenedorDomicilio.innerHTML = "";
+            let hayDomicilio = false;
+
+            if (Array.isArray(data.domicilios)) {
+                data.domicilios.forEach(d => {
+
+                    // ---- NACIONAL
+                    if (d.TIPODEDOMICILIOFISCAL === "nacional" && tieneDatos(d)) {
+                        hayDomicilio = true;
+                        contenedorDomicilio.innerHTML += `
+                            <div class="bloque-direccion nacional">
+                                <h4>📍 Domicilio Nacional</h4>
+                                <div class="info-grid info-grid-3">
+                                    <div><span>CP:</span> ${d.CODIGO_POSTAL_DOMICILIO}</div>
+                                    <div><span>Tipo de Vialidad:</span> ${d.TIPO_VIALIDAD_DOMICILIO}</div>
+                                    <div class="no-wrap"><span>Nombre de Vialidad:</span> ${d.NOMBRE_VIALIDAD_DOMICILIO}</div>
+
+                                    <div><span>Número Exterior:</span> ${d.NUMERO_EXTERIOR_DOMICILIO}</div>
+                                    <div><span>Número Interior:</span> ${d.NUMERO_INTERIOR_DOMICILIO}</div>
+                                    <div><span>Nombre de la Colonia:</span> ${d.NOMBRE_COLONIA_DOMICILIO}</div>
+
+                                    <div><span>Nombre de la Localidad:</span> ${d.NOMBRE_LOCALIDAD_DOMICILIO}</div>
+                                    <div><span>Municipio:</span> ${d.NOMBRE_MUNICIPIO_DOMICILIO}</div>
+                                    <div><span>Entidad:</span> ${d.NOMBRE_ENTIDAD_DOMICILIO}</div>
+
+                                    <div><span>Entre Calle:</span> ${d.ENTRE_CALLE_DOMICILIO}</div>
+                                    <div><span>Y Calle:</span> ${d.ENTRE_CALLE_2_DOMICILIO}</div>
+                                    <div><span>País Contratación:</span> ${d.PAIS_CONTRATACION_DOMICILIO}</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // ---- EXTRANJERO
+                    if (d.TIPODEDOMICILIOFISCAL === "extranjero" && tieneDatos(d)) {
+                        hayDomicilio = true;
+                        contenedorDomicilio.innerHTML += `
+                            <div class="bloque-direccion extranjero">
+                                <h4>🌎 Domicilio Extranjero</h4>
+                                <div class="info-grid info-grid-3">
+                                    <div><span>Domicilio:</span> ${d.DOMICILIO_EXTRANJERO}</div>
+                                    <div><span>CP:</span> ${d.CP_EXTRANJERO}</div>
+                                    <div><span>Ciudad:</span> ${d.CIUDAD_EXTRANJERO}</div>
+
+                                    <div><span>Estado:</span> ${d.ESTADO_EXTRANJERO}</div>
+                                    <div><span>País:</span> ${d.PAIS_EXTRANJERO}</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+            }
+
+            if (!hayDomicilio) {
+                contenedorDomicilio.innerHTML =
+                    `<p class="sin-info">No tiene información de domicilio fiscal guardada.</p>`;
+            }
+
+            /* ======================
+               SUCURSALES
+               ====================== */
+            seccionSucursales.style.display = "none";
+            contenedorSucursales.innerHTML = "";
+            let haySucursal = false;
+
+            if (Number(data.cuenta_sucursales) === 1 && Array.isArray(data.sucursales)) {
+                seccionSucursales.style.display = "block";
+
+                data.sucursales.forEach(s => {
+
+                    // ---- NACIONAL
+                    if (s.TIPODEDOMICILIOFISCAL === "nacional" && tieneDatos(s)) {
+                        haySucursal = true;
+                        contenedorSucursales.innerHTML += `
+                            <div class="bloque-sucursal">
+                                <h4>${s.NOMBRE_SUCURSAL}</h4>
+                                <div class="info-grid info-grid-3">
+                                    <div><span>CP:</span> ${s.CODIGO_POSTAL_SUCURSAL}</div>
+                                    <div><span>Tipo de Vialidad:</span> ${s.TIPO_VIALIDAD_SUCURSAL}</div>
+                                    <div class="no-wrap"><span>Nombre de la Vialidad:</span> ${s.NOMBRE_VIALIDAD_SUCURSAL}</div>
+
+                                    <div><span>No. Exterior:</span> ${s.NUMERO_EXTERIOR_SUCURSAL}</div>
+                                    <div><span>No. Interior:</span> ${s.NUMERO_INTERIOR_SUCURSAL}</div>
+                                    <div><span>Colonia:</span> ${s.NOMBRE_COLONIA_SUCURSAL}</div>
+
+                                    <div><span>Localidad:</span> ${s.NOMBRE_LOCALIDAD_SUCURSAL}</div>
+                                    <div><span>Municipio:</span> ${s.NOMBRE_MUNICIPIO_SUCURSAL}</div>
+                                    <div><span>Entidad:</span> ${s.NOMBRE_ENTIDAD_SUCURSAL}</div>
+
+                                    <div><span>Entre Calle:</span> ${s.ENTRE_CALLE_SUCURSAL}</div>
+                                    <div><span>Y Calle:</span> ${s.ENTRE_CALLE_2_SUCURSAL}</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // ---- EXTRANJERO
+                    if (s.TIPODEDOMICILIOFISCAL === "extranjero" && tieneDatos(s)) {
+                        haySucursal = true;
+                        contenedorSucursales.innerHTML += `
+                            <div class="bloque-sucursal">
+                                <h4>Sucursal Extranjera</h4>
+                                <div class="info-grid info-grid-3">
+                                    <div><span>Domicilio:</span> ${s.DOMICILIO_EXTRANJERO}</div>
+                                    <div><span>CP:</span> ${s.CP_EXTRANJERO}</div>
+                                    <div><span>Ciudad:</span> ${s.CIUDAD_EXTRANJERO}</div>
+
+                                    <div><span>Estado:</span> ${s.ESTADO_EXTRANJERO}</div>
+                                    <div><span>País:</span> ${s.PAIS_EXTRANJERO}</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+            }
+
+            if (seccionSucursales.style.display === "block" && !haySucursal) {
+                contenedorSucursales.innerHTML =
+                    `<p class="sin-info">No tiene información de sucursales guardada.</p>`;
+            }
+
+            /* ======================
+               MOSTRAR MODAL
+               ====================== */
+            modalInfoEmpresa.style.display = "flex";
+        });
+};
+
+cerrarModal.onclick = () => modalInfoEmpresa.style.display = "none";
+
+
+

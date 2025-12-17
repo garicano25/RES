@@ -305,6 +305,12 @@
                         </a>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: -2px;">
+                        <a class="nav-link BOTON" href="{{ url('/informacionempresa') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Información empresa</span><span class="d-none d-lg-inline">Información empresa</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-diagram-3-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Organización</span><span class="d-none d-lg-inline">Organización</span>
                         </a>
@@ -599,6 +605,11 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 
+
+
+    @if(request()->is('informacionempresa'))
+    <script src="/assets/js_sitio/informacionempresa/empresainformacion.js"></script>
+    @endif
 
     @if(request()->is('organigrama'))
     <script src="/assets/js_sitio/organizacion/organigrama.js?v=4.0"> </script>

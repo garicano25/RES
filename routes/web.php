@@ -192,6 +192,8 @@ Route::get('/modulos', [catalogoanuncioController::class, 'index']);
 
 Route::get('/tipo-cambio', [catalogoanuncioController::class, 'getTipoCambio']);
 
+Route::get('/obtenerInfoEmpresa', [catalogoanuncioController::class, 'obtenerInfoEmpresa']);
+
 //==============================================  USUARIO  ============================================== 
 
 

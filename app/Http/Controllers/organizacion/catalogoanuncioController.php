@@ -8,6 +8,8 @@ use Artisan;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 use App\Models\organizacion\catalgoanuncioModel;
+use App\Models\empresainformacion\empresainformacionModel;
+
 
 use DB;
 
@@ -65,6 +67,30 @@ class catalogoanuncioController extends Controller
 
 
 
+    public function obtenerInfoEmpresa()
+    {
+        $empresa = empresainformacionModel::first();
+
+        if (!$empresa) {
+            return response()->json(['error' => 'Empresa no encontrada'], 404);
+        }
+
+        return response()->json([
+            'datos_generales' => [
+                'RFC_EMPRESA'      => $empresa->RFC_EMPRESA,
+                'RAZON_SOCIAL'     => $empresa->RAZON_SOCIAL,
+                'NOMBRE_COMERCIAL' => $empresa->NOMBRE_COMERCIAL,
+                'REGIMEN_CAPITAL'  => $empresa->REGIMEN_CAPITAL,
+            ],
+
+            'contactos' => json_decode($empresa->CONTACTOS_JSON, true) ?? [],
+
+            'domicilios' => json_decode($empresa->DIRECCIONES_JSON, true) ?? [],
+
+            'cuenta_sucursales' => $empresa->CUENTA_SUCURSALES,
+            'sucursales' => json_decode($empresa->SUCURSALES_JSON, true) ?? []
+        ]);
+    }
 
     public function Tablanuncios()
     {
