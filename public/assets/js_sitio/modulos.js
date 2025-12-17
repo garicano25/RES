@@ -74,16 +74,12 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
         .then(r => r.json())
         .then(data => {
 
-            /* ======================
-               MENSAJE GENERAL
-               ====================== */
+           
             const mensajeGeneral = document.getElementById("mensajeGeneralEmpresa");
             mensajeGeneral.style.display = "none";
             mensajeGeneral.innerHTML = "";
 
-            /* ======================
-               CASO: NO HAY NADA EN BD
-               ====================== */
+        
             if (data.error) {
 
                 mensajeGeneral.innerHTML =
@@ -105,17 +101,13 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
                 return;
             }
 
-            /* ======================
-               DATOS GENERALES
-               ====================== */
+          
             rfcEmpresa.textContent = data.datos_generales.RFC_EMPRESA || '—';
             razonSocial.textContent = data.datos_generales.RAZON_SOCIAL || '—';
             nombreComercial.textContent = data.datos_generales.NOMBRE_COMERCIAL || '—';
             regimenCapital.textContent = data.datos_generales.REGIMEN_CAPITAL || '—';
 
-            /* ======================
-               CONTACTOS
-               ====================== */
+           
             contenedorContactos.innerHTML = "";
 
             if (Array.isArray(data.contactos) && data.contactos.length > 0) {
@@ -144,9 +136,7 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
                     `<p class="sin-info">No tiene información de representantes guardada.</p>`;
             }
 
-            /* ======================
-               DOMICILIO FISCAL
-               ====================== */
+          
             contenedorDomicilio.innerHTML = "";
             let hayDomicilio = false;
 
@@ -199,9 +189,7 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
                     `<p class="sin-info">No tiene información de domicilio fiscal guardada.</p>`;
             }
 
-            /* ======================
-               SUCURSALES
-               ====================== */
+         
             seccionSucursales.style.display = "none";
             contenedorSucursales.innerHTML = "";
             let haySucursal = false;
@@ -256,30 +244,22 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
                     `<p class="sin-info">No tiene información de sucursales guardada.</p>`;
             }
 
-            /* ======================
-               MOSTRAR MODAL
-               ====================== */
+         
             modalInfoEmpresa.style.display = "flex";
         });
 };
 
-/* ======================
-   CIERRE DEL MODAL (LO QUE FALTABA)
-   ====================== */
 
-// Click en la X
 document.getElementById("cerrarModal").onclick = () => {
     modalInfoEmpresa.style.display = "none";
 };
 
-// Click fuera del modal (overlay)
 modalInfoEmpresa.onclick = (e) => {
     if (e.target === modalInfoEmpresa) {
         modalInfoEmpresa.style.display = "none";
     }
 };
 
-// Tecla ESC
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
         modalInfoEmpresa.style.display = "none";
