@@ -75,14 +75,14 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
         .then(data => {
 
             /* ======================
-               MENSAJE GENERAL (NUEVO)
+               MENSAJE GENERAL
                ====================== */
             const mensajeGeneral = document.getElementById("mensajeGeneralEmpresa");
             mensajeGeneral.style.display = "none";
             mensajeGeneral.innerHTML = "";
 
             /* ======================
-               CASO: NO HAY NADA EN BD (NUEVO)
+               CASO: NO HAY NADA EN BD
                ====================== */
             if (data.error) {
 
@@ -91,19 +91,16 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
 
                 mensajeGeneral.style.display = "block";
 
-                // Limpiar datos generales
                 rfcEmpresa.textContent = '—';
                 razonSocial.textContent = '—';
                 nombreComercial.textContent = '—';
                 regimenCapital.textContent = '—';
 
-                // Limpiar secciones (SIN MENSAJES POR SECCIÓN)
                 contenedorContactos.innerHTML = "";
                 contenedorDomicilio.innerHTML = "";
                 contenedorSucursales.innerHTML = "";
                 seccionSucursales.style.display = "none";
 
-                // Abrir modal
                 modalInfoEmpresa.style.display = "flex";
                 return;
             }
@@ -165,15 +162,12 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
                                     <div><span>CP:</span> ${d.CODIGO_POSTAL_DOMICILIO}</div>
                                     <div><span>Tipo de Vialidad:</span> ${d.TIPO_VIALIDAD_DOMICILIO}</div>
                                     <div class="no-wrap"><span>Nombre de Vialidad:</span> ${d.NOMBRE_VIALIDAD_DOMICILIO}</div>
-
                                     <div><span>Número Exterior:</span> ${d.NUMERO_EXTERIOR_DOMICILIO}</div>
                                     <div><span>Número Interior:</span> ${d.NUMERO_INTERIOR_DOMICILIO}</div>
-                                    <div><span>Nombre de la Colonia:</span> ${d.NOMBRE_COLONIA_DOMICILIO}</div>
-
-                                    <div><span>Nombre de la Localidad:</span> ${d.NOMBRE_LOCALIDAD_DOMICILIO}</div>
+                                    <div><span>Colonia:</span> ${d.NOMBRE_COLONIA_DOMICILIO}</div>
+                                    <div><span>Localidad:</span> ${d.NOMBRE_LOCALIDAD_DOMICILIO}</div>
                                     <div><span>Municipio:</span> ${d.NOMBRE_MUNICIPIO_DOMICILIO}</div>
                                     <div><span>Entidad:</span> ${d.NOMBRE_ENTIDAD_DOMICILIO}</div>
-
                                     <div><span>Entre Calle:</span> ${d.ENTRE_CALLE_DOMICILIO}</div>
                                     <div><span>Y Calle:</span> ${d.ENTRE_CALLE_2_DOMICILIO}</div>
                                     <div><span>País Contratación:</span> ${d.PAIS_CONTRATACION_DOMICILIO}</div>
@@ -226,15 +220,12 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
                                     <div><span>CP:</span> ${s.CODIGO_POSTAL_SUCURSAL}</div>
                                     <div><span>Tipo de Vialidad:</span> ${s.TIPO_VIALIDAD_SUCURSAL}</div>
                                     <div class="no-wrap"><span>Nombre de la Vialidad:</span> ${s.NOMBRE_VIALIDAD_SUCURSAL}</div>
-
                                     <div><span>No. Exterior:</span> ${s.NUMERO_EXTERIOR_SUCURSAL}</div>
                                     <div><span>No. Interior:</span> ${s.NUMERO_INTERIOR_SUCURSAL}</div>
                                     <div><span>Colonia:</span> ${s.NOMBRE_COLONIA_SUCURSAL}</div>
-
                                     <div><span>Localidad:</span> ${s.NOMBRE_LOCALIDAD_SUCURSAL}</div>
                                     <div><span>Municipio:</span> ${s.NOMBRE_MUNICIPIO_SUCURSAL}</div>
                                     <div><span>Entidad:</span> ${s.NOMBRE_ENTIDAD_SUCURSAL}</div>
-
                                     <div><span>Entre Calle:</span> ${s.ENTRE_CALLE_SUCURSAL}</div>
                                     <div><span>Y Calle:</span> ${s.ENTRE_CALLE_2_SUCURSAL}</div>
                                 </div>
@@ -272,8 +263,28 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
         });
 };
 
-cerrarModal.onclick = () => modalInfoEmpresa.style.display = "none";
+/* ======================
+   CIERRE DEL MODAL (LO QUE FALTABA)
+   ====================== */
 
+// Click en la X
+document.getElementById("cerrarModal").onclick = () => {
+    modalInfoEmpresa.style.display = "none";
+};
+
+// Click fuera del modal (overlay)
+modalInfoEmpresa.onclick = (e) => {
+    if (e.target === modalInfoEmpresa) {
+        modalInfoEmpresa.style.display = "none";
+    }
+};
+
+// Tecla ESC
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        modalInfoEmpresa.style.display = "none";
+    }
+});
 
 
 
