@@ -18,6 +18,13 @@ use App\Http\Controllers\usuario\usuarioController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\VerificationController;
 
+
+// CONTROLADORES INFORMACION EMPRESA
+
+use App\Http\Controllers\empresainformacion\empresainformacionController;
+
+
+
 // CONTROLADORES DE ORGANIZACION 
 use App\Http\Controllers\organizacion\areasController;
 use App\Http\Controllers\organizacion\pptController;
@@ -202,6 +209,16 @@ Route::post('/validarRFC', [usuarioController::class, 'validarRFC']);
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////RRHH//////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//==============================================  INFORMACION EMRPESA  ============================================== 
+
+Route::get('/informacionempresa', function () {return view('RH.informacionempresa.empresainformacion');});
+
+
+Route::post('/InfoEmpresaSave', [empresainformacionController::class, 'store']);
+Route::get('/Tablainformacionempresa', [empresainformacionController::class, 'Tablainformacionempresa']);
+Route::get('/InfoEmpresaDelete', [empresainformacionController::class, 'store']);
+
 
 
 //==============================================  ORGANIZACION  ============================================== 
@@ -893,6 +910,10 @@ Route::get('/equipofoto/{id}', [inventarioController::class, 'mostrarFotoEquipo'
 Route::get('/inventarioDelete', [inventarioController::class, 'store']);
 Route::get('/generarCodigoAF', [inventarioController::class, 'generarCodigoAF']);
 Route::get('/generarCodigoANF', [inventarioController::class, 'generarCodigoANF']);
+
+
+
+Route::get('/cantidadEquipoReadonly', [inventarioController::class, 'cantidadEquipoReadonly']);
 
 /// ENTRADA INVENTARIO
 Route::get('/Tablaentradainventario', [inventarioController::class, 'Tablaentradainventario']);

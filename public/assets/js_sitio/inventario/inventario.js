@@ -12,6 +12,10 @@ Modalinventario.addEventListener('hidden.bs.modal', event => {
     ID_FORMULARIO_INVENTARIO = 0
     document.getElementById('formularioINVENTARIO').reset();
    
+        $('#CANTIDAD_EQUIPO').prop('readonly', false);
+
+    
+    
     $('#Modal_inventario .modal-title').html('Equipo');
 
 })
@@ -379,6 +383,18 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
     $("#tab3-documentos").off("click").on("click", function () {
         cargarTablaDocumentosEquipo();
     });
+
+
+
+    $.get('/cantidadEquipoReadonly', function (resp) {
+
+    if (resp.readonly === true) {
+        $('#CANTIDAD_EQUIPO').attr('readonly', true);
+    } else {
+        $('#CANTIDAD_EQUIPO').removeAttr('readonly');
+    }
+
+});
 
 
 });
