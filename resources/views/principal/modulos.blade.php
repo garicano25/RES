@@ -1528,7 +1528,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/assets/js_sitio/modulos.js?v=1.5"></script>
+    <script src="/assets/js_sitio/modulos.js?v=1.6"></script>
     <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
 
 

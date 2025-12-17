@@ -160,7 +160,6 @@ document.getElementById("btnInfoEmpresa").onclick = () => {
                                     <div><span>Entidad:</span> ${d.NOMBRE_ENTIDAD_DOMICILIO}</div>
                                     <div><span>Entre Calle:</span> ${d.ENTRE_CALLE_DOMICILIO}</div>
                                     <div><span>Y Calle:</span> ${d.ENTRE_CALLE_2_DOMICILIO}</div>
-                                    <div><span>País Contratación:</span> ${d.PAIS_CONTRATACION_DOMICILIO}</div>
                                 </div>
                             </div>
                         `;
