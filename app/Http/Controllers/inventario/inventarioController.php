@@ -9,6 +9,7 @@ use Exception;
 use App\Models\inventario\inventarioModel;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 //Recursos para abrir el Excel
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -197,7 +198,7 @@ class inventarioController extends Controller
         ]);
     }
 
-    
+
 
 
 
