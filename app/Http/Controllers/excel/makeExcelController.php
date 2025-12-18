@@ -2044,7 +2044,7 @@ foreach ($externas as $key => $val) {
 
         $fecha_actual = date("dmy");
 
-        $nombre_descarga = "DPT-{$nombre_archivo}-{$fecha_actual}.xlsx";
+        $nombre_descarga = "DPT-{$nombre_archivo}.xlsx";
 
 
         return response()->streamDownload(function () use ($writer) {
