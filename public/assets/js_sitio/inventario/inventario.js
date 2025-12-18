@@ -69,7 +69,8 @@ function limpiarFormularioInventario() {
 $("#guardarINVENTARIO").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioINVENTARIO'))
+
+            formularioValido = validarFormulario3($('#formularioINVENTARIO'))
 
     if (formularioValido) {
 
