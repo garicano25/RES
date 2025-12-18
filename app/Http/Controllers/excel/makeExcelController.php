@@ -2032,9 +2032,25 @@ foreach ($externas as $key => $val) {
 
 
 
-        $puesto = mb_convert_encoding($puesto, 'UTF-8', 'UTF-8');
+        function decodificarUnicodeMalFormado($texto)
+        {
+            return preg_replace_callback(
+                '/u([0-9a-fA-F]{4})/',
+                function ($matches) {
+                    return mb_convert_encoding(
+                        pack('H*', $matches[1]),
+                        'UTF-8',
+                        'UCS-2BE'
+                    );
+                },
+                $texto
+            );
+        }
+
 
         $puesto = str_replace(['[', ']'], '', $puesto);
+
+        $puesto = decodificarUnicodeMalFormado($puesto);
 
         $nombre_archivo = preg_replace(
             '/[\/\\\\\:\*\?\"\<\>\|]/',
@@ -2042,9 +2058,9 @@ foreach ($externas as $key => $val) {
             $puesto
         );
 
-        $fecha_actual = date("dmy");
-
+        // Nombre final CON ACENTOS
         $nombre_descarga = "DPT-{$nombre_archivo}.xlsx";
+
 
 
         return response()->streamDownload(function () use ($writer) {
@@ -2054,6 +2070,7 @@ foreach ($externas as $key => $val) {
 
 
 
+  
 
     private function corregirOrientacionImagen($rutaOriginal)
     {
