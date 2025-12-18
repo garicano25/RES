@@ -1863,7 +1863,7 @@ class makeExcelController extends Controller{
                         🔥 TAMAÑO REAL EN PIXELES (CONTROLADO)
                         ========================================= */
                                                 $drawing->setResizeProportional(false);
-                                                $drawing->setWidth(950);   // AJUSTA SI QUIERES
+                                                $drawing->setWidth(750);   // AJUSTA SI QUIERES
                                                 $drawing->setHeight(406);  // AJUSTA SI QUIERES
 
                                                 /* =========================================
