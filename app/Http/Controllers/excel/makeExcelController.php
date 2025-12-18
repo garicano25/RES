@@ -2030,18 +2030,23 @@ foreach ($externas as $key => $val) {
 
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
 
-     
-        
-        $puesto = str_replace(['[', ']'], '', $puesto);
-        
-        $nombre_archivo = str_replace(['\\', '/', ':', '*', '?', '"', '<', '>', '|'], '', $puesto);
-        
-        $fecha_actual = date("dmy");
-        // $fecha_actual = date("ymd");
 
-        
-        $nombre_descarga = "DPT-{$nombre_archivo}- {$fecha_actual}.xlsx";
-        
+
+        $puesto = mb_convert_encoding($puesto, 'UTF-8', 'UTF-8');
+
+        $puesto = str_replace(['[', ']'], '', $puesto);
+
+        $nombre_archivo = preg_replace(
+            '/[\/\\\\\:\*\?\"\<\>\|]/',
+            '',
+            $puesto
+        );
+
+        $fecha_actual = date("dmy");
+
+        $nombre_descarga = "DPT-{$nombre_archivo}-{$fecha_actual}.xlsx";
+
+
         return response()->streamDownload(function () use ($writer) {
             $writer->save('php://output');
         }, $nombre_descarga);
