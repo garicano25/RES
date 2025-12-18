@@ -86,7 +86,9 @@ class DenyRoleGlobalMiddleware
         'salidaalmacen',
         'bitacoraconsumibles',
         'bitacoraretornables',
-        'bitacoravehiculos'
+        'bitacoravehiculos',
+        'bitacoraasignacion',
+        'informacionempresa'
         
     ];
 
