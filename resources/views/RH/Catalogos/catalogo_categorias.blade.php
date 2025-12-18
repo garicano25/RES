@@ -7,11 +7,11 @@
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
-    <h3 style="color: #ffffff; margin: 0;">&nbsp;Nueva Categoría</h3>
+        <h3 style="color: #ffffff; margin: 0;">&nbsp;Nueva Categoría</h3>
 
-   
+
         <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_categoria" style="margin-left: auto;">
-            Nueva  &nbsp;<i class="bi bi-plus-circle"></i>
+            Nueva &nbsp;<i class="bi bi-plus-circle"></i>
         </button>
     </ol>
 
@@ -35,11 +35,11 @@
                     {!! csrf_field() !!}
                     <div class="mb-3">
                         <label>Nombre de la categoría *</label>
-                        <input type="text" class="form-control" id="NOMBRE_CATEGORIA" name="NOMBRE_CATEGORIA" required/>
+                        <input type="text" class="form-control" id="NOMBRE_CATEGORIA" name="NOMBRE_CATEGORIA" required />
                     </div>
                     <div class="mb-3">
                         <label>Lugar de trabajo *</label>
-                        <input type="text" class="form-control" id="LUGAR_CATEGORIA" name="LUGAR_CATEGORIA" required/>
+                        <input type="text" class="form-control" id="LUGAR_CATEGORIA" name="LUGAR_CATEGORIA" required />
                     </div>
                     <div class="mb-3 mt-3">
                         <label>Propósito o finalidad de la categoría *</label>
@@ -49,22 +49,22 @@
                         <label class="mt-2">Es líder</label>
 
                     </div>
-                        <div class="mb-3">
-                       <label  for="LIDER_SI">Si</label>
-                          <input  class="mx-2" type="radio" id="LIDER_SI" name="ES_LIDER_CATEGORIA" value="1">
+                    <div class="mb-3">
+                        <label for="LIDER_SI">Si</label>
+                        <input class="mx-2" type="radio" id="LIDER_SI" name="ES_LIDER_CATEGORIA" value="1" required>
                         <label for="LIDER_NO">No</label>
-                          <input class="mx-2" type="radio" id="LIDER_NO" name="ES_LIDER_CATEGORIA" value="0">
-                      </div>
-                      <div id="pruebas-contenedor">
+                        <input class="mx-2" type="radio" id="LIDER_NO" name="ES_LIDER_CATEGORIA" value="0">
+                    </div>
+                    <div id="pruebas-contenedor">
                         <div class="mb-3">
                             <label>Agregar pruebas</label>
                             <button id="botonAgregarprueba" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar prueba"><i class="bi bi-plus-circle-fill"></i></button>
                             <div id="inputs-prueba" class="mt-3"></div>
                         </div>
-                </div>
+                    </div>
 
                 </div>
-             
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-success" id="guardarFormcategorias">Guardar</button>
@@ -81,6 +81,6 @@
     var pruebas = @json($pruebas);
 </script>
 
-    
+
 
 @endsection

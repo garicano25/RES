@@ -16,6 +16,7 @@ use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Response;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
 
 
@@ -38,6 +39,7 @@ use App\Models\organizacion\catalogocompetenciabasicaModel;
 
 use App\Models\organizacion\catalogojerarquiaModel;
 
+use DB;
 
 
 class makeExcelController extends Controller{
@@ -1762,37 +1764,129 @@ class makeExcelController extends Controller{
                         }
 
 
-                        //X. Organigrama																						
+            //X. Organigrama																						
 
 
-                        // if (!is_null($val->ORGANIGRAMA_DPT)) {
-                        //     $sheet->setCellValue('B144', $val->ORGANIGRAMA_DPT);        
-                        // }
+            // if (!is_null($val->ORGANIGRAMA_DPT)) {
+            //     $sheet->setCellValue('B144', $val->ORGANIGRAMA_DPT);        
+            // }
 
 
-                        // Agregar la imagen en la celda B144
-                        //   $imagePath = public_path('/assets/images/organigramaaa.png'); // Asegúrate de que la ruta sea correcta
+            // // // Agregar la imagen en la celda B144
+            //   $imagePath = public_path('/assets/images/organigramaaa.png'); // Asegúrate de que la ruta sea correcta
 
-                        //   $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-                        //   $drawing->setName('Organigrama');
-                        //   $drawing->setDescription('Organigrama');
-                        //   $drawing->setPath($imagePath);
-                        //   $drawing->setCoordinates('B144');
-                        
-                        //   // Ajustar el tamaño de la imagen para que sea grande
-                        //   $drawing->setHeight($sheet->getRowDimension(144)->getRowHeight() * 175); 
-                        //   $drawing->setWidth($sheet->getColumnDimension('B')->getWidth() * 175); 
-                        
-                        //   // Centrar la imagen en la celda
-                        //   $drawing->setOffsetX(($sheet->getColumnDimension('B')->getWidth() * 370 - $drawing->getWidth()) / 2);
-                        //   $drawing->setOffsetY(($sheet->getRowDimension(144)->getRowHeight() * 250 - $drawing->getHeight()) / 2);
+            //   $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+            //   $drawing->setName('Organigrama');
+            //   $drawing->setDescription('Organigrama');
+            //   $drawing->setPath($imagePath);
+            //   $drawing->setCoordinates('B147');
 
-                        //   $drawing->setWorksheet($spreadsheet->getActiveSheet());
+            //   // Ajustar el tamaño de la imagen para que sea grande
+            //   $drawing->setHeight($sheet->getRowDimension(147)->getRowHeight() * 175); 
+            //   $drawing->setWidth($sheet->getColumnDimension('B')->getWidth() * 175); 
 
+            //   // Centrar la imagen en la celda
+            //   $drawing->setOffsetX(($sheet->getColumnDimension('B')->getWidth() * 370 - $drawing->getWidth()) / 2);
+            //   $drawing->setOffsetY(($sheet->getRowDimension(147)->getRowHeight() * 250 - $drawing->getHeight()) / 2);
 
+            //   $drawing->setWorksheet($spreadsheet->getActiveSheet());
 
 
-                        if (!is_null($val->ELABORADO_NOMBRE_DPT)) {
+
+            /* =====================================================
+   1. OBTENER CATEGORÍA
+===================================================== */
+            $categoria = DB::table('catalogo_categorias')
+                ->where('ID_CATALOGO_CATEGORIA', $val->DEPARTAMENTOS_AREAS_ID)
+                ->first();
+
+            $areaId = null;
+
+            /* =====================================================
+   2. DETERMINAR AREA_ID
+===================================================== */
+            if ($categoria) {
+
+                // 🟢 ES LÍDER
+                if ((int)$categoria->ES_LIDER_CATEGORIA === 1) {
+
+                    $areaLider = DB::table('areas_lideres')
+                        ->where('LIDER_ID', $val->DEPARTAMENTOS_AREAS_ID)
+                        ->where('ACTIVO', 1)
+                        ->first();
+
+                    if ($areaLider) {
+                        $areaId = $areaLider->AREA_ID;
+                    }
+                }
+                // 🔵 NO ES LÍDER
+                else {
+
+                    $liderCategoria = DB::table('lideres_categorias')
+                        ->where('CATEGORIA_ID', $val->DEPARTAMENTOS_AREAS_ID)
+                        ->first();
+
+                    if ($liderCategoria) {
+                        $areaId = $liderCategoria->AREA_ID;
+                    }
+                }
+            }
+
+            /* =====================================================
+   3. OBTENER IMAGEN DEL ÁREA
+===================================================== */
+            if ($areaId) {
+
+                $area = DB::table('areas')
+                    ->where('ID_AREA', $areaId)
+                    ->first();
+
+                if ($area && !empty($area->FOTO_ORGANIGRAMA)) {
+
+                    $rutaOriginal = storage_path('app/' . $area->FOTO_ORGANIGRAMA);
+
+                    if (file_exists($rutaOriginal)) {
+
+                        // 🔥 CORREGIR ORIENTACIÓN SI ES NECESARIO
+                        $imagePath = $this->corregirOrientacionImagen($rutaOriginal);
+
+                        /* =====================================================
+                        4. INSERTAR IMAGEN EN EXCEL (CORRECTO)
+                        ===================================================== */
+                                                $drawing = new Drawing();
+                                                $drawing->setName('Organigrama');
+                                                $drawing->setDescription('Organigrama');
+                                                $drawing->setPath($imagePath);
+                                                $drawing->setCoordinates('B147');
+
+                                                /* =========================================
+                        🔥 TAMAÑO REAL EN PIXELES (CONTROLADO)
+                        ========================================= */
+                                                $drawing->setResizeProportional(false);
+                                                $drawing->setWidth(950);   // AJUSTA SI QUIERES
+                                                $drawing->setHeight(406);  // AJUSTA SI QUIERES
+
+                                                /* =========================================
+                        🔥 POSICIÓN FINA
+                        ========================================= */
+                                                $drawing->setOffsetX(20);
+                                                $drawing->setOffsetY(10);
+
+                                                /* =========================================
+                        ✅ ASIGNAR A LA HOJA (UNA SOLA VEZ)
+                        ========================================= */
+                                                $drawing->setWorksheet($sheet);
+                    }
+                }
+            }
+
+
+
+
+
+
+
+            if (!is_null($val->ELABORADO_NOMBRE_DPT)) {
                             $sheet->setCellValue('B166', $val->ELABORADO_NOMBRE_DPT);        
                         }
 
@@ -1956,6 +2050,42 @@ foreach ($externas as $key => $val) {
 
 
 
+    private function corregirOrientacionImagen($rutaOriginal)
+    {
+        if (!function_exists('exif_read_data')) {
+            return $rutaOriginal;
+        }
+
+        $exif = @exif_read_data($rutaOriginal);
+        if (!$exif || !isset($exif['Orientation'])) {
+            return $rutaOriginal;
+        }
+
+        $imagen = imagecreatefromstring(file_get_contents($rutaOriginal));
+        if (!$imagen) {
+            return $rutaOriginal;
+        }
+
+        switch ($exif['Orientation']) {
+            case 3:
+                $imagen = imagerotate($imagen, 180, 0);
+                break;
+            case 6:
+                $imagen = imagerotate($imagen, -90, 0);
+                break;
+            case 8:
+                $imagen = imagerotate($imagen, 90, 0);
+                break;
+            default:
+                return $rutaOriginal;
+        }
+
+        $rutaTemp = storage_path('app/temp_organigrama_' . uniqid() . '.jpg');
+        imagejpeg($imagen, $rutaTemp, 100);
+        imagedestroy($imagen);
+
+        return $rutaTemp;
+    }
 
 
 
