@@ -49,6 +49,7 @@ $(document).ready(function() {
         $("#ANTES_2024").hide();
         $("#DESPUES_2024").show();
         $("#MOSTRAR_ALERTA_DOCUMENTOS").hide();
+        $("#DATOS_VEHICULOS").hide();
 
 
     });
@@ -273,6 +274,20 @@ drawCallback: function () {
 });
 
 
+
+document.getElementById('TIPO_EQUIPO').addEventListener('change', function () {
+    const tipo = this.value;
+    const divVehiculos = document.getElementById('DATOS_VEHICULOS');
+
+    if (tipo === 'Vehículos') {
+        divVehiculos.style.display = 'block';
+    } else {
+        divVehiculos.style.display = 'none';
+    }
+});
+
+
+
 $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablainventario.row(tr);
@@ -379,6 +394,12 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
 
     }
     
+    if (row.data().TIPO_EQUIPO === 'Vehículos') {
+        $('#DATOS_VEHICULOS').show();
+    } else {
+        $('#DATOS_VEHICULOS').hide();
+    }
+
     
     $("#tab3-documentos").off("click").on("click", function () {
         cargarTablaDocumentosEquipo();
@@ -517,7 +538,14 @@ $(document).ready(function() {
     $("#MOSTRAR_ALERTA_DOCUMENTOS").hide();
 
     }
-    
+        
+
+    if (row.data().TIPO_EQUIPO === 'Vehículos') {
+        $('#DATOS_VEHICULOS').show();
+    } else {
+        $('#DATOS_VEHICULOS').hide();
+    }
+
 
 
 

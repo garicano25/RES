@@ -18,6 +18,7 @@ use App\Models\inventario\catalogotipoinventarioModel;
 use App\Models\recempleados\recemplaedosModel;
 use App\Models\usuario\usuarioModel;
 use App\Models\bitacorasalmacen\bitacoraModel;
+use App\Models\contratacion\contratacionModel;
 
 class bitacoravehiculosController extends Controller
 {
@@ -30,7 +31,24 @@ class bitacoravehiculosController extends Controller
         $inventario = inventarioModel::where('ACTIVO', 1)->get();
         $usuarios = usuarioModel::where('ACTIVO', 1) ->where('USUARIO_TIPO', 1)->get();
 
-        return view('almacen.bitacoras.bitacora_vehiculos', compact('tipoinventario', 'proveedoresOficiales', 'proveedoresTemporales', 'inventario', 'usuarios'));
+
+        $colaboradores = contratacionModel::where('ACTIVO', 1)->get();
+
+
+        $proveedores = DB::table('formulario_altaproveedor as ap')
+            ->leftJoin('formulario_directorio as d', 'd.RFC_PROVEEDOR', '=', 'ap.RFC_ALTA')
+            ->where('ap.TIENE_ASIGNACION', 1)
+            ->select(
+                'ap.ID_FORMULARIO_ALTA',
+                'ap.RFC_ALTA',
+                'ap.TIENE_ASIGNACION',
+                'd.NOMBRE_DIRECTORIO'
+            )
+            ->get();
+
+
+
+        return view('almacen.bitacoras.bitacora_vehiculos', compact('tipoinventario', 'proveedoresOficiales', 'proveedoresTemporales', 'inventario', 'usuarios','colaboradores','proveedores'));
     }
 
 
@@ -198,7 +216,6 @@ class bitacoravehiculosController extends Controller
                         'FIRMA_RECIBIDO_POR'        => $bitacora->FIRMA_RECIBIDO_POR,
                         'FIRMA_ENTREGADO_POR'       => $bitacora->FIRMA_ENTREGADO_POR,
                         'OBSERVACIONES_BITACORA'    => $bitacora->OBSERVACIONES_BITACORA,
-                        'FUNCIONAMIENTO_BITACORA'   => $bitacora->FUNCIONAMIENTO_BITACORA,
                         'YA_GUARDADO'               => true
                     ]
                 ]);

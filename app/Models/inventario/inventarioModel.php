@@ -32,6 +32,8 @@ class inventarioModel extends Model
         'REQUIERE_ARTICULO',
         'LIMITEMINIMO_EQUIPO',
         'ITEM_CRITICO',
+        'PLACAS_VEHICULOS',
+        'COLOR_VEHICULO',
         'ASIGNADO'
 
 
