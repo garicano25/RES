@@ -480,8 +480,7 @@ Route::post('/verificarestadobloqueo', [contratacionController::class, 'verifica
 Route::post('/obtenerUltimoCargo', [contratacionController::class, 'obtenerUltimoCargo']);
 // CREAR CREDENCIAL 
 Route::get('/descargar-credencial', [PowerPointController::class, 'descargarCredencial']);
-Route::get('/prueba-presentation', [TestController::class, 'prueba']);
-Route::get('/prueba-editar', [TestController::class, 'editarPlantilla']);
+
 
 /////////////////////////////////////// STEP 2 DOCUMENTOS DE SOPORTE
 Route::get('/Tabladocumentosoporte', [contratacionController::class, 'Tabladocumentosoporte']);
@@ -993,6 +992,7 @@ Route::get('/bitacoravehiculos', [bitacoravehiculosController::class, 'index']);
 Route::get('/Tablabitacoravehiculos', [bitacoravehiculosController::class, 'Tablabitacoravehiculos']);
 Route::get('/obtenerMaterialVehiculos', [bitacoravehiculosController::class, 'obtenerMaterialVehiculos']);
 Route::post('/BitacoraVehiculoSave', [bitacoravehiculosController::class, 'store']);
+Route::get('/obtenerDatosInventarioVehiculo',[bitacoravehiculosController::class, 'obtenerDatosInventarioVehiculo']);
 
 
 

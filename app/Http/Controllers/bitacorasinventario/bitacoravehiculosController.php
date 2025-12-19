@@ -397,8 +397,42 @@ class bitacoravehiculosController extends Controller
     }
 
 
-    
 
+
+    public function obtenerDatosInventarioVehiculo(Request $request)
+    {
+        try {
+
+            $inventarioId = $request->get('inventario');
+
+            $inventario = DB::table('formulario_inventario')
+                ->where('ID_FORMULARIO_INVENTARIO', $inventarioId)
+                ->first();
+
+            if (!$inventario) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Inventario no encontrado'
+                ]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'MARCA_EQUIPO'   => $inventario->MARCA_EQUIPO ?? '',
+                    'COLOR_VEHICULO'   => $inventario->COLOR_VEHICULO ?? '',
+                    'PLACAS_VEHICULOS'  => $inventario->PLACAS_VEHICULOS ?? '',
+                    'MODELO_EQUIPO'  => $inventario->MODELO_EQUIPO ?? '',
+                    'CODIGO_EQUIPO'  => $inventario->CODIGO_EQUIPO ?? '',
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
 
 
 
