@@ -156,7 +156,7 @@
                             <div class="col-12 mt-3">
                                 <div class="form-group">
                                     <label for="RETORNO_LABEL">
-                                        Finalizar bitácora
+                                        Finalizar registro *
                                     </label>
                                     <select class="form-select"
                                         id="FINALIZAR_BITACORA_CONSUMBIBLES"
